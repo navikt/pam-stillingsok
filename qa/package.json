@@ -1,0 +1,27 @@
+{
+  "name": "pam-stillingsok-qa",
+  "version": "1.0.0",
+  "description": "Funksjonelle akseptansetester for PAM-stillingsøk",
+  "scripts": {
+    "cucumber": "node_modules/.bin/nightwatch --config nightwatch.conf.js --env t1",
+    "cucumber-linux": "node_modules/.bin/nightwatch --config nightwatch.conf.js --env linux-t1",
+    "cucumber-local": "node_modules/.bin/nightwatch --config nightwatch.conf.js",
+    "cucumber-linux-local": "node_modules/.bin/nightwatch --config nightwatch.conf.js --env linux-local",
+    "cucumber-jenkins": "xvfb-run node_modules/.bin/nightwatch --env jenkins",
+    "cucumber-report": "node createHtmlReports.js"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-register": "^6.26.0",
+    "chromedriver": "^2.36.0",
+    "cucumber": "^3.2.1",
+    "cucumber-html-report": "^0.6.4",
+    "cucumber-pretty": "^1.4.0",
+    "moment": "^2.21.0",
+    "nightwatch": "^0.9.19",
+    "nightwatch-cucumber": "^8.2.14",
+    "selenium-server-standalone-jar": "^3.9.1"
+  }
+}

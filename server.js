@@ -1,0 +1,135 @@
+const express = require('express');
+const proxy = require('express-http-proxy');
+const helmet = require('helmet');
+const path = require('path');
+const mustacheExpress = require('mustache-express');
+const Promise = require('promise');
+const fs = require('fs');
+const currentDirectory = __dirname;
+
+const server = express();
+const port = process.env.PORT || 8080;
+server.set('port', port);
+
+server.disable('x-powered-by');
+server.use(helmet({xssFilter: false}));
+server.use(helmet({
+    xssFilter: false,
+    noCache: true
+}));
+
+server.use(helmet.contentSecurityPolicy({
+    directives: {
+        defaultSrc: ["'none'"],
+        scriptSrc: ["'self'", "https://www.googletagmanager.com",  "https://www.google-analytics.com"],
+        styleSrc: ["'self'"],
+        fontSrc: ["'self'", "data:"],
+        imgSrc: ["'self'", "data:", "https://www.google-analytics.com"],
+        connectSrc: ["'self'"]
+    }
+}));
+
+server.set('views', `${currentDirectory}/views`);
+server.set('view engine', 'mustache');
+server.engine('html', mustacheExpress());
+
+const fasitProperties = {
+    PAM_SEARCH_API: '/pam-stillingsok/search-api',
+    PAM_STILLING: '/pam-stillingsok/stilling/',
+    PAM_FORSIDE: process.env.PAM_FORSIDE,
+    PAM_MINSIDE: process.env.PAM_MINSIDE,
+    PAM_ISTOKENVALID: process.env.PAM_ISTOKENVALID,
+    PAM_LOGOUT: process.env.PAM_LOGOUT
+};
+
+
+const writeEnvironmentVariablesToFile = () => {
+    const fileContent =
+        'window.__PAM_STILLING__="' + fasitProperties.PAM_STILLING + '";\n' +
+        'window.__PAM_SEARCH_API__="' + fasitProperties.PAM_SEARCH_API + '";\n' +
+        'window.__PAM_FORSIDE__="' + fasitProperties.PAM_FORSIDE + '";\n' +
+        'window.__PAM_MINSIDE__="' + fasitProperties.PAM_MINSIDE + '";\n' +
+        'window.__PAM_IS_TOKEN_VALID__="' + fasitProperties.PAM_ISTOKENVALID + '";\n' +
+        'window.__PAM_LOGOUT__="' + fasitProperties.PAM_LOGOUT + '";\n';
+
+    fs.writeFile(path.resolve(__dirname, 'dist/js/env.js'), fileContent, function (err) {
+        if (err) throw err;
+    });
+
+};
+const renderSok = (htmlPages) => (
+    new Promise((resolve, reject) => {
+        server.render(
+            'index.html',
+            fasitProperties,
+            (err, html) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(Object.assign({"sok": html}, htmlPages));
+                }
+            }
+        );
+    })
+);
+
+const renderStilling = (htmlPages) => (
+    new Promise((resolve, reject) => {
+        server.render(
+            'stilling.html',
+            fasitProperties,
+            (err, html) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(Object.assign({"stilling": html}, htmlPages));
+                }
+            }
+        );
+    })
+);
+
+const startServer = (htmlPages) => {
+    writeEnvironmentVariablesToFile();
+
+    server.use(
+        '/pam-stillingsok/search-api',
+        proxy('http://pam-search-api')
+    );
+
+    server.use(
+        '/pam-stillingsok/js',
+        express.static(path.resolve(__dirname, 'dist/js'))
+    );
+    server.use(
+        '/pam-stillingsok/css',
+        express.static(path.resolve(__dirname, 'dist/css'))
+    );
+
+    server.get(
+        /^\/pam-stillingsok\/stilling\/.*$/,
+        (req, res) => {
+            res.send(htmlPages["stilling"]);
+        }
+    );
+
+    server.get(
+        ['/', '/pam-stillingsok/?', /^\/pam-stillingsok\/(?!.*dist).*$/],
+        (req, res) => {
+            res.send(htmlPages["sok"]);
+        }
+    );
+
+    server.get('/pam-stillingsok/internal/isAlive', (req, res) => res.sendStatus(200));
+    server.get('/pam-stillingsok/internal/isReady', (req, res) => res.sendStatus(200));
+
+    server.listen(port, () => {
+        console.log(`Express-server startet. Server filer fra ./dist/ til localhost:${port}/`);
+    });
+};
+
+const logError = (errorMessage, details) => console.log(errorMessage, details);
+
+renderSok({})
+    .then(renderStilling, (error) => logError('Failed to render app', error))
+    .then(startServer, (error) => logError('Failed to render app', error));

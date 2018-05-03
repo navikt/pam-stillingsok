@@ -1,0 +1,152 @@
+@import '../../node_modules/nav-frontend-core/less/_variabler.less';
+@import '../../node_modules/nav-frontend-paneler-style/src/mixins.less';
+@import "utils";
+
+.search-input input {
+    height: 3rem;
+    background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxNy4wLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzMiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB3aWR0aD0iMzBweCIgaGVpZ2h0PSIzMHB4IiB2aWV3Qm94PSIwIDAgMzAgMzAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDMwIDMwIiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxwYXRoIGZpbGw9IiMwMDY3QzUiIGQ9Ik0yOS40NzUsMjYuMDk3TDE4LjgxNywxNS40NGMyLjQyMy0zLjk2NSwxLjgxOS05LjE2LTEuNDg4LTEyLjQ2NkMxNS40MTIsMS4wNTYsMTIuODYzLDAsMTAuMTUyLDANCglDNy40NCwwLDQuODkxLDEuMDU2LDIuOTc0LDIuOTc0QzEuMDU2LDQuODkyLDAsNy40NDEsMCwxMC4xNTJjMCwyLjcxMiwxLjA1Niw1LjI2MSwyLjk3NCw3LjE3OA0KCWMxLjkxNiwxLjkxNyw0LjQ2MywyLjk3Miw3LjE3NSwyLjk3MmMxLjg3OSwwLDMuNy0wLjUxMyw1LjI5Mi0xLjQ4NWwxMC42NTYsMTAuNjU5QzI2LjQzNSwyOS44MTMsMjYuOTA0LDMwLDI3LjQxOCwzMA0KCWMwLjY0MywwLDEuMjk4LTAuMjg2LDEuNzk3LTAuNzg2YzAuNDQxLTAuNDQxLDAuNzE2LTEsMC43NzQtMS41NzVDMzAuMDQ5LDI3LjAzNiwyOS44NjYsMjYuNDg5LDI5LjQ3NSwyNi4wOTd6IE0xNy40OTMsMTAuMTUyDQoJYzAsMS45NjUtMC43NjIsMy44MDktMi4xNDgsNS4xOTRjLTEuMzg1LDEuMzg1LTMuMjMsMi4xNDgtNS4xOTQsMi4xNDhjLTEuOTY1LDAtMy44MDktMC43NjMtNS4xOTQtMi4xNDgNCgljLTEuMzg1LTEuMzg1LTIuMTQ4LTMuMjI5LTIuMTQ3LTUuMTk0YzAtMS45NjUsMC43NjItMy44MDksMi4xNDgtNS4xOTRjMS4zODYtMS4zODUsMy4yMjktMi4xNDgsNS4xOTQtMi4xNDgNCgljMS45NjMsMCwzLjgwOSwwLjc2Myw1LjE5MywyLjE0OEMxNi43MzEsNi4zNDMsMTcuNDkzLDguMTg3LDE3LjQ5MywxMC4xNTJ6Ii8+DQo8L3N2Zz4NCg==');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    max-width: 720px;
+}
+
+button.lenke {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    padding: 0 0;
+}
+
+.understed {
+    margin-left: 30px;
+}
+
+.filter-item label {
+    font-size: 90%;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-center {
+    text-align: center;
+}
+
+#kart {
+    .map {
+        &:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px @orangeFocus;
+        }
+    }
+
+    .karttooltip {
+        background: white;
+        border-radius: 4px;
+        font-size: 11px;
+        font-weight: bold;
+        padding: 0px 1px;
+        outline: none;
+        box-shadow: 0 0 0 1px black;
+        &::before{
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -4px;
+            width: 0;
+            height: 0;
+            border-top: solid 4px white;
+            border-left: solid 4px transparent;
+            border-right: solid 4px transparent;
+            z-index: 999999;
+        }
+        &::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-top: 1px;
+            margin-left: -4px;
+            width: 0;
+            height: 0;
+            border-top: solid 4px black;
+            border-left: solid 4px transparent;
+            border-right: solid 4px transparent;
+        }
+    }
+
+    .kartpopup {
+        .leaflet-popup-tip,
+        .leaflet-popup-content-wrapper {
+            transition-delay: 300ms;
+        }
+        .leaflet-popup-content-wrapper {
+            .panel-mixin();
+            width: 300px;
+            padding: 1px;
+            .typo-undertekst {
+                margin-top: 0;
+                margin-bottom: 0;   
+            }
+        }
+        .arbeidsgiver-overskrift {
+            margin-top: 3px;
+            margin-bottom: 8px;
+        }
+        .text-right {
+            padding: 0;
+        }
+
+        .lenke-liten {
+            height: 18px;
+        }
+    }
+
+    .knapp {
+        &:not(:hover) {
+            background-color: white;
+        }
+    }
+
+    .sentrer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #kartfilter {
+        overflow-y: auto;
+    }
+
+    .lukk {
+        display: none;
+    }
+
+    .filterknapp {
+        display: none;
+    }
+
+    @media (max-width: @screen-md-min) {
+        #filterkolonne {
+            z-index: 10000;
+            position: fixed;
+            display: none;
+        }
+
+        #filterkolonne.vis-filter-paa-mobil {
+            z-index: 10000;
+            position: fixed;
+            display: block;
+        }
+
+        .lukk {
+            display: block;
+        }
+
+        .filterknapp {
+            display: block;
+        }
+    }
+}

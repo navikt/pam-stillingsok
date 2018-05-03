@@ -1,0 +1,36 @@
+name: pam-stillingsok
+image: docker.adeo.no:5000/pam-stillingsok
+replicas:
+  min: 1
+  max: 1
+  cpuThresholdPercentage: 50
+port: 8080
+healthcheck:
+  liveness:
+    path: /pam-stillingsok/internal/isAlive
+    initialDelay: 60
+  readiness:
+    path: /pam-stillingsok/internal/isReady
+    initialDelay: 60
+prometheus:
+  enabled: false
+  path: /metrics
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 200m
+    memory: 256Mi
+ingress:
+  enabled: true
+fasitResources:
+  used:
+  - alias: pam.forside
+    resourceType: baseurl
+  - alias: pam.minside
+    resourceType: baseurl
+  - alias: pam.isTokenValid
+    resourceType: baseurl
+  - alias: pam.logout
+    resourceType: baseurl

@@ -1,0 +1,74 @@
+@import "../node_modules/nav-frontend-core/less/core";
+
+@color-green: @navGronn;
+@background-green: #E5F3EB;
+@border-gray: #e9e7e7;
+
+.background--light-green {
+  background-color: @background-green;
+}
+
+.hovedknapp--green{
+  background-color: @color-green;
+
+  &:hover{
+    background-color: @navGronnLighten20;
+  }
+  &:active {
+    background-color: @navGronnDarken40;
+  }
+}
+
+.knapp--green {
+  box-sizing: content-box;
+  color: @color-green;
+  border-color: @color-green;
+
+  &:hover{
+    color: #FFFFFF;
+    background-color: @color-green;
+  }
+  &:active {
+    border-color: @navGronnDarken40;
+    background-color: @navGronnDarken40;
+  }
+}
+
+.skjemaelement__input {
+  border: 1px solid @color-green;
+
+  &:hover {
+    border-color: @navGronnDarken40;
+  }
+}
+
+.checkboks + .skjemaelement__label {
+  padding-left: 32px;
+  line-height: 24px;
+}
+
+.checkboks + .skjemaelement__label:before {
+  width: 24px;
+  height: 24px;
+  border-color: @color-green;
+}
+
+.checkboks:checked + .skjemaelement__label:before {
+  background-color: @color-green;
+  border-color: @color-green;
+  background-size: 30px 30px;
+}
+
+.checkboks:hover + .skjemaelement__label:before {
+  border-color: @navGronnDarken40;
+  border-width: 2px;
+}
+
+.panel--gray-border {
+  border-radius: 0;
+  border: 1px solid @border-gray;
+}
+
+.panel--white-bg {
+  background: #fff;
+}
