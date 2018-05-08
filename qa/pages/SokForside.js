@@ -31,11 +31,11 @@ module.exports = {
 
         showFilterElement: function(filter){
             const page = this;
-            page.api.element('css selector', this.getFilterCheckbox(filter), function(result) {
+            page.api.pause(1000).element('css selector', this.getFilterCheckbox(filter), function(result) {
                 if(result.status === -1){ // is not visible;
                     page.api.elements('css selector', getLukketEkspanderbartPanel(), function(result) {;
                         result.value.forEach(function(element) {
-                            page.api.elementIdClick(element.ELEMENT);
+                            page.api.elementIdClick(element.ELEMENT).pause(1000);
                         })
                     });
                 }
