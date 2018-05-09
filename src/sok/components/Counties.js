@@ -35,7 +35,7 @@ export class Counties extends React.Component {
 
     render() {
         const { counties, checkedCounties, checkedMunicipals } = this.props;
-        let title = "Velg fylke/kommune";
+        let title = "Fylke/kommune";
         if ((checkedCounties.length + checkedMunicipals.length) === 1) {
             title += " (1 valgt)"
         } else if((checkedCounties.length + checkedMunicipals.length) > 1) {

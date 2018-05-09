@@ -22,7 +22,7 @@ export class HeltidDeltid extends React.Component {
 
     render() {
         const { heltidDeltid, checkedHeltidDeltid }  = this.props;
-        let title = "Velg heltid/deltid";
+        let title = "Heltid/deltid";
         if (checkedHeltidDeltid.length === 1) {
             title += " (1 valgt)"
         } else if(checkedHeltidDeltid.length > 1) {

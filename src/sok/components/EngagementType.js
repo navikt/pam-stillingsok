@@ -22,7 +22,7 @@ export class EngagementType extends React.Component {
 
     render() {
         const { engagementType, checkedEngagementType }  = this.props;
-        let title = "Velg ansettelsesform";
+        let title = "Ansettelsesform";
         if (checkedEngagementType.length === 1) {
             title += " (1 valgt)"
         } else if(checkedEngagementType.length > 1) {
