@@ -1,12 +1,9 @@
 import React from 'react';
 import { Row, Column } from 'nav-frontend-grid';
 import { Normaltekst, Element } from 'nav-frontend-typografi';
-import SearchResultItemLogo from './SearchResultItemLogo';
 import { formatISOString } from '../../date';
 import StillingPropTypes from '../search/propstypes/StillingPropTypes';
 import { STILLING } from "../../common/fasitProperties";
-
-const searchResultItemLogo = require('./noLogo.png');
 
 function keepScrollPosition() {
     const top = window.pageYOffset || document.documentElement.scrollTop;
@@ -28,11 +25,9 @@ export default function SearchResultItem(props) {
         >
             <Row className="search-result-item">
                 <Column xs="4" className="search-result-item__arbeidsgiver">
-                    <SearchResultItemLogo
-                        className="bilde bilde__muted"
-                        src={searchResultItemLogo}
-                        alt="Logo mangler"
-                    />
+                    {stilling.properties.employer && (
+                        <Normaltekst className="break-word">{stilling.properties.employer}</Normaltekst>
+                    ) }
                 </Column>
                 <Column xs="8">
                     {stilling.updated && (
