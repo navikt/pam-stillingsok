@@ -1,9 +1,9 @@
+import { select, call, put, takeLatest } from 'redux-saga/effects';
 import {
     SearchApiError,
     fetchSearch,
     fetchTypeaheadSuggestions
-} from "./search/api";
-import {select, call, put, takeLatest} from 'redux-saga/effects';
+} from './search/api';
 
 /** *********************************************************
  * ACTIONS
@@ -300,7 +300,8 @@ export default function reducer(state = initialState, action) {
                 query: {
                     ...state.query,
                     counties: state.query.counties.filter((c) => (c !== action.county)),
-                    municipals: state.query.municipals ? state.query.municipals.filter((m1) => !countyObject.municipals.find((m) => m.key === m1)) : [],
+                    municipals: state.query.municipals ? state.query.municipals.filter((m1) =>
+                        !countyObject.municipals.find((m) => m.key === m1)) : [],
                     from: 0
                 }
             };
@@ -369,29 +370,28 @@ export const toSearchQuery = (state) => {
             })
         };
     }
-    return searchQuery
+    return searchQuery;
 };
 
 /** *********************************************************
  * ASYNC ACTIONS
  ********************************************************* */
-function* search(action) {
+function* search() {
     try {
-        yield put({type: SEARCH_BEGIN});
+        yield put({ type: SEARCH_BEGIN });
         const state = yield select();
 
         const response = yield call(fetchSearch, toSearchQuery(state));
 
-        yield put({type: SEARCH_SUCCESS, response: response});
+        yield put({ type: SEARCH_SUCCESS, response });
 
-        yield put({type: FETCH_COUNTIES_COUNT_SUCCESS, response: response.counties});
-        yield put({type: FETCH_HELTID_DELTID_COUNT_SUCCESS, response: response.heltidDeltid});
-        yield put({type: FETCH_ENGAGEMENT_TYPE_COUNT_SUCCESS, response: response.engagementTypes});
-        yield put({type: FETCH_NYE_I_DAG_COUNT_SUCCESS, response: response.nyeIDag});
-
+        yield put({ type: FETCH_COUNTIES_COUNT_SUCCESS, response: response.counties });
+        yield put({ type: FETCH_HELTID_DELTID_COUNT_SUCCESS, response: response.heltidDeltid });
+        yield put({ type: FETCH_ENGAGEMENT_TYPE_COUNT_SUCCESS, response: response.engagementTypes });
+        yield put({ type: FETCH_NYE_I_DAG_COUNT_SUCCESS, response: response.nyeIDag });
     } catch (e) {
         if (e instanceof SearchApiError) {
-            yield put({type: SEARCH_FAILURE, error: e});
+            yield put({ type: SEARCH_FAILURE, error: e });
         } else {
             throw e;
         }
@@ -401,24 +401,24 @@ function* search(action) {
 function* loadAvailableFacets(action) {
     try {
         if (Object.keys(action.query).length > 0) {
-            yield put({type: SET_INITIAL_STATE, query: action.query});
+            yield put({ type: SET_INITIAL_STATE, query: action.query });
             const response = yield call(fetchSearch);
-            yield put({type: FETCH_INITIAL_COUNTIES_SUCCESS, response: response.counties});
-            yield put({type: FETCH_INITIAL_HELTID_DELTID_SUCCESS, response: response.heltidDeltid});
-            yield put({type: FETCH_INITIAL_ENGAGEMENT_TYPE_SUCCESS, response: response.engagementTypes});
-            yield put({type: FETCH_INITIAL_NYE_I_DAG_SUCCESS, response: response.nyeIDag});
+            yield put({ type: FETCH_INITIAL_COUNTIES_SUCCESS, response: response.counties });
+            yield put({ type: FETCH_INITIAL_HELTID_DELTID_SUCCESS, response: response.heltidDeltid });
+            yield put({ type: FETCH_INITIAL_ENGAGEMENT_TYPE_SUCCESS, response: response.engagementTypes });
+            yield put({ type: FETCH_INITIAL_NYE_I_DAG_SUCCESS, response: response.nyeIDag });
             yield call(search, action);
         } else {
             const response = yield call(fetchSearch);
-            yield put({type: SEARCH_SUCCESS, response: response});
-            yield put({type: FETCH_INITIAL_COUNTIES_SUCCESS, response: response.counties});
-            yield put({type: FETCH_INITIAL_HELTID_DELTID_SUCCESS, response: response.heltidDeltid});
-            yield put({type: FETCH_INITIAL_ENGAGEMENT_TYPE_SUCCESS, response: response.engagementTypes});
-            yield put({type: FETCH_INITIAL_NYE_I_DAG_SUCCESS, response: response.nyeIDag});
+            yield put({ type: SEARCH_SUCCESS, response });
+            yield put({ type: FETCH_INITIAL_COUNTIES_SUCCESS, response: response.counties });
+            yield put({ type: FETCH_INITIAL_HELTID_DELTID_SUCCESS, response: response.heltidDeltid });
+            yield put({ type: FETCH_INITIAL_ENGAGEMENT_TYPE_SUCCESS, response: response.engagementTypes });
+            yield put({ type: FETCH_INITIAL_NYE_I_DAG_SUCCESS, response: response.nyeIDag });
         }
     } catch (e) {
         if (e instanceof SearchApiError) {
-            yield put({type: SEARCH_FAILURE, error: e});
+            yield put({ type: SEARCH_FAILURE, error: e });
         } else {
             throw e;
         }
@@ -436,11 +436,9 @@ function* fetchTypeAheadSuggestions() {
                 const response = yield call(fetchTypeaheadSuggestions, cachedTypeAheadMatch);
 
                 const suggestions = response.result.filter((cachedSuggestion) => (
-                    cachedSuggestion.toLowerCase().startsWith(cachedTypeAheadMatch.toLowerCase()))
-                );
+                    cachedSuggestion.toLowerCase().startsWith(cachedTypeAheadMatch.toLowerCase())));
                 yield put({ type: FETCH_TYPE_AHEAD_SUGGESTIONS_CACHE, cachedSuggestions: response.result });
                 yield put({ type: FETCH_TYPE_AHEAD_SUGGESTIONS_SUCCESS, suggestions });
-
             } catch (e) {
                 if (e instanceof SearchApiError) {
                     yield put({ type: FETCH_TYPE_AHEAD_SUGGESTIONS_FAILURE, error: e });
@@ -459,7 +457,7 @@ function* fetchTypeAheadSuggestions() {
     }
 }
 
-export const saga = function* () {
+export const saga = function* saga() {
     yield takeLatest(SEARCH, search);
     yield takeLatest(INITIAL_SEARCH, loadAvailableFacets);
     yield takeLatest(FETCH_TYPE_AHEAD_SUGGESTIONS, fetchTypeAheadSuggestions);

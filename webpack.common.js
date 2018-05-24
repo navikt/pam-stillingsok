@@ -3,7 +3,6 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
     entry: {
-        kart: ['babel-polyfill', 'whatwg-fetch', './src/kart/kart.js'],
         sok: ['babel-polyfill', 'whatwg-fetch', './src/sok/sok.js'],
         stilling: ['babel-polyfill', 'whatwg-fetch', './src/stilling/stilling.js'],
         googletagmanager: ['./src/googletagmanager.js']
@@ -20,15 +19,6 @@ module.exports = {
                 exclude: /node_modules/,
                 loader: 'babel-loader',
                 query: { presets: ['es2015', 'react', 'stage-2'] }
-            }, {
-                test: /\.(png|jpg|gif|svg)$/,
-                include: [
-                    path.resolve(__dirname, 'node_modules/leaflet') // Vi trenger ikke kartikonene fra leaflet
-                ],
-                loader: 'ignore-loader'
-            }, {
-                test: /\.(png)$/,
-                loader: 'base64-image-loader'
             }, {
                 test: /\.css$/,
                 use: ExtractTextPlugin.extract({

@@ -99,7 +99,16 @@ export function filterNyeIDag(nyeIDag) {
 }
 
 export default function searchTemplate(query) {
-    const { q, from, sort, counties, municipals, heltidDeltid, engagementType, nyeIDag } = query;
+    const { from, counties, municipals, heltidDeltid, engagementType, nyeIDag } = query;
+    let { sort, q } = query;
+
+    /**
+     *  To ensure consistent search results across multiple shards in elasticsearch when query is blank
+     */
+    if (!q || q.trim().length === 0) {
+        sort = 'updated';
+        q = '';
+    }
 
     let template = {
         from: from || 0,
@@ -108,7 +117,7 @@ export default function searchTemplate(query) {
             bool: {
                 must: {
                     multi_match: {
-                        query: q || '',
+                        query: q,
                         fields: [
                             'title_no^2',
                             'category_no^2',
@@ -124,7 +133,7 @@ export default function searchTemplate(query) {
                 should: {
                     match_phrase: {
                         title: {
-                            query: q || '',
+                            query: q,
                             slop: 3
                         }
                     }
@@ -210,7 +219,7 @@ export default function searchTemplate(query) {
                 },
                 aggs: {
                     values: {
-                        terms: {field: 'extent_facet'}
+                        terms: { field: 'extent_facet' }
                     }
                 }
             },
@@ -275,6 +284,7 @@ export default function searchTemplate(query) {
             }
         }
     };
+
     if (sort && sort !== 'relevant') {
         template = {
             ...template,
@@ -291,4 +301,3 @@ export default function searchTemplate(query) {
 
     return template;
 }
-
