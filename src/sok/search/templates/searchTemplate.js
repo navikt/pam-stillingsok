@@ -33,7 +33,6 @@ export function filterHeltidDeltid(heltidDeltid) {
     return filters;
 }
 
-
 export function filterEngagementType(engagementTypes) {
     const filters = {
         bool: {
@@ -81,8 +80,26 @@ export function filterLocation(counties, municipals) {
     return filters;
 }
 
+export function filterNyeIDag(nyeIDag) {
+    const filters = {
+        bool: {
+            should: []
+        }
+    };
+    if (nyeIDag && nyeIDag.length > 0) {
+        filters.bool.should.push({
+            range: {
+                created: {
+                    gte: 'now-1d'
+                }
+            }
+        });
+    }
+    return filters;
+}
+
 export default function searchTemplate(query) {
-    const { q, from, sort, counties, municipals, heltidDeltid, engagementType } = query;
+    const { q, from, sort, counties, municipals, heltidDeltid, engagementType, nyeIDag } = query;
 
     let template = {
         from: from || 0,
@@ -124,7 +141,8 @@ export default function searchTemplate(query) {
                     },
                     ...filterHeltidDeltid(heltidDeltid),
                     filterLocation(counties, municipals),
-                    filterEngagementType(engagementType)
+                    filterEngagementType(engagementType),
+                    filterNyeIDag(nyeIDag)
                 ]
             }
         },
@@ -139,6 +157,42 @@ export default function searchTemplate(query) {
             ]
         },
         aggs: {
+            nyeIDag: {
+                filter: {
+                    bool: {
+                        filter: [
+                            {
+                                term: {
+                                    status: 'ACTIVE'
+                                }
+                            },
+                            ...filterHeltidDeltid(heltidDeltid),
+                            filterLocation(counties, municipals),
+                            filterEngagementType(engagementType),
+                            {
+                                range: {
+                                    created: {
+                                        gte: 'now-1d'
+                                    }
+                                }
+                            },
+                        ]
+                    }
+                },
+                aggs: {
+                    range: {
+                        date_range: {
+                            field: 'created',
+                            ranges: [
+                                {
+                                    key: 'Nye i dag',
+                                    from: 'now-1d'
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
             heltidDeltid: {
                 filter: {
                     bool: {
@@ -149,7 +203,8 @@ export default function searchTemplate(query) {
                                 }
                             },
                             filterLocation(counties, municipals),
-                            filterEngagementType(engagementType)
+                            filterEngagementType(engagementType),
+                            filterNyeIDag(nyeIDag)
                         ]
                     }
                 },
@@ -169,7 +224,8 @@ export default function searchTemplate(query) {
                                 }
                             },
                             ...filterHeltidDeltid(heltidDeltid),
-                            filterLocation(counties, municipals)
+                            filterLocation(counties, municipals),
+                            filterNyeIDag(nyeIDag)
                         ]
                     }
                 },
@@ -189,7 +245,8 @@ export default function searchTemplate(query) {
                                 }
                             },
                             ...filterHeltidDeltid(heltidDeltid),
-                            filterEngagementType(engagementType)
+                            filterEngagementType(engagementType),
+                            filterNyeIDag(nyeIDag)
                         ]
                     }
                 },
@@ -218,7 +275,6 @@ export default function searchTemplate(query) {
             }
         }
     };
-
     if (sort && sort !== 'relevant') {
         template = {
             ...template,

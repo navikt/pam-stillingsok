@@ -4,6 +4,7 @@ import { Knapp } from 'nav-frontend-knapper';
 import Counties from './Counties';
 import HeltidDeltid from './HeltidDeltid';
 import EngagementType from './EngagementType'
+import NyeIDag from './NyeIDag';
 import SearchTypeAhead from './SearchTypeAhead';
 import {
     SEARCH
@@ -43,6 +44,7 @@ export class SearchForm extends React.Component {
                         Hopp til søkeresultat
                     </a>
                 </div>
+                <NyeIDag />
                 <Counties />
                 <HeltidDeltid />
                 <EngagementType />

@@ -51,6 +51,10 @@ export async function fetchSearch(query = {}) {
         engagementTypes: result.aggregations.engagementType.values.buckets.map((item) => ({
             key: item.key,
             count: item.doc_count
+        })),
+        nyeIDag: result.aggregations.nyeIDag.range.buckets.map((item) => ({
+            key: item.key,
+            count: item.doc_count
         }))
     };
 }
