@@ -20,6 +20,7 @@ export const getInitialStateFromUrl = (url) => {
     const municipals = getUrlParameterByName('municipals', url);
     const heltidDeltid = getUrlParameterByName('heltidDeltid', url);
     const engagementType = getUrlParameterByName('engagementType', url);
+    const sektor = getUrlParameterByName('sektor', url);
 
     if (q) stateFromUrl.q = q;
     if (from) stateFromUrl.from = parseInt(from, 10);
@@ -28,6 +29,7 @@ export const getInitialStateFromUrl = (url) => {
     if (municipals) stateFromUrl.municipals = municipals.split('_');
     if (heltidDeltid) stateFromUrl.heltidDeltid = heltidDeltid.split('_');
     if (engagementType) stateFromUrl.engagementType = engagementType.split('_');
+    if (sektor) stateFromUrl.sektor = sektor.split('_');
     return stateFromUrl;
 };
 
@@ -41,6 +43,7 @@ export const createUrlParamsFromState = (state) => {
     if (query.municipals && query.municipals.length > 0) urlQuery.municipals = query.municipals.join('_');
     if (query.heltidDeltid && query.heltidDeltid.length > 0) urlQuery.heltidDeltid = query.heltidDeltid.join('_');
     if (query.engagementType && query.engagementType.length > 0) urlQuery.engagementType = query.engagementType.join('_');
+    if (query.sektor && query.sektor.length > 0) urlQuery.sektor = query.sektor.join('_');
     return toUrlParams(urlQuery);
 };
 
