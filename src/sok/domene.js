@@ -26,6 +26,9 @@ export const FETCH_HELTID_DELTID_COUNT_SUCCESS = 'FETCH_HELTID_DELTID_COUNT_SUCC
 export const FETCH_INITIAL_COUNTIES_SUCCESS = 'FETCH_INITIAL_COUNTIES_SUCCESS';
 export const FETCH_COUNTIES_COUNT_SUCCESS = 'FETCH_COUNTIES_COUNT_SUCCESS';
 
+export const FETCH_INITIAL_SECTOR_SUCCESS = 'FETCH_INITIAL_SECTOR_SUCCESS';
+export const FETCH_SECTOR_COUNT_SUCCESS = 'FETCH_SECTOR_COUNT_SUCCESS';
+
 export const FETCH_INITIAL_CREATED_SUCCESS = 'FETCH_INITIAL_CREATED_SUCCESS';
 export const FETCH_CREATED_COUNT_SUCCESS = 'FETCH_CREATED_COUNT_SUCCESS';
 
@@ -52,6 +55,9 @@ export const UNCHECK_COUNTY = 'UNCHECK_COUNTY';
 export const CHECK_MUNICIPAL = 'CHECK_MUNICIPAL';
 export const UNCHECK_MUNICIPAL = 'UNCHECK_MUNICIPAL';
 
+export const CHECK_SECTOR = 'CHECK_SECTOR';
+export const UNCHECK_SECTOR = 'UNCHECK_SECTOR';
+
 export const CHECK_CREATED = 'CHECK_CREATED';
 export const UNCHECK_CREATED = 'UNCHECK_CREATED';
 
@@ -62,6 +68,7 @@ const initialState = {
     heltidDeltid: [],
     counties: [],
     engagementType: [],
+    sector: [],
     created: [],
     searchResult: {
         total: 0
@@ -74,6 +81,7 @@ const initialState = {
         municipals: [],
         heltidDeltid: [],
         engagementType: [],
+        sector: [],
         created: []
     },
     isSearching: true,
@@ -167,6 +175,24 @@ export default function reducer(state = initialState, action) {
                                 count: newMunicipalCount
                             };
                         })
+                    };
+                })
+            };
+        case FETCH_INITIAL_SECTOR_SUCCESS:
+            return {
+                ...state,
+                sector: action.response
+            };
+        case FETCH_SECTOR_COUNT_SUCCESS:
+            return {
+                ...state,
+                sector: state.sector.map((item) => {
+                    const found = action.response.find((e) => (
+                        e.key === item.key
+                    ));
+                    return {
+                        ...item,
+                        count: found ? found.count : 0
                     };
                 })
             };
@@ -326,6 +352,27 @@ export default function reducer(state = initialState, action) {
                     from: 0
                 }
             };
+        case CHECK_SECTOR:
+            return {
+                ...state,
+                query: {
+                    ...state.query,
+                    sector: [
+                        ...state.query.sector,
+                        action.value
+                    ],
+                    from: 0
+                }
+            };
+        case UNCHECK_SECTOR:
+            return {
+                ...state,
+                query: {
+                    ...state.query,
+                    sector: state.query.sector.filter((e) => (e !== action.value)),
+                    from: 0
+                }
+            };
         case CHECK_CREATED:
             return {
                 ...state,
@@ -388,6 +435,7 @@ function* search() {
         yield put({ type: FETCH_COUNTIES_COUNT_SUCCESS, response: response.counties });
         yield put({ type: FETCH_HELTID_DELTID_COUNT_SUCCESS, response: response.heltidDeltid });
         yield put({ type: FETCH_ENGAGEMENT_TYPE_COUNT_SUCCESS, response: response.engagementTypes });
+        yield put({ type: FETCH_SECTOR_COUNT_SUCCESS, response: response.sector });
         yield put({ type: FETCH_CREATED_COUNT_SUCCESS, response: response.created });
     } catch (e) {
         if (e instanceof SearchApiError) {
@@ -406,6 +454,7 @@ function* loadAvailableFacets(action) {
             yield put({ type: FETCH_INITIAL_COUNTIES_SUCCESS, response: response.counties });
             yield put({ type: FETCH_INITIAL_HELTID_DELTID_SUCCESS, response: response.heltidDeltid });
             yield put({ type: FETCH_INITIAL_ENGAGEMENT_TYPE_SUCCESS, response: response.engagementTypes });
+            yield put({ type: FETCH_INITIAL_SECTOR_SUCCESS, response: response.sector });
             yield put({ type: FETCH_INITIAL_CREATED_SUCCESS, response: response.created });
             yield call(search, action);
         } else {
@@ -414,6 +463,7 @@ function* loadAvailableFacets(action) {
             yield put({ type: FETCH_INITIAL_COUNTIES_SUCCESS, response: response.counties });
             yield put({ type: FETCH_INITIAL_HELTID_DELTID_SUCCESS, response: response.heltidDeltid });
             yield put({ type: FETCH_INITIAL_ENGAGEMENT_TYPE_SUCCESS, response: response.engagementTypes });
+            yield put({ type: FETCH_INITIAL_SECTOR_SUCCESS, response: response.sector });
             yield put({ type: FETCH_INITIAL_CREATED_SUCCESS, response: response.created });
         }
     } catch (e) {

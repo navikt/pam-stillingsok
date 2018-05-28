@@ -80,6 +80,24 @@ export function filterLocation(counties, municipals) {
     return filters;
 }
 
+export function filterSector(sector) {
+    const filters = {
+        bool: {
+            should: []
+        }
+    };
+    if (sector && sector.length > 0) {
+        sector.forEach((item) => {
+            filters.bool.should.push({
+                term: {
+                    sector_facet: item
+                }
+            });
+        });
+    }
+    return filters;
+}
+
 export function filterCreated(created) {
     const filters = {
         bool: {
@@ -99,7 +117,7 @@ export function filterCreated(created) {
 }
 
 export default function searchTemplate(query) {
-    const { from, counties, municipals, heltidDeltid, engagementType, created } = query;
+    const { from, counties, municipals, heltidDeltid, engagementType, sector, created } = query;
     let { sort, q } = query;
 
     /**
@@ -151,6 +169,7 @@ export default function searchTemplate(query) {
                     ...filterHeltidDeltid(heltidDeltid),
                     filterLocation(counties, municipals),
                     filterEngagementType(engagementType),
+                    filterSector(sector),
                     filterCreated(created)
                 ]
             }
@@ -195,6 +214,28 @@ export default function searchTemplate(query) {
                     }
                 }
             },
+            sector: {
+                filter: {
+                    bool: {
+                        filter: [
+                            {
+                                term: {
+                                    status: 'ACTIVE'
+                                }
+                            },
+                            ...filterHeltidDeltid(heltidDeltid),
+                            filterLocation(counties, municipals),
+                            filterEngagementType(engagementType),
+                            filterCreated(created)
+                        ]
+                    }
+                },
+                aggs: {
+                    values: {
+                        terms: {field: 'sector_facet'}
+                    }
+                }
+            },
             heltidDeltid: {
                 filter: {
                     bool: {
@@ -206,6 +247,7 @@ export default function searchTemplate(query) {
                             },
                             filterLocation(counties, municipals),
                             filterEngagementType(engagementType),
+                            filterSector(sector),
                             filterCreated(created)
                         ]
                     }
@@ -227,6 +269,7 @@ export default function searchTemplate(query) {
                             },
                             ...filterHeltidDeltid(heltidDeltid),
                             filterLocation(counties, municipals),
+                            filterSector(sector),
                             filterCreated(created)
                         ]
                     }
@@ -248,6 +291,7 @@ export default function searchTemplate(query) {
                             },
                             ...filterHeltidDeltid(heltidDeltid),
                             filterEngagementType(engagementType),
+                            filterSector(sector),
                             filterCreated(created)
                         ]
                     }
