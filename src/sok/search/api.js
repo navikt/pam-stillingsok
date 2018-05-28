@@ -52,7 +52,7 @@ export async function fetchSearch(query = {}) {
             key: item.key,
             count: item.doc_count
         })),
-        sektor: result.aggregations.sektor.values.buckets.map((item) => ({
+        sector: result.aggregations.sector.values.buckets.map((item) => ({
             key: item.key,
             count: item.doc_count
         }))

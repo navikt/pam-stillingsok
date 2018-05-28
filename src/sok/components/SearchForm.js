@@ -4,7 +4,7 @@ import { Knapp } from 'nav-frontend-knapper';
 import Counties from './Counties';
 import HeltidDeltid from './HeltidDeltid';
 import EngagementType from './EngagementType'
-import Sektor from './Sektor';
+import Sector from './Sector';
 import SearchTypeAhead from './SearchTypeAhead';
 import {
     SEARCH
@@ -47,7 +47,7 @@ export class SearchForm extends React.Component {
                 <Counties />
                 <HeltidDeltid />
                 <EngagementType />
-                <Sektor />
+                <Sector />
             </form>
         );
     }
