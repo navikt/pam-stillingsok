@@ -40,18 +40,16 @@ export class Sector extends React.Component {
                     aria-labelledby="sector-filter-header"
                     className="search-page-filter"
                 >
-                    <div>
-                        {sector && sector.map((item) => (
-                            <Checkbox
-                                name="sector"
-                                key={item.key}
-                                label={`${item.key} (${item.count})`}
-                                value={item.key}
-                                onChange={this.onSectorClick}
-                                checked={checkedSector.includes(item.key)}
-                            />
-                        ))}
-                    </div>
+                    {sector && sector.map((item) => (
+                        <Checkbox
+                            name="sector"
+                            key={item.key}
+                            label={`${item.key} (${item.count})`}
+                            value={item.key}
+                            onChange={this.onSectorClick}
+                            checked={checkedSector.includes(item.key)}
+                        />
+                    ))}
                 </div>
             </Ekspanderbartpanel>
         );
