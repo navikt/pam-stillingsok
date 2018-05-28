@@ -5,6 +5,7 @@ import Counties from './Counties';
 import HeltidDeltid from './HeltidDeltid';
 import EngagementType from './EngagementType'
 import Sector from './Sector';
+import Created from './Created';
 import SearchTypeAhead from './SearchTypeAhead';
 import {
     SEARCH
@@ -44,6 +45,7 @@ export class SearchForm extends React.Component {
                         Hopp til søkeresultat
                     </a>
                 </div>
+                <Created />
                 <Counties />
                 <HeltidDeltid />
                 <EngagementType />

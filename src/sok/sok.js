@@ -21,6 +21,7 @@ export const getInitialStateFromUrl = (url) => {
     const heltidDeltid = getUrlParameterByName('heltidDeltid', url);
     const engagementType = getUrlParameterByName('engagementType', url);
     const sector = getUrlParameterByName('sector', url);
+    const created = getUrlParameterByName('created', url);
 
     if (q) stateFromUrl.q = q;
     if (from) stateFromUrl.from = parseInt(from, 10);
@@ -30,6 +31,7 @@ export const getInitialStateFromUrl = (url) => {
     if (heltidDeltid) stateFromUrl.heltidDeltid = heltidDeltid.split('_');
     if (engagementType) stateFromUrl.engagementType = engagementType.split('_');
     if (sector) stateFromUrl.sector = sector.split('_');
+    if (created) stateFromUrl.created = created.split('_');
     return stateFromUrl;
 };
 
@@ -44,6 +46,7 @@ export const createUrlParamsFromState = (state) => {
     if (query.heltidDeltid && query.heltidDeltid.length > 0) urlQuery.heltidDeltid = query.heltidDeltid.join('_');
     if (query.engagementType && query.engagementType.length > 0) urlQuery.engagementType = query.engagementType.join('_');
     if (query.sector && query.sector.length > 0) urlQuery.sector = query.sector.join('_');
+    if (query.created && query.created.length > 0) urlQuery.created = query.created.join('_');
     return toUrlParams(urlQuery);
 };
 

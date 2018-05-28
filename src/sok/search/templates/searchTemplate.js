@@ -33,7 +33,6 @@ export function filterHeltidDeltid(heltidDeltid) {
     return filters;
 }
 
-
 export function filterEngagementType(engagementTypes) {
     const filters = {
         bool: {
@@ -99,8 +98,26 @@ export function filterSector(sector) {
     return filters;
 }
 
+export function filterCreated(created) {
+    const filters = {
+        bool: {
+            should: []
+        }
+    };
+    if (created && created.length > 0) {
+        filters.bool.should.push({
+            range: {
+                created: {
+                    gte: 'now-1d'
+                }
+            }
+        });
+    }
+    return filters;
+}
+
 export default function searchTemplate(query) {
-    const { from, counties, municipals, heltidDeltid, engagementType, sector } = query;
+    const { from, counties, municipals, heltidDeltid, engagementType, sector, created } = query;
     let { sort, q } = query;
 
     /**
@@ -152,7 +169,8 @@ export default function searchTemplate(query) {
                     ...filterHeltidDeltid(heltidDeltid),
                     filterLocation(counties, municipals),
                     filterEngagementType(engagementType),
-                    filterSector(sector)
+                    filterSector(sector),
+                    filterCreated(created)
                 ]
             }
         },
@@ -167,7 +185,7 @@ export default function searchTemplate(query) {
             ]
         },
         aggs: {
-            sector: {
+            created: {
                 filter: {
                     bool: {
                         filter: [
@@ -179,6 +197,36 @@ export default function searchTemplate(query) {
                             ...filterHeltidDeltid(heltidDeltid),
                             filterLocation(counties, municipals),
                             filterEngagementType(engagementType)
+                        ]
+                    }
+                },
+                aggs: {
+                    range: {
+                        date_range: {
+                            field: 'created',
+                            ranges: [
+                                {
+                                    key: 'now-1d',
+                                    from: 'now-1d'
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
+            sector: {
+                filter: {
+                    bool: {
+                        filter: [
+                            {
+                                term: {
+                                    status: 'ACTIVE'
+                                }
+                            },
+                            ...filterHeltidDeltid(heltidDeltid),
+                            filterLocation(counties, municipals),
+                            filterEngagementType(engagementType),
+                            filterCreated(created)
                         ]
                     }
                 },
@@ -199,7 +247,8 @@ export default function searchTemplate(query) {
                             },
                             filterLocation(counties, municipals),
                             filterEngagementType(engagementType),
-                            filterSector(sector)
+                            filterSector(sector),
+                            filterCreated(created)
                         ]
                     }
                 },
@@ -220,7 +269,8 @@ export default function searchTemplate(query) {
                             },
                             ...filterHeltidDeltid(heltidDeltid),
                             filterLocation(counties, municipals),
-                            filterSector(sector)
+                            filterSector(sector),
+                            filterCreated(created)
                         ]
                     }
                 },
@@ -241,7 +291,8 @@ export default function searchTemplate(query) {
                             },
                             ...filterHeltidDeltid(heltidDeltid),
                             filterEngagementType(engagementType),
-                            filterSector(sector)
+                            filterSector(sector),
+                            filterCreated(created)
                         ]
                     }
                 },
