@@ -196,7 +196,8 @@ export default function searchTemplate(query) {
                             },
                             ...filterHeltidDeltid(heltidDeltid),
                             filterLocation(counties, municipals),
-                            filterEngagementType(engagementType)
+                            filterEngagementType(engagementType),
+                            filterSector(sector)
                         ]
                     }
                 },
