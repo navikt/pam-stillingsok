@@ -80,13 +80,13 @@ export function filterLocation(counties, municipals) {
     return filters;
 }
 
-export function filterNyeIDag(nyeIDag) {
+export function filterCreated(created) {
     const filters = {
         bool: {
             should: []
         }
     };
-    if (nyeIDag && nyeIDag.length > 0) {
+    if (created && created.length > 0) {
         filters.bool.should.push({
             range: {
                 created: {
@@ -99,7 +99,7 @@ export function filterNyeIDag(nyeIDag) {
 }
 
 export default function searchTemplate(query) {
-    const { from, counties, municipals, heltidDeltid, engagementType, nyeIDag } = query;
+    const { from, counties, municipals, heltidDeltid, engagementType, created } = query;
     let { sort, q } = query;
 
     /**
@@ -151,7 +151,7 @@ export default function searchTemplate(query) {
                     ...filterHeltidDeltid(heltidDeltid),
                     filterLocation(counties, municipals),
                     filterEngagementType(engagementType),
-                    filterNyeIDag(nyeIDag)
+                    filterCreated(created)
                 ]
             }
         },
@@ -166,7 +166,7 @@ export default function searchTemplate(query) {
             ]
         },
         aggs: {
-            nyeIDag: {
+            created: {
                 filter: {
                     bool: {
                         filter: [
@@ -177,14 +177,7 @@ export default function searchTemplate(query) {
                             },
                             ...filterHeltidDeltid(heltidDeltid),
                             filterLocation(counties, municipals),
-                            filterEngagementType(engagementType),
-                            {
-                                range: {
-                                    created: {
-                                        gte: 'now-1d'
-                                    }
-                                }
-                            },
+                            filterEngagementType(engagementType)
                         ]
                     }
                 },
@@ -194,7 +187,7 @@ export default function searchTemplate(query) {
                             field: 'created',
                             ranges: [
                                 {
-                                    key: 'Nye i dag',
+                                    key: 'now-1d',
                                     from: 'now-1d'
                                 }
                             ]
@@ -213,7 +206,7 @@ export default function searchTemplate(query) {
                             },
                             filterLocation(counties, municipals),
                             filterEngagementType(engagementType),
-                            filterNyeIDag(nyeIDag)
+                            filterCreated(created)
                         ]
                     }
                 },
@@ -234,7 +227,7 @@ export default function searchTemplate(query) {
                             },
                             ...filterHeltidDeltid(heltidDeltid),
                             filterLocation(counties, municipals),
-                            filterNyeIDag(nyeIDag)
+                            filterCreated(created)
                         ]
                     }
                 },
@@ -255,7 +248,7 @@ export default function searchTemplate(query) {
                             },
                             ...filterHeltidDeltid(heltidDeltid),
                             filterEngagementType(engagementType),
-                            filterNyeIDag(nyeIDag)
+                            filterCreated(created)
                         ]
                     }
                 },

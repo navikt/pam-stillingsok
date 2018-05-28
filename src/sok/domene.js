@@ -26,8 +26,8 @@ export const FETCH_HELTID_DELTID_COUNT_SUCCESS = 'FETCH_HELTID_DELTID_COUNT_SUCC
 export const FETCH_INITIAL_COUNTIES_SUCCESS = 'FETCH_INITIAL_COUNTIES_SUCCESS';
 export const FETCH_COUNTIES_COUNT_SUCCESS = 'FETCH_COUNTIES_COUNT_SUCCESS';
 
-export const FETCH_INITIAL_NYE_I_DAG_SUCCESS = 'FETCH_INITIAL_NYE_I_DAG_SUCCESS';
-export const FETCH_NYE_I_DAG_COUNT_SUCCESS = 'FETCH_NYE_I_DAG_COUNT_SUCCESS';
+export const FETCH_INITIAL_CREATED_SUCCESS = 'FETCH_INITIAL_CREATED_SUCCESS';
+export const FETCH_CREATED_COUNT_SUCCESS = 'FETCH_CREATED_COUNT_SUCCESS';
 
 export const SET_TYPE_AHEAD_VALUE = 'SET_TYPE_AHEAD_VALUE';
 export const SELECT_TYPE_AHEAD_VALUE = 'SELECT_TYPE_AHEAD_TOKEN';
@@ -52,8 +52,8 @@ export const UNCHECK_COUNTY = 'UNCHECK_COUNTY';
 export const CHECK_MUNICIPAL = 'CHECK_MUNICIPAL';
 export const UNCHECK_MUNICIPAL = 'UNCHECK_MUNICIPAL';
 
-export const CHECK_NYE_I_DAG = 'CHECK_NYE_I_DAG';
-export const UNCHECK_NYE_I_DAG = 'UNCHECK_NYE_I_DAG';
+export const CHECK_CREATED = 'CHECK_CREATED';
+export const UNCHECK_CREATED = 'UNCHECK_CREATED';
 
 /** *********************************************************
  * REDUCER
@@ -62,7 +62,7 @@ const initialState = {
     heltidDeltid: [],
     counties: [],
     engagementType: [],
-    nyeIDag: [],
+    created: [],
     searchResult: {
         total: 0
     },
@@ -74,7 +74,7 @@ const initialState = {
         municipals: [],
         heltidDeltid: [],
         engagementType: [],
-        nyeIDag: []
+        created: []
     },
     isSearching: true,
     isAtLeastOneSearchDone: false,
@@ -170,15 +170,15 @@ export default function reducer(state = initialState, action) {
                     };
                 })
             };
-        case FETCH_INITIAL_NYE_I_DAG_SUCCESS:
+        case FETCH_INITIAL_CREATED_SUCCESS:
             return {
                 ...state,
-                nyeIDag: action.response
+                created: action.response
             };
-        case FETCH_NYE_I_DAG_COUNT_SUCCESS:
+        case FETCH_CREATED_COUNT_SUCCESS:
             return {
                 ...state,
-                nyeIDag: state.nyeIDag.map((item) => {
+                created: state.created.map((item) => {
                     const found = action.response.find((e) => (
                         e.key === item.key
                     ));
@@ -326,24 +326,24 @@ export default function reducer(state = initialState, action) {
                     from: 0
                 }
             };
-        case CHECK_NYE_I_DAG:
+        case CHECK_CREATED:
             return {
                 ...state,
                 query: {
                     ...state.query,
-                    nyeIDag: [
-                        ...state.query.nyeIDag,
+                    created: [
+                        ...state.query.created,
                         action.value
                     ],
                     from: 0
                 }
             };
-        case UNCHECK_NYE_I_DAG:
+        case UNCHECK_CREATED:
             return {
                 ...state,
                 query: {
                     ...state.query,
-                    nyeIDag: state.query.nyeIDag.filter((e) => (e !== action.value)),
+                    created: state.query.created.filter((e) => (e !== action.value)),
                     from: 0
                 }
             };
@@ -388,7 +388,7 @@ function* search() {
         yield put({ type: FETCH_COUNTIES_COUNT_SUCCESS, response: response.counties });
         yield put({ type: FETCH_HELTID_DELTID_COUNT_SUCCESS, response: response.heltidDeltid });
         yield put({ type: FETCH_ENGAGEMENT_TYPE_COUNT_SUCCESS, response: response.engagementTypes });
-        yield put({ type: FETCH_NYE_I_DAG_COUNT_SUCCESS, response: response.nyeIDag });
+        yield put({ type: FETCH_CREATED_COUNT_SUCCESS, response: response.created });
     } catch (e) {
         if (e instanceof SearchApiError) {
             yield put({ type: SEARCH_FAILURE, error: e });
@@ -406,7 +406,7 @@ function* loadAvailableFacets(action) {
             yield put({ type: FETCH_INITIAL_COUNTIES_SUCCESS, response: response.counties });
             yield put({ type: FETCH_INITIAL_HELTID_DELTID_SUCCESS, response: response.heltidDeltid });
             yield put({ type: FETCH_INITIAL_ENGAGEMENT_TYPE_SUCCESS, response: response.engagementTypes });
-            yield put({ type: FETCH_INITIAL_NYE_I_DAG_SUCCESS, response: response.nyeIDag });
+            yield put({ type: FETCH_INITIAL_CREATED_SUCCESS, response: response.created });
             yield call(search, action);
         } else {
             const response = yield call(fetchSearch);
@@ -414,7 +414,7 @@ function* loadAvailableFacets(action) {
             yield put({ type: FETCH_INITIAL_COUNTIES_SUCCESS, response: response.counties });
             yield put({ type: FETCH_INITIAL_HELTID_DELTID_SUCCESS, response: response.heltidDeltid });
             yield put({ type: FETCH_INITIAL_ENGAGEMENT_TYPE_SUCCESS, response: response.engagementTypes });
-            yield put({ type: FETCH_INITIAL_NYE_I_DAG_SUCCESS, response: response.nyeIDag });
+            yield put({ type: FETCH_INITIAL_CREATED_SUCCESS, response: response.created });
         }
     } catch (e) {
         if (e instanceof SearchApiError) {
