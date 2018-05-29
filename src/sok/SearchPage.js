@@ -12,12 +12,14 @@ import {
     INITIAL_SEARCH,
     SEARCH
 } from "./domene";
+import { getInitialStateFromUrl } from "./sok";
 
 class SearchPage extends React.Component {
 
     constructor(props) {
         super(props);
-        this.props.initialSearch(props.urlParams);
+        const query = getInitialStateFromUrl(window.location.href);
+        this.props.initialSearch(query);
     }
 
     scrollToTopOfResultList = () => {

@@ -8,7 +8,7 @@ import {
 /** *********************************************************
  * ACTIONS
  ********************************************************* */
-
+export const INITIAL_SEARCH_DONE = 'INITIAL_SEARCH_DONE';
 export const SEARCH = 'SEARCH';
 export const SEARCH_BEGIN = 'SEARCH_BEGIN';
 export const SEARCH_SUCCESS = 'SEARCH_SUCCESS';
@@ -84,6 +84,7 @@ const initialState = {
         sector: [],
         created: []
     },
+    initialSearchDone: false,
     isSearching: true,
     isAtLeastOneSearchDone: false,
     typeAheadSuggestions: [],
@@ -93,6 +94,11 @@ const initialState = {
 
 export default function reducer(state = initialState, action) {
     switch (action.type) {
+        case INITIAL_SEARCH_DONE:
+            return {
+                ...state,
+                initialSearchDone: true
+            };
         case SEARCH_BEGIN:
             return {
                 ...state,
@@ -446,31 +452,35 @@ function* search() {
     }
 }
 
-function* loadAvailableFacets(action) {
-    try {
-        if (Object.keys(action.query).length > 0) {
-            yield put({ type: SET_INITIAL_STATE, query: action.query });
-            const response = yield call(fetchSearch);
-            yield put({ type: FETCH_INITIAL_COUNTIES_SUCCESS, response: response.counties });
-            yield put({ type: FETCH_INITIAL_HELTID_DELTID_SUCCESS, response: response.heltidDeltid });
-            yield put({ type: FETCH_INITIAL_ENGAGEMENT_TYPE_SUCCESS, response: response.engagementTypes });
-            yield put({ type: FETCH_INITIAL_SECTOR_SUCCESS, response: response.sector });
-            yield put({ type: FETCH_INITIAL_CREATED_SUCCESS, response: response.created });
-            yield call(search, action);
-        } else {
-            const response = yield call(fetchSearch);
-            yield put({ type: SEARCH_SUCCESS, response });
-            yield put({ type: FETCH_INITIAL_COUNTIES_SUCCESS, response: response.counties });
-            yield put({ type: FETCH_INITIAL_HELTID_DELTID_SUCCESS, response: response.heltidDeltid });
-            yield put({ type: FETCH_INITIAL_ENGAGEMENT_TYPE_SUCCESS, response: response.engagementTypes });
-            yield put({ type: FETCH_INITIAL_SECTOR_SUCCESS, response: response.sector });
-            yield put({ type: FETCH_INITIAL_CREATED_SUCCESS, response: response.created });
-        }
-    } catch (e) {
-        if (e instanceof SearchApiError) {
-            yield put({ type: SEARCH_FAILURE, error: e });
-        } else {
-            throw e;
+function* initialSearch(action) {
+    const state = yield select();
+    if (!state.initialSearchDone) {
+        try {
+            if (Object.keys(action.query).length > 0) {
+                yield put({ type: SET_INITIAL_STATE, query: action.query });
+                const response = yield call(fetchSearch);
+                yield put({ type: FETCH_INITIAL_COUNTIES_SUCCESS, response: response.counties });
+                yield put({ type: FETCH_INITIAL_HELTID_DELTID_SUCCESS, response: response.heltidDeltid });
+                yield put({ type: FETCH_INITIAL_ENGAGEMENT_TYPE_SUCCESS, response: response.engagementTypes });
+                yield put({ type: FETCH_INITIAL_SECTOR_SUCCESS, response: response.sector });
+                yield put({ type: FETCH_INITIAL_CREATED_SUCCESS, response: response.created });
+                yield call(search, action);
+            } else {
+                const response = yield call(fetchSearch);
+                yield put({ type: SEARCH_SUCCESS, response });
+                yield put({ type: FETCH_INITIAL_COUNTIES_SUCCESS, response: response.counties });
+                yield put({ type: FETCH_INITIAL_HELTID_DELTID_SUCCESS, response: response.heltidDeltid });
+                yield put({ type: FETCH_INITIAL_ENGAGEMENT_TYPE_SUCCESS, response: response.engagementTypes });
+                yield put({ type: FETCH_INITIAL_SECTOR_SUCCESS, response: response.sector });
+                yield put({ type: FETCH_INITIAL_CREATED_SUCCESS, response: response.created });
+            }
+            yield put({ type: INITIAL_SEARCH_DONE });
+        } catch (e) {
+            if (e instanceof SearchApiError) {
+                yield put({ type: SEARCH_FAILURE, error: e });
+            } else {
+                throw e;
+            }
         }
     }
 }
@@ -509,6 +519,6 @@ function* fetchTypeAheadSuggestions() {
 
 export const saga = function* saga() {
     yield takeLatest(SEARCH, search);
-    yield takeLatest(INITIAL_SEARCH, loadAvailableFacets);
+    yield takeLatest(INITIAL_SEARCH, initialSearch);
     yield takeLatest(FETCH_TYPE_AHEAD_SUGGESTIONS, fetchTypeAheadSuggestions);
 };

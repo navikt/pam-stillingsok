@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Row, Column } from 'nav-frontend-grid';
 import { Normaltekst, Element } from 'nav-frontend-typografi';
 import { formatISOString } from '../../date';
@@ -17,9 +18,9 @@ function keepScrollPosition() {
 export default function SearchResultItem(props) {
     const { stilling } = props;
     return (
-        <a
+        <Link
             className="search-result-item-link"
-            href={`${STILLING}${stilling.uuid}`}
+            to={`${STILLING}${stilling.uuid}`}
             aria-label={`${stilling.title} hos ${stilling.properties.employer}`}
             onClick={keepScrollPosition}
         >
@@ -51,7 +52,7 @@ export default function SearchResultItem(props) {
                     ) }
                 </Column>
             </Row>
-        </a>
+        </Link>
     );
 }
 

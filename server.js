@@ -73,22 +73,6 @@ const renderSok = (htmlPages) => (
     })
 );
 
-const renderStilling = (htmlPages) => (
-    new Promise((resolve, reject) => {
-        server.render(
-            'stilling.html',
-            fasitProperties,
-            (err, html) => {
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve(Object.assign({"stilling": html}, htmlPages));
-                }
-            }
-        );
-    })
-);
-
 const startServer = (htmlPages) => {
     writeEnvironmentVariablesToFile();
 
@@ -104,13 +88,6 @@ const startServer = (htmlPages) => {
     server.use(
         '/pam-stillingsok/css',
         express.static(path.resolve(__dirname, 'dist/css'))
-    );
-
-    server.get(
-        /^\/pam-stillingsok\/stilling\/.*$/,
-        (req, res) => {
-            res.send(htmlPages["stilling"]);
-        }
     );
 
     server.get(
@@ -131,5 +108,4 @@ const startServer = (htmlPages) => {
 const logError = (errorMessage, details) => console.log(errorMessage, details);
 
 renderSok({})
-    .then(renderStilling, (error) => logError('Failed to render app', error))
     .then(startServer, (error) => logError('Failed to render app', error));
