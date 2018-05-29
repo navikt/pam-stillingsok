@@ -5,7 +5,7 @@ import {
     SEARCH,
     CHECK_CREATED,
     UNCHECK_CREATED,
-} from "../domene";
+} from "../../domene";
 
 export class Created extends React.Component {
 

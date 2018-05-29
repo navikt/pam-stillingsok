@@ -4,7 +4,7 @@ import { Select } from 'nav-frontend-skjema';
 import {
     SEARCH,
     SET_SORTING
-} from "../domene";
+} from "../../domene";
 
 export class SearchResultSorting extends React.Component {
 

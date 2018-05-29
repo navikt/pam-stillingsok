@@ -6,7 +6,7 @@ import {
     SEARCH,
     CHECK_SECTOR,
     UNCHECK_SECTOR,
-} from "../domene";
+} from "../../domene";
 
 export class Sector extends React.Component {
 

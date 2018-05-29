@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Undertittel, Element } from 'nav-frontend-typografi';
-import { formatISOString, isValidISOString } from '../../date';
+import { formatISOString, isValidISOString } from '../../../date';
 import { tilpassLenke, tilpassTwitterAdresse } from '../utils';
 import ReactHtmlParser from 'react-html-parser';
 

@@ -1,4 +1,4 @@
-import { SEARCH_API } from '../common/fasitProperties';
+import { SEARCH_API } from '../../common/fasitProperties';
 
 const filteredSource = {
     excludes: [

@@ -5,7 +5,7 @@ import {
     SET_TYPE_AHEAD_VALUE,
     SELECT_TYPE_AHEAD_VALUE,
     FETCH_TYPE_AHEAD_SUGGESTIONS
-} from "../domene";
+} from "../../domene";
 import Typeahead from './Typeahead';
 
 export class SearchTypeAhead extends React.Component {

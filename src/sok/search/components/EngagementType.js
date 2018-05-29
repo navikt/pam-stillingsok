@@ -6,7 +6,7 @@ import {
     SEARCH,
     CHECK_ENGAGEMENT_TYPE,
     UNCHECK_ENGAGEMENT_TYPE,
-} from "../domene";
+} from "../../domene";
 
 export class EngagementType extends React.Component {
 
