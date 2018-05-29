@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { Row, Column } from 'nav-frontend-grid';
 import { Normaltekst, Element } from 'nav-frontend-typografi';
 import { formatISOString } from '../../date';

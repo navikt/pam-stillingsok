@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { browserHistory, IndexRoute, Route, Router } from 'react-router';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { applyMiddleware, createStore } from 'redux';
 import { Provider } from 'react-redux';
@@ -70,21 +70,14 @@ store.subscribe(() => {
 
 sagaMiddleware.run(saga);
 
-
-function App(props) {
-    return (
-        props.children
-    );
-}
-
 ReactDOM.render(
     <Provider store={store}>
-        <Router history={browserHistory}>
-            <Route path="/" component={App}>
-                <IndexRoute component={SearchPage} />
+        <BrowserRouter>
+            <Switch>
+                <Route exact path="/" component={SearchPage} />
                 <Route path="/stilling/:uuid" component={StillingPage} />
-            </Route>
-        </Router>
+            </Switch>
+        </BrowserRouter>
     </Provider>,
     document.getElementById('app')
 );
