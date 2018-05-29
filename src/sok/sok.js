@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { browserHistory, IndexRoute, Route, Router } from 'react-router';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { applyMiddleware, createStore } from 'redux';
 import { Provider } from 'react-redux';
@@ -7,6 +8,7 @@ import createSagaMiddleware from 'redux-saga';
 import searchReducer, { saga } from './domene';
 import { getUrlParameterByName, toUrlParams } from './utils';
 import SearchPage from './SearchPage';
+import StillingPage from '../stilling/StillingPage';
 import './../styles.less';
 import './../colorTheme.less';
 import './sok.less';
@@ -68,9 +70,21 @@ store.subscribe(() => {
 
 sagaMiddleware.run(saga);
 
+
+function App(props) {
+    return (
+        props.children
+    );
+}
+
 ReactDOM.render(
     <Provider store={store}>
-        <SearchPage urlParams={getInitialStateFromUrl(window.location.href)} />
+        <Router history={browserHistory}>
+            <Route path="/" component={App}>
+                <IndexRoute component={SearchPage} />
+                <Route path="/stilling/:uuid" component={StillingPage} />
+            </Route>
+        </Router>
     </Provider>,
     document.getElementById('app')
 );

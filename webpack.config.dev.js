@@ -6,10 +6,7 @@ module.exports = merge(common, {
     devtool: 'inline-source-map',
     devServer: {
         historyApiFallback: {
-            index: './viewsDev/index.html',
-            rewrites: [
-                {from: /^\/stilling/, to: './viewsDev/stilling.html'}
-            ]
+            index: './viewsDev/index.html'
         }
     },
     plugins: [

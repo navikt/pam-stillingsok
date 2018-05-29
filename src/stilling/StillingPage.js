@@ -2,6 +2,7 @@ import React from 'react';
 import { Container } from 'nav-frontend-grid';
 import Stilling from './components/Stilling';
 import { fetchStilling } from './api';
+import './stilling.less';
 
 export default class StillingPage extends React.Component {
     constructor(props) {
