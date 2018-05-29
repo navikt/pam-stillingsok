@@ -6,7 +6,7 @@ import {
     SEARCH,
     CHECK_SECTOR,
     UNCHECK_SECTOR,
-} from "../domene";
+} from "../../domene";
 
 export class Sector extends React.Component {
 
@@ -57,8 +57,8 @@ export class Sector extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-    sector: state.sector,
-    checkedSector: state.query.sector
+    sector: state.search.sector,
+    checkedSector: state.search.query.sector
 });
 
 const mapDispatchToProps = (dispatch) => ({

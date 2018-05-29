@@ -1,17 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import { applyMiddleware, createStore } from 'redux';
+import { applyMiddleware, createStore, combineReducers  } from 'redux';
 import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
 import searchReducer, { saga } from './domene';
+import counties from './facets/counties/counties-redux';
 import { getUrlParameterByName, toUrlParams } from './utils';
 import SearchPage from './SearchPage';
-import StillingPage from '../stilling/StillingPage';
-import './../styles.less';
-import './../colorTheme.less';
-import './sok.less';
+import StillingPage from './stilling/StillingPage';
+import './styles.less';
+import './colorTheme.less';
 
 export const getInitialStateFromUrl = (url) => {
     const stateFromUrl = {};
@@ -38,13 +37,13 @@ export const getInitialStateFromUrl = (url) => {
 };
 
 export const createUrlParamsFromState = (state) => {
-    const { query } = state;
+    const { query } = state.search;
     const urlQuery = {};
     if (query.q) urlQuery.q = query.q;
     if (query.sort) urlQuery.sort = query.sort;
     if (query.from) urlQuery.from = query.from;
-    if (query.counties && query.counties.length > 0) urlQuery.counties = query.counties.join('_');
-    if (query.municipals && query.municipals.length > 0) urlQuery.municipals = query.municipals.join('_');
+    if (state.counties.checkedCounties.length > 0) urlQuery.counties = state.counties.checkedCounties.join('_');
+    if (state.counties.checkedMunicipals.length > 0) urlQuery.municipals = state.counties.checkedMunicipals.join('_');
     if (query.heltidDeltid && query.heltidDeltid.length > 0) urlQuery.heltidDeltid = query.heltidDeltid.join('_');
     if (query.engagementType && query.engagementType.length > 0) urlQuery.engagementType = query.engagementType.join('_');
     if (query.sector && query.sector.length > 0) urlQuery.sector = query.sector.join('_');
@@ -53,12 +52,14 @@ export const createUrlParamsFromState = (state) => {
 };
 
 const sagaMiddleware = createSagaMiddleware();
-const store = createStore(searchReducer, composeWithDevTools(
-    applyMiddleware(sagaMiddleware)));
+const store = createStore(combineReducers({
+    search: searchReducer,
+    counties
+}), applyMiddleware(sagaMiddleware));
 
 
 store.subscribe(() => {
-    if (store.getState().isSearching) {
+    if (store.getState().search.isSearching) {
         const urlParams = createUrlParamsFromState(store.getState());
         if (urlParams && urlParams.length > 0) {
             window.history.replaceState('', '', `?${urlParams}`);

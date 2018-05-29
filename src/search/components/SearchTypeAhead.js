@@ -5,7 +5,7 @@ import {
     SET_TYPE_AHEAD_VALUE,
     SELECT_TYPE_AHEAD_VALUE,
     FETCH_TYPE_AHEAD_SUGGESTIONS
-} from "../domene";
+} from "../../domene";
 import Typeahead from './Typeahead';
 
 export class SearchTypeAhead extends React.Component {
@@ -40,8 +40,8 @@ export class SearchTypeAhead extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-    value: state.query.q,
-    suggestions: state.typeAheadSuggestions
+    value: state.search.query.q,
+    suggestions: state.search.typeAheadSuggestions
 });
 
 const mapDispatchToProps = (dispatch) => ({

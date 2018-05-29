@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Knapp } from 'nav-frontend-knapper';
-import Counties from './Counties';
+import Counties from '../../facets/counties/Counties';
 import HeltidDeltid from './HeltidDeltid';
 import EngagementType from './EngagementType'
 import Sector from './Sector';
@@ -9,7 +9,7 @@ import Created from './Created';
 import SearchTypeAhead from './SearchTypeAhead';
 import {
     SEARCH
-} from "../domene";
+} from "../../domene";
 
 export class SearchForm extends React.Component {
 

@@ -19,7 +19,7 @@ export function SearchResultError({ error }) {
 }
 
 const mapStateToProps = (state) => ({
-    error: state.error
+    error: state.search.error
 });
 
 export default connect(mapStateToProps)(SearchResultError);

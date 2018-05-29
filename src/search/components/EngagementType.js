@@ -6,7 +6,7 @@ import {
     SEARCH,
     CHECK_ENGAGEMENT_TYPE,
     UNCHECK_ENGAGEMENT_TYPE,
-} from "../domene";
+} from "../../domene";
 
 export class EngagementType extends React.Component {
 
@@ -59,8 +59,8 @@ export class EngagementType extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-    engagementType: state.engagementType,
-    checkedEngagementType: state.query.engagementType
+    engagementType: state.search.engagementType,
+    checkedEngagementType: state.search.query.engagementType
 });
 
 const mapDispatchToProps = (dispatch) => ({

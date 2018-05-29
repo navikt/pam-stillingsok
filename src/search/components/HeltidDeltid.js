@@ -6,7 +6,7 @@ import {
     SEARCH,
     CHECK_HELTID_DELTID,
     UNCHECK_HELTID_DELTID,
-} from "../domene";
+} from "../../domene";
 
 export class HeltidDeltid extends React.Component {
 
@@ -59,8 +59,8 @@ export class HeltidDeltid extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-    heltidDeltid: state.heltidDeltid,
-    checkedHeltidDeltid: state.query.heltidDeltid
+    heltidDeltid: state.search.heltidDeltid,
+    checkedHeltidDeltid: state.search.query.heltidDeltid
 });
 
 const mapDispatchToProps = (dispatch) => ({
