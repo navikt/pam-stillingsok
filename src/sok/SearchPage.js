@@ -75,9 +75,9 @@ class SearchPage extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-    isSearching: state.isSearching,
-    searchResultTotal: state.searchResult.total,
-    error: state.error
+    isSearching: state.search.isSearching,
+    searchResultTotal: state.search.searchResult.total,
+    error: state.search.error
 });
 
 const mapDispatchToProps = (dispatch) => ({

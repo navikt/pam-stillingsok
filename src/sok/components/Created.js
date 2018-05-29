@@ -41,8 +41,8 @@ export class Created extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-    created: state.created,
-    checkedCreated: state.query.created
+    created: state.search.created,
+    checkedCreated: state.search.query.created
 });
 
 const mapDispatchToProps = (dispatch) => ({

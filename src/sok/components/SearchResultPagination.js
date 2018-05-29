@@ -44,8 +44,8 @@ export class SearchResultPagination extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-    from: state.query.from,
-    total: state.searchResult.total
+    from: state.search.query.from,
+    total: state.search.searchResult.total
 });
 
 const mapDispatchToProps = (dispatch) => ({
