@@ -2,9 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Row, Column } from 'nav-frontend-grid';
 import { Normaltekst, Element } from 'nav-frontend-typografi';
-import { formatISOString } from '../../../date';
+import { formatISOString } from '../../date';
 import StillingPropTypes from '../propstypes/StillingPropTypes';
-import { STILLING } from "../../../common/fasitProperties";
+import { STILLING } from '../../fasitProperties';
 
 function keepScrollPosition() {
     const top = window.pageYOffset || document.documentElement.scrollTop;

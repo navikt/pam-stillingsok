@@ -9,9 +9,8 @@ import counties from './facets/counties/counties-redux';
 import { getUrlParameterByName, toUrlParams } from './utils';
 import SearchPage from './SearchPage';
 import StillingPage from './stilling/StillingPage';
-import './../styles.less';
-import './../colorTheme.less';
-import './sok.less';
+import './styles.less';
+import './colorTheme.less';
 
 export const getInitialStateFromUrl = (url) => {
     const stateFromUrl = {};
