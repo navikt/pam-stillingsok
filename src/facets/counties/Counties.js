@@ -33,17 +33,21 @@ export class Counties extends React.Component {
         this.props.search();
     };
 
+    static renderTitleWithCount(title, count) {
+        if (count === 1) {
+            return `${title} (1 valgt)`;
+        } else if (count > 1) {
+            return `${title} (${count} valgte)`;
+        } else {
+            return title;
+        }
+    }
+
     render() {
         const { counties, checkedCounties, checkedMunicipals } = this.props;
-        let title = 'Fylke/kommune';
-        if ((checkedCounties.length + checkedMunicipals.length) === 1) {
-            title += ' (1 valgt)';
-        } else if ((checkedCounties.length + checkedMunicipals.length) > 1) {
-            title += ` (${checkedCounties.length + checkedMunicipals.length} valgte)`;
-        }
         return (
             <Ekspanderbartpanel
-                tittel={title}
+                tittel={Counties.renderTitleWithCount('Fylke/kommune', checkedCounties.length + checkedMunicipals.length)}
                 tittelProps="element"
                 className="Counties"
                 apen
