@@ -1,9 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Container, Row, Column } from 'nav-frontend-grid';
 import { Panel } from 'nav-frontend-paneler';
 import { Sidetittel } from 'nav-frontend-typografi';
 import StillingsBoks from './StillingsBoks';
-import StillingPropTypes from '../proptypes/StillingPropTypes';
 import Details from './Details';
 import ReactHtmlParser from 'react-html-parser';
 
@@ -59,5 +59,12 @@ export default function Stilling({ stilling }) {
 }
 
 Stilling.propTypes = {
-    stilling: StillingPropTypes.isRequired
+    stilling: PropTypes.shape({
+        arbeidsgiver: PropTypes.string,
+        tittel: PropTypes.string,
+        stillingUrl: PropTypes.string,
+        registreringsdato: PropTypes.string,
+        soknadsfrist: PropTypes.string,
+        sted: PropTypes.string
+    }).isRequired
 };
