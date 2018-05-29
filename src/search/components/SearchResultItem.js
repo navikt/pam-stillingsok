@@ -1,9 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Row, Column } from 'nav-frontend-grid';
 import { Normaltekst, Element } from 'nav-frontend-typografi';
 import { formatISOString } from '../../utils';
-import StillingPropTypes from '../propstypes/StillingPropTypes';
 import { STILLING } from '../../fasitProperties';
 
 function keepScrollPosition() {
@@ -57,5 +57,14 @@ export default function SearchResultItem(props) {
 }
 
 SearchResultItem.propTypes = {
-    stilling: StillingPropTypes.isRequired
+    stilling: PropTypes.shape({
+        uuid: PropTypes.string,
+        title: PropTypes.string,
+        properties: PropTypes.shape({
+            updated: PropTypes.string,
+            jobtitle: PropTypes.string,
+            employer: PropTypes.string,
+            location: PropTypes.string
+        })
+    })
 };

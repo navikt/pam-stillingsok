@@ -6,7 +6,7 @@ import {
     SEARCH,
     INCREASE_PAGINATION_FROM,
     DECREASE_PAGINATION_FROM,
-} from "../../domene";
+} from "../search-redux";
 
 export class SearchResultPagination extends React.Component {
 

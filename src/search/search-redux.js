@@ -3,7 +3,7 @@ import {
     SearchApiError,
     fetchSearch,
     fetchTypeaheadSuggestions
-} from './search/api';
+} from './api/api';
 
 /** *********************************************************
  * ACTIONS

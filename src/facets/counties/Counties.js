@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Checkbox } from 'nav-frontend-skjema';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
-import { SEARCH } from '../../domene';
+import { SEARCH } from '../../search/search-redux';
 import {
     CHECK_COUNTY,
     UNCHECK_COUNTY,

@@ -9,7 +9,7 @@ import Created from './Created';
 import SearchTypeAhead from './SearchTypeAhead';
 import {
     SEARCH
-} from "../../domene";
+} from "../search-redux";
 
 export class SearchForm extends React.Component {
 

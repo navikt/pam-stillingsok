@@ -6,7 +6,7 @@ import {
     SEARCH,
     CHECK_HELTID_DELTID,
     UNCHECK_HELTID_DELTID,
-} from "../../domene";
+} from "../search-redux";
 
 export class HeltidDeltid extends React.Component {
 

@@ -5,7 +5,7 @@ import {
     SEARCH,
     CHECK_CREATED,
     UNCHECK_CREATED,
-} from "../../domene";
+} from "../search-redux";
 
 export class Created extends React.Component {
 

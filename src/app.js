@@ -4,13 +4,13 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { applyMiddleware, createStore, combineReducers  } from 'redux';
 import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
-import searchReducer, { saga } from './domene';
+import searchReducer, { saga } from './search/search-redux';
 import counties from './facets/counties/counties-redux';
 import { getUrlParameterByName, toUrlParams } from './utils';
-import SearchPage from './SearchPage';
+import SearchPage from './search/components/SearchPage';
 import StillingPage from './stilling/StillingPage';
 import './styles.less';
-import './colorTheme.less';
+import './variables.less';
 
 export const getInitialStateFromUrl = (url) => {
     const stateFromUrl = {};

@@ -1,18 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Container, Row, Column } from 'nav-frontend-grid';
-import SearchResultCount from './search/components/SearchResultCount';
-import SearchResultList from './search/components/SearchResultList';
-import SearchResultError from './search/components/SearchResultError';
-import SearchResultPagination from './search/components/SearchResultPagination';
-import SearchResultSorting from './search/components/SearchResultSorting';
-import SearchForm from './search/components/SearchForm';
-import NoResults from './search/components/NoResults';
+import SearchResultCount from './SearchResultCount';
+import SearchResultList from './SearchResultList';
+import SearchResultError from './SearchResultError';
+import SearchResultPagination from './SearchResultPagination';
+import SearchResultSorting from './SearchResultSorting';
+import SearchForm from './SearchForm';
+import NoResults from './NoResults';
 import {
     INITIAL_SEARCH,
     SEARCH
-} from "./domene";
-import { getInitialStateFromUrl } from "./app";
+} from "../search-redux";
+import { getInitialStateFromUrl } from "../../app";
 
 class SearchPage extends React.Component {
 
