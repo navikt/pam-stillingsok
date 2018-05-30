@@ -15,8 +15,7 @@ defineSupportCode(({Given, When, Then}) => {
     });
 
     Then(/^skal det forekomme minst ett treff der "(.*)" finnes i resultatvisningen$/, (sokeOrd) => {
-        return forside.waitForElementPresent('@searchResult')
-            .searchResultContainsWord(sokeOrd);
+        return forside.searchResultContainsWord(sokeOrd);
     });
 
     Then(/^skal ingen treff vises$/, () => {

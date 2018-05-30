@@ -15,7 +15,7 @@ module.exports = {
         },
 
         searchResultContainsWord: function(word) {
-            return this.assert.containsText('@searchResult',word);
+            return this.expect.element('@searchResult').text.to.contain(word).before(2000);
         },
 
         verifyFilterCount: function(filter){
