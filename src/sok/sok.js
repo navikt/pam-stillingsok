@@ -9,7 +9,7 @@ import searchReducer, { saga } from './domene';
 import { getUrlParameterByName, toUrlParams } from './utils';
 import SearchPage from './SearchPage';
 import StillingPage from '../stilling/StillingPage';
-import { CONTEXT_PATH } from './fasitProperties';
+import { CONTEXT_PATH } from '../common/fasitProperties';
 import './../styles.less';
 import './../colorTheme.less';
 import './sok.less';
