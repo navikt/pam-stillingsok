@@ -10,7 +10,7 @@ import SearchPage from './search/Search';
 import StillingPage from './stilling/Stilling';
 import { CONTEXT_PATH } from './fasitProperties';
 import './styles.less';
-import './colorTheme.less';
+import './variables.less';
 
 const sagaMiddleware = createSagaMiddleware();
 

@@ -1,13 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Knapp } from 'nav-frontend-knapper';
+import Typeahead from './Typeahead';
 import {
     SEARCH,
     SET_TYPE_AHEAD_VALUE,
     SELECT_TYPE_AHEAD_VALUE,
     FETCH_TYPE_AHEAD_SUGGESTIONS
 } from '../domene';
-import Typeahead from './Typeahead';
+import './SearchBox.less';
 
 export class SearchBox extends React.Component {
     onTypeAheadChange = (value) => {
@@ -23,10 +24,10 @@ export class SearchBox extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="SearchBox">
                 <Typeahead
                     id="search-form-fritekst-input"
-                    className="skjemaelement__input input--fullbredde"
+                    className="SearchBox__typeahead"
                     name="q"
                     autoComplete="off"
                     label=""
@@ -39,10 +40,10 @@ export class SearchBox extends React.Component {
                 <Knapp
                     aria-label="søk"
                     id="search-button"
-                    className="knapp search-button"
+                    className="SearchBox__button"
                     onClick={this.props.onSubmit}
                 >
-                    <i className="search-button__icon" />
+                    <i className="SearchBox__button__icon" />
                 </Knapp>
             </div>
         );

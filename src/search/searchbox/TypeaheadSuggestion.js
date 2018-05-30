@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import './TypeaheadSuggestion.less';
 
 export default class TypeaheadSuggestion extends React.Component {
     constructor(props) {
@@ -29,14 +30,15 @@ export default class TypeaheadSuggestion extends React.Component {
                 onFocus={this.props.avoidBlur}
                 onMouseDown={this.props.avoidBlur}
                 onKeyDown={this.props.avoidBlur}
+                className="TypeaheadSuggestion"
             >
                 {matchFound ? (
-                    <span className={`typetext ${this.props.active && 'active'}`}>
+                    <span className={`TypeaheadSuggestion__inner ${this.props.active && 'TypeaheadSuggestion--active'}`}>
                         {this.value.substring(0, this.props.match.length)}
-                        <span className="typeahead-substring">{this.value.substring(this.props.match.length)}</span>
+                        <span className="TypeaheadSuggestion__substring">{this.value.substring(this.props.match.length)}</span>
                     </span>
                 ) : (
-                    <span className={`typetext ${this.props.active && 'active'}`}>
+                    <span className={`TypeaheadSuggestion__inner ${this.props.active && 'TypeaheadSuggestion--active'}`}>
                         {this.value}
                     </span>
                 )}

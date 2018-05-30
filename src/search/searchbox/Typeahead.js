@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Input } from 'nav-frontend-skjema';
 import TypeaheadSuggestion from './TypeaheadSuggestion';
+import './Typeahead.less';
 
 export default class Typeahead extends React.Component {
     constructor(props) {
@@ -132,7 +133,7 @@ export default class Typeahead extends React.Component {
     render() {
         const showSuggestions = this.state.hasFocus && this.state.shouldShowSuggestions && this.props.suggestions.length > 0;
         return (
-            <div className="typeahead">
+            <div className="Typeahead">
                 <input
                     id={this.props.id}
                     role="combobox"
@@ -157,7 +158,7 @@ export default class Typeahead extends React.Component {
                 <ul
                     id={`${this.props.id}-suggestions`}
                     role="listbox"
-                    className={showSuggestions ? '' : 'typeahead-suggestions-hidden'}
+                    className={showSuggestions ? 'Typeahead__suggestions' : 'Typeahead__suggestions--hidden'}
                 >
                     {showSuggestions && this.props.suggestions.map((li, i) => (
                         <TypeaheadSuggestion
