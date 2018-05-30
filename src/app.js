@@ -5,8 +5,9 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import { applyMiddleware, createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
-import searchReducer, { saga } from './search/domene';
-import searchBoxReducer, { searchBoxSaga } from './search/searchbox/searchBoxRedux';
+import reducer from './search/domene';
+import searchResultsReducer, { searchResultsSaga } from './search/searchResults/searchResultsReducer';
+import searchBoxReducer, { searchBoxSaga } from './search/searchBox/searchBoxRedux';
 import paginationReducer from './search/pagination/paginationRedux';
 import sortingReducer from './search/sorting/sortingReducer';
 import SearchPage from './search/Search';
@@ -18,13 +19,14 @@ import './variables.less';
 const sagaMiddleware = createSagaMiddleware();
 
 const store = createStore(combineReducers({
-    search: searchReducer,
+    reducer,
+    searchResults: searchResultsReducer,
     searchBox: searchBoxReducer,
     pagination: paginationReducer,
     sorting: sortingReducer
 }), applyMiddleware(sagaMiddleware));
 
-sagaMiddleware.run(saga);
+sagaMiddleware.run(searchResultsSaga);
 sagaMiddleware.run(searchBoxSaga);
 
 ReactDOM.render(

@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Checkbox } from 'nav-frontend-skjema';
+import { SEARCH } from '../../searchResults/searchResultsReducer';
 import {
-    SEARCH,
     CHECK_CREATED,
     UNCHECK_CREATED,
 } from "../../domene";
@@ -41,8 +41,8 @@ export class Created extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-    created: state.search.created,
-    checkedCreated: state.search.query.created
+    created: state.reducer.created,
+    checkedCreated: state.reducer.query.created
 });
 
 const mapDispatchToProps = (dispatch) => ({

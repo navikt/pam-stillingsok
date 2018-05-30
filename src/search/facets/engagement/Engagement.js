@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Checkbox } from 'nav-frontend-skjema';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
+import { SEARCH } from '../../searchResults/searchResultsReducer';
 import {
-    SEARCH,
     CHECK_ENGAGEMENT_TYPE,
     UNCHECK_ENGAGEMENT_TYPE,
 } from "../../domene";
@@ -59,8 +59,8 @@ export class Engagement extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-    engagementType: state.search.engagementType,
-    checkedEngagement: state.search.query.engagementType
+    engagementType: state.reducer.engagementType,
+    checkedEngagement: state.reducer.query.engagementType
 });
 
 const mapDispatchToProps = (dispatch) => ({

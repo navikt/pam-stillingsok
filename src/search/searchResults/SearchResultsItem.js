@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Row, Column } from 'nav-frontend-grid';
 import { Normaltekst, Element } from 'nav-frontend-typografi';
 import { formatISOString } from '../../utils';
-import { STILLING } from "../../fasitProperties";
+import { STILLING } from '../../fasitProperties';
 
 function keepScrollPosition() {
     const top = window.pageYOffset || document.documentElement.scrollTop;
@@ -14,7 +14,7 @@ function keepScrollPosition() {
     }
 }
 
-export default function ResultItem(props) {
+export default function SearchResultItem(props) {
     const { stilling } = props;
     return (
         <Link

@@ -2,10 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Checkbox } from 'nav-frontend-skjema';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
+import { SEARCH } from '../../searchResults/searchResultsReducer';
 import {
-    SEARCH,
     CHECK_SECTOR,
-    UNCHECK_SECTOR,
+    UNCHECK_SECTOR
 } from "../../domene";
 
 export class Sector extends React.Component {
@@ -57,8 +57,8 @@ export class Sector extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-    sector: state.search.sector,
-    checkedSector: state.search.query.sector
+    sector: state.reducer.sector,
+    checkedSector: state.reducer.query.sector
 });
 
 const mapDispatchToProps = (dispatch) => ({

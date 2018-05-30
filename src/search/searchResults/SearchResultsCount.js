@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Undertittel } from 'nav-frontend-typografi';
 
-export function ResultCount({isAtLeastOneSearchDone, count}) {
+export function SearchResultsCount({isAtLeastOneSearchDone, count}) {
     if (isAtLeastOneSearchDone) {
         if (count === 0) {
             return (
@@ -20,9 +20,9 @@ export function ResultCount({isAtLeastOneSearchDone, count}) {
 }
 
 const mapStateToProps = (state) => ({
-    isAtLeastOneSearchDone: state.search.isAtLeastOneSearchDone,
-    count: state.search.searchResult.total
+    isAtLeastOneSearchDone: state.searchResults.isAtLeastOneSearchDone,
+    count: state.searchResults.searchResult.total
 });
 
 
-export default connect(mapStateToProps)(ResultCount);
+export default connect(mapStateToProps)(SearchResultsCount);

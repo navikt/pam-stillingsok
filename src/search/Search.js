@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Container, Row, Column } from 'nav-frontend-grid';
-import SearchResultCount from './searchresult/ResultCount';
-import SearchResultList from './searchresult/ResultList';
+import SearchResultCount from './searchResults/SearchResultsCount';
+import SearchResultList from './searchResults/SearchResults';
 import SearchResultError from './error/SearchError';
 import SearchResultPagination from './pagination/Pagination';
 import SearchResultSorting from './sorting/Sorting';
@@ -11,12 +11,12 @@ import HeltidDeltid from './facets/extent/Extent';
 import EngagementType from './facets/engagement/Engagement';
 import Sector from './facets/sector/Sector';
 import Created from './facets/created/Created';
-import SearchBox from './searchbox/SearchBox';
-import NoResults from './noresult/NoResult';
+import SearchBox from './searchBox/SearchBox';
+import NoResults from './searchResults/NoSearchResults';
 import {
     INITIAL_SEARCH,
     SEARCH
-} from './domene';
+} from './searchResults/searchResultsReducer';
 import './Search.less';
 
 export function getUrlParameterByName(name, url) {
@@ -141,9 +141,9 @@ class Search extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-    isSearching: state.search.isSearching,
-    searchResultTotal: state.search.searchResult.total,
-    error: state.search.error
+    isSearching: state.searchResults.isSearching,
+    searchResultTotal: state.searchResults.searchResult.total,
+    error: state.searchResults.error
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Checkbox } from 'nav-frontend-skjema';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
+import { SEARCH } from '../../searchResults/searchResultsReducer';
 import {
-    SEARCH,
     CHECK_HELTID_DELTID,
     UNCHECK_HELTID_DELTID,
 } from "../../domene";
@@ -59,8 +59,8 @@ export class Extent extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-    heltidDeltid: state.search.heltidDeltid,
-    checkedExtent: state.search.query.heltidDeltid
+    heltidDeltid: state.reducer.heltidDeltid,
+    checkedExtent: state.reducer.query.heltidDeltid
 });
 
 const mapDispatchToProps = (dispatch) => ({

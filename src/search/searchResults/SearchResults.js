@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import SearchResultItem from './ResultListItem';
+import SearchResultItem from './SearchResultsItem';
 
-export class ResultList extends React.Component {
+export class SearchResults extends React.Component {
 
     componentDidMount() {
         try {
@@ -30,7 +30,7 @@ export class ResultList extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-    searchResult: state.search.searchResult
+    searchResult: state.searchResults.searchResult
 });
 
-export default connect(mapStateToProps)(ResultList);
+export default connect(mapStateToProps)(SearchResults);

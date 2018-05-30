@@ -2,16 +2,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Checkbox } from 'nav-frontend-skjema';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
+import { SEARCH } from '../../searchResults/searchResultsReducer';
 import {
-    SEARCH,
     CHECK_COUNTY,
     UNCHECK_COUNTY,
     CHECK_MUNICIPAL,
     UNCHECK_MUNICIPAL
-} from "../../domene";
+} from '../../domene';
 
 export class Counties extends React.Component {
-
     onCountyClick = (e) => {
         const { value } = e.target;
         if (e.target.checked) {
@@ -34,11 +33,11 @@ export class Counties extends React.Component {
 
     render() {
         const { counties, checkedCounties, checkedMunicipals } = this.props;
-        let title = "Fylke/kommune";
+        let title = 'Fylke/kommune';
         if ((checkedCounties.length + checkedMunicipals.length) === 1) {
-            title += " (1 valgt)"
-        } else if((checkedCounties.length + checkedMunicipals.length) > 1) {
-            title += " (" + (checkedCounties.length + checkedMunicipals.length) + " valgte)"
+            title += ' (1 valgt)';
+        } else if ((checkedCounties.length + checkedMunicipals.length) > 1) {
+            title += ` (${checkedCounties.length + checkedMunicipals.length} valgte)`;
         }
         return (
             <Ekspanderbartpanel
@@ -86,9 +85,9 @@ export class Counties extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-    counties: state.search.counties,
-    checkedCounties: state.search.query.counties,
-    checkedMunicipals: state.search.query.municipals,
+    counties: state.reducer.counties,
+    checkedCounties: state.reducer.query.counties,
+    checkedMunicipals: state.reducer.query.municipals
 });
 
 const mapDispatchToProps = (dispatch) => ({
