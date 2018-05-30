@@ -39,7 +39,12 @@ class SearchPage extends React.Component {
                                 <SearchForm />
                             </Column>
                             <Column xs="12" md="8">
-                                <div className="search-result-count-wrapper">
+                                <div
+                                    className="search-result-count-wrapper"
+                                    ref={(resultatListe) => {
+                                        this.resultatListe = resultatListe;
+                                    }}
+                                >
                                     <Row>
                                         <Column xs="12" md="8">
                                             <SearchResultCount/>
@@ -54,9 +59,6 @@ class SearchPage extends React.Component {
                                         tabIndex="-1"
                                         id="sokeresultat"
                                         aria-labelledby="search-result-count"
-                                        ref={(resultatListe) => {
-                                            this.resultatListe = resultatListe;
-                                        }}
                                     >
                                         <SearchResultList />
                                         <SearchResultPagination scrollToTopOfResultList={this.scrollToTopOfResultList} />
