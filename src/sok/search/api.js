@@ -1,6 +1,6 @@
 import typeaheadTemplate from './templates/typeaheadTemplate';
 import searchTemplate from './templates/searchTemplate';
-import { SEARCH_API } from '../../common/fasitProperties';
+import { SEARCH_API } from '../../fasitProperties';
 
 export class SearchApiError {
     constructor(message, statusCode) {
