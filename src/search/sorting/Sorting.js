@@ -1,13 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Select } from 'nav-frontend-skjema';
-import {
-    SEARCH,
-    SET_SORTING
-} from "../domene";
+import { SEARCH } from '../domene';
+import { SET_SORTING } from './sortingReducer';
 
 export class Sorting extends React.Component {
-
     onSortingChange = (e) => {
         this.props.setSorting(e.target.value);
         this.props.search();
@@ -28,7 +25,7 @@ export class Sorting extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-    sort: state.search.query.sort
+    sort: state.sorting.sort
 });
 
 const mapDispatchToProps = (dispatch) => ({

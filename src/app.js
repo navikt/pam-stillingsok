@@ -8,6 +8,7 @@ import createSagaMiddleware from 'redux-saga';
 import searchReducer, { saga } from './search/domene';
 import searchBoxReducer, { searchBoxSaga } from './search/searchbox/searchBoxRedux';
 import paginationReducer from './search/pagination/paginationRedux';
+import sortingReducer from './search/sorting/sortingReducer';
 import SearchPage from './search/Search';
 import StillingPage from './stilling/Stilling';
 import { CONTEXT_PATH } from './fasitProperties';
@@ -19,7 +20,8 @@ const sagaMiddleware = createSagaMiddleware();
 const store = createStore(combineReducers({
     search: searchReducer,
     searchBox: searchBoxReducer,
-    pagination: paginationReducer
+    pagination: paginationReducer,
+    sorting: sortingReducer
 }), applyMiddleware(sagaMiddleware));
 
 sagaMiddleware.run(saga);

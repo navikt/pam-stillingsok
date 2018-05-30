@@ -33,8 +33,6 @@ export const FETCH_CREATED_COUNT_SUCCESS = 'FETCH_CREATED_COUNT_SUCCESS';
 
 export const SET_TYPE_AHEAD_VALUE = 'SET_TYPE_AHEAD_VALUE';
 
-export const SET_SORTING = 'SET_SORTING';
-
 export const CHECK_ENGAGEMENT_TYPE = 'CHECK_ENGAGEMENT_TYPE';
 export const UNCHECK_ENGAGEMENT_TYPE = 'UNCHECK_ENGAGEMENT_TYPE';
 
@@ -66,8 +64,6 @@ const initialState = {
     },
     query: {
         q: '',
-        sort: '',
-        from: 0,
         counties: [],
         municipals: [],
         heltidDeltid: [],
@@ -229,14 +225,6 @@ export default function reducer(state = initialState, action) {
                     from: 0
                 }
             };
-        case SET_SORTING:
-            return {
-                ...state,
-                query: {
-                    ...state.query,
-                    sort: action.sortField
-                }
-            };
         case CHECK_HELTID_DELTID:
             return {
                 ...state,
@@ -387,7 +375,8 @@ export const toSearchQuery = (state) => {
                 const found = countyObject.municipals.find((m) => query.municipals.includes(m.key));
                 return !found;
             }),
-            from: state.pagination.from
+            from: state.pagination.from,
+            sort: state.sorting.sort
         };
     }
     return searchQuery;
@@ -398,7 +387,7 @@ export const toUrlQuery = (state) => {
     const { query } = state.search;
 
     if (query.q) urlQuery.q = query.q;
-    if (query.sort) urlQuery.sort = query.sort;
+    if (state.sorting.sort) urlQuery.sort = state.sorting.sort;
     if (state.pagination.from) urlQuery.from = state.pagination.from;
     if (query.counties && query.counties.length > 0) urlQuery.counties = query.counties.join('_');
     if (query.municipals && query.municipals.length > 0) urlQuery.municipals = query.municipals.join('_');
