@@ -124,7 +124,7 @@ function* initialSearch(action) {
                 yield put({ type: SET_INITIAL_STATE, query: urlQuery });
                 const response = yield call(fetchSearch);
                 yield put({ type: INITIAL_SEARCH_SUCCESS, response });
-                yield call(search, action);
+                yield call(search, action, false);
             } else {
                 const response = yield call(fetchSearch);
                 yield put({ type: SEARCH_SUCCESS, response });
