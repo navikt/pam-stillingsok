@@ -1,15 +1,16 @@
 import React from 'react';
 import { Knapp } from 'nav-frontend-knapper';
 import { connect } from 'react-redux';
-import { Checkbox } from 'nav-frontend-skjema';
 import {
-    SEARCH,
+    SEARCH
+} from '../domene';
+import {
     INCREASE_PAGINATION_FROM,
-    DECREASE_PAGINATION_FROM,
-} from "../domene";
+    DECREASE_PAGINATION_FROM
+} from './paginationRedux';
+import './Pagination.less';
 
 export class Pagination extends React.Component {
-
     onPaginationNextClick = () => {
         this.props.scrollToTopOfResultList(); //
         this.props.increasePaginationFrom();
@@ -22,19 +23,19 @@ export class Pagination extends React.Component {
         this.props.search();
     };
 
-    render(){
+    render() {
         const { from, total } = this.props;
         const canPaginatePrevious = from !== undefined && from > 0;
         const canPaginateNext = (from === undefined && total > 20) || (from + 20 < total);
         return (
-            <div id="search-result-pagination">
+            <div id="search-result-pagination" className="Pagination">
                 {canPaginatePrevious && (
-                    <Knapp className="knapp--green" onClick={this.onPaginationPreviousClick}>
+                    <Knapp className="Pagination__button knapp--green" onClick={this.onPaginationPreviousClick}>
                         Forrige
                     </Knapp>
                 )}
                 {canPaginateNext && (
-                    <Knapp className="knapp--green" onClick={this.onPaginationNextClick}>
+                    <Knapp className="Pagination__button knapp--green" onClick={this.onPaginationNextClick}>
                         Neste
                     </Knapp>
                 )}
@@ -44,7 +45,7 @@ export class Pagination extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-    from: state.search.query.from,
+    from: state.pagination.from,
     total: state.search.searchResult.total
 });
 

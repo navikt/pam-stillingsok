@@ -35,9 +35,6 @@ export const SET_TYPE_AHEAD_VALUE = 'SET_TYPE_AHEAD_VALUE';
 
 export const SET_SORTING = 'SET_SORTING';
 
-export const INCREASE_PAGINATION_FROM = 'INCREASE_PAGINATION_FROM';
-export const DECREASE_PAGINATION_FROM = 'DECREASE_PAGINATION_FROM';
-
 export const CHECK_ENGAGEMENT_TYPE = 'CHECK_ENGAGEMENT_TYPE';
 export const UNCHECK_ENGAGEMENT_TYPE = 'UNCHECK_ENGAGEMENT_TYPE';
 
@@ -240,16 +237,6 @@ export default function reducer(state = initialState, action) {
                     sort: action.sortField
                 }
             };
-        case INCREASE_PAGINATION_FROM:
-            return {
-                ...state,
-                query: { ...state.query, from: state.query.from + 20 }
-            };
-        case DECREASE_PAGINATION_FROM:
-            return {
-                ...state,
-                query: { ...state.query, from: state.query.from >= 20 ? state.query.from - 20 : 0 }
-            };
         case CHECK_HELTID_DELTID:
             return {
                 ...state,
@@ -399,17 +386,20 @@ export const toSearchQuery = (state) => {
                 const countyObject = state.search.counties.find((c) => c.key === county);
                 const found = countyObject.municipals.find((m) => query.municipals.includes(m.key));
                 return !found;
-            })
+            }),
+            from: state.pagination.from
         };
     }
     return searchQuery;
 };
 
-export const toUrlQuery = (query) => {
+export const toUrlQuery = (state) => {
     const urlQuery = {};
+    const { query } = state.search;
+
     if (query.q) urlQuery.q = query.q;
     if (query.sort) urlQuery.sort = query.sort;
-    if (query.from) urlQuery.from = query.from;
+    if (state.pagination.from) urlQuery.from = state.pagination.from;
     if (query.counties && query.counties.length > 0) urlQuery.counties = query.counties.join('_');
     if (query.municipals && query.municipals.length > 0) urlQuery.municipals = query.municipals.join('_');
     if (query.heltidDeltid && query.heltidDeltid.length > 0) urlQuery.heltidDeltid = query.heltidDeltid.join('_');
@@ -432,7 +422,7 @@ function* search() {
         const state = yield select();
 
         // Update browser url to reflect current search query
-        const urlQuery = toUrlQuery(state.search.query);
+        const urlQuery = toUrlQuery(state);
         const newUrlQuery = urlQuery && urlQuery.length > 0 ? `?${urlQuery}` : window.location.pathname;
         window.history.replaceState('', '', newUrlQuery);
 
