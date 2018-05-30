@@ -2,8 +2,27 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Undertittel, Element } from 'nav-frontend-typografi';
 import { formatISOString, isValidISOString } from '../../date';
-import { tilpassLenke, tilpassTwitterAdresse } from '../utils';
 import ReactHtmlParser from 'react-html-parser';
+
+export const tilpassLenke = (lenke) => {
+    if(lenke.includes('@')) {
+        return 'mailto:' + lenke;
+    } else if(!lenke.startsWith('http')) {
+        return 'https://' + lenke
+    } else {
+        return lenke;
+    }
+};
+
+export const tilpassTwitterAdresse = (adresse) => {
+    if(adresse.startsWith('@')) {
+        return 'https://twitter.com/'+ adresse;
+    } else if(!adresse.startsWith('http')) {
+        return 'https://' + adresse
+    } else {
+        return adresse;
+    }
+};
 
 export default function Details({ stilling }) {
     const { _source } = stilling;
