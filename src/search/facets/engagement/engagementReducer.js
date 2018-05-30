@@ -1,30 +1,30 @@
 import { SET_INITIAL_STATE, INITIAL_SEARCH_SUCCESS, SEARCH_SUCCESS } from '../../searchSagas';
 
-export const CHECK_CREATED = 'CHECK_CREATED';
-export const UNCHECK_CREATED = 'UNCHECK_CREATED';
+export const CHECK_ENGAGEMENT_TYPE = 'CHECK_ENGAGEMENT_TYPE';
+export const UNCHECK_ENGAGEMENT_TYPE = 'UNCHECK_ENGAGEMENT_TYPE';
 
 const initialState = {
-    created: [],
-    checkedCreated: []
+    engagementType: [],
+    checkedEngagementType: []
 };
 
-export default function createdReducer(state = initialState, action) {
+export default function engagementReducer(state = initialState, action) {
     switch (action.type) {
         case SET_INITIAL_STATE:
             return {
                 ...state,
-                checkedCreated: action.query.created || []
+                checkedEngagementType: action.query.engagementType || []
             };
         case INITIAL_SEARCH_SUCCESS:
             return {
                 ...state,
-                created: action.response.created
+                engagementType: action.response.engagementTypes
             };
         case SEARCH_SUCCESS:
             return {
                 ...state,
-                created: state.created.map((item) => {
-                    const found = action.response.created.find((e) => (
+                engagementType: state.engagementType.map((item) => {
+                    const found = action.response.engagementTypes.find((e) => (
                         e.key === item.key
                     ));
                     return {
@@ -33,18 +33,18 @@ export default function createdReducer(state = initialState, action) {
                     };
                 })
             };
-        case CHECK_CREATED:
+        case CHECK_ENGAGEMENT_TYPE:
             return {
                 ...state,
-                checkedCreated: [
-                    ...state.checkedCreated,
+                checkedEngagementType: [
+                    ...state.checkedEngagementType,
                     action.value
                 ]
             };
-        case UNCHECK_CREATED:
+        case UNCHECK_ENGAGEMENT_TYPE:
             return {
                 ...state,
-                checkedCreated: state.checkedCreated.filter((m) => (m !== action.value))
+                checkedEngagementType: state.checkedEngagementType.filter((m) => (m !== action.value))
             };
         default:
             return state;

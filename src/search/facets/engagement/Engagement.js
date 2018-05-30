@@ -2,14 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Checkbox } from 'nav-frontend-skjema';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
-import { SEARCH } from '../../searchResults/searchResultsReducer';
+import { SEARCH } from '../../searchSagas';
 import {
     CHECK_ENGAGEMENT_TYPE,
-    UNCHECK_ENGAGEMENT_TYPE,
-} from "../../domene";
+    UNCHECK_ENGAGEMENT_TYPE
+} from './engagementReducer';
 
 export class Engagement extends React.Component {
-
     onEngagementClick = (e) => {
         const { value } = e.target;
         if (e.target.checked) {
@@ -21,12 +20,12 @@ export class Engagement extends React.Component {
     };
 
     render() {
-        const { engagementType, checkedEngagement }  = this.props;
-        let title = "Ansettelsesform";
+        const { engagementType, checkedEngagement } = this.props;
+        let title = 'Ansettelsesform';
         if (checkedEngagement.length === 1) {
-            title += " (1 valgt)"
-        } else if(checkedEngagement.length > 1) {
-            title += " ("+checkedEngagement.length+" valgte)"
+            title += ' (1 valgt)';
+        } else if (checkedEngagement.length > 1) {
+            title += ` (${checkedEngagement.length} valgte)`;
         }
         return (
             <Ekspanderbartpanel
@@ -42,15 +41,15 @@ export class Engagement extends React.Component {
                 >
                     <div>
                         {engagementType && engagementType.map((item) => (
-                        <Checkbox
-                            name="engagementType"
-                            key={item.key}
-                            label={`${item.key} (${item.count})`}
-                            value={item.key}
-                            onChange={this.onEngagementClick}
-                            checked={checkedEngagement.includes(item.key)}
-                        />
-                    ))}
+                            <Checkbox
+                                name="engagementType"
+                                key={item.key}
+                                label={`${item.key} (${item.count})`}
+                                value={item.key}
+                                onChange={this.onEngagementClick}
+                                checked={checkedEngagement.includes(item.key)}
+                            />
+                        ))}
                     </div>
                 </div>
             </Ekspanderbartpanel>
@@ -59,8 +58,8 @@ export class Engagement extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-    engagementType: state.reducer.engagementType,
-    checkedEngagement: state.reducer.query.engagementType
+    engagementType: state.engagement.engagementType,
+    checkedEngagement: state.engagement.checkedEngagementType
 });
 
 const mapDispatchToProps = (dispatch) => ({

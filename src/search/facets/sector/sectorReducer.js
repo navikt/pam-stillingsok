@@ -1,30 +1,30 @@
 import { SET_INITIAL_STATE, INITIAL_SEARCH_SUCCESS, SEARCH_SUCCESS } from '../../searchSagas';
 
-export const CHECK_CREATED = 'CHECK_CREATED';
-export const UNCHECK_CREATED = 'UNCHECK_CREATED';
+export const CHECK_SECTOR = 'CHECK_SECTOR';
+export const UNCHECK_SECTOR = 'UNCHECK_SECTOR';
 
 const initialState = {
-    created: [],
-    checkedCreated: []
+    sector: [],
+    checkedSector: []
 };
 
-export default function createdReducer(state = initialState, action) {
+export default function sectorReducer(state = initialState, action) {
     switch (action.type) {
         case SET_INITIAL_STATE:
             return {
                 ...state,
-                checkedCreated: action.query.created || []
+                checkedSector: action.query.sector || []
             };
         case INITIAL_SEARCH_SUCCESS:
             return {
                 ...state,
-                created: action.response.created
+                sector: action.response.sector
             };
         case SEARCH_SUCCESS:
             return {
                 ...state,
-                created: state.created.map((item) => {
-                    const found = action.response.created.find((e) => (
+                sector: state.sector.map((item) => {
+                    const found = action.response.sector.find((e) => (
                         e.key === item.key
                     ));
                     return {
@@ -33,18 +33,18 @@ export default function createdReducer(state = initialState, action) {
                     };
                 })
             };
-        case CHECK_CREATED:
+        case CHECK_SECTOR:
             return {
                 ...state,
-                checkedCreated: [
-                    ...state.checkedCreated,
+                checkedSector: [
+                    ...state.checkedSector,
                     action.value
                 ]
             };
-        case UNCHECK_CREATED:
+        case UNCHECK_SECTOR:
             return {
                 ...state,
-                checkedCreated: state.checkedCreated.filter((m) => (m !== action.value))
+                checkedSector: state.checkedSector.filter((m) => (m !== action.value))
             };
         default:
             return state;

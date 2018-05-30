@@ -16,7 +16,7 @@ import NoResults from './searchResults/NoSearchResults';
 import {
     INITIAL_SEARCH,
     SEARCH
-} from './searchResults/searchResultsReducer';
+} from './searchSagas';
 import './Search.less';
 
 export function getUrlParameterByName(name, url) {
@@ -35,7 +35,7 @@ export const getInitialStateFromUrl = (url) => {
     const sort = getUrlParameterByName('sort', url);
     const counties = getUrlParameterByName('counties', url);
     const municipals = getUrlParameterByName('municipals', url);
-    const heltidDeltid = getUrlParameterByName('heltidDeltid', url);
+    const extent = getUrlParameterByName('extent', url);
     const engagementType = getUrlParameterByName('engagementType', url);
     const sector = getUrlParameterByName('sector', url);
     const created = getUrlParameterByName('created', url);
@@ -45,7 +45,7 @@ export const getInitialStateFromUrl = (url) => {
     if (sort) stateFromUrl.sort = sort;
     if (counties) stateFromUrl.counties = counties.split('_');
     if (municipals) stateFromUrl.municipals = municipals.split('_');
-    if (heltidDeltid) stateFromUrl.heltidDeltid = heltidDeltid.split('_');
+    if (extent) stateFromUrl.extent = extent.split('_');
     if (engagementType) stateFromUrl.engagementType = engagementType.split('_');
     if (sector) stateFromUrl.sector = sector.split('_');
     if (created) stateFromUrl.created = created.split('_');

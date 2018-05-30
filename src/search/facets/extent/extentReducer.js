@@ -1,30 +1,30 @@
 import { SET_INITIAL_STATE, INITIAL_SEARCH_SUCCESS, SEARCH_SUCCESS } from '../../searchSagas';
 
-export const CHECK_CREATED = 'CHECK_CREATED';
-export const UNCHECK_CREATED = 'UNCHECK_CREATED';
+export const CHECK_EXTENT = 'CHECK_EXTENT';
+export const UNCHECK_EXTENT = 'UNCHECK_EXTENT';
 
 const initialState = {
-    created: [],
-    checkedCreated: []
+    extent: [],
+    checkedExtent: []
 };
 
-export default function createdReducer(state = initialState, action) {
+export default function extentReducer(state = initialState, action) {
     switch (action.type) {
         case SET_INITIAL_STATE:
             return {
                 ...state,
-                checkedCreated: action.query.created || []
+                checkedExtent: action.query.extent || []
             };
         case INITIAL_SEARCH_SUCCESS:
             return {
                 ...state,
-                created: action.response.created
+                extent: action.response.extent
             };
         case SEARCH_SUCCESS:
             return {
                 ...state,
-                created: state.created.map((item) => {
-                    const found = action.response.created.find((e) => (
+                extent: state.extent.map((item) => {
+                    const found = action.response.extent.find((e) => (
                         e.key === item.key
                     ));
                     return {
@@ -33,18 +33,18 @@ export default function createdReducer(state = initialState, action) {
                     };
                 })
             };
-        case CHECK_CREATED:
+        case CHECK_EXTENT:
             return {
                 ...state,
-                checkedCreated: [
-                    ...state.checkedCreated,
+                checkedExtent: [
+                    ...state.checkedExtent,
                     action.value
                 ]
             };
-        case UNCHECK_CREATED:
+        case UNCHECK_EXTENT:
             return {
                 ...state,
-                checkedCreated: state.checkedCreated.filter((m) => (m !== action.value))
+                checkedExtent: state.checkedExtent.filter((m) => (m !== action.value))
             };
         default:
             return state;

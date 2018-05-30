@@ -1,6 +1,8 @@
 import { select, call, put, takeLatest } from 'redux-saga/effects';
 import { fetchTypeaheadSuggestions, SearchApiError } from '../../api/api';
+import { SET_INITIAL_STATE } from '../searchSagas';
 
+export const SET_TYPE_AHEAD_VALUE = 'SET_TYPE_AHEAD_VALUE';
 export const SELECT_TYPE_AHEAD_VALUE = 'SELECT_TYPE_AHEAD_TOKEN';
 export const FETCH_TYPE_AHEAD_SUGGESTIONS = 'FETCH_TYPE_AHEAD_SUGGESTIONS';
 export const FETCH_TYPE_AHEAD_SUGGESTIONS_SUCCESS = 'FETCH_TYPE_AHEAD_SUGGESTIONS_SUCCESS';
@@ -9,11 +11,22 @@ export const FETCH_TYPE_AHEAD_SUGGESTIONS_CACHE = 'FETCH_TYPE_AHEAD_SUGGESTIONS_
 
 const initialState = {
     typeAheadSuggestions: [],
-    cachedTypeAheadSuggestions: []
+    cachedTypeAheadSuggestions: [],
+    q: ''
 };
 
 export default function searchBoxReducer(state = initialState, action) {
     switch (action.type) {
+        case SET_INITIAL_STATE:
+            return {
+                ...state,
+                q: action.query.q || ''
+            };
+        case SET_TYPE_AHEAD_VALUE:
+            return {
+                ...state,
+                q: action.value
+            };
         case SELECT_TYPE_AHEAD_VALUE:
             return {
                 ...state,
@@ -37,9 +50,9 @@ export default function searchBoxReducer(state = initialState, action) {
 function* fetchTypeAheadSuggestions() {
     const TYPE_AHEAD_MIN_INPUT_LENGTH = 3;
     const state = yield select();
-    const value = state.search.query.q;
+    const value = state.searchBox.q;
     if (value && value.length >= TYPE_AHEAD_MIN_INPUT_LENGTH) {
-        if (state.search.cachedTypeAheadSuggestions.length === 0) {
+        if (state.searchBox.cachedTypeAheadSuggestions.length === 0) {
             const cachedTypeAheadMatch = value.substring(0, TYPE_AHEAD_MIN_INPUT_LENGTH);
             try {
                 const response = yield call(fetchTypeaheadSuggestions, cachedTypeAheadMatch);
@@ -56,7 +69,7 @@ function* fetchTypeAheadSuggestions() {
                 }
             }
         } else {
-            const suggestions = state.search.cachedTypeAheadSuggestions.filter((cachedSuggestion) => (
+            const suggestions = state.searchBox.cachedTypeAheadSuggestions.filter((cachedSuggestion) => (
                 cachedSuggestion.toLowerCase().startsWith(value.toLowerCase())));
             yield put({ type: FETCH_TYPE_AHEAD_SUGGESTIONS_SUCCESS, suggestions });
         }

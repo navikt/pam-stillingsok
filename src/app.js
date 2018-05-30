@@ -5,13 +5,16 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import { applyMiddleware, createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
-import reducer from './search/domene';
-import searchResultsReducer, { searchResultsSaga } from './search/searchResults/searchResultsReducer';
+import { saga } from './search/searchSagas';
+import searchResultsReducer from './search/searchResults/searchResultsReducer';
 import searchBoxReducer, { searchBoxSaga } from './search/searchBox/searchBoxReducer';
 import paginationReducer from './search/pagination/paginationReducer';
 import sortingReducer from './search/sorting/sortingReducer';
 import countiesReducer from './search/facets/counties/countiesReducer';
 import createdReducer from './search/facets/created/createdReducer';
+import engagementReducer from './search/facets/engagement/engagementReducer';
+import sectorReducer from './search/facets/sector/sectorReducer';
+import extentReducer from './search/facets/extent/extentReducer';
 import SearchPage from './search/Search';
 import StillingPage from './stilling/Stilling';
 import { CONTEXT_PATH } from './fasitProperties';
@@ -21,16 +24,18 @@ import './variables.less';
 const sagaMiddleware = createSagaMiddleware();
 
 const store = createStore(combineReducers({
-    reducer,
     searchResults: searchResultsReducer,
     searchBox: searchBoxReducer,
     pagination: paginationReducer,
     sorting: sortingReducer,
     counties: countiesReducer,
-    created: createdReducer
+    created: createdReducer,
+    engagement: engagementReducer,
+    sector: sectorReducer,
+    extent: extentReducer
 }), applyMiddleware(sagaMiddleware));
 
-sagaMiddleware.run(searchResultsSaga);
+sagaMiddleware.run(saga);
 sagaMiddleware.run(searchBoxSaga);
 
 ReactDOM.render(

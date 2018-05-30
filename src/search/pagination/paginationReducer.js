@@ -1,7 +1,8 @@
-import { SET_INITIAL_STATE } from '../domene';
+import { SET_INITIAL_STATE } from '../searchSagas';
 
 export const INCREASE_PAGINATION_FROM = 'INCREASE_PAGINATION_FROM';
 export const DECREASE_PAGINATION_FROM = 'DECREASE_PAGINATION_FROM';
+export const RESET_PAGE = 'RESET_PAGE';
 
 export const PAGE_SIZE = 20;
 
@@ -26,6 +27,12 @@ export default function paginationReducer(state = initialState, action) {
                 ...state,
                 from: state.from >= PAGE_SIZE ? state.from - PAGE_SIZE : 0
             };
+        case RESET_PAGE: {
+            return {
+                ...state,
+                from: 0
+            };
+        }
         default:
             return state;
     }

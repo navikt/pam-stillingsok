@@ -2,14 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Checkbox } from 'nav-frontend-skjema';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
-import { SEARCH } from '../../searchResults/searchResultsReducer';
+import { SEARCH } from '../../searchSagas';
 import {
     CHECK_SECTOR,
     UNCHECK_SECTOR
-} from "../../domene";
+} from './sectorReducer';
 
 export class Sector extends React.Component {
-
     onSectorClick = (e) => {
         const { value } = e.target;
         if (e.target.checked) {
@@ -21,12 +20,12 @@ export class Sector extends React.Component {
     };
 
     render() {
-        const { sector, checkedSector }  = this.props;
-        let title = "Sektor";
+        const { sector, checkedSector } = this.props;
+        let title = 'Sektor';
         if (checkedSector.length === 1) {
-            title += " (1 valgt)"
-        } else if(checkedSector.length > 1) {
-            title += " ("+checkedSector.length+" valgte)"
+            title += ' (1 valgt)';
+        } else if (checkedSector.length > 1) {
+            title += ` (${checkedSector.length} valgte)`;
         }
         return (
             <Ekspanderbartpanel
@@ -57,8 +56,8 @@ export class Sector extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-    sector: state.reducer.sector,
-    checkedSector: state.reducer.query.sector
+    sector: state.sector.sector,
+    checkedSector: state.sector.checkedSector
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -1,5 +1,4 @@
-import { SET_INITIAL_STATE } from '../../domene';
-import { INITIAL_SEARCH_SUCCESS, SEARCH_SUCCESS } from '../../searchResults/searchResultsReducer';
+import { SET_INITIAL_STATE, INITIAL_SEARCH_SUCCESS, SEARCH_SUCCESS } from '../../searchSagas';
 
 export const CHECK_COUNTY = 'CHECK_COUNTY';
 export const UNCHECK_COUNTY = 'UNCHECK_COUNTY';

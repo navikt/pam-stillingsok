@@ -1,4 +1,4 @@
-import { SET_INITIAL_STATE } from '../domene';
+import { SET_INITIAL_STATE } from '../searchSagas';
 
 export const SET_SORTING = 'SET_SORTING';
 

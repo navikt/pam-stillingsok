@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Select } from 'nav-frontend-skjema';
-import { SEARCH } from '../domene';
+import { SEARCH } from '../searchSagas';
 import { SET_SORTING } from './sortingReducer';
 
 export class Sorting extends React.Component {

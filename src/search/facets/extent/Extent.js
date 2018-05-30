@@ -2,14 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Checkbox } from 'nav-frontend-skjema';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
-import { SEARCH } from '../../searchResults/searchResultsReducer';
+import { SEARCH } from '../../searchSagas';
 import {
-    CHECK_HELTID_DELTID,
-    UNCHECK_HELTID_DELTID,
-} from "../../domene";
+    CHECK_EXTENT,
+    UNCHECK_EXTENT
+} from './extentReducer';
 
 export class Extent extends React.Component {
-
     onExtentClick = (e) => {
         const { value } = e.target;
         if (e.target.checked) {
@@ -21,12 +20,12 @@ export class Extent extends React.Component {
     };
 
     render() {
-        const { heltidDeltid, checkedExtent }  = this.props;
-        let title = "Heltid/deltid";
+        const { extent, checkedExtent } = this.props;
+        let title = 'Heltid/deltid';
         if (checkedExtent.length === 1) {
-            title += " (1 valgt)"
-        } else if(checkedExtent.length > 1) {
-            title += " ("+checkedExtent.length+" valgte)"
+            title += ' (1 valgt)';
+        } else if (checkedExtent.length > 1) {
+            title += ` (${checkedExtent.length} valgte)`;
         }
         return (
             <Ekspanderbartpanel
@@ -41,7 +40,7 @@ export class Extent extends React.Component {
                     className="search-page-filter"
                 >
                     <div>
-                        {heltidDeltid && heltidDeltid.map((item) => (
+                        {extent && extent.map((item) => (
                             <Checkbox
                                 name="heltidDeltid"
                                 key={item.key}
@@ -59,14 +58,14 @@ export class Extent extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-    heltidDeltid: state.reducer.heltidDeltid,
-    checkedExtent: state.reducer.query.heltidDeltid
+    extent: state.extent.extent,
+    checkedExtent: state.extent.checkedExtent
 });
 
 const mapDispatchToProps = (dispatch) => ({
     search: () => dispatch({ type: SEARCH }),
-    checkExtent: (value) => dispatch({ type: CHECK_HELTID_DELTID, value }),
-    uncheckExtent: (value) => dispatch({ type: UNCHECK_HELTID_DELTID, value })
+    checkExtent: (value) => dispatch({ type: CHECK_EXTENT, value }),
+    uncheckExtent: (value) => dispatch({ type: UNCHECK_EXTENT, value })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Extent);

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Checkbox } from 'nav-frontend-skjema';
-import { SEARCH } from '../../searchResults/searchResultsReducer';
+import { SEARCH } from '../../searchSagas';
 import {
     CHECK_CREATED,
     UNCHECK_CREATED,

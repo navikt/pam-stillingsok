@@ -1,7 +1,7 @@
 import React from 'react';
 import { Knapp } from 'nav-frontend-knapper';
 import { connect } from 'react-redux';
-import { SEARCH } from '../searchResults/searchResultsReducer';
+import { PAGINATE } from '../searchSagas';
 import {
     INCREASE_PAGINATION_FROM,
     DECREASE_PAGINATION_FROM
@@ -12,13 +12,13 @@ export class Pagination extends React.Component {
     onPaginationNextClick = () => {
         this.props.scrollToTopOfResultList(); //
         this.props.increasePaginationFrom();
-        this.props.search();
+        this.props.paginate();
     };
 
     onPaginationPreviousClick = () => {
         this.props.scrollToTopOfResultList();
         this.props.decreasePaginationFrom();
-        this.props.search();
+        this.props.paginate();
     };
 
     render() {
@@ -48,7 +48,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    search: () => dispatch({ type: SEARCH }),
+    paginate: () => dispatch({ type: PAGINATE }),
     increasePaginationFrom: () => dispatch({ type: INCREASE_PAGINATION_FROM }),
     decreasePaginationFrom: () => dispatch({ type: DECREASE_PAGINATION_FROM })
 });

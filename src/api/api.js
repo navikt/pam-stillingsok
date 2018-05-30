@@ -44,7 +44,7 @@ export async function fetchSearch(query = {}) {
                 count: municipal.doc_count
             }))
         })),
-        heltidDeltid: result.aggregations.heltidDeltid.values.buckets.map((item) => ({
+        extent: result.aggregations.extent.values.buckets.map((item) => ({
             key: item.key,
             count: item.doc_count
         })),
