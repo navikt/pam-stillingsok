@@ -40,8 +40,8 @@ export class SearchTypeAhead extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-    value: state.query.q,
-    suggestions: state.typeAheadSuggestions
+    value: state.search.query.q,
+    suggestions: state.search.typeAheadSuggestions
 });
 
 const mapDispatchToProps = (dispatch) => ({

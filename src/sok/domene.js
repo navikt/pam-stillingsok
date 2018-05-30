@@ -409,7 +409,7 @@ export default function reducer(state = initialState, action) {
  * SELECTORS
  ********************************************************* */
 export const toSearchQuery = (state) => {
-    const { query } = state;
+    const { query } = state.search;
     let searchQuery = { ...query };
     if (query.counties && query.municipals) {
         // Hvis man filtrerer på en kommune, må man droppe fylket når man søker.
@@ -417,7 +417,7 @@ export const toSearchQuery = (state) => {
         searchQuery = {
             ...searchQuery,
             counties: query.counties.filter((county) => {
-                const countyObject = state.counties.find((c) => c.key === county);
+                const countyObject = state.search.counties.find((c) => c.key === county);
                 const found = countyObject.municipals.find((m) => query.municipals.includes(m.key));
                 return !found;
             })
@@ -488,9 +488,9 @@ function* initialSearch(action) {
 function* fetchTypeAheadSuggestions() {
     const TYPE_AHEAD_MIN_INPUT_LENGTH = 3;
     const state = yield select();
-    const value = state.query.q;
+    const value = state.search.query.q;
     if (value && value.length >= TYPE_AHEAD_MIN_INPUT_LENGTH) {
-        if (state.cachedTypeAheadSuggestions.length === 0) {
+        if (state.search.cachedTypeAheadSuggestions.length === 0) {
             const cachedTypeAheadMatch = value.substring(0, TYPE_AHEAD_MIN_INPUT_LENGTH);
             try {
                 const response = yield call(fetchTypeaheadSuggestions, cachedTypeAheadMatch);
@@ -507,7 +507,7 @@ function* fetchTypeAheadSuggestions() {
                 }
             }
         } else {
-            const suggestions = state.cachedTypeAheadSuggestions.filter((cachedSuggestion) => (
+            const suggestions = state.search.cachedTypeAheadSuggestions.filter((cachedSuggestion) => (
                 cachedSuggestion.toLowerCase().startsWith(value.toLowerCase())));
             yield put({ type: FETCH_TYPE_AHEAD_SUGGESTIONS_SUCCESS, suggestions });
         }

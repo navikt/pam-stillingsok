@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { applyMiddleware, createStore } from 'redux';
+import { applyMiddleware, createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
 import searchReducer, { saga } from './domene';
@@ -39,7 +39,7 @@ export const getInitialStateFromUrl = (url) => {
 };
 
 export const createUrlParamsFromState = (state) => {
-    const { query } = state;
+    const { query } = state.search;
     const urlQuery = {};
     if (query.q) urlQuery.q = query.q;
     if (query.sort) urlQuery.sort = query.sort;
@@ -54,12 +54,14 @@ export const createUrlParamsFromState = (state) => {
 };
 
 const sagaMiddleware = createSagaMiddleware();
-const store = createStore(searchReducer, composeWithDevTools(
-    applyMiddleware(sagaMiddleware)));
-
+//const store = createStore(searchReducer, composeWithDevTools(
+//    applyMiddleware(sagaMiddleware)));
+const store = createStore(combineReducers({
+    search: searchReducer
+}), applyMiddleware(sagaMiddleware));
 
 store.subscribe(() => {
-    if (store.getState().isSearching) {
+    if (store.getState().search.isSearching) {
         const urlParams = createUrlParamsFromState(store.getState());
         if (urlParams && urlParams.length > 0) {
             window.history.replaceState('', '', `?${urlParams}`);
