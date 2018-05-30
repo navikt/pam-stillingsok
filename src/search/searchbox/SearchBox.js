@@ -4,10 +4,12 @@ import { Knapp } from 'nav-frontend-knapper';
 import Typeahead from './Typeahead';
 import {
     SEARCH,
-    SET_TYPE_AHEAD_VALUE,
+    SET_TYPE_AHEAD_VALUE
+} from '../domene';
+import {
     SELECT_TYPE_AHEAD_VALUE,
     FETCH_TYPE_AHEAD_SUGGESTIONS
-} from '../domene';
+} from './searchBoxRedux';
 import './SearchBox.less';
 
 export class SearchBox extends React.Component {
@@ -52,7 +54,7 @@ export class SearchBox extends React.Component {
 
 const mapStateToProps = (state) => ({
     value: state.search.query.q,
-    suggestions: state.search.typeAheadSuggestions
+    suggestions: state.searchBox.typeAheadSuggestions
 });
 
 const mapDispatchToProps = (dispatch) => ({
