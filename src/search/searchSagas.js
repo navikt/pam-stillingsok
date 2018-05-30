@@ -52,6 +52,39 @@ export const toUrlQuery = (state) => {
         .replace(/%20/g, '+');
 };
 
+export function getUrlParameterByName(name, url) {
+    name = name.replace(/[\[\]]/g, '\\$&');
+    const regex = new RegExp(`[?&]${name}(=([^&#]*)|&|#|$)`);
+    const results = regex.exec(url);
+    if (!results) return undefined;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+}
+
+export function fromUrlQuery(url) {
+    const stateFromUrl = {};
+    const q = getUrlParameterByName('q', url);
+    const from = getUrlParameterByName('from', url);
+    const sort = getUrlParameterByName('sort', url);
+    const counties = getUrlParameterByName('counties', url);
+    const municipals = getUrlParameterByName('municipals', url);
+    const extent = getUrlParameterByName('extent', url);
+    const engagementType = getUrlParameterByName('engagementType', url);
+    const sector = getUrlParameterByName('sector', url);
+    const created = getUrlParameterByName('created', url);
+
+    if (q) stateFromUrl.q = q;
+    if (from) stateFromUrl.from = parseInt(from, 10);
+    if (sort) stateFromUrl.sort = sort;
+    if (counties) stateFromUrl.counties = counties.split('_');
+    if (municipals) stateFromUrl.municipals = municipals.split('_');
+    if (extent) stateFromUrl.extent = extent.split('_');
+    if (engagementType) stateFromUrl.engagementType = engagementType.split('_');
+    if (sector) stateFromUrl.sector = sector.split('_');
+    if (created) stateFromUrl.created = created.split('_');
+    return stateFromUrl;
+};
+
 function* search(action, resetPage = true) {
     try {
         if (resetPage) {
@@ -86,8 +119,9 @@ function* initialSearch(action) {
     const state = yield select();
     if (!state.initialSearchDone) {
         try {
-            if (Object.keys(action.query).length > 0) {
-                yield put({ type: SET_INITIAL_STATE, query: action.query });
+            const urlQuery = fromUrlQuery(window.location.href);
+            if (Object.keys(urlQuery).length > 0) {
+                yield put({ type: SET_INITIAL_STATE, query: urlQuery });
                 const response = yield call(fetchSearch);
                 yield put({ type: INITIAL_SEARCH_SUCCESS, response });
                 yield call(search, action);

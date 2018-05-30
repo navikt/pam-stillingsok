@@ -13,50 +13,13 @@ import Sector from './facets/sector/Sector';
 import Created from './facets/created/Created';
 import SearchBox from './searchBox/SearchBox';
 import NoResults from './searchResults/NoSearchResults';
-import {
-    INITIAL_SEARCH,
-    SEARCH
-} from './searchSagas';
+import { INITIAL_SEARCH, SEARCH } from './searchSagas';
 import './Search.less';
-
-export function getUrlParameterByName(name, url) {
-    name = name.replace(/[\[\]]/g, '\\$&');
-    const regex = new RegExp(`[?&]${name}(=([^&#]*)|&|#|$)`);
-    const results = regex.exec(url);
-    if (!results) return undefined;
-    if (!results[2]) return '';
-    return decodeURIComponent(results[2].replace(/\+/g, ' '));
-}
-
-export const getInitialStateFromUrl = (url) => {
-    const stateFromUrl = {};
-    const q = getUrlParameterByName('q', url);
-    const from = getUrlParameterByName('from', url);
-    const sort = getUrlParameterByName('sort', url);
-    const counties = getUrlParameterByName('counties', url);
-    const municipals = getUrlParameterByName('municipals', url);
-    const extent = getUrlParameterByName('extent', url);
-    const engagementType = getUrlParameterByName('engagementType', url);
-    const sector = getUrlParameterByName('sector', url);
-    const created = getUrlParameterByName('created', url);
-
-    if (q) stateFromUrl.q = q;
-    if (from) stateFromUrl.from = parseInt(from, 10);
-    if (sort) stateFromUrl.sort = sort;
-    if (counties) stateFromUrl.counties = counties.split('_');
-    if (municipals) stateFromUrl.municipals = municipals.split('_');
-    if (extent) stateFromUrl.extent = extent.split('_');
-    if (engagementType) stateFromUrl.engagementType = engagementType.split('_');
-    if (sector) stateFromUrl.sector = sector.split('_');
-    if (created) stateFromUrl.created = created.split('_');
-    return stateFromUrl;
-};
 
 class Search extends React.Component {
     constructor(props) {
         super(props);
-        const query = getInitialStateFromUrl(window.location.href);
-        this.props.initialSearch(query);
+        this.props.initialSearch();
     }
 
     onSearchFormSubmit = (e) => {
@@ -147,7 +110,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    initialSearch: (query) => dispatch({ type: INITIAL_SEARCH, query }),
+    initialSearch: (query) => dispatch({ type: INITIAL_SEARCH }),
     search: () => dispatch({ type: SEARCH })
 });
 
