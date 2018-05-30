@@ -86,9 +86,9 @@ export class Counties extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-    counties: state.counties,
-    checkedCounties: state.query.counties,
-    checkedMunicipals: state.query.municipals,
+    counties: state.search.counties,
+    checkedCounties: state.search.query.counties,
+    checkedMunicipals: state.search.query.municipals,
 });
 
 const mapDispatchToProps = (dispatch) => ({

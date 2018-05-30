@@ -59,8 +59,8 @@ export class HeltidDeltid extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-    heltidDeltid: state.heltidDeltid,
-    checkedHeltidDeltid: state.query.heltidDeltid
+    heltidDeltid: state.search.heltidDeltid,
+    checkedHeltidDeltid: state.search.query.heltidDeltid
 });
 
 const mapDispatchToProps = (dispatch) => ({

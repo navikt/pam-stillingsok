@@ -28,7 +28,7 @@ export class SearchResultSorting extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-    sort: state.query.sort
+    sort: state.search.query.sort
 });
 
 const mapDispatchToProps = (dispatch) => ({

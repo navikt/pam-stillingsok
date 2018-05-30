@@ -59,8 +59,8 @@ export class EngagementType extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-    engagementType: state.engagementType,
-    checkedEngagementType: state.query.engagementType
+    engagementType: state.search.engagementType,
+    checkedEngagementType: state.search.query.engagementType
 });
 
 const mapDispatchToProps = (dispatch) => ({
