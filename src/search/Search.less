@@ -1,0 +1,202 @@
+@import '../../node_modules/nav-frontend-core/less/_variabler.less';
+@import "../colorTheme";
+
+@link-color: #000000;
+
+#search-result-pagination {
+  text-align: center;
+}
+
+#search-result-pagination .knapp:not(:last-child) {
+  margin-right: 1rem;
+}
+
+@media (min-width: @screen-sm-min) {
+  .search-result-count-wrapper,
+  #search-form-fritekst-input-wrapper {
+    min-height: 5rem;
+    position: relative;
+  }
+}
+
+@media (max-width: 767px) {
+  #search-form-fritekst-input-wrapper{
+    margin-bottom: 1rem;
+  }
+}
+
+#search-form-fritekst-input-wrapper {
+  padding-top: 0.5rem;
+  position: relative;
+}
+
+#search-form-fritekst-input {
+  width: 100%;
+  padding: 1rem;
+  border-radius: 0;
+  border-width: 1px;
+  font-size: 110%;
+}
+
+.search-button {
+  padding: 10px 1rem 10px 1rem!important;
+  border-radius: 0!important;
+  border: none!important;
+  top: 1px;
+  right: 1px;
+  position: absolute;
+
+  &:hover,
+  &:active {
+    background-color: @navGronn!important;
+  }
+}
+
+.search-button__icon {
+  width: 32px;
+  height: 32px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24'%3E%3Cg stroke='%23000' stroke-linejoin='round' stroke-miterlimit='10' fill='none'%3E%3Ccircle cx='8.5' cy='8.5' r='8'/%3E%3Cpath stroke-linecap='round' d='M14.156 14.156l9.344 9.344'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 28px;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: block;
+}
+
+.search-button:hover .search-button__icon,
+.search-button:active .search-button__icon  {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24'%3E%3Cg stroke='%23fff' stroke-linejoin='round' stroke-miterlimit='10' fill='none'%3E%3Ccircle cx='8.5' cy='8.5' r='8'/%3E%3Cpath stroke-linecap='round' d='M14.156 14.156l9.344 9.344'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+.typeahead {
+  position: relative;
+  margin-top: -0.5rem;
+
+  ul {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    min-width: 100%;
+    padding: 0;
+    margin: 0;
+    background-color: #fff;
+    border: 1px solid @navGronn;
+    border-top: none;
+    box-shadow: 0px 5px 15px -5px @navGra60;
+    overflow: auto;
+  }
+
+  ul li {
+    display: block;
+    clear: both;
+    line-height: 2rem;
+    color: #333;
+    white-space: nowrap;
+    font-size: initial;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: pointer;
+  }
+
+  .typetext {
+    display: block;
+    width: 100%;
+    padding: 0px 1rem;
+  }
+
+  .active {
+    color: #fff;
+    background-color: @navGronn;
+  }
+
+}
+
+.typeahead-suggestions-hidden {
+  display: none;
+}
+
+.typeahead-substring {
+  font-weight: bold;
+}
+
+#no-results {
+  background: #fff;
+  padding: 4rem;
+  text-align: center;
+  border: 1px solid @border-gray;
+}
+
+.search-page-header {
+  background-color: @background-green;
+  padding-bottom: 11.25rem;
+}
+
+.search-page-margin {
+  margin-top: -9rem;
+}
+
+#search-result-count {
+  margin-top: 0.8rem;
+  color: @color-green;
+}
+
+.search-page-filter {
+  padding: 0.5rem;
+}
+
+.search-page-filter:not(:last-child) {
+  border-bottom: none;
+}
+
+.filter-municipals {
+  margin-left: 2rem;
+}
+
+.filter-created {
+  padding: 1rem 0 0.5rem 1.5rem;
+}
+
+.search-result-item {
+  display: flex;
+}
+
+.search-result-item__arbeidsgiver {
+  align-self: center;
+  text-align: center;
+  padding: 0 2rem;
+}
+
+.search-result-item-link {
+  background-color: #fff;
+  padding: 1rem;
+  display: block;
+  text-decoration: none;
+  color: @link-color;
+  border: 1px solid @border-gray;
+  margin-bottom: 1rem;
+
+  &:focus {
+    outline: 4px solid @navOransjeLighten40;
+    border-color: transparent;
+  }
+
+  &:hover {
+    outline: 2px solid @navGronnLighten40;
+    color: @navGronn;
+    border-color: transparent;
+  }
+
+}
+
+.bilde {
+  max-width: 100%
+}
+
+.bilde__muted {
+  opacity: 0.2;
+}
+
+
+
