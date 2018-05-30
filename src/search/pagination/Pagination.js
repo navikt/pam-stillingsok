@@ -5,7 +5,7 @@ import { SEARCH } from '../searchResults/searchResultsReducer';
 import {
     INCREASE_PAGINATION_FROM,
     DECREASE_PAGINATION_FROM
-} from './paginationRedux';
+} from './paginationReducer';
 import './Pagination.less';
 
 export class Pagination extends React.Component {

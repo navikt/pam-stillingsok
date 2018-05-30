@@ -14,7 +14,7 @@ export default function paginationReducer(state = initialState, action) {
         case SET_INITIAL_STATE:
             return {
                 ...state,
-                from: action.query.from ? action.query.from : 0
+                from: action.query.from || 0
             };
         case INCREASE_PAGINATION_FROM:
             return {

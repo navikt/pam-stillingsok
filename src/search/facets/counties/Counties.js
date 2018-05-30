@@ -8,7 +8,7 @@ import {
     UNCHECK_COUNTY,
     CHECK_MUNICIPAL,
     UNCHECK_MUNICIPAL
-} from '../../domene';
+} from './countiesReducer';
 
 export class Counties extends React.Component {
     onCountyClick = (e) => {
@@ -85,9 +85,9 @@ export class Counties extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-    counties: state.reducer.counties,
-    checkedCounties: state.reducer.query.counties,
-    checkedMunicipals: state.reducer.query.municipals
+    counties: state.counties.counties,
+    checkedCounties: state.counties.checkedCounties,
+    checkedMunicipals: state.counties.checkedMunicipals
 });
 
 const mapDispatchToProps = (dispatch) => ({

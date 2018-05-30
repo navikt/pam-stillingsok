@@ -5,7 +5,7 @@ import { SEARCH } from '../../searchResults/searchResultsReducer';
 import {
     CHECK_CREATED,
     UNCHECK_CREATED,
-} from "../../domene";
+} from "./createdReducer";
 
 export class Created extends React.Component {
 
@@ -41,8 +41,8 @@ export class Created extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-    created: state.reducer.created,
-    checkedCreated: state.reducer.query.created
+    created: state.created.created,
+    checkedCreated: state.created.checkedCreated
 });
 
 const mapDispatchToProps = (dispatch) => ({

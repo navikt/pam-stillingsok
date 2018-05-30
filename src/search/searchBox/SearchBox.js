@@ -7,7 +7,7 @@ import { SET_TYPE_AHEAD_VALUE } from '../domene';
 import {
     SELECT_TYPE_AHEAD_VALUE,
     FETCH_TYPE_AHEAD_SUGGESTIONS
-} from './searchBoxRedux';
+} from './searchBoxReducer';
 import './SearchBox.less';
 
 export class SearchBox extends React.Component {

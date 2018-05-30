@@ -12,9 +12,6 @@ export const FETCH_ENGAGEMENT_TYPE_COUNT_SUCCESS = 'FETCH_ENGAGEMENT_TYPE_COUNT_
 export const FETCH_INITIAL_HELTID_DELTID_SUCCESS = 'FETCH_INITIAL_HELTID_DELTID_SUCCESS';
 export const FETCH_HELTID_DELTID_COUNT_SUCCESS = 'FETCH_HELTID_DELTID_COUNT_SUCCESS';
 
-export const FETCH_INITIAL_COUNTIES_SUCCESS = 'FETCH_INITIAL_COUNTIES_SUCCESS';
-export const FETCH_COUNTIES_COUNT_SUCCESS = 'FETCH_COUNTIES_COUNT_SUCCESS';
-
 export const FETCH_INITIAL_SECTOR_SUCCESS = 'FETCH_INITIAL_SECTOR_SUCCESS';
 export const FETCH_SECTOR_COUNT_SUCCESS = 'FETCH_SECTOR_COUNT_SUCCESS';
 
@@ -29,30 +26,20 @@ export const UNCHECK_ENGAGEMENT_TYPE = 'UNCHECK_ENGAGEMENT_TYPE';
 export const CHECK_HELTID_DELTID = 'CHECK_HELTID_DELTID';
 export const UNCHECK_HELTID_DELTID = 'UNCHECK_HELTID_DELTID';
 
-export const CHECK_COUNTY = 'CHECK_COUNTY';
-export const UNCHECK_COUNTY = 'UNCHECK_COUNTY';
-export const CHECK_MUNICIPAL = 'CHECK_MUNICIPAL';
-export const UNCHECK_MUNICIPAL = 'UNCHECK_MUNICIPAL';
-
 export const CHECK_SECTOR = 'CHECK_SECTOR';
 export const UNCHECK_SECTOR = 'UNCHECK_SECTOR';
 
-export const CHECK_CREATED = 'CHECK_CREATED';
-export const UNCHECK_CREATED = 'UNCHECK_CREATED';
 
 /** *********************************************************
  * REDUCER
  ********************************************************* */
 const initialState = {
     heltidDeltid: [],
-    counties: [],
     engagementType: [],
     sector: [],
     created: [],
     query: {
         q: '',
-        counties: [],
-        municipals: [],
         heltidDeltid: [],
         engagementType: [],
         sector: [],
@@ -99,37 +86,6 @@ export default function reducer(state = initialState, action) {
                     };
                 })
             };
-        case FETCH_INITIAL_COUNTIES_SUCCESS:
-            return {
-                ...state,
-                counties: action.response
-            };
-        case FETCH_COUNTIES_COUNT_SUCCESS:
-            return {
-                ...state,
-                counties: state.counties.map((county) => {
-                    const foundCounty = action.response.find((c) => (
-                        c.key === county.key
-                    ));
-                    return {
-                        ...county,
-                        count: foundCounty ? foundCounty.count : 0,
-                        municipals: county.municipals.map((municipal) => {
-                            let newMunicipalCount = 0;
-                            if (foundCounty) {
-                                const foundMunicipal = foundCounty.municipals.find((m) => (
-                                    m.key === municipal.key
-                                ));
-                                newMunicipalCount = foundMunicipal ? foundMunicipal.count : 0;
-                            }
-                            return {
-                                ...municipal,
-                                count: newMunicipalCount
-                            };
-                        })
-                    };
-                })
-            };
         case FETCH_INITIAL_SECTOR_SUCCESS:
             return {
                 ...state,
@@ -139,24 +95,6 @@ export default function reducer(state = initialState, action) {
             return {
                 ...state,
                 sector: state.sector.map((item) => {
-                    const found = action.response.find((e) => (
-                        e.key === item.key
-                    ));
-                    return {
-                        ...item,
-                        count: found ? found.count : 0
-                    };
-                })
-            };
-        case FETCH_INITIAL_CREATED_SUCCESS:
-            return {
-                ...state,
-                created: action.response
-            };
-        case FETCH_CREATED_COUNT_SUCCESS:
-            return {
-                ...state,
-                created: state.created.map((item) => {
                     const found = action.response.find((e) => (
                         e.key === item.key
                     ));
@@ -226,51 +164,6 @@ export default function reducer(state = initialState, action) {
                     from: 0
                 }
             };
-        case CHECK_COUNTY:
-            return {
-                ...state,
-                query: {
-                    ...state.query,
-                    counties: [
-                        ...state.query.counties,
-                        action.county
-                    ],
-                    from: 0
-                }
-            };
-        case UNCHECK_COUNTY:
-            const countyObject = state.counties.find((c) => c.key === action.county);
-            return {
-                ...state,
-                query: {
-                    ...state.query,
-                    counties: state.query.counties.filter((c) => (c !== action.county)),
-                    municipals: state.query.municipals ? state.query.municipals.filter((m1) =>
-                        !countyObject.municipals.find((m) => m.key === m1)) : [],
-                    from: 0
-                }
-            };
-        case CHECK_MUNICIPAL:
-            return {
-                ...state,
-                query: {
-                    ...state.query,
-                    municipals: [
-                        ...state.query.municipals,
-                        action.municipal
-                    ],
-                    from: 0
-                }
-            };
-        case UNCHECK_MUNICIPAL:
-            return {
-                ...state,
-                query: {
-                    ...state.query,
-                    municipals: state.query.municipals.filter((m) => (m !== action.municipal)),
-                    from: 0
-                }
-            };
         case CHECK_SECTOR:
             return {
                 ...state,
@@ -289,27 +182,6 @@ export default function reducer(state = initialState, action) {
                 query: {
                     ...state.query,
                     sector: state.query.sector.filter((e) => (e !== action.value)),
-                    from: 0
-                }
-            };
-        case CHECK_CREATED:
-            return {
-                ...state,
-                query: {
-                    ...state.query,
-                    created: [
-                        ...state.query.created,
-                        action.value
-                    ],
-                    from: 0
-                }
-            };
-        case UNCHECK_CREATED:
-            return {
-                ...state,
-                query: {
-                    ...state.query,
-                    created: state.query.created.filter((e) => (e !== action.value)),
                     from: 0
                 }
             };

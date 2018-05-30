@@ -11,7 +11,7 @@ export default function sortingReducer(state = initialState, action) {
         case SET_INITIAL_STATE:
             return {
                 ...state,
-                sort: action.query.sort ? action.query.sort : ''
+                sort: action.query.sort || ''
             };
         case SET_SORTING:
             return {

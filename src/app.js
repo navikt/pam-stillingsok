@@ -7,9 +7,11 @@ import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
 import reducer from './search/domene';
 import searchResultsReducer, { searchResultsSaga } from './search/searchResults/searchResultsReducer';
-import searchBoxReducer, { searchBoxSaga } from './search/searchBox/searchBoxRedux';
-import paginationReducer from './search/pagination/paginationRedux';
+import searchBoxReducer, { searchBoxSaga } from './search/searchBox/searchBoxReducer';
+import paginationReducer from './search/pagination/paginationReducer';
 import sortingReducer from './search/sorting/sortingReducer';
+import countiesReducer from './search/facets/counties/countiesReducer';
+import createdReducer from './search/facets/created/createdReducer';
 import SearchPage from './search/Search';
 import StillingPage from './stilling/Stilling';
 import { CONTEXT_PATH } from './fasitProperties';
@@ -23,7 +25,9 @@ const store = createStore(combineReducers({
     searchResults: searchResultsReducer,
     searchBox: searchBoxReducer,
     pagination: paginationReducer,
-    sorting: sortingReducer
+    sorting: sortingReducer,
+    counties: countiesReducer,
+    created: createdReducer
 }), applyMiddleware(sagaMiddleware));
 
 sagaMiddleware.run(searchResultsSaga);
