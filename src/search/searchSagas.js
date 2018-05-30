@@ -117,7 +117,7 @@ function* paginate(action) {
 
 function* initialSearch(action) {
     const state = yield select();
-    if (!state.initialSearchDone) {
+    if (!state.searchResults.initialSearchDone) {
         try {
             const urlQuery = fromUrlQuery(window.location.href);
             if (Object.keys(urlQuery).length > 0) {
