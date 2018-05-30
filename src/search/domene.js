@@ -426,6 +426,24 @@ export const toSearchQuery = (state) => {
     return searchQuery;
 };
 
+export const toUrlQuery = (query) => {
+    const urlQuery = {};
+    if (query.q) urlQuery.q = query.q;
+    if (query.sort) urlQuery.sort = query.sort;
+    if (query.from) urlQuery.from = query.from;
+    if (query.counties && query.counties.length > 0) urlQuery.counties = query.counties.join('_');
+    if (query.municipals && query.municipals.length > 0) urlQuery.municipals = query.municipals.join('_');
+    if (query.heltidDeltid && query.heltidDeltid.length > 0) urlQuery.heltidDeltid = query.heltidDeltid.join('_');
+    if (query.engagementType && query.engagementType.length > 0) urlQuery.engagementType = query.engagementType.join('_');
+    if (query.sector && query.sector.length > 0) urlQuery.sector = query.sector.join('_');
+    if (query.created && query.created.length > 0) urlQuery.created = query.created.join('_');
+
+    return Object.keys(urlQuery)
+        .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(urlQuery[key])}`)
+        .join('&')
+        .replace(/%20/g, '+');
+};
+
 /** *********************************************************
  * ASYNC ACTIONS
  ********************************************************* */
@@ -433,6 +451,11 @@ function* search() {
     try {
         yield put({ type: SEARCH_BEGIN });
         const state = yield select();
+
+        // Update browser url to reflect current search query
+        const urlQuery = toUrlQuery(state.search.query);
+        const newUrlQuery = urlQuery && urlQuery.length > 0 ? `?${urlQuery}` : window.location.pathname;
+        window.history.replaceState('', '', newUrlQuery);
 
         const response = yield call(fetchSearch, toSearchQuery(state));
 

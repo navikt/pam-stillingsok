@@ -14,16 +14,6 @@ export function toDate(isoString) {
     return new Date(isoString);
 }
 
-export function toIsoDateString(year, month) {
-    const monthAsInteger = parseInt(month, 10);
-    const zeroPaddedMonth = monthAsInteger > 9 ? monthAsInteger : `0${monthAsInteger}`;
-    const isoDateString = `${year}-${zeroPaddedMonth}`;
-    if (!isValidISOString(isoDateString)) {
-        throw Error(`One or more args are invalid: year=${year} month=${month}`);
-    }
-    return isoDateString;
-}
-
 export function formatISOString(isoString, format = 'MMMM YYYY') {
     if (isValidISOString(isoString)) {
         const dt = isoString.split('-');
@@ -38,21 +28,6 @@ export function formatISOString(isoString, format = 'MMMM YYYY') {
     return '';
 }
 
-export function toUrlParams(query) {
-    return Object.keys(query)
-        .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(query[key])}`)
-        .join('&')
-        .replace(/%20/g, '+');
-}
 
-export function getUrlParameterByName(name, url) {
-    if (!url) url = window.location.href;
-    name = name.replace(/[\[\]]/g, '\\$&');
-    let regex = new RegExp(`[?&]${name}(=([^&#]*)|&|#|$)`),
-        results = regex.exec(url);
-    if (!results) return undefined;
-    if (!results[2]) return '';
-    return decodeURIComponent(results[2].replace(/\+/g, ' '));
-}
 
 export default toDate;
