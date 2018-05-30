@@ -16,7 +16,8 @@ module.exports = merge(common, {
             __PAM_MINSIDE__: "'/minSide'",
             __PAM_IS_TOKEN_VALID__: "'/valid'",
             __PAM_LOGOUT__: "'/logout'",
-            __PAM_STILLING__: "'/stilling/'"
+            __PAM_STILLING__: "'/stilling/'",
+            __PAM_CONTEXT_PATH__: "''"
 })
     ]
 });

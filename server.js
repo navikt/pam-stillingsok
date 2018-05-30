@@ -34,6 +34,7 @@ server.set('view engine', 'mustache');
 server.engine('html', mustacheExpress());
 
 const fasitProperties = {
+    PAM_CONTEXT_PATH: '/pam-stillingsok',
     PAM_SEARCH_API: '/pam-stillingsok/search-api',
     PAM_STILLING: '/pam-stillingsok/stilling/',
     PAM_FORSIDE: process.env.PAM_FORSIDE,
@@ -45,6 +46,7 @@ const fasitProperties = {
 
 const writeEnvironmentVariablesToFile = () => {
     const fileContent =
+        'window.__PAM_CONTEXT_PATH__="' + fasitProperties.PAM_CONTEXT_PATH + '";\n' +
         'window.__PAM_STILLING__="' + fasitProperties.PAM_STILLING + '";\n' +
         'window.__PAM_SEARCH_API__="' + fasitProperties.PAM_SEARCH_API + '";\n' +
         'window.__PAM_FORSIDE__="' + fasitProperties.PAM_FORSIDE + '";\n' +

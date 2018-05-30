@@ -9,6 +9,7 @@ import searchReducer, { saga } from './domene';
 import { getUrlParameterByName, toUrlParams } from './utils';
 import SearchPage from './SearchPage';
 import StillingPage from '../stilling/StillingPage';
+import { CONTEXT_PATH } from './fasitProperties';
 import './../styles.less';
 import './../colorTheme.less';
 import './sok.less';
@@ -75,7 +76,7 @@ ReactDOM.render(
         <BrowserRouter>
             <Switch>
                 <Route exact path="/" component={SearchPage} />
-                <Route path="/stilling/:uuid" component={StillingPage} />
+                <Route path={`${CONTEXT_PATH}/stilling/:uuid`} component={StillingPage} />
             </Switch>
         </BrowserRouter>
     </Provider>,
