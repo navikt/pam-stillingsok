@@ -6,7 +6,7 @@ import { applyMiddleware, createStore } from 'redux';
 import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
 import searchReducer, { saga } from './domene';
-import { getUrlParameterByName, toUrlParams } from './utils';
+import { getUrlParameterByName, toUrlParams } from './../utils';
 import SearchPage from './SearchPage';
 import StillingPage from '../stilling/StillingPage';
 import { CONTEXT_PATH } from '../fasitProperties';
