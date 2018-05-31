@@ -23,10 +23,34 @@ class Search extends React.Component {
         this.props.initialSearch();
     }
 
+    componentDidMount() {
+        try {
+            let lastScrollPosition = sessionStorage.getItem('lastScrollPosition');
+            console.log(lastScrollPosition)
+            if (lastScrollPosition !== null) {
+                lastScrollPosition = parseInt(lastScrollPosition, 10);
+                sessionStorage.removeItem('lastScrollPosition');
+                window.scrollTo(0, lastScrollPosition);
+            }
+        } catch (e) {
+            // Do nothing
+        }
+    }
+
+    componentWillUnmount() {
+        const top = window.pageYOffset || document.documentElement.scrollTop;
+        try {
+            sessionStorage.setItem('lastScrollPosition', top);
+        } catch (e) {
+            // Do nothing
+        }
+    }
+
     onSearchFormSubmit = (e) => {
         e.preventDefault();
         this.props.search();
     };
+
 
     scrollToTopOfResultList = () => {
         this.resultatListe.scrollIntoView();

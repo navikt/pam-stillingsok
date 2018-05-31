@@ -7,15 +7,6 @@ import { formatISOString } from '../../utils';
 import { STILLING } from '../../fasitProperties';
 import './SearchResultsItem.less';
 
-function keepScrollPosition() {
-    const top = window.pageYOffset || document.documentElement.scrollTop;
-    try {
-        sessionStorage.setItem('lastScrollPosition', top);
-    } catch (e) {
-        // Do nothing
-    }
-}
-
 export default function SearchResultItem(props) {
     const { stilling } = props;
     return (
@@ -23,7 +14,6 @@ export default function SearchResultItem(props) {
             className="SearchResultItem"
             to={`${STILLING}${stilling.uuid}`}
             aria-label={`${stilling.title} hos ${stilling.properties.employer}`}
-            onClick={keepScrollPosition}
         >
             <Row className="SearchResultItem__inner">
                 <Column xs="4" className="SearchResultItem__inner__arbeidsgiver">
