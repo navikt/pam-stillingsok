@@ -6,6 +6,9 @@ import { Sidetittel } from 'nav-frontend-typografi';
 import { fetchStilling } from './api';
 import StillingsBoks from './listbox/ListBox';
 import Details from './Details';
+import NotFound from './NotFound';
+import SearchError from '../search/error/SearchError';
+import Expired from './Expired';
 import './Stilling.less';
 
 const arrayHasData = (array) => array && array[0].hasOwnProperty('punkt');
@@ -28,7 +31,7 @@ export default class Stilling extends React.Component {
         fetchStilling(this.state.id).then(
             (response) => {
                 this.setState({
-                    stilling: response.hits.hits[0]
+                    stilling: response
                 });
             },
             (error) => {
@@ -42,11 +45,23 @@ export default class Stilling extends React.Component {
     render() {
         return (
             <div>
-                {this.state.error && (
-                    <Container>Det oppstod en feil</Container>
+                {this.state.error && this.state.error.statusCode === 404 ? (
+                    <Container>
+                        <NotFound />
+                    </Container>
+                ) : this.state.error && (
+                    <Container>
+                        <SearchError />
+                    </Container>
                 )}
 
-                {this.state.stilling && (
+                {this.state.stilling && this.state.stilling._source.status !== 'ACTIVE' && (
+                    <Container>
+                        <Expired />
+                    </Container>
+                )}
+
+                {this.state.stilling && this.state.stilling._source.status === 'ACTIVE' && (
                     <article id="annonse-container">
                         <header id="annonse-header" className="background--light-green">
                             <Container>

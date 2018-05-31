@@ -8,7 +8,7 @@ function refreshPage() {
     window.location.reload();
 }
 
-export function SearchError() {
+function SearchError() {
     return (
         <AlertStripeAdvarsel type="advarsel" className="SearchError">
             <div className="SearchError__message">
