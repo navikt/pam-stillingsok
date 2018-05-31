@@ -1,4 +1,4 @@
-@import "../../variables";
+@import "../../../node_modules/nav-frontend-core/less/core";
 
 .Typeahead {
   position: relative;
@@ -31,6 +31,23 @@
     -ms-user-select: none;
     user-select: none;
     cursor: pointer;
+  }
+}
+
+.Typeahead__input {
+  width: 100%;
+  padding: 1rem;
+  border-radius: 0;
+  font-size: 110%;
+  border: 1px solid @navGronn;
+
+  &:hover {
+    border-color: @navGronnDarken40;
+  }
+
+  &:focus {
+    outline: 0;
+    box-shadow: 0 0 0 3px @navOransjeLighten40;
   }
 }
 

@@ -7,6 +7,7 @@ import {
     CHECK_EXTENT,
     UNCHECK_EXTENT
 } from './extentReducer';
+import './Extent.less';
 
 export class Extent extends React.Component {
     onExtentClick = (e) => {
@@ -31,18 +32,17 @@ export class Extent extends React.Component {
             <Ekspanderbartpanel
                 tittel={title}
                 tittelProps="element"
-                className="panel--white-bg panel--gray-border blokk-xs"
+                className="Extent"
                 apen={checkedExtent.length > 0}
             >
                 <div
                     role="group"
-                    aria-labelledby="heltid-deltid-filter-header"
-                    className="search-page-filter"
+                    className="Extent__inner"
                 >
                     <div>
                         {extent && extent.map((item) => (
                             <Checkbox
-                                name="heltidDeltid"
+                                name="extent"
                                 key={item.key}
                                 label={`${item.key} (${item.count})`}
                                 value={item.key}

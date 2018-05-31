@@ -153,7 +153,7 @@ export default class Typeahead extends React.Component {
                     ref={(input) => {
                         this.input = input;
                     }}
-                    className="skjemaelement__input input--fullbredde"
+                    className="Typeahead__input"
                 />
                 <ul
                     id={`${this.props.id}-suggestions`}

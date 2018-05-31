@@ -2,6 +2,20 @@
 
 .SearchBox {
   position: relative;
+  margin-top: 0.5rem;
+}
+
+@media (min-width: @screen-sm-min) {
+  .SearchBox {
+    min-height: 5rem;
+    position: relative;
+  }
+}
+
+@media (max-width: 767px) {
+  .SearchBox{
+    margin-bottom: 1rem;
+  }
 }
 
 .SearchBox__button {

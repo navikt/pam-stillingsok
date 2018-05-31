@@ -4,6 +4,7 @@ import { Row, Column } from 'nav-frontend-grid';
 import { Normaltekst, Element } from 'nav-frontend-typografi';
 import { formatISOString } from '../../utils';
 import { STILLING } from '../../fasitProperties';
+import './SearchResultsItem.less';
 
 function keepScrollPosition() {
     const top = window.pageYOffset || document.documentElement.scrollTop;
@@ -18,13 +19,13 @@ export default function SearchResultItem(props) {
     const { stilling } = props;
     return (
         <Link
-            className="search-result-item-link"
+            className="SearchResultItem"
             to={`${STILLING}${stilling.uuid}`}
             aria-label={`${stilling.title} hos ${stilling.properties.employer}`}
             onClick={keepScrollPosition}
         >
-            <Row className="search-result-item">
-                <Column xs="4" className="search-result-item__arbeidsgiver">
+            <Row className="SearchResultItem__inner">
+                <Column xs="4" className="SearchResultItem__inner__arbeidsgiver">
                     {stilling.properties.employer && (
                         <Normaltekst className="break-word">{stilling.properties.employer}</Normaltekst>
                     ) }

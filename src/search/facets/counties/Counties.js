@@ -9,6 +9,7 @@ import {
     CHECK_MUNICIPAL,
     UNCHECK_MUNICIPAL
 } from './countiesReducer';
+import './Counties.less';
 
 export class Counties extends React.Component {
     onCountyClick = (e) => {
@@ -43,41 +44,38 @@ export class Counties extends React.Component {
             <Ekspanderbartpanel
                 tittel={title}
                 tittelProps="element"
-                className="panel--white-bg panel--gray-border blokk-xs"
+                className="Counties"
                 apen
             >
                 <div
                     role="group"
-                    aria-labelledby="location-filter-header"
-                    className="search-page-filter"
+                    className="Counties__inner"
                 >
-                    <div className="filter-counties">
-                        {counties && counties.map((county) => (
-                            <div key={county.key}>
-                                <Checkbox
-                                    name="county"
-                                    label={`${county.key} (${county.count})`}
-                                    value={county.key}
-                                    onChange={this.onCountyClick}
-                                    checked={checkedCounties.includes(county.key)}
-                                />
-                                {checkedCounties && checkedCounties.includes(county.key) && county.key !== 'OSLO' && (
-                                    <div className="filter-municipals">
-                                        {county.municipals && county.municipals.map((municipal) => (
-                                            <Checkbox
-                                                name="municipal"
-                                                key={municipal.key}
-                                                label={`${municipal.key} (${municipal.count})`}
-                                                value={municipal.key}
-                                                onChange={this.onMunicipalClick}
-                                                checked={checkedMunicipals.includes(municipal.key)}
-                                            />
-                                        ))}
-                                    </div>
-                                )}
-                            </div>
-                        ))}
-                    </div>
+                    {counties && counties.map((county) => (
+                        <div key={county.key}>
+                            <Checkbox
+                                name="county"
+                                label={`${county.key} (${county.count})`}
+                                value={county.key}
+                                onChange={this.onCountyClick}
+                                checked={checkedCounties.includes(county.key)}
+                            />
+                            {checkedCounties && checkedCounties.includes(county.key) && county.key !== 'OSLO' && (
+                                <div className="Counties__inner__municipals">
+                                    {county.municipals && county.municipals.map((municipal) => (
+                                        <Checkbox
+                                            name="municipal"
+                                            key={municipal.key}
+                                            label={`${municipal.key} (${municipal.count})`}
+                                            value={municipal.key}
+                                            onChange={this.onMunicipalClick}
+                                            checked={checkedMunicipals.includes(municipal.key)}
+                                        />
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                    ))}
                 </div>
             </Ekspanderbartpanel>
         );

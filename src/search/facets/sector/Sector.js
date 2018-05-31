@@ -7,6 +7,7 @@ import {
     CHECK_SECTOR,
     UNCHECK_SECTOR
 } from './sectorReducer';
+import './Sector.less';
 
 export class Sector extends React.Component {
     onSectorClick = (e) => {
@@ -31,13 +32,12 @@ export class Sector extends React.Component {
             <Ekspanderbartpanel
                 tittel={title}
                 tittelProps="element"
-                className="panel--white-bg panel--gray-border blokk-xs"
+                className="Sector"
                 apen={checkedSector.length > 0}
             >
                 <div
                     role="group"
-                    aria-labelledby="sector-filter-header"
-                    className="search-page-filter"
+                    className="Sector__inner"
                 >
                     {sector && sector.map((item) => (
                         <Checkbox

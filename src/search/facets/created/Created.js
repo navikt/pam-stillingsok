@@ -4,11 +4,12 @@ import { Checkbox } from 'nav-frontend-skjema';
 import { SEARCH } from '../../searchReducer';
 import {
     CHECK_CREATED,
-    UNCHECK_CREATED,
-} from "./createdReducer";
+    UNCHECK_CREATED
+} from './createdReducer';
+import './Created.less';
+
 
 export class Created extends React.Component {
-
     onCreatedClick = (e) => {
         const { value } = e.target;
         if (e.target.checked) {
@@ -20,10 +21,10 @@ export class Created extends React.Component {
     };
 
     render() {
-        const { created, checkedCreated }  = this.props;
+        const { created, checkedCreated } = this.props;
         return (
             <div
-                className="panel--white-bg panel--gray-border blokk-xs filter-created"
+                className="Created"
             >
                 {created && created.map((item) => (
                     <Checkbox

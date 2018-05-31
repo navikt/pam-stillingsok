@@ -27,7 +27,6 @@ export class SearchBox extends React.Component {
             <div className="SearchBox">
                 <Typeahead
                     id="search-form-fritekst-input"
-                    className="SearchBox__typeahead"
                     name="q"
                     autoComplete="off"
                     label=""

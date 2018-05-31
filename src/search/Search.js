@@ -12,7 +12,7 @@ import EngagementType from './facets/engagement/Engagement';
 import Sector from './facets/sector/Sector';
 import Created from './facets/created/Created';
 import SearchBox from './searchBox/SearchBox';
-import NoResults from './searchResults/NoSearchResults';
+import NoResults from './noResults/NoResults';
 import { INITIAL_SEARCH, SEARCH } from './searchReducer';
 import './Search.less';
 
@@ -34,10 +34,10 @@ class Search extends React.Component {
     render() {
         return (
             <div>
-                <div className="search-page-header"/>
+                <div className="search-page-header" />
                 <Container className="search-page-margin">
                     {this.props.error ? (
-                        <SearchResultError/>
+                        <SearchResultError />
                     ) : (
                         <Row>
                             <Column xs="12" md="4">
@@ -49,20 +49,15 @@ class Search extends React.Component {
                                     method="get"
                                     onSubmit={this.onSearchFormSubmit}
                                 >
-                                    <div id="search-form-fritekst-input-wrapper">
-                                        <SearchBox onSubmit={this.onSearchFormSubmit}/>
-                                        <a
-                                            href="#sokeresultat"
-                                            className="typo-normal lenke sr-only sr-only-focusable"
-                                        >
-                                            Hopp til søkeresultat
-                                        </a>
-                                    </div>
-                                    <Created/>
-                                    <Counties/>
-                                    <HeltidDeltid/>
-                                    <EngagementType/>
-                                    <Sector/>
+                                    <SearchBox onSubmit={this.onSearchFormSubmit} />
+                                    <a href="#sokeresultat" className="typo-normal lenke sr-only sr-only-focusable">
+                                        Hopp til søkeresultat
+                                    </a>
+                                    <Created />
+                                    <Counties />
+                                    <HeltidDeltid />
+                                    <EngagementType />
+                                    <Sector />
                                 </form>
                             </Column>
                             <Column xs="12" md="8">
@@ -74,10 +69,10 @@ class Search extends React.Component {
                                 >
                                     <Row>
                                         <Column xs="12" md="8">
-                                            <SearchResultCount/>
+                                            <SearchResultCount />
                                         </Column>
                                         <Column xs="12" md="4">
-                                            <SearchResultSorting/>
+                                            <SearchResultSorting />
                                         </Column>
                                     </Row>
                                 </div>
@@ -87,12 +82,12 @@ class Search extends React.Component {
                                         id="sokeresultat"
                                         aria-labelledby="search-result-count"
                                     >
-                                        <SearchResultList/>
-                                        <SearchResultPagination scrollToTopOfResultList={this.scrollToTopOfResultList}/>
+                                        <SearchResultList />
+                                        <SearchResultPagination scrollToTopOfResultList={this.scrollToTopOfResultList} />
                                     </section>
                                 )}
                                 {!this.props.isSearching && this.props.searchResultTotal === 0 && (
-                                    <NoResults/>
+                                    <NoResults />
                                 )}
                             </Column>
                         </Row>

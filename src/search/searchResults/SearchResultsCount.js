@@ -1,22 +1,22 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Undertittel } from 'nav-frontend-typografi';
+import './SearchResultsCount.less';
 
-export function SearchResultsCount({isAtLeastOneSearchDone, count}) {
+export function SearchResultsCount({ isAtLeastOneSearchDone, count }) {
     if (isAtLeastOneSearchDone) {
         if (count === 0) {
             return (
-                <div id="search-result-count"><Undertittel>Ingen treff</Undertittel></div>
+                <div className="SearchResultsCount"><Undertittel>Ingen treff</Undertittel></div>
             );
         }
         return (
-            <div id="search-result-count"><Undertittel>{count} treff</Undertittel></div>
+            <div className="SearchResultsCount"><Undertittel>{count} treff</Undertittel></div>
         );
-    } else {
-        return (
-            <div/>
-        )
     }
+    return (
+        <div />
+    );
 }
 
 const mapStateToProps = (state) => ({

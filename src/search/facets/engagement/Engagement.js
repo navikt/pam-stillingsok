@@ -7,6 +7,7 @@ import {
     CHECK_ENGAGEMENT_TYPE,
     UNCHECK_ENGAGEMENT_TYPE
 } from './engagementReducer';
+import './Engagement.less';
 
 export class Engagement extends React.Component {
     onEngagementClick = (e) => {
@@ -31,13 +32,12 @@ export class Engagement extends React.Component {
             <Ekspanderbartpanel
                 tittel={title}
                 tittelProps="element"
-                className="panel--white-bg panel--gray-border blokk-xs"
+                className="Engagement"
                 apen={checkedEngagement.length > 0}
             >
                 <div
                     role="group"
-                    aria-labelledby="engagement-type-filter-header"
-                    className="search-page-filter"
+                    className="Engagement__inner"
                 >
                     <div>
                         {engagementType && engagementType.map((item) => (
