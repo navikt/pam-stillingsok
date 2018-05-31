@@ -26,7 +26,6 @@ class Search extends React.Component {
     componentDidMount() {
         try {
             let lastScrollPosition = sessionStorage.getItem('lastScrollPosition');
-            console.log(lastScrollPosition)
             if (lastScrollPosition !== null) {
                 lastScrollPosition = parseInt(lastScrollPosition, 10);
                 sessionStorage.removeItem('lastScrollPosition');

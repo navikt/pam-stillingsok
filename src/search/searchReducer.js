@@ -64,7 +64,9 @@ export const toUrlQuery = (state) => {
     if (state.counties.checkedCounties.length > 0) urlQuery.counties = state.counties.checkedCounties.join('_');
     if (state.counties.checkedMunicipals.length > 0) urlQuery.municipals = state.counties.checkedMunicipals.join('_');
     if (state.created.checkedCreated.length > 0) urlQuery.created = state.created.checkedCreated.join('_');
-    if (state.engagement.checkedEngagementType.length > 0) urlQuery.engagementType = state.engagement.checkedEngagementType.join('_');
+    if (state.engagement.checkedEngagementType.length > 0) {
+        urlQuery.engagementType = state.engagement.checkedEngagementType.join('_');
+    }
     if (state.sector.checkedSector.length > 0) urlQuery.sector = state.sector.checkedSector.join('_');
     if (state.extent.checkedExtent.length > 0) urlQuery.heltidDeltid = state.extent.checkedExtent.join('_');
     return Object.keys(urlQuery)
