@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Checkbox } from 'nav-frontend-skjema';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
@@ -9,7 +10,7 @@ import {
 } from './sectorReducer';
 import './Sector.less';
 
-export class Sector extends React.Component {
+class Sector extends React.Component {
     onSectorClick = (e) => {
         const { value } = e.target;
         if (e.target.checked) {
@@ -54,6 +55,17 @@ export class Sector extends React.Component {
         );
     }
 }
+
+Sector.propTypes = {
+    sector: PropTypes.arrayOf(PropTypes.shape({
+        key: PropTypes.string,
+        count: PropTypes.number
+    })).isRequired,
+    checkedSector: PropTypes.arrayOf(PropTypes.string).isRequired,
+    checkSector: PropTypes.func.isRequired,
+    uncheckSector: PropTypes.func.isRequired,
+    search: PropTypes.func.isRequired
+};
 
 const mapStateToProps = (state) => ({
     sector: state.sector.sector,

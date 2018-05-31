@@ -1,10 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Select } from 'nav-frontend-skjema';
 import { SEARCH } from '../searchReducer';
 import { SET_SORTING } from './sortingReducer';
 
-export class Sorting extends React.Component {
+class Sorting extends React.Component {
     onSortingChange = (e) => {
         this.props.setSorting(e.target.value);
         this.props.search();
@@ -23,6 +24,12 @@ export class Sorting extends React.Component {
         );
     }
 }
+
+Sorting.propTypes = {
+    sort: PropTypes.string.isRequired,
+    search: PropTypes.func.isRequired,
+    setSorting: PropTypes.func.isRequired
+};
 
 const mapStateToProps = (state) => ({
     sort: state.sorting.sort

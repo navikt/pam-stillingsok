@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Checkbox } from 'nav-frontend-skjema';
 import { SEARCH } from '../../searchReducer';
@@ -9,7 +10,7 @@ import {
 import './Created.less';
 
 
-export class Created extends React.Component {
+class Created extends React.Component {
     onCreatedClick = (e) => {
         const { value } = e.target;
         if (e.target.checked) {
@@ -40,6 +41,17 @@ export class Created extends React.Component {
         );
     }
 }
+
+Created.propTypes = {
+    created: PropTypes.arrayOf(PropTypes.shape({
+        key: PropTypes.string,
+        count: PropTypes.number
+    })).isRequired,
+    checkedCreated: PropTypes.arrayOf(PropTypes.string).isRequired,
+    checkCreated: PropTypes.func.isRequired,
+    uncheckCreated: PropTypes.func.isRequired,
+    search: PropTypes.func.isRequired
+};
 
 const mapStateToProps = (state) => ({
     created: state.created.created,

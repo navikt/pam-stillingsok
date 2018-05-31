@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Knapp } from 'nav-frontend-knapper';
 import { connect } from 'react-redux';
 import { PAGINATE } from '../searchReducer';
@@ -8,7 +9,7 @@ import {
 } from './paginationReducer';
 import './Pagination.less';
 
-export class Pagination extends React.Component {
+class Pagination extends React.Component {
     onPaginationNextClick = () => {
         this.props.scrollToTopOfResultList(); //
         this.props.increasePaginationFrom();
@@ -41,6 +42,15 @@ export class Pagination extends React.Component {
         );
     }
 }
+
+Pagination.propTypes = {
+    from: PropTypes.number.isRequired,
+    total: PropTypes.number.isRequired,
+    paginate: PropTypes.func.isRequired,
+    increasePaginationFrom: PropTypes.func.isRequired,
+    decreasePaginationFrom: PropTypes.func.isRequired,
+    scrollToTopOfResultList: PropTypes.func.isRequired
+};
 
 const mapStateToProps = (state) => ({
     from: state.pagination.from,

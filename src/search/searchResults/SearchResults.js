@@ -1,10 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import SearchResultItem from './SearchResultsItem';
 
-export class SearchResults extends React.Component {
-
-    componentDidMount() {
+class SearchResults extends React.Component {
+    static componentDidMount() {
         try {
             let lastScrollPosition = sessionStorage.getItem('lastScrollPosition');
             if (lastScrollPosition !== null) {
@@ -28,6 +28,12 @@ export class SearchResults extends React.Component {
         );
     }
 }
+
+SearchResults.propTypes = {
+    searchResult: PropTypes.arrayOf(PropTypes.shape({
+        uuid: PropTypes.string()
+    })).isRequired
+};
 
 const mapStateToProps = (state) => ({
     searchResult: state.search.searchResult

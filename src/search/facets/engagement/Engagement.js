@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Checkbox } from 'nav-frontend-skjema';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
@@ -9,7 +10,7 @@ import {
 } from './engagementReducer';
 import './Engagement.less';
 
-export class Engagement extends React.Component {
+class Engagement extends React.Component {
     onEngagementClick = (e) => {
         const { value } = e.target;
         if (e.target.checked) {
@@ -56,6 +57,17 @@ export class Engagement extends React.Component {
         );
     }
 }
+
+Engagement.propTypes = {
+    engagementType: PropTypes.arrayOf(PropTypes.shape({
+        key: PropTypes.string,
+        count: PropTypes.number
+    })).isRequired,
+    checkedEngagement: PropTypes.arrayOf(PropTypes.string).isRequired,
+    checkEngagement: PropTypes.func.isRequired,
+    uncheckEngagement: PropTypes.func.isRequired,
+    search: PropTypes.func.isRequired
+};
 
 const mapStateToProps = (state) => ({
     engagementType: state.engagement.engagementType,

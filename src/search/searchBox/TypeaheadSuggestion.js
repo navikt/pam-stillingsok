@@ -22,7 +22,6 @@ export default class TypeaheadSuggestion extends React.Component {
         return (
             <li
                 id={this.props.id}
-                ref={(node) => { this.node = node; }}
                 role="option"
                 aria-selected={this.props.active}
                 onClick={this.onClick}
@@ -33,12 +32,20 @@ export default class TypeaheadSuggestion extends React.Component {
                 className="TypeaheadSuggestion"
             >
                 {matchFound ? (
-                    <span className={`TypeaheadSuggestion__inner ${this.props.active && 'TypeaheadSuggestion--active'}`}>
+                    <span
+                        className={`TypeaheadSuggestion__inner ${this.props.active && 'TypeaheadSuggestion--active'}`}
+                    >
                         {this.value.substring(0, this.props.match.length)}
-                        <span className="TypeaheadSuggestion__substring">{this.value.substring(this.props.match.length)}</span>
+                        <span
+                            className="TypeaheadSuggestion__substring"
+                        >
+                            {this.value.substring(this.props.match.length)}
+                        </span>
                     </span>
                 ) : (
-                    <span className={`TypeaheadSuggestion__inner ${this.props.active && 'TypeaheadSuggestion--active'}`}>
+                    <span
+                        className={`TypeaheadSuggestion__inner ${this.props.active && 'TypeaheadSuggestion--active'}`}
+                    >
                         {this.value}
                     </span>
                 )}

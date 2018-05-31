@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Checkbox } from 'nav-frontend-skjema';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
@@ -11,7 +12,7 @@ import {
 } from './countiesReducer';
 import './Counties.less';
 
-export class Counties extends React.Component {
+class Counties extends React.Component {
     onCountyClick = (e) => {
         const { value } = e.target;
         if (e.target.checked) {
@@ -81,6 +82,24 @@ export class Counties extends React.Component {
         );
     }
 }
+
+Counties.propTypes = {
+    counties: PropTypes.arrayOf(PropTypes.shape({
+        key: PropTypes.string,
+        count: PropTypes.number,
+        municipals: PropTypes.arrayOf(PropTypes.shape({
+            key: PropTypes.string,
+            count: PropTypes.number
+        }))
+    })).isRequired,
+    checkedCounties: PropTypes.arrayOf(PropTypes.string).isRequired,
+    checkedMunicipals: PropTypes.arrayOf(PropTypes.string).isRequired,
+    checkCounty: PropTypes.func.isRequired,
+    uncheckCounty: PropTypes.func.isRequired,
+    checkMunicipal: PropTypes.func.isRequired,
+    uncheckMunicipal: PropTypes.func.isRequired,
+    search: PropTypes.func.isRequired
+};
 
 const mapStateToProps = (state) => ({
     counties: state.counties.counties,

@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/mouse-events-have-key-events,no-trailing-spaces */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Input } from 'nav-frontend-skjema';
 import TypeaheadSuggestion from './TypeaheadSuggestion';
 import './Typeahead.less';
 
@@ -33,7 +32,10 @@ export default class Typeahead extends React.Component {
      */
     onKeyDown = (e) => {
         let { activeSuggestionIndex } = this.state;
-        const value = this.props.suggestions[activeSuggestionIndex] ? this.props.suggestions[activeSuggestionIndex] : this.state.value;
+        const value = this.props.suggestions[activeSuggestionIndex] ?
+            this.props.suggestions[activeSuggestionIndex] :
+            this.state.value;
+
         if (this.state.shouldShowSuggestions) {
             switch (e.keyCode) {
                 case 9: // Tab
@@ -58,7 +60,9 @@ export default class Typeahead extends React.Component {
                     break;
                 case 40: // Arrow down
                     e.preventDefault();
-                    activeSuggestionIndex = activeSuggestionIndex + 1 === this.props.suggestions.length ? this.props.suggestions.length - 1 : activeSuggestionIndex + 1;
+                    activeSuggestionIndex = activeSuggestionIndex + 1 === this.props.suggestions.length ?
+                        this.props.suggestions.length - 1 :
+                        activeSuggestionIndex + 1;
                     this.setState({ activeSuggestionIndex });
                     break;
                 default:
@@ -131,7 +135,10 @@ export default class Typeahead extends React.Component {
     };
 
     render() {
-        const showSuggestions = this.state.hasFocus && this.state.shouldShowSuggestions && this.props.suggestions.length > 0;
+        const showSuggestions = this.state.hasFocus &&
+            this.state.shouldShowSuggestions &&
+            this.props.suggestions.length > 0;
+
         return (
             <div className="Typeahead">
                 <input
@@ -182,7 +189,6 @@ export default class Typeahead extends React.Component {
 Typeahead.propTypes = {
     onSelect: PropTypes.func.isRequired,
     onChange: PropTypes.func.isRequired,
-    label: PropTypes.string.isRequired,
     placeholder: PropTypes.string.isRequired,
     suggestions: PropTypes.arrayOf(PropTypes.string).isRequired,
     value: PropTypes.string.isRequired,

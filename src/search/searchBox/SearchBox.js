@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Knapp } from 'nav-frontend-knapper';
 import Typeahead from './Typeahead';
@@ -10,7 +11,7 @@ import {
 } from './searchBoxReducer';
 import './SearchBox.less';
 
-export class SearchBox extends React.Component {
+class SearchBox extends React.Component {
     onTypeAheadChange = (value) => {
         this.props.setSearchString(value);
         this.props.fetchTypeAheadSuggestions();
@@ -48,6 +49,16 @@ export class SearchBox extends React.Component {
         );
     }
 }
+
+SearchBox.propTypes = {
+    value: PropTypes.string.isRequired,
+    suggestions: PropTypes.arrayOf(PropTypes.string).isRequired,
+    search: PropTypes.func.isRequired,
+    setSearchString: PropTypes.func.isRequired,
+    selectTypeAheadValue: PropTypes.func.isRequired,
+    fetchTypeAheadSuggestions: PropTypes.func.isRequired,
+    onSubmit: PropTypes.func.isRequired
+};
 
 const mapStateToProps = (state) => ({
     value: state.searchBox.q,

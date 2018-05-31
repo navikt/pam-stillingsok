@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Container, Row, Column } from 'nav-frontend-grid';
 import SearchResultCount from './searchResults/SearchResultsCount';
@@ -36,7 +37,7 @@ class Search extends React.Component {
             <div>
                 <div className="search-page-header" />
                 <Container className="search-page-margin">
-                    {this.props.error ? (
+                    {this.props.hasError ? (
                         <SearchResultError />
                     ) : (
                         <Row>
@@ -83,7 +84,9 @@ class Search extends React.Component {
                                         aria-labelledby="search-result-count"
                                     >
                                         <SearchResultList />
-                                        <SearchResultPagination scrollToTopOfResultList={this.scrollToTopOfResultList} />
+                                        <SearchResultPagination
+                                            scrollToTopOfResultList={this.scrollToTopOfResultList}
+                                        />
                                     </section>
                                 )}
                                 {!this.props.isSearching && this.props.searchResultTotal === 0 && (
@@ -98,6 +101,14 @@ class Search extends React.Component {
     }
 }
 
+Search.propTypes = {
+    initialSearch: PropTypes.func.isRequired,
+    search: PropTypes.func.isRequired,
+    isSearching: PropTypes.bool.isRequired,
+    searchResultTotal: PropTypes.number.isRequired,
+    hasError: PropTypes.bool.isRequired
+};
+
 const mapStateToProps = (state) => ({
     isSearching: state.search.isSearching,
     searchResultTotal: state.search.searchResult.total,
@@ -105,7 +116,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    initialSearch: (query) => dispatch({ type: INITIAL_SEARCH }),
+    initialSearch: () => dispatch({ type: INITIAL_SEARCH }),
     search: () => dispatch({ type: SEARCH })
 });
 

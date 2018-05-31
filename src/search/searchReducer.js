@@ -22,7 +22,7 @@ const initialState = {
     searchResult: {
         total: 0
     },
-    error: undefined
+    hasError: false
 };
 
 export default function searchReducer(state = initialState, action) {
@@ -48,6 +48,7 @@ export default function searchReducer(state = initialState, action) {
             return {
                 ...state,
                 isSearching: false,
+                hasError: true,
                 error: action.error
             };
         default:
