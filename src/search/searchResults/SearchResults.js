@@ -30,9 +30,9 @@ class SearchResults extends React.Component {
 }
 
 SearchResults.propTypes = {
-    searchResult: PropTypes.arrayOf(PropTypes.shape({
-        uuid: PropTypes.string()
-    })).isRequired
+    searchResult: PropTypes.shape({
+        stillinger: PropTypes.arrayOf(PropTypes.object)
+    }).isRequired
 };
 
 const mapStateToProps = (state) => ({

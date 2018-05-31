@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import typeaheadTemplate from './templates/typeaheadTemplate';
 import searchTemplate from './templates/searchTemplate';
 import { SEARCH_API } from '../fasitProperties';

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Undertittel } from 'nav-frontend-typografi';
 import './SearchResultsCount.less';
@@ -18,6 +19,11 @@ export function SearchResultsCount({ isAtLeastOneSearchDone, count }) {
         <div />
     );
 }
+
+SearchResultsCount.propTypes = {
+    isAtLeastOneSearchDone: PropTypes.bool.isRequired,
+    count: PropTypes.number.isRequired
+};
 
 const mapStateToProps = (state) => ({
     isAtLeastOneSearchDone: state.search.isAtLeastOneSearchDone,

@@ -112,7 +112,7 @@ Search.propTypes = {
 const mapStateToProps = (state) => ({
     isSearching: state.search.isSearching,
     searchResultTotal: state.search.searchResult.total,
-    error: state.search.error
+    hasError: state.search.hasError
 });
 
 const mapDispatchToProps = (dispatch) => ({

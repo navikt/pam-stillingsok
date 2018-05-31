@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Row, Column } from 'nav-frontend-grid';
 import { Normaltekst, Element } from 'nav-frontend-typografi';
@@ -55,3 +56,16 @@ export default function SearchResultItem(props) {
         </Link>
     );
 }
+
+SearchResultItem.propTypes = {
+    stilling: PropTypes.shape({
+        uuid: PropTypes.string,
+        title: PropTypes.string,
+        properties: PropTypes.shape({
+            employer: PropTypes.string,
+            jobtitle: PropTypes.string,
+            location: PropTypes.string,
+            updated: PropTypes.string
+        })
+    }).isRequired
+};

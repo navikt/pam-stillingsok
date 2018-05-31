@@ -117,7 +117,9 @@ export function filterCreated(created) {
 }
 
 export default function searchTemplate(query) {
-    const { from, counties, municipals, extent, engagementType, sector, created } = query;
+    const {
+        from, counties, municipals, extent, engagementType, sector, created
+    } = query;
     let { sort, q } = query;
 
     /**
@@ -156,7 +158,7 @@ export default function searchTemplate(query) {
                         }
                     }
                 }
-            },
+            }
         },
         post_filter: {
             bool: {
@@ -176,12 +178,12 @@ export default function searchTemplate(query) {
         },
         _source: {
             includes: [
-                "properties.employer",
-                "properties.jobtitle",
-                "properties.location",
-                "title",
-                "updated",
-                "uuid"
+                'properties.employer',
+                'properties.jobtitle',
+                'properties.location',
+                'title',
+                'updated',
+                'uuid'
             ]
         },
         aggs: {
@@ -233,7 +235,7 @@ export default function searchTemplate(query) {
                 },
                 aggs: {
                     values: {
-                        terms: {field: 'sector_facet'}
+                        terms: { field: 'sector_facet' }
                     }
                 }
             },
