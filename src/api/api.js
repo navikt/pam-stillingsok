@@ -13,7 +13,7 @@ export class SearchApiError {
 async function post(query) {
     let response;
     try {
-        response = await fetch(`${SEARCH_API}/ad/_search`, {
+        response = await fetch(`${SEARCH_API}/stillingsok/ad/_search`, {
             body: JSON.stringify(query),
             method: 'POST',
             headers: {
