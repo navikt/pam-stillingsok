@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Knapp } from 'nav-frontend-knapper';
 import Typeahead from './Typeahead';
-import { SEARCH } from '../searchSagas';
+import { SEARCH } from '../searchReducer';
 import {
     SET_TYPE_AHEAD_VALUE,
     SELECT_TYPE_AHEAD_VALUE,

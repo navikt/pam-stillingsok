@@ -1,4 +1,4 @@
-import { SET_INITIAL_STATE } from '../searchSagas';
+import { SET_INITIAL_STATE } from '../searchReducer';
 
 export const SET_SORTING = 'SET_SORTING';
 

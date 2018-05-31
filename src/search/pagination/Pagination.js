@@ -1,7 +1,7 @@
 import React from 'react';
 import { Knapp } from 'nav-frontend-knapper';
 import { connect } from 'react-redux';
-import { PAGINATE } from '../searchSagas';
+import { PAGINATE } from '../searchReducer';
 import {
     INCREASE_PAGINATION_FROM,
     DECREASE_PAGINATION_FROM
@@ -44,7 +44,7 @@ export class Pagination extends React.Component {
 
 const mapStateToProps = (state) => ({
     from: state.pagination.from,
-    total: state.searchResults.searchResult.total
+    total: state.search.searchResult.total
 });
 
 const mapDispatchToProps = (dispatch) => ({

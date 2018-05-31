@@ -1,6 +1,6 @@
 import { select, call, put, takeLatest } from 'redux-saga/effects';
 import { fetchTypeaheadSuggestions, SearchApiError } from '../../api/api';
-import { SET_INITIAL_STATE } from '../searchSagas';
+import { SET_INITIAL_STATE } from '../searchReducer';
 
 export const SET_TYPE_AHEAD_VALUE = 'SET_TYPE_AHEAD_VALUE';
 export const SELECT_TYPE_AHEAD_VALUE = 'SELECT_TYPE_AHEAD_TOKEN';

@@ -15,27 +15,48 @@ export const SEARCH_SUCCESS = 'SEARCH_SUCCESS';
 export const SEARCH_FAILURE = 'SEARCH_FAILURE';
 export const PAGINATE = 'PAGINATE';
 
-export const toSearchQuery = (state) => ({
-    q: state.searchBox.q,
-    from: state.pagination.from,
-    sort: state.sorting.sort,
-    counties: state.counties.checkedCounties.filter((county) => {
-        // Hvis man filtrerer på en kommune, må man droppe fylket når man søker.
-        // Altså om man krysser av på Bergen, skal man ikke ha med Hordaland i søket.
-        const countyObject = state.counties.counties.find((c) => c.key === county);
-        const found = countyObject.municipals.find((m) => state.counties.checkedMunicipals.includes(m.key));
-        return !found;
-    }),
-    municipals: state.counties.checkedMunicipals,
-    created: state.created.checkedCreated,
-    engagementType: state.engagement.checkedEngagementType,
-    sector: state.sector.checkedSector,
-    extent: state.extent.checkedExtent
-});
+const initialState = {
+    initialSearchDone: false,
+    isAtLeastOneSearchDone: false,
+    isSearching: true,
+    searchResult: {
+        total: 0
+    },
+    error: undefined
+};
+
+export default function searchReducer(state = initialState, action) {
+    switch (action.type) {
+        case INITIAL_SEARCH_DONE:
+            return {
+                ...state,
+                initialSearchDone: true
+            };
+        case SEARCH_BEGIN:
+            return {
+                ...state,
+                isSearching: true
+            };
+        case SEARCH_SUCCESS:
+            return {
+                ...state,
+                isSearching: false,
+                isAtLeastOneSearchDone: true,
+                searchResult: action.response
+            };
+        case SEARCH_FAILURE:
+            return {
+                ...state,
+                isSearching: false,
+                error: action.error
+            };
+        default:
+            return state;
+    }
+}
 
 export const toUrlQuery = (state) => {
     const urlQuery = {};
-
     if (state.searchBox.q) urlQuery.q = state.searchBox.q;
     if (state.sorting.sort) urlQuery.sort = state.sorting.sort;
     if (state.pagination.from) urlQuery.from = state.pagination.from;
@@ -45,7 +66,6 @@ export const toUrlQuery = (state) => {
     if (state.engagement.checkedEngagementType.length > 0) urlQuery.engagementType = state.engagement.checkedEngagementType.join('_');
     if (state.sector.checkedSector.length > 0) urlQuery.sector = state.sector.checkedSector.join('_');
     if (state.extent.checkedExtent.length > 0) urlQuery.heltidDeltid = state.extent.checkedExtent.join('_');
-
     return Object.keys(urlQuery)
         .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(urlQuery[key])}`)
         .join('&')
@@ -83,7 +103,7 @@ export function fromUrlQuery(url) {
     if (sector) stateFromUrl.sector = sector.split('_');
     if (created) stateFromUrl.created = created.split('_');
     return stateFromUrl;
-};
+}
 
 function* search(action, resetPage = true) {
     try {
@@ -99,9 +119,25 @@ function* search(action, resetPage = true) {
         const newUrlQuery = urlQuery && urlQuery.length > 0 ? `?${urlQuery}` : window.location.pathname;
         window.history.replaceState('', '', newUrlQuery);
 
-        const response = yield call(fetchSearch, toSearchQuery(state));
+        const searchResult = yield call(fetchSearch, {
+            q: state.searchBox.q,
+            from: state.pagination.from,
+            sort: state.sorting.sort,
+            counties: state.counties.checkedCounties.filter((county) => {
+                // Hvis man filtrerer på en kommune, må man droppe fylket når man søker.
+                // Altså om man krysser av på Bergen, skal man ikke ha med Hordaland i søket.
+                const countyObject = state.counties.counties.find((c) => c.key === county);
+                const found = countyObject.municipals.find((m) => state.counties.checkedMunicipals.includes(m.key));
+                return !found;
+            }),
+            municipals: state.counties.checkedMunicipals,
+            created: state.created.checkedCreated,
+            engagementType: state.engagement.checkedEngagementType,
+            sector: state.sector.checkedSector,
+            extent: state.extent.checkedExtent
+        });
 
-        yield put({ type: SEARCH_SUCCESS, response });
+        yield put({ type: SEARCH_SUCCESS, response: searchResult });
     } catch (e) {
         if (e instanceof SearchApiError) {
             yield put({ type: SEARCH_FAILURE, error: e });
@@ -117,7 +153,7 @@ function* paginate(action) {
 
 function* initialSearch(action) {
     const state = yield select();
-    if (!state.searchResults.initialSearchDone) {
+    if (!state.search.initialSearchDone) {
         try {
             const urlQuery = fromUrlQuery(window.location.href);
             if (Object.keys(urlQuery).length > 0) {

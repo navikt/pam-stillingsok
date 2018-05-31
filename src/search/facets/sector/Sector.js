@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Checkbox } from 'nav-frontend-skjema';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
-import { SEARCH } from '../../searchSagas';
+import { SEARCH } from '../../searchReducer';
 import {
     CHECK_SECTOR,
     UNCHECK_SECTOR

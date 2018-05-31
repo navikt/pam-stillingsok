@@ -1,4 +1,4 @@
-import { SET_INITIAL_STATE, INITIAL_SEARCH_SUCCESS, SEARCH_SUCCESS } from '../../searchSagas';
+import { SET_INITIAL_STATE, INITIAL_SEARCH_SUCCESS, SEARCH_SUCCESS } from '../../searchReducer';
 
 export const CHECK_EXTENT = 'CHECK_EXTENT';
 export const UNCHECK_EXTENT = 'UNCHECK_EXTENT';

@@ -1,4 +1,4 @@
-import { SET_INITIAL_STATE } from '../searchSagas';
+import { SET_INITIAL_STATE } from '../searchReducer';
 
 export const INCREASE_PAGINATION_FROM = 'INCREASE_PAGINATION_FROM';
 export const DECREASE_PAGINATION_FROM = 'DECREASE_PAGINATION_FROM';

@@ -13,7 +13,7 @@ import Sector from './facets/sector/Sector';
 import Created from './facets/created/Created';
 import SearchBox from './searchBox/SearchBox';
 import NoResults from './searchResults/NoSearchResults';
-import { INITIAL_SEARCH, SEARCH } from './searchSagas';
+import { INITIAL_SEARCH, SEARCH } from './searchReducer';
 import './Search.less';
 
 class Search extends React.Component {
@@ -104,9 +104,9 @@ class Search extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-    isSearching: state.searchResults.isSearching,
-    searchResultTotal: state.searchResults.searchResult.total,
-    error: state.searchResults.error
+    isSearching: state.search.isSearching,
+    searchResultTotal: state.search.searchResult.total,
+    error: state.search.error
 });
 
 const mapDispatchToProps = (dispatch) => ({

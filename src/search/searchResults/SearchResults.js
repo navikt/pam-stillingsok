@@ -30,7 +30,7 @@ export class SearchResults extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-    searchResult: state.searchResults.searchResult
+    searchResult: state.search.searchResult
 });
 
 export default connect(mapStateToProps)(SearchResults);

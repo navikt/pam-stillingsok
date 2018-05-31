@@ -20,8 +20,8 @@ export function SearchResultsCount({isAtLeastOneSearchDone, count}) {
 }
 
 const mapStateToProps = (state) => ({
-    isAtLeastOneSearchDone: state.searchResults.isAtLeastOneSearchDone,
-    count: state.searchResults.searchResult.total
+    isAtLeastOneSearchDone: state.search.isAtLeastOneSearchDone,
+    count: state.search.searchResult.total
 });
 
 
