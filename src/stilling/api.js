@@ -1,3 +1,4 @@
+import { SearchApiError } from '../api/api';
 import { SEARCH_API } from '../fasitProperties';
 
 const filteredSource = {
@@ -22,29 +23,19 @@ const filteredSource = {
         "properties.searchtags",
         "properties.sourceupdated",
         "published",
-        "status",
         "updatedBy",
         "uuid"
     ]
 };
 
 export async function fetchStilling(id) {
-    const response = await fetch(`${SEARCH_API}/ad/_search`, {
-        body: JSON.stringify({
-            query: {
-                terms: {
-                    _id: [id]
-                }
-            },
-            _source: {
-                ...filteredSource
-            }
-        }),
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        }
+    let excludeParamValue = filteredSource.excludes.join(',');
+    const response = await fetch(`${SEARCH_API}/stillingsok/ad/ad/${id}?_source_exclude=${excludeParamValue}`, {
+        method: 'GET'
     });
+    if (response.status !== 200) {
+        throw new SearchApiError(response.statusText, response.status);
+    }
     return response.json();
 }
 
