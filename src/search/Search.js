@@ -15,6 +15,7 @@ import Created from './facets/created/Created';
 import SearchBox from './searchBox/SearchBox';
 import NoResults from './noResults/NoResults';
 import { INITIAL_SEARCH, SEARCH } from './searchReducer';
+import BackToTopButton from './backToTopButton/BackToTopButton';
 import './Search.less';
 
 class Search extends React.Component {
@@ -118,6 +119,7 @@ class Search extends React.Component {
                             </Column>
                         </Row>
                     )}
+                    <BackToTopButton offset={300} />
                 </Container>
             </div>
         );

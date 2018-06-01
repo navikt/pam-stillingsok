@@ -3,7 +3,6 @@ import {
     SearchApiError,
     fetchSearch
 } from '../api/api';
-import { RESET_PAGE } from './pagination/paginationReducer';
 
 export const SET_INITIAL_STATE = 'SET_INITIAL_STATE';
 export const INITIAL_SEARCH = 'INITIAL_SEARCH';
@@ -13,20 +12,32 @@ export const SEARCH = 'SEARCH';
 export const SEARCH_BEGIN = 'SEARCH_BEGIN';
 export const SEARCH_SUCCESS = 'SEARCH_SUCCESS';
 export const SEARCH_FAILURE = 'SEARCH_FAILURE';
-export const PAGINATE = 'PAGINATE';
+export const LOAD_MORE = 'LOAD_MORE';
+export const LOAD_MORE_BEGIN = 'LOAD_MORE_BEGIN';
+export const LOAD_MORE_SUCCESS = 'LOAD_MORE_SUCCESS';
+export const RESET_PAGE = 'RESET_PAGE';
+
+export const PAGE_SIZE = 20;
 
 const initialState = {
     initialSearchDone: false,
     isAtLeastOneSearchDone: false,
     isSearching: true,
+    isLoadingMore: false,
     searchResult: {
         total: 0
     },
-    hasError: false
+    hasError: false,
+    from: 0
 };
 
 export default function searchReducer(state = initialState, action) {
     switch (action.type) {
+        case SET_INITIAL_STATE:
+            return {
+                ...state,
+                from: action.query.from || 0
+            };
         case INITIAL_SEARCH_DONE:
             return {
                 ...state,
@@ -35,6 +46,7 @@ export default function searchReducer(state = initialState, action) {
         case SEARCH_BEGIN:
             return {
                 ...state,
+                from: 0,
                 isSearching: true
             };
         case SEARCH_SUCCESS:
@@ -51,6 +63,31 @@ export default function searchReducer(state = initialState, action) {
                 hasError: true,
                 error: action.error
             };
+        case LOAD_MORE:
+            return {
+                ...state,
+                from: state.from + PAGE_SIZE
+            };
+        case LOAD_MORE_BEGIN:
+            return {
+                ...state,
+                isLoadingMore: true
+            };
+        case LOAD_MORE_SUCCESS:
+            return {
+                ...state,
+                isLoadingMore: false,
+                searchResult: {
+                    ...state.searchResult,
+                    stillinger: [...state.searchResult.stillinger, ...action.response.stillinger]
+                }
+            };
+        case RESET_PAGE: {
+            return {
+                ...state,
+                from: 0
+            };
+        }
         default:
             return state;
     }
@@ -60,7 +97,7 @@ export const toUrlQuery = (state) => {
     const urlQuery = {};
     if (state.searchBox.q) urlQuery.q = state.searchBox.q;
     if (state.sorting.sort) urlQuery.sort = state.sorting.sort;
-    if (state.pagination.from) urlQuery.from = state.pagination.from;
+    if (state.search.from) urlQuery.from = state.pagination.from;
     if (state.counties.checkedCounties.length > 0) urlQuery.counties = state.counties.checkedCounties.join('_');
     if (state.counties.checkedMunicipals.length > 0) urlQuery.municipals = state.counties.checkedMunicipals.join('_');
     if (state.created.checkedCreated.length > 0) urlQuery.created = state.created.checkedCreated.join('_');
@@ -108,12 +145,28 @@ export function fromUrlQuery(url) {
     return stateFromUrl;
 }
 
-function* search(action, resetPage = true) {
-    try {
-        if (resetPage) {
-            yield put({ type: RESET_PAGE });
-        }
+export function toSearchQuery(state) {
+    return {
+        q: state.searchBox.q,
+        from: state.search.from,
+        sort: state.sorting.sort,
+        counties: state.counties.checkedCounties.filter((county) => {
+            // Hvis man filtrerer på en kommune, må man droppe fylket når man søker.
+            // Altså om man krysser av på Bergen, skal man ikke ha med Hordaland i søket.
+            const countyObject = state.counties.counties.find((c) => c.key === county);
+            const found = countyObject.municipals.find((m) => state.counties.checkedMunicipals.includes(m.key));
+            return !found;
+        }),
+        municipals: state.counties.checkedMunicipals,
+        created: state.created.checkedCreated,
+        engagementType: state.engagement.checkedEngagementType,
+        sector: state.sector.checkedSector,
+        extent: state.extent.checkedExtent
+    };
+}
 
+function* search() {
+    try {
         yield put({ type: SEARCH_BEGIN });
         const state = yield select();
 
@@ -122,23 +175,7 @@ function* search(action, resetPage = true) {
         const newUrlQuery = urlQuery && urlQuery.length > 0 ? `?${urlQuery}` : window.location.pathname;
         window.history.replaceState('', '', newUrlQuery);
 
-        const searchResult = yield call(fetchSearch, {
-            q: state.searchBox.q,
-            from: state.pagination.from,
-            sort: state.sorting.sort,
-            counties: state.counties.checkedCounties.filter((county) => {
-                // Hvis man filtrerer på en kommune, må man droppe fylket når man søker.
-                // Altså om man krysser av på Bergen, skal man ikke ha med Hordaland i søket.
-                const countyObject = state.counties.counties.find((c) => c.key === county);
-                const found = countyObject.municipals.find((m) => state.counties.checkedMunicipals.includes(m.key));
-                return !found;
-            }),
-            municipals: state.counties.checkedMunicipals,
-            created: state.created.checkedCreated,
-            engagementType: state.engagement.checkedEngagementType,
-            sector: state.sector.checkedSector,
-            extent: state.extent.checkedExtent
-        });
+        const searchResult = yield call(fetchSearch, toSearchQuery(state));
 
         yield put({ type: SEARCH_SUCCESS, response: searchResult });
     } catch (e) {
@@ -150,8 +187,19 @@ function* search(action, resetPage = true) {
     }
 }
 
-function* paginate(action) {
-    yield search(action, false);
+function* loadMore() {
+    try {
+        yield put({ type: LOAD_MORE_BEGIN });
+        const state = yield select();
+        const response = yield call(fetchSearch, toSearchQuery(state));
+        yield put({ type: LOAD_MORE_SUCCESS, response });
+    } catch (e) {
+        if (e instanceof SearchApiError) {
+            yield put({ type: SEARCH_FAILURE, error: e });
+        } else {
+            throw e;
+        }
+    }
 }
 
 function* initialSearch(action) {
@@ -182,6 +230,6 @@ function* initialSearch(action) {
 
 export const saga = function* saga() {
     yield takeLatest(SEARCH, search);
-    yield takeLatest(PAGINATE, paginate);
+    yield takeLatest(LOAD_MORE, loadMore);
     yield takeLatest(INITIAL_SEARCH, initialSearch);
 };
