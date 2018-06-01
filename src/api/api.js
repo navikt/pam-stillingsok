@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import typeaheadTemplate from './templates/typeaheadTemplate';
+import suggestionsTemplate from './templates/suggestionsTemplate';
 import searchTemplate from './templates/searchTemplate';
 import { SEARCH_API } from '../fasitProperties';
 
@@ -64,17 +64,15 @@ export async function fetchSearch(query = {}) {
     };
 }
 
-export async function fetchTypeaheadSuggestions(match) {
-    const result = await post(typeaheadTemplate(match));
-
-    const allSuggestions = [
-        ...result.suggest.yrkeskategori[0].options.map((typeaheadOption) => typeaheadOption.text),
-        ...result.suggest.searchtags[0].options.map((typeaheadOption) => typeaheadOption.text)
-    ];
+export async function fetchCategoryAndSearchTagsSuggestions(match, minLength) {
+    const result = await post(suggestionsTemplate(match, minLength));
 
     return {
         match,
-        result: [...new Set(allSuggestions)] // Bruker Set for å fjerne duplikate suggestions
+        result: [...new Set([ // Bruker Set for å fjerne duplikater på tverss av category_suggest og searchtags_suggest
+            ...result.suggest.category_suggest[0].options.map((suggestion) => suggestion.text),
+            ...result.suggest.searchtags_suggest[0].options.map((suggestion) => suggestion.text)
+        ].sort())]
     };
 }
 
