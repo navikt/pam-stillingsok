@@ -66,5 +66,5 @@ function* fetchSuggestions() {
 }
 
 export const searchBoxSaga = function* searchBoxSaga() {
-    yield throttle(1000, FETCH_SUGGESTIONS, fetchSuggestions);
+    yield throttle(500, FETCH_SUGGESTIONS, fetchSuggestions);
 };
