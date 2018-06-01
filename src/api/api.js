@@ -72,7 +72,7 @@ export async function fetchCategoryAndSearchTagsSuggestions(match, minLength) {
         result: [...new Set([ // Bruker Set for å fjerne duplikater på tverss av category_suggest og searchtags_suggest
             ...result.suggest.category_suggest[0].options.map((suggestion) => suggestion.text),
             ...result.suggest.searchtags_suggest[0].options.map((suggestion) => suggestion.text)
-        ])]
+        ].sort())]
     };
 }
 
