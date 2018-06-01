@@ -17,7 +17,7 @@ export default class TypeaheadSuggestion extends React.Component {
     };
 
     render() {
-        const matchFound = this.value.toLowerCase().indexOf(this.props.match.toLowerCase()) !== -1;
+        const matchFound = this.value.toLowerCase().startsWith(this.props.match.toLowerCase());
 
         return (
             <li
