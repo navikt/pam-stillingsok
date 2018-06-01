@@ -47,7 +47,12 @@ function* fetchSuggestions() {
     if (value.length >= MIN_LENGTH) {
         try {
             const response = yield call(fetchCategoryAndSearchTagsSuggestions, value, MIN_LENGTH);
-            yield put({ type: FETCH_SUGGESTIONS_SUCCESS, suggestions: response.result });
+            const newState = yield select();
+            if (newState.searchBox.q.length >= MIN_LENGTH) {
+                yield put({ type: FETCH_SUGGESTIONS_SUCCESS, suggestions: response.result });
+            } else {
+                yield put({ type: FETCH_SUGGESTIONS_SUCCESS, suggestions: [] });
+            }
         } catch (e) {
             if (e instanceof SearchApiError) {
                 yield put({ type: FETCH_SUGGESTIONS_FAILURE, error: e });
