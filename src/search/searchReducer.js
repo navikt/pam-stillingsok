@@ -17,6 +17,7 @@ export const LOAD_MORE = 'LOAD_MORE';
 export const LOAD_MORE_BEGIN = 'LOAD_MORE_BEGIN';
 export const LOAD_MORE_SUCCESS = 'LOAD_MORE_SUCCESS';
 export const RESET_PAGE = 'RESET_PAGE';
+export const KEEP_SCROLL_POSITION = 'KEEP_SCROLL_POSITION';
 
 export const PAGE_SIZE = 20;
 
@@ -91,6 +92,12 @@ export default function searchReducer(state = initialState, action) {
             return {
                 ...state,
                 from: 0
+            };
+        }
+        case KEEP_SCROLL_POSITION: {
+            return {
+                ...state,
+                scrollPosition: action.scrollPosition
             };
         }
         default:

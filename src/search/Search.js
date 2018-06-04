@@ -14,7 +14,7 @@ import Sector from './facets/sector/Sector';
 import Created from './facets/created/Created';
 import SearchBox from './searchBox/SearchBox';
 import NoResults from './noResults/NoResults';
-import { INITIAL_SEARCH, SEARCH } from './searchReducer';
+import { INITIAL_SEARCH, KEEP_SCROLL_POSITION, SEARCH } from './searchReducer';
 import BackToTopButton from './backToTopButton/BackToTopButton';
 import './Search.less';
 
@@ -25,25 +25,15 @@ class Search extends React.Component {
     }
 
     componentDidMount() {
-        try {
-            let lastScrollPosition = sessionStorage.getItem('lastScrollPosition');
-            if (lastScrollPosition !== null) {
-                lastScrollPosition = parseInt(lastScrollPosition, 10);
-                sessionStorage.removeItem('lastScrollPosition');
-                window.scrollTo(0, lastScrollPosition);
-            }
-        } catch (e) {
-            // Do nothing
-        }
+        const top = this.props.scrollPosition;
+        setTimeout(() => {
+            window.scrollTo(0, top);
+        }, 10);
     }
 
     componentWillUnmount() {
         const top = window.pageYOffset || document.documentElement.scrollTop;
-        try {
-            sessionStorage.setItem('lastScrollPosition', top);
-        } catch (e) {
-            // Do nothing
-        }
+        this.props.keepScrollPosition(top);
     }
 
     onSearchFormSubmit = (e) => {
@@ -126,23 +116,31 @@ class Search extends React.Component {
     }
 }
 
+Search.defaultProps = {
+    scrollPosition: 0
+};
+
 Search.propTypes = {
     initialSearch: PropTypes.func.isRequired,
     search: PropTypes.func.isRequired,
     isSearching: PropTypes.bool.isRequired,
     searchResultTotal: PropTypes.number.isRequired,
-    hasError: PropTypes.bool.isRequired
+    hasError: PropTypes.bool.isRequired,
+    scrollPosition: PropTypes.number,
+    keepScrollPosition: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
     isSearching: state.search.isSearching,
     searchResultTotal: state.search.searchResult.total,
-    hasError: state.search.hasError
+    hasError: state.search.hasError,
+    scrollPosition: state.search.scrollPosition
 });
 
 const mapDispatchToProps = (dispatch) => ({
     initialSearch: () => dispatch({ type: INITIAL_SEARCH }),
-    search: () => dispatch({ type: SEARCH })
+    search: () => dispatch({ type: SEARCH }),
+    keepScrollPosition: (scrollPosition) => dispatch({ type: KEEP_SCROLL_POSITION, scrollPosition })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Search);
