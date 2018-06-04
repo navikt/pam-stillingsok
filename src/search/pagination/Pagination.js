@@ -2,40 +2,27 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Knapp } from 'nav-frontend-knapper';
 import { connect } from 'react-redux';
-import { PAGINATE } from '../searchReducer';
-import {
-    INCREASE_PAGINATION_FROM,
-    DECREASE_PAGINATION_FROM
-} from './paginationReducer';
+import { LOAD_MORE, PAGE_SIZE } from '../searchReducer';
 import './Pagination.less';
 
 class Pagination extends React.Component {
-    onPaginationNextClick = () => {
-        this.props.scrollToTopOfResultList(); //
-        this.props.increasePaginationFrom();
-        this.props.paginate();
-    };
-
-    onPaginationPreviousClick = () => {
-        this.props.scrollToTopOfResultList();
-        this.props.decreasePaginationFrom();
-        this.props.paginate();
+    onLoadMoreClick = () => {
+        this.props.loadMore();
     };
 
     render() {
-        const { from, total } = this.props;
-        const canPaginatePrevious = from !== undefined && from > 0;
-        const canPaginateNext = (from === undefined && total > 20) || (from + 20 < total);
+        const { from, total, isLoadingMore } = this.props;
+        const hasMore = (from === undefined && total > PAGE_SIZE) || (from + PAGE_SIZE < total);
         return (
-            <div id="search-result-pagination" className="Pagination">
-                {canPaginatePrevious && (
-                    <Knapp className="Pagination__button knapp--green" onClick={this.onPaginationPreviousClick}>
-                        Forrige
-                    </Knapp>
-                )}
-                {canPaginateNext && (
-                    <Knapp className="Pagination__button knapp--green" onClick={this.onPaginationNextClick}>
-                        Neste
+            <div className="Pagination">
+                {hasMore && (
+                    <Knapp
+                        disabled={isLoadingMore}
+                        spinner={isLoadingMore}
+                        className="Pagination__button knapp--green"
+                        onClick={this.onLoadMoreClick}
+                    >
+                        Se flere
                     </Knapp>
                 )}
             </div>
@@ -46,21 +33,18 @@ class Pagination extends React.Component {
 Pagination.propTypes = {
     from: PropTypes.number.isRequired,
     total: PropTypes.number.isRequired,
-    paginate: PropTypes.func.isRequired,
-    increasePaginationFrom: PropTypes.func.isRequired,
-    decreasePaginationFrom: PropTypes.func.isRequired,
-    scrollToTopOfResultList: PropTypes.func.isRequired
+    isLoadingMore: PropTypes.bool.isRequired,
+    loadMore: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
-    from: state.pagination.from,
-    total: state.search.searchResult.total
+    from: state.search.from,
+    total: state.search.searchResult.total,
+    isLoadingMore: state.search.isLoadingMore
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    paginate: () => dispatch({ type: PAGINATE }),
-    increasePaginationFrom: () => dispatch({ type: INCREASE_PAGINATION_FROM }),
-    decreasePaginationFrom: () => dispatch({ type: DECREASE_PAGINATION_FROM })
+    loadMore: () => dispatch({ type: LOAD_MORE })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Pagination);
