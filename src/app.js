@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
 import searchReducer, { saga } from './search/searchReducer';
 import searchBoxReducer, { searchBoxSaga } from './search/searchBox/searchBoxReducer';
+import stillingReducer, { stillingSaga } from './stilling/stillingReducer';
 import paginationReducer from './search/pagination/paginationReducer';
 import sortingReducer from './search/sorting/sortingReducer';
 import countiesReducer from './search/facets/counties/countiesReducer';
@@ -30,11 +31,13 @@ const store = createStore(combineReducers({
     created: createdReducer,
     engagement: engagementReducer,
     sector: sectorReducer,
-    extent: extentReducer
+    extent: extentReducer,
+    stilling: stillingReducer
 }), applyMiddleware(sagaMiddleware));
 
 sagaMiddleware.run(saga);
 sagaMiddleware.run(searchBoxSaga);
+sagaMiddleware.run(stillingSaga);
 
 ReactDOM.render(
     <Provider store={store}>
