@@ -19,7 +19,7 @@ export default class BackToTopButton extends React.Component {
     }
 
     onWindowScroll = () => {
-        const top = window.scrollY;
+        const top = window.pageYOffset;
         if (top >= this.props.offset && !this.state.show) {
             this.setState({
                 show: true
