@@ -25,7 +25,6 @@ const sagaMiddleware = createSagaMiddleware();
 const store = createStore(combineReducers({
     search: searchReducer,
     searchBox: searchBoxReducer,
-    pagination: paginationReducer,
     sorting: sortingReducer,
     counties: countiesReducer,
     created: createdReducer,
