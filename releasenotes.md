@@ -1,3 +1,6 @@
+## RELEASE - 0.7.68-155954b
+#### New in this release: 
++ 2018-05-31 [PAM-888] Use GET-requests to fetch individual ads for display
 ## RELEASE - 0.5.44-a2936e9
 #### New in this release: 
 + 2018-05-28 [PAM-637] removed div tag
