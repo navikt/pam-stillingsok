@@ -1,7 +1,11 @@
+@import "../../variables";
+
 .Pagination {
     text-align: center;
 }
 
-.Pagination__button:not(:last-child) {
-    margin-right: 1rem;
+@media (max-width: @screen-xs-max) {
+    .Pagination__button {
+       width: 100%;
+    }
 }

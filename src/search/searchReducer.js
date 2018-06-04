@@ -12,6 +12,7 @@ export const SEARCH = 'SEARCH';
 export const SEARCH_BEGIN = 'SEARCH_BEGIN';
 export const SEARCH_SUCCESS = 'SEARCH_SUCCESS';
 export const SEARCH_FAILURE = 'SEARCH_FAILURE';
+export const RESET_FROM = 'RESET_FROM';
 export const LOAD_MORE = 'LOAD_MORE';
 export const LOAD_MORE_BEGIN = 'LOAD_MORE_BEGIN';
 export const LOAD_MORE_SUCCESS = 'LOAD_MORE_SUCCESS';
@@ -43,10 +44,14 @@ export default function searchReducer(state = initialState, action) {
                 ...state,
                 initialSearchDone: true
             };
+        case RESET_FROM:
+            return {
+                ...state,
+                from: 0
+            };
         case SEARCH_BEGIN:
             return {
                 ...state,
-                from: 0,
                 isSearching: true
             };
         case SEARCH_SUCCESS:
@@ -93,11 +98,11 @@ export default function searchReducer(state = initialState, action) {
     }
 }
 
-export const toUrlQuery = (state) => {
+export function toUrlQuery(state) {
     const urlQuery = {};
     if (state.searchBox.q) urlQuery.q = state.searchBox.q;
     if (state.sorting.sort) urlQuery.sort = state.sorting.sort;
-    if (state.search.from) urlQuery.from = state.pagination.from;
+    if (state.search.from) urlQuery.from = state.search.from;
     if (state.counties.checkedCounties.length > 0) urlQuery.counties = state.counties.checkedCounties.join('_');
     if (state.counties.checkedMunicipals.length > 0) urlQuery.municipals = state.counties.checkedMunicipals.join('_');
     if (state.created.checkedCreated.length > 0) urlQuery.created = state.created.checkedCreated.join('_');
@@ -110,7 +115,14 @@ export const toUrlQuery = (state) => {
         .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(urlQuery[key])}`)
         .join('&')
         .replace(/%20/g, '+');
-};
+}
+
+export function updateUrlSearchQuery(state) {
+    const urlQuery = toUrlQuery(state);
+    const newUrlQuery = urlQuery && urlQuery.length > 0 ? `?${urlQuery}` : window.location.pathname;
+    window.history.replaceState('', '', newUrlQuery);
+}
+
 
 export function getUrlParameterByName(name, url) {
     name = name.replace(/[\[\]]/g, '\\$&');
@@ -165,15 +177,17 @@ export function toSearchQuery(state) {
     };
 }
 
-function* search() {
+function* search(action, resetFrom = true) {
     try {
         yield put({ type: SEARCH_BEGIN });
+
+        if (resetFrom) {
+            yield put({ type: RESET_FROM });
+        }
+
         const state = yield select();
 
-        // Update browser url to reflect current search query
-        const urlQuery = toUrlQuery(state);
-        const newUrlQuery = urlQuery && urlQuery.length > 0 ? `?${urlQuery}` : window.location.pathname;
-        window.history.replaceState('', '', newUrlQuery);
+        updateUrlSearchQuery(state);
 
         const searchResult = yield call(fetchSearch, toSearchQuery(state));
 
@@ -191,6 +205,9 @@ function* loadMore() {
     try {
         yield put({ type: LOAD_MORE_BEGIN });
         const state = yield select();
+
+        updateUrlSearchQuery(state);
+
         const response = yield call(fetchSearch, toSearchQuery(state));
         yield put({ type: LOAD_MORE_SUCCESS, response });
     } catch (e) {
