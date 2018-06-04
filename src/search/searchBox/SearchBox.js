@@ -37,14 +37,7 @@ class SearchBox extends React.Component {
                     suggestions={this.props.suggestions}
                     value={this.props.value ? this.props.value : ''}
                 />
-                <Knapp
-                    aria-label="søk"
-                    id="search-button"
-                    className="SearchBox__button"
-                    onClick={this.props.onSubmit}
-                >
-                    <i className="SearchBox__button__icon" />
-                </Knapp>
+
             </div>
         );
     }
