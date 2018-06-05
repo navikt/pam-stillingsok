@@ -64,7 +64,6 @@ class Search extends React.Component {
                             </Column>
                             <Column xs="12" md="8">
                                 <section
-                                    tabIndex="-1"
                                     id="sokeresultat"
                                 >
                                     <SearchResultList />
