@@ -213,9 +213,9 @@ function* initialSearch() {
 
 function* search() {
     try {
+        yield put({ type: RESET_FROM });
         const state = yield select();
         updateBrowserUrl(state);
-        yield put({ type: RESET_FROM });
         yield put({ type: SEARCH_BEGIN });
         const searchResult = yield call(fetchSearch, toSearchQuery(state));
         yield put({ type: SEARCH_SUCCESS, response: searchResult });
