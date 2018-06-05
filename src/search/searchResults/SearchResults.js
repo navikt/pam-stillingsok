@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import SearchResultItem from './SearchResultsItem';
 import SearchResultsCount from './SearchResultsCount';
+import Pagination from '../pagination/Pagination';
 import NoResults from '../noResults/NoResults';
 
 function SearchResults({ searchResult, isSearching, searchResultTotal }) {
@@ -10,8 +11,15 @@ function SearchResults({ searchResult, isSearching, searchResultTotal }) {
     return (
         <div role="region" aria-live="polite">
             <SearchResultsCount />
-            {stillinger && stillinger.map((stilling) => (
-                <SearchResultItem key={stilling.uuid} stilling={stilling} />
+            {stillinger && stillinger.map((bucket, index) => (
+                <div>
+                    {bucket.map((stilling) => (
+                        <SearchResultItem key={stilling.uuid} stilling={stilling} />
+                    ))}
+                    {index === stillinger.length - 1 && (
+                        <Pagination />
+                    )}
+                </div>
             ))}
             {!isSearching && searchResultTotal === 0 && (
                 <NoResults />
@@ -22,7 +30,7 @@ function SearchResults({ searchResult, isSearching, searchResultTotal }) {
 
 SearchResults.propTypes = {
     searchResult: PropTypes.shape({
-        stillinger: PropTypes.arrayOf(PropTypes.object)
+        stillinger: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.object))
     }).isRequired,
     isSearching: PropTypes.bool.isRequired,
     searchResultTotal: PropTypes.number.isRequired

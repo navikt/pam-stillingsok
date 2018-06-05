@@ -3,9 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Container, Row, Column } from 'nav-frontend-grid';
 import SearchResults from './searchResults/SearchResults';
-import SearchResultError from './error/SearchError';
-import SearchResultPagination from './pagination/Pagination';
-import SearchResultSorting from './sorting/Sorting';
+import SearchError from './error/SearchError';
+import Sorting from './sorting/Sorting';
 import Counties from './facets/counties/Counties';
 import HeltidDeltid from './facets/extent/Extent';
 import EngagementType from './facets/engagement/Engagement';
@@ -40,7 +39,7 @@ class Search extends React.Component {
                 <div className="search-page-header" />
                 <Container className="search-page-margin">
                     {this.props.hasError ? (
-                        <SearchResultError />
+                        <SearchError />
                     ) : (
                         <Row>
                             <Column xs="12" md="4">
@@ -58,14 +57,13 @@ class Search extends React.Component {
                             </Column>
                             <Column xs="12" md="5" />
                             <Column xs="12" md="3">
-                                <SearchResultSorting />
+                                <Sorting />
                             </Column>
                             <Column xs="12" md="8">
                                 <section
                                     id="sokeresultat"
                                 >
                                     <SearchResults />
-                                    <SearchResultPagination />
                                 </section>
                             </Column>
                         </Row>
