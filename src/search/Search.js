@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Container, Row, Column } from 'nav-frontend-grid';
-import SearchResultCount from './searchResults/SearchResultsCount';
-import SearchResultList from './searchResults/SearchResults';
+import SearchResults from './searchResults/SearchResults';
 import SearchResultError from './error/SearchError';
 import SearchResultPagination from './pagination/Pagination';
 import SearchResultSorting from './sorting/Sorting';
@@ -13,7 +12,6 @@ import EngagementType from './facets/engagement/Engagement';
 import Sector from './facets/sector/Sector';
 import Created from './facets/created/Created';
 import SearchBox from './searchBox/SearchBox';
-import NoResults from './noResults/NoResults';
 import { INITIAL_SEARCH, KEEP_SCROLL_POSITION } from './searchReducer';
 import BackToTop from './backToTopButton/BackToTop';
 import './Search.less';
@@ -66,7 +64,7 @@ class Search extends React.Component {
                                 <section
                                     id="sokeresultat"
                                 >
-                                    <SearchResultList />
+                                    <SearchResults />
                                     <SearchResultPagination />
                                 </section>
                             </Column>
