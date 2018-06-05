@@ -111,7 +111,7 @@ export function toUrlQuery(state) {
         urlQuery.engagementType = state.engagement.checkedEngagementType.join('_');
     }
     if (state.sector.checkedSector.length > 0) urlQuery.sector = state.sector.checkedSector.join('_');
-    if (state.extent.checkedExtent.length > 0) urlQuery.heltidDeltid = state.extent.checkedExtent.join('_');
+    if (state.extent.checkedExtent.length > 0) urlQuery.extent = state.extent.checkedExtent.join('_');
     return Object.keys(urlQuery)
         .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(urlQuery[key])}`)
         .join('&')
