@@ -14,7 +14,7 @@ import Sector from './facets/sector/Sector';
 import Created from './facets/created/Created';
 import SearchBox from './searchBox/SearchBox';
 import NoResults from './noResults/NoResults';
-import { INITIAL_SEARCH, KEEP_SCROLL_POSITION, SEARCH } from './searchReducer';
+import { INITIAL_SEARCH, KEEP_SCROLL_POSITION } from './searchReducer';
 import BackToTop from './backToTopButton/BackToTop';
 import './Search.less';
 
@@ -36,12 +36,6 @@ class Search extends React.Component {
         this.props.keepScrollPosition(top);
     }
 
-    onSearchFormSubmit = (e) => {
-        e.preventDefault();
-        this.props.search();
-    };
-
-
     scrollToTopOfResultList = () => {
         this.resultatListe.scrollIntoView();
     };
@@ -56,15 +50,8 @@ class Search extends React.Component {
                     ) : (
                         <Row>
                             <Column xs="12" md="4">
-                                <form
-                                    role="search"
-                                    id="search-form"
-                                    name="filter"
-                                    action="/"
-                                    method="get"
-                                    onSubmit={this.onSearchFormSubmit}
-                                >
-                                    <SearchBox onSubmit={this.onSearchFormSubmit} />
+                                <div role="search">
+                                    <SearchBox />
                                     <a href="#sokeresultat" className="typo-normal lenke sr-only sr-only-focusable">
                                         Hopp til søkeresultat
                                     </a>
@@ -73,7 +60,7 @@ class Search extends React.Component {
                                     <HeltidDeltid />
                                     <EngagementType />
                                     <Sector />
-                                </form>
+                                </div>
                             </Column>
                             <Column xs="12" md="8">
                                 <div
@@ -122,7 +109,6 @@ Search.defaultProps = {
 
 Search.propTypes = {
     initialSearch: PropTypes.func.isRequired,
-    search: PropTypes.func.isRequired,
     isSearching: PropTypes.bool.isRequired,
     searchResultTotal: PropTypes.number.isRequired,
     hasError: PropTypes.bool.isRequired,
@@ -139,7 +125,6 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     initialSearch: () => dispatch({ type: INITIAL_SEARCH }),
-    search: () => dispatch({ type: SEARCH }),
     keepScrollPosition: (scrollPosition) => dispatch({ type: KEEP_SCROLL_POSITION, scrollPosition })
 });
 

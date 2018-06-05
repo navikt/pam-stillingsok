@@ -37,7 +37,6 @@ class SearchBox extends React.Component {
                     suggestions={this.props.suggestions}
                     value={this.props.value ? this.props.value : ''}
                 />
-
             </div>
         );
     }
@@ -50,7 +49,6 @@ SearchBox.propTypes = {
     setValue: PropTypes.func.isRequired,
     selectSuggestion: PropTypes.func.isRequired,
     fetchSuggestions: PropTypes.func.isRequired,
-    onSubmit: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
