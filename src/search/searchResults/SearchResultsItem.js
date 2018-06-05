@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Row, Column } from 'nav-frontend-grid';
-import { Undertittel, Normaltekst, Element, Undertekst } from 'nav-frontend-typografi';
+import { Ingress, Normaltekst, Element } from 'nav-frontend-typografi';
 import { formatISOString } from '../../utils';
 import { STILLING } from '../../fasitProperties';
 import './SearchResultsItem.less';
@@ -23,7 +23,7 @@ export default function SearchResultItem(props) {
                         </Normaltekst>
                     ) }
 
-                    <Undertittel tag="h3" className="SearchResultItem__title">{stilling.title}</Undertittel>
+                    <Ingress className="SearchResultItem__title">{stilling.title}</Ingress>
 
                     {stilling.properties.jobtitle && stilling.title !== stilling.properties.jobtitle && (
                         <Element className="SearchResultItem__jobtitle">{stilling.properties.jobtitle}</Element>

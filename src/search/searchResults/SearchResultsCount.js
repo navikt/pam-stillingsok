@@ -4,15 +4,15 @@ import { connect } from 'react-redux';
 import { Undertittel } from 'nav-frontend-typografi';
 import './SearchResultsCount.less';
 
-export function SearchResultsCount({ isAtLeastOneSearchDone, count }) {
+function SearchResultsCount({ isAtLeastOneSearchDone, count }) {
     if (isAtLeastOneSearchDone) {
         if (count === 0) {
             return (
-                <div className="SearchResultsCount"><Undertittel>Ingen treff</Undertittel></div>
+                <Undertittel className="SearchResultsCount">Ingen treff</Undertittel>
             );
         }
         return (
-            <div className="SearchResultsCount"><Undertittel>{count} treff</Undertittel></div>
+            <Undertittel className="SearchResultsCount">{count} treff</Undertittel>
         );
     }
     return (

@@ -36,10 +36,6 @@ class Search extends React.Component {
         this.props.keepScrollPosition(top);
     }
 
-    scrollToTopOfResultList = () => {
-        this.resultatListe.scrollIntoView();
-    };
-
     render() {
         return (
             <div>
@@ -62,37 +58,18 @@ class Search extends React.Component {
                                     <Sector />
                                 </div>
                             </Column>
+                            <Column xs="12" md="5" />
+                            <Column xs="12" md="3">
+                                <SearchResultSorting />
+                            </Column>
                             <Column xs="12" md="8">
-                                <div
-                                    className="search-result-count-wrapper"
-                                    ref={(resultatListe) => {
-                                        this.resultatListe = resultatListe;
-                                    }}
+                                <section
+                                    tabIndex="-1"
+                                    id="sokeresultat"
                                 >
-                                    <Row>
-                                        <Column xs="12" md="8">
-                                            <SearchResultCount />
-                                        </Column>
-                                        <Column xs="12" md="4">
-                                            <SearchResultSorting />
-                                        </Column>
-                                    </Row>
-                                </div>
-                                {this.props.searchResultTotal > 0 && (
-                                    <section
-                                        tabIndex="-1"
-                                        id="sokeresultat"
-                                        aria-labelledby="search-result-count"
-                                    >
-                                        <SearchResultList />
-                                        <SearchResultPagination
-                                            scrollToTopOfResultList={this.scrollToTopOfResultList}
-                                        />
-                                    </section>
-                                )}
-                                {!this.props.isSearching && this.props.searchResultTotal === 0 && (
-                                    <NoResults />
-                                )}
+                                    <SearchResultList />
+                                    <SearchResultPagination />
+                                </section>
                             </Column>
                         </Row>
                     )}
@@ -109,16 +86,12 @@ Search.defaultProps = {
 
 Search.propTypes = {
     initialSearch: PropTypes.func.isRequired,
-    isSearching: PropTypes.bool.isRequired,
-    searchResultTotal: PropTypes.number.isRequired,
     hasError: PropTypes.bool.isRequired,
     scrollPosition: PropTypes.number,
     keepScrollPosition: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
-    isSearching: state.search.isSearching,
-    searchResultTotal: state.search.searchResult.total,
     hasError: state.search.hasError,
     scrollPosition: state.search.scrollPosition
 });
