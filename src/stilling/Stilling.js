@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -107,6 +108,10 @@ class Stilling extends React.Component {
     }
 }
 
+Stilling.defaultProps = {
+    stilling: undefined
+};
+
 Stilling.propTypes = {
     stilling: PropTypes.shape({
         _source: PropTypes.shape({
@@ -116,7 +121,7 @@ Stilling.propTypes = {
                 adtext: PropTypes.string
             })
         })
-    }).isRequired,
+    }),
     getStilling: PropTypes.func.isRequired
 };
 
