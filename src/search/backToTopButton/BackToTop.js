@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './BackToTopButton.less';
+import './BackToTop.less';
 
-export default class BackToTopButton extends React.Component {
+export default class BackToTop extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -33,22 +33,25 @@ export default class BackToTopButton extends React.Component {
 
     render() {
         return (
-            <a
-                href="#topbar"
-                className={this.state.show ? 'BackToTopButton' : 'BackToTopButton BackToTopButton--hidden'}
+            <div
+                className={this.state.show ? 'BackToTop' : 'BackToTop BackToTop--hidden'}
             >
-                <span className="BackToTopButton__text">Tilbake til toppen</span>
-                <span className="BackToTopButton__arrow" aria-label="Tilbake til toppen">&uarr;</span>
-            </a>
+                <a
+                    href="#topbar"
+                    className="typo-normal lenke"
+                >
+                    Tilbake til toppen
+                </a>
+            </div>
         );
     }
 }
 
-BackToTopButton.defaultProps = {
+BackToTop.defaultProps = {
     offset: 300
 };
 
-BackToTopButton.propTypes = {
+BackToTop.propTypes = {
     offset: PropTypes.number
 };
 
