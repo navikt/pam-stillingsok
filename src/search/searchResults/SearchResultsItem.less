@@ -2,7 +2,7 @@
 
 .SearchResultItem {
   background-color: #fff;
-  padding: 1rem;
+  padding: 1rem 2rem 1.5rem 2rem;
   display: block;
   text-decoration: none;
   color: @navMorkGra;
@@ -21,12 +21,26 @@
   }
 }
 
-.SearchResultItem__inner {
-  display: flex;
+.SearchResultItem__updated {
+  margin-bottom: 1rem;
+  color: @navGra60;
 }
 
-.SearchResultItem__inner__arbeidsgiver {
-  align-self: center;
-  text-align: center;
-  padding: 0 2rem;
+.SearchResultItem__title {
+  margin-bottom: 1rem;
+  font-weight: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+@media (max-width: @screen-xs-max) {
+  .SearchResultItem {
+    padding: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .SearchResultItem__updated,
+  .SearchResultItem__title {
+    margin-bottom: 0.225rem;
+  }
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Row, Column } from 'nav-frontend-grid';
-import { Normaltekst, Element } from 'nav-frontend-typografi';
+import { Undertittel, Normaltekst, Element, Undertekst } from 'nav-frontend-typografi';
 import { formatISOString } from '../../utils';
 import { STILLING } from '../../fasitProperties';
 import './SearchResultsItem.less';
@@ -15,32 +15,31 @@ export default function SearchResultItem(props) {
             to={`${STILLING}${stilling.uuid}`}
             aria-label={`${stilling.title} hos ${stilling.properties.employer}`}
         >
-            <Row className="SearchResultItem__inner">
-                <Column xs="4" className="SearchResultItem__inner__arbeidsgiver">
-                    {stilling.properties.employer && (
-                        <Normaltekst className="break-word">{stilling.properties.employer}</Normaltekst>
-                    ) }
-                </Column>
-                <Column xs="8">
+            <Row>
+                <Column xs="12">
                     {stilling.updated && (
-                        <Normaltekst className="blokk-s break-word muted">
+                        <Normaltekst className="SearchResultItem__updated">
                             {formatISOString(stilling.updated, 'D. MMMM YYYY')}
                         </Normaltekst>
                     ) }
 
-                    <h3 className="typo-ingress blokk-s break-word">{stilling.title}</h3>
+                    <Undertittel tag="h3" className="SearchResultItem__title">{stilling.title}</Undertittel>
 
                     {stilling.properties.jobtitle && stilling.title !== stilling.properties.jobtitle && (
-                        <Element className="break-word">{stilling.properties.jobtitle}</Element>
+                        <Element className="SearchResultItem__jobtitle">{stilling.properties.jobtitle}</Element>
                     ) }
 
                     {stilling.properties.employer && (
-                        <Normaltekst className="break-word">{stilling.properties.employer}</Normaltekst>
-                    ) }
+                        <Normaltekst className="SearchResultItem__employer">
+                            {stilling.properties.employer}
+                        </Normaltekst>
+                    )}
 
                     {stilling.properties.location && (
-                        <Normaltekst className="break-word">{stilling.properties.location}</Normaltekst>
-                    ) }
+                        <Normaltekst className="SearchResultItem__location">
+                            {stilling.properties.location}
+                        </Normaltekst>
+                    )}
                 </Column>
             </Row>
         </Link>
