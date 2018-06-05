@@ -12,7 +12,7 @@ function SearchResults({ searchResult, isSearching, searchResultTotal }) {
         <div role="region" aria-live="polite">
             <SearchResultsCount />
             {stillinger && stillinger.map((bucket, index) => (
-                <div>
+                <div key={bucket[0].uuid}>
                     {bucket.map((stilling) => (
                         <SearchResultItem key={stilling.uuid} stilling={stilling} />
                     ))}
