@@ -26,7 +26,7 @@ module.exports = {
     },
     "test_settings": {
         "default": {
-            "launch_url" : "http://localhost:8080/sok",
+            "launch_url" : "http://localhost:8080",
             "screenshots" : {
                 "enabled" : true,
                 "on_failure" : true,

@@ -1,7 +1,6 @@
 module.exports = {
     elements : {
         searchTextField:'input[id=search-form-fritekst-input]',
-        searchButton:'button[id=search-button]',
         searchResult:'section[id=sokeresultat]',
         noResult:'div[class=NoResults]',
         searchResultItem:'a[class=SearchResultItem]',
@@ -10,8 +9,7 @@ module.exports = {
 
     commands : [{
         doTextSearch : function(text) {
-            return this.setValue('@searchTextField', text)
-                .click('@searchButton');
+            return this.setValue('@searchTextField', text + this.api.Keys.ENTER);
         },
 
         searchResultContainsWord: function(word) {
