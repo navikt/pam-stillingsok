@@ -6,8 +6,7 @@ import {
 
 export const SET_INITIAL_STATE = 'SET_INITIAL_STATE';
 export const INITIAL_SEARCH = 'INITIAL_SEARCH';
-export const INITIAL_SEARCH_SUCCESS = 'INITIAL_SEARCH_SUCCESS';
-export const INITIAL_SEARCH_DONE = 'INITIAL_SEARCH_DONE';
+export const FETCH_INITIAL_FACETS_SUCCESS = 'FETCH_INITIAL_FACETS_SUCCESS';
 export const SEARCH = 'SEARCH';
 export const SEARCH_BEGIN = 'SEARCH_BEGIN';
 export const SEARCH_SUCCESS = 'SEARCH_SUCCESS';
@@ -22,7 +21,6 @@ export const KEEP_SCROLL_POSITION = 'KEEP_SCROLL_POSITION';
 export const PAGE_SIZE = 20;
 
 const initialState = {
-    initialSearchDone: false,
     isAtLeastOneSearchDone: false,
     isSearching: true,
     isLoadingMore: false,
@@ -40,11 +38,6 @@ export default function searchReducer(state = initialState, action) {
                 ...state,
                 from: action.query.from || 0
             };
-        case INITIAL_SEARCH_DONE:
-            return {
-                ...state,
-                initialSearchDone: true
-            };
         case RESET_FROM:
             return {
                 ...state,
@@ -59,6 +52,7 @@ export default function searchReducer(state = initialState, action) {
             return {
                 ...state,
                 isSearching: false,
+                initialSearchDone: true,
                 isAtLeastOneSearchDone: true,
                 searchResult: action.response
             };
@@ -124,7 +118,7 @@ export function toUrlQuery(state) {
         .replace(/%20/g, '+');
 }
 
-export function updateUrlSearchQuery(state) {
+export function updateBrowserUrl(state) {
     const urlQuery = toUrlQuery(state);
     const newUrlQuery = urlQuery && urlQuery.length > 0 ? `?${urlQuery}` : window.location.pathname;
     window.history.replaceState('', '', newUrlQuery);
@@ -184,20 +178,46 @@ export function toSearchQuery(state) {
     };
 }
 
-function* search(action, resetFrom = true) {
-    try {
-        yield put({ type: SEARCH_BEGIN });
+/**
+ * Henter ut search query fra browser url første gang siden blir lastet.
+ * Fetcher alle tilgjengelige fasetter og gjør deretter det første søket.
+ */
+function* initialSearch() {
+    let state = yield select();
+    if (!state.search.initialSearchDone) {
+        try {
+            const urlQuery = fromUrlQuery(window.location.href);
+            yield put({ type: SET_INITIAL_STATE, query: urlQuery });
 
-        if (resetFrom) {
-            yield put({ type: RESET_FROM });
+            // Får å hente alle tilgjengelige fasetter, gjøre vi først
+            // et søk uten noen søkekriterier.
+            yield put({ type: SEARCH_BEGIN });
+            let response = yield call(fetchSearch);
+            yield put({ type: FETCH_INITIAL_FACETS_SUCCESS, response });
+
+            if (Object.keys(urlQuery).length > 0) {
+                state = yield select();
+                response = yield call(fetchSearch, toSearchQuery(state));
+            }
+
+            yield put({ type: SEARCH_SUCCESS, response });
+        } catch (e) {
+            if (e instanceof SearchApiError) {
+                yield put({ type: SEARCH_FAILURE, error: e });
+            } else {
+                throw e;
+            }
         }
+    }
+}
 
+function* search() {
+    try {
         const state = yield select();
-
-        updateUrlSearchQuery(state);
-
+        updateBrowserUrl(state);
+        yield put({ type: RESET_FROM });
+        yield put({ type: SEARCH_BEGIN });
         const searchResult = yield call(fetchSearch, toSearchQuery(state));
-
         yield put({ type: SEARCH_SUCCESS, response: searchResult });
     } catch (e) {
         if (e instanceof SearchApiError) {
@@ -210,11 +230,9 @@ function* search(action, resetFrom = true) {
 
 function* loadMore() {
     try {
-        yield put({ type: LOAD_MORE_BEGIN });
         const state = yield select();
-
-        updateUrlSearchQuery(state);
-
+        updateBrowserUrl(state);
+        yield put({ type: LOAD_MORE_BEGIN });
         const response = yield call(fetchSearch, toSearchQuery(state));
         yield put({ type: LOAD_MORE_SUCCESS, response });
     } catch (e) {
@@ -226,34 +244,8 @@ function* loadMore() {
     }
 }
 
-function* initialSearch(action) {
-    const state = yield select();
-    if (!state.search.initialSearchDone) {
-        try {
-            const urlQuery = fromUrlQuery(window.location.href);
-            if (Object.keys(urlQuery).length > 0) {
-                yield put({ type: SET_INITIAL_STATE, query: urlQuery });
-                const response = yield call(fetchSearch);
-                yield put({ type: INITIAL_SEARCH_SUCCESS, response });
-                yield call(search, action, false);
-            } else {
-                const response = yield call(fetchSearch);
-                yield put({ type: SEARCH_SUCCESS, response });
-                yield put({ type: INITIAL_SEARCH_SUCCESS, response });
-            }
-            yield put({ type: INITIAL_SEARCH_DONE });
-        } catch (e) {
-            if (e instanceof SearchApiError) {
-                yield put({ type: SEARCH_FAILURE, error: e });
-            } else {
-                throw e;
-            }
-        }
-    }
-}
-
 export const saga = function* saga() {
+    yield takeLatest(INITIAL_SEARCH, initialSearch);
     yield takeLatest(SEARCH, search);
     yield takeLatest(LOAD_MORE, loadMore);
-    yield takeLatest(INITIAL_SEARCH, initialSearch);
 };

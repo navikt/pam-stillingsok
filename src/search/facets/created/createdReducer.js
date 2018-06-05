@@ -1,4 +1,4 @@
-import { SET_INITIAL_STATE, INITIAL_SEARCH_SUCCESS, SEARCH_SUCCESS } from '../../searchReducer';
+import { SET_INITIAL_STATE, FETCH_INITIAL_FACETS_SUCCESS, SEARCH_SUCCESS } from '../../searchReducer';
 
 export const CHECK_CREATED = 'CHECK_CREATED';
 export const UNCHECK_CREATED = 'UNCHECK_CREATED';
@@ -15,7 +15,7 @@ export default function createdReducer(state = initialState, action) {
                 ...state,
                 checkedCreated: action.query.created || []
             };
-        case INITIAL_SEARCH_SUCCESS:
+        case FETCH_INITIAL_FACETS_SUCCESS:
             return {
                 ...state,
                 created: action.response.created

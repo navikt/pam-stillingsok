@@ -1,4 +1,4 @@
-import { SET_INITIAL_STATE, INITIAL_SEARCH_SUCCESS, SEARCH_SUCCESS } from '../../searchReducer';
+import { SET_INITIAL_STATE, FETCH_INITIAL_FACETS_SUCCESS, SEARCH_SUCCESS } from '../../searchReducer';
 
 export const CHECK_COUNTY = 'CHECK_COUNTY';
 export const UNCHECK_COUNTY = 'UNCHECK_COUNTY';
@@ -19,7 +19,7 @@ export default function countiesReducer(state = initialState, action) {
                 checkedCounties: action.query.counties || [],
                 checkedMunicipals: action.query.municipals || []
             };
-        case INITIAL_SEARCH_SUCCESS:
+        case FETCH_INITIAL_FACETS_SUCCESS:
             return {
                 ...state,
                 counties: action.response.counties
