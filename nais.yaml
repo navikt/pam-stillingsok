@@ -24,13 +24,3 @@ resources:
     memory: 256Mi
 ingress:
   enabled: true
-fasitResources:
-  used:
-  - alias: pam.forside
-    resourceType: baseurl
-  - alias: pam.minside
-    resourceType: baseurl
-  - alias: pam.isTokenValid
-    resourceType: baseurl
-  - alias: pam.logout
-    resourceType: baseurl
