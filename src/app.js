@@ -13,6 +13,7 @@ import createdReducer from './search/facets/created/createdReducer';
 import engagementReducer from './search/facets/engagement/engagementReducer';
 import sectorReducer from './search/facets/sector/sectorReducer';
 import extentReducer from './search/facets/extent/extentReducer';
+import focusReducer from './search/focusReducer';
 import SearchPage from './search/Search';
 import StillingPage from './stilling/Stilling';
 import { CONTEXT_PATH } from './fasitProperties';
@@ -30,7 +31,8 @@ const store = createStore(combineReducers({
     engagement: engagementReducer,
     sector: sectorReducer,
     extent: extentReducer,
-    stilling: stillingReducer
+    stilling: stillingReducer,
+    focus: focusReducer
 }), applyMiddleware(sagaMiddleware));
 
 sagaMiddleware.run(saga);
