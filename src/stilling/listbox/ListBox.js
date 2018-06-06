@@ -7,13 +7,13 @@ export default function ListBox(props) {
 
     return (
         <Row id="stillingsboks" className="blokk-s" >
-            <Column xs="3" id="left-panel">
-                <Element> {props.title} </Element>
+            <Column xs="4" id="left-panel">
+                <Element>{props.title}</Element>
             </Column>
-            <Column xs="9" id="right-panel" >
+            <Column xs="8" id="right-panel" >
                 <ul className="dashed">
                     {props.items.map((item, i) =>
-                        <li key={i}>{item.punkt}</li>
+                        <li key={i} className="typo-normal">{item.punkt}</li>
                     )}
                 </ul>
             </Column>
