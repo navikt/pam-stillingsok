@@ -8,6 +8,16 @@ const initialState = {
     checkedEngagementType: []
 };
 
+function reOrderFacets (array){
+    array.forEach(function (item, i) {
+        if(item.key === 'Annet') {
+            array.push(array.splice(i, 1)[0]);
+        }
+    });
+
+    return array;
+};
+
 export default function engagementReducer(state = initialState, action) {
     switch (action.type) {
         case SET_INITIAL_STATE:
@@ -18,7 +28,7 @@ export default function engagementReducer(state = initialState, action) {
         case FETCH_INITIAL_FACETS_SUCCESS:
             return {
                 ...state,
-                engagementType: action.response.engagementTypes
+                engagementType: reOrderFacets(action.response.engagementTypes)
             };
         case SEARCH_SUCCESS:
             return {
