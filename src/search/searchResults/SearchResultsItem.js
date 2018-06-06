@@ -7,44 +7,59 @@ import { formatISOString } from '../../utils';
 import { STILLING } from '../../fasitProperties';
 import './SearchResultsItem.less';
 
-export default function SearchResultItem(props) {
-    const { stilling } = props;
-    return (
-        <Link
-            className="SearchResultItem"
-            to={`${STILLING}${stilling.uuid}`}
-            aria-label={`${stilling.title} hos ${stilling.properties.employer}`}
-        >
-            <Row>
-                <Column xs="12">
-                    {stilling.updated && (
-                        <Normaltekst className="SearchResultItem__updated">
-                            {formatISOString(stilling.updated, 'D. MMMM YYYY')}
-                        </Normaltekst>
-                    ) }
+export default class SearchResultItem extends React.Component {
+    componentDidMount() {
+        if (this.props.shouldFocus) {
+            this.link.focus();
+        }
+    }
 
-                    <Ingress className="SearchResultItem__title">{stilling.title}</Ingress>
+    render() {
+        const { stilling } = this.props;
+        return (
+            <Link
+                innerRef={(link) => {
+                    this.link = link;
+                }}
+                className="SearchResultItem"
+                to={`${STILLING}${stilling.uuid}`}
+                aria-label={`${stilling.title} hos ${stilling.properties.employer}`}
+            >
+                <Row>
+                    <Column xs="12">
+                        {stilling.updated && (
+                            <Normaltekst className="SearchResultItem__updated">
+                                {formatISOString(stilling.updated, 'D. MMMM YYYY')}
+                            </Normaltekst>
+                        )}
 
-                    {stilling.properties.jobtitle && stilling.title !== stilling.properties.jobtitle && (
-                        <Element className="SearchResultItem__jobtitle">{stilling.properties.jobtitle}</Element>
-                    ) }
+                        <Ingress className="SearchResultItem__title">{stilling.title}</Ingress>
 
-                    {stilling.properties.employer && (
-                        <Normaltekst className="SearchResultItem__employer">
-                            {stilling.properties.employer}
-                        </Normaltekst>
-                    )}
+                        {stilling.properties.jobtitle && stilling.title !== stilling.properties.jobtitle && (
+                            <Element className="SearchResultItem__jobtitle">{stilling.properties.jobtitle}</Element>
+                        )}
 
-                    {stilling.properties.location && (
-                        <Normaltekst className="SearchResultItem__location">
-                            {stilling.properties.location}
-                        </Normaltekst>
-                    )}
-                </Column>
-            </Row>
-        </Link>
-    );
+                        {stilling.properties.employer && (
+                            <Normaltekst className="SearchResultItem__employer">
+                                {stilling.properties.employer}
+                            </Normaltekst>
+                        )}
+
+                        {stilling.properties.location && (
+                            <Normaltekst className="SearchResultItem__location">
+                                {stilling.properties.location}
+                            </Normaltekst>
+                        )}
+                    </Column>
+                </Row>
+            </Link>
+        );
+    }
 }
+
+SearchResultItem.defaultProps = {
+    shouldFocus: false
+};
 
 SearchResultItem.propTypes = {
     stilling: PropTypes.shape({
@@ -56,5 +71,6 @@ SearchResultItem.propTypes = {
             location: PropTypes.string,
             updated: PropTypes.string
         })
-    }).isRequired
+    }).isRequired,
+    shouldFocus: PropTypes.bool
 };
