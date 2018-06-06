@@ -33,7 +33,7 @@ SearchResults.defaultProps = {
 
 SearchResults.propTypes = {
     searchResult: PropTypes.shape({
-        stillinger: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.object))
+        stillinger: PropTypes.arrayOf(PropTypes.object)
     }).isRequired,
     isSearching: PropTypes.bool.isRequired,
     searchResultTotal: PropTypes.number.isRequired,
