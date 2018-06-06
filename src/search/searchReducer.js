@@ -56,7 +56,7 @@ export default function searchReducer(state = initialState, action) {
                 isAtLeastOneSearchDone: true,
                 searchResult: {
                     ...action.response,
-                    stillinger: [action.response.stillinger]
+                    stillinger: action.response.stillinger
                 }
             };
         case SEARCH_FAILURE:
@@ -82,7 +82,7 @@ export default function searchReducer(state = initialState, action) {
                 isLoadingMore: false,
                 searchResult: {
                     ...state.searchResult,
-                    stillinger: [...state.searchResult.stillinger, action.response.stillinger]
+                    stillinger: [...state.searchResult.stillinger, ...action.response.stillinger]
                 }
             };
         case RESET_PAGE: {

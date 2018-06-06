@@ -5,26 +5,21 @@ import SearchResultItem from './SearchResultsItem';
 import SearchResultsCount from './SearchResultsCount';
 import Pagination from '../pagination/Pagination';
 import NoResults from '../noResults/NoResults';
+import './SearchResults.less';
 
 function SearchResults({ searchResult, isSearching, searchResultTotal, restoreFocusToUuid }) {
     const { stillinger } = searchResult;
     return (
-        <div role="region" aria-live="polite">
+        <div className="SearchResults" role="region" aria-live="polite">
             <SearchResultsCount />
-            {stillinger && stillinger.map((bucket, bucketIndex) => (
-                <div key={bucket[0].uuid}>
-                    {bucket.map((stilling) => (
-                        <SearchResultItem
-                            key={stilling.uuid}
-                            stilling={stilling}
-                            shouldFocus={stilling.uuid === restoreFocusToUuid}
-                        />
-                    ))}
-                    {bucketIndex === stillinger.length - 1 && (
-                        <Pagination />
-                    )}
-                </div>
+            {stillinger && stillinger.map((stilling) => (
+                <SearchResultItem
+                    key={stilling.uuid}
+                    stilling={stilling}
+                    shouldFocus={stilling.uuid === restoreFocusToUuid}
+                />
             ))}
+            <Pagination />
             {!isSearching && searchResultTotal === 0 && (
                 <NoResults />
             )}
