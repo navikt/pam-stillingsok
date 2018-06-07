@@ -7,7 +7,7 @@
   z-index: 100;
   box-shadow: 0 0 10px #d1d1d1;
   margin: 0 1rem 1rem 0;
-  background: #fff;
+  background: rgba(255, 255, 255, 0.9);
 }
 
 .BackToTop__link__arrow {
@@ -18,11 +18,16 @@
 
 @media (max-width: @screen-xs-max) {
   .BackToTop {
+    border-radius: 50%!important;
     margin: 0 0.5rem 0.5rem 0;
   }
 
   .BackToTop__link {
-    padding: 1rem!important;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 50%!important;
+    padding: 0!important;
+    text-align: center;
   }
 
   .BackToTop__link__text {
@@ -30,6 +35,7 @@
   }
 
   .BackToTop__link__arrow {
+    line-height: 3.5rem;
     display: block;
   }
 }
