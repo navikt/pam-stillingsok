@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Chevron from 'nav-frontend-chevron';
 import './BackToTop.less';
 
 export default class BackToTop extends React.Component {
@@ -38,8 +39,9 @@ export default class BackToTop extends React.Component {
             >
                 <a
                     href="#topbar"
-                    className="typo-normal lenke"
+                    className="knapp knapp--green knapp--standard"
                 >
+                    <Chevron type="opp" className="BackToTop__chevron" />
                     Tilbake til toppen
                 </a>
             </div>
