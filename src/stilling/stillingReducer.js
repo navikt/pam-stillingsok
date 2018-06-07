@@ -17,7 +17,8 @@ export default function stillingReducer(state = initialState, action) {
             return {
                 ...state,
                 stilling: undefined,
-                isFetchingStilling: true
+                isFetchingStilling: true,
+                error: undefined
             };
         case FETCH_STILLING_SUCCESS:
             return {
