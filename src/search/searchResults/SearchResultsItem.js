@@ -33,7 +33,7 @@ export default class SearchResultItem extends React.Component {
                             </Normaltekst>
                         )}
 
-                        <Ingress className="SearchResultItem__title">{stilling.title}</Ingress>
+                        <Ingress tag="h3" className="SearchResultItem__title">{stilling.title}</Ingress>
 
                         {stilling.properties.jobtitle && stilling.title !== stilling.properties.jobtitle && (
                             <Element className="SearchResultItem__jobtitle">{stilling.properties.jobtitle}</Element>
