@@ -3,8 +3,9 @@ module.exports = {
         searchTextField:'input[id=search-form-fritekst-input]',
         searchResult:'section[id=sokeresultat]',
         noResult:'div[class=NoResults]',
-        searchResultItem:'a[class=SearchResultItem]',
-        searchResultCount:'div[class=SearchResultsCount]',
+        //searchResultItem:'a[class=SearchResultItem]',
+        searchResultItem:'p[class*=SearchResultItem__title]',
+        searchResultCount:'h2[class*=SearchResultsCount]',
     },
 
     commands : [{
