@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Container, Row, Column } from 'nav-frontend-grid';
+import { Sidetittel, Normaltekst } from 'nav-frontend-typografi';
 import SearchResults from './searchResults/SearchResults';
 import SearchError from './error/SearchError';
 import Sorting from './sorting/Sorting';
@@ -35,9 +36,20 @@ class Search extends React.Component {
 
     render() {
         return (
-            <div>
-                <div className="search-page-header" />
-                <Container className="search-page-margin">
+            <div className="Search">
+                <div className="Search__header">
+                    <Container>
+                        <Row>
+                            <Column xs="12">
+                                <Sidetittel className="Search__header__title">Ledige stillinger</Sidetittel>
+                                <Normaltekst>
+                                    Her finner du alle offentlig utlyste stillinger i Norge.
+                                </Normaltekst>
+                            </Column>
+                        </Row>
+                    </Container>
+                </div>
+                <Container className="Search__main">
                     {this.props.hasError ? (
                         <SearchError />
                     ) : (
