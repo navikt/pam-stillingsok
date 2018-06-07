@@ -11,6 +11,7 @@ import Details from './Details';
 import NotFound from './NotFound';
 import SearchError from '../search/error/SearchError';
 import Expired from './Expired';
+import BackToSearch from './backToSearch/BackToSearch';
 import './Stilling.less';
 import {
     FETCH_STILLING_BEGIN
@@ -27,6 +28,11 @@ class Stilling extends React.Component {
         const { stilling, error } = this.props;
         return (
             <div>
+                <div className="background--light-green">
+                    <Container>
+                        <BackToSearch />
+                    </Container>
+                </div>
                 {error && error.statusCode === 404 ? (
                     <Container>
                         <NotFound />
