@@ -28,6 +28,4 @@ export function formatISOString(isoString, format = 'MMMM YYYY') {
     return '';
 }
 
-
-
 export default toDate;
