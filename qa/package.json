@@ -4,8 +4,10 @@
   "description": "Funksjonelle akseptansetester for PAM-stillingsøk",
   "scripts": {
     "cucumber": "node_modules/.bin/nightwatch --config nightwatch.conf.js --env t1",
+    "cucumber-debug": "node --inspect node_modules/nightwatch/bin/nightwatch --config nightwatch.conf.js --env t1",
     "cucumber-linux": "node_modules/.bin/nightwatch --config nightwatch.conf.js --env linux-t1",
     "cucumber-local": "node_modules/.bin/nightwatch --config nightwatch.conf.js",
+    "cucumber-local-debug": "node --inspect node_modules/.bin/nightwatch --config nightwatch.conf.js",
     "cucumber-linux-local": "node_modules/.bin/nightwatch --config nightwatch.conf.js --env linux-local",
     "cucumber-jenkins": "xvfb-run node_modules/.bin/nightwatch --env jenkins",
     "cucumber-report": "node createHtmlReports.js"
