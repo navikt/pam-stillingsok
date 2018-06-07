@@ -20,6 +20,7 @@ body {
   min-height: 100%;
   overflow-y: scroll;
   background: #F6F5F5;
+  color: @navMorkGra;
 }
 
 #topbar {
@@ -75,13 +76,13 @@ body {
 }
 
 .hovedknapp--green{
-  background-color: @color-green;
+  background-color: @color-green!important;
 
-  &:hover{
-    background-color: @navGronnLighten20;
+  &:hover:not(:disabled){
+    background-color: @navGronnLighten20!important;
   }
   &:active {
-    background-color: @navGronnDarken40;
+    background-color: @navGronnDarken40!important;
   }
 }
 
@@ -89,13 +90,13 @@ body {
   color: @color-green;
   border-color: @color-green;
 
-  &:hover{
+  &:hover:not(:disabled){
     color: #FFFFFF;
     background-color: @color-green;
   }
   &:active {
-    border-color: @navGronnDarken40;
-    background-color: @navGronnDarken40;
+    border-color: @navGronnDarken40!important;
+    background-color: @navGronnDarken40!important;
   }
 }
 
