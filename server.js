@@ -13,10 +13,6 @@ server.set('port', port);
 
 server.disable('x-powered-by');
 server.use(helmet({xssFilter: false}));
-server.use(helmet({
-    xssFilter: false,
-    noCache: true
-}));
 
 server.use(helmet.contentSecurityPolicy({
     directives: {
