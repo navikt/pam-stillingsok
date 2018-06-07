@@ -40,9 +40,8 @@ export default class BackToTop extends React.Component {
                 <a
                     href="#topbar"
                     className="BackToTop__link knapp knapp--green knapp--standard"
-                    aria-label="Tilbake til toppen"
                 >
-                    <Chevron type="opp" className="BackToTop__chevron" />
+                    <span className="BackToTop__link__arrow" aria-label="Tilbake til toppen">&uarr;</span>
                     <span className="BackToTop__link__text">Tilbake til toppen</span>
                 </a>
             </div>
