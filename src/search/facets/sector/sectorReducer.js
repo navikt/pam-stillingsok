@@ -1,4 +1,5 @@
 import { SET_INITIAL_STATE, FETCH_INITIAL_FACETS_SUCCESS, SEARCH_SUCCESS } from '../../searchReducer';
+import { moveFacetToBottom} from "../../../utils";
 
 export const CHECK_SECTOR = 'CHECK_SECTOR';
 export const UNCHECK_SECTOR = 'UNCHECK_SECTOR';
@@ -6,16 +7,6 @@ export const UNCHECK_SECTOR = 'UNCHECK_SECTOR';
 const initialState = {
     sector: [],
     checkedSector: []
-};
-
-function reOrderFacets (array){
-    array.forEach(function (item, i) {
-        if(item.key === 'Ikke oppgitt') {
-            array.push(array.splice(i, 1)[0]);
-        }
-    });
-
-    return array;
 };
 
 export default function sectorReducer(state = initialState, action) {
@@ -28,7 +19,7 @@ export default function sectorReducer(state = initialState, action) {
         case FETCH_INITIAL_FACETS_SUCCESS:
             return {
                 ...state,
-                sector: reOrderFacets(action.response.sector)
+                sector: moveFacetToBottom (action.response.sector, 'Ikke oppgitt')
             };
         case SEARCH_SUCCESS:
             return {

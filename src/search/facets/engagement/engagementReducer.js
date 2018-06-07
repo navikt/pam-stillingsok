@@ -1,4 +1,5 @@
 import { SET_INITIAL_STATE, FETCH_INITIAL_FACETS_SUCCESS, SEARCH_SUCCESS } from '../../searchReducer';
+import { moveFacetToBottom} from "../../../utils";
 
 export const CHECK_ENGAGEMENT_TYPE = 'CHECK_ENGAGEMENT_TYPE';
 export const UNCHECK_ENGAGEMENT_TYPE = 'UNCHECK_ENGAGEMENT_TYPE';
@@ -6,16 +7,6 @@ export const UNCHECK_ENGAGEMENT_TYPE = 'UNCHECK_ENGAGEMENT_TYPE';
 const initialState = {
     engagementType: [],
     checkedEngagementType: []
-};
-
-function reOrderFacets (array){
-    array.forEach(function (item, i) {
-        if(item.key === 'Annet') {
-            array.push(array.splice(i, 1)[0]);
-        }
-    });
-
-    return array;
 };
 
 export default function engagementReducer(state = initialState, action) {
@@ -28,7 +19,7 @@ export default function engagementReducer(state = initialState, action) {
         case FETCH_INITIAL_FACETS_SUCCESS:
             return {
                 ...state,
-                engagementType: reOrderFacets(action.response.engagementTypes)
+                engagementType: moveFacetToBottom(action.response.engagementTypes, 'Annet')
             };
         case SEARCH_SUCCESS:
             return {
