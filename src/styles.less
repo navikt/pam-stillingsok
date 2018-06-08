@@ -42,6 +42,17 @@ body {
   text-align: center;
 }
 
+@media (max-width: @screen-xs-max) {
+  .header {
+    padding: 0;
+  }
+
+  .header__nav-logo svg {
+    width: 4rem;
+    height: 4rem;
+  }
+}
+
 .header__nav-logo {
   display: inline-block;
   text-decoration: none;
@@ -68,6 +79,15 @@ body {
   padding: 7px 20px 10px 46px;
   z-index: 9999;
   font-size: 110%;
+}
+
+@media (max-width: @screen-xs-max) {
+  .pilot {
+    font-size: 100%;
+    top: 37px;
+    left: -102px;
+    padding: 3px 20px 6px 46px;
+  }
 }
 
 .background--light-green {
