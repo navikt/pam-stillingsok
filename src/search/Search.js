@@ -55,7 +55,7 @@ class Search extends React.Component {
                     ) : (
                         <Row>
                             <Column xs="12" md="4">
-                                <div role="search">
+                                <form role="search">
                                     <SearchBox />
                                     <a href="#sokeresultat" className="typo-normal lenke sr-only sr-only-focusable">
                                         Hopp til søkeresultat
@@ -65,7 +65,7 @@ class Search extends React.Component {
                                     <HeltidDeltid />
                                     <EngagementType />
                                     <Sector />
-                                </div>
+                                </form>
                             </Column>
                             <Column xs="12" md="5" />
                             <Column xs="12" md="3">

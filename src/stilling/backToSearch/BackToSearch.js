@@ -8,7 +8,7 @@ export default function BackToSearch() {
         <div className="BackToSearch">
             <Link
                 to="/"
-                className="knapp knapp--green knapp--standard"
+                className="knapp knapp--standard"
             >
                 <Chevron type="venstre" className="BackToSearch__chevron"/>
                 Tilbake til søk

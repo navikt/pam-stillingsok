@@ -74,39 +74,6 @@ body {
   background-color: @background-green;
 }
 
-.hovedknapp--green{
-  background-color: @color-green!important;
-
-  &:hover:not(:disabled){
-    background-color: @navGronnLighten20!important;
-  }
-  &:active {
-    background-color: @navGronnDarken40!important;
-  }
-}
-
-.knapp--green {
-  color: @color-green!important;
-  border-color: @color-green;
-
-  &:hover:not(:disabled){
-    color: #FFFFFF!important;
-    background-color: @color-green;
-  }
-  &:active {
-    border-color: @navGronnDarken40!important;
-    background-color: @navGronnDarken40!important;
-  }
-}
-
-.skjemaelement__input {
-  border: 1px solid @color-green;
-
-  &:hover {
-    border-color: @navGronnDarken40;
-  }
-}
-
 .checkboks + .skjemaelement__label {
   padding-left: 32px;
   line-height: 24px;
@@ -115,18 +82,10 @@ body {
 .checkboks + .skjemaelement__label:before {
   width: 24px;
   height: 24px;
-  border-color: @color-green;
 }
 
 .checkboks:checked + .skjemaelement__label:before {
-  background-color: @color-green;
-  border-color: @color-green;
   background-size: 30px 30px;
-}
-
-.checkboks:hover + .skjemaelement__label:before {
-  border-color: @navGronnDarken40;
-  border-width: 2px;
 }
 
 .container {

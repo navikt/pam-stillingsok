@@ -39,7 +39,7 @@ export default class BackToTop extends React.Component {
             >
                 <a
                     href="#topbar"
-                    className="BackToTop__link knapp knapp--green knapp--standard"
+                    className="BackToTop__link knapp knapp--standard"
                 >
                     <span className="BackToTop__link__arrow" aria-label="Tilbake til toppen">&uarr;</span>
                     <span className="BackToTop__link__text">Tilbake til toppen</span>

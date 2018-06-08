@@ -19,7 +19,7 @@ class Pagination extends React.Component {
                     <Knapp
                         disabled={isLoadingMore}
                         spinner={isLoadingMore}
-                        className="Pagination__button knapp--green"
+                        className="Pagination__button"
                         onClick={this.onLoadMoreClick}
                     >
                         Se flere

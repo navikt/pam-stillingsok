@@ -108,7 +108,7 @@ export default function Details({ stilling }) {
                         <div id="send-soknad-wrapper">
                             <a
                                 id="send-soknad"
-                                className="knapp knapp--hoved hovedknapp--green"
+                                className="knapp knapp--hoved"
                                 href={sokUrl}
                             >
                             Send søknad
