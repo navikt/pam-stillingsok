@@ -1,3 +1,10 @@
+## RELEASE - 0.11.95-23f3040
+#### New in this release: 
++ 2018-06-08 [Feature] På mobil er det vanskelig å vite hvor mange treff man har når man huker av søkekriterier. Lager en "Vis 237 treff" knapp som både viser antall treff, men også tar deg raskt ned til trefflisten.
++ 2018-06-08 [Bugfix] Viser feilmelding hvis bruker mister nettverksforbindelse når stillingsannonse lastes fra backend.
++ 2018-06-08 [Feature] Teksten om testversjon i headeren tar stor plass, særlig på mobil. Legger derfor til "Skjul"-knapp, slik at bruker har mulighet til å skjule informasjonen.
++ 2018-06-08 [Feature] Viser banner med "Annonsen er utløpt" hvis annonsen brukeren har lenke til er inaktiv.
++ 2018-06-08 [PAM-969] Adjust relevance tuning
 ## RELEASE - 0.10.83-538b232
 #### New in this release: 
 + 2018-06-07 [PAM-977] Node express: do not use helmet noCache feature
