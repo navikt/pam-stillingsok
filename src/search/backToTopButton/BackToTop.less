@@ -2,50 +2,34 @@
 
 .BackToTop {
   position: fixed;
-  bottom: 0;
+  top: 0;
   right: 0;
   z-index: 100;
+  width: 100%;
   box-shadow: 0 0 10px #d1d1d1;
-  margin: 0 1rem 1rem 0;
-  background: rgba(255, 255, 255, 0.9);
+  margin: 0;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 0.5rem 1rem;
+  text-align: center;
 }
 
-.BackToTop__link__arrow {
-  font-size: 130%;
-  margin-top: -0.225rem;
-  display: none;
+.BackToTop--fixed-bottom {
+  bottom: 0;
+  top: auto;
 }
 
-@media (max-width: @screen-xs-max) {
+@media (min-width: @screen-md-min) {
   .BackToTop {
-    border-radius: 50%!important;
-    margin: 0 0.5rem 0.5rem 0;
+    bottom: 0;
+    top: auto;
+    width: auto;
+    padding: 0;
+    margin: 1rem;
   }
-
-  .BackToTop__link {
-    width: 3.5rem;
-    height: 3.5rem;
-    border-radius: 50%!important;
-    padding: 0!important;
-    text-align: center;
-  }
-
-  .BackToTop__link__text {
-    display: none;
-  }
-
-  .BackToTop__link__arrow {
-    line-height: 3.5rem;
-    display: block;
-  }
-}
-
-.BackToTop--hidden {
-  display: none;
 }
 
 .BackToTop__chevron {
-  margin-top: -3px;
-  margin-right: 0.225rem;
+  margin-right: 4px;
+  margin-top: -2px;
 }
 

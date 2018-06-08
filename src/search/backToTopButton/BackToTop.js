@@ -1,13 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import Chevron from 'nav-frontend-chevron';
 import './BackToTop.less';
 
-export default class BackToTop extends React.Component {
+class BackToTop extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            show: window.scrollY > props.offset
+            showGoToSearch: false,
+            showGoToResults: true
         };
     }
 
@@ -20,40 +22,96 @@ export default class BackToTop extends React.Component {
     }
 
     onWindowScroll = () => {
-        const top = window.pageYOffset;
-        if (top >= this.props.offset && !this.state.show) {
+        if (this.isSearchResultsVisible() && this.isSearchFormVisible()) {
             this.setState({
-                show: true
+                showGoToSearch: false,
+                showGoToResults: false
             });
-        } else if (top < this.props.offset && this.state.show) {
+        } else if (this.isSearchFormVisible()) {
             this.setState({
-                show: false
+                showGoToSearch: false,
+                showGoToResults: true
+            });
+        } else if (this.isSearchResultsVisible()) {
+            this.setState({
+                showGoToSearch: true,
+                showGoToResults: false
             });
         }
     };
 
+    isSearchFormVisible = () => {
+        if (this.searchForm === undefined) {
+            this.searchForm = document.getElementById('SearchForm');
+        }
+        return this.isElementVisible(this.searchForm);
+    };
+
+    isSearchResultsVisible = () => {
+        if (this.searchResults === undefined) {
+            this.searchResults = document.getElementById('SearchResults');
+        }
+        return this.isElementVisible(this.searchResults);
+    };
+
+    isElementVisible = (el) => {
+        const rect = el.getBoundingClientRect();
+        const windowHeight = (window.innerHeight || document.documentElement.clientHeight);
+        return (rect.top <= windowHeight) && ((rect.top + rect.height) >= 0);
+    };
+
     render() {
-        return (
-            <div
-                className={this.state.show ? 'BackToTop' : 'BackToTop BackToTop--hidden'}
-            >
-                <a
-                    href="#topbar"
-                    className="BackToTop__link knapp knapp--standard"
-                >
-                    <span className="BackToTop__link__arrow" aria-label="Tilbake til toppen">&uarr;</span>
-                    <span className="BackToTop__link__text">Tilbake til toppen</span>
-                </a>
-            </div>
-        );
+        if (this.props.isAtLeastOneSearchDone) {
+            if (this.state.showGoToResults) {
+                return (
+                    <div className="BackToTop BackToTop--fixed-bottom">
+                        <a
+                            href="#SearchResults"
+                            className="knapp knapp--mini knapp--standard"
+                        >
+                            <Chevron className="BackToTop__chevron" type="ned" />
+                            {this.props.count > 0 ? (
+                                <span>Vis {this.props.count} treff</span>
+                            ) : (
+                                <span>Ingen treff</span>
+                            )}
+                        </a>
+                    </div>
+                );
+            } else if (this.state.showGoToSearch) {
+                return (
+                    <div className="BackToTop">
+                        <a
+                            href="#SearchForm"
+                            className="knapp knapp--mini knapp--standard"
+                        >
+                            <Chevron className="BackToTop__chevron" type="opp" />
+                            Endre søk
+                        </a>
+                    </div>
+                );
+            }
+            return null;
+        }
+        return null;
     }
 }
 
-BackToTop.defaultProps = {
-    offset: 300
+BackToTop.propTypes = {
+    count: PropTypes.number.isRequired,
+    isAtLeastOneSearchDone: PropTypes.bool.isRequired
 };
 
 BackToTop.propTypes = {
-    offset: PropTypes.number
+    isAtLeastOneSearchDone: PropTypes.bool.isRequired,
+    count: PropTypes.number.isRequired
 };
+
+const mapStateToProps = (state) => ({
+    isAtLeastOneSearchDone: state.search.isAtLeastOneSearchDone,
+    count: state.search.searchResult.total
+});
+
+
+export default connect(mapStateToProps)(BackToTop);
 

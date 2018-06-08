@@ -34,7 +34,7 @@ class Extent extends React.Component {
                 tittel={title}
                 tittelProps="element"
                 className="Extent"
-                apen={checkedExtent.length > 0}
+                apen
             >
                 <div
                     role="group"

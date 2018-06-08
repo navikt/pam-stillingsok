@@ -34,7 +34,7 @@ class Sector extends React.Component {
                 tittel={title}
                 tittelProps="element"
                 className="Sector"
-                apen={checkedSector.length > 0}
+                apen
             >
                 <div
                     role="group"

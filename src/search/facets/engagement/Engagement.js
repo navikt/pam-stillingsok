@@ -34,7 +34,7 @@ class Engagement extends React.Component {
                 tittel={title}
                 tittelProps="element"
                 className="Engagement"
-                apen={checkedEngagement.length > 0}
+                apen
             >
                 <div
                     role="group"

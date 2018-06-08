@@ -57,7 +57,7 @@ class Search extends React.Component {
                     ) : (
                         <Row>
                             <Column xs="12" md="4">
-                                <form role="search">
+                                <form role="search" id="SearchForm">
                                     <SearchBox />
                                     <a href="#sokeresultat" className="typo-normal lenke sr-only sr-only-focusable">
                                         Hopp til søkeresultat
