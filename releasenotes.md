@@ -1,3 +1,9 @@
+## RELEASE - 0.10.83-538b232
+#### New in this release: 
++ 2018-06-07 [PAM-977] Node express: do not use helmet noCache feature
++ 2018-06-07 [PAM-925] flyttet util-funksjon
++ 2018-06-07 [PAM-925]: fikser review-kommentarer: lager felles metode, og bruker clone på array istedet for å modifisere
++ 2018-06-06 [PAM-925] Flyttet kategorialternativene Ikke oppgitt og Annet nederst i hhv Sektor og Ansettelsesform
 ## RELEASE - 0.7.68-155954b
 #### New in this release: 
 + 2018-05-31 [PAM-888] Use GET-requests to fetch individual ads for display
