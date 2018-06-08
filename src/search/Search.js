@@ -74,11 +74,11 @@ class Search extends React.Component {
                                 <Sorting />
                             </Column>
                             <Column xs="12" md="8">
-                                <section
+                                <div
                                     id="sokeresultat"
                                 >
                                     <SearchResults />
-                                </section>
+                                </div>
                             </Column>
                         </Row>
                     )}
