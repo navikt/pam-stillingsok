@@ -138,26 +138,54 @@ export default function searchTemplate(query) {
                 must: {
                     multi_match: {
                         query: q,
+                        type: 'best_fields',
                         fields: [
-                            'title_no^2',
                             'category_no^2',
-                            'searchtags_no^0.3',
+                            'title_no^1',
+                            'searchtags_no^0.4',
                             'adtext_no^0.2',
-                            'employer.name^0.1',
+                            'employer.name^0.2',
                             'employerdescription_no^0.1'
                         ],
-                        tie_breaker: 0.1,
+                        tie_breaker: 0.3,
+                        minimum_should_match: 1,
                         zero_terms_query: 'all'
                     }
                 },
-                should: {
-                    match_phrase: {
-                        title: {
-                            query: q,
-                            slop: 3
+                should: [
+                    {
+                        match_phrase: {
+                            title: {
+                                query: q,
+                                slop: 2
+                            }
+                        }
+                    },
+                    {
+                        constant_score: {
+                            filter: {
+                                match: {
+                                    'location.municipal': {
+                                        query: q,
+                                    }
+                                }
+                            },
+                            boost: 3
+                        }
+                    },
+                    {
+                        constant_score: {
+                            filter: {
+                                match: {
+                                    'location.county': {
+                                        query: q,
+                                    }
+                                }
+                            },
+                            boost: 3
                         }
                     }
-                }
+                ]
             }
         },
         post_filter: {
