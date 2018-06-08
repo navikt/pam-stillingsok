@@ -12,10 +12,11 @@ import NotFound from './NotFound';
 import SearchError from '../search/error/SearchError';
 import Expired from './Expired';
 import BackToSearch from './backToSearch/BackToSearch';
-import './Stilling.less';
+import Disclaimer from '../discalimer/Disclaimer';
 import {
     FETCH_STILLING_BEGIN
 } from './stillingReducer';
+import './Stilling.less';
 
 const arrayHasData = (array) => array && array[0].hasOwnProperty('punkt');
 
@@ -28,6 +29,7 @@ class Stilling extends React.Component {
         const { stilling, error } = this.props;
         return (
             <div>
+                <Disclaimer />
                 <div className="background--light-green">
                     <Container>
                         <BackToSearch />

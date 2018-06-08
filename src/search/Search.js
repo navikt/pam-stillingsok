@@ -14,6 +14,7 @@ import Created from './facets/created/Created';
 import SearchBox from './searchBox/SearchBox';
 import { INITIAL_SEARCH, KEEP_SCROLL_POSITION } from './searchReducer';
 import BackToTop from './backToTopButton/BackToTop';
+import Disclaimer from '../discalimer/Disclaimer';
 import './Search.less';
 
 class Search extends React.Component {
@@ -37,6 +38,7 @@ class Search extends React.Component {
     render() {
         return (
             <div className="Search">
+                <Disclaimer />
                 <div className="Search__header">
                     <Container>
                         <Row>

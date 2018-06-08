@@ -14,6 +14,7 @@ import engagementReducer from './search/facets/engagement/engagementReducer';
 import sectorReducer from './search/facets/sector/sectorReducer';
 import extentReducer from './search/facets/extent/extentReducer';
 import focusReducer from './search/focusReducer';
+import disclaimerReducer from './discalimer/disclaimerReducer';
 import SearchPage from './search/Search';
 import StillingPage from './stilling/Stilling';
 import { CONTEXT_PATH } from './fasitProperties';
@@ -32,7 +33,8 @@ const store = createStore(combineReducers({
     sector: sectorReducer,
     extent: extentReducer,
     stilling: stillingReducer,
-    focus: focusReducer
+    focus: focusReducer,
+    disclaimer: disclaimerReducer
 }), applyMiddleware(sagaMiddleware));
 
 sagaMiddleware.run(saga);
