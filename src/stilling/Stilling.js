@@ -45,18 +45,17 @@ class Stilling extends React.Component {
                     </Container>
                 )}
 
-                {stilling && stilling._source.status !== 'ACTIVE' && (
-                    <Container>
-                        <Expired />
-                    </Container>
-                )}
-
-                {stilling && stilling._source.status === 'ACTIVE' && (
+                {stilling && (
                     <article id="annonse-container">
                         <header id="annonse-header" className="background--light-green">
                             <Container>
                                 <Row className="blokk-m">
                                     <Column xs="12" md="8">
+                                        {stilling._source.status !== 'ACTIVE' && (
+                                            <div className="blokk-xs">
+                                                <Expired />
+                                            </div>
+                                        )}
                                         <Sidetittel id="stillingstittel">
                                             {stilling._source.title}
                                         </Sidetittel>

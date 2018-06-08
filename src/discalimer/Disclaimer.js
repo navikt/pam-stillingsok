@@ -9,7 +9,7 @@ import './Disclaimer.less';
 function Disclaimer({ shouldShow, hideDisclaimer }) {
     if (shouldShow) {
         return (
-            <div className="Disclaimer typo-normal">
+            <div role="alert" className="Disclaimer typo-normal">
                 <Element className="blokk-xxs">Tidlig versjon av nytt stillingssøk</Element>
                 <Normaltekst>
                     Vi utvikler et nytt stillingsøk, og vil at du skal få prøve
@@ -23,7 +23,7 @@ function Disclaimer({ shouldShow, hideDisclaimer }) {
                         Gå tilbake til dagens stillingssøk
                     </a>
                 </Normaltekst>
-                <Lukknapp className="Disclaimer__close" onClick={hideDisclaimer}>Skjul</Lukknapp>
+                <Lukknapp className="Disclaimer__close" onClick={hideDisclaimer} aria-label="Skjul">Skjul</Lukknapp>
             </div>
         );
     }
