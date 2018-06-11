@@ -14,7 +14,7 @@ function SearchResults({
     const { stillinger } = searchResult;
     const hasMore = (from === undefined && total > PAGE_SIZE) || (from + PAGE_SIZE < total);
     return (
-        <div id="SearchResults" className="SearchResults" role="region" aria-live="polite">
+        <div id="treff" className="SearchResults" role="region" aria-live="polite">
             <SearchResultsCount />
             {stillinger && stillinger.map((stilling) => (
                 <SearchResultItem

@@ -42,14 +42,14 @@ class BackToTop extends React.Component {
 
     isSearchFormVisible = () => {
         if (this.searchForm === undefined) {
-            this.searchForm = document.getElementById('SearchForm');
+            this.searchForm = document.getElementById('sok');
         }
         return this.isElementVisible(this.searchForm);
     };
 
     isSearchResultsVisible = () => {
         if (this.searchResults === undefined) {
-            this.searchResults = document.getElementById('SearchResults');
+            this.searchResults = document.getElementById('treff');
         }
         return this.isElementVisible(this.searchResults);
     };
@@ -66,7 +66,7 @@ class BackToTop extends React.Component {
                 return (
                     <div className="BackToTop BackToTop--fixed-bottom">
                         <a
-                            href="#SearchResults"
+                            href="#treff"
                             className="knapp knapp--mini knapp--standard"
                         >
                             <Chevron className="BackToTop__chevron" type="ned" />
@@ -82,7 +82,7 @@ class BackToTop extends React.Component {
                 return (
                     <div className="BackToTop">
                         <a
-                            href="#SearchForm"
+                            href="#sok"
                             className="knapp knapp--mini knapp--standard"
                         >
                             <Chevron className="BackToTop__chevron" type="opp" />
