@@ -12,7 +12,7 @@ import EngagementType from './facets/engagement/Engagement';
 import Sector from './facets/sector/Sector';
 import Created from './facets/created/Created';
 import SearchBox from './searchBox/SearchBox';
-import { INITIAL_SEARCH, KEEP_SCROLL_POSITION } from './searchReducer';
+import { INITIAL_SEARCH, KEEP_SCROLL_POSITION, SEARCH } from './searchReducer';
 import BackToTop from './backToTopButton/BackToTop';
 import Disclaimer from '../discalimer/Disclaimer';
 import './Search.less';
@@ -34,6 +34,11 @@ class Search extends React.Component {
         const top = window.pageYOffset || document.documentElement.scrollTop;
         this.props.keepScrollPosition(top);
     }
+
+    onSearchFormSubmit = (e) => {
+        e.preventDefault();
+        this.props.search();
+    };
 
     render() {
         return (
@@ -57,7 +62,7 @@ class Search extends React.Component {
                     ) : (
                         <Row>
                             <Column xs="12" md="4">
-                                <form role="search" id="SearchForm">
+                                <form role="search" id="SearchForm" onSubmit={this.onSearchFormSubmit}>
                                     <SearchBox />
                                     <a href="#sokeresultat" className="typo-normal lenke sr-only sr-only-focusable">
                                         Hopp til søkeresultat
@@ -95,6 +100,7 @@ Search.defaultProps = {
 
 Search.propTypes = {
     initialSearch: PropTypes.func.isRequired,
+    search: PropTypes.func.isRequired,
     hasError: PropTypes.bool.isRequired,
     scrollPosition: PropTypes.number,
     keepScrollPosition: PropTypes.func.isRequired
@@ -107,6 +113,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     initialSearch: () => dispatch({ type: INITIAL_SEARCH }),
+    search: () => dispatch({ type: SEARCH }),
     keepScrollPosition: (scrollPosition) => dispatch({ type: KEEP_SCROLL_POSITION, scrollPosition })
 });
 
