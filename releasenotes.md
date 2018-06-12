@@ -1,3 +1,12 @@
+## RELEASE - 0.12.103-7b0009d
+#### New in this release: 
++ 2018-06-12 [Bugfix] Legger til litt mer rom under "Se flere" knapp, slik at det blir mere plass til de nye stillingene som lastes inn.
++ 2018-06-12 [Bugfix] Små justeringer etter test med skjermleser og tips fra David
++ 2018-06-12 [PAM-992] Justerer "Til toppen" knapp
++ 2018-06-12 [PAM-991] Fjerner teksten "Her finner du offentlig utlyste stillinger i Norge." under sidetittel
++ 2018-06-12 [Fix] Oppgraderer dependencies. Oppdaterer til siste versjon av Designsystemet
++ 2018-06-11 [Bugfix] Gir nytt navn på id på treffliste og søkeskjema slik at url blir stillingsok.nav.no#sok eller stillingsok.nav.no#treff når man bruker interne skip-linker på siden.
++ 2018-06-11 [Bugfix] Sørger for at det kommer en blå "Søk" knapp på mobil-tastaturet når man skriver inn søkeord.
 ## RELEASE - 0.11.95-23f3040
 #### New in this release: 
 + 2018-06-08 [Feature] På mobil er det vanskelig å vite hvor mange treff man har når man huker av søkekriterier. Lager en "Vis 237 treff" knapp som både viser antall treff, men også tar deg raskt ned til trefflisten.
