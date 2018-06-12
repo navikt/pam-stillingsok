@@ -49,9 +49,6 @@ class Search extends React.Component {
                         <Row>
                             <Column xs="12">
                                 <Sidetittel className="Search__header__title">Ledige stillinger</Sidetittel>
-                                <Normaltekst>
-                                    Her finner du offentlig utlyste stillinger i Norge.
-                                </Normaltekst>
                             </Column>
                         </Row>
                     </Container>
