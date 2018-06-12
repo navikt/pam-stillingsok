@@ -67,7 +67,7 @@ class BackToTop extends React.Component {
                     <div className="BackToTop BackToTop--fixed-bottom">
                         <a
                             href="#treff"
-                            className="knapp knapp--mini knapp--standard"
+                            className="knapp knapp--standard"
                         >
                             <Chevron className="BackToTop__chevron" type="ned" />
                             {this.props.count > 0 ? (
@@ -82,11 +82,12 @@ class BackToTop extends React.Component {
                 return (
                     <div className="BackToTop">
                         <a
-                            href="#sok"
-                            className="knapp knapp--mini knapp--standard"
+                            href="#topbar"
+                            className="knapp knapp--standard"
                         >
                             <Chevron className="BackToTop__chevron" type="opp" />
-                            Endre søk
+                            <span className="BackToTop__text--mobile">Endre søk</span>
+                            <span className="BackToTop__text--pc">Til toppen</span>
                         </a>
                     </div>
                 );

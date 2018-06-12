@@ -60,10 +60,12 @@ class Search extends React.Component {
                         <Row>
                             <Column xs="12" md="4">
                                 <form role="search" id="sok" onSubmit={this.onSearchFormSubmit}>
-                                    <SearchBox />
-                                    <a href="#treff" className="typo-normal lenke sr-only sr-only-focusable">
-                                        Hopp til søkeresultat
-                                    </a>
+                                    <div className="Search__searchbox-wrapper">
+                                        <SearchBox />
+                                        <a href="#treff" className="typo-normal lenke sr-only sr-only-focusable">
+                                            Hopp til søkeresultat
+                                        </a>
+                                    </div>
                                     <Created />
                                     <Counties />
                                     <HeltidDeltid />

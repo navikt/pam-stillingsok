@@ -3,7 +3,7 @@
 .BackToTop {
   position: fixed;
   top: 0;
-  right: 0;
+  left: 0;
   z-index: 100;
   width: 100%;
   box-shadow: 0 0 10px #d1d1d1;
@@ -18,13 +18,34 @@
   top: auto;
 }
 
+.BackToTop__text--mobile {
+  display: inline-block;
+}
+
+.BackToTop__text--pc {
+  display: none;
+}
+
 @media (min-width: @screen-md-min) {
   .BackToTop {
-    bottom: 0;
+    bottom: 3rem;
+    right: 3rem;
     top: auto;
+    left: auto;
     width: auto;
     padding: 0;
-    margin: 1rem;
+  }
+
+  .BackToTop--fixed-bottom {
+    display: none;
+  }
+
+  .BackToTop__text--mobile {
+    display: none;
+  }
+
+  .BackToTop__text--pc {
+    display: inline-block;
   }
 }
 
