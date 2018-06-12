@@ -23,7 +23,6 @@ export default class SearchResultItem extends React.Component {
                 }}
                 className="SearchResultItem"
                 to={`${STILLING}${stilling.uuid}`}
-                aria-label={`${stilling.title} hos ${stilling.properties.employer}`}
             >
                 <Row>
                     <Column xs="12">

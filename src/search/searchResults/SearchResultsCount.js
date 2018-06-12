@@ -8,11 +8,23 @@ function SearchResultsCount({ isAtLeastOneSearchDone, count }) {
     if (isAtLeastOneSearchDone) {
         if (count === 0) {
             return (
-                <Undertittel className="SearchResultsCount">Ingen treff</Undertittel>
+                <Undertittel
+                    className="SearchResultsCount"
+                    role="region"
+                    aria-live="assertive"
+                >
+                    Ingen treff
+                </Undertittel>
             );
         }
         return (
-            <Undertittel className="SearchResultsCount">{count} treff</Undertittel>
+            <Undertittel
+                className="SearchResultsCount"
+                role="region"
+                aria-live="assertive"
+            >
+                {count} treff
+            </Undertittel>
         );
     }
     return (
