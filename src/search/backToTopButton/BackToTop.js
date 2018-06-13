@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import Chevron from 'nav-frontend-chevron';
+import TilToppenButton from './TilToppenButton';
+import VisTreffButton from './VisTreffButton';
+
 import './BackToTop.less';
 
 class BackToTop extends React.Component {
@@ -65,30 +67,13 @@ class BackToTop extends React.Component {
             if (this.state.showGoToResults) {
                 return (
                     <div className="BackToTop BackToTop--fixed-bottom">
-                        <a
-                            href="#treff"
-                            className="knapp knapp--standard"
-                        >
-                            <Chevron className="BackToTop__chevron" type="ned" />
-                            {this.props.count > 0 ? (
-                                <span>Vis {this.props.count} treff</span>
-                            ) : (
-                                <span>Ingen treff</span>
-                            )}
-                        </a>
+                        <VisTreffButton count={this.props.count} />
                     </div>
                 );
             } else if (this.state.showGoToSearch) {
                 return (
                     <div className="BackToTop">
-                        <a
-                            href="#topbar"
-                            className="knapp knapp--standard"
-                        >
-                            <Chevron className="BackToTop__chevron" type="opp" />
-                            <span className="BackToTop__text--mobile">Endre søk</span>
-                            <span className="BackToTop__text--pc">Til toppen</span>
-                        </a>
+                        <TilToppenButton />
                     </div>
                 );
             }
