@@ -1,9 +1,18 @@
 @import "../../variables";
 
 .BackToSearch {
-  margin: 1rem 0;
-  background: #fff;
+  margin: 1.5rem 0 0.5rem -0.5rem;
   display: inline-block;
+}
+
+a.BackToSearch__lenke {
+  border-bottom: none;
+  font-weight: bold;
+  padding: 0.5rem 0.5rem 0.5rem 0rem;
+
+  &:hover .BackToSearch__text {
+    border-bottom: solid 1px @navDypBla;
+  }
 }
 
 .BackToSearch__chevron {
