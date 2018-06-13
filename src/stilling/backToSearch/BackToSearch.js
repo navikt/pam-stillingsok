@@ -11,7 +11,7 @@ export default function BackToSearch() {
                 className="lenke BackToSearch__lenke"
             >
                 <Chevron stor type="venstre" className="BackToSearch__chevron"/>
-                Tilbake til søk
+                <span className="BackToSearch__text">Tilbake til søk</span>
             </Link>
         </div>
     );
