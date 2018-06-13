@@ -4,7 +4,7 @@ import Chevron from 'nav-frontend-chevron';
 export default function TilToppenButton() {
     return (
         <a
-            href="#topbar"
+            href="#top"
             className="TilToppenButton"
         >
             <span className="TilToppenButton__inner">
