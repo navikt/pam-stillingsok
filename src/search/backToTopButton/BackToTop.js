@@ -66,15 +66,11 @@ class BackToTop extends React.Component {
         if (this.props.isAtLeastOneSearchDone) {
             if (this.state.showGoToResults) {
                 return (
-                    <div className="BackToTop BackToTop--fixed-bottom">
-                        <VisTreffButton count={this.props.count} />
-                    </div>
+                    <VisTreffButton count={this.props.count} />
                 );
             } else if (this.state.showGoToSearch) {
                 return (
-                    <div className="BackToTop">
-                        <TilToppenButton />
-                    </div>
+                    <TilToppenButton />
                 );
             }
             return null;

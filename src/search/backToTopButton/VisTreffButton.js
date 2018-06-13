@@ -6,14 +6,13 @@ export default function VisTreffButton({ count }) {
     return (
         <a
             href="#treff"
-            className="knapp knapp--standard"
+            className="VisTreffButton"
         >
-            <Chevron className="BackToTop__chevron" type="ned" />
-            {count > 0 ? (
-                <span>Vis {count} treff</span>
-            ) : (
-                <span>Ingen treff</span>
-            )}
+            <span className="VisTreffButton__inner">
+                <span className="VisTreffButton__count typo-normal">{count}</span>
+                <span className="VisTreffButton__treff typo-normal">treff</span>
+                <Chevron className="VisTreffButton__chevron" type="ned" />
+            </span>
         </a>
     );
 }

@@ -5,11 +5,13 @@ export default function TilToppenButton() {
     return (
         <a
             href="#topbar"
-            className="knapp knapp--standard"
+            className="TilToppenButton"
         >
-            <Chevron className="BackToTop__chevron" type="opp" />
-            <span className="BackToTop__text--mobile">Endre søk</span>
-            <span className="BackToTop__text--pc">Til toppen</span>
+            <span className="TilToppenButton__inner">
+                <Chevron className="TilToppenButton__chevron" type="opp" />
+                <span className="TilToppenButton__text--mobile typo-normal">Endre søk</span>
+                <span className="TilToppenButton__text--pc typo-normal">Til toppen</span>
+            </span>
         </a>
     );
 }

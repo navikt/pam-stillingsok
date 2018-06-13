@@ -1,56 +1,97 @@
 @import "../../variables";
 
-.BackToTop {
+.VisTreffButton,
+.TilToppenButton{
   position: fixed;
-  top: 0;
-  left: 0;
+  bottom: 0.5rem;
+  right: 0.5rem;
   z-index: 100;
-  width: 100%;
-  box-shadow: 0 0 10px #d1d1d1;
-  margin: 0;
-  background: rgba(255, 255, 255, 0.95);
-  padding: 0.5rem 1rem;
+  color: #fff;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   text-align: center;
+  height: 4.5rem;
+  width: 4.5rem;
+  border-radius: 50%;
+  background: rgba(0, 103, 197, 0.95);
+  text-decoration: none;
+  box-shadow: 0 0 8px 0 @navGra60;
+  letter-spacing: -0.3px;
+
+  &:hover {
+    background: #0074df;
+  }
+
+  &:active {
+    background: #005B82;
+  }
+
+  &:focus {
+    outline: 0;
+    box-shadow: 0 0 0 3px @navOransjeLighten40;
+  }
 }
 
-.BackToTop--fixed-bottom {
-  bottom: 0;
-  top: auto;
+.TilToppenButton__inner,
+.VisTreffButton__inner {
+  width: 100%;
 }
 
-.BackToTop__text--mobile {
-  display: inline-block;
+.TilToppenButton__inner{
+  margin-top: -0.5rem;
 }
 
-.BackToTop__text--pc {
-  display: none;
+.VisTreffButton__inner{
+  margin-top: 0.5rem;
 }
 
 @media (min-width: @screen-md-min) {
-  .BackToTop {
+  .TilToppenButton {
     bottom: 3rem;
     right: 3rem;
-    top: auto;
-    left: auto;
-    width: auto;
-    padding: 0;
+    height: 5.5rem;
+    width: 5.5rem;
   }
 
-  .BackToTop--fixed-bottom {
+  .TilToppenButton__inner{
+    margin-top: -0.75rem;
+  }
+
+  .VisTreffButton {
     display: none;
-  }
-
-  .BackToTop__text--mobile {
-    display: none;
-  }
-
-  .BackToTop__text--pc {
-    display: inline-block;
   }
 }
 
-.BackToTop__chevron {
-  margin-right: 4px;
-  margin-top: -2px;
+.VisTreffButton__count {
+  line-height: 1;
+  display: block;
+  font-weight: bold;
 }
 
+.VisTreffButton__treff {
+  line-height: 1;
+  display: block;
+}
+
+.TilToppenButton__text--mobile {
+  display: block;
+  line-height: 1;
+  padding: 0 1rem;
+}
+
+.TilToppenButton__text--pc {
+  display: none;
+  line-height: 1;
+}
+
+@media (min-width: @screen-md-min) {
+
+  .TilToppenButton__text--mobile {
+    display: none;
+  }
+
+  .TilToppenButton__text--pc {
+    display: block;
+  }
+}
