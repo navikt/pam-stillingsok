@@ -50,7 +50,6 @@ const renderSok = (htmlPages) => (
     new Promise((resolve, reject) => {
         server.render(
             'index.html',
-            fasitProperties,
             (err, html) => {
                 if (err) {
                     reject(err);
