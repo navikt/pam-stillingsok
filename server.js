@@ -32,11 +32,7 @@ server.engine('html', mustacheExpress());
 const fasitProperties = {
     PAM_CONTEXT_PATH: '/pam-stillingsok',
     PAM_SEARCH_API: '/pam-stillingsok/search-api',
-    PAM_STILLING: '/pam-stillingsok/stilling/',
-    PAM_FORSIDE: process.env.PAM_FORSIDE,
-    PAM_MINSIDE: process.env.PAM_MINSIDE,
-    PAM_ISTOKENVALID: process.env.PAM_ISTOKENVALID,
-    PAM_LOGOUT: process.env.PAM_LOGOUT
+    PAM_STILLING: '/pam-stillingsok/stilling/'
 };
 
 
@@ -44,16 +40,11 @@ const writeEnvironmentVariablesToFile = () => {
     const fileContent =
         'window.__PAM_CONTEXT_PATH__="' + fasitProperties.PAM_CONTEXT_PATH + '";\n' +
         'window.__PAM_STILLING__="' + fasitProperties.PAM_STILLING + '";\n' +
-        'window.__PAM_SEARCH_API__="' + fasitProperties.PAM_SEARCH_API + '";\n' +
-        'window.__PAM_FORSIDE__="' + fasitProperties.PAM_FORSIDE + '";\n' +
-        'window.__PAM_MINSIDE__="' + fasitProperties.PAM_MINSIDE + '";\n' +
-        'window.__PAM_IS_TOKEN_VALID__="' + fasitProperties.PAM_ISTOKENVALID + '";\n' +
-        'window.__PAM_LOGOUT__="' + fasitProperties.PAM_LOGOUT + '";\n';
+        'window.__PAM_SEARCH_API__="' + fasitProperties.PAM_SEARCH_API + '";\n';
 
-    fs.writeFile(path.resolve(__dirname, 'dist/js/env.js'), fileContent, function (err) {
+    fs.writeFile(path.resolve(__dirname, 'dist/js/env.js'), fileContent, (err) => {
         if (err) throw err;
     });
-
 };
 const renderSok = (htmlPages) => (
     new Promise((resolve, reject) => {
