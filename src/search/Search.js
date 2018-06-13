@@ -58,8 +58,8 @@ class Search extends React.Component {
                         <SearchError />
                     ) : (
                         <Row>
-                            <Column xs="12" md="4">
-                                <form role="search" id="sok" onSubmit={this.onSearchFormSubmit}>
+                            <form role="search" id="sok" onSubmit={this.onSearchFormSubmit}>
+                                <Column xs="12" md="4">
                                     <div className="Search__searchbox-wrapper">
                                         <SearchBox />
                                         <a href="#treff" className="typo-normal lenke sr-only sr-only-focusable">
@@ -71,12 +71,12 @@ class Search extends React.Component {
                                     <HeltidDeltid />
                                     <EngagementType />
                                     <Sector />
-                                </form>
-                            </Column>
-                            <Column xs="12" md="5" />
-                            <Column xs="12" md="3">
-                                <Sorting />
-                            </Column>
+                                </Column>
+                                <Column xs="12" md="5" />
+                                <Column xs="12" md="3">
+                                    <Sorting />
+                                </Column>
+                            </form>
                             <Column xs="12" md="8">
                                 <div
                                     id="sokeresultat"
