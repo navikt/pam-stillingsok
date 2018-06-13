@@ -1,3 +1,6 @@
+## RELEASE - 0.15.115-8da3132
+#### New in this release: 
++ 2018-06-13 [PAM-1014] Fikser issue med selectboks på chrome ios - tweak
 ## RELEASE - 0.14.113-9b6c47a
 #### New in this release: 
 + 2018-06-13 [PAM-1014] Fikser issue med selectboks på chrome ios
