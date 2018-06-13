@@ -1,3 +1,7 @@
+## RELEASE - 0.14.113-9b6c47a
+#### New in this release: 
++ 2018-06-13 [PAM-1014] Fikser issue med selectboks på chrome ios
++ 2018-06-13 [PAM-990]: Justering av "tilbake til søk" knapp. Vises kun som tekst med pil.
 ## RELEASE - 0.13.109-7166633
 #### New in this release: 
 + 2018-06-13 [Feature] Knappene "Vis flere" og "Endre søk" var vansklige å klikke på i mobil. Dessuten lå de ofte på toppen av der de fleste leser på skjermen. Har derfor flyttet knappene ned i høyre hjørne, gjort dem runde og blå.
