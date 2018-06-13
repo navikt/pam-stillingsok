@@ -5,22 +5,22 @@ const path = require('path');
 const mustacheExpress = require('mustache-express');
 const Promise = require('promise');
 const fs = require('fs');
-const currentDirectory = __dirname;
 
+const currentDirectory = __dirname;
 const server = express();
 const port = process.env.PORT || 8080;
 server.set('port', port);
 
 server.disable('x-powered-by');
-server.use(helmet({xssFilter: false}));
+server.use(helmet({ xssFilter: false }));
 
 server.use(helmet.contentSecurityPolicy({
     directives: {
         defaultSrc: ["'none'"],
-        scriptSrc: ["'self'", "https://www.googletagmanager.com",  "https://www.google-analytics.com"],
+        scriptSrc: ["'self'"],
         styleSrc: ["'self'"],
-        fontSrc: ["'self'", "data:"],
-        imgSrc: ["'self'", "data:", "https://www.google-analytics.com"],
+        fontSrc: ["'self'", 'data:'],
+        imgSrc: ["'self'", 'data:'],
         connectSrc: ["'self'"]
     }
 }));
@@ -38,9 +38,9 @@ const fasitProperties = {
 
 const writeEnvironmentVariablesToFile = () => {
     const fileContent =
-        'window.__PAM_CONTEXT_PATH__="' + fasitProperties.PAM_CONTEXT_PATH + '";\n' +
-        'window.__PAM_STILLING__="' + fasitProperties.PAM_STILLING + '";\n' +
-        'window.__PAM_SEARCH_API__="' + fasitProperties.PAM_SEARCH_API + '";\n';
+        `window.__PAM_CONTEXT_PATH__="${fasitProperties.PAM_CONTEXT_PATH}";\n` +
+        `window.__PAM_STILLING__="${fasitProperties.PAM_STILLING}";\n` +
+        `window.__PAM_SEARCH_API__="${fasitProperties.PAM_SEARCH_API}";\n`;
 
     fs.writeFile(path.resolve(__dirname, 'dist/js/env.js'), fileContent, (err) => {
         if (err) throw err;
@@ -55,7 +55,7 @@ const renderSok = (htmlPages) => (
                 if (err) {
                     reject(err);
                 } else {
-                    resolve(Object.assign({"sok": html}, htmlPages));
+                    resolve(Object.assign({ sok: html }, htmlPages));
                 }
             }
         );
@@ -82,7 +82,7 @@ const startServer = (htmlPages) => {
     server.get(
         ['/', '/pam-stillingsok/?', /^\/pam-stillingsok\/(?!.*dist).*$/],
         (req, res) => {
-            res.send(htmlPages["sok"]);
+            res.send(htmlPages.sok);
         }
     );
 

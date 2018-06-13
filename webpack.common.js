@@ -3,8 +3,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
     entry: {
-        sok: ['babel-polyfill', 'whatwg-fetch', './src/app.js'],
-        googletagmanager: ['./src/googletagmanager.js']
+        sok: ['babel-polyfill', 'whatwg-fetch', './src/app.js']
     },
     output: {
         path: `${__dirname}/dist`,

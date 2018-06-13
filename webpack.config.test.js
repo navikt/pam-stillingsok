@@ -7,7 +7,6 @@ module.exports = merge(common, {
     plugins: [
         new UglifyJSPlugin(),
         new webpack.DefinePlugin({
-            __PAM_SEARCH_API__: "'<ENTER_URL_HERE>'",
             'process.env.NODE_ENV': JSON.stringify('production')
         })
     ]
