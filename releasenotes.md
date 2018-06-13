@@ -1,3 +1,9 @@
+## RELEASE - 0.13.109-7166633
+#### New in this release: 
++ 2018-06-13 [Feature] Knappene "Vis flere" og "Endre søk" var vansklige å klikke på i mobil. Dessuten lå de ofte på toppen av der de fleste leser på skjermen. Har derfor flyttet knappene ned i høyre hjørne, gjort dem runde og blå.
++ 2018-06-13 [Bugfix] Unngår at "Endre søk" og "Vis treff" knappene forblir blå etter at de er trykket på.
++ 2018-06-13 [PAM-975]: La til quick-fix av ugyldig søknadslenke i annonsevisning. Skal gjøre validering strengere i stillingsregistrering, så dette bør bli unødvendig.
++ 2018-06-12 [Bugfix] Fjerner litt rom under "Nye i dag", slik at den kommer midt i vertikalt
 ## RELEASE - 0.12.103-7b0009d
 #### New in this release: 
 + 2018-06-12 [Bugfix] Legger til litt mer rom under "Se flere" knapp, slik at det blir mere plass til de nye stillingene som lastes inn.
