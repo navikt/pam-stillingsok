@@ -58,19 +58,21 @@ class Search extends React.Component {
                         <SearchError />
                     ) : (
                         <Row>
-                            <form role="search" id="sok" onSubmit={this.onSearchFormSubmit}>
+                            <form role="search" onSubmit={this.onSearchFormSubmit}>
                                 <Column xs="12" md="4">
-                                    <div className="Search__searchbox-wrapper">
-                                        <SearchBox />
-                                        <a href="#treff" className="typo-normal lenke sr-only sr-only-focusable">
-                                            Hopp til søkeresultat
-                                        </a>
+                                    <div id="sok">
+                                        <div className="Search__searchbox-wrapper">
+                                            <SearchBox />
+                                            <a href="#treff" className="typo-normal lenke sr-only sr-only-focusable">
+                                                Hopp til søkeresultat
+                                            </a>
+                                        </div>
+                                        <Created />
+                                        <Counties />
+                                        <HeltidDeltid />
+                                        <EngagementType />
+                                        <Sector />
                                     </div>
-                                    <Created />
-                                    <Counties />
-                                    <HeltidDeltid />
-                                    <EngagementType />
-                                    <Sector />
                                 </Column>
                                 <Column xs="12" md="5" />
                                 <Column xs="12" md="3">
