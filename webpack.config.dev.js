@@ -12,12 +12,8 @@ module.exports = merge(common, {
     plugins: [
         new webpack.DefinePlugin({
             __PAM_SEARCH_API__: "'http://localhost:9000'",
-            __PAM_FORSIDE__: "'/forside'",
-            __PAM_MINSIDE__: "'/minSide'",
-            __PAM_IS_TOKEN_VALID__: "'/valid'",
-            __PAM_LOGOUT__: "'/logout'",
             __PAM_STILLING__: "'/stilling/'",
             __PAM_CONTEXT_PATH__: "''"
-})
+        })
     ]
 });
