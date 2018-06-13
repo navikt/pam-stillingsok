@@ -50,7 +50,7 @@ module.exports = {
             }
         },
         "t1": {
-            "launch_url" : "https://pam-stillingsok.nais.oera-q.local/",
+            "launch_url" : "https://stillingsok-q.nav.no",
             "globals" : {
                 "environment" : "t1"
             },
@@ -59,7 +59,7 @@ module.exports = {
             }
         },
         "linux-t1": {
-            "launch_url" : "https://pam-stillingsok.nais.oera-q.local/",
+            "launch_url" : "https://stillingsok-q.nav.no",
             "globals" : {
                 "environment" : "t1"
             },
@@ -71,7 +71,7 @@ module.exports = {
             }
         },
         "jenkins": {
-            "launch_url" : "https://pam-stillingsok.nais.oera-q.local/",
+            "launch_url" : "https://stillingsok-q.nav.no",
             "globals" : {
                 "environment" : "t1"
             },

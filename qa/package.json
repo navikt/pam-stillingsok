@@ -22,7 +22,7 @@
     "cucumber-html-report": "^0.6.4",
     "cucumber-pretty": "^1.4.0",
     "moment": "^2.21.0",
-    "nightwatch": "^0.9.19",
+    "nightwatch": "^0.9.20",
     "nightwatch-cucumber": "^8.2.14",
     "selenium-server-standalone-jar": "^3.9.1"
   }
