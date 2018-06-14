@@ -3,7 +3,6 @@ import { fetchCategoryAndSearchTagsSuggestions, SearchApiError } from '../../api
 import { SET_INITIAL_STATE } from '../searchReducer';
 
 export const SET_VALUE = 'SET_VALUE';
-export const SELECT_SUGGESTION = 'SELECT_SUGGESTION';
 export const FETCH_SUGGESTIONS = 'FETCH_SUGGESTIONS';
 export const FETCH_SUGGESTIONS_SUCCESS = 'FETCH_SUGGESTIONS_SUCCESS';
 export const FETCH_SUGGESTIONS_FAILURE = 'FETCH_SUGGESTIONS_FAILURE';
@@ -24,11 +23,6 @@ export default function searchBoxReducer(state = initialState, action) {
             return {
                 ...state,
                 q: action.value
-            };
-        case SELECT_SUGGESTION:
-            return {
-                ...state,
-                suggestions: []
             };
         case FETCH_SUGGESTIONS_SUCCESS:
             return {

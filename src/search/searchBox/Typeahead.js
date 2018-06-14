@@ -10,64 +10,83 @@ export default class Typeahead extends React.Component {
         this.state = {
             value: props.value,
             activeSuggestionIndex: -1,
-            shouldShowSuggestions: true,
-            hasFocus: false
+            hasFocus: false,
+            shouldShowSuggestions: true
         };
         this.shouldBlur = true;
     }
 
+    /**
+     * Vil skje hver gang man legger til eller fjerner en bokstav fra inputfeltet
+     */
     onChange = (e) => {
         const { value } = e.target;
         this.setState({
             value,
-            activeSuggestionIndex: -1,
-            shouldShowSuggestions: true
+            activeSuggestionIndex: -1, // Nullstill eventuelt markering av et forslag i listen
+            shouldShowSuggestions: true // Vis forslagslisten igjen. Den kan ha blitt skjult om man trykket Esc
         });
         this.props.onChange(value);
     };
 
     /**
-     * Key handler for tastaturnavigasjon i suggestion-listen.
+     * Behandler tastaturnavigasjon i forslagslisten.
      * @param e
      */
     onKeyDown = (e) => {
         let { activeSuggestionIndex } = this.state;
-        const value = this.props.suggestions[activeSuggestionIndex] ?
-            this.props.suggestions[activeSuggestionIndex] :
-            this.state.value;
+        const hasSelectedSuggestion = activeSuggestionIndex > -1;
 
-        if (this.state.shouldShowSuggestions) {
-            switch (e.keyCode) {
-                case 9: // Tab
-                    this.selectSuggestion(value);
-                    break;
-                case 13: // Enter
+        switch (e.keyCode) {
+            case 9: // Tab
+                if (hasSelectedSuggestion) {
+                    this.setValue(this.props.suggestions[activeSuggestionIndex]);
+                }
+                break;
+            case 13: // Enter
+                if (hasSelectedSuggestion) {
+                    e.preventDefault(); // Unngå form submit når bruker velger et av forslagene
+                    this.setValue(this.props.suggestions[activeSuggestionIndex]);
+                } else {
+                    this.setState({
+                        shouldShowSuggestions: false
+                    });
+                }
+                break;
+            case 27: // Esc
+                // Hvis man trykker Esc, og forslagslisten er synlig, så skal listen skjules.
+                // Hvis forslagslisten allerede er skjult, så vil verdien i
+                // inputfeltet slettes (hvis dette er standard oppførsel i browseren).
+                if (this.state.shouldShowSuggestions && this.props.suggestions.length > 0) {
+                    e.preventDefault(); // Unngå at verdi i inputfelt slettes
+                    this.setState({
+                        shouldShowSuggestions: false
+                    });
+                }
+                break;
+            case 38: // Pil opp
+                if (this.state.shouldShowSuggestions) {
                     e.preventDefault();
-                    this.selectSuggestion(value);
-                    break;
-                case 27: // Esc
-                    if (this.state.shouldShowSuggestions) {
-                        e.preventDefault();
-                        this.setState({
-                            shouldShowSuggestions: false
-                        });
-                    }
-                    break;
-                case 38: // Arrow up
-                    e.preventDefault();
+
+                    // Marker forrige suggestion i listen.
+                    // Hvis man er på toppen av listen og trykker pil opp, så skal ingen forslag markeres.
                     activeSuggestionIndex = activeSuggestionIndex - 1 === -2 ? -1 : activeSuggestionIndex - 1;
                     this.setState({ activeSuggestionIndex });
-                    break;
-                case 40: // Arrow down
+                }
+                break;
+            case 40: // Pil ned
+                if (this.state.shouldShowSuggestions) {
                     e.preventDefault();
+
+                    // Marker neste suggestion i listen, så fremst man ikke er på slutten av listen
                     activeSuggestionIndex = activeSuggestionIndex + 1 === this.props.suggestions.length ?
                         this.props.suggestions.length - 1 :
                         activeSuggestionIndex + 1;
                     this.setState({ activeSuggestionIndex });
-                    break;
-                default:
-                    break;
-            }
+                }
+                break;
+            default:
+                break;
         }
     };
 
@@ -79,19 +98,49 @@ export default class Typeahead extends React.Component {
     };
 
     /**
-     * Når man trykker med musen på en suggestion i listen, så vil dette museklikket
+     * Når man trykker med musen på et forslag i listen, så vil dette museklikket
      * forårsake at det også trigges onBlur på input'en. Normalt vil onBlur skjule
-     * suggestions-listen. Men når man trykker med musen (ved mousedown) på en suggestion, trenger vi
-     * at suggestions ikke skjules, slik at selectSuggestion (ved onclick) også kalles.
+     * suggestions-listen. Men når man trykker med musen på et forslag, trenger vi
+     * at forslagene ikke skjules, slik at setValue rekker å bli kjørt.
      */
     onBlur = () => {
         this.blurDelay = setTimeout(() => {
             if (this.shouldBlur) {
                 this.setState({
                     hasFocus: false
+                }, () => {
+                    this.props.onBlur();
                 });
             }
         }, 10);
+    };
+
+    /**
+     * Markerer et forslag i listen når bruker trykker pil opp/ned på tastaturet,
+     * eller når man man fører musen over et forslag.
+     * @param index
+     */
+    setSuggestionIndex = (index) => {
+        this.setState({
+            activeSuggestionIndex: index
+        });
+        this.clearBlurDelay();
+    };
+
+    /**
+     * Setter valgt forslag, og skjuler forslagslisten.
+     * @param suggestionValue
+     */
+    setValue = (value) => {
+        this.setState({
+            value,
+            shouldShowSuggestions: false,
+            activeSuggestionIndex: -1
+        }, () => {
+            this.input.focus();
+        });
+        this.clearBlurDelay();
+        this.props.onSelect(value);
     };
 
     avoidBlur = () => {
@@ -104,34 +153,6 @@ export default class Typeahead extends React.Component {
             this.blurDelay = undefined;
         }
         this.shouldBlur = true;
-    };
-
-    /**
-     * Markerer en suggestion i listen når bruker trykker pil opp/ned på tastaturet,
-     * eller når man bruker fører musen over en suggestion.
-     * @param index
-     */
-    highlightSuggestion = (index) => {
-        this.setState({
-            activeSuggestionIndex: index
-        });
-        this.clearBlurDelay();
-    };
-
-    /**
-     * Setter valgt suggestion, og skjuler suggestion-listen.
-     * @param suggestionValue
-     */
-    selectSuggestion = (suggestionValue) => {
-        this.setState({
-            value: suggestionValue,
-            shouldShowSuggestions: false,
-            activeSuggestionIndex: -1
-        }, () => {
-            this.input.focus();
-        });
-        this.clearBlurDelay();
-        this.props.onSelect(suggestionValue);
     };
 
     render() {
@@ -176,8 +197,8 @@ export default class Typeahead extends React.Component {
                             value={li}
                             match={this.state.value}
                             active={i === this.state.activeSuggestionIndex}
-                            onClick={this.selectSuggestion}
-                            highlightSuggestion={this.highlightSuggestion}
+                            onClick={this.setValue}
+                            setSuggestionIndex={this.setSuggestionIndex}
                             avoidBlur={this.avoidBlur}
                         />
                     ))}
@@ -190,6 +211,7 @@ export default class Typeahead extends React.Component {
 Typeahead.propTypes = {
     onSelect: PropTypes.func.isRequired,
     onChange: PropTypes.func.isRequired,
+    onBlur: PropTypes.func.isRequired,
     placeholder: PropTypes.string.isRequired,
     suggestions: PropTypes.arrayOf(PropTypes.string).isRequired,
     value: PropTypes.string.isRequired,

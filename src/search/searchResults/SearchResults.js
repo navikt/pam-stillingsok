@@ -14,8 +14,10 @@ function SearchResults({
     const { stillinger } = searchResult;
     const hasMore = (from === undefined && total > PAGE_SIZE) || (from + PAGE_SIZE < total);
     return (
-        <div id="treff" className="SearchResults">
-            <SearchResultsCount />
+        <div role="region" aria-labelledby="SearchResultsCount" id="treff" className="SearchResults">
+            <div id="SearchResultsCount">
+                <SearchResultsCount />
+            </div>
             {stillinger && stillinger.map((stilling) => (
                 <SearchResultItem
                     key={stilling.uuid}

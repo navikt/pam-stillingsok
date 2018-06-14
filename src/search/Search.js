@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Container, Row, Column } from 'nav-frontend-grid';
-import { Sidetittel, Normaltekst } from 'nav-frontend-typografi';
+import { Sidetittel } from 'nav-frontend-typografi';
 import SearchResults from './searchResults/SearchResults';
 import SearchError from './error/SearchError';
 import Sorting from './sorting/Sorting';
@@ -58,7 +58,7 @@ class Search extends React.Component {
                         <SearchError />
                     ) : (
                         <Row>
-                            <form role="search" onSubmit={this.onSearchFormSubmit}>
+                            <form role="search" action="/" onSubmit={this.onSearchFormSubmit}>
                                 <Column xs="12" md="4">
                                     <div id="sok">
                                         <div className="Search__searchbox-wrapper">
@@ -80,9 +80,7 @@ class Search extends React.Component {
                                 </Column>
                             </form>
                             <Column xs="12" md="8">
-                                <div
-                                    id="sokeresultat"
-                                >
+                                <div id="sokeresultat">
                                     <SearchResults />
                                 </div>
                             </Column>

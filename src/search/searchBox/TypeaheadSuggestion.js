@@ -12,8 +12,8 @@ export default class TypeaheadSuggestion extends React.Component {
         this.props.onClick(this.value);
     };
 
-    highlightSuggestion = () => {
-        this.props.highlightSuggestion(this.props.index);
+    onMouseMove = () => {
+        this.props.setSuggestionIndex(this.props.index);
     };
 
     render() {
@@ -25,7 +25,7 @@ export default class TypeaheadSuggestion extends React.Component {
                 role="option"
                 aria-selected={this.props.active}
                 onClick={this.onClick}
-                onMouseOver={this.highlightSuggestion}
+                onMouseMove={this.onMouseMove}
                 onFocus={this.props.avoidBlur}
                 onMouseDown={this.props.avoidBlur}
                 onKeyDown={this.props.avoidBlur}
@@ -61,6 +61,6 @@ TypeaheadSuggestion.propTypes = {
     match: PropTypes.string.isRequired,
     active: PropTypes.bool.isRequired,
     index: PropTypes.number.isRequired,
-    highlightSuggestion: PropTypes.func.isRequired,
+    setSuggestionIndex: PropTypes.func.isRequired,
     avoidBlur: PropTypes.func.isRequired
 };

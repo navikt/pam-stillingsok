@@ -1,4 +1,4 @@
-import { select, call, put, takeLatest } from 'redux-saga/effects';
+import { select, call, put, takeLatest, throttle } from 'redux-saga/effects';
 import {
     SearchApiError,
     fetchSearch
@@ -28,7 +28,8 @@ const initialState = {
         total: 0
     },
     hasError: false,
-    from: 0
+    from: 0,
+    lastSearchValue: ''
 };
 
 export default function searchReducer(state = initialState, action) {
@@ -46,6 +47,7 @@ export default function searchReducer(state = initialState, action) {
         case SEARCH_BEGIN:
             return {
                 ...state,
+                lastSearchValue: action.query.q || '',
                 isSearching: true
             };
         case SEARCH_SUCCESS:
@@ -194,7 +196,7 @@ function* initialSearch() {
 
             // Får å hente alle tilgjengelige fasetter, gjøre vi først
             // et søk uten noen søkekriterier.
-            yield put({ type: SEARCH_BEGIN });
+            yield put({ type: SEARCH_BEGIN, query: {} });
             let response = yield call(fetchSearch);
             yield put({ type: FETCH_INITIAL_FACETS_SUCCESS, response });
 
@@ -218,9 +220,10 @@ function* search() {
     try {
         yield put({ type: RESET_FROM });
         const state = yield select();
+        const query = toSearchQuery(state);
         updateBrowserUrl(state);
-        yield put({ type: SEARCH_BEGIN });
-        const searchResult = yield call(fetchSearch, toSearchQuery(state));
+        yield put({ type: SEARCH_BEGIN, query });
+        const searchResult = yield call(fetchSearch, query);
         yield put({ type: SEARCH_SUCCESS, response: searchResult });
     } catch (e) {
         if (e instanceof SearchApiError) {
@@ -249,6 +252,6 @@ function* loadMore() {
 
 export const saga = function* saga() {
     yield takeLatest(INITIAL_SEARCH, initialSearch);
-    yield takeLatest(SEARCH, search);
+    yield throttle(1000, SEARCH, search);
     yield takeLatest(LOAD_MORE, loadMore);
 };

@@ -10,7 +10,6 @@ function SearchResultsCount({ isAtLeastOneSearchDone, count }) {
             return (
                 <Undertittel
                     className="SearchResultsCount"
-                    role="region"
                     aria-live="assertive"
                 >
                     Ingen treff
@@ -20,7 +19,6 @@ function SearchResultsCount({ isAtLeastOneSearchDone, count }) {
         return (
             <Undertittel
                 className="SearchResultsCount"
-                role="region"
                 aria-live="assertive"
             >
                 {count} treff
