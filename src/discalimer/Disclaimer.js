@@ -16,7 +16,9 @@ function Disclaimer({ shouldShow, hideDisclaimer }) {
                     det underveis.
                 </Normaltekst>
                 <Normaltekst className="blokk-xxs">
-                    Stillingsannonsene er de samme som i dagens stillingssøk.
+                    <a href="https://insights.hotjar.com/s?siteId=148751&surveyId=71116" className="lenke">
+                        Gi tilbakemelding på feil og mangler
+                    </a>
                 </Normaltekst>
                 <Normaltekst className="blokk-xs">
                     <a href="https://tjenester.nav.no/stillinger/" className="lenke">
@@ -26,6 +28,16 @@ function Disclaimer({ shouldShow, hideDisclaimer }) {
                 <Knapp mini onClick={hideDisclaimer}>Skjul</Knapp>
             </div>
         );
+    } else {
+        return (
+            <div role="alert" className="Feedback typo-normal">
+            <Normaltekst className="blokk-xxs">
+                <a href="https://insights.hotjar.com/s?siteId=148751&surveyId=71116" className="lenke">
+                    Gi tilbakemelding på feil og mangler
+                </a>
+            </Normaltekst>
+            </div>
+         );
     }
     return null;
 }
