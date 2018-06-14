@@ -27,7 +27,11 @@ export const tilpassTwitterAdresse = (adresse) => {
 export default function Details({ stilling }) {
     const { _source } = stilling;
     const { properties } = _source;
-    const sokUrl = properties.applicationurl !== undefined ? tilpassLenke(properties.applicationurl) : tilpassLenke(properties.sourceurl);
+    let sokUrl = properties.applicationurl !== undefined ? properties.applicationurl : properties.sourceurl;
+    if(sokUrl){
+        sokUrl =  tilpassLenke(sokUrl);
+    }
+
     return (
         <div id="detail-sidebar">
             <div className="detail-section">
