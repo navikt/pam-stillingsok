@@ -39,12 +39,12 @@ export default class Typeahead extends React.Component {
 
         switch (e.keyCode) {
             case 9: // Tab
-                if (hasSelectedSuggestion) {
+                if (hasSelectedSuggestion && this.state.shouldShowSuggestions) {
                     this.setValue(this.props.suggestions[activeSuggestionIndex]);
                 }
                 break;
             case 13: // Enter
-                if (hasSelectedSuggestion) {
+                if (hasSelectedSuggestion && this.state.shouldShowSuggestions) {
                     e.preventDefault(); // Unngå form submit når bruker velger et av forslagene
                     this.setValue(this.props.suggestions[activeSuggestionIndex]);
                 } else {
