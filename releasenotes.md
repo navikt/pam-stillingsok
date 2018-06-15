@@ -1,3 +1,9 @@
+## RELEASE - 0.18.137-dd68039
+#### New in this release: 
++ 2018-06-15 [Bugfix] Sørger for å rydde opp timeout i componentWillUnmount, for å unngå at det kjøres setState når typeheaden er unmounted
++ 2018-06-15 [Bug]Søknadslenke går nå til finn hvis det er en finn-annonse
++ 2018-06-15 [Hotfix] Gjør slik at lange tekster bryter riktig på mobil
++ 2018-06-14 [feature]La til tilbakemeldingslenke
 ## RELEASE - 0.16.123-776dce5
 #### New in this release: 
 + 2018-06-14 [Bugfix] Fikser noen mindre feil med typeheaden, slik at den virker bedre på mobil.
