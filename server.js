@@ -17,11 +17,11 @@ server.use(helmet({ xssFilter: false }));
 server.use(helmet.contentSecurityPolicy({
     directives: {
         defaultSrc: ["'none'"],
-        scriptSrc: ["'self'"],
+        scriptSrc: ["'self'", 'https://www.google-analytics.com'],
         styleSrc: ["'self'"],
         fontSrc: ["'self'", 'data:'],
-        imgSrc: ["'self'", 'data:'],
-        connectSrc: ["'self'"]
+        imgSrc: ["'self'", 'data:', 'https://www.google-analytics.com'],
+        connectSrc: ["'self'", 'https://www.google-analytics.com']
     }
 }));
 
