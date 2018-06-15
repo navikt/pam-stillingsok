@@ -1,3 +1,6 @@
+## RELEASE - 0.16.123-776dce5
+#### New in this release: 
++ 2018-06-14 [Bugfix] Fikser noen mindre feil med typeheaden, slik at den virker bedre på mobil.
 ## RELEASE - 0.15.115-8da3132
 #### New in this release: 
 + 2018-06-13 [PAM-1014] Fikser issue med selectboks på chrome ios - tweak
