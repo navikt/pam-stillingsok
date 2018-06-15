@@ -9,6 +9,7 @@ import {
 } from './createdReducer';
 import './Created.less';
 
+// TODO rename this facet to "Published" in code
 
 class Created extends React.Component {
     onCreatedClick = (e) => {

@@ -107,7 +107,7 @@ export function filterCreated(created) {
     if (created && created.length > 0) {
         filters.bool.should.push({
             range: {
-                created: {
+                published: {
                     gte: 'now-1d'
                 }
             }
@@ -236,7 +236,7 @@ export default function searchTemplate(query) {
                 aggs: {
                     range: {
                         date_range: {
-                            field: 'created',
+                            field: 'published',
                             ranges: [
                                 {
                                     key: 'now-1d',
