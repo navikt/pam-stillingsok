@@ -16,6 +16,13 @@ export default class Typeahead extends React.Component {
         this.shouldBlur = true;
     }
 
+    componentWillUnmount() {
+        if (this.blurDelay) {
+            clearTimeout(this.blurDelay);
+            this.blurDelay = undefined;
+        }
+    }
+
     /**
      * Vil skje hver gang man legger til eller fjerner en bokstav fra inputfeltet
      */
