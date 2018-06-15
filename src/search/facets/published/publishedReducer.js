@@ -1,30 +1,30 @@
 import { SET_INITIAL_STATE, FETCH_INITIAL_FACETS_SUCCESS, SEARCH_SUCCESS } from '../../searchReducer';
 
-export const CHECK_CREATED = 'CHECK_CREATED';
-export const UNCHECK_CREATED = 'UNCHECK_CREATED';
+export const CHECK_PUBLISHED = 'CHECK_PUBLISHED';
+export const UNCHECK_PUBLISHED = 'UNCHECK_PUBLISHED';
 
 const initialState = {
-    created: [],
-    checkedCreated: []
+    published: [],
+    checkedPublished: []
 };
 
-export default function createdReducer(state = initialState, action) {
+export default function publishedReducer(state = initialState, action) {
     switch (action.type) {
         case SET_INITIAL_STATE:
             return {
                 ...state,
-                checkedCreated: action.query.created || []
+                checkedPublished: action.query.published || []
             };
         case FETCH_INITIAL_FACETS_SUCCESS:
             return {
                 ...state,
-                created: action.response.created
+                published: action.response.published
             };
         case SEARCH_SUCCESS:
             return {
                 ...state,
-                created: state.created.map((item) => {
-                    const found = action.response.created.find((e) => (
+                published: state.published.map((item) => {
+                    const found = action.response.published.find((e) => (
                         e.key === item.key
                     ));
                     return {
@@ -33,18 +33,18 @@ export default function createdReducer(state = initialState, action) {
                     };
                 })
             };
-        case CHECK_CREATED:
+        case CHECK_PUBLISHED:
             return {
                 ...state,
-                checkedCreated: [
-                    ...state.checkedCreated,
+                checkedPublished: [
+                    ...state.checkedPublished,
                     action.value
                 ]
             };
-        case UNCHECK_CREATED:
+        case UNCHECK_PUBLISHED:
             return {
                 ...state,
-                checkedCreated: state.checkedCreated.filter((m) => (m !== action.value))
+                checkedPublished: state.checkedPublished.filter((m) => (m !== action.value))
             };
         default:
             return state;

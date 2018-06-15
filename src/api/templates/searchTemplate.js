@@ -98,13 +98,13 @@ export function filterSector(sector) {
     return filters;
 }
 
-export function filterCreated(created) {
+export function filterPublished(published) {
     const filters = {
         bool: {
             should: []
         }
     };
-    if (created && created.length > 0) {
+    if (published && published.length > 0) {
         filters.bool.should.push({
             range: {
                 published: {
@@ -118,7 +118,7 @@ export function filterCreated(created) {
 
 export default function searchTemplate(query) {
     const {
-        from, size, counties, municipals, extent, engagementType, sector, created
+        from, size, counties, municipals, extent, engagementType, sector, published
     } = query;
     let { sort, q } = query;
 
@@ -200,7 +200,7 @@ export default function searchTemplate(query) {
                     filterLocation(counties, municipals),
                     filterEngagementType(engagementType),
                     filterSector(sector),
-                    filterCreated(created)
+                    filterPublished(published)
                 ]
             }
         },
@@ -217,7 +217,7 @@ export default function searchTemplate(query) {
             ]
         },
         aggs: {
-            created: {
+            published: {
                 filter: {
                     bool: {
                         filter: [
@@ -259,7 +259,7 @@ export default function searchTemplate(query) {
                             ...filterExtent(extent),
                             filterLocation(counties, municipals),
                             filterEngagementType(engagementType),
-                            filterCreated(created)
+                            filterPublished(published)
                         ]
                     }
                 },
@@ -281,7 +281,7 @@ export default function searchTemplate(query) {
                             filterLocation(counties, municipals),
                             filterEngagementType(engagementType),
                             filterSector(sector),
-                            filterCreated(created)
+                            filterPublished(published)
                         ]
                     }
                 },
@@ -303,7 +303,7 @@ export default function searchTemplate(query) {
                             ...filterExtent(extent),
                             filterLocation(counties, municipals),
                             filterSector(sector),
-                            filterCreated(created)
+                            filterPublished(published)
                         ]
                     }
                 },
@@ -325,7 +325,7 @@ export default function searchTemplate(query) {
                             ...filterExtent(extent),
                             filterEngagementType(engagementType),
                             filterSector(sector),
-                            filterCreated(created)
+                            filterPublished(published)
                         ]
                     }
                 },
