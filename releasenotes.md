@@ -1,3 +1,8 @@
+## RELEASE - 0.19.144-94e41d3
+#### New in this release: 
++ 2018-06-15 [Bugfix] Fikser noen mindre UU-issues etter test med aXe 2
++ 2018-06-15 [Bugfix] Fikser noen mindre UU-issues etter test med aXe
++ 2018-06-15 [Bugfix] Fikser noen mindre UU-issues etter tilbakemelding fra UU-team
 ## RELEASE - 0.18.137-dd68039
 #### New in this release: 
 + 2018-06-15 [Bugfix] Sørger for å rydde opp timeout i componentWillUnmount, for å unngå at det kjøres setState når typeheaden er unmounted
