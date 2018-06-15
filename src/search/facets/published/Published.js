@@ -9,8 +9,6 @@ import {
 } from './publishedReducer';
 import './Published.less';
 
-// TODO rename this facet to "Published" in code
-
 class Published extends React.Component {
     onPublishedClick = (e) => {
         const { value } = e.target;
