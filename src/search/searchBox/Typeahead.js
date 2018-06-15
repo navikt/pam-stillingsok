@@ -167,8 +167,12 @@ export default class Typeahead extends React.Component {
             this.state.shouldShowSuggestions &&
             this.props.suggestions.length > 0;
 
+        const activeDescendant = this.state.activeSuggestionIndex > -1 ?
+            `${this.props.id}-item-${this.state.activeSuggestionIndex}` : undefined;
+
         return (
             <div className="Typeahead">
+                <label className="skjemaelement__label" htmlFor={this.props.id}>Søkeord</label>
                 <input
                     id={this.props.id}
                     role="combobox"
@@ -178,7 +182,7 @@ export default class Typeahead extends React.Component {
                     aria-owns={`${this.props.id}-suggestions`}
                     aria-expanded={showSuggestions}
                     aria-haspopup={showSuggestions}
-                    aria-activedescendant={`${this.props.id}-item-${this.state.activeSuggestionIndex}`}
+                    aria-activedescendant={activeDescendant}
                     placeholder={this.props.placeholder}
                     value={this.state.value}
                     autoComplete="off"
