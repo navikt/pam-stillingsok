@@ -50,23 +50,27 @@ class Counties extends React.Component {
             >
                 <div
                     role="group"
-                    aria-label="Fylke/kommune"
+                    aria-label="Velg fylke"
                     className="Counties__inner"
                 >
                     {counties && counties.map((county) => (
                         <div key={county.key}>
                             <Checkbox
-                                name="county"
+                                name="location"
                                 label={`${county.key} (${county.count})`}
                                 value={county.key}
                                 onChange={this.onCountyClick}
                                 checked={checkedCounties.includes(county.key)}
                             />
                             {checkedCounties && checkedCounties.includes(county.key) && county.key !== 'OSLO' && (
-                                <div className="Counties__inner__municipals">
+                                <div
+                                    className="Counties__inner__municipals"
+                                    role="group"
+                                    aria-label="Velg kommune"
+                                >
                                     {county.municipals && county.municipals.map((municipal) => (
                                         <Checkbox
-                                            name="municipal"
+                                            name="location"
                                             key={municipal.key}
                                             label={`${municipal.key} (${municipal.count})`}
                                             value={municipal.key}
