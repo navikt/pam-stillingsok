@@ -27,7 +27,7 @@ export const tilpassTwitterAdresse = (adresse) => {
 export default function Details({ stilling }) {
     const { _source } = stilling;
     const { properties } = _source;
-    let sokUrl = properties.applicationurl !== undefined ? properties.applicationurl : properties.sourceurl;
+    let sokUrl = _source.source === "FINN" ? properties.sourceurl : properties.applicationurl !== undefined ? properties.applicationurl : properties.sourceurl;
     if(sokUrl){
         sokUrl =  tilpassLenke(sokUrl);
     }
