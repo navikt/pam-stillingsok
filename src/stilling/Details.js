@@ -4,33 +4,17 @@ import { Undertittel, Element } from 'nav-frontend-typografi';
 import { formatISOString, isValidISOString } from '../utils';
 import ReactHtmlParser from 'react-html-parser';
 
-export const tilpassLenke = (lenke) => {
-    if(lenke.includes('@')) {
-        return 'mailto:' + lenke;
-    } else if(!lenke.startsWith('http')) {
-        return 'https://' + lenke
-    } else {
-        return lenke;
+export const tilpassEmail = (email) => {
+    if (email.includes('@') && !email.includes('mailto:')) {
+        return `mailto:${email}`;
     }
-};
-
-export const tilpassTwitterAdresse = (adresse) => {
-    if(adresse.startsWith('@')) {
-        return 'https://twitter.com/'+ adresse;
-    } else if(!adresse.startsWith('http')) {
-        return 'https://' + adresse
-    } else {
-        return adresse;
-    }
+    return email;
 };
 
 export default function Details({ stilling }) {
     const { _source } = stilling;
     const { properties } = _source;
     let sokUrl = properties.applicationurl !== undefined ? properties.applicationurl : properties.sourceurl;
-    if(sokUrl){
-        sokUrl =  tilpassLenke(sokUrl);
-    }
 
     return (
         <div id="detail-sidebar">
@@ -100,7 +84,7 @@ export default function Details({ stilling }) {
                             <dd key="dd">
                                 <a
                                     className="lenke"
-                                    href={tilpassLenke(properties.applicationemail)}
+                                    href={tilpassEmail(properties.applicationemail)}
                                 >
                                     {properties.applicationemail}
                                 </a>
@@ -142,7 +126,7 @@ export default function Details({ stilling }) {
                             <dt key="dt">Epost:</dt>,
                             <dd key="dd">
                                 <a
-                                    href={tilpassLenke(properties.contactpersonemail)}
+                                    href={tilpassEmail(properties.contactpersonemail)}
                                     className="lenke"
                                 >
                                     {properties.contactpersonemail}
@@ -169,7 +153,7 @@ export default function Details({ stilling }) {
                         <dt key="dt">Hjemmeside:</dt>,
                         <dd key="dd">
                             <a
-                                href={tilpassLenke(properties.employerhomepage)}
+                                href={properties.employerhomepage}
                                 className="lenke"
                             >
                                 {properties.employerhomepage}
@@ -180,7 +164,7 @@ export default function Details({ stilling }) {
                         <dt key="dt">LinkedIn:</dt>,
                         <dd key="dd">
                             <a
-                                href={tilpassLenke(properties.linkedinpage)}
+                                href={properties.linkedinpage}
                                 className="lenke"
                             >
                                 {properties.linkedinpage}
@@ -191,7 +175,7 @@ export default function Details({ stilling }) {
                         <dt key="dt">Twitter:</dt>,
                         <dd key="dd">
                             <a
-                                href={tilpassTwitterAdresse(properties.twitteraddress)}
+                                href={properties.twitteraddress}
                                 className="lenke"
                             >
                                 {properties.twitteraddress}
@@ -202,7 +186,7 @@ export default function Details({ stilling }) {
                         <dt key="dt">Facebook:</dt>,
                         <dd key="dd">
                             <a
-                                href={tilpassLenke(properties.facebookpage)}
+                                href={properties.facebookpage}
                                 className="lenke"
                             >
                                 {properties.facebookpage}
