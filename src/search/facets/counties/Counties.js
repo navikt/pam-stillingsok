@@ -50,6 +50,7 @@ class Counties extends React.Component {
             >
                 <div
                     role="group"
+                    aria-label="Fylke/kommune"
                     className="Counties__inner"
                 >
                     {counties && counties.map((county) => (

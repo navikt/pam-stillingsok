@@ -38,6 +38,7 @@ class Sector extends React.Component {
             >
                 <div
                     role="group"
+                    aria-label="Sektor"
                     className="Sector__inner"
                 >
                     {sector && sector.map((item) => (

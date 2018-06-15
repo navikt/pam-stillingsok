@@ -38,6 +38,7 @@ class Extent extends React.Component {
             >
                 <div
                     role="group"
+                    aria-label="Heltid/deltid"
                     className="Extent__inner"
                 >
                     <div>

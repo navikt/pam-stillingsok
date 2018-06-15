@@ -38,6 +38,7 @@ class Engagement extends React.Component {
             >
                 <div
                     role="group"
+                    aria-label="Ansettelsesform"
                     className="Engagement__inner"
                 >
                     <div>
