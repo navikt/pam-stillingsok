@@ -25,6 +25,10 @@ class Stilling extends React.Component {
         this.props.getStilling(this.props.match.params.uuid);
     }
 
+    onBackToSearch = () => {
+        this.props.history.goBack();
+    };
+
     render() {
         const { stilling, error } = this.props;
         return (
@@ -32,7 +36,7 @@ class Stilling extends React.Component {
                 <Disclaimer />
                 <div className="background--light-green">
                     <Container>
-                        <BackToSearch />
+                        <BackToSearch onClick={this.onBackToSearch} />
                     </Container>
                 </div>
                 {error && error.statusCode === 404 ? (

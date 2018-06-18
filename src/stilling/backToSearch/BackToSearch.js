@@ -1,18 +1,17 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import Chevron from 'nav-frontend-chevron';
 import './BackToSearch.less';
 
-export default function BackToSearch() {
+export default function BackToSearch({onClick}) {
     return (
         <div className="BackToSearch">
-            <Link
-                to="/"
+            <a
+                onClick={onClick}
                 className="lenke BackToSearch__lenke"
             >
                 <Chevron stor type="venstre" className="BackToSearch__chevron"/>
                 <span className="BackToSearch__text">Tilbake til søk</span>
-            </Link>
+            </a>
         </div>
     );
 }
