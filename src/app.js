@@ -48,7 +48,7 @@ ReactDOM.render(
             <Switch>
                 <Route exact path="/" component={SearchPage} />
                 <Route path={`${CONTEXT_PATH}/stilling/:uuid`} component={StillingPage} />
-                <Route path="/mobil" component={Invite} />
+                <Route path={`${CONTEXT_PATH}/mobil`} component={Invite} />
                 <Route path="*" component={SearchPage} />
             </Switch>
         </BrowserRouter>
