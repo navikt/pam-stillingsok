@@ -17,6 +17,7 @@ import focusReducer from './search/focusReducer';
 import disclaimerReducer from './discalimer/disclaimerReducer';
 import SearchPage from './search/Search';
 import StillingPage from './stilling/Stilling';
+import Invite from './invite/Invite';
 import { CONTEXT_PATH } from './fasitProperties';
 import './styles.less';
 import './variables.less';
@@ -47,6 +48,7 @@ ReactDOM.render(
             <Switch>
                 <Route exact path="/" component={SearchPage} />
                 <Route path={`${CONTEXT_PATH}/stilling/:uuid`} component={StillingPage} />
+                <Route path="/mobil" component={Invite} />
                 <Route path="*" component={SearchPage} />
             </Switch>
         </BrowserRouter>
