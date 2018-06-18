@@ -21,8 +21,23 @@ import './Stilling.less';
 const arrayHasData = (array) => array && array[0].hasOwnProperty('punkt');
 
 class Stilling extends React.Component {
+    constructor(props) {
+        super(props);
+        this.hasSetTitle = false;
+    }
+
     componentDidMount() {
         this.props.getStilling(this.props.match.params.uuid);
+    }
+
+    componentDidUpdate() {
+        if (!this.hasSetTitle
+            && this.props.stilling
+            && this.props.stilling._source
+            && this.props.stilling._source.title) {
+            document.title = this.props.stilling._source.title;
+            this.hasSetTitle = true;
+        }
     }
 
     render() {
