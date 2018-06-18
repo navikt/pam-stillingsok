@@ -1,3 +1,7 @@
+## RELEASE - 0.20.148-7900474
+#### New in this release: 
++ 2018-06-18 [Feature] Legger til invitasjon til å teste ut nytt stillingssøk for de som bruker mobil.
++ 2018-06-15 [PAM-975]: fjerner  tilpassing av lenker, etter at dette er fikset i Stillingsregistrering
 ## RELEASE - 0.19.144-94e41d3
 #### New in this release: 
 + 2018-06-15 [Bugfix] Fikser noen mindre UU-issues etter test med aXe 2
