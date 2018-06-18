@@ -24,6 +24,7 @@ class Search extends React.Component {
     }
 
     componentDidMount() {
+        document.title = 'Ledige stillinger';
         const top = this.props.scrollPosition;
         setTimeout(() => {
             window.scrollTo(0, top);
