@@ -13,6 +13,7 @@ import SearchError from '../search/error/SearchError';
 import Expired from './Expired';
 import BackToSearch from './backToSearch/BackToSearch';
 import Disclaimer from '../discalimer/Disclaimer';
+import Loading from './loading/Loading';
 import {
     FETCH_STILLING_BEGIN
 } from './stillingReducer';
@@ -27,6 +28,7 @@ class Stilling extends React.Component {
     }
 
     componentDidMount() {
+        window.scrollTo(0, 0);
         this.props.getStilling(this.props.match.params.uuid);
     }
 
@@ -41,7 +43,8 @@ class Stilling extends React.Component {
     }
 
     render() {
-        const { stilling, error } = this.props;
+        const { stilling, cachedStilling, isFetchingStilling, error } = this.props;
+
         return (
             <div>
                 <Disclaimer />
@@ -60,7 +63,35 @@ class Stilling extends React.Component {
                     </Container>
                 )}
 
-                {stilling && (
+                {isFetchingStilling && (
+                    <article id="annonse-container">
+                        <header id="annonse-header" className="background--light-green">
+                            <Container>
+                                <Row className="blokk-m">
+                                    <Column xs="12" md="8">
+                                        {cachedStilling && (
+                                            <Sidetittel id="stillingstittel">
+                                                {cachedStilling.title}
+                                            </Sidetittel>
+                                        )}
+                                    </Column>
+                                </Row>
+                            </Container>
+                        </header>
+                        <Container className="annonse-margin">
+                            <Row>
+                                <Column xs="12" md="8">
+                                    <Loading />
+                                </Column>
+                                <Column xs="12" md="4">
+                                    <Loading spinner={false}/>
+                                </Column>
+                            </Row>
+                        </Container>
+                    </article>
+                )}
+
+                {!isFetchingStilling && stilling && (
                     <article id="annonse-container">
                         <header id="annonse-header" className="background--light-green">
                             <Container>
@@ -131,7 +162,9 @@ class Stilling extends React.Component {
 }
 
 Stilling.defaultProps = {
-    stilling: undefined
+    stilling: undefined,
+    cachedStilling: undefined,
+    isFetchingStilling: false
 };
 
 Stilling.propTypes = {
@@ -144,11 +177,17 @@ Stilling.propTypes = {
             })
         })
     }),
-    getStilling: PropTypes.func.isRequired
+    cachedStilling: PropTypes.shape({
+        title: PropTypes.string
+    }),
+    getStilling: PropTypes.func.isRequired,
+    isFetchingStilling: PropTypes.bool
 };
 
 const mapStateToProps = (state) => ({
+    isFetchingStilling: state.stilling.isFetchingStilling,
     stilling: state.stilling.stilling,
+    cachedStilling: state.stilling.cachedStilling,
     error: state.stilling.error
 });
 
