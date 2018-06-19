@@ -19,7 +19,7 @@
   height: 1.25rem;
   margin-top: 3rem;
   margin-bottom: 1rem;
-  background: #fcfcfc;
+  background-color: #fcfcfc;
   width: 60%;
   display: block;
 }
@@ -27,7 +27,7 @@
 .Loading__text {
   height: 1rem;
   margin-bottom: 0.5rem;
-  background: #fdfdfd;
+  background-color: #fdfdfd;
   display: block;
 }
 
@@ -41,8 +41,20 @@
   margin-left: 2rem;
   padding-left: 2rem;
   margin-bottom: 0.6rem;
-  background: #fdfdfd;
+  background-color: #fdfdfd;
   display: block;
   width: 40%;
 }
 
+.Loading .Loading__header,
+.Loading .Loading__text,
+.Loading .Loading__list-item {
+  transition: background-color 150ms;
+}
+
+
+.Loading--faded .Loading__header,
+.Loading--faded .Loading__text,
+.Loading--faded .Loading__list-item {
+  background-color: #fff;
+}

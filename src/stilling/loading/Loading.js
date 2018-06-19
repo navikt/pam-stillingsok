@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import Spinner from 'nav-frontend-spinner';
 import './Loading.less';
 
@@ -7,26 +8,40 @@ export default class Loading extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            show: false
+            faded: true,
+            showSpinner: false
         };
     }
 
     componentDidMount() {
-        this.timeout = setTimeout(() => {
+        this.loadingTimeout = setTimeout(() => {
             this.setState({
-                show: true
+                faded: false
+            });
+        }, 250);
+
+        this.spinnerTimeout = setTimeout(() => {
+            this.setState({
+                showSpinner: true
             });
         }, 1000);
     }
 
     componentWillUnmount() {
-        clearTimeout(this.timeout);
+        clearTimeout(this.loadingTimeout);
+        clearTimeout(this.spinnerTimeout);
     }
 
     render() {
         return (
-            <div className="Loading panel panel--padding">
-                {this.state.show && this.props.spinner && (
+            <div
+                className={
+                    classNames('Loading panel panel--padding', {
+                        'Loading--faded': this.state.faded
+                    })
+                }
+            >
+                {this.state.showSpinner && this.props.spinner && (
                     <div className="Loading__spinner">
                         <Spinner type="XL" />
                     </div>
