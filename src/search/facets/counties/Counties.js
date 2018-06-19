@@ -35,7 +35,7 @@ class Counties extends React.Component {
 
     capitalize = (text) => {
         const separators = [
-            ' ', // NORDRE LAND skal bli Norde Land
+            ' ', // NORDRE LAND skal bli Nordre Land
             '-', // AUST-AGDER skal bli Aust-Agder
             '(' // HERØY (MØRE OG ROMSDAL) skal bli Herøy (Møre og Romsdal)
         ];
