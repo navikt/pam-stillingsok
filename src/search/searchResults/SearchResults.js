@@ -28,6 +28,11 @@ function SearchResults({
             {hasMore && (
                 <Pagination />
             )}
+            {!hasMore && !isSearching && (
+                <div className="SearchResults__end typo-normal">
+                    Ingen flere treff
+                </div>
+            )}
             {!isSearching && searchResultTotal === 0 && (
                 <NoResults />
             )}
