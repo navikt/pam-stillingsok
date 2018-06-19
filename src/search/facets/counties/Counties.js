@@ -33,11 +33,6 @@ class Counties extends React.Component {
         this.props.search();
     };
 
-    /**
-     * MØRE OG ROMSDAL skal bli Møre og Romdal
-     * AUST-AGDER skal bli Aust-Agder
-     * HERØY (MØRE OG ROMSDAL) skal bli Herøy (Møre og Romsdal)
-     */
     capitalize = (text) => {
         const separators = [
             ' ', // NORDRE LAND skal bli Norde Land
