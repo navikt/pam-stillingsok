@@ -9,15 +9,18 @@ import { PAGE_SIZE } from '../searchReducer';
 import './SearchResults.less';
 
 function SearchResults({
-    searchResult, isSearching, searchResultTotal, restoreFocusToUuid, from, total
+    searchResult, isSearching, searchResultTotal, restoreFocusToUuid, page, total
 }) {
     const { stillinger } = searchResult;
-    const hasMore = (from === undefined && total > PAGE_SIZE) || (from + PAGE_SIZE < total);
+    const totalPages = total / PAGE_SIZE;
+    const hasMore = page + 1 < totalPages;
+    const count = ((page * PAGE_SIZE) + PAGE_SIZE) > total ? total : (page * PAGE_SIZE) + PAGE_SIZE;
     return (
         <div role="region" aria-labelledby="SearchResultsCount" id="treff" className="SearchResults">
             <div id="SearchResultsCount">
                 <SearchResultsCount />
             </div>
+
             {stillinger && stillinger.map((stilling) => (
                 <SearchResultItem
                     key={stilling.uuid}
@@ -25,14 +28,24 @@ function SearchResults({
                     shouldFocus={stilling.uuid === restoreFocusToUuid}
                 />
             ))}
+
             {hasMore && (
-                <Pagination />
-            )}
-            {!hasMore && !isSearching && (
-                <div className="SearchResults__end typo-normal">
-                    Ingen flere treff
+                <div className="SearchResults__numberOfTotal typo-normal">
+                   Viser {count} av {total} treff
                 </div>
             )}
+
+            <div className="SearchResults__end">
+                {!isSearching && !hasMore && (
+                    <div className="SearchResults__numberOfTotal typo-normal">
+                        Viser {count} av {total} treff
+                    </div>
+                )}
+                {hasMore && (
+                    <Pagination />
+                )}
+            </div>
+
             {!isSearching && searchResultTotal === 0 && (
                 <NoResults />
             )}
@@ -51,7 +64,7 @@ SearchResults.propTypes = {
     isSearching: PropTypes.bool.isRequired,
     searchResultTotal: PropTypes.number.isRequired,
     restoreFocusToUuid: PropTypes.string,
-    from: PropTypes.number.isRequired,
+    page: PropTypes.number.isRequired,
     total: PropTypes.number.isRequired
 };
 
@@ -60,7 +73,7 @@ const mapStateToProps = (state) => ({
     isSearching: state.search.isSearching,
     searchResult: state.search.searchResult,
     restoreFocusToUuid: state.focus.restoreFocusToUuid,
-    from: state.search.from,
+    page: state.search.page,
     total: state.search.searchResult.total
 });
 
