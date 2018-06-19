@@ -37,7 +37,7 @@ class Counties extends React.Component {
         const separators = [
             ' ', // NORDRE LAND skal bli Nordre Land
             '-', // AUST-AGDER skal bli Aust-Agder
-            '(' // HERØY (MØRE OG ROMSDAL) skal bli Herøy (Møre og Romsdal)
+            '(' // BØ (TELEMARK) skal bli Bø (Telemark)
         ];
 
         const ignore = [
