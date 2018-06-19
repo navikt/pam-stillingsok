@@ -33,6 +33,37 @@ class Counties extends React.Component {
         this.props.search();
     };
 
+    /**
+     * MØRE OG ROMSDAL skal bli Møre og Romdal
+     * AUST-AGDER skal bli Aust-Agder
+     * HERØY (MØRE OG ROMSDAL) skal bli Herøy (Møre og Romsdal)
+     */
+    capitalize = (text) => {
+        const separators = [
+            ' ', // NORDRE LAND skal bli Norde Land
+            '-', // AUST-AGDER skal bli Aust-Agder
+            '(' // HERØY (MØRE OG ROMSDAL) skal bli Herøy (Møre og Romsdal)
+        ];
+
+        const ignore = [
+            'i', 'og' // MØRE OG ROMSDAL skal bli Møre og Romsdal
+        ];
+
+        let capitalized = text.toLowerCase();
+
+        for (let i = 0, len = separators.length; i < len; i += 1) {
+            const fragments = capitalized.split(separators[i]);
+            for (let j = 0, x = fragments.length; j < x; j += 1) {
+                if (!ignore.includes(fragments[j])) {
+                    fragments[j] = fragments[j][0].toUpperCase() + fragments[j].substr(1);
+                }
+            }
+            capitalized = fragments.join(separators[i]);
+        }
+
+        return capitalized;
+    };
+
     render() {
         const { counties, checkedCounties, checkedMunicipals } = this.props;
         let title = 'Fylke/kommune';
@@ -57,7 +88,7 @@ class Counties extends React.Component {
                         <div key={county.key}>
                             <Checkbox
                                 name="location"
-                                label={`${county.key} (${county.count})`}
+                                label={`${this.capitalize(county.key)} (${county.count})`}
                                 value={county.key}
                                 onChange={this.onCountyClick}
                                 checked={checkedCounties.includes(county.key)}
@@ -72,7 +103,7 @@ class Counties extends React.Component {
                                         <Checkbox
                                             name="location"
                                             key={municipal.key}
-                                            label={`${municipal.key} (${municipal.count})`}
+                                            label={`${this.capitalize(municipal.key)} (${municipal.count})`}
                                             value={municipal.key}
                                             onChange={this.onMunicipalClick}
                                             checked={checkedMunicipals.includes(municipal.key)}
