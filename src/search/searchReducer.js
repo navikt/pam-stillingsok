@@ -111,6 +111,8 @@ export function toUrlQuery(state) {
     if (state.search.from) urlQuery.from = state.search.from;
     if (state.counties.checkedCounties.length > 0) urlQuery.counties = state.counties.checkedCounties.join('_');
     if (state.counties.checkedMunicipals.length > 0) urlQuery.municipals = state.counties.checkedMunicipals.join('_');
+    if (state.occupations.checkedFirstLevels.length > 0) urlQuery.occupationFirstLevels = state.occupations.checkedFirstLevels.join('_');
+    if (state.occupations.checkedSecondLevels.length > 0) urlQuery.occupationSecondLevels = state.occupations.checkedSecondLevels.join('_');
     if (state.created.checkedCreated.length > 0) urlQuery.created = state.created.checkedCreated.join('_');
     if (state.engagement.checkedEngagementType.length > 0) {
         urlQuery.engagementType = state.engagement.checkedEngagementType.join('_');
@@ -146,6 +148,8 @@ export function fromUrlQuery(url) {
     const sort = getUrlParameterByName('sort', url);
     const counties = getUrlParameterByName('counties', url);
     const municipals = getUrlParameterByName('municipals', url);
+    const occupationFirstLevels = getUrlParameterByName('occupationFirstLevels', url);
+    const occupationSecondLevels = getUrlParameterByName('occupationSecondLevels', url);
     const extent = getUrlParameterByName('extent', url);
     const engagementType = getUrlParameterByName('engagementType', url);
     const sector = getUrlParameterByName('sector', url);
@@ -156,6 +160,8 @@ export function fromUrlQuery(url) {
     if (sort) stateFromUrl.sort = sort;
     if (counties) stateFromUrl.counties = counties.split('_');
     if (municipals) stateFromUrl.municipals = municipals.split('_');
+    if (occupationFirstLevels) stateFromUrl.occupationFirstLevels = occupationFirstLevels.split('_');
+    if (occupationSecondLevels) stateFromUrl.occupationSecondLevels = occupationSecondLevels.split('_');
     if (extent) stateFromUrl.extent = extent.split('_');
     if (engagementType) stateFromUrl.engagementType = engagementType.split('_');
     if (sector) stateFromUrl.sector = sector.split('_');
@@ -176,6 +182,13 @@ export function toSearchQuery(state) {
             return !found;
         }),
         municipals: state.counties.checkedMunicipals,
+        occupationFirstLevels: state.occupations.checkedFirstLevels.filter((firstLevel) => {
+            // Hvis man filtrerer på en yrke på andre nivå, må man droppe yrkeskategorien på første nivå.
+            const firstLevelObject = state.occupations.occupationFirstLevels.find((c) => c.key === firstLevel);
+            const found = firstLevelObject.occupationSecondLevels.find((m) => state.occupations.checkedSecondLevels.includes(m.key));
+            return !found;
+        }),
+        occupationSecondLevels: state.occupations.checkedSecondLevels,
         created: state.created.checkedCreated,
         engagementType: state.engagement.checkedEngagementType,
         sector: state.sector.checkedSector,

@@ -7,6 +7,7 @@ import SearchResults from './searchResults/SearchResults';
 import SearchError from './error/SearchError';
 import Sorting from './sorting/Sorting';
 import Counties from './facets/counties/Counties';
+import Occupations from './facets/occupations/Occupations';
 import HeltidDeltid from './facets/extent/Extent';
 import EngagementType from './facets/engagement/Engagement';
 import Sector from './facets/sector/Sector';
@@ -70,6 +71,7 @@ class Search extends React.Component {
                                         </div>
                                         <Created />
                                         <Counties />
+                                        <Occupations />
                                         <HeltidDeltid />
                                         <EngagementType />
                                         <Sector />

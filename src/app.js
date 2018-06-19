@@ -9,6 +9,7 @@ import searchBoxReducer, { searchBoxSaga } from './search/searchBox/searchBoxRed
 import stillingReducer, { stillingSaga } from './stilling/stillingReducer';
 import sortingReducer from './search/sorting/sortingReducer';
 import countiesReducer from './search/facets/counties/countiesReducer';
+import occupationsReducer from './search/facets/occupations/occupationsReducer';
 import createdReducer from './search/facets/created/createdReducer';
 import engagementReducer from './search/facets/engagement/engagementReducer';
 import sectorReducer from './search/facets/sector/sectorReducer';
@@ -29,6 +30,7 @@ const store = createStore(combineReducers({
     searchBox: searchBoxReducer,
     sorting: sortingReducer,
     counties: countiesReducer,
+    occupations: occupationsReducer,
     created: createdReducer,
     engagement: engagementReducer,
     sector: sectorReducer,
