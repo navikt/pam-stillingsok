@@ -12,6 +12,7 @@ import NotFound from './NotFound';
 import SearchError from '../search/error/SearchError';
 import Expired from './Expired';
 import BackToSearch from './backToSearch/BackToSearch';
+import { toUrlQuery } from "../search/searchReducer";
 import Disclaimer from '../discalimer/Disclaimer';
 import {
     FETCH_STILLING_BEGIN
@@ -24,19 +25,16 @@ class Stilling extends React.Component {
     componentDidMount() {
         this.props.getStilling(this.props.match.params.uuid);
     }
-
-    onBackToSearch = () => {
-        this.props.history.goBack();
-    };
-
+    
     render() {
-        const { stilling, error } = this.props;
+        const { stilling, error, state } = this.props;
+
         return (
             <div>
                 <Disclaimer />
                 <div className="background--light-green">
                     <Container>
-                        <BackToSearch onClick={this.onBackToSearch} />
+                        <BackToSearch urlQuery={toUrlQuery(state)}/>
                     </Container>
                 </div>
                 {error && error.statusCode === 404 ? (
@@ -138,7 +136,8 @@ Stilling.propTypes = {
 
 const mapStateToProps = (state) => ({
     stilling: state.stilling.stilling,
-    error: state.stilling.error
+    error: state.stilling.error,
+    state: state
 });
 
 const mapDispatchToProps = (dispatch) => ({
