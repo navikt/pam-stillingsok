@@ -209,6 +209,8 @@ export default function searchTemplate(query) {
                 'properties.employer',
                 'properties.jobtitle',
                 'properties.location',
+                'properties.applicationdue',
+                'applicationdue',
                 'title',
                 'updated',
                 'uuid'
