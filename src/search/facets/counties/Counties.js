@@ -44,19 +44,22 @@ class Counties extends React.Component {
             'i', 'og' // MØRE OG ROMSDAL skal bli Møre og Romsdal
         ];
 
-        let capitalized = text.toLowerCase();
+        if (text) {
+            let capitalized = text.toLowerCase();
 
-        for (let i = 0, len = separators.length; i < len; i += 1) {
-            const fragments = capitalized.split(separators[i]);
-            for (let j = 0, x = fragments.length; j < x; j += 1) {
-                if (!ignore.includes(fragments[j])) {
-                    fragments[j] = fragments[j][0].toUpperCase() + fragments[j].substr(1);
+            for (let i = 0, len = separators.length; i < len; i += 1) {
+                const fragments = capitalized.split(separators[i]);
+                for (let j = 0, x = fragments.length; j < x; j += 1) {
+                    if (!ignore.includes(fragments[j])) {
+                        fragments[j] = fragments[j][0].toUpperCase() + fragments[j].substr(1);
+                    }
                 }
+                capitalized = fragments.join(separators[i]);
             }
-            capitalized = fragments.join(separators[i]);
-        }
 
-        return capitalized;
+            return capitalized;
+        }
+        return text;
     };
 
     render() {
