@@ -12,6 +12,7 @@ import NotFound from './NotFound';
 import SearchError from '../search/error/SearchError';
 import Expired from './Expired';
 import BackToSearch from './backToSearch/BackToSearch';
+import { toUrlQuery } from "../search/searchReducer";
 import Disclaimer from '../discalimer/Disclaimer';
 import Loading from './loading/Loading';
 import {
@@ -31,8 +32,7 @@ class Stilling extends React.Component {
         window.scrollTo(0, 0);
         this.props.getStilling(this.props.match.params.uuid);
     }
-
-    componentDidUpdate() {
+componentDidUpdate() {
         if (!this.hasSetTitle
             && this.props.stilling
             && this.props.stilling._source
@@ -41,16 +41,14 @@ class Stilling extends React.Component {
             this.hasSetTitle = true;
         }
     }
-
     render() {
-        const { stilling, cachedStilling, isFetchingStilling, error } = this.props;
-
+        const { stilling, cachedStilling, isFetchingStilling, error, state } = this.props;
         return (
             <div>
                 <Disclaimer />
                 <div className="background--light-green">
                     <Container>
-                        <BackToSearch />
+                        <BackToSearch urlQuery={toUrlQuery(state)}/>
                     </Container>
                 </div>
                 {error && error.statusCode === 404 ? (
@@ -188,7 +186,8 @@ const mapStateToProps = (state) => ({
     isFetchingStilling: state.stilling.isFetchingStilling,
     stilling: state.stilling.stilling,
     cachedStilling: state.stilling.cachedStilling,
-    error: state.stilling.error
+    error: state.stilling.error,
+    state: state
 });
 
 const mapDispatchToProps = (dispatch) => ({
