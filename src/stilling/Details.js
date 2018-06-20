@@ -4,6 +4,13 @@ import { Undertittel, Element } from 'nav-frontend-typografi';
 import { formatISOString, isValidISOString } from '../utils';
 import ReactHtmlParser from 'react-html-parser';
 
+export const tilpassLenke = (lenke) => {
+    if (!lenke.startsWith('http')) {
+        return `https://${lenke}`;
+    }
+    return lenke;
+};
+
 export const tilpassEmail = (email) => {
     if (email.includes('@') && !email.includes('mailto:')) {
         return `mailto:${email}`;
@@ -153,7 +160,7 @@ export default function Details({ stilling }) {
                         <dt key="dt">Hjemmeside:</dt>,
                         <dd key="dd">
                             <a
-                                href={properties.employerhomepage}
+                                href={tilpassLenke(properties.employerhomepage)}
                                 className="lenke"
                             >
                                 {properties.employerhomepage}
@@ -164,7 +171,7 @@ export default function Details({ stilling }) {
                         <dt key="dt">LinkedIn:</dt>,
                         <dd key="dd">
                             <a
-                                href={properties.linkedinpage}
+                                href={tilpassLenke(properties.linkedinpage)}
                                 className="lenke"
                             >
                                 {properties.linkedinpage}
@@ -175,7 +182,7 @@ export default function Details({ stilling }) {
                         <dt key="dt">Twitter:</dt>,
                         <dd key="dd">
                             <a
-                                href={properties.twitteraddress}
+                                href={tilpassLenke(properties.twitteraddress)}
                                 className="lenke"
                             >
                                 {properties.twitteraddress}
@@ -186,7 +193,7 @@ export default function Details({ stilling }) {
                         <dt key="dt">Facebook:</dt>,
                         <dd key="dd">
                             <a
-                                href={properties.facebookpage}
+                                href={tilpassLenke(properties.facebookpage)}
                                 className="lenke"
                             >
                                 {properties.facebookpage}

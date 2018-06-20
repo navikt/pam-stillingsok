@@ -15,7 +15,6 @@ export const RESET_FROM = 'RESET_FROM';
 export const LOAD_MORE = 'LOAD_MORE';
 export const LOAD_MORE_BEGIN = 'LOAD_MORE_BEGIN';
 export const LOAD_MORE_SUCCESS = 'LOAD_MORE_SUCCESS';
-export const RESET_PAGE = 'RESET_PAGE';
 export const KEEP_SCROLL_POSITION = 'KEEP_SCROLL_POSITION';
 
 export const PAGE_SIZE = 20;
@@ -29,6 +28,7 @@ const initialState = {
     },
     hasError: false,
     from: 0,
+    page: 0,
     lastSearchValue: ''
 };
 
@@ -37,12 +37,14 @@ export default function searchReducer(state = initialState, action) {
         case SET_INITIAL_STATE:
             return {
                 ...state,
-                from: action.query.from || 0
+                from: action.query.from || 0,
+                page: action.query.from ? action.query.from / PAGE_SIZE : 0
             };
         case RESET_FROM:
             return {
                 ...state,
-                from: 0
+                from: 0,
+                page: 0
             };
         case SEARCH_BEGIN:
             return {
@@ -82,17 +84,12 @@ export default function searchReducer(state = initialState, action) {
             return {
                 ...state,
                 isLoadingMore: false,
+                page: state.page + 1,
                 searchResult: {
                     ...state.searchResult,
                     stillinger: [...state.searchResult.stillinger, ...action.response.stillinger]
                 }
             };
-        case RESET_PAGE: {
-            return {
-                ...state,
-                from: 0
-            };
-        }
         case KEEP_SCROLL_POSITION: {
             return {
                 ...state,
