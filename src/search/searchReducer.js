@@ -38,14 +38,14 @@ export default function searchReducer(state = initialState, action) {
             return {
                 ...state,
                 from: 0,
-                size: action.query.size || PAGE_SIZE,
-                page: action.query.size ? (action.query.size - PAGE_SIZE) / PAGE_SIZE : 0
+                to: action.query.to || PAGE_SIZE,
+                page: action.query.to ? (action.query.to - PAGE_SIZE) / PAGE_SIZE : 0
             };
         case RESET_FROM:
             return {
                 ...state,
                 from: 0,
-                size: PAGE_SIZE,
+                to: PAGE_SIZE,
                 page: 0
             };
         case SEARCH_BEGIN:
@@ -75,8 +75,8 @@ export default function searchReducer(state = initialState, action) {
         case LOAD_MORE:
             return {
                 ...state,
-                from: state.size,
-                size: state.size + PAGE_SIZE
+                from: state.to,
+                to: state.to + PAGE_SIZE
             };
         case LOAD_MORE_BEGIN:
             return {
@@ -108,7 +108,7 @@ export function toUrlQuery(state) {
     const urlQuery = {};
     if (state.searchBox.q) urlQuery.q = state.searchBox.q;
     if (state.sorting.sort) urlQuery.sort = state.sorting.sort;
-    if (state.search.size > PAGE_SIZE) urlQuery.size = state.search.size;
+    if (state.search.to > PAGE_SIZE) urlQuery.to = state.search.to;
     if (state.counties.checkedCounties.length > 0) urlQuery.counties = state.counties.checkedCounties.join('_');
     if (state.counties.checkedMunicipals.length > 0) urlQuery.municipals = state.counties.checkedMunicipals.join('_');
     if (state.created.checkedCreated.length > 0) urlQuery.created = state.created.checkedCreated.join('_');
@@ -142,7 +142,7 @@ export function getUrlParameterByName(name, url) {
 export function fromUrlQuery(url) {
     const stateFromUrl = {};
     const q = getUrlParameterByName('q', url);
-    const size = getUrlParameterByName('size', url);
+    const to = getUrlParameterByName('to', url);
     const sort = getUrlParameterByName('sort', url);
     const counties = getUrlParameterByName('counties', url);
     const municipals = getUrlParameterByName('municipals', url);
@@ -152,7 +152,7 @@ export function fromUrlQuery(url) {
     const created = getUrlParameterByName('created', url);
 
     if (q) stateFromUrl.q = q;
-    if (size) stateFromUrl.size = parseInt(size, 10);
+    if (to) stateFromUrl.to = parseInt(to, 10);
     if (sort) stateFromUrl.sort = sort;
     if (counties) stateFromUrl.counties = counties.split('_');
     if (municipals) stateFromUrl.municipals = municipals.split('_');
@@ -167,7 +167,7 @@ export function toSearchQuery(state) {
     return {
         q: state.searchBox.q,
         from: state.search.from,
-        size: state.search.size - state.search.from,
+        size: state.search.to - state.search.from,
         sort: state.sorting.sort,
         counties: state.counties.checkedCounties.filter((county) => {
             // Hvis man filtrerer på en kommune, må man droppe fylket når man søker.
