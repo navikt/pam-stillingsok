@@ -23,7 +23,7 @@ export const PAGE_SIZE = 20;
 export const URL_PARAMETERS_DEFINITION = {
     q: ParameterType.STRING,
     sort: ParameterType.STRING,
-    from: ParameterType.NUMBER,
+    to: ParameterType.NUMBER,
     counties: ParameterType.ARRAY,
     municipals: ParameterType.ARRAY,
     created: ParameterType.ARRAY,
@@ -50,13 +50,15 @@ export default function searchReducer(state = initialState, action) {
         case SET_INITIAL_STATE:
             return {
                 ...state,
-                from: action.query.from || 0,
-                page: action.query.from ? action.query.from / PAGE_SIZE : 0
+                from: 0,
+                to: action.query.to || PAGE_SIZE,
+                page: action.query.to ? (action.query.to - PAGE_SIZE) / PAGE_SIZE : 0
             };
         case RESET_FROM:
             return {
                 ...state,
                 from: 0,
+                to: PAGE_SIZE,
                 page: 0
             };
         case SEARCH_BEGIN:
@@ -86,7 +88,8 @@ export default function searchReducer(state = initialState, action) {
         case LOAD_MORE:
             return {
                 ...state,
-                from: state.from + PAGE_SIZE
+                from: state.to,
+                to: state.to + PAGE_SIZE
             };
         case LOAD_MORE_BEGIN:
             return {
@@ -118,6 +121,7 @@ export function toSearchQuery(state) {
     return {
         q: state.searchBox.q,
         from: state.search.from,
+        size: state.search.to - state.search.from,
         sort: state.sorting.sort,
         counties: state.counties.checkedCounties.filter((county) => {
             // Hvis man filtrerer på en kommune, må man droppe fylket når man søker.
@@ -138,7 +142,7 @@ export function toUrlQuery(state) {
     return {
         q: state.searchBox.q,
         sort: state.sorting.sort,
-        from: state.search.from > 0 ? state.search.from : undefined,
+        to: state.search.to > PAGE_SIZE ? state.search.to : undefined,
         counties: state.counties.checkedCounties,
         municipals: state.counties.checkedMunicipals,
         created: state.created.checkedCreated,
