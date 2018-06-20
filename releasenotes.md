@@ -1,3 +1,13 @@
+## RELEASE - 0.21.162-061a653
+#### New in this release: 
++ 2018-06-19 [Feature] Legger til "Viser 20 av 540 treff" over Se flere knapp
++ 2018-06-19 [Feature] Legger til "Ingen flere treff" når man er kommet til slutten av søketreffene
++ 2018-06-19 [Feature] På tregt nettverk mangler det indikasjon på at annonsen lastes. Man vil bare se en Tilbakeknapp inntil annonsen her hentet fra backend. Jeg har derfor  lagt til en annonse-placeholder og spinner på annonsesiden.
++ 2018-06-19 [PAM-1040]: Endret tekst på tilbakemeldingslenke
++ 2018-06-19 [Bugfix] Frontenden mottar forsatt lenker uten http/https. Legger derfor inn igjen koden for å fikse lenker som mangler dette.
++ 2018-06-19 [PAM-924] Fylke og kommune i fasettlisten er i store bokstaver. Det mest optimale fixen ville vært å endre kildedataene, men har ikke gjort det i denne løsningen, da det er uklart om dette kan gjøres. Derfor transformerer vi heller til små bokstaver i front-endkoden.
++ 2018-06-19 [Bugfix] Flere brukere har gitt feedback på at kontrasten på stillingstittel i trefflisten er dårlig. Gjør derfor om og bruker standard formatering på undertitler slik det er definert i designsystemet.
++ 2018-06-18 [Feature] Har fått tilbakemelding fra bruker om at alle sider har samme sidetittel (i browserfanen). Det er et problem at alle stillinger får tittelen "Ledige stillinger" når man feks bookmarker en side. Har derfor gjort det slik at det er bare søkesiden som har "Ledige stillinger", mens stillingssiden får stillingsoverskrift som side tittel.
 ## RELEASE - 0.20.148-7900474
 #### New in this release: 
 + 2018-06-18 [Feature] Legger til invitasjon til å teste ut nytt stillingssøk for de som bruker mobil.
