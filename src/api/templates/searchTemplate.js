@@ -118,7 +118,7 @@ export function filterCreated(created) {
 
 export default function searchTemplate(query) {
     const {
-        from, counties, municipals, extent, engagementType, sector, created
+        from, size, counties, municipals, extent, engagementType, sector, created
     } = query;
     let { sort, q } = query;
 
@@ -131,8 +131,8 @@ export default function searchTemplate(query) {
     }
 
     let template = {
-        from: from || 0,
-        size: 20,
+        from,
+        size,
         query: {
             bool: {
                 must: {
