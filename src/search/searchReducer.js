@@ -20,6 +20,18 @@ export const KEEP_SCROLL_POSITION = 'KEEP_SCROLL_POSITION';
 
 export const PAGE_SIZE = 20;
 
+export const URL_PARAMETERS_DEFINITION = {
+    q: ParameterType.STRING,
+    sort: ParameterType.STRING,
+    from: ParameterType.NUMBER,
+    counties: ParameterType.ARRAY,
+    municipals: ParameterType.ARRAY,
+    created: ParameterType.ARRAY,
+    engagementType: ParameterType.ARRAY,
+    sector: ParameterType.ARRAY,
+    extent: ParameterType.ARRAY
+};
+
 const initialState = {
     isAtLeastOneSearchDone: false,
     isSearching: true,
@@ -144,17 +156,7 @@ function* initialSearch() {
     let state = yield select();
     if (!state.search.initialSearchDone) {
         try {
-            const urlQuery = fromUrl({
-                q: ParameterType.STRING,
-                sort: ParameterType.STRING,
-                from: ParameterType.NUMBER,
-                counties: ParameterType.ARRAY,
-                municipals: ParameterType.ARRAY,
-                created: ParameterType.ARRAY,
-                engagementType: ParameterType.ARRAY,
-                sector: ParameterType.ARRAY,
-                extent: ParameterType.ARRAY
-            }, window.location.href);
+            const urlQuery = fromUrl(URL_PARAMETERS_DEFINITION, window.location.href);
 
             yield put({ type: SET_INITIAL_STATE, query: urlQuery });
 
