@@ -1,12 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Hovedknapp } from 'nav-frontend-knapper';
 import Typeahead from './Typeahead';
 import { SEARCH } from '../searchReducer';
-import {
-    SET_VALUE,
-    FETCH_SUGGESTIONS
-} from './searchBoxReducer';
+import { FETCH_SUGGESTIONS, SET_VALUE } from './searchBoxReducer';
 import './SearchBox.less';
 
 
@@ -36,25 +34,29 @@ class SearchBox extends React.Component {
      */
     onTypeAheadBlur = () => {
         if (this.props.value !== this.props.lastSearchValue) {
-            this.props.search();
+            //this.props.search();
         }
     };
 
     render() {
         return (
-            <div className="SearchBox">
-                <Typeahead
-                    id="search-form-fritekst-input"
-                    name="q"
-                    autoComplete="off"
-                    label=""
-                    placeholder="Skriv inn søkeord"
-                    onSelect={this.onTypeAheadSuggestionSelected}
-                    onChange={this.onTypeAheadValueChange}
-                    onBlur={this.onTypeAheadBlur}
-                    suggestions={this.props.suggestions}
-                    value={this.props.value ? this.props.value : ''}
-                />
+            <div>
+                <label className="skjemaelement__label" htmlFor="search-form-fritekst-input">Søkeord</label>
+                <div className="SearchBox">
+                    <Typeahead
+                        id="search-form-fritekst-input"
+                        name="q"
+                        autoComplete="off"
+                        label=""
+                        placeholder="Skriv inn søkeord"
+                        onSelect={this.onTypeAheadSuggestionSelected}
+                        onChange={this.onTypeAheadValueChange}
+                        onBlur={this.onTypeAheadBlur}
+                        suggestions={this.props.suggestions}
+                        value={this.props.value ? this.props.value : ''}
+                    />
+                    <Hovedknapp className="SearchBox__button" mini onClick={this.props.search}>Søk</Hovedknapp>
+                </div>
             </div>
         );
     }
