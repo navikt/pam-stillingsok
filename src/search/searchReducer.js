@@ -116,6 +116,7 @@ export function toUrlQuery(state) {
         urlQuery.engagementType = state.engagement.checkedEngagementType.join('_');
     }
     if (state.sector.checkedSector.length > 0) urlQuery.sector = state.sector.checkedSector.join('_');
+    if (state.expires.checkedExpires.length > 0) urlQuery.expires = state.expires.checkedExpires.join('_');
     if (state.extent.checkedExtent.length > 0) urlQuery.extent = state.extent.checkedExtent.join('_');
     return Object.keys(urlQuery)
         .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(urlQuery[key])}`)
@@ -149,6 +150,7 @@ export function fromUrlQuery(url) {
     const extent = getUrlParameterByName('extent', url);
     const engagementType = getUrlParameterByName('engagementType', url);
     const sector = getUrlParameterByName('sector', url);
+    const expires = getUrlParameterByName('expires', url);
     const created = getUrlParameterByName('created', url);
 
     if (q) stateFromUrl.q = q;
@@ -159,6 +161,7 @@ export function fromUrlQuery(url) {
     if (extent) stateFromUrl.extent = extent.split('_');
     if (engagementType) stateFromUrl.engagementType = engagementType.split('_');
     if (sector) stateFromUrl.sector = sector.split('_');
+    if (expires) stateFromUrl.expires = expires.split('_');
     if (created) stateFromUrl.created = created.split('_');
     return stateFromUrl;
 }
@@ -179,6 +182,7 @@ export function toSearchQuery(state) {
         created: state.created.checkedCreated,
         engagementType: state.engagement.checkedEngagementType,
         sector: state.sector.checkedSector,
+        expires: state.expires.checkedExpires,
         extent: state.extent.checkedExtent
     };
 }

@@ -60,6 +60,10 @@ export async function fetchSearch(query = {}) {
         created: result.aggregations.created.range.buckets.map((item) => ({
             key: item.key,
             count: item.doc_count
+        })),
+        expires: result.aggregations.expires.range.buckets.map((item) => ({
+            key: item.key,
+            count: item.doc_count
         }))
     };
 }

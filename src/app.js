@@ -13,6 +13,7 @@ import createdReducer from './search/facets/created/createdReducer';
 import engagementReducer from './search/facets/engagement/engagementReducer';
 import sectorReducer from './search/facets/sector/sectorReducer';
 import extentReducer from './search/facets/extent/extentReducer';
+import expiresReducer from './search/facets/expires/expiresReducer';
 import focusReducer from './search/focusReducer';
 import disclaimerReducer from './discalimer/disclaimerReducer';
 import SearchPage from './search/Search';
@@ -34,6 +35,7 @@ const store = createStore(combineReducers({
     sector: sectorReducer,
     extent: extentReducer,
     stilling: stillingReducer,
+    expires: expiresReducer,
     focus: focusReducer,
     disclaimer: disclaimerReducer
 }), applyMiddleware(sagaMiddleware));

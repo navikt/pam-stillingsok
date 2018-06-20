@@ -116,9 +116,29 @@ export function filterCreated(created) {
     return filters;
 }
 
+export function filterExpires(expires) {
+    const filters = {
+        bool: {
+            should: []
+        }
+    };
+    if (expires && expires.length > 0) {
+        expires.forEach((item) => {
+            filters.bool.should.push({
+                range: {
+                    expires: {
+                        gte: 'now/d'
+                    }
+                }
+            });
+        });
+    }
+    return filters;
+}
+
 export default function searchTemplate(query) {
     const {
-        from, counties, municipals, extent, engagementType, sector, created
+        from, counties, municipals, extent, engagementType, sector, created, expires
     } = query;
     let { sort, q } = query;
 
@@ -200,7 +220,8 @@ export default function searchTemplate(query) {
                     filterLocation(counties, municipals),
                     filterEngagementType(engagementType),
                     filterSector(sector),
-                    filterCreated(created)
+                    filterCreated(created),
+                    filterExpires(expires)
                 ]
             }
         },
@@ -215,6 +236,37 @@ export default function searchTemplate(query) {
             ]
         },
         aggs: {
+            expires: {
+                filter: {
+                    bool: {
+                        filter: [
+                            {
+                                term: {
+                                    status: 'ACTIVE'
+                                }
+                            },
+                            ...filterExtent(extent),
+                            filterLocation(counties, municipals),
+                            filterEngagementType(engagementType),
+                            filterCreated(created),
+                            filterSector(sector)
+                        ]
+                    }
+                },
+                aggs: {
+                    range: {
+                        date_range: {
+                            field: 'expires',
+                            ranges: [
+                                {
+                                    key: 'I dag',
+                                    from: 'now/d'
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
             created: {
                 filter: {
                     bool: {
@@ -227,7 +279,8 @@ export default function searchTemplate(query) {
                             ...filterExtent(extent),
                             filterLocation(counties, municipals),
                             filterEngagementType(engagementType),
-                            filterSector(sector)
+                            filterSector(sector),
+                            filterExpires(expires)
                         ]
                     }
                 },
@@ -257,7 +310,8 @@ export default function searchTemplate(query) {
                             ...filterExtent(extent),
                             filterLocation(counties, municipals),
                             filterEngagementType(engagementType),
-                            filterCreated(created)
+                            filterCreated(created),
+                            filterExpires(expires)
                         ]
                     }
                 },
@@ -279,7 +333,8 @@ export default function searchTemplate(query) {
                             filterLocation(counties, municipals),
                             filterEngagementType(engagementType),
                             filterSector(sector),
-                            filterCreated(created)
+                            filterCreated(created),
+                            filterExpires(expires)
                         ]
                     }
                 },
@@ -301,7 +356,8 @@ export default function searchTemplate(query) {
                             ...filterExtent(extent),
                             filterLocation(counties, municipals),
                             filterSector(sector),
-                            filterCreated(created)
+                            filterCreated(created),
+                            filterExpires(expires)
                         ]
                     }
                 },
@@ -323,7 +379,8 @@ export default function searchTemplate(query) {
                             ...filterExtent(extent),
                             filterEngagementType(engagementType),
                             filterSector(sector),
-                            filterCreated(created)
+                            filterCreated(created),
+                            filterExpires(expires)
                         ]
                     }
                 },

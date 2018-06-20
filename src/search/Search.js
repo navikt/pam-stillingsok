@@ -11,6 +11,7 @@ import HeltidDeltid from './facets/extent/Extent';
 import EngagementType from './facets/engagement/Engagement';
 import Sector from './facets/sector/Sector';
 import Created from './facets/created/Created';
+import Expires from './facets/expires/Expires';
 import SearchBox from './searchBox/SearchBox';
 import { INITIAL_SEARCH, KEEP_SCROLL_POSITION, SEARCH } from './searchReducer';
 import BackToTop from './backToTopButton/BackToTop';
@@ -73,6 +74,7 @@ class Search extends React.Component {
                                         <HeltidDeltid />
                                         <EngagementType />
                                         <Sector />
+                                        <Expires />
                                     </div>
                                 </Column>
                                 <Column xs="12" md="5" />
