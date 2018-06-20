@@ -3,6 +3,7 @@ import {
     SearchApiError,
     fetchSearch
 } from '../api/api';
+import { fromUrl, toUrl, ParameterType } from './url';
 
 export const SET_INITIAL_STATE = 'SET_INITIAL_STATE';
 export const INITIAL_SEARCH = 'INITIAL_SEARCH';
@@ -101,65 +102,6 @@ export default function searchReducer(state = initialState, action) {
     }
 }
 
-export function toUrlQuery(state) {
-    const urlQuery = {};
-    if (state.searchBox.q) urlQuery.q = state.searchBox.q;
-    if (state.sorting.sort) urlQuery.sort = state.sorting.sort;
-    if (state.search.from) urlQuery.from = state.search.from;
-    if (state.counties.checkedCounties.length > 0) urlQuery.counties = state.counties.checkedCounties.join('_');
-    if (state.counties.checkedMunicipals.length > 0) urlQuery.municipals = state.counties.checkedMunicipals.join('_');
-    if (state.created.checkedCreated.length > 0) urlQuery.created = state.created.checkedCreated.join('_');
-    if (state.engagement.checkedEngagementType.length > 0) {
-        urlQuery.engagementType = state.engagement.checkedEngagementType.join('_');
-    }
-    if (state.sector.checkedSector.length > 0) urlQuery.sector = state.sector.checkedSector.join('_');
-    if (state.extent.checkedExtent.length > 0) urlQuery.extent = state.extent.checkedExtent.join('_');
-    return Object.keys(urlQuery)
-        .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(urlQuery[key])}`)
-        .join('&')
-        .replace(/%20/g, '+');
-}
-
-export function updateBrowserUrl(state) {
-    const urlQuery = toUrlQuery(state);
-    const newUrlQuery = urlQuery && urlQuery.length > 0 ? `?${urlQuery}` : window.location.pathname;
-    window.history.replaceState('', '', newUrlQuery);
-}
-
-
-export function getUrlParameterByName(name, url) {
-    name = name.replace(/[\[\]]/g, '\\$&');
-    const regex = new RegExp(`[?&]${name}(=([^&#]*)|&|#|$)`);
-    const results = regex.exec(url);
-    if (!results) return undefined;
-    if (!results[2]) return '';
-    return decodeURIComponent(results[2].replace(/\+/g, ' '));
-}
-
-export function fromUrlQuery(url) {
-    const stateFromUrl = {};
-    const q = getUrlParameterByName('q', url);
-    const from = getUrlParameterByName('from', url);
-    const sort = getUrlParameterByName('sort', url);
-    const counties = getUrlParameterByName('counties', url);
-    const municipals = getUrlParameterByName('municipals', url);
-    const extent = getUrlParameterByName('extent', url);
-    const engagementType = getUrlParameterByName('engagementType', url);
-    const sector = getUrlParameterByName('sector', url);
-    const created = getUrlParameterByName('created', url);
-
-    if (q) stateFromUrl.q = q;
-    if (from) stateFromUrl.from = parseInt(from, 10);
-    if (sort) stateFromUrl.sort = sort;
-    if (counties) stateFromUrl.counties = counties.split('_');
-    if (municipals) stateFromUrl.municipals = municipals.split('_');
-    if (extent) stateFromUrl.extent = extent.split('_');
-    if (engagementType) stateFromUrl.engagementType = engagementType.split('_');
-    if (sector) stateFromUrl.sector = sector.split('_');
-    if (created) stateFromUrl.created = created.split('_');
-    return stateFromUrl;
-}
-
 export function toSearchQuery(state) {
     return {
         q: state.searchBox.q,
@@ -180,6 +122,20 @@ export function toSearchQuery(state) {
     };
 }
 
+export function toUrlQuery(state) {
+    return {
+        q: state.searchBox.q,
+        sort: state.sorting.sort,
+        from: state.search.from > 0 ? state.search.from : undefined,
+        counties: state.counties.checkedCounties,
+        municipals: state.counties.checkedMunicipals,
+        created: state.created.checkedCreated,
+        engagementType: state.engagement.checkedEngagementType,
+        sector: state.sector.checkedSector,
+        extent: state.extent.checkedExtent
+    };
+}
+
 /**
  * Henter ut search query fra browser url første gang siden blir lastet.
  * Fetcher alle tilgjengelige fasetter og gjør deretter det første søket.
@@ -188,7 +144,18 @@ function* initialSearch() {
     let state = yield select();
     if (!state.search.initialSearchDone) {
         try {
-            const urlQuery = fromUrlQuery(window.location.href);
+            const urlQuery = fromUrl({
+                q: ParameterType.STRING,
+                sort: ParameterType.STRING,
+                from: ParameterType.NUMBER,
+                counties: ParameterType.ARRAY,
+                municipals: ParameterType.ARRAY,
+                created: ParameterType.ARRAY,
+                engagementType: ParameterType.ARRAY,
+                sector: ParameterType.ARRAY,
+                extent: ParameterType.ARRAY
+            }, window.location.href);
+
             yield put({ type: SET_INITIAL_STATE, query: urlQuery });
 
             // Får å hente alle tilgjengelige fasetter, gjøre vi først
@@ -218,7 +185,7 @@ function* search() {
         yield put({ type: RESET_FROM });
         const state = yield select();
         const query = toSearchQuery(state);
-        updateBrowserUrl(state);
+        window.history.replaceState('', '', toUrl(toUrlQuery(state)));
         yield put({ type: SEARCH_BEGIN, query });
         const searchResult = yield call(fetchSearch, query);
         yield put({ type: SEARCH_SUCCESS, response: searchResult });
@@ -234,7 +201,7 @@ function* search() {
 function* loadMore() {
     try {
         const state = yield select();
-        updateBrowserUrl(state);
+        window.history.replaceState('', '', toUrl(toUrlQuery(state)));
         yield put({ type: LOAD_MORE_BEGIN });
         const response = yield call(fetchSearch, toSearchQuery(state));
         yield put({ type: LOAD_MORE_SUCCESS, response });
