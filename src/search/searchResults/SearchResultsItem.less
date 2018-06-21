@@ -2,7 +2,7 @@
 
 .SearchResultItem {
   background-color: #fff;
-  padding: 1rem 2rem 1.5rem 2rem;
+  padding: 1rem 2rem;
   display: block;
   text-decoration: none;
   color: @navMorkGra;
@@ -19,6 +19,10 @@
     color: @navGronn;
     border-color: transparent;
   }
+}
+
+.SearchResultItem__employer {
+  padding-right: 1rem;
 }
 
 .SearchResultItem__updated {
@@ -45,7 +49,19 @@
   }
 
   .SearchResultItem__updated,
-  .SearchResultItem__title {
-    margin-bottom: 0.5rem;
+  .SearchResultItem__employer {
+    margin-bottom: 1rem;
+  }
+
+  .SearchResultItem__updated {
+    margin-bottom: 0;
+
+  }
+}
+
+@media (min-width: @screen-md-min) {
+  .SearchResultItem__row {
+    display: flex;
+    align-items: center;
   }
 }

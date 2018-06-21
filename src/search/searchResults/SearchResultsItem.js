@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Row, Column } from 'nav-frontend-grid';
-import { Undertittel, Normaltekst } from 'nav-frontend-typografi';
+import { Undertittel, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { formatISOString } from '../../utils';
 import { STILLING } from '../../fasitProperties';
 import './SearchResultsItem.less';
@@ -24,23 +24,28 @@ export default class SearchResultItem extends React.Component {
                 className="SearchResultItem"
                 to={`${STILLING}${stilling.uuid}`}
             >
-                <Row>
-                    <Column xs="12">
-                        {stilling.updated && (
-                            <Normaltekst className="SearchResultItem__updated">
-                                {formatISOString(stilling.updated, 'D. MMMM YYYY')}
+                <Row className="SearchResultItem__row">
+                    <Column xs="12" md="4">
+                        {stilling.properties.employer && (
+                            <Normaltekst className="SearchResultItem__employer">
+                                {stilling.properties.employer}
                             </Normaltekst>
+                        )}
+                    </Column>
+                    <Column xs="12" md="8">
+                        {stilling.updated && (
+                            <Undertekst className="SearchResultItem__updated">
+                                {formatISOString(stilling.updated, 'D. MMMM YYYY')}
+                            </Undertekst>
                         )}
 
                         <Undertittel tag="h3" className="SearchResultItem__title">{stilling.title}</Undertittel>
 
                         {stilling.properties.jobtitle && stilling.title !== stilling.properties.jobtitle && (
-                            <Normaltekst className="SearchResultItem__jobtitle">{stilling.properties.jobtitle}</Normaltekst>
-                        )}
-
-                        {stilling.properties.employer && (
-                            <Normaltekst className="SearchResultItem__employer">
-                                {stilling.properties.employer}
+                            <Normaltekst
+                                className="SearchResultItem__jobtitle"
+                            >
+                                {stilling.properties.jobtitle}
                             </Normaltekst>
                         )}
 
