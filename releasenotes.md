@@ -1,3 +1,7 @@
+## RELEASE - 0.24.177-7453fa7
+#### New in this release: 
++ 2018-06-21 [Feature] Gjør slik at Tilbakekanpp fester seg til toppen når man scroller ned på siden.
++ 2018-06-21 [Feature] Legger inn utskriftsvennlig formatering av stillingsannonse.
 ## RELEASE - 0.23.174-8a31229
 #### New in this release: 
 + 2018-06-21 [Bugfix] Fikser issue med at det ble gjort to likedans søk om man trykket enter i søkeboksen
