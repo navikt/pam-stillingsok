@@ -1,6 +1,9 @@
-import { call, put, select, takeLatest, throttle } from 'redux-saga/effects';
-import { fetchSearch, SearchApiError } from '../api/api';
-import { fromUrl, ParameterType, toUrl } from './url';
+import { select, call, put, takeLatest, throttle } from 'redux-saga/effects';
+import {
+    SearchApiError,
+    fetchSearch
+} from '../api/api';
+import { fromUrl, toUrl, ParameterType } from './url';
 
 export const SET_INITIAL_STATE = 'SET_INITIAL_STATE';
 export const INITIAL_SEARCH = 'INITIAL_SEARCH';
