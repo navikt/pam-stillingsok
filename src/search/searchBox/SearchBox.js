@@ -28,16 +28,6 @@ class SearchBox extends React.Component {
         this.props.search();
     };
 
-    /**
-     * Foretar et nytt søk hver gang man forlater typeahead'en.
-     * Men dropper å gjøre et søk hvis søkeordet ikke er endret siden forrige søk.
-     */
-    onTypeAheadBlur = () => {
-        if (this.props.value !== this.props.lastSearchValue) {
-            //this.props.search();
-        }
-    };
-
     render() {
         return (
             <div>
@@ -51,11 +41,16 @@ class SearchBox extends React.Component {
                         placeholder="Skriv inn søkeord"
                         onSelect={this.onTypeAheadSuggestionSelected}
                         onChange={this.onTypeAheadValueChange}
-                        onBlur={this.onTypeAheadBlur}
                         suggestions={this.props.suggestions}
                         value={this.props.value ? this.props.value : ''}
                     />
-                    <Hovedknapp className="SearchBox__button" mini onClick={this.props.search}>Søk</Hovedknapp>
+                    <Hovedknapp
+                        type="submit"
+                        className="SearchBox__button"
+                        mini
+                    >
+                        Søk
+                    </Hovedknapp>
                 </div>
             </div>
         );
@@ -64,7 +59,6 @@ class SearchBox extends React.Component {
 
 SearchBox.propTypes = {
     value: PropTypes.string.isRequired,
-    lastSearchValue: PropTypes.string.isRequired,
     suggestions: PropTypes.arrayOf(PropTypes.string).isRequired,
     search: PropTypes.func.isRequired,
     setValue: PropTypes.func.isRequired,
@@ -73,7 +67,6 @@ SearchBox.propTypes = {
 
 const mapStateToProps = (state) => ({
     value: state.searchBox.q,
-    lastSearchValue: state.search.lastSearchValue,
     suggestions: state.searchBox.suggestions
 });
 

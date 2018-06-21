@@ -41,8 +41,7 @@ const initialState = {
     },
     hasError: false,
     from: 0,
-    page: 0,
-    lastSearchValue: ''
+    page: 0
 };
 
 export function mergeAndRemoveDuplicates(array1, array2) {
@@ -73,7 +72,6 @@ export default function searchReducer(state = initialState, action) {
         case SEARCH_BEGIN:
             return {
                 ...state,
-                lastSearchValue: action.query.q || '',
                 isSearching: true
             };
         case SEARCH_SUCCESS:

@@ -115,8 +115,6 @@ export default class Typeahead extends React.Component {
             if (this.shouldBlur) {
                 this.setState({
                     hasFocus: false
-                }, () => {
-                    this.props.onBlur();
                 });
             }
         }, 10);
@@ -221,7 +219,6 @@ export default class Typeahead extends React.Component {
 Typeahead.propTypes = {
     onSelect: PropTypes.func.isRequired,
     onChange: PropTypes.func.isRequired,
-    onBlur: PropTypes.func.isRequired,
     placeholder: PropTypes.string.isRequired,
     suggestions: PropTypes.arrayOf(PropTypes.string).isRequired,
     value: PropTypes.string.isRequired,
