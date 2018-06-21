@@ -8,10 +8,10 @@ function BackToSearchLink({ urlQuery }) {
     return (
         <Link
             to={`/${urlQuery}`}
-            className="lenke BackToSearch__lenke typo-normal"
+            className="lenke BackToSearchLink typo-normal"
         >
-            <Chevron stor type="venstre" className="BackToSearch__chevron" />
-            <span className="BackToSearch__text">Tilbake til søk</span>
+            <Chevron stor type="venstre" className="BackToSearchLink__chevron" />
+            <span className="BackToSearchLink__text">Tilbake til søk</span>
         </Link>
     );
 }
@@ -66,12 +66,15 @@ export default class BackToSearch extends React.Component {
 
     render() {
         return this.props.urlQuery ? (
-            <div>
-                <div ref={(inlineBackButton) => { this.inlineBackButton = inlineBackButton; }} className="BackToSearch">
+            <div className="BackToSearch">
+                <div
+                    ref={(inlineBackButton) => { this.inlineBackButton = inlineBackButton; }}
+                    className="BackToSearch__inline"
+                >
                     <BackToSearchLink urlQuery={this.props.urlQuery} />
                 </div>
                 {this.state.showStickyBackButton && (
-                    <div className="BackToSearch BackToSearch--sticky">
+                    <div className="BackToSearch__sticky">
                         <div className="container">
                             <BackToSearchLink urlQuery={this.props.urlQuery} />
                         </div>
