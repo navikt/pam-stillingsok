@@ -1,3 +1,11 @@
+## RELEASE - 0.23.174-8a31229
+#### New in this release: 
++ 2018-06-21 [Bugfix] Fikser issue med at det ble gjort to likedans søk om man trykket enter i søkeboksen
++ 2018-06-21 [Bugfix] Legger til aria-label på "765 treff + pil ned" slik at skjermleser sier "Vis 765 treff"
++ 2018-06-21 [Feature] Flere tilbakemeldinger på at det er vanskleig å scanne trefflisten. Gjør derfor om til slik det var opprinnelig med arbeidsgivernavn i en egen kolonne på venstre side i treff listen.
++ 2018-06-21 [Bugfix] Tilbakeknappen fikk url /?[Object Object]. Har fikset dette nå slik at tilbakeknappen bruker stringverdien av søke-queryen.
++ 2018-06-15 [PAM-996] Use published as date field for "nye i dag"
++ 2018-06-21 [Bugfix] Det har vært et issue at det dukker opp treff fra feks Oslo, når man deretter velger feks Bamle. Dette skyldes at man har trykket "Se flere" på Oslo, og det har blitt lastet inn duplikate annonser. Man kan få duplkate annonser når man pager, siden backend returnerer treff fra flere søkeindexer. Duplikate annonser skaper trøbbel for react, og duplikater fjernes ikke fra DOM. Fixen er derfor å droppe eventuelle duplikater i frontenden.
 ## RELEASE - 0.22.168-d03bc99
 #### New in this release: 
 + 2018-06-20 [Bugfix] Fikser noen issues etter Legger på søkknapp. Fikser fonttyper som mangler noen steder.
