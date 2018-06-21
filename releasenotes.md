@@ -1,3 +1,10 @@
+## RELEASE - 0.22.168-d03bc99
+#### New in this release: 
++ 2018-06-20 [Bugfix] Fikser noen issues etter Legger på søkknapp. Fikser fonttyper som mangler noen steder.
++ 2018-06-20 [Bugfix] Bruker riktig font-type på selectboxen for sortering
++ 2018-06-20 [Bugfix] Fjerner chevron/nedpil ned fra "Se flere", da designteamet sa at dette ikonet ikke passer.
++ 2018-06-20 [Bugfix] Hvis man trykker "Se flere" og dermed får ?from=20 i urlen, og deretter laster siden inn på nytt, så vil trefflisten bare vise treffene fra index 20 til 40. Bruker i stedet ?size=40, slik at alle treffene fra 0 til 40 vises.
++ 2018-06-18 [PAM-1027]: bruker react router history til å gå tilbake til søk, slik at url-parameterne blir med
 ## RELEASE - 0.21.162-061a653
 #### New in this release: 
 + 2018-06-19 [Feature] Legger til "Viser 20 av 540 treff" over Se flere knapp
