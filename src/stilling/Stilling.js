@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Container, Row, Column } from 'nav-frontend-grid';
 import ReactHtmlParser from 'react-html-parser';
 import { Panel } from 'nav-frontend-paneler';
-import { Sidetittel } from 'nav-frontend-typografi';
+import { Innholdstittel } from 'nav-frontend-typografi';
 import StillingsBoks from './listbox/ListBox';
 import Details from './Details';
 import NotFound from './NotFound';
@@ -68,9 +68,9 @@ componentDidUpdate() {
                                 <Row className="blokk-m">
                                     <Column xs="12" md="8">
                                         {cachedStilling && (
-                                            <Sidetittel id="stillingstittel">
+                                            <Innholdstittel id="stillingstittel">
                                                 {cachedStilling.title}
-                                            </Sidetittel>
+                                            </Innholdstittel>
                                         )}
                                     </Column>
                                 </Row>
@@ -100,9 +100,9 @@ componentDidUpdate() {
                                                 <Expired />
                                             </div>
                                         )}
-                                        <Sidetittel id="stillingstittel">
+                                        <Innholdstittel id="stillingstittel">
                                             {stilling._source.title}
-                                        </Sidetittel>
+                                        </Innholdstittel>
                                     </Column>
                                 </Row>
                             </Container>
