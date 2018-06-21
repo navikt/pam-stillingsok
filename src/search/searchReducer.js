@@ -1,9 +1,6 @@
-import { select, call, put, takeLatest, throttle } from 'redux-saga/effects';
-import {
-    SearchApiError,
-    fetchSearch
-} from '../api/api';
-import { fromUrl, toUrl, ParameterType } from './url';
+import { call, put, select, takeLatest, throttle } from 'redux-saga/effects';
+import { fetchSearch, SearchApiError } from '../api/api';
+import { fromUrl, ParameterType, toUrl } from './url';
 
 export const SET_INITIAL_STATE = 'SET_INITIAL_STATE';
 export const INITIAL_SEARCH = 'INITIAL_SEARCH';
@@ -44,6 +41,15 @@ const initialState = {
     page: 0,
     lastSearchValue: ''
 };
+
+export function mergeAndRemoveDuplicates(array1, array2) {
+    return [...array1, ...array2.filter((a) => {
+        const duplicate = array1.find((b) => (
+            a.uuid === b.uuid
+        ));
+        return !duplicate;
+    })];
+}
 
 export default function searchReducer(state = initialState, action) {
     switch (action.type) {
@@ -103,7 +109,8 @@ export default function searchReducer(state = initialState, action) {
                 page: state.page + 1,
                 searchResult: {
                     ...state.searchResult,
-                    stillinger: [...state.searchResult.stillinger, ...action.response.stillinger]
+                    // Når man pager kan en allerede lastet annonse komme på nytt på neste page.
+                    stillinger: mergeAndRemoveDuplicates(state.searchResult.stillinger, action.response.stillinger)
                 }
             };
         case KEEP_SCROLL_POSITION: {
