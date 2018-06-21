@@ -61,7 +61,7 @@ export default class BackToSearch extends React.Component {
     isInlineBackButtonVisible = () => {
         const rect = this.inlineBackButton.getBoundingClientRect();
         const windowHeight = (window.innerHeight || document.documentElement.clientHeight);
-        return (rect.top <= windowHeight) && ((rect.top + rect.height) >= 0);
+        return (rect.top <= windowHeight) && ((rect.top - rect.height) >= 0);
     };
 
     render() {
