@@ -1,3 +1,6 @@
+## RELEASE - 0.26.184-a81fc81
+#### New in this release: 
++ 2018-06-21 [Bugfix] Tweak på sticky Tilbake-knapp
 ## RELEASE - 0.24.177-7453fa7
 #### New in this release: 
 + 2018-06-21 [Feature] Gjør slik at Tilbakekanpp fester seg til toppen når man scroller ned på siden.
