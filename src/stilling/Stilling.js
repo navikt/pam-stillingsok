@@ -147,9 +147,7 @@ componentDidUpdate() {
                                     </section>
                                 </Column>
                                 <Column xs="12" md="4">
-                                    <section aria-labelledby="tilleggsinformasjon-title">
-                                        <Details stilling={stilling} />
-                                    </section>
+                                    <Details stilling={stilling} />
                                 </Column>
                             </Row>
                         </Container>
