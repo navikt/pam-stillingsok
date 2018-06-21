@@ -10,7 +10,7 @@ import Counties from './facets/counties/Counties';
 import HeltidDeltid from './facets/extent/Extent';
 import EngagementType from './facets/engagement/Engagement';
 import Sector from './facets/sector/Sector';
-import Created from './facets/created/Created';
+import Published from './facets/published/Published';
 import SearchBox from './searchBox/SearchBox';
 import { INITIAL_SEARCH, KEEP_SCROLL_POSITION, SEARCH } from './searchReducer';
 import BackToTop from './backToTopButton/BackToTop';
@@ -68,7 +68,7 @@ class Search extends React.Component {
                                                 Hopp til søkeresultat
                                             </a>
                                         </div>
-                                        <Created />
+                                        <Published />
                                         <Counties />
                                         <HeltidDeltid />
                                         <EngagementType />

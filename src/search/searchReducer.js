@@ -26,7 +26,7 @@ export const URL_PARAMETERS_DEFINITION = {
     to: ParameterType.NUMBER,
     counties: ParameterType.ARRAY,
     municipals: ParameterType.ARRAY,
-    created: ParameterType.ARRAY,
+    published: ParameterType.ARRAY,
     engagementType: ParameterType.ARRAY,
     sector: ParameterType.ARRAY,
     extent: ParameterType.ARRAY
@@ -141,7 +141,7 @@ export function toSearchQuery(state) {
             return !found;
         }),
         municipals: state.counties.checkedMunicipals,
-        created: state.created.checkedCreated,
+        published: state.published.checkedPublished,
         engagementType: state.engagement.checkedEngagementType,
         sector: state.sector.checkedSector,
         extent: state.extent.checkedExtent
@@ -155,7 +155,7 @@ export function toUrlQuery(state) {
         to: state.search.to > PAGE_SIZE ? state.search.to : undefined,
         counties: state.counties.checkedCounties,
         municipals: state.counties.checkedMunicipals,
-        created: state.created.checkedCreated,
+        published: state.published.checkedPublished,
         engagementType: state.engagement.checkedEngagementType,
         sector: state.sector.checkedSector,
         extent: state.extent.checkedExtent

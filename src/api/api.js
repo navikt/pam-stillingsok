@@ -57,7 +57,7 @@ export async function fetchSearch(query = {}) {
             key: item.key,
             count: item.doc_count
         })),
-        created: result.aggregations.created.range.buckets.map((item) => ({
+        published: result.aggregations.published.range.buckets.map((item) => ({
             key: item.key,
             count: item.doc_count
         }))
