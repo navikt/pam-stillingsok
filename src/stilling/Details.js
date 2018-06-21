@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Undertittel, Element } from 'nav-frontend-typografi';
+import { Undertittel } from 'nav-frontend-typografi';
 import { formatISOString, isValidISOString } from '../utils';
 import ReactHtmlParser from 'react-html-parser';
 
@@ -26,8 +26,7 @@ export default function Details({ stilling }) {
     return (
         <div id="detail-sidebar">
             <div className="detail-section">
-                <Undertittel id="tilleggsinformasjon-title" className="blokk-s">Tilleggsinformasjon</Undertittel>
-                <Element tag="h3" className="detail-section__head">Om stillingen</Element>
+                <Undertittel className="detail-section__head">Om stillingen</Undertittel>
                 <dl className="dl-flex typo-normal">
                     {properties.jobtitle && [
                         <dt key="dt">Stillingstittel:</dt>,
@@ -76,7 +75,7 @@ export default function Details({ stilling }) {
 
             {(properties.applicationdue || properties.applicationemail || sokUrl) && (
                 <div className="detail-section">
-                    <Element tag="h3" className="detail-section__head">Søknad</Element>
+                    <Undertittel className="detail-section__head">Søknad</Undertittel>
                     <dl className="dl-flex typo-normal">
                         {properties.applicationdue && [
                             <dt key="dt">Søknadsfrist:</dt>,
@@ -115,7 +114,7 @@ export default function Details({ stilling }) {
 
             {(properties.contactperson || properties.contactpersontitle || properties.contactpersonphone || properties.contactpersonemail) && (
                 <div className="detail-section light-green-bg">
-                    <Element tag="h3" className="detail-section__head">Kontaktperson for stillingen</Element>
+                    <Undertittel className="detail-section__head">Kontaktperson for stillingen</Undertittel>
                     <dl className="dl-flex typo-normal">
                         {properties.contactperson && [
                             <dt key="dt">Kontaktperson:</dt>,
@@ -146,7 +145,7 @@ export default function Details({ stilling }) {
 
 
             <div className="detail-section">
-                <Element tag="h3" className="detail-section__head">Om bedriften</Element>
+                <Undertittel className="detail-section__head">Om bedriften</Undertittel>
                 <dl className="dl-flex typo-normal">
                     {properties.employer && [
                         <dt key="dt">Arbeidsgiver:</dt>,
@@ -208,7 +207,7 @@ export default function Details({ stilling }) {
 
 
             <div className="detail-section">
-                <Element tag="h3" className="detail-section__head">Om annonsen</Element>
+                <Undertittel className="detail-section__head">Om annonsen</Undertittel>
                 <dl className="dl-flex typo-normal">
                     {_source.updated && [
                         <dt key="dt">Sist endret:</dt>,
