@@ -15,6 +15,7 @@ import BackToSearch from './backToSearch/BackToSearch';
 import { toUrlQuery } from "../search/searchReducer";
 import Disclaimer from '../discalimer/Disclaimer';
 import Loading from './loading/Loading';
+import { toUrl } from '../search/url';
 import {
     FETCH_STILLING_BEGIN
 } from './stillingReducer';
@@ -48,7 +49,7 @@ componentDidUpdate() {
                 <Disclaimer />
                 <div className="background--light-green">
                     <Container>
-                        <BackToSearch urlQuery={toUrlQuery(state)}/>
+                        <BackToSearch urlQuery={toUrl(toUrlQuery(state))} />
                     </Container>
                 </div>
                 {error && error.statusCode === 404 ? (
