@@ -45,6 +45,15 @@ const initialState = {
     lastSearchValue: ''
 };
 
+export function mergeAndRemoveDuplicates(array1, array2) {
+    return [...array1, ...array2.filter((a) => {
+        const duplicate = array1.find((b) => (
+            a.uuid === b.uuid
+        ));
+        return !duplicate;
+    })];
+}
+
 export default function searchReducer(state = initialState, action) {
     switch (action.type) {
         case SET_INITIAL_STATE:
@@ -103,7 +112,8 @@ export default function searchReducer(state = initialState, action) {
                 page: state.page + 1,
                 searchResult: {
                     ...state.searchResult,
-                    stillinger: [...state.searchResult.stillinger, ...action.response.stillinger]
+                    // Når man pager kan en allerede lastet annonse komme på nytt på neste page.
+                    stillinger: mergeAndRemoveDuplicates(state.searchResult.stillinger, action.response.stillinger)
                 }
             };
         case KEEP_SCROLL_POSITION: {
