@@ -191,7 +191,7 @@ function* search() {
         yield put({ type: RESET_FROM });
         const state = yield select();
         const query = toSearchQuery(state);
-        window.history.replaceState('', '', toUrl(toUrlQuery(state)));
+        window.history.replaceState('', '', toUrl(toUrlQuery(state)) || window.location.pathname);
         yield put({ type: SEARCH_BEGIN, query });
         const searchResult = yield call(fetchSearch, query);
         yield put({ type: SEARCH_SUCCESS, response: searchResult });
@@ -207,7 +207,7 @@ function* search() {
 function* loadMore() {
     try {
         const state = yield select();
-        window.history.replaceState('', '', toUrl(toUrlQuery(state)));
+        window.history.replaceState('', '', toUrl(toUrlQuery(state)) || window.location.pathname);
         yield put({ type: LOAD_MORE_BEGIN });
         const response = yield call(fetchSearch, toSearchQuery(state));
         yield put({ type: LOAD_MORE_SUCCESS, response });

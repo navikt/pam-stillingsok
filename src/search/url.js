@@ -44,9 +44,8 @@ export function toUrl(query) {
         .join('&')
         .replace(/%20/g, '+');
 
-    const newUrlQuery = urlQuery && urlQuery.length > 0 ? `?${urlQuery}` : window.location.pathname;
 
-    return newUrlQuery;
+    return urlQuery && urlQuery.length > 0 ? `?${urlQuery}` : '';
 }
 
 /**

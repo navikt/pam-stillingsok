@@ -8,7 +8,7 @@ export default function BackToSearch({urlQuery}) {
     return urlQuery ? (
         <div className="BackToSearch">
             <Link
-                to={'/?'+urlQuery}
+                to={`/${urlQuery}`}
                 className="lenke BackToSearch__lenke"
             >
                 <Chevron stor type="venstre" className="BackToSearch__chevron"/>
