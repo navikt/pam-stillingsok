@@ -59,7 +59,7 @@ class Search extends React.Component {
                         <SearchError />
                     ) : (
                         <Row>
-                            <form role="search" action="/" onSubmit={this.onSearchFormSubmit}>
+                            <form role="search" action="/" onSubmit={this.onSearchFormSubmit} className="no-print">
                                 <Column xs="12" md="4">
                                     <div id="sok">
                                         <div className="Search__searchbox-wrapper">
