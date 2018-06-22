@@ -1,4 +1,11 @@
+@nodeModulesPath: './../../';
+@coreModulePath: './../../';
+
 @import '../../../variables';
+@import "../../../../node_modules/nav-frontend-typografi-style/src/fontimports";
+@import "../../../../node_modules/nav-frontend-typografi-style/src/mixins";
+
+
 
 .Occupations {
   background: #fff;
@@ -9,4 +16,8 @@
 
 .Occupations__inner__secondLevels {
   margin-left: 1.5rem;
+
+  .skjemaelement__label {
+    .typo-undertekst-mixin();
+  }
 }

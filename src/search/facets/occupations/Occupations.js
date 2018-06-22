@@ -73,7 +73,6 @@ class Occupations extends React.Component {
                                         {firstLevel.occupationSecondLevels &&
                                     firstLevel.occupationSecondLevels.map((secondLevel) => (
                                         <Checkbox
-                                            className="typo-undertekst"
                                             name="occupation"
                                             key={secondLevel.key}
                                             label={`${secondLevel.key} (${secondLevel.count})`}

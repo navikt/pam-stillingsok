@@ -401,7 +401,7 @@ export default function searchTemplate(query) {
                             filterLocation(counties, municipals),
                             filterEngagementType(engagementType),
                             filterSector(sector),
-                            filterCreated(created)
+                            filterPublished(published)
                         ]
                     }
                 },
