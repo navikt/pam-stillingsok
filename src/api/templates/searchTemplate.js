@@ -406,18 +406,12 @@ export default function searchTemplate(query) {
                 aggs: {
                     values: {
                         terms: {
-                            field: 'county_facet',
-                            order: {
-                                _key: 'asc'
-                            }
+                            field: 'occupation_level1_facet'
                         },
                         aggs: {
                             occupationSecondLevels: {
                                 terms: {
-                                    field: 'municipal_facet',
-                                    order: {
-                                        _key: 'asc'
-                                    }
+                                    field: 'occupation_level2_facet'
                                 }
                             }
                         }

@@ -70,8 +70,8 @@ class Search extends React.Component {
                                             </a>
                                         </div>
                                         <Created />
-                                        <Counties />
                                         <Occupations />
+                                        <Counties />
                                         <HeltidDeltid />
                                         <EngagementType />
                                         <Sector />
