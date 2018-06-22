@@ -1,3 +1,6 @@
+## RELEASE - 0.28.196-cd890e4
+#### New in this release: 
++ 2018-06-22 [Feature] Optimalisering av design for mobil - tweak
 ## RELEASE - 0.27.193-9c19c24
 #### New in this release: 
 + 2018-06-22 [Feature] Optimalisering av design for mobil
