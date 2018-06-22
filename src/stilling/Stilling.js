@@ -72,7 +72,13 @@ class Stilling extends React.Component {
                 )}
 
                 {isFetchingStilling && (
-                    <Skeleton title={cachedStilling ? cachedStilling.title : ''} />
+                    <Skeleton
+                        title={cachedStilling ? cachedStilling.title : ''}
+                        subtitle={cachedStilling ? this.commaSeparate(
+                            cachedStilling.properties.employer,
+                            cachedStilling.properties.location
+                        ) : ''}
+                    />
                 )}
 
                 {!isFetchingStilling && stilling && (

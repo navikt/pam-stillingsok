@@ -1,19 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Container, Row, Column } from 'nav-frontend-grid';
-import { Innholdstittel } from 'nav-frontend-typografi';
+import { Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
 import Loading from './Loading';
 
-export default function Skeleton({ title }) {
+export default function Skeleton({ title, subtitle }) {
     return (
         <article className="Stilling">
             <header className="Stilling__header">
                 <Container>
                     <Row>
                         <Column xs="12" md="8">
-                            <Innholdstittel className="Stilling__title">
-                                {title}
-                            </Innholdstittel>
+                            <div className="Stilling__title">
+                                <Normaltekst>
+                                    {subtitle}
+                                </Normaltekst>
+                                <Innholdstittel>
+                                    {title}
+                                </Innholdstittel>
+                            </div>
                         </Column>
                     </Row>
                 </Container>
@@ -33,10 +38,12 @@ export default function Skeleton({ title }) {
 }
 
 Skeleton.defaultProps = {
-    title: ''
+    title: '',
+    subtitle: ''
 };
 
 Skeleton.propTypes = {
-    title: PropTypes.string
+    title: PropTypes.string,
+    subtitle: PropTypes.string
 };
 
