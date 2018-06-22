@@ -4,8 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Container, Row, Column } from 'nav-frontend-grid';
 import ReactHtmlParser from 'react-html-parser';
-import { Panel } from 'nav-frontend-paneler';
-import { Innholdstittel } from 'nav-frontend-typografi';
+import { Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
 import StillingsBoks from './listbox/ListBox';
 import Details from './Details';
 import NotFound from './NotFound';
@@ -14,7 +13,7 @@ import Expired from './Expired';
 import BackToSearch from './backToSearch/BackToSearch';
 import { RESTORE_STATE_FROM_URL, toUrlQuery } from '../search/searchReducer';
 import Disclaimer from '../discalimer/Disclaimer';
-import Loading from './loading/Loading';
+import Skeleton from './loading/Skeleton';
 import { toUrl } from '../search/url';
 import {
     FETCH_STILLING_BEGIN
@@ -44,6 +43,14 @@ class Stilling extends React.Component {
             this.hasSetTitle = true;
         }
     }
+
+    commaSeparate = (...strings) => {
+        const nullSafe = strings.filter((string) => (
+            typeof string === 'string'
+        ));
+        return nullSafe.join(', ');
+    };
+
     render() {
         const {
             stilling, cachedStilling, isFetchingStilling, error, urlQuery
@@ -51,11 +58,9 @@ class Stilling extends React.Component {
         return (
             <div>
                 <Disclaimer />
-                <div className="background--light-green">
-                    <Container>
-                        <BackToSearch urlQuery={urlQuery} />
-                    </Container>
-                </div>
+
+                <BackToSearch urlQuery={urlQuery} />
+
                 {error && error.statusCode === 404 ? (
                     <Container>
                         <NotFound />
@@ -67,69 +72,42 @@ class Stilling extends React.Component {
                 )}
 
                 {isFetchingStilling && (
-                    <article id="annonse-container">
-                        <header id="annonse-header" className="background--light-green">
-                            <Container>
-                                <Row className="blokk-m">
-                                    <Column xs="12" md="8">
-                                        {cachedStilling && (
-                                            <Innholdstittel id="stillingstittel">
-                                                {cachedStilling.title}
-                                            </Innholdstittel>
-                                        )}
-                                    </Column>
-                                </Row>
-                            </Container>
-                        </header>
-                        <Container className="annonse-margin">
-                            <Row>
-                                <Column xs="12" md="8">
-                                    <Loading />
-                                </Column>
-                                <Column xs="12" md="4">
-                                    <Loading spinner={false}/>
-                                </Column>
-                            </Row>
-                        </Container>
-                    </article>
+                    <Skeleton title={cachedStilling ? cachedStilling.title : ''} />
                 )}
 
                 {!isFetchingStilling && stilling && (
-                    <article id="annonse-container">
-                        <header id="annonse-header" className="background--light-green">
+                    <article className="Stilling">
+                        <header className="Stilling__header">
                             <Container>
-                                <Row className="blokk-m">
+                                <Row>
                                     <Column xs="12" md="8">
                                         {stilling._source.status !== 'ACTIVE' && (
-                                            <div className="blokk-xs">
-                                                <Expired />
-                                            </div>
+                                            <Expired />
                                         )}
-                                        <Innholdstittel id="stillingstittel">
-                                            {stilling._source.title}
-                                        </Innholdstittel>
+                                        <div className="Stilling__title">
+                                            <Normaltekst>
+                                                {this.commaSeparate(
+                                                    stilling._source.properties.employer,
+                                                    stilling._source.properties.location
+                                                )}
+                                            </Normaltekst>
+                                            <Innholdstittel>
+                                                {stilling._source.title}
+                                            </Innholdstittel>
+                                        </div>
                                     </Column>
                                 </Row>
                             </Container>
                         </header>
-                        <Container className="annonse-margin">
+                        <Container className="Stilling__main">
                             <Row>
                                 <Column xs="12" md="8">
                                     <section>
-                                        <Panel className="blokk-s panel--padding panel--gray-border">
-                                            {stilling._source.properties.adtext && (
-                                                <Row>
-                                                    <Column xs="12">
-                                                        <div
-                                                            id="stillingstekst"
-                                                            className="blokk-s"
-                                                        >
-                                                            {ReactHtmlParser(stilling._source.properties.adtext)}
-                                                        </div>
-                                                    </Column>
-                                                </Row>
-                                            )}
-                                        </Panel>
+                                        {stilling._source.properties.adtext && (
+                                            <div className="Stilling__adtext">
+                                                {ReactHtmlParser(stilling._source.properties.adtext)}
+                                            </div>
+                                        )}
                                         {arrayHasData(stilling._source.properties.hardrequirements) && (
                                             <StillingsBoks
                                                 title="Krav (kvalifikasjoner)"

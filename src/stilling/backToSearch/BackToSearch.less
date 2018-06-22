@@ -1,8 +1,11 @@
 @import "../../variables";
 
+.BackToSearch {
+  background: #fff;
+}
+
 .BackToSearch__inline {
-  margin: 1.5rem 0 0.5rem 0;
-  display: inline-block;
+  padding: 0.75rem 0;
 }
 
 .BackToSearch__sticky {
@@ -13,7 +16,21 @@
   background: #fff;
   width: 100%;
   padding: 0.75rem 0;
-  box-shadow: 0 0 8px @navGra40;
+  border-bottom: 1px solid @navLysGra;
+}
+
+@media (min-width: @screen-md-min) {
+  .BackToSearch {
+    background-color: @background-green;
+  }
+
+  .BackToSearch__sticky {
+    display: none;
+  }
+
+  .BackToSearch__inline {
+    border: 0;
+  }
 }
 
 a.BackToSearchLink {
