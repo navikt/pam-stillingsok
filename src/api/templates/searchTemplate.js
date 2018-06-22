@@ -127,16 +127,16 @@ export function filterSector(sector) {
     return filters;
 }
 
-export function filterCreated(created) {
+export function filterPublished(published) {
     const filters = {
         bool: {
             should: []
         }
     };
-    if (created && created.length > 0) {
+    if (published && published.length > 0) {
         filters.bool.should.push({
             range: {
-                created: {
+                published: {
                     gte: 'now-1d'
                 }
             }
@@ -147,8 +147,8 @@ export function filterCreated(created) {
 
 export default function searchTemplate(query) {
     const {
-        from, counties, municipals, extent, engagementType, sector,
-        created, occupationFirstLevels, occupationSecondLevels
+        from, size, counties, municipals, extent, engagementType, sector, published,
+        occupationFirstLevels, occupationSecondLevels
     } = query;
     let { sort, q } = query;
 
@@ -161,8 +161,8 @@ export default function searchTemplate(query) {
     }
 
     let template = {
-        from: from || 0,
-        size: 20,
+        from,
+        size,
         query: {
             bool: {
                 must: {
@@ -231,7 +231,7 @@ export default function searchTemplate(query) {
                     filterOccupation(occupationFirstLevels, occupationSecondLevels),
                     filterEngagementType(engagementType),
                     filterSector(sector),
-                    filterCreated(created)
+                    filterPublished(published)
                 ]
             }
         },
@@ -240,13 +240,15 @@ export default function searchTemplate(query) {
                 'properties.employer',
                 'properties.jobtitle',
                 'properties.location',
+                'properties.applicationdue',
+                'applicationdue',
                 'title',
                 'updated',
                 'uuid'
             ]
         },
         aggs: {
-            created: {
+            published: {
                 filter: {
                     bool: {
                         filter: [
@@ -266,7 +268,7 @@ export default function searchTemplate(query) {
                 aggs: {
                     range: {
                         date_range: {
-                            field: 'created',
+                            field: 'published',
                             ranges: [
                                 {
                                     key: 'now-1d',
@@ -290,7 +292,7 @@ export default function searchTemplate(query) {
                             filterLocation(counties, municipals),
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
                             filterEngagementType(engagementType),
-                            filterCreated(created)
+                            filterPublished(published)
                         ]
                     }
                 },
@@ -313,7 +315,7 @@ export default function searchTemplate(query) {
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
                             filterEngagementType(engagementType),
                             filterSector(sector),
-                            filterCreated(created)
+                            filterPublished(published)
                         ]
                     }
                 },
@@ -336,7 +338,7 @@ export default function searchTemplate(query) {
                             filterLocation(counties, municipals),
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
                             filterSector(sector),
-                            filterCreated(created)
+                            filterPublished(published)
                         ]
                     }
                 },
@@ -359,7 +361,7 @@ export default function searchTemplate(query) {
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
                             filterEngagementType(engagementType),
                             filterSector(sector),
-                            filterCreated(created)
+                            filterPublished(published)
                         ]
                     }
                 },

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Row, Column } from 'nav-frontend-grid';
-import { Ingress, Normaltekst, Element } from 'nav-frontend-typografi';
+import { Undertittel, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { formatISOString } from '../../utils';
 import { STILLING } from '../../fasitProperties';
 import './SearchResultsItem.less';
@@ -15,32 +15,37 @@ export default class SearchResultItem extends React.Component {
     }
 
     render() {
-        const { stilling } = this.props;
+        const { stilling, urlQuery } = this.props;
         return (
             <Link
                 innerRef={(link) => {
                     this.link = link;
                 }}
                 className="SearchResultItem"
-                to={`${STILLING}${stilling.uuid}`}
+                to={`${STILLING}${stilling.uuid}${urlQuery}`}
             >
-                <Row>
-                    <Column xs="12">
-                        {stilling.updated && (
-                            <Normaltekst className="SearchResultItem__updated">
-                                {formatISOString(stilling.updated, 'D. MMMM YYYY')}
-                            </Normaltekst>
-                        )}
-
-                        <Ingress tag="h3" className="SearchResultItem__title">{stilling.title}</Ingress>
-
-                        {stilling.properties.jobtitle && stilling.title !== stilling.properties.jobtitle && (
-                            <Element className="SearchResultItem__jobtitle">{stilling.properties.jobtitle}</Element>
-                        )}
-
+                <Row className="SearchResultItem__row">
+                    <Column xs="12" md="4">
                         {stilling.properties.employer && (
                             <Normaltekst className="SearchResultItem__employer">
                                 {stilling.properties.employer}
+                            </Normaltekst>
+                        )}
+                    </Column>
+                    <Column xs="12" md="8">
+                        {stilling.updated && (
+                            <Undertekst className="SearchResultItem__updated">
+                                {formatISOString(stilling.updated, 'D. MMMM YYYY')}
+                            </Undertekst>
+                        )}
+
+                        <Undertittel tag="h3" className="SearchResultItem__title">{stilling.title}</Undertittel>
+
+                        {stilling.properties.jobtitle && stilling.title !== stilling.properties.jobtitle && (
+                            <Normaltekst
+                                className="SearchResultItem__jobtitle"
+                            >
+                                {stilling.properties.jobtitle}
                             </Normaltekst>
                         )}
 
@@ -57,7 +62,8 @@ export default class SearchResultItem extends React.Component {
 }
 
 SearchResultItem.defaultProps = {
-    shouldFocus: false
+    shouldFocus: false,
+    urlQuery: ''
 };
 
 SearchResultItem.propTypes = {
@@ -71,5 +77,6 @@ SearchResultItem.propTypes = {
             updated: PropTypes.string
         })
     }).isRequired,
-    shouldFocus: PropTypes.bool
+    shouldFocus: PropTypes.bool,
+    urlQuery: PropTypes.string
 };

@@ -29,7 +29,7 @@ export default class TypeaheadSuggestion extends React.Component {
                 onFocus={this.props.avoidBlur}
                 onMouseDown={this.props.avoidBlur}
                 onKeyDown={this.props.avoidBlur}
-                className="TypeaheadSuggestion"
+                className="TypeaheadSuggestion typo-normal"
             >
                 {matchFound ? (
                     <span

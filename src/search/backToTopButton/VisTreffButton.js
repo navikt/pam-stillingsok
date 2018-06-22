@@ -7,6 +7,7 @@ export default function VisTreffButton({ count }) {
         <a
             href="#treff"
             className="VisTreffButton"
+            aria-label={`Vis ${count} treff`}
         >
             <span className="VisTreffButton__inner">
                 <span className="VisTreffButton__count typo-normal">{count}</span>

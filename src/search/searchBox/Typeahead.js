@@ -115,8 +115,6 @@ export default class Typeahead extends React.Component {
             if (this.shouldBlur) {
                 this.setState({
                     hasFocus: false
-                }, () => {
-                    this.props.onBlur();
                 });
             }
         }, 10);
@@ -172,7 +170,6 @@ export default class Typeahead extends React.Component {
 
         return (
             <div className="Typeahead">
-                <label className="skjemaelement__label" htmlFor={this.props.id}>Søkeord</label>
                 <input
                     id={this.props.id}
                     role="combobox"
@@ -193,7 +190,7 @@ export default class Typeahead extends React.Component {
                     ref={(input) => {
                         this.input = input;
                     }}
-                    className="Typeahead__input"
+                    className="skjemaelement__input input--fullbredde typo-normal"
                 />
                 <ul
                     id={`${this.props.id}-suggestions`}
@@ -222,7 +219,6 @@ export default class Typeahead extends React.Component {
 Typeahead.propTypes = {
     onSelect: PropTypes.func.isRequired,
     onChange: PropTypes.func.isRequired,
-    onBlur: PropTypes.func.isRequired,
     placeholder: PropTypes.string.isRequired,
     suggestions: PropTypes.arrayOf(PropTypes.string).isRequired,
     value: PropTypes.string.isRequired,

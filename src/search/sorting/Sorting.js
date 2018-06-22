@@ -11,12 +11,14 @@ class Sorting extends React.Component {
         this.props.search();
     };
 
+    // TODO: Dropp className="typo-normal" når Select har SourceSansPro som default font.
     render() {
         return (
             <Select
                 onChange={this.onSortingChange}
                 value={this.props.sort}
                 label="Sortér treff"
+                className="typo-normal"
             >
                 <option key="relevant" value="relevant">Mest relevant</option>
                 <option key="updated" value="updated">Vis nyeste øverst</option>
