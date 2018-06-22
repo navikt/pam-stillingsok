@@ -8,7 +8,7 @@ function BackToSearchLink({ urlQuery }) {
     return (
         <Link
             to={`/${urlQuery}`}
-            className="lenke BackToSearchLink typo-normal"
+            className="lenke BackToSearchLink typo-normal no-print"
         >
             <Chevron stor type="venstre" className="BackToSearchLink__chevron" />
             <span className="BackToSearchLink__text">Tilbake til søk</span>

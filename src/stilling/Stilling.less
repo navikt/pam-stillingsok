@@ -150,58 +150,6 @@
   border: 1px solid @border-gray;
 }
 
-@media print {
-  main {
-    margin-left: 1cm;
-    margin-right: 1cm;
-  }
-
-  #stillingstittel {
-    margin-top: 4rem;
-    margin-left: 0rem;
-  }
-
-  .detail-section {
-    border: none;
-    page-break-inside: avoid;
-  }
-
-  .detail-section__head {
-    page-break-inside: avoid;
-    page-break-after: avoid;
-  }
-
-  .panel--gray-border {
-    border: 0;
-  }
-
-  #send-soknad-wrapper {
-    text-align: left;
-  }
-
-  #send-soknad {
-    font-weight: normal;
-    padding: 0;
-    margin: 0;
-    text-transform: none;
-    letter-spacing: normal;
-  }
-
-  .dl-flex,
-  #employerdescription,
-  #stillingstekst,
-  #send-soknad {
-    font-size: 14px!important;
-    line-height: 18px!important;
-  }
-
-  .detail-section,
-  .panel,
-  .panel--padding {
-    padding: 0!important;
-  }
-}
-
 @media (min-width: @screen-sm-min) {
   .panel--padding {
     padding: 2rem 3rem!important;
