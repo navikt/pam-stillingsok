@@ -12,7 +12,7 @@ const port = process.env.PORT || 8080;
 server.set('port', port);
 
 server.disable('x-powered-by');
-server.use(helmet({ xssFilter: false }));
+server.use(helmet());
 
 server.use(helmet.contentSecurityPolicy({
     directives: {
