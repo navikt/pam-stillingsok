@@ -13,7 +13,7 @@ healthcheck:
     path: /pam-stillingsok/internal/isReady
     initialDelay: 60
 prometheus:
-  enabled: false
+  enabled: true
   path: /metrics
 resources:
   limits:

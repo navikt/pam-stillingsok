@@ -5,6 +5,9 @@ const path = require('path');
 const mustacheExpress = require('mustache-express');
 const Promise = require('promise');
 const fs = require('fs');
+const prometheus = require('prom-client');
+
+prometheus.collectDefaultMetrics();
 
 const currentDirectory = __dirname;
 const server = express();
