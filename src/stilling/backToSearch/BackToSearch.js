@@ -11,7 +11,9 @@ function BackToSearchLink({ urlQuery }) {
             className="lenke BackToSearchLink typo-normal"
         >
             <Chevron stor type="venstre" className="BackToSearchLink__chevron" />
-            <span className="BackToSearchLink__text">Tilbake til søk</span>
+            <span className="BackToSearchLink__text">
+                {urlQuery === '' ? 'Gå til søk' : 'Tilbake til søkeresultatet' }
+            </span>
         </Link>
     );
 }
