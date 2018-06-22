@@ -12,7 +12,7 @@ import EngagementType from './facets/engagement/Engagement';
 import Sector from './facets/sector/Sector';
 import Published from './facets/published/Published';
 import SearchBox from './searchBox/SearchBox';
-import { INITIAL_SEARCH, KEEP_SCROLL_POSITION, SEARCH } from './searchReducer';
+import { RESTORE_STATE_FROM_URL, INITIAL_SEARCH, KEEP_SCROLL_POSITION, SEARCH } from './searchReducer';
 import BackToTop from './backToTopButton/BackToTop';
 import Disclaimer from '../discalimer/Disclaimer';
 import './Search.less';
@@ -20,6 +20,7 @@ import './Search.less';
 class Search extends React.Component {
     constructor(props) {
         super(props);
+        this.props.restoreStateFromUrl();
         this.props.initialSearch();
     }
 
@@ -99,6 +100,7 @@ Search.defaultProps = {
 };
 
 Search.propTypes = {
+    restoreStateFromUrl: PropTypes.func.isRequired,
     initialSearch: PropTypes.func.isRequired,
     search: PropTypes.func.isRequired,
     hasError: PropTypes.bool.isRequired,
@@ -112,6 +114,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
+    restoreStateFromUrl: () => dispatch({ type: RESTORE_STATE_FROM_URL }),
     initialSearch: () => dispatch({ type: INITIAL_SEARCH }),
     search: () => dispatch({ type: SEARCH }),
     keepScrollPosition: (scrollPosition) => dispatch({ type: KEEP_SCROLL_POSITION, scrollPosition })
