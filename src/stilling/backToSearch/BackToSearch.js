@@ -8,7 +8,7 @@ function BackToSearchLink({ urlQuery }) {
     return (
         <Link
             to={`/${urlQuery}`}
-            className="lenke BackToSearchLink typo-normal"
+            className="lenke BackToSearchLink typo-normal no-print"
         >
             <Chevron stor type="venstre" className="BackToSearchLink__chevron" />
             <span className="BackToSearchLink__text">
@@ -67,7 +67,7 @@ export default class BackToSearch extends React.Component {
     };
 
     render() {
-        return this.props.urlQuery ? (
+        return (
             <div className="BackToSearch">
                 <div
                     ref={(inlineBackButton) => { this.inlineBackButton = inlineBackButton; }}
@@ -83,7 +83,7 @@ export default class BackToSearch extends React.Component {
                     </div>
                 )}
             </div>
-        ) : null;
+        );
     }
 }
 

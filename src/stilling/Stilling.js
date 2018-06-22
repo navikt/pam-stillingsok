@@ -12,7 +12,7 @@ import NotFound from './NotFound';
 import SearchError from '../search/error/SearchError';
 import Expired from './Expired';
 import BackToSearch from './backToSearch/BackToSearch';
-import { toUrlQuery } from "../search/searchReducer";
+import { RESTORE_STATE_FROM_URL, toUrlQuery } from '../search/searchReducer';
 import Disclaimer from '../discalimer/Disclaimer';
 import Loading from './loading/Loading';
 import { toUrl } from '../search/url';
@@ -27,13 +27,15 @@ class Stilling extends React.Component {
     constructor(props) {
         super(props);
         this.hasSetTitle = false;
+        this.props.restoreStateFromUrl();
     }
 
     componentDidMount() {
         window.scrollTo(0, 0);
         this.props.getStilling(this.props.match.params.uuid);
     }
-componentDidUpdate() {
+
+    componentDidUpdate() {
         if (!this.hasSetTitle
             && this.props.stilling
             && this.props.stilling._source
@@ -43,13 +45,15 @@ componentDidUpdate() {
         }
     }
     render() {
-        const { stilling, cachedStilling, isFetchingStilling, error, state } = this.props;
+        const {
+            stilling, cachedStilling, isFetchingStilling, error, urlQuery
+        } = this.props;
         return (
             <div>
                 <Disclaimer />
                 <div className="background--light-green">
                     <Container>
-                        <BackToSearch urlQuery={toUrl(toUrlQuery(state))} />
+                        <BackToSearch urlQuery={urlQuery} />
                     </Container>
                 </div>
                 {error && error.statusCode === 404 ? (
@@ -161,7 +165,8 @@ componentDidUpdate() {
 Stilling.defaultProps = {
     stilling: undefined,
     cachedStilling: undefined,
-    isFetchingStilling: false
+    isFetchingStilling: false,
+    urlQuery: ''
 };
 
 Stilling.propTypes = {
@@ -177,8 +182,10 @@ Stilling.propTypes = {
     cachedStilling: PropTypes.shape({
         title: PropTypes.string
     }),
+    restoreStateFromUrl: PropTypes.func.isRequired,
     getStilling: PropTypes.func.isRequired,
-    isFetchingStilling: PropTypes.bool
+    isFetchingStilling: PropTypes.bool,
+    urlQuery: PropTypes.string
 };
 
 const mapStateToProps = (state) => ({
@@ -186,10 +193,11 @@ const mapStateToProps = (state) => ({
     stilling: state.stilling.stilling,
     cachedStilling: state.stilling.cachedStilling,
     error: state.stilling.error,
-    state: state
+    urlQuery: toUrl(toUrlQuery(state))
 });
 
 const mapDispatchToProps = (dispatch) => ({
+    restoreStateFromUrl: () => dispatch({ type: RESTORE_STATE_FROM_URL }),
     getStilling: (uuid) => dispatch({ type: FETCH_STILLING_BEGIN, uuid })
 });
 
