@@ -1,9 +1,12 @@
 import { SET_INITIAL_STATE, FETCH_INITIAL_FACETS_SUCCESS, SEARCH_SUCCESS } from '../../searchReducer';
+import { moveFacetToBottom } from '../utils';
 
 export const CHECK_FIRST_LEVEL = 'CHECK_FIRST_LEVEL';
 export const UNCHECK_FIRST_LEVEL = 'UNCHECK_FIRST_LEVEL';
 export const CHECK_SECOND_LEVEL = 'CHECK_SECOND_LEVEL';
 export const UNCHECK_SECOND_LEVEL = 'UNCHECK_SECOND_LEVEL';
+
+export const OCCUPATION_ANNET = 'Uoppgitt/ ikke identifiserbare';
 
 const initialState = {
     occupationFirstLevels: [],
@@ -22,7 +25,7 @@ export default function occupations(state = initialState, action) {
         case FETCH_INITIAL_FACETS_SUCCESS:
             return {
                 ...state,
-                occupationFirstLevels: action.response.occupationFirstLevels
+                occupationFirstLevels: moveFacetToBottom(action.response.occupationFirstLevels, OCCUPATION_ANNET)
             };
         case SEARCH_SUCCESS:
             return {

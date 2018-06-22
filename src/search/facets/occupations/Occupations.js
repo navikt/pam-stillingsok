@@ -8,7 +8,8 @@ import {
     CHECK_FIRST_LEVEL,
     UNCHECK_FIRST_LEVEL,
     CHECK_SECOND_LEVEL,
-    UNCHECK_SECOND_LEVEL
+    UNCHECK_SECOND_LEVEL,
+    OCCUPATION_ANNET
 } from './occupationsReducer';
 import './Occupations.less';
 
@@ -62,15 +63,17 @@ class Occupations extends React.Component {
                                 onChange={this.onFirstLevelClick}
                                 checked={checkedFirstLevels.includes(firstLevel.key)}
                             />
-                            {checkedFirstLevels && checkedFirstLevels.includes(firstLevel.key) && (
-                                <div
-                                    className="Occupations__inner__secondLevels"
-                                    role="group"
-                                    aria-label="Velg yrke"
-                                >
-                                    {firstLevel.occupationSecondLevels &&
+                            {checkedFirstLevels && checkedFirstLevels.includes(firstLevel.key)
+                                && firstLevel.key !== OCCUPATION_ANNET && (
+                                    <div
+                                        className="Occupations__inner__secondLevels"
+                                        role="group"
+                                        aria-label="Velg yrke"
+                                    >
+                                        {firstLevel.occupationSecondLevels &&
                                     firstLevel.occupationSecondLevels.map((secondLevel) => (
                                         <Checkbox
+                                            className="typo-undertekst"
                                             name="occupation"
                                             key={secondLevel.key}
                                             label={`${secondLevel.key} (${secondLevel.count})`}
@@ -79,8 +82,8 @@ class Occupations extends React.Component {
                                             checked={checkedSecondLevels.includes(secondLevel.key)}
                                         />
                                     ))}
-                                </div>
-                            )}
+                                    </div>
+                                )}
                         </div>
                     ))}
                 </div>

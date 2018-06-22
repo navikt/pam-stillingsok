@@ -90,7 +90,7 @@ export function filterOccupation(occupationFirstLevels, occupationSecondLevels) 
         occupationFirstLevels.forEach((occupationFirstLevel) => {
             filters.bool.should.push({
                 term: {
-                    county_facet: occupationFirstLevel
+                    occupation_level1_facet: occupationFirstLevel
                 }
             });
         });
@@ -100,7 +100,7 @@ export function filterOccupation(occupationFirstLevels, occupationSecondLevels) 
         occupationSecondLevels.forEach((occupationSecondLevel) => {
             filters.bool.should.push({
                 term: {
-                    municipal_facet: occupationSecondLevel
+                    occupation_level2_facet: occupationSecondLevel
                 }
             });
         });
