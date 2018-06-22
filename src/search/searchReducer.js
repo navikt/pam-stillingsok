@@ -5,6 +5,7 @@ import {
 } from '../api/api';
 import { fromUrl, toUrl, ParameterType } from './url';
 
+export const RESTORE_STATE_FROM_URL = 'RESTORE_STATE_FROM_URL';
 export const SET_INITIAL_STATE = 'SET_INITIAL_STATE';
 export const INITIAL_SEARCH = 'INITIAL_SEARCH';
 export const FETCH_INITIAL_FACETS_SUCCESS = 'FETCH_INITIAL_FACETS_SUCCESS';
@@ -58,6 +59,7 @@ export default function searchReducer(state = initialState, action) {
         case SET_INITIAL_STATE:
             return {
                 ...state,
+                hasRestoredStateFromUrl: true,
                 from: 0,
                 to: action.query.to || PAGE_SIZE,
                 page: action.query.to ? (action.query.to - PAGE_SIZE) / PAGE_SIZE : 0
@@ -161,24 +163,33 @@ export function toUrlQuery(state) {
 }
 
 /**
- * Henter ut search query fra browser url første gang siden blir lastet.
+ * Henter ut url query fra browser url første gang siden blir lastet.
+ */
+function* restoreStateFromUrl() {
+    const state = yield select();
+    if (!state.search.hasRestoredStateFromUrl) {
+        const urlQuery = fromUrl(URL_PARAMETERS_DEFINITION, window.location.href);
+        yield put({ type: SET_INITIAL_STATE, query: urlQuery });
+    }
+}
+
+/**
  * Fetcher alle tilgjengelige fasetter og gjør deretter det første søket.
  */
 function* initialSearch() {
     let state = yield select();
     if (!state.search.initialSearchDone) {
         try {
-            const urlQuery = fromUrl(URL_PARAMETERS_DEFINITION, window.location.href);
-
-            yield put({ type: SET_INITIAL_STATE, query: urlQuery });
-
-            // Får å hente alle tilgjengelige fasetter, gjøre vi først
+            // For å hente alle tilgjengelige fasetter, gjøre vi først
             // et søk uten noen søkekriterier.
             yield put({ type: SEARCH_BEGIN, query: {} });
             let response = yield call(fetchSearch);
             yield put({ type: FETCH_INITIAL_FACETS_SUCCESS, response });
 
-            if (Object.keys(urlQuery).length > 0) {
+            // Gjør eventuelt et søk med søkekriterier som ble hentet fra browser url'en.
+            state = yield select();
+            const query = toSearchQuery(state);
+            if (Object.keys(query).length > 0) {
                 state = yield select();
                 response = yield call(fetchSearch, toSearchQuery(state));
             }
@@ -229,6 +240,7 @@ function* loadMore() {
 }
 
 export const saga = function* saga() {
+    yield takeLatest(RESTORE_STATE_FROM_URL, restoreStateFromUrl);
     yield takeLatest(INITIAL_SEARCH, initialSearch);
     yield throttle(1000, SEARCH, search);
     yield takeLatest(LOAD_MORE, loadMore);

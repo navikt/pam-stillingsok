@@ -65,7 +65,7 @@ export default class BackToSearch extends React.Component {
     };
 
     render() {
-        return this.props.urlQuery ? (
+        return (
             <div className="BackToSearch">
                 <div
                     ref={(inlineBackButton) => { this.inlineBackButton = inlineBackButton; }}
@@ -81,7 +81,7 @@ export default class BackToSearch extends React.Component {
                     </div>
                 )}
             </div>
-        ) : null;
+        );
     }
 }
 
