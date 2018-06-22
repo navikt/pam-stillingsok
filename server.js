@@ -91,6 +91,11 @@ const startServer = (htmlPages) => {
     server.get('/pam-stillingsok/internal/isAlive', (req, res) => res.sendStatus(200));
     server.get('/pam-stillingsok/internal/isReady', (req, res) => res.sendStatus(200));
 
+    server.get('/metrics', (req, res) => {
+        res.set('Content-Type', prometheus.register.contentType);
+        res.end(prometheus.register.metrics());
+    });
+
     server.listen(port, () => {
         console.log(`Express-server startet. Server filer fra ./dist/ til localhost:${port}/`);
     });
