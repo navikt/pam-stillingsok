@@ -11,9 +11,7 @@ export const tilpassLenke = (lenke) => {
     return lenke;
 };
 
-export default function EmployerDetails({ stilling }) {
-    const { properties } = stilling._source;
-
+export default function EmployerDetails({ properties }) {
     return (
         <section className="detail-section">
             <Undertittel className="detail-section__head">Om bedriften</Undertittel>
@@ -75,7 +73,18 @@ export default function EmployerDetails({ stilling }) {
                 <div className="EmployerDetails__description">{ ReactHtmlParser(properties.employerdescription) }</div>
             )}
         </section>
-
-    )
+    );
 }
+
+EmployerDetails.propTypes = {
+    properties: PropTypes.shape({
+        employer: PropTypes.string,
+        address: PropTypes.string,
+        employerhomepage: PropTypes.string,
+        linkedinpage: PropTypes.string,
+        twitteraddress: PropTypes.string,
+        facebookpage: PropTypes.string,
+        employerdescription: PropTypes.string
+    }).isRequired
+};
 

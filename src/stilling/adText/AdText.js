@@ -3,14 +3,21 @@ import PropTypes from 'prop-types';
 import ReactHtmlParser from 'react-html-parser';
 import './AdText.less';
 
-export default function AdText({ stilling }) {
-    if (stilling._source.properties.adtext) {
+export default function AdText({ adText }) {
+    if (adText) {
         return (
             <section className="AdText">
-                {ReactHtmlParser(stilling._source.properties.adtext)}
+                {ReactHtmlParser(adText)}
             </section>
         );
     }
     return null;
 }
 
+AdText.defaultProps = {
+    adText: undefined
+};
+
+AdText.propTypes = {
+    adText: PropTypes.string
+};

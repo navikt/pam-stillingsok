@@ -4,10 +4,7 @@ import { Undertittel } from 'nav-frontend-typografi';
 import { formatISOString, isValidISOString } from '../../utils';
 
 
-export default function EmploymentDetails({ stilling }) {
-    const { _source } = stilling;
-    const { properties } = _source;
-
+export default function EmploymentDetails({ properties }) {
     return (
         <div className="detail-section">
             <Undertittel className="detail-section__head">Om stillingen</Undertittel>
@@ -58,7 +55,21 @@ export default function EmploymentDetails({ stilling }) {
                 ]}
             </dl>
         </div>
-
     );
 }
+
+EmploymentDetails.propTypes = {
+    properties: PropTypes.shape({
+        jobtitle: PropTypes.string,
+        location: PropTypes.string,
+        engagementtype: PropTypes.string,
+        extent: PropTypes.string,
+        positioncount: PropTypes.string,
+        sector: PropTypes.string,
+        workday: PropTypes.string,
+        workhours: PropTypes.string,
+        jobarrangement: PropTypes.string,
+        starttime: PropTypes.string
+    }).isRequired
+};
 

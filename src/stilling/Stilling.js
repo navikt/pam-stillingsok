@@ -93,17 +93,20 @@ class Stilling extends React.Component {
                         <Container className="Stilling__main">
                             <Row>
                                 <Column xs="12" md="8">
-                                    <AdText stilling={stilling} />
+                                    <AdText adText={stilling._source.properties.adtext} />
                                     <HardRequirements stilling={stilling} />
                                     <SoftRequirements stilling={stilling} />
                                     <PersonalAttributes stilling={stilling} />
                                 </Column>
                                 <Column xs="12" md="4">
-                                    <EmploymentDetails stilling={stilling} />
-                                    <HowToApply stilling={stilling} />
-                                    <ContactPerson stilling={stilling} />
-                                    <EmployerDetails stilling={stilling} />
-                                    <AdDetails stilling={stilling} />
+                                    <EmploymentDetails properties={stilling._source.properties} />
+                                    <HowToApply
+                                        source={stilling._source.source}
+                                        properties={stilling._source.properties}
+                                    />
+                                    <ContactPerson properties={stilling._source.properties} />
+                                    <EmployerDetails properties={stilling._source.properties} />
+                                    <AdDetails source={stilling._source} />
                                 </Column>
                             </Row>
                         </Container>

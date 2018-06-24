@@ -3,27 +3,33 @@ import PropTypes from 'prop-types';
 import { Undertittel } from 'nav-frontend-typografi';
 import { formatISOString } from '../../utils';
 
-export default function AdDetails({ stilling }) {
-    const { _source } = stilling;
-
+export default function AdDetails({ source }) {
     return (
         <section className="detail-section">
             <Undertittel className="detail-section__head">Om annonsen</Undertittel>
             <dl className="dl-flex typo-normal">
-                {_source.updated && [
+                {source.updated && [
                     <dt key="dt">Sist endret:</dt>,
-                    <dd key="dd">{formatISOString(_source.updated, 'D. MMMM YYYY')}</dd>
+                    <dd key="dd">{formatISOString(source.updated, 'D. MMMM YYYY')}</dd>
                 ]}
-                {_source.source && [
+                {source.source && [
                     <dt key="dt">Hentet fra:</dt>,
-                    <dd key="dd">{_source.source}</dd>
+                    <dd key="dd">{source.source}</dd>
                 ]}
-                {_source.reference && [
+                {source.reference && [
                     <dt key="dt">ID nr.:</dt>,
-                    <dd key="dd">{_source.reference}</dd>
+                    <dd key="dd">{source.reference}</dd>
                 ]}
             </dl>
         </section>
     );
 }
+
+AdDetails.propTypes = {
+    source: PropTypes.shape({
+        updated: PropTypes.string,
+        source: PropTypes.string,
+        reference: PropTypes.string
+    }).isRequired
+};
 

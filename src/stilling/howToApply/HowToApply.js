@@ -20,11 +20,8 @@ export function getApplicationUrl(source, properties) {
     return properties.sourceurl;
 }
 
-export default function HowToApply({ stilling }) {
-    const { _source } = stilling;
-    const { properties } = _source;
-
-    const sokUrl = getApplicationUrl(_source.source, properties);
+export default function HowToApply({ source, properties }) {
+    const sokUrl = getApplicationUrl(source, properties);
 
     if (properties.applicationdue || properties.applicationemail || sokUrl) {
         return (
@@ -67,4 +64,14 @@ export default function HowToApply({ stilling }) {
     }
     return null;
 }
+
+HowToApply.propTypes = {
+    source: PropTypes.string.isRequired,
+    properties: PropTypes.shape({
+        applicationdue: PropTypes.string,
+        applicationemail: PropTypes.string,
+        applicationurl: PropTypes.string,
+        sourceurl: PropTypes.string
+    }).isRequired
+};
 

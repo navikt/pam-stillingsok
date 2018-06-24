@@ -11,7 +11,7 @@ function BackToSearchLink({ urlQuery }) {
             to={`/${urlQuery}`}
             className="lenke BackToSearchLink typo-normal no-print"
         >
-            <Chevron stor type="venstre" className="BackToSearchLink__chevron"/>
+            <Chevron stor type="venstre" className="BackToSearchLink__chevron" />
             <span className="BackToSearchLink__text">
                 {urlQuery === '' ? 'Gå til søk' : 'Tilbake'}
             </span>
@@ -77,12 +77,12 @@ export default class BackToSearch extends React.Component {
                         }}
                         className="BackToSearch__inline"
                     >
-                        <BackToSearchLink urlQuery={this.props.urlQuery}/>
+                        <BackToSearchLink urlQuery={this.props.urlQuery} />
                     </div>
                     {this.state.showStickyBackButton && (
                         <div className="BackToSearch__sticky">
                             <div className="container">
-                                <BackToSearchLink urlQuery={this.props.urlQuery}/>
+                                <BackToSearchLink urlQuery={this.props.urlQuery} />
                             </div>
                         </div>
                     )}

@@ -9,9 +9,7 @@ export const tilpassEmail = (email) => {
     return email;
 };
 
-export default function ContactPerson({ stilling }) {
-    const { properties } = stilling._source;
-
+export default function ContactPerson({ properties }) {
     if (properties.contactperson || properties.contactpersontitle
         || properties.contactpersonphone || properties.contactpersonemail) {
         return (
@@ -47,4 +45,13 @@ export default function ContactPerson({ stilling }) {
     }
     return null;
 }
+
+ContactPerson.propTypes = {
+    properties: PropTypes.shape({
+        contactperson: PropTypes.string,
+        contactpersontitle: PropTypes.string,
+        contactpersonphone: PropTypes.string,
+        contactpersonemail: PropTypes.string
+    }).isRequired
+};
 
