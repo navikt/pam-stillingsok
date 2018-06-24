@@ -1,24 +1,22 @@
+/* eslint-disable no-underscore-dangle */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Container, Row, Column } from 'nav-frontend-grid';
-import { Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
 import Loading from './Loading';
+import AdTitle from '../adTitle/AdTitle';
 
-export default function Skeleton({ title, subtitle }) {
+export default function Skeleton({ stilling }) {
     return (
         <article className="Stilling">
             <header className="Stilling__header">
                 <Container>
                     <Row>
                         <Column xs="12" md="8">
-                            <div className="Stilling__title">
-                                <Normaltekst>
-                                    {subtitle}
-                                </Normaltekst>
-                                <Innholdstittel>
-                                    {title}
-                                </Innholdstittel>
-                            </div>
+                            <AdTitle
+                                title={stilling.title}
+                                employer={stilling.properties.employer}
+                                location={stilling.properties.location}
+                            />
                         </Column>
                     </Row>
                 </Container>
@@ -38,12 +36,22 @@ export default function Skeleton({ title, subtitle }) {
 }
 
 Skeleton.defaultProps = {
-    title: '',
-    subtitle: ''
+    stilling: {
+        title: '',
+        properties: {
+            employer: '',
+            location: ''
+        }
+    }
 };
 
 Skeleton.propTypes = {
-    title: PropTypes.string,
-    subtitle: PropTypes.string
+    stilling: PropTypes.shape({
+        title: PropTypes.string,
+        properties: PropTypes.shape({
+            employer: PropTypes.string,
+            location: PropTypes.string
+        })
+    })
 };
 

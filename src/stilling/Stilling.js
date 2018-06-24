@@ -3,13 +3,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Container, Row, Column } from 'nav-frontend-grid';
-import ReactHtmlParser from 'react-html-parser';
-import { Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
-import StillingsBoks from './listbox/ListBox';
-import Details from './Details';
-import NotFound from './NotFound';
+import AdTitle from './adTitle/AdTitle';
+import AdText from './adText/AdText';
+import PersonalAttributes from './requirements/PersonalAttributes';
+import SoftRequirements from './requirements/SoftRequirements';
+import HardRequirements from './requirements/HardRequirements';
+import HowToApply from './howToApply/HowToApply';
+import ContactPerson from './contactPerson/ContactPerson';
+import EmployerDetails from './employerDetails/EmployerDetails';
+import EmploymentDetails from './employmentDetails/EmploymentDetails';
+import AdDetails from './adDetails/AdDetails';
+import NotFound from './notFound/NotFound';
 import SearchError from '../search/error/SearchError';
-import Expired from './Expired';
+import Expired from './expired/Expired';
 import BackToSearch from './backToSearch/BackToSearch';
 import { RESTORE_STATE_FROM_URL, toUrlQuery } from '../search/searchReducer';
 import Disclaimer from '../discalimer/Disclaimer';
@@ -19,8 +25,6 @@ import {
     FETCH_STILLING_BEGIN
 } from './stillingReducer';
 import './Stilling.less';
-
-const arrayHasData = (array) => array && array[0].hasOwnProperty('punkt');
 
 class Stilling extends React.Component {
     constructor(props) {
@@ -44,13 +48,6 @@ class Stilling extends React.Component {
         }
     }
 
-    commaSeparate = (...strings) => {
-        const nullSafe = strings.filter((string) => (
-            typeof string === 'string'
-        ));
-        return nullSafe.join(', ');
-    };
-
     render() {
         const {
             stilling, cachedStilling, isFetchingStilling, error, urlQuery
@@ -72,13 +69,7 @@ class Stilling extends React.Component {
                 )}
 
                 {isFetchingStilling && (
-                    <Skeleton
-                        title={cachedStilling ? cachedStilling.title : ''}
-                        subtitle={cachedStilling ? this.commaSeparate(
-                            cachedStilling.properties.employer,
-                            cachedStilling.properties.location
-                        ) : ''}
-                    />
+                    <Skeleton stilling={cachedStilling} />
                 )}
 
                 {!isFetchingStilling && stilling && (
@@ -90,17 +81,11 @@ class Stilling extends React.Component {
                                         {stilling._source.status !== 'ACTIVE' && (
                                             <Expired />
                                         )}
-                                        <div className="Stilling__title">
-                                            <Normaltekst>
-                                                {this.commaSeparate(
-                                                    stilling._source.properties.employer,
-                                                    stilling._source.properties.location
-                                                )}
-                                            </Normaltekst>
-                                            <Innholdstittel>
-                                                {stilling._source.title}
-                                            </Innholdstittel>
-                                        </div>
+                                        <AdTitle
+                                            title={stilling._source.title}
+                                            employer={stilling._source.properties.employer}
+                                            location={stilling._source.properties.location}
+                                        />
                                     </Column>
                                 </Row>
                             </Container>
@@ -108,34 +93,17 @@ class Stilling extends React.Component {
                         <Container className="Stilling__main">
                             <Row>
                                 <Column xs="12" md="8">
-                                    <section>
-                                        {stilling._source.properties.adtext && (
-                                            <div className="Stilling__adtext">
-                                                {ReactHtmlParser(stilling._source.properties.adtext)}
-                                            </div>
-                                        )}
-                                        {arrayHasData(stilling._source.properties.hardrequirements) && (
-                                            <StillingsBoks
-                                                title="Krav (kvalifikasjoner)"
-                                                items={stilling._source.properties.hardrequirements}
-                                            />
-                                        )}
-                                        {arrayHasData(stilling._source.properties.softrequirements) && (
-                                            <StillingsBoks
-                                                title="Ønsket kompetanse"
-                                                items={stilling._source.properties.softrequirements}
-                                            />
-                                        )}
-                                        {arrayHasData(stilling._source.properties.personalattributes) && (
-                                            <StillingsBoks
-                                                title="Personlige egenskaper"
-                                                items={stilling._source.properties.personalattributes}
-                                            />
-                                        )}
-                                    </section>
+                                    <AdText stilling={stilling} />
+                                    <HardRequirements stilling={stilling} />
+                                    <SoftRequirements stilling={stilling} />
+                                    <PersonalAttributes stilling={stilling} />
                                 </Column>
                                 <Column xs="12" md="4">
-                                    <Details stilling={stilling} />
+                                    <EmploymentDetails stilling={stilling} />
+                                    <HowToApply stilling={stilling} />
+                                    <ContactPerson stilling={stilling} />
+                                    <EmployerDetails stilling={stilling} />
+                                    <AdDetails stilling={stilling} />
                                 </Column>
                             </Row>
                         </Container>

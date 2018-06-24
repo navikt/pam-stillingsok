@@ -1,6 +1,4 @@
-@import "../../node_modules/nav-frontend-lenker-style/src/lenker-style";
 @import "../variables";
-
 
 .Stilling {
   padding-bottom: 2rem;
@@ -17,12 +15,6 @@
   margin-top: -10.4rem;
 }
 
-.Stilling__title {
-  overflow-wrap: break-word;
-  word-wrap: break-word;
-  margin-bottom: 2rem;
-}
-
 @media (max-width: @screen-sm-max) {
   .Stilling__header {
     padding-bottom: 0;
@@ -31,85 +23,6 @@
   .Stilling__main {
     margin-top: 0;
   }
-
-  .Stilling__title {
-    margin-left: 0.5rem;
-  }
-}
-
-.Stilling__adtext {
-  border: 1px solid @border-gray;
-  background: #fff;
-  padding: 1.5rem 3rem;
-  font-family: "Source Sans Pro", Arial, sans-serif;
-  font-size: 1rem;
-  line-height: 1.375rem;
-  font-weight: 400;
-  min-height: 60px;
-  overflow-wrap: break-word;
-  word-wrap: break-word;
-
-  a {
-    .lenke;
-  }
-
-  h1 {
-    margin: 0;
-    font-size: 1.5rem;
-    font-weight: 600;
-  }
-
-  h2 {
-    margin: 0;
-    font-size: 1.25rem;
-    line-height: 1.5625rem;
-    font-weight: 600;
-  }
-
-  h3 {
-    margin: 0;
-    font-size: 1.125rem;
-    line-height: 1.5rem;
-    font-weight: 400;
-  }
-}
-
-@media (max-width: @screen-sm-max) {
-  .Stilling__adtext {
-    border: 0;
-    padding: 1rem 0.5rem;
-  }
-}
-
-#stillingsboks {
-  margin-top: 0;
-  margin-right:0;
-  margin-left:0;
-  display: flex;
-  border: 1px solid @border-gray;
-  min-height: 80px;
-
-  #left-panel {
-    padding-top: 1rem;
-    background-color: @background-green;
-  }
-
-  #right-panel {
-    background-color: #FFFFFF;
-
-    ul.dashed {
-      list-style: none;
-      margin-left: 0;
-      padding-left: 1em;
-    }
-
-    ul.dashed > li:before {
-      display: inline-block;
-      content: "-";
-      width: 1em;
-      margin-left: -1em;
-    }
-  }
 }
 
 .detail-section {
@@ -117,28 +30,10 @@
   border: 1px solid @border-gray;
   background-color: #fff;
   margin-bottom: 1rem;
-}
 
-.detail-section__head{
-  margin-bottom: 0.5rem;
-}
-
-#employerdescription {
-  margin-top: 1rem;
-  font-family: "Source Sans Pro", Arial, sans-serif;
-  font-size: 1rem;
-  line-height: 1.375rem;
-  font-weight: 400;
-  min-height: 60px;
-
-  a {
-    .lenke;
+  .detail-section__head {
+    margin-bottom: 0.5rem;
   }
-}
-
-#send-soknad-wrapper {
-  text-align: center;
-  margin: 1rem 0 0.5rem;
 }
 
 .dl-flex {

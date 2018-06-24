@@ -81,7 +81,7 @@ export async function fetchSearch(query = {}) {
 }
 
 export async function fetchCategoryAndSearchTagsSuggestions(match, minLength) {
-    const result = await post(suggestionsTemplate(match, minLength));
+    const result = await post(`${SEARCH_API}/stillingsok/ad/_search`, suggestionsTemplate(match, minLength));
 
     return {
         match,
