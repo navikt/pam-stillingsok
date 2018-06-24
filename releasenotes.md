@@ -1,3 +1,7 @@
+## RELEASE - 0.30.213-cead01b
+#### New in this release: 
++ 2018-06-24 [Feature] Husker scroll position når siden lastes på nytt.
++ 2018-06-24 [Feature] Legger til spinner når søkesiden lastes første gang
 ## RELEASE - 0.29.202-e892909
 #### New in this release: 
 + 2018-06-22 [Feature] Optimalisering av design for mobil - tweak ios
