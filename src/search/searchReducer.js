@@ -35,6 +35,7 @@ export const URL_PARAMETERS_DEFINITION = {
 
 const initialState = {
     isAtLeastOneSearchDone: false,
+    initialSearchDone: false,
     isSearching: true,
     isLoadingMore: false,
     searchResult: {
@@ -64,6 +65,17 @@ export default function searchReducer(state = initialState, action) {
                 to: action.query.to || PAGE_SIZE,
                 page: action.query.to ? (action.query.to - PAGE_SIZE) / PAGE_SIZE : 0
             };
+        case FETCH_INITIAL_FACETS_SUCCESS:
+            return {
+                ...state,
+                isSearching: false,
+                initialSearchDone: true,
+                isAtLeastOneSearchDone: true,
+                searchResult: {
+                    total: action.searchResponse.total,
+                    stillinger: action.searchResponse.stillinger
+                }
+            };
         case RESET_FROM:
             return {
                 ...state,
@@ -80,10 +92,8 @@ export default function searchReducer(state = initialState, action) {
             return {
                 ...state,
                 isSearching: false,
-                initialSearchDone: true,
-                isAtLeastOneSearchDone: true,
                 searchResult: {
-                    ...action.response,
+                    total: action.response.total,
                     stillinger: action.response.stillinger
                 }
             };
@@ -183,18 +193,20 @@ function* initialSearch() {
             // For å hente alle tilgjengelige fasetter, gjøre vi først
             // et søk uten noen søkekriterier.
             yield put({ type: SEARCH_BEGIN, query: {} });
-            let response = yield call(fetchSearch);
-            yield put({ type: FETCH_INITIAL_FACETS_SUCCESS, response });
+            const response = yield call(fetchSearch);
 
             // Gjør eventuelt et søk med søkekriterier som ble hentet fra browser url'en.
             state = yield select();
             const query = toSearchQuery(state);
+            let searchResponse;
             if (Object.keys(query).length > 0) {
                 state = yield select();
-                response = yield call(fetchSearch, toSearchQuery(state));
+                searchResponse = yield call(fetchSearch, toSearchQuery(state));
+            } else {
+                searchResponse = response;
             }
 
-            yield put({ type: SEARCH_SUCCESS, response });
+            yield put({ type: FETCH_INITIAL_FACETS_SUCCESS, response, searchResponse });
         } catch (e) {
             if (e instanceof SearchApiError) {
                 yield put({ type: SEARCH_FAILURE, error: e });

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Container, Row, Column } from 'nav-frontend-grid';
 import { Sidetittel } from 'nav-frontend-typografi';
+import DelayedSpinner from './loading/DelayedSpinner';
 import SearchResults from './searchResults/SearchResults';
 import SearchError from './error/SearchError';
 import Sorting from './sorting/Sorting';
@@ -56,8 +57,14 @@ class Search extends React.Component {
                     </Container>
                 </div>
                 <Container className="Search__main">
-                    {this.props.hasError ? (
+
+                    {this.props.hasError && (
                         <SearchError />
+                    )}
+                    {!this.props.initialSearchDone ? (
+                        <div className="Search__spinner">
+                            <DelayedSpinner />
+                        </div>
                     ) : (
                         <Row>
                             <form role="search" action="/" onSubmit={this.onSearchFormSubmit} className="no-print">
@@ -105,11 +112,13 @@ Search.propTypes = {
     search: PropTypes.func.isRequired,
     hasError: PropTypes.bool.isRequired,
     scrollPosition: PropTypes.number,
+    initialSearchDone: PropTypes.bool.isRequired,
     keepScrollPosition: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
     hasError: state.search.hasError,
+    initialSearchDone: state.search.initialSearchDone,
     scrollPosition: state.search.scrollPosition
 });
 
