@@ -1,6 +1,5 @@
 import { call, put, takeLatest, select } from 'redux-saga/effects';
-import { SearchApiError } from '../api/api';
-import { fetchStilling } from './api';
+import { fetchStilling, SearchApiError } from '../api/api';
 
 export const FETCH_STILLING_BEGIN = 'FETCH_STILLING_BEGIN';
 export const FETCH_STILLING_SUCCESS = 'FETCH_STILLING_SUCCESS';
