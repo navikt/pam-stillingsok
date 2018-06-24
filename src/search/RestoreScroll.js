@@ -4,9 +4,12 @@ export default class RestoreScroll extends React.Component {
     componentDidMount() {
         try {
             const top = sessionStorage.getItem('top');
-            setTimeout(() => {
-                window.scrollTo(0, top);
-            }, 10);
+            if (top && top !== null) {
+                sessionStorage.removeItem('top');
+                setTimeout(() => {
+                    window.scrollTo(0, top);
+                }, 10);
+            }
         } catch (error) {
             // ignore error
         }
