@@ -9,6 +9,8 @@ export default class RestoreScroll extends React.Component {
                 setTimeout(() => {
                     window.scrollTo(0, top);
                 }, 10);
+            } else {
+                window.scrollTo(0, 0);
             }
         } catch (error) {
             // ignore error
