@@ -25,7 +25,7 @@ export default function HowToApply({ source, properties }) {
 
     if (properties.applicationdue || properties.applicationemail || sokUrl) {
         return (
-            <section className="detail-section">
+            <div className="detail-section">
                 <Undertittel className="detail-section__head">Søknad</Undertittel>
                 <dl className="dl-flex typo-normal">
                     {properties.applicationdue && [
@@ -59,7 +59,7 @@ export default function HowToApply({ source, properties }) {
                         </a>
                     </div>
                 )}
-            </section>
+            </div>
         );
     }
     return null;

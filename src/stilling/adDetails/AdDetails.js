@@ -5,7 +5,7 @@ import { formatISOString } from '../../utils';
 
 export default function AdDetails({ source }) {
     return (
-        <section className="detail-section">
+        <div className="detail-section">
             <Undertittel className="detail-section__head">Om annonsen</Undertittel>
             <dl className="dl-flex typo-normal">
                 {source.updated && [
@@ -21,7 +21,7 @@ export default function AdDetails({ source }) {
                     <dd key="dd">{source.reference}</dd>
                 ]}
             </dl>
-        </section>
+        </div>
     );
 }
 

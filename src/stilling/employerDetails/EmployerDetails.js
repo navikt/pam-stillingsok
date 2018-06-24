@@ -13,8 +13,8 @@ export const tilpassLenke = (lenke) => {
 
 export default function EmployerDetails({ properties }) {
     return (
-        <section className="detail-section">
-            <Undertittel className="detail-section__head">Om bedriften</Undertittel>
+        <div className="detail-section">
+            <Undertittel className="detail-section__head">Om arbeidsgiveren</Undertittel>
             <dl className="dl-flex typo-normal">
                 {properties.employer && [
                     <dt key="dt">Arbeidsgiver:</dt>,
@@ -72,7 +72,7 @@ export default function EmployerDetails({ properties }) {
             {properties.employerdescription && (
                 <div className="EmployerDetails__description">{ ReactHtmlParser(properties.employerdescription) }</div>
             )}
-        </section>
+        </div>
     );
 }
 
