@@ -9,6 +9,7 @@ export const RESTORE_STATE_FROM_URL = 'RESTORE_STATE_FROM_URL';
 export const SET_INITIAL_STATE = 'SET_INITIAL_STATE';
 export const INITIAL_SEARCH = 'INITIAL_SEARCH';
 export const FETCH_INITIAL_FACETS_SUCCESS = 'FETCH_INITIAL_FACETS_SUCCESS';
+export const FETCH_INITIAL_SEARCH_SUCCESS = 'FETCH_INITIAL_SEARCH_SUCCESS';
 export const SEARCH = 'SEARCH';
 export const SEARCH_BEGIN = 'SEARCH_BEGIN';
 export const SEARCH_SUCCESS = 'SEARCH_SUCCESS';
@@ -64,7 +65,7 @@ export default function searchReducer(state = initialState, action) {
                 to: action.query.to || PAGE_SIZE,
                 page: action.query.to ? (action.query.to - PAGE_SIZE) / PAGE_SIZE : 0
             };
-        case FETCH_INITIAL_FACETS_SUCCESS:
+        case FETCH_INITIAL_SEARCH_SUCCESS:
             return {
                 ...state,
                 isSearching: false,
@@ -187,6 +188,7 @@ function* initialSearch() {
             // et søk uten noen søkekriterier.
             yield put({ type: SEARCH_BEGIN, query: {} });
             const response = yield call(fetchSearch);
+            yield put({ type: FETCH_INITIAL_FACETS_SUCCESS, response });
 
             // Gjør eventuelt et søk med søkekriterier som ble hentet fra browser url'en.
             state = yield select();
@@ -199,7 +201,7 @@ function* initialSearch() {
                 searchResponse = response;
             }
 
-            yield put({ type: FETCH_INITIAL_FACETS_SUCCESS, response, searchResponse });
+            yield put({ type: FETCH_INITIAL_SEARCH_SUCCESS, searchResponse });
         } catch (e) {
             if (e instanceof SearchApiError) {
                 yield put({ type: SEARCH_FAILURE, error: e });
