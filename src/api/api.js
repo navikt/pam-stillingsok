@@ -106,7 +106,6 @@ export async function fetchStilling(uuid) {
             'id',
             'location',
             'mediaList',
-            'medium',
             'privacy',
             'properties.author',
             'properties.industry',
