@@ -28,7 +28,7 @@ export default function AdDetails({ source }) {
 AdDetails.propTypes = {
     source: PropTypes.shape({
         updated: PropTypes.string,
-        source: PropTypes.string,
+        medium: PropTypes.string,
         reference: PropTypes.string
     }).isRequired
 };
