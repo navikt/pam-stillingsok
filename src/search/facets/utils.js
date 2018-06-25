@@ -13,8 +13,8 @@ export function moveFacetToBottom(array, itemKey) {
 
 /**
  * Hvilke fasetter som er tilgjengelige vil variere over tid. F.eks hvis det ikke finnes
- * ledige stilinger med ansetteleseform 'Sessong', vil heller ikke dette være en mulig fasett.
- * Bruker kan likevel ha en gammel lenke/bokmerke &engagementType=Sesong som inneholder utilgjengelige fasetter.
+ * ledige stilinger med ansetteleseform "Sesong" akkuratt nå, vil heller ikke dette være en mulig fasett.
+ * Bruker kan likevel ha en gammel lenke/bokmerke &engagementType=Sesong.
  * Fjern derfor fasetter fra søket som ikke er tilgjengelige.
  * @param checkedFacets
  * @param actualFacets
