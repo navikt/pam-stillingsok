@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Undertittel } from 'nav-frontend-typografi';
+import { Undertittel, Normaltekst } from 'nav-frontend-typografi';
 import { formatISOString, isValidISOString } from '../../utils';
 import './HowToApply.less';
 
@@ -22,12 +22,13 @@ export function getApplicationUrl(source, properties) {
 
 export default function HowToApply({ source, properties }) {
     const sokUrl = getApplicationUrl(source, properties);
-
+    const finn = source === 'FINN';
+    
     if (properties.applicationdue || properties.applicationemail || sokUrl) {
         return (
             <div className="detail-section">
                 <Undertittel className="detail-section__head">Søknad</Undertittel>
-                <dl className="dl-flex typo-normal">
+                <dl className="dl-flex typo-normal blokk-xs">
                     {properties.applicationdue && [
                         <dt key="dt">Søknadsfrist:</dt>,
                         <dd key="dd">
@@ -36,7 +37,11 @@ export default function HowToApply({ source, properties }) {
                                 properties.applicationdue}
                         </dd>
                     ]}
-                    {properties.applicationemail && [
+                    {!finn && source && [
+                        <dt key="dt">Hentet fra:</dt>,
+                        <dd key="dd">{source}</dd>
+                    ]}
+                    {!finn && properties.applicationemail && [
                         <dt key="dt">Send søknad til:</dt>,
                         <dd key="dd">
                             <a
@@ -49,13 +54,19 @@ export default function HowToApply({ source, properties }) {
                     ]}
                 </dl>
 
-                {sokUrl && (
+                {finn &&
+                    <Normaltekst className="blokk-xs">Denne stillingen er hentet fra Finn.no. Du kan sende søknad via den opprinnelige annonsen.</Normaltekst>
+                }
+
+                {sokUrl && sokUrl.startsWith('http') && (
                     <div className="HowToApply__send-button-wrapper">
                         <a
                             className="knapp knapp--hoved"
                             href={sokUrl}
                         >
-                            Send søknad
+                            <div className="HowToApply__send-button-content">
+                                <i className="HowToApply__send-button-icon" />Søk på stillingen
+                            </div>
                         </a>
                     </div>
                 )}

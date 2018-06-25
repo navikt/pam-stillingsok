@@ -99,11 +99,11 @@ class Stilling extends React.Component {
                                     <PersonalAttributes stilling={stilling} />
                                 </Column>
                                 <Column xs="12" md="4">
-                                    <EmploymentDetails properties={stilling._source.properties} />
                                     <HowToApply
                                         source={stilling._source.source}
                                         properties={stilling._source.properties}
                                     />
+                                    <EmploymentDetails properties={stilling._source.properties} />
                                     <ContactPerson properties={stilling._source.properties} />
                                     <EmployerDetails properties={stilling._source.properties} />
                                     <AdDetails source={stilling._source} />

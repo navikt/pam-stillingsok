@@ -12,10 +12,6 @@ export default function AdDetails({ source }) {
                     <dt key="dt">Sist endret:</dt>,
                     <dd key="dd">{formatISOString(source.updated, 'D. MMMM YYYY')}</dd>
                 ]}
-                {source.source && [
-                    <dt key="dt">Hentet fra:</dt>,
-                    <dd key="dd">{source.source}</dd>
-                ]}
                 {source.reference && [
                     <dt key="dt">ID nr.:</dt>,
                     <dd key="dd">{source.reference}</dd>
