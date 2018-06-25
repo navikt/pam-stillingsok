@@ -17,26 +17,17 @@ export function moveFacetToBottom(array, itemKey) {
  * Bruker kan likevel ha en gammel lenke/bokmerke &engagementType=Sesong.
  * Fjern derfor fasetter fra søket som ikke er tilgjengelige.
  * @param checkedFacets
- * @param actualFacets
- */
-export function removeNonExistingFacets(checkedFacets, facets) {
-    return checkedFacets.filter((checked) => {
-        const found = facets.find((facet) => (
-            checked === facet.key
-        ));
-        return found !== undefined;
-    });
-}
-
-/**
- * Fjener utilgjengelige fasetter fra fasettgrupper med to nivå.
- * @param checkedFacets
  * @param facets
- * @param nestedName f.eks 'municipals'
+ * @param nestedName, f.eks 'municipals'.
  */
-export function removeNonExistingNestedFacets(checkedFacets, facets, nestedName) {
+export function removeNonExistingFacets(checkedFacets, facets, nestedName) {
     return checkedFacets.filter((checked) => {
-        const found = facets.find((facet) => facet[nestedName].find((nested) => checked === nested.key));
+        const found = facets.find((facet) => {
+            if (nestedName !== undefined) {
+                return facet[nestedName].find((nested) => checked === nested.key);
+            }
+            return checked === facet.key;
+        });
         return found !== undefined;
     });
 }

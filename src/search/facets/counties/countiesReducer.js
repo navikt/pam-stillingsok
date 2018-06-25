@@ -1,5 +1,5 @@
 import { SET_INITIAL_STATE, FETCH_INITIAL_FACETS_SUCCESS, SEARCH_SUCCESS } from '../../searchReducer';
-import { removeNonExistingFacets, removeNonExistingNestedFacets } from '../utils';
+import { removeNonExistingFacets } from '../utils';
 
 export const CHECK_COUNTY = 'CHECK_COUNTY';
 export const UNCHECK_COUNTY = 'UNCHECK_COUNTY';
@@ -28,7 +28,7 @@ export default function countiesReducer(state = initialState, action) {
                     state.checkedCounties,
                     action.response.counties
                 ),
-                checkedMunicipals: removeNonExistingNestedFacets(
+                checkedMunicipals: removeNonExistingFacets(
                     state.checkedMunicipals,
                     action.response.counties,
                     'municipals'
