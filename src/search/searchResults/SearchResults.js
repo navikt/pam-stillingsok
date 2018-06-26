@@ -5,11 +5,12 @@ import SearchResultItem from './SearchResultsItem';
 import SearchResultsCount from './SearchResultsCount';
 import Pagination from '../pagination/Pagination';
 import NoResults from '../noResults/NoResults';
-import { PAGE_SIZE } from '../searchReducer';
+import { PAGE_SIZE, toUrlQuery } from '../searchReducer';
+import { toUrl } from '../url';
 import './SearchResults.less';
 
 function SearchResults({
-    searchResult, isSearching, restoreFocusToUuid, page, total
+    searchResult, isSearching, restoreFocusToUuid, page, total, urlQuery
 }) {
     const { stillinger } = searchResult;
     const totalPages = total / PAGE_SIZE;
@@ -25,6 +26,7 @@ function SearchResults({
                 <SearchResultItem
                     key={stilling.uuid}
                     stilling={stilling}
+                    urlQuery={urlQuery}
                     shouldFocus={stilling.uuid === restoreFocusToUuid}
                 />
             ))}
@@ -65,7 +67,8 @@ SearchResults.propTypes = {
     isSearching: PropTypes.bool.isRequired,
     restoreFocusToUuid: PropTypes.string,
     page: PropTypes.number.isRequired,
-    total: PropTypes.number.isRequired
+    total: PropTypes.number.isRequired,
+    urlQuery: PropTypes.string.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -73,7 +76,8 @@ const mapStateToProps = (state) => ({
     searchResult: state.search.searchResult,
     restoreFocusToUuid: state.focus.restoreFocusToUuid,
     page: state.search.page,
-    total: state.search.searchResult.total
+    total: state.search.searchResult.total,
+    urlQuery: toUrl(toUrlQuery(state))
 });
 
 export default connect(mapStateToProps)(SearchResults);

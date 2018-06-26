@@ -9,7 +9,7 @@ import './Disclaimer.less';
 function Disclaimer({ shouldShow, hideDisclaimer }) {
     if (shouldShow) {
         return (
-            <div className="DisclaimerWrapper">
+            <div className="DisclaimerWrapper no-print">
                 <div className="container">
                     <div role="alert" className="Disclaimer typo-normal">
                         <Element className="blokk-xxs">Tidlig versjon av nytt stillingssøk</Element>
@@ -34,7 +34,7 @@ function Disclaimer({ shouldShow, hideDisclaimer }) {
         );
     } else {
         return (
-            <div className="DisclaimerWrapper">
+            <div className="DisclaimerWrapper no-print">
                 <div className="container">
                     <div role="alert" className="Feedback typo-normal">
                         <Normaltekst className="blokk-xxs">

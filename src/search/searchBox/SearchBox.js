@@ -1,12 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Hovedknapp } from 'nav-frontend-knapper';
 import Typeahead from './Typeahead';
 import { SEARCH } from '../searchReducer';
-import {
-    SET_VALUE,
-    FETCH_SUGGESTIONS
-} from './searchBoxReducer';
+import { FETCH_SUGGESTIONS, SET_VALUE } from './searchBoxReducer';
 import './SearchBox.less';
 
 
@@ -30,31 +28,30 @@ class SearchBox extends React.Component {
         this.props.search();
     };
 
-    /**
-     * Foretar et nytt søk hver gang man forlater typeahead'en.
-     * Men dropper å gjøre et søk hvis søkeordet ikke er endret siden forrige søk.
-     */
-    onTypeAheadBlur = () => {
-        if (this.props.value !== this.props.lastSearchValue) {
-            this.props.search();
-        }
-    };
-
     render() {
         return (
-            <div className="SearchBox">
-                <Typeahead
-                    id="search-form-fritekst-input"
-                    name="q"
-                    autoComplete="off"
-                    label=""
-                    placeholder="Skriv inn søkeord"
-                    onSelect={this.onTypeAheadSuggestionSelected}
-                    onChange={this.onTypeAheadValueChange}
-                    onBlur={this.onTypeAheadBlur}
-                    suggestions={this.props.suggestions}
-                    value={this.props.value ? this.props.value : ''}
-                />
+            <div>
+                <label className="skjemaelement__label" htmlFor="search-form-fritekst-input">Søkeord</label>
+                <div className="SearchBox">
+                    <Typeahead
+                        id="search-form-fritekst-input"
+                        name="q"
+                        autoComplete="off"
+                        label=""
+                        placeholder="Skriv inn søkeord"
+                        onSelect={this.onTypeAheadSuggestionSelected}
+                        onChange={this.onTypeAheadValueChange}
+                        suggestions={this.props.suggestions}
+                        value={this.props.value ? this.props.value : ''}
+                    />
+                    <button
+                        type="submit"
+                        className="SearchBox__button"
+                        aria-label="Søk"
+                    >
+                        <i className="SearchBox__button__icon" />
+                    </button>
+                </div>
             </div>
         );
     }
@@ -62,7 +59,6 @@ class SearchBox extends React.Component {
 
 SearchBox.propTypes = {
     value: PropTypes.string.isRequired,
-    lastSearchValue: PropTypes.string.isRequired,
     suggestions: PropTypes.arrayOf(PropTypes.string).isRequired,
     search: PropTypes.func.isRequired,
     setValue: PropTypes.func.isRequired,
@@ -71,7 +67,6 @@ SearchBox.propTypes = {
 
 const mapStateToProps = (state) => ({
     value: state.searchBox.q,
-    lastSearchValue: state.search.lastSearchValue,
     suggestions: state.searchBox.suggestions
 });
 

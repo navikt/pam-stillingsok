@@ -1,8 +1,8 @@
 module.exports = {
     elements : {
-        stillingsTekst: 'div[id=stillingstekst]',
-        stillingsTittel: 'h1[id=stillingstittel]',
-        detaljer: 'div[id=detail-sidebar]'
+        stillingsTekst: '.AdText',
+        stillingsTittel: '.typo-innholdstittel',
+        detaljer: '.detail-section'
     },
 
     commands : [{
@@ -17,6 +17,6 @@ module.exports = {
 };
 
 function detailSectionElement(section,text){
-    return '//h3[contains(text(), "' + section + '")]//following-sibling::dl//dd[contains(text(), "' + text + '")]';
+    return '//h2[contains(text(), "' + section + '")]//following-sibling::dl//dd[contains(text(), "' + text + '")]';
 }
 

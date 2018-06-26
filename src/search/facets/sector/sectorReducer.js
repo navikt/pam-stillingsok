@@ -1,5 +1,5 @@
 import { SET_INITIAL_STATE, FETCH_INITIAL_FACETS_SUCCESS, SEARCH_SUCCESS } from '../../searchReducer';
-import { moveFacetToBottom} from "../utils";
+import { moveFacetToBottom, removeNonExistingFacets } from '../utils';
 
 export const CHECK_SECTOR = 'CHECK_SECTOR';
 export const UNCHECK_SECTOR = 'UNCHECK_SECTOR';
@@ -19,7 +19,11 @@ export default function sectorReducer(state = initialState, action) {
         case FETCH_INITIAL_FACETS_SUCCESS:
             return {
                 ...state,
-                sector: moveFacetToBottom (action.response.sector, 'Ikke oppgitt')
+                sector: moveFacetToBottom(action.response.sector, 'Ikke oppgitt'),
+                checkedSector: removeNonExistingFacets(
+                    state.checkedSector,
+                    action.response.sector
+                )
             };
         case SEARCH_SUCCESS:
             return {

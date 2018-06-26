@@ -1,20 +1,50 @@
 @import "../../variables";
 
 .BackToSearch {
-  margin: 1.5rem 0 0.5rem -0.5rem;
-  display: inline-block;
+  background: #fff;
 }
 
-a.BackToSearch__lenke {
+.BackToSearch__inline {
+  padding: 0.75rem 0;
+}
+
+.BackToSearch__sticky {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  background: #fff;
+  width: 100%;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid @navLysGra;
+}
+
+@media (min-width: @screen-md-min) {
+  .BackToSearch {
+    background-color: @background-green;
+  }
+
+  .BackToSearch__sticky {
+    display: none;
+  }
+
+  .BackToSearch__inline {
+    border: 0;
+  }
+}
+
+a.BackToSearchLink {
   border-bottom: none;
   font-weight: bold;
-  padding: 0.5rem 0.5rem 0.5rem 0rem;
+  padding: 0.5rem 0.5rem 0.5rem 0;
 
-  &:hover .BackToSearch__text {
+  &:hover .BackToSearchLink__text {
     border-bottom: solid 1px @navDypBla;
   }
 }
 
-.BackToSearch__chevron {
+.BackToSearchLink__chevron {
   margin-top: -3px;
 }
+
+

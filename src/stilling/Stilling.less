@@ -1,95 +1,27 @@
-@import "../../node_modules/nav-frontend-lenker-style/src/lenker-style";
 @import "../variables";
 
-
-#annonse-header {
-  padding-top: 1.75rem;
-  padding-bottom: 11rem;
-}
-
-#annonse-container {
+.Stilling {
   padding-bottom: 2rem;
   background-color: #ffffff;
 }
 
-.annonse-margin {
+.Stilling__header {
+  padding-top: 1.75rem;
+  padding-bottom: 11rem;
+  background: @background-green;
+}
+
+.Stilling__main {
   margin-top: -10.4rem;
 }
 
-#stillingstittel {
-  overflow-wrap: break-word;
-  word-wrap: break-word;
-}
-
-@media (max-width: @screen-xs-max) {
-  #stillingstittel {
-    margin-left: 0.5rem;
-  }
-}
-
-#stillingstekst {
-  margin: 0;
-  font-family: "Source Sans Pro", Arial, sans-serif;
-  font-size: 1rem;
-  line-height: 1.375rem;
-  font-weight: 400;
-  min-height: 60px;
-  overflow-wrap: break-word;
-  word-wrap: break-word;
-
-  a {
-    .lenke;
+@media (max-width: @screen-sm-max) {
+  .Stilling__header {
+    padding-bottom: 0;
   }
 
-  h1 {
-    margin: 0;
-    font-size: 1.5rem;
-    font-weight: 600;
-  }
-
-  h2 {
-    margin: 0;
-    font-size: 1.25rem;
-    line-height: 1.5625rem;
-    font-weight: 600;
-  }
-
-  h3 {
-    margin: 0;
-    font-size: 1.125rem;
-    line-height: 1.5rem;
-    font-weight: 400;
-  }
-}
-
-#stillingsboks {
-  margin-top: 0;
-  margin-right:0;
-  margin-left:0;
-  display: flex;
-  border: 1px solid @border-gray;
-  min-height: 80px;
-
-  #left-panel {
-    padding-top: 1rem;
-    background-color: @background-green;
-  }
-
-  #right-panel {
-    background-color: #FFFFFF;
-
-    ul.dashed {
-      list-style: none;
-      margin-left: 0;
-      padding-left: 1em;
-    }
-
-    ul.dashed > li:before {
-      display: inline-block;
-      content: "-";
-      width: 1em;
-      margin-left: -1em;
-    }
+  .Stilling__main {
+    margin-top: 0;
   }
 }
 
@@ -97,32 +29,11 @@
   padding: 1rem;
   border: 1px solid @border-gray;
   background-color: #fff;
-}
+  margin-bottom: 1rem;
 
-.detail-section__head{
-  margin-bottom: 0.5rem;
-}
-
-.detail-section:not(:last-of-type) {
-  border-bottom: none;
-}
-
-#employerdescription {
-  margin-top: 1rem;
-  font-family: "Source Sans Pro", Arial, sans-serif;
-  font-size: 1rem;
-  line-height: 1.375rem;
-  font-weight: 400;
-  min-height: 60px;
-
-  a {
-    .lenke;
+  .detail-section__head {
+    margin-bottom: 0.5rem;
   }
-}
-
-#send-soknad-wrapper {
-  text-align: center;
-  margin: 1rem 0 0.5rem;
 }
 
 .dl-flex {
@@ -144,17 +55,9 @@
     flex: 0 58%;
     max-width: 58%;
     margin-left: 0;
-    word-break: break-all;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
 }
 
-.panel--gray-border {
-  border-radius: 0!important;
-  border: 1px solid @border-gray;
-}
 
-@media (min-width: @screen-sm-min) {
-  .panel--padding {
-    padding: 2rem 3rem!important;
-  }
-}

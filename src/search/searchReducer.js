@@ -5,6 +5,7 @@ import {
 } from '../api/api';
 import { fromUrl, toUrl, ParameterType } from './url';
 
+export const RESTORE_STATE_FROM_URL = 'RESTORE_STATE_FROM_URL';
 export const SET_INITIAL_STATE = 'SET_INITIAL_STATE';
 export const INITIAL_SEARCH = 'INITIAL_SEARCH';
 export const FETCH_INITIAL_FACETS_SUCCESS = 'FETCH_INITIAL_FACETS_SUCCESS';
@@ -16,7 +17,6 @@ export const RESET_FROM = 'RESET_FROM';
 export const LOAD_MORE = 'LOAD_MORE';
 export const LOAD_MORE_BEGIN = 'LOAD_MORE_BEGIN';
 export const LOAD_MORE_SUCCESS = 'LOAD_MORE_SUCCESS';
-export const KEEP_SCROLL_POSITION = 'KEEP_SCROLL_POSITION';
 
 export const PAGE_SIZE = 20;
 
@@ -26,7 +26,7 @@ export const URL_PARAMETERS_DEFINITION = {
     to: ParameterType.NUMBER,
     counties: ParameterType.ARRAY,
     municipals: ParameterType.ARRAY,
-    created: ParameterType.ARRAY,
+    published: ParameterType.ARRAY,
     engagementType: ParameterType.ARRAY,
     sector: ParameterType.ARRAY,
     expires: ParameterType.ARRAY,
@@ -35,6 +35,7 @@ export const URL_PARAMETERS_DEFINITION = {
 
 const initialState = {
     isAtLeastOneSearchDone: false,
+    initialSearchDone: false,
     isSearching: true,
     isLoadingMore: false,
     searchResult: {
@@ -42,15 +43,24 @@ const initialState = {
     },
     hasError: false,
     from: 0,
-    page: 0,
-    lastSearchValue: ''
+    page: 0
 };
+
+export function mergeAndRemoveDuplicates(array1, array2) {
+    return [...array1, ...array2.filter((a) => {
+        const duplicate = array1.find((b) => (
+            a.uuid === b.uuid
+        ));
+        return !duplicate;
+    })];
+}
 
 export default function searchReducer(state = initialState, action) {
     switch (action.type) {
         case SET_INITIAL_STATE:
             return {
                 ...state,
+                hasRestoredStateFromUrl: true,
                 from: 0,
                 to: action.query.to || PAGE_SIZE,
                 page: action.query.to ? (action.query.to - PAGE_SIZE) / PAGE_SIZE : 0
@@ -65,7 +75,6 @@ export default function searchReducer(state = initialState, action) {
         case SEARCH_BEGIN:
             return {
                 ...state,
-                lastSearchValue: action.query.q || '',
                 isSearching: true
             };
         case SEARCH_SUCCESS:
@@ -75,7 +84,7 @@ export default function searchReducer(state = initialState, action) {
                 initialSearchDone: true,
                 isAtLeastOneSearchDone: true,
                 searchResult: {
-                    ...action.response,
+                    total: action.response.total,
                     stillinger: action.response.stillinger
                 }
             };
@@ -104,15 +113,10 @@ export default function searchReducer(state = initialState, action) {
                 page: state.page + 1,
                 searchResult: {
                     ...state.searchResult,
-                    stillinger: [...state.searchResult.stillinger, ...action.response.stillinger]
+                    // Når man pager kan en allerede lastet annonse komme på nytt på neste page.
+                    stillinger: mergeAndRemoveDuplicates(state.searchResult.stillinger, action.response.stillinger)
                 }
             };
-        case KEEP_SCROLL_POSITION: {
-            return {
-                ...state,
-                scrollPosition: action.scrollPosition
-            };
-        }
         default:
             return state;
     }
@@ -132,7 +136,7 @@ export function toSearchQuery(state) {
             return !found;
         }),
         municipals: state.counties.checkedMunicipals,
-        created: state.created.checkedCreated,
+        published: state.published.checkedPublished,
         engagementType: state.engagement.checkedEngagementType,
         sector: state.sector.checkedSector,
         expires: state.expires.checkedExpires,
@@ -147,7 +151,7 @@ export function toUrlQuery(state) {
         to: state.search.to > PAGE_SIZE ? state.search.to : undefined,
         counties: state.counties.checkedCounties,
         municipals: state.counties.checkedMunicipals,
-        created: state.created.checkedCreated,
+        published: state.published.checkedPublished,
         engagementType: state.engagement.checkedEngagementType,
         sector: state.sector.checkedSector,
         expires: state.expires.checkedExpires,
@@ -156,24 +160,33 @@ export function toUrlQuery(state) {
 }
 
 /**
- * Henter ut search query fra browser url første gang siden blir lastet.
+ * Henter ut url query fra browser url første gang siden blir lastet.
+ */
+function* restoreStateFromUrl() {
+    const state = yield select();
+    if (!state.search.hasRestoredStateFromUrl) {
+        const urlQuery = fromUrl(URL_PARAMETERS_DEFINITION, window.location.href);
+        yield put({ type: SET_INITIAL_STATE, query: urlQuery });
+    }
+}
+
+/**
  * Fetcher alle tilgjengelige fasetter og gjør deretter det første søket.
  */
 function* initialSearch() {
     let state = yield select();
     if (!state.search.initialSearchDone) {
         try {
-            const urlQuery = fromUrl(URL_PARAMETERS_DEFINITION, window.location.href);
-
-            yield put({ type: SET_INITIAL_STATE, query: urlQuery });
-
-            // Får å hente alle tilgjengelige fasetter, gjøre vi først
+            // For å hente alle tilgjengelige fasetter, gjøre vi først
             // et søk uten noen søkekriterier.
             yield put({ type: SEARCH_BEGIN, query: {} });
             let response = yield call(fetchSearch);
             yield put({ type: FETCH_INITIAL_FACETS_SUCCESS, response });
 
-            if (Object.keys(urlQuery).length > 0) {
+            // Gjør eventuelt et søk med søkekriterier som ble hentet fra browser url'en.
+            state = yield select();
+            const query = toSearchQuery(state);
+            if (Object.keys(query).length > 0) {
                 state = yield select();
                 response = yield call(fetchSearch, toSearchQuery(state));
             }
@@ -194,7 +207,7 @@ function* search() {
         yield put({ type: RESET_FROM });
         const state = yield select();
         const query = toSearchQuery(state);
-        window.history.replaceState('', '', toUrl(toUrlQuery(state)));
+        window.history.replaceState('', '', toUrl(toUrlQuery(state)) || window.location.pathname);
         yield put({ type: SEARCH_BEGIN, query });
         const searchResult = yield call(fetchSearch, query);
         yield put({ type: SEARCH_SUCCESS, response: searchResult });
@@ -210,7 +223,7 @@ function* search() {
 function* loadMore() {
     try {
         const state = yield select();
-        window.history.replaceState('', '', toUrl(toUrlQuery(state)));
+        window.history.replaceState('', '', toUrl(toUrlQuery(state)) || window.location.pathname);
         yield put({ type: LOAD_MORE_BEGIN });
         const response = yield call(fetchSearch, toSearchQuery(state));
         yield put({ type: LOAD_MORE_SUCCESS, response });
@@ -224,6 +237,7 @@ function* loadMore() {
 }
 
 export const saga = function* saga() {
+    yield takeLatest(RESTORE_STATE_FROM_URL, restoreStateFromUrl);
     yield takeLatest(INITIAL_SEARCH, initialSearch);
     yield throttle(1000, SEARCH, search);
     yield takeLatest(LOAD_MORE, loadMore);

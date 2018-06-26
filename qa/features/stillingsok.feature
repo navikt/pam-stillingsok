@@ -23,7 +23,7 @@ Egenskap: Søke og filtrere på stillingsannonser
     Når jeg åpner en stillingsannonse
     Så skal "Oslo" vises under "Om stillingen"
 
-  Scenario: Verifisere at filtrering på Heltid/Deltid fungerer
+  Scenario: Verifisere at filtrering på HeltidDeltid fungerer
     Når jeg filtrerer på "Heltid"
     Og jeg åpner en stillingsannonse
     Så skal "Heltid" vises under "Om stillingen"

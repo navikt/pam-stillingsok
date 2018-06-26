@@ -3,36 +3,42 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Container, Row, Column } from 'nav-frontend-grid';
-import ReactHtmlParser from 'react-html-parser';
-import { Panel } from 'nav-frontend-paneler';
-import { Sidetittel } from 'nav-frontend-typografi';
-import StillingsBoks from './listbox/ListBox';
-import Details from './Details';
-import NotFound from './NotFound';
+import AdTitle from './adTitle/AdTitle';
+import AdText from './adText/AdText';
+import PersonalAttributes from './requirements/PersonalAttributes';
+import SoftRequirements from './requirements/SoftRequirements';
+import HardRequirements from './requirements/HardRequirements';
+import HowToApply from './howToApply/HowToApply';
+import ContactPerson from './contactPerson/ContactPerson';
+import EmployerDetails from './employerDetails/EmployerDetails';
+import EmploymentDetails from './employmentDetails/EmploymentDetails';
+import AdDetails from './adDetails/AdDetails';
+import NotFound from './notFound/NotFound';
 import SearchError from '../search/error/SearchError';
-import Expired from './Expired';
+import Expired from './expired/Expired';
 import BackToSearch from './backToSearch/BackToSearch';
-import { toUrlQuery } from "../search/searchReducer";
+import { RESTORE_STATE_FROM_URL, toUrlQuery } from '../search/searchReducer';
 import Disclaimer from '../discalimer/Disclaimer';
-import Loading from './loading/Loading';
+import Skeleton from './loading/Skeleton';
+import { toUrl } from '../search/url';
 import {
     FETCH_STILLING_BEGIN
 } from './stillingReducer';
 import './Stilling.less';
 
-const arrayHasData = (array) => array && array[0].hasOwnProperty('punkt');
-
 class Stilling extends React.Component {
     constructor(props) {
         super(props);
         this.hasSetTitle = false;
+        this.props.restoreStateFromUrl();
     }
 
     componentDidMount() {
         window.scrollTo(0, 0);
         this.props.getStilling(this.props.match.params.uuid);
     }
-componentDidUpdate() {
+
+    componentDidUpdate() {
         if (!this.hasSetTitle
             && this.props.stilling
             && this.props.stilling._source
@@ -41,16 +47,17 @@ componentDidUpdate() {
             this.hasSetTitle = true;
         }
     }
+
     render() {
-        const { stilling, cachedStilling, isFetchingStilling, error, state } = this.props;
+        const {
+            stilling, cachedStilling, isFetchingStilling, error, urlQuery
+        } = this.props;
         return (
             <div>
                 <Disclaimer />
-                <div className="background--light-green">
-                    <Container>
-                        <BackToSearch urlQuery={toUrlQuery(state)}/>
-                    </Container>
-                </div>
+
+                <BackToSearch urlQuery={urlQuery} />
+
                 {error && error.statusCode === 404 ? (
                     <Container>
                         <NotFound />
@@ -62,93 +69,44 @@ componentDidUpdate() {
                 )}
 
                 {isFetchingStilling && (
-                    <article id="annonse-container">
-                        <header id="annonse-header" className="background--light-green">
-                            <Container>
-                                <Row className="blokk-m">
-                                    <Column xs="12" md="8">
-                                        {cachedStilling && (
-                                            <Sidetittel id="stillingstittel">
-                                                {cachedStilling.title}
-                                            </Sidetittel>
-                                        )}
-                                    </Column>
-                                </Row>
-                            </Container>
-                        </header>
-                        <Container className="annonse-margin">
-                            <Row>
-                                <Column xs="12" md="8">
-                                    <Loading />
-                                </Column>
-                                <Column xs="12" md="4">
-                                    <Loading spinner={false}/>
-                                </Column>
-                            </Row>
-                        </Container>
-                    </article>
+                    <Skeleton stilling={cachedStilling} />
                 )}
 
                 {!isFetchingStilling && stilling && (
-                    <article id="annonse-container">
-                        <header id="annonse-header" className="background--light-green">
+                    <article className="Stilling">
+                        <header className="Stilling__header">
                             <Container>
-                                <Row className="blokk-m">
+                                <Row>
                                     <Column xs="12" md="8">
                                         {stilling._source.status !== 'ACTIVE' && (
-                                            <div className="blokk-xs">
-                                                <Expired />
-                                            </div>
+                                            <Expired />
                                         )}
-                                        <Sidetittel id="stillingstittel">
-                                            {stilling._source.title}
-                                        </Sidetittel>
+                                        <AdTitle
+                                            title={stilling._source.title}
+                                            employer={stilling._source.properties.employer}
+                                            location={stilling._source.properties.location}
+                                        />
                                     </Column>
                                 </Row>
                             </Container>
                         </header>
-                        <Container className="annonse-margin">
+                        <Container className="Stilling__main">
                             <Row>
                                 <Column xs="12" md="8">
-                                    <section>
-                                        <Panel className="blokk-s panel--padding panel--gray-border">
-                                            {stilling._source.properties.adtext && (
-                                                <Row>
-                                                    <Column xs="12">
-                                                        <div
-                                                            id="stillingstekst"
-                                                            className="blokk-s"
-                                                        >
-                                                            {ReactHtmlParser(stilling._source.properties.adtext)}
-                                                        </div>
-                                                    </Column>
-                                                </Row>
-                                            )}
-                                        </Panel>
-                                        {arrayHasData(stilling._source.properties.hardrequirements) && (
-                                            <StillingsBoks
-                                                title="Krav (kvalifikasjoner)"
-                                                items={stilling._source.properties.hardrequirements}
-                                            />
-                                        )}
-                                        {arrayHasData(stilling._source.properties.softrequirements) && (
-                                            <StillingsBoks
-                                                title="Ønsket kompetanse"
-                                                items={stilling._source.properties.softrequirements}
-                                            />
-                                        )}
-                                        {arrayHasData(stilling._source.properties.personalattributes) && (
-                                            <StillingsBoks
-                                                title="Personlige egenskaper"
-                                                items={stilling._source.properties.personalattributes}
-                                            />
-                                        )}
-                                    </section>
+                                    <AdText adText={stilling._source.properties.adtext} />
+                                    <HardRequirements stilling={stilling} />
+                                    <SoftRequirements stilling={stilling} />
+                                    <PersonalAttributes stilling={stilling} />
                                 </Column>
                                 <Column xs="12" md="4">
-                                    <section aria-labelledby="tilleggsinformasjon-title">
-                                        <Details stilling={stilling} />
-                                    </section>
+                                    <HowToApply
+                                        source={stilling._source.source}
+                                        properties={stilling._source.properties}
+                                    />
+                                    <EmploymentDetails properties={stilling._source.properties} />
+                                    <ContactPerson properties={stilling._source.properties} />
+                                    <EmployerDetails properties={stilling._source.properties} />
+                                    <AdDetails source={stilling._source} />
                                 </Column>
                             </Row>
                         </Container>
@@ -162,7 +120,8 @@ componentDidUpdate() {
 Stilling.defaultProps = {
     stilling: undefined,
     cachedStilling: undefined,
-    isFetchingStilling: false
+    isFetchingStilling: false,
+    urlQuery: ''
 };
 
 Stilling.propTypes = {
@@ -178,8 +137,10 @@ Stilling.propTypes = {
     cachedStilling: PropTypes.shape({
         title: PropTypes.string
     }),
+    restoreStateFromUrl: PropTypes.func.isRequired,
     getStilling: PropTypes.func.isRequired,
-    isFetchingStilling: PropTypes.bool
+    isFetchingStilling: PropTypes.bool,
+    urlQuery: PropTypes.string
 };
 
 const mapStateToProps = (state) => ({
@@ -187,10 +148,11 @@ const mapStateToProps = (state) => ({
     stilling: state.stilling.stilling,
     cachedStilling: state.stilling.cachedStilling,
     error: state.stilling.error,
-    state: state
+    urlQuery: toUrl(toUrlQuery(state))
 });
 
 const mapDispatchToProps = (dispatch) => ({
+    restoreStateFromUrl: () => dispatch({ type: RESTORE_STATE_FROM_URL }),
     getStilling: (uuid) => dispatch({ type: FETCH_STILLING_BEGIN, uuid })
 });
 

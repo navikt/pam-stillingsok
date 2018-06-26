@@ -1,3 +1,45 @@
+## RELEASE - 0.30.213-cead01b
+#### New in this release: 
++ 2018-06-24 [Feature] Husker scroll position når siden lastes på nytt.
++ 2018-06-24 [Feature] Legger til spinner når søkesiden lastes første gang
+## RELEASE - 0.29.202-e892909
+#### New in this release: 
++ 2018-06-22 [Feature] Optimalisering av design for mobil - tweak ios
++ 2018-06-22 [Feature] Optimalisering av design for mobil - tweak ios
++ 2018-06-22 [Feature] Optimalisering av design for mobil - tweak ios
+## RELEASE - 0.28.196-cd890e4
+#### New in this release: 
++ 2018-06-22 [Feature] Optimalisering av design for mobil - tweak
+## RELEASE - 0.27.193-9c19c24
+#### New in this release: 
++ 2018-06-22 [Feature] Optimalisering av design for mobil
++ 2018-06-22 [Feature] Forbedret design på søkeboks
++ 2018-06-22 [Feature] Forbedret design på søkeboks
++ 2018-06-22 [Bugfix] Nå forsvinner søketreffene når man går ut av annonsesiden, feks inn på Send søknad. Når man trykker tilbake, så må man da krysse av og søke på nytt. Legger derfor til url query (?q=java&sector=Offentlig) også på selve annonse siden, slik at søket kan gjenskapes når bruker kommer tilbake.
++ 2018-06-22 [Feature] Utskriftsvennlig versjon av annonse og treffliste. Lager egen css for print.
++ 2018-06-22 [Feature]Legger til anonymisering av ip-adresser i GA
+## RELEASE - 0.26.184-a81fc81
+#### New in this release: 
++ 2018-06-21 [Bugfix] Tweak på sticky Tilbake-knapp
+## RELEASE - 0.24.177-7453fa7
+#### New in this release: 
++ 2018-06-21 [Feature] Gjør slik at Tilbakekanpp fester seg til toppen når man scroller ned på siden.
++ 2018-06-21 [Feature] Legger inn utskriftsvennlig formatering av stillingsannonse.
+## RELEASE - 0.23.174-8a31229
+#### New in this release: 
++ 2018-06-21 [Bugfix] Fikser issue med at det ble gjort to likedans søk om man trykket enter i søkeboksen
++ 2018-06-21 [Bugfix] Legger til aria-label på "765 treff + pil ned" slik at skjermleser sier "Vis 765 treff"
++ 2018-06-21 [Feature] Flere tilbakemeldinger på at det er vanskleig å scanne trefflisten. Gjør derfor om til slik det var opprinnelig med arbeidsgivernavn i en egen kolonne på venstre side i treff listen.
++ 2018-06-21 [Bugfix] Tilbakeknappen fikk url /?[Object Object]. Har fikset dette nå slik at tilbakeknappen bruker stringverdien av søke-queryen.
++ 2018-06-15 [PAM-996] Use published as date field for "nye i dag"
++ 2018-06-21 [Bugfix] Det har vært et issue at det dukker opp treff fra feks Oslo, når man deretter velger feks Bamle. Dette skyldes at man har trykket "Se flere" på Oslo, og det har blitt lastet inn duplikate annonser. Man kan få duplkate annonser når man pager, siden backend returnerer treff fra flere søkeindexer. Duplikate annonser skaper trøbbel for react, og duplikater fjernes ikke fra DOM. Fixen er derfor å droppe eventuelle duplikater i frontenden.
+## RELEASE - 0.22.168-d03bc99
+#### New in this release: 
++ 2018-06-20 [Bugfix] Fikser noen issues etter Legger på søkknapp. Fikser fonttyper som mangler noen steder.
++ 2018-06-20 [Bugfix] Bruker riktig font-type på selectboxen for sortering
++ 2018-06-20 [Bugfix] Fjerner chevron/nedpil ned fra "Se flere", da designteamet sa at dette ikonet ikke passer.
++ 2018-06-20 [Bugfix] Hvis man trykker "Se flere" og dermed får ?from=20 i urlen, og deretter laster siden inn på nytt, så vil trefflisten bare vise treffene fra index 20 til 40. Bruker i stedet ?size=40, slik at alle treffene fra 0 til 40 vises.
++ 2018-06-18 [PAM-1027]: bruker react router history til å gå tilbake til søk, slik at url-parameterne blir med
 ## RELEASE - 0.21.162-061a653
 #### New in this release: 
 + 2018-06-19 [Feature] Legger til "Viser 20 av 540 treff" over Se flere knapp

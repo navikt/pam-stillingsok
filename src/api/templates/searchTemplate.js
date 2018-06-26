@@ -98,16 +98,16 @@ export function filterSector(sector) {
     return filters;
 }
 
-export function filterCreated(created) {
+export function filterPublished(published) {
     const filters = {
         bool: {
             should: []
         }
     };
-    if (created && created.length > 0) {
+    if (published && published.length > 0) {
         filters.bool.should.push({
             range: {
-                created: {
+                published: {
                     gte: 'now-1d'
                 }
             }
@@ -140,7 +140,7 @@ export function filterExpires(expires) {
 
 export default function searchTemplate(query) {
     const {
-        from, size, counties, municipals, extent, engagementType, sector, created, expires
+        from, size, counties, municipals, extent, engagementType, sector, published, expires
     } = query;
     let { sort, q } = query;
 
@@ -222,7 +222,7 @@ export default function searchTemplate(query) {
                     filterLocation(counties, municipals),
                     filterEngagementType(engagementType),
                     filterSector(sector),
-                    filterCreated(created),
+                    filterPublished(published),
                     filterExpires(expires)
                 ]
             }
@@ -252,7 +252,7 @@ export default function searchTemplate(query) {
                             ...filterExtent(extent),
                             filterLocation(counties, municipals),
                             filterEngagementType(engagementType),
-                            filterCreated(created),
+                            filterPublished(published),
                             filterSector(sector)
                         ]
                     }
@@ -293,7 +293,7 @@ export default function searchTemplate(query) {
                     }
                 }
             },
-            created: {
+            published: {
                 filter: {
                     bool: {
                         filter: [
@@ -313,7 +313,7 @@ export default function searchTemplate(query) {
                 aggs: {
                     range: {
                         date_range: {
-                            field: 'created',
+                            field: 'published',
                             ranges: [
                                 {
                                     key: 'now-1d',
@@ -336,7 +336,7 @@ export default function searchTemplate(query) {
                             ...filterExtent(extent),
                             filterLocation(counties, municipals),
                             filterEngagementType(engagementType),
-                            filterCreated(created),
+                            filterPublished(published),
                             filterExpires(expires)
                         ]
                     }
@@ -359,7 +359,7 @@ export default function searchTemplate(query) {
                             filterLocation(counties, municipals),
                             filterEngagementType(engagementType),
                             filterSector(sector),
-                            filterCreated(created),
+                            filterPublished(published),
                             filterExpires(expires)
                         ]
                     }
@@ -382,7 +382,7 @@ export default function searchTemplate(query) {
                             ...filterExtent(extent),
                             filterLocation(counties, municipals),
                             filterSector(sector),
-                            filterCreated(created),
+                            filterPublished(published),
                             filterExpires(expires)
                         ]
                     }
@@ -405,7 +405,7 @@ export default function searchTemplate(query) {
                             ...filterExtent(extent),
                             filterEngagementType(engagementType),
                             filterSector(sector),
-                            filterCreated(created),
+                            filterPublished(published),
                             filterExpires(expires)
                         ]
                     }
