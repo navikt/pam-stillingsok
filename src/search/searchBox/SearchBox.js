@@ -44,13 +44,13 @@ class SearchBox extends React.Component {
                         suggestions={this.props.suggestions}
                         value={this.props.value ? this.props.value : ''}
                     />
-                    <Hovedknapp
+                    <button
                         type="submit"
                         className="SearchBox__button"
-                        mini
+                        aria-label="Søk"
                     >
-                        Søk
-                    </Hovedknapp>
+                        <i className="SearchBox__button__icon" />
+                    </button>
                 </div>
             </div>
         );

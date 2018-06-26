@@ -1,3 +1,23 @@
+## RELEASE - 0.30.213-cead01b
+#### New in this release: 
++ 2018-06-24 [Feature] Husker scroll position når siden lastes på nytt.
++ 2018-06-24 [Feature] Legger til spinner når søkesiden lastes første gang
+## RELEASE - 0.29.202-e892909
+#### New in this release: 
++ 2018-06-22 [Feature] Optimalisering av design for mobil - tweak ios
++ 2018-06-22 [Feature] Optimalisering av design for mobil - tweak ios
++ 2018-06-22 [Feature] Optimalisering av design for mobil - tweak ios
+## RELEASE - 0.28.196-cd890e4
+#### New in this release: 
++ 2018-06-22 [Feature] Optimalisering av design for mobil - tweak
+## RELEASE - 0.27.193-9c19c24
+#### New in this release: 
++ 2018-06-22 [Feature] Optimalisering av design for mobil
++ 2018-06-22 [Feature] Forbedret design på søkeboks
++ 2018-06-22 [Feature] Forbedret design på søkeboks
++ 2018-06-22 [Bugfix] Nå forsvinner søketreffene når man går ut av annonsesiden, feks inn på Send søknad. Når man trykker tilbake, så må man da krysse av og søke på nytt. Legger derfor til url query (?q=java&sector=Offentlig) også på selve annonse siden, slik at søket kan gjenskapes når bruker kommer tilbake.
++ 2018-06-22 [Feature] Utskriftsvennlig versjon av annonse og treffliste. Lager egen css for print.
++ 2018-06-22 [Feature]Legger til anonymisering av ip-adresser i GA
 ## RELEASE - 0.26.184-a81fc81
 #### New in this release: 
 + 2018-06-21 [Bugfix] Tweak på sticky Tilbake-knapp

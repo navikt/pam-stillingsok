@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { Container } from 'nav-frontend-grid';
 import Chevron from 'nav-frontend-chevron';
 import './BackToSearch.less';
 
@@ -12,7 +13,7 @@ function BackToSearchLink({ urlQuery }) {
         >
             <Chevron stor type="venstre" className="BackToSearchLink__chevron" />
             <span className="BackToSearchLink__text">
-                {urlQuery === '' ? 'Gå til søk' : 'Tilbake til søkeresultatet' }
+                {urlQuery === '' ? 'Gå til søk' : 'Tilbake'}
             </span>
         </Link>
     );
@@ -63,25 +64,29 @@ export default class BackToSearch extends React.Component {
     isInlineBackButtonVisible = () => {
         const rect = this.inlineBackButton.getBoundingClientRect();
         const windowHeight = (window.innerHeight || document.documentElement.clientHeight);
-        return (rect.top <= windowHeight) && ((rect.top - rect.height) >= 0);
+        return (rect.top <= windowHeight) && ((rect.top) >= 0);
     };
 
     render() {
         return (
             <div className="BackToSearch">
-                <div
-                    ref={(inlineBackButton) => { this.inlineBackButton = inlineBackButton; }}
-                    className="BackToSearch__inline"
-                >
-                    <BackToSearchLink urlQuery={this.props.urlQuery} />
-                </div>
-                {this.state.showStickyBackButton && (
-                    <div className="BackToSearch__sticky">
-                        <div className="container">
-                            <BackToSearchLink urlQuery={this.props.urlQuery} />
-                        </div>
+                <Container>
+                    <div
+                        ref={(inlineBackButton) => {
+                            this.inlineBackButton = inlineBackButton;
+                        }}
+                        className="BackToSearch__inline"
+                    >
+                        <BackToSearchLink urlQuery={this.props.urlQuery} />
                     </div>
-                )}
+                    {this.state.showStickyBackButton && (
+                        <div className="BackToSearch__sticky">
+                            <div className="container">
+                                <BackToSearchLink urlQuery={this.props.urlQuery} />
+                            </div>
+                        </div>
+                    )}
+                </Container>
             </div>
         );
     }

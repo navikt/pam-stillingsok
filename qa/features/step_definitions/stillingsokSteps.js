@@ -23,6 +23,7 @@ Then(/^skal ingen treff vises$/, () => {
 
 When(/^jeg åpner en stillingsannonse$/, async () => {
     await forside.waitForElementPresent('@searchResultItem');
+    await forside.api.pause(1000);
     await forside.click('@searchResultItem');
     await stilling.waitForElementPresent('@stillingsTittel');
 });

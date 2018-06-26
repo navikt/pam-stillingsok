@@ -36,7 +36,7 @@ export default class Loading extends React.Component {
         return (
             <div
                 className={
-                    classNames('Loading panel panel--padding', {
+                    classNames('Loading', {
                         'Loading--faded': this.state.faded
                     })
                 }

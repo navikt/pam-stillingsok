@@ -4,6 +4,14 @@
   background: #fff;
   border: 1px solid @border-gray;
   position: relative;
+  padding: 1rem 3rem;
+}
+
+@media (max-width: @screen-sm-max) {
+  .Loading {
+    border: 0;
+    padding: 0 1rem;
+  }
 }
 
 .Loading__spinner {
@@ -17,7 +25,7 @@
 
 .Loading__header {
   height: 1.25rem;
-  margin-top: 3rem;
+  margin-top: 2rem;
   margin-bottom: 1rem;
   background-color: #fcfcfc;
   width: 60%;

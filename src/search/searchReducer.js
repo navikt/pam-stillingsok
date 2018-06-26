@@ -17,7 +17,6 @@ export const RESET_FROM = 'RESET_FROM';
 export const LOAD_MORE = 'LOAD_MORE';
 export const LOAD_MORE_BEGIN = 'LOAD_MORE_BEGIN';
 export const LOAD_MORE_SUCCESS = 'LOAD_MORE_SUCCESS';
-export const KEEP_SCROLL_POSITION = 'KEEP_SCROLL_POSITION';
 
 export const PAGE_SIZE = 20;
 
@@ -37,6 +36,7 @@ export const URL_PARAMETERS_DEFINITION = {
 
 const initialState = {
     isAtLeastOneSearchDone: false,
+    initialSearchDone: false,
     isSearching: true,
     isLoadingMore: false,
     searchResult: {
@@ -85,7 +85,7 @@ export default function searchReducer(state = initialState, action) {
                 initialSearchDone: true,
                 isAtLeastOneSearchDone: true,
                 searchResult: {
-                    ...action.response,
+                    total: action.response.total,
                     stillinger: action.response.stillinger
                 }
             };
@@ -118,12 +118,6 @@ export default function searchReducer(state = initialState, action) {
                     stillinger: mergeAndRemoveDuplicates(state.searchResult.stillinger, action.response.stillinger)
                 }
             };
-        case KEEP_SCROLL_POSITION: {
-            return {
-                ...state,
-                scrollPosition: action.scrollPosition
-            };
-        }
         default:
             return state;
     }

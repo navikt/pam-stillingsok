@@ -10,10 +10,26 @@ export class SearchApiError {
     }
 }
 
-async function post(query) {
+async function get(url) {
     let response;
     try {
-        response = await fetch(`${SEARCH_API}/stillingsok/ad/_search`, {
+        response = await fetch(url, {
+            method: 'GET'
+        });
+    } catch (e) {
+        throw new SearchApiError(e.message, 0);
+    }
+
+    if (response.status !== 200) {
+        throw new SearchApiError(response.statusText, response.status);
+    }
+    return response.json();
+}
+
+async function post(url, query) {
+    let response;
+    try {
+        response = await fetch(url, {
             body: JSON.stringify(query),
             method: 'POST',
             headers: {
@@ -31,7 +47,7 @@ async function post(query) {
 }
 
 export async function fetchSearch(query = {}) {
-    const result = await post(searchTemplate(query));
+    const result = await post(`${SEARCH_API}/stillingsok/ad/_search`, searchTemplate(query));
     return {
         stillinger: result.hits.hits.map((stilling) => (
             stilling._source
@@ -73,14 +89,42 @@ export async function fetchSearch(query = {}) {
 }
 
 export async function fetchCategoryAndSearchTagsSuggestions(match, minLength) {
-    const result = await post(suggestionsTemplate(match, minLength));
+    const result = await post(`${SEARCH_API}/stillingsok/ad/_search`, suggestionsTemplate(match, minLength));
 
     return {
         match,
-        result: [...new Set([ // Bruker Set for å fjerne duplikater på tverss av category_suggest og searchtags_suggest
+        result: [...new Set([ // Bruker Set for å fjerne duplikater på tvers av category_suggest og searchtags_suggest
             ...result.suggest.category_suggest[0].options.map((suggestion) => suggestion.text),
             ...result.suggest.searchtags_suggest[0].options.map((suggestion) => suggestion.text)
         ].sort())]
     };
+}
+
+export async function fetchStilling(uuid) {
+    return get(`${SEARCH_API}/stillingsok/ad/ad/${uuid}?_source_exclude=${{
+        excludes: [
+            'administration',
+            'categoryList',
+            'contactList',
+            'created',
+            'createdBy',
+            'employer',
+            'expires',
+            'geopoint',
+            'id',
+            'location',
+            'mediaList',
+            'privacy',
+            'properties.author',
+            'properties.industry',
+            'properties.keywords',
+            'properties.occupation',
+            'properties.searchtags',
+            'properties.sourceupdated',
+            'published',
+            'updatedBy',
+            'uuid'
+        ]
+    }.excludes.join(',')}`);
 }
 

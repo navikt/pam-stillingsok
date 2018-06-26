@@ -1,5 +1,5 @@
 import { SET_INITIAL_STATE, FETCH_INITIAL_FACETS_SUCCESS, SEARCH_SUCCESS } from '../../searchReducer';
-import { moveFacetToBottom} from "../utils";
+import { moveFacetToBottom, removeNonExistingFacets } from '../utils';
 
 export const CHECK_ENGAGEMENT_TYPE = 'CHECK_ENGAGEMENT_TYPE';
 export const UNCHECK_ENGAGEMENT_TYPE = 'UNCHECK_ENGAGEMENT_TYPE';
@@ -19,7 +19,11 @@ export default function engagementReducer(state = initialState, action) {
         case FETCH_INITIAL_FACETS_SUCCESS:
             return {
                 ...state,
-                engagementType: moveFacetToBottom(action.response.engagementTypes, 'Annet')
+                engagementType: moveFacetToBottom(action.response.engagementTypes, 'Annet'),
+                checkedEngagementType: removeNonExistingFacets(
+                    state.checkedEngagementType,
+                    action.response.engagementTypes
+                )
             };
         case SEARCH_SUCCESS:
             return {
