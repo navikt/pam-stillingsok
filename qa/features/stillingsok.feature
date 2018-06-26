@@ -21,7 +21,7 @@ Egenskap: Søke og filtrere på stillingsannonser
     Så skal "Oslo" vises i annonsetreffene
     Og antall treff skal stemme overens med antall i fasett "OSLO"
     Når jeg åpner en stillingsannonse
-    Så skal "Oslo" vises under "Om stillingen"
+    Så skal "OSLO" vises under "Om stillingen"
 
   Scenario: Verifisere at filtrering på HeltidDeltid fungerer
     Når jeg filtrerer på "Heltid"
