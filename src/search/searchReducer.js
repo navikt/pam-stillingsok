@@ -29,7 +29,9 @@ export const URL_PARAMETERS_DEFINITION = {
     published: ParameterType.ARRAY,
     engagementType: ParameterType.ARRAY,
     sector: ParameterType.ARRAY,
-    extent: ParameterType.ARRAY
+    extent: ParameterType.ARRAY,
+    occupationFirstLevels: ParameterType.ARRAY,
+    occupationSecondLevels: ParameterType.ARRAY
 };
 
 const initialState = {
@@ -138,9 +140,17 @@ export function toSearchQuery(state) {
         published: state.published.checkedPublished,
         engagementType: state.engagement.checkedEngagementType,
         sector: state.sector.checkedSector,
-        extent: state.extent.checkedExtent
+        extent: state.extent.checkedExtent,
+        occupationFirstLevels: state.occupations.checkedFirstLevels.filter((firstLevel) => {
+            // Hvis man filtrerer på en yrke på andre nivå, må man droppe yrkeskategorien på første nivå.
+            const firstLevelObject = state.occupations.occupationFirstLevels.find((c) => c.key === firstLevel);
+            const found = firstLevelObject.occupationSecondLevels.find((m) => state.occupations.checkedSecondLevels.includes(m.key));
+            return !found;
+        }),
+        occupationSecondLevels: state.occupations.checkedSecondLevels
     };
 }
+
 
 export function toUrlQuery(state) {
     return {
@@ -152,7 +162,9 @@ export function toUrlQuery(state) {
         published: state.published.checkedPublished,
         engagementType: state.engagement.checkedEngagementType,
         sector: state.sector.checkedSector,
-        extent: state.extent.checkedExtent
+        extent: state.extent.checkedExtent,
+        occupationFirstLevels: state.occupations.checkedFirstLevels,
+        occupationSecondLevels: state.occupations.checkedSecondLevels
     };
 }
 
