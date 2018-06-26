@@ -55,11 +55,12 @@ class Search extends React.Component {
                     {this.props.hasError && (
                         <SearchError />
                     )}
-                    {!this.props.initialSearchDone ? (
+                    {!this.props.hasError && !this.props.initialSearchDone && (
                         <div className="Search__spinner">
                             <DelayedSpinner />
                         </div>
-                    ) : (
+                    )}
+                    {!this.props.hasError && this.props.initialSearchDone && (
                         <RestoreScroll>
                             <div>
                                 <Row>
