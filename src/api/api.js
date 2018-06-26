@@ -61,6 +61,14 @@ export async function fetchSearch(query = {}) {
                 count: municipal.doc_count
             }))
         })),
+        occupationFirstLevels: result.aggregations.occupationFirstLevels.values.buckets.map((firstLevel) => ({
+            key: firstLevel.key,
+            count: firstLevel.doc_count,
+            occupationSecondLevels: firstLevel.occupationSecondLevels.buckets.map((secondLevel) => ({
+                key: secondLevel.key,
+                count: secondLevel.doc_count
+            }))
+        })),
         extent: result.aggregations.extent.values.buckets.map((item) => ({
             key: item.key,
             count: item.doc_count
