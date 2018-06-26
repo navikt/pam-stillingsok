@@ -23,7 +23,7 @@ export function moveFacetToBottom(array, itemKey) {
 export function removeNonExistingFacets(checkedFacets, facets, nestedName) {
     return checkedFacets.filter((checked) => {
         const found = facets.find((facet) => {
-            if (nestedName !== undefined) {
+            if (nestedName !== undefined && facet[nestedName]) {
                 return facet[nestedName].find((nested) => checked === nested.key);
             }
             return checked === facet.key;
