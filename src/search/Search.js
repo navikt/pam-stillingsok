@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Container, Row, Column } from 'nav-frontend-grid';
 import { Sidetittel } from 'nav-frontend-typografi';
-import { ToggleGruppe, ToggleKnapp } from 'nav-frontend-skjema';
 import DelayedSpinner from './loading/DelayedSpinner';
 import SearchResults from './searchResults/SearchResults';
 import SearchError from './error/SearchError';
@@ -18,6 +17,7 @@ import { RESTORE_STATE_FROM_URL, INITIAL_SEARCH, SEARCH, SET_MODE } from './sear
 import BackToTop from './backToTopButton/BackToTop';
 import Disclaimer from '../discalimer/Disclaimer';
 import RestoreScroll from './RestoreScroll';
+import ViewMode from './viewMode/ViewMode';
 import './Search.less';
 
 class Search extends React.Component {
@@ -34,10 +34,6 @@ class Search extends React.Component {
     onSearchFormSubmit = (e) => {
         e.preventDefault();
         this.props.search();
-    };
-
-    onViewModeClick = (e) => {
-        this.props.setMode(e.target.value);
     };
 
     render() {
@@ -83,27 +79,7 @@ class Search extends React.Component {
                                             </div>
                                         </Column>
                                         <Column xs="12" md="5">
-                                            <label htmlFor="view-mode-toggle" className="skjemaelement__label">
-                                                Visning
-                                            </label>
-                                            <ToggleGruppe
-                                                id="view-mode-toggle"
-                                                onChange={this.onViewModeClick}
-                                                name="toggleGruppe"
-                                            >
-                                                <ToggleKnapp
-                                                    value="normal"
-                                                    defaultChecked={this.props.mode === 'normal'}
-                                                >
-                                                    Normal
-                                                </ToggleKnapp>
-                                                <ToggleKnapp
-                                                    value="compact"
-                                                    defaultChecked={this.props.mode === 'compact'}
-                                                >
-                                                    Kompakt
-                                                </ToggleKnapp>
-                                            </ToggleGruppe>
+                                            <ViewMode />
                                         </Column>
                                         <Column xs="12" md="3">
                                             <Sorting />
@@ -130,22 +106,18 @@ Search.propTypes = {
     initialSearch: PropTypes.func.isRequired,
     search: PropTypes.func.isRequired,
     hasError: PropTypes.bool.isRequired,
-    initialSearchDone: PropTypes.bool.isRequired,
-    setMode: PropTypes.func.isRequired,
-    mode: PropTypes.string.isRequired
+    initialSearchDone: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => ({
     hasError: state.search.hasError,
-    initialSearchDone: state.search.initialSearchDone,
-    mode: state.search.mode
+    initialSearchDone: state.search.initialSearchDone
 });
 
 const mapDispatchToProps = (dispatch) => ({
     restoreStateFromUrl: () => dispatch({ type: RESTORE_STATE_FROM_URL }),
     initialSearch: () => dispatch({ type: INITIAL_SEARCH }),
-    search: () => dispatch({ type: SEARCH }),
-    setMode: (mode) => dispatch({ type: SET_MODE, mode })
+    search: () => dispatch({ type: SEARCH })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Search);
