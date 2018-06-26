@@ -29,6 +29,7 @@ export const URL_PARAMETERS_DEFINITION = {
     created: ParameterType.ARRAY,
     engagementType: ParameterType.ARRAY,
     sector: ParameterType.ARRAY,
+    expires: ParameterType.ARRAY,
     extent: ParameterType.ARRAY
 };
 
@@ -149,6 +150,7 @@ export function toUrlQuery(state) {
         created: state.created.checkedCreated,
         engagementType: state.engagement.checkedEngagementType,
         sector: state.sector.checkedSector,
+        expires: state.expires.checkedExpires,
         extent: state.extent.checkedExtent
     };
 }

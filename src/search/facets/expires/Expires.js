@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Checkbox } from 'nav-frontend-skjema';
+import { Radio } from 'nav-frontend-skjema';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import { SEARCH } from '../../searchReducer';
 import {
@@ -12,11 +12,12 @@ import './Expires.less';
 
 class Expires extends React.Component {
     onExpiresClick = (e) => {
+        if (this.props.checkedExpires.length !== 0) {
+            this.props.uncheckExpires(this.props.checkedExpires[0]);
+        }
         const { value } = e.target;
-        if (e.target.checked) {
+        if (value !== '0') {
             this.props.checkExpires(value);
-        } else {
-            this.props.uncheckExpires(value);
         }
         this.props.search();
     };
@@ -24,11 +25,6 @@ class Expires extends React.Component {
     render() {
         const { expires, checkedExpires } = this.props;
         let title = 'Søknadsfrist';
-        if (checkedExpires.length === 1) {
-            title += ' (1 valgt)';
-        } else if (checkedExpires.length > 1) {
-            title += ` (${checkedExpires.length} valgte)`;
-        }
         return (
             <Ekspanderbartpanel
                 tittel={title}
@@ -41,11 +37,20 @@ class Expires extends React.Component {
                     aria-label="Expires"
                     className="Expires__inner"
                 >
+                    {(
+                        <Radio
+                            name="expires"
+                            label="Ingen"
+                            value='0'
+                            onChange={this.onExpiresClick}
+                            defaultChecked={true}
+                        />
+                    )}
                     {expires && expires.map((item) => (
-                        <Checkbox
+                        <Radio
                             name="expires"
                             key={item.key}
-                            label={`${item.key} (${item.count})`}
+                            label={`${item.key === 'now/d+1d' ? 'I dag' : item.key === 'now/d+3d' ? 'Neste 3 dager' : item.key === 'now/d+1w' ? 'Neste uke' : item.key === 'now/d+2w' ? 'Neste 14 dager' : 'Neste måned'} (${item.count})`}
                             value={item.key}
                             onChange={this.onExpiresClick}
                             checked={checkedExpires.includes(item.key)}

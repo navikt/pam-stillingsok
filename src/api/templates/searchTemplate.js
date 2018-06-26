@@ -127,7 +127,9 @@ export function filterExpires(expires) {
             filters.bool.should.push({
                 range: {
                     expires: {
-                        gte: 'now/d'
+                        gte: 'now/d',
+                        lt: item,
+                        time_zone: "CET"
                     }
                 }
             });
@@ -259,10 +261,32 @@ export default function searchTemplate(query) {
                     range: {
                         date_range: {
                             field: 'expires',
+                            time_zone: "CET",
                             ranges: [
                                 {
-                                    key: 'I dag',
-                                    from: 'now/d'
+                                    key: 'now/d+1d',
+                                    from: 'now/d',
+                                    to: 'now/d+1d'
+                                },
+                                {
+                                    key: 'now/d+3d',
+                                    from: 'now/d',
+                                    to: 'now/d+3d'
+                                },
+                                {
+                                    key: 'now/d+1w',
+                                    from: 'now/d',
+                                    to: 'now/d+1w'
+                                },
+                                {
+                                    key: 'now/d+2w',
+                                    from: 'now/d',
+                                    to: 'now/d+2w'
+                                },
+                                {
+                                    key: 'now/d+1M',
+                                    from: 'now/d',
+                                    to: 'now/d+1M'
                                 }
                             ]
                         }
