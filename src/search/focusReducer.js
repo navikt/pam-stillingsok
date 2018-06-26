@@ -1,4 +1,4 @@
-import { LOAD_MORE_SUCCESS, RESET_FROM } from './searchReducer';
+import { LOAD_MORE_SUCCESS, RESET_FROM, SET_MODE } from './searchReducer';
 import { FETCH_STILLING_BEGIN } from '../stilling/stillingReducer';
 
 const initialState = {
@@ -7,6 +7,7 @@ const initialState = {
 
 export default function focusReducer(state = initialState, action) {
     switch (action.type) {
+        case SET_MODE:
         case RESET_FROM: {
             return {
                 ...state,

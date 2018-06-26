@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Container, Row, Column } from 'nav-frontend-grid';
 import { Sidetittel } from 'nav-frontend-typografi';
+import { ToggleGruppe, ToggleKnapp } from 'nav-frontend-skjema';
 import DelayedSpinner from './loading/DelayedSpinner';
 import SearchResults from './searchResults/SearchResults';
 import SearchError from './error/SearchError';
@@ -13,7 +14,7 @@ import EngagementType from './facets/engagement/Engagement';
 import Sector from './facets/sector/Sector';
 import Published from './facets/published/Published';
 import SearchBox from './searchBox/SearchBox';
-import { RESTORE_STATE_FROM_URL, INITIAL_SEARCH,SEARCH } from './searchReducer';
+import { RESTORE_STATE_FROM_URL, INITIAL_SEARCH, SEARCH, SET_MODE } from './searchReducer';
 import BackToTop from './backToTopButton/BackToTop';
 import Disclaimer from '../discalimer/Disclaimer';
 import RestoreScroll from './RestoreScroll';
@@ -33,6 +34,10 @@ class Search extends React.Component {
     onSearchFormSubmit = (e) => {
         e.preventDefault();
         this.props.search();
+    };
+
+    onViewModeClick = (e) => {
+        this.props.setMode(e.target.value);
     };
 
     render() {
@@ -69,15 +74,7 @@ class Search extends React.Component {
                                     >
                                         <Column xs="12" md="4">
                                             <div id="sok">
-                                                <div className="Search__searchbox-wrapper">
-                                                    <SearchBox />
-                                                    <a
-                                                        href="#treff"
-                                                        className="typo-normal lenke sr-only sr-only-focusable"
-                                                    >
-                                                        Hopp til søkeresultat
-                                                    </a>
-                                                </div>
+                                                <SearchBox />
                                                 <Published />
                                                 <Counties />
                                                 <HeltidDeltid />
@@ -85,7 +82,29 @@ class Search extends React.Component {
                                                 <Sector />
                                             </div>
                                         </Column>
-                                        <Column xs="12" md="5" />
+                                        <Column xs="12" md="5">
+                                            <label htmlFor="view-mode-toggle" className="skjemaelement__label">
+                                                Visning
+                                            </label>
+                                            <ToggleGruppe
+                                                id="view-mode-toggle"
+                                                onChange={this.onViewModeClick}
+                                                name="toggleGruppe"
+                                            >
+                                                <ToggleKnapp
+                                                    value="normal"
+                                                    defaultChecked={this.props.mode === 'normal'}
+                                                >
+                                                    Normal
+                                                </ToggleKnapp>
+                                                <ToggleKnapp
+                                                    value="compact"
+                                                    defaultChecked={this.props.mode === 'compact'}
+                                                >
+                                                    Kompakt
+                                                </ToggleKnapp>
+                                            </ToggleGruppe>
+                                        </Column>
                                         <Column xs="12" md="3">
                                             <Sorting />
                                         </Column>
@@ -112,17 +131,21 @@ Search.propTypes = {
     search: PropTypes.func.isRequired,
     hasError: PropTypes.bool.isRequired,
     initialSearchDone: PropTypes.bool.isRequired,
+    setMode: PropTypes.func.isRequired,
+    mode: PropTypes.string.isRequired
 };
 
 const mapStateToProps = (state) => ({
     hasError: state.search.hasError,
-    initialSearchDone: state.search.initialSearchDone
+    initialSearchDone: state.search.initialSearchDone,
+    mode: state.search.mode
 });
 
 const mapDispatchToProps = (dispatch) => ({
     restoreStateFromUrl: () => dispatch({ type: RESTORE_STATE_FROM_URL }),
     initialSearch: () => dispatch({ type: INITIAL_SEARCH }),
-    search: () => dispatch({ type: SEARCH })
+    search: () => dispatch({ type: SEARCH }),
+    setMode: (mode) => dispatch({ type: SET_MODE, mode })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Search);

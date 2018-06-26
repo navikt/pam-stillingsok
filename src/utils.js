@@ -22,6 +22,9 @@ export function formatISOString(isoString, format = 'MMMM YYYY') {
             return `${day}.${dt[1]}.${dt[0]}`;
         } else if (format === 'MMMM YYYY') {
             return `${months[dt[1] - 1]} ${dt[0]}`;
+        } else if (format === 'DD.MMM') {
+            const day = dt[2].split('T')[0];
+            return `${day}. ${months[dt[1] - 1].substring(0, 3)}.`;
         }
         throw Error(`Unknown date format: ${format}`);
     }
