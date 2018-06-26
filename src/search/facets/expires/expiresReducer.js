@@ -1,11 +1,9 @@
 import { SET_INITIAL_STATE, FETCH_INITIAL_FACETS_SUCCESS, SEARCH_SUCCESS } from '../../searchReducer';
 
-export const CHECK_EXPIRES = 'CHECK_EXPIRES';
-export const UNCHECK_EXPIRES = 'UNCHECK_EXPIRES';
+export const SET_EXPIRES = 'SET_EXPIRES';
 
 const initialState = {
-    expires: [],
-    checkedExpires: []
+    expires: []
 };
 
 export default function expiresReducer(state = initialState, action) {
@@ -13,12 +11,14 @@ export default function expiresReducer(state = initialState, action) {
         case SET_INITIAL_STATE:
             return {
                 ...state,
-                checkedExpires: action.query.expires || []
+                value: action.query.expires
             };
         case FETCH_INITIAL_FACETS_SUCCESS:
             return {
                 ...state,
-                expires: action.response.expires
+                expires: action.response.expires,
+                // Bruker kan ha en gammel fasett i url, dropp å bruke denne om den ikke lengre finnes
+                value: action.response.expires.find((e) => (e.key === state.value)) ? state.value : undefined
             };
         case SEARCH_SUCCESS:
             return {
@@ -33,18 +33,10 @@ export default function expiresReducer(state = initialState, action) {
                     };
                 })
             };
-        case CHECK_EXPIRES:
+        case SET_EXPIRES:
             return {
                 ...state,
-                checkedExpires: [
-                    ...state.checkedExpires,
-                    action.value
-                ]
-            };
-        case UNCHECK_EXPIRES:
-            return {
-                ...state,
-                checkedExpires: state.checkedExpires.filter((m) => (m !== action.value))
+                value: action.value
             };
         default:
             return state;

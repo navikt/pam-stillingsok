@@ -38,6 +38,17 @@ export default class SearchResultItem extends React.Component {
                                 {formatISOString(stilling.updated, 'D. MMMM YYYY')}
                             </Undertekst>
                         )}
+                        {stilling.expires && (
+                            <Undertekst className="SearchResultItem__updated">
+                                {formatISOString(stilling.expires, 'D. MMMM YYYY')}
+                            </Undertekst>
+                        )}
+
+                        {stilling.properties.applicationdue && (
+                            <Undertekst className="SearchResultItem__updated">
+                                Frist: {stilling.properties.applicationdue}
+                            </Undertekst>
+                        )}
 
                         <Undertittel tag="h3" className="SearchResultItem__title">{stilling.title}</Undertittel>
 

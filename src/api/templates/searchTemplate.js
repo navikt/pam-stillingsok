@@ -1,10 +1,10 @@
-function mapSortByValue(value) {
-    switch (value) {
-        case 'updated':
-        default:
-            return 'updated';
-    }
-}
+const ExpiresRange = {
+    TODAY: { key: 'now/d+1d', label: '1d' },
+    NEXT_3_DAYS: { key: 'now/d+3d', label: '3d' },
+    NEXT_7_DAYS: { key: 'now/d+1w', label: '1w' },
+    NEXT_14_DAYS: { key: 'now/d+2w', label: '2w' },
+    NEXT_MONTH: { key: 'now/d+1M', label: '1m' }
+};
 
 function mapSortByOrder(value) {
     if (value !== 'updated') {
@@ -122,17 +122,18 @@ export function filterExpires(expires) {
             should: []
         }
     };
-    if (expires && expires.length > 0) {
-        expires.forEach((item) => {
-            filters.bool.should.push({
-                range: {
-                    expires: {
-                        gte: 'now/d',
-                        lt: item,
-                        time_zone: "CET"
-                    }
+
+    const found = Object.keys(ExpiresRange).find((key) => ExpiresRange[key].label === expires);
+    if (found) {
+        const expiresKey = ExpiresRange[found].key;
+        filters.bool.should.push({
+            range: {
+                expires: {
+                    gte: 'now/d',
+                    lt: expiresKey,
+                    time_zone: 'CET'
                 }
-            });
+            }
         });
     }
     return filters;
@@ -188,7 +189,7 @@ export default function searchTemplate(query) {
                             filter: {
                                 match: {
                                     'location.municipal': {
-                                        query: q,
+                                        query: q
                                     }
                                 }
                             },
@@ -200,7 +201,7 @@ export default function searchTemplate(query) {
                             filter: {
                                 match: {
                                     'location.county': {
-                                        query: q,
+                                        query: q
                                     }
                                 }
                             },
@@ -233,7 +234,7 @@ export default function searchTemplate(query) {
                 'properties.jobtitle',
                 'properties.location',
                 'properties.applicationdue',
-                'applicationdue',
+                'expires',
                 'title',
                 'updated',
                 'uuid'
@@ -261,30 +262,30 @@ export default function searchTemplate(query) {
                     range: {
                         date_range: {
                             field: 'expires',
-                            time_zone: "CET",
+                            time_zone: 'CET',
                             ranges: [
                                 {
-                                    key: 'now/d+1d',
+                                    key: ExpiresRange.TODAY.label,
                                     from: 'now/d',
                                     to: 'now/d+1d'
                                 },
                                 {
-                                    key: 'now/d+3d',
+                                    key: ExpiresRange.NEXT_3_DAYS.label,
                                     from: 'now/d',
                                     to: 'now/d+3d'
                                 },
                                 {
-                                    key: 'now/d+1w',
+                                    key: ExpiresRange.NEXT_7_DAYS.label,
                                     from: 'now/d',
                                     to: 'now/d+1w'
                                 },
                                 {
-                                    key: 'now/d+2w',
+                                    key: ExpiresRange.NEXT_14_DAYS.label,
                                     from: 'now/d',
                                     to: 'now/d+2w'
                                 },
                                 {
-                                    key: 'now/d+1M',
+                                    key: ExpiresRange.NEXT_MONTH.label,
                                     from: 'now/d',
                                     to: 'now/d+1M'
                                 }
@@ -441,7 +442,7 @@ export default function searchTemplate(query) {
             ...template,
             sort: [
                 {
-                    [mapSortByValue(sort)]: {
+                    [sort]: {
                         order: mapSortByOrder(sort)
                     }
                 },

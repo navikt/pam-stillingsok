@@ -4,27 +4,41 @@ import { connect } from 'react-redux';
 import { Radio } from 'nav-frontend-skjema';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import { SEARCH } from '../../searchReducer';
-import {
-    CHECK_EXPIRES,
-    UNCHECK_EXPIRES
-} from './expiresReducer';
+import { SET_EXPIRES } from './expiresReducer';
 import './Expires.less';
 
 class Expires extends React.Component {
     onExpiresClick = (e) => {
-        if (this.props.checkedExpires.length !== 0) {
-            this.props.uncheckExpires(this.props.checkedExpires[0]);
-        }
         const { value } = e.target;
-        if (value !== '0') {
-            this.props.checkExpires(value);
+        if (value === 'SHOW_ALL') {
+            this.props.setExpires(undefined);
+        } else {
+            this.props.setExpires(value);
         }
         this.props.search();
     };
 
+    toLabel = (key) => {
+        switch (key) {
+            case '1d':
+                return 'I dag';
+            case '3d':
+                return 'Neste 3 dager';
+            case '1w':
+                return 'Neste uke';
+            case '2w':
+                return 'Neste 14 dager';
+            default:
+                return 'Neste måned';
+        }
+    };
+
     render() {
-        const { expires, checkedExpires } = this.props;
+        const { expires, value } = this.props;
         let title = 'Søknadsfrist';
+        if (value !== undefined) {
+            title += ' (1 valgt)';
+        }
         return (
             <Ekspanderbartpanel
                 tittel={title}
@@ -37,51 +51,51 @@ class Expires extends React.Component {
                     aria-label="Expires"
                     className="Expires__inner"
                 >
-                    {(
-                        <Radio
-                            name="expires"
-                            label="Ingen"
-                            value='0'
-                            onChange={this.onExpiresClick}
-                            defaultChecked={true}
-                        />
-                    )}
                     {expires && expires.map((item) => (
                         <Radio
                             name="expires"
                             key={item.key}
-                            label={`${item.key === 'now/d+1d' ? 'I dag' : item.key === 'now/d+3d' ? 'Neste 3 dager' : item.key === 'now/d+1w' ? 'Neste uke' : item.key === 'now/d+2w' ? 'Neste 14 dager' : 'Neste måned'} (${item.count})`}
+                            label={`${this.toLabel(item.key)} (${item.count})`}
                             value={item.key}
                             onChange={this.onExpiresClick}
-                            checked={checkedExpires.includes(item.key)}
+                            checked={value === item.key}
                         />
                     ))}
+                    <Radio
+                        name="expires"
+                        label="Vis alle"
+                        value="SHOW_ALL"
+                        onChange={this.onExpiresClick}
+                        checked={value === undefined}
+                    />
                 </div>
             </Ekspanderbartpanel>
         );
     }
 }
 
+Expires.defaultProps = {
+    value: undefined
+};
+
 Expires.propTypes = {
     expires: PropTypes.arrayOf(PropTypes.shape({
         key: PropTypes.string,
         count: PropTypes.number
     })).isRequired,
-    checkedExpires: PropTypes.arrayOf(PropTypes.string).isRequired,
-    checkExpires: PropTypes.func.isRequired,
-    uncheckExpires: PropTypes.func.isRequired,
+    value: PropTypes.string,
+    setExpires: PropTypes.func.isRequired,
     search: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
     expires: state.expires.expires,
-    checkedExpires: state.expires.checkedExpires
+    value: state.expires.value
 });
 
 const mapDispatchToProps = (dispatch) => ({
     search: () => dispatch({ type: SEARCH }),
-    checkExpires: (value) => dispatch({ type: CHECK_EXPIRES, value }),
-    uncheckExpires: (value) => dispatch({ type: UNCHECK_EXPIRES, value })
+    setExpires: (value) => dispatch({ type: SET_EXPIRES, value })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Expires);

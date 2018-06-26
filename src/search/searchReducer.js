@@ -29,7 +29,7 @@ export const URL_PARAMETERS_DEFINITION = {
     published: ParameterType.ARRAY,
     engagementType: ParameterType.ARRAY,
     sector: ParameterType.ARRAY,
-    expires: ParameterType.ARRAY,
+    expires: ParameterType.STRING,
     extent: ParameterType.ARRAY
 };
 
@@ -139,7 +139,7 @@ export function toSearchQuery(state) {
         published: state.published.checkedPublished,
         engagementType: state.engagement.checkedEngagementType,
         sector: state.sector.checkedSector,
-        expires: state.expires.checkedExpires,
+        expires: state.expires.value,
         extent: state.extent.checkedExtent
     };
 }
@@ -154,7 +154,7 @@ export function toUrlQuery(state) {
         published: state.published.checkedPublished,
         engagementType: state.engagement.checkedEngagementType,
         sector: state.sector.checkedSector,
-        expires: state.expires.checkedExpires,
+        expires: state.expires.value,
         extent: state.extent.checkedExtent
     };
 }
