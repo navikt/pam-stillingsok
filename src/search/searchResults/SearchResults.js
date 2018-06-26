@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import SearchResultItem from './SearchResultsItem';
+import SearchResultsItemCompact from './SearchResultsItemCompact';
 import SearchResultsCount from './SearchResultsCount';
 import Pagination from '../pagination/Pagination';
 import NoResults from '../noResults/NoResults';
@@ -10,7 +11,7 @@ import { toUrl } from '../url';
 import './SearchResults.less';
 
 function SearchResults({
-    searchResult, isSearching, restoreFocusToUuid, page, total, urlQuery
+    searchResult, isSearching, restoreFocusToUuid, page, total, urlQuery, mode
 }) {
     const { stillinger } = searchResult;
     const totalPages = total / PAGE_SIZE;
@@ -22,8 +23,17 @@ function SearchResults({
                 <SearchResultsCount />
             </div>
 
-            {stillinger && stillinger.map((stilling) => (
+            {mode !== 'compact' && stillinger && stillinger.map((stilling) => (
                 <SearchResultItem
+                    key={stilling.uuid}
+                    stilling={stilling}
+                    urlQuery={urlQuery}
+                    shouldFocus={stilling.uuid === restoreFocusToUuid}
+                />
+            ))}
+
+            {mode === 'compact' && stillinger && stillinger.map((stilling) => (
+                <SearchResultsItemCompact
                     key={stilling.uuid}
                     stilling={stilling}
                     urlQuery={urlQuery}
@@ -68,6 +78,7 @@ SearchResults.propTypes = {
     restoreFocusToUuid: PropTypes.string,
     page: PropTypes.number.isRequired,
     total: PropTypes.number.isRequired,
+    mode: PropTypes.string.isRequired,
     urlQuery: PropTypes.string.isRequired
 };
 
@@ -77,6 +88,7 @@ const mapStateToProps = (state) => ({
     restoreFocusToUuid: state.focus.restoreFocusToUuid,
     page: state.search.page,
     total: state.search.searchResult.total,
+    mode: state.search.mode,
     urlQuery: toUrl(toUrlQuery(state))
 });
 

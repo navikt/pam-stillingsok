@@ -17,8 +17,9 @@ export const RESET_FROM = 'RESET_FROM';
 export const LOAD_MORE = 'LOAD_MORE';
 export const LOAD_MORE_BEGIN = 'LOAD_MORE_BEGIN';
 export const LOAD_MORE_SUCCESS = 'LOAD_MORE_SUCCESS';
+export const SET_MODE = 'SET_MODE';
 
-export const PAGE_SIZE = 20;
+export const PAGE_SIZE = 50;
 
 export const URL_PARAMETERS_DEFINITION = {
     q: ParameterType.STRING,
@@ -31,7 +32,8 @@ export const URL_PARAMETERS_DEFINITION = {
     sector: ParameterType.ARRAY,
     extent: ParameterType.ARRAY,
     occupationFirstLevels: ParameterType.ARRAY,
-    occupationSecondLevels: ParameterType.ARRAY
+    occupationSecondLevels: ParameterType.ARRAY,
+    mode: ParameterType.STRING
 };
 
 const initialState = {
@@ -44,7 +46,8 @@ const initialState = {
     },
     hasError: false,
     from: 0,
-    page: 0
+    page: 0,
+    mode: 'normal'
 };
 
 export function mergeAndRemoveDuplicates(array1, array2) {
@@ -64,7 +67,8 @@ export default function searchReducer(state = initialState, action) {
                 hasRestoredStateFromUrl: true,
                 from: 0,
                 to: action.query.to || PAGE_SIZE,
-                page: action.query.to ? (action.query.to - PAGE_SIZE) / PAGE_SIZE : 0
+                page: action.query.to ? (action.query.to - PAGE_SIZE) / PAGE_SIZE : 0,
+                mode: action.query.mode ? action.query.mode : 'normal'
             };
         case RESET_FROM:
             return {
@@ -118,6 +122,11 @@ export default function searchReducer(state = initialState, action) {
                     stillinger: mergeAndRemoveDuplicates(state.searchResult.stillinger, action.response.stillinger)
                 }
             };
+        case SET_MODE:
+            return {
+                ...state,
+                mode: action.mode
+            };
         default:
             return state;
     }
@@ -164,7 +173,8 @@ export function toUrlQuery(state) {
         sector: state.sector.checkedSector,
         extent: state.extent.checkedExtent,
         occupationFirstLevels: state.occupations.checkedFirstLevels,
-        occupationSecondLevels: state.occupations.checkedSecondLevels
+        occupationSecondLevels: state.occupations.checkedSecondLevels,
+        mode: state.search.mode
     };
 }
 
@@ -245,8 +255,14 @@ function* loadMore() {
     }
 }
 
+function* syncUrl() {
+    const state = yield select();
+    window.history.replaceState('', '', toUrl(toUrlQuery(state)) || window.location.pathname);
+}
+
 export const saga = function* saga() {
     yield takeLatest(RESTORE_STATE_FROM_URL, restoreStateFromUrl);
+    yield takeLatest(SET_MODE, syncUrl);
     yield takeLatest(INITIAL_SEARCH, initialSearch);
     yield throttle(1000, SEARCH, search);
     yield takeLatest(LOAD_MORE, loadMore);

@@ -14,10 +14,11 @@ import EngagementType from './facets/engagement/Engagement';
 import Sector from './facets/sector/Sector';
 import Published from './facets/published/Published';
 import SearchBox from './searchBox/SearchBox';
-import { RESTORE_STATE_FROM_URL, INITIAL_SEARCH,SEARCH } from './searchReducer';
+import { RESTORE_STATE_FROM_URL, INITIAL_SEARCH, SEARCH, SET_MODE } from './searchReducer';
 import BackToTop from './backToTopButton/BackToTop';
 import Disclaimer from '../discalimer/Disclaimer';
 import RestoreScroll from './RestoreScroll';
+import ViewMode from './viewMode/ViewMode';
 import './Search.less';
 
 class Search extends React.Component {
@@ -54,11 +55,12 @@ class Search extends React.Component {
                     {this.props.hasError && (
                         <SearchError />
                     )}
-                    {!this.props.initialSearchDone ? (
+                    {!this.props.hasError && !this.props.initialSearchDone && (
                         <div className="Search__spinner">
                             <DelayedSpinner />
                         </div>
-                    ) : (
+                    )}
+                    {!this.props.hasError && this.props.initialSearchDone && (
                         <RestoreScroll>
                             <div>
                                 <Row>
@@ -70,15 +72,7 @@ class Search extends React.Component {
                                     >
                                         <Column xs="12" md="4">
                                             <div id="sok">
-                                                <div className="Search__searchbox-wrapper">
-                                                    <SearchBox />
-                                                    <a
-                                                        href="#treff"
-                                                        className="typo-normal lenke sr-only sr-only-focusable"
-                                                    >
-                                                        Hopp til søkeresultat
-                                                    </a>
-                                                </div>
+                                                <SearchBox />
                                                 <Published />
                                                 <Occupations />
                                                 <Counties />
@@ -87,7 +81,9 @@ class Search extends React.Component {
                                                 <Sector />
                                             </div>
                                         </Column>
-                                        <Column xs="12" md="5" />
+                                        <Column xs="12" md="5">
+                                            <ViewMode />
+                                        </Column>
                                         <Column xs="12" md="3">
                                             <Sorting />
                                         </Column>
@@ -113,7 +109,7 @@ Search.propTypes = {
     initialSearch: PropTypes.func.isRequired,
     search: PropTypes.func.isRequired,
     hasError: PropTypes.bool.isRequired,
-    initialSearchDone: PropTypes.bool.isRequired,
+    initialSearchDone: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => ({

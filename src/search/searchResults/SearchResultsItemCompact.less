@@ -1,0 +1,51 @@
+@import "../../variables";
+
+.SearchResultItemCompact {
+  background-color: #fff;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  color: @navMorkGra;
+  border: 0;
+  margin-bottom: 1px;
+  display: flex;
+
+  &:focus {
+    outline: 4px solid @navOransjeLighten40;
+    border-color: transparent;
+  }
+
+  &:hover {
+    outline: 2px solid @navGronnLighten40;
+    color: @navGronn;
+    border-color: transparent;
+  }
+}
+
+.SearchResultItemCompact__employer{
+  flex: 1;
+}
+
+.SearchResultItemCompact__title{
+  flex: 2;
+}
+
+.SearchResultItemCompact__title,
+.SearchResultItemCompact__location,
+.SearchResultItemCompact__employer{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-right: 1rem;
+}
+
+@media (max-width: @screen-xs-max) {
+  .SearchResultItemCompact__location,
+  .SearchResultItemCompact__employer{
+    font-size: 90%;
+  }
+
+  .SearchResultItemCompact {
+    display: block;
+  }
+}
+
