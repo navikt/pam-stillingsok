@@ -12,9 +12,9 @@ export default function AdDetails({ source }) {
                     <dt key="dt">Sist endret:</dt>,
                     <dd key="dd">{formatISOString(source.updated, 'D. MMMM YYYY')}</dd>
                 ]}
-                {source.source && [
+                {source.medium && [
                     <dt key="dt">Hentet fra:</dt>,
-                    <dd key="dd">{source.source}</dd>
+                    <dd key="dd">{source.medium}</dd>
                 ]}
                 {source.reference && [
                     <dt key="dt">ID nr.:</dt>,
@@ -28,7 +28,7 @@ export default function AdDetails({ source }) {
 AdDetails.propTypes = {
     source: PropTypes.shape({
         updated: PropTypes.string,
-        source: PropTypes.string,
+        medium: PropTypes.string,
         reference: PropTypes.string
     }).isRequired
 };

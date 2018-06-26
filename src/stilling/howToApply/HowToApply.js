@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Undertittel } from 'nav-frontend-typografi';
+import { Undertittel, Undertekst } from 'nav-frontend-typografi';
 import { formatISOString, isValidISOString } from '../../utils';
 import './HowToApply.less';
 
@@ -22,7 +22,7 @@ export function getApplicationUrl(source, properties) {
 
 export default function HowToApply({ source, properties }) {
     const sokUrl = getApplicationUrl(source, properties);
-
+    const finn = source === 'FINN';
     if (properties.applicationdue || properties.applicationemail || sokUrl) {
         return (
             <div className="detail-section">
@@ -36,7 +36,7 @@ export default function HowToApply({ source, properties }) {
                                 properties.applicationdue}
                         </dd>
                     ]}
-                    {properties.applicationemail && [
+                    {!finn && properties.applicationemail && [
                         <dt key="dt">Send søknad til:</dt>,
                         <dd key="dd">
                             <a
@@ -49,14 +49,22 @@ export default function HowToApply({ source, properties }) {
                     ]}
                 </dl>
 
-                {sokUrl && (
+                {sokUrl && sokUrl.startsWith('http') && (
                     <div className="HowToApply__send-button-wrapper">
                         <a
-                            className="knapp knapp--hoved"
+                            className="knapp knapp--hoved blokk-xxs"
                             href={sokUrl}
                         >
-                            Send søknad
+                            <div className="HowToApply__send-button-content">
+                                <i className="HowToApply__send-button-icon" />Søk på stillingen
+                            </div>
                         </a>
+
+                        {finn &&
+                            <Undertekst className="blokk-xs"> Denne annonsen er hentet fra{' '}
+                                <a href="https://www.finn.no" className="lenke">FINN.no</a>. Du kan sende søknad via den opprinnelige annonsen.
+                            </Undertekst>
+                        }
                     </div>
                 )}
             </div>
