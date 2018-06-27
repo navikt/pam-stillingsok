@@ -94,7 +94,7 @@ class Search extends React.Component {
                                         </div>
                                     </Column>
                                 </Row>
-                                <BackToTop offset={300} />
+                                <BackToTop />
                             </div>
                         </RestoreScroll>
                     )}
