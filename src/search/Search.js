@@ -9,12 +9,12 @@ import SearchError from './error/SearchError';
 import Sorting from './sorting/Sorting';
 import Counties from './facets/counties/Counties';
 import Occupations from './facets/occupations/Occupations';
-import HeltidDeltid from './facets/extent/Extent';
+import Extent from './facets/extent/Extent';
 import EngagementType from './facets/engagement/Engagement';
 import Sector from './facets/sector/Sector';
 import Published from './facets/published/Published';
 import SearchBox from './searchBox/SearchBox';
-import { RESTORE_STATE_FROM_URL, INITIAL_SEARCH, SEARCH, SET_MODE } from './searchReducer';
+import { RESTORE_STATE_FROM_URL, INITIAL_SEARCH, SEARCH } from './searchReducer';
 import BackToTop from './backToTopButton/BackToTop';
 import Disclaimer from '../discalimer/Disclaimer';
 import RestoreScroll from './RestoreScroll';
@@ -76,7 +76,7 @@ class Search extends React.Component {
                                                 <Published />
                                                 <Occupations />
                                                 <Counties />
-                                                <HeltidDeltid />
+                                                <Extent />
                                                 <EngagementType />
                                                 <Sector />
                                             </div>

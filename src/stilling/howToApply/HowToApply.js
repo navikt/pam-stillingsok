@@ -25,8 +25,8 @@ export default function HowToApply({ source, properties }) {
     const finn = source === 'FINN';
     if (properties.applicationdue || properties.applicationemail || sokUrl) {
         return (
-            <div className="detail-section">
-                <Undertittel className="detail-section__head">Søknad</Undertittel>
+            <div className="HowToApply detail-section">
+                <Undertittel className="HowToApply__head detail-section__head">Søknad</Undertittel>
                 <dl className="dl-flex typo-normal">
                     {properties.applicationdue && [
                         <dt key="dt">Søknadsfrist:</dt>,
@@ -52,7 +52,7 @@ export default function HowToApply({ source, properties }) {
                 {sokUrl && sokUrl.startsWith('http') && (
                     <div className="HowToApply__send-button-wrapper">
                         <a
-                            className="knapp knapp--hoved blokk-xxs"
+                            className="HowToApply__send-button knapp knapp--hoved blokk-xxs"
                             href={sokUrl}
                         >
                             <div className="HowToApply__send-button-content">

@@ -6,8 +6,8 @@ import { formatISOString, isValidISOString } from '../../utils';
 
 export default function EmploymentDetails({ properties }) {
     return (
-        <div className="detail-section">
-            <Undertittel className="detail-section__head">Om stillingen</Undertittel>
+        <div className="EmploymentDetails detail-section">
+            <Undertittel className="EmploymentDetails__head detail-section__head">Om stillingen</Undertittel>
             <dl className="dl-flex typo-normal">
                 {properties.jobtitle && [
                     <dt key="dt">Stillingstittel:</dt>,

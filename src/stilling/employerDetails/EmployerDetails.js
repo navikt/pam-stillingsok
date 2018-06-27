@@ -13,8 +13,8 @@ export const tilpassLenke = (lenke) => {
 
 export default function EmployerDetails({ properties }) {
     return (
-        <div className="detail-section">
-            <Undertittel className="detail-section__head">Om arbeidsgiveren</Undertittel>
+        <div className="EmployerDetails detail-section">
+            <Undertittel className="EmployerDetails__head detail-section__head">Om arbeidsgiveren</Undertittel>
             <dl className="dl-flex typo-normal">
                 {properties.employer && [
                     <dt key="dt">Arbeidsgiver:</dt>,

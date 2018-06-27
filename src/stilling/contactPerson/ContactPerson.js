@@ -13,8 +13,8 @@ export default function ContactPerson({ properties }) {
     if (properties.contactperson || properties.contactpersontitle
         || properties.contactpersonphone || properties.contactpersonemail) {
         return (
-            <div className="detail-section light-green-bg">
-                <Undertittel className="detail-section__head">Kontaktperson for stillingen</Undertittel>
+            <div className="ContactPerson detail-section">
+                <Undertittel className="ContactPerson__head detail-section__head">Kontaktperson for stillingen</Undertittel>
                 <dl className="dl-flex typo-normal">
                     {properties.contactperson && [
                         <dt key="dt">Kontaktperson:</dt>,
