@@ -16,6 +16,15 @@ export default class SearchResultItem extends React.Component {
 
     render() {
         const { stilling, urlQuery } = this.props;
+
+//TODO: fjern denne:
+        if ( stilling.properties.applicationdue !== undefined &&
+            stilling.properties.applicationdue.length === "11.11.2222".length &&
+            stilling.properties.applicationdue.toLowerCase().trim() !== "snarest" &&
+            (stilling.properties.applicationdue !== formatISOString(stilling.expires, 'D. MMMM YYYY'))
+        ) {
+            console.log(`${stilling.uuid}  - Frist: ${stilling.properties.applicationdue} Utløper: ${formatISOString(stilling.expires, 'D. MMMM YYYY')}`);
+        }
         return (
             <Link
                 innerRef={(link) => {
@@ -35,18 +44,8 @@ export default class SearchResultItem extends React.Component {
                     <Column xs="12" md="8">
                         {stilling.updated && (
                             <Undertekst className="SearchResultItem__updated">
-                                {formatISOString(stilling.updated, 'D. MMMM YYYY')}
-                            </Undertekst>
-                        )}
-                        {stilling.expires && (
-                            <Undertekst className="SearchResultItem__updated">
-                                {formatISOString(stilling.expires, 'D. MMMM YYYY')}
-                            </Undertekst>
-                        )}
-
-                        {stilling.properties.applicationdue && (
-                            <Undertekst className="SearchResultItem__updated">
-                                Frist: {stilling.properties.applicationdue}
+                                Registrert: {formatISOString(stilling.updated, 'D. MMMM YYYY')}{' - '}
+                                Frist: {stilling.properties.applicationdue ? stilling.properties.applicationdue : 'Ikke oppgitt'}
                             </Undertekst>
                         )}
 
