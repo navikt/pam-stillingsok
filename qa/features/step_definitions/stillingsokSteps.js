@@ -1,8 +1,12 @@
 const { client } = require('nightwatch-cucumber');
-const { Given, When, Then } = require('cucumber');
+const { Before, Given, When, Then } = require('cucumber');
 
 const forside = client.page.SokForside();
 const stilling = client.page.Stilling();
+
+Before(() => {
+    return client.useCss(); // I tilfelle et scenario feiler med XPath, så vil neste scenario bruke CSS, som er default.
+});
 
 Given(/^at jeg er på forsiden for søk/, async () => {
     await client.url(client.launch_url);
