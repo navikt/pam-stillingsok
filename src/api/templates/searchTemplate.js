@@ -1,9 +1,9 @@
 const ExpiresRange = {
-    TODAY: { key: 'now/d+1d', label: '1d' },
-    NEXT_3_DAYS: { key: 'now/d+3d', label: '3d' },
-    NEXT_7_DAYS: { key: 'now/d+1w', label: '1w' },
-    NEXT_14_DAYS: { key: 'now/d+2w', label: '2w' },
-    NEXT_MONTH: { key: 'now/d+1M', label: '1m' }
+    TODAY: { key: 'now/d+1d', label: '1d', from: 'now/d', to: 'now/d+1d' },
+    NEXT_3_DAYS: { key: 'now/d+3d', label: '3d', from: 'now/d', to: 'now/d+3d' },
+    NEXT_7_DAYS: { key: 'now/d+1w', label: '1w', from: 'now/d', to: 'now/d+1w' },
+    NEXT_14_DAYS: { key: 'now/d+2w', label: '2w', from: 'now/d', to: 'now/d+2w' },
+    NEXT_MONTH: { key: 'now/d+1M', label: '1m', from: 'now/d', to: 'now/d+1M' }
 };
 
 function mapSortByOrder(value) {
@@ -298,28 +298,28 @@ export default function searchTemplate(query) {
                             ranges: [
                                 {
                                     key: ExpiresRange.TODAY.label,
-                                    from: 'now/d',
-                                    to: 'now/d+1d'
+                                    from: ExpiresRange.TODAY.from,
+                                    to: ExpiresRange.TODAY.to
                                 },
                                 {
                                     key: ExpiresRange.NEXT_3_DAYS.label,
-                                    from: 'now/d',
-                                    to: 'now/d+3d'
+                                    from: ExpiresRange.NEXT_3_DAYS.from,
+                                    to: ExpiresRange.NEXT_3_DAYS.to
                                 },
                                 {
                                     key: ExpiresRange.NEXT_7_DAYS.label,
-                                    from: 'now/d',
-                                    to: 'now/d+1w'
+                                    from: ExpiresRange.NEXT_7_DAYS.from,
+                                    to: ExpiresRange.NEXT_7_DAYS.to
                                 },
                                 {
                                     key: ExpiresRange.NEXT_14_DAYS.label,
-                                    from: 'now/d',
-                                    to: 'now/d+2w'
+                                    from: ExpiresRange.NEXT_14_DAYS.from,
+                                    to: ExpiresRange.NEXT_14_DAYS.to
                                 },
                                 {
                                     key: ExpiresRange.NEXT_MONTH.label,
-                                    from: 'now/d',
-                                    to: 'now/d+1M'
+                                    from: ExpiresRange.NEXT_MONTH.from,
+                                    to: ExpiresRange.NEXT_MONTH.to
                                 }
                             ]
                         }
