@@ -21,7 +21,7 @@ export default class SearchResultItem extends React.Component {
             if (stilling.properties.applicationdue.length <= 10) {
                 frist = stilling.properties.applicationdue;
             } else {
-                frist = stilling.properties.applicationdue.slice(0,10) + '...';
+                frist = stilling.properties.applicationdue.slice(0, 10) + '...';
             }
         } else {
             frist = 'Ikke oppgitt';
