@@ -1,17 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Container } from 'nav-frontend-grid';
 import Chevron from 'nav-frontend-chevron';
+import { toUrlQuery } from '../../search/searchReducer';
+import { toUrl } from '../../search/url';
 import './BackToSearch.less';
 
 function BackToSearchLink({ urlQuery }) {
     return (
         <Link
             to={`/${urlQuery}`}
-            className="lenke BackToSearchLink typo-normal no-print"
+            className="BackToSearchLink knapp knapp--flat no-print"
         >
-            <Chevron stor type="venstre" className="BackToSearchLink__chevron" />
+            <Chevron type="venstre" className="BackToSearchLink__chevron" />
             <span className="BackToSearchLink__text">
                 {urlQuery === '' ? 'Gå til søk' : 'Tilbake'}
             </span>
@@ -27,7 +29,7 @@ BackToSearchLink.propTypes = {
     urlQuery: PropTypes.string
 };
 
-export default class BackToSearch extends React.Component {
+class BackToSearch extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -70,32 +72,37 @@ export default class BackToSearch extends React.Component {
     render() {
         return (
             <div className="BackToSearch">
-                <Container>
-                    <div
-                        ref={(inlineBackButton) => {
-                            this.inlineBackButton = inlineBackButton;
-                        }}
-                        className="BackToSearch__inline"
-                    >
-                        <BackToSearchLink urlQuery={this.props.urlQuery} />
-                    </div>
-                    {this.state.showStickyBackButton && (
-                        <div className="BackToSearch__sticky">
-                            <div className="container">
-                                <BackToSearchLink urlQuery={this.props.urlQuery} />
-                            </div>
+                <div
+                    ref={(inlineBackButton) => {
+                        this.inlineBackButton = inlineBackButton;
+                    }}
+                    className="BackToSearch__inline"
+                >
+                    <BackToSearchLink urlQuery={this.props.urlQuery} />
+                </div>
+                {this.state.showStickyBackButton && (
+                    <div className="BackToSearch__sticky">
+                        <div className="container">
+                            <BackToSearchLink urlQuery={this.props.urlQuery} />
                         </div>
-                    )}
-                </Container>
+                    </div>
+                )}
             </div>
         );
     }
 }
 
 BackToSearch.defaultProps = {
-    urlQuery: undefined
+    urlQuery: ''
 };
 
 BackToSearch.propTypes = {
     urlQuery: PropTypes.string
 };
+
+const mapStateToProps = (state) => ({
+    urlQuery: toUrl(toUrlQuery(state))
+});
+
+
+export default connect(mapStateToProps)(BackToSearch);

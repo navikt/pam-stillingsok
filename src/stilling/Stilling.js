@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Container, Row, Column } from 'nav-frontend-grid';
+import { Flatknapp } from 'nav-frontend-knapper';
 import AdTitle from './adTitle/AdTitle';
 import AdText from './adText/AdText';
 import PersonalAttributes from './requirements/PersonalAttributes';
@@ -17,10 +18,9 @@ import NotFound from './notFound/NotFound';
 import SearchError from '../search/error/SearchError';
 import Expired from './expired/Expired';
 import BackToSearch from './backToSearch/BackToSearch';
-import { RESTORE_STATE_FROM_URL, toUrlQuery } from '../search/searchReducer';
+import { RESTORE_STATE_FROM_URL } from '../search/searchReducer';
 import Disclaimer from '../discalimer/Disclaimer';
 import Skeleton from './loading/Skeleton';
-import { toUrl } from '../search/url';
 import {
     FETCH_STILLING_BEGIN
 } from './stillingReducer';
@@ -48,15 +48,34 @@ class Stilling extends React.Component {
         }
     }
 
+    onPrintClick = () => {
+        window.print();
+    };
+
     render() {
         const {
-            stilling, cachedStilling, isFetchingStilling, error, urlQuery
+            stilling, cachedStilling, isFetchingStilling, error
         } = this.props;
         return (
             <div>
                 <Disclaimer />
 
-                <BackToSearch urlQuery={urlQuery} />
+                <div className="StillingSubMenu no-print">
+                    <Container>
+                        <Row>
+                            <Column xs="6">
+                                <BackToSearch />
+                            </Column>
+                            <Column xs="6">
+                                <div className="StillingSubMenu__right">
+                                    <Flatknapp className="StillingSubMenu__print" onClick={this.onPrintClick}>
+                                        Skriv ut
+                                    </Flatknapp>
+                                </div>
+                            </Column>
+                        </Row>
+                    </Container>
+                </div>
 
                 {error && error.statusCode === 404 ? (
                     <Container>
@@ -120,8 +139,7 @@ class Stilling extends React.Component {
 Stilling.defaultProps = {
     stilling: undefined,
     cachedStilling: undefined,
-    isFetchingStilling: false,
-    urlQuery: ''
+    isFetchingStilling: false
 };
 
 Stilling.propTypes = {
@@ -139,16 +157,14 @@ Stilling.propTypes = {
     }),
     restoreStateFromUrl: PropTypes.func.isRequired,
     getStilling: PropTypes.func.isRequired,
-    isFetchingStilling: PropTypes.bool,
-    urlQuery: PropTypes.string
+    isFetchingStilling: PropTypes.bool
 };
 
 const mapStateToProps = (state) => ({
     isFetchingStilling: state.stilling.isFetchingStilling,
     stilling: state.stilling.stilling,
     cachedStilling: state.stilling.cachedStilling,
-    error: state.stilling.error,
-    urlQuery: toUrl(toUrlQuery(state))
+    error: state.stilling.error
 });
 
 const mapDispatchToProps = (dispatch) => ({
