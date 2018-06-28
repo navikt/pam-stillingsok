@@ -1,3 +1,10 @@
+## RELEASE - 0.31.228-5eecd47
+#### New in this release: 
++ 2018-06-26 [Bugfix] Gjør slik at spinner ikke vises under feildmelding om innlasting av side gikk galt.
++ 2018-06-26 [Feature] Legger til mulighet for å velge to ulike former for layout på treffliste. Noen liker kompakt oversikt, mens andre foretrekker luft. Er derfor mulig å se treffene i bokser eller tabell.
++ 2018-06-25 [Feature] Hvilke fasetter som er tilgjengelige vil variere over tid. F.eks hvis det ikke finnes ledige stilinger med ansetteleseform Sessong, vil heller ikke dette være en mulig fasett.Bruker kan likevel ha en gammel lenke/bokmerke &engagementType=Sesong som inneholder utilgjengelige fasetter. Fjern derfor fasetter fra søket som ikke er tilgjengelige.
++ 2018-06-22 [PAM-1002] Initial setup of prometheus node client
++ 2018-06-19 [PAM-636] Filter for yrkeskategori
 ## RELEASE - 0.30.213-cead01b
 #### New in this release: 
 + 2018-06-24 [Feature] Husker scroll position når siden lastes på nytt.

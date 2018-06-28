@@ -5,8 +5,8 @@ import { formatISOString } from '../../utils';
 
 export default function AdDetails({ source }) {
     return (
-        <div className="detail-section">
-            <Undertittel className="detail-section__head">Om annonsen</Undertittel>
+        <div className="AdDetails detail-section">
+            <Undertittel className="AdDetails__head detail-section__head">Om annonsen</Undertittel>
             <dl className="dl-flex typo-normal">
                 {source.updated && [
                     <dt key="dt">Sist endret:</dt>,

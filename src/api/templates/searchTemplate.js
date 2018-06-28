@@ -80,6 +80,35 @@ export function filterLocation(counties, municipals) {
     return filters;
 }
 
+export function filterOccupation(occupationFirstLevels, occupationSecondLevels) {
+    const filters = {
+        bool: {
+            should: []
+        }
+    };
+    if (occupationFirstLevels && occupationFirstLevels.length > 0) {
+        occupationFirstLevels.forEach((occupationFirstLevel) => {
+            filters.bool.should.push({
+                term: {
+                    occupation_level1_facet: occupationFirstLevel
+                }
+            });
+        });
+    }
+
+    if (occupationSecondLevels && occupationSecondLevels.length > 0) {
+        occupationSecondLevels.forEach((occupationSecondLevel) => {
+            filters.bool.should.push({
+                term: {
+                    occupation_level2_facet: occupationSecondLevel
+                }
+            });
+        });
+    }
+
+    return filters;
+}
+
 export function filterSector(sector) {
     const filters = {
         bool: {
@@ -141,7 +170,8 @@ export function filterExpires(expires) {
 
 export default function searchTemplate(query) {
     const {
-        from, size, counties, municipals, extent, engagementType, sector, published, expires
+        from, size, counties, municipals, extent, engagementType, sector, published, expires,
+        occupationFirstLevels, occupationSecondLevels
     } = query;
     let { sort, q } = query;
 
@@ -221,6 +251,7 @@ export default function searchTemplate(query) {
                     },
                     ...filterExtent(extent),
                     filterLocation(counties, municipals),
+                    filterOccupation(occupationFirstLevels, occupationSecondLevels),
                     filterEngagementType(engagementType),
                     filterSector(sector),
                     filterPublished(published),
@@ -252,6 +283,7 @@ export default function searchTemplate(query) {
                             },
                             ...filterExtent(extent),
                             filterLocation(counties, municipals),
+                            filterOccupation(occupationFirstLevels, occupationSecondLevels),
                             filterEngagementType(engagementType),
                             filterPublished(published),
                             filterSector(sector)
@@ -336,6 +368,7 @@ export default function searchTemplate(query) {
                             },
                             ...filterExtent(extent),
                             filterLocation(counties, municipals),
+                            filterOccupation(occupationFirstLevels, occupationSecondLevels),
                             filterEngagementType(engagementType),
                             filterPublished(published),
                             filterExpires(expires)
@@ -358,6 +391,7 @@ export default function searchTemplate(query) {
                                 }
                             },
                             filterLocation(counties, municipals),
+                            filterOccupation(occupationFirstLevels, occupationSecondLevels),
                             filterEngagementType(engagementType),
                             filterSector(sector),
                             filterPublished(published),
@@ -382,6 +416,7 @@ export default function searchTemplate(query) {
                             },
                             ...filterExtent(extent),
                             filterLocation(counties, municipals),
+                            filterOccupation(occupationFirstLevels, occupationSecondLevels),
                             filterSector(sector),
                             filterPublished(published),
                             filterExpires(expires)
@@ -404,6 +439,7 @@ export default function searchTemplate(query) {
                                 }
                             },
                             ...filterExtent(extent),
+                            filterOccupation(occupationFirstLevels, occupationSecondLevels),
                             filterEngagementType(engagementType),
                             filterSector(sector),
                             filterPublished(published),
@@ -428,6 +464,38 @@ export default function searchTemplate(query) {
                                     order: {
                                         _key: 'asc'
                                     }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            occupationFirstLevels: {
+                filter: {
+                    bool: {
+                        filter: [
+                            {
+                                term: {
+                                    status: 'ACTIVE'
+                                }
+                            },
+                            ...filterExtent(extent),
+                            filterLocation(counties, municipals),
+                            filterEngagementType(engagementType),
+                            filterSector(sector),
+                            filterPublished(published)
+                        ]
+                    }
+                },
+                aggs: {
+                    values: {
+                        terms: {
+                            field: 'occupation_level1_facet'
+                        },
+                        aggs: {
+                            occupationSecondLevels: {
+                                terms: {
+                                    field: 'occupation_level2_facet'
                                 }
                             }
                         }
