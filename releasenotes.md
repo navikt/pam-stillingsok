@@ -1,3 +1,6 @@
+## RELEASE - 0.32.238-73a7f77
+#### New in this release: 
++ 2018-06-28 [Feature] Flere har gitt tilbakemelding på at de savner utskriftsknappen på stillingsannonsen. Etter å ha rådført meg med UU-teamet, legger jeg på en "Skriv ut" knapp, slik at det skal være enkelt å få skrevet ut annonsen.
 ## RELEASE - 0.31.228-5eecd47
 #### New in this release: 
 + 2018-06-26 [Bugfix] Gjør slik at spinner ikke vises under feildmelding om innlasting av side gikk galt.
