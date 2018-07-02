@@ -16,6 +16,12 @@ export default class SearchResultItem extends React.Component {
 
     render() {
         const { stilling, urlQuery } = this.props;
+        let frist;
+        if (stilling.properties.applicationdue !== undefined) {
+            frist = stilling.properties.applicationdue;
+        } else {
+            frist = 'Ikke oppgitt';
+        }
         return (
             <Link
                 innerRef={(link) => {
@@ -33,9 +39,14 @@ export default class SearchResultItem extends React.Component {
                         )}
                     </Column>
                     <Column xs="12" md="8">
-                        {stilling.updated && (
+                        {stilling.updated ? (
                             <Undertekst className="SearchResultItem__updated">
-                                {formatISOString(stilling.updated, 'D. MMMM YYYY')}
+                                Registrert: {formatISOString(stilling.updated, 'D. MMMM YYYY')}{' - '}
+                                Søknadsfrist: {frist}
+                            </Undertekst>
+                        ) : (
+                            <Undertekst className="SearchResultItem__updated">
+                                Søknadsfrist: {frist}
                             </Undertekst>
                         )}
 

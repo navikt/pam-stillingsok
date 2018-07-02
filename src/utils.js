@@ -7,13 +7,6 @@ export function isValidISOString(isoString) {
     return ISO_8601_DATE.test(isoString);
 }
 
-export function toDate(isoString) {
-    if (!isValidISOString(isoString)) {
-        throw Error(`${isoString} is not a valid ISO 8601 date`);
-    }
-    return new Date(isoString);
-}
-
 export function formatISOString(isoString, format = 'MMMM YYYY') {
     if (isValidISOString(isoString)) {
         const dt = isoString.split('-');
@@ -26,9 +19,6 @@ export function formatISOString(isoString, format = 'MMMM YYYY') {
             const day = dt[2].split('T')[0];
             return `${day}. ${months[dt[1] - 1].substring(0, 3)}.`;
         }
-        throw Error(`Unknown date format: ${format}`);
     }
-    return '';
+    return isoString;
 }
-
-export default toDate;
