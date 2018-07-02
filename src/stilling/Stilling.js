@@ -18,7 +18,6 @@ import NotFound from './notFound/NotFound';
 import SearchError from '../search/error/SearchError';
 import Expired from './expired/Expired';
 import BackToSearch from './backToSearch/BackToSearch';
-import { RESTORE_STATE_FROM_URL } from '../search/searchReducer';
 import Disclaimer from '../discalimer/Disclaimer';
 import Skeleton from './loading/Skeleton';
 import {
@@ -30,7 +29,6 @@ class Stilling extends React.Component {
     constructor(props) {
         super(props);
         this.hasSetTitle = false;
-        this.props.restoreStateFromUrl();
     }
 
     componentDidMount() {
@@ -155,7 +153,6 @@ Stilling.propTypes = {
     cachedStilling: PropTypes.shape({
         title: PropTypes.string
     }),
-    restoreStateFromUrl: PropTypes.func.isRequired,
     getStilling: PropTypes.func.isRequired,
     isFetchingStilling: PropTypes.bool
 };
@@ -168,7 +165,6 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    restoreStateFromUrl: () => dispatch({ type: RESTORE_STATE_FROM_URL }),
     getStilling: (uuid) => dispatch({ type: FETCH_STILLING_BEGIN, uuid })
 });
 

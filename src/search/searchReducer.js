@@ -5,7 +5,7 @@ import {
 } from '../api/api';
 import { fromUrl, toUrl, ParameterType } from './url';
 
-export const RESTORE_STATE_FROM_URL = 'RESTORE_STATE_FROM_URL';
+export const RESTORE_PREVIOUS_SEARCH = 'RESTORE_PREVIOUS_SEARCH';
 export const SET_INITIAL_STATE = 'SET_INITIAL_STATE';
 export const INITIAL_SEARCH = 'INITIAL_SEARCH';
 export const FETCH_INITIAL_FACETS_SUCCESS = 'FETCH_INITIAL_FACETS_SUCCESS';
@@ -13,6 +13,7 @@ export const SEARCH = 'SEARCH';
 export const SEARCH_BEGIN = 'SEARCH_BEGIN';
 export const SEARCH_SUCCESS = 'SEARCH_SUCCESS';
 export const SEARCH_FAILURE = 'SEARCH_FAILURE';
+export const REMEMBER_SEARCH = 'REMEMBER_SEARCH';
 export const RESET_FROM = 'RESET_FROM';
 export const LOAD_MORE = 'LOAD_MORE';
 export const LOAD_MORE_BEGIN = 'LOAD_MORE_BEGIN';
@@ -21,7 +22,7 @@ export const SET_MODE = 'SET_MODE';
 
 export const PAGE_SIZE = 50;
 
-export const URL_PARAMETERS_DEFINITION = {
+export const SEARCH_PARAMETERS_DEFINITION = {
     q: ParameterType.STRING,
     sort: ParameterType.STRING,
     to: ParameterType.NUMBER,
@@ -64,7 +65,7 @@ export default function searchReducer(state = initialState, action) {
         case SET_INITIAL_STATE:
             return {
                 ...state,
-                hasRestoredStateFromUrl: true,
+                hasRestoredPreviousSearch: true,
                 from: 0,
                 to: action.query.to || PAGE_SIZE,
                 page: action.query.to ? (action.query.to - PAGE_SIZE) / PAGE_SIZE : 0,
@@ -161,7 +162,7 @@ export function toSearchQuery(state) {
 }
 
 
-export function toUrlQuery(state) {
+export function toQuery(state) {
     return {
         q: state.searchBox.q,
         sort: state.sorting.sort,
@@ -181,13 +182,31 @@ export function toUrlQuery(state) {
 /**
  * Henter ut url query fra browser url første gang siden blir lastet.
  */
-function* restoreStateFromUrl() {
+function* restorePreviousSearch() {
     const state = yield select();
-    if (!state.search.hasRestoredStateFromUrl) {
-        const urlQuery = fromUrl(URL_PARAMETERS_DEFINITION, window.location.href);
-        yield put({ type: SET_INITIAL_STATE, query: urlQuery });
+    if (!state.search.hasRestoredPreviousSearch) {
+        let query = {};
+        try {
+            const previousSearch = yield sessionStorage.getItem('previousSearch');
+            if (previousSearch !== null) {
+                query = fromUrl(SEARCH_PARAMETERS_DEFINITION, previousSearch);
+            }
+        } catch (e) {
+            // Ignore session storage error
+        }
+        yield put({ type: SET_INITIAL_STATE, query });
     }
 }
+
+function* rememberSearch() {
+    const state = yield select();
+    try {
+        sessionStorage.setItem('previousSearch', toUrl(toQuery(state)));
+    } catch (e) {
+        // Ignore session storage error
+    }
+}
+
 
 /**
  * Fetcher alle tilgjengelige fasetter og gjør deretter det første søket.
@@ -226,7 +245,6 @@ function* search() {
         yield put({ type: RESET_FROM });
         const state = yield select();
         const query = toSearchQuery(state);
-        window.history.replaceState('', '', toUrl(toUrlQuery(state)) || window.location.pathname);
         yield put({ type: SEARCH_BEGIN, query });
         const searchResult = yield call(fetchSearch, query);
         yield put({ type: SEARCH_SUCCESS, response: searchResult });
@@ -242,7 +260,6 @@ function* search() {
 function* loadMore() {
     try {
         const state = yield select();
-        window.history.replaceState('', '', toUrl(toUrlQuery(state)) || window.location.pathname);
         yield put({ type: LOAD_MORE_BEGIN });
         const response = yield call(fetchSearch, toSearchQuery(state));
         yield put({ type: LOAD_MORE_SUCCESS, response });
@@ -255,14 +272,9 @@ function* loadMore() {
     }
 }
 
-function* syncUrl() {
-    const state = yield select();
-    window.history.replaceState('', '', toUrl(toUrlQuery(state)) || window.location.pathname);
-}
-
 export const saga = function* saga() {
-    yield takeLatest(RESTORE_STATE_FROM_URL, restoreStateFromUrl);
-    yield takeLatest(SET_MODE, syncUrl);
+    yield takeLatest(RESTORE_PREVIOUS_SEARCH, restorePreviousSearch);
+    yield takeLatest(REMEMBER_SEARCH, rememberSearch);
     yield takeLatest(INITIAL_SEARCH, initialSearch);
     yield throttle(1000, SEARCH, search);
     yield takeLatest(LOAD_MORE, loadMore);

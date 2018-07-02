@@ -15,14 +15,14 @@ export default class SearchResultItem extends React.Component {
     }
 
     render() {
-        const { stilling, urlQuery } = this.props;
+        const { stilling } = this.props;
         return (
             <Link
                 innerRef={(link) => {
                     this.link = link;
                 }}
                 className="SearchResultItem"
-                to={`${STILLING}${stilling.uuid}${urlQuery}`}
+                to={`${STILLING}${stilling.uuid}`}
             >
                 <Row className="SearchResultItem__row">
                     <Column xs="12" md="4">
@@ -62,8 +62,7 @@ export default class SearchResultItem extends React.Component {
 }
 
 SearchResultItem.defaultProps = {
-    shouldFocus: false,
-    urlQuery: ''
+    shouldFocus: false
 };
 
 SearchResultItem.propTypes = {
@@ -77,6 +76,5 @@ SearchResultItem.propTypes = {
             updated: PropTypes.string
         })
     }).isRequired,
-    shouldFocus: PropTypes.bool,
-    urlQuery: PropTypes.string
+    shouldFocus: PropTypes.bool
 };

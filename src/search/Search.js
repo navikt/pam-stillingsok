@@ -14,7 +14,7 @@ import EngagementType from './facets/engagement/Engagement';
 import Sector from './facets/sector/Sector';
 import Published from './facets/published/Published';
 import SearchBox from './searchBox/SearchBox';
-import { RESTORE_STATE_FROM_URL, INITIAL_SEARCH, SEARCH } from './searchReducer';
+import { RESTORE_PREVIOUS_SEARCH, INITIAL_SEARCH, SEARCH, REMEMBER_SEARCH } from './searchReducer';
 import BackToTop from './backToTopButton/BackToTop';
 import Disclaimer from '../discalimer/Disclaimer';
 import RestoreScroll from './RestoreScroll';
@@ -24,12 +24,16 @@ import './Search.less';
 class Search extends React.Component {
     constructor(props) {
         super(props);
-        this.props.restoreStateFromUrl();
+        this.props.restorePreviousSearch();
         this.props.initialSearch();
     }
 
     componentDidMount() {
         document.title = 'Ledige stillinger';
+    }
+
+    componentWillUnmount() {
+        this.props.rememberSearch();
     }
 
     onSearchFormSubmit = (e) => {
@@ -105,9 +109,10 @@ class Search extends React.Component {
 }
 
 Search.propTypes = {
-    restoreStateFromUrl: PropTypes.func.isRequired,
+    restorePreviousSearch: PropTypes.func.isRequired,
     initialSearch: PropTypes.func.isRequired,
     search: PropTypes.func.isRequired,
+    rememberSearch: PropTypes.func.isRequired,
     hasError: PropTypes.bool.isRequired,
     initialSearchDone: PropTypes.bool.isRequired
 };
@@ -118,9 +123,10 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    restoreStateFromUrl: () => dispatch({ type: RESTORE_STATE_FROM_URL }),
+    restorePreviousSearch: () => dispatch({ type: RESTORE_PREVIOUS_SEARCH }),
     initialSearch: () => dispatch({ type: INITIAL_SEARCH }),
-    search: () => dispatch({ type: SEARCH })
+    search: () => dispatch({ type: SEARCH }),
+    rememberSearch: () => dispatch({ type: REMEMBER_SEARCH })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Search);
