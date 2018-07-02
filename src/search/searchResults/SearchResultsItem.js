@@ -18,11 +18,7 @@ export default class SearchResultItem extends React.Component {
         const { stilling, urlQuery } = this.props;
         let frist;
         if (stilling.properties.applicationdue !== undefined) {
-            if (stilling.properties.applicationdue.length <= 10) {
-                frist = stilling.properties.applicationdue;
-            } else {
-                frist = stilling.properties.applicationdue.slice(0, 10) + '...';
-            }
+            frist = stilling.properties.applicationdue;
         } else {
             frist = 'Ikke oppgitt';
         }
@@ -43,9 +39,13 @@ export default class SearchResultItem extends React.Component {
                         )}
                     </Column>
                     <Column xs="12" md="8">
-                        {stilling.updated && (
+                        {stilling.updated ? (
                             <Undertekst className="SearchResultItem__updated">
                                 Registrert: {formatISOString(stilling.updated, 'D. MMMM YYYY')}{' - '}
+                                Søknadsfrist: {frist}
+                            </Undertekst>
+                        ) : (
+                            <Undertekst className="SearchResultItem__updated">
                                 Søknadsfrist: {frist}
                             </Undertekst>
                         )}
