@@ -1,35 +1,23 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Chevron from 'nav-frontend-chevron';
-import { toUrlQuery } from '../../search/searchReducer';
-import { toUrl } from '../../search/url';
 import './BackToSearch.less';
 
-function BackToSearchLink({ urlQuery }) {
+function BackToSearchLink() {
     return (
         <Link
-            to={`/${urlQuery}`}
+            to="/"
             className="BackToSearchLink knapp knapp--flat no-print"
         >
             <Chevron type="venstre" className="BackToSearchLink__chevron" />
             <span className="BackToSearchLink__text">
-                {urlQuery === '' ? 'Gå til søk' : 'Tilbake'}
+                Tilbake
             </span>
         </Link>
     );
 }
 
-BackToSearchLink.defaultProps = {
-    urlQuery: undefined
-};
-
-BackToSearchLink.propTypes = {
-    urlQuery: PropTypes.string
-};
-
-class BackToSearch extends React.Component {
+export default class BackToSearch extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -78,12 +66,12 @@ class BackToSearch extends React.Component {
                     }}
                     className="BackToSearch__inline"
                 >
-                    <BackToSearchLink urlQuery={this.props.urlQuery} />
+                    <BackToSearchLink />
                 </div>
                 {this.state.showStickyBackButton && (
                     <div className="BackToSearch__sticky">
                         <div className="container">
-                            <BackToSearchLink urlQuery={this.props.urlQuery} />
+                            <BackToSearchLink />
                         </div>
                     </div>
                 )}
@@ -92,17 +80,3 @@ class BackToSearch extends React.Component {
     }
 }
 
-BackToSearch.defaultProps = {
-    urlQuery: ''
-};
-
-BackToSearch.propTypes = {
-    urlQuery: PropTypes.string
-};
-
-const mapStateToProps = (state) => ({
-    urlQuery: toUrl(toUrlQuery(state))
-});
-
-
-export default connect(mapStateToProps)(BackToSearch);
