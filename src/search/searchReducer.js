@@ -196,6 +196,7 @@ function* restorePreviousSearch() {
         }
         yield put({ type: SET_INITIAL_STATE, query });
     }
+    sessionStorage.removeItem('previousSearch');
 }
 
 function* rememberSearch() {
