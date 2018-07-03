@@ -184,19 +184,19 @@ export function toQuery(state) {
  */
 function* restorePreviousSearch() {
     const state = yield select();
-    if (!state.search.hasRestoredPreviousSearch) {
-        let query = {};
-        try {
+    try {
+        if (!state.search.hasRestoredPreviousSearch) {
+            let query = {};
             const previousSearch = yield sessionStorage.getItem('previousSearch');
             if (previousSearch !== null) {
                 query = fromUrl(SEARCH_PARAMETERS_DEFINITION, previousSearch);
             }
-        } catch (e) {
-            // Ignore session storage error
+            yield put({ type: SET_INITIAL_STATE, query });
         }
-        yield put({ type: SET_INITIAL_STATE, query });
+        sessionStorage.removeItem('previousSearch');
+    } catch (e) {
+        // Ignore session storage error
     }
-    sessionStorage.removeItem('previousSearch');
 }
 
 function* rememberSearch() {
