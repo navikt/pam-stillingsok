@@ -1,3 +1,8 @@
+## RELEASE - 0.33.240-371b6ea
+#### New in this release: 
++ 2018-07-02 [Bugfix] Annonsesiden sin url har alle url-parameterene fra søket. Annonsesiden sin url inneholder derfor f.eks ?q=bachelor&county=OSLO. Spesielt ved deling av url til annonser, så ønsker man ikke at disse parameterene skal bli med. I stedet for å bruke url for å huske søket, når bruker går ut og inn av siden, bruker vi sessionStorage.
++ 2018-06-28 [Feature] Legger til søknadsfrist i resultatvisningen
++ 2018-06-28 [Feature] Legger til søknadsfrist i resultatvisningen
 ## RELEASE - 0.32.238-73a7f77
 #### New in this release: 
 + 2018-06-28 [Feature] Flere har gitt tilbakemelding på at de savner utskriftsknappen på stillingsannonsen. Etter å ha rådført meg med UU-teamet, legger jeg på en "Skriv ut" knapp, slik at det skal være enkelt å få skrevet ut annonsen.
