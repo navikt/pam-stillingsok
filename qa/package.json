@@ -13,17 +13,14 @@
     "cucumber-report": "node createHtmlReports.js"
   },
   "devDependencies": {
-    "babel-core": "^6.26.0",
-    "babel-plugin-add-module-exports": "^0.2.1",
-    "babel-preset-es2015": "^6.24.1",
-    "babel-register": "^6.26.0",
-    "chromedriver": "^2.36.0",
-    "cucumber": "^3.2.1",
-    "cucumber-html-report": "^0.6.4",
-    "cucumber-pretty": "^1.4.0",
-    "moment": "^2.21.0",
-    "nightwatch": "^0.9.20",
-    "nightwatch-cucumber": "^8.2.14",
-    "selenium-server-standalone-jar": "^3.9.1"
+    "babel-core": "^6.26.3",
+    "babel-preset-env": "^1.7.0",
+    "chromedriver": "2.38.3",
+    "cucumber": "3.2.1",
+    "cucumber-html-report": "^0.6.5",
+    "cucumber-pretty": "^1.4.4",
+    "nightwatch": "0.9.20",
+    "nightwatch-cucumber": "8.2.14",
+    "selenium-server-standalone-jar": "^3.12.0"
   }
 }
