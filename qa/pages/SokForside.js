@@ -5,15 +5,26 @@ module.exports = {
         noResult:'div[class=NoResults]',
         searchResultItem:'a[class*=SearchResultItem]',
         searchResultCount:'h2[class*=SearchResultsCount]',
+        searchResultLocation: '.SearchResultItem__location'
     },
 
     commands : [{
+        pagePause: function(ms) {
+            return this.api.pause(ms).page.SokForside();
+        },
+
         doTextSearch : function(text) {
             return this.setValue('@searchTextField', text + this.api.Keys.ENTER);
         },
 
         searchResultContainsWord: function(word) {
-            return this.expect.element('@searchResult').text.to.contain(word).before(2000);
+            return this.pagePause(2000).expect.element('@searchResult').text.to.contain(word);
+        },
+
+        searchResultContainsLocation: function(sted) {
+            return this.pagePause(2000).getText('@searchResultLocation', function(result) {
+                this.assert.equal(result.value, sted);
+            });
         },
 
         verifyFilterCount: function(filter){
