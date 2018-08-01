@@ -1,3 +1,4 @@
+const seleniumServer = require('selenium-server-standalone-jar');
 require('nightwatch-cucumber')({
     cucumberArgs: [
         '--require-module', 'babel-core/register',
@@ -12,7 +13,7 @@ module.exports = {
     "page_objects_path" : "./pages",
     "selenium": {
         "start_process": true,
-        "server_path": "./node_modules/selenium-server-standalone-jar/jar/selenium-server-standalone-3.13.0.jar",
+        "server_path": seleniumServer.path,
         "host": "127.0.0.1",
         "port": 4444, // standard selenium port
     },
