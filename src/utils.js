@@ -22,3 +22,21 @@ export function formatISOString(isoString, format = 'MMMM YYYY') {
     }
     return isoString;
 }
+
+export function isValidUrl(input) {
+    const pattern = new RegExp('^(https?:\\/\\/)' + // protocol (requires http://or https://)
+        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,})' + // domain name
+        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
+        '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
+        '(\\#[-a-z\\d_]*)?$','i'); // fragment locater
+
+    if (pattern.test(input)) {
+        return true;
+    }
+    return false;
+}
+
+export function isValidEmail(input) {
+    return input.includes('@');
+}
+
