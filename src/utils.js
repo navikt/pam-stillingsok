@@ -36,13 +36,3 @@ export function isValidUrl(input) {
     return false;
 }
 
-export function isValidEmail(input) {
-    // Regex hentet fra: https://www.w3.org/TR/html5/forms.html#valid-e-mail-address
-    const pattern = new RegExp('^[a-zA-Z0-9.!#$%&\'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?' +
-        '(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$');
-
-    if (pattern.test(input)) {
-        return true;
-    }
-    return false;
-}
