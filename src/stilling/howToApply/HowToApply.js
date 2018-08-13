@@ -4,13 +4,6 @@ import { Undertittel, Undertekst } from 'nav-frontend-typografi';
 import { formatISOString, isValidISOString, isValidUrl, isValidEmail } from '../../utils';
 import './HowToApply.less';
 
-export const tilpassEmail = (email) => {
-    if (!email.includes('mailto:')) {
-        return `mailto:${email}`;
-    }
-    return email;
-};
-
 export function getApplicationUrl(source, properties) {
     if (source === 'FINN') {
         return properties.sourceurl;
@@ -42,7 +35,7 @@ export default function HowToApply({ source, properties }) {
                             {isValidEmail(properties.applicationemail) ?
                                 <a
                                     className="lenke"
-                                    href={tilpassEmail(properties.applicationemail)}
+                                    href={`mailto:${properties.applicationemail}`}
                                 >
                                     {properties.applicationemail}
                                 </a>

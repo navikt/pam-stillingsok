@@ -1,13 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Undertittel } from 'nav-frontend-typografi';
-
-export const tilpassEmail = (email) => {
-    if (email.includes('@') && !email.includes('mailto:')) {
-        return `mailto:${email}`;
-    }
-    return email;
-};
+import { isValidEmail } from '../../utils';
 
 export default function ContactPerson({ properties }) {
     if (properties.contactperson || properties.contactpersontitle
@@ -31,12 +25,15 @@ export default function ContactPerson({ properties }) {
                     {properties.contactpersonemail && [
                         <dt key="dt">Epost:</dt>,
                         <dd key="dd">
-                            <a
-                                href={tilpassEmail(properties.contactpersonemail)}
-                                className="lenke"
-                            >
-                                {properties.contactpersonemail}
-                            </a>
+                            {isValidEmail(properties.contactpersonemail) ?
+                                <a
+                                    href={`mailto:${properties.contactpersonemail}`}
+                                    className="lenke"
+                                >
+                                    {properties.contactpersonemail}
+                                </a>
+                                : properties.contactpersonemail
+                            }
                         </dd>
                     ]}
                 </dl>
