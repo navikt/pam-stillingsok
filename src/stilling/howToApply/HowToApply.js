@@ -33,9 +33,13 @@ export default function HowToApply({ source, properties }) {
                         <dt key="dt">Send søknad til:</dt>,
                         <dd key="dd">{properties.applicationemail}</dd>
                     ]}
+                    {sokUrl && !isValidUrl(sokUrl) && [
+                        <dt key="dt">Søknadslenke:</dt>,
+                        <dd key="dd">{sokUrl}</dd>
+                    ]}
                 </dl>
 
-                {sokUrl && isValidUrl(sokUrl) ? (
+                {sokUrl && isValidUrl(sokUrl) && (
                     <div className="HowToApply__send-button-wrapper">
                         <a
                             className="HowToApply__send-button knapp knapp--hoved blokk-xxs"
@@ -53,12 +57,6 @@ export default function HowToApply({ source, properties }) {
                             </Undertekst>
                         }
                     </div>)
-                    : (
-                        <dl className="dl-flex typo-normal">
-                            <dt key="dt">Søknadslenke:</dt>
-                            <dd key="dd">{sokUrl}</dd>
-                        </dl>
-                    )
                 }
             </div>
         );
