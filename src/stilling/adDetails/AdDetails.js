@@ -17,8 +17,12 @@ export default function AdDetails({ source }) {
                     <dd key="dd">{source.medium}</dd>
                 ]}
                 {source.reference && [
-                    <dt key="dt">ID nr.:</dt>,
+                    <dt key="dt">Referanse:</dt>,
                     <dd key="dd">{source.reference}</dd>
+                ]}
+                {source.id && [
+                    <dt key="dt">Stillingsnummer:</dt>,
+                    <dd key="dd">{source.id}</dd>
                 ]}
             </dl>
         </div>
@@ -29,7 +33,8 @@ AdDetails.propTypes = {
     source: PropTypes.shape({
         updated: PropTypes.string,
         medium: PropTypes.string,
-        reference: PropTypes.string
+        reference: PropTypes.string,
+        id: PropTypes.string
     }).isRequired
 };
 

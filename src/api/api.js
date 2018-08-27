@@ -111,7 +111,6 @@ export async function fetchStilling(uuid) {
             'employer',
             'expires',
             'geopoint',
-            'id',
             'location',
             'mediaList',
             'privacy',
