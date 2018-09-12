@@ -14,12 +14,13 @@ import publishedReducer from './search/facets/published/publishedReducer';
 import engagementReducer from './search/facets/engagement/engagementReducer';
 import sectorReducer from './search/facets/sector/sectorReducer';
 import extentReducer from './search/facets/extent/extentReducer';
-import focusReducer from './search/focusReducer';
 import disclaimerReducer from './discalimer/disclaimerReducer';
+import favoritesReducer, { favoritesSaga } from './favorites/favoritesReducer';
 import SearchPage from './search/Search';
 import StillingPage from './stilling/Stilling';
 import Invite from './invite/Invite';
 import { CONTEXT_PATH } from './fasitProperties';
+import Favorites from './favorites/Favorites';
 import './styles.less';
 import './variables.less';
 
@@ -36,13 +37,14 @@ const store = createStore(combineReducers({
     sector: sectorReducer,
     extent: extentReducer,
     stilling: stillingReducer,
-    focus: focusReducer,
-    disclaimer: disclaimerReducer
+    disclaimer: disclaimerReducer,
+    favorites: favoritesReducer
 }), applyMiddleware(sagaMiddleware));
 
 sagaMiddleware.run(saga);
 sagaMiddleware.run(searchBoxSaga);
 sagaMiddleware.run(stillingSaga);
+sagaMiddleware.run(favoritesSaga);
 
 ReactDOM.render(
     <Provider store={store}>
@@ -51,10 +53,10 @@ ReactDOM.render(
                 <Route exact path="/" component={SearchPage} />
                 <Route path={`${CONTEXT_PATH}/stilling/:uuid`} component={StillingPage} />
                 <Route path={`${CONTEXT_PATH}/mobil`} component={Invite} />
+                <Route path={`${CONTEXT_PATH}/favoritter`} component={Favorites} />
                 <Route path="*" component={SearchPage} />
             </Switch>
         </BrowserRouter>
     </Provider>,
     document.getElementById('app')
 );
-

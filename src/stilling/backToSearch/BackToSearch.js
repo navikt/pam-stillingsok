@@ -11,7 +11,7 @@ function BackToSearchLink() {
         >
             <Chevron type="venstre" className="BackToSearchLink__chevron" />
             <span className="BackToSearchLink__text">
-                Tilbake
+                Til stillingssøk
             </span>
         </Link>
     );

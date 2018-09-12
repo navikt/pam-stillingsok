@@ -10,7 +10,7 @@ import { PAGE_SIZE } from '../searchReducer';
 import './SearchResults.less';
 
 function SearchResults({
-    searchResult, isSearching, restoreFocusToUuid, page, total, mode
+    searchResult, isSearching, page, total, mode
 }) {
     const { stillinger } = searchResult;
     const totalPages = total / PAGE_SIZE;
@@ -26,7 +26,6 @@ function SearchResults({
                 <SearchResultItem
                     key={stilling.uuid}
                     stilling={stilling}
-                    shouldFocus={stilling.uuid === restoreFocusToUuid}
                 />
             ))}
 
@@ -34,7 +33,6 @@ function SearchResults({
                 <SearchResultsItemCompact
                     key={stilling.uuid}
                     stilling={stilling}
-                    shouldFocus={stilling.uuid === restoreFocusToUuid}
                 />
             ))}
 
@@ -63,16 +61,11 @@ function SearchResults({
     );
 }
 
-SearchResults.defaultProps = {
-    restoreFocusToUuid: undefined
-};
-
 SearchResults.propTypes = {
     searchResult: PropTypes.shape({
         stillinger: PropTypes.arrayOf(PropTypes.object)
     }).isRequired,
     isSearching: PropTypes.bool.isRequired,
-    restoreFocusToUuid: PropTypes.string,
     page: PropTypes.number.isRequired,
     total: PropTypes.number.isRequired,
     mode: PropTypes.string.isRequired
@@ -81,7 +74,6 @@ SearchResults.propTypes = {
 const mapStateToProps = (state) => ({
     isSearching: state.search.isSearching,
     searchResult: state.search.searchResult,
-    restoreFocusToUuid: state.focus.restoreFocusToUuid,
     page: state.search.page,
     total: state.search.searchResult.total,
     mode: state.search.mode

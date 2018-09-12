@@ -1,0 +1,56 @@
+@import "../variables";
+
+.Favorites__backbutton {
+    padding: 0.5rem 0;
+    background-color: #fff;
+}
+
+.Favorites__backbutton__container {
+    max-width: 50rem;
+    margin: 0 auto;
+}
+
+.Favorites__header {
+    background-color: @background-green;
+    margin-bottom: 1rem;
+    padding: 3rem 0;
+}
+
+.Favorites__header__container,
+.Favorites__main {
+    max-width: 50rem;
+}
+
+.Favorite {
+    background-color: #fff;
+    padding: 1rem 2rem;
+    display: block;
+    border: 1px solid @border-gray;
+    margin-bottom: 1rem;
+}
+
+.Favorite__buttons {
+    text-align: right;
+}
+
+.Favorites__modal {
+    padding: 1rem;
+}
+
+.Favorites__modal__title {
+    margin-bottom: 1rem;
+}
+
+.Favorites__modal__message {
+    margin-bottom: 1.5rem;
+}
+
+.Favorites__modal__buttons .knapp:not(:last-child) {
+    margin-right: 1rem;
+}
+
+@media (min-width: @screen-md-min) {
+    .Favorites__modal {
+        min-width: 30rem;
+    }
+}

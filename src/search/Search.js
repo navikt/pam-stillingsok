@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { Container, Row, Column } from 'nav-frontend-grid';
 import { Sidetittel } from 'nav-frontend-typografi';
 import DelayedSpinner from './loading/DelayedSpinner';
@@ -19,6 +20,8 @@ import BackToTop from './backToTopButton/BackToTop';
 import Disclaimer from '../discalimer/Disclaimer';
 import RestoreScroll from './RestoreScroll';
 import ViewMode from './viewMode/ViewMode';
+import { FETCH_FAVORITES } from '../favorites/favoritesReducer';
+import FavoriteAlertStripe from '../favorites/FavoriteAlertStripe';
 import './Search.less';
 
 class Search extends React.Component {
@@ -29,6 +32,7 @@ class Search extends React.Component {
     }
 
     componentDidMount() {
+        this.props.fetchFavorites();
         document.title = 'Ledige stillinger';
     }
 
@@ -45,17 +49,24 @@ class Search extends React.Component {
         return (
             <div className="Search">
                 <Disclaimer />
+                <FavoriteAlertStripe />
                 <div className="Search__header">
                     <Container>
                         <Row>
                             <Column xs="12">
-                                <Sidetittel className="Search__header__title">Ledige stillinger</Sidetittel>
+                                <div className="Search__header__flex">
+                                    <Sidetittel className="Search__header__title">Ledige stillinger</Sidetittel>
+                                    <div>
+                                        <Link className="knapp knapp--mini" to="/favoritter">
+                                            Favoritter ({this.props.favorites.length})
+                                        </Link>
+                                    </div>
+                                </div>
                             </Column>
                         </Row>
                     </Container>
                 </div>
                 <Container className="Search__main">
-
                     {this.props.hasError && (
                         <SearchError />
                     )}
@@ -113,20 +124,24 @@ Search.propTypes = {
     initialSearch: PropTypes.func.isRequired,
     search: PropTypes.func.isRequired,
     rememberSearch: PropTypes.func.isRequired,
+    fetchFavorites: PropTypes.func.isRequired,
     hasError: PropTypes.bool.isRequired,
-    initialSearchDone: PropTypes.bool.isRequired
+    initialSearchDone: PropTypes.bool.isRequired,
+    favorites: PropTypes.arrayOf(PropTypes.string).isRequired
 };
 
 const mapStateToProps = (state) => ({
     hasError: state.search.hasError,
-    initialSearchDone: state.search.initialSearchDone
+    initialSearchDone: state.search.initialSearchDone,
+    favorites: state.favorites.favorites
 });
 
 const mapDispatchToProps = (dispatch) => ({
     restorePreviousSearch: () => dispatch({ type: RESTORE_PREVIOUS_SEARCH }),
     initialSearch: () => dispatch({ type: INITIAL_SEARCH }),
     search: () => dispatch({ type: SEARCH }),
-    rememberSearch: () => dispatch({ type: REMEMBER_SEARCH })
+    rememberSearch: () => dispatch({ type: REMEMBER_SEARCH }),
+    fetchFavorites: () => dispatch({ type: FETCH_FAVORITES })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Search);

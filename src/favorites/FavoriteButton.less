@@ -1,0 +1,28 @@
+@import "../variables";
+
+.FavoriteButton {
+  background: none;
+  border-radius: 0.125rem;
+  border: 2px solid transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:focus {
+    background: @navGronnLighten80;
+    outline: none;
+  }
+
+  &:hover {
+    background: @navGronnLighten80;
+  }
+}
+
+.FavoriteButton__star {
+  font-size: 2rem;
+  color: @navGronn;
+}
+
+.FavoriteButton__label {
+  margin-left: 0.5rem;
+}

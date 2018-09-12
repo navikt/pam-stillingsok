@@ -2,8 +2,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { Container, Row, Column } from 'nav-frontend-grid';
 import { Flatknapp } from 'nav-frontend-knapper';
+import { Normaltekst } from 'nav-frontend-typografi';
 import AdTitle from './adTitle/AdTitle';
 import AdText from './adText/AdText';
 import PersonalAttributes from './requirements/PersonalAttributes';
@@ -20,10 +22,11 @@ import Expired from './expired/Expired';
 import BackToSearch from './backToSearch/BackToSearch';
 import Disclaimer from '../discalimer/Disclaimer';
 import Skeleton from './loading/Skeleton';
-import {
-    FETCH_STILLING_BEGIN
-} from './stillingReducer';
+import { FETCH_STILLING_BEGIN } from './stillingReducer';
+import FavoriteButton from '../favorites/FavoriteButton';
 import './Stilling.less';
+import { FETCH_FAVORITES } from '../favorites/favoritesReducer';
+import FavoriteAlertStripe from '../favorites/FavoriteAlertStripe';
 
 class Stilling extends React.Component {
     constructor(props) {
@@ -34,6 +37,7 @@ class Stilling extends React.Component {
     componentDidMount() {
         window.scrollTo(0, 0);
         this.props.getStilling(this.props.match.params.uuid);
+        this.props.fetchFavorites();
     }
 
     componentDidUpdate() {
@@ -52,12 +56,14 @@ class Stilling extends React.Component {
 
     render() {
         const {
-            stilling, cachedStilling, isFetchingStilling, error
+            stilling, cachedStilling, isFetchingStilling, error, favorites
         } = this.props;
+
+        const isFavorite = stilling && favorites && favorites.includes(stilling._id);
+
         return (
             <div>
                 <Disclaimer />
-
                 <div className="StillingSubMenu no-print">
                     <Container>
                         <Row>
@@ -74,6 +80,7 @@ class Stilling extends React.Component {
                         </Row>
                     </Container>
                 </div>
+                <FavoriteAlertStripe />
 
                 {error && error.statusCode === 404 ? (
                     <Container>
@@ -103,6 +110,20 @@ class Stilling extends React.Component {
                                             employer={stilling._source.properties.employer}
                                             location={stilling._source.properties.location}
                                         />
+                                    </Column>
+                                    <Column xs="12" md="4">
+                                        <div className="Stilling__header__favorite">
+                                            {isFavorite ? (
+                                                <div className="Stilling__header__favorite__flex">
+                                                    <FavoriteButton uuid={stilling._id} />
+                                                    <Normaltekst>
+                                                        <b>Lagret i</b> <Link to="/favoritter" className="lenke">favoritter</Link>
+                                                    </Normaltekst>
+                                                </div>
+                                            ) : (
+                                                <FavoriteButton uuid={stilling._id} showLabel />
+                                            )}
+                                        </div>
                                     </Column>
                                 </Row>
                             </Container>
@@ -154,18 +175,21 @@ Stilling.propTypes = {
         title: PropTypes.string
     }),
     getStilling: PropTypes.func.isRequired,
-    isFetchingStilling: PropTypes.bool
+    isFetchingStilling: PropTypes.bool,
+    favorites: PropTypes.arrayOf(PropTypes.string).isRequired
 };
 
 const mapStateToProps = (state) => ({
     isFetchingStilling: state.stilling.isFetchingStilling,
     stilling: state.stilling.stilling,
     cachedStilling: state.stilling.cachedStilling,
-    error: state.stilling.error
+    error: state.stilling.error,
+    favorites: state.favorites.favorites
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    getStilling: (uuid) => dispatch({ type: FETCH_STILLING_BEGIN, uuid })
+    getStilling: (uuid) => dispatch({ type: FETCH_STILLING_BEGIN, uuid }),
+    fetchFavorites: () => dispatch({ type: FETCH_FAVORITES })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Stilling);
