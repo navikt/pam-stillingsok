@@ -26,7 +26,6 @@ import { FETCH_STILLING_BEGIN } from './stillingReducer';
 import FavoriteButton from '../favorites/FavoriteButton';
 import './Stilling.less';
 import { FETCH_FAVORITES } from '../favorites/favoritesReducer';
-import FavoriteAlertStripe from '../favorites/FavoriteAlertStripe';
 
 class Stilling extends React.Component {
     constructor(props) {
@@ -59,7 +58,7 @@ class Stilling extends React.Component {
             stilling, cachedStilling, isFetchingStilling, error, favorites
         } = this.props;
 
-        const isFavorite = stilling && favorites && favorites.includes(stilling._id);
+        const isFavorite = stilling && favorites && favorites.find((favorite) => favorite.uuid === stilling._id);
 
         return (
             <div>
@@ -80,7 +79,6 @@ class Stilling extends React.Component {
                         </Row>
                     </Container>
                 </div>
-                <FavoriteAlertStripe />
 
                 {error && error.statusCode === 404 ? (
                     <Container>
@@ -101,17 +99,7 @@ class Stilling extends React.Component {
                         <header className="Stilling__header">
                             <Container>
                                 <Row>
-                                    <Column xs="12" md="8">
-                                        {stilling._source.status !== 'ACTIVE' && (
-                                            <Expired />
-                                        )}
-                                        <AdTitle
-                                            title={stilling._source.title}
-                                            employer={stilling._source.properties.employer}
-                                            location={stilling._source.properties.location}
-                                        />
-                                    </Column>
-                                    <Column xs="12" md="4">
+                                    <Column xs="12">
                                         <div className="Stilling__header__favorite">
                                             {isFavorite ? (
                                                 <div className="Stilling__header__favorite__flex">
@@ -125,6 +113,19 @@ class Stilling extends React.Component {
                                             )}
                                         </div>
                                     </Column>
+                                </Row>
+                                <Row>
+                                    <Column xs="12" md="8">
+                                        {stilling._source.status !== 'ACTIVE' && (
+                                            <Expired />
+                                        )}
+                                        <AdTitle
+                                            title={stilling._source.title}
+                                            employer={stilling._source.properties.employer}
+                                            location={stilling._source.properties.location}
+                                        />
+                                    </Column>
+                                    <Column xs="12" md="4" />
                                 </Row>
                             </Container>
                         </header>
@@ -174,9 +175,12 @@ Stilling.propTypes = {
     cachedStilling: PropTypes.shape({
         title: PropTypes.string
     }),
+    fetchFavorites: PropTypes.func.isRequired,
     getStilling: PropTypes.func.isRequired,
     isFetchingStilling: PropTypes.bool,
-    favorites: PropTypes.arrayOf(PropTypes.string).isRequired
+    favorites: PropTypes.arrayOf(PropTypes.shape({
+        uuid: PropTypes.string
+    })).isRequired
 };
 
 const mapStateToProps = (state) => ({

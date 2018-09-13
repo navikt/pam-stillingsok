@@ -1,23 +1,23 @@
 import { select, put, call, takeLatest } from 'redux-saga/effects';
 import { SearchApiError } from '../api/api';
+import { get, post, remove } from './mockapi';
+import { SEARCH_API } from '../fasitProperties';
 
 export const FETCH_FAVORITES = 'FETCH_FAVORITES';
 export const FETCH_FAVORITES_BEGIN = 'FETCH_FAVORITES_BEGIN';
 export const FETCH_FAVORITES_SUCCESS = 'FETCH_FAVORITES_SUCCESS';
 export const FETCH_FAVORITES_FAILURE = 'FETCH_FAVORITES_FAILURE';
 
-export const FETCH_FAVORITE_ADS = 'FETCH_FAVORITE_ADS';
-export const FETCH_FAVORITE_ADS_BEGIN = 'FETCH_FAVORITE_ADS_BEGIN';
-export const FETCH_FAVORITE_ADS_SUCCESS = 'FETCH_FAVORITE_ADS_SUCCESS';
-export const FETCH_FAVORITE_ADS_FAILURE = 'FETCH_FAVORITE_ADS_FAILURE';
-
 export const ADD_TO_FAVORITES = 'ADD_TO_FAVORITES';
+export const ADD_TO_FAVORITES_BEGIN = 'ADD_TO_FAVORITES_BEGIN';
 export const ADD_TO_FAVORITES_SUCCESS = 'ADD_TO_FAVORITES_SUCCESS';
 export const ADD_TO_FAVORITES_FAILURE = 'ADD_TO_FAVORITES_FAILURE';
 
 export const SHOW_MODAL_REMOVE_FROM_FAVORITES = 'ABOUT_TO_REMOVE_FROM_FAVORITES';
 export const HIDE_MODAL_REMOVE_FROM_FAVORITES = 'CONFIRM_REMOVE_FROM_FAVORITES';
+
 export const REMOVE_FROM_FAVORITES = 'REMOVE_FROM_FAVORITES';
+export const REMOVE_FROM_FAVORITES_BEGIN = 'REMOVE_FROM_FAVORITES_BEGIN';
 export const REMOVE_FROM_FAVORITES_SUCCESS = 'REMOVE_FROM_FAVORITES_SUCCESS';
 export const REMOVE_FROM_FAVORITES_FAILURE = 'REMOVE_FROM_FAVORITES_FAILURE';
 
@@ -25,41 +25,48 @@ export const SHOW_FAVORITES_ALERT_STRIPE = 'SHOW_FAVORITES_ALERT_STRIPE';
 export const HIDE_FAVORITES_ALERT_STRIPE = 'HIDE_FAVORITES_ALERT_STRIPE';
 
 const initialState = {
+    shouldFetchFavorites: true,
     favorites: [],
-    favoriteAds: [],
     confirmationVisible: false,
     adAboutToBeRemoved: undefined,
-    showAlertStripe: false
+    showAlertStripe: false,
+    error: undefined
 };
 
 export default function favoritesReducer(state = initialState, action) {
     switch (action.type) {
+        case FETCH_FAVORITES_BEGIN:
+            return {
+                ...state,
+                error: undefined
+            };
         case FETCH_FAVORITES_SUCCESS:
             return {
                 ...state,
-                favorites: action.favorites
+                favorites: action.response,
+                shouldFetchFavorites: false
             };
-        case FETCH_FAVORITE_ADS_SUCCESS:
+        case ADD_TO_FAVORITES_BEGIN:
             return {
                 ...state,
-                favoriteAds: action.favoriteAds
+                favorites: [...state.favorites, action.favorite]
             };
-        case ADD_TO_FAVORITES:
+        case REMOVE_FROM_FAVORITES_BEGIN:
             return {
                 ...state,
-                favorites: [...state.favorites, action.uuid]
+                favorites: state.favorites.filter((favorite) => favorite.uuid !== action.uuid)
             };
-        case REMOVE_FROM_FAVORITES:
+        case ADD_TO_FAVORITES_FAILURE:
+        case REMOVE_FROM_FAVORITES_FAILURE:
             return {
                 ...state,
-                favorites: state.favorites.filter((uuid) => uuid !== action.uuid),
-                favoriteAds: state.favoriteAds.filter((ad) => ad.uuid !== action.uuid)
+                error: action.error
             };
         case SHOW_MODAL_REMOVE_FROM_FAVORITES:
             return {
                 ...state,
                 confirmationVisible: true,
-                adAboutToBeRemoved: state.favoriteAds.find((ad) => ad.uuid === action.uuid)
+                adAboutToBeRemoved: state.favorites.find((favorite) => favorite.uuid === action.uuid)
             };
         case HIDE_MODAL_REMOVE_FROM_FAVORITES:
             return {
@@ -82,92 +89,61 @@ export default function favoritesReducer(state = initialState, action) {
     }
 }
 
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+function toFavorite(uuid, ad) {
+    return {
+        uuid,
+        title: ad.title,
+        updated: ad.updated,
+        properties: {
+            employer: ad.properties.employer,
+            jobtitle: ad.properties.jobtitle,
+            location: ad.properties.location,
+            updated: ad.properties.updated,
+            applicationdue: ad.properties.applicationdue
+        }
+    };
+}
+
 function* fetchFavorites() {
-    try {
-        yield put({ type: FETCH_FAVORITES_BEGIN });
-        const favoritesString = localStorage.getItem('favorites');
-        const favorites = favoritesString !== null ? JSON.parse(favoritesString) : [];
-        yield put({ type: FETCH_FAVORITES_SUCCESS, favorites });
-    } catch (e) {
-        if (e instanceof SearchApiError) {
-            yield put({ type: FETCH_FAVORITES_FAILURE, error: e });
-        } else {
-            throw e;
+    const state = yield select();
+    if (state.favorites.shouldFetchFavorites) {
+        try {
+            yield put({ type: FETCH_FAVORITES_BEGIN });
+            const response = yield call(get, `${SEARCH_API}/favorites`);
+            yield put({ type: FETCH_FAVORITES_SUCCESS, response });
+        } catch (e) {
+            if (e instanceof SearchApiError) {
+                yield put({ type: FETCH_FAVORITES_FAILURE, error: e });
+            } else {
+                throw e;
+            }
         }
     }
 }
-
-function* fetchFavoriteAds() {
-    try {
-        yield put({ type: FETCH_FAVORITE_ADS_BEGIN });
-        const favoriteAdsString = localStorage.getItem('favoriteAds');
-        const favoriteAds = favoriteAdsString !== null ? JSON.parse(favoriteAdsString) : [];
-        yield put({ type: FETCH_FAVORITE_ADS_SUCCESS, favoriteAds });
-    } catch (e) {
-        if (e instanceof SearchApiError) {
-            yield put({ type: FETCH_FAVORITE_ADS_FAILURE, error: e });
-        } else {
-            throw e;
-        }
-    }
-}
-
-const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms))
 
 function* addToFavorites(action) {
     try {
+        let favorite;
         const state = yield select();
-        const favoritesString = localStorage.getItem('favorites');
-        const favoritesOld = favoritesString !== null ? JSON.parse(favoritesString) : [];
-        const favorites = [...favoritesOld, action.uuid];
-        localStorage.setItem('favorites', JSON.stringify(favorites));
-
-        let found = state.search.searchResult.stillinger &&
+        const foundInSearchResult = state.search.searchResult.stillinger &&
             state.search.searchResult.stillinger.find((s) => s.uuid === action.uuid);
-        let data;
 
-        if (found) {
-            data = {
-                uuid: found.uuid,
-                title: found.title,
-                updated: found.updated,
-                properties: {
-                    employer: found.properties.employer,
-                    jobtitle: found.properties.jobtitle,
-                    location: found.properties.location,
-                    updated: found.properties.updated,
-                    applicationdue: found.properties.applicationdue
-                }
-            };
+        if (foundInSearchResult) {
+            favorite = toFavorite(foundInSearchResult.uuid, foundInSearchResult);
+        } else if (state.stilling.stilling._id === action.uuid) {
+            favorite = toFavorite(state.stilling.stilling._id, state.stilling.stilling._source);
         } else {
-            found = state.stilling.stilling;
-            data = {
-                uuid: found._id,
-                title: found._source.title,
-                updated: found._source.updated,
-                properties: {
-                    employer: found._source.properties.employer,
-                    jobtitle: found._source.properties.jobtitle,
-                    location: found._source.properties.location,
-                    updated: found._source.properties.updated,
-                    applicationdue: found._source.properties.applicationdue
-                }
-            };
+            return;
         }
-
-        const favoriteAdsString = localStorage.getItem('favoriteAds');
-        const favoriteAdsOld = favoriteAdsString !== null ? JSON.parse(favoriteAdsString) : [];
-        const favoriteAds = [...favoriteAdsOld, data];
-        localStorage.setItem('favoriteAds', JSON.stringify(favoriteAds));
-
-        yield put({ type: ADD_TO_FAVORITES_SUCCESS, favorites });
+        yield put({ type: ADD_TO_FAVORITES_BEGIN, favorite });
+        const response = yield call(post, `${SEARCH_API}/favorites`, favorite);
+        yield put({ type: ADD_TO_FAVORITES_SUCCESS, response });
 
         yield put({ type: SHOW_FAVORITES_ALERT_STRIPE });
-
         yield call(delay, 5000);
         yield put({ type: HIDE_FAVORITES_ALERT_STRIPE });
-
-
     } catch (e) {
         if (e instanceof SearchApiError) {
             yield put({ type: ADD_TO_FAVORITES_FAILURE, error: e });
@@ -179,17 +155,9 @@ function* addToFavorites(action) {
 
 function* removeFromFavorites(action) {
     try {
-        const favoritesString = localStorage.getItem('favorites');
-        const favoritesOld = favoritesString !== null ? JSON.parse(favoritesString) : [];
-        const favorites = favoritesOld.filter((uuid) => uuid !== action.uuid);
-        localStorage.setItem('favorites', JSON.stringify(favorites));
-
-        const favoriteAdsString = localStorage.getItem('favoriteAds');
-        const favoriteAdsOld = favoriteAdsString !== null ? JSON.parse(favoriteAdsString) : [];
-        const favoriteAds = favoriteAdsOld.filter((ad) => ad.uuid !== action.uuid);
-        localStorage.setItem('favoriteAds', JSON.stringify(favoriteAds));
-
-        yield put({ type: REMOVE_FROM_FAVORITES_SUCCESS, favorites, favoriteAds });
+        yield put({ type: REMOVE_FROM_FAVORITES_BEGIN, uuid: action.uuid });
+        const response = yield call(remove, action.uuid);
+        yield put({ type: REMOVE_FROM_FAVORITES_SUCCESS, response });
     } catch (e) {
         if (e instanceof SearchApiError) {
             yield put({ type: REMOVE_FROM_FAVORITES_FAILURE, error: e });
@@ -201,7 +169,6 @@ function* removeFromFavorites(action) {
 
 export const favoritesSaga = function* saga() {
     yield takeLatest(FETCH_FAVORITES, fetchFavorites);
-    yield takeLatest(FETCH_FAVORITE_ADS, fetchFavoriteAds);
     yield takeLatest(ADD_TO_FAVORITES, addToFavorites);
     yield takeLatest(REMOVE_FROM_FAVORITES, removeFromFavorites);
 };

@@ -37,7 +37,7 @@ export default function SearchResultsItemDetails({ stilling }) {
                 )}
 
                 <Undertittel tag="h3" className="SearchResultsItemDetails__title">
-                    <Link to={`${STILLING}${stilling.uuid}`}>
+                    <Link to={`${STILLING}${stilling.uuid}`} className="lenke">
                         {stilling.title}
                     </Link>
                 </Undertittel>

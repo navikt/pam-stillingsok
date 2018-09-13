@@ -21,7 +21,6 @@ import Disclaimer from '../discalimer/Disclaimer';
 import RestoreScroll from './RestoreScroll';
 import ViewMode from './viewMode/ViewMode';
 import { FETCH_FAVORITES } from '../favorites/favoritesReducer';
-import FavoriteAlertStripe from '../favorites/FavoriteAlertStripe';
 import './Search.less';
 
 class Search extends React.Component {
@@ -49,18 +48,17 @@ class Search extends React.Component {
         return (
             <div className="Search">
                 <Disclaimer />
-                <FavoriteAlertStripe />
                 <div className="Search__header">
                     <Container>
                         <Row>
-                            <Column xs="12">
-                                <div className="Search__header__flex">
-                                    <Sidetittel className="Search__header__title">Ledige stillinger</Sidetittel>
-                                    <div>
-                                        <Link className="knapp knapp--mini" to="/favoritter">
-                                            Favoritter ({this.props.favorites.length})
-                                        </Link>
-                                    </div>
+                            <Column xs="12" md="6">
+                                <Sidetittel className="Search__header__title">Ledige stillinger</Sidetittel>
+                            </Column>
+                            <Column xs="12" md="6">
+                                <div className="Search__header__right">
+                                    <Link className="knapp knapp--mini" to="/favoritter">
+                                        Favoritter ({this.props.favorites.length})
+                                    </Link>
                                 </div>
                             </Column>
                         </Row>
@@ -127,7 +125,7 @@ Search.propTypes = {
     fetchFavorites: PropTypes.func.isRequired,
     hasError: PropTypes.bool.isRequired,
     initialSearchDone: PropTypes.bool.isRequired,
-    favorites: PropTypes.arrayOf(PropTypes.string).isRequired
+    favorites: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
 const mapStateToProps = (state) => ({

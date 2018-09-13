@@ -5,17 +5,17 @@ import { Link } from 'react-router-dom';
 import { Container, Row, Column } from 'nav-frontend-grid';
 import { Sidetittel } from 'nav-frontend-typografi';
 import Chevron from 'nav-frontend-chevron';
-import { FETCH_FAVORITE_ADS, FETCH_FAVORITES } from './favoritesReducer';
+import { FETCH_FAVORITES } from './favoritesReducer';
 import Disclaimer from '../discalimer/Disclaimer';
 import Favorite from './Favorite';
 import './Favorites.less';
 import ConfirmRemoveModal from './ConfirmRemoveModal';
+import NoFavorites from './NoFavorites';
 
 class Favorites extends React.Component {
     componentDidMount() {
         window.scrollTo(0, 0);
         document.title = 'Favoriter';
-        this.props.fetchFavoriteAds();
         this.props.fetchFavorites();
     }
 
@@ -50,14 +50,12 @@ class Favorites extends React.Component {
                 <Container className="Favorites__main">
                     <Row>
                         <Column xs="12">
-                            {this.props.favoriteAds.length === 0 ? (
-                                <div>
-                                    Ingen favoritter
-                                </div>
+                            {this.props.favorites.length === 0 ? (
+                                <NoFavorites />
                             ) : (
                                 <div>
-                                    {this.props.favoriteAds.map((favoriteAd) => (
-                                        <Favorite key={favoriteAd.uuid} favorite={favoriteAd} />
+                                    {this.props.favorites.map((favorite) => (
+                                        <Favorite key={favorite.uuid} favorite={favorite} />
                                     ))}
                                 </div>
                             )}
@@ -72,21 +70,17 @@ class Favorites extends React.Component {
 
 Favorites.propTypes = {
     fetchFavorites: PropTypes.func.isRequired,
-    fetchFavoriteAds: PropTypes.func.isRequired,
-    favoriteAds: PropTypes.arrayOf(PropTypes.shape({
+    favorites: PropTypes.arrayOf(PropTypes.shape({
         uuid: PropTypes.string,
         title: PropTypes.string
-    })).isRequired,
-    favorites: PropTypes.arrayOf(PropTypes.string).isRequired
+    })).isRequired
 };
 
 const mapStateToProps = (state) => ({
-    favoriteAds: state.favorites.favoriteAds,
     favorites: state.favorites.favorites
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    fetchFavoriteAds: () => dispatch({ type: FETCH_FAVORITE_ADS }),
     fetchFavorites: () => dispatch({ type: FETCH_FAVORITES })
 });
 

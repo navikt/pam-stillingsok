@@ -15,7 +15,7 @@ class FavoriteButton extends React.Component {
 
     render() {
         const { favorites, uuid, className, showLabel } = this.props;
-        const isFavorite = favorites && favorites.includes(uuid);
+        const isFavorite = favorites && favorites.find((favorite) => favorite.uuid === uuid);
         if (isFavorite) {
             return (
                 <button
@@ -54,7 +54,9 @@ FavoriteButton.propTypes = {
     className: PropTypes.string,
     addToFavorites: PropTypes.func.isRequired,
     removeFromFavorites: PropTypes.func.isRequired,
-    favorites: PropTypes.arrayOf(PropTypes.string).isRequired,
+    favorites: PropTypes.arrayOf(PropTypes.shape({
+        uuid: PropTypes.string
+    })).isRequired,
     uuid: PropTypes.string.isRequired,
     showLabel: PropTypes.bool
 };

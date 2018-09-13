@@ -23,6 +23,8 @@ import { CONTEXT_PATH } from './fasitProperties';
 import Favorites from './favorites/Favorites';
 import './styles.less';
 import './variables.less';
+import FavoriteAlertStripe from "./favorites/FavoriteAlertStripe";
+import FavoriteError from "./favorites/FavoriteError";
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -49,13 +51,17 @@ sagaMiddleware.run(favoritesSaga);
 ReactDOM.render(
     <Provider store={store}>
         <BrowserRouter>
-            <Switch>
-                <Route exact path="/" component={SearchPage} />
-                <Route path={`${CONTEXT_PATH}/stilling/:uuid`} component={StillingPage} />
-                <Route path={`${CONTEXT_PATH}/mobil`} component={Invite} />
-                <Route path={`${CONTEXT_PATH}/favoritter`} component={Favorites} />
-                <Route path="*" component={SearchPage} />
-            </Switch>
+            <div>
+                <FavoriteAlertStripe />
+                <FavoriteError />
+                <Switch>
+                    <Route exact path="/" component={SearchPage} />
+                    <Route path={`${CONTEXT_PATH}/stilling/:uuid`} component={StillingPage} />
+                    <Route path={`${CONTEXT_PATH}/mobil`} component={Invite} />
+                    <Route path={`${CONTEXT_PATH}/favoritter`} component={Favorites} />
+                    <Route path="*" component={SearchPage} />
+                </Switch>
+            </div>
         </BrowserRouter>
     </Provider>,
     document.getElementById('app')
