@@ -52,12 +52,22 @@
     margin-bottom: 1.5rem;
 }
 
-.Favorites__modal__buttons .knapp:not(:last-child) {
-    margin-right: 1rem;
+@media (max-width: @screen-sm-max) {
+    .Favorites__modal__buttons .knapp {
+        width: 100%;
+    }
+
+    .Favorites__modal__buttons .knapp:not(:last-child) {
+        margin-bottom: 1rem;
+    }
 }
 
 @media (min-width: @screen-md-min) {
     .Favorites__modal {
         min-width: 30rem;
+    }
+
+    .Favorites__modal__buttons .knapp:not(:last-child) {
+        margin-right: 1rem;
     }
 }
