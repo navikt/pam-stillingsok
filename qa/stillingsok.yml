@@ -1,0 +1,13 @@
+links:
+
+  - link: "https://stillingsok-q.nav.no"
+    desc: "Stilling søkeresultat uten filter"
+    options:
+      commands:
+        - waitFor: '#sokeresultat'
+
+  - link: "https://stillingsok-q.nav.no"
+    desc: "Stilling detail side"
+    options:
+      commands:
+        - clickOn: '.SearchResultItem' # Trykker på første annonsetreff
