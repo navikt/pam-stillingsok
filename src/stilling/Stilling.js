@@ -1,31 +1,33 @@
-/* eslint-disable no-underscore-dangle */
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { Container, Row, Column } from 'nav-frontend-grid';
+import { Column, Container, Row } from 'nav-frontend-grid';
 import { Flatknapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
-import AdTitle from './adTitle/AdTitle';
+import PropTypes from 'prop-types';
+/* eslint-disable no-underscore-dangle */
+import React from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import Disclaimer from '../discalimer/Disclaimer';
+import FavoriteAlertStripe from '../favorites/FavoriteAlertStripe';
+import FavoriteButton from '../favorites/FavoriteButton';
+import FavoriteError from '../favorites/FavoriteError';
+import { FETCH_FAVORITES } from '../favorites/favoritesReducer';
+import SearchError from '../search/error/SearchError';
+import AdDetails from './adDetails/AdDetails';
 import AdText from './adText/AdText';
-import PersonalAttributes from './requirements/PersonalAttributes';
-import SoftRequirements from './requirements/SoftRequirements';
-import HardRequirements from './requirements/HardRequirements';
-import HowToApply from './howToApply/HowToApply';
+import AdTitle from './adTitle/AdTitle';
+import BackToSearch from './backToSearch/BackToSearch';
 import ContactPerson from './contactPerson/ContactPerson';
 import EmployerDetails from './employerDetails/EmployerDetails';
 import EmploymentDetails from './employmentDetails/EmploymentDetails';
-import AdDetails from './adDetails/AdDetails';
-import NotFound from './notFound/NotFound';
-import SearchError from '../search/error/SearchError';
 import Expired from './expired/Expired';
-import BackToSearch from './backToSearch/BackToSearch';
-import Disclaimer from '../discalimer/Disclaimer';
+import HowToApply from './howToApply/HowToApply';
 import Skeleton from './loading/Skeleton';
-import { FETCH_STILLING_BEGIN } from './stillingReducer';
-import FavoriteButton from '../favorites/FavoriteButton';
+import NotFound from './notFound/NotFound';
+import HardRequirements from './requirements/HardRequirements';
+import PersonalAttributes from './requirements/PersonalAttributes';
+import SoftRequirements from './requirements/SoftRequirements';
 import './Stilling.less';
-import { FETCH_FAVORITES } from '../favorites/favoritesReducer';
+import { FETCH_STILLING_BEGIN } from './stillingReducer';
 
 class Stilling extends React.Component {
     constructor(props) {
@@ -63,6 +65,8 @@ class Stilling extends React.Component {
         return (
             <div>
                 <Disclaimer />
+                <FavoriteAlertStripe />
+                <FavoriteError />
                 <div className="StillingSubMenu no-print">
                     <Container>
                         <Row>

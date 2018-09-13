@@ -1,3 +1,4 @@
+import { Hovedknapp } from 'nav-frontend-knapper';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -5,6 +6,9 @@ import { Link } from 'react-router-dom';
 import { Container, Row, Column } from 'nav-frontend-grid';
 import { Sidetittel } from 'nav-frontend-typografi';
 import Chevron from 'nav-frontend-chevron';
+import DelayedSpinner from '../search/loading/DelayedSpinner';
+import FavoriteAlertStripe from './FavoriteAlertStripe';
+import FavoriteError from './FavoriteError';
 import { FETCH_FAVORITES } from './favoritesReducer';
 import Disclaimer from '../discalimer/Disclaimer';
 import Favorite from './Favorite';
@@ -23,6 +27,8 @@ class Favorites extends React.Component {
         return (
             <div className="Favorites">
                 <Disclaimer />
+                <FavoriteAlertStripe />
+                <FavoriteError />
                 <div className="Favorites__backbutton">
                     <Container className="Favorites__backbutton__container">
                         <Link
@@ -31,7 +37,7 @@ class Favorites extends React.Component {
                         >
                             <Chevron type="venstre" className="BackToSearchLink__chevron" />
                             <span className="BackToSearchLink__text">
-                            Til stillingsøk
+                                Til stillingsøk
                             </span>
                         </Link>
                     </Container>
@@ -41,7 +47,8 @@ class Favorites extends React.Component {
                         <Row>
                             <Column xs="12">
                                 <Sidetittel className="Search__header__title">
-                                    Favoritter ({this.props.favorites.length})
+                                    Favoritter
+                                    {!this.props.isFetchingFavorites ? ` (${this.props.favorites.length})` : ''}
                                 </Sidetittel>
                             </Column>
                         </Row>
@@ -50,13 +57,21 @@ class Favorites extends React.Component {
                 <Container className="Favorites__main">
                     <Row>
                         <Column xs="12">
-                            {this.props.favorites.length === 0 ? (
-                                <NoFavorites />
+                            {this.props.isFetchingFavorites ? (
+                                <div className="Favorites__main__spinner">
+                                    <DelayedSpinner />
+                                </div>
                             ) : (
                                 <div>
-                                    {this.props.favorites.map((favorite) => (
-                                        <Favorite key={favorite.uuid} favorite={favorite} />
-                                    ))}
+                                    {this.props.favorites.length === 0 ? (
+                                        <NoFavorites />
+                                    ) : (
+                                        <div>
+                                            {this.props.favorites.map((favorite) => (
+                                                <Favorite key={favorite.uuid} favorite={favorite} />
+                                            ))}
+                                        </div>
+                                    )}
                                 </div>
                             )}
                         </Column>
@@ -69,6 +84,7 @@ class Favorites extends React.Component {
 }
 
 Favorites.propTypes = {
+    isFetchingFavorites: PropTypes.bool.isRequired,
     fetchFavorites: PropTypes.func.isRequired,
     favorites: PropTypes.arrayOf(PropTypes.shape({
         uuid: PropTypes.string,
@@ -77,7 +93,8 @@ Favorites.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-    favorites: state.favorites.favorites
+    favorites: state.favorites.favorites,
+    isFetchingFavorites: state.favorites.isFetchingFavorites
 });
 
 const mapDispatchToProps = (dispatch) => ({

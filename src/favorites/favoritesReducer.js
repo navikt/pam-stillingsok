@@ -25,26 +25,41 @@ export const SHOW_FAVORITES_ALERT_STRIPE = 'SHOW_FAVORITES_ALERT_STRIPE';
 export const HIDE_FAVORITES_ALERT_STRIPE = 'HIDE_FAVORITES_ALERT_STRIPE';
 
 const initialState = {
+    isFetchingFavorites: false,
     shouldFetchFavorites: true,
     favorites: [],
     confirmationVisible: false,
     adAboutToBeRemoved: undefined,
     showAlertStripe: false,
-    error: undefined
+    error: undefined,
+    alertStripeMode: 'added'
 };
 
 export default function favoritesReducer(state = initialState, action) {
     switch (action.type) {
+        case FETCH_FAVORITES:
+            return {
+                ...state,
+                showAlertStripe: false,
+                error: undefined
+            };
         case FETCH_FAVORITES_BEGIN:
             return {
                 ...state,
-                error: undefined
+                isFetchingFavorites: true
             };
         case FETCH_FAVORITES_SUCCESS:
             return {
                 ...state,
                 favorites: action.response,
+                isFetchingFavorites: false,
                 shouldFetchFavorites: false
+            };
+        case FETCH_FAVORITES_FAILURE:
+            return {
+                ...state,
+                error: action.error,
+                isFetchingFavorites: false
             };
         case ADD_TO_FAVORITES_BEGIN:
             return {
@@ -60,7 +75,8 @@ export default function favoritesReducer(state = initialState, action) {
         case REMOVE_FROM_FAVORITES_FAILURE:
             return {
                 ...state,
-                error: action.error
+                error: action.error,
+                showAlertStripe: false
             };
         case SHOW_MODAL_REMOVE_FROM_FAVORITES:
             return {
@@ -77,6 +93,7 @@ export default function favoritesReducer(state = initialState, action) {
         case SHOW_FAVORITES_ALERT_STRIPE:
             return {
                 ...state,
+                alertStripeMode: action.alertStripeMode,
                 showAlertStripe: true
             };
         case HIDE_FAVORITES_ALERT_STRIPE:
@@ -96,6 +113,7 @@ function toFavorite(uuid, ad) {
         uuid,
         title: ad.title,
         updated: ad.updated,
+        status: 'ACTIVE',
         properties: {
             employer: ad.properties.employer,
             jobtitle: ad.properties.jobtitle,
@@ -109,8 +127,8 @@ function toFavorite(uuid, ad) {
 function* fetchFavorites() {
     const state = yield select();
     if (state.favorites.shouldFetchFavorites) {
+        yield put({ type: FETCH_FAVORITES_BEGIN });
         try {
-            yield put({ type: FETCH_FAVORITES_BEGIN });
             const response = yield call(get, `${SEARCH_API}/favorites`);
             yield put({ type: FETCH_FAVORITES_SUCCESS, response });
         } catch (e) {
@@ -137,11 +155,10 @@ function* addToFavorites(action) {
         } else {
             return;
         }
+        yield put({ type: SHOW_FAVORITES_ALERT_STRIPE, alertStripeMode: 'added' });
         yield put({ type: ADD_TO_FAVORITES_BEGIN, favorite });
         const response = yield call(post, `${SEARCH_API}/favorites`, favorite);
         yield put({ type: ADD_TO_FAVORITES_SUCCESS, response });
-
-        yield put({ type: SHOW_FAVORITES_ALERT_STRIPE });
         yield call(delay, 5000);
         yield put({ type: HIDE_FAVORITES_ALERT_STRIPE });
     } catch (e) {
@@ -155,9 +172,12 @@ function* addToFavorites(action) {
 
 function* removeFromFavorites(action) {
     try {
+        yield put({ type: SHOW_FAVORITES_ALERT_STRIPE, alertStripeMode: 'removed' });
         yield put({ type: REMOVE_FROM_FAVORITES_BEGIN, uuid: action.uuid });
         const response = yield call(remove, action.uuid);
         yield put({ type: REMOVE_FROM_FAVORITES_SUCCESS, response });
+        yield call(delay, 5000);
+        yield put({ type: HIDE_FAVORITES_ALERT_STRIPE });
     } catch (e) {
         if (e instanceof SearchApiError) {
             yield put({ type: REMOVE_FROM_FAVORITES_FAILURE, error: e });

@@ -23,8 +23,6 @@ import { CONTEXT_PATH } from './fasitProperties';
 import Favorites from './favorites/Favorites';
 import './styles.less';
 import './variables.less';
-import FavoriteAlertStripe from "./favorites/FavoriteAlertStripe";
-import FavoriteError from "./favorites/FavoriteError";
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -52,8 +50,6 @@ ReactDOM.render(
     <Provider store={store}>
         <BrowserRouter>
             <div>
-                <FavoriteAlertStripe />
-                <FavoriteError />
                 <Switch>
                     <Route exact path="/" component={SearchPage} />
                     <Route path={`${CONTEXT_PATH}/stilling/:uuid`} component={StillingPage} />

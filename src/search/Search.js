@@ -1,27 +1,29 @@
-import React from 'react';
+import { Column, Container, Row } from 'nav-frontend-grid';
+import { Sidetittel } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
+import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Container, Row, Column } from 'nav-frontend-grid';
-import { Sidetittel } from 'nav-frontend-typografi';
-import DelayedSpinner from './loading/DelayedSpinner';
-import SearchResults from './searchResults/SearchResults';
-import SearchError from './error/SearchError';
-import Sorting from './sorting/Sorting';
-import Counties from './facets/counties/Counties';
-import Occupations from './facets/occupations/Occupations';
-import Extent from './facets/extent/Extent';
-import EngagementType from './facets/engagement/Engagement';
-import Sector from './facets/sector/Sector';
-import Published from './facets/published/Published';
-import SearchBox from './searchBox/SearchBox';
-import { RESTORE_PREVIOUS_SEARCH, INITIAL_SEARCH, SEARCH, REMEMBER_SEARCH } from './searchReducer';
-import BackToTop from './backToTopButton/BackToTop';
 import Disclaimer from '../discalimer/Disclaimer';
-import RestoreScroll from './RestoreScroll';
-import ViewMode from './viewMode/ViewMode';
+import FavoriteAlertStripe from '../favorites/FavoriteAlertStripe';
+import FavoriteError from '../favorites/FavoriteError';
 import { FETCH_FAVORITES } from '../favorites/favoritesReducer';
+import BackToTop from './backToTopButton/BackToTop';
+import SearchError from './error/SearchError';
+import Counties from './facets/counties/Counties';
+import EngagementType from './facets/engagement/Engagement';
+import Extent from './facets/extent/Extent';
+import Occupations from './facets/occupations/Occupations';
+import Published from './facets/published/Published';
+import Sector from './facets/sector/Sector';
+import DelayedSpinner from './loading/DelayedSpinner';
+import RestoreScroll from './RestoreScroll';
 import './Search.less';
+import SearchBox from './searchBox/SearchBox';
+import { INITIAL_SEARCH, REMEMBER_SEARCH, RESTORE_PREVIOUS_SEARCH, SEARCH } from './searchReducer';
+import SearchResults from './searchResults/SearchResults';
+import Sorting from './sorting/Sorting';
+import ViewMode from './viewMode/ViewMode';
 
 class Search extends React.Component {
     constructor(props) {
@@ -48,6 +50,8 @@ class Search extends React.Component {
         return (
             <div className="Search">
                 <Disclaimer />
+                <FavoriteAlertStripe />
+                <FavoriteError />
                 <div className="Search__header">
                     <Container>
                         <Row>
@@ -57,7 +61,7 @@ class Search extends React.Component {
                             <Column xs="12" md="6">
                                 <div className="Search__header__right">
                                     <Link className="knapp knapp--mini" to="/favoritter">
-                                        Favoritter ({this.props.favorites.length})
+                                        Favoritter {!this.props.isFetchingFavorites ? ` (${this.props.favorites.length})` : ''}
                                     </Link>
                                 </div>
                             </Column>
@@ -125,13 +129,15 @@ Search.propTypes = {
     fetchFavorites: PropTypes.func.isRequired,
     hasError: PropTypes.bool.isRequired,
     initialSearchDone: PropTypes.bool.isRequired,
-    favorites: PropTypes.arrayOf(PropTypes.object).isRequired
+    favorites: PropTypes.arrayOf(PropTypes.object).isRequired,
+    isFetchingFavorites: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => ({
     hasError: state.search.hasError,
     initialSearchDone: state.search.initialSearchDone,
-    favorites: state.favorites.favorites
+    favorites: state.favorites.favorites,
+    isFetchingFavorites: state.favorites.isFetchingFavorites
 });
 
 const mapDispatchToProps = (dispatch) => ({

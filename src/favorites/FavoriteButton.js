@@ -14,8 +14,13 @@ class FavoriteButton extends React.Component {
     };
 
     render() {
-        const { favorites, uuid, className, showLabel } = this.props;
+        const { favorites, uuid, className, showLabel, isFetchingFavorites } = this.props;
         const isFavorite = favorites && favorites.find((favorite) => favorite.uuid === uuid);
+
+        if (isFetchingFavorites) {
+            return null;
+        }
+
         if (isFavorite) {
             return (
                 <button
@@ -51,6 +56,7 @@ FavoriteButton.defaultProps = {
 };
 
 FavoriteButton.propTypes = {
+    isFetchingFavorites: PropTypes.bool.isRequired,
     className: PropTypes.string,
     addToFavorites: PropTypes.func.isRequired,
     removeFromFavorites: PropTypes.func.isRequired,
@@ -62,7 +68,8 @@ FavoriteButton.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-    favorites: state.favorites.favorites
+    favorites: state.favorites.favorites,
+    isFetchingFavorites: state.favorites.isFetchingFavorites
 });
 
 const mapDispatchToProps = (dispatch) => ({

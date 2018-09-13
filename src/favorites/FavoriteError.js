@@ -1,16 +1,19 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import AlertStripe from 'nav-frontend-alertstriper';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { connect } from 'react-redux';
+import SnapToTop from '../common/SnapToTop';
 import './FavoriteAlertStripe.less';
 
 class FavoriteError extends React.Component {
     render() {
         if (this.props.error) {
             return (
-                <AlertStripe type="advarsel" solid className="FavoriteError">
-                    Det oppso en feil ved lagring av favoritter. Forsøk å laste siden på nytt.
-                </AlertStripe>
+                <SnapToTop>
+                    <AlertStripe type="advarsel" solid className="FavoriteError">
+                        Det oppso en feil ved lagring av favoritter. Forsøk å laste siden på nytt.
+                    </AlertStripe>
+                </SnapToTop>
             );
         }
         return null;

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Flatknapp } from 'nav-frontend-knapper';
+import { EtikettFokus } from 'nav-frontend-etiketter';
 import { SHOW_MODAL_REMOVE_FROM_FAVORITES } from './favoritesReducer';
 import SearchResultsItemDetails from '../search/searchResults/SearchResultsItemDetails';
 
@@ -14,6 +15,11 @@ class Favorite extends React.Component {
         const { favorite } = this.props;
         return (
             <div className="Favorite">
+                <div className="Favorite__top">
+                    {favorite.status !== 'ACTIVE' && (
+                        <EtikettFokus>Utløpt</EtikettFokus>
+                    )}
+                </div>
                 <SearchResultsItemDetails stilling={favorite} />
                 <div className="Favorite__buttons">
                     <Flatknapp mini onClick={this.onRemoveClick}>Slett</Flatknapp>
