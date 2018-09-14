@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import SearchResultItem from './SearchResultsItem';
 import SearchResultsItemCompact from './SearchResultsItemCompact';
-import SearchResultsCount from './SearchResultsCount';
 import Pagination from '../pagination/Pagination';
 import NoResults from '../noResults/NoResults';
 import { PAGE_SIZE } from '../searchReducer';
@@ -17,11 +16,7 @@ function SearchResults({
     const hasMore = page + 1 < totalPages;
     const count = ((page * PAGE_SIZE) + PAGE_SIZE) > total ? total : (page * PAGE_SIZE) + PAGE_SIZE;
     return (
-        <div role="region" aria-labelledby="SearchResultsCount" id="treff" className="SearchResults">
-            <div id="SearchResultsCount">
-                <SearchResultsCount />
-            </div>
-
+        <div role="region" id="treff" className="SearchResults">
             {mode !== 'compact' && stillinger && stillinger.map((stilling) => (
                 <SearchResultItem
                     key={stilling.uuid}

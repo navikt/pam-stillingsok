@@ -1,4 +1,5 @@
 import { Column, Container, Row } from 'nav-frontend-grid';
+import { Knapp } from 'nav-frontend-knapper';
 import { Sidetittel } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -8,6 +9,9 @@ import Disclaimer from '../discalimer/Disclaimer';
 import FavoriteAlertStripe from '../favorites/FavoriteAlertStripe';
 import FavoriteError from '../favorites/FavoriteError';
 import { FETCH_FAVORITES } from '../favorites/favoritesReducer';
+import AddSavedSearchModal from '../savedSearches/AddSavedSearchModal';
+import SavedSearchesAlertStripe from '../savedSearches/SavedSearchesAlertStripe';
+import { FETCH_SAVED_SEARCHES, SHOW_ADD_SAVED_SEARCH_MODAL } from '../savedSearches/savedSearchesReducer';
 import BackToTop from './backToTopButton/BackToTop';
 import SearchError from './error/SearchError';
 import Counties from './facets/counties/Counties';
@@ -34,6 +38,7 @@ class Search extends React.Component {
 
     componentDidMount() {
         this.props.fetchFavorites();
+        this.props.fetchSavedSearches();
         document.title = 'Ledige stillinger';
     }
 
@@ -46,12 +51,17 @@ class Search extends React.Component {
         this.props.search();
     };
 
+    onSaveSearchClick = () => {
+        this.props.showAddSavedSearchModal();
+    };
+
     render() {
         return (
             <div className="Search">
                 <Disclaimer />
                 <FavoriteAlertStripe />
                 <FavoriteError />
+                <SavedSearchesAlertStripe />
                 <div className="Search__header">
                     <Container>
                         <Row>
@@ -62,6 +72,9 @@ class Search extends React.Component {
                                 <div className="Search__header__right">
                                     <Link className="knapp knapp--mini" to="/favoritter">
                                         Favoritter {!this.props.isFetchingFavorites ? ` (${this.props.favorites.length})` : ''}
+                                    </Link>
+                                    <Link className="knapp knapp--mini" to="/lagrede-sok">
+                                        Lagrede søk {!this.props.isFetchingSavedSearches ? ` (${this.props.savedSearches.length})` : ''}
                                     </Link>
                                 </div>
                             </Column>
@@ -89,6 +102,9 @@ class Search extends React.Component {
                                     >
                                         <Column xs="12" md="4">
                                             <div id="sok">
+                                                <div className="blokk-xs">
+                                                    <Knapp mini onClick={this.onSaveSearchClick}>Lagre søk</Knapp>
+                                                </div>
                                                 <SearchBox />
                                                 <Published />
                                                 <Occupations />
@@ -116,35 +132,44 @@ class Search extends React.Component {
                         </RestoreScroll>
                     )}
                 </Container>
+                <AddSavedSearchModal />
             </div>
         );
     }
 }
 
 Search.propTypes = {
+    showAddSavedSearchModal: PropTypes.func.isRequired,
     restorePreviousSearch: PropTypes.func.isRequired,
     initialSearch: PropTypes.func.isRequired,
     search: PropTypes.func.isRequired,
     rememberSearch: PropTypes.func.isRequired,
     fetchFavorites: PropTypes.func.isRequired,
+    fetchSavedSearches: PropTypes.func.isRequired,
     hasError: PropTypes.bool.isRequired,
     initialSearchDone: PropTypes.bool.isRequired,
     favorites: PropTypes.arrayOf(PropTypes.object).isRequired,
-    isFetchingFavorites: PropTypes.bool.isRequired
+    isFetchingFavorites: PropTypes.bool.isRequired,
+    savedSearches: PropTypes.arrayOf(PropTypes.object).isRequired,
+    isFetchingSavedSearches: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => ({
     hasError: state.search.hasError,
     initialSearchDone: state.search.initialSearchDone,
     favorites: state.favorites.favorites,
-    isFetchingFavorites: state.favorites.isFetchingFavorites
+    isFetchingFavorites: state.favorites.isFetchingFavorites,
+    savedSearches: state.savedSearches.savedSearches,
+    isFetchingSavedSearches: state.savedSearches.isFetchingSavedSearches
 });
 
 const mapDispatchToProps = (dispatch) => ({
+    showAddSavedSearchModal: () => dispatch({ type: SHOW_ADD_SAVED_SEARCH_MODAL }),
     restorePreviousSearch: () => dispatch({ type: RESTORE_PREVIOUS_SEARCH }),
     initialSearch: () => dispatch({ type: INITIAL_SEARCH }),
     search: () => dispatch({ type: SEARCH }),
     rememberSearch: () => dispatch({ type: REMEMBER_SEARCH }),
+    fetchSavedSearches: () => dispatch({ type: FETCH_SAVED_SEARCHES }),
     fetchFavorites: () => dispatch({ type: FETCH_FAVORITES })
 });
 

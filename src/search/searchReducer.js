@@ -8,6 +8,7 @@ import { fromUrl, toUrl, ParameterType } from './url';
 export const RESTORE_PREVIOUS_SEARCH = 'RESTORE_PREVIOUS_SEARCH';
 export const SET_INITIAL_STATE = 'SET_INITIAL_STATE';
 export const INITIAL_SEARCH = 'INITIAL_SEARCH';
+export const RESTORE_SAVED_SEARCH = 'RESTORE_SAVED_SEARCH';
 export const FETCH_INITIAL_FACETS_SUCCESS = 'FETCH_INITIAL_FACETS_SUCCESS';
 export const SEARCH = 'SEARCH';
 export const SEARCH_BEGIN = 'SEARCH_BEGIN';
@@ -258,6 +259,12 @@ function* search() {
     }
 }
 
+function* restoreSavedSearch(action) {
+    yield put({ type: SET_INITIAL_STATE, query: action.query });
+    yield initialSearch();
+    yield search();
+}
+
 function* loadMore() {
     try {
         const state = yield select();
@@ -277,6 +284,7 @@ export const saga = function* saga() {
     yield takeLatest(RESTORE_PREVIOUS_SEARCH, restorePreviousSearch);
     yield takeLatest(REMEMBER_SEARCH, rememberSearch);
     yield takeLatest(INITIAL_SEARCH, initialSearch);
+    yield takeLatest(RESTORE_SAVED_SEARCH, restoreSavedSearch);
     yield throttle(1000, SEARCH, search);
     yield takeLatest(LOAD_MORE, loadMore);
 };

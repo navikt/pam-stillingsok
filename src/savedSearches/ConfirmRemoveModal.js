@@ -4,15 +4,12 @@ import { connect } from 'react-redux';
 import { Undertittel, Normaltekst } from 'nav-frontend-typografi';
 import Modal from 'nav-frontend-modal';
 import { Flatknapp, Hovedknapp } from 'nav-frontend-knapper';
-import {
-    HIDE_MODAL_REMOVE_FROM_FAVORITES,
-    REMOVE_FROM_FAVORITES
-} from './favoritesReducer';
+import { HIDE_MODAL_REMOVE_SAVED_SEARCH, REMOVE_SAVED_SEARCH } from './savedSearchesReducer';
 
 class ConfirmRemoveModal extends React.Component {
     onRemoveClick = () => {
         this.props.hideModal();
-        this.props.removeFromFavorites(this.props.adAboutToBeRemoved.uuid);
+        this.props.removeSavedSearch(this.props.savedSearchAboutToBeRemoved.uuid);
     };
 
     closeModal = () => {
@@ -25,17 +22,17 @@ class ConfirmRemoveModal extends React.Component {
                 <Modal
                     isOpen
                     onRequestClose={this.closeModal}
-                    contentLabel="Slett favoritt"
+                    contentLabel="Slett lagret søk"
                     appElement={document.getElementById('app')}
                 >
                     <div className="Favorites__modal">
-                        <Undertittel className="Favorites__modal__title">Slett favoritt</Undertittel>
-                        <Normaltekst className="Favorites__modal__message">
-                            Er du sikker på at du vil slette &#34;{this.props.adAboutToBeRemoved.title}&#34;?
+                        <Undertittel className="Favorites__modal__title">Slett lagret søk</Undertittel>
+                        <Normaltekst className="SavedSearches__modal__body">
+                            Er du sikker på at du vil slette &#34;{this.props.savedSearchAboutToBeRemoved.title}&#34;?
                         </Normaltekst>
                         <div className="Favorites__modal__buttons">
                             <Hovedknapp onClick={this.onRemoveClick}>Slett</Hovedknapp>
-                            <Flatknapp onClick={this.closeModal}>Tilbake til favoritter</Flatknapp>
+                            <Flatknapp onClick={this.closeModal}>Tilbake til lagrede søk</Flatknapp>
                         </div>
                     </div>
                 </Modal>
@@ -46,27 +43,27 @@ class ConfirmRemoveModal extends React.Component {
 }
 
 ConfirmRemoveModal.defaultProps = {
-    adAboutToBeRemoved: undefined
+    savedSearchAboutToBeRemoved: undefined
 };
 
 ConfirmRemoveModal.propTypes = {
-    removeFromFavorites: PropTypes.func.isRequired,
+    removeSavedSearch: PropTypes.func.isRequired,
     hideModal: PropTypes.func.isRequired,
     confirmationVisible: PropTypes.bool.isRequired,
-    adAboutToBeRemoved: PropTypes.shape({
+    savedSearchAboutToBeRemoved: PropTypes.shape({
         uuid: PropTypes.string,
         title: PropTypes.string
     })
 };
 
 const mapStateToProps = (state) => ({
-    confirmationVisible: state.favorites.confirmationVisible,
-    adAboutToBeRemoved: state.favorites.adAboutToBeRemoved
+    confirmationVisible: state.savedSearches.confirmationVisible,
+    savedSearchAboutToBeRemoved: state.savedSearches.savedSearchAboutToBeRemoved
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    removeFromFavorites: (uuid) => dispatch({ type: REMOVE_FROM_FAVORITES, uuid }),
-    hideModal: () => dispatch({ type: HIDE_MODAL_REMOVE_FROM_FAVORITES })
+    removeSavedSearch: (uuid) => dispatch({ type: REMOVE_SAVED_SEARCH, uuid }),
+    hideModal: () => dispatch({ type: HIDE_MODAL_REMOVE_SAVED_SEARCH })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ConfirmRemoveModal);
