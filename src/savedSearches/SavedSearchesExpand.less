@@ -1,0 +1,30 @@
+@import "../variables";
+
+.SavedSearchesExpand {
+    background: #fff;
+    padding: 2rem;
+    border-top: 2px solid @border-gray;
+    border-bottom: 2px solid @border-gray;
+}
+
+.SavedSearchesExpand__columns {
+    margin-bottom: 1.25rem;
+}
+
+@media (min-width: @screen-md-min) {
+    .SavedSearchesExpand__columns {
+        columns: 2;
+        column-gap: 2rem;
+    }
+
+    .SavedSearchesExpand {
+        padding: 2rem;
+        display: flex;
+        justify-content: center;
+    }
+}
+
+.SavedSearchesExpandItem {
+    margin-bottom: 0.75rem;
+}
+

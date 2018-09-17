@@ -27,7 +27,6 @@ class AddSavedSearchModal extends React.Component {
     };
 
     onSaveClick = () => {
-        this.props.hideModal();
         this.props.addSavedSearch();
     };
 
@@ -36,7 +35,7 @@ class AddSavedSearchModal extends React.Component {
     };
 
     render() {
-        const { savedSearchAboutToBeAdded, showAddSavedSearchModal } = this.props;
+        const { savedSearchAboutToBeAdded, showAddSavedSearchModal, validation } = this.props;
         if (showAddSavedSearchModal) {
             return (
                 <Modal
@@ -52,6 +51,10 @@ class AddSavedSearchModal extends React.Component {
                                 label="Navn*"
                                 onChange={this.onTitleChange}
                                 value={savedSearchAboutToBeAdded.title}
+                                feil={!validation.titleIsValid ?
+                                    { feilmelding: 'Du må gi et navn på søket' } :
+                                    undefined
+                                }
                             />
                             <Checkbox
                                 label="Ja, jeg ønsker å motta varsler om nye treff på e-post"
@@ -112,12 +115,16 @@ AddSavedSearchModal.propTypes = {
     hideModal: PropTypes.func.isRequired,
     savedSearchAboutToBeAdded: PropTypes.shape({
         title: PropTypes.string
-    })
+    }),
+    validation: PropTypes.shape({
+        titleIsValid: PropTypes.bool
+    }).isRequired
 };
 
 const mapStateToProps = (state) => ({
     showAddSavedSearchModal: state.savedSearches.showAddSavedSearchModal,
-    savedSearchAboutToBeAdded: state.savedSearches.savedSearchAboutToBeAdded
+    savedSearchAboutToBeAdded: state.savedSearches.savedSearchAboutToBeAdded,
+    validation: state.savedSearches.savedSearchAboutToBeAddedValidation
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -31,7 +31,9 @@ class SavedSearch extends React.Component {
         return (
             <div className="SavedSearch">
                 <div className="SavedSearch__top">
-                    <Link className="lenke typo-element" to="/" onClick={this.onTitleClick}>{savedSearch.title}</Link>
+                    <div className="SavedSearch__top__tittle">
+                        <Link className="lenke typo-element" to="/" onClick={this.onTitleClick}>{savedSearch.title}</Link>
+                    </div>
                     <div className="SavedSearch__top__buttons">
                         <Flatknapp mini onClick={this.onChangeClick}>Endre</Flatknapp>
                         <Flatknapp mini onClick={this.onRemoveClick}>Slett</Flatknapp>

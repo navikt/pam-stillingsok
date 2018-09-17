@@ -1,9 +1,13 @@
 @import "../variables";
 
 .Search__header {
-  background-color: @background-green;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
+  padding: 0;
+}
+
+.Search__header__green {
   padding: 3rem 0;
+  background-color: @background-green;
 }
 
 .Search__spinner {
@@ -19,7 +23,7 @@
 }
 
 @media (max-width: @screen-xs-max) {
-  .Search__header {
+  .Search__header__green {
     padding: 1rem 0 1rem 0.5rem;
   }
 }
@@ -39,3 +43,6 @@
   }
 }
 
+.SavedSearchExpandButton__chevron {
+  margin-left: 0.25rem;
+}

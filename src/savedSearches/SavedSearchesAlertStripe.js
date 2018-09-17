@@ -26,7 +26,7 @@ function SavedSearchesAlertStripe({
                 </AlertStripe>
             </SnapToTop>
         );
-    } else if (showAlertStripe && alertStripeMode === 'updated') {
+    } else if (showAlertStripe && alertStripeMode === 'edited') {
         return (
             <SnapToTop>
                 <AlertStripe type="suksess" solid className="SavedSearchesAlertStripe">

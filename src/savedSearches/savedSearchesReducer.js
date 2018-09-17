@@ -42,6 +42,8 @@ export const ADD_SAVED_SEARCH_SUBSCRIBE = 'ADD_SAVED_SEARCH_SUBSCRIBE';
 export const ADD_SAVED_SEARCH_DURATION = 'ADD_SAVED_SEARCH_DURATION';
 export const ADD_SAVED_SEARCH_URL = 'ADD_SAVED_SEARCH_URL';
 
+export const EXPAND_SAVED_SEARCHES = 'EXPAND_SAVED_SEARCHES';
+export const COLLAPSE_SAVED_SEARCHES = 'COLLAPSE_SAVED_SEARCHES';
 
 const initialState = {
     savedSearches: [],
@@ -52,9 +54,17 @@ const initialState = {
     savedSearchAboutToBeRemoved: undefined,
     alertStripeMode: 'added',
     confirmationVisible: false,
+    savedSearchAboutToBeEdited: undefined,
+    savedSearchAboutToBeEditedValidation: {
+        titleIsValid: true
+    },
     savedSearchAboutToBeAdded: undefined,
+    savedSearchAboutToBeAddedValidation: {
+        titleIsValid: true
+    },
     showEditSavedSearchModal: false,
-    showAddSavedSearchModal: false
+    showAddSavedSearchModal: false,
+    isSavedSearchesExpanded: false
 };
 
 export default function savedSearchesReducer(state = initialState, action) {
@@ -80,7 +90,7 @@ export default function savedSearchesReducer(state = initialState, action) {
         case FETCH_SAVED_SEARCHES_FAILURE:
             return {
                 ...state,
-                error: action.error,
+                error: 'fetch_error',
                 isFetchingSavedSearches: false
             };
         case REMOVE_SAVED_SEARCH_BEGIN:
@@ -91,12 +101,13 @@ export default function savedSearchesReducer(state = initialState, action) {
         case REMOVE_SAVED_SEARCH_FAILURE:
             return {
                 ...state,
-                error: action.error,
+                error: 'remove_error',
                 showAlertStripe: false
             };
         case SHOW_CONFIRM_REMOVE_SAVED_SEARCH_MODAL:
             return {
                 ...state,
+                showAlertStripe: false,
                 confirmationVisible: true,
                 savedSearchAboutToBeRemoved: state.savedSearches.find((savedSearch) => savedSearch.uuid === action.uuid)
             };
@@ -133,6 +144,10 @@ export default function savedSearchesReducer(state = initialState, action) {
                 savedSearchAboutToBeEdited: {
                     ...state.savedSearchAboutToBeEdited,
                     title: action.title
+                },
+                savedSearchAboutToBeEditedValidation: {
+                    ...state.savedSearchAboutToBeEditedValidation,
+                    titleIsValid: action.title.trim().length > 0
                 }
             };
         }
@@ -168,7 +183,7 @@ export default function savedSearchesReducer(state = initialState, action) {
         case UPDATE_SAVED_SEARCH_FAILURE: {
             return {
                 ...state,
-                error: action.error,
+                error: 'update_error',
                 showAlertStripe: false
             };
         }
@@ -195,6 +210,10 @@ export default function savedSearchesReducer(state = initialState, action) {
                 savedSearchAboutToBeAdded: {
                     ...state.savedSearchAboutToBeAdded,
                     title: action.title
+                },
+                savedSearchAboutToBeAddedValidation: {
+                    ...state.savedSearchAboutToBeAddedValidation,
+                    titleIsValid: action.title.trim().length > 0
                 }
             };
         }
@@ -234,8 +253,21 @@ export default function savedSearchesReducer(state = initialState, action) {
         case ADD_SAVED_SEARCH_FAILURE: {
             return {
                 ...state,
-                error: action.error,
+                error: 'add_error',
                 showAlertStripe: false
+            };
+        }
+        case EXPAND_SAVED_SEARCHES: {
+            return {
+                ...state,
+                isSavedSearchesExpanded: true
+            };
+        }
+
+        case COLLAPSE_SAVED_SEARCHES: {
+            return {
+                ...state,
+                isSavedSearchesExpanded: false
             };
         }
         default:
@@ -280,37 +312,43 @@ function* removeSavedSearch(action) {
 }
 
 function* updateSavedSearch() {
-    try {
-        const state = yield select();
-        yield put({ type: SHOW_SAVED_SEARCHES_STRIPE, alertStripeMode: 'updated' });
-        yield put({ type: UPDATE_SAVED_SEARCH_BEGIN, updated: state.savedSearches.savedSearchAboutToBeEdited });
-        const response = yield call(update, state.savedSearches.savedSearchAboutToBeEdited);
-        yield put({ type: UPDATE_SAVED_SEARCH_SUCCESS, response });
-        yield call(delay, 5000);
-        yield put({ type: HIDE_SAVED_SEARCHES_STRIPE });
-    } catch (e) {
-        if (e instanceof SearchApiError) {
-            yield put({ type: UPDATE_SAVED_SEARCH_FAILURE, error: e });
-        } else {
-            throw e;
+    const state = yield select();
+    if (state.savedSearches.savedSearchAboutToBeEditedValidation.titleIsValid) {
+        try {
+            yield put({ type: HIDE_EDIT_SAVED_SEARCH_MODAL });
+            yield put({ type: SHOW_SAVED_SEARCHES_STRIPE, alertStripeMode: 'edited' });
+            yield put({ type: UPDATE_SAVED_SEARCH_BEGIN, updated: state.savedSearches.savedSearchAboutToBeEdited });
+            const response = yield call(update, state.savedSearches.savedSearchAboutToBeEdited);
+            yield put({ type: UPDATE_SAVED_SEARCH_SUCCESS, response });
+            yield call(delay, 5000);
+            yield put({ type: HIDE_SAVED_SEARCHES_STRIPE });
+        } catch (e) {
+            if (e instanceof SearchApiError) {
+                yield put({ type: UPDATE_SAVED_SEARCH_FAILURE, error: e });
+            } else {
+                throw e;
+            }
         }
     }
 }
 
 function* addSavedSearch() {
-    try {
-        const state = yield select();
-        yield put({ type: SHOW_SAVED_SEARCHES_STRIPE, alertStripeMode: 'added' });
-        yield put({ type: ADD_SAVED_SEARCH_BEGIN, added: state.savedSearches.savedSearchAboutToBeAdded });
-        const response = yield call(post, 'url', state.savedSearches.savedSearchAboutToBeAdded);
-        yield put({ type: ADD_SAVED_SEARCH_SUCCESS, response });
-        yield call(delay, 5000);
-        yield put({ type: HIDE_SAVED_SEARCHES_STRIPE });
-    } catch (e) {
-        if (e instanceof SearchApiError) {
-            yield put({ type: ADD_SAVED_SEARCH_FAILURE, error: e });
-        } else {
-            throw e;
+    const state = yield select();
+    if (state.savedSearches.savedSearchAboutToBeAddedValidation.titleIsValid) {
+        try {
+            yield put({ type: HIDE_ADD_SAVED_SEARCH_MODAL });
+            yield put({ type: SHOW_SAVED_SEARCHES_STRIPE, alertStripeMode: 'added' });
+            yield put({ type: ADD_SAVED_SEARCH_BEGIN, added: state.savedSearches.savedSearchAboutToBeAdded });
+            const response = yield call(post, 'url', state.savedSearches.savedSearchAboutToBeAdded);
+            yield put({ type: ADD_SAVED_SEARCH_SUCCESS, response });
+            yield call(delay, 5000);
+            yield put({ type: HIDE_SAVED_SEARCHES_STRIPE });
+        } catch (e) {
+            if (e instanceof SearchApiError) {
+                yield put({ type: ADD_SAVED_SEARCH_FAILURE, error: e });
+            } else {
+                throw e;
+            }
         }
     }
 }

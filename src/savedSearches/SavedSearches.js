@@ -12,6 +12,7 @@ import EditSavedSearchModal from './EditSavedSearchModal';
 import NoSavedSearches from './NoSavedSearches';
 import SavedSearch from './SavedSearch';
 import SavedSearchesAlertStripe from './SavedSearchesAlertStripe';
+import SavedSearchesError from './SavedSearchesError';
 import { FETCH_SAVED_SEARCHES } from './savedSearchesReducer';
 import './SavedSearches.less';
 
@@ -27,6 +28,7 @@ class SavedSearches extends React.Component {
             <div className="SavedSearches">
                 <Disclaimer />
                 <SavedSearchesAlertStripe />
+                <SavedSearchesError />
                 <div className="SavedSearches__backbutton">
                     <Container className="SavedSearches__backbutton__container">
                         <Link
