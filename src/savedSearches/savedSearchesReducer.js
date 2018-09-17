@@ -1,7 +1,7 @@
 import { select, put, call, takeLatest } from 'redux-saga/effects';
 import { SearchApiError } from '../api/api';
 import capitalizeLocation from '../common/capitalizeLocation';
-import { PAGE_SIZE } from '../search/searchReducer';
+import { toUrl } from '../search/url';
 import { get, post, remove, update } from './mockapi';
 import { SEARCH_API } from '../fasitProperties';
 
@@ -40,7 +40,7 @@ export const ADD_SAVED_SEARCH_FAILURE = 'ADD_SAVED_SEARCH_FAILURE';
 export const ADD_SAVED_SEARCH_TITLE = 'ADD_SAVED_SEARCH_TITLE';
 export const ADD_SAVED_SEARCH_SUBSCRIBE = 'ADD_SAVED_SEARCH_SUBSCRIBE';
 export const ADD_SAVED_SEARCH_DURATION = 'ADD_SAVED_SEARCH_DURATION';
-export const ADD_SAVED_SEARCH_QUERY = 'ADD_SAVED_SEARCH_QUERY';
+export const ADD_SAVED_SEARCH_URL = 'ADD_SAVED_SEARCH_URL';
 
 
 const initialState = {
@@ -216,12 +216,12 @@ export default function savedSearchesReducer(state = initialState, action) {
                 }
             };
         }
-        case ADD_SAVED_SEARCH_QUERY: {
+        case ADD_SAVED_SEARCH_URL: {
             return {
                 ...state,
                 savedSearchAboutToBeAdded: {
                     ...state.savedSearchAboutToBeAdded,
-                    query: action.query
+                    url: action.url
                 }
             };
         }
@@ -353,11 +353,11 @@ function toTitle(state) {
     return title.join(', ');
 }
 
-function* setTitleAndQuery() {
+function* setTitleAndUrl() {
     const state = yield select();
-    const query = toQuery(state);
+    const url = toUrl(toQuery(state));
     const title = toTitle(state);
-    yield put({ type: ADD_SAVED_SEARCH_QUERY, query });
+    yield put({ type: ADD_SAVED_SEARCH_URL, url });
     yield put({ type: ADD_SAVED_SEARCH_TITLE, title });
 }
 
@@ -366,5 +366,5 @@ export const savedSearchesSaga = function* saga() {
     yield takeLatest(REMOVE_SAVED_SEARCH, removeSavedSearch);
     yield takeLatest(UPDATE_SAVED_SEARCH, updateSavedSearch);
     yield takeLatest(ADD_SAVED_SEARCH, addSavedSearch);
-    yield takeLatest(SHOW_ADD_SAVED_SEARCH_MODAL, setTitleAndQuery);
+    yield takeLatest(SHOW_ADD_SAVED_SEARCH_MODAL, setTitleAndUrl);
 };

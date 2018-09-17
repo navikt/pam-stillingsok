@@ -32,7 +32,6 @@ import ViewMode from './viewMode/ViewMode';
 class Search extends React.Component {
     constructor(props) {
         super(props);
-        this.props.restorePreviousSearch();
         this.props.initialSearch();
     }
 
@@ -140,7 +139,6 @@ class Search extends React.Component {
 
 Search.propTypes = {
     showAddSavedSearchModal: PropTypes.func.isRequired,
-    restorePreviousSearch: PropTypes.func.isRequired,
     initialSearch: PropTypes.func.isRequired,
     search: PropTypes.func.isRequired,
     rememberSearch: PropTypes.func.isRequired,
@@ -165,7 +163,6 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     showAddSavedSearchModal: () => dispatch({ type: SHOW_ADD_SAVED_SEARCH_MODAL }),
-    restorePreviousSearch: () => dispatch({ type: RESTORE_PREVIOUS_SEARCH }),
     initialSearch: () => dispatch({ type: INITIAL_SEARCH }),
     search: () => dispatch({ type: SEARCH }),
     rememberSearch: () => dispatch({ type: REMEMBER_SEARCH }),

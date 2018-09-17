@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Flatknapp } from 'nav-frontend-knapper';
 import { Link } from 'react-router-dom';
-import { RESTORE_SAVED_SEARCH } from '../search/searchReducer';
 import {
     SHOW_CONFIRM_REMOVE_SAVED_SEARCH_MODAL,
     SHOW_EDIT_SAVED_SEARCH_MODAL
@@ -20,7 +19,11 @@ class SavedSearch extends React.Component {
     };
 
     onTitleClick = () => {
-        this.props.restoreSearch(this.props.savedSearch.query);
+        try {
+            sessionStorage.setItem('url', this.props.savedSearch.url);
+        } catch (e) {
+            // Ignore session storage error
+        }
     };
 
     render() {
@@ -28,7 +31,7 @@ class SavedSearch extends React.Component {
         return (
             <div className="SavedSearch">
                 <div className="SavedSearch__top">
-                    <Link to="/" onClick={this.onTitleClick}>{savedSearch.title}</Link>
+                    <Link className="lenke typo-element" to="/" onClick={this.onTitleClick}>{savedSearch.title}</Link>
                     <div className="SavedSearch__top__buttons">
                         <Flatknapp mini onClick={this.onChangeClick}>Endre</Flatknapp>
                         <Flatknapp mini onClick={this.onRemoveClick}>Slett</Flatknapp>
@@ -48,7 +51,6 @@ class SavedSearch extends React.Component {
 }
 
 SavedSearch.propTypes = {
-    restoreSearch: PropTypes.func.isRequired,
     showConfirmRemoveSavedSearchModal: PropTypes.func.isRequired,
     showEditSavedSearchModal: PropTypes.func.isRequired,
     savedSearch: PropTypes.shape({
@@ -56,14 +58,13 @@ SavedSearch.propTypes = {
         title: PropTypes.string,
         duration: PropTypes.string,
         created: PropTypes.string,
-        query: PropTypes.shape({})
+        url: PropTypes.string
     }).isRequired
 };
 
 const mapStateToProps = (state) => ({});
 
 const mapDispatchToProps = (dispatch) => ({
-    restoreSearch: (query) => dispatch({ type: RESTORE_SAVED_SEARCH, query }),
     showConfirmRemoveSavedSearchModal: (uuid) => dispatch({ type: SHOW_CONFIRM_REMOVE_SAVED_SEARCH_MODAL, uuid }),
     showEditSavedSearchModal: (uuid) => dispatch({ type: SHOW_EDIT_SAVED_SEARCH_MODAL, uuid })
 });
