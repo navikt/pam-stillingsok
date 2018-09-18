@@ -34,6 +34,7 @@ import './Search.less';
 import SearchBox from './searchBox/SearchBox';
 import { INITIAL_SEARCH, REMEMBER_SEARCH, SEARCH } from './searchReducer';
 import SearchResults from './searchResults/SearchResults';
+import SearchResultsCount from './searchResults/SearchResultsCount';
 import Sorting from './sorting/Sorting';
 import ViewMode from './viewMode/ViewMode';
 
@@ -63,7 +64,7 @@ class Search extends React.Component {
     };
 
     onSavedSearchesButtonClick = () => {
-        if(this.props.isSavedSearchesExpanded) {
+        if (this.props.isSavedSearchesExpanded) {
             this.props.collapseSavedSearches();
         } else {
             this.props.expandSavedSearches();
@@ -91,7 +92,8 @@ class Search extends React.Component {
                                             Favoritter {!this.props.isFetchingFavorites ? ` (${this.props.favorites.length})` : ''}
                                         </Link>
                                         <Knapp mini to="/lagrede-sok" onClick={this.onSavedSearchesButtonClick}>
-                                            Lagrede søk {!this.props.isFetchingSavedSearches ? ` (${this.props.savedSearches.length})` : ''}
+                                            Lagrede
+                                            søk {!this.props.isFetchingSavedSearches ? ` (${this.props.savedSearches.length})` : ''}
                                             <Chevron
                                                 className="SavedSearchExpandButton__chevron"
                                                 type={this.props.isSavedSearchesExpanded ? 'opp' : 'ned'}
@@ -121,36 +123,38 @@ class Search extends React.Component {
                         <RestoreScroll>
                             <div>
                                 <Row>
-                                    <form
-                                        role="search"
-                                        action="/"
-                                        onSubmit={this.onSearchFormSubmit}
-                                        className="no-print"
-                                    >
-                                        <Column xs="12" md="4">
-                                            <div id="sok">
-                                                <div className="blokk-xs">
-                                                    <Knapp mini onClick={this.onSaveSearchClick}>Lagre søk</Knapp>
-                                                </div>
-                                                <SearchBox />
-                                                <Published />
-                                                <Occupations />
-                                                <Counties />
-                                                <Extent />
-                                                <EngagementType />
-                                                <Sector />
+                                    <Column xs="12" md="4">
+                                        <div className="Search__main__left">
+                                            <div className="Search__main__left__save-search">
+                                                <Knapp mini onClick={this.onSaveSearchClick}>Lagre søk</Knapp>
                                             </div>
-                                        </Column>
-                                        <Column xs="12" md="5">
-                                            <ViewMode />
-                                        </Column>
-                                        <Column xs="12" md="3">
-                                            <Sorting />
-                                        </Column>
-                                    </form>
+                                            <div id="sok">
+                                                <form
+                                                    role="search"
+                                                    action="/"
+                                                    onSubmit={this.onSearchFormSubmit}
+                                                    className="no-print"
+                                                >
+                                                    <SearchBox />
+                                                    <Published />
+                                                    <Occupations />
+                                                    <Counties />
+                                                    <Extent />
+                                                    <EngagementType />
+                                                    <Sector />
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </Column>
                                     <Column xs="12" md="8">
-                                        <div id="sokeresultat">
-                                            <SearchResults />
+                                        <div className="Search__main__center">
+                                            <div className="Search__main__center__header">
+                                                <SearchResultsCount />
+                                                <Sorting />
+                                            </div>
+                                            <div id="sokeresultat">
+                                                <SearchResults />
+                                            </div>
                                         </div>
                                     </Column>
                                 </Row>

@@ -31,7 +31,6 @@ class SearchBox extends React.Component {
     render() {
         return (
             <div>
-                <label className="skjemaelement__label" htmlFor="search-form-fritekst-input">Søkeord</label>
                 <div className="SearchBox">
                     <Typeahead
                         id="search-form-fritekst-input"

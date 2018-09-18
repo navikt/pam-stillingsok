@@ -1,12 +1,12 @@
 @import "../variables";
 
 .Search__header {
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   padding: 0;
 }
 
 .Search__header__green {
-  padding: 3rem 0;
+  padding: 3.25rem 0 3.75rem;
   background-color: @background-green;
 }
 
@@ -20,6 +20,21 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+@media (min-width: @screen-md-min) {
+  .Search__main__center {
+    margin-left: 5rem;
+  }
+}
+
+.Search__main__left__save-search,
+.Search__main__center__header {
+  min-height: 3.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
 }
 
 @media (max-width: @screen-xs-max) {
