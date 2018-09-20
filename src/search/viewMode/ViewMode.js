@@ -1,40 +1,30 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import { connect } from 'react-redux';
-import { ToggleGruppe, ToggleKnapp } from 'nav-frontend-skjema';
-import './ViewMode.less';
 import { SET_MODE } from '../searchReducer';
+import './ViewMode.less';
 
 class ViewMode extends React.Component {
-    onViewModeClick = (e) => {
-        this.props.setMode(e.target.value);
+    onNormalClick = () => {
+        this.props.setMode('normal');
+    };
+
+    onCompactClick = () => {
+        this.props.setMode('compact');
     };
 
     render() {
         return (
             <div className="ViewMode">
-                <label htmlFor="view-mode-toggle" className="skjemaelement__label">
-                    Visning
-                </label>
-                <ToggleGruppe
-                    id="view-mode-toggle"
-                    className="ViewMode"
-                    onChange={this.onViewModeClick}
-                    name="toggleGruppe"
-                >
-                    <ToggleKnapp
-                        value="normal"
-                        defaultChecked={this.props.mode === 'normal'}
-                    >
-                        Normal
-                    </ToggleKnapp>
-                    <ToggleKnapp
-                        value="compact"
-                        defaultChecked={this.props.mode === 'compact'}
-                    >
-                        Kompakt
-                    </ToggleKnapp>
-                </ToggleGruppe>
+                {this.props.mode === 'compact' ? (
+                    <button className="ViewMode__button lenke typo-normal" onClick={this.onNormalClick}>
+                        Normal visning
+                    </button>
+                ) : (
+                    <button className="ViewMode__button lenke typo-normal" onClick={this.onCompactClick}>
+                        Kompakt visning
+                    </button>
+                )}
             </div>
         );
     }
