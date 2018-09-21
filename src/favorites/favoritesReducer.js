@@ -145,7 +145,7 @@ function* fetchFavorites() {
     if (state.favorites.shouldFetchFavorites) {
         yield put({ type: FETCH_FAVORITES_BEGIN });
         try {
-            const response = yield call(get, `${AD_USER_API}/api/v1/userfavouriteads?user=${USER_UUID_HACK}`);
+            const response = yield call(get, `${AD_USER_API}/api/v1/userfavouriteads?size=200&user=${USER_UUID_HACK}`);
             yield put({ type: FETCH_FAVORITES_SUCCESS, response });
         } catch (e) {
             if (e instanceof SearchApiError) {
