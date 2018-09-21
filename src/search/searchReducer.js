@@ -48,6 +48,7 @@ const initialState = {
     },
     hasError: false,
     from: 0,
+    to: PAGE_SIZE,
     page: 0,
     mode: 'normal',
     url: undefined
@@ -221,7 +222,7 @@ function* initialSearch() {
         if (!state.search.initialSearchDone) {
             // For å hente alle tilgjengelige fasetter, gjør vi først
             // et søk uten noen søkekriterier.
-            response = yield call(fetchSearch);
+            response = yield call(fetchSearch, { size: PAGE_SIZE });
             yield put({ type: FETCH_INITIAL_FACETS_SUCCESS, response });
         }
 

@@ -11,16 +11,28 @@ class Favorite extends React.Component {
         this.props.showModal(this.props.favorite.uuid);
     };
 
+    toAd = (favorite) => ({
+        uuid: favorite.uuid,
+        title: favorite.title,
+        updated: favorite.updated,
+        properties: {
+            employer: favorite.employer,
+            jobtitle: favorite.jobTitle,
+            location: favorite.location,
+            applicationdue: favorite.applicationdue
+        }
+    });
+
     render() {
         const { favorite } = this.props;
         return (
             <div className="Favorite">
                 <div className="Favorite__top">
-                    {favorite.status !== 'ACTIVE' && (
+                    {favorite.favouriteAd.status !== 'ACTIVE' && (
                         <EtikettFokus>Utløpt</EtikettFokus>
                     )}
                 </div>
-                <SearchResultsItemDetails stilling={favorite} />
+                <SearchResultsItemDetails stilling={this.toAd(favorite.favouriteAd)} />
                 <div className="Favorite__buttons">
                     <Flatknapp mini onClick={this.onRemoveClick}>Slett</Flatknapp>
                 </div>
@@ -33,7 +45,9 @@ Favorite.propTypes = {
     showModal: PropTypes.func.isRequired,
     favorite: PropTypes.shape({
         uuid: PropTypes.string,
-        title: PropTypes.string
+        favouriteAd: PropTypes.shape({
+            status: PropTypes.string
+        })
     }).isRequired
 };
 

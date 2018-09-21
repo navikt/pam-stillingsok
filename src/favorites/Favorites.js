@@ -1,19 +1,18 @@
-import { Hovedknapp } from 'nav-frontend-knapper';
-import React from 'react';
+import Chevron from 'nav-frontend-chevron';
+import { Column, Container, Row } from 'nav-frontend-grid';
+import { Sidetittel } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
+import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Container, Row, Column } from 'nav-frontend-grid';
-import { Sidetittel } from 'nav-frontend-typografi';
-import Chevron from 'nav-frontend-chevron';
+import Disclaimer from '../discalimer/Disclaimer';
 import DelayedSpinner from '../search/loading/DelayedSpinner';
+import ConfirmRemoveModal from './ConfirmRemoveModal';
+import Favorite from './Favorite';
 import FavoriteAlertStripe from './FavoriteAlertStripe';
 import FavoriteError from './FavoriteError';
-import { FETCH_FAVORITES } from './favoritesReducer';
-import Disclaimer from '../discalimer/Disclaimer';
-import Favorite from './Favorite';
 import './Favorites.less';
-import ConfirmRemoveModal from './ConfirmRemoveModal';
+import { FETCH_FAVORITES } from './favoritesReducer';
 import NoFavorites from './NoFavorites';
 
 class Favorites extends React.Component {
@@ -48,7 +47,7 @@ class Favorites extends React.Component {
                             <Column xs="12">
                                 <Sidetittel className="Search__header__title">
                                     Favoritter
-                                    {!this.props.isFetchingFavorites ? ` (${this.props.favorites.length})` : ''}
+                                    {!this.props.isFetchingFavorites ? ` (${this.props.totalElements})` : ''}
                                 </Sidetittel>
                             </Column>
                         </Row>
@@ -86,6 +85,7 @@ class Favorites extends React.Component {
 Favorites.propTypes = {
     isFetchingFavorites: PropTypes.bool.isRequired,
     fetchFavorites: PropTypes.func.isRequired,
+    totalElements: PropTypes.number.isRequired,
     favorites: PropTypes.arrayOf(PropTypes.shape({
         uuid: PropTypes.string,
         title: PropTypes.string
@@ -94,6 +94,7 @@ Favorites.propTypes = {
 
 const mapStateToProps = (state) => ({
     favorites: state.favorites.favorites,
+    totalElements: state.favorites.totalElements,
     isFetchingFavorites: state.favorites.isFetchingFavorites
 });
 

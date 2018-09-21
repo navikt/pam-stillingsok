@@ -1,7 +1,7 @@
+import Chevron from 'nav-frontend-chevron';
 import { Column, Container, Row } from 'nav-frontend-grid';
 import { Knapp } from 'nav-frontend-knapper';
 import { Sidetittel } from 'nav-frontend-typografi';
-import Chevron from 'nav-frontend-chevron';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -36,7 +36,6 @@ import { INITIAL_SEARCH, REMEMBER_SEARCH, SEARCH } from './searchReducer';
 import SearchResults from './searchResults/SearchResults';
 import SearchResultsCount from './searchResults/SearchResultsCount';
 import Sorting from './sorting/Sorting';
-import ViewMode from './viewMode/ViewMode';
 
 class Search extends React.Component {
     constructor(props) {
@@ -89,7 +88,7 @@ class Search extends React.Component {
                                 <Column xs="12" md="6">
                                     <div className="Search__header__right">
                                         <Link className="knapp knapp--mini" to="/favoritter">
-                                            Favoritter {!this.props.isFetchingFavorites ? ` (${this.props.favorites.length})` : ''}
+                                            Favoritter {!this.props.isFetchingFavorites ? ` (${this.props.favoritesTotalElements})` : ''}
                                         </Link>
                                         <Knapp mini to="/lagrede-sok" onClick={this.onSavedSearchesButtonClick}>
                                             Lagrede
@@ -178,22 +177,22 @@ Search.propTypes = {
     fetchSavedSearches: PropTypes.func.isRequired,
     hasError: PropTypes.bool.isRequired,
     initialSearchDone: PropTypes.bool.isRequired,
-    favorites: PropTypes.arrayOf(PropTypes.object).isRequired,
     isFetchingFavorites: PropTypes.bool.isRequired,
     savedSearches: PropTypes.arrayOf(PropTypes.object).isRequired,
     isFetchingSavedSearches: PropTypes.bool.isRequired,
     isSavedSearchesExpanded: PropTypes.bool.isRequired,
     expandSavedSearches: PropTypes.func.isRequired,
-    collapseSavedSearches: PropTypes.func.isRequired
+    collapseSavedSearches: PropTypes.func.isRequired,
+    favoritesTotalElements: PropTypes.number.isRequired
 };
 
 const mapStateToProps = (state) => ({
     hasError: state.search.hasError,
     initialSearchDone: state.search.initialSearchDone,
-    favorites: state.favorites.favorites,
     isFetchingFavorites: state.favorites.isFetchingFavorites,
     savedSearches: state.savedSearches.savedSearches,
     isFetchingSavedSearches: state.savedSearches.isFetchingSavedSearches,
+    favoritesTotalElements: state.favorites.totalElements,
     isSavedSearchesExpanded: state.savedSearches.isSavedSearchesExpanded
 });
 

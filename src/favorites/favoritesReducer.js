@@ -1,7 +1,7 @@
+/* eslint-disable no-underscore-dangle */
 import { select, put, call, takeLatest } from 'redux-saga/effects';
-import { SearchApiError } from '../api/api';
-import { get, post, remove } from './mockapi';
-import { SEARCH_API } from '../fasitProperties';
+import { get, post, remove, SearchApiError } from '../api/api';
+import { AD_USER_API } from '../fasitProperties';
 
 export const FETCH_FAVORITES = 'FETCH_FAVORITES';
 export const FETCH_FAVORITES_BEGIN = 'FETCH_FAVORITES_BEGIN';
@@ -29,11 +29,15 @@ const initialState = {
     shouldFetchFavorites: true,
     favorites: [],
     confirmationVisible: false,
-    adAboutToBeRemoved: undefined,
+    favoriteAboutToBeRemoved: undefined,
     showAlertStripe: false,
     error: undefined,
-    alertStripeMode: 'added'
+    alertStripeMode: 'added',
+    totalElements: 0,
+    favoriteAdUuidList: []
 };
+
+const USER_UUID_HACK = 'bdd00121-9dfb-46b5-82e6-872e2d51f782';
 
 export default function favoritesReducer(state = initialState, action) {
     switch (action.type) {
@@ -46,12 +50,15 @@ export default function favoritesReducer(state = initialState, action) {
         case FETCH_FAVORITES_BEGIN:
             return {
                 ...state,
-                isFetchingFavorites: true
+                isFetchingFavorites: true,
+                favoriteAdUuidList: [...state.favoriteAdUuidList, action.uuid]
             };
         case FETCH_FAVORITES_SUCCESS:
             return {
                 ...state,
-                favorites: action.response,
+                favorites: action.response.content,
+                favoriteAdUuidList: action.response.content.map((favorite) => (favorite.favouriteAd.uuid)),
+                totalElements: action.response.totalElements,
                 isFetchingFavorites: false,
                 shouldFetchFavorites: false
             };
@@ -64,12 +71,20 @@ export default function favoritesReducer(state = initialState, action) {
         case ADD_TO_FAVORITES_BEGIN:
             return {
                 ...state,
-                favorites: [...state.favorites, action.favorite]
+                favoriteAdUuidList: [...state.favoriteAdUuidList, action.uuid],
+                totalElements: state.totalElements + 1
+            };
+        case ADD_TO_FAVORITES_SUCCESS:
+            return {
+                ...state,
+                favorites: [...state.favorites, action.response]
             };
         case REMOVE_FROM_FAVORITES_BEGIN:
             return {
                 ...state,
-                favorites: state.favorites.filter((favorite) => favorite.uuid !== action.uuid)
+                favorites: state.favorites.filter((favorite) => favorite.uuid !== action.uuid),
+                favoriteAdUuidList: state.favoriteAdUuidList.filter((uuid) => uuid !== action.uuid),
+                totalElements: state.totalElements - 1
             };
         case ADD_TO_FAVORITES_FAILURE:
         case REMOVE_FROM_FAVORITES_FAILURE:
@@ -82,13 +97,13 @@ export default function favoritesReducer(state = initialState, action) {
             return {
                 ...state,
                 confirmationVisible: true,
-                adAboutToBeRemoved: state.favorites.find((favorite) => favorite.uuid === action.uuid)
+                favoriteAboutToBeRemoved: state.favorites.find((favorite) => favorite.uuid === action.uuid)
             };
         case HIDE_MODAL_REMOVE_FROM_FAVORITES:
             return {
                 ...state,
                 confirmationVisible: false,
-                adAboutToBeRemoved: undefined
+                favoriteAboutToBeRemoved: undefined
             };
         case SHOW_FAVORITES_ALERT_STRIPE:
             return {
@@ -110,26 +125,27 @@ const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 function toFavorite(uuid, ad) {
     return {
-        uuid,
-        title: ad.title,
-        updated: ad.updated,
-        status: 'ACTIVE',
-        properties: {
-            employer: ad.properties.employer,
-            jobtitle: ad.properties.jobtitle,
-            location: ad.properties.location,
-            updated: ad.properties.updated,
-            applicationdue: ad.properties.applicationdue
+        userUuid: USER_UUID_HACK,
+        favouriteAd: {
+            uuid,
+            title: ad.title,
+            updated: '2018-11-04T10:11:30', //ikke kompatibel med updated fra search
+            jobTitle: ad.properties.jobtitle,
+            status: 'ACTIVE',
+            applicationdue: '2018-11-04T10:11:30' //må være sting i backend
+            //location mangler
+            //employer mangler
         }
     };
 }
 
 function* fetchFavorites() {
     const state = yield select();
+
     if (state.favorites.shouldFetchFavorites) {
         yield put({ type: FETCH_FAVORITES_BEGIN });
         try {
-            const response = yield call(get, `${SEARCH_API}/favorites`);
+            const response = yield call(get, `${AD_USER_API}/api/v1/userfavouriteads?user=${USER_UUID_HACK}`);
             yield put({ type: FETCH_FAVORITES_SUCCESS, response });
         } catch (e) {
             if (e instanceof SearchApiError) {
@@ -156,8 +172,8 @@ function* addToFavorites(action) {
             return;
         }
         yield put({ type: SHOW_FAVORITES_ALERT_STRIPE, alertStripeMode: 'added' });
-        yield put({ type: ADD_TO_FAVORITES_BEGIN, favorite });
-        const response = yield call(post, `${SEARCH_API}/favorites`, favorite);
+        yield put({ type: ADD_TO_FAVORITES_BEGIN, uuid: favorite.favouriteAd.uuid });
+        const response = yield call(post, `${AD_USER_API}/api/v1/userfavouriteads?user=${USER_UUID_HACK}`, favorite);
         yield put({ type: ADD_TO_FAVORITES_SUCCESS, response });
         yield call(delay, 5000);
         yield put({ type: HIDE_FAVORITES_ALERT_STRIPE });
@@ -174,8 +190,8 @@ function* removeFromFavorites(action) {
     try {
         yield put({ type: SHOW_FAVORITES_ALERT_STRIPE, alertStripeMode: 'removed' });
         yield put({ type: REMOVE_FROM_FAVORITES_BEGIN, uuid: action.uuid });
-        const response = yield call(remove, action.uuid);
-        yield put({ type: REMOVE_FROM_FAVORITES_SUCCESS, response });
+        yield call(remove, `${AD_USER_API}/api/v1/userfavouriteads/${action.uuid}?user=${USER_UUID_HACK}`);
+        yield put({ type: REMOVE_FROM_FAVORITES_SUCCESS });
         yield call(delay, 5000);
         yield put({ type: HIDE_FAVORITES_ALERT_STRIPE });
     } catch (e) {

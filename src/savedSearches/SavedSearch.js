@@ -1,13 +1,10 @@
-import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { Flatknapp } from 'nav-frontend-knapper';
+import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import {
-    SHOW_CONFIRM_REMOVE_SAVED_SEARCH_MODAL,
-    SHOW_EDIT_SAVED_SEARCH_MODAL
-} from './savedSearchesReducer';
+import { SHOW_CONFIRM_REMOVE_SAVED_SEARCH_MODAL, SHOW_EDIT_SAVED_SEARCH_MODAL } from './savedSearchesReducer';
 
 class SavedSearch extends React.Component {
     onChangeClick = () => {
@@ -32,7 +29,9 @@ class SavedSearch extends React.Component {
             <div className="SavedSearch">
                 <div className="SavedSearch__top">
                     <div className="SavedSearch__top__tittle">
-                        <Link className="lenke typo-element" to="/" onClick={this.onTitleClick}>{savedSearch.title}</Link>
+                        <Link className="lenke typo-element" to="/" onClick={this.onTitleClick}>
+                            {savedSearch.title}
+                        </Link>
                     </div>
                     <div className="SavedSearch__top__buttons">
                         <Flatknapp mini onClick={this.onChangeClick}>Endre</Flatknapp>

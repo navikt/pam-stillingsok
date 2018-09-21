@@ -12,7 +12,7 @@ import {
 class ConfirmRemoveModal extends React.Component {
     onRemoveClick = () => {
         this.props.hideModal();
-        this.props.removeFromFavorites(this.props.adAboutToBeRemoved.uuid);
+        this.props.removeFromFavorites(this.props.favoriteAboutToBeRemoved.uuid);
     };
 
     closeModal = () => {
@@ -31,7 +31,7 @@ class ConfirmRemoveModal extends React.Component {
                     <div className="Favorites__modal">
                         <Undertittel className="Favorites__modal__title">Slett favoritt</Undertittel>
                         <Normaltekst className="Favorites__modal__message">
-                            Er du sikker på at du vil slette &#34;{this.props.adAboutToBeRemoved.title}&#34;?
+                            Er du sikker på at du vil slette &#34;{this.props.favoriteAboutToBeRemoved.favouriteAd.title}&#34;?
                         </Normaltekst>
                         <div className="Favorites__modal__buttons">
                             <Hovedknapp onClick={this.onRemoveClick}>Slett</Hovedknapp>
@@ -46,22 +46,24 @@ class ConfirmRemoveModal extends React.Component {
 }
 
 ConfirmRemoveModal.defaultProps = {
-    adAboutToBeRemoved: undefined
+    favoriteAboutToBeRemoved: undefined
 };
 
 ConfirmRemoveModal.propTypes = {
     removeFromFavorites: PropTypes.func.isRequired,
     hideModal: PropTypes.func.isRequired,
     confirmationVisible: PropTypes.bool.isRequired,
-    adAboutToBeRemoved: PropTypes.shape({
+    favoriteAboutToBeRemoved: PropTypes.shape({
         uuid: PropTypes.string,
-        title: PropTypes.string
+        favouriteAd: PropTypes.shape({
+            title: PropTypes.string
+        })
     })
 };
 
 const mapStateToProps = (state) => ({
     confirmationVisible: state.favorites.confirmationVisible,
-    adAboutToBeRemoved: state.favorites.adAboutToBeRemoved
+    favoriteAboutToBeRemoved: state.favorites.favoriteAboutToBeRemoved
 });
 
 const mapDispatchToProps = (dispatch) => ({

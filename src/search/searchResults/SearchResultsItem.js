@@ -17,14 +17,5 @@ export default class SearchResultItem extends React.Component {
 }
 
 SearchResultItem.propTypes = {
-    stilling: PropTypes.shape({
-        uuid: PropTypes.string,
-        title: PropTypes.string,
-        properties: PropTypes.shape({
-            employer: PropTypes.string,
-            jobtitle: PropTypes.string,
-            location: PropTypes.string,
-            updated: PropTypes.string
-        })
-    }).isRequired
+    stilling: PropTypes.shape({}).isRequired
 };
