@@ -1,7 +1,7 @@
-require('babel-register')();
+const seleniumServer = require('selenium-server-standalone-jar');
 require('nightwatch-cucumber')({
     cucumberArgs: [
-        '--compiler', 'js:babel-core/register',
+        '--require-module', 'babel-core/register',
         '--require', 'features/step_definitions',
         '--format', 'node_modules/cucumber-pretty',
         '--format', 'json:reports/cucumber.json',
@@ -9,14 +9,11 @@ require('nightwatch-cucumber')({
     ]
 });
 module.exports = {
-    //"src_folders": "./tests/system_tests",
-    // "globals_path": "./globals.js",
     "output_folder": "./reports",
     "page_objects_path" : "./pages",
-    //"custom_commands_path" : "./commands",
     "selenium": {
         "start_process": true,
-        "server_path": "./node_modules/selenium-server-standalone-jar/jar/selenium-server-standalone-3.9.1.jar",
+        "server_path": seleniumServer.path,
         "host": "127.0.0.1",
         "port": 4444, // standard selenium port
     },

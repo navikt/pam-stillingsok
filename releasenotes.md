@@ -1,3 +1,6 @@
+## RELEASE - 0.35.250-58f0db3
+#### New in this release: 
++ 2018-08-10 [PAM-1162]: Legger til validering på lenker. Kun gyldige lenker vises med <a href>-tag, resten vises som kun tekst.
 ## RELEASE - 0.33.240-371b6ea
 #### New in this release: 
 + 2018-07-02 [Bugfix] Annonsesiden sin url har alle url-parameterene fra søket. Annonsesiden sin url inneholder derfor f.eks ?q=bachelor&county=OSLO. Spesielt ved deling av url til annonser, så ønsker man ikke at disse parameterene skal bli med. I stedet for å bruke url for å huske søket, når bruker går ut og inn av siden, bruker vi sessionStorage.
