@@ -102,7 +102,7 @@ export default function savedSearchesReducer(state = initialState, action) {
             return {
                 ...state,
                 savedSearches: state.savedSearches.filter((savedSearch) => savedSearch.uuid !== action.uuid),
-                totalItems: state.totalElements - 1
+                totalElements: state.totalElements - 1
             };
         case REMOVE_SAVED_SEARCH_FAILURE:
             return {
@@ -269,7 +269,7 @@ export default function savedSearchesReducer(state = initialState, action) {
                 ...state,
                 isSaving: false,
                 savedSearches: [...state.savedSearches, action.response],
-                totalItems: state.totalElements + 1
+                totalElements: state.totalElements + 1
             };
         }
         case ADD_SAVED_SEARCH_FAILURE: {
@@ -323,6 +323,10 @@ function* removeSavedSearch(action) {
         yield put({ type: REMOVE_SAVED_SEARCH_BEGIN, uuid: action.uuid });
         const response = yield call(remove, `${AD_USER_API}/api/v1/savedsearches/${action.uuid}`);
         yield put({ type: REMOVE_SAVED_SEARCH_SUCCESS, response });
+        const state = yield select();
+        if (state.savedSearches.totalElements === 0) {
+            yield put({ type: COLLAPSE_SAVED_SEARCHES });
+        }
         yield call(delay, 5000);
         yield put({ type: HIDE_SAVED_SEARCHES_STRIPE });
     } catch (e) {

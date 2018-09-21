@@ -65,7 +65,7 @@ export default function favoritesReducer(state = initialState, action) {
         case FETCH_FAVORITES_FAILURE:
             return {
                 ...state,
-                error: action.error,
+                error: 'fetch_error',
                 isFetchingFavorites: false
             };
         case ADD_TO_FAVORITES_BEGIN:
@@ -87,15 +87,21 @@ export default function favoritesReducer(state = initialState, action) {
                 totalElements: state.totalElements - 1
             };
         case ADD_TO_FAVORITES_FAILURE:
+            return {
+                ...state,
+                error: 'add_error',
+                showAlertStripe: false
+            };
         case REMOVE_FROM_FAVORITES_FAILURE:
             return {
                 ...state,
-                error: action.error,
+                error: 'remove_error',
                 showAlertStripe: false
             };
         case SHOW_MODAL_REMOVE_FROM_FAVORITES:
             return {
                 ...state,
+                showAlertStripe: false,
                 confirmationVisible: true,
                 favoriteAboutToBeRemoved: state.favorites.find((favorite) => favorite.uuid === action.uuid)
             };

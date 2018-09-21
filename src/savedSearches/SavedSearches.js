@@ -48,7 +48,7 @@ class SavedSearches extends React.Component {
                             <Column xs="12">
                                 <Sidetittel className="Search__header__title">
                                     Lagrede søk
-                                    {!this.props.isFetchingSavedSearches ? ` (${this.props.savedSearches.length})` : ''}
+                                    {!this.props.isFetchingSavedSearches ? ` (${this.props.totalElements})` : ''}
                                 </Sidetittel>
                             </Column>
                         </Row>
@@ -86,6 +86,7 @@ class SavedSearches extends React.Component {
 
 SavedSearches.propTypes = {
     isFetchingSavedSearches: PropTypes.bool.isRequired,
+    totalElements: PropTypes.number.isRequired,
     fetchSavedSearches: PropTypes.func.isRequired,
     savedSearches: PropTypes.arrayOf(PropTypes.shape({
         uuid: PropTypes.string,
@@ -95,6 +96,7 @@ SavedSearches.propTypes = {
 
 const mapStateToProps = (state) => ({
     savedSearches: state.savedSearches.savedSearches,
+    totalElements: state.savedSearches.totalElements,
     isFetchingSavedSearches: state.savedSearches.isFetchingSavedSearches
 });
 

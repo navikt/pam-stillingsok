@@ -11,7 +11,15 @@ class FavoriteError extends React.Component {
             return (
                 <SnapToTop>
                     <AlertStripe type="advarsel" solid className="FavoriteError">
-                        Det oppso en feil ved lagring av favoritter. Forsøk å laste siden på nytt.
+                        {this.props.error === 'fetch_error' &&
+                        'Klarte ikke å ikke hente favoritter. Forsøk å laste siden på nytt.'
+                        }
+                        {this.props.error === 'remove_error' &&
+                        'Klarte ikke å slette favoritt. Forsøk å laste siden på nytt.'
+                        }
+                        {this.props.error === 'add_error' &&
+                        'Klarte ikke å lagre favoritt. Forsøk å laste siden på nytt.'
+                        }
                     </AlertStripe>
                 </SnapToTop>
             );
