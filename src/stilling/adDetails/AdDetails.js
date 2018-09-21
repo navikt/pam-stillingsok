@@ -34,7 +34,7 @@ AdDetails.propTypes = {
         updated: PropTypes.string,
         medium: PropTypes.string,
         reference: PropTypes.string,
-        id: PropTypes.string
+        id: PropTypes.number
     }).isRequired
 };
 

@@ -37,6 +37,7 @@ import { INITIAL_SEARCH, REMEMBER_SEARCH, RESET_SEARCH, SEARCH } from './searchR
 import SearchResults from './searchResults/SearchResults';
 import SearchResultsCount from './searchResults/SearchResultsCount';
 import Sorting from './sorting/Sorting';
+import ViewMode from './viewMode/ViewMode';
 
 class Search extends React.Component {
     constructor(props) {
@@ -157,6 +158,7 @@ class Search extends React.Component {
                                         <div className="Search__main__center">
                                             <div className="Search__main__center__header">
                                                 <SearchResultsCount />
+                                                <ViewMode />
                                                 <Sorting />
                                             </div>
                                             <div id="sokeresultat">

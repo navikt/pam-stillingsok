@@ -28,13 +28,23 @@
   }
 }
 
-.Search__main__left__save-search,
-.Search__main__center__header {
+.Search__main__left__save-search {
   min-height: 3.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1rem;
+}
+
+
+@media (min-width: @screen-md-min) {
+  .Search__main__center__header {
+    min-height: 3.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
 }
 
 @media (max-width: @screen-xs-max) {

@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
+import Lenkeknapp from '../../common/Lenkeknapp';
 import { SET_MODE } from '../searchReducer';
 import './ViewMode.less';
 
@@ -17,13 +18,13 @@ class ViewMode extends React.Component {
         return (
             <div className="ViewMode">
                 {this.props.mode === 'compact' ? (
-                    <button className="ViewMode__button lenke typo-normal" onClick={this.onNormalClick}>
+                    <Lenkeknapp onClick={this.onNormalClick}>
                         Normal visning
-                    </button>
+                    </Lenkeknapp>
                 ) : (
-                    <button className="ViewMode__button lenke typo-normal" onClick={this.onCompactClick}>
+                    <Lenkeknapp onClick={this.onCompactClick}>
                         Kompakt visning
-                    </button>
+                    </Lenkeknapp>
                 )}
             </div>
         );
