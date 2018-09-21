@@ -8,7 +8,7 @@ class SavedSearchesExpandItem extends React.Component {
     onTitleClick = (e) => {
         e.preventDefault();
         try {
-            sessionStorage.setItem('url', this.props.savedSearch.url);
+            sessionStorage.setItem('url', this.props.savedSearch.searchQuery);
             this.props.collapseSavedSearches();
             this.props.search();
         } catch (error) {
@@ -33,7 +33,8 @@ SavedSearchesExpandItem.propTypes = {
     search: PropTypes.func.isRequired,
     savedSearch: PropTypes.shape({
         url: PropTypes.string,
-        title: PropTypes.string
+        title: PropTypes.string,
+        searchQuery: PropTypes.string
     }).isRequired
 };
 

@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { formatISOString, isValidISOString } from '../utils';
+import NotifyTypeEnum from './enums/NotifyTypeEnum';
 import { SHOW_CONFIRM_REMOVE_SAVED_SEARCH_MODAL, SHOW_EDIT_SAVED_SEARCH_MODAL } from './savedSearchesReducer';
 
 class SavedSearch extends React.Component {
@@ -17,7 +19,7 @@ class SavedSearch extends React.Component {
 
     onTitleClick = () => {
         try {
-            sessionStorage.setItem('url', this.props.savedSearch.url);
+            sessionStorage.setItem('url', this.props.savedSearch.searchQuery);
         } catch (e) {
             // Ignore session storage error
         }
@@ -39,12 +41,16 @@ class SavedSearch extends React.Component {
                     </div>
                 </div>
                 <div className="SavedSearch__bottom">
-                    {savedSearch.subscribe ? (
+                    {savedSearch.notifyType === NotifyTypeEnum.EMAIL ? (
                         <Normaltekst>Varighet på varsel: {savedSearch.duration} dager</Normaltekst>
                     ) : (
                         <Normaltekst>Ingen varsling</Normaltekst>
                     )}
-                    <Undertekst className="SavedSearch__bottom__created">Opprettet: {savedSearch.created}</Undertekst>
+                    {isValidISOString(savedSearch.updated) && (
+                        <Undertekst className="SavedSearch__bottom__created">
+                            Sist endret: {formatISOString(savedSearch.updated, 'D. MMM YYYY HH:MM')}
+                        </Undertekst>
+                    )}
                 </div>
             </div>
         );
@@ -57,9 +63,10 @@ SavedSearch.propTypes = {
     savedSearch: PropTypes.shape({
         uuid: PropTypes.string,
         title: PropTypes.string,
-        duration: PropTypes.string,
-        created: PropTypes.string,
-        url: PropTypes.string
+        notifyType: PropTypes.string,
+        duration: PropTypes.number,
+        updated: PropTypes.string,
+        searchQuery: PropTypes.string
     }).isRequired
 };
 

@@ -5,10 +5,11 @@ import { connect } from 'react-redux';
 import { Undertittel } from 'nav-frontend-typografi';
 import Modal from 'nav-frontend-modal';
 import { Flatknapp, Hovedknapp } from 'nav-frontend-knapper';
+import NotifyTypeEnum from './enums/NotifyTypeEnum';
 import {
     HIDE_ADD_SAVED_SEARCH_MODAL,
     ADD_SAVED_SEARCH_DURATION,
-    ADD_SAVED_SEARCH_SUBSCRIBE,
+    ADD_SAVED_SEARCH_NOTIFY_TYPE,
     ADD_SAVED_SEARCH_TITLE,
     ADD_SAVED_SEARCH
 } from './savedSearchesReducer';
@@ -19,7 +20,11 @@ class AddSavedSearchModal extends React.Component {
     };
 
     onSubscribeChange = (e) => {
-        this.props.setSubscribe(e.target.checked);
+        if (e.target.checked) {
+            this.props.setNotifyType(NotifyTypeEnum.EMAIL);
+        } else {
+            this.props.setNotifyType(NotifyTypeEnum.NONE);
+        }
     };
 
     onDurationChange = (e) => {
@@ -35,7 +40,9 @@ class AddSavedSearchModal extends React.Component {
     };
 
     render() {
-        const { savedSearchAboutToBeAdded, showAddSavedSearchModal, validation } = this.props;
+        const {
+            savedSearchAboutToBeAdded, showAddSavedSearchModal, validation, isSaving
+        } = this.props;
         if (showAddSavedSearchModal) {
             return (
                 <Modal
@@ -59,7 +66,7 @@ class AddSavedSearchModal extends React.Component {
                             <Checkbox
                                 label="Ja, jeg ønsker å motta varsler om nye treff på e-post"
                                 onChange={this.onSubscribeChange}
-                                checked={savedSearchAboutToBeAdded.subscribe}
+                                checked={savedSearchAboutToBeAdded.notifyType === NotifyTypeEnum.EMAIL}
                             />
                             <SkjemaGruppe>
                                 <Fieldset legend="Varighet på søket:">
@@ -69,7 +76,7 @@ class AddSavedSearchModal extends React.Component {
                                         key="30dager"
                                         value="30"
                                         onChange={this.onDurationChange}
-                                        checked={savedSearchAboutToBeAdded.duration === '30'}
+                                        checked={savedSearchAboutToBeAdded.duration === 30}
                                     />
                                     <Radio
                                         label="60 dager"
@@ -77,7 +84,7 @@ class AddSavedSearchModal extends React.Component {
                                         key="60dager"
                                         value="60"
                                         onChange={this.onDurationChange}
-                                        checked={savedSearchAboutToBeAdded.duration === '60'}
+                                        checked={savedSearchAboutToBeAdded.duration === 60}
                                     />
                                     <Radio
                                         label="90 dager"
@@ -85,13 +92,19 @@ class AddSavedSearchModal extends React.Component {
                                         key="90dager"
                                         value="90"
                                         onChange={this.onDurationChange}
-                                        checked={savedSearchAboutToBeAdded.duration === '90'}
+                                        checked={savedSearchAboutToBeAdded.duration === 90}
                                     />
                                 </Fieldset>
                             </SkjemaGruppe>
                         </div>
                         <div className="SavedSearches__modal__buttons">
-                            <Hovedknapp onClick={this.onSaveClick}>Lagre søk</Hovedknapp>
+                            <Hovedknapp
+                                disabled={isSaving}
+                                spinner={isSaving}
+                                onClick={this.onSaveClick}
+                            >
+                                Lagre søk
+                            </Hovedknapp>
                             <Flatknapp onClick={this.closeModal}>Tilbake til stillingssøk</Flatknapp>
                         </div>
                     </div>
@@ -107,10 +120,11 @@ AddSavedSearchModal.defaultProps = {
 };
 
 AddSavedSearchModal.propTypes = {
+    isSaving: PropTypes.bool.isRequired,
     showAddSavedSearchModal: PropTypes.bool.isRequired,
     addSavedSearch: PropTypes.func.isRequired,
     setTitle: PropTypes.func.isRequired,
-    setSubscribe: PropTypes.func.isRequired,
+    setNotifyType: PropTypes.func.isRequired,
     setDuration: PropTypes.func.isRequired,
     hideModal: PropTypes.func.isRequired,
     savedSearchAboutToBeAdded: PropTypes.shape({
@@ -124,13 +138,14 @@ AddSavedSearchModal.propTypes = {
 const mapStateToProps = (state) => ({
     showAddSavedSearchModal: state.savedSearches.showAddSavedSearchModal,
     savedSearchAboutToBeAdded: state.savedSearches.savedSearchAboutToBeAdded,
-    validation: state.savedSearches.savedSearchAboutToBeAddedValidation
+    validation: state.savedSearches.savedSearchAboutToBeAddedValidation,
+    isSaving: state.savedSearches.isSaving
 });
 
 const mapDispatchToProps = (dispatch) => ({
     addSavedSearch: () => dispatch({ type: ADD_SAVED_SEARCH }),
     setTitle: (title) => dispatch({ type: ADD_SAVED_SEARCH_TITLE, title }),
-    setSubscribe: (subscribe) => dispatch({ type: ADD_SAVED_SEARCH_SUBSCRIBE, subscribe }),
+    setNotifyType: (notifyType) => dispatch({ type: ADD_SAVED_SEARCH_NOTIFY_TYPE, notifyType }),
     setDuration: (duration) => dispatch({ type: ADD_SAVED_SEARCH_DURATION, duration }),
     hideModal: () => dispatch({ type: HIDE_ADD_SAVED_SEARCH_MODAL })
 });

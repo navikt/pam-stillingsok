@@ -37,7 +37,7 @@ const initialState = {
     favoriteAdUuidList: []
 };
 
-const USER_UUID_HACK = 'bdd00121-9dfb-46b5-82e6-872e2d51f782';
+export const USER_UUID_HACK = 'bdd00121-9dfb-46b5-82e6-872e2d51f782';
 
 export default function favoritesReducer(state = initialState, action) {
     switch (action.type) {

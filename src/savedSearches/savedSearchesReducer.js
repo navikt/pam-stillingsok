@@ -1,9 +1,11 @@
-import { select, put, call, takeLatest } from 'redux-saga/effects';
-import { SearchApiError } from '../api/api';
+import { call, put, select, takeLatest } from 'redux-saga/effects';
+import { get, post, put as fetchPut, remove, SearchApiError } from '../api/api';
 import capitalizeLocation from '../common/capitalizeLocation';
+import { AD_USER_API } from '../fasitProperties';
+import { USER_UUID_HACK } from '../favorites/favoritesReducer';
 import { toUrl } from '../search/url';
-import { get, post, remove, update } from './mockapi';
-import { SEARCH_API } from '../fasitProperties';
+import NotifyTypeEnum from './enums/NotifyTypeEnum';
+import SavedSearchStatusEnum from './enums/SavedSearchStatusEnum';
 
 export const FETCH_SAVED_SEARCHES = 'FETCH_SAVED_SEARCHES';
 export const FETCH_SAVED_SEARCHES_BEGIN = 'FETCH_SAVED_SEARCHES_BEGIN';
@@ -23,7 +25,7 @@ export const HIDE_SAVED_SEARCHES_STRIPE = 'HIDE_SAVED_SEARCHES_STRIPE';
 export const SHOW_EDIT_SAVED_SEARCH_MODAL = 'SHOW_EDIT_SAVED_SEARCH_MODAL';
 export const HIDE_EDIT_SAVED_SEARCH_MODAL = 'HIDE_EDIT_SAVED_SEARCH_MODAL';
 export const SET_SAVED_SEARCH_TITLE = 'SET_SAVED_SEARCH_TITLE';
-export const SET_SAVED_SEARCH_SUBSCRIBE = 'SET_SAVED_SEARCH_SUBSCRIBE';
+export const SET_SAVED_SEARCH_NOTIFY_TYPE = 'SET_SAVED_SEARCH_NOTIFY_TYPE';
 export const SET_SAVED_SEARCH_DURATION = 'SET_SAVED_SEARCH_DURATION';
 
 export const UPDATE_SAVED_SEARCH = 'UPDATE_SAVED_SEARCH';
@@ -38,9 +40,9 @@ export const ADD_SAVED_SEARCH_BEGIN = 'ADD_SAVED_SEARCH_BEGIN';
 export const ADD_SAVED_SEARCH_SUCCESS = 'ADD_SAVED_SEARCH_SUCCESS';
 export const ADD_SAVED_SEARCH_FAILURE = 'ADD_SAVED_SEARCH_FAILURE';
 export const ADD_SAVED_SEARCH_TITLE = 'ADD_SAVED_SEARCH_TITLE';
-export const ADD_SAVED_SEARCH_SUBSCRIBE = 'ADD_SAVED_SEARCH_SUBSCRIBE';
+export const ADD_SAVED_SEARCH_NOTIFY_TYPE = 'ADD_SAVED_SEARCH_NOTIFY_TYPE';
 export const ADD_SAVED_SEARCH_DURATION = 'ADD_SAVED_SEARCH_DURATION';
-export const ADD_SAVED_SEARCH_URL = 'ADD_SAVED_SEARCH_URL';
+export const ADD_SAVED_SEARCH_QUERY = 'ADD_SAVED_SEARCH_QUERY';
 
 export const EXPAND_SAVED_SEARCHES = 'EXPAND_SAVED_SEARCHES';
 export const COLLAPSE_SAVED_SEARCHES = 'COLLAPSE_SAVED_SEARCHES';
@@ -64,7 +66,9 @@ const initialState = {
     },
     showEditSavedSearchModal: false,
     showAddSavedSearchModal: false,
-    isSavedSearchesExpanded: false
+    isSavedSearchesExpanded: false,
+    totalElements: 0,
+    isSaving: false
 };
 
 export default function savedSearchesReducer(state = initialState, action) {
@@ -83,7 +87,8 @@ export default function savedSearchesReducer(state = initialState, action) {
         case FETCH_SAVED_SEARCHES_SUCCESS:
             return {
                 ...state,
-                savedSearches: action.response,
+                savedSearches: action.response.content,
+                totalElements: action.response.totalElements,
                 isFetchingSavedSearches: false,
                 shouldFetchSavedSearches: false
             };
@@ -96,7 +101,8 @@ export default function savedSearchesReducer(state = initialState, action) {
         case REMOVE_SAVED_SEARCH_BEGIN:
             return {
                 ...state,
-                savedSearches: state.savedSearches.filter((savedSearch) => savedSearch.uuid !== action.uuid)
+                savedSearches: state.savedSearches.filter((savedSearch) => savedSearch.uuid !== action.uuid),
+                totalItems: state.totalElements - 1
             };
         case REMOVE_SAVED_SEARCH_FAILURE:
             return {
@@ -151,12 +157,12 @@ export default function savedSearchesReducer(state = initialState, action) {
                 }
             };
         }
-        case SET_SAVED_SEARCH_SUBSCRIBE: {
+        case SET_SAVED_SEARCH_NOTIFY_TYPE: {
             return {
                 ...state,
                 savedSearchAboutToBeEdited: {
                     ...state.savedSearchAboutToBeEdited,
-                    subscribe: action.subscribe
+                    notifyType: action.notifyType
                 }
             };
         }
@@ -165,13 +171,14 @@ export default function savedSearchesReducer(state = initialState, action) {
                 ...state,
                 savedSearchAboutToBeEdited: {
                     ...state.savedSearchAboutToBeEdited,
-                    duration: action.duration
+                    duration: parseInt(action.duration, 10)
                 }
             };
         }
         case UPDATE_SAVED_SEARCH_BEGIN: {
             return {
                 ...state,
+                isSaving: true,
                 savedSearches: state.savedSearches.map((savedSearch) => {
                     if (savedSearch.uuid === action.updated.uuid) {
                         return state.savedSearchAboutToBeEdited;
@@ -180,9 +187,16 @@ export default function savedSearchesReducer(state = initialState, action) {
                 })
             };
         }
+        case UPDATE_SAVED_SEARCH_SUCCESS: {
+            return {
+                ...state,
+                isSaving: false
+            };
+        }
         case UPDATE_SAVED_SEARCH_FAILURE: {
             return {
                 ...state,
+                isSaving: false,
                 error: 'update_error',
                 showAlertStripe: false
             };
@@ -193,10 +207,10 @@ export default function savedSearchesReducer(state = initialState, action) {
                 showAddSavedSearchModal: true,
                 savedSearchAboutToBeAdded: {
                     title: '',
-                    duration: '30',
-                    subscribe: false,
-                    created: 'I dag',
-                    uuid: new Date().getTime().toString()
+                    duration: 30,
+                    notifyType: NotifyTypeEnum.EMAIL,
+                    status: SavedSearchStatusEnum.ACTIVE,
+                    userUuid: USER_UUID_HACK
                 }
             };
         case HIDE_ADD_SAVED_SEARCH_MODAL:
@@ -217,12 +231,12 @@ export default function savedSearchesReducer(state = initialState, action) {
                 }
             };
         }
-        case ADD_SAVED_SEARCH_SUBSCRIBE: {
+        case ADD_SAVED_SEARCH_NOTIFY_TYPE: {
             return {
                 ...state,
                 savedSearchAboutToBeAdded: {
                     ...state.savedSearchAboutToBeAdded,
-                    subscribe: action.subscribe
+                    notifyType: action.notifyType
                 }
             };
         }
@@ -231,28 +245,37 @@ export default function savedSearchesReducer(state = initialState, action) {
                 ...state,
                 savedSearchAboutToBeAdded: {
                     ...state.savedSearchAboutToBeAdded,
-                    duration: action.duration
+                    duration: parseInt(action.duration, 10)
                 }
             };
         }
-        case ADD_SAVED_SEARCH_URL: {
+        case ADD_SAVED_SEARCH_QUERY: {
             return {
                 ...state,
                 savedSearchAboutToBeAdded: {
                     ...state.savedSearchAboutToBeAdded,
-                    url: action.url
+                    searchQuery: action.searchQuery
                 }
             };
         }
         case ADD_SAVED_SEARCH_BEGIN: {
             return {
                 ...state,
-                savedSearches: [...state.savedSearches, state.savedSearchAboutToBeAdded]
+                isSaving: true
+            };
+        }
+        case ADD_SAVED_SEARCH_SUCCESS: {
+            return {
+                ...state,
+                isSaving: false,
+                savedSearches: [...state.savedSearches, action.response],
+                totalItems: state.totalElements + 1
             };
         }
         case ADD_SAVED_SEARCH_FAILURE: {
             return {
                 ...state,
+                isSaving: false,
                 error: 'add_error',
                 showAlertStripe: false
             };
@@ -280,7 +303,7 @@ function* fetchSavedSearches() {
     if (state.savedSearches.shouldFetchSavedSearches) {
         yield put({ type: FETCH_SAVED_SEARCHES_BEGIN });
         try {
-            const response = yield call(get, `${SEARCH_API}/savedSearches`);
+            const response = yield call(get, `${AD_USER_API}/api/v1/savedsearches?size=200&user=${USER_UUID_HACK}`);
             yield put({ type: FETCH_SAVED_SEARCHES_SUCCESS, response });
         } catch (e) {
             if (e instanceof SearchApiError) {
@@ -298,7 +321,7 @@ function* removeSavedSearch(action) {
     try {
         yield put({ type: SHOW_SAVED_SEARCHES_STRIPE, alertStripeMode: 'removed' });
         yield put({ type: REMOVE_SAVED_SEARCH_BEGIN, uuid: action.uuid });
-        const response = yield call(remove, action.uuid);
+        const response = yield call(remove, `${AD_USER_API}/api/v1/savedsearches/${action.uuid}`);
         yield put({ type: REMOVE_SAVED_SEARCH_SUCCESS, response });
         yield call(delay, 5000);
         yield put({ type: HIDE_SAVED_SEARCHES_STRIPE });
@@ -315,10 +338,14 @@ function* updateSavedSearch() {
     const state = yield select();
     if (state.savedSearches.savedSearchAboutToBeEditedValidation.titleIsValid) {
         try {
+            yield put({ type: UPDATE_SAVED_SEARCH_BEGIN, updated: state.savedSearches.savedSearchAboutToBeEdited });
+            const response = yield call(
+                fetchPut,
+                `${AD_USER_API}/api/v1/savedsearches/${state.savedSearches.savedSearchAboutToBeEdited.uuid}`,
+                state.savedSearches.savedSearchAboutToBeEdited
+            );
             yield put({ type: HIDE_EDIT_SAVED_SEARCH_MODAL });
             yield put({ type: SHOW_SAVED_SEARCHES_STRIPE, alertStripeMode: 'edited' });
-            yield put({ type: UPDATE_SAVED_SEARCH_BEGIN, updated: state.savedSearches.savedSearchAboutToBeEdited });
-            const response = yield call(update, state.savedSearches.savedSearchAboutToBeEdited);
             yield put({ type: UPDATE_SAVED_SEARCH_SUCCESS, response });
             yield call(delay, 5000);
             yield put({ type: HIDE_SAVED_SEARCHES_STRIPE });
@@ -336,11 +363,11 @@ function* addSavedSearch() {
     const state = yield select();
     if (state.savedSearches.savedSearchAboutToBeAddedValidation.titleIsValid) {
         try {
+            yield put({ type: ADD_SAVED_SEARCH_BEGIN, added: state.savedSearches.savedSearchAboutToBeAdded });
+            const response = yield call(post, `${AD_USER_API}/api/v1/savedsearches`, state.savedSearches.savedSearchAboutToBeAdded);
+            yield put({ type: ADD_SAVED_SEARCH_SUCCESS, response });
             yield put({ type: HIDE_ADD_SAVED_SEARCH_MODAL });
             yield put({ type: SHOW_SAVED_SEARCHES_STRIPE, alertStripeMode: 'added' });
-            yield put({ type: ADD_SAVED_SEARCH_BEGIN, added: state.savedSearches.savedSearchAboutToBeAdded });
-            const response = yield call(post, 'url', state.savedSearches.savedSearchAboutToBeAdded);
-            yield put({ type: ADD_SAVED_SEARCH_SUCCESS, response });
             yield call(delay, 5000);
             yield put({ type: HIDE_SAVED_SEARCHES_STRIPE });
         } catch (e) {
@@ -393,9 +420,9 @@ function toTitle(state) {
 
 function* setTitleAndUrl() {
     const state = yield select();
-    const url = toUrl(toQuery(state));
+    const searchQuery = toUrl(toQuery(state));
     const title = toTitle(state);
-    yield put({ type: ADD_SAVED_SEARCH_URL, url });
+    yield put({ type: ADD_SAVED_SEARCH_QUERY, searchQuery });
     yield put({ type: ADD_SAVED_SEARCH_TITLE, title });
 }
 

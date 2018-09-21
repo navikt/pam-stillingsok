@@ -8,7 +8,6 @@ export default class Typeahead extends React.Component {
     constructor(props) {
         super();
         this.state = {
-            value: props.value,
             activeSuggestionIndex: -1,
             hasFocus: false,
             shouldShowSuggestions: true
@@ -29,7 +28,6 @@ export default class Typeahead extends React.Component {
     onChange = (e) => {
         const { value } = e.target;
         this.setState({
-            value,
             activeSuggestionIndex: -1, // Nullstill eventuelt markering av et forslag i listen
             shouldShowSuggestions: true // Vis forslagslisten igjen. Den kan ha blitt skjult om man trykket Esc
         });
@@ -138,7 +136,6 @@ export default class Typeahead extends React.Component {
      */
     setValue = (value) => {
         this.setState({
-            value,
             shouldShowSuggestions: false,
             activeSuggestionIndex: -1
         }, () => {
@@ -181,7 +178,7 @@ export default class Typeahead extends React.Component {
                     aria-haspopup={showSuggestions}
                     aria-activedescendant={activeDescendant}
                     placeholder={this.props.placeholder}
-                    value={this.state.value}
+                    value={this.props.value}
                     autoComplete="off"
                     onChange={this.onChange}
                     onBlur={this.onBlur}
@@ -203,7 +200,7 @@ export default class Typeahead extends React.Component {
                             key={li}
                             index={i}
                             value={li}
-                            match={this.state.value}
+                            match={this.props.value}
                             active={i === this.state.activeSuggestionIndex}
                             onClick={this.setValue}
                             setSuggestionIndex={this.setSuggestionIndex}
