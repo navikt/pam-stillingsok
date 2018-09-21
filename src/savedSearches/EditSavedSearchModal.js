@@ -1,10 +1,11 @@
-import { Flatknapp, Hovedknapp } from 'nav-frontend-knapper';
+import { Hovedknapp } from 'nav-frontend-knapper';
 import Modal from 'nav-frontend-modal';
 import { Checkbox, Fieldset, Input, Radio, SkjemaGruppe } from 'nav-frontend-skjema';
 import { Undertittel } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
+import Lenkeknapp from '../common/Lenkeknapp';
 import NotifyTypeEnum from './enums/NotifyTypeEnum';
 import {
     HIDE_EDIT_SAVED_SEARCH_MODAL,
@@ -53,6 +54,7 @@ class EditSavedSearchModal extends React.Component {
                         <Undertittel className="SavedSearches__modal__title">Endre lagret søk</Undertittel>
                         <div className="SavedSearches__modal__body">
                             <Input
+                                className="blokk"
                                 label="Navn*"
                                 onChange={this.onTitleChange}
                                 value={savedSearchAboutToBeEdited.title}
@@ -62,6 +64,7 @@ class EditSavedSearchModal extends React.Component {
                                 }
                             />
                             <Checkbox
+                                className="blokk"
                                 label="Ja, jeg ønsker å motta varsler om nye treff på e-post"
                                 onChange={this.onSubscribeChange}
                                 checked={savedSearchAboutToBeEdited.notifyType === NotifyTypeEnum.EMAIL}
@@ -103,7 +106,7 @@ class EditSavedSearchModal extends React.Component {
                             >
                                 Lagre søk
                             </Hovedknapp>
-                            <Flatknapp onClick={this.closeModal}>Tilbake til lagrede søk</Flatknapp>
+                            <Lenkeknapp onClick={this.closeModal}>Tilbake til lagrede søk</Lenkeknapp>
                         </div>
                     </div>
                 </Modal>

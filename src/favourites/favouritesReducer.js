@@ -37,7 +37,7 @@ const initialState = {
     favouriteAdUuidList: []
 };
 
-export const USER_UUID_HACK = 'bdd00121-9dfb-46b5-82e6-872e2d51f782';
+export const USER_UUID_HACK = localStorage.getItem('hack');
 
 export default function favouritesReducer(state = initialState, action) {
     switch (action.type) {
@@ -138,7 +138,7 @@ function toFavourite(uuid, ad) {
             updated: '2018-11-04T10:11:30', //ikke kompatibel med updated fra search
             jobTitle: ad.properties.jobtitle,
             status: 'ACTIVE',
-            applicationdue: '2018-11-04T10:11:30' //må være sting i backend
+            applicationdue: '2018-11-04T10:11:30'
             //location mangler
             //employer mangler
         }

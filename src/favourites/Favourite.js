@@ -1,10 +1,10 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { Flatknapp } from 'nav-frontend-knapper';
 import { EtikettFokus } from 'nav-frontend-etiketter';
-import { SHOW_MODAL_REMOVE_FROM_FAVOURITES } from './favouritesReducer';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { connect } from 'react-redux';
+import Lenkeknapp from '../common/Lenkeknapp';
 import SearchResultsItemDetails from '../search/searchResults/SearchResultsItemDetails';
+import { SHOW_MODAL_REMOVE_FROM_FAVOURITES } from './favouritesReducer';
 
 class Favourite extends React.Component {
     onRemoveClick = () => {
@@ -34,7 +34,7 @@ class Favourite extends React.Component {
                 </div>
                 <SearchResultsItemDetails stilling={this.toAd(favourite.favouriteAd)} />
                 <div className="Favourite__buttons">
-                    <Flatknapp mini onClick={this.onRemoveClick}>Slett</Flatknapp>
+                    <Lenkeknapp onClick={this.onRemoveClick}>Slett</Lenkeknapp>
                 </div>
             </div>
         );

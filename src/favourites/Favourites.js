@@ -18,7 +18,7 @@ import NoFavourites from './NoFavourites';
 class Favourites extends React.Component {
     componentDidMount() {
         window.scrollTo(0, 0);
-        document.title = 'Favouriter';
+        document.title = 'Favoritter';
         this.props.fetchFavourites();
     }
 

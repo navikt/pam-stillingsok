@@ -1,6 +1,6 @@
 const NotifyTypeEnum = {
     EMAIL: 'EMAIL',
-    NONE: null
+    NONE: 'NONE'
 };
 
 export default NotifyTypeEnum;

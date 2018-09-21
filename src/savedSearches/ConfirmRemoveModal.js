@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Undertittel, Normaltekst } from 'nav-frontend-typografi';
 import Modal from 'nav-frontend-modal';
 import { Flatknapp, Hovedknapp } from 'nav-frontend-knapper';
+import Lenkeknapp from '../common/Lenkeknapp';
 import { HIDE_MODAL_REMOVE_SAVED_SEARCH, REMOVE_SAVED_SEARCH } from './savedSearchesReducer';
 
 class ConfirmRemoveModal extends React.Component {
@@ -34,7 +35,7 @@ class ConfirmRemoveModal extends React.Component {
                         </div>
                         <div className="Favourites__modal__buttons">
                             <Hovedknapp onClick={this.onRemoveClick}>Slett</Hovedknapp>
-                            <Flatknapp onClick={this.closeModal}>Tilbake til lagrede søk</Flatknapp>
+                            <Lenkeknapp onClick={this.closeModal}>Tilbake til lagrede søk</Lenkeknapp>
                         </div>
                     </div>
                 </Modal>

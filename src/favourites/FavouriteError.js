@@ -33,10 +33,7 @@ FavouriteError.defaultProps = {
 };
 
 FavouriteError.propTypes = {
-    error: PropTypes.shape({
-        message: PropTypes.string,
-        statusCode: PropTypes.number
-    })
+    error:  PropTypes.string
 };
 
 const mapStateToProps = (state) => ({

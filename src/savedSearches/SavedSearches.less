@@ -1,24 +1,21 @@
 @import "../variables";
 
+.SavedSearches__backbutton__container,
+.SavedSearches__header__container,
+.SavedSearches__main {
+    max-width: 41rem;
+    margin: 0 auto;
+}
+
 .SavedSearches__backbutton {
     padding: 0.5rem 0;
     background-color: #fff;
 }
 
-.SavedSearches__backbutton__container {
-    max-width: 50rem;
-    margin: 0 auto;
-}
-
 .SavedSearches__header {
     background-color: @background-green;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
     padding: 3rem 0;
-}
-
-.SavedSearches__header__container,
-.SavedSearches__main {
-    max-width: 50rem;
 }
 
 .SavedSearches__main__spinner {
@@ -29,7 +26,7 @@
 
 .SavedSearch {
     background-color: #fff;
-    padding: 1.25rem;
+    padding: 1rem 1.25rem 1.25rem;
     display: block;
     border: 1px solid @border-gray;
     margin-bottom: 1rem;
@@ -41,8 +38,8 @@
         justify-content: space-between;
         align-items: baseline;
         border-bottom: 1px solid @border-gray;
-        padding-bottom: 0.5rem;
-        margin-bottom: 0.5rem;
+        padding-bottom: 0.75rem;
+        margin-bottom: 0.75rem;
     }
 }
 
@@ -52,14 +49,13 @@
     }
 }
 
-.SavedSearch__top__buttons .knapp:not(:last-child) {
-    margin-right: 0.5rem;
+.SavedSearch__top__buttons .Lenkeknapp:not(:last-child) {
+    margin-right: 2rem;
 }
 
 .SavedSearch__bottom {
     display: flex;
     justify-content: space-between;
-    padding-top: 0.5rem;
     align-items: baseline;
 }
 
@@ -95,6 +91,6 @@
     }
 
     .SavedSearches__modal__buttons .knapp:not(:last-child) {
-        margin-right: 1rem;
+        margin-right: 2rem;
     }
 }

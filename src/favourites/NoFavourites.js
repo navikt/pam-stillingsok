@@ -1,14 +1,16 @@
-import React from 'react';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import './NoFavourites.less';
 
 export default function NoFavourites() {
     return (
         <div className="NoFavourites">
-            <Undertittel>Du har ingen favoritter</Undertittel>
-            <Normaltekst>
-                Du kan lagre en annonse ved å trykke på <span className="FavouriteButton__star">&#9734;</span>
+            <Undertittel className="NoFavourites__title">Du har ingen favoritter</Undertittel>
+            <Normaltekst className="NoFavourites__message">
+                Når du ser en stillingsannonse du ønsker å ta vare på klikk på stjernen.
             </Normaltekst>
+            <Link to="/" className="knapp knapp--hoved">Finn favoritter</Link>
         </div>
     );
 }

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Undertittel, Normaltekst } from 'nav-frontend-typografi';
 import Modal from 'nav-frontend-modal';
 import { Flatknapp, Hovedknapp } from 'nav-frontend-knapper';
+import Lenkeknapp from '../common/Lenkeknapp';
 import {
     HIDE_MODAL_REMOVE_FROM_FAVOURITES,
     REMOVE_FROM_FAVOURITES
@@ -35,7 +36,7 @@ class ConfirmRemoveModal extends React.Component {
                         </Normaltekst>
                         <div className="Favourites__modal__buttons">
                             <Hovedknapp onClick={this.onRemoveClick}>Slett</Hovedknapp>
-                            <Flatknapp onClick={this.closeModal}>Tilbake til favoritter</Flatknapp>
+                            <Lenkeknapp onClick={this.closeModal}>Tilbake til favoritter</Lenkeknapp>
                         </div>
                     </div>
                 </Modal>

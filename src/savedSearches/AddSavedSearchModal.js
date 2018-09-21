@@ -1,17 +1,18 @@
-import { Checkbox, Fieldset, Input, Radio, SkjemaGruppe } from 'nav-frontend-skjema';
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { Undertittel } from 'nav-frontend-typografi';
+import { Hovedknapp } from 'nav-frontend-knapper';
 import Modal from 'nav-frontend-modal';
-import { Flatknapp, Hovedknapp } from 'nav-frontend-knapper';
+import { Checkbox, Fieldset, Input, Radio, SkjemaGruppe } from 'nav-frontend-skjema';
+import { Undertittel } from 'nav-frontend-typografi';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { connect } from 'react-redux';
+import Lenkeknapp from '../common/Lenkeknapp';
 import NotifyTypeEnum from './enums/NotifyTypeEnum';
 import {
-    HIDE_ADD_SAVED_SEARCH_MODAL,
+    ADD_SAVED_SEARCH,
     ADD_SAVED_SEARCH_DURATION,
     ADD_SAVED_SEARCH_NOTIFY_TYPE,
     ADD_SAVED_SEARCH_TITLE,
-    ADD_SAVED_SEARCH
+    HIDE_ADD_SAVED_SEARCH_MODAL
 } from './savedSearchesReducer';
 
 class AddSavedSearchModal extends React.Component {
@@ -55,6 +56,7 @@ class AddSavedSearchModal extends React.Component {
                         <Undertittel className="SavedSearches__modal__title">Lagre søk</Undertittel>
                         <div className="SavedSearches__modal__body">
                             <Input
+                                className="blokk"
                                 label="Navn*"
                                 onChange={this.onTitleChange}
                                 value={savedSearchAboutToBeAdded.title}
@@ -64,6 +66,7 @@ class AddSavedSearchModal extends React.Component {
                                 }
                             />
                             <Checkbox
+                                className="blokk"
                                 label="Ja, jeg ønsker å motta varsler om nye treff på e-post"
                                 onChange={this.onSubscribeChange}
                                 checked={savedSearchAboutToBeAdded.notifyType === NotifyTypeEnum.EMAIL}
@@ -105,7 +108,7 @@ class AddSavedSearchModal extends React.Component {
                             >
                                 Lagre søk
                             </Hovedknapp>
-                            <Flatknapp onClick={this.closeModal}>Tilbake til stillingssøk</Flatknapp>
+                            <Lenkeknapp onClick={this.closeModal}>Tilbake til stillingssøk</Lenkeknapp>
                         </div>
                     </div>
                 </Modal>

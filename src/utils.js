@@ -20,7 +20,9 @@ export function formatISOString(isoString, format = 'MMMM YYYY') {
         const hours = time[0];
         const mins = time[1];
         if (format === 'D. MMMM YYYY') {
-            return `${day}.${dt[1]}.${dt[0]}`;
+            return `${dayWithoutZero}.${dt[1]}.${dt[0]}`;
+        } else if (format === 'DD.MM.YYYY') {
+            return `${day}.${month}.${year}`;
         } else if (format === 'MMMM YYYY') {
             return `${months[dt[1] - 1]} ${dt[0]}`;
         } else if (format === 'DD.MMM') {
