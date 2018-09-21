@@ -7,9 +7,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Disclaimer from '../discalimer/Disclaimer';
-import FavoriteAlertStripe from '../favorites/FavoriteAlertStripe';
-import FavoriteError from '../favorites/FavoriteError';
-import { FETCH_FAVORITES } from '../favorites/favoritesReducer';
+import FavouriteAlertStripe from '../favourites/FavouriteAlertStripe';
+import FavouriteError from '../favourites/FavouriteError';
+import { FETCH_FAVOURITES } from '../favourites/favouritesReducer';
 import AddSavedSearchModal from '../savedSearches/AddSavedSearchModal';
 import SavedSearchesAlertStripe from '../savedSearches/SavedSearchesAlertStripe';
 import SavedSearchesError from '../savedSearches/SavedSearchesError';
@@ -44,7 +44,7 @@ class Search extends React.Component {
     }
 
     componentDidMount() {
-        this.props.fetchFavorites();
+        this.props.fetchFavourites();
         this.props.fetchSavedSearches();
         document.title = 'Ledige stillinger';
     }
@@ -74,8 +74,8 @@ class Search extends React.Component {
         return (
             <div className="Search">
                 <Disclaimer />
-                <FavoriteAlertStripe />
-                <FavoriteError />
+                <FavouriteAlertStripe />
+                <FavouriteError />
                 <SavedSearchesAlertStripe />
                 <SavedSearchesError />
                 <div className="Search__header">
@@ -88,7 +88,7 @@ class Search extends React.Component {
                                 <Column xs="12" md="6">
                                     <div className="Search__header__right">
                                         <Link className="knapp knapp--mini" to="/favoritter">
-                                            Favoritter {!this.props.isFetchingFavorites ? ` (${this.props.favoritesTotalElements})` : ''}
+                                            Favoritter {!this.props.isFetchingFavourites ? ` (${this.props.favouritesTotalElements})` : ''}
                                         </Link>
                                         <Knapp mini to="/lagrede-sok" onClick={this.onSavedSearchesButtonClick}>
                                             Lagrede
@@ -173,26 +173,26 @@ Search.propTypes = {
     initialSearch: PropTypes.func.isRequired,
     search: PropTypes.func.isRequired,
     rememberSearch: PropTypes.func.isRequired,
-    fetchFavorites: PropTypes.func.isRequired,
+    fetchFavourites: PropTypes.func.isRequired,
     fetchSavedSearches: PropTypes.func.isRequired,
     hasError: PropTypes.bool.isRequired,
     initialSearchDone: PropTypes.bool.isRequired,
-    isFetchingFavorites: PropTypes.bool.isRequired,
+    isFetchingFavourites: PropTypes.bool.isRequired,
     savedSearches: PropTypes.arrayOf(PropTypes.object).isRequired,
     isFetchingSavedSearches: PropTypes.bool.isRequired,
     isSavedSearchesExpanded: PropTypes.bool.isRequired,
     expandSavedSearches: PropTypes.func.isRequired,
     collapseSavedSearches: PropTypes.func.isRequired,
-    favoritesTotalElements: PropTypes.number.isRequired
+    favouritesTotalElements: PropTypes.number.isRequired
 };
 
 const mapStateToProps = (state) => ({
     hasError: state.search.hasError,
     initialSearchDone: state.search.initialSearchDone,
-    isFetchingFavorites: state.favorites.isFetchingFavorites,
+    isFetchingFavourites: state.favourites.isFetchingFavourites,
     savedSearches: state.savedSearches.savedSearches,
     isFetchingSavedSearches: state.savedSearches.isFetchingSavedSearches,
-    favoritesTotalElements: state.favorites.totalElements,
+    favouritesTotalElements: state.favourites.totalElements,
     isSavedSearchesExpanded: state.savedSearches.isSavedSearchesExpanded
 });
 
@@ -202,7 +202,7 @@ const mapDispatchToProps = (dispatch) => ({
     search: () => dispatch({ type: SEARCH }),
     rememberSearch: () => dispatch({ type: REMEMBER_SEARCH }),
     fetchSavedSearches: () => dispatch({ type: FETCH_SAVED_SEARCHES }),
-    fetchFavorites: () => dispatch({ type: FETCH_FAVORITES }),
+    fetchFavourites: () => dispatch({ type: FETCH_FAVOURITES }),
     expandSavedSearches: () => dispatch({ type: EXPAND_SAVED_SEARCHES }),
     collapseSavedSearches: () => dispatch({ type: COLLAPSE_SAVED_SEARCHES })
 });

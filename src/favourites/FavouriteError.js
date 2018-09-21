@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import SnapToTop from '../common/SnapToTop';
-import './FavoriteAlertStripe.less';
+import './FavouriteAlertStripe.less';
 
-class FavoriteError extends React.Component {
+class FavouriteError extends React.Component {
     render() {
         if (this.props.error) {
             return (
                 <SnapToTop>
-                    <AlertStripe type="advarsel" solid className="FavoriteError">
+                    <AlertStripe type="advarsel" solid className="FavouriteError">
                         {this.props.error === 'fetch_error' &&
                         'Klarte ikke å ikke hente favoritter. Forsøk å laste siden på nytt.'
                         }
@@ -28,11 +28,11 @@ class FavoriteError extends React.Component {
     }
 }
 
-FavoriteError.defaultProps = {
+FavouriteError.defaultProps = {
     error: undefined
 };
 
-FavoriteError.propTypes = {
+FavouriteError.propTypes = {
     error: PropTypes.shape({
         message: PropTypes.string,
         statusCode: PropTypes.number
@@ -40,7 +40,7 @@ FavoriteError.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-    error: state.favorites.error
+    error: state.favourites.error
 });
 
-export default connect(mapStateToProps)(FavoriteError);
+export default connect(mapStateToProps)(FavouriteError);

@@ -2,7 +2,7 @@ import { call, put, select, takeLatest } from 'redux-saga/effects';
 import { get, post, put as fetchPut, remove, SearchApiError } from '../api/api';
 import capitalizeLocation from '../common/capitalizeLocation';
 import { AD_USER_API } from '../fasitProperties';
-import { USER_UUID_HACK } from '../favorites/favoritesReducer';
+import { USER_UUID_HACK } from '../favourites/favouritesReducer';
 import { toUrl } from '../search/url';
 import NotifyTypeEnum from './enums/NotifyTypeEnum';
 import SavedSearchStatusEnum from './enums/SavedSearchStatusEnum';

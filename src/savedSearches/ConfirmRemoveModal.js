@@ -25,14 +25,14 @@ class ConfirmRemoveModal extends React.Component {
                     contentLabel="Slett lagret søk"
                     appElement={document.getElementById('app')}
                 >
-                    <div className="Favorites__modal">
-                        <Undertittel className="Favorites__modal__title">Slett lagret søk</Undertittel>
+                    <div className="Favourites__modal">
+                        <Undertittel className="Favourites__modal__title">Slett lagret søk</Undertittel>
                         <div className="SavedSearches__modal__body">
                             <Normaltekst>
                                 Er du sikker på at du vil slette {this.props.savedSearchAboutToBeRemoved.title}?
                             </Normaltekst>
                         </div>
-                        <div className="Favorites__modal__buttons">
+                        <div className="Favourites__modal__buttons">
                             <Hovedknapp onClick={this.onRemoveClick}>Slett</Hovedknapp>
                             <Flatknapp onClick={this.closeModal}>Tilbake til lagrede søk</Flatknapp>
                         </div>

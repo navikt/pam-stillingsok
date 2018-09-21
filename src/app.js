@@ -16,13 +16,13 @@ import engagementReducer from './search/facets/engagement/engagementReducer';
 import sectorReducer from './search/facets/sector/sectorReducer';
 import extentReducer from './search/facets/extent/extentReducer';
 import disclaimerReducer from './discalimer/disclaimerReducer';
-import favoritesReducer, { favoritesSaga } from './favorites/favoritesReducer';
+import favouritesReducer, { favouritesSaga } from './favourites/favouritesReducer';
 import savedSearchesReducer, { savedSearchesSaga } from './savedSearches/savedSearchesReducer';
 import SearchPage from './search/Search';
 import StillingPage from './stilling/Stilling';
 import Invite from './invite/Invite';
 import { CONTEXT_PATH } from './fasitProperties';
-import Favorites from './favorites/Favorites';
+import Favourites from './favourites/Favourites';
 import './styles.less';
 import './variables.less';
 
@@ -40,14 +40,14 @@ const store = createStore(combineReducers({
     extent: extentReducer,
     stilling: stillingReducer,
     disclaimer: disclaimerReducer,
-    favorites: favoritesReducer,
+    favourites: favouritesReducer,
     savedSearches: savedSearchesReducer
 }), applyMiddleware(sagaMiddleware));
 
 sagaMiddleware.run(saga);
 sagaMiddleware.run(searchBoxSaga);
 sagaMiddleware.run(stillingSaga);
-sagaMiddleware.run(favoritesSaga);
+sagaMiddleware.run(favouritesSaga);
 sagaMiddleware.run(savedSearchesSaga);
 
 ReactDOM.render(
@@ -58,7 +58,7 @@ ReactDOM.render(
                     <Route exact path="/" component={SearchPage} />
                     <Route path={`${CONTEXT_PATH}/stilling/:uuid`} component={StillingPage} />
                     <Route path={`${CONTEXT_PATH}/mobil`} component={Invite} />
-                    <Route path={`${CONTEXT_PATH}/favoritter`} component={Favorites} />
+                    <Route path={`${CONTEXT_PATH}/favoritter`} component={Favourites} />
                     <Route path={`${CONTEXT_PATH}/lagrede-sok`} component={SavedSearches} />
                     <Route path="*" component={SearchPage} />
                 </Switch>

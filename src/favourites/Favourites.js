@@ -8,28 +8,28 @@ import { Link } from 'react-router-dom';
 import Disclaimer from '../discalimer/Disclaimer';
 import DelayedSpinner from '../search/loading/DelayedSpinner';
 import ConfirmRemoveModal from './ConfirmRemoveModal';
-import Favorite from './Favorite';
-import FavoriteAlertStripe from './FavoriteAlertStripe';
-import FavoriteError from './FavoriteError';
-import './Favorites.less';
-import { FETCH_FAVORITES } from './favoritesReducer';
-import NoFavorites from './NoFavorites';
+import Favourite from './Favourite';
+import FavouriteAlertStripe from './FavouriteAlertStripe';
+import FavouriteError from './FavouriteError';
+import './Favourites.less';
+import { FETCH_FAVOURITES } from './favouritesReducer';
+import NoFavourites from './NoFavourites';
 
-class Favorites extends React.Component {
+class Favourites extends React.Component {
     componentDidMount() {
         window.scrollTo(0, 0);
-        document.title = 'Favoriter';
-        this.props.fetchFavorites();
+        document.title = 'Favouriter';
+        this.props.fetchFavourites();
     }
 
     render() {
         return (
-            <div className="Favorites">
+            <div className="Favourites">
                 <Disclaimer />
-                <FavoriteAlertStripe />
-                <FavoriteError />
-                <div className="Favorites__backbutton">
-                    <Container className="Favorites__backbutton__container">
+                <FavouriteAlertStripe />
+                <FavouriteError />
+                <div className="Favourites__backbutton">
+                    <Container className="Favourites__backbutton__container">
                         <Link
                             to="/"
                             className="BackToSearchLink knapp knapp--flat no-print"
@@ -41,33 +41,33 @@ class Favorites extends React.Component {
                         </Link>
                     </Container>
                 </div>
-                <div className="Favorites__header">
-                    <Container className="Favorites__header__container">
+                <div className="Favourites__header">
+                    <Container className="Favourites__header__container">
                         <Row>
                             <Column xs="12">
                                 <Sidetittel className="Search__header__title">
                                     Favoritter
-                                    {!this.props.isFetchingFavorites ? ` (${this.props.totalElements})` : ''}
+                                    {!this.props.isFetchingFavourites ? ` (${this.props.totalElements})` : ''}
                                 </Sidetittel>
                             </Column>
                         </Row>
                     </Container>
                 </div>
-                <Container className="Favorites__main">
+                <Container className="Favourites__main">
                     <Row>
                         <Column xs="12">
-                            {this.props.isFetchingFavorites ? (
-                                <div className="Favorites__main__spinner">
+                            {this.props.isFetchingFavourites ? (
+                                <div className="Favourites__main__spinner">
                                     <DelayedSpinner />
                                 </div>
                             ) : (
                                 <div>
-                                    {this.props.favorites.length === 0 ? (
-                                        <NoFavorites />
+                                    {this.props.favourites.length === 0 ? (
+                                        <NoFavourites />
                                     ) : (
                                         <div>
-                                            {this.props.favorites.map((favorite) => (
-                                                <Favorite key={favorite.uuid} favorite={favorite} />
+                                            {this.props.favourites.map((favourite) => (
+                                                <Favourite key={favourite.uuid} favourite={favourite} />
                                             ))}
                                         </div>
                                     )}
@@ -82,24 +82,24 @@ class Favorites extends React.Component {
     }
 }
 
-Favorites.propTypes = {
-    isFetchingFavorites: PropTypes.bool.isRequired,
-    fetchFavorites: PropTypes.func.isRequired,
+Favourites.propTypes = {
+    isFetchingFavourites: PropTypes.bool.isRequired,
+    fetchFavourites: PropTypes.func.isRequired,
     totalElements: PropTypes.number.isRequired,
-    favorites: PropTypes.arrayOf(PropTypes.shape({
+    favourites: PropTypes.arrayOf(PropTypes.shape({
         uuid: PropTypes.string,
         title: PropTypes.string
     })).isRequired
 };
 
 const mapStateToProps = (state) => ({
-    favorites: state.favorites.favorites,
-    totalElements: state.favorites.totalElements,
-    isFetchingFavorites: state.favorites.isFetchingFavorites
+    favourites: state.favourites.favourites,
+    totalElements: state.favourites.totalElements,
+    isFetchingFavourites: state.favourites.isFetchingFavourites
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    fetchFavorites: () => dispatch({ type: FETCH_FAVORITES })
+    fetchFavourites: () => dispatch({ type: FETCH_FAVOURITES })
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Favorites);
+export default connect(mapStateToProps, mapDispatchToProps)(Favourites);
