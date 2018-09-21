@@ -10,6 +10,7 @@ export const SET_INITIAL_STATE = 'SET_INITIAL_STATE';
 export const INITIAL_SEARCH = 'INITIAL_SEARCH';
 export const FETCH_INITIAL_FACETS_SUCCESS = 'FETCH_INITIAL_FACETS_SUCCESS';
 export const SEARCH = 'SEARCH';
+export const RESET_SEARCH = 'RESET_SEARCH';
 export const SEARCH_BEGIN = 'SEARCH_BEGIN';
 export const SEARCH_END = 'SEARCH_END';
 export const SEARCH_SUCCESS = 'SEARCH_SUCCESS';
@@ -288,9 +289,19 @@ function* loadMore() {
     }
 }
 
+function* resetSearch() {
+    yield put({
+        type: SET_INITIAL_STATE,
+        query: {},
+        url: ''
+    });
+    yield search();
+}
+
 export const saga = function* saga() {
     yield takeLatest(REMEMBER_SEARCH, updateUrlParams);
     yield takeLatest(INITIAL_SEARCH, initialSearch);
     yield throttle(1000, SEARCH, search);
     yield takeLatest(LOAD_MORE, loadMore);
+    yield takeLatest(RESET_SEARCH, resetSearch);
 };

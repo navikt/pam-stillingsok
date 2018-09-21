@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import Lenkeknapp from '../common/Lenkeknapp';
 import Disclaimer from '../discalimer/Disclaimer';
 import FavouriteAlertStripe from '../favourites/FavouriteAlertStripe';
 import FavouriteError from '../favourites/FavouriteError';
@@ -32,7 +33,7 @@ import DelayedSpinner from './loading/DelayedSpinner';
 import RestoreScroll from './RestoreScroll';
 import './Search.less';
 import SearchBox from './searchBox/SearchBox';
-import { INITIAL_SEARCH, REMEMBER_SEARCH, SEARCH } from './searchReducer';
+import { INITIAL_SEARCH, REMEMBER_SEARCH, RESET_SEARCH, SEARCH } from './searchReducer';
 import SearchResults from './searchResults/SearchResults';
 import SearchResultsCount from './searchResults/SearchResultsCount';
 import Sorting from './sorting/Sorting';
@@ -60,6 +61,10 @@ class Search extends React.Component {
 
     onSaveSearchClick = () => {
         this.props.showAddSavedSearchModal();
+    };
+
+    onResetSearchClick = () => {
+        this.props.resetSearch();
     };
 
     onSavedSearchesButtonClick = () => {
@@ -126,6 +131,9 @@ class Search extends React.Component {
                                         <div className="Search__main__left">
                                             <div className="Search__main__left__save-search">
                                                 <Knapp mini onClick={this.onSaveSearchClick}>Lagre søk</Knapp>
+                                                <Lenkeknapp onClick={this.onResetSearchClick}>
+                                                    Nullstill kriterier
+                                                </Lenkeknapp>
                                             </div>
                                             <div id="sok">
                                                 <form
@@ -172,6 +180,7 @@ Search.propTypes = {
     showAddSavedSearchModal: PropTypes.func.isRequired,
     initialSearch: PropTypes.func.isRequired,
     search: PropTypes.func.isRequired,
+    resetSearch: PropTypes.func.isRequired,
     rememberSearch: PropTypes.func.isRequired,
     fetchFavourites: PropTypes.func.isRequired,
     fetchSavedSearches: PropTypes.func.isRequired,
@@ -200,6 +209,7 @@ const mapDispatchToProps = (dispatch) => ({
     showAddSavedSearchModal: () => dispatch({ type: SHOW_ADD_SAVED_SEARCH_MODAL }),
     initialSearch: () => dispatch({ type: INITIAL_SEARCH }),
     search: () => dispatch({ type: SEARCH }),
+    resetSearch: () => dispatch({ type: RESET_SEARCH }),
     rememberSearch: () => dispatch({ type: REMEMBER_SEARCH }),
     fetchSavedSearches: () => dispatch({ type: FETCH_SAVED_SEARCHES }),
     fetchFavourites: () => dispatch({ type: FETCH_FAVOURITES }),
