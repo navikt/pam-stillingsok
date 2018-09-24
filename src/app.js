@@ -1,28 +1,32 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { applyMiddleware, createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { applyMiddleware, combineReducers, createStore } from 'redux';
 import createSagaMiddleware from 'redux-saga';
-import SavedSearches from './savedSearches/SavedSearches';
-import searchReducer, { saga } from './search/searchReducer';
-import searchBoxReducer, { searchBoxSaga } from './search/searchBox/searchBoxReducer';
-import stillingReducer, { stillingSaga } from './stilling/stillingReducer';
-import sortingReducer from './search/sorting/sortingReducer';
-import countiesReducer from './search/facets/counties/countiesReducer';
-import occupationsReducer from './search/facets/occupations/occupationsReducer';
-import publishedReducer from './search/facets/published/publishedReducer';
-import engagementReducer from './search/facets/engagement/engagementReducer';
-import sectorReducer from './search/facets/sector/sectorReducer';
-import extentReducer from './search/facets/extent/extentReducer';
 import disclaimerReducer from './discalimer/disclaimerReducer';
-import favouritesReducer, { favouritesSaga } from './favourites/favouritesReducer';
-import savedSearchesReducer, { savedSearchesSaga } from './savedSearches/savedSearchesReducer';
-import SearchPage from './search/Search';
-import StillingPage from './stilling/Stilling';
-import Invite from './invite/Invite';
 import { CONTEXT_PATH } from './fasitProperties';
 import Favourites from './favourites/Favourites';
+import favouritesReducer, { favouritesSaga } from './favourites/favouritesReducer';
+import Invite from './invite/Invite';
+import savedSearchAlertStripeReducer, { savedSearchAlertStripeSaga } from './savedSearches/alertstripe/savedSearchAlertStripeReducer';
+import savedSearchErrorReducer from './savedSearches/error/savedSearchErrorReducer';
+import savedSearchExpandReducer from './savedSearches/expand/savedSearchExpandReducer';
+import savedSearchFormReducer, { savedSearchFormSaga } from './savedSearches/form/savedSearchFormReducer';
+import SavedSearches from './savedSearches/SavedSearches';
+import savedSearchesReducer, { savedSearchesSaga } from './savedSearches/savedSearchesReducer';
+import countiesReducer from './search/facets/counties/countiesReducer';
+import engagementReducer from './search/facets/engagement/engagementReducer';
+import extentReducer from './search/facets/extent/extentReducer';
+import occupationsReducer from './search/facets/occupations/occupationsReducer';
+import publishedReducer from './search/facets/published/publishedReducer';
+import sectorReducer from './search/facets/sector/sectorReducer';
+import SearchPage from './search/Search';
+import searchBoxReducer, { searchBoxSaga } from './search/searchBox/searchBoxReducer';
+import searchReducer, { saga } from './search/searchReducer';
+import sortingReducer from './search/sorting/sortingReducer';
+import StillingPage from './stilling/Stilling';
+import stillingReducer, { stillingSaga } from './stilling/stillingReducer';
 import './styles.less';
 import './variables.less';
 
@@ -41,7 +45,11 @@ const store = createStore(combineReducers({
     stilling: stillingReducer,
     disclaimer: disclaimerReducer,
     favourites: favouritesReducer,
-    savedSearches: savedSearchesReducer
+    savedSearches: savedSearchesReducer,
+    savedSearchForm: savedSearchFormReducer,
+    savedSearchAlertStripe: savedSearchAlertStripeReducer,
+    savedSearchError: savedSearchErrorReducer,
+    savedSearchExpand: savedSearchExpandReducer
 }), applyMiddleware(sagaMiddleware));
 
 sagaMiddleware.run(saga);
@@ -49,6 +57,8 @@ sagaMiddleware.run(searchBoxSaga);
 sagaMiddleware.run(stillingSaga);
 sagaMiddleware.run(favouritesSaga);
 sagaMiddleware.run(savedSearchesSaga);
+sagaMiddleware.run(savedSearchFormSaga);
+sagaMiddleware.run(savedSearchAlertStripeSaga);
 
 ReactDOM.render(
     <Provider store={store}>

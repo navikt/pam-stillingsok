@@ -1,20 +1,20 @@
-import React from 'react';
+import Chevron from 'nav-frontend-chevron';
+import { Column, Container, Row } from 'nav-frontend-grid';
+import { Sidetittel } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
+import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Container, Row, Column } from 'nav-frontend-grid';
-import { Sidetittel } from 'nav-frontend-typografi';
-import Chevron from 'nav-frontend-chevron';
-import DelayedSpinner from '../search/loading/DelayedSpinner';
 import Disclaimer from '../discalimer/Disclaimer';
+import DelayedSpinner from '../search/loading/DelayedSpinner';
+import SavedSearchAlertStripe from './alertstripe/SavedSearchAlertStripe';
+import SavedSearchError from './error/SavedSearchError';
+import SavedSearchList from './list/SavedSearchList';
 import ConfirmRemoveModal from './ConfirmRemoveModal';
-import EditSavedSearchModal from './EditSavedSearchModal';
-import NoSavedSearches from './NoSavedSearches';
-import SavedSearch from './SavedSearch';
-import SavedSearchesAlertStripe from './SavedSearchesAlertStripe';
-import SavedSearchesError from './SavedSearchesError';
-import { FETCH_SAVED_SEARCHES } from './savedSearchesReducer';
+import SavedSearchForm from './form/SavedSearchForm';
+import NoSavedSearches from './noresult/NoSavedSearches';
 import './SavedSearches.less';
+import { FETCH_SAVED_SEARCHES } from './savedSearchesReducer';
 
 class SavedSearches extends React.Component {
     componentDidMount() {
@@ -27,8 +27,8 @@ class SavedSearches extends React.Component {
         return (
             <div className="SavedSearches">
                 <Disclaimer />
-                <SavedSearchesAlertStripe />
-                <SavedSearchesError />
+                <SavedSearchAlertStripe />
+                <SavedSearchError />
                 <div className="SavedSearches__backbutton">
                     <Container className="SavedSearches__backbutton__container">
                         <Link
@@ -48,7 +48,7 @@ class SavedSearches extends React.Component {
                             <Column xs="12">
                                 <Sidetittel className="Search__header__title">
                                     Lagrede søk
-                                    {!this.props.isFetchingSavedSearches ? ` (${this.props.totalElements})` : ''}
+                                    {!this.props.isFetching ? ` (${this.props.totalElements})` : ''}
                                 </Sidetittel>
                             </Column>
                         </Row>
@@ -57,7 +57,7 @@ class SavedSearches extends React.Component {
                 <Container className="SavedSearches__main">
                     <Row>
                         <Column xs="12">
-                            {this.props.isFetchingSavedSearches ? (
+                            {this.props.isFetching ? (
                                 <div className="SavedSearches__main__spinner">
                                     <DelayedSpinner />
                                 </div>
@@ -66,18 +66,14 @@ class SavedSearches extends React.Component {
                                     {this.props.savedSearches.length === 0 ? (
                                         <NoSavedSearches />
                                     ) : (
-                                        <div>
-                                            {this.props.savedSearches.map((savedSearch) => (
-                                                <SavedSearch key={savedSearch.uuid} savedSearch={savedSearch} />
-                                            ))}
-                                        </div>
+                                        <SavedSearchList />
                                     )}
                                 </div>
                             )}
                         </Column>
                     </Row>
                 </Container>
-                <EditSavedSearchModal />
+                <SavedSearchForm />
                 <ConfirmRemoveModal />
             </div>
         );
@@ -85,7 +81,7 @@ class SavedSearches extends React.Component {
 }
 
 SavedSearches.propTypes = {
-    isFetchingSavedSearches: PropTypes.bool.isRequired,
+    isFetching: PropTypes.bool.isRequired,
     totalElements: PropTypes.number.isRequired,
     fetchSavedSearches: PropTypes.func.isRequired,
     savedSearches: PropTypes.arrayOf(PropTypes.shape({
@@ -97,7 +93,7 @@ SavedSearches.propTypes = {
 const mapStateToProps = (state) => ({
     savedSearches: state.savedSearches.savedSearches,
     totalElements: state.savedSearches.totalElements,
-    isFetchingSavedSearches: state.savedSearches.isFetchingSavedSearches
+    isFetching: state.savedSearches.isFetching
 });
 
 const mapDispatchToProps = (dispatch) => ({

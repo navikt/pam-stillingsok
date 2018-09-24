@@ -12,12 +12,12 @@ import {
 
 class ConfirmRemoveModal extends React.Component {
     onRemoveClick = () => {
-        this.props.hideModal();
+        this.props.hideForm();
         this.props.removeFromFavourites(this.props.favouriteAboutToBeRemoved.uuid);
     };
 
     closeModal = () => {
-        this.props.hideModal();
+        this.props.hideForm();
     };
 
     render() {
@@ -52,7 +52,7 @@ ConfirmRemoveModal.defaultProps = {
 
 ConfirmRemoveModal.propTypes = {
     removeFromFavourites: PropTypes.func.isRequired,
-    hideModal: PropTypes.func.isRequired,
+    hideForm: PropTypes.func.isRequired,
     confirmationVisible: PropTypes.bool.isRequired,
     favouriteAboutToBeRemoved: PropTypes.shape({
         uuid: PropTypes.string,
@@ -69,7 +69,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     removeFromFavourites: (uuid) => dispatch({ type: REMOVE_FROM_FAVOURITES, uuid }),
-    hideModal: () => dispatch({ type: HIDE_MODAL_REMOVE_FROM_FAVOURITES })
+    hideForm: () => dispatch({ type: HIDE_MODAL_REMOVE_FROM_FAVOURITES })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ConfirmRemoveModal);

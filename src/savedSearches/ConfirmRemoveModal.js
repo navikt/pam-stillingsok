@@ -3,18 +3,18 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Undertittel, Normaltekst } from 'nav-frontend-typografi';
 import Modal from 'nav-frontend-modal';
-import { Flatknapp, Hovedknapp } from 'nav-frontend-knapper';
+import { Hovedknapp } from 'nav-frontend-knapper';
 import Lenkeknapp from '../common/Lenkeknapp';
 import { HIDE_MODAL_REMOVE_SAVED_SEARCH, REMOVE_SAVED_SEARCH } from './savedSearchesReducer';
 
 class ConfirmRemoveModal extends React.Component {
     onRemoveClick = () => {
-        this.props.hideModal();
+        this.props.hideForm();
         this.props.removeSavedSearch(this.props.savedSearchAboutToBeRemoved.uuid);
     };
 
     closeModal = () => {
-        this.props.hideModal();
+        this.props.hideForm();
     };
 
     render() {
@@ -26,14 +26,14 @@ class ConfirmRemoveModal extends React.Component {
                     contentLabel="Slett lagret søk"
                     appElement={document.getElementById('app')}
                 >
-                    <div className="Favourites__modal">
-                        <Undertittel className="Favourites__modal__title">Slett lagret søk</Undertittel>
-                        <div className="SavedSearches__modal__body">
+                    <div className="SavedSearchModal">
+                        <Undertittel className="SavedSearchModal__title">Slett lagret søk</Undertittel>
+                        <div className="SavedSearchModal__body">
                             <Normaltekst>
                                 Er du sikker på at du vil slette {this.props.savedSearchAboutToBeRemoved.title}?
                             </Normaltekst>
                         </div>
-                        <div className="Favourites__modal__buttons">
+                        <div className="SavedSearchModal__buttons">
                             <Hovedknapp onClick={this.onRemoveClick}>Slett</Hovedknapp>
                             <Lenkeknapp onClick={this.closeModal}>Tilbake til lagrede søk</Lenkeknapp>
                         </div>
@@ -51,7 +51,7 @@ ConfirmRemoveModal.defaultProps = {
 
 ConfirmRemoveModal.propTypes = {
     removeSavedSearch: PropTypes.func.isRequired,
-    hideModal: PropTypes.func.isRequired,
+    hideForm: PropTypes.func.isRequired,
     confirmationVisible: PropTypes.bool.isRequired,
     savedSearchAboutToBeRemoved: PropTypes.shape({
         uuid: PropTypes.string,
@@ -66,7 +66,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     removeSavedSearch: (uuid) => dispatch({ type: REMOVE_SAVED_SEARCH, uuid }),
-    hideModal: () => dispatch({ type: HIDE_MODAL_REMOVE_SAVED_SEARCH })
+    hideForm: () => dispatch({ type: HIDE_MODAL_REMOVE_SAVED_SEARCH })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ConfirmRemoveModal);

@@ -1,0 +1,40 @@
+@import "../../variables";
+
+.SavedSearchListItem {
+    background-color: #fff;
+    padding: 1rem 1.25rem 1.25rem;
+    display: block;
+    border: 1px solid @border-gray;
+    margin-bottom: 1rem;
+}
+
+@media (min-width: @screen-md-min) {
+    .SavedSearchListItem__top {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        border-bottom: 1px solid @border-gray;
+        padding-bottom: 0.75rem;
+        margin-bottom: 0.75rem;
+    }
+}
+
+@media (max-width: @screen-sm-max) {
+    .SavedSearchListItem__top__buttons {
+        margin-top: 0.5rem;
+    }
+}
+
+.SavedSearchListItem__top__buttons .Lenkeknapp:not(:last-child) {
+    margin-right: 2rem;
+}
+
+.SavedSearchListItem__bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.SavedSearchListItem__bottom__created {
+    color: #999;
+}

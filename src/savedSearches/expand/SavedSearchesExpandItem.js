@@ -1,14 +1,15 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { INITIAL_SEARCH } from '../search/searchReducer';
-import { COLLAPSE_SAVED_SEARCHES } from './savedSearchesReducer';
+import { INITIAL_SEARCH } from '../../search/searchReducer';
+import { SET_CURRENT_SAVED_SEARCH } from '../savedSearchesReducer';
+import { COLLAPSE_SAVED_SEARCHES } from './savedSearchExpandReducer';
 
 class SavedSearchesExpandItem extends React.Component {
     onTitleClick = (e) => {
         e.preventDefault();
         try {
-            sessionStorage.setItem('url', this.props.savedSearch.searchQuery);
+            this.props.setCurrentSavedSearch(this.props.savedSearch);
             this.props.collapseSavedSearches();
             this.props.search();
         } catch (error) {
@@ -29,6 +30,7 @@ class SavedSearchesExpandItem extends React.Component {
 }
 
 SavedSearchesExpandItem.propTypes = {
+    setCurrentSavedSearch: PropTypes.func.isRequired,
     collapseSavedSearches: PropTypes.func.isRequired,
     search: PropTypes.func.isRequired,
     savedSearch: PropTypes.shape({
@@ -42,7 +44,8 @@ const mapStateToProps = (state) => ({});
 
 const mapDispatchToProps = (dispatch) => ({
     search: () => dispatch({ type: INITIAL_SEARCH }),
-    collapseSavedSearches: () => dispatch({ type: COLLAPSE_SAVED_SEARCHES })
+    collapseSavedSearches: () => dispatch({ type: COLLAPSE_SAVED_SEARCHES }),
+    setCurrentSavedSearch: (savedSearch) => dispatch({ type: SET_CURRENT_SAVED_SEARCH, savedSearch })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SavedSearchesExpandItem);
