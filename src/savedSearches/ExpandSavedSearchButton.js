@@ -5,7 +5,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { COLLAPSE_SAVED_SEARCHES, EXPAND_SAVED_SEARCHES } from './expand/savedSearchExpandReducer';
 
-class SavedSearchButton extends React.Component {
+class ExpandSavedSearchButton extends React.Component {
     onClick = () => {
         if (this.props.isSavedSearchesExpanded) {
             this.props.collapseSavedSearches();
@@ -27,7 +27,7 @@ class SavedSearchButton extends React.Component {
     }
 }
 
-SavedSearchButton.propTypes = {
+ExpandSavedSearchButton.propTypes = {
     savedSearches: PropTypes.arrayOf(PropTypes.object).isRequired,
     isFetching: PropTypes.bool.isRequired,
     isSavedSearchesExpanded: PropTypes.bool.isRequired,
@@ -46,4 +46,4 @@ const mapDispatchToProps = (dispatch) => ({
     collapseSavedSearches: () => dispatch({ type: COLLAPSE_SAVED_SEARCHES })
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(SavedSearchButton);
+export default connect(mapStateToProps, mapDispatchToProps)(ExpandSavedSearchButton);

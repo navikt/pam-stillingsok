@@ -1,5 +1,4 @@
 import { Column, Container, Row } from 'nav-frontend-grid';
-import { Knapp } from 'nav-frontend-knapper';
 import { Normaltekst, Sidetittel } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -11,12 +10,13 @@ import FavouriteError from '../favourites/error/FavouriteError';
 import FavouritesButton from '../favourites/FavouritesButton';
 import { FETCH_FAVOURITES } from '../favourites/favouritesReducer';
 import SavedSearchAlertStripe from '../savedSearches/alertstripe/SavedSearchAlertStripe';
+import CurrentSavedSearch from '../savedSearches/CurrentSavedSearch';
 import SavedSearchError from '../savedSearches/error/SavedSearchError';
 import SavedSearchesExpand from '../savedSearches/expand/SavedSearchesExpand';
 import SavedSearchForm from '../savedSearches/form/SavedSearchForm';
-import { SavedSearchFormMode, SHOW_SAVED_SEARCH_FORM } from '../savedSearches/form/savedSearchFormReducer';
-import SavedSearchButton from '../savedSearches/SavedSearchButton';
+import ExpandSavedSearchButton from '../savedSearches/ExpandSavedSearchButton';
 import { FETCH_SAVED_SEARCHES } from '../savedSearches/savedSearchesReducer';
+import SaveSearchButton from '../savedSearches/SaveSearchButton';
 import BackToTop from './backToTopButton/BackToTop';
 import SearchError from './error/SearchError';
 import Counties from './facets/counties/Counties';
@@ -56,14 +56,6 @@ class Search extends React.Component {
         this.props.search();
     };
 
-    onSaveSearchClick = () => {
-        this.props.showSavedSearchForm(
-            this.props.currentSavedSearch ? SavedSearchFormMode.EDIT : SavedSearchFormMode.ADD,
-            this.props.currentSavedSearch !== undefined,
-            'Tilbake til stillingssøk'
-        );
-    };
-
     onResetSearchClick = () => {
         this.props.resetSearch();
     };
@@ -86,17 +78,15 @@ class Search extends React.Component {
                                 <Column xs="12" md="6">
                                     <div className="Search__header__right">
                                         <FavouritesButton />
-                                        <SavedSearchButton />
+                                        <ExpandSavedSearchButton />
                                     </div>
                                 </Column>
                             </Row>
                         </Container>
                     </div>
-                    {this.props.isSavedSearchesExpanded && (
-                        <div className="Search__header__savedSearches">
-                            <SavedSearchesExpand />
-                        </div>
-                    )}
+                    <div className="Search__header__savedSearches">
+                        <SavedSearchesExpand />
+                    </div>
                 </div>
                 <Container className="Search__main">
                     {this.props.hasError && (
@@ -114,7 +104,7 @@ class Search extends React.Component {
                                     <Column xs="12" md="4">
                                         <div className="Search__main__left">
                                             <div className="Search__main__left__save-search">
-                                                <Knapp mini onClick={this.onSaveSearchClick}>Lagre søk</Knapp>
+                                                <SaveSearchButton />
                                                 <Lenkeknapp onClick={this.onResetSearchClick}>
                                                     Nullstill kriterier
                                                 </Lenkeknapp>
@@ -141,11 +131,7 @@ class Search extends React.Component {
                                         <div className="Search__main__center">
                                             <div className="Search__main__center__header">
                                                 <SearchResultsCount />
-                                                {this.props.currentSavedSearch && (
-                                                    <div>
-                                                        <Normaltekst>{this.props.currentSavedSearch.title}</Normaltekst>
-                                                    </div>
-                                                )}
+                                                <CurrentSavedSearch />
                                                 <ViewMode />
                                                 <Sorting />
                                             </div>
@@ -166,10 +152,6 @@ class Search extends React.Component {
     }
 }
 
-Search.defaultProps = {
-    currentSavedSearch: undefined
-};
-
 Search.propTypes = {
     initialSearch: PropTypes.func.isRequired,
     search: PropTypes.func.isRequired,
@@ -177,22 +159,15 @@ Search.propTypes = {
     rememberSearch: PropTypes.func.isRequired,
     fetchFavourites: PropTypes.func.isRequired,
     fetchSavedSearches: PropTypes.func.isRequired,
-    showSavedSearchForm: PropTypes.func.isRequired,
     hasError: PropTypes.bool.isRequired,
-    initialSearchDone: PropTypes.bool.isRequired,
-    isSavedSearchesExpanded: PropTypes.bool.isRequired,
-    currentSavedSearch: PropTypes.shape({
-        title: PropTypes.string
-    })
+    initialSearchDone: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => ({
     hasError: state.search.hasError,
     initialSearchDone: state.search.initialSearchDone,
     isFetchingFavourites: state.favourites.isFetchingFavourites,
-    savedSearches: state.savedSearches.savedSearches,
-    isSavedSearchesExpanded: state.savedSearchExpand.isSavedSearchesExpanded,
-    currentSavedSearch: state.savedSearches.currentSavedSearch
+    savedSearches: state.savedSearches.savedSearches
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -201,13 +176,7 @@ const mapDispatchToProps = (dispatch) => ({
     resetSearch: () => dispatch({ type: RESET_SEARCH }),
     rememberSearch: () => dispatch({ type: REMEMBER_SEARCH }),
     fetchSavedSearches: () => dispatch({ type: FETCH_SAVED_SEARCHES }),
-    fetchFavourites: () => dispatch({ type: FETCH_FAVOURITES }),
-    showSavedSearchForm: (formMode, showAddOrReplace, cancelButtonText) => dispatch({
-        type: SHOW_SAVED_SEARCH_FORM,
-        formMode,
-        showAddOrReplace,
-        cancelButtonText
-    })
+    fetchFavourites: () => dispatch({ type: FETCH_FAVOURITES })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Search);
