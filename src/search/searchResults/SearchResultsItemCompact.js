@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { STILLING } from '../../fasitProperties';
-import FavouriteButton from '../../favourites/FavouriteButton';
+import FavouriteButton from '../../favourites/star/FavouriteButton';
 import { formatISOString } from '../../utils';
 import './SearchResultsItemCompact.less';
 

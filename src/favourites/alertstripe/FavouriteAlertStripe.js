@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import AlertStripe from 'nav-frontend-alertstriper';
 import './FavouriteAlertStripe.less';
-import SnapToTop from '../common/SnapToTop';
+import SnapToTop from '../../common/SnapToTop';
 
 function FavouriteAlertStripe({ showAlertStripe, alertStripeMode }) {
     if (showAlertStripe && (alertStripeMode === 'added')) {

@@ -8,12 +8,12 @@ import { Link } from 'react-router-dom';
 import Disclaimer from '../discalimer/Disclaimer';
 import DelayedSpinner from '../search/loading/DelayedSpinner';
 import ConfirmRemoveModal from './ConfirmRemoveModal';
-import Favourite from './Favourite';
-import FavouriteAlertStripe from './FavouriteAlertStripe';
-import FavouriteError from './FavouriteError';
+import Favourite from './list/Favourite';
+import FavouriteAlertStripe from './alertstripe/FavouriteAlertStripe';
+import FavouriteError from './error/FavouriteError';
 import './Favourites.less';
 import { FETCH_FAVOURITES } from './favouritesReducer';
-import NoFavourites from './NoFavourites';
+import NoFavourites from './noresult/NoFavourites';
 
 class Favourites extends React.Component {
     componentDidMount() {

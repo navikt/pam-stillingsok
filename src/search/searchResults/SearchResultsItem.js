@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import FavouriteButton from '../../favourites/FavouriteButton';
+import FavouriteButton from '../../favourites/star/FavouriteButton';
 import SearchResultsItemDetails from './SearchResultsItemDetails';
 import './SearchResultsItem.less';
 

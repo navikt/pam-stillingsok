@@ -2,9 +2,9 @@ import { EtikettFokus } from 'nav-frontend-etiketter';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import Lenkeknapp from '../common/Lenkeknapp';
-import SearchResultsItemDetails from '../search/searchResults/SearchResultsItemDetails';
-import { SHOW_MODAL_REMOVE_FROM_FAVOURITES } from './favouritesReducer';
+import Lenkeknapp from '../../common/Lenkeknapp';
+import SearchResultsItemDetails from '../../search/searchResults/SearchResultsItemDetails';
+import { SHOW_MODAL_REMOVE_FROM_FAVOURITES } from '../favouritesReducer';
 
 class Favourite extends React.Component {
     onRemoveClick = () => {

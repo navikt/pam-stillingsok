@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { ADD_TO_FAVOURITES, REMOVE_FROM_FAVOURITES } from './favouritesReducer';
+import { ADD_TO_FAVOURITES, REMOVE_FROM_FAVOURITES } from '../favouritesReducer';
 import './FavouriteButton.less';
 
 class FavouriteButton extends React.Component {

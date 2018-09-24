@@ -2,8 +2,8 @@ import AlertStripe from 'nav-frontend-alertstriper';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import SnapToTop from '../common/SnapToTop';
-import './FavouriteAlertStripe.less';
+import SnapToTop from '../../common/SnapToTop';
+import '../alertstripe/FavouriteAlertStripe.less';
 
 class FavouriteError extends React.Component {
     render() {
