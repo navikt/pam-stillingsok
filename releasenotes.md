@@ -1,3 +1,6 @@
+## RELEASE - 0.37.254-d7fc93f
+#### New in this release: 
++ 2018-09-20 [PAM-1146] Bruk lenke-knapp istedet for toggleknapp for Normal-/Kompaktvisning (ref. skisser i zeplin). Dette fikser da også uu-issue relatert til toggleknapp.
 ## RELEASE - 0.35.250-58f0db3
 #### New in this release: 
 + 2018-08-10 [PAM-1162]: Legger til validering på lenker. Kun gyldige lenker vises med <a href>-tag, resten vises som kun tekst.
