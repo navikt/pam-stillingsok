@@ -4,9 +4,20 @@
   padding: 1rem;
 }
 
+@media (max-width: @screen-sm-max) {
+  .SavedSearchModal {
+    padding: 0.75rem 0.25rem;
+  }
+}
+
 .SavedSearchModal__title,
 .SavedSearchModal__form-mode {
   margin-bottom: 1rem;
+}
+
+.SavedSearchModal__body__name,
+.SavedSearchModal__body__notify {
+  margin-bottom: 2rem!important;
 }
 
 .SavedSearchModal__body {
@@ -14,12 +25,29 @@
 }
 
 @media (max-width: @screen-sm-max) {
+  .SavedSearchModal__body {
+    margin-bottom: 0;
+  }
+
+  .SavedSearchModal__title {
+    margin-bottom: 0.25rem;
+  }
+
+  .SavedSearchModal__form-mode {
+    margin-bottom: 0;
+  }
+
   .SavedSearchModal__buttons .knapp {
     width: 100%;
   }
 
   .SavedSearchModal__buttons .knapp:not(:last-child) {
     margin-bottom: 1rem;
+  }
+
+  .SavedSearchModal__body__name,
+  .SavedSearchModal__body__notify {
+    margin-bottom: 1rem!important;
   }
 }
 

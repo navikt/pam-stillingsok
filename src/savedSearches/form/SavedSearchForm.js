@@ -106,7 +106,7 @@ class SavedSearchForm extends React.Component {
                         {!(showAddOrReplace && formMode === SavedSearchFormMode.EDIT) && (
                             <div className="SavedSearchModal__body">
                                 <Input
-                                    className="blokk"
+                                    className="SavedSearchModal__body__name"
                                     label="Navn*"
                                     onChange={this.onTitleChange}
                                     value={formData.title}
@@ -116,7 +116,7 @@ class SavedSearchForm extends React.Component {
                                     }
                                 />
                                 <Checkbox
-                                    className="blokk"
+                                    className="SavedSearchModal__body__notify"
                                     label="Ja, jeg ønsker å motta varsler om nye treff på e-post"
                                     onChange={this.onSubscribeChange}
                                     checked={formData.notifyType === NotifyTypeEnum.EMAIL}

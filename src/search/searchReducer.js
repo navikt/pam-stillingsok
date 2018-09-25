@@ -160,19 +160,17 @@ function* initialSearch() {
         if (!state.search.initialSearchDone) {
             // For å hente alle tilgjengelige fasetter, gjør vi først
             // et søk uten noen søkekriterier.
-            response = yield call(fetchSearch, { size: PAGE_SIZE });
+            response = yield call(fetchSearch, { size: 0 });
             yield put({ type: FETCH_INITIAL_FACETS_SUCCESS, response });
-        }
 
-        // Gjør et nytt søk med søkekriterier fra url
-        state = yield select();
-        const query = toSearchQuery(state);
-        if (Object.keys(query).length > 0) {
+            // Gjør et nytt søk med søkekriterier
+            state = yield select();
+            const query = toSearchQuery(state);
             response = yield call(fetchSearch, query);
-        }
 
-        if (response) {
-            yield put({ type: SEARCH_SUCCESS, response });
+            if (response) {
+                yield put({ type: SEARCH_SUCCESS, response });
+            }
         }
     } catch (e) {
         if (e instanceof SearchApiError) {
