@@ -1,8 +1,9 @@
 import { select, takeLatest, put } from 'redux-saga/effects';
 import { SET_CURRENT_SAVED_SEARCH } from './savedSearches/savedSearchesReducer';
 import { SET_VALUE } from './search/searchBox/searchBoxReducer';
-import { PAGE_SIZE, RESET_SEARCH, SEARCH, SET_MODE } from './search/searchReducer';
+import { PAGE_SIZE, RESET_SEARCH, SEARCH } from './search/searchReducer';
 import { fromUrl, ParameterType, toUrl } from './search/url';
+import { SET_VIEW_MODE } from './search/viewMode/viewModeReducer';
 
 export const RESTORE_STATE_FROM_URL_BEGIN = 'RESTORE_STATE_FROM_URL_BEGIN';
 export const RESTORE_STATE_FROM_URL = 'RESTORE_STATE_FROM_URL';
@@ -38,7 +39,7 @@ function* updateUrl() {
         extent: state.extent.checkedExtent,
         occupationFirstLevels: state.occupations.checkedFirstLevels,
         occupationSecondLevels: state.occupations.checkedSecondLevels,
-        mode: state.search.mode ? state.search.mode : undefined,
+        mode: state.viewMode.mode ? state.viewMode.mode : undefined,
         saved: state.savedSearches.currentSavedSearch ? state.savedSearches.currentSavedSearch.uuid : undefined
     };
 
@@ -49,13 +50,17 @@ function* updateUrl() {
     }
 }
 
-function* restoreStateFromUrl(action) {
-    if (action.url) {
-        yield put({
-            type: RESTORE_STATE_FROM_URL,
-            query: fromUrl(SEARCH_PARAMETERS_DEFINITION, action.url),
-            url: action.url
-        });
+function* restoreStateFromUrl() {
+    try {
+        const url = sessionStorage.getItem('url');
+        if (url && url !== null) {
+            yield put({
+                type: RESTORE_STATE_FROM_URL,
+                query: fromUrl(SEARCH_PARAMETERS_DEFINITION, url)
+            });
+        }
+    } catch (e) {
+        // Ignore session storage error
     }
 }
 
@@ -64,7 +69,7 @@ export const urlSaga = function* saga() {
         SEARCH,
         RESET_SEARCH,
         SET_CURRENT_SAVED_SEARCH,
-        SET_MODE,
+        SET_VIEW_MODE,
         SET_VALUE
     ], updateUrl);
     yield takeLatest(RESTORE_STATE_FROM_URL_BEGIN, restoreStateFromUrl);

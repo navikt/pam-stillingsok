@@ -39,7 +39,7 @@ import ViewMode from './viewMode/ViewMode';
 class Search extends React.Component {
     constructor(props) {
         super(props);
-        this.props.restoreStateFromUrl(sessionStorage.getItem('url'));
+        this.props.restoreStateFromUrl();
         this.props.initialSearch();
     }
 
@@ -169,7 +169,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    restoreStateFromUrl: (url) => dispatch({ type: RESTORE_STATE_FROM_URL_BEGIN, url }),
+    restoreStateFromUrl: () => dispatch({ type: RESTORE_STATE_FROM_URL_BEGIN }),
     initialSearch: () => dispatch({ type: INITIAL_SEARCH }),
     search: () => dispatch({ type: SEARCH }),
     resetSearch: () => dispatch({ type: RESET_SEARCH }),

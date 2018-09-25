@@ -71,7 +71,7 @@ const mapStateToProps = (state) => ({
     searchResult: state.search.searchResult,
     page: state.search.page,
     total: state.search.searchResult.total,
-    mode: state.search.mode
+    mode: state.viewMode.mode
 });
 
 export default connect(mapStateToProps)(SearchResults);

@@ -25,6 +25,7 @@ import SearchPage from './search/Search';
 import searchBoxReducer, { searchBoxSaga } from './search/searchBox/searchBoxReducer';
 import searchReducer, { saga } from './search/searchReducer';
 import sortingReducer from './search/sorting/sortingReducer';
+import viewModeReducer from './search/viewMode/viewModeReducer';
 import StillingPage from './stilling/Stilling';
 import stillingReducer, { stillingSaga } from './stilling/stillingReducer';
 import './styles.less';
@@ -50,7 +51,8 @@ const store = createStore(combineReducers({
     savedSearchForm: savedSearchFormReducer,
     savedSearchAlertStripe: savedSearchAlertStripeReducer,
     savedSearchError: savedSearchErrorReducer,
-    savedSearchExpand: savedSearchExpandReducer
+    savedSearchExpand: savedSearchExpandReducer,
+    viewMode: viewModeReducer
 }), applyMiddleware(sagaMiddleware));
 
 sagaMiddleware.run(saga);

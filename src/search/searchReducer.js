@@ -15,7 +15,6 @@ export const RESET_FROM = 'RESET_FROM';
 export const LOAD_MORE = 'LOAD_MORE';
 export const LOAD_MORE_BEGIN = 'LOAD_MORE_BEGIN';
 export const LOAD_MORE_SUCCESS = 'LOAD_MORE_SUCCESS';
-export const SET_MODE = 'SET_MODE';
 
 export const PAGE_SIZE = 50;
 
@@ -30,9 +29,7 @@ const initialState = {
     hasError: false,
     from: 0,
     to: PAGE_SIZE,
-    page: 0,
-    mode: 'normal',
-    url: undefined
+    page: 0
 };
 
 export function mergeAndRemoveDuplicates(array1, array2) {
@@ -49,12 +46,9 @@ export default function searchReducer(state = initialState, action) {
         case RESTORE_STATE_FROM_URL:
             return {
                 ...state,
-                hasRestoredPreviousSearch: true,
                 from: 0,
                 to: action.query.to || PAGE_SIZE,
-                page: action.query.to ? (action.query.to - PAGE_SIZE) / PAGE_SIZE : 0,
-                mode: action.query.mode ? action.query.mode : 'normal',
-                url: action.url
+                page: action.query.to ? (action.query.to - PAGE_SIZE) / PAGE_SIZE : 0
             };
         case RESET_FROM:
             return {
@@ -110,11 +104,6 @@ export default function searchReducer(state = initialState, action) {
                     // Når man pager kan en allerede lastet annonse komme på nytt på neste page.
                     stillinger: mergeAndRemoveDuplicates(state.searchResult.stillinger, action.response.stillinger)
                 }
-            };
-        case SET_MODE:
-            return {
-                ...state,
-                mode: action.mode
             };
         default:
             return state;

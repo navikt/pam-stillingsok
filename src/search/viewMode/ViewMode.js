@@ -2,8 +2,8 @@ import { Knapp } from 'nav-frontend-knapper';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { SET_MODE } from '../searchReducer';
 import './ViewMode.less';
+import { SET_VIEW_MODE } from './viewModeReducer';
 
 class ViewMode extends React.Component {
     onNormalClick = () => {
@@ -37,11 +37,11 @@ ViewMode.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-    mode: state.search.mode
+    mode: state.viewMode.mode
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    setMode: (mode) => dispatch({ type: SET_MODE, mode })
+    setMode: (mode) => dispatch({ type: SET_VIEW_MODE, mode })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ViewMode);
