@@ -1,21 +1,16 @@
-import { select, call, put, takeLatest, throttle } from 'redux-saga/effects';
-import {
-    SearchApiError,
-    fetchSearch
-} from '../api/api';
-import { fromUrl, toUrl, ParameterType } from './url';
+import { call, put, select, takeLatest, throttle } from 'redux-saga/effects';
+import { fetchSearch, SearchApiError } from '../api/api';
+import { SET_CURRENT_SAVED_SEARCH } from '../savedSearches/savedSearchesReducer';
+import { RESTORE_STATE_FROM_URL } from '../urlReducer';
 
-export const RESTORE_PREVIOUS_SEARCH = 'RESTORE_PREVIOUS_SEARCH';
-export const SET_INITIAL_STATE = 'SET_INITIAL_STATE';
-export const INITIAL_SEARCH = 'INITIAL_SEARCH';
 export const FETCH_INITIAL_FACETS_SUCCESS = 'FETCH_INITIAL_FACETS_SUCCESS';
-export const SEARCH = 'SEARCH';
+export const INITIAL_SEARCH = 'INITIAL_SEARCH';
 export const RESET_SEARCH = 'RESET_SEARCH';
+export const SEARCH = 'SEARCH';
 export const SEARCH_BEGIN = 'SEARCH_BEGIN';
 export const SEARCH_END = 'SEARCH_END';
 export const SEARCH_SUCCESS = 'SEARCH_SUCCESS';
 export const SEARCH_FAILURE = 'SEARCH_FAILURE';
-export const REMEMBER_SEARCH = 'REMEMBER_SEARCH';
 export const RESET_FROM = 'RESET_FROM';
 export const LOAD_MORE = 'LOAD_MORE';
 export const LOAD_MORE_BEGIN = 'LOAD_MORE_BEGIN';
@@ -23,21 +18,6 @@ export const LOAD_MORE_SUCCESS = 'LOAD_MORE_SUCCESS';
 export const SET_MODE = 'SET_MODE';
 
 export const PAGE_SIZE = 50;
-
-export const SEARCH_PARAMETERS_DEFINITION = {
-    q: ParameterType.STRING,
-    sort: ParameterType.STRING,
-    to: ParameterType.NUMBER,
-    counties: ParameterType.ARRAY,
-    municipals: ParameterType.ARRAY,
-    published: ParameterType.ARRAY,
-    engagementType: ParameterType.ARRAY,
-    sector: ParameterType.ARRAY,
-    extent: ParameterType.ARRAY,
-    occupationFirstLevels: ParameterType.ARRAY,
-    occupationSecondLevels: ParameterType.ARRAY,
-    mode: ParameterType.STRING
-};
 
 const initialState = {
     isAtLeastOneSearchDone: false,
@@ -66,7 +46,7 @@ export function mergeAndRemoveDuplicates(array1, array2) {
 
 export default function searchReducer(state = initialState, action) {
     switch (action.type) {
-        case SET_INITIAL_STATE:
+        case RESTORE_STATE_FROM_URL:
             return {
                 ...state,
                 hasRestoredPreviousSearch: true,
@@ -169,49 +149,6 @@ export function toSearchQuery(state) {
     };
 }
 
-
-export function toQuery(state) {
-    return {
-        q: state.searchBox.q,
-        sort: state.sorting.sort,
-        to: state.search.to > PAGE_SIZE ? state.search.to : undefined,
-        counties: state.counties.checkedCounties,
-        municipals: state.counties.checkedMunicipals,
-        published: state.published.checkedPublished,
-        engagementType: state.engagement.checkedEngagementType,
-        sector: state.sector.checkedSector,
-        extent: state.extent.checkedExtent,
-        occupationFirstLevels: state.occupations.checkedFirstLevels,
-        occupationSecondLevels: state.occupations.checkedSecondLevels
-    };
-}
-
-
-function* updateUrlParams() {
-    const state = yield select();
-    try {
-        const url = toUrl(toQuery(state));
-        if (url && url.length > 0) {
-            sessionStorage.setItem('url', url);
-        } else {
-            sessionStorage.removeItem('url');
-        }
-    } catch (e) {
-        // Ignore session storage error
-    }
-}
-
-function getUrlParams() {
-    let url;
-    try {
-        url = sessionStorage.getItem('url');
-    } catch (e) {
-        // Ignore session storage error
-    }
-    return url === null ? undefined : url;
-}
-
-
 /**
  * Fetcher alle tilgjengelige fasetter og gjør deretter det første søket.
  */
@@ -227,19 +164,11 @@ function* initialSearch() {
             yield put({ type: FETCH_INITIAL_FACETS_SUCCESS, response });
         }
 
-        // Gjør eventuelt et nytt søk med søkekriterier fra url
-        const url = getUrlParams();
-        if (url && url !== state.search.url) {
-            yield put({
-                type: SET_INITIAL_STATE,
-                query: fromUrl(SEARCH_PARAMETERS_DEFINITION, url),
-                url
-            });
-            state = yield select();
-            const query = toSearchQuery(state);
-            if (Object.keys(query).length > 0) {
-                response = yield call(fetchSearch, query);
-            }
+        // Gjør et nytt søk med søkekriterier fra url
+        state = yield select();
+        const query = toSearchQuery(state);
+        if (Object.keys(query).length > 0) {
+            response = yield call(fetchSearch, query);
         }
 
         if (response) {
@@ -258,7 +187,6 @@ function* initialSearch() {
 function* search() {
     yield put({ type: SEARCH_BEGIN });
     try {
-        yield updateUrlParams();
         yield put({ type: RESET_FROM });
         const state = yield select();
         const query = toSearchQuery(state);
@@ -289,19 +217,10 @@ function* loadMore() {
     }
 }
 
-function* resetSearch() {
-    yield put({
-        type: SET_INITIAL_STATE,
-        query: {},
-        url: ''
-    });
-    yield search();
-}
-
 export const saga = function* saga() {
-    yield takeLatest(REMEMBER_SEARCH, updateUrlParams);
     yield takeLatest(INITIAL_SEARCH, initialSearch);
+    yield takeLatest(RESET_SEARCH, search);
+    yield takeLatest(SET_CURRENT_SAVED_SEARCH, search);
     yield throttle(1000, SEARCH, search);
     yield takeLatest(LOAD_MORE, loadMore);
-    yield takeLatest(RESET_SEARCH, resetSearch);
 };

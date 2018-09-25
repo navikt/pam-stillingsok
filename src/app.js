@@ -29,6 +29,7 @@ import StillingPage from './stilling/Stilling';
 import stillingReducer, { stillingSaga } from './stilling/stillingReducer';
 import './styles.less';
 import './variables.less';
+import { urlSaga } from './urlReducer';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -59,6 +60,7 @@ sagaMiddleware.run(favouritesSaga);
 sagaMiddleware.run(savedSearchesSaga);
 sagaMiddleware.run(savedSearchFormSaga);
 sagaMiddleware.run(savedSearchAlertStripeSaga);
+sagaMiddleware.run(urlSaga);
 
 ReactDOM.render(
     <Provider store={store}>

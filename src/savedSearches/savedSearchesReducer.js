@@ -1,8 +1,10 @@
-import { call, put, select, takeLatest } from 'redux-saga/effects';
+import { takeEvery, take, call, put, select, takeLatest } from 'redux-saga/effects';
 import { get, post, put as fetchPut, remove, SearchApiError } from '../api/api';
 import { AD_USER_API } from '../fasitProperties';
 import { USER_UUID_HACK } from '../favourites/favouritesReducer';
 import { RESET_SEARCH } from '../search/searchReducer';
+import { fromUrl } from '../search/url';
+import { RESTORE_STATE_FROM_URL, SEARCH_PARAMETERS_DEFINITION } from '../urlReducer';
 
 export const FETCH_SAVED_SEARCHES = 'FETCH_SAVED_SEARCHES';
 export const FETCH_SAVED_SEARCHES_BEGIN = 'FETCH_SAVED_SEARCHES_BEGIN';
@@ -27,6 +29,8 @@ export const UPDATE_SAVED_SEARCH_SUCCESS = 'UPDATE_SAVED_SEARCH_SUCCESS';
 export const UPDATE_SAVED_SEARCH_FAILURE = 'UPDATE_SAVED_SEARCH_FAILURE';
 
 export const SET_CURRENT_SAVED_SEARCH = 'SET_CURRENT_SAVED_SEARCH';
+export const RESTORE_STATE_FROM_SAVED_SEARCH = 'RESTORE_STATE_FROM_SAVED_SEARCH';
+export const RESTORE_CURRENT_SAVED_SEARCH = 'RESTORE_CURRENT_SAVED_SEARCH';
 
 const initialState = {
     savedSearches: [],
@@ -44,15 +48,15 @@ export default function savedSearchesReducer(state = initialState, action) {
         case FETCH_SAVED_SEARCHES_BEGIN:
             return {
                 ...state,
-                isFetching: true
+                isFetching: true,
+                shouldFetch: false
             };
         case FETCH_SAVED_SEARCHES_SUCCESS:
             return {
                 ...state,
                 savedSearches: action.response.content,
                 totalElements: action.response.totalElements,
-                isFetching: false,
-                shouldFetch: false
+                isFetching: false
             };
         case FETCH_SAVED_SEARCHES_FAILURE:
             return {
@@ -121,6 +125,7 @@ export default function savedSearchesReducer(state = initialState, action) {
                 isSaving: false
             };
         }
+        case RESTORE_CURRENT_SAVED_SEARCH:
         case SET_CURRENT_SAVED_SEARCH: {
             return {
                 ...state,
@@ -215,18 +220,36 @@ function* addSavedSearch() {
     }
 }
 
-function* setCurrentSavedSearch(action) {
-    try {
-        yield sessionStorage.setItem('url', action.savedSearch.searchQuery);
-    } catch (e) {
-        // Ignore session storage error
+function* setCurrentSavedSearch() {
+    const state = yield select();
+    yield put({
+        type: RESTORE_STATE_FROM_SAVED_SEARCH,
+        query: fromUrl(SEARCH_PARAMETERS_DEFINITION, state.savedSearches.currentSavedSearch.searchQuery)
+    });
+}
+
+function* restoreCurrentSavedSearch(action) {
+    let state = yield select();
+    if (action.query.saved) {
+        if (state.savedSearches.shouldFetch) {
+            yield put({ type: FETCH_SAVED_SEARCHES });
+            yield take(FETCH_SAVED_SEARCHES_SUCCESS);
+        }
+        state = yield select();
+        const found = state.savedSearches.savedSearches.find((savedSearch) => (
+            savedSearch.uuid === action.query.saved
+        ));
+        if (found) {
+             yield put({ type: RESTORE_CURRENT_SAVED_SEARCH, savedSearch: found });
+        }
     }
 }
 
 export const savedSearchesSaga = function* saga() {
-    yield takeLatest(FETCH_SAVED_SEARCHES, fetchSavedSearches);
+    yield takeEvery(FETCH_SAVED_SEARCHES, fetchSavedSearches);
     yield takeLatest(REMOVE_SAVED_SEARCH, removeSavedSearch);
     yield takeLatest(UPDATE_SAVED_SEARCH, updateSavedSearch);
     yield takeLatest(ADD_SAVED_SEARCH, addSavedSearch);
+    yield takeLatest(RESTORE_STATE_FROM_URL, restoreCurrentSavedSearch);
     yield takeLatest(SET_CURRENT_SAVED_SEARCH, setCurrentSavedSearch);
 };

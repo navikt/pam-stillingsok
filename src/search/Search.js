@@ -17,6 +17,7 @@ import ExpandSavedSearchButton from '../savedSearches/ExpandSavedSearchButton';
 import SavedSearchForm from '../savedSearches/form/SavedSearchForm';
 import { FETCH_SAVED_SEARCHES } from '../savedSearches/savedSearchesReducer';
 import SaveSearchButton from '../savedSearches/SaveSearchButton';
+import { RESTORE_STATE_FROM_URL_BEGIN } from '../urlReducer';
 import BackToTop from './backToTopButton/BackToTop';
 import SearchError from './error/SearchError';
 import Counties from './facets/counties/Counties';
@@ -29,7 +30,7 @@ import DelayedSpinner from './loading/DelayedSpinner';
 import RestoreScroll from './RestoreScroll';
 import './Search.less';
 import SearchBox from './searchBox/SearchBox';
-import { INITIAL_SEARCH, REMEMBER_SEARCH, RESET_SEARCH, SEARCH } from './searchReducer';
+import { INITIAL_SEARCH, RESET_SEARCH, SEARCH } from './searchReducer';
 import SearchResults from './searchResults/SearchResults';
 import SearchResultsCount from './searchResults/SearchResultsCount';
 import Sorting from './sorting/Sorting';
@@ -38,6 +39,7 @@ import ViewMode from './viewMode/ViewMode';
 class Search extends React.Component {
     constructor(props) {
         super(props);
+        this.props.restoreStateFromUrl(sessionStorage.getItem('url'));
         this.props.initialSearch();
     }
 
@@ -45,10 +47,6 @@ class Search extends React.Component {
         this.props.fetchFavourites();
         this.props.fetchSavedSearches();
         document.title = 'Ledige stillinger';
-    }
-
-    componentWillUnmount() {
-        this.props.rememberSearch();
     }
 
     onSearchFormSubmit = (e) => {
@@ -153,10 +151,10 @@ class Search extends React.Component {
 }
 
 Search.propTypes = {
+    restoreStateFromUrl: PropTypes.func.isRequired,
     initialSearch: PropTypes.func.isRequired,
     search: PropTypes.func.isRequired,
     resetSearch: PropTypes.func.isRequired,
-    rememberSearch: PropTypes.func.isRequired,
     fetchFavourites: PropTypes.func.isRequired,
     fetchSavedSearches: PropTypes.func.isRequired,
     hasError: PropTypes.bool.isRequired,
@@ -171,10 +169,10 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
+    restoreStateFromUrl: (url) => dispatch({ type: RESTORE_STATE_FROM_URL_BEGIN, url }),
     initialSearch: () => dispatch({ type: INITIAL_SEARCH }),
     search: () => dispatch({ type: SEARCH }),
     resetSearch: () => dispatch({ type: RESET_SEARCH }),
-    rememberSearch: () => dispatch({ type: REMEMBER_SEARCH }),
     fetchSavedSearches: () => dispatch({ type: FETCH_SAVED_SEARCHES }),
     fetchFavourites: () => dispatch({ type: FETCH_FAVOURITES })
 });

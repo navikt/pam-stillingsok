@@ -1,4 +1,5 @@
-import { SET_INITIAL_STATE } from '../searchReducer';
+import { RESTORE_STATE_FROM_URL } from '../../urlReducer';
+import { RESET_SEARCH } from '../searchReducer';
 
 export const SET_SORTING = 'SET_SORTING';
 
@@ -8,10 +9,15 @@ const initialState = {
 
 export default function sortingReducer(state = initialState, action) {
     switch (action.type) {
-        case SET_INITIAL_STATE:
+        case RESTORE_STATE_FROM_URL:
             return {
                 ...state,
                 sort: action.query.sort || ''
+            };
+        case RESET_SEARCH:
+            return {
+                ...state,
+                sort: ''
             };
         case SET_SORTING:
             return {
