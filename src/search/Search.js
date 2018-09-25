@@ -1,9 +1,9 @@
 import { Column, Container, Row } from 'nav-frontend-grid';
-import { Normaltekst, Sidetittel } from 'nav-frontend-typografi';
+import { Knapp } from 'nav-frontend-knapper';
+import { Sidetittel } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import Lenkeknapp from '../common/Lenkeknapp';
 import Disclaimer from '../discalimer/Disclaimer';
 import FavouriteAlertStripe from '../favourites/alertstripe/FavouriteAlertStripe';
 import FavouriteError from '../favourites/error/FavouriteError';
@@ -13,8 +13,8 @@ import SavedSearchAlertStripe from '../savedSearches/alertstripe/SavedSearchAler
 import CurrentSavedSearch from '../savedSearches/CurrentSavedSearch';
 import SavedSearchError from '../savedSearches/error/SavedSearchError';
 import SavedSearchesExpand from '../savedSearches/expand/SavedSearchesExpand';
-import SavedSearchForm from '../savedSearches/form/SavedSearchForm';
 import ExpandSavedSearchButton from '../savedSearches/ExpandSavedSearchButton';
+import SavedSearchForm from '../savedSearches/form/SavedSearchForm';
 import { FETCH_SAVED_SEARCHES } from '../savedSearches/savedSearchesReducer';
 import SaveSearchButton from '../savedSearches/SaveSearchButton';
 import BackToTop from './backToTopButton/BackToTop';
@@ -105,9 +105,9 @@ class Search extends React.Component {
                                         <div className="Search__main__left">
                                             <div className="Search__main__left__save-search">
                                                 <SaveSearchButton />
-                                                <Lenkeknapp onClick={this.onResetSearchClick}>
+                                                <Knapp mini onClick={this.onResetSearchClick}>
                                                     Nullstill kriterier
-                                                </Lenkeknapp>
+                                                </Knapp>
                                             </div>
                                             <div id="sok">
                                                 <form
