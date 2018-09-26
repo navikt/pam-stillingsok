@@ -7,12 +7,12 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Disclaimer from '../discalimer/Disclaimer';
 import DelayedSpinner from '../search/loading/DelayedSpinner';
-import ConfirmRemoveModal from './ConfirmRemoveModal';
-import Favourite from './list/Favourite';
 import FavouriteAlertStripe from './alertstripe/FavouriteAlertStripe';
+import RemoveFavouriteModal from './modal/RemoveFavouriteModal';
 import FavouriteError from './error/FavouriteError';
 import './Favourites.less';
 import { FETCH_FAVOURITES } from './favouritesReducer';
+import FavouriteList from './list/FavouriteList';
 import NoFavourites from './noresult/NoFavourites';
 
 class Favourites extends React.Component {
@@ -65,18 +65,14 @@ class Favourites extends React.Component {
                                     {this.props.favourites.length === 0 ? (
                                         <NoFavourites />
                                     ) : (
-                                        <div>
-                                            {this.props.favourites.map((favourite) => (
-                                                <Favourite key={favourite.uuid} favourite={favourite} />
-                                            ))}
-                                        </div>
+                                        <FavouriteList />
                                     )}
                                 </div>
                             )}
                         </Column>
                     </Row>
                 </Container>
-                <ConfirmRemoveModal />
+                <RemoveFavouriteModal />
             </div>
         );
     }

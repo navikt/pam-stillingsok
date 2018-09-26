@@ -1,16 +1,14 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { Undertittel, Normaltekst } from 'nav-frontend-typografi';
+import { Hovedknapp } from 'nav-frontend-knapper';
 import Modal from 'nav-frontend-modal';
-import { Flatknapp, Hovedknapp } from 'nav-frontend-knapper';
-import Lenkeknapp from '../common/Lenkeknapp';
-import {
-    HIDE_MODAL_REMOVE_FROM_FAVOURITES,
-    REMOVE_FROM_FAVOURITES
-} from './favouritesReducer';
+import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { connect } from 'react-redux';
+import Lenkeknapp from '../../common/Lenkeknapp';
+import { HIDE_MODAL_REMOVE_FROM_FAVOURITES, REMOVE_FROM_FAVOURITES } from '../favouritesReducer';
+import './RemoveFavouriteModal.less';
 
-class ConfirmRemoveModal extends React.Component {
+class RemoveFavouriteModal extends React.Component {
     onRemoveClick = () => {
         this.props.hideForm();
         this.props.removeFromFavourites(this.props.favouriteAboutToBeRemoved.uuid);
@@ -29,12 +27,12 @@ class ConfirmRemoveModal extends React.Component {
                     contentLabel="Slett favoritt"
                     appElement={document.getElementById('app')}
                 >
-                    <div className="Favourites__modal">
-                        <Undertittel className="Favourites__modal__title">Slett favoritt</Undertittel>
-                        <Normaltekst className="Favourites__modal__message">
+                    <div className="RemoveFavouriteModal">
+                        <Undertittel className="RemoveFavouriteModal__title">Slett favoritt</Undertittel>
+                        <Normaltekst className="RemoveFavouriteModal__message">
                             Er du sikker på at du vil slette &#34;{this.props.favouriteAboutToBeRemoved.favouriteAd.title}&#34;?
                         </Normaltekst>
-                        <div className="Favourites__modal__buttons">
+                        <div className="RemoveFavouriteModal__buttons">
                             <Hovedknapp onClick={this.onRemoveClick}>Slett</Hovedknapp>
                             <Lenkeknapp onClick={this.closeModal}>Tilbake til favoritter</Lenkeknapp>
                         </div>
@@ -46,11 +44,11 @@ class ConfirmRemoveModal extends React.Component {
     }
 }
 
-ConfirmRemoveModal.defaultProps = {
+RemoveFavouriteModal.defaultProps = {
     favouriteAboutToBeRemoved: undefined
 };
 
-ConfirmRemoveModal.propTypes = {
+RemoveFavouriteModal.propTypes = {
     removeFromFavourites: PropTypes.func.isRequired,
     hideForm: PropTypes.func.isRequired,
     confirmationVisible: PropTypes.bool.isRequired,
@@ -72,4 +70,4 @@ const mapDispatchToProps = (dispatch) => ({
     hideForm: () => dispatch({ type: HIDE_MODAL_REMOVE_FROM_FAVOURITES })
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ConfirmRemoveModal);
+export default connect(mapStateToProps, mapDispatchToProps)(RemoveFavouriteModal);

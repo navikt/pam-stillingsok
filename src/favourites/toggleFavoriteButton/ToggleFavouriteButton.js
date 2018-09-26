@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { ADD_TO_FAVOURITES, REMOVE_FROM_FAVOURITES } from '../favouritesReducer';
-import './FavouriteButton.less';
+import './ToggleFavouriteButton.less';
 import Star from './Star';
 
-class FavouriteButton extends React.Component {
+class ToggleFavouriteButton extends React.Component {
     onAddToFavouritesClick = () => {
         this.props.addToFavourites(this.props.uuid);
     };
@@ -29,13 +29,13 @@ class FavouriteButton extends React.Component {
                 <button
                     onClick={this.onRemoveFromFavouritesClick}
                     aria-label="Fjern favoritt"
-                    className={className ? `FavouriteButton ${className}` : 'FavouriteButton'}
+                    className={className ? `ToggleFavouriteButton ${className}` : 'ToggleFavouriteButton'}
                 >
-                    <span className="FavouriteButton__star">
+                    <span className="ToggleFavouriteButton__star">
                         <Star fill="#06893A" stroke="#06893A" />
                     </span>
                     {showLabel && (
-                        <span className="FavouriteButton__label typo-normal">Fjern favoritt</span>
+                        <span className="ToggleFavouriteButton__label typo-normal">Fjern favoritt</span>
                     )}
                 </button>
             );
@@ -44,25 +44,25 @@ class FavouriteButton extends React.Component {
             <button
                 onClick={this.onAddToFavouritesClick}
                 aria-label="Lagre favoritt"
-                className={className ? `FavouriteButton ${className}` : 'FavouriteButton'}
+                className={className ? `ToggleFavouriteButton ${className}` : 'ToggleFavouriteButton'}
             >
-                <span className="FavouriteButton__star">
+                <span className="ToggleFavouriteButton__star">
                     <Star fill="none" stroke="#3E3832" />
                 </span>
                 {showLabel && (
-                    <span className="FavouriteButton__label typo-normal">Lagre favoritt</span>
+                    <span className="ToggleFavouriteButton__label typo-normal">Lagre favoritt</span>
                 )}
             </button>
         );
     }
 }
 
-FavouriteButton.defaultProps = {
+ToggleFavouriteButton.defaultProps = {
     className: undefined,
     showLabel: false
 };
 
-FavouriteButton.propTypes = {
+ToggleFavouriteButton.propTypes = {
     isFetchingFavourites: PropTypes.bool.isRequired,
     className: PropTypes.string,
     addToFavourites: PropTypes.func.isRequired,
@@ -82,4 +82,4 @@ const mapDispatchToProps = (dispatch) => ({
     removeFromFavourites: (uuid) => dispatch({ type: REMOVE_FROM_FAVOURITES, uuid })
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(FavouriteButton);
+export default connect(mapStateToProps, mapDispatchToProps)(ToggleFavouriteButton);

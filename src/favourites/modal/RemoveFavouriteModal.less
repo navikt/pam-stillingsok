@@ -1,0 +1,33 @@
+@import "../../variables";
+
+.RemoveFavouriteModal {
+    padding: 1rem;
+}
+
+.RemoveFavouriteModal__title {
+    margin-bottom: 1rem;
+}
+
+.RemoveFavouriteModal__message {
+    margin-bottom: 1.5rem;
+}
+
+@media (max-width: @screen-sm-max) {
+    .RemoveFavouriteModal__buttons .knapp {
+        width: 100%;
+    }
+
+    .RemoveFavouriteModal__buttons .knapp:not(:last-child) {
+        margin-bottom: 1rem;
+    }
+}
+
+@media (min-width: @screen-md-min) {
+    .RemoveFavouriteModal {
+        min-width: 30rem;
+    }
+
+    .RemoveFavouriteModal__buttons .knapp:not(:last-child) {
+        margin-right: 2rem;
+    }
+}

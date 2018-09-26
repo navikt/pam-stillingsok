@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-function FavouritesButton({ isFetching, totalElements }) {
+function ShowFavouriteListLink({ isFetching, totalElements }) {
     return (
         <Link className="knapp knapp--mini" to="/favoritter">
             Favoritter {!isFetching ? ` (${totalElements})` : ''}
@@ -11,7 +11,7 @@ function FavouritesButton({ isFetching, totalElements }) {
     );
 }
 
-FavouritesButton.propTypes = {
+ShowFavouriteListLink.propTypes = {
     isFetching: PropTypes.bool.isRequired,
     totalElements: PropTypes.number.isRequired
 };
@@ -21,4 +21,4 @@ const mapStateToProps = (state) => ({
     totalElements: state.favourites.totalElements
 });
 
-export default connect(mapStateToProps)(FavouritesButton);
+export default connect(mapStateToProps)(ShowFavouriteListLink);

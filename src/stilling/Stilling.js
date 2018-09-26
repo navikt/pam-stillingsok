@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Disclaimer from '../discalimer/Disclaimer';
 import FavouriteAlertStripe from '../favourites/alertstripe/FavouriteAlertStripe';
-import FavouriteButton from '../favourites/star/FavouriteButton';
+import ToggleFavouriteButton from '../favourites/toggleFavoriteButton/ToggleFavouriteButton';
 import FavouriteError from '../favourites/error/FavouriteError';
 import { FETCH_FAVOURITES } from '../favourites/favouritesReducer';
 import SearchError from '../search/error/SearchError';
@@ -107,13 +107,13 @@ class Stilling extends React.Component {
                                         <div className="Stilling__header__favourite">
                                             {isFavourite ? (
                                                 <div className="Stilling__header__favourite__flex">
-                                                    <FavouriteButton uuid={stilling._id} />
+                                                    <ToggleFavouriteButton uuid={stilling._id} />
                                                     <Normaltekst>
                                                         <b>Lagret i</b> <Link to="/favoritter" className="lenke">favoritter</Link>
                                                     </Normaltekst>
                                                 </div>
                                             ) : (
-                                                <FavouriteButton uuid={stilling._id} showLabel />
+                                                <ToggleFavouriteButton uuid={stilling._id} showLabel />
                                             )}
                                         </div>
                                     </Column>

@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import Disclaimer from '../discalimer/Disclaimer';
 import FavouriteAlertStripe from '../favourites/alertstripe/FavouriteAlertStripe';
 import FavouriteError from '../favourites/error/FavouriteError';
-import FavouritesButton from '../favourites/FavouritesButton';
+import ShowFavouriteListLink from '../favourites/ShowFavouriteListLink';
 import { FETCH_FAVOURITES } from '../favourites/favouritesReducer';
 import SavedSearchAlertStripe from '../savedSearches/alertstripe/SavedSearchAlertStripe';
 import CurrentSavedSearch from '../savedSearches/CurrentSavedSearch';
@@ -75,7 +75,7 @@ class Search extends React.Component {
                                 </Column>
                                 <Column xs="12" md="6">
                                     <div className="Search__header__right">
-                                        <FavouritesButton />
+                                        <ShowFavouriteListLink />
                                         <ExpandSavedSearchButton />
                                     </div>
                                 </Column>

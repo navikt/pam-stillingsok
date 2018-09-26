@@ -8,28 +8,21 @@ export function isValidISOString(isoString) {
 }
 
 export function formatISOString(isoString, format = 'MMMM YYYY') {
-    if (isValidISOString(isoString)) {
-        const dt = isoString.split('-');
-        const year = dt[0];
-        const month = dt[1];
-        const monthName = months[month - 1];
-        const dayAndTime = dt[2].split('T');
-        const day = dayAndTime[0];
-        const dayWithoutZero = day.substring(0, 1) === '0' ? day.substring(1) : day;
-        const time = dayAndTime[1].split(':');
-        const hours = time[0];
-        const mins = time[1];
-        if (format === 'D. MMMM YYYY') {
-            return `${dayWithoutZero}.${dt[1]}.${dt[0]}`;
-        } else if (format === 'DD.MM.YYYY') {
-            return `${day}.${month}.${year}`;
-        } else if (format === 'MMMM YYYY') {
-            return `${months[dt[1] - 1]} ${dt[0]}`;
-        } else if (format === 'DD.MMM') {
-            return `${day}. ${months[dt[1] - 1].substring(0, 3)}.`;
-        } else if (format === 'D. MMM YYYY HH:MM') {
-            return `${dayWithoutZero}. ${monthName.substring(0, 3)} ${year} ${hours}:${mins}`;
+    try {
+        if (isValidISOString(isoString)) {
+            const dt = isoString.split('-');
+            if (format === 'D. MMMM YYYY') {
+                const day = dt[2].split('T')[0];
+                return `${day}.${dt[1]}.${dt[0]}`;
+            } else if (format === 'MMMM YYYY') {
+                return `${months[dt[1] - 1]} ${dt[0]}`;
+            } else if (format === 'DD.MMM') {
+                const day = dt[2].split('T')[0];
+                return `${day}. ${months[dt[1] - 1].substring(0, 3)}.`;
+            }
         }
+    } catch (error) {
+        return isoString;
     }
     return isoString;
 }
@@ -37,9 +30,9 @@ export function formatISOString(isoString, format = 'MMMM YYYY') {
 export function isValidUrl(input) {
     const pattern = new RegExp('^(https?:\\/\\/)' + // protocol (requires http://or https://)
         '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,})' + // domain name
-        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
-        '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
-        '(\\#[-a-z\\d_]*)?$','i'); // fragment locater
+        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+        '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+        '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locater
 
     if (pattern.test(input)) {
         return true;

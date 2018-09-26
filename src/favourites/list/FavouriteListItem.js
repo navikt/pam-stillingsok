@@ -6,7 +6,7 @@ import Lenkeknapp from '../../common/Lenkeknapp';
 import SearchResultsItemDetails from '../../search/searchResults/SearchResultsItemDetails';
 import { SHOW_MODAL_REMOVE_FROM_FAVOURITES } from '../favouritesReducer';
 
-class Favourite extends React.Component {
+class FavouriteListItem extends React.Component {
     onRemoveClick = () => {
         this.props.showModal(this.props.favourite.uuid);
     };
@@ -26,14 +26,14 @@ class Favourite extends React.Component {
     render() {
         const { favourite } = this.props;
         return (
-            <div className="Favourite">
-                <div className="Favourite__top">
+            <div className="FavouriteListItem">
+                <div className="FavouriteListItem__top">
                     {favourite.favouriteAd.status !== 'ACTIVE' && (
                         <EtikettFokus>Utløpt</EtikettFokus>
                     )}
                 </div>
                 <SearchResultsItemDetails stilling={this.toAd(favourite.favouriteAd)} />
-                <div className="Favourite__buttons">
+                <div className="FavouriteListItem__buttons">
                     <Lenkeknapp onClick={this.onRemoveClick}>Slett</Lenkeknapp>
                 </div>
             </div>
@@ -41,7 +41,7 @@ class Favourite extends React.Component {
     }
 }
 
-Favourite.propTypes = {
+FavouriteListItem.propTypes = {
     showModal: PropTypes.func.isRequired,
     favourite: PropTypes.shape({
         uuid: PropTypes.string,
@@ -57,4 +57,4 @@ const mapDispatchToProps = (dispatch) => ({
     showModal: (uuid) => dispatch({ type: SHOW_MODAL_REMOVE_FROM_FAVOURITES, uuid })
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Favourite);
+export default connect(mapStateToProps, mapDispatchToProps)(FavouriteListItem);
