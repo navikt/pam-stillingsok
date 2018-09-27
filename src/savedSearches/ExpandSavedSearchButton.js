@@ -16,7 +16,12 @@ class ExpandSavedSearchButton extends React.Component {
 
     render() {
         return (
-            <Flatknapp mini to="/lagrede-sok" onClick={this.onClick}>
+            <Flatknapp
+                mini
+                to="/lagrede-sok"
+                onClick={this.onClick}
+                aria-expanded={this.props.isSavedSearchesExpanded}
+            >
                 <Chevron
                     className="SavedSearchExpandButton__chevron"
                     type={this.props.isSavedSearchesExpanded ? 'opp' : 'ned'}
