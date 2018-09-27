@@ -15,7 +15,7 @@ class SaveSearchButton extends React.Component {
 
     render() {
         return (
-            <Knapp mini onClick={this.onClick}>Lagre søk</Knapp>
+            <Knapp mini className="SaveSearchButton" onClick={this.onClick}>Lagre søk</Knapp>
         );
     }
 }

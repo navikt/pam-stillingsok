@@ -16,7 +16,7 @@ function SearchResults({
     const hasMore = page + 1 < totalPages;
     const count = ((page * PAGE_SIZE) + PAGE_SIZE) > total ? total : (page * PAGE_SIZE) + PAGE_SIZE;
     return (
-        <div role="region" id="treff" className="SearchResults">
+        <div role="region" className="SearchResults">
             {mode !== 'compact' && stillinger && stillinger.map((stilling) => (
                 <SearchResultItem
                     key={stilling.uuid}

@@ -1,5 +1,5 @@
 import Chevron from 'nav-frontend-chevron';
-import { Knapp } from 'nav-frontend-knapper';
+import { Flatknapp } from 'nav-frontend-knapper';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -16,13 +16,13 @@ class ExpandSavedSearchButton extends React.Component {
 
     render() {
         return (
-            <Knapp mini to="/lagrede-sok" onClick={this.onClick}>
-                Lagrede søk {!this.props.isFetching ? ` (${this.props.savedSearches.length})` : ''}
+            <Flatknapp mini to="/lagrede-sok" onClick={this.onClick}>
                 <Chevron
                     className="SavedSearchExpandButton__chevron"
                     type={this.props.isSavedSearchesExpanded ? 'opp' : 'ned'}
                 />
-            </Knapp>
+                Lagrede søk {!this.props.isFetching ? ` (${this.props.savedSearches.length})` : ''}
+            </Flatknapp>
         );
     }
 }

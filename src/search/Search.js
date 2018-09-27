@@ -1,5 +1,5 @@
 import { Column, Container, Row } from 'nav-frontend-grid';
-import { Knapp } from 'nav-frontend-knapper';
+import { Flatknapp } from 'nav-frontend-knapper';
 import { Sidetittel } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -7,8 +7,8 @@ import { connect } from 'react-redux';
 import Disclaimer from '../discalimer/Disclaimer';
 import FavouriteAlertStripe from '../favourites/alertstripe/FavouriteAlertStripe';
 import FavouriteError from '../favourites/error/FavouriteError';
-import ShowFavouriteListLink from '../favourites/ShowFavouriteListLink';
 import { FETCH_FAVOURITES } from '../favourites/favouritesReducer';
+import ShowFavouriteListLink from '../favourites/ShowFavouriteListLink';
 import SavedSearchAlertStripe from '../savedSearches/alertstripe/SavedSearchAlertStripe';
 import CurrentSavedSearch from '../savedSearches/CurrentSavedSearch';
 import SavedSearchError from '../savedSearches/error/SavedSearchError';
@@ -103,9 +103,9 @@ class Search extends React.Component {
                                         <div className="Search__main__left">
                                             <div className="Search__main__left__save-search">
                                                 <SaveSearchButton />
-                                                <Knapp mini onClick={this.onResetSearchClick}>
+                                                <Flatknapp mini onClick={this.onResetSearchClick}>
                                                     Nullstill kriterier
-                                                </Knapp>
+                                                </Flatknapp>
                                             </div>
                                             <div id="sok">
                                                 <form
@@ -126,16 +126,18 @@ class Search extends React.Component {
                                         </div>
                                     </Column>
                                     <Column xs="12" md="8">
-                                        <div className="Search__main__center">
+                                        <div id="treff" className="Search__main__center">
                                             <div className="Search__main__center__header">
-                                                <SearchResultsCount />
-                                                <CurrentSavedSearch />
-                                                <ViewMode />
-                                                <Sorting />
+                                                <div className="Search__main__center__header__left">
+                                                    <SearchResultsCount />
+                                                    <CurrentSavedSearch />
+                                                </div>
+                                                <div className="Search__main__center__header__right">
+                                                    <ViewMode />
+                                                    <Sorting />
+                                                </div>
                                             </div>
-                                            <div id="sokeresultat">
-                                                <SearchResults />
-                                            </div>
+                                            <SearchResults />
                                         </div>
                                     </Column>
                                 </Row>

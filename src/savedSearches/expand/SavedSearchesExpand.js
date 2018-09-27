@@ -1,3 +1,4 @@
+import { Container } from 'nav-frontend-grid';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -11,33 +12,35 @@ function SavedSearchesExpand({ isFetching, savedSearches, isSavedSearchesExpande
     if (isSavedSearchesExpanded) {
         return (
             <div className="SavedSearchesExpand">
-                {isFetching ? (
-                    <div className="SavedSearchesExpand__spinner">
-                        <DelayedSpinner />
-                    </div>
-                ) : (
-                    <div>
-                        {savedSearches.length === 0 ? (
-                            <NoSavedSearches />
-                        ) : (
-                            <div>
-                                <div className="SavedSearchesExpand__columns">
-                                    {savedSearches.map((savedSearch) => (
-                                        <SavedSearchesExpandItem
-                                            key={savedSearch.uuid}
-                                            savedSearch={savedSearch}
-                                        />
-                                    ))}
-                                </div>
-                                <div className="SavedSearchesExpand__link-to-saved-searches">
-                                    <Link to="/lagrede-sok" className="lenke typo-element">
+                <Container>
+                    {isFetching ? (
+                        <div className="SavedSearchesExpand__spinner">
+                            <DelayedSpinner />
+                        </div>
+                    ) : (
+                        <div>
+                            {savedSearches.length === 0 ? (
+                                <NoSavedSearches />
+                            ) : (
+                                <div>
+                                    <div className="SavedSearchesExpand__columns">
+                                        {savedSearches.map((savedSearch) => (
+                                            <SavedSearchesExpandItem
+                                                key={savedSearch.uuid}
+                                                savedSearch={savedSearch}
+                                            />
+                                        ))}
+                                    </div>
+                                    <div className="SavedSearchesExpand__link-to-saved-searches">
+                                        <Link to="/lagrede-sok" className="lenke typo-element">
                                         Endre lagrede søk og varsler
-                                    </Link>
+                                        </Link>
+                                    </div>
                                 </div>
-                            </div>
-                        )}
-                    </div>
-                )}
+                            )}
+                        </div>
+                    )}
+                </Container>
             </div>
         );
     }

@@ -28,46 +28,59 @@
   }
 }
 
-.Search__main__left__save-search {
-  min-height: 3.5rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1rem;
-}
-
-
 @media (min-width: @screen-md-min) {
+  .Search__main__left__save-search,
   .Search__main__center__header {
-    min-height: 3.5rem;
+    min-height: 4.5rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 1rem;
   }
 }
 
-@media (max-width: @screen-xs-max) {
+@media (max-width: @screen-sm-max) {
   .Search__header__green {
     padding: 1rem 0 1rem 0.5rem;
   }
+
+  .Search__main__left__save-search {
+    margin-bottom: 1rem;
+  }
+
+  .Search__main__center__header {
+    padding-top: 2rem;
+  }
+}
+
+.Search__main__center__header__left {
+  flex: 1;
+}
+
+.Search__main__center__header__right {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .Search__header__right {
   margin-top: 1rem;
 
-  .knapp:not(:last-child) {
+  .lenke:not(:last-child) {
     margin-right: 1rem;
   }
 }
 
+.SavedSearchExpandButton__chevron {
+  margin-right: 0.25rem;
+}
+
 @media (min-width: @screen-md-min) {
   .Search__header__right {
-    display: flex;
-    justify-content: flex-end;
+    text-align: right;
   }
 }
 
-.SavedSearchExpandButton__chevron {
-  margin-left: 0.25rem;
+.SaveSearchButton {
+  margin-right: 1rem;
 }

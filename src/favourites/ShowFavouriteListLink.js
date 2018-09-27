@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 function ShowFavouriteListLink({ isFetching, totalElements }) {
     return (
-        <Link className="knapp knapp--mini" to="/favoritter">
+        <Link className="lenke typo-normal" to="/favoritter">
             Favoritter {!isFetching ? ` (${totalElements})` : ''}
         </Link>
     );
