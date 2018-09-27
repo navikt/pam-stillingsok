@@ -3,7 +3,7 @@ import React from 'react';
 
 export default function Star({ fill, stroke }) {
     return (
-        <svg width="24px" height="23px" viewBox="0 0 24 23" version="1.1" xmlns="http://www.w3.org/2000/svg">
+        <svg width="20px" height="20px" viewBox="0 0 24 23" version="1.1" xmlns="http://www.w3.org/2000/svg">
             <title>Favoritt</title>
             <desc>Created with Sketch.</desc>
             <defs />

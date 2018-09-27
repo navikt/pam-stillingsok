@@ -105,16 +105,7 @@ class Stilling extends React.Component {
                                 <Row>
                                     <Column xs="12">
                                         <div className="Stilling__header__favourite">
-                                            {isFavourite ? (
-                                                <div className="Stilling__header__favourite__flex">
-                                                    <ToggleFavouriteButton uuid={stilling._id} />
-                                                    <Normaltekst>
-                                                        <b>Lagret i</b> <Link to="/favoritter" className="lenke">favoritter</Link>
-                                                    </Normaltekst>
-                                                </div>
-                                            ) : (
-                                                <ToggleFavouriteButton uuid={stilling._id} showLabel />
-                                            )}
+                                            <ToggleFavouriteButton uuid={stilling._id} showLabel />
                                         </div>
                                     </Column>
                                 </Row>
