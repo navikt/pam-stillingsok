@@ -1,4 +1,4 @@
-import { Normaltekst } from 'nav-frontend-typografi';
+import { Undertekst } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -7,7 +7,7 @@ function CurrentSavedSearch({ currentSavedSearch }) {
     if (currentSavedSearch) {
         return (
             <div>
-                <Normaltekst>Lagret søk: {currentSavedSearch.title}</Normaltekst>
+                <Undertekst><b>Lagret søk:</b> {currentSavedSearch.title}</Undertekst>
             </div>
         );
     }
