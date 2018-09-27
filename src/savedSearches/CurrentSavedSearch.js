@@ -7,7 +7,7 @@ function CurrentSavedSearch({ currentSavedSearch }) {
     if (currentSavedSearch) {
         return (
             <div>
-                <Normaltekst>{currentSavedSearch.title}</Normaltekst>
+                <Normaltekst>Lagret søk: {currentSavedSearch.title}</Normaltekst>
             </div>
         );
     }
