@@ -30,7 +30,7 @@ export default function SearchResultsItemCompact({ stilling, urlQuery }) {
             </Normaltekst>
             {stilling.updated && (
                 <Undertekst className="SearchResultItem__updated">
-                    {formatISOString(stilling.updated, 'DD.MMM')}
+                    {formatISOString(stilling.updated, 'DD.MM.YYYY')}
                 </Undertekst>
             )}
             <ToggleFavouriteButton uuid={stilling.uuid} />

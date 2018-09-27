@@ -25,7 +25,7 @@ export default function HowToApply({ source, properties }) {
                         <dt key="dt">Søknadsfrist:</dt>,
                         <dd key="dd">
                             {isValidISOString(properties.applicationdue) ?
-                                formatISOString(properties.applicationdue, 'D. MMMM YYYY') :
+                                formatISOString(properties.applicationdue, 'DD.MM.YYYY') :
                                 properties.applicationdue}
                         </dd>
                     ]}

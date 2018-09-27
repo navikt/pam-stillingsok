@@ -27,7 +27,7 @@ export default function SearchResultsItemDetails({ stilling }) {
             <Column xs="12" md="8">
                 {stilling.updated ? (
                     <Undertekst className="SearchResultsItemDetails__updated">
-                        Registrert: {formatISOString(stilling.updated, 'D. MMMM YYYY')}{' - '}
+                        Registrert: {formatISOString(stilling.updated, 'DD.MM.YYYY')}{' - '}
                         Søknadsfrist: {frist}
                     </Undertekst>
                 ) : (
