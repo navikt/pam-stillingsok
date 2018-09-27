@@ -1,4 +1,4 @@
-import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
+import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -32,8 +32,8 @@ class SavedSearchListItem extends React.Component {
             <div className="SavedSearchListItem">
                 <div className="SavedSearchListItem__top">
                     <div className="SavedSearchListItem__top__tittle">
-                        <Link className="lenke typo-element" to="/" onClick={this.onTitleClick}>
-                            {savedSearch.title}
+                        <Link className="lenke" to="/" onClick={this.onTitleClick}>
+                            <Element tag="h3">{savedSearch.title}</Element>
                         </Link>
                     </div>
                     <div className="SavedSearchListItem__top__buttons">
