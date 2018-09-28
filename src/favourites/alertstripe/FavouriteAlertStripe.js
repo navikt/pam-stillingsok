@@ -9,7 +9,7 @@ import SnapToTop from '../../common/SnapToTop';
 function FavouriteAlertStripe({ showAlertStripe, alertStripeMode }) {
     if (showAlertStripe && (alertStripeMode === 'added')) {
         return (
-            <SnapToTop>
+            <SnapToTop inlineClassName="FavouriteAlertStripeSnapToTop">
                 <AlertStripe type="suksess" solid className="FavouriteAlertStripe">
                     Stillingsannonsen er lagret i <Link className="lenke" to="/favoritter">favoritter</Link>
                 </AlertStripe>
@@ -17,7 +17,7 @@ function FavouriteAlertStripe({ showAlertStripe, alertStripeMode }) {
         );
     } else if (showAlertStripe && alertStripeMode === 'removed') {
         return (
-            <SnapToTop>
+            <SnapToTop inlineClassName="FavouriteAlertStripeSnapToTop">
                 <AlertStripe type="suksess" solid className="FavouriteAlertStripe">
                     Favoritten er slettet
                 </AlertStripe>

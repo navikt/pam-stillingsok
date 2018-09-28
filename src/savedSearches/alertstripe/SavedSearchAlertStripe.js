@@ -12,7 +12,7 @@ function SavedSearchAlertStripe({
 }) {
     if (showAlertStripe && (alertStripeMode === SavedSearchAlertStripeMode.ADDED)) {
         return (
-            <SnapToTop>
+            <SnapToTop inlineClassName="SavedSearchAlertStripeSnapToTop">
                 <AlertStripe type="suksess" solid className="SavedSearchAlertStripe">
                     Søket er lagret i <Link className="lenke" to="/lagrede-sok">Lagrede søk</Link>
                 </AlertStripe>
@@ -20,7 +20,7 @@ function SavedSearchAlertStripe({
         );
     } else if (showAlertStripe && alertStripeMode === SavedSearchAlertStripeMode.REMOVED) {
         return (
-            <SnapToTop>
+            <SnapToTop inlineClassName="SavedSearchAlertStripeSnapToTop">
                 <AlertStripe type="suksess" solid className="SavedSearchAlertStripe">
                     Lagret søk: {savedSearchAboutToBeRemoved.title} er slettet
                 </AlertStripe>
@@ -28,7 +28,7 @@ function SavedSearchAlertStripe({
         );
     } else if (showAlertStripe && alertStripeMode === SavedSearchAlertStripeMode.UPDATED) {
         return (
-            <SnapToTop>
+            <SnapToTop inlineClassName="SavedSearchAlertStripeSnapToTop">
                 <AlertStripe type="suksess" solid className="SavedSearchAlertStripe">
                     Lagret søk: {formData.title} er oppdatert
                 </AlertStripe>
