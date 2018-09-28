@@ -1,4 +1,5 @@
 import { Container } from 'nav-frontend-grid';
+import { Undertittel } from 'nav-frontend-typografi';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -23,17 +24,15 @@ function SavedSearchesExpand({ isFetching, savedSearches, isSavedSearchesExpande
                                 <NoSavedSearches />
                             ) : (
                                 <div>
-                                    <div className="SavedSearchesExpand__columns">
+                                    <Undertittel>Lagrede søk</Undertittel>
+                                    <ul className={savedSearches.length > 4 ? 'SavedSearchesExpand__columns' : ''}>
                                         {savedSearches.map((savedSearch) => (
-                                            <SavedSearchesExpandItem
-                                                key={savedSearch.uuid}
-                                                savedSearch={savedSearch}
-                                            />
+                                            <SavedSearchesExpandItem key={savedSearch.uuid} savedSearch={savedSearch} />
                                         ))}
-                                    </div>
+                                    </ul>
                                     <div className="SavedSearchesExpand__link-to-saved-searches">
                                         <Link to="/lagrede-sok" className="lenke typo-element">
-                                        Endre lagrede søk og varsler
+                                            Endre lagrede søk og varsler
                                         </Link>
                                     </div>
                                 </div>

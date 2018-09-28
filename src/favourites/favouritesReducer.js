@@ -167,7 +167,7 @@ function* addToFavourites(action) {
     try {
         let favourite;
         const state = yield select();
-        const foundInSearchResult = state.search.searchResult.stillinger &&
+        const foundInSearchResult = state.search.searchResult && state.search.searchResult.stillinger &&
             state.search.searchResult.stillinger.find((s) => s.uuid === action.uuid);
 
         if (foundInSearchResult) {
