@@ -9,7 +9,7 @@ import { STILLING } from '../../fasitProperties';
 
 export default function SearchResultsItemDetails({ stilling }) {
     let frist;
-    if (stilling.properties.applicationdue !== undefined) {
+    if (stilling.properties.applicationdue && stilling.properties.applicationdue !== undefined) {
         frist = stilling.properties.applicationdue;
     } else {
         frist = 'Ikke oppgitt';
