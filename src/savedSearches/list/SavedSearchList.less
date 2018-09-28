@@ -2,43 +2,46 @@
 
 .SavedSearchListItem {
     background-color: #fff;
-    padding: 1rem 1.25rem 1.25rem;
+    padding: 1.25rem;
     display: block;
     border: 1px solid @border-gray;
     margin-bottom: 1rem;
 }
 
+.SavedSearchListItem__top {
+    margin-bottom: 1rem;
+}
+
 @media (min-width: @screen-md-min) {
-    .SavedSearchListItem__top {
+    .SavedSearchListItem__top_flex {
+        margin-bottom: 1rem;
         display: flex;
         justify-content: space-between;
-        align-items: baseline;
-        border-bottom: 1px solid @border-gray;
-        padding-bottom: 0.75rem;
-        margin-bottom: 0.75rem;
     }
 }
 
 @media (max-width: @screen-sm-max) {
-    .SavedSearchListItem__top__buttons {
-        margin-top: 0.5rem;
+    .SavedSearchListItem__title {
+        margin-bottom: 0.75rem;
     }
-}
 
-.SavedSearchListItem__top__buttons {
-    white-space: nowrap;
-}
-
-.SavedSearchListItem__top__buttons .Lenkeknapp:not(:last-child) {
-    margin-right: 2rem;
+    .SavedSearchListItem__created {
+        margin-bottom: 0.75rem;
+    }
 }
 
 .SavedSearchListItem__bottom {
     display: flex;
-    justify-content: space-between;
-    align-items: baseline;
+    justify-content: flex-end;
+    border-top: 1px solid @border-gray;
+    padding-top: 1rem;
 }
 
-.SavedSearchListItem__bottom__created {
+.SavedSearchListItem__bottom .Lenkeknapp:not(:last-child) {
+    margin-right: 1rem;
+}
+
+.SavedSearchListItem__created {
+    white-space: nowrap;
     color: #999;
 }

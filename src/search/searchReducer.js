@@ -1,6 +1,6 @@
 import { call, put, select, takeLatest, throttle } from 'redux-saga/effects';
 import { fetchSearch, SearchApiError } from '../api/api';
-import { SET_CURRENT_SAVED_SEARCH } from '../savedSearches/savedSearchesReducer';
+import { RESTORE_STATE_FROM_SAVED_SEARCH, SET_CURRENT_SAVED_SEARCH } from '../savedSearches/savedSearchesReducer';
 import { RESTORE_STATE_FROM_URL } from '../urlReducer';
 
 export const FETCH_INITIAL_FACETS_SUCCESS = 'FETCH_INITIAL_FACETS_SUCCESS';
@@ -19,13 +19,10 @@ export const LOAD_MORE_SUCCESS = 'LOAD_MORE_SUCCESS';
 export const PAGE_SIZE = 50;
 
 const initialState = {
-    isAtLeastOneSearchDone: false,
     initialSearchDone: false,
     isSearching: true,
     isLoadingMore: false,
-    searchResult: {
-        total: 0
-    },
+    searchResult: undefined,
     hasError: false,
     from: 0,
     to: PAGE_SIZE,
@@ -57,6 +54,12 @@ export default function searchReducer(state = initialState, action) {
                 to: PAGE_SIZE,
                 page: 0
             };
+        case RESTORE_STATE_FROM_SAVED_SEARCH:
+        case RESET_SEARCH:
+            return {
+                ...state,
+                searchResult: undefined
+            };
         case SEARCH_BEGIN:
             return {
                 ...state,
@@ -71,7 +74,6 @@ export default function searchReducer(state = initialState, action) {
             return {
                 ...state,
                 initialSearchDone: true,
-                isAtLeastOneSearchDone: true,
                 searchResult: {
                     total: action.response.total,
                     stillinger: action.response.stillinger

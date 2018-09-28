@@ -1,8 +1,8 @@
 import { EtikettFokus } from 'nav-frontend-etiketter';
+import { Flatknapp } from 'nav-frontend-knapper';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import Lenkeknapp from '../../common/Lenkeknapp';
 import SearchResultsItemDetails from '../../search/searchResults/SearchResultsItemDetails';
 import { SHOW_MODAL_REMOVE_FROM_FAVOURITES } from '../favouritesReducer';
 
@@ -28,13 +28,15 @@ class FavouriteListItem extends React.Component {
         return (
             <div className="FavouriteListItem">
                 <div className="FavouriteListItem__top">
-                    {favourite.favouriteAd.status !== 'ACTIVE' && (
-                        <EtikettFokus>Utløpt</EtikettFokus>
+                    {favourite.favouriteAd.status === 'INACTIVE' && (
+                        <div className="FavouriteListItem__etikett-wrapper">
+                            <EtikettFokus>Inaktiv</EtikettFokus>
+                        </div>
                     )}
+                    <SearchResultsItemDetails stilling={this.toAd(favourite.favouriteAd)} />
                 </div>
-                <SearchResultsItemDetails stilling={this.toAd(favourite.favouriteAd)} />
-                <div className="FavouriteListItem__buttons">
-                    <Lenkeknapp onClick={this.onRemoveClick}>Slett</Lenkeknapp>
+                <div className="FavouriteListItem__bottom">
+                    <Flatknapp mini onClick={this.onRemoveClick}>Slett</Flatknapp>
                 </div>
             </div>
         );
