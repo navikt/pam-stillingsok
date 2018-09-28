@@ -29,9 +29,11 @@ class SavedSearchListItem extends React.Component {
                 <div className="SavedSearchListItem__top">
                     <div className="SavedSearchListItem__top_flex">
                         <div className="SavedSearchListItem__title">
-                            <Link className="lenke" to="/" onClick={this.onTitleClick}>
-                                <Element tag="h3">{savedSearch.title}</Element>
-                            </Link>
+                            <Element tag="h3">
+                                <Link className="lenke" to="/" onClick={this.onTitleClick}>
+                                    {savedSearch.title}
+                                </Link>
+                            </Element>
                         </div>
                         {isValidISOString(savedSearch.updated) && (
                             <Undertekst className="SavedSearchListItem__created">
