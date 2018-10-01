@@ -123,7 +123,7 @@ class SavedSearchForm extends React.Component {
                                 />
                                 {formData.notifyType === NotifyTypeEnum.EMAIL && (
                                     <SkjemaGruppe>
-                                        <Fieldset legend="Jeg vil motta e-postvarsler i:">
+                                        <Fieldset legend="Varighet på varsel:">
                                             <Radio
                                                 label="30 dager"
                                                 name="duration"
