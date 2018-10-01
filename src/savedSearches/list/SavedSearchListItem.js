@@ -7,11 +7,7 @@ import Lenkeknapp from '../../common/Lenkeknapp';
 import { formatISOString, isValidISOString } from '../../utils';
 import NotifyTypeEnum from '../enums/NotifyTypeEnum';
 import { SavedSearchFormMode, SHOW_SAVED_SEARCH_FORM } from '../form/savedSearchFormReducer';
-import {
-    SET_CURRENT_SAVED_SEARCH,
-    SHOW_CONFIRM_REMOVE_SAVED_SEARCH_MODAL,
-    SHOW_EDIT_SAVED_SEARCH_MODAL
-} from '../savedSearchesReducer';
+import { SET_CURRENT_SAVED_SEARCH, SHOW_CONFIRM_REMOVE_SAVED_SEARCH_MODAL } from '../savedSearchesReducer';
 
 class SavedSearchListItem extends React.Component {
     onChangeClick = () => {
@@ -31,27 +27,29 @@ class SavedSearchListItem extends React.Component {
         return (
             <div className="SavedSearchListItem">
                 <div className="SavedSearchListItem__top">
-                    <div className="SavedSearchListItem__top__tittle">
-                        <Link className="lenke" to="/" onClick={this.onTitleClick}>
-                            <Element tag="h3">{savedSearch.title}</Element>
-                        </Link>
+                    <div className="SavedSearchListItem__top_flex">
+                        <div className="SavedSearchListItem__title">
+                            <Element tag="h3">
+                                <Link className="lenke" to="/" onClick={this.onTitleClick}>
+                                    {savedSearch.title}
+                                </Link>
+                            </Element>
+                        </div>
+                        {isValidISOString(savedSearch.updated) && (
+                            <Undertekst className="SavedSearchListItem__created">
+                                Sist endret: {formatISOString(savedSearch.updated, 'DD.MM.YYYY')}
+                            </Undertekst>
+                        )}
                     </div>
-                    <div className="SavedSearchListItem__top__buttons">
-                        <Lenkeknapp onClick={this.onChangeClick}>Endre</Lenkeknapp>
-                        <Lenkeknapp onClick={this.onRemoveClick}>Slett</Lenkeknapp>
-                    </div>
-                </div>
-                <div className="SavedSearchListItem__bottom">
                     {savedSearch.notifyType === NotifyTypeEnum.EMAIL ? (
                         <Normaltekst>Varighet på varsel: {savedSearch.duration} dager</Normaltekst>
                     ) : (
                         <Normaltekst>Ingen varsling</Normaltekst>
                     )}
-                    {isValidISOString(savedSearch.updated) && (
-                        <Undertekst className="SavedSearchListItem__bottom__created">
-                            Sist endret: {formatISOString(savedSearch.updated, 'DD.MM.YYYY')}
-                        </Undertekst>
-                    )}
+                </div>
+                <div className="SavedSearchListItem__bottom">
+                    <Lenkeknapp onClick={this.onChangeClick}>Endre</Lenkeknapp>
+                    <Lenkeknapp onClick={this.onRemoveClick}>Slett</Lenkeknapp>
                 </div>
             </div>
         );

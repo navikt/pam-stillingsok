@@ -29,31 +29,31 @@ import viewModeReducer from './search/viewMode/viewModeReducer';
 import StillingPage from './stilling/Stilling';
 import stillingReducer, { stillingSaga } from './stilling/stillingReducer';
 import './styles.less';
-import './variables.less';
 import { urlSaga } from './urlReducer';
+import './variables.less';
 import authorizationReducer, { authorizationSaga } from './authorization/authorizationReducer';
 
 const sagaMiddleware = createSagaMiddleware();
 
 const store = createStore(combineReducers({
     authorization: authorizationReducer,
-    search: searchReducer,
-    searchBox: searchBoxReducer,
-    sorting: sortingReducer,
     counties: countiesReducer,
-    published: publishedReducer,
-    occupations: occupationsReducer,
-    engagement: engagementReducer,
-    sector: sectorReducer,
-    extent: extentReducer,
-    stilling: stillingReducer,
     disclaimer: disclaimerReducer,
+    engagement: engagementReducer,
+    extent: extentReducer,
     favourites: favouritesReducer,
+    occupations: occupationsReducer,
+    published: publishedReducer,
     savedSearches: savedSearchesReducer,
     savedSearchForm: savedSearchFormReducer,
     savedSearchAlertStripe: savedSearchAlertStripeReducer,
     savedSearchError: savedSearchErrorReducer,
     savedSearchExpand: savedSearchExpandReducer,
+    search: searchReducer,
+    searchBox: searchBoxReducer,
+    sector: sectorReducer,
+    sorting: sortingReducer,
+    stilling: stillingReducer,
     viewMode: viewModeReducer
 }), applyMiddleware(sagaMiddleware));
 

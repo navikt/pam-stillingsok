@@ -161,8 +161,8 @@ export default function searchTemplate(query) {
     }
 
     let template = {
-        from,
-        size,
+        from: from || 0,
+        size: size || 50,
         query: {
             bool: {
                 must: {

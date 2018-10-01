@@ -141,9 +141,9 @@ function toFavourite(uuid, ad) {
             updated: '2018-11-04T10:11:30', //ikke kompatibel med updated fra search
             jobTitle: ad.properties.jobtitle ? ad.properties.jobtitle : '',
             status: 'ACTIVE',
-            applicationdue: '2018-11-04T10:11:30'
-            //location mangler
-            //employer mangler
+            applicationdue: ad.properties.applicationdue,
+            location: ad.properties.location,
+            employer: ad.properties.employer
         }
     };
 }
@@ -170,7 +170,7 @@ function* addToFavourites(action) {
     try {
         let favourite;
         const state = yield select();
-        const foundInSearchResult = state.search.searchResult.stillinger &&
+        const foundInSearchResult = state.search.searchResult && state.search.searchResult.stillinger &&
             state.search.searchResult.stillinger.find((s) => s.uuid === action.uuid);
 
         if (foundInSearchResult) {

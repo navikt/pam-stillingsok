@@ -1,7 +1,7 @@
 import { select, takeLatest, put } from 'redux-saga/effects';
 import { SET_CURRENT_SAVED_SEARCH } from './savedSearches/savedSearchesReducer';
 import { SET_VALUE } from './search/searchBox/searchBoxReducer';
-import { PAGE_SIZE, RESET_SEARCH, SEARCH } from './search/searchReducer';
+import { LOAD_MORE, PAGE_SIZE, RESET_SEARCH, SEARCH } from './search/searchReducer';
 import { fromUrl, ParameterType, toUrl } from './search/url';
 import { SET_VIEW_MODE } from './search/viewMode/viewModeReducer';
 
@@ -70,7 +70,8 @@ export const urlSaga = function* saga() {
         RESET_SEARCH,
         SET_CURRENT_SAVED_SEARCH,
         SET_VIEW_MODE,
-        SET_VALUE
+        SET_VALUE,
+        LOAD_MORE
     ], updateUrl);
     yield takeLatest(RESTORE_STATE_FROM_URL_BEGIN, restoreStateFromUrl);
 };

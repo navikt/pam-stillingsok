@@ -6,11 +6,12 @@ export default class SnapToTop extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            showStickyElement: false
+            showStickyElement: undefined
         };
     }
 
     componentDidMount() {
+        this.onWindowScroll();
         window.addEventListener('scroll', this.onWindowScroll);
     }
 

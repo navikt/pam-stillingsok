@@ -28,12 +28,14 @@ class FavouriteListItem extends React.Component {
         return (
             <div className="FavouriteListItem">
                 <div className="FavouriteListItem__top">
-                    {favourite.favouriteAd.status !== 'ACTIVE' && (
-                        <EtikettFokus>Utløpt</EtikettFokus>
+                    {favourite.favouriteAd.status === 'INACTIVE' && (
+                        <div className="FavouriteListItem__etikett-wrapper">
+                            <EtikettFokus>Inaktiv</EtikettFokus>
+                        </div>
                     )}
+                    <SearchResultsItemDetails stilling={this.toAd(favourite.favouriteAd)} />
                 </div>
-                <SearchResultsItemDetails stilling={this.toAd(favourite.favouriteAd)} />
-                <div className="FavouriteListItem__buttons">
+                <div className="FavouriteListItem__bottom">
                     <Lenkeknapp onClick={this.onRemoveClick}>Slett</Lenkeknapp>
                 </div>
             </div>

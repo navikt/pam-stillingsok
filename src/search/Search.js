@@ -31,8 +31,8 @@ import RestoreScroll from './RestoreScroll';
 import './Search.less';
 import SearchBox from './searchBox/SearchBox';
 import { INITIAL_SEARCH, RESET_SEARCH, SEARCH } from './searchReducer';
+import SearchResultCount from './searchResults/SearchResultCount';
 import SearchResults from './searchResults/SearchResults';
-import SearchResultsCount from './searchResults/SearchResultsCount';
 import Sorting from './sorting/Sorting';
 import ViewMode from './viewMode/ViewMode';
 import NotLoggedIn from '../authorization/NotLoggedIn';
@@ -135,7 +135,7 @@ class Search extends React.Component {
                                         <div id="treff" className="Search__main__center">
                                             <div className="Search__main__center__header">
                                                 <div className="Search__main__center__header__left">
-                                                    <SearchResultsCount />
+                                                    <SearchResultCount />
                                                     <CurrentSavedSearch />
                                                 </div>
                                                 <div className="Search__main__center__header__right">

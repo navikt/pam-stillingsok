@@ -20,11 +20,11 @@ class SavedSearchesExpandItem extends React.Component {
     render() {
         const { savedSearch } = this.props;
         return (
-            <div className="SavedSearchesExpandItem">
+            <li className="SavedSearchesExpandItem">
                 <a href="#" className="lenke typo-normal" onClick={this.onTitleClick}>
                     {savedSearch.title}
                 </a>
-            </div>
+            </li>
         );
     }
 }

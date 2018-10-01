@@ -113,7 +113,7 @@ class Stilling extends React.Component {
                                 </Row>
                                 <Row>
                                     <Column xs="12" md="8">
-                                        {stilling._source.status !== 'ACTIVE' && (
+                                        {stilling._source.status === 'INACTIVE' && (
                                             <Expired />
                                         )}
                                         <AdTitle

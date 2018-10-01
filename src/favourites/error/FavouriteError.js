@@ -34,7 +34,7 @@ FavouriteError.defaultProps = {
 };
 
 FavouriteError.propTypes = {
-    error:  PropTypes.string,
+    error: PropTypes.string,
     httpStatus: PropTypes.number
 };
 
