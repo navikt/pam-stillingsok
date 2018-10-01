@@ -5,6 +5,7 @@ import { USER_UUID_HACK } from '../favourites/favouritesReducer';
 import { RESET_SEARCH } from '../search/searchReducer';
 import { fromUrl } from '../search/url';
 import { RESTORE_STATE_FROM_URL, SEARCH_PARAMETERS_DEFINITION } from '../urlReducer';
+import { validateAll } from './form/savedSearchFormReducer';
 
 export const FETCH_SAVED_SEARCHES = 'FETCH_SAVED_SEARCHES';
 export const FETCH_SAVED_SEARCHES_BEGIN = 'FETCH_SAVED_SEARCHES_BEGIN';
@@ -178,6 +179,7 @@ function* removeSavedSearch(action) {
 }
 
 function* updateSavedSearch() {
+    yield validateAll();
     const state = yield select();
     if (state.savedSearchForm.validation.titleIsValid) {
         try {
@@ -201,6 +203,7 @@ function* updateSavedSearch() {
 }
 
 function* addSavedSearch() {
+    yield validateAll();
     const state = yield select();
     if (state.savedSearchForm.validation.titleIsValid) {
         try {
