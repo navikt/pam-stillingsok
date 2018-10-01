@@ -121,34 +121,36 @@ class SavedSearchForm extends React.Component {
                                     onChange={this.onSubscribeChange}
                                     checked={formData.notifyType === NotifyTypeEnum.EMAIL}
                                 />
-                                <SkjemaGruppe>
-                                    <Fieldset legend="Varighet på søket:">
-                                        <Radio
-                                            label="30 dager"
-                                            name="duration"
-                                            key="30dager"
-                                            value="30"
-                                            onChange={this.onDurationChange}
-                                            checked={formData.duration === 30}
-                                        />
-                                        <Radio
-                                            label="60 dager"
-                                            name="duration"
-                                            key="60dager"
-                                            value="60"
-                                            onChange={this.onDurationChange}
-                                            checked={formData.duration === 60}
-                                        />
-                                        <Radio
-                                            label="90 dager"
-                                            name="duration"
-                                            key="90dager"
-                                            value="90"
-                                            onChange={this.onDurationChange}
-                                            checked={formData.duration === 90}
-                                        />
-                                    </Fieldset>
-                                </SkjemaGruppe>
+                                {formData.notifyType === NotifyTypeEnum.EMAIL && (
+                                    <SkjemaGruppe>
+                                        <Fieldset legend="Jeg vil motta e-postvarsler i:">
+                                            <Radio
+                                                label="30 dager"
+                                                name="duration"
+                                                key="30dager"
+                                                value="30"
+                                                onChange={this.onDurationChange}
+                                                checked={formData.duration === 30}
+                                            />
+                                            <Radio
+                                                label="60 dager"
+                                                name="duration"
+                                                key="60dager"
+                                                value="60"
+                                                onChange={this.onDurationChange}
+                                                checked={formData.duration === 60}
+                                            />
+                                            <Radio
+                                                label="90 dager"
+                                                name="duration"
+                                                key="90dager"
+                                                value="90"
+                                                onChange={this.onDurationChange}
+                                                checked={formData.duration === 90}
+                                            />
+                                        </Fieldset>
+                                    </SkjemaGruppe>
+                                )}
                             </div>
                         )}
 
