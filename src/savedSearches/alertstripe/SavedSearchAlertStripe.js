@@ -1,10 +1,9 @@
-import React from 'react';
+import AlertStripe from 'nav-frontend-alertstriper';
 import PropTypes from 'prop-types';
+import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import AlertStripe from 'nav-frontend-alertstriper';
 import './SavedSearchAlertStripe.less';
-import SnapToTop from '../../common/SnapToTop';
 import { SavedSearchAlertStripeMode } from './savedSearchAlertStripeReducer';
 
 function SavedSearchAlertStripe({
@@ -12,27 +11,21 @@ function SavedSearchAlertStripe({
 }) {
     if (showAlertStripe && (alertStripeMode === SavedSearchAlertStripeMode.ADDED)) {
         return (
-            <SnapToTop inlineClassName="SavedSearchAlertStripeSnapToTop">
-                <AlertStripe type="suksess" solid className="SavedSearchAlertStripe">
+            <AlertStripe type="suksess" solid className="SavedSearchAlertStripe">
                     Søket er lagret i <Link className="lenke" to="/lagrede-sok">Lagrede søk</Link>
-                </AlertStripe>
-            </SnapToTop>
+            </AlertStripe>
         );
     } else if (showAlertStripe && alertStripeMode === SavedSearchAlertStripeMode.REMOVED) {
         return (
-            <SnapToTop inlineClassName="SavedSearchAlertStripeSnapToTop">
-                <AlertStripe type="suksess" solid className="SavedSearchAlertStripe">
+            <AlertStripe type="suksess" solid className="SavedSearchAlertStripe">
                     Lagret søk: {savedSearchAboutToBeRemoved.title} er slettet
-                </AlertStripe>
-            </SnapToTop>
+            </AlertStripe>
         );
     } else if (showAlertStripe && alertStripeMode === SavedSearchAlertStripeMode.UPDATED) {
         return (
-            <SnapToTop inlineClassName="SavedSearchAlertStripeSnapToTop">
-                <AlertStripe type="suksess" solid className="SavedSearchAlertStripe">
+            <AlertStripe type="suksess" solid className="SavedSearchAlertStripe">
                     Lagret søk: {formData.title} er oppdatert
-                </AlertStripe>
-            </SnapToTop>
+            </AlertStripe>
         );
     }
     return <div />;
