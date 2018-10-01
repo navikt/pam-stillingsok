@@ -40,7 +40,8 @@ const initialState = {
     confirmationVisible: false,
     totalElements: 0,
     isSaving: false,
-    currentSavedSearch: undefined
+    currentSavedSearch: undefined,
+    httpErrorStatus: undefined
 };
 
 export default function savedSearchesReducer(state = initialState, action) {
@@ -56,12 +57,14 @@ export default function savedSearchesReducer(state = initialState, action) {
                 ...state,
                 savedSearches: action.response.content,
                 totalElements: action.response.totalElements,
-                isFetching: false
+                isFetching: false,
+                httpErrorStatus: undefined
             };
         case FETCH_SAVED_SEARCHES_FAILURE:
             return {
                 ...state,
-                isFetching: false
+                isFetching: false,
+                httpErrorStatus: action.error.statusCode
             };
         case REMOVE_SAVED_SEARCH_BEGIN:
             return {
@@ -144,7 +147,7 @@ export default function savedSearchesReducer(state = initialState, action) {
 
 function* fetchSavedSearches() {
     const state = yield select();
-    if (state.savedSearches.shouldFetch) {
+    if (state.savedSearches.shouldFetch && state.authorization.isLoggedIn) {
         yield put({ type: FETCH_SAVED_SEARCHES_BEGIN });
         try {
             const response = yield call(get, `${AD_USER_API}/api/v1/savedsearches?size=200&user=${USER_UUID_HACK}`);

@@ -7,7 +7,7 @@ import '../alertstripe/FavouriteAlertStripe.less';
 
 class FavouriteError extends React.Component {
     render() {
-        if (this.props.error) {
+        if (this.props.error && this.props.httpStatus !== 404) {
             return (
                 <SnapToTop>
                     <AlertStripe type="advarsel" solid className="FavouriteError">
@@ -29,15 +29,18 @@ class FavouriteError extends React.Component {
 }
 
 FavouriteError.defaultProps = {
-    error: undefined
+    error: undefined,
+    httpStatus: undefined
 };
 
 FavouriteError.propTypes = {
-    error:  PropTypes.string
+    error:  PropTypes.string,
+    httpStatus: PropTypes.number
 };
 
 const mapStateToProps = (state) => ({
-    error: state.favourites.error
+    error: state.favourites.error,
+    httpStatus: state.favourites.httpErrorStatus
 });
 
 export default connect(mapStateToProps)(FavouriteError);

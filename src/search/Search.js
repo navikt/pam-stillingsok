@@ -35,6 +35,8 @@ import SearchResults from './searchResults/SearchResults';
 import SearchResultsCount from './searchResults/SearchResultsCount';
 import Sorting from './sorting/Sorting';
 import ViewMode from './viewMode/ViewMode';
+import NotLoggedIn from '../authorization/NotLoggedIn';
+import { FETCH_USER } from '../authorization/authorizationReducer';
 
 class Search extends React.Component {
     constructor(props) {
@@ -44,6 +46,7 @@ class Search extends React.Component {
     }
 
     componentDidMount() {
+        this.props.fetchUser();
         this.props.fetchFavourites();
         this.props.fetchSavedSearches();
         document.title = 'Ledige stillinger';
@@ -66,6 +69,7 @@ class Search extends React.Component {
                 <FavouriteError />
                 <SavedSearchAlertStripe />
                 <SavedSearchError />
+                <NotLoggedIn />
                 <div className="Search__header">
                     <div className="Search__header__green">
                         <Container>
@@ -73,12 +77,14 @@ class Search extends React.Component {
                                 <Column xs="12" md="6">
                                     <Sidetittel className="Search__header__title">Ledige stillinger</Sidetittel>
                                 </Column>
-                                <Column xs="12" md="6">
-                                    <div className="Search__header__right">
-                                        <ShowFavouriteListLink />
-                                        <ExpandSavedSearchButton />
-                                    </div>
-                                </Column>
+                                { this.props.isLoggedIn &&
+                                    <Column xs="12" md="6">
+                                        <div className="Search__header__right">
+                                            <ShowFavouriteListLink/>
+                                            <ExpandSavedSearchButton/>
+                                        </div>
+                                    </Column>
+                                }
                             </Row>
                         </Container>
                     </div>
@@ -159,15 +165,18 @@ Search.propTypes = {
     resetSearch: PropTypes.func.isRequired,
     fetchFavourites: PropTypes.func.isRequired,
     fetchSavedSearches: PropTypes.func.isRequired,
+    fetchUser: PropTypes.func.isRequired,
     hasError: PropTypes.bool.isRequired,
-    initialSearchDone: PropTypes.bool.isRequired
+    initialSearchDone: PropTypes.bool.isRequired,
+    isLoggedIn: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => ({
     hasError: state.search.hasError,
     initialSearchDone: state.search.initialSearchDone,
     isFetchingFavourites: state.favourites.isFetchingFavourites,
-    savedSearches: state.savedSearches.savedSearches
+    savedSearches: state.savedSearches.savedSearches,
+    isLoggedIn: state.authorization.isLoggedIn
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -176,7 +185,8 @@ const mapDispatchToProps = (dispatch) => ({
     search: () => dispatch({ type: SEARCH }),
     resetSearch: () => dispatch({ type: RESET_SEARCH }),
     fetchSavedSearches: () => dispatch({ type: FETCH_SAVED_SEARCHES }),
-    fetchFavourites: () => dispatch({ type: FETCH_FAVOURITES })
+    fetchFavourites: () => dispatch({ type: FETCH_FAVOURITES }),
+    fetchUser: () => dispatch({ type: FETCH_USER })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Search);

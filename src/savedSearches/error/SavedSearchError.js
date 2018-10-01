@@ -6,8 +6,8 @@ import SnapToTop from '../../common/SnapToTop';
 import './SavedSearchError.less';
 import { SavedSearchErrorEnum } from './savedSearchErrorReducer';
 
-function SavedSearchError({ error }) {
-    if (error) {
+function SavedSearchError({ error, httpStatus }) {
+    if (error && (httpStatus !== 404)) {
         return (
             <SnapToTop>
                 <AlertStripe type="advarsel" solid className="SavedSearchError">
@@ -39,7 +39,8 @@ SavedSearchError.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-    error: state.savedSearchError.error
+    error: state.savedSearchError.error,
+    httpStatus: state.savedSearches.httpErrorStatus
 });
 
 export default connect(mapStateToProps)(SavedSearchError);
