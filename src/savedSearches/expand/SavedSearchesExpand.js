@@ -25,7 +25,7 @@ function SavedSearchesExpand({ isFetching, savedSearches, isSavedSearchesExpande
                             ) : (
                                 <div>
                                     <Undertittel>Lagrede søk</Undertittel>
-                                    <ul className={savedSearches.length > 4 ? 'SavedSearchesExpand__columns' : ''}>
+                                    <ul className={savedSearches.length > 2 ? 'SavedSearchesExpand__columns' : ''}>
                                         {savedSearches.map((savedSearch) => (
                                             <SavedSearchesExpandItem key={savedSearch.uuid} savedSearch={savedSearch} />
                                         ))}
