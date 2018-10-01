@@ -1,9 +1,9 @@
-import { Flatknapp } from 'nav-frontend-knapper';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import Lenkeknapp from '../../common/Lenkeknapp';
 import { formatISOString, isValidISOString } from '../../utils';
 import NotifyTypeEnum from '../enums/NotifyTypeEnum';
 import { SavedSearchFormMode, SHOW_SAVED_SEARCH_FORM } from '../form/savedSearchFormReducer';
@@ -48,8 +48,8 @@ class SavedSearchListItem extends React.Component {
                     )}
                 </div>
                 <div className="SavedSearchListItem__bottom">
-                    <Flatknapp mini onClick={this.onChangeClick}>Endre</Flatknapp>
-                    <Flatknapp mini onClick={this.onRemoveClick}>Slett</Flatknapp>
+                    <Lenkeknapp onClick={this.onChangeClick}>Endre</Lenkeknapp>
+                    <Lenkeknapp onClick={this.onRemoveClick}>Slett</Lenkeknapp>
                 </div>
             </div>
         );
