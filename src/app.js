@@ -31,10 +31,12 @@ import stillingReducer, { stillingSaga } from './stilling/stillingReducer';
 import './styles.less';
 import { urlSaga } from './urlReducer';
 import './variables.less';
+import authorizationReducer, { authorizationSaga } from './authorization/authorizationReducer';
 
 const sagaMiddleware = createSagaMiddleware();
 
 const store = createStore(combineReducers({
+    authorization: authorizationReducer,
     counties: countiesReducer,
     disclaimer: disclaimerReducer,
     engagement: engagementReducer,
@@ -63,6 +65,7 @@ sagaMiddleware.run(savedSearchesSaga);
 sagaMiddleware.run(savedSearchFormSaga);
 sagaMiddleware.run(savedSearchAlertStripeSaga);
 sagaMiddleware.run(urlSaga);
+sagaMiddleware.run(authorizationSaga);
 
 ReactDOM.render(
     <Provider store={store}>
