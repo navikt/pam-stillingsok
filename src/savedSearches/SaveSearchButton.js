@@ -7,7 +7,7 @@ import { SavedSearchFormMode, SHOW_SAVED_SEARCH_FORM } from './form/savedSearchF
 class SaveSearchButton extends React.Component {
     onClick = () => {
         this.props.showSavedSearchForm(
-            this.props.currentSavedSearch ? SavedSearchFormMode.EDIT : SavedSearchFormMode.ADD,
+            this.props.currentSavedSearch ? SavedSearchFormMode.REPLACE : SavedSearchFormMode.ADD,
             this.props.currentSavedSearch !== undefined
         );
     };

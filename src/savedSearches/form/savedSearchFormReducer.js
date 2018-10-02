@@ -175,12 +175,12 @@ function* setDefaultFormData(action) {
                 status: SavedSearchStatusEnum.ACTIVE
             }
         });
-    } else if (action.formMode === SavedSearchFormMode.EDIT && !state.savedSearches.currentSavedSearch) {
+    } else if (action.formMode === SavedSearchFormMode.EDIT) {
         yield put({
             type: SET_FORM_DATA,
             formData: action.formData
         });
-    } else if (action.formMode === SavedSearchFormMode.EDIT && state.savedSearches.currentSavedSearch ) {
+    } else if (action.formMode === SavedSearchFormMode.REPLACE) {
         yield put({
             type: SET_FORM_DATA,
             formData: {

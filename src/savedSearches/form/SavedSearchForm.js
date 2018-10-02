@@ -56,11 +56,11 @@ class SavedSearchForm extends React.Component {
                                     >
                                         <Radio
                                             label="Lagre endringene"
-                                            name="update"
-                                            key="update"
-                                            value={SavedSearchFormMode.EDIT}
+                                            name="replace"
+                                            key="replace"
+                                            value={SavedSearchFormMode.REPLACE}
                                             onChange={this.onFormModeChange}
-                                            checked={formMode === SavedSearchFormMode.EDIT}
+                                            checked={formMode === SavedSearchFormMode.REPLACE}
                                         />
                                         <Radio
                                             label="Lagre nytt søk"
@@ -83,19 +83,18 @@ class SavedSearchForm extends React.Component {
                                 )}
                             </div>
                         )}
-                        {!(showAddOrReplace && formMode === SavedSearchFormMode.EDIT) && (
-                            <div className="SavedSearchModal__body">
-                                {showAddOrReplace ? (
-                                    <SkjemaGruppe>
-                                        <Fieldset legend="Lagre nytt søk">
-                                            <AddOrReplaceForm />
-                                        </Fieldset>
-                                    </SkjemaGruppe>
-                                ) : (
-                                    <AddOrReplaceForm />
-                                )}
-                            </div>
-                        )}
+                        <div className="SavedSearchModal__body">
+                            {formMode !== SavedSearchFormMode.REPLACE && !showAddOrReplace && (
+                                <AddOrReplaceForm />
+                            )}
+                            {formMode !== SavedSearchFormMode.REPLACE && showAddOrReplace && (
+                                <SkjemaGruppe>
+                                    <Fieldset legend="Lagre nytt søk">
+                                        <AddOrReplaceForm />
+                                    </Fieldset>
+                                </SkjemaGruppe>
+                            )}
+                        </div>
 
                         <div className="SavedSearchModal__buttons">
                             <Hovedknapp
