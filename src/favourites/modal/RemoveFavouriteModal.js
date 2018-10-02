@@ -1,10 +1,9 @@
-import { Hovedknapp } from 'nav-frontend-knapper';
+import { Flatknapp, Hovedknapp } from 'nav-frontend-knapper';
 import Modal from 'nav-frontend-modal';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import Lenkeknapp from '../../common/Lenkeknapp';
 import { HIDE_MODAL_REMOVE_FROM_FAVOURITES, REMOVE_FROM_FAVOURITES } from '../favouritesReducer';
 import './RemoveFavouriteModal.less';
 
@@ -34,7 +33,7 @@ class RemoveFavouriteModal extends React.Component {
                         </Normaltekst>
                         <div className="RemoveFavouriteModal__buttons">
                             <Hovedknapp onClick={this.onRemoveClick}>Slett</Hovedknapp>
-                            <Lenkeknapp onClick={this.closeModal}>Tilbake til favoritter</Lenkeknapp>
+                            <Flatknapp onClick={this.closeModal}>Avbryt</Flatknapp>
                         </div>
                     </div>
                 </Modal>

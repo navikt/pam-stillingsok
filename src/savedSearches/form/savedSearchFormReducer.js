@@ -33,7 +33,6 @@ const initialState = {
     validation: {
         titleIsValid: true
     },
-    cancelButtonText: 'back_to_search',
     showAddOrReplace: false
 };
 
@@ -44,8 +43,7 @@ export default function savedSearchFormReducer(state = initialState, action) {
                 ...state,
                 showAddOrReplace: action.showAddOrReplace,
                 showSavedSearchForm: true,
-                formMode: action.formMode,
-                cancelButtonText: action.cancelButtonText
+                formMode: action.formMode
             };
         case HIDE_SAVED_SEARCH_FORM:
         case UPDATE_SAVED_SEARCH_SUCCESS:
@@ -173,7 +171,6 @@ function* setDefaultFormData(action) {
                 title: toTitle(state),
                 searchQuery: toUrl(toQuery(state)),
                 duration: 30,
-                notifyType: NotifyTypeEnum.EMAIL,
                 status: SavedSearchStatusEnum.ACTIVE
             }
         });
