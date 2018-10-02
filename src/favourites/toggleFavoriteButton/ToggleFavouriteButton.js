@@ -34,7 +34,8 @@ class ToggleFavouriteButton extends React.Component {
             return (
                 <button
                     onClick={this.onRemoveFromFavouritesClick}
-                    aria-label="Fjern favoritt"
+                    aria-label="Favoritt"
+                    aria-pressed="true"
                     className={className ? `ToggleFavouriteButton ${className}` : 'ToggleFavouriteButton'}
                 >
                     <span className="ToggleFavouriteButton__star">
@@ -49,7 +50,8 @@ class ToggleFavouriteButton extends React.Component {
         return (
             <button
                 onClick={this.onAddToFavouritesClick}
-                aria-label="Lagre favoritt"
+                aria-label="Favoritt"
+                aria-pressed="false"
                 className={className ? `ToggleFavouriteButton ${className}` : 'ToggleFavouriteButton'}
             >
                 <span className="ToggleFavouriteButton__star">
