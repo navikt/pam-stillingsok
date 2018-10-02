@@ -7,7 +7,7 @@ import './SavedSearchError.less';
 import { SavedSearchErrorEnum } from './savedSearchErrorReducer';
 
 function SavedSearchError({ error, httpStatus }) {
-    if (error && (httpStatus !== 404)) {
+    if (error && (httpStatus !== 403)) {
         return (
             <SnapToTop>
                 <AlertStripe type="advarsel" solid className="SavedSearchError">

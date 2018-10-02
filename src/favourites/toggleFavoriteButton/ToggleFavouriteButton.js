@@ -4,11 +4,12 @@ import { connect } from 'react-redux';
 import { ADD_TO_FAVOURITES, REMOVE_FROM_FAVOURITES } from '../favouritesReducer';
 import './ToggleFavouriteButton.less';
 import Star from './Star';
-import { AuthorizationEnum, SHOW_AUTHORIZATION_ERROR_MODAL } from '../../authorization/authorizationReducer';
+import { SHOW_AUTHORIZATION_ERROR_MODAL } from '../../authorization/authorizationReducer';
+import AuthorizationEnum from '../../authorization/AuthorizationEnum';
 
 class ToggleFavouriteButton extends React.Component {
     onAddToFavouritesClick = () => {
-        if (this.props.httpStatus === 404 || !this.props.isLoggedIn ) {
+        if (this.props.httpStatus === 403 || !this.props.isLoggedIn ) {
             this.props.showError(AuthorizationEnum.ADD_FAVORITE_ERROR);
         } else {
             this.props.addToFavourites(this.props.uuid);

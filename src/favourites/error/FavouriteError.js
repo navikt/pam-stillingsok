@@ -7,7 +7,7 @@ import '../alertstripe/FavouriteAlertStripe.less';
 
 class FavouriteError extends React.Component {
     render() {
-        if (this.props.error && this.props.httpStatus !== 404) {
+        if (this.props.error && this.props.httpStatus !== 403) {
             return (
                 <SnapToTop>
                     <AlertStripe type="advarsel" solid className="FavouriteError">

@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { SavedSearchFormMode, SHOW_SAVED_SEARCH_FORM } from './form/savedSearchFormReducer';
-import { AuthorizationEnum, SHOW_AUTHORIZATION_ERROR_MODAL } from '../authorization/authorizationReducer';
+import { SHOW_AUTHORIZATION_ERROR_MODAL } from '../authorization/authorizationReducer';
+import AuthorizationEnum from '../authorization/AuthorizationEnum';
 
 class SaveSearchButton extends React.Component {
     onClick = () => {
-        if (this.props.httpStatus === 404 || !this.props.isLoggedIn) {
+        if (this.props.httpStatus === 403 || !this.props.isLoggedIn) {
             this.props.showError(AuthorizationEnum.SAVE_SEARCH_ERROR);
         } else {
             this.props.showSavedSearchForm(

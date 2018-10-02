@@ -5,6 +5,7 @@ import { USER_UUID_HACK } from '../favourites/favouritesReducer';
 import { RESET_SEARCH } from '../search/searchReducer';
 import { fromUrl } from '../search/url';
 import { RESTORE_STATE_FROM_URL, SEARCH_PARAMETERS_DEFINITION } from '../urlReducer';
+import { FETCH_USER_SUCCESS, FETCH_USER } from '../authorization/authorizationReducer';
 
 export const FETCH_SAVED_SEARCHES = 'FETCH_SAVED_SEARCHES';
 export const FETCH_SAVED_SEARCHES_BEGIN = 'FETCH_SAVED_SEARCHES_BEGIN';
@@ -146,6 +147,8 @@ export default function savedSearchesReducer(state = initialState, action) {
 }
 
 function* fetchSavedSearches() {
+    yield put({ type: FETCH_USER });
+    yield take(FETCH_USER_SUCCESS);
     const state = yield select();
     if (state.savedSearches.shouldFetch && state.authorization.isLoggedIn) {
         yield put({ type: FETCH_SAVED_SEARCHES_BEGIN });

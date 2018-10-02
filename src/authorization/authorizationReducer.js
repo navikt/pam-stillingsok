@@ -11,11 +11,6 @@ export const FETCH_USER_BEGIN = 'FETCH_USER_BEGIN';
 export const FETCH_USER_SUCCESS = 'FETCH_USER_SUCCESS';
 export const FETCH_USER_FAILURE = 'FETCH_USER_FAILURE';
 
-export const AuthorizationEnum = {
-    SAVE_SEARCH_ERROR: 'For å lagre et søk må du logge inn',
-    ADD_FAVORITE_ERROR: 'For å lagre en favoritt må du logge inn'
-};
-
 const initialState = {
     authorizationError: undefined,
     isFetchingUser: false,

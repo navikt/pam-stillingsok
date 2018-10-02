@@ -46,7 +46,6 @@ class Search extends React.Component {
     }
 
     componentDidMount() {
-        this.props.fetchUser();
         this.props.fetchFavourites();
         this.props.fetchSavedSearches();
         document.title = 'Ledige stillinger';
