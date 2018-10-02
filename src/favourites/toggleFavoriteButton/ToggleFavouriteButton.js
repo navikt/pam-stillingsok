@@ -9,7 +9,7 @@ import AuthorizationEnum from '../../authorization/AuthorizationEnum';
 
 class ToggleFavouriteButton extends React.Component {
     onAddToFavouritesClick = () => {
-        if (this.props.httpStatus === 403 || !this.props.isLoggedIn ) {
+        if (!this.props.isLoggedIn) {
             this.props.showError(AuthorizationEnum.ADD_FAVORITE_ERROR);
         } else {
             this.props.addToFavourites(this.props.uuid);

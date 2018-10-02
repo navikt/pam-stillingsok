@@ -8,7 +8,7 @@ import AuthorizationEnum from '../authorization/AuthorizationEnum';
 
 class SaveSearchButton extends React.Component {
     onClick = () => {
-        if (this.props.httpStatus === 403 || !this.props.isLoggedIn) {
+        if (!this.props.isLoggedIn) {
             this.props.showError(AuthorizationEnum.SAVE_SEARCH_ERROR);
         } else {this.props.showSavedSearchForm(
             this.props.currentSavedSearch ? SavedSearchFormMode.EDIT : SavedSearchFormMode.ADD,
