@@ -1,4 +1,4 @@
-import { select, put, call, takeLatest } from 'redux-saga/effects';
+import { select, put, call, takeEvery } from 'redux-saga/effects';
 import { get, SearchApiError } from '../api/api';
 import { AD_USER_API } from '../fasitProperties';
 import { USER_UUID_HACK } from '../favourites/favouritesReducer';
@@ -78,5 +78,5 @@ function* fetchUser() {
 }
 
 export const authorizationSaga = function* saga() {
-    yield takeLatest(FETCH_USER, fetchUser);
+    yield takeEvery(FETCH_USER, fetchUser);
 };
