@@ -189,6 +189,7 @@ function* setDefaultFormData(action) {
             }
         });
     }
+    yield validateAll();
 }
 
 export const savedSearchFormSaga = function* saga() {
