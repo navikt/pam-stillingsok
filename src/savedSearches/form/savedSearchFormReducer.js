@@ -18,6 +18,7 @@ export const SET_SAVED_SEARCH_TITLE = 'SET_SAVED_SEARCH_TITLE';
 export const SET_SAVED_SEARCH_NOTIFY_TYPE = 'SET_SAVED_SEARCH_NOTIFY_TYPE';
 export const SET_SAVED_SEARCH_DURATION = 'SET_SAVED_SEARCH_DURATION';
 export const SET_SAVED_SEARCH_QUERY = 'SET_SAVED_SEARCH_QUERY';
+export const SET_TITLE_VALIDATION = 'SET_TITLE_VALIDATION';
 
 export const SavedSearchFormMode = {
     ADD: 'ADD',
@@ -72,10 +73,6 @@ export default function savedSearchFormReducer(state = initialState, action) {
                 formData: {
                     ...state.formData,
                     title: action.title
-                },
-                validation: {
-                    ...state.validation,
-                    titleIsValid: action.title.trim().length > 0
                 }
             };
         }
@@ -106,9 +103,27 @@ export default function savedSearchFormReducer(state = initialState, action) {
                 }
             };
         }
+        case SET_TITLE_VALIDATION:
+            return {
+                ...state,
+                validation: {
+                    ...state.validation,
+                    titleIsValid: action.titleIsValid
+                }
+            };
         default:
             return state;
     }
+}
+
+function* validateTitle() {
+    const state = yield select();
+    const titleIsValid = state.savedSearchForm.formData.title.trim().length > 0;
+    yield put({ type: SET_TITLE_VALIDATION, titleIsValid });
+}
+
+export function* validateAll() {
+    yield validateTitle();
 }
 
 function toQuery(state) {
@@ -179,6 +194,7 @@ function* setDefaultFormData(action) {
 }
 
 export const savedSearchFormSaga = function* saga() {
+    yield takeLatest(SET_SAVED_SEARCH_TITLE, validateAll);
     yield takeLatest(SHOW_SAVED_SEARCH_FORM, setDefaultFormData);
     yield takeLatest(SET_SAVED_SEARCH_FORM_MODE, setDefaultFormData);
 };
