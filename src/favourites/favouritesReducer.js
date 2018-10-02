@@ -140,7 +140,7 @@ function toFavourite(uuid, ad) {
             title: ad.title,
             updated: '2018-11-04T10:11:30', //ikke kompatibel med updated fra search
             jobTitle: ad.properties.jobtitle ? ad.properties.jobtitle : '',
-            status: 'ACTIVE',
+            status: 'INACTIVE',
             applicationdue: ad.properties.applicationdue,
             location: ad.properties.location,
             employer: ad.properties.employer

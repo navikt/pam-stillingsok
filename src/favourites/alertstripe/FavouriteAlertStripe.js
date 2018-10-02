@@ -1,27 +1,22 @@
-import React from 'react';
+import AlertStripe from 'nav-frontend-alertstriper';
 import PropTypes from 'prop-types';
+import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import AlertStripe from 'nav-frontend-alertstriper';
 import './FavouriteAlertStripe.less';
-import SnapToTop from '../../common/SnapToTop';
 
 function FavouriteAlertStripe({ showAlertStripe, alertStripeMode }) {
     if (showAlertStripe && (alertStripeMode === 'added')) {
         return (
-            <SnapToTop inlineClassName="FavouriteAlertStripeSnapToTop">
-                <AlertStripe type="suksess" solid className="FavouriteAlertStripe">
+            <AlertStripe type="suksess" solid className="FavouriteAlertStripe">
                     Stillingsannonsen er lagret i <Link className="lenke" to="/favoritter">favoritter</Link>
-                </AlertStripe>
-            </SnapToTop>
+            </AlertStripe>
         );
     } else if (showAlertStripe && alertStripeMode === 'removed') {
         return (
-            <SnapToTop inlineClassName="FavouriteAlertStripeSnapToTop">
-                <AlertStripe type="suksess" solid className="FavouriteAlertStripe">
+            <AlertStripe type="suksess" solid className="FavouriteAlertStripe">
                     Favoritten er slettet
-                </AlertStripe>
-            </SnapToTop>
+            </AlertStripe>
         );
     }
     return <div />;

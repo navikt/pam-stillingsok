@@ -10,13 +10,11 @@ class SaveSearchButton extends React.Component {
     onClick = () => {
         if (this.props.httpStatus === 403 || !this.props.isLoggedIn) {
             this.props.showError(AuthorizationEnum.SAVE_SEARCH_ERROR);
-        } else {
-            this.props.showSavedSearchForm(
-                this.props.currentSavedSearch ? SavedSearchFormMode.EDIT : SavedSearchFormMode.ADD,
-                this.props.currentSavedSearch !== undefined,
-                'Tilbake til stillingssøk'
-            );
-        }
+        } else {this.props.showSavedSearchForm(
+            this.props.currentSavedSearch ? SavedSearchFormMode.EDIT : SavedSearchFormMode.ADD,
+            this.props.currentSavedSearch !== undefined
+
+        );}
     };
 
     render() {
@@ -46,11 +44,10 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    showSavedSearchForm: (formMode, showAddOrReplace, cancelButtonText) => dispatch({
+    showSavedSearchForm: (formMode, showAddOrReplace) => dispatch({
         type: SHOW_SAVED_SEARCH_FORM,
         formMode,
-        showAddOrReplace,
-        cancelButtonText
+        showAddOrReplace
     }),
     showError: (text) => dispatch({ type: SHOW_AUTHORIZATION_ERROR_MODAL, text })
 });

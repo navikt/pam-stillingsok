@@ -18,6 +18,7 @@ export const SET_SAVED_SEARCH_TITLE = 'SET_SAVED_SEARCH_TITLE';
 export const SET_SAVED_SEARCH_NOTIFY_TYPE = 'SET_SAVED_SEARCH_NOTIFY_TYPE';
 export const SET_SAVED_SEARCH_DURATION = 'SET_SAVED_SEARCH_DURATION';
 export const SET_SAVED_SEARCH_QUERY = 'SET_SAVED_SEARCH_QUERY';
+export const SET_TITLE_VALIDATION = 'SET_TITLE_VALIDATION';
 
 export const SavedSearchFormMode = {
     ADD: 'ADD',
@@ -32,7 +33,6 @@ const initialState = {
     validation: {
         titleIsValid: true
     },
-    cancelButtonText: 'back_to_search',
     showAddOrReplace: false
 };
 
@@ -43,8 +43,7 @@ export default function savedSearchFormReducer(state = initialState, action) {
                 ...state,
                 showAddOrReplace: action.showAddOrReplace,
                 showSavedSearchForm: true,
-                formMode: action.formMode,
-                cancelButtonText: action.cancelButtonText
+                formMode: action.formMode
             };
         case HIDE_SAVED_SEARCH_FORM:
         case UPDATE_SAVED_SEARCH_SUCCESS:
@@ -72,10 +71,6 @@ export default function savedSearchFormReducer(state = initialState, action) {
                 formData: {
                     ...state.formData,
                     title: action.title
-                },
-                validation: {
-                    ...state.validation,
-                    titleIsValid: action.title.trim().length > 0
                 }
             };
         }
@@ -106,9 +101,27 @@ export default function savedSearchFormReducer(state = initialState, action) {
                 }
             };
         }
+        case SET_TITLE_VALIDATION:
+            return {
+                ...state,
+                validation: {
+                    ...state.validation,
+                    titleIsValid: action.titleIsValid
+                }
+            };
         default:
             return state;
     }
+}
+
+function* validateTitle() {
+    const state = yield select();
+    const titleIsValid = state.savedSearchForm.formData.title.trim().length > 0;
+    yield put({ type: SET_TITLE_VALIDATION, titleIsValid });
+}
+
+export function* validateAll() {
+    yield validateTitle();
 }
 
 function toQuery(state) {
@@ -158,7 +171,6 @@ function* setDefaultFormData(action) {
                 title: toTitle(state),
                 searchQuery: toUrl(toQuery(state)),
                 duration: 30,
-                notifyType: NotifyTypeEnum.EMAIL,
                 status: SavedSearchStatusEnum.ACTIVE
             }
         });
@@ -179,6 +191,7 @@ function* setDefaultFormData(action) {
 }
 
 export const savedSearchFormSaga = function* saga() {
+    yield takeLatest(SET_SAVED_SEARCH_TITLE, validateAll);
     yield takeLatest(SHOW_SAVED_SEARCH_FORM, setDefaultFormData);
     yield takeLatest(SET_SAVED_SEARCH_FORM_MODE, setDefaultFormData);
 };
