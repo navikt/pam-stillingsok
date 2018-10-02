@@ -5,8 +5,8 @@ import { connect } from 'react-redux';
 import './SavedSearchError.less';
 import { SavedSearchErrorEnum } from './savedSearchErrorReducer';
 
-function SavedSearchError({ error }) {
-    if (error) {
+function SavedSearchError({ error, httpStatus }) {
+    if (error && (httpStatus !== 403)) {
         return (
             <AlertStripe type="advarsel" solid className="SavedSearchError">
                 {error === SavedSearchErrorEnum.FETCH_ERROR &&
@@ -36,7 +36,8 @@ SavedSearchError.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-    error: state.savedSearchError.error
+    error: state.savedSearchError.error,
+    httpStatus: state.savedSearches.httpErrorStatus
 });
 
 export default connect(mapStateToProps)(SavedSearchError);
