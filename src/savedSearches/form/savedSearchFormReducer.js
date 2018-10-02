@@ -194,7 +194,7 @@ function* setDefaultFormData(action) {
 }
 
 export const savedSearchFormSaga = function* saga() {
-    yield takeLatest(SET_SAVED_SEARCH_TITLE, validateAll);
+    yield takeLatest([SET_SAVED_SEARCH_TITLE, SET_FORM_DATA], validateAll);
     yield takeLatest(SHOW_SAVED_SEARCH_FORM, setDefaultFormData);
     yield takeLatest(SET_SAVED_SEARCH_FORM_MODE, setDefaultFormData);
 };
