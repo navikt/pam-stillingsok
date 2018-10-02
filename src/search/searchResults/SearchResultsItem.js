@@ -7,8 +7,8 @@ import './SearchResultsItem.less';
 export default function SearchResultItem({ stilling }) {
     return (
         <div className="SearchResultItem">
-            <ToggleFavouriteButton uuid={stilling.uuid} className="SearchResultItem__favourite" />
             <SearchResultsItemDetails stilling={stilling} />
+            <ToggleFavouriteButton uuid={stilling.uuid} className="SearchResultItem__favourite" />
         </div>
     );
 }
