@@ -11,7 +11,7 @@ class SaveSearchButton extends React.Component {
         if (!this.props.isLoggedIn) {
             this.props.showError(AuthorizationEnum.SAVE_SEARCH_ERROR);
         } else {this.props.showSavedSearchForm(
-            this.props.currentSavedSearch ? SavedSearchFormMode.EDIT : SavedSearchFormMode.ADD,
+            this.props.currentSavedSearch ? SavedSearchFormMode.REPLACE : SavedSearchFormMode.ADD,
             this.props.currentSavedSearch !== undefined
 
         );}
