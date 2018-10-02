@@ -171,6 +171,7 @@ function* setDefaultFormData(action) {
                 title: toTitle(state),
                 searchQuery: toUrl(toQuery(state)),
                 duration: 30,
+                notifyType: NotifyTypeEnum.NONE,
                 status: SavedSearchStatusEnum.ACTIVE
             }
         });
