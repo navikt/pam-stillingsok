@@ -7,7 +7,6 @@ import { AuthorizationEnum, SHOW_AUTHORIZATION_ERROR_MODAL } from '../authorizat
 
 class SaveSearchButton extends React.Component {
     onClick = () => {
-        console.log(this.props);
         if (this.props.httpStatus === 404 || !this.props.isLoggedIn) {
             this.props.showError(AuthorizationEnum.SAVE_SEARCH_ERROR);
         } else {
