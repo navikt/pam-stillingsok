@@ -21,7 +21,7 @@ function SavedSearchesExpand({ isFetching, savedSearches, isSavedSearchesExpande
                     ) : (
                         <div>
                             {savedSearches.length === 0 ? (
-                                <NoSavedSearches />
+                                <NoSavedSearches showButton={false} />
                             ) : (
                                 <div>
                                     <Undertittel>Lagrede søk</Undertittel>
