@@ -8,8 +8,7 @@ class SaveSearchButton extends React.Component {
     onClick = () => {
         this.props.showSavedSearchForm(
             this.props.currentSavedSearch ? SavedSearchFormMode.EDIT : SavedSearchFormMode.ADD,
-            this.props.currentSavedSearch !== undefined,
-            'Tilbake til stillingssøk'
+            this.props.currentSavedSearch !== undefined
         );
     };
 
@@ -34,11 +33,10 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    showSavedSearchForm: (formMode, showAddOrReplace, cancelButtonText) => dispatch({
+    showSavedSearchForm: (formMode, showAddOrReplace) => dispatch({
         type: SHOW_SAVED_SEARCH_FORM,
         formMode,
-        showAddOrReplace,
-        cancelButtonText
+        showAddOrReplace
     })
 });
 
