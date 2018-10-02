@@ -1,11 +1,10 @@
-import { Hovedknapp } from 'nav-frontend-knapper';
+import { Hovedknapp, Flatknapp } from 'nav-frontend-knapper';
 import Modal from 'nav-frontend-modal';
 import { Fieldset, Radio, SkjemaGruppe } from 'nav-frontend-skjema';
 import { Undertittel } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import Lenkeknapp from '../../common/Lenkeknapp';
 import { ADD_SAVED_SEARCH, UPDATE_SAVED_SEARCH } from '../savedSearchesReducer';
 import './SavedSearchForm.less';
 import {
@@ -34,7 +33,7 @@ class SavedSearchForm extends React.Component {
 
     render() {
         const {
-            showSavedSearchForm, isSaving, formMode, cancelButtonText, currentSavedSearch, showAddOrReplace
+            showSavedSearchForm, isSaving, formMode, currentSavedSearch, showAddOrReplace
         } = this.props;
 
         if (showSavedSearchForm) {
@@ -57,11 +56,11 @@ class SavedSearchForm extends React.Component {
                                     >
                                         <Radio
                                             label="Lagre endringene"
-                                            name="update"
-                                            key="update"
-                                            value={SavedSearchFormMode.EDIT}
+                                            name="replace"
+                                            key="replace"
+                                            value={SavedSearchFormMode.REPLACE}
                                             onChange={this.onFormModeChange}
-                                            checked={formMode === SavedSearchFormMode.EDIT}
+                                            checked={formMode === SavedSearchFormMode.REPLACE}
                                         />
                                         <Radio
                                             label="Lagre nytt søk"
@@ -84,19 +83,18 @@ class SavedSearchForm extends React.Component {
                                 )}
                             </div>
                         )}
-                        {!(showAddOrReplace && formMode === SavedSearchFormMode.EDIT) && (
-                            <div className="SavedSearchModal__body">
-                                {showAddOrReplace ? (
-                                    <SkjemaGruppe>
-                                        <Fieldset legend="Lagre nytt søk">
-                                            <AddOrReplaceForm />
-                                        </Fieldset>
-                                    </SkjemaGruppe>
-                                ) : (
-                                    <AddOrReplaceForm />
-                                )}
-                            </div>
-                        )}
+                        <div className="SavedSearchModal__body">
+                            {formMode !== SavedSearchFormMode.REPLACE && !showAddOrReplace && (
+                                <AddOrReplaceForm />
+                            )}
+                            {formMode !== SavedSearchFormMode.REPLACE && showAddOrReplace && (
+                                <SkjemaGruppe>
+                                    <Fieldset legend="Lagre nytt søk">
+                                        <AddOrReplaceForm />
+                                    </Fieldset>
+                                </SkjemaGruppe>
+                            )}
+                        </div>
 
                         <div className="SavedSearchModal__buttons">
                             <Hovedknapp
@@ -106,7 +104,7 @@ class SavedSearchForm extends React.Component {
                             >
                                 Lagre søk
                             </Hovedknapp>
-                            <Lenkeknapp onClick={this.closeModal}>{cancelButtonText}</Lenkeknapp>
+                            <Flatknapp onClick={this.closeModal}>Avbryt</Flatknapp>
                         </div>
                     </div>
                 </Modal>
@@ -129,7 +127,6 @@ SavedSearchForm.propTypes = {
     setFormMode: PropTypes.func.isRequired,
     hideForm: PropTypes.func.isRequired,
     formMode: PropTypes.string.isRequired,
-    cancelButtonText: PropTypes.string.isRequired,
     currentSavedSearch: PropTypes.shape({
         title: PropTypes.string
     })
@@ -138,7 +135,6 @@ SavedSearchForm.propTypes = {
 const mapStateToProps = (state) => ({
     showSavedSearchForm: state.savedSearchForm.showSavedSearchForm,
     formMode: state.savedSearchForm.formMode,
-    cancelButtonText: state.savedSearchForm.cancelButtonText,
     showAddOrReplace: state.savedSearchForm.showAddOrReplace,
     currentSavedSearch: state.savedSearches.currentSavedSearch,
     isSaving: state.savedSearches.isSaving

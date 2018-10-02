@@ -32,7 +32,6 @@ const initialState = {
     formMode: SavedSearchFormMode.ADD,
     formData: undefined,
     validation: {},
-    cancelButtonText: 'back_to_search',
     showAddOrReplace: false
 };
 
@@ -43,8 +42,7 @@ export default function savedSearchFormReducer(state = initialState, action) {
                 ...state,
                 showAddOrReplace: action.showAddOrReplace,
                 showSavedSearchForm: true,
-                formMode: action.formMode,
-                cancelButtonText: action.cancelButtonText
+                formMode: action.formMode
             };
         case HIDE_SAVED_SEARCH_FORM:
         case UPDATE_SAVED_SEARCH_SUCCESS:
@@ -190,16 +188,16 @@ function* setDefaultFormData(action) {
                 title: toTitle(state),
                 searchQuery: toUrl(toQuery(state)),
                 duration: 30,
-                notifyType: NotifyTypeEnum.EMAIL,
+                notifyType: NotifyTypeEnum.NONE,
                 status: SavedSearchStatusEnum.ACTIVE
             }
         });
-    } else if (action.formMode === SavedSearchFormMode.EDIT && !state.savedSearches.currentSavedSearch) {
+    } else if (action.formMode === SavedSearchFormMode.EDIT) {
         yield put({
             type: SET_FORM_DATA,
             formData: action.formData
         });
-    } else if (action.formMode === SavedSearchFormMode.EDIT && state.savedSearches.currentSavedSearch ) {
+    } else if (action.formMode === SavedSearchFormMode.REPLACE) {
         yield put({
             type: SET_FORM_DATA,
             formData: {
@@ -208,6 +206,7 @@ function* setDefaultFormData(action) {
             }
         });
     }
+    yield validateAll();
 }
 
 export const savedSearchFormSaga = function* saga() {

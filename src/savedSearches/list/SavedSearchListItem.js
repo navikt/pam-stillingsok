@@ -11,7 +11,7 @@ import { SET_CURRENT_SAVED_SEARCH, SHOW_CONFIRM_REMOVE_SAVED_SEARCH_MODAL } from
 
 class SavedSearchListItem extends React.Component {
     onChangeClick = () => {
-        this.props.showSavedSearchForm(this.props.savedSearch, 'Tilbake til lagrede søk');
+        this.props.showSavedSearchForm(this.props.savedSearch);
     };
 
     onRemoveClick = () => {
@@ -74,12 +74,11 @@ const mapStateToProps = (state) => ({});
 
 const mapDispatchToProps = (dispatch) => ({
     showConfirmRemoveSavedSearchModal: (uuid) => dispatch({ type: SHOW_CONFIRM_REMOVE_SAVED_SEARCH_MODAL, uuid }),
-    showSavedSearchForm: (formData, cancelButtonText) => dispatch({
+    showSavedSearchForm: (formData) => dispatch({
         type: SHOW_SAVED_SEARCH_FORM,
         formMode: SavedSearchFormMode.EDIT,
         formData,
-        showAddOrReplace: false,
-        cancelButtonText
+        showAddOrReplace: false
     }),
     setCurrentSavedSearch: (savedSearch) => dispatch({ type: SET_CURRENT_SAVED_SEARCH, savedSearch })
 });

@@ -28,6 +28,7 @@ import PersonalAttributes from './requirements/PersonalAttributes';
 import SoftRequirements from './requirements/SoftRequirements';
 import './Stilling.less';
 import { FETCH_STILLING_BEGIN } from './stillingReducer';
+import NotLoggedIn from '../authorization/NotLoggedIn';
 
 class Stilling extends React.Component {
     constructor(props) {
@@ -67,6 +68,7 @@ class Stilling extends React.Component {
                 <Disclaimer />
                 <FavouriteAlertStripe />
                 <FavouriteError />
+                <NotLoggedIn />
                 <div className="StillingSubMenu no-print">
                     <Container>
                         <Row>
