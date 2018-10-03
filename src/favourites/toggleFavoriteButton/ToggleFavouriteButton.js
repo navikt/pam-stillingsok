@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { ADD_TO_FAVOURITES, REMOVE_FROM_FAVOURITES } from '../favouritesReducer';
 import './ToggleFavouriteButton.less';
-import Star from './Star';
 import { SHOW_AUTHORIZATION_ERROR_MODAL } from '../../authorization/authorizationReducer';
 import AuthorizationEnum from '../../authorization/AuthorizationEnum';
 
@@ -39,7 +38,7 @@ class ToggleFavouriteButton extends React.Component {
                     className={className ? `ToggleFavouriteButton ${className}` : 'ToggleFavouriteButton'}
                 >
                     <span className="ToggleFavouriteButton__star">
-                        <Star fill="#06893A" stroke="#06893A" />
+                        &#9733;
                     </span>
                     {showLabel && (
                         <span className="ToggleFavouriteButton__label typo-normal">Fjern favoritt</span>
@@ -55,7 +54,7 @@ class ToggleFavouriteButton extends React.Component {
                 className={className ? `ToggleFavouriteButton ${className}` : 'ToggleFavouriteButton'}
             >
                 <span className="ToggleFavouriteButton__star">
-                    <Star fill="none" stroke="#3E3832" />
+                    &#9734;
                 </span>
                 {showLabel && (
                     <span className="ToggleFavouriteButton__label typo-normal">Lagre favoritt</span>
