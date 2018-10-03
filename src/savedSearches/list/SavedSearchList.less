@@ -1,11 +1,14 @@
 @import "../../variables";
 
+.SavedSearchListItem__wrapper {
+    margin-bottom: 1rem;
+}
+
 .SavedSearchListItem {
     background-color: #fff;
     padding: 1.25rem;
     display: block;
     border: 1px solid @border-gray;
-    margin-bottom: 1rem;
 }
 
 .SavedSearchListItem__top {
@@ -18,6 +21,10 @@
         display: flex;
         justify-content: space-between;
     }
+
+    .SavedSearchListItem__button-alertstripe {
+        margin-left: 9rem;
+    }
 }
 
 @media (max-width: @screen-sm-max) {
@@ -27,6 +34,11 @@
 
     .SavedSearchListItem__created {
         margin-bottom: 0.75rem;
+    }
+
+    .SavedSearchListItem__button-alertstripe {
+        display: block!important;
+        margin-top: 1rem;
     }
 }
 

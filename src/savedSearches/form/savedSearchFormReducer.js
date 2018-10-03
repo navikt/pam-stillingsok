@@ -18,7 +18,8 @@ export const SET_SAVED_SEARCH_TITLE = 'SET_SAVED_SEARCH_TITLE';
 export const SET_SAVED_SEARCH_NOTIFY_TYPE = 'SET_SAVED_SEARCH_NOTIFY_TYPE';
 export const SET_SAVED_SEARCH_DURATION = 'SET_SAVED_SEARCH_DURATION';
 export const SET_SAVED_SEARCH_QUERY = 'SET_SAVED_SEARCH_QUERY';
-export const SET_TITLE_VALIDATION = 'SET_TITLE_VALIDATION';
+export const SET_ERROR = 'SET_ERROR';
+export const REMOVE_ERROR = 'REMOVE_ERROR';
 
 export const SavedSearchFormMode = {
     ADD: 'ADD',
@@ -30,9 +31,7 @@ const initialState = {
     showSavedSearchForm: false,
     formMode: SavedSearchFormMode.ADD,
     formData: undefined,
-    validation: {
-        titleIsValid: true
-    },
+    validation: {},
     showAddOrReplace: false
 };
 
@@ -101,12 +100,20 @@ export default function savedSearchFormReducer(state = initialState, action) {
                 }
             };
         }
-        case SET_TITLE_VALIDATION:
+        case SET_ERROR:
             return {
                 ...state,
                 validation: {
                     ...state.validation,
-                    titleIsValid: action.titleIsValid
+                    [action.field]: action.message
+                }
+            };
+        case REMOVE_ERROR:
+            return {
+                ...state,
+                validation: {
+                    ...state.validation,
+                    [action.field]: undefined
                 }
             };
         default:
@@ -116,8 +123,15 @@ export default function savedSearchFormReducer(state = initialState, action) {
 
 function* validateTitle() {
     const state = yield select();
-    const titleIsValid = state.savedSearchForm.formData.title.trim().length > 0;
-    yield put({ type: SET_TITLE_VALIDATION, titleIsValid });
+    const titleIsSet = state.savedSearchForm.formData.title.trim().length > 0;
+    const titleIsToLong = state.savedSearchForm.formData.title.length > 255;
+    if (!titleIsSet) {
+        yield put({ type: SET_ERROR, field: 'title', message: 'Du må gi et navn på søket' });
+    } else if (titleIsToLong) {
+        yield put({ type: SET_ERROR, field: 'title', message: 'Tittelen kan ikke overstige 255 tegn' });
+    } else {
+        yield put({ type: REMOVE_ERROR, field: 'title'});
+    }
 }
 
 export function* validateAll() {
@@ -159,7 +173,10 @@ function toTitle(state) {
     if (state.extent.checkedExtent.length > 0) title.push(state.extent.checkedExtent.join(', '));
     if (state.engagement.checkedEngagementType.length > 0) title.push(state.engagement.checkedEngagementType.join(', '));
     if (state.sector.checkedSector.length > 0) title.push(state.sector.checkedSector.join(', '));
-    return title.join(', ');
+
+    const newTitle = title.join(', ');
+
+    return newTitle.length > 255 ? `${newTitle.substr(0, 252)}...` : newTitle;
 }
 
 function* setDefaultFormData(action) {
@@ -193,7 +210,7 @@ function* setDefaultFormData(action) {
 }
 
 export const savedSearchFormSaga = function* saga() {
-    yield takeLatest(SET_SAVED_SEARCH_TITLE, validateAll);
+    yield takeLatest([SET_SAVED_SEARCH_TITLE, SET_FORM_DATA], validateAll);
     yield takeLatest(SHOW_SAVED_SEARCH_FORM, setDefaultFormData);
     yield takeLatest(SET_SAVED_SEARCH_FORM_MODE, setDefaultFormData);
 };
