@@ -5,6 +5,7 @@ import AlertStripe from 'nav-frontend-alertstriper';
 import Lenkeknapp from '../../common/Lenkeknapp';
 import SearchResultsItemDetails from '../../search/searchResults/SearchResultsItemDetails';
 import { SHOW_MODAL_REMOVE_FROM_FAVOURITES } from '../favouritesReducer';
+import '../../common/Icons.less';
 
 class FavouriteListItem extends React.Component {
     onRemoveClick = () => {
@@ -32,7 +33,10 @@ class FavouriteListItem extends React.Component {
                         <SearchResultsItemDetails stilling={this.toAd(favourite.favouriteAd)} />
                     </div>
                     <div className="FavouriteListItem__bottom">
-                        <Lenkeknapp onClick={this.onRemoveClick}>Slett</Lenkeknapp>
+                        <Lenkeknapp onClick={this.onRemoveClick} className="Delete">
+                            <i className="Delete__icon"/>
+                            Slett
+                        </Lenkeknapp>
                     </div>
                 </div>
                 {favourite.favouriteAd.status === 'INACTIVE' && (

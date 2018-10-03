@@ -18,6 +18,7 @@ import {
     SHOW_CONFIRM_REMOVE_SAVED_SEARCH_MODAL,
     UPDATE_SAVED_SEARCH
 } from '../savedSearchesReducer';
+import '../../common/Icons.less';
 
 class SavedSearchListItem extends React.Component {
     onChangeClick = () => {
@@ -67,8 +68,14 @@ class SavedSearchListItem extends React.Component {
                         )}
                     </div>
                     <div className="SavedSearchListItem__bottom">
-                        <Lenkeknapp onClick={this.onChangeClick}>Endre</Lenkeknapp>
-                        <Lenkeknapp onClick={this.onRemoveClick}>Slett</Lenkeknapp>
+                        <Lenkeknapp onClick={this.onChangeClick} className="Edit">
+                            <i className="Edit__icon"/>
+                            Endre
+                        </Lenkeknapp>
+                        <Lenkeknapp onClick={this.onRemoveClick} className="Delete">
+                            <i className="Delete__icon"/>
+                            Slett
+                        </Lenkeknapp>
                     </div>
                 </div>
                 {savedSearch.expired && (
