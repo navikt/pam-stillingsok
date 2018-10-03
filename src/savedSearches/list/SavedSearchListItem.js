@@ -3,11 +3,21 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import AlertStripe from 'nav-frontend-alertstriper';
+import { Flatknapp } from 'nav-frontend-knapper';
 import Lenkeknapp from '../../common/Lenkeknapp';
 import { formatISOString, isValidISOString } from '../../utils';
 import NotifyTypeEnum from '../enums/NotifyTypeEnum';
-import { SavedSearchFormMode, SHOW_SAVED_SEARCH_FORM } from '../form/savedSearchFormReducer';
-import { SET_CURRENT_SAVED_SEARCH, SHOW_CONFIRM_REMOVE_SAVED_SEARCH_MODAL } from '../savedSearchesReducer';
+import {
+    SavedSearchFormMode,
+    SET_FORM_DATA,
+    SHOW_SAVED_SEARCH_FORM
+} from '../form/savedSearchFormReducer';
+import {
+    SET_CURRENT_SAVED_SEARCH,
+    SHOW_CONFIRM_REMOVE_SAVED_SEARCH_MODAL,
+    UPDATE_SAVED_SEARCH
+} from '../savedSearchesReducer';
 
 class SavedSearchListItem extends React.Component {
     onChangeClick = () => {
@@ -22,35 +32,57 @@ class SavedSearchListItem extends React.Component {
         this.props.setCurrentSavedSearch(this.props.savedSearch);
     };
 
+    onExtendDurationClick = () => {
+        this.props.setFormData({
+            ...this.props.savedSearch,
+            expired: false
+        });
+        this.props.updateSavedSearch();
+    };
+
     render() {
         const { savedSearch } = this.props;
         return (
-            <div className="SavedSearchListItem">
-                <div className="SavedSearchListItem__top">
-                    <div className="SavedSearchListItem__top_flex">
-                        <div className="SavedSearchListItem__title">
-                            <Element tag="h3">
-                                <Link className="lenke" to="/" onClick={this.onTitleClick}>
-                                    {savedSearch.title}
-                                </Link>
-                            </Element>
-                        </div>
-                        {isValidISOString(savedSearch.updated) && (
-                            <Undertekst className="SavedSearchListItem__created">
+            <div className="SavedSearchListItem__wrapper">
+                <div className="SavedSearchListItem">
+                    <div className="SavedSearchListItem__top">
+                        <div className="SavedSearchListItem__top_flex">
+                            <div className="SavedSearchListItem__title">
+                                <Element tag="h3">
+                                    <Link className="lenke" to="/" onClick={this.onTitleClick}>
+                                        {savedSearch.title}
+                                    </Link>
+                                </Element>
+                            </div>
+                            {isValidISOString(savedSearch.updated) && (
+                                <Undertekst className="SavedSearchListItem__created">
                                 Sist endret: {formatISOString(savedSearch.updated, 'DD.MM.YYYY')}
-                            </Undertekst>
+                                </Undertekst>
+                            )}
+                        </div>
+                        {savedSearch.notifyType === NotifyTypeEnum.EMAIL ? (
+                            <Normaltekst>Varighet på varsel: {savedSearch.duration} dager</Normaltekst>
+                        ) : (
+                            <Normaltekst>Ingen varsling</Normaltekst>
                         )}
                     </div>
-                    {savedSearch.notifyType === NotifyTypeEnum.EMAIL ? (
-                        <Normaltekst>Varighet på varsel: {savedSearch.duration} dager</Normaltekst>
-                    ) : (
-                        <Normaltekst>Ingen varsling</Normaltekst>
-                    )}
+                    <div className="SavedSearchListItem__bottom">
+                        <Lenkeknapp onClick={this.onChangeClick}>Endre</Lenkeknapp>
+                        <Lenkeknapp onClick={this.onRemoveClick}>Slett</Lenkeknapp>
+                    </div>
                 </div>
-                <div className="SavedSearchListItem__bottom">
-                    <Lenkeknapp onClick={this.onChangeClick}>Endre</Lenkeknapp>
-                    <Lenkeknapp onClick={this.onRemoveClick}>Slett</Lenkeknapp>
-                </div>
+                {savedSearch.expired && (
+                    <AlertStripe type="info" solid>
+                        Ditt varsel for dette søket har gått ut
+                        <Flatknapp
+                            className="SavedSearchListItem__button-alertstripe"
+                            onClick={this.onExtendDurationClick}
+                            mini
+                        >
+                            Start ny varsling
+                        </Flatknapp>
+                    </AlertStripe>
+                )}
             </div>
         );
     }
@@ -60,13 +92,16 @@ SavedSearchListItem.propTypes = {
     showConfirmRemoveSavedSearchModal: PropTypes.func.isRequired,
     showSavedSearchForm: PropTypes.func.isRequired,
     setCurrentSavedSearch: PropTypes.func.isRequired,
+    updateSavedSearch: PropTypes.func.isRequired,
+    setFormData: PropTypes.func.isRequired,
     savedSearch: PropTypes.shape({
         uuid: PropTypes.string,
         title: PropTypes.string,
         notifyType: PropTypes.string,
         duration: PropTypes.number,
         updated: PropTypes.string,
-        searchQuery: PropTypes.string
+        searchQuery: PropTypes.string,
+        expired: PropTypes.string
     }).isRequired
 };
 
@@ -80,7 +115,9 @@ const mapDispatchToProps = (dispatch) => ({
         formData,
         showAddOrReplace: false
     }),
-    setCurrentSavedSearch: (savedSearch) => dispatch({ type: SET_CURRENT_SAVED_SEARCH, savedSearch })
+    setCurrentSavedSearch: (savedSearch) => dispatch({ type: SET_CURRENT_SAVED_SEARCH, savedSearch }),
+    setFormData: (formData) => dispatch({ type: SET_FORM_DATA, formData }),
+    updateSavedSearch: () => dispatch({ type: UPDATE_SAVED_SEARCH })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SavedSearchListItem);
