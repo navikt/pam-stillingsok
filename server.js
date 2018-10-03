@@ -23,7 +23,8 @@ server.use(helmet.contentSecurityPolicy({
         scriptSrc: ["'self'", 'https://www.google-analytics.com'],
         styleSrc: ["'self'"],
         fontSrc: ["'self'", 'data:'],
-        imgSrc: ["'self'", 'data:', 'https://www.google-analytics.com'],
+        imgSrc: ["'self'", 'data:', 'https://www.google-analytics.com',
+            'https://www.nav.no/_public/beta.nav.no/images/logo.png'],
         connectSrc: ["'self'", 'https://www.google-analytics.com']
     }
 }));
