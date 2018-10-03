@@ -4,10 +4,16 @@ import { connect } from 'react-redux';
 import { ADD_TO_FAVOURITES, REMOVE_FROM_FAVOURITES } from '../favouritesReducer';
 import './ToggleFavouriteButton.less';
 import Star from './Star';
+import { SHOW_AUTHORIZATION_ERROR_MODAL } from '../../authorization/authorizationReducer';
+import AuthorizationEnum from '../../authorization/AuthorizationEnum';
 
 class ToggleFavouriteButton extends React.Component {
     onAddToFavouritesClick = () => {
-        this.props.addToFavourites(this.props.uuid);
+        if (!this.props.isLoggedIn) {
+            this.props.showError(AuthorizationEnum.ADD_FAVORITE_ERROR);
+        } else {
+            this.props.addToFavourites(this.props.uuid);
+        }
     };
 
     onRemoveFromFavouritesClick = () => {
@@ -28,7 +34,8 @@ class ToggleFavouriteButton extends React.Component {
             return (
                 <button
                     onClick={this.onRemoveFromFavouritesClick}
-                    aria-label="Fjern favoritt"
+                    aria-label="Favoritt"
+                    aria-pressed="true"
                     className={className ? `ToggleFavouriteButton ${className}` : 'ToggleFavouriteButton'}
                 >
                     <span className="ToggleFavouriteButton__star">
@@ -43,7 +50,8 @@ class ToggleFavouriteButton extends React.Component {
         return (
             <button
                 onClick={this.onAddToFavouritesClick}
-                aria-label="Lagre favoritt"
+                aria-label="Favoritt"
+                aria-pressed="false"
                 className={className ? `ToggleFavouriteButton ${className}` : 'ToggleFavouriteButton'}
             >
                 <span className="ToggleFavouriteButton__star">
@@ -59,7 +67,8 @@ class ToggleFavouriteButton extends React.Component {
 
 ToggleFavouriteButton.defaultProps = {
     className: undefined,
-    showLabel: false
+    showLabel: false,
+    httpStatus: undefined
 };
 
 ToggleFavouriteButton.propTypes = {
@@ -69,17 +78,23 @@ ToggleFavouriteButton.propTypes = {
     removeFromFavourites: PropTypes.func.isRequired,
     favouriteAdUuidList: PropTypes.arrayOf(PropTypes.string).isRequired,
     uuid: PropTypes.string.isRequired,
-    showLabel: PropTypes.bool
+    showLabel: PropTypes.bool,
+    httpStatus: PropTypes.number,
+    showError: PropTypes.func.isRequired,
+    isLoggedIn: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => ({
     favouriteAdUuidList: state.favourites.favouriteAdUuidList,
-    isFetchingFavourites: state.favourites.isFetchingFavourites
+    isFetchingFavourites: state.favourites.isFetchingFavourites,
+    httpStatus: state.favourites.httpErrorStatus,
+    isLoggedIn: state.authorization.isLoggedIn
 });
 
 const mapDispatchToProps = (dispatch) => ({
     addToFavourites: (uuid) => dispatch({ type: ADD_TO_FAVOURITES, uuid }),
-    removeFromFavourites: (uuid) => dispatch({ type: REMOVE_FROM_FAVOURITES, uuid })
+    removeFromFavourites: (uuid) => dispatch({ type: REMOVE_FROM_FAVOURITES, uuid }),
+    showError: (text) => dispatch({ type: SHOW_AUTHORIZATION_ERROR_MODAL, text })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ToggleFavouriteButton);

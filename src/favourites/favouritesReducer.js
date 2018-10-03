@@ -32,6 +32,7 @@ const initialState = {
     favouriteAboutToBeRemoved: undefined,
     showAlertStripe: false,
     error: undefined,
+    httpErrorStatus: undefined,
     alertStripeMode: 'added',
     totalElements: 0,
     favouriteAdUuidList: []
@@ -60,12 +61,14 @@ export default function favouritesReducer(state = initialState, action) {
                 favouriteAdUuidList: action.response.content.map((favourite) => (favourite.favouriteAd.uuid)),
                 totalElements: action.response.totalElements,
                 isFetchingFavourites: false,
-                shouldFetchFavourites: false
+                shouldFetchFavourites: false,
+                httpErrorStatus: undefined
             };
         case FETCH_FAVOURITES_FAILURE:
             return {
                 ...state,
                 error: 'fetch_error',
+                httpErrorStatus: action.error.statusCode,
                 isFetchingFavourites: false
             };
         case ADD_TO_FAVOURITES_BEGIN:
@@ -137,7 +140,7 @@ function toFavourite(uuid, ad) {
             title: ad.title,
             updated: '2018-11-04T10:11:30', //ikke kompatibel med updated fra search
             jobTitle: ad.properties.jobtitle ? ad.properties.jobtitle : '',
-            status: 'INACTIVE',
+            status: 'ACTIVE',
             applicationdue: ad.properties.applicationdue,
             location: ad.properties.location,
             employer: ad.properties.employer
@@ -148,7 +151,7 @@ function toFavourite(uuid, ad) {
 function* fetchFavourites() {
     const state = yield select();
 
-    if (state.favourites.shouldFetchFavourites) {
+    if (state.favourites.shouldFetchFavourites && state.authorization.isLoggedIn) {
         yield put({ type: FETCH_FAVOURITES_BEGIN });
         try {
             const response = yield call(get, `${AD_USER_API}/api/v1/userfavouriteads?size=200&user=${USER_UUID_HACK}`);

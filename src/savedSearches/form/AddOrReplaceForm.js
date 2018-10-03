@@ -36,10 +36,7 @@ class AddOrReplaceForm extends React.Component {
                     label="Navn*"
                     onChange={this.onTitleChange}
                     value={formData.title}
-                    feil={!validation.titleIsValid ?
-                        { feilmelding: 'Du må gi et navn på søket' } :
-                        undefined
-                    }
+                    feil={validation.title ? { feilmelding: validation.title }  : undefined}
                 />
                 <Checkbox
                     className="SavedSearchModal__body__notify"
