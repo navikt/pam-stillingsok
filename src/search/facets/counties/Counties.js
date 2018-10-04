@@ -64,7 +64,7 @@ class Counties extends React.Component {
 
     render() {
         const { counties, checkedCounties, checkedMunicipals } = this.props;
-        let title = 'Fylke/kommune';
+        let title = 'Område';
         if ((checkedCounties.length + checkedMunicipals.length) === 1) {
             title += ' (1 valgt)';
         } else if ((checkedCounties.length + checkedMunicipals.length) > 1) {
@@ -79,7 +79,7 @@ class Counties extends React.Component {
             >
                 <div
                     role="group"
-                    aria-label="Velg fylke"
+                    aria-label="Velg område"
                     className="Counties__inner"
                 >
                     {counties && counties.map((county) => (
@@ -95,7 +95,7 @@ class Counties extends React.Component {
                                 <div
                                     className="Counties__inner__municipals"
                                     role="group"
-                                    aria-label="Velg kommune"
+                                    aria-label={`Underområder ${this.capitalize(county.key)}`}
                                 >
                                     {county.municipals && county.municipals.map((municipal) => (
                                         <Checkbox
