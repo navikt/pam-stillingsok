@@ -1,3 +1,6 @@
+## RELEASE - 0.40.263-de418ef
+#### New in this release: 
++ 2018-10-05 [PAM-1617]: Viser info om kontaktperson (For stillinger fra FINN er disse dataene excludert fra elastic search.)
 ## RELEASE - 0.39.262-2d6d81e
 #### New in this release: 
 + 2018-10-05 [Bugfix] Oppdatere lenker til hotjar
