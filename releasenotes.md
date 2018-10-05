@@ -1,3 +1,7 @@
+## RELEASE - 0.38.260-0cf5702
+#### New in this release: 
++ 2018-10-04 [PAM-1323] Endrer fra "Fylke/Kommune" til "Område", slik at det skal passe bedre med f.eks Svalbard/Longyearbyen
++ 2018-09-25 [Bugfix] Gjør om kompaktvisning til visuell knapp
 ## RELEASE - 0.37.254-d7fc93f
 #### New in this release: 
 + 2018-09-20 [PAM-1146] Bruk lenke-knapp istedet for toggleknapp for Normal-/Kompaktvisning (ref. skisser i zeplin). Dette fikser da også uu-issue relatert til toggleknapp.
