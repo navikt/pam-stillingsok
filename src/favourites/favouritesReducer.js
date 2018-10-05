@@ -150,20 +150,27 @@ function toFavourite(uuid, ad) {
 }
 
 function* fetchFavourites() {
-    yield put({ type: FETCH_USER });
-    yield take(FETCH_USER_SUCCESS);
-    const state = yield select();
-
-    if (state.favourites.shouldFetchFavourites && state.authorization.isLoggedIn) {
-        yield put({ type: FETCH_FAVOURITES_BEGIN });
-        try {
-            const response = yield call(get, `${AD_USER_API}/api/v1/userfavouriteads?size=200&user=${USER_UUID_HACK}`);
-            yield put({ type: FETCH_FAVOURITES_SUCCESS, response });
-        } catch (e) {
-            if (e instanceof SearchApiError) {
-                yield put({ type: FETCH_FAVOURITES_FAILURE, error: e });
-            } else {
-                throw e;
+    let state = yield select();
+    if (state.favourites.shouldFetchFavourites) {
+        if (state.authorization.shouldFetchUser) {
+            yield put({ type: FETCH_USER });
+            yield take(FETCH_USER_SUCCESS);
+            state = yield select();
+        }
+        if (state.authorization.isLoggedIn) {
+            yield put({ type: FETCH_FAVOURITES_BEGIN });
+            try {
+                const response = yield call(
+                    get,
+                    `${AD_USER_API}/api/v1/userfavouriteads?size=200&user=${USER_UUID_HACK}`
+                );
+                yield put({ type: FETCH_FAVOURITES_SUCCESS, response });
+            } catch (e) {
+                if (e instanceof SearchApiError) {
+                    yield put({ type: FETCH_FAVOURITES_FAILURE, error: e });
+                } else {
+                    throw e;
+                }
             }
         }
     }
