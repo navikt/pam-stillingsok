@@ -1,6 +1,6 @@
 import { call, put, select, takeLatest, throttle } from 'redux-saga/effects';
 import { fetchSearch, SearchApiError } from '../api/api';
-import { RESTORE_STATE_FROM_SAVED_SEARCH, SET_CURRENT_SAVED_SEARCH } from '../savedSearches/savedSearchesReducer';
+import { RESTORE_STATE_FROM_SAVED_SEARCH } from '../savedSearches/savedSearchesReducer';
 import { RESTORE_STATE_FROM_URL } from '../urlReducer';
 
 export const FETCH_INITIAL_FACETS_SUCCESS = 'FETCH_INITIAL_FACETS_SUCCESS';
@@ -213,7 +213,6 @@ function* loadMore() {
 export const saga = function* saga() {
     yield takeLatest(INITIAL_SEARCH, initialSearch);
     yield takeLatest(RESET_SEARCH, search);
-    yield takeLatest(SET_CURRENT_SAVED_SEARCH, search);
     yield throttle(1000, SEARCH, search);
     yield takeLatest(LOAD_MORE, loadMore);
 };

@@ -2,7 +2,7 @@ import { takeEvery, take, call, put, select, takeLatest } from 'redux-saga/effec
 import { get, post, put as fetchPut, remove, SearchApiError } from '../api/api';
 import { AD_USER_API } from '../fasitProperties';
 import { USER_UUID_HACK } from '../favourites/favouritesReducer';
-import { RESET_SEARCH } from '../search/searchReducer';
+import { RESET_SEARCH, SEARCH } from '../search/searchReducer';
 import { fromUrl } from '../search/url';
 import { RESTORE_STATE_FROM_URL, SEARCH_PARAMETERS_DEFINITION } from '../urlReducer';
 import { FETCH_USER_SUCCESS, FETCH_USER } from '../authorization/authorizationReducer';
@@ -235,6 +235,7 @@ function* setCurrentSavedSearch() {
         type: RESTORE_STATE_FROM_SAVED_SEARCH,
         query: fromUrl(SEARCH_PARAMETERS_DEFINITION, state.savedSearches.currentSavedSearch.searchQuery)
     });
+    yield put({ type: SEARCH });
 }
 
 function* restoreCurrentSavedSearch(action) {
@@ -249,7 +250,7 @@ function* restoreCurrentSavedSearch(action) {
             savedSearch.uuid === action.query.saved
         ));
         if (found) {
-             yield put({ type: RESTORE_CURRENT_SAVED_SEARCH, savedSearch: found });
+            yield put({ type: RESTORE_CURRENT_SAVED_SEARCH, savedSearch: found });
         }
     }
 }
