@@ -121,7 +121,7 @@ class Stilling extends React.Component {
                                         properties={stilling._source.properties}
                                     />
                                     <EmploymentDetails properties={stilling._source.properties} />
-                                    <ContactPerson properties={stilling._source.properties} />
+                                    <ContactPerson contactList={stilling._source.contactList} />
                                     <EmployerDetails properties={stilling._source.properties} />
                                     <AdDetails source={stilling._source} />
                                 </Column>
