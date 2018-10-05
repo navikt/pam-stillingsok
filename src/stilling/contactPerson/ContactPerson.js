@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Undertittel } from 'nav-frontend-typografi';
 
 export default function ContactPerson({ contactList }) {
-    console.log(contactList);
     if (contactList && contactList.length > 0) {
         return (
             <div className="detail-section">
