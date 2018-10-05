@@ -18,7 +18,7 @@ function Disclaimer({ shouldShow, hideDisclaimer }) {
                             det underveis.
                         </Normaltekst>
                         <Normaltekst className="blokk-xxs">
-                            <a href="https://insights.hotjar.com/s?siteId=148751&surveyId=71116" className="lenke">
+                            <a href="https://in.hotjar.com/s?siteId=148751&surveyId=71116" className="lenke">
                                 Gi oss din tilbakemelding på det nye stillingssøket
                             </a>
                         </Normaltekst>
@@ -38,7 +38,7 @@ function Disclaimer({ shouldShow, hideDisclaimer }) {
                 <div className="container">
                     <div role="alert" className="Feedback typo-normal">
                         <Normaltekst className="blokk-xxs">
-                            <a href="https://insights.hotjar.com/s?siteId=148751&surveyId=71116" className="lenke">
+                            <a href="https://in.hotjar.com/s?siteId=148751&surveyId=71116" className="lenke">
                                 Gi oss din tilbakemelding på det nye stillingssøket
                             </a>
                         </Normaltekst>
