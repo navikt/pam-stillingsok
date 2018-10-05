@@ -1,3 +1,6 @@
+## RELEASE - 0.39.262-2d6d81e
+#### New in this release: 
++ 2018-10-05 [Bugfix] Oppdatere lenker til hotjar
 ## RELEASE - 0.38.260-0cf5702
 #### New in this release: 
 + 2018-10-04 [PAM-1323] Endrer fra "Fylke/Kommune" til "Område", slik at det skal passe bedre med f.eks Svalbard/Longyearbyen
