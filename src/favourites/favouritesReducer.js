@@ -39,8 +39,6 @@ const initialState = {
     favouriteAdUuidList: []
 };
 
-export const USER_UUID_HACK = localStorage.getItem('hack');
-
 export default function favouritesReducer(state = initialState, action) {
     switch (action.type) {
         case FETCH_FAVOURITES:
@@ -86,7 +84,7 @@ export default function favouritesReducer(state = initialState, action) {
         case REMOVE_FROM_FAVOURITES_BEGIN:
             return {
                 ...state,
-                favourites: state.favourites.filter((favourite) => favourite.uuid !== action.uuid),
+                favourites: state.favourites.filter((favourite) => favourite.favouriteAd.uuid !== action.uuid),
                 favouriteAdUuidList: state.favouriteAdUuidList.filter((uuid) => uuid !== action.uuid),
                 totalElements: state.totalElements - 1
             };
@@ -135,7 +133,6 @@ const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 function toFavourite(uuid, ad) {
     return {
-        userUuid: USER_UUID_HACK,
         favouriteAd: {
             uuid,
             title: ad.title,
@@ -162,7 +159,7 @@ function* fetchFavourites() {
             try {
                 const response = yield call(
                     get,
-                    `${AD_USER_API}/api/v1/userfavouriteads?size=200&user=${USER_UUID_HACK}`
+                    `${AD_USER_API}/api/v1/userfavouriteads?size=200`
                 );
                 yield put({ type: FETCH_FAVOURITES_SUCCESS, response });
             } catch (e) {
@@ -192,7 +189,7 @@ function* addToFavourites(action) {
         }
         yield put({ type: SHOW_FAVOURITES_ALERT_STRIPE, alertStripeMode: 'added' });
         yield put({ type: ADD_TO_FAVOURITES_BEGIN, uuid: favourite.favouriteAd.uuid });
-        const response = yield call(post, `${AD_USER_API}/api/v1/userfavouriteads?user=${USER_UUID_HACK}`, favourite);
+        const response = yield call(post, `${AD_USER_API}/api/v1/userfavouriteads`, favourite);
         yield put({ type: ADD_TO_FAVOURITES_SUCCESS, response });
         yield call(delay, 5000);
         yield put({ type: HIDE_FAVOURITES_ALERT_STRIPE });
@@ -207,9 +204,11 @@ function* addToFavourites(action) {
 
 function* removeFromFavourites(action) {
     try {
+        const state = yield select();
+        const adToDelete = state.favourites.favourites.find((favourite) => favourite.favouriteAd.uuid === action.uuid);
         yield put({ type: SHOW_FAVOURITES_ALERT_STRIPE, alertStripeMode: 'removed' });
         yield put({ type: REMOVE_FROM_FAVOURITES_BEGIN, uuid: action.uuid });
-        yield call(remove, `${AD_USER_API}/api/v1/userfavouriteads/${action.uuid}?user=${USER_UUID_HACK}`);
+        yield call(remove, `${AD_USER_API}/api/v1/userfavouriteads/${adToDelete.uuid}`);
         yield put({ type: REMOVE_FROM_FAVOURITES_SUCCESS });
         yield call(delay, 5000);
         yield put({ type: HIDE_FAVOURITES_ALERT_STRIPE });

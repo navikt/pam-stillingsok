@@ -10,7 +10,7 @@ import './RemoveFavouriteModal.less';
 class RemoveFavouriteModal extends React.Component {
     onRemoveClick = () => {
         this.props.hideForm();
-        this.props.removeFromFavourites(this.props.favouriteAboutToBeRemoved.uuid);
+        this.props.removeFromFavourites(this.props.favouriteAboutToBeRemoved.favouriteAd.uuid);
     };
 
     closeModal = () => {

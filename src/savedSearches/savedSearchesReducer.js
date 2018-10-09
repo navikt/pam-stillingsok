@@ -1,7 +1,6 @@
 import { takeEvery, take, call, put, select, takeLatest } from 'redux-saga/effects';
 import { get, post, put as fetchPut, remove, SearchApiError } from '../api/api';
 import { AD_USER_API } from '../fasitProperties';
-import { USER_UUID_HACK } from '../favourites/favouritesReducer';
 import { RESET_SEARCH, SEARCH } from '../search/searchReducer';
 import { fromUrl } from '../search/url';
 import { RESTORE_STATE_FROM_URL, SEARCH_PARAMETERS_DEFINITION } from '../urlReducer';
@@ -158,7 +157,7 @@ function* fetchSavedSearches() {
         if (state.authorization.isLoggedIn) {
             yield put({ type: FETCH_SAVED_SEARCHES_BEGIN });
             try {
-                const response = yield call(get, `${AD_USER_API}/api/v1/savedsearches?size=200&user=${USER_UUID_HACK}`);
+                const response = yield call(get, `${AD_USER_API}/api/v1/savedsearches?size=200`);
                 yield put({ type: FETCH_SAVED_SEARCHES_SUCCESS, response });
             } catch (e) {
                 if (e instanceof SearchApiError) {
@@ -198,8 +197,7 @@ function* updateSavedSearch() {
             const response = yield call(
                 fetchPut,
                 `${AD_USER_API}/api/v1/savedsearches/${state.savedSearchForm.formData.uuid}`, {
-                    ...state.savedSearchForm.formData,
-                    userUuid: USER_UUID_HACK
+                    ...state.savedSearchForm.formData
                 }
             );
             yield put({ type: UPDATE_SAVED_SEARCH_SUCCESS, response });
@@ -220,8 +218,7 @@ function* addSavedSearch() {
         try {
             yield put({ type: ADD_SAVED_SEARCH_BEGIN, added: state.savedSearchForm.formData });
             const response = yield call(post, `${AD_USER_API}/api/v1/savedsearches`, {
-                ...state.savedSearchForm.formData,
-                userUuid: USER_UUID_HACK
+                ...state.savedSearchForm.formData
             });
             yield put({ type: ADD_SAVED_SEARCH_SUCCESS, response });
         } catch (e) {

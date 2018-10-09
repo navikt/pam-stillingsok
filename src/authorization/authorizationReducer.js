@@ -1,7 +1,6 @@
 import { select, put, call, takeEvery } from 'redux-saga/effects';
 import { get, SearchApiError } from '../api/api';
 import { AD_USER_API } from '../fasitProperties';
-import { USER_UUID_HACK } from '../favourites/favouritesReducer';
 
 export const SHOW_AUTHORIZATION_ERROR_MODAL = 'SHOW_AUTHORIZATION_ERROR_MODAL';
 export const HIDE_AUTHORIZATION_ERROR_MODAL = 'HIDE_AUTHORIZATION_ERROR_MODAL';
@@ -60,7 +59,7 @@ function* fetchUser() {
     if (state.authorization.shouldFetchUser) {
         yield put({ type: FETCH_USER_BEGIN });
         try {
-            const response = yield call(get, `${AD_USER_API}/api/v1/user/${USER_UUID_HACK}`);
+            const response = yield call(get, `${AD_USER_API}/api/v1/user`);
             yield put({ type: FETCH_USER_SUCCESS, response });
         } catch (e) {
             if (e instanceof SearchApiError) {
