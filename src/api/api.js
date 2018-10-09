@@ -14,6 +14,7 @@ export async function get(url) {
     let response;
     try {
         response = await fetch(url, {
+            credentials: 'include',
             method: 'GET'
         });
     } catch (e) {
@@ -30,6 +31,7 @@ export async function post(url, query) {
     let response;
     try {
         response = await fetch(url, {
+            credentials: 'include',
             body: JSON.stringify(query),
             method: 'POST',
             headers: {
@@ -50,6 +52,7 @@ export async function put(url, query) {
     let response;
     try {
         response = await fetch(url, {
+            credentials: 'include',
             body: JSON.stringify(query),
             method: 'PUT',
             headers: {
@@ -70,6 +73,7 @@ export async function remove(url) {
     let response;
     try {
         response = await fetch(url, {
+            credentials: 'include',
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'

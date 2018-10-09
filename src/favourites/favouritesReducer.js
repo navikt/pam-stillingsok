@@ -86,7 +86,7 @@ export default function favouritesReducer(state = initialState, action) {
         case REMOVE_FROM_FAVOURITES_BEGIN:
             return {
                 ...state,
-                favourites: state.favourites.filter((favourite) => favourite.uuid !== action.uuid),
+                favourites: state.favourites.filter((favourite) => favourite.favouriteAd.uuid !== action.uuid),
                 favouriteAdUuidList: state.favouriteAdUuidList.filter((uuid) => uuid !== action.uuid),
                 totalElements: state.totalElements - 1
             };
@@ -207,9 +207,11 @@ function* addToFavourites(action) {
 
 function* removeFromFavourites(action) {
     try {
+        const state = yield select();
+        const adToDelete = state.favourites.favourites.find((favourite) => favourite.favouriteAd.uuid === action.uuid);
         yield put({ type: SHOW_FAVOURITES_ALERT_STRIPE, alertStripeMode: 'removed' });
         yield put({ type: REMOVE_FROM_FAVOURITES_BEGIN, uuid: action.uuid });
-        yield call(remove, `${AD_USER_API}/api/v1/userfavouriteads/${action.uuid}?user=${USER_UUID_HACK}`);
+        yield call(remove, `${AD_USER_API}/api/v1/userfavouriteads/${adToDelete.uuid}?user=${USER_UUID_HACK}`);
         yield put({ type: REMOVE_FROM_FAVOURITES_SUCCESS });
         yield call(delay, 5000);
         yield put({ type: HIDE_FAVOURITES_ALERT_STRIPE });
