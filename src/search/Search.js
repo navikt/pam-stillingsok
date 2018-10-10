@@ -1,5 +1,5 @@
 import { Column, Container, Row } from 'nav-frontend-grid';
-import { Flatknapp } from 'nav-frontend-knapper';
+import { Flatknapp, Hovedknapp } from 'nav-frontend-knapper';
 import { Sidetittel } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -37,6 +37,7 @@ import Sorting from './sorting/Sorting';
 import ViewMode from './viewMode/ViewMode';
 import NotLoggedIn from '../authorization/NotLoggedIn';
 import { FETCH_USER } from '../authorization/authorizationReducer';
+import { LOGIN_URL, LOGOUT_URL } from "../fasitProperties";
 
 class Search extends React.Component {
     constructor(props) {
@@ -60,9 +61,31 @@ class Search extends React.Component {
         this.props.resetSearch();
     };
 
+    onLoginClick = () => {
+        window.location.href = `${LOGIN_URL}?redirect=${window.location.href}`;
+    };
+
+    onLogoutClick = () => {
+        window.location.href = LOGOUT_URL;
+    };
+
     render() {
         return (
             <div className="Search">
+                <div className="Search__auth">
+                    <Hovedknapp
+                        mini
+                        onClick={this.onLoginClick}
+                    >
+                        Logg inn
+                    </Hovedknapp>
+                    <Hovedknapp
+                        mini
+                        onClick={this.onLogoutClick}
+                    >
+                        Logg ut
+                    </Hovedknapp>
+                </div>
                 <Disclaimer />
                 <FavouriteAlertStripe />
                 <FavouriteError />
