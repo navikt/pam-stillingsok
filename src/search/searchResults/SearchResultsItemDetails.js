@@ -25,14 +25,9 @@ export default function SearchResultsItemDetails({ stilling }) {
                 )}
             </Column>
             <Column xs="12" md="8">
-                {stilling.updated ? (
+                {stilling.updated && (
                     <Undertekst className="SearchResultsItemDetails__updated">
-                        Registrert: {formatISOString(stilling.updated, 'DD.MM.YYYY')}{' - '}
-                        Søknadsfrist: {frist}
-                    </Undertekst>
-                ) : (
-                    <Undertekst className="SearchResultsItemDetails__updated">
-                        Søknadsfrist: {frist}
+                        {formatISOString(stilling.updated, 'DD.MM.YYYY')}
                     </Undertekst>
                 )}
 
@@ -54,6 +49,9 @@ export default function SearchResultsItemDetails({ stilling }) {
                         {stilling.properties.location}
                     </Normaltekst>
                 )}
+                <Normaltekst className="SearchResultsItemDetails__applicationdue">
+                    Søknadsfrist: {frist}
+                </Normaltekst>
             </Column>
         </Row>
     );
