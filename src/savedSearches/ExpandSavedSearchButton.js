@@ -22,11 +22,11 @@ class ExpandSavedSearchButton extends React.Component {
                 onClick={this.onClick}
                 aria-expanded={this.props.isSavedSearchesExpanded}
             >
+                Se lagrede søk {!this.props.isFetching ? ` (${this.props.savedSearches.length})` : ''}
                 <Chevron
                     className="SavedSearchExpandButton__chevron"
                     type={this.props.isSavedSearchesExpanded ? 'opp' : 'ned'}
                 />
-                Lagrede søk {!this.props.isFetching ? ` (${this.props.savedSearches.length})` : ''}
             </Flatknapp>
         );
     }
