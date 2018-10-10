@@ -79,7 +79,7 @@ class SavedSearchForm extends React.Component {
                                     <Undertittel className="SavedSearchModal__title">Lagre søk</Undertittel>
                                 )}
                                 {formMode === SavedSearchFormMode.EDIT && (
-                                    <Undertittel className="SavedSearchModal__title">Endre søk</Undertittel>
+                                    <Undertittel className="SavedSearchModal__title">Endre lagret søk</Undertittel>
                                 )}
                             </div>
                         )}
@@ -102,7 +102,7 @@ class SavedSearchForm extends React.Component {
                                 spinner={isSaving}
                                 onClick={this.onSaveClick}
                             >
-                                Lagre søk
+                                Lagre
                             </Hovedknapp>
                             <Flatknapp onClick={this.closeModal}>Avbryt</Flatknapp>
                         </div>
