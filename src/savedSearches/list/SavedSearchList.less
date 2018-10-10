@@ -1,0 +1,59 @@
+@import "../../variables";
+
+.SavedSearchListItem__wrapper {
+    margin-bottom: 1rem;
+}
+
+.SavedSearchListItem {
+    background-color: #fff;
+    padding: 1.25rem;
+    display: block;
+    border: 1px solid @border-gray;
+}
+
+.SavedSearchListItem__top {
+    margin-bottom: 1rem;
+}
+
+@media (min-width: @screen-md-min) {
+    .SavedSearchListItem__top_flex {
+        margin-bottom: 1rem;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .SavedSearchListItem__button-alertstripe {
+        margin-left: 9rem;
+    }
+}
+
+@media (max-width: @screen-sm-max) {
+    .SavedSearchListItem__title {
+        margin-bottom: 0.75rem;
+    }
+
+    .SavedSearchListItem__created {
+        margin-bottom: 0.75rem;
+    }
+
+    .SavedSearchListItem__button-alertstripe {
+        display: block!important;
+        margin-top: 1rem;
+    }
+}
+
+.SavedSearchListItem__bottom {
+    display: flex;
+    justify-content: flex-end;
+    border-top: 1px solid @border-gray;
+    padding-top: 1rem;
+}
+
+.SavedSearchListItem__bottom .Lenkeknapp:not(:last-child) {
+    margin-right: 1rem;
+}
+
+.SavedSearchListItem__created {
+    white-space: nowrap;
+    color: #999;
+}

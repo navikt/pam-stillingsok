@@ -1,0 +1,65 @@
+@import "../../variables";
+
+.SearchResultsItemDetails {
+  color: @navMorkGra;
+}
+
+@media (min-width: @screen-md-min) {
+  .SearchResultsItemDetails {
+    display: flex;
+    align-items: center;
+  }
+
+  .SearchResultsItemDetails__employer {
+    text-align: center;
+  }
+}
+
+.SearchResultsItemDetails__employer {
+  padding-right: 1rem;
+}
+
+.SearchResultsItemDetails__updated {
+  color: @navGra60;
+}
+
+.SearchResultsItemDetails__title {
+  margin-bottom: 0.5rem;
+  font-weight: normal;
+
+  .lenke {
+    color: @navGronn;
+
+    &:hover {
+      border-color: @navGronn;
+    }
+  }
+}
+
+.SearchResultsItemDetails__title,
+.SearchResultsItemDetails__jobtitle,
+.SearchResultsItemDetails__employer,
+.SearchResultsItemDetails__location {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.SearchResultsItemDetails__location {
+  margin-top: 1rem;
+}
+
+@media (max-width: @screen-sm-max) {
+  .SearchResultsItemDetails__updated,
+  .SearchResultsItemDetails__employer {
+    margin-bottom: 1rem;
+  }
+
+  .SearchResultsItemDetails__updated {
+    margin-bottom: 0;
+
+  }
+}
+
+
+
+

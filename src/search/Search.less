@@ -1,9 +1,15 @@
 @import "../variables";
 
 .Search__header {
+  margin-bottom: 1.5rem;
+  padding: 0;
+}
+
+.Search__header__green {
+  height: 7.5rem;
+  display: flex;
+  align-items: center;
   background-color: @background-green;
-  margin-bottom: 1rem;
-  padding: 3rem 0;
 }
 
 .Search__spinner {
@@ -12,10 +18,72 @@
   padding: 2rem 0;
 }
 
-@media (max-width: @screen-xs-max) {
-  .Search__header {
-    padding: 1rem 0 1rem 0.5rem;
+.Search__header__flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@media (min-width: @screen-md-min) {
+  .Search__main__center {
+    margin-left: 5rem;
   }
 }
 
+@media (min-width: @screen-md-min) {
+  .Search__main__left__save-search,
+  .Search__main__center__header {
+    min-height: 4rem;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
 
+@media (max-width: @screen-sm-max) {
+  .Search__header__green {
+    padding: 1rem 0 1rem 0.5rem;
+  }
+
+  .Search__main__left__save-search {
+    margin-bottom: 1rem;
+  }
+
+  .Search__main__center__header {
+    padding-top: 2rem;
+  }
+}
+
+.Search__main__center__header__left {
+  flex: 1;
+}
+
+.Search__main__center__header__right {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.Search__header__right {
+  margin-top: 1rem;
+
+  .lenke:not(:last-child) {
+    margin-right: 1rem;
+  }
+}
+
+.SavedSearchExpandButton__chevron {
+  margin-left: 0.25rem;
+}
+
+@media (min-width: @screen-md-min) {
+  .Search__header__right {
+    text-align: right;
+  }
+}
+
+.SaveSearchButton {
+  margin-right: 1rem;
+}

@@ -3,42 +3,13 @@
 .SearchResultItem {
   background-color: #fff;
   padding: 1rem 2rem;
-  display: block;
-  text-decoration: none;
-  color: @navMorkGra;
   border: 1px solid @border-gray;
   margin-bottom: 1rem;
+  position: relative;
 
-  &:focus {
-    outline: 4px solid @navOransjeLighten40;
-    border-color: transparent;
+  .SearchResultsItemDetails {
+    margin-right: 2rem;
   }
-
-  &:hover {
-    outline: 2px solid @navGronnLighten40;
-    color: @navGronn;
-    border-color: transparent;
-  }
-}
-
-.SearchResultItem__employer {
-  padding-right: 1rem;
-}
-
-.SearchResultItem__updated {
-  color: @navGra60;
-}
-
-.SearchResultItem__title {
-  margin-bottom: 1rem;
-}
-
-.SearchResultItem__title,
-.SearchResultItem__jobtitle,
-.SearchResultItem__employer,
-.SearchResultItem__location {
-  word-wrap: break-word;
-  overflow-wrap: break-word;
 }
 
 @media (max-width: @screen-sm-max) {
@@ -46,25 +17,14 @@
     padding: 1rem;
     margin-bottom: 0.5rem;
   }
-
-  .SearchResultItem__updated,
-  .SearchResultItem__employer {
-    margin-bottom: 1rem;
-  }
-
-  .SearchResultItem__updated {
-    margin-bottom: 0;
-
-  }
 }
 
-@media (min-width: @screen-md-min) {
-  .SearchResultItem__row {
-    display: flex;
-    align-items: center;
-  }
-
-  .SearchResultItem__employer {
-    text-align: center;
-  }
+.SearchResultItem__favourite {
+  border-radius: 50%;
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  z-index: 10;
 }
+
+

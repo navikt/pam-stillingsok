@@ -1,6 +1,8 @@
-import { select, call, put, throttle } from 'redux-saga/effects';
+import { call, put, select, throttle } from 'redux-saga/effects';
 import { fetchCategoryAndSearchTagsSuggestions, SearchApiError } from '../../api/api';
-import { SET_INITIAL_STATE } from '../searchReducer';
+import { RESTORE_STATE_FROM_SAVED_SEARCH } from '../../savedSearches/savedSearchesReducer';
+import { RESTORE_STATE_FROM_URL } from '../../urlReducer';
+import { RESET_SEARCH } from '../searchReducer';
 
 export const SET_VALUE = 'SET_VALUE';
 export const FETCH_SUGGESTIONS = 'FETCH_SUGGESTIONS';
@@ -14,10 +16,16 @@ const initialState = {
 
 export default function searchBoxReducer(state = initialState, action) {
     switch (action.type) {
-        case SET_INITIAL_STATE:
+        case RESTORE_STATE_FROM_URL:
+        case RESTORE_STATE_FROM_SAVED_SEARCH:
             return {
                 ...state,
                 q: action.query.q || ''
+            };
+        case RESET_SEARCH:
+            return {
+                ...state,
+                q: ''
             };
         case SET_VALUE:
             return {

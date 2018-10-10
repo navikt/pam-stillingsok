@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Select } from 'nav-frontend-skjema';
 import { SEARCH } from '../searchReducer';
 import { SET_SORTING } from './sortingReducer';
+import './Sorting.less';
 
 class Sorting extends React.Component {
     onSortingChange = (e) => {
@@ -14,15 +15,18 @@ class Sorting extends React.Component {
     // TODO: Dropp className="typo-normal" når Select har SourceSansPro som default font.
     render() {
         return (
-            <Select
-                onChange={this.onSortingChange}
-                value={this.props.sort}
-                label="Sortér treff"
-                className="typo-normal"
-            >
-                <option key="relevant" value="relevant">Mest relevant</option>
-                <option key="updated" value="updated">Vis nyeste øverst</option>
-            </Select>
+            <div className="Sorting">
+                <Select
+                    onChange={this.onSortingChange}
+                    value={this.props.sort}
+                    label=""
+                    aria-label="Sortér treff"
+                    className="typo-normal Sorting__Select"
+                >
+                    <option key="relevant" value="relevant">Mest relevant</option>
+                    <option key="updated" value="updated">Vis nyeste øverst</option>
+                </Select>
+            </div>
         );
     }
 }

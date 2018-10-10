@@ -1,29 +1,34 @@
 /* eslint-disable no-underscore-dangle */
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { Container, Row, Column } from 'nav-frontend-grid';
+import { Column, Container, Row } from 'nav-frontend-grid';
 import { Flatknapp } from 'nav-frontend-knapper';
-import AdTitle from './adTitle/AdTitle';
+import { Normaltekst } from 'nav-frontend-typografi';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import Disclaimer from '../discalimer/Disclaimer';
+import FavouriteAlertStripe from '../favourites/alertstripe/FavouriteAlertStripe';
+import ToggleFavouriteButton from '../favourites/toggleFavoriteButton/ToggleFavouriteButton';
+import FavouriteError from '../favourites/error/FavouriteError';
+import { FETCH_FAVOURITES } from '../favourites/favouritesReducer';
+import SearchError from '../search/error/SearchError';
+import AdDetails from './adDetails/AdDetails';
 import AdText from './adText/AdText';
-import PersonalAttributes from './requirements/PersonalAttributes';
-import SoftRequirements from './requirements/SoftRequirements';
-import HardRequirements from './requirements/HardRequirements';
-import HowToApply from './howToApply/HowToApply';
+import AdTitle from './adTitle/AdTitle';
+import BackToSearch from './backToSearch/BackToSearch';
 import ContactPerson from './contactPerson/ContactPerson';
 import EmployerDetails from './employerDetails/EmployerDetails';
 import EmploymentDetails from './employmentDetails/EmploymentDetails';
-import AdDetails from './adDetails/AdDetails';
-import NotFound from './notFound/NotFound';
-import SearchError from '../search/error/SearchError';
 import Expired from './expired/Expired';
-import BackToSearch from './backToSearch/BackToSearch';
-import Disclaimer from '../discalimer/Disclaimer';
+import HowToApply from './howToApply/HowToApply';
 import Skeleton from './loading/Skeleton';
-import {
-    FETCH_STILLING_BEGIN
-} from './stillingReducer';
+import NotFound from './notFound/NotFound';
+import HardRequirements from './requirements/HardRequirements';
+import PersonalAttributes from './requirements/PersonalAttributes';
+import SoftRequirements from './requirements/SoftRequirements';
 import './Stilling.less';
+import { FETCH_STILLING_BEGIN } from './stillingReducer';
+import NotLoggedIn from '../authorization/NotLoggedIn';
 
 class Stilling extends React.Component {
     constructor(props) {
@@ -34,6 +39,7 @@ class Stilling extends React.Component {
     componentDidMount() {
         window.scrollTo(0, 0);
         this.props.getStilling(this.props.match.params.uuid);
+        this.props.fetchFavourites();
     }
 
     componentDidUpdate() {
@@ -52,12 +58,17 @@ class Stilling extends React.Component {
 
     render() {
         const {
-            stilling, cachedStilling, isFetchingStilling, error
+            stilling, cachedStilling, isFetchingStilling, error, favourites
         } = this.props;
+
+        const isFavourite = stilling && favourites && favourites.find((favourite) => favourite.uuid === stilling._id);
+
         return (
             <div>
                 <Disclaimer />
-
+                <FavouriteAlertStripe />
+                <FavouriteError />
+                <NotLoggedIn />
                 <div className="StillingSubMenu no-print">
                     <Container>
                         <Row>
@@ -94,8 +105,15 @@ class Stilling extends React.Component {
                         <header className="Stilling__header">
                             <Container>
                                 <Row>
+                                    <Column xs="12">
+                                        <div className="Stilling__header__favourite">
+                                            <ToggleFavouriteButton uuid={stilling._id} showLabel />
+                                        </div>
+                                    </Column>
+                                </Row>
+                                <Row>
                                     <Column xs="12" md="8">
-                                        {stilling._source.status !== 'ACTIVE' && (
+                                        {stilling._source.status === 'INACTIVE' && (
                                             <Expired />
                                         )}
                                         <AdTitle
@@ -104,6 +122,7 @@ class Stilling extends React.Component {
                                             location={stilling._source.properties.location}
                                         />
                                     </Column>
+                                    <Column xs="12" md="4" />
                                 </Row>
                             </Container>
                         </header>
@@ -153,19 +172,25 @@ Stilling.propTypes = {
     cachedStilling: PropTypes.shape({
         title: PropTypes.string
     }),
+    fetchFavourites: PropTypes.func.isRequired,
     getStilling: PropTypes.func.isRequired,
-    isFetchingStilling: PropTypes.bool
+    isFetchingStilling: PropTypes.bool,
+    favourites: PropTypes.arrayOf(PropTypes.shape({
+        uuid: PropTypes.string
+    })).isRequired
 };
 
 const mapStateToProps = (state) => ({
     isFetchingStilling: state.stilling.isFetchingStilling,
     stilling: state.stilling.stilling,
     cachedStilling: state.stilling.cachedStilling,
-    error: state.stilling.error
+    error: state.stilling.error,
+    favourites: state.favourites.favourites
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    getStilling: (uuid) => dispatch({ type: FETCH_STILLING_BEGIN, uuid })
+    getStilling: (uuid) => dispatch({ type: FETCH_STILLING_BEGIN, uuid }),
+    fetchFavourites: () => dispatch({ type: FETCH_FAVOURITES })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Stilling);

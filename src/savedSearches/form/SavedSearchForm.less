@@ -1,0 +1,64 @@
+@import "../../variables";
+
+.SavedSearchModal {
+  padding: 1rem;
+}
+
+@media (max-width: @screen-sm-max) {
+  .SavedSearchModal {
+    padding: 0.5rem 0.25rem;
+  }
+}
+
+.SavedSearchModal__title,
+.SavedSearchModal__form-mode {
+  margin-bottom: 1rem;
+}
+
+.SavedSearchModal__body__name,
+.SavedSearchModal__body__notify {
+  margin-bottom: 2rem!important;
+}
+
+.SavedSearchModal__body {
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: @screen-sm-max) {
+  .SavedSearchModal__form-mode {
+    margin-bottom: 0;
+  }
+
+  .SavedSearchModal__buttons .knapp {
+    width: 100%;
+  }
+
+  .SavedSearchModal__buttons .knapp:not(:last-child) {
+    margin-bottom: 1rem;
+  }
+
+  .SavedSearchModal__body__name,
+  .SavedSearchModal__body__notify {
+    margin-bottom: 1rem!important;
+  }
+}
+
+@media (min-width: @screen-md-min) {
+  .SavedSearchModal {
+    width: 38rem;
+  }
+
+  .SavedSearchModal__buttons .knapp:not(:last-child) {
+    margin-right: 2rem;
+  }
+}
+
+@media (min-width: 450px) {
+  .SavedSearchModal__body__duration {
+    display: inline;
+
+    &:not(:last-child) {
+      margin-right: 2rem;
+    }
+  }
+}

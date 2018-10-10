@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Checkbox } from 'nav-frontend-skjema';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
+import capitalizeLocation from '../../../common/capitalizeLocation';
 import { SEARCH } from '../../searchReducer';
 import {
     CHECK_COUNTY,
@@ -33,35 +34,6 @@ class Counties extends React.Component {
         this.props.search();
     };
 
-    capitalize = (text) => {
-        const separators = [
-            ' ', // NORDRE LAND skal bli Nordre Land
-            '-', // AUST-AGDER skal bli Aust-Agder
-            '(' // BØ (TELEMARK) skal bli Bø (Telemark)
-        ];
-
-        const ignore = [
-            'i', 'og' // MØRE OG ROMSDAL skal bli Møre og Romsdal
-        ];
-
-        if (text) {
-            let capitalized = text.toLowerCase();
-
-            for (let i = 0, len = separators.length; i < len; i += 1) {
-                const fragments = capitalized.split(separators[i]);
-                for (let j = 0, x = fragments.length; j < x; j += 1) {
-                    if (!ignore.includes(fragments[j])) {
-                        fragments[j] = fragments[j][0].toUpperCase() + fragments[j].substr(1);
-                    }
-                }
-                capitalized = fragments.join(separators[i]);
-            }
-
-            return capitalized;
-        }
-        return text;
-    };
-
     render() {
         const { counties, checkedCounties, checkedMunicipals } = this.props;
         let title = 'Område';
@@ -86,7 +58,7 @@ class Counties extends React.Component {
                         <div key={county.key}>
                             <Checkbox
                                 name="location"
-                                label={`${this.capitalize(county.key)} (${county.count})`}
+                                label={`${capitalizeLocation(county.key)} (${county.count})`}
                                 value={county.key}
                                 onChange={this.onCountyClick}
                                 checked={checkedCounties.includes(county.key)}
@@ -101,7 +73,7 @@ class Counties extends React.Component {
                                         <Checkbox
                                             name="location"
                                             key={municipal.key}
-                                            label={`${this.capitalize(municipal.key)} (${municipal.count})`}
+                                            label={`${capitalizeLocation(municipal.key)} (${municipal.count})`}
                                             value={municipal.key}
                                             onChange={this.onMunicipalClick}
                                             checked={checkedMunicipals.includes(municipal.key)}

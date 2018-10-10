@@ -10,7 +10,7 @@ export default function AdDetails({ source }) {
             <dl className="dl-flex typo-normal">
                 {source.updated && [
                     <dt key="dt">Sist endret:</dt>,
-                    <dd key="dd">{formatISOString(source.updated, 'D. MMMM YYYY')}</dd>
+                    <dd key="dd">{formatISOString(source.updated, 'DD.MM.YYYY')}</dd>
                 ]}
                 {source.medium && [
                     <dt key="dt">Hentet fra:</dt>,
@@ -34,7 +34,7 @@ AdDetails.propTypes = {
         updated: PropTypes.string,
         medium: PropTypes.string,
         reference: PropTypes.string,
-        id: PropTypes.string
+        id: PropTypes.number
     }).isRequired
 };
 
