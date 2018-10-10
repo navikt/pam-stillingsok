@@ -34,7 +34,7 @@ class ConfirmRemoveModal extends React.Component {
                         </div>
                         <div className="SavedSearchModal__buttons">
                             <Hovedknapp onClick={this.onRemoveClick}>Slett</Hovedknapp>
-                            <Flatknapp onClick={this.closeModal}>Avbryt</Flatknapp>
+                            <Flatknapp onClick={this.closeModal}>avbryt</Flatknapp>
                         </div>
                     </div>
                 </Modal>
