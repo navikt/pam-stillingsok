@@ -1,18 +1,22 @@
 @import "../../variables";
 
 .RemoveFavouriteModal {
-    padding: 1rem;
+    padding: @modal-padding;
 }
 
 .RemoveFavouriteModal__title {
-    margin-bottom: 1rem;
+    margin-bottom: @modal-title-margin-bottom;
 }
 
 .RemoveFavouriteModal__message {
-    margin-bottom: 1.5rem;
+    margin-bottom: @modal-body-margin-bottom;
 }
 
 @media (max-width: @screen-sm-max) {
+    .RemoveFavouriteModal {
+        padding: @modal-padding-mobile;
+    }
+
     .RemoveFavouriteModal__buttons .knapp {
         width: 100%;
     }

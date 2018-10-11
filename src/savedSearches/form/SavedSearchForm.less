@@ -1,7 +1,7 @@
 @import "../../variables";
 
 .SavedSearchModal {
-  padding: 1rem;
+  padding: @modal-padding;
 }
 
 @media (max-width: @screen-sm-max) {
@@ -10,18 +10,16 @@
   }
 }
 
-.SavedSearchModal__title,
+.SavedSearchModal__title {
+  margin-bottom:  @modal-title-margin-bottom;
+}
+
 .SavedSearchModal__form-mode {
   margin-bottom: 1rem;
 }
 
-.SavedSearchModal__body__name,
-.SavedSearchModal__body__notify {
-  margin-bottom: 2rem!important;
-}
-
 .SavedSearchModal__body {
-  margin-bottom: 1.5rem;
+  margin-bottom: @modal-body-margin-bottom;
 }
 
 @media (max-width: @screen-sm-max) {
@@ -35,11 +33,6 @@
 
   .SavedSearchModal__buttons .knapp:not(:last-child) {
     margin-bottom: @knapp-margin-bottom;
-  }
-
-  .SavedSearchModal__body__name,
-  .SavedSearchModal__body__notify {
-    margin-bottom: 1rem!important;
   }
 }
 

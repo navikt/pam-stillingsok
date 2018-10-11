@@ -45,7 +45,6 @@ class Occupations extends React.Component {
         return (
             <Ekspanderbartpanel
                 tittel={title}
-                tittelProps="element"
                 className="Occupations"
                 apen
             >

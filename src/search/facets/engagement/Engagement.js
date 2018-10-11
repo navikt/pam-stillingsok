@@ -32,7 +32,6 @@ class Engagement extends React.Component {
         return (
             <Ekspanderbartpanel
                 tittel={title}
-                tittelProps="element"
                 className="Engagement"
                 apen
             >
