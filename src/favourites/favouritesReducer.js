@@ -136,7 +136,7 @@ function toFavourite(uuid, ad) {
         favouriteAd: {
             uuid,
             title: ad.title,
-            updated: '2018-11-04T10:11:30', //ikke kompatibel med updated fra search
+            updated: ad.updated,
             jobTitle: ad.properties.jobtitle ? ad.properties.jobtitle : '',
             status: ad.status,
             applicationdue: ad.properties.applicationdue,
