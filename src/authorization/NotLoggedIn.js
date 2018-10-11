@@ -24,14 +24,18 @@ class NotLoggedIn extends React.Component {
 
                 >
                     <div className="NotLoggedIn">
-                        <Undertittel className="NotLoggedIn__title">Krever innlogging</Undertittel>
+                        {this.props.authorizationError === AuthorizationEnum.ADD_FAVORITE_ERROR && (
+                            <Undertittel className="NotLoggedIn__title">
+                                Du må logge inn for å lagre favoritter
+                            </Undertittel>
+                        )}
+                        {this.props.authorizationError === AuthorizationEnum.SAVE_SEARCH_ERROR && (
+                            <Undertittel className="NotLoggedIn__title">
+                                Du må logge inn for å lagre søk
+                            </Undertittel>
+                        )}
                         <Normaltekst className="NotLoggedIn__message">
-                            {this.props.authorizationError === AuthorizationEnum.ADD_FAVORITE_ERROR && (
-                                <span>For å lagre en favoritt må du logge inn</span>
-                            )}
-                            {this.props.authorizationError === AuthorizationEnum.SAVE_SEARCH_ERROR && (
-                                <span>For å lagre et søk må du logge inn</span>
-                            )}
+                            Logg inn med MinID, BankID, BankID på mobil, Buypass eller Commfides.
                         </Normaltekst>
                         <div className="NotLoggedIn__buttons">
                             <Hovedknapp onClick={this.onRemoveClick}>Logg inn</Hovedknapp>
