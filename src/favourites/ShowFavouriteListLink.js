@@ -5,8 +5,10 @@ import { Link } from 'react-router-dom';
 
 function ShowFavouriteListLink({ isFetching, totalElements }) {
     return (
-        <Link className="lenke typo-normal" to="/favoritter">
-            Favoritter {!isFetching ? ` (${totalElements})` : ''}
+        <Link className="FavouritesLink typo-normal " to="/favoritter">
+            <span className="FavouritesLink__text lenke">
+                Se favoritter {!isFetching ? ` (${totalElements})` : ''}
+            </span>
         </Link>
     );
 }
