@@ -244,7 +244,8 @@ export default function searchTemplate(query) {
                 'applicationdue',
                 'title',
                 'updated',
-                'uuid'
+                'uuid',
+                'status'
             ]
         },
         aggs: {
