@@ -159,7 +159,7 @@ function* fetchFavourites() {
             try {
                 const response = yield call(
                     get,
-                    `${AD_USER_API}/api/v1/userfavouriteads?size=200`
+                    `${AD_USER_API}/api/v1/userfavouriteads?size=999`
                 );
                 yield put({ type: FETCH_FAVOURITES_SUCCESS, response });
             } catch (e) {
