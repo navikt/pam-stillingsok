@@ -104,7 +104,7 @@ class SavedSearchForm extends React.Component {
                             >
                                 Lagre
                             </Hovedknapp>
-                            <Flatknapp onClick={this.closeModal}>Avbryt</Flatknapp>
+                            <Flatknapp onClick={this.closeModal}>avbryt</Flatknapp>
                         </div>
                     </div>
                 </Modal>
