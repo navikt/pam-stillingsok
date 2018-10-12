@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Router, Route, Switch } from 'react-router-dom';
 import { applyMiddleware, combineReducers, createStore } from 'redux';
 import createSagaMiddleware from 'redux-saga';
+import history from './history'
 import disclaimerReducer from './discalimer/disclaimerReducer';
 import { CONTEXT_PATH } from './fasitProperties';
 import Favourites from './favourites/Favourites';
@@ -32,6 +33,7 @@ import './styles.less';
 import { urlSaga } from './urlReducer';
 import './variables.less';
 import authorizationReducer, { authorizationSaga } from './authorization/authorizationReducer';
+import TermsOfUse from './authorization/TermsOfUse';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -69,7 +71,7 @@ sagaMiddleware.run(authorizationSaga);
 
 ReactDOM.render(
     <Provider store={store}>
-        <BrowserRouter>
+        <Router history={history}>
             <div>
                 <Switch>
                     <Route exact path="/" component={SearchPage} />
@@ -77,10 +79,11 @@ ReactDOM.render(
                     <Route path={`${CONTEXT_PATH}/mobil`} component={Invite} />
                     <Route path={`${CONTEXT_PATH}/favoritter`} component={Favourites} />
                     <Route path={`${CONTEXT_PATH}/lagrede-sok`} component={SavedSearches} />
+                    <Route path={`${CONTEXT_PATH}/vilkaar`} component={TermsOfUse} />
                     <Route path="*" component={SearchPage} />
                 </Switch>
             </div>
-        </BrowserRouter>
+        </Router>
     </Provider>,
     document.getElementById('app')
 );

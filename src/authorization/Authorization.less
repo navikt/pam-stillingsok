@@ -1,0 +1,22 @@
+@import "../variables";
+
+.TermsOfUse {
+  margin: 8rem;
+  padding: 2rem 5rem!important;
+}
+
+@media (max-width: @screen-sm-max) {
+  .TermsOfUse .knapp {
+    width: 100%;
+  }
+
+  .TermsOfUse__buttons .knapp:not(:last-child) {
+    margin-bottom: @knapp-margin-bottom;
+  }
+}
+
+@media (min-width: @screen-md-min) {
+  .TermsOfUse__buttons .knapp:not(:last-child) {
+    margin-right: @knapp-margin-right;
+  }
+}
