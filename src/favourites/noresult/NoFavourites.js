@@ -10,7 +10,7 @@ export default function NoFavourites() {
             <Normaltekst className="NoFavourites__message">
                 Når du ser en stillingsannonse du ønsker å ta vare på klikk på stjernen.
             </Normaltekst>
-            <Link to="/" className="knapp knapp--hoved">Finn favoritter</Link>
+            <Link to="/" className="lenke typo-normal">Finn favoritter</Link>
         </div>
     );
 }

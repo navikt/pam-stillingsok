@@ -32,7 +32,6 @@ class Extent extends React.Component {
         return (
             <Ekspanderbartpanel
                 tittel={title}
-                tittelProps="element"
                 className="Extent"
                 apen
             >

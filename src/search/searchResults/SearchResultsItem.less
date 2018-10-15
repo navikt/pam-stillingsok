@@ -2,9 +2,9 @@
 
 .SearchResultItem {
   background-color: #fff;
-  padding: 1rem 2rem;
+  padding: @list-box-padding;
   border: 1px solid @border-gray;
-  margin-bottom: 1rem;
+  margin-bottom: @list-box-margin-bottom;
   position: relative;
 
   .SearchResultsItemDetails {
@@ -14,8 +14,8 @@
 
 @media (max-width: @screen-sm-max) {
   .SearchResultItem {
-    padding: 1rem;
-    margin-bottom: 0.5rem;
+    padding: @list-box-padding;
+    margin-bottom: @list-box-margin-bottom;
   }
 }
 

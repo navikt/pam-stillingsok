@@ -1,12 +1,9 @@
 @import "../../variables";
 
-.FavouriteListItem__wrapper {
-  margin-bottom: 1rem;
-}
-
 .FavouriteListItem {
   background-color: #fff;
-  padding: 1.25rem;
+  padding: @list-box-padding;
+  margin-bottom: @list-box-margin-bottom;
   display: block;
   border: 1px solid @border-gray;
 }
@@ -17,6 +14,7 @@
 
 .FavouriteListItem__bottom {
   border-top: 1px solid @border-gray;
-  padding-top: 1rem;
+  margin-top: @list-box-button-bar-margin-top;
+  padding-top: @list-box-button-bar-margin-bottom;
   text-align: right;
 }

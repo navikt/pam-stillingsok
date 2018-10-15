@@ -1,12 +1,14 @@
+import { Flatknapp, Hovedknapp } from 'nav-frontend-knapper';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Element } from 'nav-frontend-typografi';
+import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import Modal from 'nav-frontend-modal';
+import AuthorizationEnum from './AuthorizationEnum';
 import { HIDE_AUTHORIZATION_ERROR_MODAL } from './authorizationReducer';
+import './NotLoggedIn.less';
 
 class NotLoggedIn extends React.Component {
-
     closeModal = () => {
         this.props.hideError();
     };
@@ -21,10 +23,24 @@ class NotLoggedIn extends React.Component {
                     appElement={document.getElementById('app')}
 
                 >
-                    <div className="SavedSearchModal">
-                        <Element>
-                            {this.props.authorizationError}
-                        </Element>
+                    <div className="NotLoggedIn">
+                        {this.props.authorizationError === AuthorizationEnum.ADD_FAVORITE_ERROR && (
+                            <Undertittel className="NotLoggedIn__title">
+                                Du må logge inn for å lagre favoritter
+                            </Undertittel>
+                        )}
+                        {this.props.authorizationError === AuthorizationEnum.SAVE_SEARCH_ERROR && (
+                            <Undertittel className="NotLoggedIn__title">
+                                Du må logge inn for å lagre søk
+                            </Undertittel>
+                        )}
+                        <Normaltekst className="NotLoggedIn__message">
+                            Logg inn med MinID, BankID, BankID på mobil, Buypass eller Commfides.
+                        </Normaltekst>
+                        <div className="NotLoggedIn__buttons">
+                            <Hovedknapp onClick={this.onRemoveClick}>Logg inn</Hovedknapp>
+                            <Flatknapp onClick={this.closeModal}>Avbryt</Flatknapp>
+                        </div>
                     </div>
                 </Modal>
             );

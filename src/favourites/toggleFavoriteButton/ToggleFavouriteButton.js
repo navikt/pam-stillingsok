@@ -66,8 +66,7 @@ class ToggleFavouriteButton extends React.Component {
 
 ToggleFavouriteButton.defaultProps = {
     className: undefined,
-    showLabel: false,
-    httpStatus: undefined
+    showLabel: false
 };
 
 ToggleFavouriteButton.propTypes = {
@@ -78,7 +77,6 @@ ToggleFavouriteButton.propTypes = {
     favouriteAdUuidList: PropTypes.arrayOf(PropTypes.string).isRequired,
     uuid: PropTypes.string.isRequired,
     showLabel: PropTypes.bool,
-    httpStatus: PropTypes.number,
     showError: PropTypes.func.isRequired,
     isLoggedIn: PropTypes.bool.isRequired
 };
@@ -86,7 +84,6 @@ ToggleFavouriteButton.propTypes = {
 const mapStateToProps = (state) => ({
     favouriteAdUuidList: state.favourites.favouriteAdUuidList,
     isFetchingFavourites: state.favourites.isFetchingFavourites,
-    httpStatus: state.favourites.httpErrorStatus,
     isLoggedIn: state.authorization.isLoggedIn
 });
 

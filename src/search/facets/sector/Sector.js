@@ -32,7 +32,6 @@ class Sector extends React.Component {
         return (
             <Ekspanderbartpanel
                 tittel={title}
-                tittelProps="element"
                 className="Sector"
                 apen
             >

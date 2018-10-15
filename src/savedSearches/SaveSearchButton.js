@@ -10,11 +10,13 @@ class SaveSearchButton extends React.Component {
     onClick = () => {
         if (!this.props.isLoggedIn) {
             this.props.showError(AuthorizationEnum.SAVE_SEARCH_ERROR);
-        } else {this.props.showSavedSearchForm(
-            this.props.currentSavedSearch ? SavedSearchFormMode.REPLACE : SavedSearchFormMode.ADD,
-            this.props.currentSavedSearch !== undefined
+        } else {
+            this.props.showSavedSearchForm(
+                this.props.currentSavedSearch ? SavedSearchFormMode.REPLACE : SavedSearchFormMode.ADD,
+                this.props.currentSavedSearch !== undefined
 
-        );}
+            );
+        }
     };
 
     render() {
@@ -25,21 +27,18 @@ class SaveSearchButton extends React.Component {
 }
 
 SaveSearchButton.defaultProps = {
-    currentSavedSearch: undefined,
-    httpStatus: undefined
+    currentSavedSearch: undefined
 };
 
 SaveSearchButton.propTypes = {
     showSavedSearchForm: PropTypes.func.isRequired,
     currentSavedSearch: PropTypes.shape({}),
-    httpStatus: PropTypes.number,
     showError: PropTypes.func.isRequired,
     isLoggedIn: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => ({
     currentSavedSearch: state.savedSearches.currentSavedSearch,
-    httpStatus: state.savedSearches.httpErrorStatus,
     isLoggedIn: state.authorization.isLoggedIn
 });
 

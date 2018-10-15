@@ -136,9 +136,9 @@ function toFavourite(uuid, ad) {
         favouriteAd: {
             uuid,
             title: ad.title,
-            updated: '2018-11-04T10:11:30', //ikke kompatibel med updated fra search
+            updated: ad.updated,
             jobTitle: ad.properties.jobtitle ? ad.properties.jobtitle : '',
-            status: 'ACTIVE',
+            status: ad.status,
             applicationdue: ad.properties.applicationdue,
             location: ad.properties.location,
             employer: ad.properties.employer
@@ -159,7 +159,7 @@ function* fetchFavourites() {
             try {
                 const response = yield call(
                     get,
-                    `${AD_USER_API}/api/v1/userfavouriteads?size=200`
+                    `${AD_USER_API}/api/v1/userfavouriteads?size=999`
                 );
                 yield put({ type: FETCH_FAVOURITES_SUCCESS, response });
             } catch (e) {

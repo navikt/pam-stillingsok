@@ -29,7 +29,7 @@ class ConfirmRemoveModal extends React.Component {
                         <Undertittel className="SavedSearchModal__title">Slett lagret søk</Undertittel>
                         <div className="SavedSearchModal__body">
                             <Normaltekst>
-                                Er du sikker på at du vil slette {this.props.savedSearchAboutToBeRemoved.title}?
+                                Er du sikker på at du vil slette &#34;{this.props.savedSearchAboutToBeRemoved.title}&#34;?
                             </Normaltekst>
                         </div>
                         <div className="SavedSearchModal__buttons">
