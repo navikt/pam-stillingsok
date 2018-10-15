@@ -43,7 +43,7 @@ class TermsOfUse extends React.Component {
                         onChange={this.onCheckboxChange}
                         className="blokk-l"
                     />
-                    <div className="TermsOfUse__buttons">
+                    <div>
                         {this.state.checked ?
                             <Link
                                 disabled={!this.state.checked}
