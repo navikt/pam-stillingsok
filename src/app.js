@@ -6,7 +6,7 @@ import { applyMiddleware, combineReducers, createStore } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import history from './history'
 import disclaimerReducer from './discalimer/disclaimerReducer';
-import { CONTEXT_PATH } from './fasitProperties';
+import { CONTEXT_PATH, LOGIN_URL, LOGOUT_URL } from './fasitProperties';
 import Favourites from './favourites/Favourites';
 import favouritesReducer, { favouritesSaga } from './favourites/favouritesReducer';
 import Invite from './invite/Invite';
@@ -33,6 +33,7 @@ import './styles.less';
 import { urlSaga } from './urlReducer';
 import './variables.less';
 import authorizationReducer, { authorizationSaga } from './authorization/authorizationReducer';
+import { Hovedknapp } from "nav-frontend-knapper";
 import TermsOfUse from './authorization/TermsOfUse';
 
 const sagaMiddleware = createSagaMiddleware();
@@ -69,10 +70,32 @@ sagaMiddleware.run(savedSearchAlertStripeSaga);
 sagaMiddleware.run(urlSaga);
 sagaMiddleware.run(authorizationSaga);
 
+function onLoginClick() {
+    window.location.href = `${LOGIN_URL}?redirect=${window.location.href}`;
+}
+
+function onLogoutClick() {
+    window.location.href = LOGOUT_URL;
+}
+
 ReactDOM.render(
     <Provider store={store}>
         <Router history={history}>
             <div>
+                <div className="Auth-buttons">
+                    <Hovedknapp
+                        mini
+                        onClick={onLoginClick}
+                    >
+                        Logg inn
+                    </Hovedknapp>
+                    <Hovedknapp
+                        mini
+                        onClick={onLogoutClick}
+                    >
+                        Logg ut
+                    </Hovedknapp>
+                </div>
                 <Switch>
                     <Route exact path="/" component={SearchPage} />
                     <Route path={`${CONTEXT_PATH}/stilling/:uuid`} component={StillingPage} />
