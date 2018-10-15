@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Router, Route, Switch } from 'react-router-dom';
 import { applyMiddleware, combineReducers, createStore } from 'redux';
 import createSagaMiddleware from 'redux-saga';
+import history from './history'
 import disclaimerReducer from './discalimer/disclaimerReducer';
 import { CONTEXT_PATH, LOGIN_URL, LOGOUT_URL } from './fasitProperties';
 import Favourites from './favourites/Favourites';
@@ -33,6 +34,7 @@ import { urlSaga } from './urlReducer';
 import './variables.less';
 import authorizationReducer, { authorizationSaga } from './authorization/authorizationReducer';
 import { Hovedknapp } from "nav-frontend-knapper";
+import TermsOfUse from './authorization/TermsOfUse';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -70,15 +72,15 @@ sagaMiddleware.run(authorizationSaga);
 
 function onLoginClick() {
     window.location.href = `${LOGIN_URL}?redirect=${window.location.href}`;
-};
+}
 
 function onLogoutClick() {
     window.location.href = LOGOUT_URL;
-};
+}
 
 ReactDOM.render(
     <Provider store={store}>
-        <BrowserRouter>
+        <Router history={history}>
             <div>
                 <div className="Auth-buttons">
                     <Hovedknapp
@@ -100,10 +102,11 @@ ReactDOM.render(
                     <Route path={`${CONTEXT_PATH}/mobil`} component={Invite} />
                     <Route path={`${CONTEXT_PATH}/favoritter`} component={Favourites} />
                     <Route path={`${CONTEXT_PATH}/lagrede-sok`} component={SavedSearches} />
+                    <Route path={`${CONTEXT_PATH}/vilkaar`} component={TermsOfUse} />
                     <Route path="*" component={SearchPage} />
                 </Switch>
             </div>
-        </BrowserRouter>
+        </Router>
     </Provider>,
     document.getElementById('app')
 );
