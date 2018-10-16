@@ -23,7 +23,8 @@ const initialState = {
     isFetchingUser: false,
     shouldFetchUser: true,
     isLoggedIn: false,
-    termsDeclined: false
+    termsVersion: undefined,
+    termsStatus: undefined
 };
 
 export default function authorizationReducer(state = initialState, action) {
@@ -31,7 +32,7 @@ export default function authorizationReducer(state = initialState, action) {
         case DECLINE_TERMS_OF_USE:
             return {
                 ...state,
-                termsDeclined: true
+                termsStatus: 'declined'
             };
         case SHOW_AUTHORIZATION_ERROR_MODAL:
             return {
@@ -56,7 +57,8 @@ export default function authorizationReducer(state = initialState, action) {
         case CREATE_USER_SUCCESS:
             return {
                 ...state,
-                termsDeclined: false,
+                termsVersion: action.response.acceptedTerms,
+                termsStatus: 'accepted',
                 isLoggedIn: true
             };
         case FETCH_USER_SUCCESS:
@@ -67,13 +69,21 @@ export default function authorizationReducer(state = initialState, action) {
                 isLoggedIn: true
             };
         case CREATE_USER_FAILURE:
-        case FETCH_USER_FAILURE:
             return {
                 ...state,
                 error: 'fetch_error',
                 isFetchingUser: false,
                 shouldFetchUser: true,
                 isLoggedIn: false
+            };
+        case FETCH_USER_FAILURE:
+            return {
+                ...state,
+                error: 'fetch_error',
+                isFetchingUser: false,
+                shouldFetchUser: true,
+                // 404: Bruker er innlogget men ikke opprettet i databasen
+                isLoggedIn: (action.error.statusCode === 404)
             };
         default:
             return state;
@@ -92,9 +102,6 @@ function* fetchUser() {
         } catch (e) {
             if (e instanceof SearchApiError) {
                 yield put({ type: FETCH_USER_FAILURE, error: e });
-                if (e.statusCode === 404 && !state.authorization.termsDeclined) {
-                    yield call(history.push, '/vilkaar');
-                }
             } else {
                 throw e;
             }

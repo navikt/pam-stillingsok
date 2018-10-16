@@ -5,11 +5,14 @@ import { connect } from 'react-redux';
 import { SavedSearchFormMode, SHOW_SAVED_SEARCH_FORM } from './form/savedSearchFormReducer';
 import { SHOW_AUTHORIZATION_ERROR_MODAL } from '../authorization/authorizationReducer';
 import AuthorizationEnum from '../authorization/AuthorizationEnum';
+import history from '../history';
 
 class SaveSearchButton extends React.Component {
     onClick = () => {
         if (!this.props.isLoggedIn) {
             this.props.showError(AuthorizationEnum.SAVE_SEARCH_ERROR);
+        } else if(this.props.termsStatus !== 'accepted') {
+            history.push('/vilkaar');
         } else {
             this.props.showSavedSearchForm(
                 this.props.currentSavedSearch ? SavedSearchFormMode.REPLACE : SavedSearchFormMode.ADD,
@@ -39,7 +42,8 @@ SaveSearchButton.propTypes = {
 
 const mapStateToProps = (state) => ({
     currentSavedSearch: state.savedSearches.currentSavedSearch,
-    isLoggedIn: state.authorization.isLoggedIn
+    isLoggedIn: state.authorization.isLoggedIn,
+    termsStatus: state.authorization.termsStatus
 });
 
 const mapDispatchToProps = (dispatch) => ({
