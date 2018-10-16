@@ -155,7 +155,7 @@ function* fetchSavedSearches() {
             yield take(FETCH_USER_SUCCESS);
             state = yield select();
         }
-        if (state.authorization.isLoggedIn) {
+        if (state.authorization.isLoggedIn && (state.authorization.termsStatus === 'accepted')) {
             yield put({ type: FETCH_SAVED_SEARCHES_BEGIN });
             try {
                 const response = yield call(get, `${AD_USER_API}/api/v1/savedsearches?size=999`);

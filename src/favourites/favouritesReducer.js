@@ -3,6 +3,7 @@ import { select, put, call, takeLatest, take } from 'redux-saga/effects';
 import { get, post, remove, SearchApiError } from '../api/api';
 import { AD_USER_API } from '../fasitProperties';
 import { FETCH_USER_SUCCESS, FETCH_USER } from '../authorization/authorizationReducer';
+import history from '../history';
 import featureToggle from '../featureToggle';
 
 export const FETCH_FAVOURITES = 'FETCH_FAVOURITES';
@@ -155,7 +156,7 @@ function* fetchFavourites() {
             yield take(FETCH_USER_SUCCESS);
             state = yield select();
         }
-        if (state.authorization.isLoggedIn) {
+        if (state.authorization.isLoggedIn && (state.authorization.termsStatus === 'accepted')) {
             yield put({ type: FETCH_FAVOURITES_BEGIN });
             try {
                 const response = yield call(
@@ -175,9 +176,9 @@ function* fetchFavourites() {
 }
 
 function* addToFavourites(action) {
+    const state = yield select();
     try {
         let favourite;
-        const state = yield select();
         const foundInSearchResult = state.search.searchResult && state.search.searchResult.stillinger &&
             state.search.searchResult.stillinger.find((s) => s.uuid === action.uuid);
 
@@ -197,6 +198,9 @@ function* addToFavourites(action) {
     } catch (e) {
         if (e instanceof SearchApiError) {
             yield put({ type: ADD_TO_FAVOURITES_FAILURE, error: e });
+            if (e.statusCode === 404) {
+                yield call(history.push, '/vilkaar');
+            }
         } else {
             throw e;
         }

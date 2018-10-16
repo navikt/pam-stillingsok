@@ -7,6 +7,7 @@ import { Panel } from 'nav-frontend-paneler';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { Container } from 'nav-frontend-grid';
 import { DECLINE_TERMS_OF_USE, CREATE_USER } from './authorizationReducer';
+import { LOGOUT_URL } from '../fasitProperties';
 import './Authorization.less';
 
 class TermsOfUse extends React.Component {
@@ -56,8 +57,7 @@ class TermsOfUse extends React.Component {
                             <Link
                                 className="lenke"
                                 onClick={this.onDeclineTerms}
-
-                                to="/logg-ut"
+                                to={LOGOUT_URL}
                             >
                                 Avbryt og logg ut
                             </Link>
