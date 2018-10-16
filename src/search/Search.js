@@ -80,8 +80,8 @@ class Search extends React.Component {
                                 {featureToggle() && this.props.isLoggedIn &&
                                     <Column xs="12" md="6">
                                         <div className="Search__header__right">
-                                            <ShowFavouriteListLink/>
-                                            <ExpandSavedSearchButton/>
+                                            <ShowFavouriteListLink />
+                                            <ExpandSavedSearchButton />
                                         </div>
                                     </Column>
                                 }
