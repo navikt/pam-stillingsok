@@ -4,7 +4,8 @@ import { Provider } from 'react-redux';
 import { Router, Route, Switch } from 'react-router-dom';
 import { applyMiddleware, combineReducers, createStore } from 'redux';
 import createSagaMiddleware from 'redux-saga';
-import history from './history'
+import featureToggle from './featureToggle';
+import history from './history';
 import disclaimerReducer from './discalimer/disclaimerReducer';
 import { CONTEXT_PATH, LOGIN_URL, LOGOUT_URL } from './fasitProperties';
 import Favourites from './favourites/Favourites';
@@ -33,7 +34,7 @@ import './styles.less';
 import { urlSaga } from './urlReducer';
 import './variables.less';
 import authorizationReducer, { authorizationSaga } from './authorization/authorizationReducer';
-import { Hovedknapp } from "nav-frontend-knapper";
+import { Hovedknapp } from 'nav-frontend-knapper';
 import TermsOfUse from './authorization/TermsOfUse';
 
 const sagaMiddleware = createSagaMiddleware();
@@ -82,20 +83,22 @@ ReactDOM.render(
     <Provider store={store}>
         <Router history={history}>
             <div>
-                <div className="Auth-buttons">
-                    <Hovedknapp
-                        mini
-                        onClick={onLoginClick}
-                    >
+                {featureToggle() && (
+                    <div className="Auth-buttons">
+                        <Hovedknapp
+                            mini
+                            onClick={onLoginClick}
+                        >
                         Logg inn
-                    </Hovedknapp>
-                    <Hovedknapp
-                        mini
-                        onClick={onLogoutClick}
-                    >
+                        </Hovedknapp>
+                        <Hovedknapp
+                            mini
+                            onClick={onLogoutClick}
+                        >
                         Logg ut
-                    </Hovedknapp>
-                </div>
+                        </Hovedknapp>
+                    </div>
+                )}
                 <Switch>
                     <Route exact path="/" component={SearchPage} />
                     <Route path={`${CONTEXT_PATH}/stilling/:uuid`} component={StillingPage} />

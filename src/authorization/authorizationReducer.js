@@ -1,6 +1,7 @@
 import { select, put, call, takeEvery, takeLatest } from 'redux-saga/effects';
 import { get, SearchApiError, post} from '../api/api';
 import { AD_USER_API } from '../fasitProperties';
+import featureToggle from '../featureToggle';
 import history from '../history';
 
 export const SHOW_AUTHORIZATION_ERROR_MODAL = 'SHOW_AUTHORIZATION_ERROR_MODAL';
@@ -93,7 +94,7 @@ export default function authorizationReducer(state = initialState, action) {
 function* fetchUser() {
     const state = yield select();
 
-    if (state.authorization.shouldFetchUser) {
+    if (featureToggle() && state.authorization.shouldFetchUser) {
         yield put({ type: FETCH_USER_BEGIN });
         try {
             const response = yield call(get, `${AD_USER_API}/api/v1/user`);
