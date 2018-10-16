@@ -9,6 +9,7 @@ import FavouriteAlertStripe from '../favourites/alertstripe/FavouriteAlertStripe
 import FavouriteError from '../favourites/error/FavouriteError';
 import { FETCH_FAVOURITES } from '../favourites/favouritesReducer';
 import ShowFavouriteListLink from '../favourites/ShowFavouriteListLink';
+import featureToggle from '../featureToggle';
 import SavedSearchAlertStripe from '../savedSearches/alertstripe/SavedSearchAlertStripe';
 import CurrentSavedSearch from '../savedSearches/CurrentSavedSearch';
 import SavedSearchError from '../savedSearches/error/SavedSearchError';
@@ -76,11 +77,11 @@ class Search extends React.Component {
                                 <Column xs="12" md="6">
                                     <Sidetittel className="Search__header__title">Ledige stillinger</Sidetittel>
                                 </Column>
-                                { this.props.isLoggedIn &&
+                                {featureToggle() && this.props.isLoggedIn &&
                                     <Column xs="12" md="6">
                                         <div className="Search__header__right">
-                                            <ShowFavouriteListLink/>
-                                            <ExpandSavedSearchButton/>
+                                            <ShowFavouriteListLink />
+                                            <ExpandSavedSearchButton />
                                         </div>
                                     </Column>
                                 }
@@ -107,10 +108,14 @@ class Search extends React.Component {
                                     <Column xs="12" md="4">
                                         <div className="Search__main__left">
                                             <div className="Search__main__left__save-search">
-                                                <SaveSearchButton />
-                                                <Flatknapp mini onClick={this.onResetSearchClick}>
-                                                    Nullstill kriterier
-                                                </Flatknapp>
+                                                {featureToggle() && (
+                                                    <div>
+                                                        <SaveSearchButton />
+                                                        <Flatknapp mini onClick={this.onResetSearchClick}>
+                                                            Nullstill kriterier
+                                                        </Flatknapp>
+                                                    </div>
+                                                )}
                                             </div>
                                             <div id="sok">
                                                 <form
