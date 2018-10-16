@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import featureToggle from '../../featureToggle';
 import { ADD_TO_FAVOURITES, REMOVE_FROM_FAVOURITES } from '../favouritesReducer';
 import './ToggleFavouriteButton.less';
 import { SHOW_AUTHORIZATION_ERROR_MODAL } from '../../authorization/authorizationReducer';
@@ -20,6 +21,10 @@ class ToggleFavouriteButton extends React.Component {
     };
 
     render() {
+        if (!featureToggle()) {
+            return null;
+        }
+
         const {
             favouriteAdUuidList, uuid, className, showLabel, isFetchingFavourites
         } = this.props;

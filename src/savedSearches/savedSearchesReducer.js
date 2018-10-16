@@ -1,6 +1,7 @@
 import { takeEvery, take, call, put, select, takeLatest } from 'redux-saga/effects';
 import { get, post, put as fetchPut, remove, SearchApiError } from '../api/api';
 import { AD_USER_API } from '../fasitProperties';
+import featureToggle from '../featureToggle';
 import { RESET_SEARCH, SEARCH } from '../search/searchReducer';
 import { fromUrl } from '../search/url';
 import { RESTORE_STATE_FROM_URL, SEARCH_PARAMETERS_DEFINITION } from '../urlReducer';
@@ -148,7 +149,7 @@ export default function savedSearchesReducer(state = initialState, action) {
 
 function* fetchSavedSearches() {
     let state = yield select();
-    if (state.savedSearches.shouldFetch) {
+    if (featureToggle() && state.savedSearches.shouldFetch) {
         if (state.authorization.shouldFetchUser) {
             yield put({ type: FETCH_USER });
             yield take(FETCH_USER_SUCCESS);

@@ -3,6 +3,7 @@ import { select, put, call, takeLatest, take } from 'redux-saga/effects';
 import { get, post, remove, SearchApiError } from '../api/api';
 import { AD_USER_API } from '../fasitProperties';
 import { FETCH_USER_SUCCESS, FETCH_USER } from '../authorization/authorizationReducer';
+import featureToggle from '../featureToggle';
 
 export const FETCH_FAVOURITES = 'FETCH_FAVOURITES';
 export const FETCH_FAVOURITES_BEGIN = 'FETCH_FAVOURITES_BEGIN';
@@ -148,7 +149,7 @@ function toFavourite(uuid, ad) {
 
 function* fetchFavourites() {
     let state = yield select();
-    if (state.favourites.shouldFetchFavourites) {
+    if (featureToggle() && state.favourites.shouldFetchFavourites) {
         if (state.authorization.shouldFetchUser) {
             yield put({ type: FETCH_USER });
             yield take(FETCH_USER_SUCCESS);
