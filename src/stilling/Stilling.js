@@ -98,7 +98,17 @@ class Stilling extends React.Component {
                         <header className="Stilling__header">
                             <Container>
                                 <Row>
-                                    <Column xs="12">
+                                    <Column xs="12" md="8">
+                                        {stilling._source.status === 'INACTIVE' && (
+                                            <Expired />
+                                        )}
+                                        <AdTitle
+                                            title={stilling._source.title}
+                                            employer={stilling._source.properties.employer}
+                                            location={stilling._source.properties.location}
+                                        />
+                                    </Column>
+                                    <Column xs="12" md="4">
                                         <div className="Stilling__header__favourite">
                                             <ToggleFavouriteButton uuid={stilling._id} />
                                             <Flatknapp
@@ -110,19 +120,6 @@ class Stilling extends React.Component {
                                             </Flatknapp>
                                         </div>
                                     </Column>
-                                </Row>
-                                <Row>
-                                    <Column xs="12" md="8">
-                                        {stilling._source.status === 'INACTIVE' && (
-                                            <Expired />
-                                        )}
-                                        <AdTitle
-                                            title={stilling._source.title}
-                                            employer={stilling._source.properties.employer}
-                                            location={stilling._source.properties.location}
-                                        />
-                                    </Column>
-                                    <Column xs="12" md="4" />
                                 </Row>
                             </Container>
                         </header>

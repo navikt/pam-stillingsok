@@ -20,7 +20,7 @@ class SavedSearchesExpand extends React.Component {
         if (isSavedSearchesExpanded) {
             return (
                 <div className="SavedSearchesExpand">
-                    <Container>
+                    <div className="SavedSearchesExpand__inner">
                         {isFetching ? (
                             <div className="SavedSearchesExpand__spinner">
                                 <DelayedSpinner />
@@ -32,7 +32,7 @@ class SavedSearchesExpand extends React.Component {
                                 ) : (
                                     <div>
                                         <Undertittel>Lagrede søk</Undertittel>
-                                        <ul className={savedSearches.length > 2 ? 'SavedSearchesExpand__columns' : ''}>
+                                        <ul className={savedSearches.length > 2 ? 'SavedSearchesExpand__list SavedSearchesExpand__columns' : 'SavedSearchesExpand__list'}>
                                             {savedSearches.map((savedSearch) => (
                                                 <SavedSearchesExpandItem
                                                     key={savedSearch.uuid}
@@ -42,14 +42,14 @@ class SavedSearchesExpand extends React.Component {
                                         </ul>
                                         <div className="SavedSearchesExpand__link-to-saved-searches">
                                             <Link to="/lagrede-sok" className="lenke typo-element">
-                                            Endre lagrede søk og varsler
+                                                Endre lagrede søk og varsler
                                             </Link>
                                         </div>
                                     </div>
                                 )}
                             </div>
                         )}
-                    </Container>
+                    </div>
                 </div>
             );
         }

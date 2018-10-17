@@ -66,7 +66,7 @@ class Counties extends React.Component {
                                 <div
                                     className="Counties__inner__municipals"
                                     role="group"
-                                    aria-label={`Underområder ${this.capitalize(county.key)}`}
+                                    aria-label={`Underområder ${capitalizeLocation(county.key)}`}
                                 >
                                     {county.municipals && county.municipals.map((municipal) => (
                                         <Checkbox

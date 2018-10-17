@@ -34,13 +34,13 @@ class FavouriteListItem extends React.Component {
                     </div>
                     <div className="FavouriteListItem__bottom">
                         <Lenkeknapp onClick={this.onRemoveClick} className="Delete">
-                            <i className="Delete__icon"/>
+                            <i className="Delete__icon" />
                             Slett
                         </Lenkeknapp>
                     </div>
                 </div>
                 {favourite.favouriteAd.status === 'INACTIVE' && (
-                    <AlertStripe type="info" solid>
+                    <AlertStripe type="info" solid className="FavouriteListItem__alertstripe">
                         Stillingsannonsen er utløpt
                     </AlertStripe>
                 )}
