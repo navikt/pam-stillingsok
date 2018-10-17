@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Checkbox } from 'nav-frontend-skjema';
 import { Panel } from 'nav-frontend-paneler';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
+import { Undertittel, Normaltekst } from 'nav-frontend-typografi';
 import { Container } from 'nav-frontend-grid';
 import { DECLINE_TERMS_OF_USE, CREATE_USER } from './authorizationReducer';
 import { LOGOUT_URL } from '../fasitProperties';
@@ -32,9 +32,9 @@ class TermsOfUse extends React.Component {
     render() {
         return (
             <Container>
-                <Panel className="TermsOfUse blokk-s">
-                    <Element className="blokk-xs">Du er i ferd med å bruke en innlogget tjeneste.</Element>
-                    <Normaltekst className="blokk-s">
+                <Panel className="TermsOfUse">
+                    <Undertittel className="TermsOfUse__title">Du er i ferd med å bruke en innlogget tjeneste</Undertittel>
+                    <Normaltekst className="TermsOfUse__text">
                         For å gå videre må du samtykke til at vi får lov til å innhente og behandle persondata
                         om deg.
                     </Normaltekst>
@@ -42,7 +42,7 @@ class TermsOfUse extends React.Component {
                         label="Ja, jeg samtykker"
                         checked={this.state.checked}
                         onChange={this.onCheckboxChange}
-                        className="blokk-l"
+                        className="TermsOfUse__checkbox"
                     />
                     <div>
                         {this.state.checked ?
@@ -50,12 +50,12 @@ class TermsOfUse extends React.Component {
                                 disabled={!this.state.checked}
                                 to="/"
                                 onClick={this.onAcceptTerms}
-                                className="lenke"
+                                className="lenke typo-normal"
                             >
                                 Fortsett til stillingssøket
                             </Link> :
                             <Link
-                                className="lenke"
+                                className="lenke typo-normal"
                                 onClick={this.onDeclineTerms}
                                 to={LOGOUT_URL}
                             >
