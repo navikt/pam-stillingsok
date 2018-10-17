@@ -40,7 +40,7 @@ class NotLoggedIn extends React.Component {
                             </Undertittel>
                         )}
                         <Normaltekst className="NotLoggedIn__message">
-                            Logg inn med BankID, BankID på mobil, Buypass eller Commfides.
+                            Logg inn med MinID, BankID, BankID på mobil, Buypass eller Commfides.
                         </Normaltekst>
                         <div className="NotLoggedIn__buttons">
                             <Hovedknapp onClick={this.onLoginClick}>Logg inn</Hovedknapp>

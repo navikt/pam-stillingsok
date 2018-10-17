@@ -79,7 +79,7 @@ ReactDOM.render(
                     <div className="Auth-buttons">
                         <a
                             className="knapp knapp--hoved knapp--mini"
-                            href={`${LOGIN_URL}?redirect=${window.location.href}`}
+                            href={`${LOGIN_URL}?level=Level3&redirect=${window.location.href}`}
                         >
                             Logg inn
                         </a>
