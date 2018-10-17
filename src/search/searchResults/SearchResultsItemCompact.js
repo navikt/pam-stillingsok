@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { STILLING } from '../../fasitProperties';
-import ToggleFavouriteButton from '../../favourites/toggleFavoriteButton/ToggleFavouriteButton';
+import ToggleFavouriteStar from '../../favourites/toggleFavoriteButton/ToggleFavouriteStar';
 import { formatISOString } from '../../utils';
 import './SearchResultsItemCompact.less';
 
@@ -33,7 +33,7 @@ export default function SearchResultsItemCompact({ stilling, urlQuery }) {
                     {formatISOString(stilling.updated, 'DD.MM.YYYY')}
                 </Undertekst>
             )}
-            <ToggleFavouriteButton uuid={stilling.uuid} />
+            <ToggleFavouriteStar uuid={stilling.uuid} />
         </div>
     );
 }

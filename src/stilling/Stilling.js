@@ -75,13 +75,6 @@ class Stilling extends React.Component {
                             <Column xs="6">
                                 <BackToSearch />
                             </Column>
-                            <Column xs="6">
-                                <div className="StillingSubMenu__right">
-                                    <Flatknapp className="StillingSubMenu__print" onClick={this.onPrintClick}>
-                                        Skriv ut
-                                    </Flatknapp>
-                                </div>
-                            </Column>
                         </Row>
                     </Container>
                 </div>
@@ -107,7 +100,14 @@ class Stilling extends React.Component {
                                 <Row>
                                     <Column xs="12">
                                         <div className="Stilling__header__favourite">
-                                            <ToggleFavouriteButton uuid={stilling._id} showLabel />
+                                            <ToggleFavouriteButton uuid={stilling._id} />
+                                            <Flatknapp
+                                                mini
+                                                className="StillingSubMenu__print"
+                                                onClick={this.onPrintClick}
+                                            >
+                                                Skriv ut
+                                            </Flatknapp>
                                         </div>
                                     </Column>
                                 </Row>

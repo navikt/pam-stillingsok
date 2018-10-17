@@ -1,0 +1,33 @@
+@import "../../variables";
+
+.ToggleFavouriteStar {
+  background: none;
+  border-radius: 0.125rem;
+  border: 2px solid transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem;
+  min-width: 3rem;
+  min-height: 3rem;
+
+  &:focus {
+    box-shadow: 0 0 0 3px @orangeFocus;
+    outline: none;
+  }
+
+  &:hover {
+    background: @navGronnLighten80;
+  }
+
+  &:active {
+    background: @navGronnLighten60;
+  }
+}
+
+.ToggleFavouriteStar__star {
+  display: flex;
+  align-items: center;
+  font-size: 1.75rem;
+  color: @navGronn;
+}

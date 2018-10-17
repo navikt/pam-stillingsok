@@ -1,14 +1,13 @@
-import { Flatknapp } from 'nav-frontend-knapper';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import featureToggle from '../../featureToggle';
 import { ADD_TO_FAVOURITES, REMOVE_FROM_FAVOURITES } from '../favouritesReducer';
-import './ToggleFavouriteButton.less';
+import './ToggleFavouriteStar.less';
 import { SHOW_AUTHORIZATION_ERROR_MODAL } from '../../authorization/authorizationReducer';
 import AuthorizationEnum from '../../authorization/AuthorizationEnum';
 
-class ToggleFavouriteButton extends React.Component {
+class ToggleFavouriteStar extends React.Component {
     onAddToFavouritesClick = () => {
         if (!this.props.isLoggedIn) {
             this.props.showError(AuthorizationEnum.ADD_FAVORITE_ERROR);
@@ -37,42 +36,38 @@ class ToggleFavouriteButton extends React.Component {
 
         if (isFavourite) {
             return (
-                <Flatknapp
-                    mini
-                    aria-label="Fjern favoritt"
+                <button
                     onClick={this.onRemoveFromFavouritesClick}
+                    aria-label="Favoritt"
+                    aria-pressed="true"
+                    className={className ? `ToggleFavouriteStar ${className}` : 'ToggleFavouriteStar'}
                 >
-                    <div className="ToggleFavouriteButton__flex">
-                        <i className="ToggleFavouriteButton__star ToggleFavouriteButton__star--active"/>
-                        <span className="ToggleFavouriteButton__label">
-                            Fjern favoritt
-                        </span>
-                    </div>
-                </Flatknapp>
+                    <span className="ToggleFavouriteStar__star">
+                        &#9733;
+                    </span>
+                </button>
             );
         }
         return (
-            <Flatknapp
-                mini
-                aria-label="Lagre favoritt"
+            <button
                 onClick={this.onAddToFavouritesClick}
+                aria-label="Favoritt"
+                aria-pressed="false"
+                className={className ? `ToggleFavouriteStar ${className}` : 'ToggleFavouriteStar'}
             >
-                <div className="ToggleFavouriteButton__flex">
-                    <i className="ToggleFavouriteButton__star" />
-                    <span className="ToggleFavouriteButton__label">
-                    Lagre favoritt
-                    </span>
-                </div>
-            </Flatknapp>
+                <span className="ToggleFavouriteStar__star">
+                    &#9734;
+                </span>
+            </button>
         );
     }
 }
 
-ToggleFavouriteButton.defaultProps = {
+ToggleFavouriteStar.defaultProps = {
     className: undefined
 };
 
-ToggleFavouriteButton.propTypes = {
+ToggleFavouriteStar.propTypes = {
     isFetchingFavourites: PropTypes.bool.isRequired,
     className: PropTypes.string,
     addToFavourites: PropTypes.func.isRequired,
@@ -95,4 +90,4 @@ const mapDispatchToProps = (dispatch) => ({
     showError: (text) => dispatch({ type: SHOW_AUTHORIZATION_ERROR_MODAL, text })
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ToggleFavouriteButton);
+export default connect(mapStateToProps, mapDispatchToProps)(ToggleFavouriteStar);
