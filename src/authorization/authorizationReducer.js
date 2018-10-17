@@ -67,6 +67,7 @@ export default function authorizationReducer(state = initialState, action) {
                 ...state,
                 isFetchingUser: false,
                 shouldFetchUser: false,
+                termsStatus: action.response.acceptedTerms === 'sok_v1' ? 'accepted' : undefined,
                 isLoggedIn: true
             };
         case CREATE_USER_FAILURE:
