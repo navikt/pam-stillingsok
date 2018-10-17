@@ -33,7 +33,7 @@ export default function SearchResultsItemCompact({ stilling, urlQuery }) {
                     {formatISOString(stilling.updated, 'DD.MM.YYYY')}
                 </Undertekst>
             )}
-            <ToggleFavouriteStar uuid={stilling.uuid} />
+            <ToggleFavouriteStar uuid={stilling.uuid} className="SearchResultItemCompact__favourite"/>
         </div>
     );
 }
