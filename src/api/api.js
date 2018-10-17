@@ -148,7 +148,6 @@ export async function fetchStilling(uuid) {
         excludes: [
             'administration',
             'categoryList',
-            'contactList',
             'created',
             'createdBy',
             'employer',

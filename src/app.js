@@ -34,7 +34,6 @@ import './styles.less';
 import { urlSaga } from './urlReducer';
 import './variables.less';
 import authorizationReducer, { authorizationSaga } from './authorization/authorizationReducer';
-import { Hovedknapp } from 'nav-frontend-knapper';
 import TermsOfUse from './authorization/TermsOfUse';
 
 const sagaMiddleware = createSagaMiddleware();
@@ -71,13 +70,6 @@ sagaMiddleware.run(savedSearchAlertStripeSaga);
 sagaMiddleware.run(urlSaga);
 sagaMiddleware.run(authorizationSaga);
 
-function onLoginClick() {
-    window.location.href = `${LOGIN_URL}?redirect=${window.location.href}`;
-}
-
-function onLogoutClick() {
-    window.location.href = LOGOUT_URL;
-}
 
 ReactDOM.render(
     <Provider store={store}>
@@ -85,18 +77,18 @@ ReactDOM.render(
             <div>
                 {featureToggle() && (
                     <div className="Auth-buttons">
-                        <Hovedknapp
-                            mini
-                            onClick={onLoginClick}
+                        <a
+                            className="knapp knapp--hoved knapp--mini"
+                            href={`${LOGIN_URL}?redirect=${window.location.href}`}
                         >
-                        Logg inn
-                        </Hovedknapp>
-                        <Hovedknapp
-                            mini
-                            onClick={onLogoutClick}
+                            Logg inn
+                        </a>
+                        <a
+                            className="knapp knapp--hoved knapp--mini"
+                            href={LOGOUT_URL}
                         >
-                        Logg ut
-                        </Hovedknapp>
+                            Logg ut
+                        </a>
                     </div>
                 )}
                 <Switch>
