@@ -47,9 +47,10 @@ function* getStilling(action) {
     try {
         const state = yield select();
 
-        const found = state.search.searchResult.stillinger ? state.search.searchResult.stillinger.find((stilling) => (
-            stilling.uuid === action.uuid
-        )) : undefined;
+        const found = state.search.searchResult && state.search.searchResult.stillinger ?
+            state.search.searchResult.stillinger.find((stilling) => (
+                stilling.uuid === action.uuid
+            )) : undefined;
 
         if (found) {
             yield put({ type: FOUND_CACHED_STILLING, found });

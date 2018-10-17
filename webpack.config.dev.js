@@ -12,6 +12,7 @@ module.exports = merge(common, {
     plugins: [
         new webpack.DefinePlugin({
             __PAM_SEARCH_API__: "'http://localhost:9000'",
+            __PAM_AD_USER_API__: "'http://localhost:9017'",
             __PAM_STILLING__: "'/stilling/'",
             __PAM_CONTEXT_PATH__: "''",
             __LOGIN_URL__: "''",

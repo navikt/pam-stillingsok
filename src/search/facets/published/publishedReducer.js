@@ -1,4 +1,6 @@
-import { SET_INITIAL_STATE, FETCH_INITIAL_FACETS_SUCCESS, SEARCH_SUCCESS } from '../../searchReducer';
+import { RESTORE_STATE_FROM_SAVED_SEARCH } from '../../../savedSearches/savedSearchesReducer';
+import { RESTORE_STATE_FROM_URL } from '../../../urlReducer';
+import { FETCH_INITIAL_FACETS_SUCCESS, RESET_SEARCH, SEARCH_SUCCESS } from '../../searchReducer';
 import { removeNonExistingFacets } from '../utils';
 
 export const CHECK_PUBLISHED = 'CHECK_PUBLISHED';
@@ -11,10 +13,16 @@ const initialState = {
 
 export default function publishedReducer(state = initialState, action) {
     switch (action.type) {
-        case SET_INITIAL_STATE:
+        case RESTORE_STATE_FROM_URL:
+        case RESTORE_STATE_FROM_SAVED_SEARCH:
             return {
                 ...state,
                 checkedPublished: action.query.published || []
+            };
+        case RESET_SEARCH:
+            return {
+                ...state,
+                checkedPublished: []
             };
         case FETCH_INITIAL_FACETS_SUCCESS:
             return {

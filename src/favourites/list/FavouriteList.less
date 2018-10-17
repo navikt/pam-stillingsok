@@ -1,0 +1,38 @@
+@import "../../variables";
+
+.FavouriteListItem__wrapper {
+  border: 1px solid @border-gray;
+  margin-bottom: @list-box-margin-bottom;
+}
+
+.FavouriteListItem {
+  background-color: #fff;
+  padding: @list-box-padding;
+  display: block;
+}
+
+.FavouriteListItem__top {
+  margin-bottom: 1rem;
+}
+
+.FavouriteListItem__bottom {
+  border-top: 1px solid @border-gray;
+  margin-top: @list-box-button-bar-margin-top;
+  padding-top: @list-box-button-bar-margin-bottom;
+  text-align: right;
+}
+
+.FavouriteListItem__alertstripe {
+  .alertstripe__ikon {
+    margin: 0!important;
+    padding: 0!important;
+    width: 2rem!important;
+  }
+
+  .alertstripe__tekst {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}

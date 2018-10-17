@@ -1,55 +1,41 @@
-import React from 'react';
+import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { Row, Column } from 'nav-frontend-grid';
-import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
-import { formatISOString } from '../../utils';
 import { STILLING } from '../../fasitProperties';
+import ToggleFavouriteStar from '../../favourites/toggleFavoriteButton/ToggleFavouriteStar';
+import { formatISOString } from '../../utils';
 import './SearchResultsItemCompact.less';
 
-export default class SearchResultsItemCompact extends React.Component {
-    componentDidMount() {
-        if (this.props.shouldFocus) {
-            this.link.focus();
-        }
-    }
+export default function SearchResultsItemCompact({ stilling, urlQuery }) {
+    return (
+        <div className="SearchResultItemCompact">
+            {stilling.properties.employer && (
+                <Normaltekst className="SearchResultItemCompact__employer">
+                    {stilling.properties.employer} - {stilling.properties.location}
+                </Normaltekst>
+            )}
 
-    render() {
-        const { stilling, urlQuery } = this.props;
-        return (
-            <Link
-                innerRef={(link) => {
-                    this.link = link;
-                }}
-                className="SearchResultItemCompact"
-                to={`${STILLING}${stilling.uuid}${urlQuery}`}
-            >
-                {stilling.properties.employer && (
-                    <Normaltekst className="SearchResultItemCompact__employer">
-                        {stilling.properties.employer} - {stilling.properties.location}
-                    </Normaltekst>
-                )}
-
-
-                {stilling.properties.jobtitle && stilling.title !== stilling.properties.jobtitle ? (
-                    <Normaltekst
-                        tag="h3"
-                        className="SearchResultItemCompact__title"
-                    >
-                        <b>{stilling.properties.jobtitle}</b> - {stilling.title}
-                    </Normaltekst>
-                ) : (
-                    <Element tag="h3" className="SearchResultItemCompact__title">{stilling.title}</Element>
-                )}
-
-                {stilling.updated && (
-                    <Undertekst className="SearchResultItem__updated">
-                        {formatISOString(stilling.updated, 'DD.MMM')}
-                    </Undertekst>
-                )}
-            </Link>
-        );
-    }
+            <Normaltekst tag="h3" className="SearchResultItemCompact__title">
+                <Link to={`${STILLING}${stilling.uuid}${urlQuery}`} className="lenke SearchResultItemCompact__title__ellipsis">
+                    {stilling.properties.jobtitle && stilling.title !== stilling.properties.jobtitle ? (
+                        <span>
+                            <b>{stilling.properties.jobtitle}</b> - {stilling.title}
+                        </span>
+                    ) : (
+                        <b>{stilling.title}</b>
+                    )
+                    }
+                </Link>
+            </Normaltekst>
+            {stilling.updated && (
+                <Undertekst className="SearchResultItem__updated">
+                    {formatISOString(stilling.updated, 'DD.MM.YYYY')}
+                </Undertekst>
+            )}
+            <ToggleFavouriteStar uuid={stilling.uuid} className="SearchResultItemCompact__favourite"/>
+        </div>
+    );
 }
 
 SearchResultsItemCompact.defaultProps = {

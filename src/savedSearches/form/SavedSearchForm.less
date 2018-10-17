@@ -1,0 +1,61 @@
+@import "../../variables";
+
+.SavedSearchModal {
+  padding: @modal-padding;
+}
+
+@media (max-width: @screen-sm-max) {
+  .SavedSearchModal {
+    padding: 0.5rem 0.25rem;
+  }
+}
+
+.SavedSearchModal__title {
+  margin-bottom:  @modal-title-margin-bottom;
+}
+
+.SavedSearchModal__form-mode {
+  margin-bottom: 1rem;
+}
+
+.SavedSearchModal__body__notify {
+  margin: 1.5rem 0 2.5rem!important;
+}
+
+.SavedSearchModal__body {
+  margin-bottom: @modal-body-margin-bottom;
+}
+
+@media (max-width: @screen-sm-max) {
+  .SavedSearchModal__form-mode {
+    margin-bottom: 0;
+  }
+
+  .SavedSearchModal__buttons .knapp {
+    width: 100%;
+  }
+
+  .SavedSearchModal__buttons .knapp:not(:last-child) {
+    margin-bottom: @knapp-margin-bottom;
+  }
+}
+
+@media (min-width: @screen-md-min) {
+  .SavedSearchModal {
+    width: 38rem;
+  }
+
+  .SavedSearchModal__buttons .knapp:not(:last-child) {
+    margin-right: @knapp-margin-right;
+  }
+}
+
+@media (min-width: 450px) {
+  .SavedSearchModal__body__duration {
+    display: inline;
+
+    &:not(:last-child) {
+      margin-right: 2rem;
+    }
+  }
+}

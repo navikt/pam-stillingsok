@@ -3,49 +3,73 @@
 .SearchResultItemCompact {
   background-color: #fff;
   padding: 0.5rem 1rem;
-  text-decoration: none;
   color: @navMorkGra;
   border: 0;
   margin-bottom: 1px;
   display: flex;
-
-  &:focus {
-    outline: 4px solid @navOransjeLighten40;
-    border-color: transparent;
-  }
-
-  &:hover {
-    outline: 2px solid @navGronnLighten40;
-    color: @navGronn;
-    border-color: transparent;
-  }
+  align-items: center;
 }
 
-.SearchResultItemCompact__employer{
+.SearchResultItemCompact__employer {
   flex: 1;
 }
 
-.SearchResultItemCompact__title{
+.SearchResultItemCompact__title {
   flex: 2;
+
+  .lenke {
+    color: @navGronn;
+
+    &:hover {
+      border-color: @navGronn;
+    }
+  }
+}
+
+.SearchResultItemCompact__title__ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .SearchResultItemCompact__title,
 .SearchResultItemCompact__location,
-.SearchResultItemCompact__employer{
+.SearchResultItemCompact__employer {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   margin-right: 1rem;
 }
 
+
+.SearchResultItemCompact .ToggleFavouriteButton {
+  margin-left: 0.5rem;
+  border-radius: 50%;
+  .FavouriteButton__star {
+    font-size: 1.5rem;
+  }
+}
+
 @media (max-width: @screen-xs-max) {
   .SearchResultItemCompact__location,
-  .SearchResultItemCompact__employer{
+  .SearchResultItemCompact__employer {
     font-size: 90%;
+  }
+
+  .SearchResultItemCompact__title,
+  .SearchResultItemCompact__location,
+  .SearchResultItemCompact__employer {
+    margin-right: 2.5rem;
   }
 
   .SearchResultItemCompact {
     display: block;
+    position: relative;
+  }
+
+  .SearchResultItemCompact .ToggleFavouriteButton {
+    position: absolute;
+    top: 0.25rem;
+    right: 0.25rem;
   }
 }
-

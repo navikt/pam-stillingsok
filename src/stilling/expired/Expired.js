@@ -6,7 +6,7 @@ export default function Expired() {
     return (
         <AlertStripeInfo className="Expired">
             <div className="Expired__message">
-                <strong>Stillingsannonsen er utløpt.</strong>
+                <strong>Stillingsannonsen er inaktiv.</strong>
             </div>
         </AlertStripeInfo>
     );

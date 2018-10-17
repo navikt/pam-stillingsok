@@ -50,10 +50,10 @@ class BackToTop extends React.Component {
     };
 
     isSearchResultsVisible = () => {
-        if (this.searchResults === undefined) {
-            this.searchResults = document.getElementById('treff');
+        if (this.el === undefined) {
+            this.el = document.getElementById('treff');
         }
-        return this.isElementVisible(this.searchResults);
+        return this.isElementVisible(this.el);
     };
 
     isElementVisible = (el) => {
@@ -63,35 +63,31 @@ class BackToTop extends React.Component {
     };
 
     render() {
-        if (this.props.isAtLeastOneSearchDone) {
-            if (this.state.showGoToResults) {
-                return (
-                    <VisTreffButton count={this.props.count} />
-                );
-            } else if (this.state.showGoToSearch) {
-                return (
-                    <TilToppenButton />
-                );
-            }
-            return null;
+        if (this.props.searchResults && this.state.showGoToResults) {
+            return (
+                <VisTreffButton count={this.props.searchResults.total} />
+            );
+        } else if (this.props.searchResults && this.state.showGoToSearch) {
+            return (
+                <TilToppenButton />
+            );
         }
         return null;
     }
 }
 
-BackToTop.propTypes = {
-    count: PropTypes.number.isRequired,
-    isAtLeastOneSearchDone: PropTypes.bool.isRequired
+BackToTop.defaultProps = {
+    searchResults: undefined
 };
 
 BackToTop.propTypes = {
-    isAtLeastOneSearchDone: PropTypes.bool.isRequired,
-    count: PropTypes.number.isRequired
+    searchResults: PropTypes.shape({
+        total: PropTypes.number
+    })
 };
 
 const mapStateToProps = (state) => ({
-    isAtLeastOneSearchDone: state.search.isAtLeastOneSearchDone,
-    count: state.search.searchResult.total
+    searchResults: state.search.searchResult
 });
 
 

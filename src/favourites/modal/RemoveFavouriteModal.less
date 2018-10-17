@@ -1,0 +1,37 @@
+@import "../../variables";
+
+.RemoveFavouriteModal {
+    padding: @modal-padding;
+}
+
+.RemoveFavouriteModal__title {
+    margin-bottom: @modal-title-margin-bottom;
+}
+
+.RemoveFavouriteModal__message {
+    margin-bottom: @modal-body-margin-bottom;
+}
+
+@media (max-width: @screen-sm-max) {
+    .RemoveFavouriteModal {
+        padding: @modal-padding-mobile;
+    }
+
+    .RemoveFavouriteModal__buttons .knapp {
+        width: 100%;
+    }
+
+    .RemoveFavouriteModal__buttons .knapp:not(:last-child) {
+        margin-bottom: @knapp-margin-right;
+    }
+}
+
+@media (min-width: @screen-md-min) {
+    .RemoveFavouriteModal {
+        width: 38rem;
+    }
+
+    .RemoveFavouriteModal__buttons .knapp:not(:last-child) {
+        margin-right: @knapp-margin-right;
+    }
+}

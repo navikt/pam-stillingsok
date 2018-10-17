@@ -1,0 +1,71 @@
+@import "../../variables";
+
+.SavedSearchListItem__wrapper {
+    margin-bottom: @list-box-margin-bottom;
+    border: 1px solid @border-gray;
+}
+
+.SavedSearchListItem {
+    background-color: #fff;
+    padding: @list-box-padding;
+    display: block;
+}
+
+@media (min-width: @screen-md-min) {
+    .SavedSearchListItem__top_flex {
+        margin-bottom: 1rem;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .SavedSearchListItem__title {
+        margin-right: 1rem;
+    }
+}
+
+@media (max-width: @screen-sm-max) {
+    .SavedSearchListItem__title {
+        margin-bottom: 0.75rem;
+    }
+
+    .SavedSearchListItem__created {
+        margin-bottom: 0.75rem;
+    }
+
+    .SavedSearchListItem__button-alertstripe {
+        display: block!important;
+        margin-top: 1rem;
+    }
+}
+
+.SavedSearchListItem__bottom {
+    display: flex;
+    justify-content: flex-end;
+    border-top: 1px solid @border-gray;
+    margin-top: @list-box-button-bar-margin-top;
+    padding-top: @list-box-button-bar-margin-bottom;
+}
+
+.SavedSearchListItem__bottom .Lenkeknapp:not(:last-child) {
+    margin-right: @knapp-margin-right;
+}
+
+.SavedSearchListItem__created {
+    white-space: nowrap;
+    color: @muted-text-color;
+}
+
+.SavedSearchListItem__alertstripe {
+    .alertstripe__ikon {
+        margin: 0!important;
+        padding: 0!important;
+        width: 2rem!important;
+    }
+
+    .alertstripe__tekst {
+        flex: 1;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+}

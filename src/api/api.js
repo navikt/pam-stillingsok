@@ -10,10 +10,11 @@ export class SearchApiError {
     }
 }
 
-async function get(url) {
+export async function get(url) {
     let response;
     try {
         response = await fetch(url, {
+            credentials: 'include',
             method: 'GET'
         });
     } catch (e) {
@@ -26,10 +27,11 @@ async function get(url) {
     return response.json();
 }
 
-async function post(url, query) {
+export async function post(url, query) {
     let response;
     try {
         response = await fetch(url, {
+            credentials: 'include',
             body: JSON.stringify(query),
             method: 'POST',
             headers: {
@@ -44,6 +46,47 @@ async function post(url, query) {
         throw new SearchApiError(response.statusText, response.status);
     }
     return response.json();
+}
+
+export async function put(url, query) {
+    let response;
+    try {
+        response = await fetch(url, {
+            credentials: 'include',
+            body: JSON.stringify(query),
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+    } catch (e) {
+        throw new SearchApiError(e.message, 0);
+    }
+
+    if (response.status !== 200) {
+        throw new SearchApiError(response.statusText, response.status);
+    }
+    return response.json();
+}
+
+export async function remove(url) {
+    let response;
+    try {
+        response = await fetch(url, {
+            credentials: 'include',
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+    } catch (e) {
+        throw new SearchApiError(e.message, 0);
+    }
+
+    if (response.status !== 200) {
+        throw new SearchApiError(response.statusText, response.status);
+    }
+    return response;
 }
 
 export async function fetchSearch(query = {}) {
