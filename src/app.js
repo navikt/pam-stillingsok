@@ -19,9 +19,10 @@ import disclaimerReducer from './discalimer/disclaimerReducer';
 import SearchPage from './search/Search';
 import StillingPage from './stilling/Stilling';
 import Invite from './invite/Invite';
-import { CONTEXT_PATH } from './fasitProperties';
+import { CONTEXT_PATH, LOGIN_URL, LOGOUT_URL } from './fasitProperties';
 import './styles.less';
 import './variables.less';
+import { Hovedknapp } from 'nav-frontend-knapper';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -44,15 +45,39 @@ sagaMiddleware.run(saga);
 sagaMiddleware.run(searchBoxSaga);
 sagaMiddleware.run(stillingSaga);
 
+function onLoginClick() {
+    window.location.href = `${LOGIN_URL}?redirect=${window.location.href}`;
+}
+
+function onLogoutClick() {
+    window.location.href = LOGOUT_URL;
+}
+
 ReactDOM.render(
     <Provider store={store}>
         <BrowserRouter>
-            <Switch>
-                <Route exact path="/" component={SearchPage} />
-                <Route path={`${CONTEXT_PATH}/stilling/:uuid`} component={StillingPage} />
-                <Route path={`${CONTEXT_PATH}/mobil`} component={Invite} />
-                <Route path="*" component={SearchPage} />
-            </Switch>
+            <div>
+                <div className="Auth-buttons">
+                    <Hovedknapp
+                        mini
+                        onClick={onLoginClick}
+                    >
+                        Logg inn
+                    </Hovedknapp>
+                    <Hovedknapp
+                        mini
+                        onClick={onLogoutClick}
+                    >
+                        Logg ut
+                    </Hovedknapp>
+                </div>
+                <Switch>
+                    <Route exact path="/" component={SearchPage} />
+                    <Route path={`${CONTEXT_PATH}/stilling/:uuid`} component={StillingPage} />
+                    <Route path={`${CONTEXT_PATH}/mobil`} component={Invite} />
+                    <Route path="*" component={SearchPage} />
+                </Switch>
+            </div>
         </BrowserRouter>
     </Provider>,
     document.getElementById('app')
