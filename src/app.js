@@ -22,7 +22,6 @@ import Invite from './invite/Invite';
 import { CONTEXT_PATH, LOGIN_URL, LOGOUT_URL } from './fasitProperties';
 import './styles.less';
 import './variables.less';
-import { Hovedknapp } from 'nav-frontend-knapper';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -45,31 +44,23 @@ sagaMiddleware.run(saga);
 sagaMiddleware.run(searchBoxSaga);
 sagaMiddleware.run(stillingSaga);
 
-function onLoginClick() {
-    window.location.href = `${LOGIN_URL}?redirect=${window.location.href}`;
-}
-
-function onLogoutClick() {
-    window.location.href = LOGOUT_URL;
-}
-
 ReactDOM.render(
     <Provider store={store}>
         <BrowserRouter>
             <div>
                 <div className="Auth-buttons">
-                    <Hovedknapp
-                        mini
-                        onClick={onLoginClick}
+                    <a
+                        className="knapp knapp--hoved knapp--mini"
+                        href={`${LOGIN_URL}?redirect=${window.location.href}`}
                     >
                         Logg inn
-                    </Hovedknapp>
-                    <Hovedknapp
-                        mini
-                        onClick={onLogoutClick}
+                    </a>
+                    <a
+                        className="knapp knapp--hoved knapp--mini"
+                        href={LOGOUT_URL}
                     >
                         Logg ut
-                    </Hovedknapp>
+                    </a>
                 </div>
                 <Switch>
                     <Route exact path="/" component={SearchPage} />
