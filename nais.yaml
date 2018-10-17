@@ -24,3 +24,9 @@ resources:
     memory: 256Mi
 ingress:
   enabled: true
+fasitResources:
+  used:
+  - alias: loginservice
+    resourceType: restservice
+  - alias: logoutservice
+    resourceType: restservice

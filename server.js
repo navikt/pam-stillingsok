@@ -36,7 +36,9 @@ server.engine('html', mustacheExpress());
 const fasitProperties = {
     PAM_CONTEXT_PATH: '/pam-stillingsok',
     PAM_SEARCH_API: '/pam-stillingsok/search-api',
-    PAM_STILLING: '/pam-stillingsok/stilling/'
+    PAM_STILLING: '/pam-stillingsok/stilling/',
+    LOGIN_URL: process.env.LOGINSERVICE_URL,
+    LOGOUT_URL: process.env.LOGOUTSERVICE_URL
 };
 
 
@@ -44,6 +46,8 @@ const writeEnvironmentVariablesToFile = () => {
     const fileContent =
         `window.__PAM_CONTEXT_PATH__="${fasitProperties.PAM_CONTEXT_PATH}";\n` +
         `window.__PAM_STILLING__="${fasitProperties.PAM_STILLING}";\n` +
+        `window.__LOGIN_URL__="${fasitProperties.LOGIN_URL}";\n` +
+        `window.__LOGOUT_URL__="${fasitProperties.LOGOUT_URL}";\n` +
         `window.__PAM_SEARCH_API__="${fasitProperties.PAM_SEARCH_API}";\n`;
 
     fs.writeFile(path.resolve(__dirname, 'dist/js/env.js'), fileContent, (err) => {
