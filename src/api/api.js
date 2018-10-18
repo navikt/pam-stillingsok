@@ -89,11 +89,21 @@ export async function remove(url) {
     return response;
 }
 
+function fixStilling(stilling) {
+    if (stilling.properties === undefined) {
+        return {
+            ...stilling,
+            properties: {}
+        };
+    }
+    return stilling;
+}
+
 export async function fetchSearch(query = {}) {
     const result = await post(`${SEARCH_API}/stillingsok/ad/_search`, searchTemplate(query));
     return {
         stillinger: result.hits.hits.map((stilling) => (
-            stilling._source
+            fixStilling(stilling._source)
         )),
         total: result.hits.total,
         counties: result.aggregations.counties.values.buckets.map((county) => ({
