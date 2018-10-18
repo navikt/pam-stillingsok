@@ -94,13 +94,19 @@ export default function favouritesReducer(state = initialState, action) {
             return {
                 ...state,
                 error: 'add_error',
+                favourites: state.favourites.filter((favourite) => favourite.favouriteAd.uuid !== action.uuid),
+                favouriteAdUuidList: state.favouriteAdUuidList.filter((uuid) => uuid !== action.uuid),
+                totalElements: state.totalElements - 1,
                 showAlertStripe: false
             };
         case REMOVE_FROM_FAVOURITES_FAILURE:
             return {
                 ...state,
                 error: 'remove_error',
-                showAlertStripe: false
+                showAlertStripe: false,
+                favourites: [...state.favourites, action.favourite],
+                favouriteAdUuidList: [...state.favouriteAdUuidList, action.favourite.favouriteAd.uuid],
+                totalElements: state.totalElements + 1
             };
         case SHOW_MODAL_REMOVE_FROM_FAVOURITES:
             return {
@@ -177,18 +183,18 @@ function* fetchFavourites() {
 
 function* addToFavourites(action) {
     const state = yield select();
-    try {
-        let favourite;
-        const foundInSearchResult = state.search.searchResult && state.search.searchResult.stillinger &&
-            state.search.searchResult.stillinger.find((s) => s.uuid === action.uuid);
+    let favourite;
+    const foundInSearchResult = state.search.searchResult && state.search.searchResult.stillinger &&
+        state.search.searchResult.stillinger.find((s) => s.uuid === action.uuid);
 
-        if (foundInSearchResult) {
-            favourite = toFavourite(foundInSearchResult.uuid, foundInSearchResult);
-        } else if (state.stilling.stilling._id === action.uuid) {
-            favourite = toFavourite(state.stilling.stilling._id, state.stilling.stilling._source);
-        } else {
-            return;
-        }
+    if (foundInSearchResult) {
+        favourite = toFavourite(foundInSearchResult.uuid, foundInSearchResult);
+    } else if (state.stilling.stilling._id === action.uuid) {
+        favourite = toFavourite(state.stilling.stilling._id, state.stilling.stilling._source);
+    } else {
+        return;
+    }
+    try {
         yield put({ type: SHOW_FAVOURITES_ALERT_STRIPE, alertStripeMode: 'added' });
         yield put({ type: ADD_TO_FAVOURITES_BEGIN, uuid: favourite.favouriteAd.uuid });
         const response = yield call(post, `${AD_USER_API}/api/v1/userfavouriteads`, favourite);
@@ -197,7 +203,7 @@ function* addToFavourites(action) {
         yield put({ type: HIDE_FAVOURITES_ALERT_STRIPE });
     } catch (e) {
         if (e instanceof SearchApiError) {
-            yield put({ type: ADD_TO_FAVOURITES_FAILURE, error: e });
+            yield put({ type: ADD_TO_FAVOURITES_FAILURE, error: e, uuid: favourite.favouriteAd.uuid });
             if (e.statusCode === 404) {
                 yield call(history.push, '/vilkaar');
             }
@@ -208,9 +214,9 @@ function* addToFavourites(action) {
 }
 
 function* removeFromFavourites(action) {
+    const state = yield select();
+    const adToDelete = state.favourites.favourites.find((favourite) => favourite.favouriteAd.uuid === action.uuid);
     try {
-        const state = yield select();
-        const adToDelete = state.favourites.favourites.find((favourite) => favourite.favouriteAd.uuid === action.uuid);
         yield put({ type: SHOW_FAVOURITES_ALERT_STRIPE, alertStripeMode: 'removed' });
         yield put({ type: REMOVE_FROM_FAVOURITES_BEGIN, uuid: action.uuid });
         yield call(remove, `${AD_USER_API}/api/v1/userfavouriteads/${adToDelete.uuid}`);
@@ -219,7 +225,7 @@ function* removeFromFavourites(action) {
         yield put({ type: HIDE_FAVOURITES_ALERT_STRIPE });
     } catch (e) {
         if (e instanceof SearchApiError) {
-            yield put({ type: REMOVE_FROM_FAVOURITES_FAILURE, error: e });
+            yield put({ type: REMOVE_FROM_FAVOURITES_FAILURE, error: e, favourite: adToDelete });
         } else {
             throw e;
         }
