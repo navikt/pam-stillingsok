@@ -53,6 +53,7 @@ export default function authorizationReducer(state = initialState, action) {
         case FETCH_USER_BEGIN:
             return {
                 ...state,
+                shouldFetchUser: false,
                 isFetchingUser: true
             };
         case CREATE_USER_SUCCESS:
@@ -83,8 +84,8 @@ export default function authorizationReducer(state = initialState, action) {
                 ...state,
                 error: 'fetch_error',
                 isFetchingUser: false,
-                shouldFetchUser: false,
                 // 404: Bruker er innlogget men ikke opprettet i databasen
+                shouldFetchUser: action.error.statusCode !== 404 && action.error.statusCode === 401,
                 isLoggedIn: action.error.statusCode === 404
             };
         default:
