@@ -25,7 +25,7 @@ server.use(helmet.contentSecurityPolicy({
         fontSrc: ["'self'", 'data:'],
         imgSrc: ["'self'", 'data:', 'https://www.google-analytics.com',
             'https://www.nav.no/_public/beta.nav.no/images/logo.png'],
-        connectSrc: ["'self'", 'https://pam-aduser.nais.oera-q.local', 'https://www.google-analytics.com']
+        connectSrc: ["'self'", 'https://arbeidsplassen-q.nav.no/aduser', 'https://www.google-analytics.com']
     }
 }));
 
