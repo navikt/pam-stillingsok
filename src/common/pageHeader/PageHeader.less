@@ -1,0 +1,70 @@
+@import "../../variables";
+
+.PageHeader {
+    width: 100%;
+    background-color: @background-green;
+    margin-bottom: @site-header-margin-bottom;
+}
+
+@media (min-width: @screen-lg-min) {
+    .PageHeader {
+        height: @site-header-height;
+        display: flex;
+        align-items: center;
+    }
+
+    .PageHeader__row {
+        display: flex;
+        align-items: center;
+    }
+
+    .PageHeader__right {
+        text-align: right;
+    }
+}
+
+@media (max-width: @screen-md-max) {
+    .PageHeader {
+        padding: 1rem 0;
+    }
+
+    .PageHeader__left {
+        margin-bottom: 1rem;
+        display: block;
+        text-align: center;
+    }
+
+    .PageHeader__right {
+        margin-top: 1rem;
+        display: block;
+        text-align: center;
+    }
+}
+
+@media (max-width: @screen-xs-max) {
+    .PageHeader__right {
+        margin-top: 1rem;
+        display: block;
+        text-align: center;
+    }
+}
+
+.PageHeader__container {
+    margin: 0 auto;
+}
+
+.PageHeader__back {
+    border-bottom: 0!important;
+}
+
+.PageHeader__back:hover .PageHeader__back__text {
+    border-bottom: 1px solid @navBla;
+}
+
+.PageHeader__back__chevron {
+    margin-top: -3px;
+}
+
+.PageHeader__title {
+    text-align: center;
+}

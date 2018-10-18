@@ -1,32 +1,20 @@
 @import "../variables";
 
-.Search__header {
-  margin-bottom: @site-header-margin-bottom;
-  padding: 0;
-}
-
-.Search__header__green {
-  height: @site-header-height;
-  display: flex;
-  align-items: center;
-  background-color: @background-green;
-}
-
 .Search__spinner {
   width: 100%;
   text-align: center;
   padding: 2rem 0;
 }
 
-.Search__header__flex {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
 @media (min-width: @screen-md-min) {
   .Search__main__center {
-    margin-left: 5rem;
+    margin-left: 2.5rem;
+  }
+}
+
+@media (min-width: @screen-lg-min) {
+  .Search__main__center {
+    margin-left: 4.375rem;
   }
 }
 
@@ -42,10 +30,6 @@
 }
 
 @media (max-width: @screen-sm-max) {
-  .Search__header__green {
-    padding: 1rem 0 1rem 0.5rem;
-  }
-
   .Search__main__left__save-search {
     margin-bottom: 1rem;
   }
@@ -66,22 +50,13 @@
   align-items: center;
 }
 
-.Search__header__right {
-  margin-top: 1rem;
-
-  .lenke:not(:last-child) {
-    margin-right: 1rem;
-  }
-}
-
 .SavedSearchExpandButton__chevron {
   margin-left: 0.25rem;
 }
 
-@media (min-width: @screen-md-min) {
-  .Search__header__right {
-    text-align: right;
-  }
+.Search__header__savedSearches {
+  margin-top: -2.5rem;
+  margin-bottom: 2.5rem;
 }
 
 .SaveSearchButton {

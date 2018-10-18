@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import PageHeader from '../common/pageHeader/PageHeader';
 import Disclaimer from '../discalimer/Disclaimer';
 import DelayedSpinner from '../search/loading/DelayedSpinner';
 import FavouriteAlertStripe from './alertstripe/FavouriteAlertStripe';
@@ -28,31 +29,10 @@ class Favourites extends React.Component {
                 <Disclaimer />
                 <FavouriteAlertStripe />
                 <FavouriteError />
-                <div className="Favourites__backbutton">
-                    <Container className="Favourites__backbutton__container">
-                        <Link
-                            to="/"
-                            className="BackToSearchLink knapp knapp--flat no-print"
-                        >
-                            <Chevron type="venstre" className="BackToSearchLink__chevron" />
-                            <span className="BackToSearchLink__text">
-                                Til stillingsøk
-                            </span>
-                        </Link>
-                    </Container>
-                </div>
-                <div className="Favourites__header">
-                    <Container className="Favourites__header__container">
-                        <Row>
-                            <Column xs="12">
-                                <Sidetittel className="Search__header__title">
-                                    Favoritter
-                                    {!this.props.isFetchingFavourites ? ` (${this.props.totalElements})` : ''}
-                                </Sidetittel>
-                            </Column>
-                        </Row>
-                    </Container>
-                </div>
+                <PageHeader
+                    backUrl="/"
+                    title={`Favoritter ${!this.props.isFetchingFavourites ? `(${this.props.totalElements})` : ''}`}
+                />
                 <Container className="Favourites__main">
                     <Row>
                         <Column xs="12">

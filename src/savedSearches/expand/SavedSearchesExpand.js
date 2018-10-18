@@ -1,4 +1,3 @@
-import { Container } from 'nav-frontend-grid';
 import { Undertittel } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -16,51 +15,47 @@ class SavedSearchesExpand extends React.Component {
     }
 
     render() {
-        const { isFetching, savedSearches, isSavedSearchesExpanded } = this.props;
-        if (isSavedSearchesExpanded) {
-            return (
-                <div className="SavedSearchesExpand">
-                    <div className="SavedSearchesExpand__inner">
-                        {isFetching ? (
-                            <div className="SavedSearchesExpand__spinner">
-                                <DelayedSpinner />
-                            </div>
-                        ) : (
-                            <div>
-                                {savedSearches.length === 0 ? (
-                                    <NoSavedSearches showButton={false} />
-                                ) : (
-                                    <div>
-                                        <Undertittel>Lagrede søk</Undertittel>
-                                        <ul className={savedSearches.length > 2 ? 'SavedSearchesExpand__list SavedSearchesExpand__columns' : 'SavedSearchesExpand__list'}>
-                                            {savedSearches.map((savedSearch) => (
-                                                <SavedSearchesExpandItem
-                                                    key={savedSearch.uuid}
-                                                    savedSearch={savedSearch}
-                                                />
-                                            ))}
-                                        </ul>
-                                        <div className="SavedSearchesExpand__link-to-saved-searches">
-                                            <Link to="/lagrede-sok" className="lenke typo-element">
-                                                Endre lagrede søk og varsler
-                                            </Link>
-                                        </div>
+        const { isFetching, savedSearches } = this.props;
+        return (
+            <div className="SavedSearchesExpand">
+                <div className="SavedSearchesExpand__inner">
+                    {isFetching ? (
+                        <div className="SavedSearchesExpand__spinner">
+                            <DelayedSpinner />
+                        </div>
+                    ) : (
+                        <div>
+                            {savedSearches.length === 0 ? (
+                                <NoSavedSearches showButton={false} />
+                            ) : (
+                                <div>
+                                    <Undertittel>Lagrede søk</Undertittel>
+                                    <ul className={savedSearches.length > 2 ? 'SavedSearchesExpand__list SavedSearchesExpand__columns' : 'SavedSearchesExpand__list'}>
+                                        {savedSearches.map((savedSearch) => (
+                                            <SavedSearchesExpandItem
+                                                key={savedSearch.uuid}
+                                                savedSearch={savedSearch}
+                                            />
+                                        ))}
+                                    </ul>
+                                    <div className="SavedSearchesExpand__link-to-saved-searches">
+                                        <Link to="/lagrede-sok" className="lenke typo-element">
+                                            Endre lagrede søk og varsler
+                                        </Link>
                                     </div>
-                                )}
-                            </div>
-                        )}
-                    </div>
+                                </div>
+                            )}
+                        </div>
+                    )}
                 </div>
-            );
-        }
-        return <div />;
+            </div>
+        );
     }
 }
 
 SavedSearchesExpand.propTypes = {
     collapse: PropTypes.func.isRequired,
     isFetching: PropTypes.bool.isRequired,
-    isSavedSearchesExpanded: PropTypes.bool.isRequired,
     savedSearches: PropTypes.arrayOf(PropTypes.shape({
         uuid: PropTypes.string,
         title: PropTypes.string
@@ -69,8 +64,7 @@ SavedSearchesExpand.propTypes = {
 
 const mapStateToProps = (state) => ({
     savedSearches: state.savedSearches.savedSearches,
-    isFetching: state.savedSearches.isFetching,
-    isSavedSearchesExpanded: state.savedSearchExpand.isSavedSearchesExpanded
+    isFetching: state.savedSearches.isFetching
 });
 
 const mapDispatchToProps = (dispatch) => ({

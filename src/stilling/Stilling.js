@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
+import Chevron from 'nav-frontend-chevron';
 import { Column, Container, Row } from 'nav-frontend-grid';
 import { Flatknapp } from 'nav-frontend-knapper';
-import { Normaltekst } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -15,13 +15,12 @@ import SearchError from '../search/error/SearchError';
 import AdDetails from './adDetails/AdDetails';
 import AdText from './adText/AdText';
 import AdTitle from './adTitle/AdTitle';
-import BackToSearch from './backToSearch/BackToSearch';
 import ContactPerson from './contactPerson/ContactPerson';
 import EmployerDetails from './employerDetails/EmployerDetails';
 import EmploymentDetails from './employmentDetails/EmploymentDetails';
 import Expired from './expired/Expired';
 import HowToApply from './howToApply/HowToApply';
-import Skeleton from './loading/Skeleton';
+import Loading from './loading/Loading';
 import NotFound from './notFound/NotFound';
 import HardRequirements from './requirements/HardRequirements';
 import PersonalAttributes from './requirements/PersonalAttributes';
@@ -61,23 +60,12 @@ class Stilling extends React.Component {
             stilling, cachedStilling, isFetchingStilling, error, favourites
         } = this.props;
 
-        const isFavourite = stilling && favourites && favourites.find((favourite) => favourite.uuid === stilling._id);
-
         return (
             <div>
                 <Disclaimer />
                 <FavouriteAlertStripe />
                 <FavouriteError />
                 <NotLoggedIn />
-                <div className="StillingSubMenu no-print">
-                    <Container>
-                        <Row>
-                            <Column xs="6">
-                                <BackToSearch />
-                            </Column>
-                        </Row>
-                    </Container>
-                </div>
 
                 {error && error.statusCode === 404 ? (
                     <Container>
@@ -89,40 +77,76 @@ class Stilling extends React.Component {
                     </Container>
                 )}
 
-                {isFetchingStilling && (
-                    <Skeleton stilling={cachedStilling} />
-                )}
 
-                {!isFetchingStilling && stilling && (
-                    <article className="Stilling">
-                        <header className="Stilling__header">
-                            <Container>
-                                <Row>
-                                    <Column xs="12" md="8">
-                                        {stilling._source.status === 'INACTIVE' && (
-                                            <Expired />
-                                        )}
+                <article className="Stilling">
+                    <header className="Stilling__header">
+                        <Container>
+                            <Row>
+                                <Column xs="12">
+                                    <div className="blokk-s">
+                                        <Link
+                                            to="/"
+                                            className="PageHeader__back typo-normal lenke no-print"
+                                        >
+                                            <Chevron type="venstre" className="PageHeader__back__chevron" />
+                                            <span className="PageHeader__back__text">
+                                                    Til stillingsøk
+                                            </span>
+                                        </Link>
+                                    </div>
+                                </Column>
+                                <Column xs="12" md="8">
+                                    {!isFetchingStilling && stilling && stilling._source.status === 'INACTIVE' && (
+                                        <Expired />
+                                    )}
+                                    {isFetchingStilling && cachedStilling && (
+                                        <AdTitle
+                                            title={cachedStilling.title}
+                                            employer={cachedStilling.properties.employer}
+                                            location={cachedStilling.properties.location}
+                                        />
+                                    )}
+                                    {!isFetchingStilling && stilling && (
                                         <AdTitle
                                             title={stilling._source.title}
                                             employer={stilling._source.properties.employer}
                                             location={stilling._source.properties.location}
                                         />
-                                    </Column>
-                                    <Column xs="12" md="4">
-                                        <div className="Stilling__header__favourite">
+                                    )}
+                                </Column>
+                                <Column xs="12" md="4">
+                                    <div className="Stilling__header__favourite">
+                                        {isFetchingStilling && cachedStilling && (
+                                            <ToggleFavouriteButton uuid={cachedStilling.uuid} />
+                                        )}
+                                        {!isFetchingStilling && stilling && (
                                             <ToggleFavouriteButton uuid={stilling._id} />
-                                            <Flatknapp
-                                                mini
-                                                className="StillingSubMenu__print"
-                                                onClick={this.onPrintClick}
-                                            >
+                                        )}
+                                        <Flatknapp
+                                            mini
+                                            className="StillingSubMenu__print"
+                                            onClick={this.onPrintClick}
+                                        >
                                                 Skriv ut
-                                            </Flatknapp>
-                                        </div>
-                                    </Column>
-                                </Row>
-                            </Container>
-                        </header>
+                                        </Flatknapp>
+                                    </div>
+                                </Column>
+                            </Row>
+                        </Container>
+                    </header>
+                    {isFetchingStilling && (
+                        <Container className="Stilling__main">
+                            <Row>
+                                <Column xs="12" md="8">
+                                    <Loading />
+                                </Column>
+                                <Column xs="12" md="4">
+                                    <Loading spinner={false} />
+                                </Column>
+                            </Row>
+                        </Container>
+                    )}
+                    {!isFetchingStilling && stilling && (
                         <Container className="Stilling__main">
                             <Row>
                                 <Column xs="12" md="8">
@@ -143,8 +167,8 @@ class Stilling extends React.Component {
                                 </Column>
                             </Row>
                         </Container>
-                    </article>
-                )}
+                    )}
+                </article>
             </div>
         );
     }

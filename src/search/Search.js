@@ -1,9 +1,9 @@
 import { Column, Container, Row } from 'nav-frontend-grid';
 import { Flatknapp } from 'nav-frontend-knapper';
-import { Sidetittel } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
+import PageHeader from '../common/pageHeader/PageHeader';
 import Disclaimer from '../discalimer/Disclaimer';
 import FavouriteAlertStripe from '../favourites/alertstripe/FavouriteAlertStripe';
 import FavouriteError from '../favourites/error/FavouriteError';
@@ -70,28 +70,20 @@ class Search extends React.Component {
                 <SavedSearchAlertStripe />
                 <SavedSearchError />
                 <NotLoggedIn />
-                <div className="Search__header">
-                    <div className="Search__header__green">
-                        <Container>
-                            <Row>
-                                <Column xs="12" md="6">
-                                    <Sidetittel className="Search__header__title">Ledige stillinger</Sidetittel>
-                                </Column>
-                                {featureToggle() && this.props.isLoggedIn &&
-                                    <Column xs="12" md="6">
-                                        <div className="Search__header__right">
-                                            <ShowFavouriteListLink />
-                                            <ExpandSavedSearchButton />
-                                        </div>
-                                    </Column>
-                                }
-                            </Row>
-                        </Container>
-                    </div>
+                <PageHeader
+                    title="Ledige stillinger"
+                    buttons={featureToggle() && this.props.isLoggedIn ?
+                        <div>
+                            <ShowFavouriteListLink />
+                            <ExpandSavedSearchButton />
+                        </div> : null
+                    }
+                />
+                {this.props.isSavedSearchesExpanded && (
                     <div className="Search__header__savedSearches">
                         <SavedSearchesExpand />
                     </div>
-                </div>
+                )}
                 <Container className="Search__main">
                     {this.props.hasError && (
                         <SearchError />
@@ -169,7 +161,7 @@ Search.propTypes = {
     resetSearch: PropTypes.func.isRequired,
     fetchFavourites: PropTypes.func.isRequired,
     fetchSavedSearches: PropTypes.func.isRequired,
-    fetchUser: PropTypes.func.isRequired,
+    isSavedSearchesExpanded: PropTypes.bool.isRequired,
     hasError: PropTypes.bool.isRequired,
     initialSearchDone: PropTypes.bool.isRequired,
     isLoggedIn: PropTypes.bool.isRequired
@@ -180,7 +172,8 @@ const mapStateToProps = (state) => ({
     initialSearchDone: state.search.initialSearchDone,
     isFetchingFavourites: state.favourites.isFetchingFavourites,
     savedSearches: state.savedSearches.savedSearches,
-    isLoggedIn: state.authorization.isLoggedIn
+    isLoggedIn: state.authorization.isLoggedIn,
+    isSavedSearchesExpanded: state.savedSearchExpand.isSavedSearchesExpanded
 });
 
 const mapDispatchToProps = (dispatch) => ({

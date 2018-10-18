@@ -76,7 +76,7 @@ ReactDOM.render(
         <Router history={history}>
             <div>
                 {featureToggle() && (
-                    <div className="Auth-buttons">
+                    <div className="Auth-buttons no-print">
                         <a
                             className="knapp knapp--hoved knapp--mini"
                             href={`${LOGIN_URL}?redirect=${window.location.href}`}

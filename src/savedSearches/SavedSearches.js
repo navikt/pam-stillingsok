@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import PageHeader from '../common/pageHeader/PageHeader';
 import Disclaimer from '../discalimer/Disclaimer';
 import DelayedSpinner from '../search/loading/DelayedSpinner';
 import SavedSearchAlertStripe from './alertstripe/SavedSearchAlertStripe';
@@ -29,31 +30,10 @@ class SavedSearches extends React.Component {
                 <Disclaimer />
                 <SavedSearchAlertStripe />
                 <SavedSearchError />
-                <div className="SavedSearches__backbutton">
-                    <Container className="SavedSearches__backbutton__container">
-                        <Link
-                            to="/"
-                            className="BackToSearchLink knapp knapp--flat no-print"
-                        >
-                            <Chevron type="venstre" className="BackToSearchLink__chevron" />
-                            <span className="BackToSearchLink__text">
-                                Til stillingsøk
-                            </span>
-                        </Link>
-                    </Container>
-                </div>
-                <div className="SavedSearches__header">
-                    <Container className="SavedSearches__header__container">
-                        <Row>
-                            <Column xs="12">
-                                <Sidetittel className="Search__header__title">
-                                    Lagrede søk
-                                    {!this.props.isFetching ? ` (${this.props.totalElements})` : ''}
-                                </Sidetittel>
-                            </Column>
-                        </Row>
-                    </Container>
-                </div>
+                <PageHeader
+                    backUrl="/"
+                    title={`Lagrede søk ${!this.props.isFetching ? `(${this.props.totalElements})` : ''}`}
+                />
                 <Container className="SavedSearches__main">
                     <Row>
                         <Column xs="12">
