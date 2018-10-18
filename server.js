@@ -25,7 +25,7 @@ server.use(helmet.contentSecurityPolicy({
         fontSrc: ["'self'", 'data:'],
         imgSrc: ["'self'", 'data:', 'https://www.google-analytics.com',
             'https://www.nav.no/_public/beta.nav.no/images/logo.png'],
-        connectSrc: ["'self'", 'https://www.google-analytics.com']
+        connectSrc: ["'self'", 'https://pam-aduser.nais.oera-q.local', 'https://www.google-analytics.com']
     }
 }));
 
@@ -37,7 +37,7 @@ const fasitProperties = {
     PAM_CONTEXT_PATH: '/pam-stillingsok',
     PAM_SEARCH_API: '/pam-stillingsok/search-api',
     PAM_STILLING: '/pam-stillingsok/stilling/',
-    PAM_AD_USER_API: 'https://pam-aduser.nais.oera-q.local/',
+    PAM_AD_USER_API: 'https://pam-aduser.nais.oera-q.local',
     LOGIN_URL: process.env.LOGINSERVICE_URL,
     LOGOUT_URL: process.env.LOGOUTSERVICE_URL
 };
