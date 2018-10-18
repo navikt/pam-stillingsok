@@ -2,10 +2,11 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { CONTEXT_PATH } from '../fasitProperties';
 
 function ShowFavouriteListLink({ isFetching, totalElements }) {
     return (
-        <Link className="FavouritesLink" to="/favoritter">
+        <Link className="FavouritesLink" to={`${CONTEXT_PATH}/favoritter`}>
             <span className="FavouritesLink__text lenke typo-element">
                 Se favoritter {!isFetching ? ` (${totalElements})` : ''}
             </span>

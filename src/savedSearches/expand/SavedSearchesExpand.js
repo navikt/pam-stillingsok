@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { CONTEXT_PATH } from '../../fasitProperties';
 import DelayedSpinner from '../../search/loading/DelayedSpinner';
 import NoSavedSearches from '../noresult/NoSavedSearches';
 import './SavedSearchesExpand.less';
@@ -39,7 +40,7 @@ class SavedSearchesExpand extends React.Component {
                                         ))}
                                     </ul>
                                     <div className="SavedSearchesExpand__link-to-saved-searches">
-                                        <Link to="/lagrede-sok" className="lenke typo-element">
+                                        <Link to={`${CONTEXT_PATH}/lagrede-sok`} className="lenke typo-element">
                                             Endre lagrede søk og varsler
                                         </Link>
                                     </div>
