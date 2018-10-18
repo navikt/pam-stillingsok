@@ -83,8 +83,8 @@ export default function authorizationReducer(state = initialState, action) {
                 ...state,
                 error: 'fetch_error',
                 isFetchingUser: false,
+                shouldFetchUser: false,
                 // 404: Bruker er innlogget men ikke opprettet i databasen
-                shouldFetchUser: action.error.statusCode !== 404,
                 isLoggedIn: action.error.statusCode === 404
             };
         default:
