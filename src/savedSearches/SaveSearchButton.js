@@ -2,6 +2,7 @@ import { Knapp } from 'nav-frontend-knapper';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
+import { CONTEXT_PATH } from '../fasitProperties';
 import { SavedSearchFormMode, SHOW_SAVED_SEARCH_FORM } from './form/savedSearchFormReducer';
 import { SHOW_AUTHORIZATION_ERROR_MODAL } from '../authorization/authorizationReducer';
 import AuthorizationEnum from '../authorization/AuthorizationEnum';
@@ -11,8 +12,8 @@ class SaveSearchButton extends React.Component {
     onClick = () => {
         if (!this.props.isLoggedIn) {
             this.props.showError(AuthorizationEnum.SAVE_SEARCH_ERROR);
-        } else if(this.props.termsStatus !== 'accepted') {
-            history.push('/vilkaar');
+        } else if (this.props.termsStatus !== 'accepted') {
+            history.push(`${CONTEXT_PATH}/vilkaar`);
         } else {
             this.props.showSavedSearchForm(
                 this.props.currentSavedSearch ? SavedSearchFormMode.REPLACE : SavedSearchFormMode.ADD,

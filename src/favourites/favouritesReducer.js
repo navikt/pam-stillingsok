@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import { select, put, call, takeLatest, take } from 'redux-saga/effects';
 import { get, post, remove, SearchApiError } from '../api/api';
-import { AD_USER_API } from '../fasitProperties';
+import { AD_USER_API, CONTEXT_PATH } from '../fasitProperties';
 import { FETCH_USER_SUCCESS, FETCH_USER } from '../authorization/authorizationReducer';
 import history from '../history';
 import featureToggle from '../featureToggle';
@@ -205,7 +205,7 @@ function* addToFavourites(action) {
         if (e instanceof SearchApiError) {
             yield put({ type: ADD_TO_FAVOURITES_FAILURE, error: e, uuid: favourite.favouriteAd.uuid });
             if (e.statusCode === 404) {
-                yield call(history.push, '/vilkaar');
+                yield call(history.push, `${CONTEXT_PATH}/vilkaar`);
             }
         } else {
             throw e;
