@@ -2,13 +2,14 @@ import { select, put, call, takeLatest } from 'redux-saga/effects';
 import { get, SearchApiError, post } from '../api/api';
 import { AD_USER_API } from '../fasitProperties';
 import featureToggle from '../featureToggle';
-import { ACCEPT_TERMS, CURRENT_TERMS_OF_USE } from '../termsOfUse/termsOfUseReducer';
+import { CURRENT_TERMS_OF_USE } from '../termsOfUse/termsOfUseReducer';
 import { FETCH_AUTHENTICATION_SUCCESS } from '../authentication/authenticationReducer';
 
 export const FETCH_USER_BEGIN = 'FETCH_USER_BEGIN';
 export const FETCH_USER_SUCCESS = 'FETCH_USER_SUCCESS';
 export const FETCH_USER_FAILURE = 'FETCH_USER_FAILURE';
 
+export const CREATE_USER = 'CREATE_USER';
 export const CREATE_USER_BEGIN = 'CREATE_USER_BEGIN';
 export const CREATE_USER_SUCCESS = 'CREATE_USER_SUCCESS';
 export const CREATE_USER_FAILURE = 'CREATE_USER_FAILURE';
@@ -91,5 +92,5 @@ function* createUser() {
 
 export const userSaga = function* saga() {
     yield takeLatest(FETCH_AUTHENTICATION_SUCCESS, fetchUser);
-    yield takeLatest(ACCEPT_TERMS, createUser);
+     yield takeLatest(CREATE_USER, createUser);
 };

@@ -1,7 +1,32 @@
 @import "../variables";
 
-.AuthenticationButton {
+.AuthenticationButton-wrapper {
+  top: 0.5rem;
   position: absolute;
-  right: 16px;
-  top: 5px;
+  text-align: right;
+  width: 100%;
+}
+
+.AuthenticationButton {
+  background: @navLysGra;
+  color: @navMorkGra;
+  padding: 0.25rem 1rem;
+  text-decoration: none;
+  border-radius: 0.125em;
+  font-size: 0.875em!important;
+
+  &:hover {
+    background: @navBla;
+    color: #fff;
+  }
+
+  &:active {
+    background: #005B82;
+    color: #fff;
+  }
+
+  &:focus {
+    outline: 0;
+    box-shadow: 0 0 0 3px @navOransjeLighten40;
+  }
 }

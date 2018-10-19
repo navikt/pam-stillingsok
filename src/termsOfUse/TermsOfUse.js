@@ -6,20 +6,25 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import './TermsOfUse.less';
-import { ACCEPT_TERMS, HIDE_TERMS_OF_USE_MODAL } from './termsOfUseReducer';
+import { CREATE_USER } from '../user/userReducer';
+import {
+    SET_ACCEPT_TERMS_CHECKBOX_VALUE,
+    HIDE_TERMS_OF_USE_MODAL,
+    SHOW_TERMS_OF_USE_ERROR
+} from './termsOfUseReducer';
 
 class TermsOfUse extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = { checked: false };
-    }
-
-    onCheckboxChange = () => {
-        this.setState({ checked: !this.state.checked });
+    onCheckboxChange = (e) => {
+        this.props.setAcceptTermsCheckboxValue(e.target.checked);
     };
 
-    onAcceptTerms = () => {
-        this.props.acceptTerms();
+    onConfirmClick = () => {
+        if (this.props.acceptTermsCheckboxIsChecked) {
+            this.props.hideModal();
+            this.props.createUser();
+        } else {
+            this.props.showError();
+        }
     };
 
     closeModal = () => {
@@ -46,12 +51,16 @@ class TermsOfUse extends React.Component {
                     <div className="TermsOfUse__checkbox">
                         <Checkbox
                             label="Ja, jeg samtykker"
-                            checked={this.state.checked}
+                            checked={this.props.acceptTermsCheckboxIsChecked}
                             onChange={this.onCheckboxChange}
+                            feil={this.props.validationError ?
+                                { feilmelding: 'Du må godta vilkårene for å kunne forsette' } :
+                                undefined
+                            }
                         />
                     </div>
                     <div className="TermsOfUse__buttons">
-                        <Hovedknapp disabled={!this.state.checked} onClick={this.onAcceptTerms}>
+                        <Hovedknapp onClick={this.onConfirmClick}>
                             Fortsett
                         </Hovedknapp>
                         <Flatknapp onClick={this.closeModal}>
@@ -65,15 +74,23 @@ class TermsOfUse extends React.Component {
 }
 
 TermsOfUse.propTypes = {
-    acceptTerms: PropTypes.func.isRequired,
-    hideModal: PropTypes.func.isRequired
+    createUser: PropTypes.func.isRequired,
+    showError: PropTypes.func.isRequired,
+    validationError: PropTypes.bool.isRequired,
+    hideModal: PropTypes.func.isRequired,
+    setAcceptTermsCheckboxValue: PropTypes.func.isRequired,
+    acceptTermsCheckboxIsChecked: PropTypes.bool.isRequired
 };
 
-const mapStateToProps = () => ({
+const mapStateToProps = (state) => ({
+    validationError: state.termsOfUse.validationError,
+    acceptTermsCheckboxIsChecked: state.termsOfUse.acceptTermsCheckboxIsChecked
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    acceptTerms: () => dispatch({ type: ACCEPT_TERMS }),
+    showError: () => dispatch({ type: SHOW_TERMS_OF_USE_ERROR }),
+    createUser: () => dispatch({ type: CREATE_USER }),
+    setAcceptTermsCheckboxValue: (checked) => dispatch({ type: SET_ACCEPT_TERMS_CHECKBOX_VALUE, checked }),
     hideModal: () => dispatch({ type: HIDE_TERMS_OF_USE_MODAL })
 });
 

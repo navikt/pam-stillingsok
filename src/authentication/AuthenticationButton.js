@@ -1,3 +1,4 @@
+import { Container } from 'nav-frontend-grid';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -6,22 +7,21 @@ import './AuthenticationButton.less';
 
 function AuthenticationButton({ isAuthenticated }) {
     return (
-        <div className="no-print">
-            {isAuthenticated ? (
-                <a
-                    className="knapp knapp--hoved knapp--mini AuthenticationButton"
-                    href={LOGOUT_URL}
-                >
+        <div className="AuthenticationButton-wrapper no-print">
+            <Container>
+                {isAuthenticated ? (
+                    <a className="AuthenticationButton typo-element" href={LOGOUT_URL}>
                         Logg ut
-                </a>
-            ) : (
-                <a
-                    className="knapp knapp--hoved knapp--mini AuthenticationButton"
-                    href={`${LOGIN_URL}?redirect=${window.location.href}`}
-                >
+                    </a>
+                ) : (
+                    <a
+                        className="AuthenticationButton typo-element"
+                        href={`${LOGIN_URL}?redirect=${window.location.href}`}
+                    >
                         Logg inn
-                </a>
-            )}
+                    </a>
+                )}
+            </Container>
         </div>
     );
 }

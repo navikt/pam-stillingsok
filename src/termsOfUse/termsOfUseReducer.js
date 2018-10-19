@@ -1,11 +1,14 @@
 export const SHOW_TERMS_OF_USE_MODAL = 'SHOW_TERMS_OF_USE_MODAL';
 export const HIDE_TERMS_OF_USE_MODAL = 'HIDE_TERMS_OF_USE_MODAL';
-export const ACCEPT_TERMS = 'ACCEPT_TERMS';
+export const SET_ACCEPT_TERMS_CHECKBOX_VALUE = 'SET_ACCEPT_TERMS_CHECKBOX_VALUE';
+export const SHOW_TERMS_OF_USE_ERROR = 'SHOW_TERMS_OF_USE_ERROR';
 
 export const CURRENT_TERMS_OF_USE = 'sok_v1';
 
 const initialState = {
-    isVisible: false
+    isVisible: false,
+    acceptTermsCheckboxIsChecked: false,
+    validationError: false
 };
 
 export default function termsOfUseReducer(state = initialState, action) {
@@ -15,11 +18,23 @@ export default function termsOfUseReducer(state = initialState, action) {
                 ...state,
                 isVisible: true
             };
-        case HIDE_TERMS_OF_USE_MODAL:
-        case ACCEPT_TERMS:
+        case SET_ACCEPT_TERMS_CHECKBOX_VALUE:
             return {
                 ...state,
-                isVisible: false
+                acceptTermsCheckboxIsChecked: action.checked,
+                validationError: !action.checked
+            };
+        case HIDE_TERMS_OF_USE_MODAL:
+            return {
+                ...state,
+                isVisible: false,
+                acceptTermsCheckboxIsChecked: false,
+                validationError: false
+            };
+        case SHOW_TERMS_OF_USE_ERROR:
+            return {
+                ...state,
+                validationError: true
             };
         default:
             return state;
