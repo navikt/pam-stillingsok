@@ -6,7 +6,7 @@ import { Checkbox } from 'nav-frontend-skjema';
 import { Panel } from 'nav-frontend-paneler';
 import { Undertittel, Normaltekst } from 'nav-frontend-typografi';
 import { Container } from 'nav-frontend-grid';
-import { DECLINE_TERMS_OF_USE, CREATE_USER } from './authorizationReducer';
+import { CREATE_USER } from './userReducer';
 import { LOGOUT_URL } from '../fasitProperties';
 import './Authorization.less';
 
@@ -23,10 +23,6 @@ class TermsOfUse extends React.Component {
 
     onAcceptTerms = () => {
         this.props.createUser(this.version);
-    };
-
-    onDeclineTerms = () => {
-        this.props.declineTerms();
     };
 
     render() {
@@ -56,7 +52,6 @@ class TermsOfUse extends React.Component {
                             </Link> :
                             <Link
                                 className="lenke typo-normal"
-                                onClick={this.onDeclineTerms}
                                 to={LOGOUT_URL}
                             >
                                 Avbryt og logg ut
@@ -71,7 +66,6 @@ class TermsOfUse extends React.Component {
 }
 
 TermsOfUse.propTypes = {
-    declineTerms: PropTypes.func.isRequired,
     createUser: PropTypes.func.isRequired
 };
 
@@ -79,7 +73,6 @@ const mapStateToProps = () => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    declineTerms: () => dispatch({ type: DECLINE_TERMS_OF_USE }),
     createUser: (terms) => dispatch({ type: CREATE_USER, terms })
 });
 

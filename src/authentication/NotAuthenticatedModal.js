@@ -4,10 +4,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import Modal from 'nav-frontend-modal';
+import { HIDE_AUTHORIZATION_ERROR_MODAL } from './authenticationModalReducer';
 import AuthorizationEnum from './AuthorizationEnum';
-import { HIDE_AUTHORIZATION_ERROR_MODAL } from './authorizationReducer';
 import './NotLoggedIn.less';
-import { LOGIN_URL } from "../fasitProperties";
+import { LOGIN_URL } from '../fasitProperties';
 
 class NotLoggedIn extends React.Component {
     closeModal = () => {
@@ -19,7 +19,7 @@ class NotLoggedIn extends React.Component {
     };
 
     render() {
-        if (this.props.authorizationError) {
+        if (this.props.isVisible) {
             return (
                 <Modal
                     isOpen
@@ -29,12 +29,12 @@ class NotLoggedIn extends React.Component {
 
                 >
                     <div className="NotLoggedIn">
-                        {this.props.authorizationError === AuthorizationEnum.ADD_FAVORITE_ERROR && (
+                        {this.props.text === AuthorizationEnum.ADD_FAVORITE_ERROR && (
                             <Undertittel className="NotLoggedIn__title">
                                 Du må logge inn for å lagre favoritter
                             </Undertittel>
                         )}
-                        {this.props.authorizationError === AuthorizationEnum.SAVE_SEARCH_ERROR && (
+                        {this.props.text === AuthorizationEnum.SAVE_SEARCH_ERROR && (
                             <Undertittel className="NotLoggedIn__title">
                                 Du må logge inn for å lagre søk
                             </Undertittel>
@@ -55,16 +55,18 @@ class NotLoggedIn extends React.Component {
 }
 
 NotLoggedIn.defaultProps = {
-    authorizationError: undefined
+    text: AuthorizationEnum.ADD_FAVORITE_ERROR
 };
 
 NotLoggedIn.propTypes = {
     hideError: PropTypes.func.isRequired,
-    authorizationError: PropTypes.string
+    isVisible: PropTypes.bool.isRequired,
+    text: PropTypes.string
 };
 
 const mapStateToProps = (state) => ({
-    authorizationError: state.authorization.authorizationError
+    text: state.authenticationModal.text,
+    isVisible: state.authenticationModal.isVisible
 });
 
 const mapDispatchToProps = (dispatch) => ({
