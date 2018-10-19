@@ -5,7 +5,7 @@ import featureToggle from '../featureToggle';
 import { RESET_SEARCH, SEARCH } from '../search/searchReducer';
 import { fromUrl } from '../search/url';
 import { RESTORE_STATE_FROM_URL, SEARCH_PARAMETERS_DEFINITION } from '../urlReducer';
-import { FETCH_USER_SUCCESS, FETCH_USER } from '../authorization/authorizationReducer';
+import { FETCH_USER_SUCCESS } from '../user/userReducer';
 import { validateAll } from './form/savedSearchFormReducer';
 
 export const FETCH_SAVED_SEARCHES = 'FETCH_SAVED_SEARCHES';
@@ -148,14 +148,9 @@ export default function savedSearchesReducer(state = initialState, action) {
 }
 
 function* fetchSavedSearches() {
-    let state = yield select();
-    if (featureToggle() && state.savedSearches.shouldFetch) {
-        if (state.authorization.shouldFetchUser) {
-            yield put({ type: FETCH_USER });
-            yield take(FETCH_USER_SUCCESS);
-            state = yield select();
-        }
-        if (state.authorization.isLoggedIn && (state.authorization.termsStatus === 'accepted')) {
+    if (featureToggle()) {
+        const state = yield select();
+        if (state.savedSearches.shouldFetch) {
             yield put({ type: FETCH_SAVED_SEARCHES_BEGIN });
             try {
                 const response = yield call(get, `${AD_USER_API}/api/v1/savedsearches?size=999`);
@@ -259,7 +254,7 @@ function* restoreCurrentSavedSearch(action) {
 }
 
 export const savedSearchesSaga = function* saga() {
-    yield takeEvery(FETCH_SAVED_SEARCHES, fetchSavedSearches);
+    yield takeLatest(FETCH_USER_SUCCESS, fetchSavedSearches);
     yield takeLatest(REMOVE_SAVED_SEARCH, removeSavedSearch);
     yield takeLatest(UPDATE_SAVED_SEARCH, updateSavedSearch);
     yield takeLatest(ADD_SAVED_SEARCH, addSavedSearch);

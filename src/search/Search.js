@@ -7,7 +7,6 @@ import PageHeader from '../common/pageHeader/PageHeader';
 import Disclaimer from '../discalimer/Disclaimer';
 import FavouriteAlertStripe from '../favourites/alertstripe/FavouriteAlertStripe';
 import FavouriteError from '../favourites/error/FavouriteError';
-import { FETCH_FAVOURITES } from '../favourites/favouritesReducer';
 import ShowFavouriteListLink from '../favourites/ShowFavouriteListLink';
 import featureToggle from '../featureToggle';
 import SavedSearchAlertStripe from '../savedSearches/alertstripe/SavedSearchAlertStripe';
@@ -16,7 +15,6 @@ import SavedSearchError from '../savedSearches/error/SavedSearchError';
 import SavedSearchesExpand from '../savedSearches/expand/SavedSearchesExpand';
 import ExpandSavedSearchButton from '../savedSearches/ExpandSavedSearchButton';
 import SavedSearchForm from '../savedSearches/form/SavedSearchForm';
-import { FETCH_SAVED_SEARCHES } from '../savedSearches/savedSearchesReducer';
 import SaveSearchButton from '../savedSearches/SaveSearchButton';
 import { RESTORE_STATE_FROM_URL_BEGIN } from '../urlReducer';
 import BackToTop from './backToTopButton/BackToTop';
@@ -36,8 +34,6 @@ import SearchResultCount from './searchResults/SearchResultCount';
 import SearchResults from './searchResults/SearchResults';
 import Sorting from './sorting/Sorting';
 import ViewMode from './viewMode/ViewMode';
-import NotLoggedIn from '../authorization/NotLoggedIn';
-import { FETCH_USER } from '../authorization/authorizationReducer';
 
 class Search extends React.Component {
     constructor(props) {
@@ -47,8 +43,6 @@ class Search extends React.Component {
     }
 
     componentDidMount() {
-        this.props.fetchFavourites();
-        this.props.fetchSavedSearches();
         document.title = 'Ledige stillinger';
     }
 
@@ -69,10 +63,9 @@ class Search extends React.Component {
                 <FavouriteError />
                 <SavedSearchAlertStripe />
                 <SavedSearchError />
-                <NotLoggedIn />
                 <PageHeader
                     title="Ledige stillinger"
-                    buttons={featureToggle() && this.props.isLoggedIn ?
+                    buttons={featureToggle() && this.props.isAuthenticated && this.props.hasUser ?
                         <div>
                             <ShowFavouriteListLink />
                             <ExpandSavedSearchButton />
@@ -154,17 +147,21 @@ class Search extends React.Component {
     }
 }
 
+Search.defaultProps = {
+    isAuthenticated: undefined,
+    hasUser: undefined
+};
+
 Search.propTypes = {
     restoreStateFromUrl: PropTypes.func.isRequired,
     initialSearch: PropTypes.func.isRequired,
     search: PropTypes.func.isRequired,
     resetSearch: PropTypes.func.isRequired,
-    fetchFavourites: PropTypes.func.isRequired,
-    fetchSavedSearches: PropTypes.func.isRequired,
     isSavedSearchesExpanded: PropTypes.bool.isRequired,
     hasError: PropTypes.bool.isRequired,
     initialSearchDone: PropTypes.bool.isRequired,
-    isLoggedIn: PropTypes.bool.isRequired
+    isAuthenticated: PropTypes.bool,
+    hasUser: PropTypes.bool
 };
 
 const mapStateToProps = (state) => ({
@@ -172,7 +169,8 @@ const mapStateToProps = (state) => ({
     initialSearchDone: state.search.initialSearchDone,
     isFetchingFavourites: state.favourites.isFetchingFavourites,
     savedSearches: state.savedSearches.savedSearches,
-    isLoggedIn: state.authorization.isLoggedIn,
+    isAuthenticated: state.authentication.isAuthenticated,
+    hasUser: state.user.hasUser,
     isSavedSearchesExpanded: state.savedSearchExpand.isSavedSearchesExpanded
 });
 
@@ -180,10 +178,7 @@ const mapDispatchToProps = (dispatch) => ({
     restoreStateFromUrl: () => dispatch({ type: RESTORE_STATE_FROM_URL_BEGIN }),
     initialSearch: () => dispatch({ type: INITIAL_SEARCH }),
     search: () => dispatch({ type: SEARCH }),
-    resetSearch: () => dispatch({ type: RESET_SEARCH }),
-    fetchSavedSearches: () => dispatch({ type: FETCH_SAVED_SEARCHES }),
-    fetchFavourites: () => dispatch({ type: FETCH_FAVOURITES }),
-    fetchUser: () => dispatch({ type: FETCH_USER })
+    resetSearch: () => dispatch({ type: RESET_SEARCH })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Search);

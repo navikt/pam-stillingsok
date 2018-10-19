@@ -13,7 +13,6 @@ const initialState = {
 export default function authenticationReducer(state = initialState, action) {
     switch (action.type) {
         case FETCH_AUTHENTICATION_SUCCESS:
-            console.log("Is loggedin "  + action.isAuthenticated)
             return {
                 ...state,
                 isAuthenticated: action.isAuthenticated

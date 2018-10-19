@@ -1,94 +1,28 @@
-import { select, put, call, takeLatest } from 'redux-saga/effects';
-import { get, SearchApiError, post } from '../api/api';
-import { AD_USER_API } from '../fasitProperties';
-import featureToggle from '../featureToggle';
-import { FETCH_AUTHENTICATION_SUCCESS } from './authenticationReducer';
+export const SHOW_TERMS_OF_USE_MODAL = 'SHOW_TERMS_OF_USE_MODAL';
+export const HIDE_TERMS_OF_USE_MODAL = 'HIDE_TERMS_OF_USE_MODAL';
+export const ACCEPT_TERMS = 'ACCEPT_TERMS';
 
-export const FETCH_USER_BEGIN = 'FETCH_USER_BEGIN';
-export const FETCH_USER_SUCCESS = 'FETCH_USER_SUCCESS';
-export const FETCH_USER_FAILURE = 'FETCH_USER_FAILURE';
-
-export const CREATE_USER = 'CREATE_USER';
-export const CREATE_USER_BEGIN = 'CREATE_USER_BEGIN';
-export const CREATE_USER_SUCCESS = 'CREATE_USER_SUCCESS';
-export const CREATE_USER_FAILURE = 'CREATE_USER_FAILURE';
+export const CURRENT_TERMS_OF_USE = 'sok_v1';
 
 const initialState = {
-    user: undefined
+    isVisible: false
 };
 
-export default function userReducer(state = initialState, action) {
+export default function termsOfUseReducer(state = initialState, action) {
     switch (action.type) {
-        case FETCH_USER_BEGIN:
-            return {
-                ...state
-            };
-        case FETCH_USER_SUCCESS:
+        case SHOW_TERMS_OF_USE_MODAL:
             return {
                 ...state,
-                user: action.response,
-                hasUser: true
+                isVisible: true
             };
-        case FETCH_USER_FAILURE:
+        case HIDE_TERMS_OF_USE_MODAL:
+        case ACCEPT_TERMS:
             return {
                 ...state,
-                error: 'fetch_error',
-                hasUser: false
-            };
-        case CREATE_USER_BEGIN:
-            return {
-                ...state
-            };
-        case CREATE_USER_SUCCESS:
-            return {
-                ...state,
-                user: action.response,
-                hasUser: true
-            };
-        case CREATE_USER_FAILURE:
-            return {
-                ...state,
-                error: 'create_error'
+                isVisible: false
             };
         default:
             return state;
     }
 }
 
-function* fetchUser() {
-    if (featureToggle()) {
-        const state = yield select();
-        if (state.authentication.isAuthenticated) {
-            yield put({ type: FETCH_USER_BEGIN });
-            try {
-                const response = yield call(get, `${AD_USER_API}/api/v1/user`);
-                yield put({ type: FETCH_USER_SUCCESS, response });
-            } catch (e) {
-                if (e instanceof SearchApiError) {
-                    yield put({ type: FETCH_USER_FAILURE, error: e });
-                } else {
-                    throw e;
-                }
-            }
-        }
-    }
-}
-
-function* createUser(action) {
-    yield put({ type: CREATE_USER_BEGIN });
-    try {
-        const response = yield call(post, `${AD_USER_API}/api/v1/user`, { acceptedTerms: action.terms });
-        yield put({ type: CREATE_USER_SUCCESS, response });
-    } catch (e) {
-        if (e instanceof SearchApiError) {
-            yield put({ type: CREATE_USER_FAILURE, error: e });
-        } else {
-            throw e;
-        }
-    }
-}
-
-export const userSaga = function* saga() {
-    yield takeLatest(FETCH_AUTHENTICATION_SUCCESS, fetchUser);
-    yield takeLatest(CREATE_USER, createUser);
-};

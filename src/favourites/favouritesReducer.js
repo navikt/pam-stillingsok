@@ -1,9 +1,8 @@
 /* eslint-disable no-underscore-dangle */
-import { select, put, call, takeLatest, take } from 'redux-saga/effects';
+import { select, put, call, takeLatest } from 'redux-saga/effects';
 import { get, post, remove, SearchApiError } from '../api/api';
-import { AD_USER_API, CONTEXT_PATH } from '../fasitProperties';
-import { FETCH_USER_SUCCESS, FETCH_USER } from '../authorization/authorizationReducer';
-import history from '../history';
+import { AD_USER_API } from '../fasitProperties';
+import { FETCH_USER_SUCCESS } from '../user/userReducer';
 import featureToggle from '../featureToggle';
 
 export const FETCH_FAVOURITES = 'FETCH_FAVOURITES';
@@ -155,20 +154,12 @@ function toFavourite(uuid, ad) {
 }
 
 function* fetchFavourites() {
-    let state = yield select();
-    if (featureToggle() && state.favourites.shouldFetchFavourites) {
-        if (state.authorization.shouldFetchUser) {
-            yield put({ type: FETCH_USER });
-            yield take(FETCH_USER_SUCCESS);
-            state = yield select();
-        }
-        if (state.authorization.isLoggedIn && (state.authorization.termsStatus === 'accepted')) {
+    if (featureToggle()) {
+        const state = yield select();
+        if (state.favourites.shouldFetchFavourites) {
             yield put({ type: FETCH_FAVOURITES_BEGIN });
             try {
-                const response = yield call(
-                    get,
-                    `${AD_USER_API}/api/v1/userfavouriteads?size=999`
-                );
+                const response = yield call(get, `${AD_USER_API}/api/v1/userfavouriteads?size=999`);
                 yield put({ type: FETCH_FAVOURITES_SUCCESS, response });
             } catch (e) {
                 if (e instanceof SearchApiError) {
@@ -204,9 +195,6 @@ function* addToFavourites(action) {
     } catch (e) {
         if (e instanceof SearchApiError) {
             yield put({ type: ADD_TO_FAVOURITES_FAILURE, error: e, uuid: favourite.favouriteAd.uuid });
-            if (e.statusCode === 404) {
-                yield call(history.push, `${CONTEXT_PATH}/vilkaar`);
-            }
         } else {
             throw e;
         }
@@ -233,7 +221,7 @@ function* removeFromFavourites(action) {
 }
 
 export const favouritesSaga = function* saga() {
-    yield takeLatest(FETCH_FAVOURITES, fetchFavourites);
+    yield takeLatest(FETCH_USER_SUCCESS, fetchFavourites);
     yield takeLatest(ADD_TO_FAVOURITES, addToFavourites);
     yield takeLatest(REMOVE_FROM_FAVOURITES, removeFromFavourites);
 };

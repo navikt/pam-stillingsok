@@ -1,20 +1,17 @@
+import { Flatknapp, Hovedknapp } from 'nav-frontend-knapper';
+import Modal from 'nav-frontend-modal';
+import { Checkbox } from 'nav-frontend-skjema';
+import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
+import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import { Checkbox } from 'nav-frontend-skjema';
-import { Panel } from 'nav-frontend-paneler';
-import { Undertittel, Normaltekst } from 'nav-frontend-typografi';
-import { Container } from 'nav-frontend-grid';
-import { CREATE_USER } from './userReducer';
-import { LOGOUT_URL } from '../fasitProperties';
-import './Authorization.less';
+import './TermsOfUse.less';
+import { ACCEPT_TERMS, HIDE_TERMS_OF_USE_MODAL } from './termsOfUseReducer';
 
 class TermsOfUse extends React.Component {
     constructor(props) {
         super(props);
         this.state = { checked: false };
-        this.version = 'sok_v1';
     }
 
     onCheckboxChange = () => {
@@ -22,58 +19,62 @@ class TermsOfUse extends React.Component {
     };
 
     onAcceptTerms = () => {
-        this.props.createUser(this.version);
+        this.props.acceptTerms();
+    };
+
+    closeModal = () => {
+        this.props.hideModal();
     };
 
     render() {
         return (
-            <Container>
-                <Panel className="TermsOfUse">
-                    <Undertittel className="TermsOfUse__title">Du er i ferd med å bruke en innlogget tjeneste</Undertittel>
+            <Modal
+                isOpen
+                onRequestClose={this.closeModal}
+                contentLabel="Vilkår for bruk av tjenesten"
+                appElement={document.getElementById('app')}
+
+            >
+                <div className="TermsOfUse">
+                    <Undertittel className="TermsOfUse__title">
+                        Du er i ferd med å bruke en innlogget tjeneste
+                    </Undertittel>
                     <Normaltekst className="TermsOfUse__text">
                         For å gå videre må du samtykke til at vi får lov til å innhente og behandle persondata
                         om deg.
                     </Normaltekst>
-                    <Checkbox
-                        label="Ja, jeg samtykker"
-                        checked={this.state.checked}
-                        onChange={this.onCheckboxChange}
-                        className="TermsOfUse__checkbox"
-                    />
-                    <div>
-                        {this.state.checked ?
-                            <Link
-                                disabled={!this.state.checked}
-                                to="/"
-                                onClick={this.onAcceptTerms}
-                                className="lenke typo-normal"
-                            >
-                                Fortsett til stillingssøket
-                            </Link> :
-                            <Link
-                                className="lenke typo-normal"
-                                to={LOGOUT_URL}
-                            >
-                                Avbryt og logg ut
-                            </Link>
-                        }
+                    <div className="TermsOfUse__checkbox">
+                        <Checkbox
+                            label="Ja, jeg samtykker"
+                            checked={this.state.checked}
+                            onChange={this.onCheckboxChange}
+                        />
                     </div>
-
-                </Panel>
-            </Container>
+                    <div className="TermsOfUse__buttons">
+                        <Hovedknapp disabled={!this.state.checked} onClick={this.onAcceptTerms}>
+                            Fortsett
+                        </Hovedknapp>
+                        <Flatknapp onClick={this.closeModal}>
+                            Avbryt
+                        </Flatknapp>
+                    </div>
+                </div>
+            </Modal>
         );
     }
 }
 
 TermsOfUse.propTypes = {
-    createUser: PropTypes.func.isRequired
+    acceptTerms: PropTypes.func.isRequired,
+    hideModal: PropTypes.func.isRequired
 };
 
 const mapStateToProps = () => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    createUser: (terms) => dispatch({ type: CREATE_USER, terms })
+    acceptTerms: () => dispatch({ type: ACCEPT_TERMS }),
+    hideModal: () => dispatch({ type: HIDE_TERMS_OF_USE_MODAL })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TermsOfUse);
