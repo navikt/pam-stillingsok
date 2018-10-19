@@ -4,6 +4,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import './SavedSearchAlertStripe.less';
+import { CONTEXT_PATH } from '../../fasitProperties';
 import { SavedSearchAlertStripeMode } from './savedSearchAlertStripeReducer';
 
 function SavedSearchAlertStripe({
@@ -12,7 +13,7 @@ function SavedSearchAlertStripe({
     if (showAlertStripe && (alertStripeMode === SavedSearchAlertStripeMode.ADDED)) {
         return (
             <AlertStripe type="suksess" solid className="SavedSearchAlertStripe">
-                    Søket er lagret i <Link className="lenke" to="/lagrede-sok">Lagrede søk</Link>
+                Søket er lagret i <Link className="lenke" to={`${CONTEXT_PATH}/lagrede-sok`}>Lagrede søk</Link>
             </AlertStripe>
         );
     } else if (showAlertStripe && alertStripeMode === SavedSearchAlertStripeMode.REMOVED) {

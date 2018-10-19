@@ -4,12 +4,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import './FavouriteAlertStripe.less';
+import { CONTEXT_PATH } from '../../fasitProperties';
 
 function FavouriteAlertStripe({ showAlertStripe, alertStripeMode }) {
     if (showAlertStripe && (alertStripeMode === 'added')) {
         return (
             <AlertStripe type="suksess" solid className="FavouriteAlertStripe">
-                    Stillingsannonsen er lagret i <Link className="lenke" to="/favoritter">favoritter</Link>
+                Stillingsannonsen er lagret i <Link className="lenke" to={`${CONTEXT_PATH}/favoritter`}>favoritter</Link>
             </AlertStripe>
         );
     } else if (showAlertStripe && alertStripeMode === 'removed') {
