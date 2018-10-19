@@ -52,8 +52,8 @@ export default function favouritesReducer(state = initialState, action) {
         case FETCH_FAVOURITES_BEGIN:
             return {
                 ...state,
-                isFetchingFavourites: true,
-                favouriteAdUuidList: [...state.favouriteAdUuidList, action.uuid]
+                shouldFetchFavourites: false,
+                isFetchingFavourites: true
             };
         case FETCH_FAVOURITES_SUCCESS:
             return {
@@ -62,7 +62,6 @@ export default function favouritesReducer(state = initialState, action) {
                 favouriteAdUuidList: action.response.content.map((favourite) => (favourite.favouriteAd.uuid)),
                 totalElements: action.response.totalElements,
                 isFetchingFavourites: false,
-                shouldFetchFavourites: false,
                 httpErrorStatus: undefined
             };
         case FETCH_FAVOURITES_FAILURE:
@@ -156,21 +155,31 @@ function toFavourite(uuid, ad) {
 
 function* fetchFavourites() {
     let state = yield select();
+    console.log("a");
     if (featureToggle() && state.favourites.shouldFetchFavourites) {
+        console.log("b")
         if (state.authorization.shouldFetchUser) {
+            console.log("c")
             yield put({ type: FETCH_USER });
+            console.log("d")
             yield take(FETCH_USER_SUCCESS);
+            console.log("e")
             state = yield select();
+            console.log("f")
         }
+        console.log("g")
         if (state.authorization.isLoggedIn && (state.authorization.termsStatus === 'accepted')) {
+            console.log("h")
             yield put({ type: FETCH_FAVOURITES_BEGIN });
+            console.log("i")
             try {
-                const response = yield call(
-                    get,
-                    `${AD_USER_API}/api/v1/userfavouriteads?size=999`
-                );
+                console.log("j")
+                const response = yield call(get, `${AD_USER_API}/api/v1/userfavouriteads?size=999`);
+                console.log("k")
                 yield put({ type: FETCH_FAVOURITES_SUCCESS, response });
+                console.log("l")
             } catch (e) {
+                console.log("m")
                 if (e instanceof SearchApiError) {
                     yield put({ type: FETCH_FAVOURITES_FAILURE, error: e });
                 } else {
