@@ -35,7 +35,8 @@ export async function post(url, query) {
             body: JSON.stringify(query),
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'X-XSRF-TOKEN': getCookie('XSRF-TOKEN')
             }
         });
     } catch (e) {
@@ -56,7 +57,8 @@ export async function put(url, query) {
             body: JSON.stringify(query),
             method: 'PUT',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'X-XSRF-TOKEN': getCookie('XSRF-TOKEN')
             }
         });
     } catch (e) {
@@ -76,7 +78,8 @@ export async function remove(url) {
             credentials: 'include',
             method: 'DELETE',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'X-XSRF-TOKEN': getCookie('XSRF-TOKEN')
             }
         });
     } catch (e) {
@@ -178,4 +181,10 @@ export async function fetchStilling(uuid) {
         ]
     }.excludes.join(',')}`);
 }
+
+const getCookie = (name) => {
+    const re = new RegExp(`${name}=([^;]+)`);
+    const match = re.exec(document.cookie);
+    return match !== null ? match[1] : '';
+};
 
