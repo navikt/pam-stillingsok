@@ -148,17 +148,24 @@ export default function savedSearchesReducer(state = initialState, action) {
 }
 
 function* fetchSavedSearches() {
-    const state = yield select();
+    let state = yield select();
     if (featureToggle() && state.savedSearches.shouldFetch) {
-        yield put({ type: FETCH_SAVED_SEARCHES_BEGIN });
-        try {
-            const response = yield call(get, `${AD_USER_API}/api/v1/savedsearches?size=999`);
-            yield put({ type: FETCH_SAVED_SEARCHES_SUCCESS, response });
-        } catch (e) {
-            if (e instanceof SearchApiError && e.statusCode !== 401) {
-                yield put({ type: FETCH_SAVED_SEARCHES_FAILURE, error: e });
-            } else {
-                throw e;
+        if (state.authorization.shouldFetchUser) {
+            yield put({ type: FETCH_USER });
+            yield take(FETCH_USER_SUCCESS);
+            state = yield select();
+        }
+        if (state.authorization.isLoggedIn && (state.authorization.termsStatus === 'accepted')) {
+            yield put({ type: FETCH_SAVED_SEARCHES_BEGIN });
+            try {
+                const response = yield call(get, `${AD_USER_API}/api/v1/savedsearches?size=999`);
+                yield put({ type: FETCH_SAVED_SEARCHES_SUCCESS, response });
+            } catch (e) {
+                if (e instanceof SearchApiError) {
+                    yield put({ type: FETCH_SAVED_SEARCHES_FAILURE, error: e });
+                } else {
+                    throw e;
+                }
             }
         }
     }

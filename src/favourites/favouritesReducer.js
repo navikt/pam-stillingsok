@@ -52,8 +52,8 @@ export default function favouritesReducer(state = initialState, action) {
         case FETCH_FAVOURITES_BEGIN:
             return {
                 ...state,
-                shouldFetchFavourites: false,
-                isFetchingFavourites: true
+                isFetchingFavourites: true,
+                favouriteAdUuidList: [...state.favouriteAdUuidList, action.uuid]
             };
         case FETCH_FAVOURITES_SUCCESS:
             return {
@@ -62,6 +62,7 @@ export default function favouritesReducer(state = initialState, action) {
                 favouriteAdUuidList: action.response.content.map((favourite) => (favourite.favouriteAd.uuid)),
                 totalElements: action.response.totalElements,
                 isFetchingFavourites: false,
+                shouldFetchFavourites: false,
                 httpErrorStatus: undefined
             };
         case FETCH_FAVOURITES_FAILURE:
@@ -154,17 +155,27 @@ function toFavourite(uuid, ad) {
 }
 
 function* fetchFavourites() {
-    const state = yield select();
+    let state = yield select();
     if (featureToggle() && state.favourites.shouldFetchFavourites) {
-        yield put({ type: FETCH_FAVOURITES_BEGIN });
-        try {
-            const response = yield call(get, `${AD_USER_API}/api/v1/userfavouriteads?size=999`);
-            yield put({ type: FETCH_FAVOURITES_SUCCESS, response });
-        } catch (e) {
-            if (e instanceof SearchApiError && e.statusCode !== 401) {
-                yield put({ type: FETCH_FAVOURITES_FAILURE, error: e });
-            } else {
-                throw e;
+        if (state.authorization.shouldFetchUser) {
+            yield put({ type: FETCH_USER });
+            yield take(FETCH_USER_SUCCESS);
+            state = yield select();
+        }
+        if (state.authorization.isLoggedIn && (state.authorization.termsStatus === 'accepted')) {
+            yield put({ type: FETCH_FAVOURITES_BEGIN });
+            try {
+                const response = yield call(
+                    get,
+                    `${AD_USER_API}/api/v1/userfavouriteads?size=999`
+                );
+                yield put({ type: FETCH_FAVOURITES_SUCCESS, response });
+            } catch (e) {
+                if (e instanceof SearchApiError) {
+                    yield put({ type: FETCH_FAVOURITES_FAILURE, error: e });
+                } else {
+                    throw e;
+                }
             }
         }
     }
