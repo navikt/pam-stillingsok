@@ -45,7 +45,7 @@ class ToggleFavouriteButton extends React.Component {
                     <div className="ToggleFavouriteButton__flex">
                         <i className="ToggleFavouriteButton__star ToggleFavouriteButton__star--active"/>
                         <span className="ToggleFavouriteButton__label">
-                            Fjern favoritt
+                            Slett favoritt
                         </span>
                     </div>
                 </Flatknapp>
