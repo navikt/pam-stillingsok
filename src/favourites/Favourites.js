@@ -9,7 +9,6 @@ import DelayedSpinner from '../search/loading/DelayedSpinner';
 import FavouriteAlertStripe from './alertstripe/FavouriteAlertStripe';
 import FavouriteError from './error/FavouriteError';
 import './Favourites.less';
-import { FETCH_FAVOURITES } from './favouritesReducer';
 import FavouriteList from './list/FavouriteList';
 import RemoveFavouriteModal from './modal/RemoveFavouriteModal';
 import NoFavourites from './noresult/NoFavourites';
@@ -18,7 +17,6 @@ class Favourites extends React.Component {
     componentDidMount() {
         window.scrollTo(0, 0);
         document.title = 'Favoritter';
-        this.props.fetchFavourites();
     }
 
     render() {
@@ -67,7 +65,6 @@ class Favourites extends React.Component {
 Favourites.propTypes = {
     isAuthenticated: PropTypes.bool.isRequired,
     isFetchingFavourites: PropTypes.bool.isRequired,
-    fetchFavourites: PropTypes.func.isRequired,
     totalElements: PropTypes.number.isRequired,
     favourites: PropTypes.arrayOf(PropTypes.shape({
         uuid: PropTypes.string,
@@ -82,8 +79,4 @@ const mapStateToProps = (state) => ({
     isAuthenticated: state.authentication.isAuthenticated
 });
 
-const mapDispatchToProps = (dispatch) => ({
-    fetchFavourites: () => dispatch({ type: FETCH_FAVOURITES })
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Favourites);
+export default connect(mapStateToProps)(Favourites);
