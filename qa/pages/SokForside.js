@@ -2,9 +2,9 @@ module.exports = {
     elements : {
         searchTextField:'input[id=search-form-fritekst-input]',
         searchResult:'#sokeresultat',
-        noResult:'div[class=NoResults]',
-        searchResultItem:'a[class*=SearchResultItem]',
-        searchResultCount:'h2[class*=SearchResultsCount]',
+        noResult:'.NoResults',
+        searchResultItem:'.SearchResultItem',
+        searchResultCount:'.SearchResultsCount',
         searchResultLocation: '.SearchResultItem__location'
     },
 
