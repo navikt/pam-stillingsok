@@ -1,11 +1,15 @@
 module.exports = {
     elements : {
         searchTextField:'input[id=search-form-fritekst-input]',
-        searchResult:'#sokeresultat',
+        searchResult:'#treff',
         noResult:'.NoResults',
         searchResultItem:'.SearchResultItem',
-        searchResultCount:'.SearchResultsCount',
-        searchResultLocation: '.SearchResultItem__location'
+        searchResultItemLink: {
+            selector: '//*[@id="treff"]/div[2]/div/div[1]/div/div[2]/h3/a',
+            locateStrategy: 'xpath'
+        },
+        searchResultCount:'.SearchResultCount',
+        searchResultLocation: '.SearchResultsItemDetails__location'
     },
 
     commands : [{
