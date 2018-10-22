@@ -36,7 +36,7 @@ class SearchBox extends React.Component {
                         id="search-form-fritekst-input"
                         name="q"
                         autoComplete="off"
-                        label=""
+                        ariaLabel="Søk"
                         placeholder="Skriv inn søkeord"
                         onSelect={this.onTypeAheadSuggestionSelected}
                         onChange={this.onTypeAheadValueChange}

@@ -171,6 +171,7 @@ export default class Typeahead extends React.Component {
                     id={this.props.id}
                     role="combobox"
                     type="search"
+                    aria-label={this.props.ariaLabel}
                     aria-autocomplete="list"
                     aria-controls={`${this.props.id}-suggestions`}
                     aria-owns={`${this.props.id}-suggestions`}
@@ -213,11 +214,16 @@ export default class Typeahead extends React.Component {
     }
 }
 
+Typeahead.defaultProps = {
+    ariaLabel: undefined
+};
+
 Typeahead.propTypes = {
     onSelect: PropTypes.func.isRequired,
     onChange: PropTypes.func.isRequired,
     placeholder: PropTypes.string.isRequired,
     suggestions: PropTypes.arrayOf(PropTypes.string).isRequired,
     value: PropTypes.string.isRequired,
+    ariaLabel: PropTypes.string,
     id: PropTypes.string.isRequired
 };
