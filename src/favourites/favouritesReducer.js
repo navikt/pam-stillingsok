@@ -1,10 +1,9 @@
 /* eslint-disable no-underscore-dangle */
-import { select, put, call, takeLatest, take } from 'redux-saga/effects';
+import { call, put, select, takeLatest } from 'redux-saga/effects';
 import { get, post, remove, SearchApiError } from '../api/api';
+import { FETCH_USER_SUCCESS } from '../authorization/authorizationReducer';
 import { AD_USER_API, CONTEXT_PATH } from '../fasitProperties';
-import { FETCH_USER_SUCCESS, FETCH_USER } from '../authorization/authorizationReducer';
 import history from '../history';
-import featureToggle from '../featureToggle';
 
 export const FETCH_FAVOURITES = 'FETCH_FAVOURITES';
 export const FETCH_FAVOURITES_BEGIN = 'FETCH_FAVOURITES_BEGIN';
@@ -29,7 +28,6 @@ export const HIDE_FAVOURITES_ALERT_STRIPE = 'HIDE_FAVOURITES_ALERT_STRIPE';
 
 const initialState = {
     isFetchingFavourites: false,
-    shouldFetchFavourites: true,
     favourites: [],
     confirmationVisible: false,
     favouriteAboutToBeRemoved: undefined,
@@ -62,7 +60,6 @@ export default function favouritesReducer(state = initialState, action) {
                 favouriteAdUuidList: action.response.content.map((favourite) => (favourite.favouriteAd.uuid)),
                 totalElements: action.response.totalElements,
                 isFetchingFavourites: false,
-                shouldFetchFavourites: false,
                 httpErrorStatus: undefined
             };
         case FETCH_FAVOURITES_FAILURE:
@@ -155,28 +152,15 @@ function toFavourite(uuid, ad) {
 }
 
 function* fetchFavourites() {
-    let state = yield select();
-    if (featureToggle() && state.favourites.shouldFetchFavourites) {
-        if (state.authorization.shouldFetchUser) {
-            yield put({ type: FETCH_USER });
-            yield take(FETCH_USER_SUCCESS);
-            state = yield select();
-        }
-        if (state.authorization.isLoggedIn && (state.authorization.termsStatus === 'accepted')) {
-            yield put({ type: FETCH_FAVOURITES_BEGIN });
-            try {
-                const response = yield call(
-                    get,
-                    `${AD_USER_API}/api/v1/userfavouriteads?size=999`
-                );
-                yield put({ type: FETCH_FAVOURITES_SUCCESS, response });
-            } catch (e) {
-                if (e instanceof SearchApiError) {
-                    yield put({ type: FETCH_FAVOURITES_FAILURE, error: e });
-                } else {
-                    throw e;
-                }
-            }
+    yield put({ type: FETCH_FAVOURITES_BEGIN });
+    try {
+        const response = yield call(get, `${AD_USER_API}/api/v1/userfavouriteads?size=999`);
+        yield put({ type: FETCH_FAVOURITES_SUCCESS, response });
+    } catch (e) {
+        if (e instanceof SearchApiError) {
+            yield put({ type: FETCH_FAVOURITES_FAILURE, error: e });
+        } else {
+            throw e;
         }
     }
 }
@@ -233,7 +217,7 @@ function* removeFromFavourites(action) {
 }
 
 export const favouritesSaga = function* saga() {
-    yield takeLatest(FETCH_FAVOURITES, fetchFavourites);
+    yield takeLatest(FETCH_USER_SUCCESS, fetchFavourites);
     yield takeLatest(ADD_TO_FAVOURITES, addToFavourites);
     yield takeLatest(REMOVE_FROM_FAVOURITES, removeFromFavourites);
 };

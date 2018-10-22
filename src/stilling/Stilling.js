@@ -38,7 +38,6 @@ class Stilling extends React.Component {
     componentDidMount() {
         window.scrollTo(0, 0);
         this.props.getStilling(this.props.match.params.uuid);
-        this.props.fetchFavourites();
     }
 
     componentDidUpdate() {
@@ -193,7 +192,6 @@ Stilling.propTypes = {
     cachedStilling: PropTypes.shape({
         title: PropTypes.string
     }),
-    fetchFavourites: PropTypes.func.isRequired,
     getStilling: PropTypes.func.isRequired,
     isFetchingStilling: PropTypes.bool,
     favourites: PropTypes.arrayOf(PropTypes.shape({
@@ -210,8 +208,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    getStilling: (uuid) => dispatch({ type: FETCH_STILLING_BEGIN, uuid }),
-    fetchFavourites: () => dispatch({ type: FETCH_FAVOURITES })
+    getStilling: (uuid) => dispatch({ type: FETCH_STILLING_BEGIN, uuid })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Stilling);

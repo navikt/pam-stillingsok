@@ -1,27 +1,22 @@
-import Chevron from 'nav-frontend-chevron';
 import { Column, Container, Row } from 'nav-frontend-grid';
-import { Sidetittel } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import PageHeader from '../common/pageHeader/PageHeader';
 import Disclaimer from '../discalimer/Disclaimer';
 import DelayedSpinner from '../search/loading/DelayedSpinner';
 import SavedSearchAlertStripe from './alertstripe/SavedSearchAlertStripe';
-import SavedSearchError from './error/SavedSearchError';
-import SavedSearchList from './list/SavedSearchList';
 import ConfirmRemoveModal from './ConfirmRemoveModal';
+import SavedSearchError from './error/SavedSearchError';
 import SavedSearchForm from './form/SavedSearchForm';
+import SavedSearchList from './list/SavedSearchList';
 import NoSavedSearches from './noresult/NoSavedSearches';
 import './SavedSearches.less';
-import { FETCH_SAVED_SEARCHES } from './savedSearchesReducer';
 
 class SavedSearches extends React.Component {
     componentDidMount() {
         window.scrollTo(0, 0);
         document.title = 'Lagrede søk';
-        this.props.fetchSavedSearches();
     }
 
     render() {
@@ -63,7 +58,6 @@ class SavedSearches extends React.Component {
 SavedSearches.propTypes = {
     isFetching: PropTypes.bool.isRequired,
     totalElements: PropTypes.number.isRequired,
-    fetchSavedSearches: PropTypes.func.isRequired,
     savedSearches: PropTypes.arrayOf(PropTypes.shape({
         uuid: PropTypes.string,
         title: PropTypes.string
@@ -76,8 +70,4 @@ const mapStateToProps = (state) => ({
     isFetching: state.savedSearches.isFetching
 });
 
-const mapDispatchToProps = (dispatch) => ({
-    fetchSavedSearches: () => dispatch({ type: FETCH_SAVED_SEARCHES })
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(SavedSearches);
+export default connect(mapStateToProps)(SavedSearches);

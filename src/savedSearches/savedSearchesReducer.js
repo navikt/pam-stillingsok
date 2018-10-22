@@ -1,11 +1,10 @@
-import { takeEvery, take, call, put, select, takeLatest } from 'redux-saga/effects';
+import { call, put, select, take, takeEvery, takeLatest } from 'redux-saga/effects';
 import { get, post, put as fetchPut, remove, SearchApiError } from '../api/api';
+import { FETCH_USER_SUCCESS } from '../authorization/authorizationReducer';
 import { AD_USER_API } from '../fasitProperties';
-import featureToggle from '../featureToggle';
 import { RESET_SEARCH, SEARCH } from '../search/searchReducer';
 import { fromUrl } from '../search/url';
 import { RESTORE_STATE_FROM_URL, SEARCH_PARAMETERS_DEFINITION } from '../urlReducer';
-import { FETCH_USER_SUCCESS, FETCH_USER } from '../authorization/authorizationReducer';
 import { validateAll } from './form/savedSearchFormReducer';
 
 export const FETCH_SAVED_SEARCHES = 'FETCH_SAVED_SEARCHES';
@@ -148,25 +147,15 @@ export default function savedSearchesReducer(state = initialState, action) {
 }
 
 function* fetchSavedSearches() {
-    let state = yield select();
-    if (featureToggle() && state.savedSearches.shouldFetch) {
-        if (state.authorization.shouldFetchUser) {
-            yield put({ type: FETCH_USER });
-            yield take(FETCH_USER_SUCCESS);
-            state = yield select();
-        }
-        if (state.authorization.isLoggedIn && (state.authorization.termsStatus === 'accepted')) {
-            yield put({ type: FETCH_SAVED_SEARCHES_BEGIN });
-            try {
-                const response = yield call(get, `${AD_USER_API}/api/v1/savedsearches?size=999`);
-                yield put({ type: FETCH_SAVED_SEARCHES_SUCCESS, response });
-            } catch (e) {
-                if (e instanceof SearchApiError) {
-                    yield put({ type: FETCH_SAVED_SEARCHES_FAILURE, error: e });
-                } else {
-                    throw e;
-                }
-            }
+    yield put({ type: FETCH_SAVED_SEARCHES_BEGIN });
+    try {
+        const response = yield call(get, `${AD_USER_API}/api/v1/savedsearches?size=999`);
+        yield put({ type: FETCH_SAVED_SEARCHES_SUCCESS, response });
+    } catch (e) {
+        if (e instanceof SearchApiError) {
+            yield put({ type: FETCH_SAVED_SEARCHES_FAILURE, error: e });
+        } else {
+            throw e;
         }
     }
 }
@@ -259,7 +248,7 @@ function* restoreCurrentSavedSearch(action) {
 }
 
 export const savedSearchesSaga = function* saga() {
-    yield takeEvery(FETCH_SAVED_SEARCHES, fetchSavedSearches);
+    yield takeEvery(FETCH_USER_SUCCESS, fetchSavedSearches);
     yield takeLatest(REMOVE_SAVED_SEARCH, removeSavedSearch);
     yield takeLatest(UPDATE_SAVED_SEARCH, updateSavedSearch);
     yield takeLatest(ADD_SAVED_SEARCH, addSavedSearch);
