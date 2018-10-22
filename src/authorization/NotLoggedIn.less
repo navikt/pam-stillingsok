@@ -1,37 +1,37 @@
 @import "../variables";
 
-.NotAuthenticatedModal {
+.NotLoggedIn {
   padding: @modal-padding;
 }
 
-.NotAuthenticatedModal__title {
+.NotLoggedIn__title {
   margin-bottom: @modal-title-margin-bottom;
 }
 
-.NotAuthenticatedModal__message {
+.NotLoggedIn__message {
   margin-bottom: @modal-body-margin-bottom;
 }
 
 @media (max-width: @screen-sm-max) {
-  .NotAuthenticatedModal {
+  .NotLoggedIn {
     padding: @modal-padding-mobile;
   }
 
-  .NotAuthenticatedModal__buttons .knapp {
+  .NotLoggedIn__buttons .knapp {
     width: 100%;
   }
 
-  .NotAuthenticatedModal__buttons .knapp:not(:last-child) {
+  .NotLoggedIn__buttons .knapp:not(:last-child) {
     margin-bottom: @knapp-margin-right;
   }
 }
 
 @media (min-width: @screen-md-min) {
-  .NotAuthenticatedModal {
+  .NotLoggedIn {
     width: 38rem;
   }
 
-  .NotAuthenticatedModal__buttons .knapp:not(:last-child) {
+  .NotLoggedIn__buttons .knapp:not(:last-child) {
     margin-right: @knapp-margin-right;
   }
 }

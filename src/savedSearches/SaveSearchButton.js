@@ -2,17 +2,18 @@ import { Knapp } from 'nav-frontend-knapper';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { SHOW_AUTHORIZATION_ERROR_MODAL } from '../authentication/authenticationModalReducer';
-import AuthorizationEnum from '../authentication/AuthorizationEnum';
-import { SHOW_TERMS_OF_USE_MODAL } from '../termsOfUse/termsOfUseReducer';
+import { CONTEXT_PATH } from '../fasitProperties';
 import { SavedSearchFormMode, SHOW_SAVED_SEARCH_FORM } from './form/savedSearchFormReducer';
+import { SHOW_AUTHORIZATION_ERROR_MODAL } from '../authorization/authorizationReducer';
+import AuthorizationEnum from '../authorization/AuthorizationEnum';
+import history from '../history';
 
 class SaveSearchButton extends React.Component {
     onClick = () => {
-        if (!this.props.isAuthenticated) {
+        if (!this.props.isLoggedIn) {
             this.props.showError(AuthorizationEnum.SAVE_SEARCH_ERROR);
-        } else if (!this.props.hasUser) {
-            this.props.showTermsOfUse();
+        } else if (this.props.termsStatus !== 'accepted') {
+            history.push(`${CONTEXT_PATH}/vilkaar`);
         } else {
             this.props.showSavedSearchForm(
                 this.props.currentSavedSearch ? SavedSearchFormMode.REPLACE : SavedSearchFormMode.ADD,
@@ -34,18 +35,16 @@ SaveSearchButton.defaultProps = {
 };
 
 SaveSearchButton.propTypes = {
-    showTermsOfUse: PropTypes.func.isRequired,
     showSavedSearchForm: PropTypes.func.isRequired,
     currentSavedSearch: PropTypes.shape({}),
     showError: PropTypes.func.isRequired,
-    isAuthenticated: PropTypes.bool.isRequired,
-    hasUser: PropTypes.bool.isRequired
+    isLoggedIn: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => ({
     currentSavedSearch: state.savedSearches.currentSavedSearch,
-    isAuthenticated: state.authentication.isAuthenticated,
-    hasUser: state.user.hasUser
+    isLoggedIn: state.authorization.isLoggedIn,
+    termsStatus: state.authorization.termsStatus
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -54,8 +53,7 @@ const mapDispatchToProps = (dispatch) => ({
         formMode,
         showAddOrReplace
     }),
-    showError: (text) => dispatch({ type: SHOW_AUTHORIZATION_ERROR_MODAL, text }),
-    showTermsOfUse: () => dispatch({ type: SHOW_TERMS_OF_USE_MODAL })
+    showError: (text) => dispatch({ type: SHOW_AUTHORIZATION_ERROR_MODAL, text })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SaveSearchButton);
