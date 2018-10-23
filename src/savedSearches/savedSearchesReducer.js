@@ -149,7 +149,7 @@ export default function savedSearchesReducer(state = initialState, action) {
 function* fetchSavedSearches() {
     yield put({ type: FETCH_SAVED_SEARCHES_BEGIN });
     try {
-        const response = yield call(get, `${AD_USER_API}/api/v1/savedsearches?size=999`);
+        const response = yield call(get, `${AD_USER_API}/api/v1/savedsearches?size=999&sort=updated,desc`);
         yield put({ type: FETCH_SAVED_SEARCHES_SUCCESS, response });
     } catch (e) {
         if (e instanceof SearchApiError) {

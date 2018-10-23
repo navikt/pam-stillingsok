@@ -154,7 +154,7 @@ function toFavourite(uuid, ad) {
 function* fetchFavourites() {
     yield put({ type: FETCH_FAVOURITES_BEGIN });
     try {
-        const response = yield call(get, `${AD_USER_API}/api/v1/userfavouriteads?size=999`);
+        const response = yield call(get, `${AD_USER_API}/api/v1/userfavouriteads?size=999&sort=favouriteAd.updated,desc`);
         yield put({ type: FETCH_FAVOURITES_SUCCESS, response });
     } catch (e) {
         if (e instanceof SearchApiError) {
