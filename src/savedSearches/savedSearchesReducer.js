@@ -118,7 +118,7 @@ export default function savedSearchesReducer(state = initialState, action) {
             return {
                 ...state,
                 isSaving: false,
-                savedSearches: [...state.savedSearches, action.response],
+                savedSearches: [action.response, ...state.savedSearches],
                 currentSavedSearch: action.response,
                 totalElements: state.totalElements + 1
             };

@@ -78,7 +78,7 @@ export default function favouritesReducer(state = initialState, action) {
         case ADD_TO_FAVOURITES_SUCCESS:
             return {
                 ...state,
-                favourites: [...state.favourites, action.response]
+                favourites: [action.response, ...state.favourites]
             };
         case REMOVE_FROM_FAVOURITES_BEGIN:
             return {
