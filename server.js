@@ -21,7 +21,10 @@ server.use(helmet.contentSecurityPolicy({
     directives: {
         defaultSrc: ["'none'"],
         scriptSrc: ["'self'", 'https://www.google-analytics.com'],
-        styleSrc: ["'self'"],
+        styleSrc: [
+            "'self'",
+            "'unsafe-inline'"
+        ],
         fontSrc: ["'self'", 'data:'],
         imgSrc: ["'self'", 'data:', 'https://www.google-analytics.com',
             'https://www.nav.no/_public/beta.nav.no/images/logo.png'],
@@ -64,7 +67,7 @@ const renderSok = (htmlPages) => (
                 if (err) {
                     reject(err);
                 } else {
-                    resolve(Object.assign({ sok: html }, htmlPages));
+                    resolve(Object.assign({sok: html}, htmlPages));
                 }
             }
         );

@@ -1,7 +1,18 @@
-const path = require('path');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
+    optimization: {
+        splitChunks: {
+            cacheGroups: {
+                styles: {
+                    name: 'styles',
+                    test: /\.css$/,
+                    chunks: 'all',
+                    enforce: true
+                }
+            }
+        }
+    },
     entry: {
         sok: ['babel-polyfill', 'whatwg-fetch', './src/app.js'],
         print: ['babel-polyfill', 'whatwg-fetch', './src/print.js'],
@@ -13,27 +24,27 @@ module.exports = {
         publicPath: '/sok/'
     },
     module: {
-        loaders: [
+        rules: [
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
-                loader: 'babel-loader',
-                query: { presets: ['es2015', 'react', 'stage-2'] }
-            }, {
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['es2015', 'react', 'stage-2']
+                    }
+                }
+            },
+            {
                 test: /\.css$/,
-                use: ExtractTextPlugin.extract({
-                    fallback: 'style-loader',
-                    use: 'css-loader'
-                })
-            }, {
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    'css-loader'
+                ]
+            },
+            {
                 test: /\.less$/,
-                use: ExtractTextPlugin.extract({
-                    fallback: 'style-loader',
-                    use: [
-                        'css-loader',
-                        'less-loader?{"globalVars":{"nodeModulesPath":"\'./../../\'", "coreModulePath":"\'./../../\'"}}'
-                    ]
-                })
+                loader: 'style-loader!css-loader!less-loader?{"globalVars":{"nodeModulesPath":"\'./../../\'", "coreModulePath":"\'./../../\'"}}'
             }
         ]
     },
@@ -41,6 +52,8 @@ module.exports = {
         extensions: ['.js', '.jsx']
     },
     plugins: [
-        new ExtractTextPlugin('css/[name].css')
+        new MiniCssExtractPlugin({
+            filename: 'css/[name].css'
+        })
     ]
 };
