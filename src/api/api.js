@@ -36,7 +36,7 @@ export async function post(url, query) {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'X-XSRF-TOKEN': getCookie('XSRF-TOKEN')
+                'X-XSRF-TOKEN-ARBEIDSPLASSEN': getCookie('XSRF-TOKEN-ARBEIDSPLASSEN')
             }
         });
     } catch (e) {
@@ -58,7 +58,7 @@ export async function put(url, query) {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
-                'X-XSRF-TOKEN': getCookie('XSRF-TOKEN')
+                'X-XSRF-TOKEN-ARBEIDSPLASSEN': getCookie('XSRF-TOKEN-ARBEIDSPLASSEN')
             }
         });
     } catch (e) {
@@ -79,7 +79,7 @@ export async function remove(url) {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
-                'X-XSRF-TOKEN': getCookie('XSRF-TOKEN')
+                'X-XSRF-TOKEN-ARBEIDSPLASSEN': getCookie('XSRF-TOKEN-ARBEIDSPLASSEN')
             }
         });
     } catch (e) {
