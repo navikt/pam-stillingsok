@@ -78,8 +78,8 @@
     "rimraf": "^2.6.2",
     "style-loader": "^0.21.0",
     "uglifyjs-webpack-plugin": "^1.2.5",
-    "webpack": "^3.5.5",
-    "webpack-dev-server": "^2.11.3",
+    "webpack": "^4.0.0",
+    "webpack-dev-server": "^3.1.6",
     "webpack-merge": "^4.1.2"
   }
 }
