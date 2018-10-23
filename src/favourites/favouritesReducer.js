@@ -35,7 +35,9 @@ const initialState = {
     error: undefined,
     alertStripeMode: 'added',
     totalElements: 0,
-    favouriteAdUuidList: []
+    adsMarkedAsFavorite: [],
+    pending: [],
+    favouritesAboutToBeDeleted: []
 };
 
 export default function favouritesReducer(state = initialState, action) {
@@ -50,13 +52,13 @@ export default function favouritesReducer(state = initialState, action) {
             return {
                 ...state,
                 isFetchingFavourites: true,
-                favouriteAdUuidList: [...state.favouriteAdUuidList, action.uuid]
+                adsMarkedAsFavorite: [...state.adsMarkedAsFavorite, action.uuid]
             };
         case FETCH_FAVOURITES_SUCCESS:
             return {
                 ...state,
                 favourites: action.response.content,
-                favouriteAdUuidList: action.response.content.map((favourite) => (favourite.favouriteAd.uuid)),
+                adsMarkedAsFavorite: action.response.content.map((favourite) => (favourite.favouriteAd.uuid)),
                 totalElements: action.response.totalElements,
                 isFetchingFavourites: false
             };
@@ -69,38 +71,41 @@ export default function favouritesReducer(state = initialState, action) {
         case ADD_TO_FAVOURITES_BEGIN:
             return {
                 ...state,
-                favouriteAdUuidList: [...state.favouriteAdUuidList, action.uuid],
-                totalElements: state.totalElements + 1
+                showAlertStripe: false,
+                adsMarkedAsFavorite: [...state.adsMarkedAsFavorite, action.favourite.favouriteAd.uuid]
             };
         case ADD_TO_FAVOURITES_SUCCESS:
             return {
                 ...state,
-                favourites: [action.response, ...state.favourites]
-            };
-        case REMOVE_FROM_FAVOURITES_BEGIN:
-            return {
-                ...state,
-                favourites: state.favourites.filter((favourite) => favourite.favouriteAd.uuid !== action.uuid),
-                favouriteAdUuidList: state.favouriteAdUuidList.filter((uuid) => uuid !== action.uuid),
-                totalElements: state.totalElements - 1
+                favourites: [action.response, ...state.favourites],
+                totalElements: state.totalElements + 1
             };
         case ADD_TO_FAVOURITES_FAILURE:
             return {
                 ...state,
                 error: 'add_error',
-                favourites: state.favourites.filter((favourite) => favourite.favouriteAd.uuid !== action.uuid),
-                favouriteAdUuidList: state.favouriteAdUuidList.filter((uuid) => uuid !== action.uuid),
+                adsMarkedAsFavorite: state.adsMarkedAsFavorite.filter((uuid) => uuid !== action.uuid)
+            };
+        case REMOVE_FROM_FAVOURITES_BEGIN:
+            return {
+                ...state,
+                showAlertStripe: false,
+                adsMarkedAsFavorite: state.adsMarkedAsFavorite.filter((uuid) => uuid !== action.favourite.favouriteAd.uuid),
+                pending: [...state.pending, action.favourite.uuid]
+            };
+        case REMOVE_FROM_FAVOURITES_SUCCESS:
+            return {
+                ...state,
+                favourites: state.favourites.filter((favourite) => favourite.uuid !== action.favourite.uuid),
                 totalElements: state.totalElements - 1,
-                showAlertStripe: false
+                pending: state.pending.filter((uuid) => uuid !== action.favourite.uuid)
             };
         case REMOVE_FROM_FAVOURITES_FAILURE:
             return {
                 ...state,
                 error: 'remove_error',
-                showAlertStripe: false,
-                favourites: [...state.favourites, action.favourite],
-                favouriteAdUuidList: [...state.favouriteAdUuidList, action.favourite.favouriteAd.uuid],
-                totalElements: state.totalElements + 1
+                adsMarkedAsFavorite: [...state.adsMarkedAsFavorite, action.favourite.favouriteAd.uuid],
+                pending: state.pending.filter((uuid) => uuid !== action.favourite.uuid)
             };
         case SHOW_MODAL_REMOVE_FROM_FAVOURITES:
             return {
@@ -130,6 +135,10 @@ export default function favouritesReducer(state = initialState, action) {
             return state;
     }
 }
+
+export const withoutPendingFavorites = function withoutPendingFavorites(state) {
+    return state.favourites.filter((favourite) => !state.pending.includes(favourite.uuid));
+};
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -177,7 +186,7 @@ function* addToFavourites(action) {
     }
     try {
         yield put({ type: SHOW_FAVOURITES_ALERT_STRIPE, alertStripeMode: 'added' });
-        yield put({ type: ADD_TO_FAVOURITES_BEGIN, uuid: favourite.favouriteAd.uuid });
+        yield put({ type: ADD_TO_FAVOURITES_BEGIN, favourite });
         const response = yield call(post, `${AD_USER_API}/api/v1/userfavouriteads`, favourite);
         yield put({ type: ADD_TO_FAVOURITES_SUCCESS, response });
         yield call(delay, 5000);
@@ -196,17 +205,17 @@ function* addToFavourites(action) {
 
 function* removeFromFavourites(action) {
     const state = yield select();
-    const adToDelete = state.favourites.favourites.find((favourite) => favourite.favouriteAd.uuid === action.uuid);
+    const favourite = state.favourites.favourites.find((favourite) => favourite.favouriteAd.uuid === action.uuid);
     try {
         yield put({ type: SHOW_FAVOURITES_ALERT_STRIPE, alertStripeMode: 'removed' });
-        yield put({ type: REMOVE_FROM_FAVOURITES_BEGIN, uuid: action.uuid });
-        yield call(remove, `${AD_USER_API}/api/v1/userfavouriteads/${adToDelete.uuid}`);
-        yield put({ type: REMOVE_FROM_FAVOURITES_SUCCESS });
+        yield put({ type: REMOVE_FROM_FAVOURITES_BEGIN, favourite });
+        yield call(remove, `${AD_USER_API}/api/v1/userfavouriteads/${favourite.uuid}`);
+        yield put({ type: REMOVE_FROM_FAVOURITES_SUCCESS, favourite });
         yield call(delay, 5000);
         yield put({ type: HIDE_FAVOURITES_ALERT_STRIPE });
     } catch (e) {
         if (e instanceof SearchApiError) {
-            yield put({ type: REMOVE_FROM_FAVOURITES_FAILURE, error: e, favourite: adToDelete });
+            yield put({ type: REMOVE_FROM_FAVOURITES_FAILURE, error: e, favourite });
         } else {
             throw e;
         }

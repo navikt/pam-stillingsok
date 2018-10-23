@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
+import { withoutPending } from '../savedSearchesReducer';
 import SavedSearchListItem from './SavedSearchListItem';
 import './SavedSearchList.less';
 
@@ -21,8 +22,7 @@ SavedSearchList.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-    savedSearches: state.savedSearches.savedSearches
+    savedSearches: withoutPending(state.savedSearches)
 });
-
 
 export default connect(mapStateToProps)(SavedSearchList);

@@ -41,6 +41,7 @@ const initialState = {
     confirmationVisible: false,
     totalElements: 0,
     isSaving: false,
+    pending: [],
     currentSavedSearch: undefined
 };
 
@@ -67,8 +68,19 @@ export default function savedSearchesReducer(state = initialState, action) {
         case REMOVE_SAVED_SEARCH_BEGIN:
             return {
                 ...state,
+                pending: [...state.pending, action.uuid]
+            };
+        case REMOVE_SAVED_SEARCH_SUCCESS:
+            return {
+                ...state,
                 savedSearches: state.savedSearches.filter((savedSearch) => savedSearch.uuid !== action.uuid),
-                totalElements: state.totalElements - 1
+                totalElements: state.totalElements - 1,
+                pending: state.pending.filter((uuid) => uuid !== action.uuid)
+            };
+        case REMOVE_SAVED_SEARCH_FAILURE:
+            return {
+                ...state,
+                pending: state.pending.filter((uuid) => uuid !== action.uuid)
             };
         case SHOW_CONFIRM_REMOVE_SAVED_SEARCH_MODAL:
             return {
@@ -143,6 +155,10 @@ export default function savedSearchesReducer(state = initialState, action) {
     }
 }
 
+export const withoutPending = function withoutPending(state) {
+    return state.savedSearches.filter((savedSearch) => !state.pending.includes(savedSearch.uuid));
+};
+
 function* fetchSavedSearches() {
     yield put({ type: FETCH_SAVED_SEARCHES_BEGIN });
     try {
@@ -168,7 +184,7 @@ function* removeSavedSearch(action) {
         }
     } catch (e) {
         if (e instanceof SearchApiError) {
-            yield put({ type: REMOVE_SAVED_SEARCH_FAILURE, error: e });
+            yield put({ type: REMOVE_SAVED_SEARCH_FAILURE, error: e, uuid: action.uuid });
         } else {
             throw e;
         }

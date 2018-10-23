@@ -27,9 +27,9 @@ class ToggleFavouriteStar extends React.Component {
         }
 
         const {
-            favouriteAdUuidList, uuid, className, isFetchingFavourites
+            adsMarkedAsFavorite, uuid, className, isFetchingFavourites
         } = this.props;
-        const isFavourite = favouriteAdUuidList.includes(uuid);
+        const isFavourite = adsMarkedAsFavorite.includes(uuid);
 
         if (isFetchingFavourites) {
             return null;
@@ -59,7 +59,7 @@ class ToggleFavouriteStar extends React.Component {
                 className={className ? `ToggleFavouriteStar ${className}` : 'ToggleFavouriteStar'}
             >
                 <div className="ToggleFavouriteStar__flex">
-                    <i className="ToggleFavouriteStar__star"/>
+                    <i className="ToggleFavouriteStar__star" />
                 </div>
             </Flatknapp>
         );
@@ -75,14 +75,14 @@ ToggleFavouriteStar.propTypes = {
     className: PropTypes.string,
     addToFavourites: PropTypes.func.isRequired,
     removeFromFavourites: PropTypes.func.isRequired,
-    favouriteAdUuidList: PropTypes.arrayOf(PropTypes.string).isRequired,
+    adsMarkedAsFavorite: PropTypes.arrayOf(PropTypes.string).isRequired,
     uuid: PropTypes.string.isRequired,
     showError: PropTypes.func.isRequired,
     isLoggedIn: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => ({
-    favouriteAdUuidList: state.favourites.favouriteAdUuidList,
+    adsMarkedAsFavorite: state.favourites.adsMarkedAsFavorite,
     isFetchingFavourites: state.favourites.isFetchingFavourites,
     isLoggedIn: state.authorization.isLoggedIn
 });
