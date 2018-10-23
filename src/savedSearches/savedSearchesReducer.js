@@ -41,8 +41,7 @@ const initialState = {
     confirmationVisible: false,
     totalElements: 0,
     isSaving: false,
-    currentSavedSearch: undefined,
-    httpErrorStatus: undefined
+    currentSavedSearch: undefined
 };
 
 export default function savedSearchesReducer(state = initialState, action) {
@@ -58,14 +57,12 @@ export default function savedSearchesReducer(state = initialState, action) {
                 ...state,
                 savedSearches: action.response.content,
                 totalElements: action.response.totalElements,
-                isFetching: false,
-                httpErrorStatus: undefined
+                isFetching: false
             };
         case FETCH_SAVED_SEARCHES_FAILURE:
             return {
                 ...state,
-                isFetching: false,
-                httpErrorStatus: action.error.statusCode
+                isFetching: false
             };
         case REMOVE_SAVED_SEARCH_BEGIN:
             return {
