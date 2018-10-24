@@ -64,7 +64,7 @@ const renderSok = (htmlPages) => (
                 if (err) {
                     reject(err);
                 } else {
-                    resolve(Object.assign({ sok: html }, htmlPages));
+                    resolve(Object.assign({sok: html}, htmlPages));
                 }
             }
         );

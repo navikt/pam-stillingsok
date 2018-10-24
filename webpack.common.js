@@ -1,7 +1,20 @@
-const path = require('path');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
+const devMode = process.env.NODE_ENV !== 'production';
 
 module.exports = {
+    optimization: {
+        splitChunks: {
+            cacheGroups: {
+                styles: {
+                    name: 'styles',
+                    test: /\.css$/,
+                    chunks: 'all',
+                    enforce: true
+                }
+            }
+        }
+    },
     entry: {
         sok: ['babel-polyfill', 'whatwg-fetch', './src/app.js'],
         print: ['babel-polyfill', 'whatwg-fetch', './src/print.js'],
@@ -13,27 +26,37 @@ module.exports = {
         publicPath: '/sok/'
     },
     module: {
-        loaders: [
+        rules: [
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
-                loader: 'babel-loader',
-                query: { presets: ['es2015', 'react', 'stage-2'] }
-            }, {
-                test: /\.css$/,
-                use: ExtractTextPlugin.extract({
-                    fallback: 'style-loader',
-                    use: 'css-loader'
-                })
-            }, {
-                test: /\.less$/,
-                use: ExtractTextPlugin.extract({
-                    fallback: 'style-loader',
-                    use: [
-                        'css-loader',
-                        'less-loader?{"globalVars":{"nodeModulesPath":"\'./../../\'", "coreModulePath":"\'./../../\'"}}'
-                    ]
-                })
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['es2015', 'react', 'stage-2']
+                    }
+                }
+            },
+            {
+                test: /\.(le|c)ss$/,
+                use: [
+                    {
+                        loader: MiniCssExtractPlugin.loader
+                    },
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            sourceMap: true
+                        }
+                    },
+                    {
+                        loader: 'less-loader',
+                        options: {
+                            sourceMap: true,
+                            includePaths: ["styles/"]
+                        }
+                    },
+                ]
             }
         ]
     },
@@ -41,6 +64,8 @@ module.exports = {
         extensions: ['.js', '.jsx']
     },
     plugins: [
-        new ExtractTextPlugin('css/[name].css')
+        new MiniCssExtractPlugin({
+            filename: 'css/[name].css'
+        })
     ]
 };
