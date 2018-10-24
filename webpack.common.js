@@ -1,5 +1,7 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
+const devMode = process.env.NODE_ENV !== 'production';
+
 module.exports = {
     optimization: {
         splitChunks: {
@@ -36,15 +38,25 @@ module.exports = {
                 }
             },
             {
-                test: /\.css$/,
+                test: /\.(le|c)ss$/,
                 use: [
-                    MiniCssExtractPlugin.loader,
-                    'css-loader'
+                    {
+                        loader: MiniCssExtractPlugin.loader
+                    },
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            sourceMap: true
+                        }
+                    },
+                    {
+                        loader: 'less-loader',
+                        options: {
+                            sourceMap: true,
+                            includePaths: ["styles/"]
+                        }
+                    },
                 ]
-            },
-            {
-                test: /\.less$/,
-                loader: 'style-loader!css-loader!less-loader?{"globalVars":{"nodeModulesPath":"\'./../../\'", "coreModulePath":"\'./../../\'"}}'
             }
         ]
     },

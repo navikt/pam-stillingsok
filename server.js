@@ -21,10 +21,7 @@ server.use(helmet.contentSecurityPolicy({
     directives: {
         defaultSrc: ["'none'"],
         scriptSrc: ["'self'", 'https://www.google-analytics.com'],
-        styleSrc: [
-            "'self'",
-            "'unsafe-inline'"
-        ],
+        styleSrc: ["'self'"],
         fontSrc: ["'self'", 'data:'],
         imgSrc: ["'self'", 'data:', 'https://www.google-analytics.com',
             'https://www.nav.no/_public/beta.nav.no/images/logo.png'],
