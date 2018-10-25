@@ -37,7 +37,7 @@ const fasitProperties = {
     PAM_CONTEXT_PATH: '/pam-stillingsok',
     PAM_SEARCH_API: '/pam-stillingsok/search-api',
     PAM_STILLING: '/pam-stillingsok/stilling/',
-    PAM_AD_USER_API: process.env.PAMADUSER_URL,
+    PAM_AD_USER_API: process.env.PAMADUSER_URL + '/aduser',
     LOGIN_URL: process.env.LOGINSERVICE_URL,
     LOGOUT_URL: process.env.LOGOUTSERVICE_URL
 };
