@@ -1,4 +1,5 @@
 name: pam-stillingsok
+team: teampam
 image: repo.adeo.no:5443/pam-stillingsok
 replicas:
   min: 3
