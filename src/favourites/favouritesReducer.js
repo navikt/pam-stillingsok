@@ -129,7 +129,7 @@ export default function favouritesReducer(state = initialState, action) {
         case HIDE_FAVOURITES_ALERT_STRIPE:
             return {
                 ...state,
-                // showAlertStripe: false
+                showAlertStripe: false
             };
         default:
             return state;
