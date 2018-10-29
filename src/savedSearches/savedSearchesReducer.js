@@ -71,6 +71,7 @@ export default function savedSearchesReducer(state = initialState, action) {
                 pending: [...state.pending, action.uuid]
             };
         case REMOVE_SAVED_SEARCH_SUCCESS:
+            console.log(action)
             return {
                 ...state,
                 savedSearches: state.savedSearches.filter((savedSearch) => savedSearch.uuid !== action.uuid),
@@ -176,8 +177,8 @@ function* fetchSavedSearches() {
 function* removeSavedSearch(action) {
     try {
         yield put({ type: REMOVE_SAVED_SEARCH_BEGIN, uuid: action.uuid });
-        const response = yield call(remove, `${AD_USER_API}/api/v1/savedsearches/${action.uuid}`);
-        yield put({ type: REMOVE_SAVED_SEARCH_SUCCESS, response });
+        yield call(remove, `${AD_USER_API}/api/v1/savedsearches/${action.uuid}`);
+        yield put({ type: REMOVE_SAVED_SEARCH_SUCCESS, uuid: action.uuid });
         const state = yield select();
         if (state.savedSearches.currentSavedSearch && state.savedSearches.currentSavedSearch.uuid === action.uuid) {
             yield put({ type: RESET_SEARCH });
