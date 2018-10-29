@@ -67,7 +67,7 @@ class Search extends React.Component {
                 <NotLoggedIn />
                 <PageHeader
                     title="Ledige stillinger"
-                    buttons={featureToggle() && this.props.isLoggedIn ?
+                    buttons={featureToggle() && this.props.isLoggedIn && this.props.termsStatus === 'accepted' ?
                         <div>
                             <ShowFavouriteListLink />
                             <ExpandSavedSearchButton />
@@ -166,7 +166,8 @@ const mapStateToProps = (state) => ({
     isFetchingFavourites: state.favourites.isFetchingFavourites,
     savedSearches: state.savedSearches.savedSearches,
     isLoggedIn: state.authorization.isLoggedIn,
-    isSavedSearchesExpanded: state.savedSearchExpand.isSavedSearchesExpanded
+    isSavedSearchesExpanded: state.savedSearchExpand.isSavedSearchesExpanded,
+    termsStatus: state.authorization.termsStatus
 });
 
 const mapDispatchToProps = (dispatch) => ({

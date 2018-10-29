@@ -2,7 +2,9 @@ import { Flatknapp } from 'nav-frontend-knapper';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { CONTEXT_PATH } from '../../fasitProperties';
 import featureToggle from '../../featureToggle';
+import history from '../../history';
 import { ADD_TO_FAVOURITES, REMOVE_FROM_FAVOURITES } from '../favouritesReducer';
 import './ToggleFavouriteButton.less';
 import { SHOW_AUTHORIZATION_ERROR_MODAL } from '../../authorization/authorizationReducer';
@@ -12,6 +14,8 @@ class ToggleFavouriteButton extends React.Component {
     onAddToFavouritesClick = () => {
         if (!this.props.isLoggedIn) {
             this.props.showError(AuthorizationEnum.ADD_FAVORITE_ERROR);
+        } else if (this.props.termsStatus !== 'accepted') {
+            history.push(`${CONTEXT_PATH}/vilkaar`);
         } else {
             this.props.addToFavourites(this.props.uuid);
         }
@@ -81,7 +85,8 @@ ToggleFavouriteButton.propTypes = {
 const mapStateToProps = (state) => ({
     adsMarkedAsFavorite: state.favourites.adsMarkedAsFavorite,
     isFetchingFavourites: state.favourites.isFetchingFavourites,
-    isLoggedIn: state.authorization.isLoggedIn
+    isLoggedIn: state.authorization.isLoggedIn,
+    termsStatus: state.authorization.termsStatus
 });
 
 const mapDispatchToProps = (dispatch) => ({

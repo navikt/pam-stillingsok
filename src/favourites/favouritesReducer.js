@@ -71,7 +71,7 @@ export default function favouritesReducer(state = initialState, action) {
         case ADD_TO_FAVOURITES_BEGIN:
             return {
                 ...state,
-                showAlertStripe: false,
+                showAlertStripe: true,
                 adsMarkedAsFavorite: [...state.adsMarkedAsFavorite, action.favourite.favouriteAd.uuid]
             };
         case ADD_TO_FAVOURITES_SUCCESS:
@@ -89,7 +89,7 @@ export default function favouritesReducer(state = initialState, action) {
         case REMOVE_FROM_FAVOURITES_BEGIN:
             return {
                 ...state,
-                showAlertStripe: false,
+                showAlertStripe: true,
                 adsMarkedAsFavorite: state.adsMarkedAsFavorite.filter((uuid) => uuid !== action.favourite.favouriteAd.uuid),
                 pending: [...state.pending, action.favourite.uuid]
             };
@@ -129,7 +129,7 @@ export default function favouritesReducer(state = initialState, action) {
         case HIDE_FAVOURITES_ALERT_STRIPE:
             return {
                 ...state,
-                showAlertStripe: false
+                // showAlertStripe: false
             };
         default:
             return state;
