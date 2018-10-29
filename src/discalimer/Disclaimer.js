@@ -14,8 +14,11 @@ function Disclaimer({ shouldShow, hideDisclaimer }) {
                     <div role="alert" className="Disclaimer typo-normal">
                         <Element className="blokk-xxs">Tidlig versjon av nytt stillingssøk</Element>
                         <Normaltekst className="blokk-xxs">
-                            Vi utvikler et nytt stillingsøk, og vil at du skal få prøve
-                            det underveis.
+                            Vi utvikler nytt stillingssøk, og ønsker at du skal prøve det underveis.
+                            Midlertidige feil i tjenesten på grunn av teknisk arbeid kan forekomme.
+                            <br/>
+                            Akkurat nå jobber vi for at du skal kunne lagre søk og annonser.
+                            Inntil videre kan du bare gjøre dette i dagens stillingssøk.
                         </Normaltekst>
                         <Normaltekst className="blokk-xxs">
                             <a href="https://in.hotjar.com/s?siteId=148751&surveyId=71116" className="lenke">
