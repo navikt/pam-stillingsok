@@ -7,7 +7,7 @@ import Modal from 'nav-frontend-modal';
 import AuthorizationEnum from './AuthorizationEnum';
 import { HIDE_AUTHORIZATION_ERROR_MODAL } from './authorizationReducer';
 import './NotLoggedIn.less';
-import { LOGIN_URL } from "../fasitProperties";
+import { LOGIN_URL_WITHOUT_LEVEL } from "../fasitProperties";
 
 class NotLoggedIn extends React.Component {
     closeModal = () => {
@@ -15,7 +15,7 @@ class NotLoggedIn extends React.Component {
     };
 
     onLoginClick = () => {
-        window.location.href = `${LOGIN_URL}?redirect=${window.location.href}`;
+        window.location.href = `${LOGIN_URL_WITHOUT_LEVEL}?redirect=${window.location.href}`;
     };
 
     render() {

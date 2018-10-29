@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Route, Router, Switch } from 'react-router-dom';
 import { FETCH_USER } from './authorization/authorizationReducer';
 import TermsOfUse from './authorization/TermsOfUse';
-import { CONTEXT_PATH, LOGIN_URL, LOGOUT_URL } from './fasitProperties';
+import { CONTEXT_PATH, LOGIN_URL_WITHOUT_LEVEL, LOGOUT_URL } from './fasitProperties';
 import Favourites from './favourites/Favourites';
 import featureToggle from './featureToggle';
 import history from './history';
@@ -28,7 +28,7 @@ class Application extends React.Component {
                         <div className="Auth-buttons no-print">
                             <a
                                 className="knapp knapp--hoved knapp--mini"
-                                href={`${LOGIN_URL}?redirect=${window.location.href}`}
+                                href={`${LOGIN_URL_WITHOUT_LEVEL}?redirect=${window.location.href}`}
                             >
                                 Logg inn
                             </a>
