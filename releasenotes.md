@@ -1,3 +1,8 @@
+## RELEASE - 0.42.328-f0b6f49
+#### New in this release: 
++ 2018-10-30 [Bugfix] Fikser datoformat på søknadsfrist
++ 2018-10-29 [PAM-1831] Enables MinId as login option
++ 2018-10-29 [PAM-1831] Renames LOGIN_URL
 ## RELEASE - 0.41.325-b7c1cfc
 #### New in this release: 
 + 2018-10-29 [Bugfix] Skjuler alertstripe etter 5 sekunder
