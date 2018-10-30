@@ -52,18 +52,6 @@ const initialState = {
     confirmDeleteUserModalIsVisible: false
 };
 
-const setEmail = function setEmail(user, newEmail) {
-    if (newEmail && newEmail.trim().length > 0) {
-        return {
-            ...user,
-            email: newEmail
-        };
-    }
-    // eslint-disable-next-line no-unused-vars
-    const { email, ...withoutEmail } = user;
-    return withoutEmail;
-};
-
 export default function authorizationReducer(state = initialState, action) {
     switch (action.type) {
         case FETCH_IS_AUTHENTICATED_SUCCESS:
@@ -98,7 +86,10 @@ export default function authorizationReducer(state = initialState, action) {
         case SET_USER_EMAIL:
             return {
                 ...state,
-                user: setEmail(state.user, action.email)
+                user: {
+                    ...state.user,
+                    email: action.email
+                }
             };
         case UPDATE_USER_BEGIN:
             return {
@@ -174,6 +165,16 @@ export default function authorizationReducer(state = initialState, action) {
     }
 }
 
+const fixUser = function fixUser(user) {
+    if (user.email !== undefined && user.email !== null && user.email.trim().length === 0) {
+        return {
+            ...user,
+            email: null
+        };
+    }
+    return user;
+};
+
 function* fetchIsAuthenticated() {
     const response = yield fetch(`${AD_USER_API}/isAuthenticated`, { credentials: 'include' });
     if (response.status === 200) {
@@ -205,16 +206,11 @@ function* fetchUser() {
 function* createUser(action) {
     yield put({ type: CREATE_USER_BEGIN });
     try {
-        let userData = {
-            acceptedTerms: TERMS_VERSION
+        const user = {
+            acceptedTerms: TERMS_VERSION,
+            email: action.email
         };
-        if (action.email && action.email.trim().length > 0) {
-            userData = {
-                ...userData,
-                email: action.email
-            };
-        }
-        const response = yield call(post, `${AD_USER_API}/api/v1/user`, userData);
+        const response = yield call(post, `${AD_USER_API}/api/v1/user`, fixUser(user));
         yield put({ type: CREATE_USER_SUCCESS, response });
     } catch (e) {
         if (e instanceof SearchApiError) {
@@ -229,7 +225,7 @@ function* updateUser() {
     try {
         const state = yield select();
         yield put({ type: UPDATE_USER_BEGIN });
-        const response = yield call(apiPut, `${AD_USER_API}/api/v1/user`, state.user.user);
+        const response = yield call(apiPut, `${AD_USER_API}/api/v1/user`, fixUser(state.user.user));
         yield put({ type: UPDATE_USER_SUCCESS, response });
         yield call(delay, 5000);
         yield put({ type: UPDATE_USER_HIDE_ALERT });
