@@ -1,3 +1,44 @@
+## RELEASE - 0.41.325-b7c1cfc
+#### New in this release: 
++ 2018-10-29 [Bugfix] Skjuler alertstripe etter 5 sekunder
++ 2018-10-29 [Bugfix] Det skal vises Ingen flere lagrede søk, når alle søk er slettet
++ 2018-10-29 [Bugfix] Fikser slik at alertstriper vises når man legger til eller sletter en favoritt
++ 2018-10-29 [Bugfix] Justerer plassering av favorittstjernen i kompaktvisning på mobil, slik at den kommer i høyre hjørne av radene i listevisningen.
++ 2018-10-24 [fix] updated webpack and related plugins
++ 2018-10-24 [PAM-1787] Legge til url for pamaduser
++ 2018-10-23 [Bugfix] Hvis sletting feiler, så skal favoritten/lagret søk legges inn igjen på samme sted i listen, og feilmelding vises.
++ 2018-10-23 [PAM-1830] Endrer sorteringsrekkefølge av favoritter og lagrede søk - fix
++ 2018-10-23 [PAM-1830] Endrer sorteringsrekkefølge av favoritter og lagrede søk
++ 2018-10-22 [PAM-1785] now ending the client after each scenario to have a clean state, and fixed some element selectors
++ 2018-10-22 [bugfix] attempts fixing acceptance tests, now using dot notation instead of html classes, since site structure keeps changing
++ 2018-10-22 [PAM-1805] Favoritter viser feil antall. Forenkler hvordan favoritter hentes inn. Nå hentes favoritter først etter at user er lastet.
++ 2018-10-19 [PAM-1657] csrf beskyttelse
++ 2018-10-18 [PAM-1751] Fikse slik at favorittstjerne blir markert når den ikke skal
++ 2018-10-17 [PAM-1775]: Gjør om favorittstjerne til blå flatknapp
++ 2018-10-17 [PAM-1185] Enkel versjon av innlogging. Viser Logg inn og Logg ut knapp.
++ 2018-10-16 [PAM-1744] Featuretoggle også på login-knapp
++ 2018-10-16 [PAM-1744] Feature toggle for favoritter/lagre søk. For å enable kjør localStorage.setItem("toggleFeatures", "favoritter") i Console (F12). For å disable kjør localStorage.removeItem("toggleFeatures")
++ 2018-10-12 [PAM-1703]: første versjon av å sjekke vilkår for bruker etter login.
++ 2018-10-11 [PAM-1694] Unngå hardkoding av favourite.status
++ 2018-10-10 [PAM-1672] design-justeringer på favorittlenke og lagrede søk-knapp på forsiden
++ 2018-10-10 [PAM-1688] Fikse bredde på modaler i stillingsøk
++ 2018-10-10 [PAM-1680] Når man ikke har noen favoritter skal "finn favoritter" være en lenke, ikke knapp slik det er nå
++ 2018-10-10 [Feature] Move login/logout to app.js so its always visible
++ 2018-10-10 [Feature] Add simple version of login/logout-buttons
++ 2018-10-10 [PAM-1690] Favorittstjernen var plassert feil i kompaktvisning på mobil
++ 2018-10-10 [PAM-1683] Fikser små avvik fra skissene på hvor teksten om søknadsfrist står, og margin mellom overskrift og sted
++ 2018-10-09 [PAM-1658] Update webpack-dev-server dependency
++ 2018-10-09 [Fix] Remove Uuid-hack
++ 2018-10-09 [Fix] Update frontend to include credentials in api calls and fix deletion
++ 2018-10-02 [PAM-1591] Vise feilmelding når tittel på lagret søk er lengre enn det db tillater
++ 2018-10-02 [PAM-1591] Oppdatere feilmelding når formdata settes
++ 2018-10-02 [PAM-1591] Vise feilmelding over hele bredden til skjermen
++ 2018-10-01 [PAM-1567] Legge til skjemagruppe ved opprettelse av nytt søk fra et allerede lagret
++ 2018-10-01 [PAM-1583]: Hvis ikke bruker er logget inn, vises en modal ved klikk på "lagre søk" eller favoritt-stjerne, med beskjed om å logge inn. Lenke til favoritter og lagrede søk skjules. status som ikke innlogget fåes hvis en fetch returnerer 404.
++ 2018-10-01 [PAM-1568] Unngå unødvending søk ved initialSearch
++ 2018-09-27 [PAM-1571] Legger h3 level i lagrede søk listen
++ 2018-09-27 [PAM-1565] Legger til aria-expanded på Lagrede søk knapp
++ 2018-09-27 [PAM-1561] Hover/focus/active state på favoritt-stjerne
 ## RELEASE - 0.40.263-de418ef
 #### New in this release: 
 + 2018-10-05 [PAM-1617]: Viser info om kontaktperson (For stillinger fra FINN er disse dataene excludert fra elastic search.)

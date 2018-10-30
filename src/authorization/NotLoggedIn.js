@@ -7,7 +7,9 @@ import Modal from 'nav-frontend-modal';
 import AuthorizationEnum from './AuthorizationEnum';
 import { HIDE_AUTHORIZATION_ERROR_MODAL } from './authorizationReducer';
 import './NotLoggedIn.less';
-import { LOGIN_URL } from "../fasitProperties";
+import { LOGIN_URL_WITHOUT_LEVEL } from "../fasitProperties";
+
+export const LOGIN_URL = LOGIN_URL_WITHOUT_LEVEL + "?level=Level3";
 
 class NotLoggedIn extends React.Component {
     closeModal = () => {
@@ -15,7 +17,7 @@ class NotLoggedIn extends React.Component {
     };
 
     onLoginClick = () => {
-        window.location.href = `${LOGIN_URL}?redirect=${window.location.href}`;
+        window.location.href = `${LOGIN_URL}&redirect=${window.location.href}`;
     };
 
     render() {
@@ -40,7 +42,7 @@ class NotLoggedIn extends React.Component {
                             </Undertittel>
                         )}
                         <Normaltekst className="NotLoggedIn__message">
-                            Logg inn med BankID, BankID på mobil, Buypass eller Commfides.
+                            Logg inn med MinID, BankID, BankID på mobil, Buypass eller Commfides.
                         </Normaltekst>
                         <div className="NotLoggedIn__buttons">
                             <Hovedknapp onClick={this.onLoginClick}>Logg inn</Hovedknapp>
