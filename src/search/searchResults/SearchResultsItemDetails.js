@@ -3,14 +3,15 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Row, Column } from 'nav-frontend-grid';
 import { Undertittel, Normaltekst, Undertekst, Element } from 'nav-frontend-typografi';
-import { formatISOString } from '../../utils';
+import { formatISOString, isValidISOString } from '../../utils';
 import './SearchResultsItemDetails.less';
 import { STILLING } from '../../fasitProperties';
 
 export default function SearchResultsItemDetails({ stilling }) {
     let frist;
-    if (stilling.properties.applicationdue && stilling.properties.applicationdue !== undefined) {
-        frist = stilling.properties.applicationdue;
+    const { applicationdue } = stilling.properties;
+    if (applicationdue && applicationdue !== undefined) {
+        frist = isValidISOString(applicationdue) ? formatISOString(applicationdue, 'DD.MM.YYYY') : applicationdue;
     } else {
         frist = 'Ikke oppgitt';
     }
