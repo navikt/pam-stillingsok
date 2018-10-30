@@ -5,17 +5,17 @@ import { connect } from 'react-redux';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import Modal from 'nav-frontend-modal';
 import AuthorizationEnum from './AuthorizationEnum';
-import { HIDE_AUTHORIZATION_ERROR_MODAL } from './authorizationReducer';
+import { HIDE_AUTHORIZATION_ERROR_MODAL } from './userReducer';
 import './NotLoggedIn.less';
-import { LOGIN_URL } from "../fasitProperties";
+import { LOGIN_URL } from '../fasitProperties';
 
 class NotLoggedIn extends React.Component {
-    closeModal = () => {
-        this.props.hideError();
-    };
-
     onLoginClick = () => {
         window.location.href = `${LOGIN_URL}?redirect=${window.location.href}`;
+    };
+
+    closeModal = () => {
+        this.props.hideError();
     };
 
     render() {
@@ -64,7 +64,7 @@ NotLoggedIn.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-    authorizationError: state.authorization.authorizationError
+    authorizationError: state.user.authorizationError
 });
 
 const mapDispatchToProps = (dispatch) => ({

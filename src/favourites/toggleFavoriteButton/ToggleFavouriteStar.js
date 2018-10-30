@@ -1,21 +1,19 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { Flatknapp } from 'nav-frontend-knapper';
-import { CONTEXT_PATH } from '../../fasitProperties';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { connect } from 'react-redux';
+import AuthorizationEnum from '../../user/AuthorizationEnum';
+import { SHOW_AUTHORIZATION_ERROR_MODAL, SHOW_TERMS_OF_USE_MODAL } from '../../user/userReducer';
 import featureToggle from '../../featureToggle';
-import history from '../../history';
 import { ADD_TO_FAVOURITES, REMOVE_FROM_FAVOURITES } from '../favouritesReducer';
 import './ToggleFavouriteStar.less';
-import { SHOW_AUTHORIZATION_ERROR_MODAL } from '../../authorization/authorizationReducer';
-import AuthorizationEnum from '../../authorization/AuthorizationEnum';
 
 class ToggleFavouriteStar extends React.Component {
     onAddToFavouritesClick = () => {
-        if (!this.props.isLoggedIn) {
+        if (this.props.isAuthenticated !== true) {
             this.props.showError(AuthorizationEnum.ADD_FAVORITE_ERROR);
-        } else if (this.props.termsStatus !== 'accepted') {
-            history.push(`${CONTEXT_PATH}/vilkaar`);
+        } else if (!this.props.user) {
+            this.props.showTermsOfUseModal();
         } else {
             this.props.addToFavourites(this.props.uuid);
         }
@@ -71,7 +69,9 @@ class ToggleFavouriteStar extends React.Component {
 }
 
 ToggleFavouriteStar.defaultProps = {
-    className: undefined
+    className: undefined,
+    user: undefined,
+    isAuthenticated: undefined
 };
 
 ToggleFavouriteStar.propTypes = {
@@ -82,20 +82,23 @@ ToggleFavouriteStar.propTypes = {
     adsMarkedAsFavorite: PropTypes.arrayOf(PropTypes.string).isRequired,
     uuid: PropTypes.string.isRequired,
     showError: PropTypes.func.isRequired,
-    isLoggedIn: PropTypes.bool.isRequired
+    showTermsOfUseModal: PropTypes.func.isRequired,
+    isAuthenticated: PropTypes.bool,
+    user: PropTypes.shape({})
 };
 
 const mapStateToProps = (state) => ({
     adsMarkedAsFavorite: state.favourites.adsMarkedAsFavorite,
     isFetchingFavourites: state.favourites.isFetchingFavourites,
-    isLoggedIn: state.authorization.isLoggedIn,
-    termsStatus: state.authorization.termsStatus
+    isAuthenticated: state.user.isAuthenticated,
+    user: state.user.user
 });
 
 const mapDispatchToProps = (dispatch) => ({
     addToFavourites: (uuid) => dispatch({ type: ADD_TO_FAVOURITES, uuid }),
     removeFromFavourites: (uuid) => dispatch({ type: REMOVE_FROM_FAVOURITES, uuid }),
-    showError: (text) => dispatch({ type: SHOW_AUTHORIZATION_ERROR_MODAL, text })
+    showError: (text) => dispatch({ type: SHOW_AUTHORIZATION_ERROR_MODAL, text }),
+    showTermsOfUseModal: () => dispatch({ type: SHOW_TERMS_OF_USE_MODAL })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ToggleFavouriteStar);

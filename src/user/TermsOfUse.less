@@ -1,0 +1,50 @@
+@import "../variables";
+
+.TermsOfUse {
+  padding: @modal-padding;
+}
+
+.TermsOfUse__error {
+  margin-bottom: 2rem;
+}
+
+.TermsOfUse__title {
+  margin-bottom: 1.25rem;
+}
+
+.TermsOfUse__text {
+  margin-bottom: 2rem;
+}
+
+.TermsOfUse__input {
+  margin-bottom: 2.5rem;
+}
+
+.TermsOfUse__buttons {
+  margin-bottom: 1rem;
+}
+
+@media (max-width: @screen-sm-max) {
+  .TermsOfUse {
+    padding: @modal-padding-mobile;
+  }
+
+  .TermsOfUse__buttons .knapp {
+    width: 100%;
+  }
+
+  .TermsOfUse__buttons .knapp:not(:last-child) {
+    margin-bottom: @knapp-margin-right;
+  }
+}
+
+@media (min-width: @screen-md-min) {
+  .TermsOfUse {
+    width: 38rem;
+  }
+
+  .TermsOfUse__buttons .knapp:not(:last-child) {
+    margin-right: @knapp-margin-right;
+  }
+}
+

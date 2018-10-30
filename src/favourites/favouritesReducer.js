@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import { call, put, select, takeLatest } from 'redux-saga/effects';
 import { get, post, remove, SearchApiError } from '../api/api';
-import { FETCH_USER_SUCCESS } from '../authorization/authorizationReducer';
+import { FETCH_USER_SUCCESS } from '../user/userReducer';
 import { AD_USER_API, CONTEXT_PATH } from '../fasitProperties';
 import history from '../history';
 

@@ -2,8 +2,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Route, Router, Switch } from 'react-router-dom';
-import { FETCH_USER } from './authorization/authorizationReducer';
-import TermsOfUse from './authorization/TermsOfUse';
+import { FETCH_IS_AUTHENTICATED } from './user/userReducer';
+import TermsOfUse from './user/TermsOfUse';
 import { CONTEXT_PATH, LOGIN_URL, LOGOUT_URL } from './fasitProperties';
 import Favourites from './favourites/Favourites';
 import featureToggle from './featureToggle';
@@ -12,11 +12,13 @@ import Invite from './invite/Invite';
 import SavedSearches from './savedSearches/SavedSearches';
 import SearchPage from './search/Search';
 import StillingPage from './stilling/Stilling';
+import UserSettings from './user/UserSettings';
+import ViewTermsOfUse from './user/ViewTermsOfUse';
 
 class Application extends React.Component {
     componentDidMount() {
         if (featureToggle()) {
-            this.props.fetchUser();
+            this.props.fetchIsAuthenticated();
         }
     }
 
@@ -46,9 +48,14 @@ class Application extends React.Component {
                         <Route path={`${CONTEXT_PATH}/mobil`} component={Invite} />
                         <Route path={`${CONTEXT_PATH}/favoritter`} component={Favourites} />
                         <Route path={`${CONTEXT_PATH}/lagrede-sok`} component={SavedSearches} />
-                        <Route path={`${CONTEXT_PATH}/vilkaar`} component={TermsOfUse} />
+                        <Route path={`${CONTEXT_PATH}/minside`} component={UserSettings} />
+                        <Route path={`${CONTEXT_PATH}/vilkar`} component={ViewTermsOfUse} />
                         <Route path="*" component={SearchPage} />
                     </Switch>
+
+                    {this.props.termsOfUseModalIsVisible && (
+                        <TermsOfUse />
+                    )}
                 </div>
             </Router>
         );
@@ -56,13 +63,16 @@ class Application extends React.Component {
 }
 
 Application.propTypes = {
-    fetchUser: PropTypes.func.isRequired
+    fetchIsAuthenticated: PropTypes.func.isRequired,
+    termsOfUseModalIsVisible: PropTypes.bool.isRequired
 };
 
-const mapStateToProps = () => ({});
+const mapStateToProps = (state) => ({
+    termsOfUseModalIsVisible: state.user.termsOfUseModalIsVisible
+});
 
 const mapDispatchToProps = (dispatch) => ({
-    fetchUser: () => dispatch({ type: FETCH_USER })
+    fetchIsAuthenticated: () => dispatch({ type: FETCH_IS_AUTHENTICATED })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Application);

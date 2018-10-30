@@ -8,10 +8,10 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Disclaimer from '../discalimer/Disclaimer';
 import FavouriteAlertStripe from '../favourites/alertstripe/FavouriteAlertStripe';
-import ToggleFavouriteButton from '../favourites/toggleFavoriteButton/ToggleFavouriteButton';
 import FavouriteError from '../favourites/error/FavouriteError';
-import { FETCH_FAVOURITES } from '../favourites/favouritesReducer';
+import ToggleFavouriteButton from '../favourites/toggleFavoriteButton/ToggleFavouriteButton';
 import SearchError from '../search/error/SearchError';
+import NotLoggedIn from '../user/NotLoggedIn';
 import AdDetails from './adDetails/AdDetails';
 import AdText from './adText/AdText';
 import AdTitle from './adTitle/AdTitle';
@@ -27,7 +27,6 @@ import PersonalAttributes from './requirements/PersonalAttributes';
 import SoftRequirements from './requirements/SoftRequirements';
 import './Stilling.less';
 import { FETCH_STILLING_BEGIN } from './stillingReducer';
-import NotLoggedIn from '../authorization/NotLoggedIn';
 
 class Stilling extends React.Component {
     constructor(props) {

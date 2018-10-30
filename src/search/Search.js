@@ -3,7 +3,7 @@ import { Flatknapp } from 'nav-frontend-knapper';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import NotLoggedIn from '../authorization/NotLoggedIn';
+import NotLoggedIn from '../user/NotLoggedIn';
 import PageHeader from '../common/pageHeader/PageHeader';
 import Disclaimer from '../discalimer/Disclaimer';
 import FavouriteAlertStripe from '../favourites/alertstripe/FavouriteAlertStripe';
@@ -67,7 +67,7 @@ class Search extends React.Component {
                 <NotLoggedIn />
                 <PageHeader
                     title="Ledige stillinger"
-                    buttons={featureToggle() && this.props.isLoggedIn && this.props.termsStatus === 'accepted' ?
+                    buttons={featureToggle() && this.props.isAuthenticated !== false && this.props.user ?
                         <div>
                             <ShowFavouriteListLink />
                             <ExpandSavedSearchButton />
@@ -149,6 +149,11 @@ class Search extends React.Component {
     }
 }
 
+Search.defaultProps = {
+    user: undefined,
+    isAuthenticated: undefined
+};
+
 Search.propTypes = {
     restoreStateFromUrl: PropTypes.func.isRequired,
     initialSearch: PropTypes.func.isRequired,
@@ -157,7 +162,8 @@ Search.propTypes = {
     isSavedSearchesExpanded: PropTypes.bool.isRequired,
     hasError: PropTypes.bool.isRequired,
     initialSearchDone: PropTypes.bool.isRequired,
-    isLoggedIn: PropTypes.bool.isRequired
+    isAuthenticated: PropTypes.bool,
+    user: PropTypes.shape({})
 };
 
 const mapStateToProps = (state) => ({
@@ -165,9 +171,9 @@ const mapStateToProps = (state) => ({
     initialSearchDone: state.search.initialSearchDone,
     isFetchingFavourites: state.favourites.isFetchingFavourites,
     savedSearches: state.savedSearches.savedSearches,
-    isLoggedIn: state.authorization.isLoggedIn,
     isSavedSearchesExpanded: state.savedSearchExpand.isSavedSearchesExpanded,
-    termsStatus: state.authorization.termsStatus
+    isAuthenticated: state.user.isAuthenticated,
+    user: state.user.user
 });
 
 const mapDispatchToProps = (dispatch) => ({

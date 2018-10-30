@@ -1,6 +1,6 @@
 import { call, put, select, take, takeEvery, takeLatest } from 'redux-saga/effects';
 import { get, post, put as fetchPut, remove, SearchApiError } from '../api/api';
-import { FETCH_USER_SUCCESS } from '../authorization/authorizationReducer';
+import { FETCH_USER_SUCCESS } from '../user/userReducer';
 import { AD_USER_API } from '../fasitProperties';
 import { RESET_SEARCH, SEARCH } from '../search/searchReducer';
 import { fromUrl } from '../search/url';

@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { applyMiddleware, combineReducers, createStore } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import Application from './Application';
-import authorizationReducer, { authorizationSaga } from './authorization/authorizationReducer';
+import userReducer, { userSaga } from './user/userReducer';
 import disclaimerReducer from './discalimer/disclaimerReducer';
 import favouritesReducer, { favouritesSaga } from './favourites/favouritesReducer';
 import savedSearchAlertStripeReducer, { savedSearchAlertStripeSaga } from './savedSearches/alertstripe/savedSearchAlertStripeReducer';
@@ -30,7 +30,7 @@ import './variables.less';
 const sagaMiddleware = createSagaMiddleware();
 
 const store = createStore(combineReducers({
-    authorization: authorizationReducer,
+    user: userReducer,
     counties: countiesReducer,
     disclaimer: disclaimerReducer,
     engagement: engagementReducer,
@@ -59,7 +59,7 @@ sagaMiddleware.run(savedSearchesSaga);
 sagaMiddleware.run(savedSearchFormSaga);
 sagaMiddleware.run(savedSearchAlertStripeSaga);
 sagaMiddleware.run(urlSaga);
-sagaMiddleware.run(authorizationSaga);
+sagaMiddleware.run(userSaga);
 
 
 ReactDOM.render(
