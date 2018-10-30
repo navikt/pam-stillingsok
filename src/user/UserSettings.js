@@ -1,6 +1,6 @@
 import AlertStripe from 'nav-frontend-alertstriper';
 import { Column, Container, Row } from 'nav-frontend-grid';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
+import { Flatknapp, Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Input } from 'nav-frontend-skjema';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
@@ -36,6 +36,11 @@ class UserSettings extends React.Component {
 
     onCreateUserClick = () => {
         this.props.showTermsOfUseModal();
+    };
+
+    onRemoveEmailClick = () => {
+        this.props.setUserEmail(null);
+        this.props.updateUser();
     };
 
     render() {
@@ -94,11 +99,14 @@ class UserSettings extends React.Component {
                                         <Row>
                                             <Column xs="12">
                                                 <Undertittel className="UserSettings__email-title">
-                                                    Endre e-postadresse
+                                                    E-postvarslinger
                                                 </Undertittel>
                                                 <Normaltekst className="UserSettings__email-text">
                                                     Hvis du gjør et søk og vil lagre søkekriteriene under Lagrede søk,
                                                     trenger vi en e-postadresse som du vil motta stillingsannonser på.
+                                                    <br /><br />
+                                                    Hvis du ikke ønsker å motta e-postvarslinger kan du
+                                                    slette e-postadressen.
                                                 </Normaltekst>
                                                 <div className="UserSettings__email-input">
                                                     <Input
@@ -107,13 +115,24 @@ class UserSettings extends React.Component {
                                                         onChange={this.onEmailChange}
                                                     />
                                                 </div>
-                                                <Knapp
-                                                    onClick={this.onUpdateUserClick}
-                                                    spinner={this.props.isUpdating}
-                                                    disabled={this.props.isUpdating}
-                                                >
-                                                    Lagre
-                                                </Knapp>
+                                                <div className="UserSettings__email-buttons">
+                                                    <Knapp
+                                                        onClick={this.onUpdateUserClick}
+                                                        spinner={this.props.isUpdating}
+                                                        disabled={this.props.isUpdating}
+                                                    >
+                                                        Lagre
+                                                    </Knapp>
+                                                    {this.props.user.email !== null && (
+                                                        <Flatknapp
+                                                            onClick={this.onRemoveEmailClick}
+                                                            spinner={this.props.isUpdating}
+                                                            disabled={this.props.isUpdating}
+                                                        >
+                                                            Slett e-post
+                                                        </Flatknapp>
+                                                    )}
+                                                </div>
                                             </Column>
                                         </Row>
                                     </div>
