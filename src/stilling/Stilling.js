@@ -11,7 +11,6 @@ import FavouriteAlertStripe from '../favourites/alertstripe/FavouriteAlertStripe
 import FavouriteError from '../favourites/error/FavouriteError';
 import ToggleFavouriteButton from '../favourites/toggleFavoriteButton/ToggleFavouriteButton';
 import SearchError from '../search/error/SearchError';
-import NotLoggedIn from '../user/NotLoggedIn';
 import AdDetails from './adDetails/AdDetails';
 import AdText from './adText/AdText';
 import AdTitle from './adTitle/AdTitle';
@@ -63,7 +62,6 @@ class Stilling extends React.Component {
                 <Disclaimer />
                 <FavouriteAlertStripe />
                 <FavouriteError />
-                <NotLoggedIn />
 
                 {error && error.statusCode === 404 ? (
                     <Container>

@@ -1,7 +1,9 @@
+import { Container } from 'nav-frontend-grid';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Route, Router, Switch } from 'react-router-dom';
+import NotAuthenticatedModal from './user/NotAuthenticatedModal';
 import { FETCH_IS_AUTHENTICATED } from './user/userReducer';
 import TermsOfUse from './user/TermsOfUse';
 import { CONTEXT_PATH, LOGIN_URL, LOGOUT_URL } from './fasitProperties';
@@ -27,19 +29,24 @@ class Application extends React.Component {
             <Router history={history}>
                 <div>
                     {featureToggle() && (
-                        <div className="Auth-buttons no-print">
-                            <a
-                                className="knapp knapp--hoved knapp--mini"
-                                href={`${LOGIN_URL}?redirect=${window.location.href}`}
-                            >
-                                Logg inn
-                            </a>
-                            <a
-                                className="knapp knapp--hoved knapp--mini"
-                                href={LOGOUT_URL}
-                            >
-                                Logg ut
-                            </a>
+                        <div className="AuthButtons no-print">
+                            <Container>
+                                {this.props.isAuthenticated === false ? (
+                                    <a
+                                        className="knapp knapp--mini"
+                                        href={`${LOGIN_URL}?redirect=${window.location.href}`}
+                                    >
+                                        Logg inn
+                                    </a>
+                                ) : (
+                                    <a
+                                        className="knapp knapp--mini"
+                                        href={LOGOUT_URL}
+                                    >
+                                        Logg ut
+                                    </a>
+                                )}
+                            </Container>
                         </div>
                     )}
                     <Switch>
@@ -56,19 +63,33 @@ class Application extends React.Component {
                     {this.props.termsOfUseModalIsVisible && (
                         <TermsOfUse />
                     )}
+
+                    {this.props.authorizationError && (
+                        <NotAuthenticatedModal />
+                    )}
+
                 </div>
             </Router>
         );
     }
 }
 
+Application.defaultProps = {
+    authorizationError: undefined,
+    isAuthenticated: undefined
+};
+
 Application.propTypes = {
     fetchIsAuthenticated: PropTypes.func.isRequired,
-    termsOfUseModalIsVisible: PropTypes.bool.isRequired
+    isAuthenticated: PropTypes.bool,
+    termsOfUseModalIsVisible: PropTypes.bool.isRequired,
+    authorizationError: PropTypes.string
 };
 
 const mapStateToProps = (state) => ({
-    termsOfUseModalIsVisible: state.user.termsOfUseModalIsVisible
+    isAuthenticated: state.user.isAuthenticated,
+    termsOfUseModalIsVisible: state.user.termsOfUseModalIsVisible,
+    authorizationError: state.user.authorizationError
 });
 
 const mapDispatchToProps = (dispatch) => ({

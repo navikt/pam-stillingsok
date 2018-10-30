@@ -40,9 +40,9 @@ export default class ViewTermsOfUse extends React.Component {
                                     <Normaltekst className="TermsOfUse__notes">
                                         Du kan trekke samtykket ditt når som helst hvis du ikke lenger ønsker å
                                         bruke innloggede tjenester i stillingssøket. Vilkårene og mulighet for å
-                                        trekke samtykket finner du igjen i menyen til tjenesten.
+                                        trekke samtykket finner du igjen i Min side.
                                         <br />E-posten benyttes bare til å varsle deg når nye stillinger dukker opp.
-                                        Du kan senere velge å skru av e-postvarslingen under Vilkår.
+                                        Du kan senere velge å skru av e-postvarslingen under Min side.
                                     </Normaltekst>
                                 </Column>
                             </Row>

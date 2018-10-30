@@ -90,13 +90,25 @@ input::-ms-clear {
   display: none;
 }
 
-.Auth-buttons {
+.AuthButtons {
   position: absolute;
-  right: 16px;
   top: 5px;
+  text-align: right;
+  width: 100%;
 
-  .knapp:not(:last-child) {
-    margin-right: 16px;
+  .container {
+    margin: 0 auto;
+  }
+
+  .knapp {
+    background: @navLysGra;
+    color: @navMorkGra;
+    border-color: transparent;
+  }
+
+  .knapp:hover {
+    background: @navBla;
+    color: #fff;
   }
 }
 

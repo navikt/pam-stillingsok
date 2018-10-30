@@ -1,0 +1,25 @@
+@import "../variables";
+
+.NotAuthenticated__title {
+  margin-bottom: @modal-title-margin-bottom;
+}
+
+.NotAuthenticated__message {
+  margin-bottom: @modal-body-margin-bottom;
+}
+
+@media (max-width: @screen-sm-max) {
+  .NotAuthenticated__buttons .knapp {
+    width: 100%;
+  }
+
+  .NotAuthenticated__buttons .knapp:not(:last-child) {
+    margin-bottom: @knapp-margin-right;
+  }
+}
+
+@media (min-width: @screen-md-min) {
+  .NotAuthenticated__buttons .knapp:not(:last-child) {
+    margin-right: @knapp-margin-right;
+  }
+}

@@ -1,6 +1,7 @@
 import { select, put, call, takeEvery, takeLatest } from 'redux-saga/effects';
-import { get, SearchApiError, post, put as apiPut } from '../api/api';
+import { get, SearchApiError, post, put as apiPut, remove } from '../api/api';
 import { AD_USER_API } from '../fasitProperties';
+import delay from '../common/delay';
 
 export const FETCH_IS_AUTHENTICATED = 'FETCH_IS_AUTHENTICATED';
 export const FETCH_IS_AUTHENTICATED_SUCCESS = 'FETCH_IS_AUTHENTICATED_SUCCESS';
@@ -23,7 +24,15 @@ export const CREATE_USER_FAILURE = 'CREATE_USER_FAILURE';
 export const UPDATE_USER = 'UPDATE_USER';
 export const UPDATE_USER_BEGIN = 'UPDATE_USER_BEGIN';
 export const UPDATE_USER_SUCCESS = 'UPDATE_USER_SUCCESS';
+export const UPDATE_USER_HIDE_ALERT = 'UPDATE_USER_HIDE_ALERT';
 export const UPDATE_USER_FAILURE = 'UPDATE_USER_FAILURE';
+
+export const SHOW_CONFIRM_DELETE_USER_MODAL = 'SHOW_CONFIRM_DELETE_USER_MODAL';
+export const HIDE_CONFIRM_DELETE_USER_MODAL = 'HIDE_CONFIRM_DELETE_USER_MODAL';
+
+export const DELETE_USER = 'DELETE_USER';
+export const DELETE_USER_BEGIN = 'DELETE_USER_BEGIN';
+export const DELETE_USER_FAILURE = 'DELETE_USER_FAILURE';
 
 export const SET_USER_EMAIL = 'SET_USER_EMAIL';
 
@@ -35,9 +44,12 @@ const initialState = {
     user: undefined,
     isCreating: false,
     isUpdating: false,
+    isDeletingUser: false,
     createUserError: undefined,
     updateUserError: undefined,
-    termsOfUseModalIsVisible: false
+    userAlertStripeIsVisible: false,
+    termsOfUseModalIsVisible: false,
+    confirmDeleteUserModalIsVisible: false
 };
 
 const setEmail = function setEmail(user, newEmail) {
@@ -98,12 +110,19 @@ export default function authorizationReducer(state = initialState, action) {
             return {
                 ...state,
                 isUpdating: false,
-                user: action.response
+                user: action.response,
+                userAlertStripeIsVisible: true
+            };
+        case UPDATE_USER_HIDE_ALERT:
+            return {
+                ...state,
+                userAlertStripeIsVisible: false
             };
         case UPDATE_USER_FAILURE:
             return {
                 ...state,
                 isUpdating: false,
+                userAlertStripeIsVisible: false,
                 updateUserError: action.error
             };
         case SHOW_TERMS_OF_USE_MODAL:
@@ -126,6 +145,29 @@ export default function authorizationReducer(state = initialState, action) {
             return {
                 ...state,
                 authorizationError: undefined
+            };
+        case SHOW_CONFIRM_DELETE_USER_MODAL:
+            return {
+                ...state,
+                confirmDeleteUserModalIsVisible: true
+            };
+        case HIDE_CONFIRM_DELETE_USER_MODAL:
+            return {
+                ...state,
+                confirmDeleteUserModalIsVisible: false,
+                deleteUserError: undefined
+            };
+        case DELETE_USER_BEGIN:
+            return {
+                ...state,
+                isDeletingUser: true,
+                deleteUserError: undefined
+            };
+        case DELETE_USER_FAILURE:
+            return {
+                ...state,
+                isDeletingUser: false,
+                deleteUserError: action.error
             };
         default:
             return state;
@@ -189,9 +231,25 @@ function* updateUser() {
         yield put({ type: UPDATE_USER_BEGIN });
         const response = yield call(apiPut, `${AD_USER_API}/api/v1/user`, state.user.user);
         yield put({ type: UPDATE_USER_SUCCESS, response });
+        yield call(delay, 5000);
+        yield put({ type: UPDATE_USER_HIDE_ALERT });
     } catch (e) {
         if (e instanceof SearchApiError) {
             yield put({ type: UPDATE_USER_FAILURE, error: e });
+        } else {
+            throw e;
+        }
+    }
+}
+
+function* deleteUser() {
+    try {
+        yield put({ type: DELETE_USER_BEGIN });
+        yield call(remove, `${AD_USER_API}/api/v1/user`);
+        window.location.reload();
+    } catch (e) {
+        if (e instanceof SearchApiError) {
+            yield put({ type: DELETE_USER_FAILURE, error: e });
         } else {
             throw e;
         }
@@ -203,4 +261,5 @@ export const userSaga = function* saga() {
     yield takeEvery(FETCH_IS_AUTHENTICATED_SUCCESS, fetchUser);
     yield takeLatest(CREATE_USER, createUser);
     yield takeLatest(UPDATE_USER, updateUser);
+    yield takeLatest(DELETE_USER, deleteUser);
 };

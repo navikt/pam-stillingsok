@@ -71,7 +71,6 @@ export default function savedSearchesReducer(state = initialState, action) {
                 pending: [...state.pending, action.uuid]
             };
         case REMOVE_SAVED_SEARCH_SUCCESS:
-            console.log(action)
             return {
                 ...state,
                 savedSearches: state.savedSearches.filter((savedSearch) => savedSearch.uuid !== action.uuid),

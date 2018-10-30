@@ -3,9 +3,10 @@ import { Flatknapp } from 'nav-frontend-knapper';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import NotLoggedIn from '../user/NotLoggedIn';
+import { Link } from 'react-router-dom';
 import PageHeader from '../common/pageHeader/PageHeader';
 import Disclaimer from '../discalimer/Disclaimer';
+import { CONTEXT_PATH } from '../fasitProperties';
 import FavouriteAlertStripe from '../favourites/alertstripe/FavouriteAlertStripe';
 import FavouriteError from '../favourites/error/FavouriteError';
 import ShowFavouriteListLink from '../favourites/ShowFavouriteListLink';
@@ -64,13 +65,15 @@ class Search extends React.Component {
                 <FavouriteError />
                 <SavedSearchAlertStripe />
                 <SavedSearchError />
-                <NotLoggedIn />
                 <PageHeader
                     title="Ledige stillinger"
                     buttons={featureToggle() && this.props.isAuthenticated !== false && this.props.user ?
                         <div>
                             <ShowFavouriteListLink />
                             <ExpandSavedSearchButton />
+                            <Link to={`${CONTEXT_PATH}/minside`} className="Search__minside-lenke lenke typo-element">
+                                Min side
+                            </Link>
                         </div> : null
                     }
                 />
