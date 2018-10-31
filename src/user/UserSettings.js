@@ -11,6 +11,7 @@ import PageHeader from '../common/pageHeader/PageHeader';
 import Disclaimer from '../discalimer/Disclaimer';
 import ConfirmDeleteUserModal from './ConfirmDeleteUserModal';
 import NotAuthenticated from './NotAuthenticated';
+import NoUser from './NoUser';
 import { SET_USER_EMAIL, SHOW_CONFIRM_DELETE_USER_MODAL, SHOW_TERMS_OF_USE_MODAL, UPDATE_USER } from './userReducer';
 import './UserSettings.less';
 
@@ -32,10 +33,6 @@ class UserSettings extends React.Component {
 
     onDeleteUserClick = () => {
         this.props.showConfirmDeleteUserModal();
-    };
-
-    onCreateUserClick = () => {
-        this.props.showTermsOfUseModal();
     };
 
     onRemoveEmailClick = () => {
@@ -64,29 +61,12 @@ class UserSettings extends React.Component {
                         </div>
                     ) : (
                         <div>
-
                             {!this.props.user && (
                                 <div className="UserSettings__main">
                                     <div className="UserSettings__section">
                                         <Row>
                                             <Column xs="12">
-                                                <Undertittel className="UserSettings__no-user-title">
-                                                    Du har ikke tatt i bruk innloggede tjenester
-                                                </Undertittel>
-                                                <Normaltekst className="UserSettings__no-user-text">
-                                                    For å kunne lagre søk og favotitter, må du opprette en bruker.
-                                                </Normaltekst>
-                                                <Hovedknapp
-                                                    className="UserSettings__no-user-button"
-                                                    onClick={this.onCreateUserClick}
-                                                    spinner={this.props.isUpdating}
-                                                    disabled={this.props.isUpdating}
-                                                >
-                                                    Ny bruker
-                                                </Hovedknapp>
-                                                <Link to="/" className="lenke typo-normal">
-                                                    Forsett uten bruker
-                                                </Link>
+                                                <NoUser />
                                             </Column>
                                         </Row>
                                     </div>
@@ -143,11 +123,15 @@ class UserSettings extends React.Component {
                                                     Din bruker
                                                 </Undertittel>
                                                 <Normaltekst className="TermsOfUse__text">
-                                                    Du har akseptert våre <Link to="/vilkar" className="lenke">vilkår
-                                                    for å bruke innloggede tjenester
-                                                    </Link> og du kan trekke
-                                                    samtykket ditt når som helst hvis du ikke lenger ønsker å
-                                                    bruke innloggede tjenester i stillingssøket.
+                                                    Du har samtykket til våre <Link to="/vilkar" className="lenke">vilkår
+                                                    for å bruke innloggede tjenester.
+                                                    </Link>
+                                                    <br /><br />
+                                                    Hvis du ikke lenger ønsker å bruke innloggede tjenester i
+                                                    stillingssøket, kan du slette brukeren din.
+                                                    Når du sletter brukeren trekker du også samtykket ditt. Du sletter
+                                                    også alle dine favoritter og lagrede søk. Har du valgt å motta
+                                                    varslinger på e-post, så vil du ikke lenger motta disse.
                                                 </Normaltekst>
                                                 <Knapp
                                                     onClick={this.onDeleteUserClick}
@@ -193,7 +177,6 @@ UserSettings.propTypes = {
     }),
     isAuthenticated: PropTypes.bool,
     updateUserError: PropTypes.shape({}),
-    showTermsOfUseModal: PropTypes.func.isRequired,
     setUserEmail: PropTypes.func.isRequired,
     showConfirmDeleteUserModal: PropTypes.func.isRequired,
     updateUser: PropTypes.func.isRequired,
@@ -212,7 +195,6 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    showTermsOfUseModal: () => dispatch({ type: SHOW_TERMS_OF_USE_MODAL }),
     setUserEmail: (email) => dispatch({ type: SET_USER_EMAIL, email }),
     updateUser: () => dispatch({ type: UPDATE_USER }),
     showConfirmDeleteUserModal: () => dispatch({ type: SHOW_CONFIRM_DELETE_USER_MODAL })

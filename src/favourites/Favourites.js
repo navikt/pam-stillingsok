@@ -6,6 +6,7 @@ import PageHeader from '../common/pageHeader/PageHeader';
 import Disclaimer from '../discalimer/Disclaimer';
 import DelayedSpinner from '../search/loading/DelayedSpinner';
 import NotAuthenticated from '../user/NotAuthenticated';
+import NoUser from '../user/NoUser';
 import FavouriteAlertStripe from './alertstripe/FavouriteAlertStripe';
 import FavouriteError from './error/FavouriteError';
 import './Favourites.less';
@@ -41,23 +42,39 @@ class Favourites extends React.Component {
                             </div>
                         </div>
                     ) : (
-                        <Row>
-                            <Column xs="12">
-                                {this.props.isFetchingFavourites ? (
-                                    <div className="Favourites__main__spinner">
-                                        <DelayedSpinner />
+                        <div>
+                            {!this.props.user && (
+                                <div className="UserSettings__main">
+                                    <div className="UserSettings__section">
+                                        <Row>
+                                            <Column xs="12">
+                                                <NoUser />
+                                            </Column>
+                                        </Row>
                                     </div>
-                                ) : (
-                                    <div>
-                                        {this.props.favourites.length === 0 ? (
-                                            <NoFavourites />
+                                </div>
+                            )}
+
+                            {this.props.user && (
+                                <Row>
+                                    <Column xs="12">
+                                        {this.props.isFetchingFavourites ? (
+                                            <div className="Favourites__main__spinner">
+                                                <DelayedSpinner />
+                                            </div>
                                         ) : (
-                                            <FavouriteList />
+                                            <div>
+                                                {this.props.favourites.length === 0 ? (
+                                                    <NoFavourites />
+                                                ) : (
+                                                    <FavouriteList />
+                                                )}
+                                            </div>
                                         )}
-                                    </div>
-                                )}
-                            </Column>
-                        </Row>
+                                    </Column>
+                                </Row>
+                            )}
+                        </div>
                     )}
                 </Container>
                 <RemoveFavouriteModal />
@@ -66,10 +83,12 @@ class Favourites extends React.Component {
     }
 }
 Favourites.defaultProps = {
-    isAuthenticated: undefined
+    isAuthenticated: undefined,
+    user: undefined
 };
 
 Favourites.propTypes = {
+    user: PropTypes.shape(),
     isAuthenticated: PropTypes.bool,
     isFetchingFavourites: PropTypes.bool.isRequired,
     totalElements: PropTypes.number.isRequired,
@@ -80,6 +99,7 @@ Favourites.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
+    user: state.user.user,
     isAuthenticated: state.user.isAuthenticated,
     favourites: state.favourites.favourites,
     totalElements: state.favourites.totalElements,

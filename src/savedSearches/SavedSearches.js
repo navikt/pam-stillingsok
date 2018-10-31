@@ -6,6 +6,7 @@ import PageHeader from '../common/pageHeader/PageHeader';
 import Disclaimer from '../discalimer/Disclaimer';
 import DelayedSpinner from '../search/loading/DelayedSpinner';
 import NotAuthenticated from '../user/NotAuthenticated';
+import NoUser from '../user/NoUser';
 import SavedSearchAlertStripe from './alertstripe/SavedSearchAlertStripe';
 import ConfirmRemoveModal from './ConfirmRemoveModal';
 import SavedSearchError from './error/SavedSearchError';
@@ -42,23 +43,39 @@ class SavedSearches extends React.Component {
                             </div>
                         </div>
                     ) : (
-                        <Row>
-                            <Column xs="12">
-                                {this.props.isFetching ? (
-                                    <div className="SavedSearches__main__spinner">
-                                        <DelayedSpinner />
+                        <div>
+                            {!this.props.user && (
+                                <div className="UserSettings__main">
+                                    <div className="UserSettings__section">
+                                        <Row>
+                                            <Column xs="12">
+                                                <NoUser />
+                                            </Column>
+                                        </Row>
                                     </div>
-                                ) : (
-                                    <div>
-                                        {this.props.savedSearches.length === 0 ? (
-                                            <NoSavedSearches />
+                                </div>
+                            )}
+
+                            {this.props.user && (
+                                <Row>
+                                    <Column xs="12">
+                                        {this.props.isFetching ? (
+                                            <div className="SavedSearches__main__spinner">
+                                                <DelayedSpinner />
+                                            </div>
                                         ) : (
-                                            <SavedSearchList />
+                                            <div>
+                                                {this.props.savedSearches.length === 0 ? (
+                                                    <NoSavedSearches />
+                                                ) : (
+                                                    <SavedSearchList />
+                                                )}
+                                            </div>
                                         )}
-                                    </div>
-                                )}
-                            </Column>
-                        </Row>
+                                    </Column>
+                                </Row>
+                            )}
+                        </div>
                     )}
                 </Container>
                 <SavedSearchForm />
@@ -70,10 +87,12 @@ class SavedSearches extends React.Component {
 
 
 SavedSearches.defaultProps = {
-    isAuthenticated: undefined
+    isAuthenticated: undefined,
+    user: undefined
 };
 
 SavedSearches.propTypes = {
+    user: PropTypes.shape(),
     isAuthenticated: PropTypes.bool,
     isFetching: PropTypes.bool.isRequired,
     totalElements: PropTypes.number.isRequired,
@@ -84,6 +103,7 @@ SavedSearches.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
+    user: state.user.user,
     isAuthenticated: state.user.isAuthenticated,
     savedSearches: state.savedSearches.savedSearches,
     totalElements: state.savedSearches.totalElements,
