@@ -148,11 +148,11 @@ function toFavourite(uuid, ad) {
             uuid,
             title: ad.title,
             updated: ad.updated,
-            jobTitle: ad.properties.jobtitle ? ad.properties.jobtitle : '',
+            jobTitle: ad.properties.jobtitle ? ad.properties.jobtitle : null,
             status: ad.status,
-            applicationdue: ad.properties.applicationdue ? ad.properties.applicationdue : '',
-            location: ad.properties.location ? ad.properties.location : '',
-            employer: ad.properties.employer ? ad.properties.employer : ''
+            applicationdue: ad.properties.applicationdue ? ad.properties.applicationdue : null,
+            location: ad.properties.location ? ad.properties.location : null,
+            employer: ad.properties.employer ? ad.properties.employer : null
         }
     };
 }
