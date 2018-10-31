@@ -6,7 +6,7 @@ import { Route, Router, Switch } from 'react-router-dom';
 import NotAuthenticatedModal from './user/NotAuthenticatedModal';
 import { FETCH_IS_AUTHENTICATED } from './user/userReducer';
 import TermsOfUse from './user/TermsOfUse';
-import { CONTEXT_PATH, LOGOUT_URL } from './fasitProperties';
+import { CONTEXT_PATH, LOGOUT_URL, LOGIN_URL } from './fasitProperties';
 import Favourites from './favourites/Favourites';
 import featureToggle from './featureToggle';
 import history from './history';
@@ -16,7 +16,6 @@ import SearchPage from './search/Search';
 import StillingPage from './stilling/Stilling';
 import UserSettings from './user/UserSettings';
 import ViewTermsOfUse from './user/ViewTermsOfUse';
-import {LOGIN_URL} from "./authorization/NotLoggedIn";
 
 class Application extends React.Component {
     componentDidMount() {

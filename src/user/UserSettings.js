@@ -129,7 +129,7 @@ class UserSettings extends React.Component {
                                                     <br /><br />
                                                     Hvis du ikke lenger ønsker å bruke innloggede tjenester i
                                                     stillingssøket, kan du slette brukeren din.
-                                                    Når du sletter brukeren trekker du også samtykket ditt. Du sletter
+                                                    Når du sletter brukeren trekker du samtykket ditt. Du sletter
                                                     også alle dine favoritter og lagrede søk. Har du valgt å motta
                                                     varslinger på e-post, så vil du ikke lenger motta disse.
                                                 </Normaltekst>
