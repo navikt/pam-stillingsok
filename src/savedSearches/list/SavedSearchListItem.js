@@ -8,6 +8,7 @@ import { Flatknapp } from 'nav-frontend-knapper';
 import Lenkeknapp from '../../common/Lenkeknapp';
 import { formatISOString, isValidISOString } from '../../utils';
 import NotifyTypeEnum from '../enums/NotifyTypeEnum';
+import SavedSearchStatusEnum from '../enums/SavedSearchStatusEnum';
 import {
     SavedSearchFormMode,
     SET_FORM_DATA,
@@ -36,7 +37,7 @@ class SavedSearchListItem extends React.Component {
     onExtendDurationClick = () => {
         this.props.setFormData({
             ...this.props.savedSearch,
-            expired: false
+            status: SavedSearchStatusEnum.ACTIVE
         });
         this.props.updateSavedSearch();
     };
@@ -69,27 +70,28 @@ class SavedSearchListItem extends React.Component {
                     </div>
                     <div className="SavedSearchListItem__bottom">
                         <Lenkeknapp onClick={this.onChangeClick} className="Edit">
-                            <i className="Edit__icon"/>
+                            <i className="Edit__icon" />
                             Endre
                         </Lenkeknapp>
                         <Lenkeknapp onClick={this.onRemoveClick} className="Delete">
-                            <i className="Delete__icon"/>
+                            <i className="Delete__icon" />
                             Slett
                         </Lenkeknapp>
                     </div>
                 </div>
-                {savedSearch.expired && (
-                    <AlertStripe type="info" solid className="SavedSearchListItem__alertstripe">
-                        Ditt varsel for dette søket har gått ut
-                        <Flatknapp
-                            className="SavedSearchListItem__button-alertstripe"
-                            onClick={this.onExtendDurationClick}
-                            mini
-                        >
-                            Start ny varsling
-                        </Flatknapp>
-                    </AlertStripe>
-                )}
+                {savedSearch.status === SavedSearchStatusEnum.INACTIVE &&
+                    savedSearch.notifyType === NotifyTypeEnum.EMAIL && (
+                        <AlertStripe type="info" solid className="SavedSearchListItem__alertstripe">
+                            Ditt varsel for dette søket har gått ut
+                            <Flatknapp
+                                className="SavedSearchListItem__button-alertstripe"
+                                onClick={this.onExtendDurationClick}
+                                mini
+                            >
+                                Start ny varsling
+                            </Flatknapp>
+                        </AlertStripe>
+                    )}
             </div>
         );
     }
