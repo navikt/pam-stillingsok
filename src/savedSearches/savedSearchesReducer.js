@@ -1,8 +1,8 @@
 import { call, put, select, take, takeEvery, takeLatest } from 'redux-saga/effects';
-import { get, post, put as fetchPut, remove, SearchApiError } from '../api/api';
+import { fetchSearch, get, post, put as fetchPut, remove, SearchApiError } from '../api/api';
 import { FETCH_USER_SUCCESS } from '../user/userReducer';
 import { AD_USER_API } from '../fasitProperties';
-import { RESET_SEARCH, SEARCH } from '../search/searchReducer';
+import { FETCH_INITIAL_FACETS_SUCCESS, INITIAL_SEARCH, RESET_SEARCH, SEARCH } from '../search/searchReducer';
 import { fromUrl } from '../search/url';
 import { RESTORE_STATE_FROM_URL, SEARCH_PARAMETERS_DEFINITION } from '../urlReducer';
 import { validateAll } from './form/savedSearchFormReducer';
@@ -240,7 +240,9 @@ function* setCurrentSavedSearch() {
         type: RESTORE_STATE_FROM_SAVED_SEARCH,
         query: fromUrl(SEARCH_PARAMETERS_DEFINITION, state.savedSearches.currentSavedSearch.searchQuery)
     });
-    yield put({ type: SEARCH });
+    if (state.search.initialSearchDone) {
+        yield put({ type: SEARCH });
+    }
 }
 
 function* restoreCurrentSavedSearch(action) {
