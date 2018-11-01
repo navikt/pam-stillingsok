@@ -41,7 +41,7 @@ class FavouriteListItem extends React.Component {
                 </div>
                 {favourite.favouriteAd.status === 'INACTIVE' && (
                     <AlertStripe type="info" solid className="FavouriteListItem__alertstripe">
-                        Stillingsannonsen er utløpt
+                        Stillingsannonsen er inaktiv
                     </AlertStripe>
                 )}
             </div>
