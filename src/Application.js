@@ -2,14 +2,13 @@ import { Container } from 'nav-frontend-grid';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { Route, Router, Switch } from 'react-router-dom';
+import { Route, BrowserRouter, Switch } from 'react-router-dom';
 import NotAuthenticatedModal from './user/NotAuthenticatedModal';
 import { FETCH_IS_AUTHENTICATED } from './user/userReducer';
 import TermsOfUse from './user/TermsOfUse';
 import { CONTEXT_PATH, LOGOUT_URL, LOGIN_URL } from './fasitProperties';
 import Favourites from './favourites/Favourites';
 import featureToggle from './featureToggle';
-import history from './history';
 import Invite from './invite/Invite';
 import SavedSearches from './savedSearches/SavedSearches';
 import SearchPage from './search/Search';
@@ -26,7 +25,7 @@ class Application extends React.Component {
 
     render() {
         return (
-            <Router history={history}>
+            <BrowserRouter>
                 <div>
                     {featureToggle() && (
                         <div className="AuthButtons no-print">
@@ -69,7 +68,7 @@ class Application extends React.Component {
                     )}
 
                 </div>
-            </Router>
+            </BrowserRouter>
         );
     }
 }
