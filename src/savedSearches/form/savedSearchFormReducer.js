@@ -78,7 +78,10 @@ export default function savedSearchFormReducer(state = initialState, action) {
                 ...state,
                 formData: {
                     ...state.formData,
-                    notifyType: action.notifyType
+                    notifyType: action.notifyType,
+                    duration: action.notifyType === NotifyTypeEnum.NONE ? 0 : 30,
+                    status: action.notifyType === NotifyTypeEnum.NONE ?
+                        SavedSearchStatusEnum.INACTIVE : SavedSearchStatusEnum.ACTIVE
                 }
             };
         }
@@ -187,9 +190,8 @@ function* setDefaultFormData(action) {
             formData: {
                 title: toTitle(state),
                 searchQuery: toUrl(toQuery(state)),
-                duration: 30,
                 notifyType: NotifyTypeEnum.NONE,
-                status: SavedSearchStatusEnum.ACTIVE
+                status: SavedSearchStatusEnum.INACTIVE
             }
         });
     } else if (action.formMode === SavedSearchFormMode.EDIT) {

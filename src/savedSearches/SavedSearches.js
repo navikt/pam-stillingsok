@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import PageHeader from '../common/pageHeader/PageHeader';
 import Disclaimer from '../discalimer/Disclaimer';
 import DelayedSpinner from '../search/loading/DelayedSpinner';
+import NotAuthenticated from '../user/NotAuthenticated';
+import NoUser from '../user/NoUser';
 import SavedSearchAlertStripe from './alertstripe/SavedSearchAlertStripe';
 import ConfirmRemoveModal from './ConfirmRemoveModal';
 import SavedSearchError from './error/SavedSearchError';
@@ -27,26 +29,54 @@ class SavedSearches extends React.Component {
                 <SavedSearchError />
                 <PageHeader
                     backUrl="/"
-                    title={`Lagrede søk ${!this.props.isFetching ? `(${this.props.totalElements})` : ''}`}
+                    title={`Lagrede søk ${!this.props.isFetching && this.props.totalElements > 0 ? `(${this.props.totalElements})` : ''}`}
                 />
                 <Container className="SavedSearches__main">
-                    <Row>
-                        <Column xs="12">
-                            {this.props.isFetching ? (
-                                <div className="SavedSearches__main__spinner">
-                                    <DelayedSpinner />
-                                </div>
-                            ) : (
-                                <div>
-                                    {this.props.savedSearches.length === 0 ? (
-                                        <NoSavedSearches />
-                                    ) : (
-                                        <SavedSearchList />
-                                    )}
+                    {this.props.isAuthenticated === false ? (
+                        <div className="UserSettings__main">
+                            <div className="UserSettings__section">
+                                <Row>
+                                    <Column xs="12">
+                                        <NotAuthenticated title="Du må logge inn for å se lagrede søk" />
+                                    </Column>
+                                </Row>
+                            </div>
+                        </div>
+                    ) : (
+                        <div>
+                            {!this.props.user && (
+                                <div className="UserSettings__main">
+                                    <div className="UserSettings__section">
+                                        <Row>
+                                            <Column xs="12">
+                                                <NoUser />
+                                            </Column>
+                                        </Row>
+                                    </div>
                                 </div>
                             )}
-                        </Column>
-                    </Row>
+
+                            {this.props.user && (
+                                <Row>
+                                    <Column xs="12">
+                                        {this.props.isFetching ? (
+                                            <div className="SavedSearches__main__spinner">
+                                                <DelayedSpinner />
+                                            </div>
+                                        ) : (
+                                            <div>
+                                                {this.props.savedSearches.length === 0 ? (
+                                                    <NoSavedSearches />
+                                                ) : (
+                                                    <SavedSearchList />
+                                                )}
+                                            </div>
+                                        )}
+                                    </Column>
+                                </Row>
+                            )}
+                        </div>
+                    )}
                 </Container>
                 <SavedSearchForm />
                 <ConfirmRemoveModal />
@@ -55,7 +85,15 @@ class SavedSearches extends React.Component {
     }
 }
 
+
+SavedSearches.defaultProps = {
+    isAuthenticated: undefined,
+    user: undefined
+};
+
 SavedSearches.propTypes = {
+    user: PropTypes.shape(),
+    isAuthenticated: PropTypes.bool,
     isFetching: PropTypes.bool.isRequired,
     totalElements: PropTypes.number.isRequired,
     savedSearches: PropTypes.arrayOf(PropTypes.shape({
@@ -65,6 +103,8 @@ SavedSearches.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
+    user: state.user.user,
+    isAuthenticated: state.user.isAuthenticated,
     savedSearches: state.savedSearches.savedSearches,
     totalElements: state.savedSearches.totalElements,
     isFetching: state.savedSearches.isFetching

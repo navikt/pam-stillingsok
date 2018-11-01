@@ -3,9 +3,10 @@ import { Flatknapp } from 'nav-frontend-knapper';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import NotLoggedIn from '../authorization/NotLoggedIn';
+import { Link } from 'react-router-dom';
 import PageHeader from '../common/pageHeader/PageHeader';
 import Disclaimer from '../discalimer/Disclaimer';
+import { CONTEXT_PATH } from '../fasitProperties';
 import FavouriteAlertStripe from '../favourites/alertstripe/FavouriteAlertStripe';
 import FavouriteError from '../favourites/error/FavouriteError';
 import ShowFavouriteListLink from '../favourites/ShowFavouriteListLink';
@@ -64,13 +65,15 @@ class Search extends React.Component {
                 <FavouriteError />
                 <SavedSearchAlertStripe />
                 <SavedSearchError />
-                <NotLoggedIn />
                 <PageHeader
                     title="Ledige stillinger"
-                    buttons={featureToggle() && this.props.isLoggedIn && this.props.termsStatus === 'accepted' ?
+                    buttons={featureToggle() && this.props.isAuthenticated !== false && this.props.user ?
                         <div>
                             <ShowFavouriteListLink />
                             <ExpandSavedSearchButton />
+                            <Link to={`${CONTEXT_PATH}/minside`} className="Search__minside-lenke lenke typo-element">
+                                Min side
+                            </Link>
                         </div> : null
                     }
                 />
@@ -149,6 +152,11 @@ class Search extends React.Component {
     }
 }
 
+Search.defaultProps = {
+    user: undefined,
+    isAuthenticated: undefined
+};
+
 Search.propTypes = {
     restoreStateFromUrl: PropTypes.func.isRequired,
     initialSearch: PropTypes.func.isRequired,
@@ -157,7 +165,8 @@ Search.propTypes = {
     isSavedSearchesExpanded: PropTypes.bool.isRequired,
     hasError: PropTypes.bool.isRequired,
     initialSearchDone: PropTypes.bool.isRequired,
-    isLoggedIn: PropTypes.bool.isRequired
+    isAuthenticated: PropTypes.bool,
+    user: PropTypes.shape({})
 };
 
 const mapStateToProps = (state) => ({
@@ -165,9 +174,9 @@ const mapStateToProps = (state) => ({
     initialSearchDone: state.search.initialSearchDone,
     isFetchingFavourites: state.favourites.isFetchingFavourites,
     savedSearches: state.savedSearches.savedSearches,
-    isLoggedIn: state.authorization.isLoggedIn,
     isSavedSearchesExpanded: state.savedSearchExpand.isSavedSearchesExpanded,
-    termsStatus: state.authorization.termsStatus
+    isAuthenticated: state.user.isAuthenticated,
+    user: state.user.user
 });
 
 const mapDispatchToProps = (dispatch) => ({

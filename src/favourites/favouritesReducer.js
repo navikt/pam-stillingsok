@@ -1,9 +1,8 @@
 /* eslint-disable no-underscore-dangle */
 import { call, put, select, takeLatest } from 'redux-saga/effects';
 import { get, post, remove, SearchApiError } from '../api/api';
-import { FETCH_USER_SUCCESS } from '../authorization/authorizationReducer';
-import { AD_USER_API, CONTEXT_PATH } from '../fasitProperties';
-import history from '../history';
+import { FETCH_USER_SUCCESS } from '../user/userReducer';
+import { AD_USER_API } from '../fasitProperties';
 
 export const FETCH_FAVOURITES = 'FETCH_FAVOURITES';
 export const FETCH_FAVOURITES_BEGIN = 'FETCH_FAVOURITES_BEGIN';
@@ -148,11 +147,11 @@ function toFavourite(uuid, ad) {
             uuid,
             title: ad.title,
             updated: ad.updated,
-            jobTitle: ad.properties.jobtitle ? ad.properties.jobtitle : '',
+            jobTitle: ad.properties.jobtitle ? ad.properties.jobtitle : null,
             status: ad.status,
-            applicationdue: ad.properties.applicationdue ? ad.properties.applicationdue : '',
-            location: ad.properties.location ? ad.properties.location : '',
-            employer: ad.properties.employer ? ad.properties.employer : ''
+            applicationdue: ad.properties.applicationdue ? ad.properties.applicationdue : null,
+            location: ad.properties.location ? ad.properties.location : null,
+            employer: ad.properties.employer ? ad.properties.employer : null
         }
     };
 }
@@ -194,9 +193,6 @@ function* addToFavourites(action) {
     } catch (e) {
         if (e instanceof SearchApiError) {
             yield put({ type: ADD_TO_FAVOURITES_FAILURE, error: e, uuid: favourite.favouriteAd.uuid });
-            if (e.statusCode === 404) {
-                yield call(history.push, `${CONTEXT_PATH}/vilkaar`);
-            }
         } else {
             throw e;
         }

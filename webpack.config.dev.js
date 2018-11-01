@@ -15,6 +15,7 @@ module.exports = merge(common, {
     },
     plugins: [
         new webpack.DefinePlugin({
+            __PAM_STILLINGSOK_URL__: "'http://localhost:8000'",
             __PAM_SEARCH_API__: "'http://localhost:9000'",
             __PAM_AD_USER_API__: "'http://localhost:9017/aduser'",
             __PAM_STILLING__: "'/stilling/'",

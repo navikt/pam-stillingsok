@@ -39,12 +39,14 @@ const fasitProperties = {
     PAM_STILLING: '/pam-stillingsok/stilling/',
     PAM_AD_USER_API: process.env.PAMADUSER_URL + '/aduser',
     LOGIN_URL: process.env.LOGINSERVICE_URL,
-    LOGOUT_URL: process.env.LOGOUTSERVICE_URL
+    LOGOUT_URL: process.env.LOGOUTSERVICE_URL,
+    PAM_STILLINGSOK_URL: process.env.PAM_STILLINGSOK_URL
 };
 
 
 const writeEnvironmentVariablesToFile = () => {
     const fileContent =
+        `window.__PAM_STILLINGSOK_URL__="${fasitProperties.PAM_STILLINGSOK_URL}";\n` +
         `window.__PAM_CONTEXT_PATH__="${fasitProperties.PAM_CONTEXT_PATH}";\n` +
         `window.__PAM_STILLING__="${fasitProperties.PAM_STILLING}";\n` +
         `window.__PAM_AD_USER_API__="${fasitProperties.PAM_AD_USER_API}";\n` +

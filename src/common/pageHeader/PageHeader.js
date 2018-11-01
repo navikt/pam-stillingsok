@@ -6,7 +6,9 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import './PageHeader.less';
 
-export default function PageHeader({ backUrl, title, buttons }) {
+export default function PageHeader({
+    backUrl, title, buttons, backLabel
+}) {
     return (
         <div className="PageHeader">
             <Container className="PageHeader__container">
@@ -20,7 +22,7 @@ export default function PageHeader({ backUrl, title, buttons }) {
                                 >
                                     <Chevron type="venstre" className="PageHeader__back__chevron" />
                                     <span className="PageHeader__back__text">
-                                        Til stillingsøk
+                                        {backLabel || 'Til stillingsøk'}
                                     </span>
                                 </Link>
                             </div>
@@ -44,11 +46,13 @@ export default function PageHeader({ backUrl, title, buttons }) {
 
 PageHeader.defaultProps = {
     backUrl: undefined,
+    backLabel: undefined,
     buttons: undefined
 };
 
 PageHeader.propTypes = {
     backUrl: PropTypes.string,
+    backLabel: PropTypes.string,
     title: PropTypes.string.isRequired,
     buttons: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node])
 };

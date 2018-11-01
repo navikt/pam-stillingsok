@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import AlertStripe from 'nav-frontend-alertstriper';
 import PropTypes from 'prop-types';
 import { Checkbox, Fieldset, Input, Radio, SkjemaGruppe } from 'nav-frontend-skjema';
 import NotifyTypeEnum from '../enums/NotifyTypeEnum';
@@ -36,7 +37,7 @@ class AddOrReplaceForm extends React.Component {
                     label="Navn*"
                     onChange={this.onTitleChange}
                     value={formData.title}
-                    feil={validation.title ? { feilmelding: validation.title }  : undefined}
+                    feil={validation.title ? { feilmelding: validation.title } : undefined}
                 />
                 <Checkbox
                     className="SavedSearchModal__body__notify"
@@ -45,37 +46,47 @@ class AddOrReplaceForm extends React.Component {
                     checked={formData.notifyType === NotifyTypeEnum.EMAIL}
                 />
                 {formData.notifyType === NotifyTypeEnum.EMAIL && (
-                    <SkjemaGruppe>
-                        <Fieldset legend="Varighet på varsel:">
-                            <Radio
-                                label="30 dager"
-                                className="SavedSearchModal__body__duration"
-                                name="duration"
-                                key="30dager"
-                                value="30"
-                                onChange={this.onDurationChange}
-                                checked={formData.duration === 30}
-                            />
-                            <Radio
-                                label="60 dager"
-                                className="SavedSearchModal__body__duration"
-                                name="duration"
-                                key="60dager"
-                                value="60"
-                                onChange={this.onDurationChange}
-                                checked={formData.duration === 60}
-                            />
-                            <Radio
-                                label="90 dager"
-                                className="SavedSearchModal__body__duration"
-                                name="duration"
-                                key="90dager"
-                                value="90"
-                                onChange={this.onDurationChange}
-                                checked={formData.duration === 90}
-                            />
-                        </Fieldset>
-                    </SkjemaGruppe>
+                    <div>
+                        <SkjemaGruppe className="blokk-s">
+                            <Fieldset legend="Varighet på varsel:">
+                                <Radio
+                                    label="30 dager"
+                                    className="SavedSearchModal__body__duration"
+                                    name="duration"
+                                    key="30dager"
+                                    value="30"
+                                    onChange={this.onDurationChange}
+                                    checked={formData.duration === 30}
+                                />
+                                <Radio
+                                    label="60 dager"
+                                    className="SavedSearchModal__body__duration"
+                                    name="duration"
+                                    key="60dager"
+                                    value="60"
+                                    onChange={this.onDurationChange}
+                                    checked={formData.duration === 60}
+                                />
+                                <Radio
+                                    label="90 dager"
+                                    className="SavedSearchModal__body__duration"
+                                    name="duration"
+                                    key="90dager"
+                                    value="90"
+                                    onChange={this.onDurationChange}
+                                    checked={formData.duration === 90}
+                                />
+                            </Fieldset>
+                        </SkjemaGruppe>
+                        {(this.props.user.email === undefined ||
+                            this.props.user.email === null ||
+                            this.props.user.email.trim().length === 0) && (
+                                <AlertStripe type="info" solid>
+                                    <b>Du har ikke registrert e-postadresse.</b> For å motta varsler på e-post må du
+                                    registrere din e-postadresse på Min side.
+                                </AlertStripe>
+                            )}
+                    </div>
                 )}
             </div>
         );
@@ -83,10 +94,14 @@ class AddOrReplaceForm extends React.Component {
 }
 
 AddOrReplaceForm.defaultProps = {
-    formData: undefined
+    formData: undefined,
+    user: undefined
 };
 
 AddOrReplaceForm.propTypes = {
+    user: PropTypes.shape({
+        email: PropTypes.string
+    }),
     setTitle: PropTypes.func.isRequired,
     setNotifyType: PropTypes.func.isRequired,
     setDuration: PropTypes.func.isRequired,
@@ -99,6 +114,7 @@ AddOrReplaceForm.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
+    user: state.user.user,
     formData: state.savedSearchForm.formData,
     validation: state.savedSearchForm.validation
 });

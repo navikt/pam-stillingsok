@@ -8,7 +8,7 @@ function ShowFavouriteListLink({ isFetching, totalElements }) {
     return (
         <Link className="FavouritesLink" to={`${CONTEXT_PATH}/favoritter`}>
             <span className="FavouritesLink__text lenke typo-element">
-                Se favoritter {!isFetching ? ` (${totalElements})` : ''}
+                Favoritter {!isFetching ? ` (${totalElements})` : ''}
             </span>
         </Link>
     );

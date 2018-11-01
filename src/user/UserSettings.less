@@ -1,0 +1,59 @@
+@import "../variables";
+
+.UserSettings {
+  margin-bottom: 3rem;
+}
+
+.UserSettingsAlertStripe {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+  .alertstripe__tekst {
+    flex: none !important;
+  }
+}
+
+.UserSettings__header__container,
+.UserSettings__main {
+  max-width: 41rem;
+  margin: 0 auto;
+}
+
+.UserSettings__main {
+}
+
+.UserSettings__section {
+  background: #fff;
+  padding: 2rem;
+  margin-bottom: 1rem;
+  border-radius: 0.125rem;
+}
+
+.UserSettings__email-title {
+  margin-bottom: @undertittel-margin-bottom;
+}
+
+.UserSettings__email-text {
+  margin-bottom: 2rem;
+}
+
+.UserSettings__email-input {
+  margin-bottom: 2.5rem;
+}
+
+.UserSettings__email-buttons .knapp:not(:last-child) {
+  margin-right: @knapp-margin-right;
+}
+
+.UserSettings__not-authenticated-title {
+  margin-bottom: @undertittel-margin-bottom;
+}
+
+.UserSettings__not-authenticated-message {
+  margin-bottom: 2.5rem;
+}

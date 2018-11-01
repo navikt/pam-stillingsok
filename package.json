@@ -28,7 +28,6 @@
     "express": "^4.16.4",
     "express-http-proxy": "^1.4.0",
     "helmet": "^3.14.0",
-    "history": "^4.7.2",
     "less": "^3.8.1",
     "less-loader": "^4.1.0",
     "lodash.throttle": "^4.1.1",
