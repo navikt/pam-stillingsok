@@ -33,3 +33,5 @@ fasitResources:
     resourceType: restservice
   - alias: pamaduser
     resourceType: restservice
+  - alias: pam-stillingsok
+    resourceType: baseurl
