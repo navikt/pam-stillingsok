@@ -9,10 +9,11 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PageHeader from '../common/pageHeader/PageHeader';
 import Disclaimer from '../discalimer/Disclaimer';
+import { CONTEXT_PATH } from '../fasitProperties';
 import ConfirmDeleteUserModal from './ConfirmDeleteUserModal';
 import NotAuthenticated from './NotAuthenticated';
 import NoUser from './NoUser';
-import { SET_USER_EMAIL, SHOW_CONFIRM_DELETE_USER_MODAL, SHOW_TERMS_OF_USE_MODAL, UPDATE_USER } from './userReducer';
+import { SET_USER_EMAIL, SHOW_CONFIRM_DELETE_USER_MODAL, UPDATE_USER } from './userReducer';
 import './UserSettings.less';
 
 const PAGE_TITLE = 'Min side';
@@ -123,7 +124,7 @@ class UserSettings extends React.Component {
                                                     Din bruker
                                                 </Undertittel>
                                                 <Normaltekst className="TermsOfUse__text">
-                                                    Du har samtykket til våre <Link to="/vilkar" className="lenke">vilkår
+                                                    Du har samtykket til våre <Link to={`${CONTEXT_PATH}/vilkar`} className="lenke">vilkår
                                                     for å bruke innloggede tjenester.
                                                     </Link>
                                                     <br /><br />

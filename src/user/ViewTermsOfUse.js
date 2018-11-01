@@ -4,6 +4,7 @@ import React from 'react';
 import PageHeader from '../common/pageHeader/PageHeader';
 import Disclaimer from '../discalimer/Disclaimer';
 import './UserSettings.less';
+import { CONTEXT_PATH } from '../fasitProperties';
 
 const PAGE_TITLE = 'Vilkår';
 
@@ -18,7 +19,7 @@ export default class ViewTermsOfUse extends React.Component {
             <div className="UserSettings">
                 <Disclaimer />
                 <PageHeader
-                    backUrl="/minside"
+                    backUrl={`${CONTEXT_PATH}/minside`}
                     title={PAGE_TITLE}
                     backLabel="Tilbake til Min side"
                 />
