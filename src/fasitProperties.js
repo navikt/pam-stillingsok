@@ -5,4 +5,4 @@ export const CONTEXT_PATH = __PAM_CONTEXT_PATH__;
 export const LOGIN_URL_WITHOUT_LEVEL = __LOGIN_URL__;
 export const LOGOUT_URL = __LOGOUT_URL__;
 export const PAM_STILLINGSOK_URL = __PAM_STILLINGSOK_URL__;
-export const LOGIN_URL = `${LOGIN_URL_WITHOUT_LEVEL}?level=Level3?redirect=${PAM_STILLINGSOK_URL}`;
+export const LOGIN_URL = `${LOGIN_URL_WITHOUT_LEVEL}?level=Level3&redirect=${PAM_STILLINGSOK_URL}`;
