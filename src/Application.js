@@ -2,17 +2,17 @@ import { Container } from 'nav-frontend-grid';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { Route, BrowserRouter, Switch } from 'react-router-dom';
-import NotAuthenticatedModal from './user/NotAuthenticatedModal';
-import { FETCH_IS_AUTHENTICATED } from './user/userReducer';
-import TermsOfUse from './user/TermsOfUse';
-import { CONTEXT_PATH, LOGOUT_URL, LOGIN_URL, PAM_STILLINGSOK_URL } from './fasitProperties';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { CONTEXT_PATH, LOGIN_URL, LOGOUT_URL } from './fasitProperties';
 import Favourites from './favourites/Favourites';
 import featureToggle from './featureToggle';
 import Invite from './invite/Invite';
 import SavedSearches from './savedSearches/SavedSearches';
 import SearchPage from './search/Search';
 import StillingPage from './stilling/Stilling';
+import NotAuthenticatedModal from './user/NotAuthenticatedModal';
+import TermsOfUse from './user/TermsOfUse';
+import { FETCH_IS_AUTHENTICATED } from './user/userReducer';
 import UserSettings from './user/UserSettings';
 import ViewTermsOfUse from './user/ViewTermsOfUse';
 
@@ -33,7 +33,7 @@ class Application extends React.Component {
                                 {this.props.isAuthenticated === false ? (
                                     <a
                                         className="knapp knapp--mini"
-                                        href={`${LOGIN_URL}?redirect=${PAM_STILLINGSOK_URL}`}
+                                        href={LOGIN_URL}
                                     >
                                         Logg inn
                                     </a>

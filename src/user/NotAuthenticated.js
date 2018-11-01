@@ -7,7 +7,7 @@ import { LOGIN_URL } from '../fasitProperties';
 
 export default class NotAuthenticated extends React.Component {
     onLoginClick = () => {
-        window.location.href = `${LOGIN_URL}?redirect=${window.location.href}`;
+        window.location.href = LOGIN_URL;
     };
 
     render() {
