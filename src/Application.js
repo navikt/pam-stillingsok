@@ -6,7 +6,7 @@ import { Route, BrowserRouter, Switch } from 'react-router-dom';
 import NotAuthenticatedModal from './user/NotAuthenticatedModal';
 import { FETCH_IS_AUTHENTICATED } from './user/userReducer';
 import TermsOfUse from './user/TermsOfUse';
-import { CONTEXT_PATH, LOGOUT_URL, LOGIN_URL } from './fasitProperties';
+import { CONTEXT_PATH, LOGOUT_URL, LOGIN_URL, PAM_STILLINGSOK_URL } from './fasitProperties';
 import Favourites from './favourites/Favourites';
 import featureToggle from './featureToggle';
 import Invite from './invite/Invite';
@@ -33,7 +33,7 @@ class Application extends React.Component {
                                 {this.props.isAuthenticated === false ? (
                                     <a
                                         className="knapp knapp--mini"
-                                        href={`${LOGIN_URL}?redirect=${window.location.href}`}
+                                        href={`${LOGIN_URL}?redirect=${PAM_STILLINGSOK_URL}`}
                                     >
                                         Logg inn
                                     </a>
