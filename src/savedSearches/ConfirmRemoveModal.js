@@ -1,9 +1,7 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import { connect } from 'react-redux';
-import { Undertittel, Normaltekst } from 'nav-frontend-typografi';
-import Modal from 'nav-frontend-modal';
-import { Flatknapp, Hovedknapp } from 'nav-frontend-knapper';
+import ConfirmationModal from '../common/ConfirmationModal';
 import { HIDE_MODAL_REMOVE_SAVED_SEARCH, REMOVE_SAVED_SEARCH } from './savedSearchesReducer';
 
 class ConfirmRemoveModal extends React.Component {
@@ -19,25 +17,14 @@ class ConfirmRemoveModal extends React.Component {
     render() {
         if (this.props.confirmationVisible) {
             return (
-                <Modal
-                    isOpen
-                    onRequestClose={this.closeModal}
-                    contentLabel="Slett lagret søk"
-                    appElement={document.getElementById('app')}
+                <ConfirmationModal
+                    title="Slett lagret søk"
+                    onConfirm={this.onRemoveClick}
+                    onCancel={this.closeModal}
+                    confirmLabel="Slett"
                 >
-                    <div className="SavedSearchModal">
-                        <Undertittel className="SavedSearchModal__title">Slett lagret søk</Undertittel>
-                        <div className="SavedSearchModal__body">
-                            <Normaltekst>
-                                Er du sikker på at du vil slette &#34;{this.props.savedSearchAboutToBeRemoved.title}&#34;?
-                            </Normaltekst>
-                        </div>
-                        <div className="SavedSearchModal__buttons">
-                            <Hovedknapp onClick={this.onRemoveClick}>Slett</Hovedknapp>
-                            <Flatknapp onClick={this.closeModal}>Avbryt</Flatknapp>
-                        </div>
-                    </div>
-                </Modal>
+                    Er du sikker på at du vil slette &#34;{this.props.savedSearchAboutToBeRemoved.title}&#34;?
+                </ConfirmationModal>
             );
         }
         return null;

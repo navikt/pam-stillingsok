@@ -1,37 +1,37 @@
-@import "../../variables";
+@import "../variables";
 
-.RemoveFavouriteModal {
+.ConfirmationModal {
     padding: @modal-padding;
 }
 
-.RemoveFavouriteModal__title {
+.ConfirmationModal__title {
     margin-bottom: @modal-title-margin-bottom;
 }
 
-.RemoveFavouriteModal__message {
+.ConfirmationModal__message {
     margin-bottom: @modal-body-margin-bottom;
 }
 
 @media (max-width: @screen-sm-max) {
-    .RemoveFavouriteModal {
+    .ConfirmationModal {
         padding: @modal-padding-mobile;
     }
 
-    .RemoveFavouriteModal__buttons .knapp {
+    .ConfirmationModal__buttons .knapp {
         width: 100%;
     }
 
-    .RemoveFavouriteModal__buttons .knapp:not(:last-child) {
+    .ConfirmationModal__buttons .knapp:not(:last-child) {
         margin-bottom: @knapp-margin-right;
     }
 }
 
 @media (min-width: @screen-md-min) {
-    .RemoveFavouriteModal {
+    .ConfirmationModal {
         width: 38rem;
     }
 
-    .RemoveFavouriteModal__buttons .knapp:not(:last-child) {
+    .ConfirmationModal__buttons .knapp:not(:last-child) {
         margin-right: @knapp-margin-right;
     }
 }

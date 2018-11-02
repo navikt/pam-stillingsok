@@ -1,10 +1,8 @@
 import AlertStripe from 'nav-frontend-alertstriper';
-import { Flatknapp, Hovedknapp } from 'nav-frontend-knapper';
-import Modal from 'nav-frontend-modal';
-import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
+import ConfirmationModal from '../common/ConfirmationModal';
 import { DELETE_USER, HIDE_CONFIRM_DELETE_USER_MODAL } from './userReducer';
 
 class ConfirmDeleteUserModal extends React.Component {
@@ -18,39 +16,21 @@ class ConfirmDeleteUserModal extends React.Component {
 
     render() {
         return (
-            <Modal
-                isOpen
-                onRequestClose={this.closeModal}
-                contentLabel="Slett konto"
-                appElement={document.getElementById('app')}
+            <ConfirmationModal
+                title="Er du sikker på at du vil slette din bruker?"
+                onConfirm={this.onRemoveClick}
+                onCancel={this.closeModal}
+                confirmLabel="Slett bruker"
+                spinner={this.props.isDeletingUser}
             >
-                <div className="SavedSearchModal">
-                    {this.props.deleteUserError && (
-                        <AlertStripe solid type="advarsel" className="blokk-m">
-                            Det oppsto en feil ved sletting av bruker. Forsøk å laste siden på nytt
-                        </AlertStripe>
-                    )}
-                    <Undertittel className="SavedSearchModal__title">
-                        Er du sikker på at du vil slette din bruker?
-                    </Undertittel>
-                    <div className="SavedSearchModal__body">
-                        <Normaltekst>
-                            Når du sletter brukeren, sletter du også alle dine favoritter og lagrede søk.
-                            Har du valgt å motta varslinger på e-post, så vil du ikke lenger motta disse.
-                        </Normaltekst>
-                    </div>
-                    <div className="SavedSearchModal__buttons">
-                        <Hovedknapp
-                            spinner={this.props.isDeletingUser}
-                            disabled={this.props.isDeletingUser}
-                            onClick={this.onRemoveClick}
-                        >
-                            Slett bruker
-                        </Hovedknapp>
-                        <Flatknapp onClick={this.closeModal}>Avbryt</Flatknapp>
-                    </div>
-                </div>
-            </Modal>
+                {this.props.deleteUserError && (
+                    <AlertStripe solid type="advarsel" className="blokk-m">
+                        Det oppsto en feil ved sletting av bruker. Forsøk å laste siden på nytt
+                    </AlertStripe>
+                )}
+                Når du sletter brukeren, sletter du også alle dine favoritter og lagrede søk.
+                Har du valgt å motta varslinger på e-post, så vil du ikke lenger motta disse.
+            </ConfirmationModal>
         );
     }
 }
