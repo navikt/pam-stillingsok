@@ -1,13 +1,12 @@
-import AlertStripe from 'nav-frontend-alertstriper';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import '../alertstripe/FavouriteAlertStripe.less';
+import StickyAlertStripe from '../../common/StickyAlertStripe';
 
 function FavouriteError({ error }) {
     if (error) {
         return (
-            <AlertStripe type="advarsel" solid className="FavouriteError">
+            <StickyAlertStripe type="advarsel">
                 {error === 'fetch_error' &&
                     'Klarte ikke å ikke hente favoritter. Forsøk å laste siden på nytt.'
                 }
@@ -17,7 +16,7 @@ function FavouriteError({ error }) {
                 {error === 'add_error' &&
                     'Klarte ikke å lagre favoritt. Forsøk å laste siden på nytt.'
                 }
-            </AlertStripe>
+            </StickyAlertStripe>
         );
     }
     return <div />;

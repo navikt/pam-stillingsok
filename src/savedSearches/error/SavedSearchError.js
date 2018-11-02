@@ -1,14 +1,13 @@
-import AlertStripe from 'nav-frontend-alertstriper';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import './SavedSearchError.less';
+import StickyAlertStripe from '../../common/StickyAlertStripe';
 import { SavedSearchErrorEnum } from './savedSearchErrorReducer';
 
 function SavedSearchError({ error }) {
     if (error) {
         return (
-            <AlertStripe type="advarsel" solid className="SavedSearchError">
+            <StickyAlertStripe type="advarsel">
                 {error === SavedSearchErrorEnum.FETCH_ERROR &&
                     'Klarte ikke å ikke hente lagrede søk. Forsøk å laste siden på nytt.'
                 }
@@ -21,7 +20,7 @@ function SavedSearchError({ error }) {
                 {error === SavedSearchErrorEnum.ADD_ERROR &&
                     'Klarte ikke å lagre søk. Forsøk å laste siden på nytt.'
                 }
-            </AlertStripe>
+            </StickyAlertStripe>
         );
     }
     return <div />;

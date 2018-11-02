@@ -1,9 +1,8 @@
-import AlertStripe from 'nav-frontend-alertstriper';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import './SavedSearchAlertStripe.less';
+import StickyAlertStripe from '../../common/StickyAlertStripe';
 import { CONTEXT_PATH } from '../../fasitProperties';
 import { SavedSearchAlertStripeMode } from './savedSearchAlertStripeReducer';
 
@@ -12,21 +11,21 @@ function SavedSearchAlertStripe({
 }) {
     if (showAlertStripe && (alertStripeMode === SavedSearchAlertStripeMode.ADDED)) {
         return (
-            <AlertStripe type="suksess" solid className="SavedSearchAlertStripe">
+            <StickyAlertStripe type="suksess">
                 Søket er lagret i <Link className="lenke" to={`${CONTEXT_PATH}/lagrede-sok`}>Lagrede søk</Link>
-            </AlertStripe>
+            </StickyAlertStripe>
         );
     } else if (showAlertStripe && alertStripeMode === SavedSearchAlertStripeMode.REMOVED) {
         return (
-            <AlertStripe type="suksess" solid className="SavedSearchAlertStripe">
-                    Lagret søk: {savedSearchAboutToBeRemoved.title} er slettet
-            </AlertStripe>
+            <StickyAlertStripe type="suksess">
+                Lagret søk: {savedSearchAboutToBeRemoved.title} er slettet
+            </StickyAlertStripe>
         );
     } else if (showAlertStripe && alertStripeMode === SavedSearchAlertStripeMode.UPDATED) {
         return (
-            <AlertStripe type="suksess" solid className="SavedSearchAlertStripe">
-                    Lagret søk: {formData.title} er oppdatert
-            </AlertStripe>
+            <StickyAlertStripe type="suksess">
+                Lagret søk: {formData.title} er oppdatert
+            </StickyAlertStripe>
         );
     }
     return <div />;
