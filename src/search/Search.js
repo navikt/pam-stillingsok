@@ -97,13 +97,11 @@ class Search extends React.Component {
                                         <div className="Search__main__left">
                                             <div className="Search__main__left__save-search">
                                                 {featureToggle() && (
-                                                    <div>
-                                                        <SaveSearchButton />
-                                                        <Flatknapp mini onClick={this.onResetSearchClick}>
-                                                            Nullstill kriterier
-                                                        </Flatknapp>
-                                                    </div>
+                                                    <SaveSearchButton />
                                                 )}
+                                                <Flatknapp mini onClick={this.onResetSearchClick}>
+                                                            Nullstill kriterier
+                                                </Flatknapp>
                                             </div>
                                             <div id="sok">
                                                 <form
