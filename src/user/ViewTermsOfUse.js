@@ -2,7 +2,6 @@ import { Column, Container, Row } from 'nav-frontend-grid';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import React from 'react';
 import PageHeader from '../common/pageHeader/PageHeader';
-import Disclaimer from '../discalimer/Disclaimer';
 import './UserSettings.less';
 import { CONTEXT_PATH } from '../fasitProperties';
 
@@ -17,7 +16,6 @@ export default class ViewTermsOfUse extends React.Component {
     render() {
         return (
             <div className="UserSettings">
-                <Disclaimer />
                 <PageHeader
                     backUrl={`${CONTEXT_PATH}/minside`}
                     title={PAGE_TITLE}

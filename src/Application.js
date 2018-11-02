@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import Disclaimer from './discalimer/Disclaimer';
 import { CONTEXT_PATH, LOGIN_URL, LOGOUT_URL } from './fasitProperties';
 import Favourites from './favourites/Favourites';
 import featureToggle from './featureToggle';
@@ -27,6 +28,7 @@ class Application extends React.Component {
         return (
             <BrowserRouter>
                 <div>
+                    <Disclaimer />
                     {featureToggle() && (
                         <div className="AuthButtons no-print">
                             <Container>

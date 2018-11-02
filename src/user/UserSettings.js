@@ -8,7 +8,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PageHeader from '../common/pageHeader/PageHeader';
-import Disclaimer from '../discalimer/Disclaimer';
 import { CONTEXT_PATH } from '../fasitProperties';
 import ConfirmDeleteUserModal from './ConfirmDeleteUserModal';
 import NotAuthenticated from './NotAuthenticated';
@@ -44,7 +43,6 @@ class UserSettings extends React.Component {
     render() {
         return (
             <div className="UserSettings">
-                <Disclaimer />
                 <PageHeader
                     backUrl="/"
                     title={PAGE_TITLE}

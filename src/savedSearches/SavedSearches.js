@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import PageHeader from '../common/pageHeader/PageHeader';
-import Disclaimer from '../discalimer/Disclaimer';
 import DelayedSpinner from '../search/loading/DelayedSpinner';
 import NotAuthenticated from '../user/NotAuthenticated';
 import NoUser from '../user/NoUser';
@@ -24,7 +23,6 @@ class SavedSearches extends React.Component {
     render() {
         return (
             <div className="SavedSearches">
-                <Disclaimer />
                 <SavedSearchAlertStripe />
                 <SavedSearchError />
                 <PageHeader

@@ -5,7 +5,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PageHeader from '../common/pageHeader/PageHeader';
-import Disclaimer from '../discalimer/Disclaimer';
 import { CONTEXT_PATH } from '../fasitProperties';
 import FavouriteAlertStripe from '../favourites/alertstripe/FavouriteAlertStripe';
 import FavouriteError from '../favourites/error/FavouriteError';
@@ -60,7 +59,6 @@ class Search extends React.Component {
     render() {
         return (
             <div className="Search">
-                <Disclaimer />
                 <FavouriteAlertStripe />
                 <FavouriteError />
                 <SavedSearchAlertStripe />

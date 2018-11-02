@@ -6,7 +6,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import Disclaimer from '../discalimer/Disclaimer';
 import FavouriteAlertStripe from '../favourites/alertstripe/FavouriteAlertStripe';
 import FavouriteError from '../favourites/error/FavouriteError';
 import ToggleFavouriteButton from '../favourites/toggleFavoriteButton/ToggleFavouriteButton';
@@ -59,7 +58,6 @@ class Stilling extends React.Component {
 
         return (
             <div>
-                <Disclaimer />
                 <FavouriteAlertStripe />
                 <FavouriteError />
 
