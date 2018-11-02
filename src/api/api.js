@@ -1,20 +1,14 @@
+import SearchApiError from './SearchApiError';
+
 /* eslint-disable no-underscore-dangle */
 import suggestionsTemplate from './templates/suggestionsTemplate';
 import searchTemplate from './templates/searchTemplate';
 import { SEARCH_API } from '../fasitProperties';
 
-export class SearchApiError {
-    constructor(message, statusCode) {
-        this.message = message;
-        this.statusCode = statusCode;
-    }
-}
-
 export async function get(url) {
     let response;
     try {
         response = await fetch(url, {
-            credentials: 'include',
             method: 'GET'
         });
     } catch (e) {
@@ -31,12 +25,10 @@ export async function post(url, query) {
     let response;
     try {
         response = await fetch(url, {
-            credentials: 'include',
             body: JSON.stringify(query),
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                'X-XSRF-TOKEN-ARBEIDSPLASSEN': getCookie('XSRF-TOKEN-ARBEIDSPLASSEN')
+                'Content-Type': 'application/json'
             }
         });
     } catch (e) {
@@ -53,12 +45,10 @@ export async function put(url, query) {
     let response;
     try {
         response = await fetch(url, {
-            credentials: 'include',
             body: JSON.stringify(query),
             method: 'PUT',
             headers: {
-                'Content-Type': 'application/json',
-                'X-XSRF-TOKEN-ARBEIDSPLASSEN': getCookie('XSRF-TOKEN-ARBEIDSPLASSEN')
+                'Content-Type': 'application/json'
             }
         });
     } catch (e) {
@@ -75,11 +65,9 @@ export async function remove(url) {
     let response;
     try {
         response = await fetch(url, {
-            credentials: 'include',
             method: 'DELETE',
             headers: {
-                'Content-Type': 'application/json',
-                'X-XSRF-TOKEN-ARBEIDSPLASSEN': getCookie('XSRF-TOKEN-ARBEIDSPLASSEN')
+                'Content-Type': 'application/json'
             }
         });
     } catch (e) {
@@ -181,10 +169,3 @@ export async function fetchStilling(uuid) {
         ]
     }.excludes.join(',')}`);
 }
-
-const getCookie = (name) => {
-    const re = new RegExp(`${name}=([^;]+)`);
-    const match = re.exec(document.cookie);
-    return match !== null ? match[1] : '';
-};
-

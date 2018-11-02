@@ -1,5 +1,6 @@
 import { call, put, select, throttle } from 'redux-saga/effects';
-import { fetchCategoryAndSearchTagsSuggestions, SearchApiError } from '../../api/api';
+import { fetchCategoryAndSearchTagsSuggestions } from '../../api/api';
+import SearchApiError from '../../api/SearchApiError';
 import { RESTORE_STATE_FROM_SAVED_SEARCH } from '../../savedSearches/savedSearchesReducer';
 import { RESTORE_STATE_FROM_URL } from '../../urlReducer';
 import { RESET_SEARCH } from '../searchReducer';

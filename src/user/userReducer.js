@@ -1,5 +1,6 @@
 import { select, put, call, takeEvery, takeLatest } from 'redux-saga/effects';
-import { get, SearchApiError, post, put as apiPut, remove } from '../api/api';
+import SearchApiError from '../api/SearchApiError';
+import { userApiGet, userApiPost, userApiRemove, userApiPut } from '../api/userApi';
 import { AD_USER_API } from '../fasitProperties';
 import delay from '../common/delay';
 
@@ -191,7 +192,7 @@ function* fetchUser() {
     if (state.user.isAuthenticated) {
         yield put({ type: FETCH_USER_BEGIN });
         try {
-            const response = yield call(get, `${AD_USER_API}/api/v1/user`);
+            const response = yield call(userApiGet, `${AD_USER_API}/api/v1/user`);
             yield put({ type: FETCH_USER_SUCCESS, response });
         } catch (e) {
             if (e instanceof SearchApiError) {
@@ -210,7 +211,7 @@ function* createUser(action) {
             acceptedTerms: TERMS_VERSION,
             email: action.email
         };
-        const response = yield call(post, `${AD_USER_API}/api/v1/user`, fixUser(user));
+        const response = yield call(userApiPost, `${AD_USER_API}/api/v1/user`, fixUser(user));
         yield put({ type: CREATE_USER_SUCCESS, response });
     } catch (e) {
         if (e instanceof SearchApiError) {
@@ -225,7 +226,7 @@ function* updateUser() {
     try {
         const state = yield select();
         yield put({ type: UPDATE_USER_BEGIN });
-        const response = yield call(apiPut, `${AD_USER_API}/api/v1/user`, fixUser(state.user.user));
+        const response = yield call(userApiPut, `${AD_USER_API}/api/v1/user`, fixUser(state.user.user));
         yield put({ type: UPDATE_USER_SUCCESS, response });
         yield call(delay, 5000);
         yield put({ type: UPDATE_USER_HIDE_ALERT });
@@ -241,7 +242,7 @@ function* updateUser() {
 function* deleteUser() {
     try {
         yield put({ type: DELETE_USER_BEGIN });
-        yield call(remove, `${AD_USER_API}/api/v1/user`);
+        yield call(userApiRemove, `${AD_USER_API}/api/v1/user`);
         window.location.reload();
     } catch (e) {
         if (e instanceof SearchApiError) {

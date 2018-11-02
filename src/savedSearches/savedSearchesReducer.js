@@ -1,10 +1,11 @@
 import { call, put, select, take, takeEvery, takeLatest } from 'redux-saga/effects';
-import { fetchSearch, get, post, put as fetchPut, remove, SearchApiError } from '../api/api';
-import { FETCH_USER_SUCCESS } from '../user/userReducer';
+import { userApiGet, userApiPost, userApiRemove, userApiPut } from '../api/userApi';
+import SearchApiError from '../api/SearchApiError';
 import { AD_USER_API } from '../fasitProperties';
-import { FETCH_INITIAL_FACETS_SUCCESS, INITIAL_SEARCH, RESET_SEARCH, SEARCH } from '../search/searchReducer';
+import { RESET_SEARCH, SEARCH } from '../search/searchReducer';
 import { fromUrl } from '../search/url';
 import { RESTORE_STATE_FROM_URL, SEARCH_PARAMETERS_DEFINITION } from '../urlReducer';
+import { FETCH_USER_SUCCESS } from '../user/userReducer';
 import { validateAll } from './form/savedSearchFormReducer';
 
 export const FETCH_SAVED_SEARCHES = 'FETCH_SAVED_SEARCHES';
@@ -162,7 +163,7 @@ export const withoutPending = function withoutPending(state) {
 function* fetchSavedSearches() {
     yield put({ type: FETCH_SAVED_SEARCHES_BEGIN });
     try {
-        const response = yield call(get, `${AD_USER_API}/api/v1/savedsearches?size=999&sort=updated,desc`);
+        const response = yield call(userApiGet, `${AD_USER_API}/api/v1/savedsearches?size=999&sort=updated,desc`);
         yield put({ type: FETCH_SAVED_SEARCHES_SUCCESS, response });
     } catch (e) {
         if (e instanceof SearchApiError) {
@@ -176,7 +177,7 @@ function* fetchSavedSearches() {
 function* removeSavedSearch(action) {
     try {
         yield put({ type: REMOVE_SAVED_SEARCH_BEGIN, uuid: action.uuid });
-        yield call(remove, `${AD_USER_API}/api/v1/savedsearches/${action.uuid}`);
+        yield call(userApiRemove, `${AD_USER_API}/api/v1/savedsearches/${action.uuid}`);
         yield put({ type: REMOVE_SAVED_SEARCH_SUCCESS, uuid: action.uuid });
         const state = yield select();
         if (state.savedSearches.currentSavedSearch && state.savedSearches.currentSavedSearch.uuid === action.uuid) {
@@ -198,7 +199,7 @@ function* updateSavedSearch() {
         try {
             yield put({ type: UPDATE_SAVED_SEARCH_BEGIN });
             const response = yield call(
-                fetchPut,
+                userApiPut,
                 `${AD_USER_API}/api/v1/savedsearches/${state.savedSearchForm.formData.uuid}`, {
                     ...state.savedSearchForm.formData
                 }
@@ -220,7 +221,7 @@ function* addSavedSearch() {
     if (state.savedSearchForm.validation.title === undefined) {
         try {
             yield put({ type: ADD_SAVED_SEARCH_BEGIN, added: state.savedSearchForm.formData });
-            const response = yield call(post, `${AD_USER_API}/api/v1/savedsearches`, {
+            const response = yield call(userApiPost, `${AD_USER_API}/api/v1/savedsearches`, {
                 ...state.savedSearchForm.formData
             });
             yield put({ type: ADD_SAVED_SEARCH_SUCCESS, response });

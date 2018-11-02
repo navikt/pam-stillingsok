@@ -1,6 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import { call, put, select, takeLatest } from 'redux-saga/effects';
-import { get, post, remove, SearchApiError } from '../api/api';
+import { userApiGet, userApiPost, userApiRemove } from '../api/userApi';
+import SearchApiError from '../api/SearchApiError';
 import { FETCH_USER_SUCCESS } from '../user/userReducer';
 import { AD_USER_API } from '../fasitProperties';
 
@@ -159,7 +160,7 @@ function toFavourite(uuid, ad) {
 function* fetchFavourites() {
     yield put({ type: FETCH_FAVOURITES_BEGIN });
     try {
-        const response = yield call(get, `${AD_USER_API}/api/v1/userfavouriteads?size=999&sort=favouriteAd.updated,desc`);
+        const response = yield call(userApiGet, `${AD_USER_API}/api/v1/userfavouriteads?size=999&sort=favouriteAd.updated,desc`);
         yield put({ type: FETCH_FAVOURITES_SUCCESS, response });
     } catch (e) {
         if (e instanceof SearchApiError) {
@@ -186,7 +187,7 @@ function* addToFavourites(action) {
     try {
         yield put({ type: SHOW_FAVOURITES_ALERT_STRIPE, alertStripeMode: 'added' });
         yield put({ type: ADD_TO_FAVOURITES_BEGIN, favourite });
-        const response = yield call(post, `${AD_USER_API}/api/v1/userfavouriteads`, favourite);
+        const response = yield call(userApiPost, `${AD_USER_API}/api/v1/userfavouriteads`, favourite);
         yield put({ type: ADD_TO_FAVOURITES_SUCCESS, response });
         yield call(delay, 5000);
         yield put({ type: HIDE_FAVOURITES_ALERT_STRIPE });
@@ -201,11 +202,11 @@ function* addToFavourites(action) {
 
 function* removeFromFavourites(action) {
     const state = yield select();
-    const favourite = state.favourites.favourites.find((favourite) => favourite.favouriteAd.uuid === action.uuid);
+    const favourite = state.favourites.favourites.find((f) => f.favouriteAd.uuid === action.uuid);
     try {
         yield put({ type: SHOW_FAVOURITES_ALERT_STRIPE, alertStripeMode: 'removed' });
         yield put({ type: REMOVE_FROM_FAVOURITES_BEGIN, favourite });
-        yield call(remove, `${AD_USER_API}/api/v1/userfavouriteads/${favourite.uuid}`);
+        yield call(userApiRemove, `${AD_USER_API}/api/v1/userfavouriteads/${favourite.uuid}`);
         yield put({ type: REMOVE_FROM_FAVOURITES_SUCCESS, favourite });
         yield call(delay, 5000);
         yield put({ type: HIDE_FAVOURITES_ALERT_STRIPE });
