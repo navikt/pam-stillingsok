@@ -1,3 +1,12 @@
+## RELEASE - 0.43.342-d54911b
+#### New in this release: 
++ 2018-11-02 [Bugfix] Søket virket ikke på Edge/Windows10. Var et issue med at kall mot backend ikke kunne ha tomme http headere. Splitter derfor opp search-api og aduser-api kall, slik at kun de som skal ha med credentials og xsrf-token legger til headerene.
++ 2018-10-31 [PAM-1703] Legger til beskjed om at innlogget bruker ikke har opprettet user, hvis man går direkte inn på en side som forutsetter dette.
++ 2018-10-31 [PAM-1703] Legger til beskjed om at innlogget bruker ikke har opprettet user, hvis man går direkte inn på en side som forutsetter dette.
++ 2018-10-30 [PAM-1703] Legger til mulighet for å slette e-postadresse
++ 2018-10-30 [PAM-1703] Viser advarsel hvis bruker oppretter et lagret søk, men ikke har registrert e-postadresse
++ 2018-10-30 [PAM-1703] Viser enten login eller logout, ikke begge. Legger til beskjed om at bruker må logge inn om de er uinnlogget og går direkte til Min side, Favoritter eller Lagrede søk via url.
++ 2018-10-30 [PAM-1703] Gi samtykke og opprette bruker. Med mulighet for å endre epost.
 ## RELEASE - 0.42.328-f0b6f49
 #### New in this release: 
 + 2018-10-30 [Bugfix] Fikser datoformat på søknadsfrist
