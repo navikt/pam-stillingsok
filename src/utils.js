@@ -33,3 +33,20 @@ export function isValidUrl(input) {
     return false;
 }
 
+export function objectToQueryString(object) {
+    return Object.keys(object)
+        .map(key => {
+            const value = object[key];
+            if (Array.isArray(value)) {
+                return arrayToQueryString(key, value);
+            } else {
+                return key + '=' + object[key];
+            }
+        })
+        .join('&');
+}
+
+function arrayToQueryString(key, array) {
+    return array.map(val => key + '[]=' + val)
+        .join('&');
+}
