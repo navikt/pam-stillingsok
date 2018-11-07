@@ -74,7 +74,7 @@ class Occupations extends React.Component {
                                         <Checkbox
                                             name="occupation"
                                             key={secondLevel.key}
-                                            label={`${secondLevel.key} (${secondLevel.count})`}
+                                            label={`${secondLevel.label} (${secondLevel.count})`}
                                             value={secondLevel.key}
                                             onChange={this.onSecondLevelClick}
                                             checked={checkedSecondLevels.includes(secondLevel.key)}
