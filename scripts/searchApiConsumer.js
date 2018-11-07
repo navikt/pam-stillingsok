@@ -1,10 +1,12 @@
 const rp = require('request-promise');
 
 exports.search = (templateFunc, query = {}) => {
-    const uri = 'http://localhost:9000/ad/_search';
+    console.log(query);
+    const host = process.env.DEV_PROFILE === 'true' ? 'http://localhost:9000' : 'http://pam-search-api';
+    const url = `${host}/ad/_search`;
     const options = {
         method: 'POST',
-        uri: uri,
+        url: url,
         body: templateFunc(query),
         json: true
     };
