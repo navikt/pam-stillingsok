@@ -95,6 +95,20 @@ const startServer = (htmlPages) => {
         express.static(path.resolve(__dirname, 'dist/css'))
     );
 
+    server.get('/pam-stillingsok/search', async function(req, res) {
+        const result = await searchApiConsumer.search(searchTemplate, req.query)
+            .catch((err) => { logError('Failed to query search api', err)});
+
+        res.send(result);
+    });
+
+    server.get('/pam-stillingsok/suggestions', async function(req, res) {
+        const result = await searchApiConsumer.search(suggestionsTemplate, req.query)
+            .catch((err) => { logError('Failed to query search api', err)});
+
+        res.send(result);
+    });
+
     server.get(
         ['/', '/pam-stillingsok/?', /^\/pam-stillingsok\/(?!.*dist).*$/],
         (req, res) => {
