@@ -1,8 +1,6 @@
 import SearchApiError from './SearchApiError';
 
 /* eslint-disable no-underscore-dangle */
-import suggestionsTemplate from './templates/suggestionsTemplate';
-import searchTemplate from './templates/searchTemplate';
 import { SEARCH_API } from '../fasitProperties';
 
 export async function get(url) {
@@ -91,7 +89,7 @@ function fixStilling(stilling) {
 }
 
 export async function fetchSearch(query = {}) {
-    const result = await post(`${SEARCH_API}/stillingsok/ad/_search`, searchTemplate(query));
+    const result = await post('/pam-stillingsok/search', query);
     return {
         stillinger: result.hits.hits.map((stilling) => (
             fixStilling(stilling._source)
@@ -133,7 +131,7 @@ export async function fetchSearch(query = {}) {
 }
 
 export async function fetchCategoryAndSearchTagsSuggestions(match, minLength) {
-    const result = await post(`${SEARCH_API}/stillingsok/ad/_search`, suggestionsTemplate(match, minLength));
+    const result = await post('/pam-stillingsok/suggestions', { match: match, minLength: minLength });
 
     return {
         match,

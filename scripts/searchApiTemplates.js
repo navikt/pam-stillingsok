@@ -1,160 +1,23 @@
-function mapSortByValue(value) {
-    switch (value) {
-        case 'updated':
-        default:
-            return 'updated';
-    }
-}
-
-function mapSortByOrder(value) {
-    if (value !== 'updated') {
-        return 'asc';
-    }
-    return 'desc';
-}
-
-export function filterExtent(extent) {
-    const filters = [];
-    if (extent && extent.length > 0) {
-        const filter = {
-            bool: {
-                should: []
-            }
-        };
-        extent.forEach((item) => {
-            filter.bool.should.push({
-                term: {
-                    extent_facet: item
-                }
-            });
-        });
-        filters.push(filter);
-    }
-    return filters;
-}
-
-export function filterEngagementType(engagementTypes) {
-    const filters = {
-        bool: {
-            should: []
+exports.suggestionsTemplate = (match, minLength) => ({
+    suggest: {
+        category_suggest: {
+            ...suggest('category_suggest', match, minLength)
+        },
+        searchtags_suggest: {
+            ...suggest('searchtags_suggest', match, minLength)
         }
-    };
-    if (engagementTypes && engagementTypes.length > 0) {
-        engagementTypes.forEach((engagementType) => {
-            filters.bool.should.push({
-                term: {
-                    engagementtype_facet: engagementType
-                }
-            });
-        });
-    }
-    return filters;
-}
+    },
+    _source: false
+});
 
-export function filterLocation(counties, municipals) {
-    const filters = {
-        bool: {
-            should: []
-        }
-    };
-    if (counties && counties.length > 0) {
-        counties.forEach((county) => {
-            filters.bool.should.push({
-                term: {
-                    county_facet: county
-                }
-            });
-        });
-    }
-
-    if (municipals && municipals.length > 0) {
-        municipals.forEach((municipal) => {
-            filters.bool.should.push({
-                term: {
-                    municipal_facet: municipal
-                }
-            });
-        });
-    }
-
-    return filters;
-}
-
-export function filterOccupation(occupationFirstLevels, occupationSecondLevels) {
-    const filters = {
-        bool: {
-            should: []
-        }
-    };
-    if (occupationFirstLevels && occupationFirstLevels.length > 0) {
-        occupationFirstLevels.forEach((occupationFirstLevel) => {
-            filters.bool.should.push({
-                term: {
-                    occupation_level1_facet: occupationFirstLevel
-                }
-            });
-        });
-    }
-
-    if (occupationSecondLevels && occupationSecondLevels.length > 0) {
-        occupationSecondLevels.forEach((occupationSecondLevel) => {
-            filters.bool.should.push({
-                term: {
-                    occupation_level2_facet: occupationSecondLevel
-                }
-            });
-        });
-    }
-
-    return filters;
-}
-
-export function filterSector(sector) {
-    const filters = {
-        bool: {
-            should: []
-        }
-    };
-    if (sector && sector.length > 0) {
-        sector.forEach((item) => {
-            filters.bool.should.push({
-                term: {
-                    sector_facet: item
-                }
-            });
-        });
-    }
-    return filters;
-}
-
-export function filterPublished(published) {
-    const filters = {
-        bool: {
-            should: []
-        }
-    };
-    if (published && published.length > 0) {
-        filters.bool.should.push({
-            range: {
-                published: {
-                    gte: 'now-1d'
-                }
-            }
-        });
-    }
-    return filters;
-}
-
-export default function searchTemplate(query) {
+exports.searchTemplate = (query) => {
     const {
         from, size, counties, municipals, extent, engagementType, sector, published,
         occupationFirstLevels, occupationSecondLevels
     } = query;
     let { sort, q } = query;
 
-    /**
-     *  To ensure consistent search results across multiple shards in elasticsearch when query is blank
-     */
+    // To ensure consistent search results across multiple shards in elasticsearch when query is blank
     if (!q || q.trim().length === 0) {
         sort = 'updated';
         q = '';
@@ -439,4 +302,168 @@ export default function searchTemplate(query) {
     }
 
     return template;
+}
+
+function mapSortByValue(value) {
+    switch (value) {
+        case 'updated':
+        default:
+            return 'updated';
+    }
+}
+
+function mapSortByOrder(value) {
+    if (value !== 'updated') {
+        return 'asc';
+    }
+    return 'desc';
+}
+
+function filterExtent(extent) {
+    const filters = [];
+    if (extent && extent.length > 0) {
+        const filter = {
+            bool: {
+                should: []
+            }
+        };
+        extent.forEach((item) => {
+            filter.bool.should.push({
+                term: {
+                    extent_facet: item
+                }
+            });
+        });
+        filters.push(filter);
+    }
+    return filters;
+}
+
+function filterEngagementType(engagementTypes) {
+    const filters = {
+        bool: {
+            should: []
+        }
+    };
+    if (engagementTypes && engagementTypes.length > 0) {
+        engagementTypes.forEach((engagementType) => {
+            filters.bool.should.push({
+                term: {
+                    engagementtype_facet: engagementType
+                }
+            });
+        });
+    }
+    return filters;
+}
+
+function filterLocation(counties, municipals) {
+    const filters = {
+        bool: {
+            should: []
+        }
+    };
+    if (counties && counties.length > 0) {
+        counties.forEach((county) => {
+            filters.bool.should.push({
+                term: {
+                    county_facet: county
+                }
+            });
+        });
+    }
+
+    if (municipals && municipals.length > 0) {
+        municipals.forEach((municipal) => {
+            filters.bool.should.push({
+                term: {
+                    municipal_facet: municipal
+                }
+            });
+        });
+    }
+
+    return filters;
+}
+
+function filterOccupation(occupationFirstLevels, occupationSecondLevels) {
+    const filters = {
+        bool: {
+            should: []
+        }
+    };
+    if (occupationFirstLevels && occupationFirstLevels.length > 0) {
+        occupationFirstLevels.forEach((occupationFirstLevel) => {
+            filters.bool.should.push({
+                term: {
+                    occupation_level1_facet: occupationFirstLevel
+                }
+            });
+        });
+    }
+
+    if (occupationSecondLevels && occupationSecondLevels.length > 0) {
+        occupationSecondLevels.forEach((occupationSecondLevel) => {
+            filters.bool.should.push({
+                term: {
+                    occupation_level2_facet: occupationSecondLevel
+                }
+            });
+        });
+    }
+
+    return filters;
+}
+
+function filterSector(sector) {
+    const filters = {
+        bool: {
+            should: []
+        }
+    };
+    if (sector && sector.length > 0) {
+        sector.forEach((item) => {
+            filters.bool.should.push({
+                term: {
+                    sector_facet: item
+                }
+            });
+        });
+    }
+    return filters;
+}
+
+function filterPublished(published) {
+    const filters = {
+        bool: {
+            should: []
+        }
+    };
+    if (published && published.length > 0) {
+        filters.bool.should.push({
+            range: {
+                published: {
+                    gte: 'now-1d'
+                }
+            }
+        });
+    }
+    return filters;
+}
+
+function suggest(field, match, minLength) {
+    return {
+        prefix: match,
+        completion: {
+            field,
+            skip_duplicates: true,
+            contexts: {
+                status: 'ACTIVE'
+            },
+            size: 5,
+            fuzzy: {
+                prefix_length: minLength
+            }
+        }
+    };
 }
