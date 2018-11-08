@@ -1,4 +1,4 @@
-<<<<<<< HEAD:scripts/searchApiTemplates.js
+
 exports.suggestionsTemplate = (match, minLength) => ({
     suggest: {
         category_suggest: {
@@ -6,136 +6,6 @@ exports.suggestionsTemplate = (match, minLength) => ({
         },
         searchtags_suggest: {
             ...suggest('searchtags_suggest', match, minLength)
-=======
-function mapSortByValue(value) {
-    switch (value) {
-        case 'updated':
-        default:
-            return 'updated';
-    }
-}
-
-function mapSortByOrder(value) {
-    if (value !== 'updated') {
-        return 'asc';
-    }
-    return 'desc';
-}
-
-export function filterExtent(extent) {
-    const filters = [];
-    if (extent && extent.length > 0) {
-        const filter = {
-            bool: {
-                should: []
-            }
-        };
-        extent.forEach((item) => {
-            filter.bool.should.push({
-                term: {
-                    extent_facet: item
-                }
-            });
-        });
-        filters.push(filter);
-    }
-    return filters;
-}
-
-export function filterEngagementType(engagementTypes) {
-    const filters = {
-        bool: {
-            should: []
-        }
-    };
-    if (engagementTypes && engagementTypes.length > 0) {
-        engagementTypes.forEach((engagementType) => {
-            filters.bool.should.push({
-                term: {
-                    engagementtype_facet: engagementType
-                }
-            });
-        });
-    }
-    return filters;
-}
-
-/**
- * Lager filter for fasetter med flere nivå, feks fylke og kommune. Kobinerer AND og OR.
- * Feks (Akershus) OR (Buskerud) hvis man bare har valgt disse to fylkene.
- * Feks (Akershus AND Asker) OR (Buskerud AND Drammen) om man ser etter jobb i Asker og Drammen
- * Feks (Akershus) OR (Buskerud AND Drammen) om man ser etter jobb i hele Akershus fylke, men også i Drammen kommune.
- */
-export function filterNestedFacets(parents, children = [], parentKey, childKey) {
-    let allMusts = [];
-    if (parents && parents.length > 0) {
-        parents.forEach((parent) => {
-            let must = [{
-                match: {
-                    [parentKey]: parent
-                }
-            }];
-
-            const childrenOfCurrentParent = children.filter((m) => (m.split('.')[0] === parent));
-            if (childrenOfCurrentParent.length > 0) {
-                must = [...must, {
-                    bool: {
-                        should: childrenOfCurrentParent.map((child) => ({
-                            term: {
-                                [childKey]: child.split('.')[1] // child kan feks være AKERSHUS.ASKER
-                            }
-                        }))
-                    }
-                }];
-            }
-
-            allMusts = [...allMusts, must];
-        });
-    }
-
-    return {
-        bool: {
-            should: allMusts.map((must) => ({
-                bool: {
-                    must
-                }
-            }))
-        }
-    };
-}
-
-export function filterLocation(counties, municipals) {
-    return filterNestedFacets(counties, municipals, 'county_facet', 'municipal_facet');
-}
-
-export function filterOccupation(occupationLevel1, occupationLevel2) {
-    return filterNestedFacets(occupationLevel1, occupationLevel2, 'occupation_level1_facet', 'occupation_level2_facet');
-}
-
-
-export function filterSector(sector) {
-    const filters = {
-        bool: {
-            should: []
-        }
-    };
-    if (sector && sector.length > 0) {
-        sector.forEach((item) => {
-            filters.bool.should.push({
-                term: {
-                    sector_facet: item
-                }
-            });
-        });
-    }
-    return filters;
-}
-
-export function filterPublished(published) {
-    const filters = {
-        bool: {
-            should: []
->>>>>>> pam-1360-fikser-elastic-search-query:src/api/templates/searchTemplate.js
         }
     },
     _source: false
@@ -433,7 +303,7 @@ exports.searchTemplate = (query) => {
     }
 
     return template;
-}
+};
 
 function mapSortByValue(value) {
     switch (value) {
@@ -448,6 +318,58 @@ function mapSortByOrder(value) {
         return 'asc';
     }
     return 'desc';
+}
+
+/**
+ * Lager filter for fasetter med flere nivå, feks fylke og kommune. Kobinerer AND og OR.
+ * Feks (Akershus) OR (Buskerud) hvis man bare har valgt disse to fylkene.
+ * Feks (Akershus AND Asker) OR (Buskerud AND Drammen) om man ser etter jobb i Asker og Drammen
+ * Feks (Akershus) OR (Buskerud AND Drammen) om man ser etter jobb i hele Akershus fylke, men også i Drammen kommune.
+ */
+function filterNestedFacets(parents, children = [], parentKey, childKey) {
+    let allMusts = [];
+    if (parents && parents.length > 0) {
+        parents.forEach((parent) => {
+            let must = [{
+                match: {
+                    [parentKey]: parent
+                }
+            }];
+
+            const childrenOfCurrentParent = children.filter((m) => (m.split('.')[0] === parent));
+            if (childrenOfCurrentParent.length > 0) {
+                must = [...must, {
+                    bool: {
+                        should: childrenOfCurrentParent.map((child) => ({
+                            term: {
+                                [childKey]: child.split('.')[1] // child kan feks være AKERSHUS.ASKER
+                            }
+                        }))
+                    }
+                }];
+            }
+
+            allMusts = [...allMusts, must];
+        });
+    }
+
+    return {
+        bool: {
+            should: allMusts.map((must) => ({
+                bool: {
+                    must
+                }
+            }))
+        }
+    };
+}
+
+function filterLocation(counties, municipals) {
+    return filterNestedFacets(counties, municipals, 'county_facet', 'municipal_facet');
+}
+
+function filterOccupation(occupationLevel1, occupationLevel2) {
+    return filterNestedFacets(occupationLevel1, occupationLevel2, 'occupation_level1_facet', 'occupation_level2_facet');
 }
 
 function filterExtent(extent) {
@@ -486,39 +408,6 @@ function filterEngagementType(engagementTypes) {
         });
     }
     return filters;
-}
-
-function filterLocation(counties, municipals) {
-    const filters = {
-        bool: {
-            should: []
-        }
-    };
-    if (counties && counties.length > 0) {
-        counties.forEach((county) => {
-            filters.bool.should.push({
-                term: {
-                    county_facet: county
-                }
-            });
-        });
-    }
-
-    if (municipals && municipals.length > 0) {
-        municipals.forEach((municipal) => {
-            filters.bool.should.push({
-                term: {
-                    municipal_facet: municipal
-                }
-            });
-        });
-    }
-
-    return filters;
-}
-
-function filterOccupation(occupationFirstLevels, occupationSecondLevels) {
-    return filterNestedFacets(occupationLevel1, occupationLevel2, 'occupation_level1_facet', 'occupation_level2_facet');
 }
 
 function filterSector(sector) {
@@ -570,50 +459,6 @@ function suggest(field, match, minLength) {
             fuzzy: {
                 prefix_length: minLength
             }
-        }
-    };
-}
-
-/**
- * Lager filter for fasetter med flere nivå, feks fylke og kommune. Kombinerer AND og OR.
- * Feks (Akershus) OR (Buskerud) hvis man bare har valgt disse to fylkene.
- * Feks (Akershus AND (Asker OR Bærum)) OR (Buskerud AND Drammen) om man ser etter jobb i Asker, Bærum eller Drammen
- * Feks (Akershus) OR (Buskerud AND Drammen) om man ser etter jobb i hele Akershus fylke, men også i Drammen kommune.
- */
-export function filterNestedFacets(parents, children = [], parentKey, childKey) {
-    let allMusts = [];
-    if (parents && parents.length > 0) {
-        parents.forEach((parent) => {
-            let must = [{
-                match: {
-                    [parentKey]: parent
-                }
-            }];
-
-            const childrenOfCurrentParent = children.filter((m) => (m.split('.')[0] === parent));
-            if (childrenOfCurrentParent.length > 0) {
-                must = [...must, {
-                    bool: {
-                        should: childrenOfCurrentParent.map((child) => ({
-                            term: {
-                                [childKey]: child.split('.')[1] // child kan feks være AKERSHUS.ASKER
-                            }
-                        }))
-                    }
-                }];
-            }
-
-            allMusts = [...allMusts, must];
-        });
-    }
-
-    return {
-        bool: {
-            should: allMusts.map((must) => ({
-                bool: {
-                    must
-                }
-            }))
         }
     };
 }
