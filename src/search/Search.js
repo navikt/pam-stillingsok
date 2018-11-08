@@ -7,19 +7,16 @@ import { Link } from 'react-router-dom';
 import PageHeader from '../common/pageHeader/PageHeader';
 import { CONTEXT_PATH } from '../fasitProperties';
 import FavouriteAlertStripe from '../favourites/alertstripe/FavouriteAlertStripe';
-import FavouriteError from '../favourites/error/FavouriteError';
 import ShowFavouriteListLink from '../favourites/ShowFavouriteListLink';
 import featureToggle from '../featureToggle';
 import SavedSearchAlertStripe from '../savedSearches/alertstripe/SavedSearchAlertStripe';
 import CurrentSavedSearch from '../savedSearches/CurrentSavedSearch';
-import SavedSearchError from '../savedSearches/error/SavedSearchError';
 import SavedSearchesExpand from '../savedSearches/expand/SavedSearchesExpand';
 import ExpandSavedSearchButton from '../savedSearches/ExpandSavedSearchButton';
 import SavedSearchForm from '../savedSearches/form/SavedSearchForm';
 import SaveSearchButton from '../savedSearches/SaveSearchButton';
 import { RESTORE_STATE_FROM_URL_BEGIN } from '../urlReducer';
 import BackToTop from './backToTopButton/BackToTop';
-import SearchError from './error/SearchError';
 import Counties from './facets/counties/Counties';
 import EngagementType from './facets/engagement/Engagement';
 import Extent from './facets/extent/Extent';
@@ -60,9 +57,7 @@ class Search extends React.Component {
         return (
             <div className="Search">
                 <FavouriteAlertStripe />
-                <FavouriteError />
                 <SavedSearchAlertStripe />
-                <SavedSearchError />
                 <PageHeader
                     title="Ledige stillinger"
                     buttons={featureToggle() && this.props.isAuthenticated !== false && this.props.user ?
@@ -81,15 +76,13 @@ class Search extends React.Component {
                     </div>
                 )}
                 <Container className="Search__main">
-                    {this.props.hasError && (
-                        <SearchError />
-                    )}
-                    {!this.props.hasError && !this.props.initialSearchDone && (
+
+                    {!this.props.initialSearchDone && (
                         <div className="Search__spinner">
                             <DelayedSpinner />
                         </div>
                     )}
-                    {!this.props.hasError && this.props.initialSearchDone && (
+                    {this.props.initialSearchDone && (
                         <RestoreScroll>
                             <div>
                                 <Row>
@@ -159,14 +152,12 @@ Search.propTypes = {
     search: PropTypes.func.isRequired,
     resetSearch: PropTypes.func.isRequired,
     isSavedSearchesExpanded: PropTypes.bool.isRequired,
-    hasError: PropTypes.bool.isRequired,
     initialSearchDone: PropTypes.bool.isRequired,
     isAuthenticated: PropTypes.bool,
     user: PropTypes.shape({})
 };
 
 const mapStateToProps = (state) => ({
-    hasError: state.search.hasError,
     initialSearchDone: state.search.initialSearchDone,
     isFetchingFavourites: state.favourites.isFetchingFavourites,
     savedSearches: state.savedSearches.savedSearches,

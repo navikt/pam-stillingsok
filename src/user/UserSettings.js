@@ -151,11 +151,6 @@ class UserSettings extends React.Component {
                                     E-postadressen din ble endret
                                 </AlertStripe>
                             )}
-                            {this.props.updateUserError && (
-                                <AlertStripe type="advarsel" solid className="UserSettingsAlertStripe">
-                                    Det oppsto en feil ved endring av dine innstillinger. Forsøk å laste siden på nytt
-                                </AlertStripe>
-                            )}
                         </div>
                     )}
                 </Container>
@@ -166,7 +161,6 @@ class UserSettings extends React.Component {
 
 UserSettings.defaultProps = {
     user: undefined,
-    updateUserError: undefined,
     isAuthenticated: undefined
 };
 
@@ -175,7 +169,6 @@ UserSettings.propTypes = {
         email: PropTypes.string
     }),
     isAuthenticated: PropTypes.bool,
-    updateUserError: PropTypes.shape({}),
     setUserEmail: PropTypes.func.isRequired,
     showConfirmDeleteUserModal: PropTypes.func.isRequired,
     updateUser: PropTypes.func.isRequired,

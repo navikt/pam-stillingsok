@@ -2,7 +2,6 @@ import { Flatknapp, Hovedknapp } from 'nav-frontend-knapper';
 import Modal from 'nav-frontend-modal';
 import { Input } from 'nav-frontend-skjema';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
-import AlertStripe from 'nav-frontend-alertstriper';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -40,13 +39,6 @@ class TermsOfUse extends React.Component {
                 appElement={document.getElementById('app')}
             >
                 <div className="TermsOfUse">
-                    {this.props.createUserError && (
-                        <div className="TermsOfUse__error">
-                            <AlertStripe solid type="advarsel">
-                                Det oppsto en feil. Forsøk å laste siden på nytt.
-                            </AlertStripe>
-                        </div>
-                    )}
                     <Undertittel className="TermsOfUse__title">
                         Vilkår for å bruke innloggede tjenester
                     </Undertittel>
@@ -89,19 +81,13 @@ class TermsOfUse extends React.Component {
     }
 }
 
-TermsOfUse.defaultProps = {
-    createUserError: undefined
-};
-
 TermsOfUse.propTypes = {
     createUser: PropTypes.func.isRequired,
     hideModal: PropTypes.func.isRequired,
-    isCreating: PropTypes.bool.isRequired,
-    createUserError: PropTypes.shape({})
+    isCreating: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => ({
-    createUserError: state.user.createUserError,
     isCreating: state.user.isCreating
 });
 

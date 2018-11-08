@@ -2,7 +2,7 @@
 import { call, put, select, takeLatest } from 'redux-saga/effects';
 import { userApiGet, userApiPost, userApiRemove } from '../api/userApi';
 import SearchApiError from '../api/SearchApiError';
-import { FETCH_USER_SUCCESS } from '../user/userReducer';
+import { FETCH_USER_SUCCESS, SHOW_AUTHORIZATION_ERROR_MODAL } from '../user/userReducer';
 import { AD_USER_API } from '../fasitProperties';
 
 export const FETCH_FAVOURITES = 'FETCH_FAVOURITES';
@@ -71,7 +71,6 @@ export default function favouritesReducer(state = initialState, action) {
         case ADD_TO_FAVOURITES_BEGIN:
             return {
                 ...state,
-                showAlertStripe: true,
                 adsMarkedAsFavorite: [...state.adsMarkedAsFavorite, action.favourite.favouriteAd.uuid]
             };
         case ADD_TO_FAVOURITES_SUCCESS:
@@ -89,7 +88,6 @@ export default function favouritesReducer(state = initialState, action) {
         case REMOVE_FROM_FAVOURITES_BEGIN:
             return {
                 ...state,
-                showAlertStripe: true,
                 adsMarkedAsFavorite: state.adsMarkedAsFavorite.filter((uuid) => uuid !== action.favourite.favouriteAd.uuid),
                 pending: [...state.pending, action.favourite.uuid]
             };
@@ -185,10 +183,10 @@ function* addToFavourites(action) {
         return;
     }
     try {
-        yield put({ type: SHOW_FAVOURITES_ALERT_STRIPE, alertStripeMode: 'added' });
         yield put({ type: ADD_TO_FAVOURITES_BEGIN, favourite });
         const response = yield call(userApiPost, `${AD_USER_API}/api/v1/userfavouriteads`, favourite);
         yield put({ type: ADD_TO_FAVOURITES_SUCCESS, response });
+        yield put({ type: SHOW_FAVOURITES_ALERT_STRIPE, alertStripeMode: 'added' });
         yield call(delay, 5000);
         yield put({ type: HIDE_FAVOURITES_ALERT_STRIPE });
     } catch (e) {
@@ -204,10 +202,10 @@ function* removeFromFavourites(action) {
     const state = yield select();
     const favourite = state.favourites.favourites.find((f) => f.favouriteAd.uuid === action.uuid);
     try {
-        yield put({ type: SHOW_FAVOURITES_ALERT_STRIPE, alertStripeMode: 'removed' });
         yield put({ type: REMOVE_FROM_FAVOURITES_BEGIN, favourite });
         yield call(userApiRemove, `${AD_USER_API}/api/v1/userfavouriteads/${favourite.uuid}`);
         yield put({ type: REMOVE_FROM_FAVOURITES_SUCCESS, favourite });
+        yield put({ type: SHOW_FAVOURITES_ALERT_STRIPE, alertStripeMode: 'removed' });
         yield call(delay, 5000);
         yield put({ type: HIDE_FAVOURITES_ALERT_STRIPE });
     } catch (e) {

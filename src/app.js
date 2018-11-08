@@ -3,12 +3,12 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { applyMiddleware, combineReducers, createStore } from 'redux';
 import createSagaMiddleware from 'redux-saga';
+import errorReducer from './error/errorReducer';
 import Application from './Application';
 import userReducer, { userSaga } from './user/userReducer';
 import disclaimerReducer from './discalimer/disclaimerReducer';
 import favouritesReducer, { favouritesSaga } from './favourites/favouritesReducer';
 import savedSearchAlertStripeReducer, { savedSearchAlertStripeSaga } from './savedSearches/alertstripe/savedSearchAlertStripeReducer';
-import savedSearchErrorReducer from './savedSearches/error/savedSearchErrorReducer';
 import savedSearchExpandReducer from './savedSearches/expand/savedSearchExpandReducer';
 import savedSearchFormReducer, { savedSearchFormSaga } from './savedSearches/form/savedSearchFormReducer';
 import savedSearchesReducer, { savedSearchesSaga } from './savedSearches/savedSearchesReducer';
@@ -30,6 +30,7 @@ import './variables.less';
 const sagaMiddleware = createSagaMiddleware();
 
 const store = createStore(combineReducers({
+    error: errorReducer,
     user: userReducer,
     counties: countiesReducer,
     disclaimer: disclaimerReducer,
@@ -41,7 +42,6 @@ const store = createStore(combineReducers({
     savedSearches: savedSearchesReducer,
     savedSearchForm: savedSearchFormReducer,
     savedSearchAlertStripe: savedSearchAlertStripeReducer,
-    savedSearchError: savedSearchErrorReducer,
     savedSearchExpand: savedSearchExpandReducer,
     search: searchReducer,
     searchBox: searchBoxReducer,

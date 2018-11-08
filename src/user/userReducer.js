@@ -46,8 +46,6 @@ const initialState = {
     isCreating: false,
     isUpdating: false,
     isDeletingUser: false,
-    createUserError: undefined,
-    updateUserError: undefined,
     userAlertStripeIsVisible: false,
     termsOfUseModalIsVisible: false,
     confirmDeleteUserModalIsVisible: false
@@ -68,8 +66,7 @@ export default function authorizationReducer(state = initialState, action) {
         case CREATE_USER_BEGIN:
             return {
                 ...state,
-                isCreating: true,
-                createUserError: undefined
+                isCreating: true
             };
         case CREATE_USER_SUCCESS:
             return {
@@ -82,7 +79,7 @@ export default function authorizationReducer(state = initialState, action) {
             return {
                 ...state,
                 isCreating: false,
-                createUserError: action.error
+                termsOfUseModalIsVisible: false
             };
         case SET_USER_EMAIL:
             return {
@@ -95,8 +92,7 @@ export default function authorizationReducer(state = initialState, action) {
         case UPDATE_USER_BEGIN:
             return {
                 ...state,
-                isUpdating: true,
-                updateUserError: undefined
+                isUpdating: true
             };
         case UPDATE_USER_SUCCESS:
             return {
@@ -114,8 +110,7 @@ export default function authorizationReducer(state = initialState, action) {
             return {
                 ...state,
                 isUpdating: false,
-                userAlertStripeIsVisible: false,
-                updateUserError: action.error
+                userAlertStripeIsVisible: false
             };
         case SHOW_TERMS_OF_USE_MODAL:
             return {
@@ -125,8 +120,7 @@ export default function authorizationReducer(state = initialState, action) {
         case HIDE_TERMS_OF_USE_MODAL:
             return {
                 ...state,
-                termsOfUseModalIsVisible: false,
-                createUserError: undefined
+                termsOfUseModalIsVisible: false
             };
         case SHOW_AUTHORIZATION_ERROR_MODAL:
             return {
@@ -146,20 +140,18 @@ export default function authorizationReducer(state = initialState, action) {
         case HIDE_CONFIRM_DELETE_USER_MODAL:
             return {
                 ...state,
-                confirmDeleteUserModalIsVisible: false,
-                deleteUserError: undefined
+                confirmDeleteUserModalIsVisible: false
             };
         case DELETE_USER_BEGIN:
             return {
                 ...state,
-                isDeletingUser: true,
-                deleteUserError: undefined
+                isDeletingUser: true
             };
         case DELETE_USER_FAILURE:
             return {
                 ...state,
-                isDeletingUser: false,
-                deleteUserError: action.error
+                confirmDeleteUserModalIsVisible: false,
+                isDeletingUser: false
             };
         default:
             return state;
@@ -196,7 +188,9 @@ function* fetchUser() {
             yield put({ type: FETCH_USER_SUCCESS, response });
         } catch (e) {
             if (e instanceof SearchApiError) {
-                yield put({ type: FETCH_USER_FAILURE, error: e });
+                if (e.statusCode !== 404) {
+                    yield put({ type: FETCH_USER_FAILURE, error: e });
+                }
             } else {
                 throw e;
             }
