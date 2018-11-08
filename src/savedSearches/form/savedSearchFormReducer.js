@@ -170,9 +170,9 @@ function toTitle(state) {
 
     if (state.searchBox.q) title.push(state.searchBox.q);
     if (occupationFirstLevels.length > 0) title.push(occupationFirstLevels.join(', '));
-    if (state.occupations.checkedSecondLevels.length > 0) title.push(state.occupations.checkedSecondLevels.join(', '));
+    if (state.occupations.checkedSecondLevels.length > 0) title.push(state.occupations.checkedSecondLevels.map((o) => (o.split('.')[1])).join(', '));
     if (counties.length > 0) title.push(counties.map((c) => (capitalizeLocation(c))).join(', '));
-    if (state.counties.checkedMunicipals.length > 0) title.push(state.counties.checkedMunicipals.map((m) => (capitalizeLocation(m))).join(', '));
+    if (state.counties.checkedMunicipals.length > 0) title.push(state.counties.checkedMunicipals.map((m) => (capitalizeLocation(m.split('.')[1]))).join(', '));
     if (state.extent.checkedExtent.length > 0) title.push(state.extent.checkedExtent.join(', '));
     if (state.engagement.checkedEngagementType.length > 0) title.push(state.engagement.checkedEngagementType.join(', '));
     if (state.sector.checkedSector.length > 0) title.push(state.sector.checkedSector.join(', '));

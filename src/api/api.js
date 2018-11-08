@@ -101,7 +101,8 @@ export async function fetchSearch(query = {}) {
             key: county.key,
             count: county.doc_count,
             municipals: county.municipals.buckets.map((municipal) => ({
-                key: municipal.key,
+                key: `${county.key}.${municipal.key}`,
+                label: municipal.key,
                 count: municipal.doc_count
             }))
         })),
@@ -109,7 +110,8 @@ export async function fetchSearch(query = {}) {
             key: firstLevel.key,
             count: firstLevel.doc_count,
             occupationSecondLevels: firstLevel.occupationSecondLevels.buckets.map((secondLevel) => ({
-                key: secondLevel.key,
+                key: `${firstLevel.key}.${secondLevel.key}`,
+                label: secondLevel.key,
                 count: secondLevel.doc_count
             }))
         })),
