@@ -6,6 +6,7 @@ import delay from '../common/delay';
 
 export const FETCH_IS_AUTHENTICATED = 'FETCH_IS_AUTHENTICATED';
 export const FETCH_IS_AUTHENTICATED_SUCCESS = 'FETCH_IS_AUTHENTICATED_SUCCESS';
+export const FETCH_IS_AUTHENTICATED_FAILURE = 'FETCH_IS_AUTHENTICATED_FAILURE';
 
 export const SHOW_AUTHORIZATION_ERROR_MODAL = 'SHOW_AUTHORIZATION_ERROR_MODAL';
 export const HIDE_AUTHORIZATION_ERROR_MODAL = 'HIDE_AUTHORIZATION_ERROR_MODAL';
@@ -57,6 +58,11 @@ export default function authorizationReducer(state = initialState, action) {
             return {
                 ...state,
                 isAuthenticated: action.isAuthenticated
+            };
+        case FETCH_IS_AUTHENTICATED_FAILURE:
+            return {
+                ...state,
+                isAuthenticated: undefined
             };
         case FETCH_USER_SUCCESS:
             return {
@@ -169,13 +175,18 @@ const fixUser = function fixUser(user) {
 };
 
 function* fetchIsAuthenticated() {
-    const response = yield fetch(`${AD_USER_API}/isAuthenticated`, { credentials: 'include' });
-    if (response.status === 200) {
-        yield put({ type: FETCH_IS_AUTHENTICATED_SUCCESS, isAuthenticated: true });
-    } else if (response.status === 401) {
-        yield put({ type: FETCH_IS_AUTHENTICATED_SUCCESS, isAuthenticated: false });
-    } else {
-        yield put({ type: FETCH_IS_AUTHENTICATED_SUCCESS, isAuthenticated: undefined });
+    try {
+        const response = yield fetch(`${AD_USER_API}/isAuthenticated`, { credentials: 'include' });
+        if (response.status === 200) {
+            yield put({ type: FETCH_IS_AUTHENTICATED_SUCCESS, isAuthenticated: true });
+        } else if (response.status === 401) {
+            yield put({ type: FETCH_IS_AUTHENTICATED_SUCCESS, isAuthenticated: false });
+        } else {
+            yield put({ type: FETCH_IS_AUTHENTICATED_FAILURE });
+        }
+    } catch (error) {
+        yield put({ type: FETCH_IS_AUTHENTICATED_FAILURE });
+        throw error;
     }
 }
 

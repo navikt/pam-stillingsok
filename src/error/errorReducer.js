@@ -1,4 +1,3 @@
-import { HIDE_DISCLAIMER } from '../discalimer/disclaimerReducer';
 import {
     ADD_TO_FAVOURITES_FAILURE,
     FETCH_FAVOURITES_FAILURE,
@@ -10,10 +9,15 @@ import {
     REMOVE_SAVED_SEARCH_FAILURE,
     UPDATE_SAVED_SEARCH_FAILURE
 } from '../savedSearches/savedSearchesReducer';
-import { CHECK_COUNTY } from '../search/facets/counties/countiesReducer';
-import { RESET_SEARCH, SEARCH_FAILURE } from '../search/searchReducer';
+import { SEARCH_FAILURE } from '../search/searchReducer';
 import { FETCH_STILLING_FAILURE } from '../stilling/stillingReducer';
-import { CREATE_USER_FAILURE, DELETE_USER_FAILURE, FETCH_USER_FAILURE, UPDATE_USER_FAILURE } from '../user/userReducer';
+import {
+    CREATE_USER_FAILURE,
+    DELETE_USER_FAILURE,
+    FETCH_IS_AUTHENTICATED_FAILURE,
+    FETCH_USER_FAILURE,
+    UPDATE_USER_FAILURE
+} from '../user/userReducer';
 
 export const HIDE_ERROR = 'HIDE_ERROR';
 
@@ -34,6 +38,11 @@ export default function errorReducer(state = initialState, action) {
             return {
                 ...state,
                 messages: []
+            };
+        case FETCH_IS_AUTHENTICATED_FAILURE:
+            return {
+                ...state,
+                messages: prependMessage(state.messages, 'Klarte ikke å sjekke om du er innlogget')
             };
         case SEARCH_FAILURE:
             return {
