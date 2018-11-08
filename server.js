@@ -6,6 +6,9 @@ const mustacheExpress = require('mustache-express');
 const Promise = require('promise');
 const fs = require('fs');
 const prometheus = require('prom-client');
+const bodyParser = require('body-parser');
+const searchApiConsumer = require('./scripts/searchApiConsumer');
+const { searchTemplate, suggestionsTemplate } = require('./scripts/searchApiTemplates');
 
 prometheus.collectDefaultMetrics();
 
@@ -32,6 +35,8 @@ server.use(helmet.contentSecurityPolicy({
 server.set('views', `${currentDirectory}/views`);
 server.set('view engine', 'mustache');
 server.engine('html', mustacheExpress());
+
+server.use(bodyParser.json());
 
 const fasitProperties = {
     PAM_CONTEXT_PATH: '/pam-stillingsok',
@@ -89,6 +94,34 @@ const startServer = (htmlPages) => {
         '/pam-stillingsok/css',
         express.static(path.resolve(__dirname, 'dist/css'))
     );
+
+    server.get('/pam-stillingsok/search', async function(req, res) {
+        const result = await searchApiConsumer.search(searchTemplate, req.query)
+            .catch(err => logError('Failed to query search api', err));
+
+        res.send(result);
+    });
+
+    server.get('/pam-stillingsok/suggestions', async function(req, res) {
+        const result = await searchApiConsumer.search(suggestionsTemplate, req.query)
+            .catch(err => logError('Failed to query search api', err));
+
+        res.send(result);
+    });
+
+    server.post('/pam-stillingsok/search', async function(req, res) {
+        const result = await searchApiConsumer.search(searchTemplate, req.body)
+            .catch((err) => { logError('Failed to query search api', err)});
+
+        res.send(result);
+    });
+
+    server.post('/pam-stillingsok/suggestions', async function(req, res) {
+        const result = await searchApiConsumer.search(suggestionsTemplate, req.body)
+            .catch((err) => { logError('Failed to query search api', err)});
+
+        res.send(result);
+    });
 
     server.get(
         ['/', '/pam-stillingsok/?', /^\/pam-stillingsok\/(?!.*dist).*$/],
