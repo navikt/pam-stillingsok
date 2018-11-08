@@ -34,37 +34,20 @@ class Application extends React.Component {
                     {featureToggle() && (
                         <div className="AuthButtons no-print">
                             <Container>
-                                {this.props.isAuthenticated === false && (
+                                {this.props.isAuthenticated === false ? (
                                     <a
                                         className="knapp knapp--mini"
                                         href={LOGIN_URL}
                                     >
                                         Logg inn
                                     </a>
-                                )}
-                                {this.props.isAuthenticated === true && (
+                                ) : (
                                     <a
                                         className="knapp knapp--mini"
                                         href={LOGOUT_URL}
                                     >
                                         Logg ut
                                     </a>
-                                )}
-                                {this.props.isAuthenticated === undefined && (
-                                    <div>
-                                        <a
-                                            className="knapp knapp--mini"
-                                            href={LOGIN_URL}
-                                        >
-                                            Logg inn
-                                        </a>&nbsp;
-                                        <a
-                                            className="knapp knapp--mini"
-                                            href={LOGOUT_URL}
-                                        >
-                                            Logg ut
-                                        </a>
-                                    </div>
                                 )}
                             </Container>
                         </div>
