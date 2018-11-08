@@ -52,9 +52,9 @@ export function filterEngagementType(engagementTypes) {
 }
 
 /**
- * Lager filter for fasetter med flere nivå, feks fylke og kommune. Kobinerer AND og OR.
+ * Lager filter for fasetter med flere nivå, feks fylke og kommune. Kombinerer AND og OR.
  * Feks (Akershus) OR (Buskerud) hvis man bare har valgt disse to fylkene.
- * Feks (Akershus AND Asker) OR (Buskerud AND Drammen) om man ser etter jobb i Asker og Drammen
+ * Feks (Akershus AND (Asker OR Bærum)) OR (Buskerud AND Drammen) om man ser etter jobb i Asker, Bærum eller Drammen
  * Feks (Akershus) OR (Buskerud AND Drammen) om man ser etter jobb i hele Akershus fylke, men også i Drammen kommune.
  */
 export function filterNestedFacets(parents, children = [], parentKey, childKey) {
