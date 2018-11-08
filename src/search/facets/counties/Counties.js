@@ -72,7 +72,7 @@ class Counties extends React.Component {
                                         <Checkbox
                                             name="location"
                                             key={municipal.key}
-                                            label={`${capitalizeLocation(municipal.key)} (${municipal.count})`}
+                                            label={`${capitalizeLocation(municipal.label)} (${municipal.count})`}
                                             value={municipal.key}
                                             onChange={this.onMunicipalClick}
                                             checked={checkedMunicipals.includes(municipal.key)}

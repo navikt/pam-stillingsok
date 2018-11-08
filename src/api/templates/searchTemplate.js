@@ -51,63 +51,58 @@ export function filterEngagementType(engagementTypes) {
     return filters;
 }
 
+/**
+ * Lager filter for fasetter med flere nivå, feks fylke og kommune. Kombinerer AND og OR.
+ * Feks (Akershus) OR (Buskerud) hvis man bare har valgt disse to fylkene.
+ * Feks (Akershus AND (Asker OR Bærum)) OR (Buskerud AND Drammen) om man ser etter jobb i Asker, Bærum eller Drammen
+ * Feks (Akershus) OR (Buskerud AND Drammen) om man ser etter jobb i hele Akershus fylke, men også i Drammen kommune.
+ */
+export function filterNestedFacets(parents, children = [], parentKey, childKey) {
+    let allMusts = [];
+    if (parents && parents.length > 0) {
+        parents.forEach((parent) => {
+            let must = [{
+                match: {
+                    [parentKey]: parent
+                }
+            }];
+
+            const childrenOfCurrentParent = children.filter((m) => (m.split('.')[0] === parent));
+            if (childrenOfCurrentParent.length > 0) {
+                must = [...must, {
+                    bool: {
+                        should: childrenOfCurrentParent.map((child) => ({
+                            term: {
+                                [childKey]: child.split('.')[1] // child kan feks være AKERSHUS.ASKER
+                            }
+                        }))
+                    }
+                }];
+            }
+
+            allMusts = [...allMusts, must];
+        });
+    }
+
+    return {
+        bool: {
+            should: allMusts.map((must) => ({
+                bool: {
+                    must
+                }
+            }))
+        }
+    };
+}
+
 export function filterLocation(counties, municipals) {
-    const filters = {
-        bool: {
-            should: []
-        }
-    };
-    if (counties && counties.length > 0) {
-        counties.forEach((county) => {
-            filters.bool.should.push({
-                term: {
-                    county_facet: county
-                }
-            });
-        });
-    }
-
-    if (municipals && municipals.length > 0) {
-        municipals.forEach((municipal) => {
-            filters.bool.should.push({
-                term: {
-                    municipal_facet: municipal
-                }
-            });
-        });
-    }
-
-    return filters;
+    return filterNestedFacets(counties, municipals, 'county_facet', 'municipal_facet');
 }
 
-export function filterOccupation(occupationFirstLevels, occupationSecondLevels) {
-    const filters = {
-        bool: {
-            should: []
-        }
-    };
-    if (occupationFirstLevels && occupationFirstLevels.length > 0) {
-        occupationFirstLevels.forEach((occupationFirstLevel) => {
-            filters.bool.should.push({
-                term: {
-                    occupation_level1_facet: occupationFirstLevel
-                }
-            });
-        });
-    }
-
-    if (occupationSecondLevels && occupationSecondLevels.length > 0) {
-        occupationSecondLevels.forEach((occupationSecondLevel) => {
-            filters.bool.should.push({
-                term: {
-                    occupation_level2_facet: occupationSecondLevel
-                }
-            });
-        });
-    }
-
-    return filters;
+export function filterOccupation(occupationLevel1, occupationLevel2) {
+    return filterNestedFacets(occupationLevel1, occupationLevel2, 'occupation_level1_facet', 'occupation_level2_facet');
 }
+
 
 export function filterSector(sector) {
     const filters = {

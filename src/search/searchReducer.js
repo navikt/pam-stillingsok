@@ -119,27 +119,13 @@ export function toSearchQuery(state) {
     if (state.search.from > 0) query.from = state.search.from;
     if (state.search.to > PAGE_SIZE) query.size = state.search.to - state.search.from;
     if (state.sorting.sort.length > 0) query.sort = state.sorting.sort;
-
-    // Hvis man filtrerer på en kommune, må man droppe fylket når man søker.
-    // Altså om man krysser av på Bergen, skal man ikke ha med Hordaland i søket.
-    const counties = state.counties.checkedCounties.filter((county) => {
-        const countyObject = state.counties.counties.find((c) => c.key === county);
-        const found = countyObject.municipals.find((m) => state.counties.checkedMunicipals.includes(m.key));
-        return !found;
-    });
-    if (counties.length > 0) query.counties = counties;
+    if (state.counties.checkedCounties.length > 0) query.counties = state.counties.checkedCounties;
     if (state.counties.checkedMunicipals.length > 0) query.municipals = state.counties.checkedMunicipals;
     if (state.published.checkedPublished.length > 0) query.published = state.published.checkedPublished;
     if (state.engagement.checkedEngagementType.length > 0) query.engagementType = state.engagement.checkedEngagementType;
     if (state.sector.checkedSector.length > 0) query.sector = state.sector.checkedSector;
     if (state.extent.checkedExtent.length > 0) query.extent = state.extent.checkedExtent;
-    // Hvis man filtrerer på en yrke på andre nivå, må man droppe yrkeskategorien på første nivå.
-    const occupationFirstLevels = state.occupations.checkedFirstLevels.filter((firstLevel) => {
-        const firstLevelObject = state.occupations.occupationFirstLevels.find((c) => c.key === firstLevel);
-        const found = firstLevelObject.occupationSecondLevels.find((m) => state.occupations.checkedSecondLevels.includes(m.key));
-        return !found;
-    });
-    if (occupationFirstLevels.length > 0) query.occupationFirstLevels = occupationFirstLevels;
+    if (state.occupations.checkedFirstLevels.length > 0) query.occupationFirstLevels = state.occupations.checkedFirstLevels;
     if (state.occupations.checkedSecondLevels.length > 0) query.occupationSecondLevels = state.occupations.checkedSecondLevels;
     return query;
 }
