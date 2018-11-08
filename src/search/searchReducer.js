@@ -141,7 +141,7 @@ function* initialSearch() {
         if (!state.search.initialSearchDone) {
             // For å hente alle tilgjengelige fasetter (yrke, sted ), gjør vi først
             // et søk uten noen søkekriterier.
-            response = yield call(fetchSearch, { size: 0 });
+            response = yield call(fetchSearch, {});
             yield put({ type: FETCH_INITIAL_FACETS_SUCCESS, response });
 
             // Gjør et nytt søk hvis det finnes noen krysset av noen
