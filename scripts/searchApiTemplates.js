@@ -387,32 +387,7 @@ function filterLocation(counties, municipals) {
 }
 
 function filterOccupation(occupationFirstLevels, occupationSecondLevels) {
-    const filters = {
-        bool: {
-            should: []
-        }
-    };
-    if (occupationFirstLevels && occupationFirstLevels.length > 0) {
-        occupationFirstLevels.forEach((occupationFirstLevel) => {
-            filters.bool.should.push({
-                term: {
-                    occupation_level1_facet: occupationFirstLevel
-                }
-            });
-        });
-    }
-
-    if (occupationSecondLevels && occupationSecondLevels.length > 0) {
-        occupationSecondLevels.forEach((occupationSecondLevel) => {
-            filters.bool.should.push({
-                term: {
-                    occupation_level2_facet: occupationSecondLevel
-                }
-            });
-        });
-    }
-
-    return filters;
+    return filterNestedFacets(occupationLevel1, occupationLevel2, 'occupation_level1_facet', 'occupation_level2_facet');
 }
 
 function filterSector(sector) {
@@ -464,6 +439,50 @@ function suggest(field, match, minLength) {
             fuzzy: {
                 prefix_length: minLength
             }
+        }
+    };
+}
+
+/**
+ * Lager filter for fasetter med flere nivå, feks fylke og kommune. Kombinerer AND og OR.
+ * Feks (Akershus) OR (Buskerud) hvis man bare har valgt disse to fylkene.
+ * Feks (Akershus AND (Asker OR Bærum)) OR (Buskerud AND Drammen) om man ser etter jobb i Asker, Bærum eller Drammen
+ * Feks (Akershus) OR (Buskerud AND Drammen) om man ser etter jobb i hele Akershus fylke, men også i Drammen kommune.
+ */
+export function filterNestedFacets(parents, children = [], parentKey, childKey) {
+    let allMusts = [];
+    if (parents && parents.length > 0) {
+        parents.forEach((parent) => {
+            let must = [{
+                match: {
+                    [parentKey]: parent
+                }
+            }];
+
+            const childrenOfCurrentParent = children.filter((m) => (m.split('.')[0] === parent));
+            if (childrenOfCurrentParent.length > 0) {
+                must = [...must, {
+                    bool: {
+                        should: childrenOfCurrentParent.map((child) => ({
+                            term: {
+                                [childKey]: child.split('.')[1] // child kan feks være AKERSHUS.ASKER
+                            }
+                        }))
+                    }
+                }];
+            }
+
+            allMusts = [...allMusts, must];
+        });
+    }
+
+    return {
+        bool: {
+            should: allMusts.map((must) => ({
+                bool: {
+                    must
+                }
+            }))
         }
     };
 }
