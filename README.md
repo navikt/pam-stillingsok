@@ -3,6 +3,14 @@
 ## Hvordan kjøre applikasjonen lokalt
 
 #### 1. Start node server
+For å starte server.js lokalt trenger du å sette følgende miljøvariabler:
+```
+PAMADUSER_URL
+LOGINSERVICE_URL
+LOGOUTSERVICE_URL
+```
+Dersom du kjører en lokal instanse av pam-search-api kan du også sette `DEV_PROFILE=true` for at kall mot søkeapiet skal rettes mot denne.
+
 ```sh 
 npm install
 npm run build
@@ -15,13 +23,6 @@ Frontend kjører som default på [localhost:8080](localhost:8080).
 webpack --watch  --config webpack.config.dev.js
 ```
 
-For å starte server.js lokalt trenger du å sette følgende miljøvariabler:
-```
-PAMADUSER_URL
-LOGINSERVICE_URL
-LOGOUTSERVICE_URL
-```
-Dersom du kjører en lokal instanse av pam-search-api kan du også sette `DEV_PROFILE=true` for at kall mot søkeapiet skal rettes mot denne.
 
 ## I miljø
 
