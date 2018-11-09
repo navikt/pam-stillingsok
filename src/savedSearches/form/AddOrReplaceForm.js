@@ -41,7 +41,7 @@ class AddOrReplaceForm extends React.Component {
                 />
                 <Checkbox
                     className="SavedSearchModal__body__notify"
-                    label="Ja, jeg ønsker å motta varsler om nye treff på e-post"
+                    label="Ja, jeg ønsker å motta e-post med varsel om nye treff"
                     onChange={this.onSubscribeChange}
                     checked={formData.notifyType === NotifyTypeEnum.EMAIL}
                 />

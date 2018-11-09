@@ -23,7 +23,7 @@ class ConfirmRemoveModal extends React.Component {
                     onCancel={this.closeModal}
                     confirmLabel="Slett"
                 >
-                    Er du sikker på at du vil slette &#34;{this.props.savedSearchAboutToBeRemoved.title}&#34;?
+                    Er du sikker på at du vil slette søket &#34;{this.props.savedSearchAboutToBeRemoved.title}&#34;?
                 </ConfirmationModal>
             );
         }

@@ -8,7 +8,7 @@ export default function NoFavourites() {
         <div className="NoFavourites">
             <Undertittel className="NoFavourites__title">Du har ingen favoritter</Undertittel>
             <Normaltekst className="NoFavourites__message">
-                Når du ser en stillingsannonse du ønsker å ta vare på klikk på stjernen.
+                Klikk på stjernen når du ser en stilling du ønsker å ta vare på.
             </Normaltekst>
             <Link to="/" className="lenke typo-normal">Finn favoritter</Link>
         </div>
