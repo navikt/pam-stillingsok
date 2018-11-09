@@ -2,12 +2,18 @@
 
 ## Hvordan kjøre applikasjonen lokalt
 
+#### 1. Start node server
 ```sh 
 npm install
+npm run build
 npm start
 ```
+Frontend kjører som default på [localhost:8080](localhost:8080). 
 
-Frontend kjører som default på [localhost:8080](localhost:8080). For å få data må pam-search-api kjøre lokalt på port 9000.
+#### 2. Starte automatisk bygging av frontendkoden
+```sh 
+webpack --watch  --config webpack.config.dev.js
+```
 
 ## I miljø
 
