@@ -1,11 +1,11 @@
-import React from 'react';
+import { Column, Row } from 'nav-frontend-grid';
+import { Element, Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { Row, Column } from 'nav-frontend-grid';
-import { Undertittel, Normaltekst, Undertekst, Element } from 'nav-frontend-typografi';
+import { CONTEXT_PATH } from '../../fasitProperties';
 import { formatISOString, isValidISOString } from '../../utils';
 import './SearchResultsItemDetails.less';
-import { STILLING } from '../../fasitProperties';
 
 export default function SearchResultsItemDetails({ stilling }) {
     let frist;
@@ -33,7 +33,7 @@ export default function SearchResultsItemDetails({ stilling }) {
                 )}
 
                 <Undertittel tag="h3" className="SearchResultsItemDetails__title">
-                    <Link to={`${STILLING}${stilling.uuid}`} className="lenke">
+                    <Link to={`${CONTEXT_PATH}/stilling/${stilling.uuid}`} className="lenke">
                         {stilling.title}
                     </Link>
                 </Undertittel>

@@ -2,7 +2,7 @@ import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { STILLING } from '../../fasitProperties';
+import { CONTEXT_PATH } from '../../fasitProperties';
 import ToggleFavouriteStar from '../../favourites/toggleFavoriteButton/ToggleFavouriteStar';
 import { formatISOString } from '../../utils';
 import './SearchResultsItemCompact.less';
@@ -17,7 +17,7 @@ export default function SearchResultsItemCompact({ stilling, urlQuery }) {
             )}
 
             <Normaltekst tag="h3" className="SearchResultItemCompact__title">
-                <Link to={`${STILLING}${stilling.uuid}${urlQuery}`} className="lenke SearchResultItemCompact__title__ellipsis">
+                <Link to={`${CONTEXT_PATH}/stilling/${stilling.uuid}${urlQuery}`} className="lenke SearchResultItemCompact__title__ellipsis">
                     {stilling.properties.jobtitle && stilling.title !== stilling.properties.jobtitle ? (
                         <span>
                             <b>{stilling.properties.jobtitle}</b> - {stilling.title}
