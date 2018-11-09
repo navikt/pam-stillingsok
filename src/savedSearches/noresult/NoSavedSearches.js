@@ -9,7 +9,8 @@ export default function NoSavedSearches({ showButton }) {
         <div className="NoSavedSearches">
             <Undertittel className="NoSavedSearches__title">Du har ingen lagrede søk</Undertittel>
             <Normaltekst className="NoSavedSearches__message">
-                Når du har laget et søk, kan du et lagre det og motta e-postvarlser på nye treff.
+                For å lagre et søk må du fylle inn søkeord eller andre kriterier.
+                Du kan deretter lagre søket og motta e-postvarsler med nye treff.
             </Normaltekst>
             {showButton && (
                 <Link to="/" className="lenke typo-normal">Søk etter stillinger</Link>
@@ -25,5 +26,3 @@ NoSavedSearches.defaultProps = {
 NoSavedSearches.propTypes = {
     showButton: PropTypes.bool
 };
-
-
