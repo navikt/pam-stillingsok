@@ -23,11 +23,6 @@ class ConfirmDeleteUserModal extends React.Component {
                 confirmLabel="Slett bruker"
                 spinner={this.props.isDeletingUser}
             >
-                {this.props.deleteUserError && (
-                    <AlertStripe solid type="advarsel" className="blokk-m">
-                        Det oppsto en feil ved sletting av bruker. Forsøk å laste siden på nytt
-                    </AlertStripe>
-                )}
                 Når du sletter brukeren, sletter du også alle dine favoritter og lagrede søk.
                 Har du valgt å motta varslinger på e-post, så vil du ikke lenger motta disse.
             </ConfirmationModal>
@@ -35,19 +30,13 @@ class ConfirmDeleteUserModal extends React.Component {
     }
 }
 
-ConfirmDeleteUserModal.defaultProps = {
-    deleteUserError: undefined
-};
-
 ConfirmDeleteUserModal.propTypes = {
     deleteUser: PropTypes.func.isRequired,
     isDeletingUser: PropTypes.bool.isRequired,
-    hideForm: PropTypes.func.isRequired,
-    deleteUserError: PropTypes.shape({})
+    hideForm: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
-    deleteUserError: state.user.deleteUserError,
     isDeletingUser: state.user.isDeletingUser
 });
 

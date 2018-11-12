@@ -8,7 +8,7 @@ function SearchResultCount({ searchResult }) {
         return (
             <Undertittel
                 className="SearchResultCount"
-                aria-live="assertive"
+                aria-live="polite"
             >
                 {searchResult.total > 0 ? `${searchResult.total} treff` : 'Ingen treff'}
             </Undertittel>

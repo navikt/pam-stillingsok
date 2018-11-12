@@ -6,6 +6,7 @@ import delay from '../common/delay';
 
 export const FETCH_IS_AUTHENTICATED = 'FETCH_IS_AUTHENTICATED';
 export const FETCH_IS_AUTHENTICATED_SUCCESS = 'FETCH_IS_AUTHENTICATED_SUCCESS';
+export const FETCH_IS_AUTHENTICATED_FAILURE = 'FETCH_IS_AUTHENTICATED_FAILURE';
 
 export const SHOW_AUTHORIZATION_ERROR_MODAL = 'SHOW_AUTHORIZATION_ERROR_MODAL';
 export const HIDE_AUTHORIZATION_ERROR_MODAL = 'HIDE_AUTHORIZATION_ERROR_MODAL';
@@ -46,8 +47,6 @@ const initialState = {
     isCreating: false,
     isUpdating: false,
     isDeletingUser: false,
-    createUserError: undefined,
-    updateUserError: undefined,
     userAlertStripeIsVisible: false,
     termsOfUseModalIsVisible: false,
     confirmDeleteUserModalIsVisible: false
@@ -60,6 +59,11 @@ export default function authorizationReducer(state = initialState, action) {
                 ...state,
                 isAuthenticated: action.isAuthenticated
             };
+        case FETCH_IS_AUTHENTICATED_FAILURE:
+            return {
+                ...state,
+                isAuthenticated: undefined
+            };
         case FETCH_USER_SUCCESS:
             return {
                 ...state,
@@ -68,8 +72,7 @@ export default function authorizationReducer(state = initialState, action) {
         case CREATE_USER_BEGIN:
             return {
                 ...state,
-                isCreating: true,
-                createUserError: undefined
+                isCreating: true
             };
         case CREATE_USER_SUCCESS:
             return {
@@ -82,7 +85,7 @@ export default function authorizationReducer(state = initialState, action) {
             return {
                 ...state,
                 isCreating: false,
-                createUserError: action.error
+                termsOfUseModalIsVisible: false
             };
         case SET_USER_EMAIL:
             return {
@@ -95,8 +98,7 @@ export default function authorizationReducer(state = initialState, action) {
         case UPDATE_USER_BEGIN:
             return {
                 ...state,
-                isUpdating: true,
-                updateUserError: undefined
+                isUpdating: true
             };
         case UPDATE_USER_SUCCESS:
             return {
@@ -114,8 +116,7 @@ export default function authorizationReducer(state = initialState, action) {
             return {
                 ...state,
                 isUpdating: false,
-                userAlertStripeIsVisible: false,
-                updateUserError: action.error
+                userAlertStripeIsVisible: false
             };
         case SHOW_TERMS_OF_USE_MODAL:
             return {
@@ -125,8 +126,7 @@ export default function authorizationReducer(state = initialState, action) {
         case HIDE_TERMS_OF_USE_MODAL:
             return {
                 ...state,
-                termsOfUseModalIsVisible: false,
-                createUserError: undefined
+                termsOfUseModalIsVisible: false
             };
         case SHOW_AUTHORIZATION_ERROR_MODAL:
             return {
@@ -146,20 +146,18 @@ export default function authorizationReducer(state = initialState, action) {
         case HIDE_CONFIRM_DELETE_USER_MODAL:
             return {
                 ...state,
-                confirmDeleteUserModalIsVisible: false,
-                deleteUserError: undefined
+                confirmDeleteUserModalIsVisible: false
             };
         case DELETE_USER_BEGIN:
             return {
                 ...state,
-                isDeletingUser: true,
-                deleteUserError: undefined
+                isDeletingUser: true
             };
         case DELETE_USER_FAILURE:
             return {
                 ...state,
-                isDeletingUser: false,
-                deleteUserError: action.error
+                confirmDeleteUserModalIsVisible: false,
+                isDeletingUser: false
             };
         default:
             return state;
@@ -177,13 +175,18 @@ const fixUser = function fixUser(user) {
 };
 
 function* fetchIsAuthenticated() {
-    const response = yield fetch(`${AD_USER_API}/isAuthenticated`, { credentials: 'include' });
-    if (response.status === 200) {
-        yield put({ type: FETCH_IS_AUTHENTICATED_SUCCESS, isAuthenticated: true });
-    } else if (response.status === 401) {
-        yield put({ type: FETCH_IS_AUTHENTICATED_SUCCESS, isAuthenticated: false });
-    } else {
-        yield put({ type: FETCH_IS_AUTHENTICATED_SUCCESS, isAuthenticated: undefined });
+    try {
+        const response = yield fetch(`${AD_USER_API}/isAuthenticated`, { credentials: 'include' });
+        if (response.status === 200) {
+            yield put({ type: FETCH_IS_AUTHENTICATED_SUCCESS, isAuthenticated: true });
+        } else if (response.status === 401) {
+            yield put({ type: FETCH_IS_AUTHENTICATED_SUCCESS, isAuthenticated: false });
+        } else {
+            yield put({ type: FETCH_IS_AUTHENTICATED_FAILURE });
+        }
+    } catch (error) {
+        yield put({ type: FETCH_IS_AUTHENTICATED_FAILURE });
+        throw error;
     }
 }
 
@@ -196,7 +199,9 @@ function* fetchUser() {
             yield put({ type: FETCH_USER_SUCCESS, response });
         } catch (e) {
             if (e instanceof SearchApiError) {
-                yield put({ type: FETCH_USER_FAILURE, error: e });
+                if (e.statusCode !== 404) {
+                    yield put({ type: FETCH_USER_FAILURE, error: e });
+                }
             } else {
                 throw e;
             }

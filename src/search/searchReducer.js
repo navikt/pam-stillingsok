@@ -24,7 +24,6 @@ const initialState = {
     isSearching: true,
     isLoadingMore: false,
     searchResult: undefined,
-    hasError: false,
     from: 0,
     to: PAGE_SIZE,
     page: 0
@@ -79,12 +78,6 @@ export default function searchReducer(state = initialState, action) {
                     total: action.response.total,
                     stillinger: action.response.stillinger
                 }
-            };
-        case SEARCH_FAILURE:
-            return {
-                ...state,
-                hasError: true,
-                error: action.error
             };
         case LOAD_MORE:
             return {

@@ -7,7 +7,6 @@ import DelayedSpinner from '../search/loading/DelayedSpinner';
 import NotAuthenticated from '../user/NotAuthenticated';
 import NoUser from '../user/NoUser';
 import FavouriteAlertStripe from './alertstripe/FavouriteAlertStripe';
-import FavouriteError from './error/FavouriteError';
 import './Favourites.less';
 import FavouriteList from './list/FavouriteList';
 import RemoveFavouriteModal from './modal/RemoveFavouriteModal';
@@ -23,7 +22,6 @@ class Favourites extends React.Component {
         return (
             <div className="Favourites">
                 <FavouriteAlertStripe />
-                <FavouriteError />
                 <PageHeader
                     backUrl="/"
                     title={`Favoritter ${!this.props.isFetchingFavourites && this.props.totalElements > 0 ? `(${this.props.totalElements})` : ''}`}

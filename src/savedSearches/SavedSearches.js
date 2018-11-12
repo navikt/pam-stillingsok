@@ -8,7 +8,6 @@ import NotAuthenticated from '../user/NotAuthenticated';
 import NoUser from '../user/NoUser';
 import SavedSearchAlertStripe from './alertstripe/SavedSearchAlertStripe';
 import ConfirmRemoveModal from './ConfirmRemoveModal';
-import SavedSearchError from './error/SavedSearchError';
 import SavedSearchForm from './form/SavedSearchForm';
 import SavedSearchList from './list/SavedSearchList';
 import NoSavedSearches from './noresult/NoSavedSearches';
@@ -24,7 +23,6 @@ class SavedSearches extends React.Component {
         return (
             <div className="SavedSearches">
                 <SavedSearchAlertStripe />
-                <SavedSearchError />
                 <PageHeader
                     backUrl="/"
                     title={`Lagrede søk ${!this.props.isFetching && this.props.totalElements > 0 ? `(${this.props.totalElements})` : ''}`}
