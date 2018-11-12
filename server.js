@@ -46,9 +46,6 @@ const fasitProperties = {
     PAM_STILLINGSOK_URL: process.env.PAM_STILLINGSOK_URL
 };
 
-console.log(JSON.stringify(fasitProperties));
-
-
 const writeEnvironmentVariablesToFile = () => {
     const fileContent =
         `window.__PAM_STILLINGSOK_URL__="${fasitProperties.PAM_STILLINGSOK_URL}";\n` +
