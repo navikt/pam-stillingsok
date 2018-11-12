@@ -1,3 +1,5 @@
+import { parse } from 'url';
+
 const ISO_8601_DATE = /^\d{4}(-\d\d(-\d\d(T\d\d:\d\d(:\d\d)?(\.\d+)?(([+-]\d\d:\d\d)|Z)?)?)?)?$/i;
 
 export function isValidISOString(isoString) {
@@ -31,22 +33,4 @@ export function isValidUrl(input) {
         return true;
     }
     return false;
-}
-
-export function objectToQueryString(object) {
-    return Object.keys(object)
-        .map(key => {
-            const value = object[key];
-            if (Array.isArray(value)) {
-                return arrayToQueryString(key, value);
-            } else {
-                return key + '=' + object[key];
-            }
-        })
-        .join('&');
-}
-
-function arrayToQueryString(key, array) {
-    return array.map(val => key + '[]=' + val)
-        .join('&');
 }

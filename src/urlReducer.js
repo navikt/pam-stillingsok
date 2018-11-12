@@ -2,27 +2,11 @@ import { select, takeLatest, put } from 'redux-saga/effects';
 import { ADD_SAVED_SEARCH_SUCCESS, SET_CURRENT_SAVED_SEARCH } from './savedSearches/savedSearchesReducer';
 import { SET_VALUE } from './search/searchBox/searchBoxReducer';
 import { LOAD_MORE, PAGE_SIZE, RESET_SEARCH, SEARCH } from './search/searchReducer';
-import { fromUrl, ParameterType, toUrl } from './search/url';
 import { SET_VIEW_MODE } from './search/viewMode/viewModeReducer';
+import { toQueryString, toObject } from "./search/url";
 
 export const RESTORE_STATE_FROM_URL_BEGIN = 'RESTORE_STATE_FROM_URL_BEGIN';
 export const RESTORE_STATE_FROM_URL = 'RESTORE_STATE_FROM_URL';
-
-export const SEARCH_PARAMETERS_DEFINITION = {
-    q: ParameterType.STRING,
-    sort: ParameterType.STRING,
-    to: ParameterType.NUMBER,
-    counties: ParameterType.ARRAY,
-    municipals: ParameterType.ARRAY,
-    published: ParameterType.ARRAY,
-    engagementType: ParameterType.ARRAY,
-    sector: ParameterType.ARRAY,
-    extent: ParameterType.ARRAY,
-    occupationFirstLevels: ParameterType.ARRAY,
-    occupationSecondLevels: ParameterType.ARRAY,
-    mode: ParameterType.STRING,
-    saved: ParameterType.STRING
-};
 
 function* updateUrl() {
     const state = yield select();
@@ -44,7 +28,7 @@ function* updateUrl() {
     };
 
     try {
-        yield sessionStorage.setItem('url', toUrl(x));
+        yield sessionStorage.setItem('url', toQueryString(x));
     } catch (e) {
         // Ignore session storage error
     }
@@ -56,7 +40,7 @@ function* restoreStateFromUrl() {
         if (url && url !== null) {
             yield put({
                 type: RESTORE_STATE_FROM_URL,
-                query: fromUrl(SEARCH_PARAMETERS_DEFINITION, url)
+                query: toObject(url)
             });
         }
     } catch (e) {

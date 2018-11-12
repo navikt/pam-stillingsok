@@ -1,6 +1,6 @@
 import { put, select, takeLatest } from 'redux-saga/es/effects';
 import capitalizeLocation from '../../common/capitalizeLocation';
-import { toUrl } from '../../search/url';
+import { toQueryString } from "../../search/url";
 import NotifyTypeEnum from '../enums/NotifyTypeEnum';
 import SavedSearchStatusEnum from '../enums/SavedSearchStatusEnum';
 import {
@@ -189,7 +189,7 @@ function* setDefaultFormData(action) {
             type: SET_FORM_DATA,
             formData: {
                 title: toTitle(state),
-                searchQuery: toUrl(toQuery(state)),
+                searchQuery: toQueryString(toQuery(state)),
                 notifyType: NotifyTypeEnum.NONE,
                 status: SavedSearchStatusEnum.INACTIVE
             }
@@ -204,7 +204,7 @@ function* setDefaultFormData(action) {
             type: SET_FORM_DATA,
             formData: {
                 ...state.savedSearches.currentSavedSearch,
-                searchQuery: toUrl(toQuery(state))
+                searchQuery: toQueryString(toQuery(state))
             }
         });
     }
@@ -216,4 +216,3 @@ export const savedSearchFormSaga = function* saga() {
     yield takeLatest(SHOW_SAVED_SEARCH_FORM, setDefaultFormData);
     yield takeLatest(SET_SAVED_SEARCH_FORM_MODE, setDefaultFormData);
 };
-
