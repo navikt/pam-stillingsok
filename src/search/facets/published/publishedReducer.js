@@ -1,7 +1,6 @@
 import { RESTORE_STATE_FROM_SAVED_SEARCH } from '../../../savedSearches/savedSearchesReducer';
 import { RESTORE_STATE_FROM_URL } from '../../../urlReducer';
 import { FETCH_INITIAL_FACETS_SUCCESS, RESET_SEARCH, SEARCH_SUCCESS } from '../../searchReducer';
-import { removeNonExistingFacets } from '../utils';
 
 export const CHECK_PUBLISHED = 'CHECK_PUBLISHED';
 export const UNCHECK_PUBLISHED = 'UNCHECK_PUBLISHED';
@@ -27,11 +26,7 @@ export default function publishedReducer(state = initialState, action) {
         case FETCH_INITIAL_FACETS_SUCCESS:
             return {
                 ...state,
-                published: action.response.published,
-                checkedPublished: removeNonExistingFacets(
-                    state.checkedPublished,
-                    action.response.published
-                )
+                published: action.response.published
             };
         case SEARCH_SUCCESS:
             return {

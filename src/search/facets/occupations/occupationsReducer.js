@@ -1,7 +1,7 @@
 import { RESTORE_STATE_FROM_SAVED_SEARCH } from '../../../savedSearches/savedSearchesReducer';
 import { RESTORE_STATE_FROM_URL } from '../../../urlReducer';
 import { FETCH_INITIAL_FACETS_SUCCESS, RESET_SEARCH, SEARCH_SUCCESS } from '../../searchReducer';
-import { moveFacetToBottom, removeNonExistingFacets } from '../utils';
+import { moveFacetToBottom } from '../utils';
 
 export const CHECK_FIRST_LEVEL = 'CHECK_FIRST_LEVEL';
 export const UNCHECK_FIRST_LEVEL = 'UNCHECK_FIRST_LEVEL';
@@ -34,16 +34,7 @@ export default function occupations(state = initialState, action) {
         case FETCH_INITIAL_FACETS_SUCCESS:
             return {
                 ...state,
-                occupationFirstLevels: moveFacetToBottom(action.response.occupationFirstLevels, OCCUPATION_ANNET),
-                checkedFirstLevels: removeNonExistingFacets(
-                    state.checkedFirstLevels,
-                    action.response.occupationFirstLevels
-                ),
-                checkedSecondLevels: removeNonExistingFacets(
-                    state.checkedSecondLevels,
-                    action.response.occupationFirstLevels,
-                    'occupationSecondLevels'
-                )
+                occupationFirstLevels: moveFacetToBottom(action.response.occupationFirstLevels, OCCUPATION_ANNET)
             };
         case SEARCH_SUCCESS:
             return {

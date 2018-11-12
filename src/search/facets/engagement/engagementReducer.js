@@ -1,7 +1,7 @@
 import { RESTORE_STATE_FROM_SAVED_SEARCH } from '../../../savedSearches/savedSearchesReducer';
 import { RESTORE_STATE_FROM_URL } from '../../../urlReducer';
 import { FETCH_INITIAL_FACETS_SUCCESS, RESET_SEARCH, SEARCH_SUCCESS } from '../../searchReducer';
-import { moveFacetToBottom, removeNonExistingFacets } from '../utils';
+import { moveFacetToBottom } from '../utils';
 
 export const CHECK_ENGAGEMENT_TYPE = 'CHECK_ENGAGEMENT_TYPE';
 export const UNCHECK_ENGAGEMENT_TYPE = 'UNCHECK_ENGAGEMENT_TYPE';
@@ -27,11 +27,7 @@ export default function engagementReducer(state = initialState, action) {
         case FETCH_INITIAL_FACETS_SUCCESS:
             return {
                 ...state,
-                engagementType: moveFacetToBottom(action.response.engagementTypes, 'Annet'),
-                checkedEngagementType: removeNonExistingFacets(
-                    state.checkedEngagementType,
-                    action.response.engagementTypes
-                )
+                engagementType: moveFacetToBottom(action.response.engagementTypes, 'Annet')
             };
         case SEARCH_SUCCESS:
             return {

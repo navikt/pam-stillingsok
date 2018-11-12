@@ -1,8 +1,6 @@
 import { RESTORE_STATE_FROM_SAVED_SEARCH } from '../../../savedSearches/savedSearchesReducer';
-import { RESTORE_STATE_FROM_URL, SEARCH_PARAMETERS_DEFINITION } from '../../../urlReducer';
+import { RESTORE_STATE_FROM_URL } from '../../../urlReducer';
 import { FETCH_INITIAL_FACETS_SUCCESS, RESET_SEARCH, SEARCH_SUCCESS } from '../../searchReducer';
-import { fromUrl } from '../../url';
-import { removeNonExistingFacets } from '../utils';
 
 export const CHECK_COUNTY = 'CHECK_COUNTY';
 export const UNCHECK_COUNTY = 'UNCHECK_COUNTY';
@@ -33,16 +31,7 @@ export default function countiesReducer(state = initialState, action) {
         case FETCH_INITIAL_FACETS_SUCCESS:
             return {
                 ...state,
-                counties: action.response.counties,
-                checkedCounties: removeNonExistingFacets(
-                    state.checkedCounties,
-                    action.response.counties
-                ),
-                checkedMunicipals: removeNonExistingFacets(
-                    state.checkedMunicipals,
-                    action.response.counties,
-                    'municipals'
-                )
+                counties: action.response.counties
             };
         case SEARCH_SUCCESS:
             return {

@@ -1,7 +1,7 @@
 import { RESTORE_STATE_FROM_SAVED_SEARCH } from '../../../savedSearches/savedSearchesReducer';
 import { RESTORE_STATE_FROM_URL } from '../../../urlReducer';
 import { FETCH_INITIAL_FACETS_SUCCESS, RESET_SEARCH, SEARCH_SUCCESS } from '../../searchReducer';
-import { moveFacetToBottom, removeNonExistingFacets } from '../utils';
+import { moveFacetToBottom } from '../utils';
 
 export const CHECK_SECTOR = 'CHECK_SECTOR';
 export const UNCHECK_SECTOR = 'UNCHECK_SECTOR';
@@ -27,11 +27,7 @@ export default function sectorReducer(state = initialState, action) {
         case FETCH_INITIAL_FACETS_SUCCESS:
             return {
                 ...state,
-                sector: moveFacetToBottom(action.response.sector, 'Ikke oppgitt'),
-                checkedSector: removeNonExistingFacets(
-                    state.checkedSector,
-                    action.response.sector
-                )
+                sector: moveFacetToBottom(action.response.sector, 'Ikke oppgitt')
             };
         case SEARCH_SUCCESS:
             return {

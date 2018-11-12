@@ -1,7 +1,6 @@
 import { RESTORE_STATE_FROM_SAVED_SEARCH } from '../../../savedSearches/savedSearchesReducer';
 import { RESTORE_STATE_FROM_URL } from '../../../urlReducer';
 import { FETCH_INITIAL_FACETS_SUCCESS, RESET_SEARCH, SEARCH_SUCCESS } from '../../searchReducer';
-import { removeNonExistingFacets } from '../utils';
 
 export const CHECK_EXTENT = 'CHECK_EXTENT';
 export const UNCHECK_EXTENT = 'UNCHECK_EXTENT';
@@ -27,11 +26,7 @@ export default function extentReducer(state = initialState, action) {
         case FETCH_INITIAL_FACETS_SUCCESS:
             return {
                 ...state,
-                extent: action.response.extent,
-                checkedExtent: removeNonExistingFacets(
-                    state.checkedExtent,
-                    action.response.extent
-                )
+                extent: action.response.extent
             };
         case SEARCH_SUCCESS:
             return {
