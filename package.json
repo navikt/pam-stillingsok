@@ -8,6 +8,7 @@
     "clean-build": "rimraf ./dist",
     "build": "npm run clean-build && webpack -p",
     "start-express": "node ./server.js",
+    "start-webpack": "webpack --watch --config webpack.config.dev.js",
     "docker-build": "npm run build && docker build . -t pam-stillingsok",
     "docker-start": "docker run --name pam-stillingsok -p 8080:8080 -d pam-stillingsok",
     "docker-kill": "npm run docker-stop && npm run docker-rm",

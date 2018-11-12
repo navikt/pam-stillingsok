@@ -8,7 +8,6 @@ const fs = require('fs');
 const prometheus = require('prom-client');
 const bodyParser = require('body-parser');
 const searchApiConsumer = require('./scripts/searchApiConsumer');
-const { searchTemplate, suggestionsTemplate } = require('./scripts/searchApiTemplates');
 
 prometheus.collectDefaultMetrics();
 
@@ -28,7 +27,7 @@ server.use(helmet.contentSecurityPolicy({
         fontSrc: ["'self'", 'data:'],
         imgSrc: ["'self'", 'data:', 'https://www.google-analytics.com',
             'https://www.nav.no/_public/beta.nav.no/images/logo.png'],
-        connectSrc: ["'self'", process.env.PAMADUSER_URL,  'https://www.google-analytics.com']
+        connectSrc: ["'self'", process.env.PAMADUSER_URL, 'https://www.google-analytics.com']
     }
 }));
 
@@ -46,7 +45,6 @@ const fasitProperties = {
     LOGOUT_URL: process.env.LOGOUTSERVICE_URL,
     PAM_STILLINGSOK_URL: process.env.PAM_STILLINGSOK_URL
 };
-
 
 const writeEnvironmentVariablesToFile = () => {
     const fileContent =
@@ -81,7 +79,7 @@ const startServer = (htmlPages) => {
 
     server.use(
         '/pam-stillingsok/search-api',
-        proxy('http://pam-search-api')
+        process.env.DEV_PROFILE === 'true' ? proxy('http://localhost:9000') : proxy('http://pam-search-api')
     );
 
     server.use(
@@ -94,28 +92,29 @@ const startServer = (htmlPages) => {
     );
 
     server.get('/pam-stillingsok/search', async function(req, res) {
-        const result = await searchApiConsumer.search(searchTemplate, req.query)
-            .catch(err => logError('Failed to query search api', err));
-
-        res.send(result);
-    });
-
-    server.get('/pam-stillingsok/suggestions', async function(req, res) {
-        const result = await searchApiConsumer.search(suggestionsTemplate, req.query)
+        const result = await searchApiConsumer.search(req.query)
             .catch(err => logError('Failed to query search api', err));
 
         res.send(result);
     });
 
     server.post('/pam-stillingsok/search', async function(req, res) {
-        const result = await searchApiConsumer.search(searchTemplate, req.body)
+        const result = await searchApiConsumer.search(req.body)
             .catch((err) => { logError('Failed to query search api', err)});
 
         res.send(result);
     });
 
+    server.get('/pam-stillingsok/suggestions', async function(req, res) {
+        console.log('REQUEST QUERY:', req.query);
+        const result = await searchApiConsumer.suggestions(req.query)
+            .catch(err => logError('Failed to query search api', err));
+
+        res.send(result);
+    });
+
     server.post('/pam-stillingsok/suggestions', async function(req, res) {
-        const result = await searchApiConsumer.search(suggestionsTemplate, req.body)
+        const result = await searchApiConsumer.suggestions(req.body)
             .catch((err) => { logError('Failed to query search api', err)});
 
         res.send(result);
