@@ -106,7 +106,6 @@ const startServer = (htmlPages) => {
     });
 
     server.get('/pam-stillingsok/suggestions', async function(req, res) {
-        console.log('REQUEST QUERY:', req.query);
         const result = await searchApiConsumer.suggestions(req.query)
             .catch(err => logError('Failed to query search api', err));
 
