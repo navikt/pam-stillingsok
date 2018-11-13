@@ -29,7 +29,7 @@ function* updateUrl() {
     };
 
     try {
-        yield sessionStorage.setItem('url', toQueryString(removeUndefinedOrEmptyString(x)));
+        yield sessionStorage.setItem('url-v2', toQueryString(removeUndefinedOrEmptyString(x)));
     } catch (e) {
         // Ignore session storage error
     }
@@ -37,7 +37,7 @@ function* updateUrl() {
 
 function* restoreStateFromUrl() {
     try {
-        const url = sessionStorage.getItem('url');
+        const url = sessionStorage.getItem('url-v2');
         if (url && url !== null) {
             yield put({
                 type: RESTORE_STATE_FROM_URL,
