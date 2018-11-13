@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import SearchApiError from './SearchApiError';
 import { toQueryString } from '../search/url';
 
