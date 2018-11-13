@@ -33,20 +33,12 @@ export function isValidUrl(input) {
     return false;
 }
 
-export function objectToQueryString(object) {
-    return Object.keys(object)
-        .map(key => {
-            const value = object[key];
-            if (Array.isArray(value)) {
-                return arrayToQueryString(key, value);
-            } else {
-                return key + '=' + object[key];
-            }
-        })
-        .join('&');
-}
-
-function arrayToQueryString(key, array) {
-    return array.map(val => key + '[]=' + val)
-        .join('&');
+export function removeUndefinedOrEmptyString(obj) {
+    const newObj = {};
+    Object.keys(obj).forEach((prop) => {
+        if (obj[prop] !== undefined && obj[prop] !== '') {
+            newObj[prop] = obj[prop];
+        }
+    });
+    return newObj;
 }

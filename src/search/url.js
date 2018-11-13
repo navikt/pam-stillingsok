@@ -1,83 +1,51 @@
-export const ParameterType = {
-    ARRAY: 'ARRAY',
-    STRING: 'STRING',
-    NUMBER: 'NUMBER'
-};
-
-export function getUrlParameterByName(name, url) {
-    name = name.replace(/[\[\]]/g, '\\$&');
-    const regex = new RegExp(`[?&]${name}(=([^&#]*)|&|#|$)`);
-    const results = regex.exec(url);
-    if (!results) return undefined;
-    if (!results[2]) return '';
-    return decodeURIComponent(results[2].replace(/\+/g, ' '));
-}
+import { parse } from 'url';
 
 /**
- * Takes an object representing the url query and transform it into a string
- * @param query: f.ex: {q: "Java", fruits: ["Apple", "Banana"], count: 10}
- * @returns {string} f.ex: q=Java&names=Apple_Banana&count=10
+ * Tar en query-string og returnerer en Object-representasjon av stringen.
+ * @param queryString   Query-stringen som skal parseres til et objekt.
+ * @returns {Object}    En Object-representasjon av 'queryString'.
  */
-export function toUrl(query) {
-    let result = {};
+export function toObject(queryString = '') {
+    const object = parse(queryString, true).query;
 
-    Object.keys(query).forEach((key) => {
-        if (query[key] !== undefined) {
-            if (Array.isArray(query[key])) {
-                if (query[key].length > 0) {
-                    result = {
-                        ...result,
-                        [key]: query[key].join('_')
-                    };
-                }
-            } else if (query[key] !== '') {
-                result = {
-                    ...result,
-                    [key]: query[key]
-                };
+    Object.keys(object).forEach((key) => {
+        if (key.includes('[]')) {
+            let value = object[key];
+
+            if (!Array.isArray(value)) {
+                value = [value];
             }
+
+            const newKey = key.replace('[]', '');
+            delete object[key];
+            object[newKey] = value;
         }
     });
 
-    const urlQuery = Object.keys(result)
-        .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(result[key])}`)
-        .join('&')
-        .replace(/%20/g, '+');
-
-
-    return urlQuery && urlQuery.length > 0 ? `?${urlQuery}` : '';
+    return object;
 }
 
 /**
- * Takes an url query string and extract url parameters and return them as in a query object
- * @param queryDefinition: f.ex: {q: ParameterType.STRING, fruits: ParameterType.ARRAY, count: ParameterType.NUMBER}
- * @param url: f.ex: q=Java&names=Apple_Banana&count=10
- * @returns {{}} f.ex: {q: "Java", fruits: ["Apple", "Banana"], count: 10}
+ * Tar et objekt og returnerer en query-string-representasjon av objektet.
+ * @param object        Objekt som skal gjøres om til en query-string.
+ * @returns {string}    En query-string-representasjon av 'object'.
  */
-export function fromUrl(queryDefinition, url) {
-    let result = {};
-    Object.keys(queryDefinition).forEach((key) => {
-        const urlParameter = getUrlParameterByName(key, url);
-        if (urlParameter) {
-            if (queryDefinition[key] === ParameterType.ARRAY) {
-                result = {
-                    ...result,
-                    [key]: urlParameter.split('_')
-                };
-            } else if (queryDefinition[key] === ParameterType.NUMBER) {
-                result = {
-                    ...result,
-                    [key]: parseInt(urlParameter, 10)
-                };
-            } else if (queryDefinition[key] === ParameterType.STRING) {
-                result = {
-                    ...result,
-                    [key]: urlParameter
-                };
+export function toQueryString(object = {}) {
+    return '?' + Object.keys(object)
+        .map(key => {
+            const value = object[key];
+            if (Array.isArray(value)) {
+                return arrayToQueryString(key, value);
             } else {
-                throw Error(`Unsupported query type: ${queryDefinition[key]}`);
+                return key + '=' + object[key];
             }
-        }
-    });
-    return result;
+        })
+        .filter(elem => elem !== '')
+        .join('&')
+        .replace(/\s/g, '%20');
+}
+
+function arrayToQueryString(key, array) {
+    return array.map(val => key + '[]=' + val)
+        .join('&');
 }
