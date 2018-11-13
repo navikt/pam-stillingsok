@@ -40,6 +40,7 @@ export function toQueryString(object = {}) {
                 return key + '=' + object[key];
             }
         })
+        .filter(elem => elem !== '')
         .join('&')
         .replace(/\s/g, '%20');
 }
