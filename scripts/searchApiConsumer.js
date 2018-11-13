@@ -15,7 +15,7 @@ exports.search = async (query = {}) => {
         json: true
     };
 
-    return rp(options)
+    return rp(options);
 };
 
 exports.suggestions = async (query = {}) => {
@@ -29,7 +29,39 @@ exports.suggestions = async (query = {}) => {
         json: true
     };
 
-    return rp(options)
+    return rp(options);
+};
+
+exports.fetchStilling = async (uuid) => {
+    const excludes = [
+        'administration',
+        'categoryList',
+        'created',
+        'createdBy',
+        'employer',
+        'expires',
+        'geopoint',
+        'location',
+        'mediaList',
+        'privacy',
+        'properties.author',
+        'properties.industry',
+        'properties.keywords',
+        'properties.occupation',
+        'properties.searchtags',
+        'properties.sourceupdated',
+        'published',
+        'updatedBy',
+        'uuid'
+    ].join(',');
+
+    const path = `/stillingsok/ad/ad/${uuid}?_source_exclude=${excludes}`;
+    const options = {
+        method: 'GET',
+        url: host + path,
+    };
+
+    return rp(options);
 };
 
 const bodyUsingTemplate = (template, ...args) => {

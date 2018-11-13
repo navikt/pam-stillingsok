@@ -91,29 +91,36 @@ const startServer = (htmlPages) => {
         express.static(path.resolve(__dirname, 'dist/css'))
     );
 
-    server.get('/pam-stillingsok/search', async function(req, res) {
+    server.get('/api/search', async function(req, res) {
         const result = await searchApiConsumer.search(req.query)
             .catch(err => logError('Failed to query search api', err));
 
         res.send(result);
     });
 
-    server.post('/pam-stillingsok/search', async function(req, res) {
+    server.post('/api/search', async function(req, res) {
         const result = await searchApiConsumer.search(req.body)
             .catch((err) => { logError('Failed to query search api', err)});
 
         res.send(result);
     });
 
-    server.get('/pam-stillingsok/suggestions', async function(req, res) {
+    server.get('/api/suggestions', async function(req, res) {
         const result = await searchApiConsumer.suggestions(req.query)
             .catch(err => logError('Failed to query search api', err));
 
         res.send(result);
     });
 
-    server.post('/pam-stillingsok/suggestions', async function(req, res) {
+    server.post('/api/suggestions', async function(req, res) {
         const result = await searchApiConsumer.suggestions(req.body)
+            .catch((err) => { logError('Failed to query search api', err)});
+
+        res.send(result);
+    });
+
+    server.get('/api/stilling/:uuid', async function(req, res) {
+        const result = await searchApiConsumer.fetchStilling(req.params.uuid)
             .catch((err) => { logError('Failed to query search api', err)});
 
         res.send(result);
