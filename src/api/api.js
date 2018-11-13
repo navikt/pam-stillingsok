@@ -91,7 +91,7 @@ function fixStilling(stilling) {
 
 export async function fetchSearch(query = {}) {
     const queryString = '?' + objectToQueryString(query);
-    const result = await get('/pam-stillingsok/search' + queryString);
+    const result = await get('/api/search' + queryString);
     return {
         stillinger: result.hits.hits.map((stilling) => (
             fixStilling(stilling._source)
@@ -136,7 +136,7 @@ export async function fetchSearch(query = {}) {
 
 export async function fetchCategoryAndSearchTagsSuggestions(match, minLength) {
     const queryString = '?' + objectToQueryString({ match: match, minLength: minLength });
-    const result = await get('/pam-stillingsok/suggestions' + queryString);
+    const result = await get('/api/suggestions' + queryString);
 
     return {
         match,
@@ -148,5 +148,5 @@ export async function fetchCategoryAndSearchTagsSuggestions(match, minLength) {
 }
 
 export async function fetchStilling(uuid) {
-    return await get(`/pam-stillingsok/stilling/${uuid}`);
+    return await get(`/api/stilling/${uuid}`);
 }
