@@ -25,27 +25,27 @@ export function toObject(queryString = '') {
     return object;
 }
 
+function arrayToQueryString(key, array) {
+    return array.map((val) => `${key}[]=${val}`)
+        .join('&');
+}
+
 /**
  * Tar et objekt og returnerer en query-string-representasjon av objektet.
  * @param object        Objekt som skal gjøres om til en query-string.
  * @returns {string}    En query-string-representasjon av 'object'.
  */
 export function toQueryString(object = {}) {
-    return '?' + Object.keys(object)
-        .map(key => {
+    const string = Object.keys(object)
+        .map((key) => {
             const value = object[key];
             if (Array.isArray(value)) {
                 return arrayToQueryString(key, value);
-            } else {
-                return key + '=' + object[key];
             }
+            return `${key}=${object[key]}`;
         })
-        .filter(elem => elem !== '')
+        .filter((elem) => elem !== '')
         .join('&')
         .replace(/\s/g, '%20');
-}
-
-function arrayToQueryString(key, array) {
-    return array.map(val => key + '[]=' + val)
-        .join('&');
+    return `?${string}`;
 }
