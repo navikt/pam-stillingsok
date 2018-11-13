@@ -1,3 +1,52 @@
+function mapSortByValue(value) {
+    switch (value) {
+        case 'updated':
+        default:
+            return 'updated';
+    }
+}
+
+function mapSortByOrder(value) {
+    if (value !== 'updated') {
+        return 'asc';
+    }
+    return 'desc';
+}
+
+function filterPublished(published) {
+    const filters = {
+        bool: {
+            should: []
+        }
+    };
+    if (published && published.length > 0) {
+        filters.bool.should.push({
+            range: {
+                published: {
+                    gte: 'now-1d'
+                }
+            }
+        });
+    }
+    return filters;
+}
+
+function suggest(field, match, minLength) {
+    return {
+        prefix: match,
+        completion: {
+            field,
+            skip_duplicates: true,
+            contexts: {
+                status: 'ACTIVE'
+            },
+            size: 5,
+            fuzzy: {
+                prefix_length: minLength
+            }
+        }
+    };
+}
 
 function filterExtent(extent) {
     const filters = [];
@@ -169,7 +218,7 @@ exports.searchTemplate = (query) => {
                             filter: {
                                 match: {
                                     'location.municipal': {
-                                        query: q,
+                                        query: q
                                     }
                                 }
                             },
@@ -181,7 +230,7 @@ exports.searchTemplate = (query) => {
                             filter: {
                                 match: {
                                     'location.county': {
-                                        query: q,
+                                        query: q
                                     }
                                 }
                             },
@@ -413,53 +462,3 @@ exports.searchTemplate = (query) => {
 
     return template;
 };
-
-function mapSortByValue(value) {
-    switch (value) {
-        case 'updated':
-        default:
-            return 'updated';
-    }
-}
-
-function mapSortByOrder(value) {
-    if (value !== 'updated') {
-        return 'asc';
-    }
-    return 'desc';
-}
-
-function filterPublished(published) {
-    const filters = {
-        bool: {
-            should: []
-        }
-    };
-    if (published && published.length > 0) {
-        filters.bool.should.push({
-            range: {
-                published: {
-                    gte: 'now-1d'
-                }
-            }
-        });
-    }
-    return filters;
-}
-
-function suggest(field, match, minLength) {
-    return {
-        prefix: match,
-        completion: {
-            field,
-            skip_duplicates: true,
-            contexts: {
-                status: 'ACTIVE'
-            },
-            size: 5,
-            fuzzy: {
-                prefix_length: minLength
-            }
-        }
-    };
-}

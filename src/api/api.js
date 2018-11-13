@@ -1,8 +1,7 @@
 import SearchApiError from './SearchApiError';
-import { toQueryString } from "../search/url";
+import { toQueryString } from '../search/url';
 
 /* eslint-disable no-underscore-dangle */
-import { SEARCH_API } from '../fasitProperties';
 
 export async function get(url) {
     let response;
@@ -91,7 +90,7 @@ function fixStilling(stilling) {
 
 export async function fetchSearch(query = {}) {
     const queryString = toQueryString(query);
-    const result = await get('/pam-stillingsok/search' + queryString);
+    const result = await get(`/api/search${queryString}`);
     return {
         stillinger: result.hits.hits.map((stilling) => (
             fixStilling(stilling._source)
@@ -135,8 +134,8 @@ export async function fetchSearch(query = {}) {
 }
 
 export async function fetchCategoryAndSearchTagsSuggestions(match, minLength) {
-    const queryString = toQueryString({ match: match, minLength: minLength });
-    const result = await get('/pam-stillingsok/suggestions' + queryString);
+    const queryString = toQueryString({ match, minLength });
+    const result = await get(`/api/suggestions${queryString}`);
 
     return {
         match,
@@ -148,5 +147,5 @@ export async function fetchCategoryAndSearchTagsSuggestions(match, minLength) {
 }
 
 export async function fetchStilling(uuid) {
-    return await get(`/api/stilling/${uuid}`);
+    return get(`/api/stilling/${uuid}`);
 }
