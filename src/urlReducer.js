@@ -4,6 +4,7 @@ import { SET_VALUE } from './search/searchBox/searchBoxReducer';
 import { LOAD_MORE, PAGE_SIZE, RESET_SEARCH, SEARCH } from './search/searchReducer';
 import { SET_VIEW_MODE } from './search/viewMode/viewModeReducer';
 import { toQueryString, toObject } from "./search/url";
+import { removeUndefinedOrEmptyString } from './utils';
 
 export const RESTORE_STATE_FROM_URL_BEGIN = 'RESTORE_STATE_FROM_URL_BEGIN';
 export const RESTORE_STATE_FROM_URL = 'RESTORE_STATE_FROM_URL';
@@ -28,7 +29,7 @@ function* updateUrl() {
     };
 
     try {
-        yield sessionStorage.setItem('url', toQueryString(x));
+        yield sessionStorage.setItem('url', toQueryString(removeUndefinedOrEmptyString(x)));
     } catch (e) {
         // Ignore session storage error
     }

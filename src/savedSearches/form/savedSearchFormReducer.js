@@ -1,6 +1,7 @@
 import { put, select, takeLatest } from 'redux-saga/es/effects';
 import capitalizeLocation from '../../common/capitalizeLocation';
-import { toQueryString } from "../../search/url";
+import { toQueryString } from '../../search/url';
+import { removeUndefinedOrEmptyString } from '../../utils';
 import NotifyTypeEnum from '../enums/NotifyTypeEnum';
 import SavedSearchStatusEnum from '../enums/SavedSearchStatusEnum';
 import {
@@ -142,7 +143,7 @@ export function* validateAll() {
 }
 
 function toQuery(state) {
-    return {
+    const query = {
         q: state.searchBox.q,
         counties: state.counties.checkedCounties,
         municipals: state.counties.checkedMunicipals,
@@ -153,6 +154,8 @@ function toQuery(state) {
         occupationFirstLevels: state.occupations.checkedFirstLevels,
         occupationSecondLevels: state.occupations.checkedSecondLevels
     };
+
+    return removeUndefinedOrEmptyString(query);
 }
 
 function toTitle(state) {

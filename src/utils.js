@@ -1,5 +1,3 @@
-import { parse } from 'url';
-
 const ISO_8601_DATE = /^\d{4}(-\d\d(-\d\d(T\d\d:\d\d(:\d\d)?(\.\d+)?(([+-]\d\d:\d\d)|Z)?)?)?)?$/i;
 
 export function isValidISOString(isoString) {
@@ -33,4 +31,14 @@ export function isValidUrl(input) {
         return true;
     }
     return false;
+}
+
+export function removeUndefinedOrEmptyString(obj) {
+    const newObj = {};
+    Object.keys(obj).forEach((prop) => {
+        if (obj[prop] !== undefined && obj[prop] !== '') {
+            newObj[prop] = obj[prop];
+        }
+    });
+    return newObj;
 }
