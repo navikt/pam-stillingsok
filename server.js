@@ -119,6 +119,13 @@ const startServer = (htmlPages) => {
         res.send(result);
     });
 
+    server.get('/pam-stillingsok/stilling/:uuid', async function(req, res) {
+        const result = await searchApiConsumer.fetchStilling(req.params.uuid)
+            .catch((err) => { logError('Failed to query search api', err)});
+
+        res.send(result);
+    });
+
     server.get(
         ['/', '/pam-stillingsok/?', /^\/pam-stillingsok\/(?!.*dist).*$/],
         (req, res) => {

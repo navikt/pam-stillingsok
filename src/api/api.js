@@ -148,27 +148,5 @@ export async function fetchCategoryAndSearchTagsSuggestions(match, minLength) {
 }
 
 export async function fetchStilling(uuid) {
-    return get(`${SEARCH_API}/stillingsok/ad/ad/${uuid}?_source_exclude=${{
-        excludes: [
-            'administration',
-            'categoryList',
-            'created',
-            'createdBy',
-            'employer',
-            'expires',
-            'geopoint',
-            'location',
-            'mediaList',
-            'privacy',
-            'properties.author',
-            'properties.industry',
-            'properties.keywords',
-            'properties.occupation',
-            'properties.searchtags',
-            'properties.sourceupdated',
-            'published',
-            'updatedBy',
-            'uuid'
-        ]
-    }.excludes.join(',')}`);
+    return await get(`/pam-stillingsok/stilling/${uuid}`);
 }
