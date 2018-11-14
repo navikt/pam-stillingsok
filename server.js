@@ -79,9 +79,15 @@ const startServer = (htmlPages) => {
         '/pam-stillingsok/js',
         express.static(path.resolve(__dirname, 'dist/js'))
     );
+
     server.use(
         '/pam-stillingsok/css',
         express.static(path.resolve(__dirname, 'dist/css'))
+    );
+
+    server.use(
+        '/pam-stillingsok/images',
+        express.static(path.resolve(__dirname, 'images'))
     );
 
     server.get('/api/search', async (req, res) => {
