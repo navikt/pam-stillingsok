@@ -1,5 +1,4 @@
 const express = require('express');
-const proxy = require('express-http-proxy');
 const helmet = require('helmet');
 const path = require('path');
 const mustacheExpress = require('mustache-express');
@@ -8,6 +7,8 @@ const fs = require('fs');
 const prometheus = require('prom-client');
 const bodyParser = require('body-parser');
 const searchApiConsumer = require('./scripts/searchApiConsumer');
+
+/* eslint no-console: 0 */
 
 prometheus.collectDefaultMetrics();
 
@@ -40,20 +41,19 @@ server.use(bodyParser.json());
 const fasitProperties = {
     PAM_CONTEXT_PATH: '/pam-stillingsok',
     PAM_SEARCH_API: '/pam-stillingsok/search-api',
-    PAM_AD_USER_API: process.env.PAMADUSER_URL + '/aduser',
+    PAM_AD_USER_API: `${process.env.PAMADUSER_URL}/aduser`,
     LOGIN_URL: process.env.LOGINSERVICE_URL,
     LOGOUT_URL: process.env.LOGOUTSERVICE_URL,
     PAM_STILLINGSOK_URL: process.env.PAM_STILLINGSOK_URL
 };
 
 const writeEnvironmentVariablesToFile = () => {
-    const fileContent =
-        `window.__PAM_STILLINGSOK_URL__="${fasitProperties.PAM_STILLINGSOK_URL}";\n` +
-        `window.__PAM_CONTEXT_PATH__="${fasitProperties.PAM_CONTEXT_PATH}";\n` +
-        `window.__PAM_AD_USER_API__="${fasitProperties.PAM_AD_USER_API}";\n` +
-        `window.__LOGIN_URL__="${fasitProperties.LOGIN_URL}";\n` +
-        `window.__LOGOUT_URL__="${fasitProperties.LOGOUT_URL}";\n` +
-        `window.__PAM_SEARCH_API__="${fasitProperties.PAM_SEARCH_API}";\n`;
+    const fileContent = `window.__PAM_STILLINGSOK_URL__="${fasitProperties.PAM_STILLINGSOK_URL}";\n`
+        + `window.__PAM_CONTEXT_PATH__="${fasitProperties.PAM_CONTEXT_PATH}";\n`
+        + `window.__PAM_AD_USER_API__="${fasitProperties.PAM_AD_USER_API}";\n`
+        + `window.__LOGIN_URL__="${fasitProperties.LOGIN_URL}";\n`
+        + `window.__LOGOUT_URL__="${fasitProperties.LOGOUT_URL}";\n`
+        + `window.__PAM_SEARCH_API__="${fasitProperties.PAM_SEARCH_API}";\n`;
 
     fs.writeFile(path.resolve(__dirname, 'dist/js/env.js'), fileContent, (err) => {
         if (err) throw err;
@@ -67,7 +67,7 @@ const renderSok = (htmlPages) => (
                 if (err) {
                     reject(err);
                 } else {
-                    resolve(Object.assign({sok: html}, htmlPages));
+                    resolve(Object.assign({ sok: html }, htmlPages));
                 }
             }
         );
@@ -78,11 +78,6 @@ const startServer = (htmlPages) => {
     writeEnvironmentVariablesToFile();
 
     server.use(
-        '/pam-stillingsok/search-api',
-        process.env.DEV_PROFILE === 'true' ? proxy('http://localhost:9000') : proxy('http://pam-search-api')
-    );
-
-    server.use(
         '/pam-stillingsok/js',
         express.static(path.resolve(__dirname, 'dist/js'))
     );
@@ -91,37 +86,37 @@ const startServer = (htmlPages) => {
         express.static(path.resolve(__dirname, 'dist/css'))
     );
 
-    server.get('/pam-stillingsok/search', async function(req, res) {
+    server.get('/api/search', async (req, res) => {
         const result = await searchApiConsumer.search(req.query)
-            .catch(err => logError('Failed to query search api', err));
+            .catch((err) => console.error('Failed to query search api', err));
 
         res.send(result);
     });
 
-    server.post('/pam-stillingsok/search', async function(req, res) {
+    server.post('/api/search', async (req, res) => {
         const result = await searchApiConsumer.search(req.body)
-            .catch((err) => { logError('Failed to query search api', err)});
+            .catch((err) => { console.error('Failed to query search api', err); });
 
         res.send(result);
     });
 
-    server.get('/pam-stillingsok/suggestions', async function(req, res) {
+    server.get('/api/suggestions', async (req, res) => {
         const result = await searchApiConsumer.suggestions(req.query)
-            .catch(err => logError('Failed to query search api', err));
+            .catch((err) => console.error('Failed to query search api', err));
 
         res.send(result);
     });
 
-    server.post('/pam-stillingsok/suggestions', async function(req, res) {
+    server.post('/api/suggestions', async (req, res) => {
         const result = await searchApiConsumer.suggestions(req.body)
-            .catch((err) => { logError('Failed to query search api', err)});
+            .catch((err) => { console.error('Failed to query search api', err); });
 
         res.send(result);
     });
 
-    server.get('/pam-stillingsok/ads/:uuid', async function(req, res) {
+    server.get('/api/stilling/:uuid', async (req, res) => {
         const result = await searchApiConsumer.fetchStilling(req.params.uuid)
-            .catch((err) => { logError('Failed to query search api', err)});
+            .catch((err) => { console.error('Failed to query search api', err); });
 
         res.send(result);
     });
@@ -146,7 +141,5 @@ const startServer = (htmlPages) => {
     });
 };
 
-const logError = (errorMessage, details) => console.log(errorMessage, details);
-
 renderSok({})
-    .then(startServer, (error) => logError('Failed to render app', error));
+    .then(startServer, (error) => console.error('Failed to render app', error));
