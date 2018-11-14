@@ -73,7 +73,8 @@ class TermsOfUse extends React.Component {
                         bruke innloggede tjenester i stillingssøket. Vilkårene og mulighet for å
                         trekke samtykket finner du igjen i Min side.
                         <br />E-posten benyttes bare til å varsle deg når nye stillinger dukker opp.
-                        Du kan senere velge å skru av e-postvarslingen under Min side.
+                        Du kan senere velge å skru av e-postvarsling under lagrede søk eller
+                        slette e-postadressen på Min side.
                     </Normaltekst>
                 </div>
             </Modal>
