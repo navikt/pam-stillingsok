@@ -1,3 +1,25 @@
+## RELEASE - 0.44.370-42ec2c4
+#### New in this release: 
++ 2018-11-14 [Bugfix] Fjern overflødig koding av space-karakterer
++ 2018-11-14 [Bugfix] Fiks koding/dekoding av querystring-parametre
++ 2018-11-14 [PAM-1998] Legge til NAV-logo slik at den kan brukes ved sending av mail
++ 2018-11-13 [PAM-2035] Refaktorer og linting
++ 2018-11-13 [PAM-2035] Fjern express-http-proxy
++ 2018-11-13 [Bugfix] Fiks duplikat url
++ 2018-11-13 [PAM-2031] Legg til endepunkt for henting av stilling
++ 2018-11-13 [PAM-2035] Filtrer fasetter det ikke er krysset av for
++ 2018-11-12 [PAM-2035] Refaktorer funksjoner for å konvertere til/fra objekt/querystring
++ 2018-11-12 [PAM-1359] Fjern unødvendig console.log
++ 2018-11-12 [PAM-1359] Refaktorer funksjoner som gjør kall mot søkeapiet
++ 2018-11-09 [PAM-2023] Oppdaterer README
++ 2018-11-09 [PAM-2023] Fikser kopiering av filer til docker-container
++ 2018-11-09 [PAM-2012] Tekstendringer på lagre søk og funn
++ 2018-11-09 [PAM-2008] Tekstendring ved ingen lagrede søk
++ 2018-11-08 [PAM-1769] Skjermleser leser opp kun en feil. Lager derfor en global alertstripe som viser alle feilmeldingene som kan oppstå i applikasjonen.
++ 2018-11-08 [PAM-1360] Integrerer endringer fra pr #78
++ 2018-11-08 [Bugfix] Fikser at initialSearch ikke får søkeresultater
++ 2018-11-07 [PAM-1360] Fikser bool filter for fylke og kommune
++ 2018-11-02 [Feature] Tar bort feature toggle på Nullstill kriterier.
 ## RELEASE - 0.43.342-d54911b
 #### New in this release: 
 + 2018-11-02 [Bugfix] Søket virket ikke på Edge/Windows10. Var et issue med at kall mot backend ikke kunne ha tomme http headere. Splitter derfor opp search-api og aduser-api kall, slik at kun de som skal ha med credentials og xsrf-token legger til headerene.
