@@ -30,7 +30,6 @@ class Application extends React.Component {
             <BrowserRouter>
                 <div>
                     <Error />
-                    <Disclaimer />
                     {featureToggle() && (
                         <div className="AuthButtons no-print">
                             <Container>
@@ -52,6 +51,7 @@ class Application extends React.Component {
                             </Container>
                         </div>
                     )}
+                    <Disclaimer />
                     <Switch>
                         <Route exact path="/" component={SearchPage} />
                         <Route path={`${CONTEXT_PATH}/stilling/:uuid`} component={StillingPage} />
