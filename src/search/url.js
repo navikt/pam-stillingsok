@@ -13,10 +13,12 @@ export function toObject(queryString = '') {
             let value = object[key];
 
             if (!Array.isArray(value)) {
-                value = [value];
+                value = [decodeURIComponent(value)];
+            } else {
+                value = decodeURIComponent(value);
             }
 
-            const newKey = key.replace('[]', '');
+            const newKey = decodeURIComponent(key.replace('[]', ''));
             delete object[key];
             object[newKey] = value;
         }
@@ -26,7 +28,7 @@ export function toObject(queryString = '') {
 }
 
 function arrayToQueryString(key, array) {
-    return array.map((val) => `${key}[]=${val}`)
+    return array.map((val) => `${encodeURIComponent(key)}[]=${encodeURIComponent(val)}`)
         .join('&');
 }
 
@@ -42,7 +44,7 @@ export function toQueryString(object = {}) {
             if (Array.isArray(value)) {
                 return arrayToQueryString(key, value);
             }
-            return `${key}=${object[key]}`;
+            return `${encodeURIComponent(key)}=${encodeURIComponent(object[key])}`;
         })
         .filter((elem) => elem !== '')
         .join('&')
