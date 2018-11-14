@@ -21,7 +21,7 @@ import sectorReducer from './search/facets/sector/sectorReducer';
 import searchBoxReducer, { searchBoxSaga } from './search/searchBox/searchBoxReducer';
 import searchReducer, { saga } from './search/searchReducer';
 import sortingReducer from './search/sorting/sortingReducer';
-import viewModeReducer from './search/viewMode/viewModeReducer';
+import viewModeReducer, { viewModeSaga } from './search/viewMode/viewModeReducer';
 import stillingReducer, { stillingSaga } from './stilling/stillingReducer';
 import './styles.less';
 import { urlSaga } from './urlReducer';
@@ -60,6 +60,7 @@ sagaMiddleware.run(savedSearchFormSaga);
 sagaMiddleware.run(savedSearchAlertStripeSaga);
 sagaMiddleware.run(urlSaga);
 sagaMiddleware.run(userSaga);
+sagaMiddleware.run(viewModeSaga);
 
 
 ReactDOM.render(

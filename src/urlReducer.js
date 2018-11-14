@@ -24,7 +24,6 @@ function* updateUrl() {
         extent: state.extent.checkedExtent,
         occupationFirstLevels: state.occupations.checkedFirstLevels,
         occupationSecondLevels: state.occupations.checkedSecondLevels,
-        mode: state.viewMode.mode ? state.viewMode.mode : undefined,
         saved: state.savedSearches.currentSavedSearch ? state.savedSearches.currentSavedSearch.uuid : undefined
     };
 
