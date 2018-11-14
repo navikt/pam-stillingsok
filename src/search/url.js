@@ -47,7 +47,6 @@ export function toQueryString(object = {}) {
             return `${encodeURIComponent(key)}=${encodeURIComponent(object[key])}`;
         })
         .filter((elem) => elem !== '')
-        .join('&')
-        .replace(/\s/g, '%20');
+        .join('&');
     return `?${string}`;
 }
