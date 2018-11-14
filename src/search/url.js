@@ -1,26 +1,27 @@
-import { parse } from 'url';
-
 /**
  * Tar en query-string og returnerer en Object-representasjon av stringen.
  * @param queryString   Query-stringen som skal parseres til et objekt.
  * @returns {Object}    En Object-representasjon av 'queryString'.
  */
 export function toObject(queryString = '') {
-    const object = parse(queryString, true).query;
+    const parameters = queryString.substring(1).split('&');
+    const object = {};
 
-    Object.keys(object).forEach((key) => {
+    parameters.forEach((parameter) => {
+        const pair = parameter.split('=');
+        let key = decodeURIComponent(pair[0]);
+        let val = decodeURIComponent(pair[1]);
+
         if (key.includes('[]')) {
-            let value = object[key];
+            key = key.replace('[]', '');
 
-            if (!Array.isArray(value)) {
-                value = [decodeURIComponent(value)];
+            if (object[key] === undefined) {
+                object[key] = [val];
             } else {
-                value = decodeURIComponent(value);
+                object[key].push(val);
             }
-
-            const newKey = decodeURIComponent(key.replace('[]', ''));
-            delete object[key];
-            object[newKey] = value;
+        } else {
+            object[key] = val;
         }
     });
 
