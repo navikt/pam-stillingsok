@@ -8,6 +8,7 @@ COPY dist/ ./dist
 COPY node_modules/ ./node_modules
 COPY views/ ./views
 COPY scripts/ ./scripts
+COPY images/ ./images
 
 EXPOSE 8080
 
