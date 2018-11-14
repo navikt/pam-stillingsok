@@ -1,3 +1,8 @@
+## RELEASE - 0.45.374-b896275
+#### New in this release: 
++ 2018-11-14 [Bugfix] Skriv egen parseringslogikk for querystrings
++ 2018-11-14 [Bugfix] Endre til riktig path
++ 2018-11-14 [Fix] Endret vilkårstekst
 ## RELEASE - 0.44.370-42ec2c4
 #### New in this release: 
 + 2018-11-14 [Bugfix] Fjern overflødig koding av space-karakterer
