@@ -41,6 +41,7 @@ class UserSettings extends React.Component {
 
     onRemoveEmailClick = () => {
         this.props.setUserEmail(null);
+        this.props.validateEmail();
         this.props.updateUser();
     };
 
