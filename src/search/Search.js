@@ -32,6 +32,7 @@ import SearchResultCount from './searchResults/SearchResultCount';
 import SearchResults from './searchResults/SearchResults';
 import Sorting from './sorting/Sorting';
 import ViewMode from './viewMode/ViewMode';
+import UserAlertStripe from '../user/UserAlertStripe';
 
 class Search extends React.Component {
     constructor(props) {
@@ -58,6 +59,7 @@ class Search extends React.Component {
             <div className="Search">
                 <FavouriteAlertStripe />
                 <SavedSearchAlertStripe />
+                <UserAlertStripe />
                 <PageHeader
                     title="Ledige stillinger"
                     buttons={featureToggle() && this.props.isAuthenticated !== false && this.props.user ?

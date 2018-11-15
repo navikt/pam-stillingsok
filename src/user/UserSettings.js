@@ -1,6 +1,5 @@
-import AlertStripe from 'nav-frontend-alertstriper';
 import { Column, Container, Row } from 'nav-frontend-grid';
-import { Flatknapp, Hovedknapp, Knapp } from 'nav-frontend-knapper';
+import { Flatknapp, Knapp } from 'nav-frontend-knapper';
 import { Input } from 'nav-frontend-skjema';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
@@ -12,6 +11,7 @@ import { CONTEXT_PATH } from '../fasitProperties';
 import ConfirmDeleteUserModal from './ConfirmDeleteUserModal';
 import NotAuthenticated from './NotAuthenticated';
 import NoUser from './NoUser';
+import UserAlertStripe from './UserAlertStripe';
 import { SET_USER_EMAIL, SHOW_CONFIRM_DELETE_USER_MODAL, UPDATE_USER, VALIDATE_USER_EMAIL } from './userReducer';
 import './UserSettings.less';
 
@@ -160,11 +160,7 @@ class UserSettings extends React.Component {
                             {this.props.confirmDeleteUserModalIsVisible && (
                                 <ConfirmDeleteUserModal />
                             )}
-                            {this.props.userAlertStripeIsVisible && (
-                                <AlertStripe type="suksess" solid className="UserSettingsAlertStripe">
-                                    E-postadressen din ble endret
-                                </AlertStripe>
-                            )}
+                            <UserAlertStripe />
                         </div>
                     )}
                 </Container>
@@ -188,7 +184,6 @@ UserSettings.propTypes = {
     showConfirmDeleteUserModal: PropTypes.func.isRequired,
     updateUser: PropTypes.func.isRequired,
     confirmDeleteUserModalIsVisible: PropTypes.bool.isRequired,
-    userAlertStripeIsVisible: PropTypes.bool.isRequired,
     isUpdating: PropTypes.bool.isRequired,
     validation: PropTypes.shape({
         email: PropTypes.string
@@ -200,7 +195,6 @@ const mapStateToProps = (state) => ({
     user: state.user.user,
     isUpdating: state.user.isUpdating,
     updateUserError: state.user.updateUserError,
-    userAlertStripeIsVisible: state.user.userAlertStripeIsVisible,
     confirmDeleteUserModalIsVisible: state.user.confirmDeleteUserModalIsVisible,
     validation: state.user.validation
 });

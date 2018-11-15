@@ -21,6 +21,8 @@ export const FETCH_USER_FAILURE = 'FETCH_USER_FAILURE';
 export const CREATE_USER = 'CREATE_USER';
 export const CREATE_USER_BEGIN = 'CREATE_USER_BEGIN';
 export const CREATE_USER_SUCCESS = 'CREATE_USER_SUCCESS';
+export const CREATE_USER_HIDE_ALERT = 'CREATE_USER_HIDE_ALERT';
+export const CREATE_USER_SHOW_ALERT = 'CREATE_USER_SHOW_ALERT';
 export const CREATE_USER_FAILURE = 'CREATE_USER_FAILURE';
 
 export const UPDATE_USER = 'UPDATE_USER';
@@ -52,6 +54,7 @@ const initialState = {
     isUpdating: false,
     isDeletingUser: false,
     userAlertStripeIsVisible: false,
+    userAlertStripeMode: 'added',
     termsOfUseModalIsVisible: false,
     confirmDeleteUserModalIsVisible: false,
     validation: {}
@@ -84,13 +87,21 @@ export default function authorizationReducer(state = initialState, action) {
                 ...state,
                 user: action.response,
                 isCreating: false,
-                termsOfUseModalIsVisible: false
+                termsOfUseModalIsVisible: false,
+                userAlertStripeIsVisible: false
+            };
+        case CREATE_USER_SHOW_ALERT:
+            return {
+                ...state,
+                userAlertStripeIsVisible: true,
+                userAlertStripeMode: 'added'
             };
         case CREATE_USER_FAILURE:
             return {
                 ...state,
                 isCreating: false,
-                termsOfUseModalIsVisible: false
+                termsOfUseModalIsVisible: false,
+                userAlertStripeIsVisible: false
             };
         case SET_USER_EMAIL:
             return {
@@ -110,8 +121,10 @@ export default function authorizationReducer(state = initialState, action) {
                 ...state,
                 isUpdating: false,
                 user: action.response,
-                userAlertStripeIsVisible: true
+                userAlertStripeIsVisible: true,
+                userAlertStripeMode: 'changed'
             };
+        case CREATE_USER_HIDE_ALERT:
         case UPDATE_USER_HIDE_ALERT:
             return {
                 ...state,
@@ -239,6 +252,11 @@ function* createUser(action) {
         };
         const response = yield call(userApiPost, `${AD_USER_API}/api/v1/user`, fixUser(user));
         yield put({ type: CREATE_USER_SUCCESS, response });
+        if (user.email) {
+            yield put({ type: CREATE_USER_SHOW_ALERT });
+            yield call(delay, 5000);
+            yield put({ type: CREATE_USER_HIDE_ALERT });
+        }
     } catch (e) {
         if (e instanceof SearchApiError) {
             yield put({ type: CREATE_USER_FAILURE, error: e });
