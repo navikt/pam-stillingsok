@@ -1,3 +1,6 @@
+## RELEASE - 0.46.375-a7624eb
+#### New in this release: 
++ 2018-11-15 [Bugfix] Parse urlparameter ?to=n til integer
 ## RELEASE - 0.45.374-b896275
 #### New in this release: 
 + 2018-11-14 [Bugfix] Skriv egen parseringslogikk for querystrings
