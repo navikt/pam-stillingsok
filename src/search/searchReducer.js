@@ -26,7 +26,8 @@ const initialState = {
     searchResult: undefined,
     from: 0,
     to: PAGE_SIZE,
-    page: 0
+    page: 0,
+    searchIsNonEmpty: false
 };
 
 export function mergeAndRemoveDuplicates(array1, array2) {
@@ -74,6 +75,7 @@ export default function searchReducer(state = initialState, action) {
             return {
                 ...state,
                 initialSearchDone: true,
+                searchIsNonEmpty: action.searchIsNonEmpty,
                 searchResult: {
                     total: action.response.total,
                     stillinger: action.response.stillinger
@@ -123,6 +125,10 @@ export function toSearchQuery(state) {
     return query;
 }
 
+function queryIsNonEmpty(query) {
+    return Object.keys(query).length > 0;
+}
+
 /**
  * Fetcher alle tilgjengelige fasetter og gjør deretter det første søket.
  */
@@ -145,7 +151,7 @@ function* initialSearch() {
                 response = yield call(fetchSearch, query);
             }
 
-            yield put({ type: SEARCH_SUCCESS, response });
+            yield put({ type: SEARCH_SUCCESS, response, searchIsNonEmpty: queryIsNonEmpty(query) });
         }
     } catch (e) {
         if (e instanceof SearchApiError) {
@@ -164,7 +170,7 @@ function* search() {
         const state = yield select();
         const query = toSearchQuery(state);
         const searchResult = yield call(fetchSearch, query);
-        yield put({ type: SEARCH_SUCCESS, response: searchResult });
+        yield put({ type: SEARCH_SUCCESS, response: searchResult, searchIsNonEmpty: queryIsNonEmpty(query) });
     } catch (e) {
         if (e instanceof SearchApiError) {
             yield put({ type: SEARCH_FAILURE, error: e });
