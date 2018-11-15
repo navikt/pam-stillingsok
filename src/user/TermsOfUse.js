@@ -13,12 +13,12 @@ class TermsOfUse extends React.Component {
         super(props);
         this.state = {
             email: '',
-            validationError: false
+            hasValidationError: false
         };
     }
 
     onAcceptTerms = () => {
-        if (this.state.validationError === false) {
+        if (this.state.hasValidationError === false) {
             this.props.createUser(this.state.email);
         }
     };
@@ -29,14 +29,17 @@ class TermsOfUse extends React.Component {
         });
     };
 
+    onEmailBlur = () => {
+        this.setState({
+            hasValidationError: this.state.email.length > 0 && this.state.email.indexOf('@') === -1
+        });
+    };
+
     closeModal = () => {
         this.props.hideModal();
     };
 
     render() {
-        const validationMessage = 'E-postadressen er ugyldig. Den må minimum inneholde en «@»';
-        this.state.validationError = (this.state.email.length > 0) && (this.state.email.indexOf('@') === -1);
-
         return (
             <Modal
                 isOpen
@@ -60,7 +63,10 @@ class TermsOfUse extends React.Component {
                             label="E-postadressen din"
                             value={this.state.email}
                             onChange={this.onEmailChange}
-                            feil={this.state.validationError ? { feilmelding: validationMessage } : undefined}
+                            onBlur={this.onEmailBlur}
+                            feil={this.state.hasValidationError ? {
+                                feilmelding: 'E-postadressen er ugyldig. Den må minimum inneholde en «@»'
+                            } : undefined}
                         />
                     </div>
                     <div className="TermsOfUse__buttons">

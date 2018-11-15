@@ -38,6 +38,7 @@ export const DELETE_USER_FAILURE = 'DELETE_USER_FAILURE';
 
 export const SET_USER_EMAIL = 'SET_USER_EMAIL';
 
+export const VALIDATE_USER_EMAIL = 'VALIDATE_USER_EMAIL';
 export const SET_VALIDATION_ERROR = 'SET_VALIDATION_ERROR';
 export const REMOVE_VALIDATION_ERROR = 'REMOVE_VALIDATION_ERROR';
 
@@ -284,9 +285,13 @@ function* validateEMail() {
     const email = yield select((state) => state.user.user.email);
     const error = email && (email.length > 0) && (email.indexOf('@') === -1);
     if (error) {
-        yield put({ type: SET_VALIDATION_ERROR, field: 'email', message: 'E-postadressen er ugyldig. Den må minimum inneholde en «@»' });
+        yield put({
+            type: SET_VALIDATION_ERROR,
+            field: 'email',
+            message: 'E-postadressen er ugyldig. Den må minimum inneholde en «@»'
+        });
     } else {
-        yield put({ type: REMOVE_VALIDATION_ERROR, field: 'email'});
+        yield put({ type: REMOVE_VALIDATION_ERROR, field: 'email' });
     }
 }
 
@@ -296,5 +301,5 @@ export const userSaga = function* saga() {
     yield takeLatest(CREATE_USER, createUser);
     yield takeLatest(UPDATE_USER, updateUser);
     yield takeLatest(DELETE_USER, deleteUser);
-    yield takeLatest(SET_USER_EMAIL, validateEMail);
+    yield takeLatest(VALIDATE_USER_EMAIL, validateEMail);
 };
