@@ -21,7 +21,7 @@ function Disclaimer({ shouldShow, hideDisclaimer }) {
                             Inntil videre kan du bare gjøre dette i dagens stillingssøk.
                         </Normaltekst>
                         <Normaltekst className="blokk-xxs">
-                            <a href="https://in.hotjar.com/s?siteId=148751&surveyId=71116" className="lenke">
+                            <a href="https://surveys.hotjar.com/s?siteId=148751&surveyId=123859" className="lenke">
                                 Gi oss din tilbakemelding på det nye stillingssøket
                             </a>
                         </Normaltekst>
