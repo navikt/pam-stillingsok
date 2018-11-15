@@ -38,7 +38,7 @@ SaveSearchButton.defaultProps = {
     currentSavedSearch: undefined,
     user: undefined,
     isAuthenticated: undefined,
-    searchIsNonEmpty: undefined,
+    searchIsNonEmpty: false,
     searchBoxValue: undefined
 };
 
