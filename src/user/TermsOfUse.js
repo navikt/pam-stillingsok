@@ -12,17 +12,26 @@ class TermsOfUse extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            email: ''
+            email: '',
+            hasValidationError: false
         };
     }
 
     onAcceptTerms = () => {
-        this.props.createUser(this.state.email);
+        if (this.state.hasValidationError === false) {
+            this.props.createUser(this.state.email);
+        }
     };
 
     onEmailChange = (e) => {
         this.setState({
             email: e.target.value
+        });
+    };
+
+    onEmailBlur = () => {
+        this.setState({
+            hasValidationError: this.state.email.length > 0 && this.state.email.indexOf('@') === -1
         });
     };
 
@@ -54,6 +63,10 @@ class TermsOfUse extends React.Component {
                             label="E-postadressen din"
                             value={this.state.email}
                             onChange={this.onEmailChange}
+                            onBlur={this.onEmailBlur}
+                            feil={this.state.hasValidationError ? {
+                                feilmelding: 'E-postadressen er ugyldig. Den må minimum inneholde en «@»'
+                            } : undefined}
                         />
                     </div>
                     <div className="TermsOfUse__buttons">
