@@ -1,3 +1,8 @@
+## RELEASE - 0.48.386-45a0576
+#### New in this release: 
++ 2018-11-15 [PAM-2081] Ny hotjar lenke
++ 2018-11-15 [PAM-2081] Ny hotjar lenke
++ 2018-11-15 [PAM-1974] Legger til validering av epost felt
 ## RELEASE - 0.47.380-dbd1471
 #### New in this release: 
 + 2018-11-15 [PAM-2076] Øk size på filter aggregering slik at alle yrkeskategorier kommer med
