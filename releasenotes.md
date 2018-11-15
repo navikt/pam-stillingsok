@@ -1,3 +1,6 @@
+## RELEASE - 0.47.380-dbd1471
+#### New in this release: 
++ 2018-11-15 [PAM-2076] Øk size på filter aggregering slik at alle yrkeskategorier kommer med
 ## RELEASE - 0.46.375-a7624eb
 #### New in this release: 
 + 2018-11-15 [Bugfix] Parse urlparameter ?to=n til integer
