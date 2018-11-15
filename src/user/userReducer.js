@@ -38,6 +38,9 @@ export const DELETE_USER_FAILURE = 'DELETE_USER_FAILURE';
 
 export const SET_USER_EMAIL = 'SET_USER_EMAIL';
 
+export const SET_VALIDATION_ERROR = 'SET_VALIDATION_ERROR';
+export const REMOVE_VALIDATION_ERROR = 'REMOVE_VALIDATION_ERROR';
+
 const TERMS_VERSION = 'sok_v1';
 
 const initialState = {
@@ -49,7 +52,8 @@ const initialState = {
     isDeletingUser: false,
     userAlertStripeIsVisible: false,
     termsOfUseModalIsVisible: false,
-    confirmDeleteUserModalIsVisible: false
+    confirmDeleteUserModalIsVisible: false,
+    validation: {}
 };
 
 export default function authorizationReducer(state = initialState, action) {
@@ -159,6 +163,22 @@ export default function authorizationReducer(state = initialState, action) {
                 confirmDeleteUserModalIsVisible: false,
                 isDeletingUser: false
             };
+        case SET_VALIDATION_ERROR:
+            return {
+                ...state,
+                validation: {
+                    ...state.validation,
+                    [action.field]: action.message
+                }
+            };
+        case REMOVE_VALIDATION_ERROR:
+            return {
+                ...state,
+                validation: {
+                    ...state.validation,
+                    [action.field]: undefined
+                }
+            };
         default:
             return state;
     }
@@ -228,18 +248,20 @@ function* createUser(action) {
 }
 
 function* updateUser() {
-    try {
-        const state = yield select();
-        yield put({ type: UPDATE_USER_BEGIN });
-        const response = yield call(userApiPut, `${AD_USER_API}/api/v1/user`, fixUser(state.user.user));
-        yield put({ type: UPDATE_USER_SUCCESS, response });
-        yield call(delay, 5000);
-        yield put({ type: UPDATE_USER_HIDE_ALERT });
-    } catch (e) {
-        if (e instanceof SearchApiError) {
-            yield put({ type: UPDATE_USER_FAILURE, error: e });
-        } else {
-            throw e;
+    const state = yield select();
+    if (state.user.validation.email === undefined) {
+        try {
+            yield put({ type: UPDATE_USER_BEGIN });
+            const response = yield call(userApiPut, `${AD_USER_API}/api/v1/user`, fixUser(state.user.user));
+            yield put({ type: UPDATE_USER_SUCCESS, response });
+            yield call(delay, 5000);
+            yield put({ type: UPDATE_USER_HIDE_ALERT });
+        } catch (e) {
+            if (e instanceof SearchApiError) {
+                yield put({ type: UPDATE_USER_FAILURE, error: e });
+            } else {
+                throw e;
+            }
         }
     }
 }
@@ -258,10 +280,21 @@ function* deleteUser() {
     }
 }
 
+function* validateEMail() {
+    const email = yield select((state) => state.user.user.email);
+    const error = email && (email.length > 0) && (email.indexOf('@') === -1);
+    if (error) {
+        yield put({ type: SET_VALIDATION_ERROR, field: 'email', message: 'E-postadressen er ugyldig. Den må minimum inneholde en «@»' });
+    } else {
+        yield put({ type: REMOVE_VALIDATION_ERROR, field: 'email'});
+    }
+}
+
 export const userSaga = function* saga() {
     yield takeEvery(FETCH_IS_AUTHENTICATED, fetchIsAuthenticated);
     yield takeEvery(FETCH_IS_AUTHENTICATED_SUCCESS, fetchUser);
     yield takeLatest(CREATE_USER, createUser);
     yield takeLatest(UPDATE_USER, updateUser);
     yield takeLatest(DELETE_USER, deleteUser);
+    yield takeLatest(SET_USER_EMAIL, validateEMail);
 };

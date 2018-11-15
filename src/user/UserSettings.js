@@ -41,6 +41,8 @@ class UserSettings extends React.Component {
     };
 
     render() {
+        const { validation } = this.props;
+
         return (
             <div className="UserSettings">
                 <PageHeader
@@ -92,6 +94,7 @@ class UserSettings extends React.Component {
                                                         label="E-postadressen din"
                                                         value={this.props.user.email || ''}
                                                         onChange={this.onEmailChange}
+                                                        feil={validation.email ? { feilmelding: validation.email } : undefined}
                                                     />
                                                 </div>
                                                 <div className="UserSettings__email-buttons">
@@ -124,7 +127,7 @@ class UserSettings extends React.Component {
                                                 <Normaltekst className="TermsOfUse__text">
                                                     Du har samtykket til våre <Link to={`${CONTEXT_PATH}/vilkar`} className="lenke">vilkår
                                                     for å bruke innloggede tjenester.
-                                                    </Link>
+                                                </Link>
                                                     <br /><br />
                                                     Hvis du ikke lenger ønsker å bruke innloggede tjenester i
                                                     stillingssøket, kan du slette brukeren din.
@@ -174,7 +177,10 @@ UserSettings.propTypes = {
     updateUser: PropTypes.func.isRequired,
     confirmDeleteUserModalIsVisible: PropTypes.bool.isRequired,
     userAlertStripeIsVisible: PropTypes.bool.isRequired,
-    isUpdating: PropTypes.bool.isRequired
+    isUpdating: PropTypes.bool.isRequired,
+    validation: PropTypes.shape({
+        email: PropTypes.string
+    }).isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -183,7 +189,8 @@ const mapStateToProps = (state) => ({
     isUpdating: state.user.isUpdating,
     updateUserError: state.user.updateUserError,
     userAlertStripeIsVisible: state.user.userAlertStripeIsVisible,
-    confirmDeleteUserModalIsVisible: state.user.confirmDeleteUserModalIsVisible
+    confirmDeleteUserModalIsVisible: state.user.confirmDeleteUserModalIsVisible,
+    validation: state.user.validation
 });
 
 const mapDispatchToProps = (dispatch) => ({
