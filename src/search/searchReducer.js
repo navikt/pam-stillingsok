@@ -44,8 +44,8 @@ export default function searchReducer(state = initialState, action) {
             return {
                 ...state,
                 from: 0,
-                to: action.query.to || PAGE_SIZE,
-                page: action.query.to ? (action.query.to - PAGE_SIZE) / PAGE_SIZE : 0
+                to: action.query.to ? parseInt(action.query.to, 10) : PAGE_SIZE,
+                page: action.query.to ? (parseInt(action.query.to, 10) - PAGE_SIZE) / PAGE_SIZE : 0
             };
         case RESET_FROM:
             return {
