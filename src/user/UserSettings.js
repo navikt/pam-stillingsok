@@ -12,7 +12,7 @@ import { CONTEXT_PATH } from '../fasitProperties';
 import ConfirmDeleteUserModal from './ConfirmDeleteUserModal';
 import NotAuthenticated from './NotAuthenticated';
 import NoUser from './NoUser';
-import { SET_USER_EMAIL, SHOW_CONFIRM_DELETE_USER_MODAL, UPDATE_USER } from './userReducer';
+import { SET_USER_EMAIL, SHOW_CONFIRM_DELETE_USER_MODAL, UPDATE_USER, VALIDATE_USER_EMAIL } from './userReducer';
 import './UserSettings.less';
 
 const PAGE_TITLE = 'Min side';
@@ -25,6 +25,10 @@ class UserSettings extends React.Component {
 
     onEmailChange = (e) => {
         this.props.setUserEmail(e.target.value);
+    };
+
+    onEmailBlur = () => {
+        this.props.validateEmail();
     };
 
     onUpdateUserClick = () => {
@@ -41,6 +45,8 @@ class UserSettings extends React.Component {
     };
 
     render() {
+        const { validation } = this.props;
+
         return (
             <div className="UserSettings">
                 <PageHeader
@@ -92,6 +98,10 @@ class UserSettings extends React.Component {
                                                         label="E-postadressen din"
                                                         value={this.props.user.email || ''}
                                                         onChange={this.onEmailChange}
+                                                        onBlur={this.onEmailBlur}
+                                                        feil={validation.email ? {
+                                                            feilmelding: validation.email
+                                                        } : undefined}
                                                     />
                                                 </div>
                                                 <div className="UserSettings__email-buttons">
@@ -122,8 +132,11 @@ class UserSettings extends React.Component {
                                                     Din bruker
                                                 </Undertittel>
                                                 <Normaltekst className="TermsOfUse__text">
-                                                    Du har samtykket til våre <Link to={`${CONTEXT_PATH}/vilkar`} className="lenke">vilkår
-                                                    for å bruke innloggede tjenester.
+                                                    Du har samtykket til våre <Link
+                                                        to={`${CONTEXT_PATH}/vilkar`}
+                                                        className="lenke"
+                                                    >
+                                                     vilkår for å bruke innloggede tjenester.
                                                     </Link>
                                                     <br /><br />
                                                     Hvis du ikke lenger ønsker å bruke innloggede tjenester i
@@ -170,11 +183,15 @@ UserSettings.propTypes = {
     }),
     isAuthenticated: PropTypes.bool,
     setUserEmail: PropTypes.func.isRequired,
+    validateEmail: PropTypes.func.isRequired,
     showConfirmDeleteUserModal: PropTypes.func.isRequired,
     updateUser: PropTypes.func.isRequired,
     confirmDeleteUserModalIsVisible: PropTypes.bool.isRequired,
     userAlertStripeIsVisible: PropTypes.bool.isRequired,
-    isUpdating: PropTypes.bool.isRequired
+    isUpdating: PropTypes.bool.isRequired,
+    validation: PropTypes.shape({
+        email: PropTypes.string
+    }).isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -183,11 +200,13 @@ const mapStateToProps = (state) => ({
     isUpdating: state.user.isUpdating,
     updateUserError: state.user.updateUserError,
     userAlertStripeIsVisible: state.user.userAlertStripeIsVisible,
-    confirmDeleteUserModalIsVisible: state.user.confirmDeleteUserModalIsVisible
+    confirmDeleteUserModalIsVisible: state.user.confirmDeleteUserModalIsVisible,
+    validation: state.user.validation
 });
 
 const mapDispatchToProps = (dispatch) => ({
     setUserEmail: (email) => dispatch({ type: SET_USER_EMAIL, email }),
+    validateEmail: () => dispatch({ type: VALIDATE_USER_EMAIL }),
     updateUser: () => dispatch({ type: UPDATE_USER }),
     showConfirmDeleteUserModal: () => dispatch({ type: SHOW_CONFIRM_DELETE_USER_MODAL })
 });
