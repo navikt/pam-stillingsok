@@ -127,8 +127,14 @@ export function toSearchQuery(state) {
     return query;
 }
 
-function queryIsNonEmpty(query) {
-    return Object.keys(query).length > 0;
+/**
+ * Sjekker om bruker har foretatt et valg i stillingssøkskjemaet ved søk.
+ * @param query         Query som brukes i søket.
+ * @returns {boolean}   True dersom bruker har huket av for en fasett eller skrevet noe i søkeboksen.
+ */
+function queryHasSelectedFacets(query) {
+    const { length } = Object.keys(query);
+    return (length > 1 && query.q !== undefined) || (length > 0 && query.q === undefined);
 }
 
 /**
@@ -153,7 +159,7 @@ function* initialSearch() {
                 response = yield call(fetchSearch, query);
             }
 
-            yield put({ type: SEARCH_SUCCESS, response, searchIsNonEmpty: queryIsNonEmpty(query) });
+            yield put({ type: SEARCH_SUCCESS, response });
         }
     } catch (e) {
         if (e instanceof SearchApiError) {
@@ -172,7 +178,7 @@ function* search() {
         const state = yield select();
         const query = toSearchQuery(state);
         const searchResult = yield call(fetchSearch, query);
-        yield put({ type: SEARCH_SUCCESS, response: searchResult, searchIsNonEmpty: queryIsNonEmpty(query) });
+        yield put({ type: SEARCH_SUCCESS, response: searchResult, searchIsNonEmpty: queryHasSelectedFacets(query) });
     } catch (e) {
         if (e instanceof SearchApiError) {
             yield put({ type: SEARCH_FAILURE, error: e });
