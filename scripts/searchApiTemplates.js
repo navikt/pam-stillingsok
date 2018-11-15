@@ -392,7 +392,7 @@ exports.searchTemplate = (query) => {
                     values: {
                         terms: {
                             field: 'county_facet',
-                            size: 20,
+                            size: 50,
                             order: {
                                 _key: 'asc'
                             }
@@ -431,11 +431,13 @@ exports.searchTemplate = (query) => {
                 aggs: {
                     values: {
                         terms: {
+                            size: 50,
                             field: 'occupation_level1_facet'
                         },
                         aggs: {
                             occupationSecondLevels: {
                                 terms: {
+                                    size: 50,
                                     field: 'occupation_level2_facet'
                                 }
                             }
