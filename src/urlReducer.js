@@ -3,7 +3,7 @@ import { ADD_SAVED_SEARCH_SUCCESS, SET_CURRENT_SAVED_SEARCH } from './savedSearc
 import { SET_VALUE } from './search/searchBox/searchBoxReducer';
 import { LOAD_MORE, PAGE_SIZE, RESET_SEARCH, SEARCH } from './search/searchReducer';
 import { SET_VIEW_MODE } from './search/viewMode/viewModeReducer';
-import { toQueryString, toObject } from "./search/url";
+import { toQueryString, toObject } from './search/url';
 import { removeUndefinedOrEmptyString } from './utils';
 
 export const RESTORE_STATE_FROM_URL_BEGIN = 'RESTORE_STATE_FROM_URL_BEGIN';
