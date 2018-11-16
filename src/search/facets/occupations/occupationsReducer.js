@@ -13,7 +13,9 @@ export const OCCUPATION_ANNET = 'Uoppgitt/ ikke identifiserbare';
 const initialState = {
     occupationFirstLevels: [],
     checkedFirstLevels: [],
-    checkedSecondLevels: []
+    checkedSecondLevels: [],
+    deprecatedFirstLevels: [],
+    deprecatedSecondLevels: []
 };
 
 export default function occupations(state = initialState, action) {
@@ -60,6 +62,21 @@ export default function occupations(state = initialState, action) {
                             };
                         })
                     };
+                }),
+                deprecatedFirstLevels: state.checkedFirstLevels.map((checkedFirstLevel) => (
+                    !state.occupationFirstLevels.map((o) => o.key).includes(checkedFirstLevel)
+                        ? checkedFirstLevel
+                        : undefined
+                )),
+                deprecatedSecondLevels: state.checkedSecondLevels.map((checkedSecondLevel) => {
+                    const occupation = checkedSecondLevel.split('.');
+                    const firstLevel = state.occupationFirstLevels.find((o) => o.key === occupation[0]);
+                    if (firstLevel) {
+                        return !firstLevel.occupationSecondLevels.map((o) => o.key).includes(checkedSecondLevel)
+                            ? occupation[1]
+                            : undefined;
+                    }
+                    return occupation[1];
                 })
             };
         case CHECK_FIRST_LEVEL:

@@ -64,12 +64,12 @@ class Occupations extends React.Component {
                             />
                             {checkedFirstLevels && checkedFirstLevels.includes(firstLevel.key)
                                 && firstLevel.key !== OCCUPATION_ANNET && (
-                                    <div
-                                        className="Occupations__inner__secondLevels"
-                                        role="group"
-                                        aria-label="Velg yrke"
-                                    >
-                                        {firstLevel.occupationSecondLevels &&
+                                <div
+                                    className="Occupations__inner__secondLevels"
+                                    role="group"
+                                    aria-label="Velg yrke"
+                                >
+                                    {firstLevel.occupationSecondLevels &&
                                     firstLevel.occupationSecondLevels.map((secondLevel) => (
                                         <Checkbox
                                             name="occupation"
@@ -80,8 +80,8 @@ class Occupations extends React.Component {
                                             checked={checkedSecondLevels.includes(secondLevel.key)}
                                         />
                                     ))}
-                                    </div>
-                                )}
+                                </div>
+                            )}
                         </div>
                     ))}
                 </div>

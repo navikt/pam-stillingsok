@@ -10,7 +10,9 @@ export const UNCHECK_MUNICIPAL = 'UNCHECK_MUNICIPAL';
 const initialState = {
     counties: [],
     checkedCounties: [],
-    checkedMunicipals: []
+    checkedMunicipals: [],
+    deprecatedCounties: [],
+    deprecatedMunicipals: []
 };
 
 export default function countiesReducer(state = initialState, action) {
@@ -57,6 +59,19 @@ export default function countiesReducer(state = initialState, action) {
                             };
                         })
                     };
+                }),
+                deprecatedCounties: state.checkedCounties.map((checkedCounty) => (
+                    !state.counties.map((c) => c.key).includes(checkedCounty) ? checkedCounty : undefined
+                )),
+                deprecatedMunicipals: state.checkedMunicipals.map((checkedMunicipal) => {
+                    const municipal = checkedMunicipal.split('.');
+                    const county = state.counties.find((c) => c.key === municipal[0]);
+                    if (county) {
+                        return !county.municipals.map((m) => m.key).includes(checkedMunicipal)
+                            ? municipal[1]
+                            : undefined;
+                    }
+                    return municipal[1];
                 })
             };
         case CHECK_COUNTY:
