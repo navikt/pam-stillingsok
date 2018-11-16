@@ -2,12 +2,11 @@ import { RESTORE_STATE_FROM_SAVED_SEARCH } from '../../../savedSearches/savedSea
 import { RESTORE_STATE_FROM_URL } from '../../../urlReducer';
 import { FETCH_INITIAL_FACETS_SUCCESS, RESET_SEARCH, SEARCH_SUCCESS } from '../../searchReducer';
 
-export const CHECK_PUBLISHED = 'CHECK_PUBLISHED';
-export const UNCHECK_PUBLISHED = 'UNCHECK_PUBLISHED';
+export const SET_PUBLISHED = 'CHECK_PUBLISHED';
 
 const initialState = {
     published: [],
-    checkedPublished: []
+    checkedPublished: undefined
 };
 
 export default function publishedReducer(state = initialState, action) {
@@ -16,12 +15,12 @@ export default function publishedReducer(state = initialState, action) {
         case RESTORE_STATE_FROM_SAVED_SEARCH:
             return {
                 ...state,
-                checkedPublished: action.query.published || []
+                checkedPublished: action.query.published
             };
         case RESET_SEARCH:
             return {
                 ...state,
-                checkedPublished: []
+                checkedPublished: undefined
             };
         case FETCH_INITIAL_FACETS_SUCCESS:
             return {
@@ -41,18 +40,10 @@ export default function publishedReducer(state = initialState, action) {
                     };
                 })
             };
-        case CHECK_PUBLISHED:
+        case SET_PUBLISHED:
             return {
                 ...state,
-                checkedPublished: [
-                    ...state.checkedPublished,
-                    action.value
-                ]
-            };
-        case UNCHECK_PUBLISHED:
-            return {
-                ...state,
-                checkedPublished: state.checkedPublished.filter((m) => (m !== action.value))
+                checkedPublished: action.value
             };
         default:
             return state;
