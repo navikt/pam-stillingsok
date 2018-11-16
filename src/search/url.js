@@ -10,7 +10,7 @@ export function toObject(queryString = '') {
     parameters.forEach((parameter) => {
         const pair = parameter.split('=');
         let key = decodeURIComponent(pair[0]);
-        let val = decodeURIComponent(pair[1]);
+        let val = pair[1] !== undefined ? decodeURIComponent(pair[1]) : '';
 
         if (key.includes('[]')) {
             key = key.replace('[]', '');
