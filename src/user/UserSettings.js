@@ -11,7 +11,6 @@ import { CONTEXT_PATH } from '../fasitProperties';
 import ConfirmDeleteUserModal from './ConfirmDeleteUserModal';
 import NotAuthenticated from './NotAuthenticated';
 import NoUser from './NoUser';
-import UserAlertStripe from './UserAlertStripe';
 import { SET_USER_EMAIL, SHOW_CONFIRM_DELETE_USER_MODAL, UPDATE_USER, VALIDATE_USER_EMAIL } from './userReducer';
 import './UserSettings.less';
 
@@ -160,7 +159,6 @@ class UserSettings extends React.Component {
                             {this.props.confirmDeleteUserModalIsVisible && (
                                 <ConfirmDeleteUserModal />
                             )}
-                            <UserAlertStripe />
                         </div>
                     )}
                 </Container>
