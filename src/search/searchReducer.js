@@ -1,5 +1,6 @@
 import { call, put, select, takeLatest, throttle } from 'redux-saga/effects';
 import { fetchSearch } from '../api/api';
+import { toObject } from './url';
 import SearchApiError from '../api/SearchApiError';
 import { RESTORE_STATE_FROM_SAVED_SEARCH } from '../savedSearches/savedSearchesReducer';
 import { RESTORE_STATE_FROM_URL } from '../urlReducer';
@@ -137,12 +138,20 @@ function* initialSearch() {
             response = yield call(fetchSearch, {});
             yield put({ type: FETCH_INITIAL_FACETS_SUCCESS, response });
 
-            // Gjør et nytt søk hvis det finnes noen krysset av noen
-            // fasetter/søkekriterier
-            state = yield select();
-            const query = toSearchQuery(state);
-            if (Object.keys(query).length > 0) {
+            const searchString = document.location.search;
+            if (searchString) {
+                // Om urlen inneholder søkeparametre skal disse benyttes i søket.
+                const query = toObject(searchString);
+                yield put({ type: RESTORE_STATE_FROM_SAVED_SEARCH, query });
                 response = yield call(fetchSearch, query);
+            } else {
+                // Gjør et nytt søk hvis det finnes noen krysset av noen
+                // fasetter/søkekriterier
+                state = yield select();
+                const query = toSearchQuery(state);
+                if (Object.keys(query).length > 0) {
+                    response = yield call(fetchSearch, query);
+                }
             }
 
             yield put({ type: SEARCH_SUCCESS, response });
