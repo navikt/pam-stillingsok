@@ -2,7 +2,7 @@ import { RESTORE_STATE_FROM_SAVED_SEARCH } from '../../../savedSearches/savedSea
 import { RESTORE_STATE_FROM_URL } from '../../../urlReducer';
 import { FETCH_INITIAL_FACETS_SUCCESS, RESET_SEARCH, SEARCH_SUCCESS } from '../../searchReducer';
 
-export const SET_PUBLISHED = 'CHECK_PUBLISHED';
+export const SET_PUBLISHED = 'SET_PUBLISHED';
 
 const initialState = {
     published: [],
