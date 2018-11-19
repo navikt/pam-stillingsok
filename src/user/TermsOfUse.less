@@ -24,17 +24,18 @@
   margin-bottom: 1rem;
 }
 
+.TermsOfUse__buttons .knapp:not(:last-child) {
+  margin-right: @knapp-margin-right;
+}
+
 @media (max-width: @screen-sm-max) {
   .TermsOfUse {
     padding: @modal-padding-mobile;
   }
 
-  .TermsOfUse__buttons .knapp {
-    width: 100%;
-  }
-
   .TermsOfUse__buttons .knapp:not(:last-child) {
-    margin-bottom: @knapp-margin-right;
+    display: block;
+    margin-bottom: @knapp-margin-bottom;
   }
 }
 

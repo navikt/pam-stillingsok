@@ -118,7 +118,7 @@ class UserSettings extends React.Component {
                                                             spinner={this.props.isUpdating}
                                                             disabled={this.props.isUpdating}
                                                         >
-                                                            Slett e-post
+                                                            Slett
                                                         </Flatknapp>
                                                     )}
                                                 </div>

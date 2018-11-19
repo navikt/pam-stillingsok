@@ -12,26 +12,18 @@
     margin-bottom: @modal-body-margin-bottom;
 }
 
+.ConfirmationModal__buttons .knapp:not(:last-child) {
+    margin-right: @knapp-margin-right;
+}
+
 @media (max-width: @screen-sm-max) {
     .ConfirmationModal {
         padding: @modal-padding-mobile;
-    }
-
-    .ConfirmationModal__buttons .knapp {
-        width: 100%;
-    }
-
-    .ConfirmationModal__buttons .knapp:not(:last-child) {
-        margin-bottom: @knapp-margin-right;
     }
 }
 
 @media (min-width: @screen-md-min) {
     .ConfirmationModal {
         width: 38rem;
-    }
-
-    .ConfirmationModal__buttons .knapp:not(:last-child) {
-        margin-right: @knapp-margin-right;
     }
 }

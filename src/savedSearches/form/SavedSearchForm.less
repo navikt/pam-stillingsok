@@ -6,7 +6,7 @@
 
 @media (max-width: @screen-sm-max) {
   .SavedSearchModal {
-    padding: 0.5rem 0.25rem;
+    padding: 0;
   }
 }
 
@@ -26,27 +26,20 @@
   margin-bottom: @modal-body-margin-bottom;
 }
 
+
+.SavedSearchModal__buttons .knapp:not(:last-child) {
+  margin-right: @knapp-margin-right;
+}
+
 @media (max-width: @screen-sm-max) {
   .SavedSearchModal__form-mode {
     margin-bottom: 0;
-  }
-
-  .SavedSearchModal__buttons .knapp {
-    width: 100%;
-  }
-
-  .SavedSearchModal__buttons .knapp:not(:last-child) {
-    margin-bottom: @knapp-margin-bottom;
   }
 }
 
 @media (min-width: @screen-md-min) {
   .SavedSearchModal {
     width: 38rem;
-  }
-
-  .SavedSearchModal__buttons .knapp:not(:last-child) {
-    margin-right: @knapp-margin-right;
   }
 }
 

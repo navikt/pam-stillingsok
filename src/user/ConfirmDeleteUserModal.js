@@ -17,10 +17,10 @@ class ConfirmDeleteUserModal extends React.Component {
     render() {
         return (
             <ConfirmationModal
-                title="Er du sikker på at du vil slette din bruker?"
+                title="Slett bruker"
                 onConfirm={this.onRemoveClick}
                 onCancel={this.closeModal}
-                confirmLabel="Slett bruker"
+                confirmLabel="Slett"
                 spinner={this.props.isDeletingUser}
             >
                 Når du sletter brukeren, sletter du også alle dine favoritter og lagrede søk.
