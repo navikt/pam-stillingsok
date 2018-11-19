@@ -8,7 +8,8 @@ export const UNCHECK_ENGAGEMENT_TYPE = 'UNCHECK_ENGAGEMENT_TYPE';
 
 const initialState = {
     engagementType: [],
-    checkedEngagementType: []
+    checkedEngagementType: [],
+    deprecatedEngagementType: []
 };
 
 export default function engagementReducer(state = initialState, action) {
@@ -40,7 +41,10 @@ export default function engagementReducer(state = initialState, action) {
                         ...item,
                         count: found ? found.count : 0
                     };
-                })
+                }),
+                deprecatedEngagementType: state.checkedEngagementType.map((type) => (
+                    !state.engagementType.map((e) => e.key).includes(type) ? type : undefined
+                ))
             };
         case CHECK_ENGAGEMENT_TYPE:
             return {

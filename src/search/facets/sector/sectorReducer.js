@@ -8,7 +8,8 @@ export const UNCHECK_SECTOR = 'UNCHECK_SECTOR';
 
 const initialState = {
     sector: [],
-    checkedSector: []
+    checkedSector: [],
+    deprecatedSector: []
 };
 
 export default function sectorReducer(state = initialState, action) {
@@ -40,7 +41,10 @@ export default function sectorReducer(state = initialState, action) {
                         ...item,
                         count: found ? found.count : 0
                     };
-                })
+                }),
+                deprecatedSector: state.checkedSector.map((sector) => (
+                    !state.sector.map((s) => s.key).includes(sector) ? sector : undefined
+                ))
             };
         case CHECK_SECTOR:
             return {

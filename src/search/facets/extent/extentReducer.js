@@ -7,7 +7,8 @@ export const UNCHECK_EXTENT = 'UNCHECK_EXTENT';
 
 const initialState = {
     extent: [],
-    checkedExtent: []
+    checkedExtent: [],
+    deprecatedExtent: []
 };
 
 export default function extentReducer(state = initialState, action) {
@@ -39,7 +40,10 @@ export default function extentReducer(state = initialState, action) {
                         ...item,
                         count: found ? found.count : 0
                     };
-                })
+                }),
+                deprecatedExtent: state.checkedExtent.map((ext) => (
+                    !state.extent.map((e) => e.key).includes(ext) ? ext : undefined
+                ))
             };
         case CHECK_EXTENT:
             return {
