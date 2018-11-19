@@ -24,9 +24,6 @@
   margin: 0 auto;
 }
 
-.UserSettings__main {
-}
-
 .UserSettings__section {
   background: #fff;
   padding: 2rem;
@@ -46,8 +43,20 @@
   margin-bottom: 2.5rem;
 }
 
-.UserSettings__email-buttons .knapp:not(:last-child) {
-  margin-right: @knapp-margin-right;
+@media (min-width: @screen-md-min) {
+  .UserSettings__email-buttons .knapp:not(:last-child) {
+    margin-right: @knapp-margin-right;
+  }
+}
+
+@media (max-width: @screen-sm-max) {
+  .UserSettings__email-buttons .knapp {
+    width: 100%;
+  }
+
+  .UserSettings__email-buttons .knapp:not(:last-child) {
+    margin-bottom: @knapp-margin-right;
+  }
 }
 
 .UserSettings__not-authenticated-title {
