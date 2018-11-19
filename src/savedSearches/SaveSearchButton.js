@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import AuthorizationEnum from '../user/AuthorizationEnum';
 import { SHOW_AUTHORIZATION_ERROR_MODAL, SHOW_TERMS_OF_USE_MODAL } from '../user/userReducer';
 import { SavedSearchFormMode, SHOW_SAVED_SEARCH_FORM } from './form/savedSearchFormReducer';
+import HjelpetekstBase from 'nav-frontend-hjelpetekst';
 
 class SaveSearchButton extends React.Component {
     onClick = () => {
@@ -22,14 +23,24 @@ class SaveSearchButton extends React.Component {
         }
     };
 
+    lagreKnappDisabled = () => <div role="button" className="knapp knapp--mini knapp--disabled">Lagre søk</div>;
+
     shouldBeDisabled = () => {
         const { searchBoxValue, searchIsNonEmpty } = this.props;
         return searchBoxValue.length === 0 && !searchIsNonEmpty;
     };
 
     render() {
-        return (
-            <Knapp mini className="SaveSearchButton" onClick={this.onClick} disabled={this.shouldBeDisabled()}>Lagre søk</Knapp>
+        return this.shouldBeDisabled() ? (
+            <HjelpetekstBase
+                id="hjelpetekstLagreknapp"
+                anchor={this.lagreKnappDisabled}
+                tittel="Du må fylle inn søkeord eller kriterier for å kunne lagre."
+            >
+                Du må fylle inn søkeord eller kriterier for å kunne lagre.
+            </HjelpetekstBase>
+        ) : (
+            <Knapp mini className="SaveSearchButton" onClick={this.onClick}>Lagre søk</Knapp>
         );
     }
 }
