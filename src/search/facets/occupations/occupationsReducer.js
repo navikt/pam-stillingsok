@@ -36,7 +36,22 @@ export default function occupations(state = initialState, action) {
         case FETCH_INITIAL_FACETS_SUCCESS:
             return {
                 ...state,
-                occupationFirstLevels: moveFacetToBottom(action.response.occupationFirstLevels, OCCUPATION_ANNET)
+                occupationFirstLevels: moveFacetToBottom(action.response.occupationFirstLevels, OCCUPATION_ANNET),
+                deprecatedFirstLevels: state.checkedFirstLevels.filter((checkedFirstLevel) => (
+                    !action.response.occupationFirstLevels.map((o) => o.key).includes(checkedFirstLevel)
+                        ? checkedFirstLevel
+                        : undefined
+                )),
+                deprecatedSecondLevels: state.checkedSecondLevels.map((checkedSecondLevel) => {
+                    const occupation = checkedSecondLevel.split('.');
+                    const firstLevel = action.response.occupationFirstLevels.find((o) => o.key === occupation[0]);
+                    if (firstLevel) {
+                        return !firstLevel.occupationSecondLevels.map((o) => o.key).includes(checkedSecondLevel)
+                            ? occupation[1]
+                            : undefined;
+                    }
+                    return occupation[1];
+                }).filter((o) => o !== undefined)
             };
         case SEARCH_SUCCESS:
             return {
@@ -62,22 +77,7 @@ export default function occupations(state = initialState, action) {
                             };
                         })
                     };
-                }),
-                deprecatedFirstLevels: state.checkedFirstLevels.map((checkedFirstLevel) => (
-                    !state.occupationFirstLevels.map((o) => o.key).includes(checkedFirstLevel)
-                        ? checkedFirstLevel
-                        : undefined
-                )).filter((o) => o !== undefined),
-                deprecatedSecondLevels: state.checkedSecondLevels.map((checkedSecondLevel) => {
-                    const occupation = checkedSecondLevel.split('.');
-                    const firstLevel = state.occupationFirstLevels.find((o) => o.key === occupation[0]);
-                    if (firstLevel) {
-                        return !firstLevel.occupationSecondLevels.map((o) => o.key).includes(checkedSecondLevel)
-                            ? occupation[1]
-                            : undefined;
-                    }
-                    return occupation[1];
-                }).filter((o) => o !== undefined)
+                })
             };
         case CHECK_FIRST_LEVEL:
             return {

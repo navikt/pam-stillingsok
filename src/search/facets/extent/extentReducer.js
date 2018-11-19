@@ -27,7 +27,10 @@ export default function extentReducer(state = initialState, action) {
         case FETCH_INITIAL_FACETS_SUCCESS:
             return {
                 ...state,
-                extent: action.response.extent
+                extent: action.response.extent,
+                deprecatedExtent: state.checkedExtent.filter((ext) => (
+                    !action.response.extent.map((e) => e.key).includes(ext) ? ext : undefined
+                ))
             };
         case SEARCH_SUCCESS:
             return {
@@ -40,10 +43,7 @@ export default function extentReducer(state = initialState, action) {
                         ...item,
                         count: found ? found.count : 0
                     };
-                }),
-                deprecatedExtent: state.checkedExtent.map((ext) => (
-                    !state.extent.map((e) => e.key).includes(ext) ? ext : undefined
-                )).filter((e) => e !== undefined)
+                })
             };
         case CHECK_EXTENT:
             return {

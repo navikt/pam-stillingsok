@@ -28,7 +28,10 @@ export default function engagementReducer(state = initialState, action) {
         case FETCH_INITIAL_FACETS_SUCCESS:
             return {
                 ...state,
-                engagementType: moveFacetToBottom(action.response.engagementTypes, 'Annet')
+                engagementType: moveFacetToBottom(action.response.engagementTypes, 'Annet'),
+                deprecatedEngagementType: state.checkedEngagementType.filter((type) => (
+                    !action.response.engagementTypes.map((e) => e.key).includes(type) ? type : undefined
+                ))
             };
         case SEARCH_SUCCESS:
             return {
@@ -41,10 +44,7 @@ export default function engagementReducer(state = initialState, action) {
                         ...item,
                         count: found ? found.count : 0
                     };
-                }),
-                deprecatedEngagementType: state.checkedEngagementType.map((type) => (
-                    !state.engagementType.map((e) => e.key).includes(type) ? type : undefined
-                )).filter((e) => e !== undefined)
+                })
             };
         case CHECK_ENGAGEMENT_TYPE:
             return {

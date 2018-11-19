@@ -28,7 +28,10 @@ export default function sectorReducer(state = initialState, action) {
         case FETCH_INITIAL_FACETS_SUCCESS:
             return {
                 ...state,
-                sector: moveFacetToBottom(action.response.sector, 'Ikke oppgitt')
+                sector: moveFacetToBottom(action.response.sector, 'Ikke oppgitt'),
+                deprecatedSector: state.checkedSector.filter((sector) => (
+                    !action.response.sector.map((s) => s.key).includes(sector) ? sector : undefined
+                ))
             };
         case SEARCH_SUCCESS:
             return {
@@ -41,10 +44,7 @@ export default function sectorReducer(state = initialState, action) {
                         ...item,
                         count: found ? found.count : 0
                     };
-                }),
-                deprecatedSector: state.checkedSector.map((sector) => (
-                    !state.sector.map((s) => s.key).includes(sector) ? sector : undefined
-                )).filter((s) => s !== undefined)
+                })
             };
         case CHECK_SECTOR:
             return {

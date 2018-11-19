@@ -33,7 +33,20 @@ export default function countiesReducer(state = initialState, action) {
         case FETCH_INITIAL_FACETS_SUCCESS:
             return {
                 ...state,
-                counties: action.response.counties
+                counties: action.response.counties,
+                deprecatedCounties: state.checkedCounties.filter((checkedCounty) => (
+                    !action.response.counties.map((c) => c.key).includes(checkedCounty) ? checkedCounty : undefined
+                )),
+                deprecatedMunicipals: state.checkedMunicipals.map((checkedMunicipal) => {
+                    const municipal = checkedMunicipal.split('.');
+                    const county = action.response.counties.find((c) => c.key === municipal[0]);
+                    if (county) {
+                        return !county.municipals.map((m) => m.key).includes(checkedMunicipal)
+                            ? municipal[1]
+                            : undefined;
+                    }
+                    return municipal[1];
+                }).filter((m) => m !== undefined)
             };
         case SEARCH_SUCCESS:
             return {
@@ -59,20 +72,7 @@ export default function countiesReducer(state = initialState, action) {
                             };
                         })
                     };
-                }),
-                deprecatedCounties: state.checkedCounties.map((checkedCounty) => (
-                    !state.counties.map((c) => c.key).includes(checkedCounty) ? checkedCounty : undefined
-                )).filter((c) => c !== undefined),
-                deprecatedMunicipals: state.checkedMunicipals.map((checkedMunicipal) => {
-                    const municipal = checkedMunicipal.split('.');
-                    const county = state.counties.find((c) => c.key === municipal[0]);
-                    if (county) {
-                        return !county.municipals.map((m) => m.key).includes(checkedMunicipal)
-                            ? municipal[1]
-                            : undefined;
-                    }
-                    return municipal[1];
-                }).filter((m) => m !== undefined)
+                })
             };
         case CHECK_COUNTY:
             return {
