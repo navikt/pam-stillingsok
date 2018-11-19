@@ -56,9 +56,3 @@ export function toQueryString(object = {}) {
         .join('&');
     return `?${string}`;
 }
-
-export function urlFromSessionStorageOrIndex() {
-    const url = sessionStorage.getItem('latestQueryUrl');
-    console.log('url:', url);
-    return url || '/';
-}

@@ -42,3 +42,7 @@ export function removeUndefinedOrEmptyString(obj) {
     });
     return newObj;
 }
+
+export function isNonEmpty(object) {
+    return Object.keys(object).length > 0;
+}

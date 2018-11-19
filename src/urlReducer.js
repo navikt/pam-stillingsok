@@ -1,50 +1,55 @@
 import { select, takeLatest, put } from 'redux-saga/effects';
 import { ADD_SAVED_SEARCH_SUCCESS, SET_CURRENT_SAVED_SEARCH } from './savedSearches/savedSearchesReducer';
 import { SET_VALUE } from './search/searchBox/searchBoxReducer';
-import { LOAD_MORE, PAGE_SIZE, RESET_SEARCH, SEARCH } from './search/searchReducer';
 import { SET_VIEW_MODE } from './search/viewMode/viewModeReducer';
 import { toQueryString, toObject } from './search/url';
-import { removeUndefinedOrEmptyString } from './utils';
+import { isNonEmpty, removeUndefinedOrEmptyString } from './utils';
+import {
+    LOAD_MORE,
+    RESET_SEARCH,
+    SEARCH,
+    toSearchQuery
+} from './search/searchReducer';
 
 export const RESTORE_STATE_FROM_URL_BEGIN = 'RESTORE_STATE_FROM_URL_BEGIN';
 export const RESTORE_STATE_FROM_URL = 'RESTORE_STATE_FROM_URL';
+export const RESTORE_STATE_FROM_SESSION_STORAGE = 'RESTORE_STATE_FROM_SESSION_STORAGE';
+export const SAVE_URL = 'SAVE_URL';
+
+const LATEST_QUERY_URL_KEY = 'latestQueryUrl';
+
+export function urlFromSessionStorageOrIndex() {
+    const url = sessionStorage.getItem(LATEST_QUERY_URL_KEY);
+    return url ? `/${url}` : '/';
+}
+
+function* saveUrl({ url }) {
+    window.history.pushState({}, '', url);
+    yield sessionStorage.setItem(LATEST_QUERY_URL_KEY, url);
+}
 
 function* updateUrl() {
     const state = yield select();
+    const query = toSearchQuery(state);
+    const queryString = toQueryString(removeUndefinedOrEmptyString(query));
 
-    const x = {
-        q: state.searchBox.q,
-        sort: state.sorting.sort,
-        to: state.search.to > PAGE_SIZE ? state.search.to : undefined,
-        counties: state.counties.checkedCounties,
-        municipals: state.counties.checkedMunicipals,
-        published: state.published.checkedPublished,
-        engagementType: state.engagement.checkedEngagementType,
-        sector: state.sector.checkedSector,
-        extent: state.extent.checkedExtent,
-        occupationFirstLevels: state.occupations.checkedFirstLevels,
-        occupationSecondLevels: state.occupations.checkedSecondLevels,
-        saved: state.savedSearches.currentSavedSearch ? state.savedSearches.currentSavedSearch.uuid : undefined
-    };
+    yield put({ type: SAVE_URL, url: queryString });
+}
 
-    try {
-        yield sessionStorage.setItem('url-v2', toQueryString(removeUndefinedOrEmptyString(x)));
-    } catch (e) {
-        // Ignore session storage error
-    }
+function* restoreStateFromSessionStorage() {
+    const url = sessionStorage.getItem(LATEST_QUERY_URL_KEY);
+    yield put({ type: RESTORE_STATE_FROM_URL, query: toObject(url) });
 }
 
 function* restoreStateFromUrl() {
-    try {
-        const url = sessionStorage.getItem('url-v2');
-        if (url && url !== null) {
-            yield put({
-                type: RESTORE_STATE_FROM_URL,
-                query: toObject(url)
-            });
-        }
-    } catch (e) {
-        // Ignore session storage error
+    const searchString = document.location.search;
+    const query = toObject(searchString);
+
+    if (searchString.length > 0 && isNonEmpty(query)) {;
+        yield put({ type: SAVE_URL, url: searchString })
+        yield put({ type: RESTORE_STATE_FROM_URL, query });
+    } else {
+        yield put({ type: RESTORE_STATE_FROM_SESSION_STORAGE });
     }
 }
 
@@ -59,4 +64,6 @@ export const urlSaga = function* saga() {
         LOAD_MORE
     ], updateUrl);
     yield takeLatest(RESTORE_STATE_FROM_URL_BEGIN, restoreStateFromUrl);
+    yield takeLatest(RESTORE_STATE_FROM_SESSION_STORAGE, restoreStateFromSessionStorage);
+    yield takeLatest(SAVE_URL, saveUrl);
 };
