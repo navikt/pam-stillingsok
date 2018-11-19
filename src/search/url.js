@@ -4,24 +4,29 @@
  * @returns {Object}    En Object-representasjon av 'queryString'.
  */
 export function toObject(queryString = '') {
+    if (!queryString) {
+        queryString = '';
+    }
     const parameters = queryString.substring(1).split('&');
     const object = {};
 
     parameters.forEach((parameter) => {
         const pair = parameter.split('=');
-        let key = decodeURIComponent(pair[0]);
-        let val = pair[1] !== undefined ? decodeURIComponent(pair[1]) : '';
+        if (pair[0] !== undefined || pair[0] !== '') {
+            let key = decodeURIComponent(pair[0]);
+            let val = pair[1] !== undefined ? decodeURIComponent(pair[1]) : '';
 
-        if (key.includes('[]')) {
-            key = key.replace('[]', '');
+            if (key.includes('[]')) {
+                key = key.replace('[]', '');
 
-            if (object[key] === undefined) {
-                object[key] = [val];
+                if (object[key] === undefined) {
+                    object[key] = [val];
+                } else {
+                    object[key].push(val);
+                }
             } else {
-                object[key].push(val);
+                object[key] = val;
             }
-        } else {
-            object[key] = val;
         }
     });
 
@@ -50,4 +55,10 @@ export function toQueryString(object = {}) {
         .filter((elem) => elem !== '')
         .join('&');
     return `?${string}`;
+}
+
+export function urlFromSessionStorageOrIndex() {
+    const url = sessionStorage.getItem('latestQueryUrl');
+    console.log('url:', url);
+    return url || '/';
 }
