@@ -21,13 +21,17 @@ export function urlFromSessionStorageOrIndex() {
     return url ? `/${url}` : '/';
 }
 
+function setCurrentQueryString(queryString) {
+    window.history.replaceState({}, '', queryString);
+    sessionStorage.setItem(LATEST_QUERY_STRING_KEY, queryString);
+}
+
 function* updateUrl() {
     const state = yield select();
     const query = toSearchQuery(state);
     const queryString = toQueryString(removeUndefinedOrEmptyString(query));
 
-    window.history.replaceState({}, '', queryString);
-    sessionStorage.setItem(LATEST_QUERY_STRING_KEY, queryString);
+    setCurrentQueryString(queryString);
 }
 
 function* restoreStateFromUrl() {
@@ -37,6 +41,8 @@ function* restoreStateFromUrl() {
     if (searchString.length > 0 && isNonEmpty(query)) {
         yield put({ type: RESTORE_STATE_FROM_URL, query });
     }
+
+    setCurrentQueryString(searchString || '');
 }
 
 export const urlSaga = function* saga() {
