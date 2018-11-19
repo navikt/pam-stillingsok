@@ -3,7 +3,7 @@ import { ADD_SAVED_SEARCH_SUCCESS, SET_CURRENT_SAVED_SEARCH } from './savedSearc
 import { SET_VALUE } from './search/searchBox/searchBoxReducer';
 import { SET_VIEW_MODE } from './search/viewMode/viewModeReducer';
 import { toQueryString, toObject } from './search/url';
-import { isNonEmpty, removeUndefinedOrEmptyString } from './utils';
+import { removeUndefinedOrEmptyString } from './utils';
 import {
     LOAD_MORE,
     RESET_SEARCH,
@@ -38,7 +38,7 @@ function* restoreStateFromUrl() {
     const searchString = document.location.search;
     const query = toObject(searchString);
 
-    if (searchString.length > 0 && isNonEmpty(query)) {
+    if (searchString.length > 0) {
         yield put({ type: RESTORE_STATE_FROM_URL, query });
     }
 
