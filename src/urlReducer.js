@@ -36,13 +36,11 @@ function* updateUrl() {
 
 function* restoreStateFromUrl() {
     const searchString = document.location.search;
-    const query = toObject(searchString);
+    setCurrentQueryString(searchString || '');
 
     if (searchString.length > 0) {
-        yield put({ type: RESTORE_STATE_FROM_URL, query });
+        yield put({ type: RESTORE_STATE_FROM_URL, query: toObject(searchString) });
     }
-
-    setCurrentQueryString(searchString || '');
 }
 
 export const urlSaga = function* saga() {
