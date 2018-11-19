@@ -11,7 +11,7 @@ export function toObject(queryString = '?') {
         const pair = parameter.split('=');
         if (pair[0] !== undefined || pair[0] !== '') {
             let key = decodeURIComponent(pair[0]);
-            let val = pair[1] !== undefined ? decodeURIComponent(pair[1]) : '';
+            const val = pair[1] !== undefined ? decodeURIComponent(pair[1]) : '';
 
             if (key.includes('[]')) {
                 key = key.replace('[]', '');
