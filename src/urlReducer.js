@@ -21,6 +21,13 @@ export function urlFromSessionStorageOrIndex() {
     return url ? `/${url}` : '/';
 }
 
+/**
+ * Lagrer en queryString til sessionStorage, samt oppdaterer urlen i nettleserens adressefelt
+ * slik at den viser denne queryStringen. Stringen lagres til sessionStorage for at brukeren
+ * skal kunne navigere vekk fra stillingssøket uten å miste det siste foretatte søket, f.eks.
+ * når en bruker klikker seg videre til annonsen på f.eks. Finn.no.
+ * @param queryString   QueryStringen som skal lagres til sessionStorage.
+ */
 function setCurrentQueryString(queryString) {
     window.history.replaceState({}, '', queryString);
     sessionStorage.setItem(LATEST_QUERY_STRING_KEY, queryString);
