@@ -3,10 +3,7 @@
  * @param queryString   Query-stringen som skal parseres til et objekt.
  * @returns {Object}    En Object-representasjon av 'queryString'.
  */
-export function toObject(queryString = '') {
-    if (!queryString) {
-        queryString = '';
-    }
+export function toObject(queryString = '?') {
     const parameters = queryString.substring(1).split('&');
     const object = {};
 
