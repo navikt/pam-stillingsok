@@ -114,7 +114,7 @@ export function toSearchQuery(state) {
     if (state.sorting.sort.length > 0) query.sort = state.sorting.sort;
     if (state.counties.checkedCounties.length > 0) query.counties = state.counties.checkedCounties;
     if (state.counties.checkedMunicipals.length > 0) query.municipals = state.counties.checkedMunicipals;
-    if (state.published.checkedPublished.length > 0) query.published = state.published.checkedPublished;
+    if (state.published.checkedPublished) query.published = state.published.checkedPublished;
     if (state.engagement.checkedEngagementType.length > 0) query.engagementType = state.engagement.checkedEngagementType;
     if (state.sector.checkedSector.length > 0) query.sector = state.sector.checkedSector;
     if (state.extent.checkedExtent.length > 0) query.extent = state.extent.checkedExtent;

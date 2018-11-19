@@ -3,19 +3,20 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Checkbox } from 'nav-frontend-skjema';
 import { SEARCH } from '../../searchReducer';
-import {
-    CHECK_PUBLISHED,
-    UNCHECK_PUBLISHED
-} from './publishedReducer';
+import { SET_PUBLISHED } from './publishedReducer';
 import './Published.less';
+
+const PublishedLabelsEnum = {
+    'now-1d': 'Nye i dag'
+};
 
 class Published extends React.Component {
     onPublishedClick = (e) => {
         const { value } = e.target;
         if (e.target.checked) {
-            this.props.checkPublished(value);
+            this.props.setPublished(value);
         } else {
-            this.props.uncheckPublished(value);
+            this.props.setPublished(undefined);
         }
         this.props.search();
     };
@@ -30,10 +31,10 @@ class Published extends React.Component {
                     <Checkbox
                         name="published"
                         key={item.key}
-                        label={`Nye i dag (${item.count})`}
+                        label={`${PublishedLabelsEnum[item.key]} (${item.count})`}
                         value={item.key}
                         onChange={this.onPublishedClick}
-                        checked={checkedPublished.includes(item.key)}
+                        checked={checkedPublished === item.key}
                     />
                 ))}
             </div>
@@ -41,14 +42,17 @@ class Published extends React.Component {
     }
 }
 
+Published.defaultProps = {
+    checkedPublished: undefined
+};
+
 Published.propTypes = {
     published: PropTypes.arrayOf(PropTypes.shape({
         key: PropTypes.string,
         count: PropTypes.number
     })).isRequired,
-    checkedPublished: PropTypes.arrayOf(PropTypes.string).isRequired,
-    checkPublished: PropTypes.func.isRequired,
-    uncheckPublished: PropTypes.func.isRequired,
+    checkedPublished: PropTypes.string,
+    setPublished: PropTypes.func.isRequired,
     search: PropTypes.func.isRequired
 };
 
@@ -59,8 +63,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     search: () => dispatch({ type: SEARCH }),
-    checkPublished: (value) => dispatch({ type: CHECK_PUBLISHED, value }),
-    uncheckPublished: (value) => dispatch({ type: UNCHECK_PUBLISHED, value })
+    setPublished: (value) => dispatch({ type: SET_PUBLISHED, value })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Published);
