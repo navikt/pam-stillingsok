@@ -13,19 +13,12 @@ import {
 
 export const RESTORE_STATE_FROM_URL_BEGIN = 'RESTORE_STATE_FROM_URL_BEGIN';
 export const RESTORE_STATE_FROM_URL = 'RESTORE_STATE_FROM_URL';
-export const RESTORE_STATE_FROM_SESSION_STORAGE = 'RESTORE_STATE_FROM_SESSION_STORAGE';
-export const SAVE_URL = 'SAVE_URL';
 
-const LATEST_QUERY_URL_KEY = 'latestQueryUrl';
+const LATEST_QUERY_STRING_KEY = 'latestQueryString';
 
 export function urlFromSessionStorageOrIndex() {
-    const url = sessionStorage.getItem(LATEST_QUERY_URL_KEY);
+    const url = sessionStorage.getItem(LATEST_QUERY_STRING_KEY);
     return url ? `/${url}` : '/';
-}
-
-function* saveUrl({ url }) {
-    window.history.pushState({}, '', url);
-    yield sessionStorage.setItem(LATEST_QUERY_URL_KEY, url);
 }
 
 function* updateUrl() {
@@ -33,23 +26,16 @@ function* updateUrl() {
     const query = toSearchQuery(state);
     const queryString = toQueryString(removeUndefinedOrEmptyString(query));
 
-    yield put({ type: SAVE_URL, url: queryString });
-}
-
-function* restoreStateFromSessionStorage() {
-    const url = sessionStorage.getItem(LATEST_QUERY_URL_KEY);
-    yield put({ type: RESTORE_STATE_FROM_URL, query: toObject(url) });
+    window.history.replaceState({}, '', queryString);
+    sessionStorage.setItem(LATEST_QUERY_STRING_KEY, queryString);
 }
 
 function* restoreStateFromUrl() {
     const searchString = document.location.search;
     const query = toObject(searchString);
 
-    if (searchString.length > 0 && isNonEmpty(query)) {;
-        yield put({ type: SAVE_URL, url: searchString })
+    if (searchString.length > 0 && isNonEmpty(query)) {
         yield put({ type: RESTORE_STATE_FROM_URL, query });
-    } else {
-        yield put({ type: RESTORE_STATE_FROM_SESSION_STORAGE });
     }
 }
 
@@ -64,6 +50,4 @@ export const urlSaga = function* saga() {
         LOAD_MORE
     ], updateUrl);
     yield takeLatest(RESTORE_STATE_FROM_URL_BEGIN, restoreStateFromUrl);
-    yield takeLatest(RESTORE_STATE_FROM_SESSION_STORAGE, restoreStateFromSessionStorage);
-    yield takeLatest(SAVE_URL, saveUrl);
 };
