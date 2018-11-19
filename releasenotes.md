@@ -1,3 +1,6 @@
+## RELEASE - 0.49.394-6e28968
+#### New in this release: 
++ 2018-11-19 [PAM-2106] Muligjør bruk av piltaster i radiobuttons
 ## RELEASE - 0.48.386-45a0576
 #### New in this release: 
 + 2018-11-15 [PAM-2081] Ny hotjar lenke
