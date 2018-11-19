@@ -44,7 +44,7 @@ export default function engagementReducer(state = initialState, action) {
                 }),
                 deprecatedEngagementType: state.checkedEngagementType.map((type) => (
                     !state.engagementType.map((e) => e.key).includes(type) ? type : undefined
-                ))
+                )).filter((e) => e !== undefined)
             };
         case CHECK_ENGAGEMENT_TYPE:
             return {

@@ -67,7 +67,7 @@ export default function occupations(state = initialState, action) {
                     !state.occupationFirstLevels.map((o) => o.key).includes(checkedFirstLevel)
                         ? checkedFirstLevel
                         : undefined
-                )),
+                )).filter((o) => o !== undefined),
                 deprecatedSecondLevels: state.checkedSecondLevels.map((checkedSecondLevel) => {
                     const occupation = checkedSecondLevel.split('.');
                     const firstLevel = state.occupationFirstLevels.find((o) => o.key === occupation[0]);
@@ -77,7 +77,7 @@ export default function occupations(state = initialState, action) {
                             : undefined;
                     }
                     return occupation[1];
-                })
+                }).filter((o) => o !== undefined)
             };
         case CHECK_FIRST_LEVEL:
             return {

@@ -62,7 +62,7 @@ export default function countiesReducer(state = initialState, action) {
                 }),
                 deprecatedCounties: state.checkedCounties.map((checkedCounty) => (
                     !state.counties.map((c) => c.key).includes(checkedCounty) ? checkedCounty : undefined
-                )),
+                )).filter((c) => c !== undefined),
                 deprecatedMunicipals: state.checkedMunicipals.map((checkedMunicipal) => {
                     const municipal = checkedMunicipal.split('.');
                     const county = state.counties.find((c) => c.key === municipal[0]);
@@ -72,7 +72,7 @@ export default function countiesReducer(state = initialState, action) {
                             : undefined;
                     }
                     return municipal[1];
-                })
+                }).filter((m) => m !== undefined)
             };
         case CHECK_COUNTY:
             return {

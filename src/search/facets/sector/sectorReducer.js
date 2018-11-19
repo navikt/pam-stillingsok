@@ -44,7 +44,7 @@ export default function sectorReducer(state = initialState, action) {
                 }),
                 deprecatedSector: state.checkedSector.map((sector) => (
                     !state.sector.map((s) => s.key).includes(sector) ? sector : undefined
-                ))
+                )).filter((s) => s !== undefined)
             };
         case CHECK_SECTOR:
             return {

@@ -43,7 +43,7 @@ export default function extentReducer(state = initialState, action) {
                 }),
                 deprecatedExtent: state.checkedExtent.map((ext) => (
                     !state.extent.map((e) => e.key).includes(ext) ? ext : undefined
-                ))
+                )).filter((e) => e !== undefined)
             };
         case CHECK_EXTENT:
             return {
