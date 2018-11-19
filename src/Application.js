@@ -17,6 +17,7 @@ import TermsOfUse from './user/TermsOfUse';
 import { FETCH_IS_AUTHENTICATED } from './user/userReducer';
 import UserSettings from './user/UserSettings';
 import ViewTermsOfUse from './user/ViewTermsOfUse';
+import UserAlertStripe from './user/UserAlertStripe';
 
 class Application extends React.Component {
     componentDidMount() {
@@ -70,7 +71,7 @@ class Application extends React.Component {
                     {this.props.authorizationError && (
                         <NotAuthenticatedModal />
                     )}
-
+                    <UserAlertStripe />
                 </div>
             </BrowserRouter>
         );

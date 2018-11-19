@@ -14,21 +14,24 @@ function mapSortByOrder(value) {
 }
 
 function filterPublished(published) {
-    const filters = {
+    if (published) {
+        return {
+            bool: {
+                should: [{
+                    range: {
+                        published: {
+                            gte: published
+                        }
+                    }
+                }]
+            }
+        };
+    }
+    return {
         bool: {
             should: []
         }
     };
-    if (published && published.length > 0) {
-        filters.bool.should.push({
-            range: {
-                published: {
-                    gte: 'now-1d'
-                }
-            }
-        });
-    }
-    return filters;
 }
 
 function suggest(field, match, minLength) {

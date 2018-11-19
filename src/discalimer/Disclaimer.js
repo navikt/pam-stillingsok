@@ -12,13 +12,13 @@ function Disclaimer({ shouldShow, hideDisclaimer }) {
             <div className="DisclaimerWrapper no-print">
                 <div className="container">
                     <div role="alert" className="Disclaimer typo-normal">
-                        <Element className="blokk-xxs">Tidlig versjon av nytt stillingssøk</Element>
+                        <Element className="blokk-xxs">Stillingssøket har blitt fornyet</Element>
                         <Normaltekst className="blokk-xxs">
-                            Vi utvikler nytt stillingssøk, og ønsker at du skal prøve det underveis.
-                            Midlertidige feil i tjenesten på grunn av teknisk arbeid kan forekomme.
-                            <br/>
+                            Vi erstatter vårt gamle stillingssøk med en ny versjon.
                             Akkurat nå jobber vi for at du skal kunne lagre søk og annonser.
-                            Inntil videre kan du bare gjøre dette i dagens stillingssøk.
+                            <br />
+                            Inntil videre kan du bare gjøre dette i det gamle stillingssøket.
+                            Midlertidige feil i tjenesten på grunn av teknisk arbeid kan forekomme.
                         </Normaltekst>
                         <Normaltekst className="blokk-xxs">
                             <a href="https://surveys.hotjar.com/s?siteId=148751&surveyId=123859" className="lenke">
@@ -27,7 +27,7 @@ function Disclaimer({ shouldShow, hideDisclaimer }) {
                         </Normaltekst>
                         <Normaltekst className="blokk-xs">
                             <a href="https://tjenester.nav.no/stillinger/" className="lenke">
-                                Gå tilbake til dagens stillingssøk
+                                Gå til det gamle stillingssøket
                             </a>
                         </Normaltekst>
                         <Knapp mini onClick={hideDisclaimer}>Skjul</Knapp>
