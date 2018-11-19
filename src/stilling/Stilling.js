@@ -23,6 +23,7 @@ import PersonalAttributes from './requirements/PersonalAttributes';
 import SoftRequirements from './requirements/SoftRequirements';
 import './Stilling.less';
 import { FETCH_STILLING_BEGIN } from './stillingReducer';
+import { urlFromSessionStorageOrIndex } from '../urlReducer';
 
 class Stilling extends React.Component {
     constructor(props) {
@@ -72,7 +73,7 @@ class Stilling extends React.Component {
                                     <Column xs="12">
                                         <div className="blokk-s">
                                             <Link
-                                                to="/"
+                                                to={`${urlFromSessionStorageOrIndex()}`}
                                                 className="PageHeader__back typo-normal lenke no-print"
                                             >
                                                 <Chevron type="venstre" className="PageHeader__back__chevron" />

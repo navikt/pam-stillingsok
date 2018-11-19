@@ -3,10 +3,10 @@ import { userApiGet, userApiPost, userApiRemove, userApiPut } from '../api/userA
 import SearchApiError from '../api/SearchApiError';
 import { AD_USER_API } from '../fasitProperties';
 import { RESET_SEARCH, SEARCH } from '../search/searchReducer';
-import { RESTORE_STATE_FROM_URL, SEARCH_PARAMETERS_DEFINITION } from '../urlReducer';
+import { RESTORE_STATE_FROM_URL } from '../urlReducer';
 import { FETCH_USER_SUCCESS } from '../user/userReducer';
 import { validateAll } from './form/savedSearchFormReducer';
-import { toObject } from "../search/url";
+import { toObject } from '../search/url';
 
 export const FETCH_SAVED_SEARCHES = 'FETCH_SAVED_SEARCHES';
 export const FETCH_SAVED_SEARCHES_BEGIN = 'FETCH_SAVED_SEARCHES_BEGIN';
