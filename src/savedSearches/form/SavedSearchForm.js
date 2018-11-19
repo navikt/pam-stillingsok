@@ -56,7 +56,7 @@ class SavedSearchForm extends React.Component {
                                     >
                                         <Radio
                                             label="Lagre endringene"
-                                            name="replace"
+                                            name="add_or_replace"
                                             key="replace"
                                             value={SavedSearchFormMode.REPLACE}
                                             onChange={this.onFormModeChange}
@@ -64,7 +64,7 @@ class SavedSearchForm extends React.Component {
                                         />
                                         <Radio
                                             label="Lagre nytt søk"
-                                            name="add"
+                                            name="add_or_replace"
                                             key="add"
                                             value={SavedSearchFormMode.ADD}
                                             onChange={this.onFormModeChange}
