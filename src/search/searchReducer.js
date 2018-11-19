@@ -159,7 +159,7 @@ function* initialSearch() {
                 response = yield call(fetchSearch, query);
             }
 
-            yield put({ type: SEARCH_SUCCESS, response });
+            yield put({ type: SEARCH_SUCCESS, response, searchIsNonEmpty: queryHasSelectedFacets(query) });
         }
     } catch (e) {
         if (e instanceof SearchApiError) {
