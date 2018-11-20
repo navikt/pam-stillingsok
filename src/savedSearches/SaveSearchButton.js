@@ -5,24 +5,41 @@ import { connect } from 'react-redux';
 import AuthorizationEnum from '../user/AuthorizationEnum';
 import { SHOW_AUTHORIZATION_ERROR_MODAL, SHOW_TERMS_OF_USE_MODAL } from '../user/userReducer';
 import { SavedSearchFormMode, SHOW_SAVED_SEARCH_FORM } from './form/savedSearchFormReducer';
+import HjelpetekstBase from 'nav-frontend-hjelpetekst';
 
 class SaveSearchButton extends React.Component {
     onClick = () => {
-        if (this.props.isAuthenticated !== true) {
-            this.props.showError(AuthorizationEnum.SAVE_SEARCH_ERROR);
-        } else if (!this.props.user) {
-            this.props.showTermsOfUseModal();
+        const { isAuthenticated, showError, user, showTermsOfUseModal, showSavedSearchForm, currentSavedSearch } = this.props;
+        if (isAuthenticated !== true) {
+            showError(AuthorizationEnum.SAVE_SEARCH_ERROR);
+        } else if (!user) {
+            showTermsOfUseModal();
         } else {
-            this.props.showSavedSearchForm(
-                this.props.currentSavedSearch ? SavedSearchFormMode.REPLACE : SavedSearchFormMode.ADD,
-                this.props.currentSavedSearch !== undefined
+            showSavedSearchForm(
+                currentSavedSearch ? SavedSearchFormMode.REPLACE : SavedSearchFormMode.ADD,
+                currentSavedSearch !== undefined
 
             );
         }
     };
 
+    lagreKnappDisabled = () => <div role="button" className="knapp knapp--mini knapp--disabled SaveSearchButton">Lagre søk</div>;
+
+    shouldBeDisabled = () => {
+        const { searchBoxValue, searchIsNonEmpty } = this.props;
+        return searchBoxValue.length === 0 && !searchIsNonEmpty;
+    };
+
     render() {
-        return (
+        return this.shouldBeDisabled() ? (
+            <HjelpetekstBase
+                id="hjelpetekstLagreknapp"
+                anchor={this.lagreKnappDisabled}
+                tittel="Du må fylle inn søkeord eller kriterier for å kunne lagre."
+            >
+                Du må fylle inn søkeord eller kriterier for å kunne lagre.
+            </HjelpetekstBase>
+        ) : (
             <Knapp mini className="SaveSearchButton" onClick={this.onClick}>Lagre søk</Knapp>
         );
     }
@@ -31,7 +48,9 @@ class SaveSearchButton extends React.Component {
 SaveSearchButton.defaultProps = {
     currentSavedSearch: undefined,
     user: undefined,
-    isAuthenticated: undefined
+    isAuthenticated: undefined,
+    searchIsNonEmpty: false,
+    searchBoxValue: undefined
 };
 
 SaveSearchButton.propTypes = {
@@ -40,12 +59,16 @@ SaveSearchButton.propTypes = {
     showError: PropTypes.func.isRequired,
     showTermsOfUseModal: PropTypes.func.isRequired,
     isAuthenticated: PropTypes.bool,
+    searchIsNonEmpty: PropTypes.bool,
+    searchBoxValue: PropTypes.string,
     user: PropTypes.shape({})
 };
 
 const mapStateToProps = (state) => ({
     currentSavedSearch: state.savedSearches.currentSavedSearch,
     isAuthenticated: state.user.isAuthenticated,
+    searchIsNonEmpty: state.search.searchIsNonEmpty,
+    searchBoxValue: state.searchBox.q,
     user: state.user.user
 });
 
