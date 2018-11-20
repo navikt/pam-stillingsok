@@ -12,26 +12,32 @@ const initialState = {
     deprecatedEngagementType: []
 };
 
+const findDeprecatedEngagementType = (checkedEngagementType, engagementTypes) => (
+    checkedEngagementType.filter((type) => (!engagementTypes.map((e) => e.key).includes(type) ? type : undefined))
+);
+
 export default function engagementReducer(state = initialState, action) {
     switch (action.type) {
         case RESTORE_STATE_FROM_URL:
         case RESTORE_STATE_FROM_SAVED_SEARCH:
+            const checkedEngagementType = action.query.engagementType || [];
             return {
                 ...state,
-                checkedEngagementType: action.query.engagementType || []
+                checkedEngagementType,
+                deprecatedEngagementType: findDeprecatedEngagementType(checkedEngagementType, state.engagementType)
             };
         case RESET_SEARCH:
             return {
                 ...state,
-                checkedEngagementType: []
+                checkedEngagementType: [],
+                deprecatedEngagementType: []
             };
         case FETCH_INITIAL_FACETS_SUCCESS:
             return {
                 ...state,
                 engagementType: moveFacetToBottom(action.response.engagementTypes, 'Annet'),
-                deprecatedEngagementType: state.checkedEngagementType.filter((type) => (
-                    !action.response.engagementTypes.map((e) => e.key).includes(type) ? type : undefined
-                ))
+                deprecatedEngagementType: findDeprecatedEngagementType(state.checkedEngagementType,
+                    action.response.engagementTypes)
             };
         case SEARCH_SUCCESS:
             return {
@@ -52,12 +58,14 @@ export default function engagementReducer(state = initialState, action) {
                 checkedEngagementType: [
                     ...state.checkedEngagementType,
                     action.value
-                ]
+                ],
+                deprecatedEngagementType: []
             };
         case UNCHECK_ENGAGEMENT_TYPE:
             return {
                 ...state,
-                checkedEngagementType: state.checkedEngagementType.filter((m) => (m !== action.value))
+                checkedEngagementType: state.checkedEngagementType.filter((m) => (m !== action.value)),
+                deprecatedEngagementType: []
             };
         default:
             return state;

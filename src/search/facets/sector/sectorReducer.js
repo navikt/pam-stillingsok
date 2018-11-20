@@ -12,26 +12,31 @@ const initialState = {
     deprecatedSector: []
 };
 
+const findDeprecatedSector = (checkedSector, sector) => (
+    checkedSector.filter((sec) => (!sector.map((s) => s.key).includes(sec) ? sec : undefined))
+);
+
 export default function sectorReducer(state = initialState, action) {
     switch (action.type) {
         case RESTORE_STATE_FROM_URL:
         case RESTORE_STATE_FROM_SAVED_SEARCH:
+            const checkedSector = action.query.sector || [];
             return {
                 ...state,
-                checkedSector: action.query.sector || []
+                checkedSector,
+                deprecatedSector: findDeprecatedSector(checkedSector, state.sector)
             };
         case RESET_SEARCH:
             return {
                 ...state,
-                checkedSector: []
+                checkedSector: [],
+                deprecatedSector: []
             };
         case FETCH_INITIAL_FACETS_SUCCESS:
             return {
                 ...state,
                 sector: moveFacetToBottom(action.response.sector, 'Ikke oppgitt'),
-                deprecatedSector: state.checkedSector.filter((sector) => (
-                    !action.response.sector.map((s) => s.key).includes(sector) ? sector : undefined
-                ))
+                deprecatedSector: findDeprecatedSector(state.checkedSector, action.response.sector)
             };
         case SEARCH_SUCCESS:
             return {
@@ -52,12 +57,14 @@ export default function sectorReducer(state = initialState, action) {
                 checkedSector: [
                     ...state.checkedSector,
                     action.value
-                ]
+                ],
+                deprecatedSector: []
             };
         case UNCHECK_SECTOR:
             return {
                 ...state,
-                checkedSector: state.checkedSector.filter((m) => (m !== action.value))
+                checkedSector: state.checkedSector.filter((m) => (m !== action.value)),
+                deprecatedSector: []
             };
         default:
             return state;

@@ -11,26 +11,31 @@ const initialState = {
     deprecatedExtent: []
 };
 
+const findDeprecatedExtent = (checkedExtent, extent) => (
+    checkedExtent.filter((ext) => (!extent.map((e) => e.key).includes(ext) ? ext : undefined))
+);
+
 export default function extentReducer(state = initialState, action) {
     switch (action.type) {
         case RESTORE_STATE_FROM_URL:
         case RESTORE_STATE_FROM_SAVED_SEARCH:
+            const checkedExtent = action.query.extent || [];
             return {
                 ...state,
-                checkedExtent: action.query.extent || []
+                checkedExtent,
+                deprecatedExtent: findDeprecatedExtent(checkedExtent, state.extent)
             };
         case RESET_SEARCH:
             return {
                 ...state,
-                checkedExtent: []
+                checkedExtent: [],
+                deprecatedExtent: []
             };
         case FETCH_INITIAL_FACETS_SUCCESS:
             return {
                 ...state,
                 extent: action.response.extent,
-                deprecatedExtent: state.checkedExtent.filter((ext) => (
-                    !action.response.extent.map((e) => e.key).includes(ext) ? ext : undefined
-                ))
+                deprecatedExtent: findDeprecatedExtent(state.checkedExtent, action.response.extent)
             };
         case SEARCH_SUCCESS:
             return {
@@ -51,12 +56,14 @@ export default function extentReducer(state = initialState, action) {
                 checkedExtent: [
                     ...state.checkedExtent,
                     action.value
-                ]
+                ],
+                deprecatedExtent: []
             };
         case UNCHECK_EXTENT:
             return {
                 ...state,
-                checkedExtent: state.checkedExtent.filter((m) => (m !== action.value))
+                checkedExtent: state.checkedExtent.filter((m) => (m !== action.value)),
+                deprecatedExtent: []
             };
         default:
             return state;
