@@ -25,11 +25,12 @@ export const CREATE_USER_HIDE_ALERT = 'CREATE_USER_HIDE_ALERT';
 export const CREATE_USER_SHOW_ALERT = 'CREATE_USER_SHOW_ALERT';
 export const CREATE_USER_FAILURE = 'CREATE_USER_FAILURE';
 
-export const UPDATE_USER = 'UPDATE_USER';
-export const UPDATE_USER_BEGIN = 'UPDATE_USER_BEGIN';
-export const UPDATE_USER_SUCCESS = 'UPDATE_USER_SUCCESS';
-export const UPDATE_USER_HIDE_ALERT = 'UPDATE_USER_HIDE_ALERT';
-export const UPDATE_USER_FAILURE = 'UPDATE_USER_FAILURE';
+export const UPDATE_USER_EMAIL = 'UPDATE_USER_EMAIL';
+export const UPDATE_USER_EMAIL_BEGIN = 'UPDATE_USER_EMAIL_BEGIN';
+export const UPDATE_USER_EMAIL_SUCCESS = 'UPDATE_USER_EMAIL_SUCCESS';
+export const UPDATE_USER_EMAIL_SHOW_ALERT = 'UPDATE_USER_EMAIL_SHOW_ALERT';
+export const UPDATE_USER_EMAIL_HIDE_ALERT = 'UPDATE_USER_EMAIL_HIDE_ALERT';
+export const UPDATE_USER_EMAIL_FAILURE = 'UPDATE_USER_EMAIL_FAILURE';
 
 export const SHOW_CONFIRM_DELETE_USER_MODAL = 'SHOW_CONFIRM_DELETE_USER_MODAL';
 export const HIDE_CONFIRM_DELETE_USER_MODAL = 'HIDE_CONFIRM_DELETE_USER_MODAL';
@@ -111,26 +112,30 @@ export default function authorizationReducer(state = initialState, action) {
                     email: action.email
                 }
             };
-        case UPDATE_USER_BEGIN:
+        case UPDATE_USER_EMAIL_BEGIN:
             return {
                 ...state,
                 isUpdating: true
             };
-        case UPDATE_USER_SUCCESS:
+        case UPDATE_USER_EMAIL_SUCCESS:
             return {
                 ...state,
                 isUpdating: false,
-                user: action.response,
+                user: action.response
+            };
+        case UPDATE_USER_EMAIL_SHOW_ALERT:
+            return {
+                ...state,
                 userAlertStripeIsVisible: true,
-                userAlertStripeMode: 'changed'
+                userAlertStripeMode: action.mode
             };
         case CREATE_USER_HIDE_ALERT:
-        case UPDATE_USER_HIDE_ALERT:
+        case UPDATE_USER_EMAIL_HIDE_ALERT:
             return {
                 ...state,
                 userAlertStripeIsVisible: false
             };
-        case UPDATE_USER_FAILURE:
+        case UPDATE_USER_EMAIL_FAILURE:
             return {
                 ...state,
                 isUpdating: false,
@@ -266,18 +271,23 @@ function* createUser(action) {
     }
 }
 
-function* updateUser() {
+function* updateUserEmail() {
     const state = yield select();
     if (state.user.validation.email === undefined) {
+        const isClearingEmail = state.user.user.email === null || state.user.user.email.trim().length === 0;
         try {
-            yield put({ type: UPDATE_USER_BEGIN });
+            yield put({ type: UPDATE_USER_EMAIL_BEGIN });
             const response = yield call(userApiPut, `${AD_USER_API}/api/v1/user`, fixUser(state.user.user));
-            yield put({ type: UPDATE_USER_SUCCESS, response });
+            yield put({ type: UPDATE_USER_EMAIL_SUCCESS, response });
+            yield put({
+                type: UPDATE_USER_EMAIL_SHOW_ALERT,
+                mode: isClearingEmail ? 'clear-email' : 'set-email'
+            });
             yield call(delay, 5000);
-            yield put({ type: UPDATE_USER_HIDE_ALERT });
+            yield put({ type: UPDATE_USER_EMAIL_HIDE_ALERT });
         } catch (e) {
             if (e instanceof SearchApiError) {
-                yield put({ type: UPDATE_USER_FAILURE, error: e });
+                yield put({ type: UPDATE_USER_EMAIL_FAILURE, error: e });
             } else {
                 throw e;
             }
@@ -317,7 +327,7 @@ export const userSaga = function* saga() {
     yield takeEvery(FETCH_IS_AUTHENTICATED, fetchIsAuthenticated);
     yield takeEvery(FETCH_IS_AUTHENTICATED_SUCCESS, fetchUser);
     yield takeLatest(CREATE_USER, createUser);
-    yield takeLatest(UPDATE_USER, updateUser);
+    yield takeLatest(UPDATE_USER_EMAIL, updateUserEmail);
     yield takeLatest(DELETE_USER, deleteUser);
     yield takeLatest(VALIDATE_USER_EMAIL, validateEMail);
 };

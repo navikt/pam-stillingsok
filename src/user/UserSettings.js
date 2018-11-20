@@ -11,7 +11,7 @@ import { CONTEXT_PATH } from '../fasitProperties';
 import ConfirmDeleteUserModal from './ConfirmDeleteUserModal';
 import NotAuthenticated from './NotAuthenticated';
 import NoUser from './NoUser';
-import { SET_USER_EMAIL, SHOW_CONFIRM_DELETE_USER_MODAL, UPDATE_USER, VALIDATE_USER_EMAIL } from './userReducer';
+import { SET_USER_EMAIL, SHOW_CONFIRM_DELETE_USER_MODAL, UPDATE_USER_EMAIL, VALIDATE_USER_EMAIL } from './userReducer';
 import './UserSettings.less';
 
 const PAGE_TITLE = 'Min side';
@@ -30,8 +30,8 @@ class UserSettings extends React.Component {
         this.props.validateEmail();
     };
 
-    onUpdateUserClick = () => {
-        this.props.updateUser();
+    onUpdateUserEmailClick = () => {
+        this.props.updateUserEmail();
     };
 
     onDeleteUserClick = () => {
@@ -41,7 +41,7 @@ class UserSettings extends React.Component {
     onRemoveEmailClick = () => {
         this.props.setUserEmail(null);
         this.props.validateEmail();
-        this.props.updateUser();
+        this.props.updateUserEmail();
     };
 
     render() {
@@ -106,7 +106,7 @@ class UserSettings extends React.Component {
                                                 </div>
                                                 <div className="UserSettings__email-buttons">
                                                     <Knapp
-                                                        onClick={this.onUpdateUserClick}
+                                                        onClick={this.onUpdateUserEmailClick}
                                                         spinner={this.props.isUpdating}
                                                         disabled={this.props.isUpdating}
                                                     >
@@ -180,7 +180,7 @@ UserSettings.propTypes = {
     setUserEmail: PropTypes.func.isRequired,
     validateEmail: PropTypes.func.isRequired,
     showConfirmDeleteUserModal: PropTypes.func.isRequired,
-    updateUser: PropTypes.func.isRequired,
+    updateUserEmail: PropTypes.func.isRequired,
     confirmDeleteUserModalIsVisible: PropTypes.bool.isRequired,
     isUpdating: PropTypes.bool.isRequired,
     validation: PropTypes.shape({
@@ -200,7 +200,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
     setUserEmail: (email) => dispatch({ type: SET_USER_EMAIL, email }),
     validateEmail: () => dispatch({ type: VALIDATE_USER_EMAIL }),
-    updateUser: () => dispatch({ type: UPDATE_USER }),
+    updateUserEmail: () => dispatch({ type: UPDATE_USER_EMAIL }),
     showConfirmDeleteUserModal: () => dispatch({ type: SHOW_CONFIRM_DELETE_USER_MODAL })
 });
 
