@@ -11,9 +11,8 @@ const initialState = {
     deprecatedExtent: []
 };
 
-const findDeprecatedExtent = (checkedExtent, extent) => (
-    checkedExtent.filter((ext) => (!extent.map((e) => e.key).includes(ext) ? ext : undefined))
-);
+const findDeprecatedExtent = (checkedExtent, extent) =>
+    checkedExtent.filter((ext) => !extent.map((e) => e.key).includes(ext));
 
 export default function extentReducer(state = initialState, action) {
     switch (action.type) {

@@ -19,9 +19,8 @@ const initialState = {
 };
 
 const findDeprecatedFirstLevels = (checkedFirstLevels, occupationFirstLevels) => (
-    checkedFirstLevels.filter((checkedFirstLevel) => (
-        !occupationFirstLevels.map((o) => o.key).includes(checkedFirstLevel) ? checkedFirstLevel : undefined
-    ))
+    checkedFirstLevels.filter((checkedFirstLevel) =>
+        !occupationFirstLevels.map((o) => o.key).includes(checkedFirstLevel))
 );
 
 const findDeprecatedSecondLevels = (checkedSecondLevels, occupationFirstLevels) => (

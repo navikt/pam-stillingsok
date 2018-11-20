@@ -162,13 +162,19 @@ function toTitle(state) {
     const title = [];
     const counties = state.counties.checkedCounties.filter((county) => {
         const countyObject = state.counties.counties.find((c) => c.key === county);
-        const found = countyObject.municipals.find((m) => state.counties.checkedMunicipals.includes(m.key));
-        return !found;
+        if (countyObject) {
+            const found = countyObject.municipals.find((m) => state.counties.checkedMunicipals.includes(m.key));
+            return !found;
+        }
+        return '';
     });
     const occupationFirstLevels = state.occupations.checkedFirstLevels.filter((firstLevel) => {
         const firstLevelObject = state.occupations.occupationFirstLevels.find((c) => c.key === firstLevel);
-        const found = firstLevelObject.occupationSecondLevels.find((m) => state.occupations.checkedSecondLevels.includes(m.key));
-        return !found;
+        if (firstLevelObject) {
+            const found = firstLevelObject.occupationSecondLevels.find((m) => state.occupations.checkedSecondLevels.includes(m.key));
+            return !found;
+        }
+        return '';
     });
 
     if (state.searchBox.q) title.push(state.searchBox.q);

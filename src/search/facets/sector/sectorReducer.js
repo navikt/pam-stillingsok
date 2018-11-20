@@ -12,9 +12,8 @@ const initialState = {
     deprecatedSector: []
 };
 
-const findDeprecatedSector = (checkedSector, sector) => (
-    checkedSector.filter((sec) => (!sector.map((s) => s.key).includes(sec) ? sec : undefined))
-);
+const findDeprecatedSector = (checkedSector, sector) =>
+    checkedSector.filter((sec) => !sector.map((s) => s.key).includes(sec));
 
 export default function sectorReducer(state = initialState, action) {
     switch (action.type) {

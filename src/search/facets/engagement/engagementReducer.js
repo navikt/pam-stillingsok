@@ -12,9 +12,8 @@ const initialState = {
     deprecatedEngagementType: []
 };
 
-const findDeprecatedEngagementType = (checkedEngagementType, engagementTypes) => (
-    checkedEngagementType.filter((type) => (!engagementTypes.map((e) => e.key).includes(type) ? type : undefined))
-);
+const findDeprecatedEngagementType = (checkedEngagementType, engagementTypes) =>
+    checkedEngagementType.filter((type) => !engagementTypes.map((e) => e.key).includes(type));
 
 export default function engagementReducer(state = initialState, action) {
     switch (action.type) {

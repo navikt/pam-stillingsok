@@ -16,11 +16,9 @@ const initialState = {
     deprecatedMunicipals: []
 };
 
-const findDeprecatedCounties = (checkedCounties, counties) => (
-    checkedCounties.filter((checkedCounty) => (
-        !counties.map((c) => c.key).includes(checkedCounty) ? capitalizeLocation(checkedCounty) : undefined
-    ))
-);
+const findDeprecatedCounties = (checkedCounties, counties) =>
+    checkedCounties.filter((checkedCounty) => !counties.map((c) => c.key).includes(checkedCounty))
+        .map((c) => capitalizeLocation(c));
 
 const findDeprecatedMunicipals = (checkedMunicipals, counties) => (
     checkedMunicipals.map((checkedMunicipal) => {
