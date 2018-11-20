@@ -15,6 +15,11 @@ import {
 import AddOrReplaceForm from './AddOrReplaceForm';
 
 class SavedSearchForm extends React.Component {
+    constructor(props) {
+        super(props);
+        this.childForm = React.createRef();
+    }
+
     onFormModeChange = (e) => {
         this.props.setFormMode(e.target.value);
     };
@@ -24,6 +29,10 @@ class SavedSearchForm extends React.Component {
             this.props.addSavedSearch();
         } else {
             this.props.updateSavedSearch();
+        }
+
+        if(this.childForm && this.childForm.current) {
+            this.childForm.current.getWrappedInstance().setFocusTitle();
         }
     };
 
@@ -85,12 +94,12 @@ class SavedSearchForm extends React.Component {
                         )}
                         <div className="SavedSearchModal__body">
                             {formMode !== SavedSearchFormMode.REPLACE && !showAddOrReplace && (
-                                <AddOrReplaceForm />
+                                <AddOrReplaceForm ref={this.childForm}/>
                             )}
                             {formMode !== SavedSearchFormMode.REPLACE && showAddOrReplace && (
                                 <SkjemaGruppe>
                                     <Fieldset legend="Lagre nytt søk">
-                                        <AddOrReplaceForm />
+                                        <AddOrReplaceForm ref={this.childForm} />
                                     </Fieldset>
                                 </SkjemaGruppe>
                             )}

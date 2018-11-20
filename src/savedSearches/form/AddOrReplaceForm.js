@@ -12,6 +12,11 @@ import {
 import './SavedSearchForm.less';
 
 class AddOrReplaceForm extends React.Component {
+    constructor(props) {
+        super(props);
+        this.titleRef = null;
+    }
+
     onTitleChange = (e) => {
         this.props.setTitle(e.target.value);
     };
@@ -28,6 +33,16 @@ class AddOrReplaceForm extends React.Component {
         this.props.setDuration(e.target.value);
     };
 
+    setTitleRef = (element) => {
+        this.titleRef = element;
+    };
+
+    setFocusTitle = () => {
+        if(this.props.validation.title && this.titleRef){
+            this.titleRef.focus();
+        }
+    };
+
     render() {
         const { formData, validation } = this.props;
         return (
@@ -38,6 +53,7 @@ class AddOrReplaceForm extends React.Component {
                     onChange={this.onTitleChange}
                     value={formData.title}
                     feil={validation.title ? { feilmelding: validation.title } : undefined}
+                    inputRef={this.setTitleRef}
                 />
                 <Checkbox
                     className="SavedSearchModal__body__notify"
@@ -109,7 +125,7 @@ AddOrReplaceForm.propTypes = {
         title: PropTypes.string
     }),
     validation: PropTypes.shape({
-        titleIsValid: PropTypes.bool
+        title: PropTypes.string
     }).isRequired
 };
 
@@ -125,4 +141,4 @@ const mapDispatchToProps = (dispatch) => ({
     setDuration: (duration) => dispatch({ type: SET_SAVED_SEARCH_DURATION, duration })
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddOrReplaceForm);
+export default connect(mapStateToProps, mapDispatchToProps, null, { withRef: true })(AddOrReplaceForm);
