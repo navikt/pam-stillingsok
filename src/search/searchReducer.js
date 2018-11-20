@@ -129,12 +129,22 @@ export function toSearchQuery(state) {
 
 /**
  * Sjekker om bruker har foretatt et valg i stillingssøkskjemaet ved søk.
+ * Tar ikke stilling til om bruker har valgt å skrive noe i søkefeltet.
  * @param query         Query som brukes i søket.
- * @returns {boolean}   True dersom bruker har huket av for en fasett eller skrevet noe i søkeboksen.
+ * @returns {boolean}   True dersom bruker har huket av for en fasett.
  */
 function queryHasSelectedFacets(query) {
-    const { length } = Object.keys(query);
-    return (length > 1 && query.q !== undefined) || (length > 0 && query.q === undefined);
+    let { length } = Object.keys(query);
+
+    if (query.q !== undefined) {
+        length -= 1;
+    }
+
+    if (query.published !== undefined) {
+        length -= 1;
+    }
+
+    return length > 0;
 }
 
 /**
