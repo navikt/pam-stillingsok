@@ -23,7 +23,7 @@ class SaveSearchButton extends React.Component {
         }
     };
 
-    lagreKnappDisabled = () => <div role="button" className="knapp knapp--mini knapp--disabled">Lagre søk</div>;
+    lagreKnappDisabled = () => <div role="button" className="knapp knapp--mini knapp--disabled SaveSearchButton">Lagre søk</div>;
 
     shouldBeDisabled = () => {
         const { searchBoxValue, searchIsNonEmpty } = this.props;
