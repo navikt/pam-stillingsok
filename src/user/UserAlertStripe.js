@@ -15,7 +15,7 @@ function UserAlertStripe({ userAlertStripeMode, userAlertStripeIsVisible }) {
     } else if (userAlertStripeIsVisible && userAlertStripeMode === 'set-email') {
         return (
             <StickyAlertStripe type="suksess">
-                E-postadressen din ble endret
+                Din e-postadresse er lagret
             </StickyAlertStripe>
         );
     } else if (userAlertStripeIsVisible && userAlertStripeMode === 'clear-email') {
