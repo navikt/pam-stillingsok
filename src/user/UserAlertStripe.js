@@ -12,10 +12,16 @@ function UserAlertStripe({ userAlertStripeMode, userAlertStripeIsVisible }) {
                 Din e-postadresse er lagret på <Link className="lenke" to={`${CONTEXT_PATH}/minside`}>min side</Link>
             </StickyAlertStripe>
         );
-    } else if (userAlertStripeIsVisible && userAlertStripeMode === 'changed') {
+    } else if (userAlertStripeIsVisible && userAlertStripeMode === 'set-email') {
         return (
             <StickyAlertStripe type="suksess">
                 E-postadressen din ble endret
+            </StickyAlertStripe>
+        );
+    } else if (userAlertStripeIsVisible && userAlertStripeMode === 'clear-email') {
+        return (
+            <StickyAlertStripe type="suksess">
+                E-postadressen din ble slettet
             </StickyAlertStripe>
         );
     }

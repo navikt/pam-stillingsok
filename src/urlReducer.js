@@ -1,15 +1,10 @@
-import { select, takeLatest, put } from 'redux-saga/effects';
+import { put, select, takeLatest } from 'redux-saga/effects';
 import { ADD_SAVED_SEARCH_SUCCESS, SET_CURRENT_SAVED_SEARCH } from './savedSearches/savedSearchesReducer';
 import { SET_VALUE } from './search/searchBox/searchBoxReducer';
+import { LOAD_MORE, PAGE_SIZE, RESET_SEARCH, SEARCH } from './search/searchReducer';
+import { toObject, toQueryString } from './search/url';
 import { SET_VIEW_MODE } from './search/viewMode/viewModeReducer';
-import { toQueryString, toObject } from './search/url';
 import { removeUndefinedOrEmptyString } from './utils';
-import {
-    LOAD_MORE,
-    RESET_SEARCH,
-    SEARCH,
-    toSearchQuery
-} from './search/searchReducer';
 
 export const RESTORE_STATE_FROM_URL_BEGIN = 'RESTORE_STATE_FROM_URL_BEGIN';
 export const RESTORE_STATE_FROM_URL = 'RESTORE_STATE_FROM_URL';
@@ -35,7 +30,20 @@ function setCurrentQueryString(queryString) {
 
 function* updateUrl() {
     const state = yield select();
-    const query = toSearchQuery(state);
+    const query = {
+        q: state.searchBox.q,
+        sort: state.sorting.sort,
+        to: state.search.to > PAGE_SIZE ? state.search.to : undefined,
+        counties: state.counties.checkedCounties,
+        municipals: state.counties.checkedMunicipals,
+        published: state.published.checkedPublished,
+        engagementType: state.engagement.checkedEngagementType,
+        sector: state.sector.checkedSector,
+        extent: state.extent.checkedExtent,
+        occupationFirstLevels: state.occupations.checkedFirstLevels,
+        occupationSecondLevels: state.occupations.checkedSecondLevels,
+        saved: state.savedSearches.currentSavedSearch ? state.savedSearches.currentSavedSearch.uuid : undefined
+    };
     const queryString = toQueryString(removeUndefinedOrEmptyString(query));
 
     setCurrentQueryString(queryString);

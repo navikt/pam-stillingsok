@@ -16,7 +16,7 @@ import {
     DELETE_USER_FAILURE,
     FETCH_IS_AUTHENTICATED_FAILURE,
     FETCH_USER_FAILURE,
-    UPDATE_USER_FAILURE
+    UPDATE_USER_EMAIL_FAILURE
 } from '../user/userReducer';
 
 export const HIDE_ERROR = 'HIDE_ERROR';
@@ -89,10 +89,10 @@ export default function errorReducer(state = initialState, action) {
                 ...state,
                 messages: prependMessage(state.messages, 'Klarte ikke å slette favoritt')
             };
-        case UPDATE_USER_FAILURE:
+        case UPDATE_USER_EMAIL_FAILURE:
             return {
                 ...state,
-                messages: prependMessage(state.messages, 'Klarte ikke å lagre dine innstillinger')
+                messages: prependMessage(state.messages, 'Klarte ikke å endre e-postadresse')
             };
         case DELETE_USER_FAILURE:
             return {
