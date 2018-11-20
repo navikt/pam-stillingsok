@@ -4,14 +4,8 @@
   padding: @modal-padding;
 }
 
-@media (max-width: @screen-sm-max) {
+@media (max-width: @screen-xs-max) {
   .NotAuthenticatedModal {
-    padding: 0;
-  }
-}
-
-@media (min-width: @screen-md-min) {
-  .NotAuthenticatedModal {
-    width: 38rem;
+    padding: @modal-padding-mobile;
   }
 }

@@ -4,9 +4,9 @@
   padding: @modal-padding;
 }
 
-@media (max-width: @screen-sm-max) {
+@media (max-width: @screen-xs-max) {
   .SavedSearchModal {
-    padding: 0;
+    padding: @modal-padding-mobile;
   }
 }
 
@@ -31,15 +31,9 @@
   margin-right: @knapp-margin-right;
 }
 
-@media (max-width: @screen-sm-max) {
+@media (max-width: @screen-xs-max) {
   .SavedSearchModal__form-mode {
     margin-bottom: 0;
-  }
-}
-
-@media (min-width: @screen-md-min) {
-  .SavedSearchModal {
-    width: 38rem;
   }
 }
 
