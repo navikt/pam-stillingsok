@@ -3,6 +3,7 @@ import { userApiGet, userApiPost, userApiRemove, userApiPut } from '../api/userA
 import SearchApiError from '../api/SearchApiError';
 import { AD_USER_API } from '../fasitProperties';
 import { RESET_SEARCH, SEARCH } from '../search/searchReducer';
+import { SET_VIEW_MODE } from '../search/viewMode/viewModeReducer';
 import { RESTORE_STATE_FROM_URL } from '../urlReducer';
 import { FETCH_USER_SUCCESS } from '../user/userReducer';
 import { validateAll } from './form/savedSearchFormReducer';
@@ -237,6 +238,11 @@ function* addSavedSearch() {
 
 function* setCurrentSavedSearch() {
     const state = yield select();
+    try {
+        yield sessionStorage.setItem('saved', state.savedSearches.currentSavedSearch.uuid);
+    } catch (e) {
+        // Ignore session storage error
+    }
     yield put({
         type: RESTORE_STATE_FROM_SAVED_SEARCH,
         query: toObject(state.savedSearches.currentSavedSearch.searchQuery)
@@ -246,20 +252,33 @@ function* setCurrentSavedSearch() {
     }
 }
 
-function* restoreCurrentSavedSearch(action) {
+function* restoreCurrentSavedSearch() {
     let state = yield select();
-    if (action.query.saved) {
-        if (state.savedSearches.shouldFetch) {
-            yield put({ type: FETCH_SAVED_SEARCHES });
-            yield take(FETCH_SAVED_SEARCHES_SUCCESS);
+    try {
+        const saved = yield sessionStorage.getItem('saved');
+        if (saved && saved !== null) {
+            if (state.savedSearches.shouldFetch) {
+                yield put({ type: FETCH_SAVED_SEARCHES });
+                yield take(FETCH_SAVED_SEARCHES_SUCCESS);
+            }
+            state = yield select();
+            const found = state.savedSearches.savedSearches.find((savedSearch) => (
+                savedSearch.uuid === saved
+            ));
+            if (found) {
+                yield put({ type: RESTORE_CURRENT_SAVED_SEARCH, savedSearch: found });
+            }
         }
-        state = yield select();
-        const found = state.savedSearches.savedSearches.find((savedSearch) => (
-            savedSearch.uuid === action.query.saved
-        ));
-        if (found) {
-            yield put({ type: RESTORE_CURRENT_SAVED_SEARCH, savedSearch: found });
-        }
+    } catch (e) {
+        // Ignore session storage error
+    }
+}
+
+function resetCurrentSavedSearch() {
+    try {
+        sessionStorage.removeItem('saved');
+    } catch (e) {
+        // Ignore session storage error
     }
 }
 
@@ -268,6 +287,7 @@ export const savedSearchesSaga = function* saga() {
     yield takeLatest(REMOVE_SAVED_SEARCH, removeSavedSearch);
     yield takeLatest(UPDATE_SAVED_SEARCH, updateSavedSearch);
     yield takeLatest(ADD_SAVED_SEARCH, addSavedSearch);
+    yield takeLatest(RESET_SEARCH, resetCurrentSavedSearch);
     yield takeLatest(RESTORE_STATE_FROM_URL, restoreCurrentSavedSearch);
     yield takeLatest(SET_CURRENT_SAVED_SEARCH, setCurrentSavedSearch);
 };
