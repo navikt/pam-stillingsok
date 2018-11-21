@@ -1,15 +1,10 @@
-import {
-    RESTORE_STATE_FROM_SAVED_SEARCH,
-    UPDATE_SAVED_SEARCH_SUCCESS
-} from '../../../savedSearches/savedSearchesReducer';
+import { RESTORE_STATE_FROM_SAVED_SEARCH } from '../../../savedSearches/savedSearchesReducer';
 import { RESTORE_STATE_FROM_URL } from '../../../urlReducer';
 import { FETCH_INITIAL_FACETS_SUCCESS, RESET_SEARCH, SEARCH_SUCCESS } from '../../searchReducer';
 import { findDeprecatedFacets, moveFacetToBottom } from '../utils';
 
 export const CHECK_SECTOR = 'CHECK_SECTOR';
 export const UNCHECK_SECTOR = 'UNCHECK_SECTOR';
-
-export const UNCHECK_DEPRECATED_SECTOR = 'UNCHECK_DEPRECATED_SECTOR';
 
 const initialState = {
     sector: [],
