@@ -46,8 +46,8 @@ export default function countiesReducer(state = initialState, action) {
             return {
                 ...state,
                 counties: action.response.counties,
-                deprecatedCounties: findDeprecatedFacets(state.checkedCounties, state.counties),
-                deprecatedMunicipals: findDeprecatedFacets(state.checkedMunicipals, state.counties, 'municipals')
+                deprecatedCounties: findDeprecatedFacets(state.checkedCounties, action.response.counties),
+                deprecatedMunicipals: findDeprecatedFacets(state.checkedMunicipals, action.response.counties, 'municipals')
             };
         case SEARCH_SUCCESS:
             return {
