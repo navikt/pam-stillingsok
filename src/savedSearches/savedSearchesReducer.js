@@ -1,12 +1,13 @@
 import { call, put, select, take, takeEvery, takeLatest } from 'redux-saga/effects';
-import { userApiGet, userApiPost, userApiRemove, userApiPut } from '../api/userApi';
 import SearchApiError from '../api/SearchApiError';
+import { userApiGet, userApiPost, userApiPut, userApiRemove } from '../api/userApi';
 import { AD_USER_API } from '../fasitProperties';
-import { RESET_SEARCH, SEARCH } from '../search/searchReducer';
+import { INITIAL_SEARCH, RESET_SEARCH, SEARCH } from '../search/searchReducer';
+import { toObject, toQueryString } from '../search/url';
 import { RESTORE_STATE_FROM_URL } from '../urlReducer';
 import { FETCH_USER_SUCCESS } from '../user/userReducer';
+import { removeUndefinedOrEmptyString } from '../utils';
 import { validateAll } from './form/savedSearchFormReducer';
-import { toObject } from '../search/url';
 
 export const FETCH_SAVED_SEARCHES = 'FETCH_SAVED_SEARCHES';
 export const FETCH_SAVED_SEARCHES_BEGIN = 'FETCH_SAVED_SEARCHES_BEGIN';
@@ -33,6 +34,7 @@ export const UPDATE_SAVED_SEARCH_FAILURE = 'UPDATE_SAVED_SEARCH_FAILURE';
 export const SET_CURRENT_SAVED_SEARCH = 'SET_CURRENT_SAVED_SEARCH';
 export const RESTORE_STATE_FROM_SAVED_SEARCH = 'RESTORE_STATE_FROM_SAVED_SEARCH';
 export const RESTORE_CURRENT_SAVED_SEARCH = 'RESTORE_CURRENT_SAVED_SEARCH';
+export const SET_CAN_SAVE_SEARCH_BUTTON = 'SET_CAN_SAVE_SEARCH_BUTTON';
 
 const initialState = {
     savedSearches: [],
@@ -43,7 +45,8 @@ const initialState = {
     totalElements: 0,
     isSaving: false,
     pending: [],
-    currentSavedSearch: undefined
+    currentSavedSearch: undefined,
+    canSaveSearch: false
 };
 
 export default function savedSearchesReducer(state = initialState, action) {
@@ -151,6 +154,11 @@ export default function savedSearchesReducer(state = initialState, action) {
                 ...state,
                 currentSavedSearch: undefined
             };
+        case SET_CAN_SAVE_SEARCH_BUTTON:
+            return {
+                ...state,
+                canSaveSearch: action.canSaveSearch
+            };
         default:
             return state;
     }
@@ -158,6 +166,22 @@ export default function savedSearchesReducer(state = initialState, action) {
 
 export const withoutPending = function withoutPending(state) {
     return state.savedSearches.filter((savedSearch) => !state.pending.includes(savedSearch.uuid));
+};
+
+export const toSavedSearchQuery = function toSavedSearchQuery(state) {
+    const query = {
+        q: state.searchBox.q,
+        counties: state.counties.checkedCounties,
+        municipals: state.counties.checkedMunicipals,
+        published: state.published.checkedPublished,
+        engagementType: state.engagement.checkedEngagementType,
+        sector: state.sector.checkedSector,
+        extent: state.extent.checkedExtent,
+        occupationFirstLevels: state.occupations.checkedFirstLevels,
+        occupationSecondLevels: state.occupations.checkedSecondLevels
+    };
+
+    return removeUndefinedOrEmptyString(query);
 };
 
 function* fetchSavedSearches() {
@@ -263,7 +287,15 @@ function* restoreCurrentSavedSearch(action) {
     }
 }
 
+function* setCanSaveSearch() {
+    const state = yield select();
+    const queryString = toQueryString(toSavedSearchQuery(state));
+    const canSaveSearch = queryString.length > 0 && queryString !== '?';
+    yield put({ type: SET_CAN_SAVE_SEARCH_BUTTON, canSaveSearch });
+}
+
 export const savedSearchesSaga = function* saga() {
+    yield takeEvery([SEARCH, INITIAL_SEARCH, RESET_SEARCH], setCanSaveSearch);
     yield takeEvery(FETCH_USER_SUCCESS, fetchSavedSearches);
     yield takeLatest(REMOVE_SAVED_SEARCH, removeSavedSearch);
     yield takeLatest(UPDATE_SAVED_SEARCH, updateSavedSearch);
