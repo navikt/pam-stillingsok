@@ -121,7 +121,7 @@ const startServer = (htmlPages) => {
     server.get('/api/stilling/:uuid', async (req, res) => {
         await searchApiConsumer.fetchStilling(req.params.uuid)
             .catch((err) => {
-                console.error('Failed to fetch stilling with uuid', req.params.uuid);
+                console.warn('Failed to fetch stilling with uuid', req.params.uuid);
                 res.status(err.statusCode)
                     .send(err.message);
             })
