@@ -65,11 +65,6 @@ export default function sectorReducer(state = initialState, action) {
                 ...state,
                 checkedSector: state.checkedSector.filter((m) => (m !== action.value))
             };
-        case UPDATE_SAVED_SEARCH_SUCCESS:
-            return {
-                ...state,
-                deprecatedSector: findDeprecatedFacets(state.checkedSector, state.sector)
-            };
         default:
             return state;
     }
