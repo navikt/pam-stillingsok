@@ -62,7 +62,7 @@ class Engagement extends React.Component {
                             <div key={engagement}>
                                 <Checkbox
                                     name="deprecatedEngagement"
-                                    label={`${engagement} (0)`}
+                                    label={<span>{engagement}<span className="Search__expiredText"> (Utgått)</span></span>}
                                     value={engagement}
                                     onChange={this.onDeprecatedEngagementTypeClick}
                                     checked={checkedEngagement.includes(engagement)}

@@ -5,6 +5,7 @@ import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import Lukknapp from 'nav-frontend-lukknapp';
 import capitalizeLocation from '../../common/capitalizeLocation';
+import './DeprecatedAlertstripe.less';
 
 class DeprecatedAlertstripe extends React.Component {
     constructor(props) {
@@ -22,7 +23,7 @@ class DeprecatedAlertstripe extends React.Component {
 
     render() {
         const { deprecatedFirstLevels, deprecatedSecondLevels, deprecatedCounties, deprecatedMunicipals,
-            deprecatedEngagementType, deprecatedExtent, deprecatedSector } = this.props;
+            deprecatedEngagementType, deprecatedExtent, deprecatedSector, currentSavedSearch } = this.props;
 
         const deprecatedOccupations = [...deprecatedFirstLevels, ...deprecatedSecondLevels];
         const deprecatedLocation = [...deprecatedCounties, ...deprecatedMunicipals];
@@ -36,80 +37,82 @@ class DeprecatedAlertstripe extends React.Component {
 
         if (this.state.showAlertStripe && deprecatedParamTitles.length > 0) {
             return (
-                <AlertStripeInfo solid className="SearchResults__deprecatedParams">
-                    <div className="SearchResults__AlertStripe__close">
+                <AlertStripeInfo solid className="DeprecatedAlertstripe">
+                    <div className="DeprecatedAlertstripe__close">
                         <Lukknapp onClick={this.hideAlertStripe}>Skjul alertstripe</Lukknapp>
                     </div>
-                    <Element className="SearchResults__AlertStripe__title">
+                    <Element className="DeprecatedAlertstripe__title">
                         {deprecatedParamTitles.map((t, i) => (
                             `${(i > 0 && i !== deprecatedParamTitles.length - 1) ? ', ' : ''}
                                     ${(i > 0 && i === deprecatedParamTitles.length - 1) ? ' og ' : ''}
                                     ${i === 0 ? t.charAt(0).toUpperCase() + t.substr(1) : t}`
-                        ))}{' du har valgt er utgått. Du vil ikke få nye treff på søket'}
+                        ))}{' du har valgt er utgått.'}
                     </Element>
                     <Normaltekst>
-                        For å få nye treff må du fjerne utgåtte kriterier, velge nye og lagre søket på nytt.
+                        {currentSavedSearch !== undefined
+                            ? 'For å få nye treff må du fjerne utgåtte kriterier, velge nye og lagre søket på nytt.'
+                            : 'For å få nye treff må du fjerne utgåtte kriterier og velge nye.'}
                     </Normaltekst>
                     <div>
                         {deprecatedOccupations.length > 0 && (
-                            <div className="SearchResults__AlertStripe__deprecatedParams">
-                                <Element>Valgte yrke:</Element>
+                            <div className="DeprecatedAlertstripe__queryParams">
+                                <Element>Valgte yrker:</Element>
                                 {deprecatedFirstLevels.map((o) => (
                                     <Normaltekst key={o}>
-                                        {o}<span className="SearchResults__AlertStripe__expired"> (Utgått)</span>
+                                        {o}<span className="DeprecatedAlertstripe__expired"> (Utgått)</span>
                                     </Normaltekst>
                                 ))}
                                 {deprecatedSecondLevels.map((o) => (
                                     <Normaltekst key={o}>
                                         {o.split('.')[1]}
-                                        <span className="SearchResults__AlertStripe__expired"> (Utgått)</span>
+                                        <span className="DeprecatedAlertstripe__expired"> (Utgått)</span>
                                     </Normaltekst>
                                 ))}
                             </div>
                         )}
                         {deprecatedLocation.length > 0 && (
-                            <div className="SearchResults__AlertStripe__deprecatedParams">
+                            <div className="DeprecatedAlertstripe__queryParams">
                                 <Element>Valgte områder:</Element>
                                 {deprecatedCounties.map((c) => (
                                     <Normaltekst key={c}>
                                         {capitalizeLocation(c)}
-                                        <span className="SearchResults__AlertStripe__expired"> (Utgått)</span>
+                                        <span className="DeprecatedAlertstripe__expired"> (Utgått)</span>
                                     </Normaltekst>
                                 ))}
                                 {deprecatedMunicipals.map((m) => (
                                     <Normaltekst key={m}>
                                         {capitalizeLocation(m.split('.')[1])}
-                                        <span className="SearchResults__AlertStripe__expired"> (Utgått)</span>
+                                        <span className="DeprecatedAlertstripe__expired"> (Utgått)</span>
                                     </Normaltekst>
                                 ))}
                             </div>
                         )}
                         {deprecatedExtent.length > 0 && (
-                            <div className="SearchResults__AlertStripe__deprecatedParams">
+                            <div className="DeprecatedAlertstripe__queryParams">
                                 <Element>Valgt heltid/deltid:</Element>
                                 {deprecatedExtent.map((e) => (
                                     <Normaltekst key={e}>
-                                        {e}<span className="SearchResults__AlertStripe__expired"> (Utgått)</span>
+                                        {e}<span className="DeprecatedAlertstripe__expired"> (Utgått)</span>
                                     </Normaltekst>
                                 ))}
                             </div>
                         )}
                         {deprecatedEngagementType.length > 0 && (
-                            <div className="SearchResults__AlertStripe__deprecatedParams">
+                            <div className="DeprecatedAlertstripe__queryParams">
                                 <Element>Valgte ansettelsesformer:</Element>
                                 {deprecatedEngagementType.map((e) => (
                                     <Normaltekst key={e}>
-                                        {e}<span className="SearchResults__AlertStripe__expired"> (Utgått)</span>
+                                        {e}<span className="DeprecatedAlertstripe__expired"> (Utgått)</span>
                                     </Normaltekst>
                                 ))}
                             </div>
                         )}
                         {deprecatedSector.length > 0 && (
-                            <div className="SearchResults__AlertStripe__deprecatedParams">
+                            <div className="DeprecatedAlertstripe__queryParams">
                                 <Element>Valgte sektorer:</Element>
                                 {deprecatedSector.map((s) => (
                                     <Normaltekst key={s}>
-                                        {s}<span className="SearchResults__AlertStripe__expired"> (Utgått)</span>
+                                        {s}<span className="DeprecatedAlertstripe__expired"> (Utgått)</span>
                                     </Normaltekst>
                                 ))}
                             </div>
@@ -122,6 +125,10 @@ class DeprecatedAlertstripe extends React.Component {
     }
 }
 
+DeprecatedAlertstripe.defaultProps = {
+    currentSavedSearch: undefined
+};
+
 DeprecatedAlertstripe.propTypes = {
     deprecatedFirstLevels: PropTypes.arrayOf(PropTypes.string).isRequired,
     deprecatedSecondLevels: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -129,7 +136,8 @@ DeprecatedAlertstripe.propTypes = {
     deprecatedMunicipals: PropTypes.arrayOf(PropTypes.string).isRequired,
     deprecatedEngagementType: PropTypes.arrayOf(PropTypes.string).isRequired,
     deprecatedExtent: PropTypes.arrayOf(PropTypes.string).isRequired,
-    deprecatedSector: PropTypes.arrayOf(PropTypes.string).isRequired
+    deprecatedSector: PropTypes.arrayOf(PropTypes.string).isRequired,
+    currentSavedSearch: PropTypes.shape()
 };
 
 const mapStateToProps = (state) => ({
@@ -139,7 +147,8 @@ const mapStateToProps = (state) => ({
     deprecatedMunicipals: state.counties.deprecatedMunicipals,
     deprecatedEngagementType: state.engagement.deprecatedEngagementType,
     deprecatedExtent: state.extent.deprecatedExtent,
-    deprecatedSector: state.sector.deprecatedSector
+    deprecatedSector: state.sector.deprecatedSector,
+    currentSavedSearch: state.savedSearches.currentSavedSearch
 });
 
 export default connect(mapStateToProps)(DeprecatedAlertstripe);
