@@ -1,15 +1,11 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { Checkbox } from 'nav-frontend-skjema';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
+import { Checkbox } from 'nav-frontend-skjema';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { connect } from 'react-redux';
 import { SEARCH } from '../../searchReducer';
-import {
-    CHECK_SECTOR,
-    UNCHECK_DEPRECATED_SECTOR,
-    UNCHECK_SECTOR
-} from './sectorReducer';
 import './Sector.less';
+import { CHECK_SECTOR, UNCHECK_SECTOR } from './sectorReducer';
 
 class Sector extends React.Component {
     onSectorClick = (e) => {
@@ -19,12 +15,6 @@ class Sector extends React.Component {
         } else {
             this.props.uncheckSector(value);
         }
-        this.props.search();
-    };
-
-    onDeprecatedSectorClick = (e) => {
-        const { value } = e.target;
-        this.props.uncheckDeprecatedSector(value);
         this.props.search();
     };
 
@@ -63,9 +53,8 @@ class Sector extends React.Component {
                                 name="deprecatedSector"
                                 label={<span>{sec}<span className="Search__expiredText"> (Utgått)</span></span>}
                                 value={sec}
-                                onChange={this.onDeprecatedSectorClick}
+                                onChange={this.onSectorClick}
                                 checked={checkedSector.includes(sec)}
-                                disabled={!checkedSector.includes(sec)}
                             />
                         </div>
                     ))}
@@ -84,8 +73,7 @@ Sector.propTypes = {
     deprecatedSector: PropTypes.arrayOf(PropTypes.string).isRequired,
     checkSector: PropTypes.func.isRequired,
     uncheckSector: PropTypes.func.isRequired,
-    search: PropTypes.func.isRequired,
-    uncheckDeprecatedSector: PropTypes.func.isRequired,
+    search: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -97,8 +85,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
     search: () => dispatch({ type: SEARCH }),
     checkSector: (value) => dispatch({ type: CHECK_SECTOR, value }),
-    uncheckSector: (value) => dispatch({ type: UNCHECK_SECTOR, value }),
-    uncheckDeprecatedSector: (deprecated) => dispatch({ type: UNCHECK_DEPRECATED_SECTOR, deprecated })
+    uncheckSector: (value) => dispatch({ type: UNCHECK_SECTOR, value })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Sector);

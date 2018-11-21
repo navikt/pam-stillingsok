@@ -9,8 +9,6 @@ import { findDeprecatedFacets } from '../utils';
 export const CHECK_EXTENT = 'CHECK_EXTENT';
 export const UNCHECK_EXTENT = 'UNCHECK_EXTENT';
 
-export const UNCHECK_DEPRECATED_EXTENT = 'UNCHECK_DEPRECATED_EXTENT';
-
 const initialState = {
     extent: [],
     checkedExtent: [],
@@ -69,11 +67,6 @@ export default function extentReducer(state = initialState, action) {
             return {
                 ...state,
                 deprecatedExtent: findDeprecatedFacets(state.checkedExtent, state.extent)
-            };
-        case UNCHECK_DEPRECATED_EXTENT:
-            return {
-                ...state,
-                checkedExtent: state.checkedExtent.filter((e) => e !== action.deprecated)
             };
         default:
             return state;

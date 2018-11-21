@@ -6,7 +6,6 @@ import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import { SEARCH } from '../../searchReducer';
 import {
     CHECK_EXTENT,
-    UNCHECK_DEPRECATED_EXTENT,
     UNCHECK_EXTENT
 } from './extentReducer';
 import './Extent.less';
@@ -19,12 +18,6 @@ class Extent extends React.Component {
         } else {
             this.props.uncheckExtent(value);
         }
-        this.props.search();
-    };
-
-    onDeprecatedExtentClick = (e) => {
-        const { value } = e.target;
-        this.props.uncheckDeprecatedExtent(value);
         this.props.search();
     };
 
@@ -64,9 +57,8 @@ class Extent extends React.Component {
                                     name="deprecatedExtent"
                                     label={<span>{ext}<span className="Search__expiredText"> (Utgått)</span></span>}
                                     value={ext}
-                                    onChange={this.onDeprecatedExtentClick}
+                                    onChange={this.onExtentClick}
                                     checked={checkedExtent.includes(ext)}
-                                    disabled={!checkedExtent.includes(ext)}
                                 />
                             </div>
                         ))}
@@ -86,8 +78,7 @@ Extent.propTypes = {
     deprecatedExtent: PropTypes.arrayOf(PropTypes.string).isRequired,
     checkExtent: PropTypes.func.isRequired,
     uncheckExtent: PropTypes.func.isRequired,
-    search: PropTypes.func.isRequired,
-    uncheckDeprecatedExtent: PropTypes.func.isRequired
+    search: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -99,8 +90,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
     search: () => dispatch({ type: SEARCH }),
     checkExtent: (value) => dispatch({ type: CHECK_EXTENT, value }),
-    uncheckExtent: (value) => dispatch({ type: UNCHECK_EXTENT, value }),
-    uncheckDeprecatedExtent: (deprecated) => dispatch({ type: UNCHECK_DEPRECATED_EXTENT, deprecated })
+    uncheckExtent: (value) => dispatch({ type: UNCHECK_EXTENT, value })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Extent);
