@@ -2,6 +2,7 @@ import { call, put, select, take, takeEvery, takeLatest } from 'redux-saga/effec
 import SearchApiError from '../api/SearchApiError';
 import { userApiGet, userApiPost, userApiPut, userApiRemove } from '../api/userApi';
 import { AD_USER_API } from '../fasitProperties';
+import { SET_VALUE } from '../search/searchBox/searchBoxReducer';
 import { INITIAL_SEARCH, RESET_SEARCH, SEARCH } from '../search/searchReducer';
 import { toObject, toQueryString } from '../search/url';
 import { RESTORE_STATE_FROM_URL } from '../urlReducer';
@@ -295,7 +296,7 @@ function* setCanSaveSearch() {
 }
 
 export const savedSearchesSaga = function* saga() {
-    yield takeEvery([SEARCH, INITIAL_SEARCH, RESET_SEARCH], setCanSaveSearch);
+    yield takeEvery([SEARCH, INITIAL_SEARCH, RESET_SEARCH, SET_VALUE], setCanSaveSearch);
     yield takeEvery(FETCH_USER_SUCCESS, fetchSavedSearches);
     yield takeLatest(REMOVE_SAVED_SEARCH, removeSavedSearch);
     yield takeLatest(UPDATE_SAVED_SEARCH, updateSavedSearch);
