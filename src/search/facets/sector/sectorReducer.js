@@ -4,7 +4,7 @@ import {
 } from '../../../savedSearches/savedSearchesReducer';
 import { RESTORE_STATE_FROM_URL } from '../../../urlReducer';
 import { FETCH_INITIAL_FACETS_SUCCESS, RESET_SEARCH, SEARCH_SUCCESS } from '../../searchReducer';
-import { moveFacetToBottom } from '../utils';
+import { findDeprecatedFacets, moveFacetToBottom } from '../utils';
 
 export const CHECK_SECTOR = 'CHECK_SECTOR';
 export const UNCHECK_SECTOR = 'UNCHECK_SECTOR';
@@ -17,9 +17,6 @@ const initialState = {
     deprecatedSector: []
 };
 
-const findDeprecatedSector = (checkedSector, sector) =>
-    checkedSector.filter((sec) => !sector.map((s) => s.key).includes(sec));
-
 export default function sectorReducer(state = initialState, action) {
     switch (action.type) {
         case RESTORE_STATE_FROM_URL:
@@ -28,7 +25,7 @@ export default function sectorReducer(state = initialState, action) {
             return {
                 ...state,
                 checkedSector,
-                deprecatedSector: findDeprecatedSector(checkedSector, state.sector)
+                deprecatedSector: findDeprecatedFacets(checkedSector, state.sector)
             };
         case RESET_SEARCH:
             return {
@@ -40,7 +37,7 @@ export default function sectorReducer(state = initialState, action) {
             return {
                 ...state,
                 sector: moveFacetToBottom(action.response.sector, 'Ikke oppgitt'),
-                deprecatedSector: findDeprecatedSector(state.checkedSector, action.response.sector)
+                deprecatedSector: findDeprecatedFacets(state.checkedSector, action.response.sector)
             };
         case SEARCH_SUCCESS:
             return {
@@ -71,7 +68,7 @@ export default function sectorReducer(state = initialState, action) {
         case UPDATE_SAVED_SEARCH_SUCCESS:
             return {
                 ...state,
-                deprecatedSector: findDeprecatedSector(state.checkedSector, state.sector)
+                deprecatedSector: findDeprecatedFacets(state.checkedSector, state.sector)
             };
         case UNCHECK_DEPRECATED_SECTOR:
             return {

@@ -4,6 +4,7 @@ import {
 } from '../../../savedSearches/savedSearchesReducer';
 import { RESTORE_STATE_FROM_URL } from '../../../urlReducer';
 import { FETCH_INITIAL_FACETS_SUCCESS, RESET_SEARCH, SEARCH_SUCCESS } from '../../searchReducer';
+import { findDeprecatedFacets } from '../utils';
 
 export const CHECK_COUNTY = 'CHECK_COUNTY';
 export const UNCHECK_COUNTY = 'UNCHECK_COUNTY';
@@ -20,22 +21,6 @@ const initialState = {
     deprecatedMunicipals: []
 };
 
-const findDeprecatedCounties = (checkedCounties, counties) =>
-    checkedCounties.filter((checkedCounty) => !counties.map((c) => c.key).includes(checkedCounty));
-
-const findDeprecatedMunicipals = (checkedMunicipals, counties) => (
-    checkedMunicipals.map((checkedMunicipal) => {
-        const municipal = checkedMunicipal.split('.');
-        const county = counties.find((c) => c.key === municipal[0]);
-        if (county) {
-            return !county.municipals.map((m) => m.key).includes(checkedMunicipal)
-                ? checkedMunicipal
-                : undefined;
-        }
-        return checkedMunicipal;
-    }).filter((m) => m !== undefined)
-);
-
 export default function countiesReducer(state = initialState, action) {
     switch (action.type) {
         case RESTORE_STATE_FROM_URL:
@@ -46,8 +31,8 @@ export default function countiesReducer(state = initialState, action) {
                 ...state,
                 checkedCounties,
                 checkedMunicipals,
-                deprecatedCounties: findDeprecatedCounties(checkedCounties, state.counties),
-                deprecatedMunicipals: findDeprecatedMunicipals(checkedMunicipals, state.counties)
+                deprecatedCounties: findDeprecatedFacets(checkedCounties, state.counties),
+                deprecatedMunicipals: findDeprecatedFacets(checkedMunicipals, state.counties, 'municipals')
             };
         case RESET_SEARCH:
             return {
@@ -61,8 +46,8 @@ export default function countiesReducer(state = initialState, action) {
             return {
                 ...state,
                 counties: action.response.counties,
-                deprecatedCounties: findDeprecatedCounties(state.checkedCounties, action.response.counties),
-                deprecatedMunicipals: findDeprecatedMunicipals(state.checkedMunicipals, action.response.counties)
+                deprecatedCounties: findDeprecatedFacets(state.checkedCounties, state.counties),
+                deprecatedMunicipals: findDeprecatedFacets(state.checkedMunicipals, state.counties, 'municipals')
             };
         case SEARCH_SUCCESS:
             return {
@@ -123,8 +108,8 @@ export default function countiesReducer(state = initialState, action) {
         case UPDATE_SAVED_SEARCH_SUCCESS:
             return {
                 ...state,
-                deprecatedCounties: findDeprecatedCounties(state.checkedCounties, state.counties),
-                deprecatedMunicipals: findDeprecatedMunicipals(state.checkedMunicipals, state.counties)
+                deprecatedCounties: findDeprecatedFacets(state.checkedMunicipals, state.counties),
+                deprecatedMunicipals: findDeprecatedFacets(state.checkedMunicipals, state.counties, 'municipals')
             };
         case UNCHECK_DEPRECATED_LOCATION:
             if (state.checkedCounties.includes(action.deprecated)) {
