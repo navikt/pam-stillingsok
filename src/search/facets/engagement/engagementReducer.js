@@ -59,14 +59,12 @@ export default function engagementReducer(state = initialState, action) {
                 checkedEngagementType: [
                     ...state.checkedEngagementType,
                     action.value
-                ],
-                deprecatedEngagementType: []
+                ]
             };
         case UNCHECK_ENGAGEMENT_TYPE:
             return {
                 ...state,
-                checkedEngagementType: state.checkedEngagementType.filter((m) => (m !== action.value)),
-                deprecatedEngagementType: []
+                checkedEngagementType: state.checkedEngagementType.filter((m) => (m !== action.value))
             };
         case UNCHECK_DEPRECATED_ENGAGEMENT_TYPE:
             return {
