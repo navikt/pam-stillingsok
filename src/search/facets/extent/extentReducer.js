@@ -4,6 +4,7 @@ import {
 } from '../../../savedSearches/savedSearchesReducer';
 import { RESTORE_STATE_FROM_URL } from '../../../urlReducer';
 import { FETCH_INITIAL_FACETS_SUCCESS, RESET_SEARCH, SEARCH_SUCCESS } from '../../searchReducer';
+import { findDeprecatedFacets } from '../utils';
 
 export const CHECK_EXTENT = 'CHECK_EXTENT';
 export const UNCHECK_EXTENT = 'UNCHECK_EXTENT';
@@ -16,9 +17,6 @@ const initialState = {
     deprecatedExtent: []
 };
 
-const findDeprecatedExtent = (checkedExtent, extent) =>
-    checkedExtent.filter((ext) => !extent.map((e) => e.key).includes(ext));
-
 export default function extentReducer(state = initialState, action) {
     switch (action.type) {
         case RESTORE_STATE_FROM_URL:
@@ -27,7 +25,7 @@ export default function extentReducer(state = initialState, action) {
             return {
                 ...state,
                 checkedExtent,
-                deprecatedExtent: findDeprecatedExtent(checkedExtent, state.extent)
+                deprecatedExtent: findDeprecatedFacets(checkedExtent, state.extent)
             };
         case RESET_SEARCH:
             return {
@@ -39,7 +37,7 @@ export default function extentReducer(state = initialState, action) {
             return {
                 ...state,
                 extent: action.response.extent,
-                deprecatedExtent: findDeprecatedExtent(state.checkedExtent, action.response.extent)
+                deprecatedExtent: findDeprecatedFacets(state.checkedExtent, action.response.extent)
             };
         case SEARCH_SUCCESS:
             return {
@@ -70,7 +68,7 @@ export default function extentReducer(state = initialState, action) {
         case UPDATE_SAVED_SEARCH_SUCCESS:
             return {
                 ...state,
-                deprecatedExtent: findDeprecatedExtent(state.checkedExtent, state.extent)
+                deprecatedExtent: findDeprecatedFacets(state.checkedExtent, state.extent)
             };
         case UNCHECK_DEPRECATED_EXTENT:
             return {

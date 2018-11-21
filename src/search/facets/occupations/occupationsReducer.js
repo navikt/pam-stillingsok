@@ -4,7 +4,7 @@ import {
 } from '../../../savedSearches/savedSearchesReducer';
 import { RESTORE_STATE_FROM_URL } from '../../../urlReducer';
 import { FETCH_INITIAL_FACETS_SUCCESS, RESET_SEARCH, SEARCH_SUCCESS } from '../../searchReducer';
-import { moveFacetToBottom } from '../utils';
+import { findDeprecatedFacets, moveFacetToBottom } from '../utils';
 
 export const CHECK_FIRST_LEVEL = 'CHECK_FIRST_LEVEL';
 export const UNCHECK_FIRST_LEVEL = 'UNCHECK_FIRST_LEVEL';
@@ -23,24 +23,6 @@ const initialState = {
     deprecatedSecondLevels: []
 };
 
-const findDeprecatedFirstLevels = (checkedFirstLevels, occupationFirstLevels) => (
-    checkedFirstLevels.filter((checkedFirstLevel) =>
-        !occupationFirstLevels.map((o) => o.key).includes(checkedFirstLevel))
-);
-
-const findDeprecatedSecondLevels = (checkedSecondLevels, occupationFirstLevels) => (
-    checkedSecondLevels.map((checkedSecondLevel) => {
-        const occupation = checkedSecondLevel.split('.');
-        const firstLevel = occupationFirstLevels.find((o) => o.key === occupation[0]);
-        if (firstLevel) {
-            return !firstLevel.occupationSecondLevels.map((o) => o.key).includes(checkedSecondLevel)
-                ? checkedSecondLevel
-                : undefined;
-        }
-        return checkedSecondLevel;
-    }).filter((o) => o !== undefined)
-);
-
 export default function occupations(state = initialState, action) {
     switch (action.type) {
         case RESTORE_STATE_FROM_URL:
@@ -51,8 +33,8 @@ export default function occupations(state = initialState, action) {
                 ...state,
                 checkedFirstLevels,
                 checkedSecondLevels,
-                deprecatedFirstLevels: findDeprecatedFirstLevels(checkedFirstLevels, state.occupationFirstLevels),
-                deprecatedSecondLevels: findDeprecatedSecondLevels(checkedSecondLevels, state.occupationFirstLevels)
+                deprecatedFirstLevels: findDeprecatedFacets(checkedFirstLevels, state.occupationFirstLevels),
+                deprecatedSecondLevels: findDeprecatedFacets(checkedSecondLevels, state.occupationFirstLevels, 'occupationSecondLevels')
             };
         case RESET_SEARCH:
             return {
@@ -66,10 +48,10 @@ export default function occupations(state = initialState, action) {
             return {
                 ...state,
                 occupationFirstLevels: moveFacetToBottom(action.response.occupationFirstLevels, OCCUPATION_ANNET),
-                deprecatedFirstLevels: findDeprecatedFirstLevels(state.checkedFirstLevels,
+                deprecatedFirstLevels: findDeprecatedFacets(state.checkedFirstLevels,
                     action.response.occupationFirstLevels),
-                deprecatedSecondLevels: findDeprecatedSecondLevels(state.checkedSecondLevels,
-                    action.response.occupationFirstLevels)
+                deprecatedSecondLevels: findDeprecatedFacets(state.checkedSecondLevels,
+                    action.response.occupationFirstLevels, 'occupationSecondLevels')
             };
         case SEARCH_SUCCESS:
             return {
@@ -130,9 +112,9 @@ export default function occupations(state = initialState, action) {
         case UPDATE_SAVED_SEARCH_SUCCESS:
             return {
                 ...state,
-                deprecatedFirstLevels: findDeprecatedFirstLevels(state.checkedFirstLevels, state.occupationFirstLevels),
-                deprecatedSecondLevels: findDeprecatedSecondLevels(state.checkedSecondLevels,
-                    state.occupationFirstLevels)
+                deprecatedFirstLevels: findDeprecatedFacets(state.checkedFirstLevels, state.occupationFirstLevels),
+                deprecatedSecondLevels: findDeprecatedFacets(state.checkedSecondLevels,
+                    state.occupationFirstLevels, 'occupationSecondLevels')
             };
         case UNCHECK_DEPRECATED_OCCUPATION:
             if (state.checkedFirstLevels.includes(action.deprecated)) {
