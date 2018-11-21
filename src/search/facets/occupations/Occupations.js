@@ -1,18 +1,17 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { Checkbox } from 'nav-frontend-skjema';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
+import { Checkbox } from 'nav-frontend-skjema';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { connect } from 'react-redux';
 import { SEARCH } from '../../searchReducer';
+import './Occupations.less';
 import {
     CHECK_FIRST_LEVEL,
-    UNCHECK_FIRST_LEVEL,
     CHECK_SECOND_LEVEL,
-    UNCHECK_SECOND_LEVEL,
     OCCUPATION_ANNET,
-    UNCHECK_DEPRECATED_OCCUPATION
+    UNCHECK_FIRST_LEVEL,
+    UNCHECK_SECOND_LEVEL
 } from './occupationsReducer';
-import './Occupations.less';
 
 class Occupations extends React.Component {
     onFirstLevelClick = (e) => {
@@ -32,12 +31,6 @@ class Occupations extends React.Component {
         } else {
             this.props.uncheckSecondLevel(value);
         }
-        this.props.search();
-    };
-
-    onDeprecatedOccupationClick = (e) => {
-        const { value } = e.target;
-        this.props.uncheckDeprecatedOccupation(value);
         this.props.search();
     };
 
@@ -102,9 +95,8 @@ class Occupations extends React.Component {
                                 name="deprecatedOccupation"
                                 label={<span>{first}<span className="Search__expiredText"> (Utgått)</span></span>}
                                 value={first}
-                                onChange={this.onDeprecatedOccupationClick}
+                                onChange={this.onFirstLevelClick}
                                 checked={checkedFirstLevels.includes(first)}
-                                disabled={!checkedFirstLevels.includes(first)}
                             />
                         </div>
                     ))}
@@ -114,9 +106,8 @@ class Occupations extends React.Component {
                                 name="deprecatedOccupation"
                                 label={<span>{second.split('.')[1]}<span className="Search__expiredText"> (Utgått)</span></span>}
                                 value={second}
-                                onChange={this.onDeprecatedOccupationClick}
+                                onChange={this.onSecondLevelClick}
                                 checked={checkedSecondLevels.includes(second)}
-                                disabled={!checkedSecondLevels.includes(second)}
                             />
                         </div>
                     ))}
@@ -143,8 +134,7 @@ Occupations.propTypes = {
     uncheckFirstLevel: PropTypes.func.isRequired,
     checkSecondLevel: PropTypes.func.isRequired,
     uncheckSecondLevel: PropTypes.func.isRequired,
-    search: PropTypes.func.isRequired,
-    uncheckDeprecatedOccupation: PropTypes.func.isRequired
+    search: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -160,8 +150,7 @@ const mapDispatchToProps = (dispatch) => ({
     checkFirstLevel: (firstLevel) => dispatch({ type: CHECK_FIRST_LEVEL, firstLevel }),
     uncheckFirstLevel: (firstLevel) => dispatch({ type: UNCHECK_FIRST_LEVEL, firstLevel }),
     checkSecondLevel: (secondLevel) => dispatch({ type: CHECK_SECOND_LEVEL, secondLevel }),
-    uncheckSecondLevel: (secondLevel) => dispatch({ type: UNCHECK_SECOND_LEVEL, secondLevel }),
-    uncheckDeprecatedOccupation: (deprecated) => dispatch({ type: UNCHECK_DEPRECATED_OCCUPATION, deprecated })
+    uncheckSecondLevel: (secondLevel) => dispatch({ type: UNCHECK_SECOND_LEVEL, secondLevel })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Occupations);

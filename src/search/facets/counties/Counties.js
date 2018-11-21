@@ -1,18 +1,17 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { Checkbox } from 'nav-frontend-skjema';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
+import { Checkbox } from 'nav-frontend-skjema';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { connect } from 'react-redux';
 import capitalizeLocation from '../../../common/capitalizeLocation';
 import { SEARCH } from '../../searchReducer';
+import './Counties.less';
 import {
     CHECK_COUNTY,
-    UNCHECK_COUNTY,
     CHECK_MUNICIPAL,
-    UNCHECK_MUNICIPAL,
-    UNCHECK_DEPRECATED_LOCATION
+    UNCHECK_COUNTY,
+    UNCHECK_MUNICIPAL
 } from './countiesReducer';
-import './Counties.less';
 
 class Counties extends React.Component {
     onCountyClick = (e) => {
@@ -32,12 +31,6 @@ class Counties extends React.Component {
         } else {
             this.props.uncheckMunicipal(value);
         }
-        this.props.search();
-    };
-
-    onDeprecatedLocationClick = (e) => {
-        const { value } = e.target;
-        this.props.uncheckDeprecatedLocation(value);
         this.props.search();
     };
 
@@ -97,9 +90,8 @@ class Counties extends React.Component {
                                 name="deprecatedLocation"
                                 label={<span>{capitalizeLocation(county)}<span className="Search__expiredText"> (Utgått)</span></span>}
                                 value={county}
-                                onChange={this.onDeprecatedLocationClick}
+                                onChange={this.onCountyClick}
                                 checked={checkedCounties.includes(county)}
-                                disabled={!checkedCounties.includes(county)}
                             />
                         </div>
                     ))}
@@ -109,9 +101,8 @@ class Counties extends React.Component {
                                 name="deprecatedLocation"
                                 label={<span>{capitalizeLocation(municipal.split('.')[1])}<span className="Search__expiredText"> (Utgått)</span></span>}
                                 value={municipal}
-                                onChange={this.onDeprecatedLocationClick}
+                                onChange={this.onMunicipalClick}
                                 checked={checkedMunicipals.includes(municipal)}
-                                disabled={!checkedMunicipals.includes(municipal)}
                             />
                         </div>
                     ))}
@@ -138,8 +129,7 @@ Counties.propTypes = {
     uncheckCounty: PropTypes.func.isRequired,
     checkMunicipal: PropTypes.func.isRequired,
     uncheckMunicipal: PropTypes.func.isRequired,
-    search: PropTypes.func.isRequired,
-    uncheckDeprecatedLocation: PropTypes.func.isRequired
+    search: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -155,8 +145,7 @@ const mapDispatchToProps = (dispatch) => ({
     checkCounty: (county) => dispatch({ type: CHECK_COUNTY, county }),
     uncheckCounty: (county) => dispatch({ type: UNCHECK_COUNTY, county }),
     checkMunicipal: (municipal) => dispatch({ type: CHECK_MUNICIPAL, municipal }),
-    uncheckMunicipal: (municipal) => dispatch({ type: UNCHECK_MUNICIPAL, municipal }),
-    uncheckDeprecatedLocation: (deprecated) => dispatch({ type: UNCHECK_DEPRECATED_LOCATION, deprecated })
+    uncheckMunicipal: (municipal) => dispatch({ type: UNCHECK_MUNICIPAL, municipal })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Counties);

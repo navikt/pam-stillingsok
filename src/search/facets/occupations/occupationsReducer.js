@@ -11,8 +11,6 @@ export const UNCHECK_FIRST_LEVEL = 'UNCHECK_FIRST_LEVEL';
 export const CHECK_SECOND_LEVEL = 'CHECK_SECOND_LEVEL';
 export const UNCHECK_SECOND_LEVEL = 'UNCHECK_SECOND_LEVEL';
 
-export const UNCHECK_DEPRECATED_OCCUPATION = 'UNCHECK_DEPRECATED_OCCUPATION';
-
 export const OCCUPATION_ANNET = 'Uoppgitt/ ikke identifiserbare';
 
 const initialState = {
@@ -21,6 +19,20 @@ const initialState = {
     checkedSecondLevels: [],
     deprecatedFirstLevels: [],
     deprecatedSecondLevels: []
+};
+
+function uncheckSecondsLevels(state, firstLevel) {
+    const firstLevelObject = state.occupationFirstLevels.find((c) => c.key === firstLevel);
+    if (!firstLevelObject) {
+        return state.checkedSecondLevels;
+    }
+
+    if (!state.checkedSecondLevels) {
+        return [];
+    }
+
+    return state.checkedSecondLevels.filter((m1) =>
+        !firstLevelObject.occupationSecondLevels.find((m) => m.key === m1));
 };
 
 export default function occupations(state = initialState, action) {
@@ -88,12 +100,10 @@ export default function occupations(state = initialState, action) {
                 ]
             };
         case UNCHECK_FIRST_LEVEL:
-            const firstLevelObject = state.occupationFirstLevels.find((c) => c.key === action.firstLevel);
             return {
                 ...state,
                 checkedFirstLevels: state.checkedFirstLevels.filter((c) => (c !== action.firstLevel)),
-                checkedSecondLevels: state.checkedSecondLevels ? state.checkedSecondLevels.filter((m1) =>
-                    !firstLevelObject.occupationSecondLevels.find((m) => m.key === m1)) : [],
+                checkedSecondLevels: uncheckSecondsLevels(state, action.firstLevel),
                 from: 0
             };
         case CHECK_SECOND_LEVEL:
@@ -116,19 +126,6 @@ export default function occupations(state = initialState, action) {
                 deprecatedSecondLevels: findDeprecatedFacets(state.checkedSecondLevels,
                     state.occupationFirstLevels, 'occupationSecondLevels')
             };
-        case UNCHECK_DEPRECATED_OCCUPATION:
-            if (state.checkedFirstLevels.includes(action.deprecated)) {
-                return {
-                    ...state,
-                    checkedFirstLevels: state.checkedFirstLevels.filter((c) => c !== action.deprecated)
-                };
-            } else if (state.checkedSecondLevels.includes(action.deprecated)) {
-                return {
-                    ...state,
-                    checkedSecondLevels: state.checkedSecondLevels.filter((c) => c !== action.deprecated)
-                };
-            }
-            return state;
         default:
             return state;
     }

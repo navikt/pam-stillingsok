@@ -11,8 +11,6 @@ export const UNCHECK_COUNTY = 'UNCHECK_COUNTY';
 export const CHECK_MUNICIPAL = 'CHECK_MUNICIPAL';
 export const UNCHECK_MUNICIPAL = 'UNCHECK_MUNICIPAL';
 
-export const UNCHECK_DEPRECATED_LOCATION = 'UNCHECK_DEPRECATED_LOCATION';
-
 const initialState = {
     counties: [],
     checkedCounties: [],
@@ -20,6 +18,20 @@ const initialState = {
     deprecatedCounties: [],
     deprecatedMunicipals: []
 };
+
+function uncheckMunicipalsInCounty(state, county) {
+    const countyObject = state.counties.find((c) => c.key === county);
+    if (!countyObject) {
+        return state.checkedMunicipals;
+    }
+
+    if (!state.checkedMunicipals) {
+        return [];
+    }
+
+    return state.checkedMunicipals.filter((m1) =>
+        !countyObject.municipals.find((m) => m.key === m1));
+}
 
 export default function countiesReducer(state = initialState, action) {
     switch (action.type) {
@@ -84,12 +96,10 @@ export default function countiesReducer(state = initialState, action) {
                 ]
             };
         case UNCHECK_COUNTY:
-            const countyObject = state.counties.find((c) => c.key === action.county);
             return {
                 ...state,
                 checkedCounties: state.checkedCounties.filter((c) => (c !== action.county)),
-                checkedMunicipals: state.checkedMunicipals ? state.checkedMunicipals.filter((m1) =>
-                    !countyObject.municipals.find((m) => m.key === m1)) : [],
+                checkedMunicipals: uncheckMunicipalsInCounty(state, action.county),
                 from: 0
             };
         case CHECK_MUNICIPAL:
@@ -111,19 +121,6 @@ export default function countiesReducer(state = initialState, action) {
                 deprecatedCounties: findDeprecatedFacets(state.checkedMunicipals, state.counties),
                 deprecatedMunicipals: findDeprecatedFacets(state.checkedMunicipals, state.counties, 'municipals')
             };
-        case UNCHECK_DEPRECATED_LOCATION:
-            if (state.checkedCounties.includes(action.deprecated)) {
-                return {
-                    ...state,
-                    checkedCounties: state.checkedCounties.filter((c) => c !== action.deprecated)
-                };
-            } else if (state.checkedMunicipals.includes(action.deprecated)) {
-                return {
-                    ...state,
-                    checkedMunicipals: state.checkedMunicipals.filter((c) => c !== action.deprecated)
-                };
-            }
-            return state;
         default:
             return state;
     }
