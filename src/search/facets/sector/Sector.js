@@ -6,6 +6,7 @@ import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import { SEARCH } from '../../searchReducer';
 import {
     CHECK_SECTOR,
+    UNCHECK_DEPRECATED_SECTOR,
     UNCHECK_SECTOR
 } from './sectorReducer';
 import './Sector.less';
@@ -21,8 +22,14 @@ class Sector extends React.Component {
         this.props.search();
     };
 
+    onDeprecatedSectorClick = (e) => {
+        const { value } = e.target;
+        this.props.uncheckDeprecatedSector(value);
+        this.props.search();
+    };
+
     render() {
-        const { sector, checkedSector } = this.props;
+        const { sector, checkedSector, deprecatedSector } = this.props;
         let title = 'Sektor';
         if (checkedSector.length === 1) {
             title += ' (1 valgt)';
@@ -50,6 +57,18 @@ class Sector extends React.Component {
                             checked={checkedSector.includes(item.key)}
                         />
                     ))}
+                    {deprecatedSector && deprecatedSector.map((sec) => (
+                        <div key={sec}>
+                            <Checkbox
+                                name="deprecatedSector"
+                                label={`${sec} (0)`}
+                                value={sec}
+                                onChange={this.onDeprecatedSectorClick}
+                                checked={checkedSector.includes(sec)}
+                                disabled={!checkedSector.includes(sec)}
+                            />
+                        </div>
+                    ))}
                 </div>
             </Ekspanderbartpanel>
         );
@@ -62,20 +81,24 @@ Sector.propTypes = {
         count: PropTypes.number
     })).isRequired,
     checkedSector: PropTypes.arrayOf(PropTypes.string).isRequired,
+    deprecatedSector: PropTypes.arrayOf(PropTypes.string).isRequired,
     checkSector: PropTypes.func.isRequired,
     uncheckSector: PropTypes.func.isRequired,
-    search: PropTypes.func.isRequired
+    search: PropTypes.func.isRequired,
+    uncheckDeprecatedSector: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
     sector: state.sector.sector,
-    checkedSector: state.sector.checkedSector
+    checkedSector: state.sector.checkedSector,
+    deprecatedSector: state.sector.deprecatedSector
 });
 
 const mapDispatchToProps = (dispatch) => ({
     search: () => dispatch({ type: SEARCH }),
     checkSector: (value) => dispatch({ type: CHECK_SECTOR, value }),
-    uncheckSector: (value) => dispatch({ type: UNCHECK_SECTOR, value })
+    uncheckSector: (value) => dispatch({ type: UNCHECK_SECTOR, value }),
+    uncheckDeprecatedSector: (deprecated) => dispatch({ type: UNCHECK_DEPRECATED_SECTOR, deprecated })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Sector);

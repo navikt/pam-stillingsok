@@ -6,6 +6,7 @@ import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import { SEARCH } from '../../searchReducer';
 import {
     CHECK_EXTENT,
+    UNCHECK_DEPRECATED_EXTENT,
     UNCHECK_EXTENT
 } from './extentReducer';
 import './Extent.less';
@@ -21,8 +22,14 @@ class Extent extends React.Component {
         this.props.search();
     };
 
+    onDeprecatedExtentClick = (e) => {
+        const { value } = e.target;
+        this.props.uncheckDeprecatedExtent(value);
+        this.props.search();
+    };
+
     render() {
-        const { extent, checkedExtent } = this.props;
+        const { extent, checkedExtent, deprecatedExtent } = this.props;
         let title = 'Heltid/deltid';
         if (checkedExtent.length === 1) {
             title += ' (1 valgt)';
@@ -51,6 +58,18 @@ class Extent extends React.Component {
                                 checked={checkedExtent.includes(item.key)}
                             />
                         ))}
+                        {deprecatedExtent && deprecatedExtent.map((ext) => (
+                            <div key={ext}>
+                                <Checkbox
+                                    name="deprecatedExtent"
+                                    label={`${ext} (0)`}
+                                    value={ext}
+                                    onChange={this.onDeprecatedExtentClick}
+                                    checked={checkedExtent.includes(ext)}
+                                    disabled={!checkedExtent.includes(ext)}
+                                />
+                            </div>
+                        ))}
                     </div>
                 </div>
             </Ekspanderbartpanel>
@@ -64,20 +83,24 @@ Extent.propTypes = {
         count: PropTypes.number
     })).isRequired,
     checkedExtent: PropTypes.arrayOf(PropTypes.string).isRequired,
+    deprecatedExtent: PropTypes.arrayOf(PropTypes.string).isRequired,
     checkExtent: PropTypes.func.isRequired,
     uncheckExtent: PropTypes.func.isRequired,
-    search: PropTypes.func.isRequired
+    search: PropTypes.func.isRequired,
+    uncheckDeprecatedExtent: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
     extent: state.extent.extent,
-    checkedExtent: state.extent.checkedExtent
+    checkedExtent: state.extent.checkedExtent,
+    deprecatedExtent: state.extent.deprecatedExtent
 });
 
 const mapDispatchToProps = (dispatch) => ({
     search: () => dispatch({ type: SEARCH }),
     checkExtent: (value) => dispatch({ type: CHECK_EXTENT, value }),
-    uncheckExtent: (value) => dispatch({ type: UNCHECK_EXTENT, value })
+    uncheckExtent: (value) => dispatch({ type: UNCHECK_EXTENT, value }),
+    uncheckDeprecatedExtent: (deprecated) => dispatch({ type: UNCHECK_DEPRECATED_EXTENT, deprecated })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Extent);

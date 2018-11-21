@@ -6,6 +6,8 @@ import { moveFacetToBottom } from '../utils';
 export const CHECK_ENGAGEMENT_TYPE = 'CHECK_ENGAGEMENT_TYPE';
 export const UNCHECK_ENGAGEMENT_TYPE = 'UNCHECK_ENGAGEMENT_TYPE';
 
+export const UNCHECK_DEPRECATED_ENGAGEMENT_TYPE = 'UNCHECK_DEPRECATED_ENGAGEMENT_TYPE';
+
 const initialState = {
     engagementType: [],
     checkedEngagementType: [],
@@ -65,6 +67,11 @@ export default function engagementReducer(state = initialState, action) {
                 ...state,
                 checkedEngagementType: state.checkedEngagementType.filter((m) => (m !== action.value)),
                 deprecatedEngagementType: []
+            };
+        case UNCHECK_DEPRECATED_ENGAGEMENT_TYPE:
+            return {
+                ...state,
+                checkedEngagementType: state.checkedEngagementType.filter((e) => e !== action.deprecated)
             };
         default:
             return state;

@@ -5,6 +5,8 @@ import { FETCH_INITIAL_FACETS_SUCCESS, RESET_SEARCH, SEARCH_SUCCESS } from '../.
 export const CHECK_EXTENT = 'CHECK_EXTENT';
 export const UNCHECK_EXTENT = 'UNCHECK_EXTENT';
 
+export const UNCHECK_DEPRECATED_EXTENT = 'UNCHECK_DEPRECATED_EXTENT';
+
 const initialState = {
     extent: [],
     checkedExtent: [],
@@ -55,14 +57,17 @@ export default function extentReducer(state = initialState, action) {
                 checkedExtent: [
                     ...state.checkedExtent,
                     action.value
-                ],
-                deprecatedExtent: []
+                ]
             };
         case UNCHECK_EXTENT:
             return {
                 ...state,
-                checkedExtent: state.checkedExtent.filter((m) => (m !== action.value)),
-                deprecatedExtent: []
+                checkedExtent: state.checkedExtent.filter((m) => (m !== action.value))
+            };
+        case UNCHECK_DEPRECATED_EXTENT:
+            return {
+                ...state,
+                checkedExtent: state.checkedExtent.filter((e) => e !== action.deprecated)
             };
         default:
             return state;

@@ -9,7 +9,8 @@ import {
     UNCHECK_FIRST_LEVEL,
     CHECK_SECOND_LEVEL,
     UNCHECK_SECOND_LEVEL,
-    OCCUPATION_ANNET
+    OCCUPATION_ANNET,
+    UNCHECK_DEPRECATED_OCCUPATION
 } from './occupationsReducer';
 import './Occupations.less';
 
@@ -34,14 +35,25 @@ class Occupations extends React.Component {
         this.props.search();
     };
 
+    onDeprecatedOccupationClick = (e) => {
+        const { value } = e.target;
+        this.props.uncheckDeprecatedOccupation(value);
+        this.props.search();
+    };
+
     render() {
-        const { occupationFirstLevels, checkedFirstLevels, checkedSecondLevels } = this.props;
+        const {
+            occupationFirstLevels, checkedFirstLevels, checkedSecondLevels, deprecatedFirstLevels,
+            deprecatedSecondLevels
+        } = this.props;
+
         let title = 'Yrke';
         if ((checkedFirstLevels.length + checkedSecondLevels.length) === 1) {
             title += ' (1 valgt)';
         } else if ((checkedFirstLevels.length + checkedSecondLevels.length) > 1) {
             title += ` (${checkedFirstLevels.length + checkedSecondLevels.length} valgte)`;
         }
+
         return (
             <Ekspanderbartpanel
                 tittel={title}
@@ -84,6 +96,30 @@ class Occupations extends React.Component {
                             )}
                         </div>
                     ))}
+                    {deprecatedFirstLevels && deprecatedFirstLevels.map((first) => (
+                        <div key={first}>
+                            <Checkbox
+                                name="deprecatedOccupation"
+                                label={`${first} (0)`}
+                                value={first}
+                                onChange={this.onDeprecatedOccupationClick}
+                                checked={checkedFirstLevels.includes(first)}
+                                disabled={!checkedFirstLevels.includes(first)}
+                            />
+                        </div>
+                    ))}
+                    {deprecatedSecondLevels && deprecatedSecondLevels.map((second) => (
+                        <div key={second}>
+                            <Checkbox
+                                name="deprecatedOccupation"
+                                label={`${second.split('.')[1]} (0)`}
+                                value={second}
+                                onChange={this.onDeprecatedOccupationClick}
+                                checked={checkedSecondLevels.includes(second)}
+                                disabled={!checkedSecondLevels.includes(second)}
+                            />
+                        </div>
+                    ))}
                 </div>
             </Ekspanderbartpanel>
         );
@@ -101,17 +137,22 @@ Occupations.propTypes = {
     })).isRequired,
     checkedFirstLevels: PropTypes.arrayOf(PropTypes.string).isRequired,
     checkedSecondLevels: PropTypes.arrayOf(PropTypes.string).isRequired,
+    deprecatedFirstLevels: PropTypes.arrayOf(PropTypes.string).isRequired,
+    deprecatedSecondLevels: PropTypes.arrayOf(PropTypes.string).isRequired,
     checkFirstLevel: PropTypes.func.isRequired,
     uncheckFirstLevel: PropTypes.func.isRequired,
     checkSecondLevel: PropTypes.func.isRequired,
     uncheckSecondLevel: PropTypes.func.isRequired,
-    search: PropTypes.func.isRequired
+    search: PropTypes.func.isRequired,
+    uncheckDeprecatedOccupation: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
     occupationFirstLevels: state.occupations.occupationFirstLevels,
     checkedFirstLevels: state.occupations.checkedFirstLevels,
-    checkedSecondLevels: state.occupations.checkedSecondLevels
+    checkedSecondLevels: state.occupations.checkedSecondLevels,
+    deprecatedFirstLevels: state.occupations.deprecatedFirstLevels,
+    deprecatedSecondLevels: state.occupations.deprecatedSecondLevels
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -119,7 +160,8 @@ const mapDispatchToProps = (dispatch) => ({
     checkFirstLevel: (firstLevel) => dispatch({ type: CHECK_FIRST_LEVEL, firstLevel }),
     uncheckFirstLevel: (firstLevel) => dispatch({ type: UNCHECK_FIRST_LEVEL, firstLevel }),
     checkSecondLevel: (secondLevel) => dispatch({ type: CHECK_SECOND_LEVEL, secondLevel }),
-    uncheckSecondLevel: (secondLevel) => dispatch({ type: UNCHECK_SECOND_LEVEL, secondLevel })
+    uncheckSecondLevel: (secondLevel) => dispatch({ type: UNCHECK_SECOND_LEVEL, secondLevel }),
+    uncheckDeprecatedOccupation: (deprecated) => dispatch({ type: UNCHECK_DEPRECATED_OCCUPATION, deprecated })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Occupations);

@@ -8,6 +8,8 @@ export const UNCHECK_FIRST_LEVEL = 'UNCHECK_FIRST_LEVEL';
 export const CHECK_SECOND_LEVEL = 'CHECK_SECOND_LEVEL';
 export const UNCHECK_SECOND_LEVEL = 'UNCHECK_SECOND_LEVEL';
 
+export const UNCHECK_DEPRECATED_OCCUPATION = 'UNCHECK_DEPRECATED_OCCUPATION';
+
 export const OCCUPATION_ANNET = 'Uoppgitt/ ikke identifiserbare';
 
 const initialState = {
@@ -29,10 +31,10 @@ const findDeprecatedSecondLevels = (checkedSecondLevels, occupationFirstLevels) 
         const firstLevel = occupationFirstLevels.find((o) => o.key === occupation[0]);
         if (firstLevel) {
             return !firstLevel.occupationSecondLevels.map((o) => o.key).includes(checkedSecondLevel)
-                ? occupation[1]
+                ? checkedSecondLevel
                 : undefined;
         }
-        return occupation[1];
+        return checkedSecondLevel;
     }).filter((o) => o !== undefined)
 );
 
@@ -98,9 +100,7 @@ export default function occupations(state = initialState, action) {
                 checkedFirstLevels: [
                     ...state.checkedFirstLevels,
                     action.firstLevel
-                ],
-                deprecatedFirstLevels: [],
-                deprecatedSecondLevels: []
+                ]
             };
         case UNCHECK_FIRST_LEVEL:
             const firstLevelObject = state.occupationFirstLevels.find((c) => c.key === action.firstLevel);
@@ -109,9 +109,7 @@ export default function occupations(state = initialState, action) {
                 checkedFirstLevels: state.checkedFirstLevels.filter((c) => (c !== action.firstLevel)),
                 checkedSecondLevels: state.checkedSecondLevels ? state.checkedSecondLevels.filter((m1) =>
                     !firstLevelObject.occupationSecondLevels.find((m) => m.key === m1)) : [],
-                from: 0,
-                deprecatedFirstLevels: [],
-                deprecatedSecondLevels: []
+                from: 0
             };
         case CHECK_SECOND_LEVEL:
             return {
@@ -119,16 +117,27 @@ export default function occupations(state = initialState, action) {
                 checkedSecondLevels: [
                     ...state.checkedSecondLevels,
                     action.secondLevel
-                ],
-                deprecatedFirstLevels: [],
-                deprecatedSecondLevels: []
+                ]
             };
         case UNCHECK_SECOND_LEVEL:
             return {
                 ...state,
-                checkedSecondLevels: state.checkedSecondLevels.filter((m) => (m !== action.secondLevel)),
-                deprecatedFirstLevels: [],
-                deprecatedSecondLevels: []
+                checkedSecondLevels: state.checkedSecondLevels.filter((m) => (m !== action.secondLevel))
+            };
+        case UNCHECK_DEPRECATED_OCCUPATION:
+            if (state.checkedFirstLevels.includes(action.deprecated)) {
+                return {
+                    ...state,
+                    checkedFirstLevels: state.checkedFirstLevels.filter((c) => c !== action.deprecated)
+                };
+            } else if (state.checkedSecondLevels.includes(action.deprecated)) {
+                return {
+                    ...state,
+                    checkedSecondLevels: state.checkedSecondLevels.filter((c) => c !== action.deprecated)
+                };
+            }
+            return {
+                ...state
             };
         default:
             return state;

@@ -9,7 +9,8 @@ import {
     CHECK_COUNTY,
     UNCHECK_COUNTY,
     CHECK_MUNICIPAL,
-    UNCHECK_MUNICIPAL
+    UNCHECK_MUNICIPAL,
+    UNCHECK_DEPRECATED_LOCATION
 } from './countiesReducer';
 import './Counties.less';
 
@@ -34,8 +35,16 @@ class Counties extends React.Component {
         this.props.search();
     };
 
+    onDeprecatedLocationClick = (e) => {
+        const { value } = e.target;
+        this.props.uncheckDeprecatedLocation(value);
+        this.props.search();
+    };
+
     render() {
-        const { counties, checkedCounties, checkedMunicipals } = this.props;
+        const {
+            counties, checkedCounties, checkedMunicipals, deprecatedCounties, deprecatedMunicipals
+        } = this.props;
         let title = 'Område';
         if ((checkedCounties.length + checkedMunicipals.length) === 1) {
             title += ' (1 valgt)';
@@ -82,6 +91,30 @@ class Counties extends React.Component {
                             )}
                         </div>
                     ))}
+                    {deprecatedCounties && deprecatedCounties.map((county) => (
+                        <div key={county}>
+                            <Checkbox
+                                name="deprecatedLocation"
+                                label={`${county} (0)`}
+                                value={county}
+                                onChange={this.onDeprecatedLocationClick}
+                                checked={checkedCounties.includes(county)}
+                                disabled={!checkedCounties.includes(county)}
+                            />
+                        </div>
+                    ))}
+                    {deprecatedMunicipals && deprecatedMunicipals.map((municipal) => (
+                        <div key={municipal}>
+                            <Checkbox
+                                name="deprecatedLocation"
+                                label={`${municipal.split('.')[1]} (0)`}
+                                value={municipal}
+                                onChange={this.onDeprecatedLocationClick}
+                                checked={checkedMunicipals.includes(municipal)}
+                                disabled={!checkedMunicipals.includes(municipal)}
+                            />
+                        </div>
+                    ))}
                 </div>
             </Ekspanderbartpanel>
         );
@@ -99,17 +132,22 @@ Counties.propTypes = {
     })).isRequired,
     checkedCounties: PropTypes.arrayOf(PropTypes.string).isRequired,
     checkedMunicipals: PropTypes.arrayOf(PropTypes.string).isRequired,
+    deprecatedCounties: PropTypes.arrayOf(PropTypes.string).isRequired,
+    deprecatedMunicipals: PropTypes.arrayOf(PropTypes.string).isRequired,
     checkCounty: PropTypes.func.isRequired,
     uncheckCounty: PropTypes.func.isRequired,
     checkMunicipal: PropTypes.func.isRequired,
     uncheckMunicipal: PropTypes.func.isRequired,
-    search: PropTypes.func.isRequired
+    search: PropTypes.func.isRequired,
+    uncheckDeprecatedLocation: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
     counties: state.counties.counties,
     checkedCounties: state.counties.checkedCounties,
-    checkedMunicipals: state.counties.checkedMunicipals
+    checkedMunicipals: state.counties.checkedMunicipals,
+    deprecatedCounties: state.counties.deprecatedCounties,
+    deprecatedMunicipals: state.counties.deprecatedMunicipals
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -117,7 +155,8 @@ const mapDispatchToProps = (dispatch) => ({
     checkCounty: (county) => dispatch({ type: CHECK_COUNTY, county }),
     uncheckCounty: (county) => dispatch({ type: UNCHECK_COUNTY, county }),
     checkMunicipal: (municipal) => dispatch({ type: CHECK_MUNICIPAL, municipal }),
-    uncheckMunicipal: (municipal) => dispatch({ type: UNCHECK_MUNICIPAL, municipal })
+    uncheckMunicipal: (municipal) => dispatch({ type: UNCHECK_MUNICIPAL, municipal }),
+    uncheckDeprecatedLocation: (deprecated) => dispatch({ type: UNCHECK_DEPRECATED_LOCATION, deprecated })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Counties);

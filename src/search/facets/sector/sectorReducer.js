@@ -6,6 +6,8 @@ import { moveFacetToBottom } from '../utils';
 export const CHECK_SECTOR = 'CHECK_SECTOR';
 export const UNCHECK_SECTOR = 'UNCHECK_SECTOR';
 
+export const UNCHECK_DEPRECATED_SECTOR = 'UNCHECK_DEPRECATED_SECTOR';
+
 const initialState = {
     sector: [],
     checkedSector: [],
@@ -56,14 +58,17 @@ export default function sectorReducer(state = initialState, action) {
                 checkedSector: [
                     ...state.checkedSector,
                     action.value
-                ],
-                deprecatedSector: []
+                ]
             };
         case UNCHECK_SECTOR:
             return {
                 ...state,
-                checkedSector: state.checkedSector.filter((m) => (m !== action.value)),
-                deprecatedSector: []
+                checkedSector: state.checkedSector.filter((m) => (m !== action.value))
+            };
+        case UNCHECK_DEPRECATED_SECTOR:
+            return {
+                ...state,
+                checkedSector: state.checkedSector.filter((s) => s !== action.deprecated)
             };
         default:
             return state;

@@ -1,12 +1,13 @@
 import { RESTORE_STATE_FROM_SAVED_SEARCH } from '../../../savedSearches/savedSearchesReducer';
 import { RESTORE_STATE_FROM_URL } from '../../../urlReducer';
 import { FETCH_INITIAL_FACETS_SUCCESS, RESET_SEARCH, SEARCH_SUCCESS } from '../../searchReducer';
-import capitalizeLocation from '../../../common/capitalizeLocation';
 
 export const CHECK_COUNTY = 'CHECK_COUNTY';
 export const UNCHECK_COUNTY = 'UNCHECK_COUNTY';
 export const CHECK_MUNICIPAL = 'CHECK_MUNICIPAL';
 export const UNCHECK_MUNICIPAL = 'UNCHECK_MUNICIPAL';
+
+export const UNCHECK_DEPRECATED_LOCATION = 'UNCHECK_DEPRECATED_LOCATION';
 
 const initialState = {
     counties: [],
@@ -17,8 +18,7 @@ const initialState = {
 };
 
 const findDeprecatedCounties = (checkedCounties, counties) =>
-    checkedCounties.filter((checkedCounty) => !counties.map((c) => c.key).includes(checkedCounty))
-        .map((c) => capitalizeLocation(c));
+    checkedCounties.filter((checkedCounty) => !counties.map((c) => c.key).includes(checkedCounty));
 
 const findDeprecatedMunicipals = (checkedMunicipals, counties) => (
     checkedMunicipals.map((checkedMunicipal) => {
@@ -26,10 +26,10 @@ const findDeprecatedMunicipals = (checkedMunicipals, counties) => (
         const county = counties.find((c) => c.key === municipal[0]);
         if (county) {
             return !county.municipals.map((m) => m.key).includes(checkedMunicipal)
-                ? capitalizeLocation(municipal[1])
+                ? checkedMunicipal
                 : undefined;
         }
-        return capitalizeLocation(municipal[1]);
+        return checkedMunicipal;
     }).filter((m) => m !== undefined)
 );
 
@@ -93,9 +93,7 @@ export default function countiesReducer(state = initialState, action) {
                 checkedCounties: [
                     ...state.checkedCounties,
                     action.county
-                ],
-                deprecatedCounties: [],
-                deprecatedMunicipals: []
+                ]
             };
         case UNCHECK_COUNTY:
             const countyObject = state.counties.find((c) => c.key === action.county);
@@ -104,9 +102,7 @@ export default function countiesReducer(state = initialState, action) {
                 checkedCounties: state.checkedCounties.filter((c) => (c !== action.county)),
                 checkedMunicipals: state.checkedMunicipals ? state.checkedMunicipals.filter((m1) =>
                     !countyObject.municipals.find((m) => m.key === m1)) : [],
-                from: 0,
-                deprecatedCounties: [],
-                deprecatedMunicipals: []
+                from: 0
             };
         case CHECK_MUNICIPAL:
             return {
@@ -114,16 +110,27 @@ export default function countiesReducer(state = initialState, action) {
                 checkedMunicipals: [
                     ...state.checkedMunicipals,
                     action.municipal
-                ],
-                deprecatedCounties: [],
-                deprecatedMunicipals: []
+                ]
             };
         case UNCHECK_MUNICIPAL:
             return {
                 ...state,
-                checkedMunicipals: state.checkedMunicipals.filter((m) => (m !== action.municipal)),
-                deprecatedCounties: [],
-                deprecatedMunicipals: []
+                checkedMunicipals: state.checkedMunicipals.filter((m) => (m !== action.municipal))
+            };
+        case UNCHECK_DEPRECATED_LOCATION:
+            if (state.checkedCounties.includes(action.deprecated)) {
+                return {
+                    ...state,
+                    checkedCounties: state.checkedCounties.filter((c) => c !== action.deprecated)
+                };
+            } else if (state.checkedMunicipals.includes(action.deprecated)) {
+                return {
+                    ...state,
+                    checkedMunicipals: state.checkedMunicipals.filter((c) => c !== action.deprecated)
+                };
+            }
+            return {
+                ...state
             };
         default:
             return state;
