@@ -59,13 +59,13 @@ class DeprecatedAlertstripe extends React.Component {
                                 <Element>Valgte yrker:</Element>
                                 {deprecatedFirstLevels.map((o) => (
                                     <Normaltekst key={o}>
-                                        {o}<span className="Search__expired"> (Utgått)</span>
+                                        {o}<span className="DeprecatedAlertstripe__expired"> (Utgått)</span>
                                     </Normaltekst>
                                 ))}
                                 {deprecatedSecondLevels.map((o) => (
                                     <Normaltekst key={o}>
                                         {o.split('.')[1]}
-                                        <span className="Search__expired"> (Utgått)</span>
+                                        <span className="DeprecatedAlertstripe__expired"> (Utgått)</span>
                                     </Normaltekst>
                                 ))}
                             </div>
@@ -76,13 +76,13 @@ class DeprecatedAlertstripe extends React.Component {
                                 {deprecatedCounties.map((c) => (
                                     <Normaltekst key={c}>
                                         {capitalizeLocation(c)}
-                                        <span className="Search__expired"> (Utgått)</span>
+                                        <span className="DeprecatedAlertstripe__expired"> (Utgått)</span>
                                     </Normaltekst>
                                 ))}
                                 {deprecatedMunicipals.map((m) => (
                                     <Normaltekst key={m}>
                                         {capitalizeLocation(m.split('.')[1])}
-                                        <span className="Search__expired"> (Utgått)</span>
+                                        <span className="DeprecatedAlertstripe__expired"> (Utgått)</span>
                                     </Normaltekst>
                                 ))}
                             </div>
@@ -92,7 +92,7 @@ class DeprecatedAlertstripe extends React.Component {
                                 <Element>Valgt heltid/deltid:</Element>
                                 {deprecatedExtent.map((e) => (
                                     <Normaltekst key={e}>
-                                        {e}<span className="Search__expired"> (Utgått)</span>
+                                        {e}<span className="DeprecatedAlertstripe__expired"> (Utgått)</span>
                                     </Normaltekst>
                                 ))}
                             </div>
@@ -102,7 +102,7 @@ class DeprecatedAlertstripe extends React.Component {
                                 <Element>Valgte ansettelsesformer:</Element>
                                 {deprecatedEngagementType.map((e) => (
                                     <Normaltekst key={e}>
-                                        {e}<span className="Search__expired"> (Utgått)</span>
+                                        {e}<span className="DeprecatedAlertstripe__expired"> (Utgått)</span>
                                     </Normaltekst>
                                 ))}
                             </div>
@@ -112,7 +112,7 @@ class DeprecatedAlertstripe extends React.Component {
                                 <Element>Valgte sektorer:</Element>
                                 {deprecatedSector.map((s) => (
                                     <Normaltekst key={s}>
-                                        {s}<span className="Search__expired"> (Utgått)</span>
+                                        {s}<span className="DeprecatedAlertstripe__expired"> (Utgått)</span>
                                     </Normaltekst>
                                 ))}
                             </div>
