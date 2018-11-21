@@ -34,7 +34,7 @@ export const UPDATE_SAVED_SEARCH_FAILURE = 'UPDATE_SAVED_SEARCH_FAILURE';
 export const SET_CURRENT_SAVED_SEARCH = 'SET_CURRENT_SAVED_SEARCH';
 export const RESTORE_STATE_FROM_SAVED_SEARCH = 'RESTORE_STATE_FROM_SAVED_SEARCH';
 export const RESTORE_CURRENT_SAVED_SEARCH = 'RESTORE_CURRENT_SAVED_SEARCH';
-export const SET_CAN_SAVE_SEARCH_BUTTON = 'SET_CAN_SAVE_SEARCH_BUTTON';
+export const SET_CAN_SAVE_SEARCH = 'SET_CAN_SAVE_SEARCH';
 
 const initialState = {
     savedSearches: [],
@@ -154,7 +154,7 @@ export default function savedSearchesReducer(state = initialState, action) {
                 ...state,
                 currentSavedSearch: undefined
             };
-        case SET_CAN_SAVE_SEARCH_BUTTON:
+        case SET_CAN_SAVE_SEARCH:
             return {
                 ...state,
                 canSaveSearch: action.canSaveSearch
@@ -291,7 +291,7 @@ function* setCanSaveSearch() {
     const state = yield select();
     const queryString = toQueryString(toSavedSearchQuery(state));
     const canSaveSearch = queryString.length > 0 && queryString !== '?';
-    yield put({ type: SET_CAN_SAVE_SEARCH_BUTTON, canSaveSearch });
+    yield put({ type: SET_CAN_SAVE_SEARCH, canSaveSearch });
 }
 
 export const savedSearchesSaga = function* saga() {
