@@ -1,4 +1,7 @@
-import { RESTORE_STATE_FROM_SAVED_SEARCH } from '../../../savedSearches/savedSearchesReducer';
+import {
+    RESTORE_STATE_FROM_SAVED_SEARCH,
+    UPDATE_SAVED_SEARCH_SUCCESS
+} from '../../../savedSearches/savedSearchesReducer';
 import { RESTORE_STATE_FROM_URL } from '../../../urlReducer';
 import { FETCH_INITIAL_FACETS_SUCCESS, RESET_SEARCH, SEARCH_SUCCESS } from '../../searchReducer';
 import { moveFacetToBottom } from '../utils';
@@ -65,6 +68,12 @@ export default function engagementReducer(state = initialState, action) {
             return {
                 ...state,
                 checkedEngagementType: state.checkedEngagementType.filter((m) => (m !== action.value))
+            };
+        case UPDATE_SAVED_SEARCH_SUCCESS:
+            return {
+                ...state,
+                deprecatedEngagementType: findDeprecatedEngagementType(state.checkedEngagementType,
+                    state.engagementType)
             };
         case UNCHECK_DEPRECATED_ENGAGEMENT_TYPE:
             return {

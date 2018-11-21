@@ -1,4 +1,7 @@
-import { RESTORE_STATE_FROM_SAVED_SEARCH } from '../../../savedSearches/savedSearchesReducer';
+import {
+    RESTORE_STATE_FROM_SAVED_SEARCH,
+    UPDATE_SAVED_SEARCH_SUCCESS
+} from '../../../savedSearches/savedSearchesReducer';
 import { RESTORE_STATE_FROM_URL } from '../../../urlReducer';
 import { FETCH_INITIAL_FACETS_SUCCESS, RESET_SEARCH, SEARCH_SUCCESS } from '../../searchReducer';
 
@@ -116,6 +119,12 @@ export default function countiesReducer(state = initialState, action) {
             return {
                 ...state,
                 checkedMunicipals: state.checkedMunicipals.filter((m) => (m !== action.municipal))
+            };
+        case UPDATE_SAVED_SEARCH_SUCCESS:
+            return {
+                ...state,
+                deprecatedCounties: findDeprecatedCounties(state.checkedCounties, state.counties),
+                deprecatedMunicipals: findDeprecatedMunicipals(state.checkedMunicipals, state.counties)
             };
         case UNCHECK_DEPRECATED_LOCATION:
             if (state.checkedCounties.includes(action.deprecated)) {

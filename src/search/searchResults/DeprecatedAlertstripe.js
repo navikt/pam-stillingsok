@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import Lukknapp from 'nav-frontend-lukknapp';
-import capitalizeLocation from "../../common/capitalizeLocation";
+import capitalizeLocation from '../../common/capitalizeLocation';
 
 class DeprecatedAlertstripe extends React.Component {
     constructor(props) {
