@@ -6,6 +6,7 @@ export const FETCH_STILLING_BEGIN = 'FETCH_STILLING_BEGIN';
 export const FETCH_STILLING_SUCCESS = 'FETCH_STILLING_SUCCESS';
 export const FETCH_STILLING_FAILURE = 'FETCH_STILLING_FAILURE';
 export const FOUND_CACHED_STILLING = 'FOUND_CACHED_STILLING';
+export const FETCH_STILLING_NOT_FOUND = 'FETCH_STILLING_NOT_FOUND';
 
 const initialState = {
     stilling: undefined,
@@ -39,6 +40,12 @@ export default function stillingReducer(state = initialState, action) {
                 ...state,
                 cachedStilling: action.found
             };
+        case FETCH_STILLING_NOT_FOUND:
+            return {
+                ...state,
+                error: action.error,
+                isFetchingStilling: false
+            };
         default:
             return state;
     }
@@ -61,7 +68,11 @@ function* getStilling(action) {
         yield put({ type: FETCH_STILLING_SUCCESS, response });
     } catch (e) {
         if (e instanceof SearchApiError) {
-            yield put({ type: FETCH_STILLING_FAILURE, error: e });
+            if (e.statusCode === 404) {
+                yield put({ type: FETCH_STILLING_NOT_FOUND, error: e });
+            } else {
+                yield put({ type: FETCH_STILLING_FAILURE, error: e });
+            }
         } else {
             throw e;
         }
