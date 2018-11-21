@@ -62,7 +62,7 @@ class Extent extends React.Component {
                             <div key={ext}>
                                 <Checkbox
                                     name="deprecatedExtent"
-                                    label={`${ext} (0)`}
+                                    label={<span>{ext}<span className="Search__expired"> (Utgått)</span></span>}
                                     value={ext}
                                     onChange={this.onDeprecatedExtentClick}
                                     checked={checkedExtent.includes(ext)}

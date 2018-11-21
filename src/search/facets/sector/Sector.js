@@ -61,7 +61,7 @@ class Sector extends React.Component {
                         <div key={sec}>
                             <Checkbox
                                 name="deprecatedSector"
-                                label={`${sec} (0)`}
+                                label={<span>{sec}<span className="Search__expired"> (Utgått)</span></span>}
                                 value={sec}
                                 onChange={this.onDeprecatedSectorClick}
                                 checked={checkedSector.includes(sec)}

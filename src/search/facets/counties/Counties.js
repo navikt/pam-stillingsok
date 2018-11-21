@@ -95,7 +95,7 @@ class Counties extends React.Component {
                         <div key={county}>
                             <Checkbox
                                 name="deprecatedLocation"
-                                label={`${county} (0)`}
+                                label={<span>{capitalizeLocation(county)}<span className="Search__expired"> (Utgått)</span></span>}
                                 value={county}
                                 onChange={this.onDeprecatedLocationClick}
                                 checked={checkedCounties.includes(county)}
@@ -107,7 +107,7 @@ class Counties extends React.Component {
                         <div key={municipal}>
                             <Checkbox
                                 name="deprecatedLocation"
-                                label={`${municipal.split('.')[1]} (0)`}
+                                label={<span>{capitalizeLocation(municipal.split('.')[1])}<span className="Search__expired"> (Utgått)</span></span>}
                                 value={municipal}
                                 onChange={this.onDeprecatedLocationClick}
                                 checked={checkedMunicipals.includes(municipal)}

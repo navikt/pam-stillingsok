@@ -100,7 +100,7 @@ class Occupations extends React.Component {
                         <div key={first}>
                             <Checkbox
                                 name="deprecatedOccupation"
-                                label={`${first} (0)`}
+                                label={<span>{first}<span className="Search__expired"> (Utgått)</span></span>}
                                 value={first}
                                 onChange={this.onDeprecatedOccupationClick}
                                 checked={checkedFirstLevels.includes(first)}
@@ -112,7 +112,7 @@ class Occupations extends React.Component {
                         <div key={second}>
                             <Checkbox
                                 name="deprecatedOccupation"
-                                label={`${second.split('.')[1]} (0)`}
+                                label={<span>{second.split('.')[1]}<span className="Search__expired"> (Utgått)</span></span>}
                                 value={second}
                                 onChange={this.onDeprecatedOccupationClick}
                                 checked={checkedSecondLevels.includes(second)}
