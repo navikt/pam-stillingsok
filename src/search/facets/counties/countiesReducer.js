@@ -129,9 +129,7 @@ export default function countiesReducer(state = initialState, action) {
                     checkedMunicipals: state.checkedMunicipals.filter((c) => c !== action.deprecated)
                 };
             }
-            return {
-                ...state
-            };
+            return state;
         default:
             return state;
     }

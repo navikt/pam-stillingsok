@@ -136,9 +136,7 @@ export default function occupations(state = initialState, action) {
                     checkedSecondLevels: state.checkedSecondLevels.filter((c) => c !== action.deprecated)
                 };
             }
-            return {
-                ...state
-            };
+            return state;
         default:
             return state;
     }
