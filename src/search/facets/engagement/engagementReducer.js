@@ -64,12 +64,6 @@ export default function engagementReducer(state = initialState, action) {
                 ...state,
                 checkedEngagementType: state.checkedEngagementType.filter((m) => (m !== action.value))
             };
-        case UPDATE_SAVED_SEARCH_SUCCESS:
-            return {
-                ...state,
-                deprecatedEngagementType: findDeprecatedFacets(state.checkedEngagementType,
-                    state.engagementType)
-            };
         default:
             return state;
     }

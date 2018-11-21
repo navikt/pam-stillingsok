@@ -115,12 +115,6 @@ export default function countiesReducer(state = initialState, action) {
                 ...state,
                 checkedMunicipals: state.checkedMunicipals.filter((m) => (m !== action.municipal))
             };
-        case UPDATE_SAVED_SEARCH_SUCCESS:
-            return {
-                ...state,
-                deprecatedCounties: findDeprecatedFacets(state.checkedMunicipals, state.counties),
-                deprecatedMunicipals: findDeprecatedFacets(state.checkedMunicipals, state.counties, 'municipals')
-            };
         default:
             return state;
     }

@@ -63,11 +63,6 @@ export default function extentReducer(state = initialState, action) {
                 ...state,
                 checkedExtent: state.checkedExtent.filter((m) => (m !== action.value))
             };
-        case UPDATE_SAVED_SEARCH_SUCCESS:
-            return {
-                ...state,
-                deprecatedExtent: findDeprecatedFacets(state.checkedExtent, state.extent)
-            };
         default:
             return state;
     }

@@ -119,13 +119,6 @@ export default function occupations(state = initialState, action) {
                 ...state,
                 checkedSecondLevels: state.checkedSecondLevels.filter((m) => (m !== action.secondLevel))
             };
-        case UPDATE_SAVED_SEARCH_SUCCESS:
-            return {
-                ...state,
-                deprecatedFirstLevels: findDeprecatedFacets(state.checkedFirstLevels, state.occupationFirstLevels),
-                deprecatedSecondLevels: findDeprecatedFacets(state.checkedSecondLevels,
-                    state.occupationFirstLevels, 'occupationSecondLevels')
-            };
         default:
             return state;
     }
