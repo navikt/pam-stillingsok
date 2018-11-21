@@ -28,7 +28,8 @@ const initialState = {
     searchResult: undefined,
     from: 0,
     to: PAGE_SIZE,
-    page: 0
+    page: 0,
+    searchIsNonEmpty: false
 };
 
 export function mergeAndRemoveDuplicates(array1, array2) {
@@ -76,6 +77,7 @@ export default function searchReducer(state = initialState, action) {
             return {
                 ...state,
                 initialSearchDone: true,
+                searchIsNonEmpty: action.searchIsNonEmpty,
                 searchResult: {
                     total: action.response.total,
                     stillinger: action.response.stillinger
@@ -126,6 +128,26 @@ export function toSearchQuery(state) {
 }
 
 /**
+ * Sjekker om bruker har foretatt et valg i stillingssøkskjemaet ved søk.
+ * Tar ikke stilling til om bruker har valgt å skrive noe i søkefeltet.
+ * @param query         Query som brukes i søket.
+ * @returns {boolean}   True dersom bruker har huket av for en fasett.
+ */
+function queryHasSelectedFacets(query) {
+    let { length } = Object.keys(query);
+
+    if (query.q !== undefined) {
+        length -= 1;
+    }
+
+    if (query.published !== undefined) {
+        length -= 1;
+    }
+
+    return length > 0;
+}
+
+/**
  * Fetcher alle tilgjengelige fasetter og gjør deretter det første søket.
  */
 function* initialSearch() {
@@ -147,7 +169,7 @@ function* initialSearch() {
                 response = yield call(fetchSearch, query);
             }
 
-            yield put({ type: SEARCH_SUCCESS, response });
+            yield put({ type: SEARCH_SUCCESS, response, searchIsNonEmpty: queryHasSelectedFacets(query) });
         }
     } catch (e) {
         if (e instanceof SearchApiError) {
@@ -166,7 +188,7 @@ function* search() {
         const state = yield select();
         const query = toSearchQuery(state);
         const searchResult = yield call(fetchSearch, query);
-        yield put({ type: SEARCH_SUCCESS, response: searchResult });
+        yield put({ type: SEARCH_SUCCESS, response: searchResult, searchIsNonEmpty: queryHasSelectedFacets(query) });
     } catch (e) {
         if (e instanceof SearchApiError) {
             yield put({ type: SEARCH_FAILURE, error: e });
