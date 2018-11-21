@@ -1,12 +1,12 @@
 import { put, select, takeLatest } from 'redux-saga/es/effects';
 import capitalizeLocation from '../../common/capitalizeLocation';
 import { toQueryString } from '../../search/url';
-import { removeUndefinedOrEmptyString } from '../../utils';
 import NotifyTypeEnum from '../enums/NotifyTypeEnum';
 import SavedSearchStatusEnum from '../enums/SavedSearchStatusEnum';
 import {
     ADD_SAVED_SEARCH_FAILURE,
     ADD_SAVED_SEARCH_SUCCESS,
+    toSavedSearchQuery,
     UPDATE_SAVED_SEARCH_FAILURE,
     UPDATE_SAVED_SEARCH_SUCCESS
 } from '../savedSearchesReducer';
@@ -134,28 +134,12 @@ function* validateTitle() {
     } else if (titleIsToLong) {
         yield put({ type: SET_ERROR, field: 'title', message: 'Tittelen kan ikke overstige 255 tegn' });
     } else {
-        yield put({ type: REMOVE_ERROR, field: 'title'});
+        yield put({ type: REMOVE_ERROR, field: 'title' });
     }
 }
 
 export function* validateAll() {
     yield validateTitle();
-}
-
-function toQuery(state) {
-    const query = {
-        q: state.searchBox.q,
-        counties: state.counties.checkedCounties,
-        municipals: state.counties.checkedMunicipals,
-        published: state.published.checkedPublished,
-        engagementType: state.engagement.checkedEngagementType,
-        sector: state.sector.checkedSector,
-        extent: state.extent.checkedExtent,
-        occupationFirstLevels: state.occupations.checkedFirstLevels,
-        occupationSecondLevels: state.occupations.checkedSecondLevels
-    };
-
-    return removeUndefinedOrEmptyString(query);
 }
 
 function toTitle(state) {
@@ -192,7 +176,7 @@ function* setDefaultFormData(action) {
             type: SET_FORM_DATA,
             formData: {
                 title: toTitle(state),
-                searchQuery: toQueryString(toQuery(state)),
+                searchQuery: toQueryString(toSavedSearchQuery(state)),
                 notifyType: NotifyTypeEnum.NONE,
                 status: SavedSearchStatusEnum.INACTIVE
             }
@@ -207,7 +191,7 @@ function* setDefaultFormData(action) {
             type: SET_FORM_DATA,
             formData: {
                 ...state.savedSearches.currentSavedSearch,
-                searchQuery: toQueryString(toQuery(state))
+                searchQuery: toQueryString(toSavedSearchQuery(state))
             }
         });
     }
