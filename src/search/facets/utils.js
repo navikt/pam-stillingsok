@@ -31,3 +31,12 @@ export function findDeprecatedFacets(checkedFacets, facets, nestedName) {
         return found === undefined;
     });
 }
+
+export function toFacetTitleWithCount(facetName, facetCount) {
+    if (facetCount === 1) {
+        return `${facetName} (1 valgt)`;
+    } else if (facetCount > 1) {
+        return `${facetName} (${facetCount} valgte)`;
+    }
+    return facetName;
+}

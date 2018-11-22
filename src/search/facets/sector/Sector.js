@@ -6,6 +6,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { SEARCH } from '../../searchReducer';
 import './Sector.less';
+import { toFacetTitleWithCount } from '../utils';
 import { CHECK_SECTOR, UNCHECK_SECTOR } from './sectorReducer';
 
 class Sector extends React.Component {
@@ -21,15 +22,9 @@ class Sector extends React.Component {
 
     render() {
         const { sector, checkedSector, deprecatedSector } = this.props;
-        let title = 'Sektor';
-        if (checkedSector.length === 1) {
-            title += ' (1 valgt)';
-        } else if (checkedSector.length > 1) {
-            title += ` (${checkedSector.length} valgte)`;
-        }
         return (
             <Ekspanderbartpanel
-                tittel={title}
+                tittel={toFacetTitleWithCount('Sektor', checkedSector.length)}
                 className="Sector"
                 apen
             >

@@ -6,6 +6,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { SEARCH } from '../../searchReducer';
 import './Engagement.less';
+import { toFacetTitleWithCount } from '../utils';
 import { CHECK_ENGAGEMENT_TYPE, UNCHECK_ENGAGEMENT_TYPE } from './engagementReducer';
 
 class Engagement extends React.Component {
@@ -21,15 +22,9 @@ class Engagement extends React.Component {
 
     render() {
         const { engagementType, checkedEngagement, deprecatedEngagementType } = this.props;
-        let title = 'Ansettelsesform';
-        if (checkedEngagement.length === 1) {
-            title += ' (1 valgt)';
-        } else if (checkedEngagement.length > 1) {
-            title += ` (${checkedEngagement.length} valgte)`;
-        }
         return (
             <Ekspanderbartpanel
-                tittel={title}
+                tittel={toFacetTitleWithCount('Ansettelsesform', checkedEngagement.length)}
                 className="Engagement"
                 apen
             >

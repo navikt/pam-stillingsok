@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import capitalizeLocation from '../../../common/capitalizeLocation';
 import { SEARCH } from '../../searchReducer';
 import './Counties.less';
+import { toFacetTitleWithCount } from '../utils';
 import {
     CHECK_COUNTY,
     CHECK_MUNICIPAL,
@@ -39,15 +40,9 @@ class Counties extends React.Component {
         const {
             counties, checkedCounties, checkedMunicipals, deprecatedCounties, deprecatedMunicipals
         } = this.props;
-        let title = 'Område';
-        if ((checkedCounties.length + checkedMunicipals.length) === 1) {
-            title += ' (1 valgt)';
-        } else if ((checkedCounties.length + checkedMunicipals.length) > 1) {
-            title += ` (${checkedCounties.length + checkedMunicipals.length} valgte)`;
-        }
         return (
             <Ekspanderbartpanel
-                tittel={title}
+                tittel={toFacetTitleWithCount('Område', checkedCounties.length + checkedMunicipals.length)}
                 className="Counties"
                 apen
             >

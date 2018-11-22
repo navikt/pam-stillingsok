@@ -5,6 +5,7 @@ import { Checkbox } from 'nav-frontend-skjema';
 import { Element } from 'nav-frontend-typografi';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import { SEARCH } from '../../searchReducer';
+import { toFacetTitleWithCount } from '../utils';
 import {
     CHECK_EXTENT,
     UNCHECK_EXTENT
@@ -24,15 +25,9 @@ class Extent extends React.Component {
 
     render() {
         const { extent, checkedExtent, deprecatedExtent } = this.props;
-        let title = 'Heltid/deltid';
-        if (checkedExtent.length === 1) {
-            title += ' (1 valgt)';
-        } else if (checkedExtent.length > 1) {
-            title += ` (${checkedExtent.length} valgte)`;
-        }
         return (
             <Ekspanderbartpanel
-                tittel={title}
+                tittel={toFacetTitleWithCount('Heltid/deltid', checkedExtent.length)}
                 className="Extent"
                 apen
             >

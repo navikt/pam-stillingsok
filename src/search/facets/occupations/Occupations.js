@@ -6,6 +6,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { SEARCH } from '../../searchReducer';
 import './Occupations.less';
+import { toFacetTitleWithCount } from '../utils';
 import {
     CHECK_FIRST_LEVEL,
     CHECK_SECOND_LEVEL,
@@ -40,17 +41,9 @@ class Occupations extends React.Component {
             occupationFirstLevels, checkedFirstLevels, checkedSecondLevels, deprecatedFirstLevels,
             deprecatedSecondLevels
         } = this.props;
-
-        let title = 'Yrke';
-        if ((checkedFirstLevels.length + checkedSecondLevels.length) === 1) {
-            title += ' (1 valgt)';
-        } else if ((checkedFirstLevels.length + checkedSecondLevels.length) > 1) {
-            title += ` (${checkedFirstLevels.length + checkedSecondLevels.length} valgte)`;
-        }
-
         return (
             <Ekspanderbartpanel
-                tittel={title}
+                tittel={toFacetTitleWithCount('Yrke', checkedFirstLevels.length + checkedSecondLevels.length)}
                 className="Occupations"
                 apen
             >
