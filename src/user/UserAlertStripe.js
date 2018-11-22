@@ -9,7 +9,7 @@ function UserAlertStripe({ userAlertStripeMode, userAlertStripeIsVisible }) {
     if (userAlertStripeIsVisible && (userAlertStripeMode === 'added')) {
         return (
             <StickyAlertStripe type="suksess">
-                Din e-postadresse er lagret på <Link className="lenke" to={`${CONTEXT_PATH}/minside`}>min side</Link>
+                Din e-postadresse er lagret på <Link className="lenke" to={`${CONTEXT_PATH}/innstillinger`}>min side</Link>
             </StickyAlertStripe>
         );
     } else if (userAlertStripeIsVisible && userAlertStripeMode === 'set-email') {

@@ -14,7 +14,7 @@ import NoUser from './NoUser';
 import { SET_USER_EMAIL, SHOW_CONFIRM_DELETE_USER_MODAL, UPDATE_USER_EMAIL, VALIDATE_USER_EMAIL } from './userReducer';
 import './UserSettings.less';
 
-const PAGE_TITLE = 'Min side';
+const PAGE_TITLE = 'Innstillinger';
 
 class UserSettings extends React.Component {
     componentDidMount() {
@@ -59,7 +59,7 @@ class UserSettings extends React.Component {
                             <div className="UserSettings__section">
                                 <Row>
                                     <Column xs="12">
-                                        <NotAuthenticated title="Du må logge inn for å ta i bruk Min side" />
+                                        <NotAuthenticated title="Du må logge inn for å ta i bruk Innstillinger" />
                                     </Column>
                                 </Row>
                             </div>

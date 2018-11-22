@@ -99,7 +99,7 @@ class AddOrReplaceForm extends React.Component {
                             this.props.user.email.trim().length === 0) && (
                                 <AlertStripe type="info" solid>
                                     <b>Du har ikke registrert e-postadresse.</b> For å motta varsler på e-post må du
-                                    registrere din e-postadresse på Min side.
+                                    registrere din e-postadresse på Innstillinger.
                                 </AlertStripe>
                             )}
                     </div>

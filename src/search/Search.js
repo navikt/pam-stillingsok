@@ -70,7 +70,7 @@ class Search extends React.Component {
                                     <div className="Search__header__left">
                                         <ShowFavouriteListLink />
                                         <ExpandSavedSearchButton />
-                                        <Link to={`${CONTEXT_PATH}/minside`} className="Search__minside-lenke lenke typo-element">
+                                        <Link to={`${CONTEXT_PATH}/innstillinger`} className="Search__innstillinger-lenke lenke typo-element">
                                             Innstillinger
                                         </Link>
                                     </div> : null

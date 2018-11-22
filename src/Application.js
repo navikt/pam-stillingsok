@@ -59,7 +59,7 @@ class Application extends React.Component {
                         <Route path={`${CONTEXT_PATH}/mobil`} component={Invite} />
                         <Route path={`${CONTEXT_PATH}/favoritter`} component={Favourites} />
                         <Route path={`${CONTEXT_PATH}/lagrede-sok`} component={SavedSearches} />
-                        <Route path={`${CONTEXT_PATH}/minside`} component={UserSettings} />
+                        <Route path={`${CONTEXT_PATH}/innstillinger`} component={UserSettings} />
                         <Route path={`${CONTEXT_PATH}/vilkar`} component={ViewTermsOfUse} />
                         <Route path="*" component={SearchPage} />
                     </Switch>
