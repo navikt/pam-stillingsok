@@ -1,5 +1,6 @@
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import { Checkbox } from 'nav-frontend-skjema';
+import { Element } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -48,11 +49,17 @@ class Engagement extends React.Component {
                                 checked={checkedEngagement.includes(item.key)}
                             />
                         ))}
+                        {deprecatedEngagementType && deprecatedEngagementType.length > 0 && (
+                            <div>
+                                <div className="Search__separator" />
+                                <Element className="blokk-xs">Følgende kriterier gir 0 treff:</Element>
+                            </div>
+                        )}
                         {deprecatedEngagementType && deprecatedEngagementType.map((engagement) => (
                             <div key={engagement}>
                                 <Checkbox
                                     name="deprecatedEngagement"
-                                    label={<span>{engagement}<span className="Search__expiredText"> (Utgått)</span></span>}
+                                    label={`${engagement} (0)`}
                                     value={engagement}
                                     onChange={this.onEngagementClick}
                                     checked={checkedEngagement.includes(engagement)}

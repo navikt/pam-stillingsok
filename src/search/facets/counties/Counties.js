@@ -1,5 +1,6 @@
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import { Checkbox } from 'nav-frontend-skjema';
+import { Element } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -84,11 +85,18 @@ class Counties extends React.Component {
                             )}
                         </div>
                     ))}
+                    {((deprecatedCounties && deprecatedCounties.length > 0)
+                        || (deprecatedMunicipals && deprecatedMunicipals.length > 0)) && (
+                        <div>
+                            <div className="Search__separator" />
+                            <Element className="blokk-xs">Følgende kriterier gir 0 treff:</Element>
+                        </div>
+                    )}
                     {deprecatedCounties && deprecatedCounties.map((county) => (
                         <div key={county}>
                             <Checkbox
                                 name="deprecatedLocation"
-                                label={<span>{capitalizeLocation(county)}<span className="Search__expiredText"> (Utgått)</span></span>}
+                                label={`${capitalizeLocation(county)} (0)`}
                                 value={county}
                                 onChange={this.onCountyClick}
                                 checked={checkedCounties.includes(county)}
@@ -99,7 +107,7 @@ class Counties extends React.Component {
                         <div key={municipal}>
                             <Checkbox
                                 name="deprecatedLocation"
-                                label={<span>{capitalizeLocation(municipal.split('.')[1])}<span className="Search__expiredText"> (Utgått)</span></span>}
+                                label={`${capitalizeLocation(municipal.split('.')[1])} (0)`}
                                 value={municipal}
                                 onChange={this.onMunicipalClick}
                                 checked={checkedMunicipals.includes(municipal)}

@@ -1,5 +1,6 @@
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import { Checkbox } from 'nav-frontend-skjema';
+import { Element } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -89,11 +90,18 @@ class Occupations extends React.Component {
                             )}
                         </div>
                     ))}
+                    {((deprecatedFirstLevels && deprecatedFirstLevels.length > 0)
+                        || (deprecatedSecondLevels && deprecatedSecondLevels.length > 0)) && (
+                        <div>
+                            <div className="Search__separator" />
+                            <Element className="blokk-xs">Følgende kriterier gir 0 treff:</Element>
+                        </div>
+                    )}
                     {deprecatedFirstLevels && deprecatedFirstLevels.map((first) => (
                         <div key={first}>
                             <Checkbox
                                 name="deprecatedOccupation"
-                                label={<span>{first}<span className="Search__expiredText"> (Utgått)</span></span>}
+                                label={`${first} (0)`}
                                 value={first}
                                 onChange={this.onFirstLevelClick}
                                 checked={checkedFirstLevels.includes(first)}
@@ -104,7 +112,7 @@ class Occupations extends React.Component {
                         <div key={second}>
                             <Checkbox
                                 name="deprecatedOccupation"
-                                label={<span>{second.split('.')[1]}<span className="Search__expiredText"> (Utgått)</span></span>}
+                                label={`${second.split('.')[1]} (0)`}
                                 value={second}
                                 onChange={this.onSecondLevelClick}
                                 checked={checkedSecondLevels.includes(second)}

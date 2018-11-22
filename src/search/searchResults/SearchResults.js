@@ -8,7 +8,6 @@ import Pagination from '../pagination/Pagination';
 import NoResults from '../noResults/NoResults';
 import { PAGE_SIZE } from '../searchReducer';
 import './SearchResults.less';
-import DeprecatedAlertstripe from './DeprecatedAlertstripe';
 
 const SearchResults = ({ searchResult, isSearching, page, mode }) => {
     if (searchResult) {
@@ -19,8 +18,6 @@ const SearchResults = ({ searchResult, isSearching, page, mode }) => {
         return (
             <div role="region" className="SearchResults">
                 <div>
-                    <DeprecatedAlertstripe />
-
                     {mode !== 'compact' && stillinger && stillinger.map((stilling) => (
                         <SearchResultItem
                             key={stilling.uuid}

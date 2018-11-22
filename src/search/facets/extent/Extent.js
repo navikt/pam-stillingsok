@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Checkbox } from 'nav-frontend-skjema';
+import { Element } from 'nav-frontend-typografi';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import { SEARCH } from '../../searchReducer';
 import {
@@ -51,11 +52,17 @@ class Extent extends React.Component {
                                 checked={checkedExtent.includes(item.key)}
                             />
                         ))}
+                        {deprecatedExtent && deprecatedExtent.length > 0 && (
+                            <div>
+                                <div className="Search__separator" />
+                                <Element className="blokk-xs">Følgende kriterier gir 0 treff:</Element>
+                            </div>
+                        )}
                         {deprecatedExtent && deprecatedExtent.map((ext) => (
                             <div key={ext}>
                                 <Checkbox
                                     name="deprecatedExtent"
-                                    label={<span>{ext}<span className="Search__expiredText"> (Utgått)</span></span>}
+                                    label={`${ext} (0)`}
                                     value={ext}
                                     onChange={this.onExtentClick}
                                     checked={checkedExtent.includes(ext)}

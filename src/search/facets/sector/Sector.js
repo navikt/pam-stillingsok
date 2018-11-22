@@ -1,5 +1,6 @@
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import { Checkbox } from 'nav-frontend-skjema';
+import { Element } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -47,11 +48,17 @@ class Sector extends React.Component {
                             checked={checkedSector.includes(item.key)}
                         />
                     ))}
+                    {deprecatedSector && deprecatedSector.length > 0 && (
+                        <div>
+                            <div className="Search__separator" />
+                            <Element className="blokk-xs">Følgende kriterier gir 0 treff:</Element>
+                        </div>
+                    )}
                     {deprecatedSector && deprecatedSector.map((sec) => (
                         <div key={sec}>
                             <Checkbox
                                 name="deprecatedSector"
-                                label={<span>{sec}<span className="Search__expiredText"> (Utgått)</span></span>}
+                                label={`${sec} (0)`}
                                 value={sec}
                                 onChange={this.onSectorClick}
                                 checked={checkedSector.includes(sec)}
