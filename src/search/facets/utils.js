@@ -10,3 +10,33 @@ export function moveFacetToBottom(array, itemKey) {
 
     return clone;
 }
+
+/**
+ * Hvilke fasetter som er tilgjengelige vil variere over tid. F.eks hvis det ikke finnes
+ * ledige stilinger med ansetteleseform "Sesong" akkuratt nå, vil heller ikke dette være en mulig fasett.
+ * Bruker kan likevel ha en gammel lenke/bokmerke &engagementType=Sesong.
+ * Returner liste over fasetter fra søket som ikke er tilgjengelige.
+ * @param checkedFacets
+ * @param facets
+ * @param nestedName, f.eks 'municipals'.
+ */
+export function findDeprecatedFacets(checkedFacets, facets, nestedName) {
+    return checkedFacets.filter((checked) => {
+        const found = facets.find((facet) => {
+            if (nestedName !== undefined && facet[nestedName]) {
+                return facet[nestedName].find((nested) => checked === nested.key);
+            }
+            return checked === facet.key;
+        });
+        return found === undefined;
+    });
+}
+
+export function toFacetTitleWithCount(facetName, facetCount) {
+    if (facetCount === 1) {
+        return `${facetName} (1 valgt)`;
+    } else if (facetCount > 1) {
+        return `${facetName} (${facetCount} valgte)`;
+    }
+    return facetName;
+}

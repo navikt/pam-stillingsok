@@ -1,14 +1,13 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { Checkbox } from 'nav-frontend-skjema';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
+import { Checkbox } from 'nav-frontend-skjema';
+import { Element } from 'nav-frontend-typografi';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { connect } from 'react-redux';
 import { SEARCH } from '../../searchReducer';
-import {
-    CHECK_ENGAGEMENT_TYPE,
-    UNCHECK_ENGAGEMENT_TYPE
-} from './engagementReducer';
 import './Engagement.less';
+import { toFacetTitleWithCount } from '../utils';
+import { CHECK_ENGAGEMENT_TYPE, UNCHECK_ENGAGEMENT_TYPE } from './engagementReducer';
 
 class Engagement extends React.Component {
     onEngagementClick = (e) => {
@@ -22,16 +21,10 @@ class Engagement extends React.Component {
     };
 
     render() {
-        const { engagementType, checkedEngagement } = this.props;
-        let title = 'Ansettelsesform';
-        if (checkedEngagement.length === 1) {
-            title += ' (1 valgt)';
-        } else if (checkedEngagement.length > 1) {
-            title += ` (${checkedEngagement.length} valgte)`;
-        }
+        const { engagementType, checkedEngagement, deprecatedEngagementType } = this.props;
         return (
             <Ekspanderbartpanel
-                tittel={title}
+                tittel={toFacetTitleWithCount('Ansettelsesform', checkedEngagement.length)}
                 className="Engagement"
                 apen
             >
@@ -51,6 +44,23 @@ class Engagement extends React.Component {
                                 checked={checkedEngagement.includes(item.key)}
                             />
                         ))}
+                        {deprecatedEngagementType && deprecatedEngagementType.length > 0 && (
+                            <div>
+                                <div className="Search__separator" />
+                                <Element className="blokk-xs">Følgende kriterier gir 0 treff:</Element>
+                            </div>
+                        )}
+                        {deprecatedEngagementType && deprecatedEngagementType.map((engagement) => (
+                            <div key={engagement}>
+                                <Checkbox
+                                    name="deprecatedEngagement"
+                                    label={`${engagement} (0)`}
+                                    value={engagement}
+                                    onChange={this.onEngagementClick}
+                                    checked={checkedEngagement.includes(engagement)}
+                                />
+                            </div>
+                        ))}
                     </div>
                 </div>
             </Ekspanderbartpanel>
@@ -64,6 +74,7 @@ Engagement.propTypes = {
         count: PropTypes.number
     })).isRequired,
     checkedEngagement: PropTypes.arrayOf(PropTypes.string).isRequired,
+    deprecatedEngagementType: PropTypes.arrayOf(PropTypes.string).isRequired,
     checkEngagement: PropTypes.func.isRequired,
     uncheckEngagement: PropTypes.func.isRequired,
     search: PropTypes.func.isRequired
@@ -71,7 +82,8 @@ Engagement.propTypes = {
 
 const mapStateToProps = (state) => ({
     engagementType: state.engagement.engagementType,
-    checkedEngagement: state.engagement.checkedEngagementType
+    checkedEngagement: state.engagement.checkedEngagementType,
+    deprecatedEngagementType: state.engagement.deprecatedEngagementType
 });
 
 const mapDispatchToProps = (dispatch) => ({

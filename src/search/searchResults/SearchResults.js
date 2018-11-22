@@ -9,9 +9,7 @@ import NoResults from '../noResults/NoResults';
 import { PAGE_SIZE } from '../searchReducer';
 import './SearchResults.less';
 
-function SearchResults({
-    searchResult, isSearching, page, mode
-}) {
+const SearchResults = ({ searchResult, isSearching, page, mode }) => {
     if (searchResult) {
         const { stillinger, total } = searchResult;
         const totalPages = total / PAGE_SIZE;
@@ -36,7 +34,7 @@ function SearchResults({
 
                     {hasMore && (
                         <div className="SearchResults__numberOfTotal typo-normal">
-                            Viser {count} av {total} treff
+                                Viser {count} av {total} treff
                         </div>
                     )}
 
@@ -47,7 +45,7 @@ function SearchResults({
                     <div className="SearchResults__end">
                         {total > 0 && !isSearching && !hasMore && (
                             <div className="SearchResults__numberOfTotal typo-normal">
-                                Viser {count} av {total} treff
+                                    Viser {count} av {total} treff
                             </div>
                         )}
                         {hasMore && (
@@ -65,7 +63,7 @@ function SearchResults({
             </div>
         </div>
     );
-}
+};
 
 SearchResults.defaultProps = {
     searchResult: undefined

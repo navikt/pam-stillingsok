@@ -1,32 +1,38 @@
 import { RESTORE_STATE_FROM_SAVED_SEARCH } from '../../../savedSearches/savedSearchesReducer';
 import { RESTORE_STATE_FROM_URL } from '../../../urlReducer';
 import { FETCH_INITIAL_FACETS_SUCCESS, RESET_SEARCH, SEARCH_SUCCESS } from '../../searchReducer';
+import { findDeprecatedFacets } from '../utils';
 
 export const CHECK_EXTENT = 'CHECK_EXTENT';
 export const UNCHECK_EXTENT = 'UNCHECK_EXTENT';
 
 const initialState = {
     extent: [],
-    checkedExtent: []
+    checkedExtent: [],
+    deprecatedExtent: []
 };
 
 export default function extentReducer(state = initialState, action) {
     switch (action.type) {
         case RESTORE_STATE_FROM_URL:
         case RESTORE_STATE_FROM_SAVED_SEARCH:
+            const checkedExtent = action.query.extent || [];
             return {
                 ...state,
-                checkedExtent: action.query.extent || []
+                checkedExtent,
+                deprecatedExtent: findDeprecatedFacets(checkedExtent, state.extent)
             };
         case RESET_SEARCH:
             return {
                 ...state,
-                checkedExtent: []
+                checkedExtent: [],
+                deprecatedExtent: []
             };
         case FETCH_INITIAL_FACETS_SUCCESS:
             return {
                 ...state,
-                extent: action.response.extent
+                extent: action.response.extent,
+                deprecatedExtent: findDeprecatedFacets(state.checkedExtent, action.response.extent)
             };
         case SEARCH_SUCCESS:
             return {
