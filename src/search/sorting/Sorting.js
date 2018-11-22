@@ -25,6 +25,7 @@ class Sorting extends React.Component {
                 >
                     <option key="relevant" value="relevant">Mest relevant</option>
                     <option key="updated" value="updated">Vis nyeste øverst</option>
+                    <option key="expires" value="expires">Søknadsfrist</option>
                 </Select>
             </div>
         );
