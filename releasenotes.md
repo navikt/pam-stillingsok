@@ -1,3 +1,46 @@
+## RELEASE - 0.50.411-74f6ece
+#### New in this release: 
++ 2018-11-22 [Fix] Rename Min side til Innstillinger
++ 2018-11-22 [Fix] Rename Min side til Innstillinger
++ 2018-11-22 [PAM-2120] Juster side header slik at den passer bedre på mobil
++ 2018-11-22 [PAM-2123]: Tilpasser hjelpeteksten til mobil.
++ 2018-11-21 [Fix] Disable Lagre søk kanpp også om man bare velger ?sort
++ 2018-11-21 [PAM-2040] Vise utgåtte kriterier under filteret og disable det ved onclick
++ 2018-11-19 [PAM-2040] Legge til sjekk på utgåtte kriterier for sektor, ansettelsesform og heltid/deltid
++ 2018-11-16 [PAM-2040] Sjekke utgåtte kriterier for yrkeskategori og geografi
++ 2018-11-21 [Fix] Semantisk fiks
++ 2018-11-21 [Fix] Vis riktig feilmelding ved 404
++ 2018-11-21 [Fix] Send 404 ved stilling med ugyldig uuid
++ 2018-11-21 [Fix] Legg til hvit bakgrunnsfarge på annonsesiden
++ 2018-11-20 [PAM-2119] Tekstendring på alertstripe
++ 2018-11-20 [Fix] Fiks avhengigheter
++ 2018-11-20 [Fix] Legg til klassenavn
++ 2018-11-20 [PAM-1817] Fjern unødvendig margin
++ 2018-11-20 [Fix] Restore lagret søk når man refresher siden
++ 2018-11-20 [PAM-1817] Fiks sjekk av query
++ 2018-11-20 [Fix] Restore lagret søk når man refresher siden
++ 2018-11-20 [PAM-2116] Vis alertstripe som bekrefter at bruker har slettet e-postadresse.
++ 2018-11-19 [PAM-1817] Legg til hjelpetekst når bruker klikker på inaktivert knapp
++ 2018-11-15 [PAM-1817] Refaktorering
++ 2018-11-15 [PAM-1817] Disable knapp for lagre søk når ingen valg er tatt
++ 2018-11-20 [PAM-2103] Gi alle modaler samme bredde. 100% bredde men max 640px
++ 2018-11-19 [PAM-1817] Legg til hjelpetekst når bruker klikker på inaktivert knapp
++ 2018-11-19 [PAM-2089] Legg til forklarende kommentar
++ 2018-11-19 [Fix] Refaktorer
++ 2018-11-19 [Fix] Lint
++ 2018-11-19 [Fix] Fjern overflødig sjekk
++ 2018-11-19 [PAM-2089] Fjern unødvendig funksjon
++ 2018-11-19 [PAM-2089] Oppdater queryString i sessionStorage
++ 2018-11-19 [PAM-2089] Refaktorer
++ 2018-11-19 [PAM-2089] Bruk sessionStorage for å lagre siste query
++ 2018-11-19 [Fix] Fiks dekoding av url-parametre
++ 2018-11-16 [PAM-2089] Ikke dekod verdier som er undefined
++ 2018-11-16 [PAM-2089] Legg til støtte for søk med url-parametre
++ 2018-11-16 [Fix] Gjør linteren blid
++ 2018-11-16 [PAM-2010] Legge til sortering på søknadsfrist/utløpsdato
++ 2018-11-15 [PAM-1817] Refaktorering
++ 2018-11-15 [PAM-1817] Disable knapp for lagre søk når ingen valg er tatt
++ 2018-11-15 [Fix] Linting
 ## RELEASE - 0.49.394-6e28968
 #### New in this release: 
 + 2018-11-19 [PAM-2106] Muligjør bruk av piltaster i radiobuttons
