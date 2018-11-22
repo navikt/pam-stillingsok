@@ -3,6 +3,7 @@ import HjelpetekstBase from 'nav-frontend-hjelpetekst';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
+import HjelpetekstBase from 'nav-frontend-hjelpetekst';
 import AuthorizationEnum from '../user/AuthorizationEnum';
 import { SHOW_AUTHORIZATION_ERROR_MODAL, SHOW_TERMS_OF_USE_MODAL } from '../user/userReducer';
 import { SavedSearchFormMode, SHOW_SAVED_SEARCH_FORM } from './form/savedSearchFormReducer';
@@ -30,6 +31,7 @@ class SaveSearchButton extends React.Component {
             <Knapp mini className="SaveSearchButton" onClick={this.onClick}>Lagre søk</Knapp>
         ) : (
             <HjelpetekstBase
+                type="over"
                 id="hjelpetekstLagreknapp"
                 anchor={() => (
                     <div role="button" className="knapp knapp--mini knapp--disabled SaveSearchButton">

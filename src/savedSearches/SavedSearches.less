@@ -14,3 +14,57 @@
     display: flex;
     justify-content: center;
 }
+
+
+/* Hjelpetekst-komponeneten er kodet slik at den blir fullscreen på mobil.
+Endringer på dette skal skje, men bruker koden under intil det er på plass */
+@media (max-width: @screen-xs-max) {
+  #tooltip-hjelpetekstLagreknapp  {
+      position: absolute;
+      width: 95vw;
+      max-width: 24rem;
+      top: auto;
+      left: auto;
+      right: auto;
+      bottom: 3rem;
+      border-radius: 0.25rem;
+
+    &:before,
+    &:after {
+      content: '';
+      height: sqrt(2.25rem / 2); // Pythagoras
+      width: sqrt(2.25rem / 2); // Pythagoras
+      background-color: @navMorkGra;
+      display: block;
+      position: absolute;
+      transform: rotate(-45deg);
+      transform-origin: 0 0;
+      z-index: 1;
+      border: 3px solid transparent;
+      box-sizing: border-box;
+    }
+
+    &:after {
+      z-index: 0;
+      background-color: transparent;
+      transform: rotate(-45deg);
+      box-sizing: content-box;
+      border: 3px solid transparent;
+    }
+    
+     &:before,
+     &:focus:after {
+       top: 100%;
+       bottom: 3rem;
+       left: 1.25rem;
+     }
+
+
+     &:focus:after {
+       left: 1rem;
+       border-left-color: @orangeFocus;
+       border-bottom-color: @orangeFocus;
+     }
+
+  }
+}
