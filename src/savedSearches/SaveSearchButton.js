@@ -30,6 +30,7 @@ class SaveSearchButton extends React.Component {
             <Knapp mini className="SaveSearchButton" onClick={this.onClick}>Lagre søk</Knapp>
         ) : (
             <HjelpetekstBase
+                type="over"
                 id="hjelpetekstLagreknapp"
                 anchor={() => (
                     <div role="button" className="knapp knapp--mini knapp--disabled SaveSearchButton">

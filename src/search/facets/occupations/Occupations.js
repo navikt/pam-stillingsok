@@ -1,17 +1,19 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { Checkbox } from 'nav-frontend-skjema';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
+import { Checkbox } from 'nav-frontend-skjema';
+import { Element } from 'nav-frontend-typografi';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { connect } from 'react-redux';
 import { SEARCH } from '../../searchReducer';
+import './Occupations.less';
+import { toFacetTitleWithCount } from '../utils';
 import {
     CHECK_FIRST_LEVEL,
-    UNCHECK_FIRST_LEVEL,
     CHECK_SECOND_LEVEL,
-    UNCHECK_SECOND_LEVEL,
-    OCCUPATION_ANNET
+    OCCUPATION_ANNET,
+    UNCHECK_FIRST_LEVEL,
+    UNCHECK_SECOND_LEVEL
 } from './occupationsReducer';
-import './Occupations.less';
 
 class Occupations extends React.Component {
     onFirstLevelClick = (e) => {
@@ -35,16 +37,13 @@ class Occupations extends React.Component {
     };
 
     render() {
-        const { occupationFirstLevels, checkedFirstLevels, checkedSecondLevels } = this.props;
-        let title = 'Yrke';
-        if ((checkedFirstLevels.length + checkedSecondLevels.length) === 1) {
-            title += ' (1 valgt)';
-        } else if ((checkedFirstLevels.length + checkedSecondLevels.length) > 1) {
-            title += ` (${checkedFirstLevels.length + checkedSecondLevels.length} valgte)`;
-        }
+        const {
+            occupationFirstLevels, checkedFirstLevels, checkedSecondLevels, deprecatedFirstLevels,
+            deprecatedSecondLevels
+        } = this.props;
         return (
             <Ekspanderbartpanel
-                tittel={title}
+                tittel={toFacetTitleWithCount('Yrke', checkedFirstLevels.length + checkedSecondLevels.length)}
                 className="Occupations"
                 apen
             >
@@ -64,12 +63,12 @@ class Occupations extends React.Component {
                             />
                             {checkedFirstLevels && checkedFirstLevels.includes(firstLevel.key)
                                 && firstLevel.key !== OCCUPATION_ANNET && (
-                                    <div
-                                        className="Occupations__inner__secondLevels"
-                                        role="group"
-                                        aria-label="Velg yrke"
-                                    >
-                                        {firstLevel.occupationSecondLevels &&
+                                <div
+                                    className="Occupations__inner__secondLevels"
+                                    role="group"
+                                    aria-label="Velg yrke"
+                                >
+                                    {firstLevel.occupationSecondLevels &&
                                     firstLevel.occupationSecondLevels.map((secondLevel) => (
                                         <Checkbox
                                             name="occupation"
@@ -80,8 +79,37 @@ class Occupations extends React.Component {
                                             checked={checkedSecondLevels.includes(secondLevel.key)}
                                         />
                                     ))}
-                                    </div>
-                                )}
+                                </div>
+                            )}
+                        </div>
+                    ))}
+                    {((deprecatedFirstLevels && deprecatedFirstLevels.length > 0)
+                        || (deprecatedSecondLevels && deprecatedSecondLevels.length > 0)) && (
+                        <div>
+                            <div className="Search__separator" />
+                            <Element className="blokk-xs">Følgende kriterier gir 0 treff:</Element>
+                        </div>
+                    )}
+                    {deprecatedFirstLevels && deprecatedFirstLevels.map((first) => (
+                        <div key={first}>
+                            <Checkbox
+                                name="deprecatedOccupation"
+                                label={`${first} (0)`}
+                                value={first}
+                                onChange={this.onFirstLevelClick}
+                                checked={checkedFirstLevels.includes(first)}
+                            />
+                        </div>
+                    ))}
+                    {deprecatedSecondLevels && deprecatedSecondLevels.map((second) => (
+                        <div key={second}>
+                            <Checkbox
+                                name="deprecatedOccupation"
+                                label={`${second.split('.')[1]} (0)`}
+                                value={second}
+                                onChange={this.onSecondLevelClick}
+                                checked={checkedSecondLevels.includes(second)}
+                            />
                         </div>
                     ))}
                 </div>
@@ -101,6 +129,8 @@ Occupations.propTypes = {
     })).isRequired,
     checkedFirstLevels: PropTypes.arrayOf(PropTypes.string).isRequired,
     checkedSecondLevels: PropTypes.arrayOf(PropTypes.string).isRequired,
+    deprecatedFirstLevels: PropTypes.arrayOf(PropTypes.string).isRequired,
+    deprecatedSecondLevels: PropTypes.arrayOf(PropTypes.string).isRequired,
     checkFirstLevel: PropTypes.func.isRequired,
     uncheckFirstLevel: PropTypes.func.isRequired,
     checkSecondLevel: PropTypes.func.isRequired,
@@ -111,7 +141,9 @@ Occupations.propTypes = {
 const mapStateToProps = (state) => ({
     occupationFirstLevels: state.occupations.occupationFirstLevels,
     checkedFirstLevels: state.occupations.checkedFirstLevels,
-    checkedSecondLevels: state.occupations.checkedSecondLevels
+    checkedSecondLevels: state.occupations.checkedSecondLevels,
+    deprecatedFirstLevels: state.occupations.deprecatedFirstLevels,
+    deprecatedSecondLevels: state.occupations.deprecatedSecondLevels
 });
 
 const mapDispatchToProps = (dispatch) => ({

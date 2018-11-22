@@ -1,33 +1,38 @@
 import { RESTORE_STATE_FROM_SAVED_SEARCH } from '../../../savedSearches/savedSearchesReducer';
 import { RESTORE_STATE_FROM_URL } from '../../../urlReducer';
 import { FETCH_INITIAL_FACETS_SUCCESS, RESET_SEARCH, SEARCH_SUCCESS } from '../../searchReducer';
-import { moveFacetToBottom } from '../utils';
+import { findDeprecatedFacets, moveFacetToBottom } from '../utils';
 
 export const CHECK_SECTOR = 'CHECK_SECTOR';
 export const UNCHECK_SECTOR = 'UNCHECK_SECTOR';
 
 const initialState = {
     sector: [],
-    checkedSector: []
+    checkedSector: [],
+    deprecatedSector: []
 };
 
 export default function sectorReducer(state = initialState, action) {
     switch (action.type) {
         case RESTORE_STATE_FROM_URL:
         case RESTORE_STATE_FROM_SAVED_SEARCH:
+            const checkedSector = action.query.sector || [];
             return {
                 ...state,
-                checkedSector: action.query.sector || []
+                checkedSector,
+                deprecatedSector: findDeprecatedFacets(checkedSector, state.sector)
             };
         case RESET_SEARCH:
             return {
                 ...state,
-                checkedSector: []
+                checkedSector: [],
+                deprecatedSector: []
             };
         case FETCH_INITIAL_FACETS_SUCCESS:
             return {
                 ...state,
-                sector: moveFacetToBottom(action.response.sector, 'Ikke oppgitt')
+                sector: moveFacetToBottom(action.response.sector, 'Ikke oppgitt'),
+                deprecatedSector: findDeprecatedFacets(state.checkedSector, action.response.sector)
             };
         case SEARCH_SUCCESS:
             return {

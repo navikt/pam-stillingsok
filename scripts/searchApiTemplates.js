@@ -1,5 +1,7 @@
 function mapSortByValue(value) {
     switch (value) {
+        case 'expires':
+            return 'expires';
         case 'updated':
         default:
             return 'updated';
@@ -181,7 +183,9 @@ exports.searchTemplate = (query) => {
 
     // To ensure consistent search results across multiple shards in elasticsearch when query is blank
     if (!q || q.trim().length === 0) {
-        sort = 'updated';
+        if (sort !== 'expires') {
+            sort = 'updated';
+        }
         q = '';
     }
 

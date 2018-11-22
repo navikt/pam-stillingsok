@@ -1,17 +1,19 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { Checkbox } from 'nav-frontend-skjema';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
+import { Checkbox } from 'nav-frontend-skjema';
+import { Element } from 'nav-frontend-typografi';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { connect } from 'react-redux';
 import capitalizeLocation from '../../../common/capitalizeLocation';
 import { SEARCH } from '../../searchReducer';
+import './Counties.less';
+import { toFacetTitleWithCount } from '../utils';
 import {
     CHECK_COUNTY,
-    UNCHECK_COUNTY,
     CHECK_MUNICIPAL,
+    UNCHECK_COUNTY,
     UNCHECK_MUNICIPAL
 } from './countiesReducer';
-import './Counties.less';
 
 class Counties extends React.Component {
     onCountyClick = (e) => {
@@ -35,16 +37,12 @@ class Counties extends React.Component {
     };
 
     render() {
-        const { counties, checkedCounties, checkedMunicipals } = this.props;
-        let title = 'Område';
-        if ((checkedCounties.length + checkedMunicipals.length) === 1) {
-            title += ' (1 valgt)';
-        } else if ((checkedCounties.length + checkedMunicipals.length) > 1) {
-            title += ` (${checkedCounties.length + checkedMunicipals.length} valgte)`;
-        }
+        const {
+            counties, checkedCounties, checkedMunicipals, deprecatedCounties, deprecatedMunicipals
+        } = this.props;
         return (
             <Ekspanderbartpanel
-                tittel={title}
+                tittel={toFacetTitleWithCount('Område', checkedCounties.length + checkedMunicipals.length)}
                 className="Counties"
                 apen
             >
@@ -82,6 +80,35 @@ class Counties extends React.Component {
                             )}
                         </div>
                     ))}
+                    {((deprecatedCounties && deprecatedCounties.length > 0)
+                        || (deprecatedMunicipals && deprecatedMunicipals.length > 0)) && (
+                        <div>
+                            <div className="Search__separator" />
+                            <Element className="blokk-xs">Følgende kriterier gir 0 treff:</Element>
+                        </div>
+                    )}
+                    {deprecatedCounties && deprecatedCounties.map((county) => (
+                        <div key={county}>
+                            <Checkbox
+                                name="deprecatedLocation"
+                                label={`${capitalizeLocation(county)} (0)`}
+                                value={county}
+                                onChange={this.onCountyClick}
+                                checked={checkedCounties.includes(county)}
+                            />
+                        </div>
+                    ))}
+                    {deprecatedMunicipals && deprecatedMunicipals.map((municipal) => (
+                        <div key={municipal}>
+                            <Checkbox
+                                name="deprecatedLocation"
+                                label={`${capitalizeLocation(municipal.split('.')[1])} (0)`}
+                                value={municipal}
+                                onChange={this.onMunicipalClick}
+                                checked={checkedMunicipals.includes(municipal)}
+                            />
+                        </div>
+                    ))}
                 </div>
             </Ekspanderbartpanel>
         );
@@ -99,6 +126,8 @@ Counties.propTypes = {
     })).isRequired,
     checkedCounties: PropTypes.arrayOf(PropTypes.string).isRequired,
     checkedMunicipals: PropTypes.arrayOf(PropTypes.string).isRequired,
+    deprecatedCounties: PropTypes.arrayOf(PropTypes.string).isRequired,
+    deprecatedMunicipals: PropTypes.arrayOf(PropTypes.string).isRequired,
     checkCounty: PropTypes.func.isRequired,
     uncheckCounty: PropTypes.func.isRequired,
     checkMunicipal: PropTypes.func.isRequired,
@@ -109,7 +138,9 @@ Counties.propTypes = {
 const mapStateToProps = (state) => ({
     counties: state.counties.counties,
     checkedCounties: state.counties.checkedCounties,
-    checkedMunicipals: state.counties.checkedMunicipals
+    checkedMunicipals: state.counties.checkedMunicipals,
+    deprecatedCounties: state.counties.deprecatedCounties,
+    deprecatedMunicipals: state.counties.deprecatedMunicipals
 });
 
 const mapDispatchToProps = (dispatch) => ({
