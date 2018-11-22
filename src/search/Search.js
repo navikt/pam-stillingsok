@@ -1,10 +1,10 @@
 import { Column, Container, Row } from 'nav-frontend-grid';
 import { Flatknapp } from 'nav-frontend-knapper';
+import { Sidetittel } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import PageHeader from '../common/pageHeader/PageHeader';
 import { CONTEXT_PATH } from '../fasitProperties';
 import FavouriteAlertStripe from '../favourites/alertstripe/FavouriteAlertStripe';
 import ShowFavouriteListLink from '../favourites/ShowFavouriteListLink';
@@ -58,18 +58,27 @@ class Search extends React.Component {
             <div className="Search">
                 <FavouriteAlertStripe />
                 <SavedSearchAlertStripe />
-                <PageHeader
-                    title="Ledige stillinger"
-                    buttons={featureToggle() && this.props.isAuthenticated !== false && this.props.user ?
-                        <div>
-                            <ShowFavouriteListLink />
-                            <ExpandSavedSearchButton />
-                            <Link to={`${CONTEXT_PATH}/minside`} className="Search__minside-lenke lenke typo-element">
-                                Min side
-                            </Link>
-                        </div> : null
-                    }
-                />
+                <div className="Search__header">
+                    <Container className="Search__header__container">
+                        <Row className="Search__header__row">
+                            <Column xs="12" lg="4" />
+                            <Column xs="12" lg="4">
+                                <Sidetittel className="Search__header__title">Ledige stillinger</Sidetittel>
+                            </Column>
+                            <Column xs="12" lg="4">
+                                {featureToggle() && this.props.isAuthenticated !== false && this.props.user ?
+                                    <div className="Search__header__left">
+                                        <ShowFavouriteListLink />
+                                        <ExpandSavedSearchButton />
+                                        <Link to={`${CONTEXT_PATH}/minside`} className="Search__minside-lenke lenke typo-element">
+                                            Innstillinger
+                                        </Link>
+                                    </div> : null
+                                }
+                            </Column>
+                        </Row>
+                    </Container>
+                </div>
                 {this.props.isSavedSearchesExpanded && (
                     <div className="Search__header__savedSearches">
                         <SavedSearchesExpand />

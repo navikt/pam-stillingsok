@@ -7,13 +7,13 @@ import { Link } from 'react-router-dom';
 import './PageHeader.less';
 
 export default function PageHeader({
-    backUrl, title, buttons, backLabel
+    backUrl, title, backLabel
 }) {
     return (
         <div className="PageHeader">
             <Container className="PageHeader__container">
                 <Row className="PageHeader__row">
-                    <Column xs="12" lg="4">
+                    <Column xs="12" sm="3">
                         {backUrl && (
                             <div className="PageHeader__left">
                                 <Link
@@ -28,16 +28,10 @@ export default function PageHeader({
                             </div>
                         )}
                     </Column>
-                    <Column xs="12" lg="4">
+                    <Column xs="12" sm="6">
                         <Sidetittel className="PageHeader__title">{title}</Sidetittel>
                     </Column>
-                    <Column xs="12" lg="4">
-                        {buttons && (
-                            <div className="PageHeader__right">
-                                {buttons}
-                            </div>
-                        )}
-                    </Column>
+                    <Column xs="12" sm="3" />
                 </Row>
             </Container>
         </div>

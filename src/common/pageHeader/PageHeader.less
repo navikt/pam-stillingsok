@@ -6,7 +6,7 @@
     margin-bottom: @site-header-margin-bottom;
 }
 
-@media (min-width: @screen-lg-min) {
+@media (min-width: @screen-sm-min) {
     .PageHeader {
         height: @site-header-height;
         display: flex;
@@ -23,7 +23,7 @@
     }
 }
 
-@media (max-width: @screen-md-max) {
+@media (max-width: @screen-xs-max) {
     .PageHeader {
         padding: 1rem 0;
     }
@@ -39,9 +39,7 @@
         display: block;
         text-align: center;
     }
-}
 
-@media (max-width: @screen-xs-max) {
     .PageHeader__right {
         margin-top: 1rem;
         display: block;
