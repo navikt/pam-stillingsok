@@ -1,4 +1,4 @@
-import { put, select, takeLatest } from 'redux-saga/es/effects';
+import { put, select, take, takeLatest } from 'redux-saga/es/effects';
 import { requiresAuthentication } from '../../authentication/authenticationReducer';
 import AuthenticationCaller from '../../authentication/AuthenticationCaller';
 import capitalizeLocation from '../../common/capitalizeLocation';
@@ -12,8 +12,10 @@ import {
     UPDATE_SAVED_SEARCH_FAILURE,
     UPDATE_SAVED_SEARCH_SUCCESS
 } from '../savedSearchesReducer';
+import { SHOW_TERMS_OF_USE_MODAL, HIDE_TERMS_OF_USE_MODAL, CREATE_USER_SUCCESS } from '../../user/userReducer';
 
 export const SHOW_SAVED_SEARCH_FORM = 'SHOW_SAVED_SEARCH_FORM';
+export const SHOW_SAVED_SEARCH_FORM_SUCCESS = 'SHOW_SAVED_SEARCH_FORM_SUCCESS';
 export const HIDE_SAVED_SEARCH_FORM = 'HIDE_SAVED_SEARCH_FORM';
 export const SET_SAVED_SEARCH_FORM_MODE = 'SET_SAVED_SEARCH_FORM_MODE';
 export const SET_FORM_DATA = 'SET_FORM_DATA';
@@ -40,13 +42,13 @@ const initialState = {
 
 export default function savedSearchFormReducer(state = initialState, action) {
     switch (action.type) {
-        // case SHOW_SAVED_SEARCH_FORM:
-        //     return {
-        //         ...state,
-        //         // showAddOrReplace: action.showAddOrReplace,
-        //         // showSavedSearchForm: true,
-        //         // formMode: action.formMode
-        //     };
+        case SHOW_SAVED_SEARCH_FORM_SUCCESS:
+            return {
+                ...state,
+                showAddOrReplace: action.showAddOrReplace,
+                showSavedSearchForm: true,
+                formMode: action.formMode
+            };
         case HIDE_SAVED_SEARCH_FORM:
         case UPDATE_SAVED_SEARCH_SUCCESS:
         case UPDATE_SAVED_SEARCH_FAILURE:
@@ -178,38 +180,57 @@ function toTitle(state) {
 }
 
 function* setDefaultFormData(action) {
+    const state = yield select();
+    if (action.formMode === SavedSearchFormMode.ADD) {
+        yield put({
+            type: SET_FORM_DATA,
+            formData: {
+                title: toTitle(state),
+                searchQuery: toQueryString(toSavedSearchQuery(state)),
+                notifyType: NotifyTypeEnum.NONE,
+                status: SavedSearchStatusEnum.INACTIVE
+            }
+        });
+    } else if (action.formMode === SavedSearchFormMode.EDIT) {
+        yield put({
+            type: SET_FORM_DATA,
+            formData: action.formData
+        });
+    } else if (action.formMode === SavedSearchFormMode.REPLACE) {
+        yield put({
+            type: SET_FORM_DATA,
+            formData: {
+                ...state.savedSearches.currentSavedSearch,
+                searchQuery: toQueryString(toSavedSearchQuery(state))
+            }
+        });
+    }
+
+    // TODO: trenger vi denne?
+    yield validateAll();
+}
+
+function* showSavedSearchForm(action) {
     if (yield requiresAuthentication(AuthenticationCaller.SAVE_SEARCH)) {
-        const state = yield select();
-        if (action.formMode === SavedSearchFormMode.ADD) {
+        let state = yield select();
+        if (!state.user.user) {
+            yield put({ type: SHOW_TERMS_OF_USE_MODAL });
+            yield take([HIDE_TERMS_OF_USE_MODAL, CREATE_USER_SUCCESS]);
+        }
+        state = yield select();
+        if (state.user.user) {
+            yield setDefaultFormData(action);
             yield put({
-                type: SET_FORM_DATA,
-                formData: {
-                    title: toTitle(state),
-                    searchQuery: toQueryString(toSavedSearchQuery(state)),
-                    notifyType: NotifyTypeEnum.NONE,
-                    status: SavedSearchStatusEnum.INACTIVE
-                }
-            });
-        } else if (action.formMode === SavedSearchFormMode.EDIT) {
-            yield put({
-                type: SET_FORM_DATA,
-                formData: action.formData
-            });
-        } else if (action.formMode === SavedSearchFormMode.REPLACE) {
-            yield put({
-                type: SET_FORM_DATA,
-                formData: {
-                    ...state.savedSearches.currentSavedSearch,
-                    searchQuery: toQueryString(toSavedSearchQuery(state))
-                }
+                type: SHOW_SAVED_SEARCH_FORM_SUCCESS,
+                formMode: action.formMode,
+                showAddOrReplace: action.showAddOrReplace
             });
         }
-        yield validateAll();
     }
 }
 
 export const savedSearchFormSaga = function* saga() {
     yield takeLatest([SET_SAVED_SEARCH_TITLE, SET_FORM_DATA], validateAll);
-    yield takeLatest(SHOW_SAVED_SEARCH_FORM, setDefaultFormData);
+    yield takeLatest(SHOW_SAVED_SEARCH_FORM, showSavedSearchForm);
     yield takeLatest(SET_SAVED_SEARCH_FORM_MODE, setDefaultFormData);
 };
