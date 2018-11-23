@@ -221,7 +221,6 @@ function* fetchUser() {
 
 function* createUser(action) {
     const state = yield select();
-    console.log(state.user.termsAccepted)
     if (state.user.termsAccepted) {
         yield put({ type: CREATE_USER_BEGIN });
         try {
