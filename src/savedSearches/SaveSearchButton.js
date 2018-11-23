@@ -10,19 +10,12 @@ import { SavedSearchFormMode, SHOW_SAVED_SEARCH_FORM } from './form/savedSearchF
 class SaveSearchButton extends React.Component {
     onClick = () => {
         const {
-            isAuthenticated, showError, user, showTermsOfUseModal, showSavedSearchForm, currentSavedSearch
+            showSavedSearchForm, currentSavedSearch
         } = this.props;
-        if (isAuthenticated !== true) {
-            showError(AuthorizationEnum.SAVE_SEARCH_ERROR);
-        } else if (!user) {
-            showTermsOfUseModal();
-        } else {
-            showSavedSearchForm(
-                currentSavedSearch ? SavedSearchFormMode.REPLACE : SavedSearchFormMode.ADD,
-                currentSavedSearch !== undefined
-
-            );
-        }
+        showSavedSearchForm(
+            currentSavedSearch ? SavedSearchFormMode.REPLACE : SavedSearchFormMode.ADD,
+            currentSavedSearch !== undefined
+        );
     };
 
     render() {
