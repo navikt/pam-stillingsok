@@ -12,9 +12,9 @@ import Invite from './invite/Invite';
 import SavedSearches from './savedSearches/SavedSearches';
 import SearchPage from './search/Search';
 import StillingPage from './stilling/Stilling';
-import NotAuthenticatedModal from './user/NotAuthenticatedModal';
+import NotAuthenticatedModal from './authentication/NotAuthenticatedModal';
 import TermsOfUse from './user/TermsOfUse';
-import { FETCH_IS_AUTHENTICATED } from './user/userReducer';
+import { FETCH_IS_AUTHENTICATED } from './authentication/authenticationReducer';
 import UserSettings from './user/UserSettings';
 import ViewTermsOfUse from './user/ViewTermsOfUse';
 import UserAlertStripe from './user/UserAlertStripe';
@@ -68,7 +68,7 @@ class Application extends React.Component {
                         <TermsOfUse />
                     )}
 
-                    {this.props.authorizationError && (
+                    {this.props.authenticationRequiredModalIsVisible && (
                         <NotAuthenticatedModal />
                     )}
                     <UserAlertStripe />
@@ -79,7 +79,6 @@ class Application extends React.Component {
 }
 
 Application.defaultProps = {
-    authorizationError: undefined,
     isAuthenticated: undefined
 };
 
@@ -87,13 +86,13 @@ Application.propTypes = {
     fetchIsAuthenticated: PropTypes.func.isRequired,
     isAuthenticated: PropTypes.bool,
     termsOfUseModalIsVisible: PropTypes.bool.isRequired,
-    authorizationError: PropTypes.string
+    authenticationRequiredModalIsVisible: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => ({
-    isAuthenticated: state.user.isAuthenticated,
+    isAuthenticated: state.authentication.isAuthenticated,
     termsOfUseModalIsVisible: state.user.termsOfUseModalIsVisible,
-    authorizationError: state.user.authorizationError
+    authenticationRequiredModalIsVisible: state.authentication.authenticationRequiredModalIsVisible
 });
 
 const mapDispatchToProps = (dispatch) => ({

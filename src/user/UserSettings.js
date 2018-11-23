@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 import PageHeader from '../common/pageHeader/PageHeader';
 import { CONTEXT_PATH } from '../fasitProperties';
 import ConfirmDeleteUserModal from './ConfirmDeleteUserModal';
-import NotAuthenticated from './NotAuthenticated';
+import NotAuthenticated from '../authentication/NotAuthenticated';
 import NoUser from './NoUser';
 import { SET_USER_EMAIL, SHOW_CONFIRM_DELETE_USER_MODAL, UPDATE_USER_EMAIL, VALIDATE_USER_EMAIL } from './userReducer';
 import './UserSettings.less';
@@ -189,7 +189,7 @@ UserSettings.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-    isAuthenticated: state.user.isAuthenticated,
+    isAuthenticated: state.authentication.isAuthenticated,
     user: state.user.user,
     isUpdating: state.user.isUpdating,
     updateUserError: state.user.updateUserError,

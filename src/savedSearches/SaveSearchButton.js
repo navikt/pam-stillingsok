@@ -1,20 +1,15 @@
-import { Knapp } from 'nav-frontend-knapper';
 import HjelpetekstBase from 'nav-frontend-hjelpetekst';
+import { Knapp } from 'nav-frontend-knapper';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import AuthorizationEnum from '../user/AuthorizationEnum';
-import { SHOW_AUTHORIZATION_ERROR_MODAL, SHOW_TERMS_OF_USE_MODAL } from '../user/userReducer';
 import { SavedSearchFormMode, SHOW_SAVED_SEARCH_FORM } from './form/savedSearchFormReducer';
 
 class SaveSearchButton extends React.Component {
     onClick = () => {
-        const {
-            showSavedSearchForm, currentSavedSearch
-        } = this.props;
-        showSavedSearchForm(
-            currentSavedSearch ? SavedSearchFormMode.REPLACE : SavedSearchFormMode.ADD,
-            currentSavedSearch !== undefined
+        this.props.showSavedSearchForm(
+            this.props.currentSavedSearch ? SavedSearchFormMode.REPLACE : SavedSearchFormMode.ADD,
+            this.props.currentSavedSearch !== undefined
         );
     };
 
@@ -39,25 +34,17 @@ class SaveSearchButton extends React.Component {
 }
 
 SaveSearchButton.defaultProps = {
-    currentSavedSearch: undefined,
-    user: undefined,
-    isAuthenticated: undefined
+    currentSavedSearch: undefined
 };
 
 SaveSearchButton.propTypes = {
     showSavedSearchForm: PropTypes.func.isRequired,
     currentSavedSearch: PropTypes.shape({}),
-    showError: PropTypes.func.isRequired,
-    showTermsOfUseModal: PropTypes.func.isRequired,
-    isAuthenticated: PropTypes.bool,
-    canSaveSearch: PropTypes.bool.isRequired,
-    user: PropTypes.shape({})
+    canSaveSearch: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => ({
     currentSavedSearch: state.savedSearches.currentSavedSearch,
-    isAuthenticated: state.user.isAuthenticated,
-    user: state.user.user,
     canSaveSearch: state.savedSearches.canSaveSearch
 });
 
@@ -66,9 +53,7 @@ const mapDispatchToProps = (dispatch) => ({
         type: SHOW_SAVED_SEARCH_FORM,
         formMode,
         showAddOrReplace
-    }),
-    showError: (text) => dispatch({ type: SHOW_AUTHORIZATION_ERROR_MODAL, text }),
-    showTermsOfUseModal: () => dispatch({ type: SHOW_TERMS_OF_USE_MODAL })
+    })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SaveSearchButton);

@@ -2,10 +2,10 @@ import Modal from 'nav-frontend-modal';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import AuthorizationEnum from './AuthorizationEnum';
+import { HIDE_AUTHENTICATION_REQUIRED_MODAL } from './authenticationReducer';
+import AuthenticationCaller from './AuthenticationCaller';
 import NotAuthenticated from './NotAuthenticated';
 import './NotAuthenticatedModal.less';
-import { HIDE_AUTHORIZATION_ERROR_MODAL } from './userReducer';
 
 class NotAuthenticatedModal extends React.Component {
     closeModal = () => {
@@ -14,10 +14,12 @@ class NotAuthenticatedModal extends React.Component {
 
     render() {
         let title;
-        if (this.props.authorizationError === AuthorizationEnum.ADD_FAVORITE_ERROR) {
+        if (this.props.authenticationRequiredTitle === AuthenticationCaller.ADD_FAVORITE) {
             title = 'Du må logge inn for å lagre favoritter';
-        } else if (this.props.authorizationError === AuthorizationEnum.SAVE_SEARCH_ERROR) {
+        } else if (this.props.authenticationRequiredTitle === AuthenticationCaller.SAVE_SEARCH) {
             title = 'Du må logge inn for å lagre søk';
+        } else {
+            title = 'Du må logge inn';
         }
 
         return (
@@ -36,21 +38,18 @@ class NotAuthenticatedModal extends React.Component {
     }
 }
 
-NotAuthenticatedModal.defaultProps = {
-    authorizationError: undefined
-};
 
 NotAuthenticatedModal.propTypes = {
     hideError: PropTypes.func.isRequired,
-    authorizationError: PropTypes.string
+    authenticationRequiredTitle: PropTypes.string.isRequired
 };
 
 const mapStateToProps = (state) => ({
-    authorizationError: state.user.authorizationError
+    authenticationRequiredTitle: state.authentication.authenticationRequiredTitle
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    hideError: () => dispatch({ type: HIDE_AUTHORIZATION_ERROR_MODAL })
+    hideError: () => dispatch({ type: HIDE_AUTHENTICATION_REQUIRED_MODAL })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NotAuthenticatedModal);

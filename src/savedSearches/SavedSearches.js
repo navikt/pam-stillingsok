@@ -4,7 +4,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PageHeader from '../common/pageHeader/PageHeader';
 import DelayedSpinner from '../search/loading/DelayedSpinner';
-import NotAuthenticated from '../user/NotAuthenticated';
+import NotAuthenticated from '../authentication/NotAuthenticated';
 import NoUser from '../user/NoUser';
 import SavedSearchAlertStripe from './alertstripe/SavedSearchAlertStripe';
 import ConfirmRemoveModal from './ConfirmRemoveModal';
@@ -100,7 +100,7 @@ SavedSearches.propTypes = {
 
 const mapStateToProps = (state) => ({
     user: state.user.user,
-    isAuthenticated: state.user.isAuthenticated,
+    isAuthenticated: state.authentication.isAuthenticated,
     savedSearches: state.savedSearches.savedSearches,
     totalElements: state.savedSearches.totalElements,
     isFetching: state.savedSearches.isFetching

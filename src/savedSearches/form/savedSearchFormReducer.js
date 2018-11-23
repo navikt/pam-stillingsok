@@ -1,4 +1,6 @@
 import { put, select, takeLatest } from 'redux-saga/es/effects';
+import { requiresAuthentication } from '../../authentication/authenticationReducer';
+import AuthenticationCaller from '../../authentication/AuthenticationCaller';
 import capitalizeLocation from '../../common/capitalizeLocation';
 import { toQueryString } from '../../search/url';
 import NotifyTypeEnum from '../enums/NotifyTypeEnum';
@@ -38,13 +40,13 @@ const initialState = {
 
 export default function savedSearchFormReducer(state = initialState, action) {
     switch (action.type) {
-        case SHOW_SAVED_SEARCH_FORM:
-            return {
-                ...state,
-                showAddOrReplace: action.showAddOrReplace,
-                showSavedSearchForm: true,
-                formMode: action.formMode
-            };
+        // case SHOW_SAVED_SEARCH_FORM:
+        //     return {
+        //         ...state,
+        //         // showAddOrReplace: action.showAddOrReplace,
+        //         // showSavedSearchForm: true,
+        //         // formMode: action.formMode
+        //     };
         case HIDE_SAVED_SEARCH_FORM:
         case UPDATE_SAVED_SEARCH_SUCCESS:
         case UPDATE_SAVED_SEARCH_FAILURE:
@@ -176,32 +178,34 @@ function toTitle(state) {
 }
 
 function* setDefaultFormData(action) {
-    const state = yield select();
-    if (action.formMode === SavedSearchFormMode.ADD) {
-        yield put({
-            type: SET_FORM_DATA,
-            formData: {
-                title: toTitle(state),
-                searchQuery: toQueryString(toSavedSearchQuery(state)),
-                notifyType: NotifyTypeEnum.NONE,
-                status: SavedSearchStatusEnum.INACTIVE
-            }
-        });
-    } else if (action.formMode === SavedSearchFormMode.EDIT) {
-        yield put({
-            type: SET_FORM_DATA,
-            formData: action.formData
-        });
-    } else if (action.formMode === SavedSearchFormMode.REPLACE) {
-        yield put({
-            type: SET_FORM_DATA,
-            formData: {
-                ...state.savedSearches.currentSavedSearch,
-                searchQuery: toQueryString(toSavedSearchQuery(state))
-            }
-        });
+    if (yield requiresAuthentication(AuthenticationCaller.SAVE_SEARCH)) {
+        const state = yield select();
+        if (action.formMode === SavedSearchFormMode.ADD) {
+            yield put({
+                type: SET_FORM_DATA,
+                formData: {
+                    title: toTitle(state),
+                    searchQuery: toQueryString(toSavedSearchQuery(state)),
+                    notifyType: NotifyTypeEnum.NONE,
+                    status: SavedSearchStatusEnum.INACTIVE
+                }
+            });
+        } else if (action.formMode === SavedSearchFormMode.EDIT) {
+            yield put({
+                type: SET_FORM_DATA,
+                formData: action.formData
+            });
+        } else if (action.formMode === SavedSearchFormMode.REPLACE) {
+            yield put({
+                type: SET_FORM_DATA,
+                formData: {
+                    ...state.savedSearches.currentSavedSearch,
+                    searchQuery: toQueryString(toSavedSearchQuery(state))
+                }
+            });
+        }
+        yield validateAll();
     }
-    yield validateAll();
 }
 
 export const savedSearchFormSaga = function* saga() {
