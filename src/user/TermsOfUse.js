@@ -71,7 +71,7 @@ class TermsOfUse extends React.Component {
                         <Normaltekst>
                             Ønsker du å motta varslinger på et lagret søk trenger vi e-postadressen din.
                             Den vil bare bli brukt til dette formålet. Du kan senere velge å skru av
-                            e-postvarsling under lagrede søk eller slette e-postadressen på Innstillinger.
+                            e-postvarsling under lagrede søk eller slette e-postadressen under dine innstillinger.
                         </Normaltekst>
                         <div className="TermsOfUse__input">
                             <Input
@@ -99,7 +99,7 @@ class TermsOfUse extends React.Component {
                         />
                         <Normaltekst>
                             Du kan trekke samtykket hvis du ikke lenger ønsker å bruke innloggede tjenester
-                            i stillingssøket. Dette kan du gjøre i Innstillinger.
+                            i stillingssøket. Dette kan du gjøre under dine innstillinger.
                         </Normaltekst>
                     </div>
                     <div className="TermsOfUse__buttons">
