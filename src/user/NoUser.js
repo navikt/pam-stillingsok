@@ -19,7 +19,7 @@ class NoUser extends React.Component {
                     Du har ikke tatt i bruk innloggede tjenester
                 </Undertittel>
                 <Normaltekst className="NoUser__text">
-                    For å kunne lagre søk og favotitter, må du opprette en bruker.
+                    For å kunne lagre søk og favoritter, må du opprette en bruker.
                 </Normaltekst>
                 <Hovedknapp
                     className="NoUser__button"
