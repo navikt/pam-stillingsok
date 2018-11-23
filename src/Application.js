@@ -16,7 +16,6 @@ import NotAuthenticatedModal from './user/NotAuthenticatedModal';
 import TermsOfUse from './user/TermsOfUse';
 import { FETCH_IS_AUTHENTICATED } from './user/userReducer';
 import UserSettings from './user/UserSettings';
-import ViewTermsOfUse from './user/ViewTermsOfUse';
 import UserAlertStripe from './user/UserAlertStripe';
 
 class Application extends React.Component {
@@ -60,7 +59,6 @@ class Application extends React.Component {
                         <Route path={`${CONTEXT_PATH}/favoritter`} component={Favourites} />
                         <Route path={`${CONTEXT_PATH}/lagrede-sok`} component={SavedSearches} />
                         <Route path={`${CONTEXT_PATH}/innstillinger`} component={UserSettings} />
-                        <Route path={`${CONTEXT_PATH}/vilkar`} component={ViewTermsOfUse} />
                         <Route path="*" component={SearchPage} />
                     </Switch>
 

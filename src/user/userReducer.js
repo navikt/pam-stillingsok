@@ -39,6 +39,8 @@ export const DELETE_USER = 'DELETE_USER';
 export const DELETE_USER_BEGIN = 'DELETE_USER_BEGIN';
 export const DELETE_USER_FAILURE = 'DELETE_USER_FAILURE';
 
+export const SET_USER_TERMS_ACCEPTED = 'SET_USER_TERMS_ACCEPTED';
+export const SHOW_USER_TERMS_REQUIRED_MESSAGE = 'SHOW_USER_TERMS_REQUIRED_MESSAGE';
 export const SET_USER_EMAIL = 'SET_USER_EMAIL';
 
 export const VALIDATE_USER_EMAIL = 'VALIDATE_USER_EMAIL';
@@ -58,7 +60,9 @@ const initialState = {
     userAlertStripeMode: 'added',
     termsOfUseModalIsVisible: false,
     confirmDeleteUserModalIsVisible: false,
-    validation: {}
+    validation: {},
+    termsAccepted: false,
+    showUserTermsRequiredMessage: false
 };
 
 export default function authorizationReducer(state = initialState, action) {
@@ -198,6 +202,17 @@ export default function authorizationReducer(state = initialState, action) {
                     [action.field]: undefined
                 }
             };
+        case SET_USER_TERMS_ACCEPTED:
+            return {
+                ...state,
+                termsAccepted: action.termsAccepted,
+                showUserTermsRequiredMessage: false
+            };
+        case SHOW_USER_TERMS_REQUIRED_MESSAGE:
+            return {
+                ...state,
+                showUserTermsRequiredMessage: true
+            };
         default:
             return state;
     }
@@ -249,25 +264,31 @@ function* fetchUser() {
 }
 
 function* createUser(action) {
-    yield put({ type: CREATE_USER_BEGIN });
-    try {
-        const user = {
-            acceptedTerms: TERMS_VERSION,
-            email: action.email
-        };
-        const response = yield call(userApiPost, `${AD_USER_API}/api/v1/user`, fixUser(user));
-        yield put({ type: CREATE_USER_SUCCESS, response });
-        if (user.email) {
-            yield put({ type: CREATE_USER_SHOW_ALERT });
-            yield call(delay, 5000);
-            yield put({ type: CREATE_USER_HIDE_ALERT });
+    const state = yield select();
+    console.log(state.user.termsAccepted)
+    if (state.user.termsAccepted) {
+        yield put({ type: CREATE_USER_BEGIN });
+        try {
+            const user = {
+                acceptedTerms: TERMS_VERSION,
+                email: action.email
+            };
+            const response = yield call(userApiPost, `${AD_USER_API}/api/v1/user`, fixUser(user));
+            yield put({ type: CREATE_USER_SUCCESS, response });
+            if (user.email) {
+                yield put({ type: CREATE_USER_SHOW_ALERT });
+                yield call(delay, 5000);
+                yield put({ type: CREATE_USER_HIDE_ALERT });
+            }
+        } catch (e) {
+            if (e instanceof SearchApiError) {
+                yield put({ type: CREATE_USER_FAILURE, error: e });
+            } else {
+                throw e;
+            }
         }
-    } catch (e) {
-        if (e instanceof SearchApiError) {
-            yield put({ type: CREATE_USER_FAILURE, error: e });
-        } else {
-            throw e;
-        }
+    } else {
+        yield put({ type: SHOW_USER_TERMS_REQUIRED_MESSAGE });
     }
 }
 

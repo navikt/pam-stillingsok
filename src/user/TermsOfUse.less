@@ -1,7 +1,7 @@
 @import "../variables";
 
 .TermsOfUse {
-  padding: @modal-padding;
+  padding: 0.7rem;
 }
 
 .TermsOfUse__error {
@@ -12,12 +12,17 @@
   margin-bottom: 1.25rem;
 }
 
-.TermsOfUse__text {
+.TermsOfUse__section {
   margin-bottom: 2rem;
 }
 
-.TermsOfUse__input {
+.TermsOfUse__section--email,
+.TermsOfUse__section--last {
   margin-bottom: 2.5rem;
+}
+
+.TermsOfUse__input {
+  margin-top: 1.25rem;
 }
 
 .TermsOfUse__buttons {
@@ -34,7 +39,6 @@
   }
 
   .TermsOfUse__buttons .knapp:not(:last-child) {
-    display: block;
     margin-bottom: @knapp-margin-bottom;
   }
 }
