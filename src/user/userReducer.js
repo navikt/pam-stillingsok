@@ -47,6 +47,8 @@ export const VALIDATE_USER_EMAIL = 'VALIDATE_USER_EMAIL';
 export const SET_VALIDATION_ERROR = 'SET_VALIDATION_ERROR';
 export const REMOVE_VALIDATION_ERROR = 'REMOVE_VALIDATION_ERROR';
 
+export const SET_EMAIL_FROM_SAVED_SEARCH = 'SET_EMAIL_FROM_SAVED_SEARCH';
+
 const TERMS_VERSION = 'sok_v1';
 
 const initialState = {
@@ -265,7 +267,6 @@ function* fetchUser() {
 
 function* createUser(action) {
     const state = yield select();
-    console.log(state.user.termsAccepted)
     if (state.user.termsAccepted) {
         yield put({ type: CREATE_USER_BEGIN });
         try {
@@ -316,6 +317,25 @@ function* updateUserEmail() {
     }
 }
 
+function* setEmailFromSavedSearch() {
+    let state = yield select();
+    if (state.savedSearchForm.validation.email === undefined) {
+        try {
+            yield put({ type: UPDATE_USER_EMAIL_BEGIN });
+            yield put({ type: SET_USER_EMAIL, email: state.savedSearchForm.emailInputValue });
+            state = yield select();
+            const response = yield call(userApiPut, `${AD_USER_API}/api/v1/user`, state.user.user);
+            yield put({ type: UPDATE_USER_EMAIL_SUCCESS, response });
+        } catch (e) {
+            if (e instanceof SearchApiError) {
+                yield put({ type: UPDATE_USER_EMAIL_FAILURE, error: e });
+            } else {
+                throw e;
+            }
+        }
+    }
+}
+
 function* deleteUser() {
     try {
         yield put({ type: DELETE_USER_BEGIN });
@@ -349,6 +369,7 @@ export const userSaga = function* saga() {
     yield takeEvery(FETCH_IS_AUTHENTICATED_SUCCESS, fetchUser);
     yield takeLatest(CREATE_USER, createUser);
     yield takeLatest(UPDATE_USER_EMAIL, updateUserEmail);
+    yield takeLatest(SET_EMAIL_FROM_SAVED_SEARCH, setEmailFromSavedSearch);
     yield takeLatest(DELETE_USER, deleteUser);
     yield takeLatest(VALIDATE_USER_EMAIL, validateEMail);
 };
