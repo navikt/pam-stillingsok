@@ -218,6 +218,11 @@ function toTitle(state) {
 
 function* setDefaultFormData(action) {
     const state = yield select();
+    if (action.formData && action.formData.notifyType === NotifyTypeEnum.EMAIL) {
+        const { email } = state.user.user;
+        const emailNotSet = email === undefined || email === null || email.trim().length === 0;
+        yield put({ type: SET_SHOW_REGISTER_EMAIL, showRegisterEmail: emailNotSet });
+    }
     if (action.formMode === SavedSearchFormMode.ADD) {
         yield put({
             type: SET_FORM_DATA,
