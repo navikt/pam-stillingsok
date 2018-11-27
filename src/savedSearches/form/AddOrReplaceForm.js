@@ -18,6 +18,7 @@ class AddOrReplaceForm extends React.Component {
     constructor(props) {
         super(props);
         this.titleRef = null;
+        this.emailRef = null;
     }
 
     onTitleChange = (e) => {
@@ -51,9 +52,15 @@ class AddOrReplaceForm extends React.Component {
         this.titleRef = element;
     };
 
-    setFocusTitle = () => {
+    setEmailRef = (element) => {
+        this.emailRef = element;
+    };
+
+    setFocusOnError = () => {
         if(this.props.validation.title && this.titleRef){
             this.titleRef.focus();
+        } else if(this.props.validation.email && this.emailRef){
+            this.emailRef.focus();
         }
     };
 
@@ -126,6 +133,7 @@ class AddOrReplaceForm extends React.Component {
                                 value={this.props.emailInputValue || ''}
                                 onChange={this.onEmailChange}
                                 onBlur={this.onEmailBlur}
+                                inputRef={this.setEmailRef}
                                 feil={validation.email ? {
                                     feilmelding: validation.email
                                 } : undefined}
