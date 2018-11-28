@@ -23,7 +23,7 @@ class TopMenu extends React.Component {
                         onLoggUt={this.onLogoutClick}
                         onLoggInn={this.onLoginClick}
                         personbruker={{ navn: 'Innstillinger' }}
-                        isAuthenticated={this.props.isAuthenticated}
+                        erInnlogget={this.props.isAuthenticated}
                     />
                 ) : (
                     <PersonbrukerHeader />
@@ -43,7 +43,7 @@ TopMenu.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-    isAuthenticated: state.user.isAuthenticated,
+    isAuthenticated: state.authentication.isAuthenticated,
     user: state.user.user
 });
 
