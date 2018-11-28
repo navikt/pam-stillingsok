@@ -1,7 +1,7 @@
 import { Column, Container, Row } from 'nav-frontend-grid';
 import { Flatknapp, Knapp } from 'nav-frontend-knapper';
 import { Input } from 'nav-frontend-skjema';
-import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
+import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -54,7 +54,7 @@ class UserSettings extends React.Component {
                     title={PAGE_TITLE}
                 />
                 <Container>
-                    {this.props.isAuthenticated === false ? (
+                    {this.props.isAuthenticated === false && (
                         <div className="UserSettings__main">
                             <div className="UserSettings__section">
                                 <Row>
@@ -64,7 +64,8 @@ class UserSettings extends React.Component {
                                 </Row>
                             </div>
                         </div>
-                    ) : (
+                    )}
+                    {this.props.isAuthenticated === true && (
                         <div>
                             {!this.props.user && (
                                 <div className="UserSettings__main">
@@ -87,15 +88,17 @@ class UserSettings extends React.Component {
                                                     E-postvarslinger
                                                 </Undertittel>
                                                 <Normaltekst className="UserSettings__email-text">
-                                                    Hvis du gjør et søk og vil lagre søkekriteriene under Lagrede søk,
-                                                    trenger vi en e-postadresse som du vil motta stillingsannonser på.
+                                                    Ønsker du å motta varslinger på et lagret søk trenger vi
+                                                    e-postadressen din. Den vil bare bli brukt til dette formålet.
                                                     <br /><br />
-                                                    Hvis du ikke ønsker å motta e-postvarslinger kan du
-                                                    slette e-postadressen.
+                                                    Hvis du ikke ønsker å motta e-postvarsling kan du skru den
+                                                    av under <Link to={`${CONTEXT_PATH}/lagrede-sok`} className="lenke">
+                                                    lagrede søk
+                                                    </Link> eller slette e-postadressen.
                                                 </Normaltekst>
                                                 <div className="UserSettings__email-input">
                                                     <Input
-                                                        label="E-postadressen din"
+                                                        label="E-postadressen din (valgfritt)"
                                                         value={this.props.user.email || ''}
                                                         onChange={this.onEmailChange}
                                                         onBlur={this.onEmailBlur}
@@ -128,27 +131,31 @@ class UserSettings extends React.Component {
                                     <div className="UserSettings__section">
                                         <Row>
                                             <Column xs="12">
-                                                <Undertittel className="TermsOfUse__title">
-                                                    Din bruker
+                                                <Undertittel className="UserSettings__user__title">
+                                                    Samtykke
                                                 </Undertittel>
-                                                <Normaltekst className="TermsOfUse__text">
-                                                    Du har samtykket til våre <Link
-                                                        to={`${CONTEXT_PATH}/vilkar`}
-                                                        className="lenke"
-                                                    >
-                                                     vilkår for å bruke innloggede tjenester.
-                                                    </Link>
-                                                    <br /><br />
-                                                    Hvis du ikke lenger ønsker å bruke innloggede tjenester i
-                                                    stillingssøket, kan du slette brukeren din.
-                                                    Når du sletter brukeren trekker du samtykket ditt. Du sletter
-                                                    også alle dine favoritter og lagrede søk. Har du valgt å motta
-                                                    varslinger på e-post, så vil du ikke lenger motta disse.
-                                                </Normaltekst>
+                                                <div className="UserSettings__user__text">
+                                                    <Normaltekst>
+                                                        Du har samtykket til å bruke innloggede tjenester i stillingssøk.
+                                                    </Normaltekst>
+                                                    <br />
+                                                    <Element>Vi lagrer:</Element>
+                                                    <ul className="typo-normal UserSettings__user__text__list">
+                                                        <li>dine favoritter</li>
+                                                        <li>søk med søkekriterier</li>
+                                                        <li>e-postadresse (valgfritt)</li>
+                                                    </ul>
+                                                    <Normaltekst>
+                                                        Hvis du ikke lenger ønsker å bruke innloggede tjenester i
+                                                        stillingssøket, kan du slette samtykke. Da sletter du også
+                                                        alle dine favoritter og lagrede søk. Har du valgt å motta
+                                                        varslinger på e-post, så vil du ikke lenger motta disse.
+                                                    </Normaltekst>
+                                                </div>
                                                 <Knapp
                                                     onClick={this.onDeleteUserClick}
                                                 >
-                                                    Slett bruker
+                                                    Slett samtykke
                                                 </Knapp>
                                             </Column>
                                         </Row>

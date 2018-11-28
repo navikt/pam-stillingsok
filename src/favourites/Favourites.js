@@ -27,7 +27,7 @@ class Favourites extends React.Component {
                     title={`Favoritter ${!this.props.isFetchingFavourites && this.props.totalElements > 0 ? `(${this.props.totalElements})` : ''}`}
                 />
                 <Container className="Favourites__main">
-                    {this.props.isAuthenticated === false ? (
+                    {this.props.isAuthenticated === false && (
                         <div className="UserSettings__main">
                             <div className="UserSettings__section">
                                 <Row>
@@ -37,7 +37,8 @@ class Favourites extends React.Component {
                                 </Row>
                             </div>
                         </div>
-                    ) : (
+                    )}
+                    {this.props.isAuthenticated === true && (
                         <div>
                             {!this.props.user && (
                                 <div className="UserSettings__main">

@@ -33,11 +33,15 @@ export const DELETE_USER = 'DELETE_USER';
 export const DELETE_USER_BEGIN = 'DELETE_USER_BEGIN';
 export const DELETE_USER_FAILURE = 'DELETE_USER_FAILURE';
 
+export const SET_USER_TERMS_ACCEPTED = 'SET_USER_TERMS_ACCEPTED';
+export const SHOW_USER_TERMS_REQUIRED_MESSAGE = 'SHOW_USER_TERMS_REQUIRED_MESSAGE';
 export const SET_USER_EMAIL = 'SET_USER_EMAIL';
 
 export const VALIDATE_USER_EMAIL = 'VALIDATE_USER_EMAIL';
 export const SET_VALIDATION_ERROR = 'SET_VALIDATION_ERROR';
 export const REMOVE_VALIDATION_ERROR = 'REMOVE_VALIDATION_ERROR';
+
+export const SET_EMAIL_FROM_SAVED_SEARCH = 'SET_EMAIL_FROM_SAVED_SEARCH';
 
 const TERMS_VERSION = 'sok_v1';
 
@@ -50,7 +54,9 @@ const initialState = {
     userAlertStripeMode: 'added',
     termsOfUseModalIsVisible: false,
     confirmDeleteUserModalIsVisible: false,
-    validation: {}
+    validation: {},
+    termsAccepted: false,
+    showUserTermsRequiredMessage: false
 };
 
 export default function authorizationReducer(state = initialState, action) {
@@ -170,6 +176,17 @@ export default function authorizationReducer(state = initialState, action) {
                     [action.field]: undefined
                 }
             };
+        case SET_USER_TERMS_ACCEPTED:
+            return {
+                ...state,
+                termsAccepted: action.termsAccepted,
+                showUserTermsRequiredMessage: false
+            };
+        case SHOW_USER_TERMS_REQUIRED_MESSAGE:
+            return {
+                ...state,
+                showUserTermsRequiredMessage: true
+            };
         default:
             return state;
     }
@@ -205,25 +222,30 @@ function* fetchUser() {
 }
 
 function* createUser(action) {
-    yield put({ type: CREATE_USER_BEGIN });
-    try {
-        const user = {
-            acceptedTerms: TERMS_VERSION,
-            email: action.email
-        };
-        const response = yield call(userApiPost, `${AD_USER_API}/api/v1/user`, fixUser(user));
-        yield put({ type: CREATE_USER_SUCCESS, response });
-        if (user.email) {
-            yield put({ type: CREATE_USER_SHOW_ALERT });
-            yield call(delay, 5000);
-            yield put({ type: CREATE_USER_HIDE_ALERT });
+    const state = yield select();
+    if (state.user.termsAccepted) {
+        yield put({ type: CREATE_USER_BEGIN });
+        try {
+            const user = {
+                acceptedTerms: TERMS_VERSION,
+                email: action.email
+            };
+            const response = yield call(userApiPost, `${AD_USER_API}/api/v1/user`, fixUser(user));
+            yield put({ type: CREATE_USER_SUCCESS, response });
+            if (user.email) {
+                yield put({ type: CREATE_USER_SHOW_ALERT });
+                yield call(delay, 5000);
+                yield put({ type: CREATE_USER_HIDE_ALERT });
+            }
+        } catch (e) {
+            if (e instanceof SearchApiError) {
+                yield put({ type: CREATE_USER_FAILURE, error: e });
+            } else {
+                throw e;
+            }
         }
-    } catch (e) {
-        if (e instanceof SearchApiError) {
-            yield put({ type: CREATE_USER_FAILURE, error: e });
-        } else {
-            throw e;
-        }
+    } else {
+        yield put({ type: SHOW_USER_TERMS_REQUIRED_MESSAGE });
     }
 }
 
@@ -241,6 +263,25 @@ function* updateUserEmail() {
             });
             yield call(delay, 5000);
             yield put({ type: UPDATE_USER_EMAIL_HIDE_ALERT });
+        } catch (e) {
+            if (e instanceof SearchApiError) {
+                yield put({ type: UPDATE_USER_EMAIL_FAILURE, error: e });
+            } else {
+                throw e;
+            }
+        }
+    }
+}
+
+function* setEmailFromSavedSearch() {
+    let state = yield select();
+    if (state.savedSearchForm.validation.email === undefined) {
+        try {
+            yield put({ type: UPDATE_USER_EMAIL_BEGIN });
+            yield put({ type: SET_USER_EMAIL, email: state.savedSearchForm.emailInputValue });
+            state = yield select();
+            const response = yield call(userApiPut, `${AD_USER_API}/api/v1/user`, state.user.user);
+            yield put({ type: UPDATE_USER_EMAIL_SUCCESS, response });
         } catch (e) {
             if (e instanceof SearchApiError) {
                 yield put({ type: UPDATE_USER_EMAIL_FAILURE, error: e });
@@ -283,6 +324,7 @@ export const userSaga = function* saga() {
     yield takeEvery(FETCH_IS_AUTHENTICATED_SUCCESS, fetchUser);
     yield takeLatest(CREATE_USER, createUser);
     yield takeLatest(UPDATE_USER_EMAIL, updateUserEmail);
+    yield takeLatest(SET_EMAIL_FROM_SAVED_SEARCH, setEmailFromSavedSearch);
     yield takeLatest(DELETE_USER, deleteUser);
     yield takeLatest(VALIDATE_USER_EMAIL, validateEMail);
 };

@@ -28,7 +28,7 @@ class SavedSearches extends React.Component {
                     title={`Lagrede søk ${!this.props.isFetching && this.props.totalElements > 0 ? `(${this.props.totalElements})` : ''}`}
                 />
                 <Container className="SavedSearches__main">
-                    {this.props.isAuthenticated === false ? (
+                    {this.props.isAuthenticated === false && (
                         <div className="UserSettings__main">
                             <div className="UserSettings__section">
                                 <Row>
@@ -38,7 +38,8 @@ class SavedSearches extends React.Component {
                                 </Row>
                             </div>
                         </div>
-                    ) : (
+                    )}
+                    {this.props.isAuthenticated === true && (
                         <div>
                             {!this.props.user && (
                                 <div className="UserSettings__main">

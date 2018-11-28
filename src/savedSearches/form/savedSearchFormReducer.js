@@ -17,6 +17,7 @@ import { SHOW_TERMS_OF_USE_MODAL, HIDE_TERMS_OF_USE_MODAL, CREATE_USER_SUCCESS }
 export const SHOW_SAVED_SEARCH_FORM = 'SHOW_SAVED_SEARCH_FORM';
 export const SHOW_SAVED_SEARCH_FORM_SUCCESS = 'SHOW_SAVED_SEARCH_FORM_SUCCESS';
 export const HIDE_SAVED_SEARCH_FORM = 'HIDE_SAVED_SEARCH_FORM';
+export const SET_SHOW_REGISTER_EMAIL = 'SET_SHOW_REGISTER_EMAIL';
 export const SET_SAVED_SEARCH_FORM_MODE = 'SET_SAVED_SEARCH_FORM_MODE';
 export const SET_FORM_DATA = 'SET_FORM_DATA';
 export const SET_SAVED_SEARCH_TITLE = 'SET_SAVED_SEARCH_TITLE';
@@ -25,6 +26,8 @@ export const SET_SAVED_SEARCH_DURATION = 'SET_SAVED_SEARCH_DURATION';
 export const SET_SAVED_SEARCH_QUERY = 'SET_SAVED_SEARCH_QUERY';
 export const SET_ERROR = 'SET_ERROR';
 export const REMOVE_ERROR = 'REMOVE_ERROR';
+export const VALIDATE_EMAIL = 'VALIDATE_EMAIL';
+export const SET_EMAIL_INPUT_VALUE = 'SET_EMAIL_INPUT_VALUE';
 
 export const SavedSearchFormMode = {
     ADD: 'ADD',
@@ -37,7 +40,9 @@ const initialState = {
     formMode: SavedSearchFormMode.ADD,
     formData: undefined,
     validation: {},
-    showAddOrReplace: false
+    showAddOrReplace: false,
+    showRegisterEmail: false,
+    emailInputValue: undefined
 };
 
 export default function savedSearchFormReducer(state = initialState, action) {
@@ -47,7 +52,19 @@ export default function savedSearchFormReducer(state = initialState, action) {
                 ...state,
                 showAddOrReplace: action.showAddOrReplace,
                 showSavedSearchForm: true,
-                formMode: action.formMode
+                formMode: action.formMode,
+                showRegisterEmail: false,
+                emailInputValue: undefined
+            };
+        case SET_SHOW_REGISTER_EMAIL:
+            return {
+                ...state,
+                showRegisterEmail: action.showRegisterEmail
+            };
+        case SET_EMAIL_INPUT_VALUE:
+            return {
+                ...state,
+                emailInputValue: action.email
             };
         case HIDE_SAVED_SEARCH_FORM:
         case UPDATE_SAVED_SEARCH_SUCCESS:
@@ -142,8 +159,32 @@ function* validateTitle() {
     }
 }
 
+function* validateEmail() {
+    const { emailInputValue, showRegisterEmail } = yield select((state) => state.savedSearchForm);
+    const invalid = emailInputValue && (emailInputValue.length > 0) && (emailInputValue.indexOf('@') === -1);
+    const empty = emailInputValue === undefined || emailInputValue === null || emailInputValue.trim().length === 0;
+
+    if (invalid && showRegisterEmail) {
+        yield put({
+            type: SET_ERROR,
+            field: 'email',
+            message: 'E-postadressen er ugyldig. Den må minimum inneholde en «@»'
+        });
+    } else if (empty && showRegisterEmail) {
+        yield put({
+            type: SET_ERROR,
+            field: 'email',
+            message: 'Du må skrive inn e-postadresse for å kunne få varsler på e-post'
+        });
+    } else {
+        yield put({ type: REMOVE_ERROR, field: 'email' });
+    }
+}
+
+
 export function* validateAll() {
     yield validateTitle();
+    yield validateEmail();
 }
 
 function toTitle(state) {
@@ -181,6 +222,11 @@ function toTitle(state) {
 
 function* setDefaultFormData(action) {
     const state = yield select();
+    if (action.formData && action.formData.notifyType === NotifyTypeEnum.EMAIL) {
+        const { email } = state.user.user;
+        const emailNotSet = email === undefined || email === null || email.trim().length === 0;
+        yield put({ type: SET_SHOW_REGISTER_EMAIL, showRegisterEmail: emailNotSet });
+    }
     if (action.formMode === SavedSearchFormMode.ADD) {
         yield put({
             type: SET_FORM_DATA,
@@ -230,7 +276,8 @@ function* showSavedSearchForm(action) {
 }
 
 export const savedSearchFormSaga = function* saga() {
-    yield takeLatest([SET_SAVED_SEARCH_TITLE, SET_FORM_DATA], validateAll);
+    yield takeLatest([SET_SAVED_SEARCH_TITLE, SET_FORM_DATA], validateTitle);
+    yield takeLatest(VALIDATE_EMAIL, validateEmail);
     yield takeLatest(SHOW_SAVED_SEARCH_FORM, showSavedSearchForm);
     yield takeLatest(SET_SAVED_SEARCH_FORM_MODE, setDefaultFormData);
 };

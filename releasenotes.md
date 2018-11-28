@@ -1,3 +1,7 @@
+## RELEASE - 0.51.414-343fc58
+#### New in this release: 
++ 2018-11-27 [PAM-2149] Endre tekst i samtykke-modalen
++ 2018-11-23 [PAM-2144] Legg til ny samtykketekst
 ## RELEASE - 0.50.411-74f6ece
 #### New in this release: 
 + 2018-11-22 [Fix] Rename Min side til Innstillinger

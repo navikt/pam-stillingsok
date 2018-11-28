@@ -7,7 +7,10 @@ import NotifyTypeEnum from '../enums/NotifyTypeEnum';
 import {
     SET_SAVED_SEARCH_DURATION,
     SET_SAVED_SEARCH_NOTIFY_TYPE,
-    SET_SAVED_SEARCH_TITLE
+    SET_SAVED_SEARCH_TITLE,
+    SET_SHOW_REGISTER_EMAIL,
+    VALIDATE_EMAIL,
+    SET_EMAIL_INPUT_VALUE
 } from './savedSearchFormReducer';
 import './SavedSearchForm.less';
 
@@ -15,17 +18,29 @@ class AddOrReplaceForm extends React.Component {
     constructor(props) {
         super(props);
         this.titleRef = null;
+        this.emailRef = null;
     }
 
     onTitleChange = (e) => {
         this.props.setTitle(e.target.value);
     };
 
+    onEmailChange = (e) => {
+        this.props.setEmailInputValue(e.target.value);
+    };
+
+    onEmailBlur = () => {
+        this.props.validateEmail();
+    };
+
     onSubscribeChange = (e) => {
         if (e.target.checked) {
             this.props.setNotifyType(NotifyTypeEnum.EMAIL);
+            const emailNotSet = this.emailNotSet();
+            this.props.setShowRegisterEmail(emailNotSet);
         } else {
             this.props.setNotifyType(NotifyTypeEnum.NONE);
+            this.props.setShowRegisterEmail(false);
         }
     };
 
@@ -37,10 +52,22 @@ class AddOrReplaceForm extends React.Component {
         this.titleRef = element;
     };
 
-    setFocusTitle = () => {
+    setEmailRef = (element) => {
+        this.emailRef = element;
+    };
+
+    setFocusOnError = () => {
         if(this.props.validation.title && this.titleRef){
             this.titleRef.focus();
+        } else if(this.props.validation.email && this.emailRef){
+            this.emailRef.focus();
         }
+    };
+
+    emailNotSet = () => {
+        return (this.props.user.email === undefined ||
+            this.props.user.email === null ||
+            this.props.user.email.trim().length === 0);
     };
 
     render() {
@@ -94,14 +121,24 @@ class AddOrReplaceForm extends React.Component {
                                 />
                             </Fieldset>
                         </SkjemaGruppe>
-                        {(this.props.user.email === undefined ||
-                            this.props.user.email === null ||
-                            this.props.user.email.trim().length === 0) && (
-                                <AlertStripe type="info" solid>
-                                    <b>Du har ikke registrert e-postadresse.</b> For å motta varsler på e-post må du
-                                    registrere din e-postadresse på Innstillinger.
-                                </AlertStripe>
-                            )}
+                        {this.emailNotSet() && (
+                            <AlertStripe className="blokk-s" type="info" solid>
+                                <b>Du har ikke registrert e-postadresse</b> <br />
+                                For å motta varsler på e-post må du registrere e-postadressen din.
+                            </AlertStripe>
+                        )}
+                        {this.emailNotSet() && (
+                            <Input
+                                label="Skriv inn e-postadressen din"
+                                value={this.props.emailInputValue || ''}
+                                onChange={this.onEmailChange}
+                                onBlur={this.onEmailBlur}
+                                inputRef={this.setEmailRef}
+                                feil={validation.email ? {
+                                    feilmelding: validation.email
+                                } : undefined}
+                            />
+                        )}
                     </div>
                 )}
             </div>
@@ -121,24 +158,33 @@ AddOrReplaceForm.propTypes = {
     setTitle: PropTypes.func.isRequired,
     setNotifyType: PropTypes.func.isRequired,
     setDuration: PropTypes.func.isRequired,
+    setEmailInputValue: PropTypes.func.isRequired,
+    validateEmail: PropTypes.func.isRequired,
+    setShowRegisterEmail: PropTypes.func.isRequired,
     formData: PropTypes.shape({
         title: PropTypes.string
     }),
     validation: PropTypes.shape({
-        title: PropTypes.string
+        title: PropTypes.string,
+        email: PropTypes.string
     }).isRequired
 };
 
 const mapStateToProps = (state) => ({
     user: state.user.user,
     formData: state.savedSearchForm.formData,
-    validation: state.savedSearchForm.validation
+    validation: state.savedSearchForm.validation,
+    showRegisterEmail: state.savedSearchForm.showRegisterEmail,
+    emailInputValue: state.savedSearchForm.emailInputValue
 });
 
 const mapDispatchToProps = (dispatch) => ({
     setTitle: (title) => dispatch({ type: SET_SAVED_SEARCH_TITLE, title }),
     setNotifyType: (notifyType) => dispatch({ type: SET_SAVED_SEARCH_NOTIFY_TYPE, notifyType }),
-    setDuration: (duration) => dispatch({ type: SET_SAVED_SEARCH_DURATION, duration })
+    setDuration: (duration) => dispatch({ type: SET_SAVED_SEARCH_DURATION, duration }),
+    setEmailInputValue: (email) => dispatch({ type: SET_EMAIL_INPUT_VALUE, email }),
+    validateEmail: () => dispatch({ type: VALIDATE_EMAIL }),
+    setShowRegisterEmail: (showRegisterEmail) => dispatch({ type: SET_SHOW_REGISTER_EMAIL, showRegisterEmail })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps, null, { withRef: true })(AddOrReplaceForm);
