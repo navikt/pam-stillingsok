@@ -91,17 +91,21 @@ const startServer = (htmlPages) => {
     );
 
     server.get('/api/search', async (req, res) => {
-        const result = await searchApiConsumer.search(req.query)
-            .catch((err) => console.warn('Failed to query search api', err));
-
-        res.send(result);
+        await searchApiConsumer.search(req.query)
+            .catch((err) => {
+                console.warn('Failed to query search api', err);
+                res.status(500).send();
+            })
+            .then((result) => { res.send(result); });
     });
 
     server.post('/api/search', async (req, res) => {
-        const result = await searchApiConsumer.search(req.body)
-            .catch((err) => { console.warn('Failed to query search api', err); });
-
-        res.send(result);
+        await searchApiConsumer.search(req.body)
+            .catch((err) => {
+                console.warn('Failed to query search api', err);
+                res.status(500).send();
+            })
+            .then((result) => { res.send(result); });
     });
 
     server.get('/api/suggestions', async (req, res) => {
