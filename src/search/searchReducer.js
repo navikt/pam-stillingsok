@@ -81,6 +81,11 @@ export default function searchReducer(state = initialState, action) {
                     stillinger: action.response.stillinger
                 }
             };
+        case SEARCH_FAILURE:
+            return {
+                ...state,
+                isSearching: false
+            };
         case LOAD_MORE:
             return {
                 ...state,
