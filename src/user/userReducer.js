@@ -1,15 +1,9 @@
 import { select, put, call, takeEvery, takeLatest } from 'redux-saga/effects';
 import SearchApiError from '../api/SearchApiError';
 import { userApiGet, userApiPost, userApiRemove, userApiPut } from '../api/userApi';
+import { FETCH_IS_AUTHENTICATED_SUCCESS } from '../authentication/authenticationReducer';
 import { AD_USER_API } from '../fasitProperties';
 import delay from '../common/delay';
-
-export const FETCH_IS_AUTHENTICATED = 'FETCH_IS_AUTHENTICATED';
-export const FETCH_IS_AUTHENTICATED_SUCCESS = 'FETCH_IS_AUTHENTICATED_SUCCESS';
-export const FETCH_IS_AUTHENTICATED_FAILURE = 'FETCH_IS_AUTHENTICATED_FAILURE';
-
-export const SHOW_AUTHORIZATION_ERROR_MODAL = 'SHOW_AUTHORIZATION_ERROR_MODAL';
-export const HIDE_AUTHORIZATION_ERROR_MODAL = 'HIDE_AUTHORIZATION_ERROR_MODAL';
 
 export const SHOW_TERMS_OF_USE_MODAL = 'SHOW_TERMS_OF_USE_MODAL';
 export const HIDE_TERMS_OF_USE_MODAL = 'HIDE_TERMS_OF_USE_MODAL';
@@ -52,8 +46,6 @@ export const SET_EMAIL_FROM_SAVED_SEARCH = 'SET_EMAIL_FROM_SAVED_SEARCH';
 const TERMS_VERSION = 'sok_v1';
 
 const initialState = {
-    isAuthenticated: undefined,
-    authorizationError: undefined,
     user: undefined,
     isCreating: false,
     isUpdating: false,
@@ -69,16 +61,6 @@ const initialState = {
 
 export default function authorizationReducer(state = initialState, action) {
     switch (action.type) {
-        case FETCH_IS_AUTHENTICATED_SUCCESS:
-            return {
-                ...state,
-                isAuthenticated: action.isAuthenticated
-            };
-        case FETCH_IS_AUTHENTICATED_FAILURE:
-            return {
-                ...state,
-                isAuthenticated: undefined
-            };
         case FETCH_USER_SUCCESS:
             return {
                 ...state,
@@ -157,16 +139,6 @@ export default function authorizationReducer(state = initialState, action) {
                 ...state,
                 termsOfUseModalIsVisible: false
             };
-        case SHOW_AUTHORIZATION_ERROR_MODAL:
-            return {
-                ...state,
-                authorizationError: action.text
-            };
-        case HIDE_AUTHORIZATION_ERROR_MODAL:
-            return {
-                ...state,
-                authorizationError: undefined
-            };
         case SHOW_CONFIRM_DELETE_USER_MODAL:
             return {
                 ...state,
@@ -230,25 +202,9 @@ const fixUser = function fixUser(user) {
     return user;
 };
 
-function* fetchIsAuthenticated() {
-    try {
-        const response = yield fetch(`${AD_USER_API}/isAuthenticated`, { credentials: 'include' });
-        if (response.status === 200) {
-            yield put({ type: FETCH_IS_AUTHENTICATED_SUCCESS, isAuthenticated: true });
-        } else if (response.status === 401) {
-            yield put({ type: FETCH_IS_AUTHENTICATED_SUCCESS, isAuthenticated: false });
-        } else {
-            yield put({ type: FETCH_IS_AUTHENTICATED_FAILURE });
-        }
-    } catch (error) {
-        yield put({ type: FETCH_IS_AUTHENTICATED_FAILURE });
-        throw error;
-    }
-}
-
 function* fetchUser() {
     const state = yield select();
-    if (state.user.isAuthenticated) {
+    if (state.authentication.isAuthenticated) {
         yield put({ type: FETCH_USER_BEGIN });
         try {
             const response = yield call(userApiGet, `${AD_USER_API}/api/v1/user`);
@@ -365,7 +321,6 @@ function* validateEMail() {
 }
 
 export const userSaga = function* saga() {
-    yield takeEvery(FETCH_IS_AUTHENTICATED, fetchIsAuthenticated);
     yield takeEvery(FETCH_IS_AUTHENTICATED_SUCCESS, fetchUser);
     yield takeLatest(CREATE_USER, createUser);
     yield takeLatest(UPDATE_USER_EMAIL, updateUserEmail);

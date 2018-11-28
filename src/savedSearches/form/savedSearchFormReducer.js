@@ -1,4 +1,6 @@
-import { put, select, takeLatest } from 'redux-saga/es/effects';
+import { put, select, take, takeLatest } from 'redux-saga/es/effects';
+import { requiresAuthentication } from '../../authentication/authenticationReducer';
+import AuthenticationCaller from '../../authentication/AuthenticationCaller';
 import capitalizeLocation from '../../common/capitalizeLocation';
 import { toQueryString } from '../../search/url';
 import NotifyTypeEnum from '../enums/NotifyTypeEnum';
@@ -10,8 +12,10 @@ import {
     UPDATE_SAVED_SEARCH_FAILURE,
     UPDATE_SAVED_SEARCH_SUCCESS
 } from '../savedSearchesReducer';
+import { SHOW_TERMS_OF_USE_MODAL, HIDE_TERMS_OF_USE_MODAL, CREATE_USER_SUCCESS } from '../../user/userReducer';
 
 export const SHOW_SAVED_SEARCH_FORM = 'SHOW_SAVED_SEARCH_FORM';
+export const SHOW_SAVED_SEARCH_FORM_SUCCESS = 'SHOW_SAVED_SEARCH_FORM_SUCCESS';
 export const HIDE_SAVED_SEARCH_FORM = 'HIDE_SAVED_SEARCH_FORM';
 export const SET_SHOW_REGISTER_EMAIL = 'SET_SHOW_REGISTER_EMAIL';
 export const SET_SAVED_SEARCH_FORM_MODE = 'SET_SAVED_SEARCH_FORM_MODE';
@@ -43,7 +47,7 @@ const initialState = {
 
 export default function savedSearchFormReducer(state = initialState, action) {
     switch (action.type) {
-        case SHOW_SAVED_SEARCH_FORM:
+        case SHOW_SAVED_SEARCH_FORM_SUCCESS:
             return {
                 ...state,
                 showAddOrReplace: action.showAddOrReplace,
@@ -247,12 +251,33 @@ function* setDefaultFormData(action) {
             }
         });
     }
+
+    // TODO: trenger vi denne?
     yield validateAll();
+}
+
+function* showSavedSearchForm(action) {
+    if (yield requiresAuthentication(AuthenticationCaller.SAVE_SEARCH)) {
+        let state = yield select();
+        if (!state.user.user) {
+            yield put({ type: SHOW_TERMS_OF_USE_MODAL });
+            yield take([HIDE_TERMS_OF_USE_MODAL, CREATE_USER_SUCCESS]);
+        }
+        state = yield select();
+        if (state.user.user) {
+            yield setDefaultFormData(action);
+            yield put({
+                type: SHOW_SAVED_SEARCH_FORM_SUCCESS,
+                formMode: action.formMode,
+                showAddOrReplace: action.showAddOrReplace
+            });
+        }
+    }
 }
 
 export const savedSearchFormSaga = function* saga() {
     yield takeLatest([SET_SAVED_SEARCH_TITLE, SET_FORM_DATA], validateTitle);
     yield takeLatest(VALIDATE_EMAIL, validateEmail);
-    yield takeLatest(SHOW_SAVED_SEARCH_FORM, setDefaultFormData);
+    yield takeLatest(SHOW_SAVED_SEARCH_FORM, showSavedSearchForm);
     yield takeLatest(SET_SAVED_SEARCH_FORM_MODE, setDefaultFormData);
 };
