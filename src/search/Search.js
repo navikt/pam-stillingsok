@@ -4,10 +4,7 @@ import { Sidetittel } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { CONTEXT_PATH } from '../fasitProperties';
 import FavouriteAlertStripe from '../favourites/alertstripe/FavouriteAlertStripe';
-import ShowFavouriteListLink from '../favourites/ShowFavouriteListLink';
 import featureToggle from '../featureToggle';
 import SavedSearchAlertStripe from '../savedSearches/alertstripe/SavedSearchAlertStripe';
 import CurrentSavedSearch from '../savedSearches/CurrentSavedSearch';
@@ -68,11 +65,7 @@ class Search extends React.Component {
                             <Column xs="12" lg="4">
                                 {featureToggle() && this.props.isAuthenticated !== false && this.props.user ?
                                     <div className="Search__header__left">
-                                        <ShowFavouriteListLink />
                                         <ExpandSavedSearchButton />
-                                        <Link to={`${CONTEXT_PATH}/innstillinger`} className="Search__innstillinger-lenke lenke typo-element">
-                                            Innstillinger
-                                        </Link>
                                     </div> : null
                                 }
                             </Column>
