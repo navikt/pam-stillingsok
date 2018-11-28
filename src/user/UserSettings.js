@@ -54,7 +54,7 @@ class UserSettings extends React.Component {
                     title={PAGE_TITLE}
                 />
                 <Container>
-                    {this.props.isAuthenticated === false ? (
+                    {this.props.isAuthenticated === false && (
                         <div className="UserSettings__main">
                             <div className="UserSettings__section">
                                 <Row>
@@ -64,7 +64,8 @@ class UserSettings extends React.Component {
                                 </Row>
                             </div>
                         </div>
-                    ) : (
+                    )}
+                    {this.props.isAuthenticated === true && (
                         <div>
                             {!this.props.user && (
                                 <div className="UserSettings__main">
