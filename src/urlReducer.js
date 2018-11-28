@@ -65,7 +65,6 @@ export const urlSaga = function* saga() {
         SET_CURRENT_SAVED_SEARCH,
         ADD_SAVED_SEARCH_SUCCESS,
         SET_VIEW_MODE,
-        SET_VALUE,
         LOAD_MORE
     ], updateUrl);
     yield takeLatest(RESTORE_STATE_FROM_URL_BEGIN, restoreStateFromUrl);
