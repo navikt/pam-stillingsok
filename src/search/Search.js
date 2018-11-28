@@ -171,7 +171,7 @@ const mapStateToProps = (state) => ({
     isFetchingFavourites: state.favourites.isFetchingFavourites,
     savedSearches: state.savedSearches.savedSearches,
     isSavedSearchesExpanded: state.savedSearchExpand.isSavedSearchesExpanded,
-    isAuthenticated: state.user.isAuthenticated,
+    isAuthenticated: state.authentication.isAuthenticated,
     user: state.user.user
 });
 

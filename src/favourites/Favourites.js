@@ -4,7 +4,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PageHeader from '../common/pageHeader/PageHeader';
 import DelayedSpinner from '../search/loading/DelayedSpinner';
-import NotAuthenticated from '../user/NotAuthenticated';
+import NotAuthenticated from '../authentication/NotAuthenticated';
 import NoUser from '../user/NoUser';
 import FavouriteAlertStripe from './alertstripe/FavouriteAlertStripe';
 import './Favourites.less';
@@ -97,7 +97,7 @@ Favourites.propTypes = {
 
 const mapStateToProps = (state) => ({
     user: state.user.user,
-    isAuthenticated: state.user.isAuthenticated,
+    isAuthenticated: state.authentication.isAuthenticated,
     favourites: state.favourites.favourites,
     totalElements: state.favourites.totalElements,
     isFetchingFavourites: state.favourites.isFetchingFavourites
