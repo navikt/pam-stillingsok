@@ -16,7 +16,7 @@ import ExpandSavedSearchButton from '../savedSearches/ExpandSavedSearchButton';
 import SavedSearchForm from '../savedSearches/form/SavedSearchForm';
 import SaveSearchButton from '../savedSearches/SaveSearchButton';
 import { RESTORE_STATE_FROM_URL_BEGIN } from '../urlReducer';
-import BackToTop from './backToTopButton/BackToTop';
+import ShowResultsButton from './showResultsButton/ShowResultsButton';
 import Counties from './facets/counties/Counties';
 import EngagementType from './facets/engagement/Engagement';
 import Extent from './facets/extent/Extent';
@@ -84,6 +84,7 @@ class Search extends React.Component {
                         <SavedSearchesExpand />
                     </div>
                 )}
+                <ShowResultsButton />
                 <Container className="Search__main">
 
                     {!this.props.initialSearchDone && (
@@ -136,10 +137,12 @@ class Search extends React.Component {
                                                 </div>
                                             </div>
                                             <SearchResults />
+                                            <div className="Search__main__tiltoppen">
+                                                <a href="#top" className="lenke typo-normal">Til toppen</a>
+                                            </div>
                                         </div>
                                     </Column>
                                 </Row>
-                                <BackToTop />
                             </div>
                         </RestoreScroll>
                     )}
