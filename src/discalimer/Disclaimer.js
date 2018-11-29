@@ -6,6 +6,8 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { HIDE_DISCLAIMER } from './disclaimerReducer';
 import './Disclaimer.less';
 
+const HOTJAR_URL = 'https://surveys.hotjar.com/s?siteId=118350&surveyId=124493';
+
 function Disclaimer({ shouldShow, hideDisclaimer }) {
     if (shouldShow) {
         return (
@@ -14,7 +16,7 @@ function Disclaimer({ shouldShow, hideDisclaimer }) {
                     <div role="alert" className="Disclaimer typo-normal">
                         <Element className="blokk-xxs">Stillingssøket har blitt fornyet</Element>
                         <Normaltekst className="blokk-xxs">
-                            <a href="https://surveys.hotjar.com/s?siteId=148751&surveyId=123859" className="lenke">
+                            <a href={HOTJAR_URL} className="lenke">
                                 Gi oss din tilbakemelding på det nye stillingssøket
                             </a>
                         </Normaltekst>
@@ -34,7 +36,7 @@ function Disclaimer({ shouldShow, hideDisclaimer }) {
                 <div className="container">
                     <div role="alert" className="Feedback typo-normal">
                         <Normaltekst className="blokk-xxs">
-                            <a href="https://surveys.hotjar.com/s?siteId=148751&surveyId=123859" className="lenke">
+                            <a href={HOTJAR_URL} className="lenke">
                                 Gi oss din tilbakemelding på det nye stillingssøket
                             </a>
                         </Normaltekst>
