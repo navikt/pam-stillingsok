@@ -18,7 +18,7 @@ class TopMenu extends React.Component {
     render() {
         return (
             <div>
-                {featureToggle() ? (
+                {featureToggle() && this.props.isAuthenticated !== undefined ? (
                     <PersonbrukerHeaderMeny
                         onLoggUt={this.onLogoutClick}
                         onLoggInn={this.onLoginClick}
@@ -35,7 +35,7 @@ class TopMenu extends React.Component {
 }
 
 TopMenu.defaultProps = {
-    isAuthenticated: false
+    isAuthenticated: undefined
 };
 
 TopMenu.propTypes = {

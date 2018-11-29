@@ -29,7 +29,7 @@ module.exports = {
         rules: [
             {
                 test: /\.js$/,
-                exclude: [/node_modules/, "/home/tony/dev/pam-frontend-moduler/pam-frontend-header"],
+                exclude: /node_modules/,
                 use: {
                     loader: 'babel-loader',
                     options: {
