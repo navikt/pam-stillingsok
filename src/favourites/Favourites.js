@@ -4,7 +4,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PageHeader from '../common/pageHeader/PageHeader';
 import DelayedSpinner from '../search/loading/DelayedSpinner';
-import NotAuthenticated from '../user/NotAuthenticated';
+import NotAuthenticated from '../authentication/NotAuthenticated';
 import NoUser from '../user/NoUser';
 import FavouriteAlertStripe from './alertstripe/FavouriteAlertStripe';
 import './Favourites.less';
@@ -27,7 +27,7 @@ class Favourites extends React.Component {
                     title={`Favoritter ${!this.props.isFetchingFavourites && this.props.totalElements > 0 ? `(${this.props.totalElements})` : ''}`}
                 />
                 <Container className="Favourites__main">
-                    {this.props.isAuthenticated === false ? (
+                    {this.props.isAuthenticated === false && (
                         <div className="UserSettings__main">
                             <div className="UserSettings__section">
                                 <Row>
@@ -37,7 +37,8 @@ class Favourites extends React.Component {
                                 </Row>
                             </div>
                         </div>
-                    ) : (
+                    )}
+                    {this.props.isAuthenticated === true && (
                         <div>
                             {!this.props.user && (
                                 <div className="UserSettings__main">
@@ -96,7 +97,7 @@ Favourites.propTypes = {
 
 const mapStateToProps = (state) => ({
     user: state.user.user,
-    isAuthenticated: state.user.isAuthenticated,
+    isAuthenticated: state.authentication.isAuthenticated,
     favourites: state.favourites.favourites,
     totalElements: state.favourites.totalElements,
     isFetchingFavourites: state.favourites.isFetchingFavourites

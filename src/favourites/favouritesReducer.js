@@ -1,8 +1,15 @@
 /* eslint-disable no-underscore-dangle */
-import { call, put, select, takeLatest } from 'redux-saga/effects';
+import { call, put, select, take, takeLatest } from 'redux-saga/effects';
 import { userApiGet, userApiPost, userApiRemove } from '../api/userApi';
 import SearchApiError from '../api/SearchApiError';
-import { FETCH_USER_SUCCESS, SHOW_AUTHORIZATION_ERROR_MODAL } from '../user/userReducer';
+import AuthenticationCaller from '../authentication/AuthenticationCaller';
+import { requiresAuthentication } from '../authentication/authenticationReducer';
+import {
+    FETCH_USER_SUCCESS,
+    CREATE_USER_SUCCESS,
+    SHOW_TERMS_OF_USE_MODAL,
+    HIDE_TERMS_OF_USE_MODAL
+} from '../user/userReducer';
 import { AD_USER_API } from '../fasitProperties';
 
 export const FETCH_FAVOURITES = 'FETCH_FAVOURITES';
@@ -170,30 +177,39 @@ function* fetchFavourites() {
 }
 
 function* addToFavourites(action) {
-    const state = yield select();
-    let favourite;
-    const foundInSearchResult = state.search.searchResult && state.search.searchResult.stillinger &&
-        state.search.searchResult.stillinger.find((s) => s.uuid === action.uuid);
+    if (yield requiresAuthentication(AuthenticationCaller.ADD_FAVORITE)) {
+        let state = yield select();
+        if (!state.user.user) {
+            yield put({type: SHOW_TERMS_OF_USE_MODAL});
+            yield take([HIDE_TERMS_OF_USE_MODAL, CREATE_USER_SUCCESS]);
+        }
+        state = yield select();
+        if (state.user.user) {
+            let favourite;
+            const foundInSearchResult = state.search.searchResult && state.search.searchResult.stillinger &&
+                state.search.searchResult.stillinger.find((s) => s.uuid === action.uuid);
 
-    if (foundInSearchResult) {
-        favourite = toFavourite(foundInSearchResult.uuid, foundInSearchResult);
-    } else if (state.stilling.stilling._id === action.uuid) {
-        favourite = toFavourite(state.stilling.stilling._id, state.stilling.stilling._source);
-    } else {
-        return;
-    }
-    try {
-        yield put({ type: ADD_TO_FAVOURITES_BEGIN, favourite });
-        const response = yield call(userApiPost, `${AD_USER_API}/api/v1/userfavouriteads`, favourite);
-        yield put({ type: ADD_TO_FAVOURITES_SUCCESS, response });
-        yield put({ type: SHOW_FAVOURITES_ALERT_STRIPE, alertStripeMode: 'added' });
-        yield call(delay, 5000);
-        yield put({ type: HIDE_FAVOURITES_ALERT_STRIPE });
-    } catch (e) {
-        if (e instanceof SearchApiError) {
-            yield put({ type: ADD_TO_FAVOURITES_FAILURE, error: e, uuid: favourite.favouriteAd.uuid });
-        } else {
-            throw e;
+            if (foundInSearchResult) {
+                favourite = toFavourite(foundInSearchResult.uuid, foundInSearchResult);
+            } else if (state.stilling.stilling._id === action.uuid) {
+                favourite = toFavourite(state.stilling.stilling._id, state.stilling.stilling._source);
+            } else {
+                return;
+            }
+            try {
+                yield put({ type: ADD_TO_FAVOURITES_BEGIN, favourite });
+                const response = yield call(userApiPost, `${AD_USER_API}/api/v1/userfavouriteads`, favourite);
+                yield put({ type: ADD_TO_FAVOURITES_SUCCESS, response });
+                yield put({ type: SHOW_FAVOURITES_ALERT_STRIPE, alertStripeMode: 'added' });
+                yield call(delay, 5000);
+                yield put({ type: HIDE_FAVOURITES_ALERT_STRIPE });
+            } catch (e) {
+                if (e instanceof SearchApiError) {
+                    yield put({ type: ADD_TO_FAVOURITES_FAILURE, error: e, uuid: favourite.favouriteAd.uuid });
+                } else {
+                    throw e;
+                }
+            }
         }
     }
 }

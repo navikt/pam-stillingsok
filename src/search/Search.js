@@ -86,7 +86,7 @@ class Search extends React.Component {
                 )}
                 <Container className="Search__main">
 
-                    {!this.props.initialSearchDone && (
+                    {this.props.isSearching && !this.props.initialSearchDone && (
                         <div className="Search__spinner">
                             <DelayedSpinner />
                         </div>
@@ -162,16 +162,18 @@ Search.propTypes = {
     resetSearch: PropTypes.func.isRequired,
     isSavedSearchesExpanded: PropTypes.bool.isRequired,
     initialSearchDone: PropTypes.bool.isRequired,
+    isSearching: PropTypes.bool.isRequired,
     isAuthenticated: PropTypes.bool,
     user: PropTypes.shape({})
 };
 
 const mapStateToProps = (state) => ({
     initialSearchDone: state.search.initialSearchDone,
+    isSearching: state.search.isSearching,
     isFetchingFavourites: state.favourites.isFetchingFavourites,
     savedSearches: state.savedSearches.savedSearches,
     isSavedSearchesExpanded: state.savedSearchExpand.isSavedSearchesExpanded,
-    isAuthenticated: state.user.isAuthenticated,
+    isAuthenticated: state.authentication.isAuthenticated,
     user: state.user.user
 });
 
