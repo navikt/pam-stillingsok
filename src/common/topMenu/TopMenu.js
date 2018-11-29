@@ -35,7 +35,7 @@ class TopMenu extends React.Component {
 }
 
 TopMenu.defaultProps = {
-    isAuthenticated: undefined
+    isAuthenticated: false
 };
 
 TopMenu.propTypes = {
