@@ -16,19 +16,19 @@ class NoUser extends React.Component {
         return (
             <div className="NoUser">
                 <Undertittel className="NoUser__title">
-                    Du har ikke tatt i bruk innloggede tjenester
+                    Du har ikke samtykket til å bruke tjenesten
                 </Undertittel>
                 <Normaltekst className="NoUser__text">
-                    For å kunne lagre søk og favoritter, må du opprette en bruker.
+                    Du må samtykke for å kunne lagre søk og favoritter.
                 </Normaltekst>
                 <Hovedknapp
                     className="NoUser__button"
                     onClick={this.onCreateUserClick}
                 >
-                    Ny bruker
+                    Se samtykke
                 </Hovedknapp>
                 <Link to="/" className="lenke typo-normal">
-                    Forsett uten bruker
+                    Fortsett uten å samtykke
                 </Link>
             </div>
         );

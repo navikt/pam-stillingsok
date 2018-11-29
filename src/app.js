@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { applyMiddleware, combineReducers, createStore } from 'redux';
 import createSagaMiddleware from 'redux-saga';
+import authenticationReducer, { authenticationSaga } from './authentication/authenticationReducer';
 import errorReducer from './error/errorReducer';
 import Application from './Application';
 import userReducer, { userSaga } from './user/userReducer';
@@ -30,6 +31,7 @@ import './variables.less';
 const sagaMiddleware = createSagaMiddleware();
 
 const store = createStore(combineReducers({
+    authentication: authenticationReducer,
     error: errorReducer,
     user: userReducer,
     counties: countiesReducer,
@@ -61,6 +63,7 @@ sagaMiddleware.run(savedSearchAlertStripeSaga);
 sagaMiddleware.run(urlSaga);
 sagaMiddleware.run(userSaga);
 sagaMiddleware.run(viewModeSaga);
+sagaMiddleware.run(authenticationSaga);
 
 
 ReactDOM.render(

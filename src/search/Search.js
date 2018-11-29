@@ -8,7 +8,6 @@ import { Link } from 'react-router-dom';
 import { CONTEXT_PATH } from '../fasitProperties';
 import FavouriteAlertStripe from '../favourites/alertstripe/FavouriteAlertStripe';
 import ShowFavouriteListLink from '../favourites/ShowFavouriteListLink';
-import featureToggle from '../featureToggle';
 import SavedSearchAlertStripe from '../savedSearches/alertstripe/SavedSearchAlertStripe';
 import CurrentSavedSearch from '../savedSearches/CurrentSavedSearch';
 import SavedSearchesExpand from '../savedSearches/expand/SavedSearchesExpand';
@@ -66,7 +65,7 @@ class Search extends React.Component {
                                 <Sidetittel className="Search__header__title">Ledige stillinger</Sidetittel>
                             </Column>
                             <Column xs="12" lg="4">
-                                {featureToggle() && this.props.isAuthenticated !== false && this.props.user ?
+                                {this.props.isAuthenticated !== false && this.props.user ?
                                     <div className="Search__header__left">
                                         <ShowFavouriteListLink />
                                         <ExpandSavedSearchButton />
@@ -87,7 +86,7 @@ class Search extends React.Component {
                 <ShowResultsButton />
                 <Container className="Search__main">
 
-                    {!this.props.initialSearchDone && (
+                    {this.props.isSearching && !this.props.initialSearchDone && (
                         <div className="Search__spinner">
                             <DelayedSpinner />
                         </div>
@@ -99,9 +98,7 @@ class Search extends React.Component {
                                     <Column xs="12" md="4">
                                         <div className="Search__main__left">
                                             <div className="Search__main__left__save-search">
-                                                {featureToggle() && (
-                                                    <SaveSearchButton />
-                                                )}
+                                                <SaveSearchButton />
                                                 <Flatknapp mini onClick={this.onResetSearchClick}>
                                                             Nullstill kriterier
                                                 </Flatknapp>
@@ -165,16 +162,18 @@ Search.propTypes = {
     resetSearch: PropTypes.func.isRequired,
     isSavedSearchesExpanded: PropTypes.bool.isRequired,
     initialSearchDone: PropTypes.bool.isRequired,
+    isSearching: PropTypes.bool.isRequired,
     isAuthenticated: PropTypes.bool,
     user: PropTypes.shape({})
 };
 
 const mapStateToProps = (state) => ({
     initialSearchDone: state.search.initialSearchDone,
+    isSearching: state.search.isSearching,
     isFetchingFavourites: state.favourites.isFetchingFavourites,
     savedSearches: state.savedSearches.savedSearches,
     isSavedSearchesExpanded: state.savedSearchExpand.isSavedSearchesExpanded,
-    isAuthenticated: state.user.isAuthenticated,
+    isAuthenticated: state.authentication.isAuthenticated,
     user: state.user.user
 });
 

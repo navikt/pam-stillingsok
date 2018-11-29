@@ -1,3 +1,17 @@
+## RELEASE - 0.53.430-8573cee
+#### New in this release: 
++ 2018-11-29 [PAM-2211] Tekstendringer
+## RELEASE - 0.52.429-f96a60e
+#### New in this release: 
++ 2018-11-29 [PAM-2194] Endre lenke til hotjar etter at feature toggle er skrudd av
++ 2018-11-29 [PAM-2197] Fjern teksten om at vi jobber med lagre søk, at tekniske feil kan oppstå osv.
++ 2018-11-29 [PAM-2212] Vis feilmelding om søk feiler
++ 2018-11-28 [PAM-2182] Gjør besøkte lenker lilla
++ 2018-11-28 [PAM-2179] Fjern pilotbanner
++ 2018-11-27 [PAM-2152] legger til mulighet for å lagre epost når du lagrer et søk med varsling, hvis du ikke har en epost lagret allerede.
++ 2018-11-28 [PAM-2154] Ikke vis dialog om at man må opprette bruker hvis man ikke først er logget inn.
++ 2018-11-28 [Fix] Oppdater url i browser adresselinje først når søk utføres, ikke for hvert tastetrykk man gjør i søkeboksen)
++ 2018-11-28 [PAM-2162]: endret fontstørrelser resultatvisning
 ## RELEASE - 0.51.414-343fc58
 #### New in this release: 
 + 2018-11-27 [PAM-2149] Endre tekst i samtykke-modalen

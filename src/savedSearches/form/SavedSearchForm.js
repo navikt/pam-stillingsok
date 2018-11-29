@@ -12,6 +12,7 @@ import {
     SavedSearchFormMode,
     SET_SAVED_SEARCH_FORM_MODE
 } from './savedSearchFormReducer';
+import { SET_EMAIL_FROM_SAVED_SEARCH } from '../../user/userReducer';
 import AddOrReplaceForm from './AddOrReplaceForm';
 
 class SavedSearchForm extends React.Component {
@@ -25,6 +26,9 @@ class SavedSearchForm extends React.Component {
     };
 
     onSaveClick = () => {
+        if (this.props.showRegisterEmail) {
+            this.props.setEmailFromSavedSearch();
+        }
         if (this.props.formMode === SavedSearchFormMode.ADD) {
             this.props.addSavedSearch();
         } else {
@@ -32,7 +36,7 @@ class SavedSearchForm extends React.Component {
         }
 
         if(this.childForm && this.childForm.current) {
-            this.childForm.current.getWrappedInstance().setFocusTitle();
+            this.childForm.current.getWrappedInstance().setFocusOnError();
         }
     };
 
@@ -94,7 +98,7 @@ class SavedSearchForm extends React.Component {
                         )}
                         <div className="SavedSearchModal__body">
                             {formMode !== SavedSearchFormMode.REPLACE && !showAddOrReplace && (
-                                <AddOrReplaceForm ref={this.childForm}/>
+                                <AddOrReplaceForm ref={this.childForm} />
                             )}
                             {formMode !== SavedSearchFormMode.REPLACE && showAddOrReplace && (
                                 <SkjemaGruppe>
@@ -138,7 +142,9 @@ SavedSearchForm.propTypes = {
     formMode: PropTypes.string.isRequired,
     currentSavedSearch: PropTypes.shape({
         title: PropTypes.string
-    })
+    }),
+    showRegisterEmail: PropTypes.bool.isRequired,
+    setEmailFromSavedSearch: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -146,14 +152,16 @@ const mapStateToProps = (state) => ({
     formMode: state.savedSearchForm.formMode,
     showAddOrReplace: state.savedSearchForm.showAddOrReplace,
     currentSavedSearch: state.savedSearches.currentSavedSearch,
-    isSaving: state.savedSearches.isSaving
+    isSaving: state.savedSearches.isSaving,
+    showRegisterEmail: state.savedSearchForm.showRegisterEmail,
 });
 
 const mapDispatchToProps = (dispatch) => ({
     addSavedSearch: () => dispatch({ type: ADD_SAVED_SEARCH }),
     updateSavedSearch: () => dispatch({ type: UPDATE_SAVED_SEARCH }),
     setFormMode: (formMode) => dispatch({ type: SET_SAVED_SEARCH_FORM_MODE, formMode }),
-    hideForm: () => dispatch({ type: HIDE_SAVED_SEARCH_FORM })
+    hideForm: () => dispatch({ type: HIDE_SAVED_SEARCH_FORM }),
+    setEmailFromSavedSearch: () => dispatch({ type: SET_EMAIL_FROM_SAVED_SEARCH })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SavedSearchForm);

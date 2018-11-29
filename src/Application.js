@@ -7,22 +7,19 @@ import Error from './error/Error';
 import Disclaimer from './discalimer/Disclaimer';
 import { CONTEXT_PATH, LOGIN_URL, LOGOUT_URL } from './fasitProperties';
 import Favourites from './favourites/Favourites';
-import featureToggle from './featureToggle';
 import Invite from './invite/Invite';
 import SavedSearches from './savedSearches/SavedSearches';
 import SearchPage from './search/Search';
 import StillingPage from './stilling/Stilling';
-import NotAuthenticatedModal from './user/NotAuthenticatedModal';
+import NotAuthenticatedModal from './authentication/NotAuthenticatedModal';
 import TermsOfUse from './user/TermsOfUse';
-import { FETCH_IS_AUTHENTICATED } from './user/userReducer';
+import { FETCH_IS_AUTHENTICATED } from './authentication/authenticationReducer';
 import UserSettings from './user/UserSettings';
 import UserAlertStripe from './user/UserAlertStripe';
 
 class Application extends React.Component {
     componentDidMount() {
-        if (featureToggle()) {
-            this.props.fetchIsAuthenticated();
-        }
+        this.props.fetchIsAuthenticated();
     }
 
     render() {
@@ -30,27 +27,25 @@ class Application extends React.Component {
             <BrowserRouter>
                 <div>
                     <Error />
-                    {featureToggle() && (
-                        <div className="AuthButtons no-print">
-                            <Container>
-                                {this.props.isAuthenticated === false ? (
-                                    <a
-                                        className="knapp knapp--mini"
-                                        href={LOGIN_URL}
-                                    >
-                                        Logg inn
-                                    </a>
-                                ) : (
-                                    <a
-                                        className="knapp knapp--mini"
-                                        href={LOGOUT_URL}
-                                    >
-                                        Logg ut
-                                    </a>
-                                )}
-                            </Container>
-                        </div>
-                    )}
+                    <div className="AuthButtons no-print">
+                        <Container>
+                            {this.props.isAuthenticated === false ? (
+                                <a
+                                    className="knapp knapp--mini"
+                                    href={LOGIN_URL}
+                                >
+                                    Logg inn
+                                </a>
+                            ) : (
+                                <a
+                                    className="knapp knapp--mini"
+                                    href={LOGOUT_URL}
+                                >
+                                    Logg ut
+                                </a>
+                            )}
+                        </Container>
+                    </div>
                     <Disclaimer />
                     <Switch>
                         <Route exact path="/" component={SearchPage} />
@@ -66,7 +61,7 @@ class Application extends React.Component {
                         <TermsOfUse />
                     )}
 
-                    {this.props.authorizationError && (
+                    {this.props.authenticationRequiredModalIsVisible && (
                         <NotAuthenticatedModal />
                     )}
                     <UserAlertStripe />
@@ -77,7 +72,6 @@ class Application extends React.Component {
 }
 
 Application.defaultProps = {
-    authorizationError: undefined,
     isAuthenticated: undefined
 };
 
@@ -85,13 +79,13 @@ Application.propTypes = {
     fetchIsAuthenticated: PropTypes.func.isRequired,
     isAuthenticated: PropTypes.bool,
     termsOfUseModalIsVisible: PropTypes.bool.isRequired,
-    authorizationError: PropTypes.string
+    authenticationRequiredModalIsVisible: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => ({
-    isAuthenticated: state.user.isAuthenticated,
+    isAuthenticated: state.authentication.isAuthenticated,
     termsOfUseModalIsVisible: state.user.termsOfUseModalIsVisible,
-    authorizationError: state.user.authorizationError
+    authenticationRequiredModalIsVisible: state.authentication.authenticationRequiredModalIsVisible
 });
 
 const mapDispatchToProps = (dispatch) => ({
