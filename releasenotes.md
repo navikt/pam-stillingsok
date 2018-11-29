@@ -1,3 +1,6 @@
+## RELEASE - 0.53.430-8573cee
+#### New in this release: 
++ 2018-11-29 [PAM-2211] Tekstendringer
 ## RELEASE - 0.52.429-f96a60e
 #### New in this release: 
 + 2018-11-29 [PAM-2194] Endre lenke til hotjar etter at feature toggle er skrudd av
