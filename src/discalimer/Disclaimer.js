@@ -14,13 +14,6 @@ function Disclaimer({ shouldShow, hideDisclaimer }) {
                     <div role="alert" className="Disclaimer typo-normal">
                         <Element className="blokk-xxs">Stillingssøket har blitt fornyet</Element>
                         <Normaltekst className="blokk-xxs">
-                            Vi erstatter vårt gamle stillingssøk med en ny versjon.
-                            Akkurat nå jobber vi for at du skal kunne lagre søk og annonser.
-                            <br />
-                            Inntil videre kan du bare gjøre dette i det gamle stillingssøket.
-                            Midlertidige feil i tjenesten på grunn av teknisk arbeid kan forekomme.
-                        </Normaltekst>
-                        <Normaltekst className="blokk-xxs">
                             <a href="https://surveys.hotjar.com/s?siteId=148751&surveyId=123859" className="lenke">
                                 Gi oss din tilbakemelding på det nye stillingssøket
                             </a>
