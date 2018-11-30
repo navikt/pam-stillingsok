@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import FavouriteAlertStripe from '../favourites/alertstripe/FavouriteAlertStripe';
-import featureToggle from '../featureToggle';
 import SavedSearchAlertStripe from '../savedSearches/alertstripe/SavedSearchAlertStripe';
 import CurrentSavedSearch from '../savedSearches/CurrentSavedSearch';
 import SavedSearchesExpand from '../savedSearches/expand/SavedSearchesExpand';
@@ -63,7 +62,7 @@ class Search extends React.Component {
                                 <Sidetittel className="Search__header__title">Ledige stillinger</Sidetittel>
                             </Column>
                             <Column xs="12" lg="4">
-                                {featureToggle() && this.props.isAuthenticated !== false && this.props.user ?
+                                {this.props.isAuthenticated !== false && this.props.user ?
                                     <div className="Search__header__left">
                                         <ExpandSavedSearchButton />
                                     </div> : null
@@ -91,9 +90,7 @@ class Search extends React.Component {
                                     <Column xs="12" md="4">
                                         <div className="Search__main__left">
                                             <div className="Search__main__left__save-search">
-                                                {featureToggle() && (
-                                                    <SaveSearchButton />
-                                                )}
+                                                <SaveSearchButton />
                                                 <Flatknapp mini onClick={this.onResetSearchClick}>
                                                             Nullstill kriterier
                                                 </Flatknapp>

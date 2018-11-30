@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { PersonbrukerHeaderMeny, PersonbrukerHeader } from 'pam-frontend-header';
 import { LOGIN_URL, LOGOUT_URL } from '../../fasitProperties';
 import Disclaimer from '../../discalimer/Disclaimer';
-import featureToggle from '../../featureToggle';
 
 class TopMenu extends React.Component {
     onLoginClick = () => {
@@ -18,7 +17,7 @@ class TopMenu extends React.Component {
     render() {
         return (
             <div>
-                {featureToggle() && this.props.isAuthenticated !== undefined ? (
+                {this.props.isAuthenticated !== undefined ? (
                     <PersonbrukerHeaderMeny
                         onLoggUt={this.onLogoutClick}
                         onLoggInn={this.onLoginClick}

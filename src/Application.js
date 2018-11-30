@@ -5,7 +5,6 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Error from './error/Error';
 import { CONTEXT_PATH } from './fasitProperties';
 import Favourites from './favourites/Favourites';
-import featureToggle from './featureToggle';
 import Invite from './invite/Invite';
 import SavedSearches from './savedSearches/SavedSearches';
 import SearchPage from './search/Search';
@@ -19,9 +18,7 @@ import TopMenu from './common/topMenu/TopMenu';
 
 class Application extends React.Component {
     componentDidMount() {
-        if (featureToggle()) {
-            this.props.fetchIsAuthenticated();
-        }
+        this.props.fetchIsAuthenticated();
     }
 
     render() {
