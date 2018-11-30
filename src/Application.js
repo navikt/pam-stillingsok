@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Error from './error/Error';
 import Disclaimer from './discalimer/Disclaimer';
-import { CONTEXT_PATH, LOGIN_URL_REDIRECT, LOGOUT_URL } from './fasitProperties';
+import { CONTEXT_PATH, LOGIN_URL, LOGOUT_URL } from './fasitProperties';
 import Favourites from './favourites/Favourites';
 import featureToggle from './featureToggle';
 import Invite from './invite/Invite';
@@ -17,6 +17,7 @@ import TermsOfUse from './user/TermsOfUse';
 import { FETCH_IS_AUTHENTICATED } from './authentication/authenticationReducer';
 import UserSettings from './user/UserSettings';
 import UserAlertStripe from './user/UserAlertStripe';
+import { getRedirect } from './redirect';
 
 class Application extends React.Component {
     componentDidMount() {
@@ -24,7 +25,7 @@ class Application extends React.Component {
             this.props.fetchIsAuthenticated();
         }
     }
-    
+
     render() {
         return (
             <BrowserRouter>
@@ -36,7 +37,7 @@ class Application extends React.Component {
                                 {this.props.isAuthenticated === false ? (
                                     <a
                                         className="knapp knapp--mini"
-                                        href={`${LOGIN_URL_REDIRECT}${window.location.href}`}
+                                        href={`${LOGIN_URL}${getRedirect()}`}
                                     >
                                         Logg inn
                                     </a>
