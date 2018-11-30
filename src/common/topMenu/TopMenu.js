@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { PersonbrukerHeaderMeny, PersonbrukerHeader } from 'pam-frontend-header';
 import { LOGIN_URL, LOGOUT_URL } from '../../fasitProperties';
 import Disclaimer from '../../discalimer/Disclaimer';
+import { authenticationEnum } from '../../authentication/authenticationReducer';
 
 class TopMenu extends React.Component {
     onLoginClick = () => {
@@ -17,16 +18,17 @@ class TopMenu extends React.Component {
     render() {
         return (
             <div>
-                {this.props.isAuthenticated !== undefined ? (
-                    <PersonbrukerHeaderMeny
-                        onLoggUt={this.onLogoutClick}
-                        onLoggInn={this.onLoginClick}
-                        personbruker={{ navn: 'Innstillinger' }}
-                        erInnlogget={this.props.isAuthenticated}
-                    />
-                ) : (
-                    <PersonbrukerHeader />
-                )}
+                {this.props.isAuthenticated === authenticationEnum.IS_AUTHENTICATED
+                    || this.props.isAuthenticated === authenticationEnum.NOT_AUTHENTICATED ? (
+                        <PersonbrukerHeaderMeny
+                            onLoggUt={this.onLogoutClick}
+                            onLoggInn={this.onLoginClick}
+                            personbruker={{ navn: 'Innstillinger' }}
+                            erInnlogget={this.props.isAuthenticated === authenticationEnum.IS_AUTHENTICATED}
+                        />
+                    ) : (
+                        <PersonbrukerHeader />
+                    )}
                 <Disclaimer />
             </div>
         );
@@ -34,16 +36,15 @@ class TopMenu extends React.Component {
 }
 
 TopMenu.defaultProps = {
-    isAuthenticated: undefined
+    isAuthenticated: authenticationEnum.AUTHENTICATION_PENDING
 };
 
 TopMenu.propTypes = {
-    isAuthenticated: PropTypes.bool
+    isAuthenticated: PropTypes.string
 };
 
 const mapStateToProps = (state) => ({
-    isAuthenticated: state.authentication.isAuthenticated,
-    user: state.user.user
+    isAuthenticated: state.authentication.isAuthenticated
 });
 
 export default connect(mapStateToProps)(TopMenu);

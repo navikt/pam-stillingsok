@@ -28,6 +28,7 @@ import SearchResultCount from './searchResults/SearchResultCount';
 import SearchResults from './searchResults/SearchResults';
 import Sorting from './sorting/Sorting';
 import ViewMode from './viewMode/ViewMode';
+import { authenticationEnum } from '../authentication/authenticationReducer';
 
 class Search extends React.Component {
     constructor(props) {
@@ -62,7 +63,7 @@ class Search extends React.Component {
                                 <Sidetittel className="Search__header__title">Ledige stillinger</Sidetittel>
                             </Column>
                             <Column xs="12" lg="4">
-                                {this.props.isAuthenticated !== false && this.props.user ?
+                                {this.props.isAuthenticated === authenticationEnum.IS_AUTHENTICATED && this.props.user ?
                                     <div className="Search__header__left">
                                         <ExpandSavedSearchButton />
                                     </div> : null
@@ -142,7 +143,7 @@ class Search extends React.Component {
 
 Search.defaultProps = {
     user: undefined,
-    isAuthenticated: undefined
+    isAuthenticated: authenticationEnum.AUTHENTICATION_PENDING
 };
 
 Search.propTypes = {
@@ -153,7 +154,7 @@ Search.propTypes = {
     isSavedSearchesExpanded: PropTypes.bool.isRequired,
     initialSearchDone: PropTypes.bool.isRequired,
     isSearching: PropTypes.bool.isRequired,
-    isAuthenticated: PropTypes.bool,
+    isAuthenticated: PropTypes.string,
     user: PropTypes.shape({})
 };
 

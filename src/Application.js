@@ -53,10 +53,6 @@ class Application extends React.Component {
     }
 }
 
-Application.defaultProps = {
-    isAuthenticated: undefined
-};
-
 Application.propTypes = {
     fetchIsAuthenticated: PropTypes.func.isRequired,
     termsOfUseModalIsVisible: PropTypes.bool.isRequired,
@@ -64,7 +60,6 @@ Application.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-    isAuthenticated: state.authentication.isAuthenticated,
     termsOfUseModalIsVisible: state.user.termsOfUseModalIsVisible,
     authenticationRequiredModalIsVisible: state.authentication.authenticationRequiredModalIsVisible
 });
