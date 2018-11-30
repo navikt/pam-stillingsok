@@ -59,7 +59,7 @@ class UserSettings extends React.Component {
                             <div className="UserSettings__section">
                                 <Row>
                                     <Column xs="12">
-                                        <NotAuthenticated title="Du må logge inn for å ta i bruk Innstillinger" />
+                                        <NotAuthenticated title="Du må logge inn for å se dine innstillinger" />
                                     </Column>
                                 </Row>
                             </div>

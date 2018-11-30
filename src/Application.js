@@ -7,7 +7,6 @@ import Error from './error/Error';
 import Disclaimer from './discalimer/Disclaimer';
 import { CONTEXT_PATH, LOGIN_URL_REDIRECT, LOGOUT_URL } from './fasitProperties';
 import Favourites from './favourites/Favourites';
-import featureToggle from './featureToggle';
 import Invite from './invite/Invite';
 import SavedSearches from './savedSearches/SavedSearches';
 import SearchPage from './search/Search';
@@ -20,9 +19,7 @@ import UserAlertStripe from './user/UserAlertStripe';
 
 class Application extends React.Component {
     componentDidMount() {
-        if (featureToggle()) {
-            this.props.fetchIsAuthenticated();
-        }
+        this.props.fetchIsAuthenticated();
     }
     
     render() {
@@ -30,27 +27,25 @@ class Application extends React.Component {
             <BrowserRouter>
                 <div>
                     <Error />
-                    {featureToggle() && (
-                        <div className="AuthButtons no-print">
-                            <Container>
-                                {this.props.isAuthenticated === false ? (
-                                    <a
-                                        className="knapp knapp--mini"
-                                        href={`${LOGIN_URL_REDIRECT}${window.location.href}`}
-                                    >
-                                        Logg inn
-                                    </a>
-                                ) : (
-                                    <a
-                                        className="knapp knapp--mini"
-                                        href={LOGOUT_URL}
-                                    >
-                                        Logg ut
-                                    </a>
-                                )}
-                            </Container>
-                        </div>
-                    )}
+                    <div className="AuthButtons no-print">
+                        <Container>
+                            {this.props.isAuthenticated === false ? (
+                                <a
+                                    className="knapp knapp--mini"
+                                    href={`${LOGIN_URL_REDIRECT}${window.location.href}`}
+                                >
+                                    Logg inn
+                                </a>
+                            ) : (
+                                <a
+                                    className="knapp knapp--mini"
+                                    href={LOGOUT_URL}
+                                >
+                                    Logg ut
+                                </a>
+                            )}
+                        </Container>
+                    </div>
                     <Disclaimer />
                     <Switch>
                         <Route exact path="/" component={SearchPage} />
