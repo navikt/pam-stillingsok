@@ -1,10 +1,10 @@
-import { STILLINGSOK_URL } from './fasitProperties';
+import { STILLINGSOK_URL, CONTEXT_PATH } from './fasitProperties';
 
 const whiteList = [
-    '/pam-stillingsok/favoritter',
-    '/pam-stillingsok/lagrede-sok',
-    '/pam-stillingsok/innstillinger',
-    '/pam-stillingsok/',
+    `${CONTEXT_PATH}/favoritter`,
+    `${CONTEXT_PATH}/lagrede-sok`,
+    `${CONTEXT_PATH}/innstillinger`,
+    `${CONTEXT_PATH}`,
     '/'
 ];
 
