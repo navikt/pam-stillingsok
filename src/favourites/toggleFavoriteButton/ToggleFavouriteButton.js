@@ -2,7 +2,6 @@ import { Flatknapp } from 'nav-frontend-knapper';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import featureToggle from '../../featureToggle';
 import { ADD_TO_FAVOURITES, REMOVE_FROM_FAVOURITES } from '../favouritesReducer';
 import './ToggleFavouriteButton.less';
 
@@ -16,10 +15,6 @@ class ToggleFavouriteButton extends React.Component {
     };
 
     render() {
-        if (!featureToggle()) {
-            return null;
-        }
-
         const {
             adsMarkedAsFavorite, uuid, isFetchingFavourites
         } = this.props;
