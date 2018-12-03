@@ -1,9 +1,9 @@
-import { Flatknapp } from 'nav-frontend-knapper';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import './ViewMode.less';
 import { SET_VIEW_MODE } from './viewModeReducer';
+import KompaktKnapp from './KompaktKnapp';
 
 class ViewMode extends React.Component {
     onNormalClick = () => {
@@ -18,13 +18,9 @@ class ViewMode extends React.Component {
         return (
             <div className="ViewMode">
                 {this.props.mode === 'compact' ? (
-                    <Flatknapp mini className="" onClick={this.onNormalClick}>
-                        Normal visning
-                    </Flatknapp>
+                    <KompaktKnapp status="aktiv" clickHandler={this.onNormalClick}/>
                 ) : (
-                    <Flatknapp mini className="" onClick={this.onCompactClick}>
-                        Kompakt visning
-                    </Flatknapp>
+                    <KompaktKnapp status="inaktiv" clickHandler={this.onCompactClick}/>
                 )}
             </div>
         );
