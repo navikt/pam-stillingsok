@@ -5,10 +5,11 @@ import { PersonbrukerHeaderMeny, PersonbrukerHeader } from 'pam-frontend-header'
 import { LOGIN_URL, LOGOUT_URL } from '../../fasitProperties';
 import Disclaimer from '../../discalimer/Disclaimer';
 import { authenticationEnum } from '../../authentication/authenticationReducer';
+import { getRedirect } from '../../redirect';
 
 class TopMenu extends React.Component {
     onLoginClick = () => {
-        window.location.href = LOGIN_URL;
+        window.location.href = `${LOGIN_URL}${getRedirect()}`;
     };
 
     onLogoutClick = () => {
