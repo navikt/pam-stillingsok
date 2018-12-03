@@ -4,10 +4,7 @@ import { Sidetittel } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { CONTEXT_PATH } from '../fasitProperties';
 import FavouriteAlertStripe from '../favourites/alertstripe/FavouriteAlertStripe';
-import ShowFavouriteListLink from '../favourites/ShowFavouriteListLink';
 import SavedSearchAlertStripe from '../savedSearches/alertstripe/SavedSearchAlertStripe';
 import CurrentSavedSearch from '../savedSearches/CurrentSavedSearch';
 import SavedSearchesExpand from '../savedSearches/expand/SavedSearchesExpand';
@@ -31,6 +28,7 @@ import SearchResultCount from './searchResults/SearchResultCount';
 import SearchResults from './searchResults/SearchResults';
 import Sorting from './sorting/Sorting';
 import ViewMode from './viewMode/ViewMode';
+import { authenticationEnum } from '../authentication/authenticationReducer';
 
 class Search extends React.Component {
     constructor(props) {
@@ -65,13 +63,9 @@ class Search extends React.Component {
                                 <Sidetittel className="Search__header__title">Ledige stillinger</Sidetittel>
                             </Column>
                             <Column xs="12" lg="4">
-                                {this.props.isAuthenticated !== false && this.props.user ?
+                                {this.props.isAuthenticated === authenticationEnum.IS_AUTHENTICATED && this.props.user ?
                                     <div className="Search__header__left">
-                                        <ShowFavouriteListLink />
                                         <ExpandSavedSearchButton />
-                                        <Link to={`${CONTEXT_PATH}/innstillinger`} className="Search__innstillinger-lenke lenke typo-element">
-                                            Innstillinger
-                                        </Link>
                                     </div> : null
                                 }
                             </Column>
@@ -148,8 +142,7 @@ class Search extends React.Component {
 }
 
 Search.defaultProps = {
-    user: undefined,
-    isAuthenticated: undefined
+    user: undefined
 };
 
 Search.propTypes = {
@@ -160,7 +153,7 @@ Search.propTypes = {
     isSavedSearchesExpanded: PropTypes.bool.isRequired,
     initialSearchDone: PropTypes.bool.isRequired,
     isSearching: PropTypes.bool.isRequired,
-    isAuthenticated: PropTypes.bool,
+    isAuthenticated: PropTypes.string.isRequired,
     user: PropTypes.shape({})
 };
 

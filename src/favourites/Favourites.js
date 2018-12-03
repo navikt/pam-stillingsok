@@ -11,6 +11,7 @@ import './Favourites.less';
 import FavouriteList from './list/FavouriteList';
 import RemoveFavouriteModal from './modal/RemoveFavouriteModal';
 import NoFavourites from './noresult/NoFavourites';
+import { authenticationEnum } from '../authentication/authenticationReducer';
 
 class Favourites extends React.Component {
     componentDidMount() {
@@ -27,7 +28,7 @@ class Favourites extends React.Component {
                     title={`Favoritter ${!this.props.isFetchingFavourites && this.props.totalElements > 0 ? `(${this.props.totalElements})` : ''}`}
                 />
                 <Container className="Favourites__main">
-                    {this.props.isAuthenticated === false && (
+                    {this.props.isAuthenticated === authenticationEnum.NOT_AUTHENTICATED && (
                         <div className="UserSettings__main">
                             <div className="UserSettings__section">
                                 <Row>
@@ -38,7 +39,7 @@ class Favourites extends React.Component {
                             </div>
                         </div>
                     )}
-                    {this.props.isAuthenticated === true && (
+                    {this.props.isAuthenticated === authenticationEnum.IS_AUTHENTICATED && (
                         <div>
                             {!this.props.user && (
                                 <div className="UserSettings__main">
@@ -80,13 +81,12 @@ class Favourites extends React.Component {
     }
 }
 Favourites.defaultProps = {
-    isAuthenticated: undefined,
     user: undefined
 };
 
 Favourites.propTypes = {
     user: PropTypes.shape(),
-    isAuthenticated: PropTypes.bool,
+    isAuthenticated: PropTypes.string.isRequired,
     isFetchingFavourites: PropTypes.bool.isRequired,
     totalElements: PropTypes.number.isRequired,
     favourites: PropTypes.arrayOf(PropTypes.shape({

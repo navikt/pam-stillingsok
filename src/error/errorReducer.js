@@ -14,10 +14,10 @@ import { FETCH_STILLING_FAILURE } from '../stilling/stillingReducer';
 import {
     CREATE_USER_FAILURE,
     DELETE_USER_FAILURE,
-    FETCH_IS_AUTHENTICATED_FAILURE,
     FETCH_USER_FAILURE,
     UPDATE_USER_EMAIL_FAILURE
 } from '../user/userReducer';
+import { FETCH_IS_AUTHENTICATED_FAILURE } from '../authentication/authenticationReducer';
 
 export const HIDE_ERROR = 'HIDE_ERROR';
 
