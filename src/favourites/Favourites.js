@@ -81,13 +81,12 @@ class Favourites extends React.Component {
     }
 }
 Favourites.defaultProps = {
-    isAuthenticated: authenticationEnum.AUTHENTICATION_PENDING,
     user: undefined
 };
 
 Favourites.propTypes = {
     user: PropTypes.shape(),
-    isAuthenticated: PropTypes.string,
+    isAuthenticated: PropTypes.string.isRequired,
     isFetchingFavourites: PropTypes.bool.isRequired,
     totalElements: PropTypes.number.isRequired,
     favourites: PropTypes.arrayOf(PropTypes.shape({

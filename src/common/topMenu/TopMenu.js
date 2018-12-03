@@ -35,12 +35,8 @@ class TopMenu extends React.Component {
     }
 }
 
-TopMenu.defaultProps = {
-    isAuthenticated: authenticationEnum.AUTHENTICATION_PENDING
-};
-
 TopMenu.propTypes = {
-    isAuthenticated: PropTypes.string
+    isAuthenticated: PropTypes.string.isRequired
 };
 
 const mapStateToProps = (state) => ({

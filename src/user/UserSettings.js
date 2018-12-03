@@ -176,15 +176,14 @@ class UserSettings extends React.Component {
 }
 
 UserSettings.defaultProps = {
-    user: undefined,
-    isAuthenticated: authenticationEnum.AUTHENTICATION_PENDING
+    user: undefined
 };
 
 UserSettings.propTypes = {
     user: PropTypes.shape({
         email: PropTypes.string
     }),
-    isAuthenticated: PropTypes.string,
+    isAuthenticated: PropTypes.string.isRequired,
     setUserEmail: PropTypes.func.isRequired,
     validateEmail: PropTypes.func.isRequired,
     showConfirmDeleteUserModal: PropTypes.func.isRequired,

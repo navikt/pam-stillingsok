@@ -142,8 +142,7 @@ class Search extends React.Component {
 }
 
 Search.defaultProps = {
-    user: undefined,
-    isAuthenticated: authenticationEnum.AUTHENTICATION_PENDING
+    user: undefined
 };
 
 Search.propTypes = {
@@ -154,7 +153,7 @@ Search.propTypes = {
     isSavedSearchesExpanded: PropTypes.bool.isRequired,
     initialSearchDone: PropTypes.bool.isRequired,
     isSearching: PropTypes.bool.isRequired,
-    isAuthenticated: PropTypes.string,
+    isAuthenticated: PropTypes.string.isRequired,
     user: PropTypes.shape({})
 };
 

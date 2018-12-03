@@ -85,13 +85,12 @@ class SavedSearches extends React.Component {
 
 
 SavedSearches.defaultProps = {
-    isAuthenticated: authenticationEnum.AUTHENTICATION_PENDING,
     user: undefined
 };
 
 SavedSearches.propTypes = {
     user: PropTypes.shape(),
-    isAuthenticated: PropTypes.string,
+    isAuthenticated: PropTypes.string.isRequired,
     isFetching: PropTypes.bool.isRequired,
     totalElements: PropTypes.number.isRequired,
     savedSearches: PropTypes.arrayOf(PropTypes.shape({
