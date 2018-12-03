@@ -1,7 +1,7 @@
 import { select, put, call, takeEvery, takeLatest } from 'redux-saga/effects';
 import SearchApiError from '../api/SearchApiError';
 import { userApiGet, userApiPost, userApiRemove, userApiPut } from '../api/userApi';
-import { FETCH_IS_AUTHENTICATED_SUCCESS } from '../authentication/authenticationReducer';
+import { authenticationEnum, FETCH_IS_AUTHENTICATED_SUCCESS } from '../authentication/authenticationReducer';
 import { AD_USER_API } from '../fasitProperties';
 import delay from '../common/delay';
 
@@ -204,7 +204,7 @@ const fixUser = function fixUser(user) {
 
 function* fetchUser() {
     const state = yield select();
-    if (state.authentication.isAuthenticated) {
+    if (state.authentication.isAuthenticated === authenticationEnum.IS_AUTHENTICATED) {
         yield put({ type: FETCH_USER_BEGIN });
         try {
             const response = yield call(userApiGet, `${AD_USER_API}/api/v1/user`);

@@ -12,6 +12,7 @@ import SavedSearchForm from './form/SavedSearchForm';
 import SavedSearchList from './list/SavedSearchList';
 import NoSavedSearches from './noresult/NoSavedSearches';
 import './SavedSearches.less';
+import { authenticationEnum } from '../authentication/authenticationReducer';
 
 class SavedSearches extends React.Component {
     componentDidMount() {
@@ -28,7 +29,7 @@ class SavedSearches extends React.Component {
                     title={`Lagrede søk ${!this.props.isFetching && this.props.totalElements > 0 ? `(${this.props.totalElements})` : ''}`}
                 />
                 <Container className="SavedSearches__main">
-                    {this.props.isAuthenticated === false && (
+                    {this.props.isAuthenticated === authenticationEnum.NOT_AUTHENTICATED && (
                         <div className="UserSettings__main">
                             <div className="UserSettings__section">
                                 <Row>
@@ -39,7 +40,7 @@ class SavedSearches extends React.Component {
                             </div>
                         </div>
                     )}
-                    {this.props.isAuthenticated === true && (
+                    {this.props.isAuthenticated === authenticationEnum.IS_AUTHENTICATED && (
                         <div>
                             {!this.props.user && (
                                 <div className="UserSettings__main">
@@ -84,13 +85,12 @@ class SavedSearches extends React.Component {
 
 
 SavedSearches.defaultProps = {
-    isAuthenticated: undefined,
     user: undefined
 };
 
 SavedSearches.propTypes = {
     user: PropTypes.shape(),
-    isAuthenticated: PropTypes.bool,
+    isAuthenticated: PropTypes.string.isRequired,
     isFetching: PropTypes.bool.isRequired,
     totalElements: PropTypes.number.isRequired,
     savedSearches: PropTypes.arrayOf(PropTypes.shape({

@@ -13,6 +13,7 @@ import NotAuthenticated from '../authentication/NotAuthenticated';
 import NoUser from './NoUser';
 import { SET_USER_EMAIL, SHOW_CONFIRM_DELETE_USER_MODAL, UPDATE_USER_EMAIL, VALIDATE_USER_EMAIL } from './userReducer';
 import './UserSettings.less';
+import { authenticationEnum } from '../authentication/authenticationReducer';
 
 const PAGE_TITLE = 'Innstillinger';
 
@@ -54,7 +55,7 @@ class UserSettings extends React.Component {
                     title={PAGE_TITLE}
                 />
                 <Container>
-                    {this.props.isAuthenticated === false && (
+                    {this.props.isAuthenticated === authenticationEnum.NOT_AUTHENTICATED && (
                         <div className="UserSettings__main">
                             <div className="UserSettings__section">
                                 <Row>
@@ -65,7 +66,7 @@ class UserSettings extends React.Component {
                             </div>
                         </div>
                     )}
-                    {this.props.isAuthenticated === true && (
+                    {this.props.isAuthenticated === authenticationEnum.IS_AUTHENTICATED && (
                         <div>
                             {!this.props.user && (
                                 <div className="UserSettings__main">
@@ -175,15 +176,14 @@ class UserSettings extends React.Component {
 }
 
 UserSettings.defaultProps = {
-    user: undefined,
-    isAuthenticated: undefined
+    user: undefined
 };
 
 UserSettings.propTypes = {
     user: PropTypes.shape({
         email: PropTypes.string
     }),
-    isAuthenticated: PropTypes.bool,
+    isAuthenticated: PropTypes.string.isRequired,
     setUserEmail: PropTypes.func.isRequired,
     validateEmail: PropTypes.func.isRequired,
     showConfirmDeleteUserModal: PropTypes.func.isRequired,
