@@ -1,3 +1,6 @@
+## RELEASE - 0.54.433-b2e1417
+#### New in this release: 
++ 2018-11-28 [PAM-2019] Legge til header for personbruker
 ## RELEASE - 0.53.430-8573cee
 #### New in this release: 
 + 2018-11-29 [PAM-2211] Tekstendringer
