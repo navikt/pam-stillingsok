@@ -46,7 +46,6 @@
 
   .SearchResultsItemDetails__updated {
     margin-bottom: 0;
-
   }
 }
 
@@ -61,4 +60,15 @@
 .SearchResultsItemDetails__location,
 .SearchResultsItemDetails__applicationdue{
   line-height: 20px;
+}
+
+@media (max-width: @screen-xs-max) {
+  .SearchResultsItemDetails__jobtitle,
+  .SearchResultsItemDetails__employer {
+    margin-bottom: 8px;
+  }
+
+  .SearchResultsItemDetails__title {
+    margin-bottom: 4px;
+  }
 }
