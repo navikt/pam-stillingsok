@@ -1,3 +1,6 @@
+## RELEASE - 0.55.434-ae735cb
+#### New in this release: 
++ 2018-12-04 [enhancement] adding gzip compression to reduce served file sizes
 ## RELEASE - 0.54.433-b2e1417
 #### New in this release: 
 + 2018-11-28 [PAM-2019] Legge til header for personbruker
