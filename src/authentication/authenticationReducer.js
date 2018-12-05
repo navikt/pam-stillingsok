@@ -9,8 +9,15 @@ export const FETCH_IS_AUTHENTICATED_FAILURE = 'FETCH_IS_AUTHENTICATED_FAILURE';
 export const SHOW_AUTHENTICATION_REQUIRED_MODAL = 'SHOW_AUTHENTICATION_REQUIRED_MODAL';
 export const HIDE_AUTHENTICATION_REQUIRED_MODAL = 'HIDE_AUTHENTICATION_REQUIRED_MODAL';
 
+export const authenticationEnum = {
+    IS_AUTHENTICATED: 'IS_AUTHENTICATED',
+    NOT_AUTHENTICATED: 'NOT_AUTHENTICATED',
+    AUTHENTICATION_FAILURE: 'AUTHENTICATION_FAILURE',
+    AUTHENTICATION_PENDING: 'AUTHENTICATION_PENDING'
+};
+
 const initialState = {
-    isAuthenticated: undefined,
+    isAuthenticated: authenticationEnum.AUTHENTICATION_PENDING,
     authenticationRequiredModalIsVisible: false
 };
 
@@ -24,7 +31,7 @@ export default function authenticationReducer(state = initialState, action) {
         case FETCH_IS_AUTHENTICATED_FAILURE:
             return {
                 ...state,
-                isAuthenticated: undefined
+                isAuthenticated: authenticationEnum.AUTHENTICATION_FAILURE
             };
         case SHOW_AUTHENTICATION_REQUIRED_MODAL:
             return {
@@ -46,9 +53,9 @@ function* fetchIsAuthenticated() {
     try {
         const response = yield fetch(`${AD_USER_API}/isAuthenticated`, { credentials: 'include' });
         if (response.status === 200) {
-            yield put({ type: FETCH_IS_AUTHENTICATED_SUCCESS, isAuthenticated: true });
+            yield put({ type: FETCH_IS_AUTHENTICATED_SUCCESS, isAuthenticated: authenticationEnum.IS_AUTHENTICATED });
         } else if (response.status === 401) {
-            yield put({ type: FETCH_IS_AUTHENTICATED_SUCCESS, isAuthenticated: false });
+            yield put({ type: FETCH_IS_AUTHENTICATED_SUCCESS, isAuthenticated: authenticationEnum.NOT_AUTHENTICATED });
         } else {
             yield put({ type: FETCH_IS_AUTHENTICATED_FAILURE });
         }
@@ -60,7 +67,7 @@ function* fetchIsAuthenticated() {
 
 export const requiresAuthentication = function* requiresAuthentication(caller) {
     const state = yield select();
-    if (state.authentication.isAuthenticated === true) {
+    if (state.authentication.isAuthenticated === authenticationEnum.IS_AUTHENTICATED) {
         return true;
     }
     yield put({ type: SHOW_AUTHENTICATION_REQUIRED_MODAL, title: caller || AuthenticationCaller.DEFAULT });

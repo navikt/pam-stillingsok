@@ -7,6 +7,7 @@ const fs = require('fs');
 const prometheus = require('prom-client');
 const bodyParser = require('body-parser');
 const searchApiConsumer = require('./scripts/searchApiConsumer');
+const compression = require('compression');
 
 /* eslint no-console: 0 */
 
@@ -18,6 +19,7 @@ const port = process.env.PORT || 8080;
 server.set('port', port);
 
 server.disable('x-powered-by');
+server.use(compression());
 server.use(helmet());
 
 server.use(helmet.contentSecurityPolicy({
