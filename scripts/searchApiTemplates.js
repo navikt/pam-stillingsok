@@ -174,12 +174,166 @@ exports.suggestionsTemplate = (match, minLength) => ({
     _source: false
 });
 
+/* Experimental alternative relevance model with AND-logic and using cross-fields matching.
+   In its current form NOT recommended as default. It is not strictly AND across all queried fields either, due
+   to difficulties with analyzer-grouping for cross_field multi-match queries combined with AND-logic. */
+function mainQueryOperatorAnd(q) {
+    return {
+        bool: {
+            must: {
+                bool: {
+                    should: [
+                        {
+                            multi_match: {
+                                query: q,
+                                type: 'cross_fields',
+                                fields: [
+                                    'category_no^2',
+                                    'title_no^1',
+                                    'searchtags_no^0.2',
+                                    'adtext_no^0.2',
+                                    'employerdescription_no^0.1'
+                                ],
+                                operator: 'and',
+                                tie_breaker: 0.3,
+                                analyzer: 'norwegian',
+                                zero_terms_query: 'all'
+                            }
+                        },
+                        {
+                            match_phrase: {
+                                'employername': {
+                                    query: q,
+                                    slop: 0,
+                                    boost: 2
+                                }
+                            }
+                        },
+                        {
+                            match: {
+                                id: {
+                                    query: q,
+                                    operator: 'and',
+                                    boost: 1
+                                }
+                            }
+                        }
+                    ]
+                }
+            },
+            should: [
+                {
+                    match_phrase: {
+                        title: {
+                            query: q,
+                            slop: 2
+                        }
+                    }
+                },
+                {
+                    constant_score: {
+                        filter: {
+                            match: {
+                                'location.municipal': {
+                                    query: q
+                                }
+                            }
+                        },
+                        boost: 3
+                    }
+                },
+                {
+                    constant_score: {
+                        filter: {
+                            match: {
+                                'location.county': {
+                                    query: q
+                                }
+                            }
+                        },
+                        boost: 3
+                    }
+                }
+            ]
+        }
+    }
+}
+
+/* Generate main matching query object with classic/original relevance model */
+function mainQuery(q) {
+    return {
+        bool: {
+            must: {
+                multi_match: {
+                    query: q,
+                    type: 'best_fields',
+                    fields: [
+                        'category_no^2',
+                        'title_no^1',
+                        'id^1',
+                        'employername^0.9',
+                        'searchtags_no^0.4',
+                        'adtext_no^0.2',
+                        'employerdescription_no^0.1'
+                    ],
+                    tie_breaker: 0.3,
+                    minimum_should_match: 1,
+                    zero_terms_query: 'all'
+                }
+            },
+            should: [
+                {
+                    match_phrase: {
+                        title: {
+                            query: q,
+                            slop: 2
+                        }
+                    }
+                },
+                {
+                    match_phrase: {
+                        'employername': {
+                            query: q,
+                            slop: 0,
+                            boost: 1
+                        }
+                    }
+                },
+                {
+                    constant_score: {
+                        filter: {
+                            match: {
+                                'location.municipal': {
+                                    query: q
+                                }
+                            }
+                        },
+                        boost: 3
+                    }
+                },
+                {
+                    constant_score: {
+                        filter: {
+                            match: {
+                                'location.county': {
+                                    query: q
+                                }
+                            }
+                        },
+                        boost: 3
+                    }
+                }
+            ]
+        }
+    }
+}
+
 exports.searchTemplate = (query) => {
     const {
         from, size, counties, municipals, extent, engagementType, sector, published,
         occupationFirstLevels, occupationSecondLevels
     } = query;
-    let { sort, q } = query;
+    let { sort, q, operator } = query;
 
     // To ensure consistent search results across multiple shards in elasticsearch when query is blank
     if (!q || q.trim().length === 0) {
@@ -189,64 +343,16 @@ exports.searchTemplate = (query) => {
         q = '';
     }
 
+    // Resolve if and-operator should be used (experimental)
+    let mainQueryTemplateFunc = mainQuery;
+    if (operator === 'and') {
+        mainQueryTemplateFunc = mainQueryOperatorAnd;
+    }
+
     let template = {
         from: from || 0,
         size: size || 50,
-        query: {
-            bool: {
-                must: {
-                    multi_match: {
-                        query: q,
-                        type: 'best_fields',
-                        fields: [
-                            'category_no^2',
-                            'title_no^1',
-                            'searchtags_no^0.4',
-                            'adtext_no^0.2',
-                            'employer.name^0.2',
-                            'employerdescription_no^0.1'
-                        ],
-                        tie_breaker: 0.3,
-                        minimum_should_match: 1,
-                        zero_terms_query: 'all'
-                    }
-                },
-                should: [
-                    {
-                        match_phrase: {
-                            title: {
-                                query: q,
-                                slop: 2
-                            }
-                        }
-                    },
-                    {
-                        constant_score: {
-                            filter: {
-                                match: {
-                                    'location.municipal': {
-                                        query: q
-                                    }
-                                }
-                            },
-                            boost: 3
-                        }
-                    },
-                    {
-                        constant_score: {
-                            filter: {
-                                match: {
-                                    'location.county': {
-                                        query: q
-                                    }
-                                }
-                            },
-                            boost: 3
-                        }
-                    }
-                ]
-            }
-        },
+        query: mainQueryTemplateFunc(q),
         post_filter: {
             bool: {
                 filter: [
