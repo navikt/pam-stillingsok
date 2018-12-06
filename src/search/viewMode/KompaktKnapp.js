@@ -15,7 +15,14 @@ const KompaktKnapp = (props) => {
     const { clickHandler, status } = props;
     const lines = createLines(status, 4);
     return (
-        <button type="button" className={`kompakt-knapp kompakt-knapp__${status}`} onClick={clickHandler}>
+        <button
+            type="button"
+            role="switch"
+            aria-checked={status === 'aktiv'}
+            aria-label={status === 'aktiv' ? 'Normal visning' : 'Kompakt visning'}
+            className={`kompakt-knapp kompakt-knapp__${status}`}
+            onClick={clickHandler}
+        >
             {lines}
         </button>
     );

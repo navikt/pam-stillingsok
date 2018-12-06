@@ -18,9 +18,9 @@ class ViewMode extends React.Component {
         return (
             <div className="ViewMode">
                 {this.props.mode === 'compact' ? (
-                    <KompaktKnapp status="aktiv" clickHandler={this.onNormalClick}/>
+                    <KompaktKnapp status="aktiv" clickHandler={this.onNormalClick} />
                 ) : (
-                    <KompaktKnapp status="inaktiv" clickHandler={this.onCompactClick}/>
+                    <KompaktKnapp status="inaktiv" clickHandler={this.onCompactClick} />
                 )}
             </div>
         );

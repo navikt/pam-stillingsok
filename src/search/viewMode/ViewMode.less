@@ -27,7 +27,6 @@
   padding-bottom: 8px;
   width: 32px;
   height: 32px;
-  border: 1px solid @border-gray;
   border-radius: @border-radius-base;
   cursor: pointer;
 
@@ -35,19 +34,20 @@
     outline-style: none;
     box-shadow: 0 0 0 3px @orangeFocus;
   }
-
-  &:hover {
-    border: 1px solid @navBla;
-  }
 }
 
 .kompakt-knapp__aktiv {
-  border-style: none;
   background-color: @navBla;
+  border: 1px solid @navBla;
 }
 
 .kompakt-knapp__inaktiv {
   background-color: white;
+  border: 1px solid @border-gray;
+
+  &:hover {
+    border-color: @navBla !important;
+  }
 }
 
 .kompakt-line {
