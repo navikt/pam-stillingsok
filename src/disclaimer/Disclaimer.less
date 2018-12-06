@@ -1,6 +1,9 @@
+@import "../variables";
+
 .DisclaimerWrapper {
   background: #fff;
   border-top: 1px solid #979797;
+  pointer-events: none;
 }
 
 .Disclaimer {
@@ -9,6 +12,7 @@
   background: #fff;
   font-size: 120%;
   position: relative;
+  pointer-events: visible;
 }
 
 .Disclaimer__close {
@@ -23,4 +27,22 @@
   background: #fff;
   font-size: 120%;
   position: relative;
+}
+
+@media (min-width: @screen-sm-max) {
+  .DisclaimerWrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: transparent !important;
+    min-height: 6.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .Disclaimer {
+    background: transparent;
+  }
 }
