@@ -15,10 +15,10 @@
 .kompakt-knapp {
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
-  padding-top: 6px;
-  padding-bottom: 6px;
+  padding-top: 8px;
+  padding-bottom: 8px;
   width: 32px;
   height: 32px;
   border: 1px solid @border-gray;
@@ -28,6 +28,10 @@
   &:focus {
     outline-style: none;
     box-shadow: 0 0 0 3px @orangeFocus;
+  }
+
+  &:hover {
+    border: 1px solid @navBla;
   }
 }
 
