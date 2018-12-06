@@ -29,6 +29,7 @@ class SearchBox extends React.Component {
     };
 
     render() {
+        const searchCount = this.props.searchResult ? this.props.searchResult.total : '...';
         return (
             <div>
                 <div className="SearchBox">
@@ -37,7 +38,7 @@ class SearchBox extends React.Component {
                         name="q"
                         autoComplete="off"
                         ariaLabel="Søk"
-                        placeholder="Skriv inn søkeord"
+                        placeholder={`Søk i ${searchCount} ledige stillinger`}
                         onSelect={this.onTypeAheadSuggestionSelected}
                         onChange={this.onTypeAheadValueChange}
                         suggestions={this.props.suggestions}
@@ -48,7 +49,7 @@ class SearchBox extends React.Component {
                         type="submit"
                         className="SearchBox__button"
                     >
-                       Søk
+                        <i className="SearchBox__button__icon" />
                     </Knapp>
                 </div>
             </div>
@@ -59,6 +60,9 @@ class SearchBox extends React.Component {
 SearchBox.propTypes = {
     value: PropTypes.string.isRequired,
     suggestions: PropTypes.arrayOf(PropTypes.string).isRequired,
+    searchResult: PropTypes.shape({
+        total: PropTypes.number
+    }),
     search: PropTypes.func.isRequired,
     setValue: PropTypes.func.isRequired,
     fetchSuggestions: PropTypes.func.isRequired
@@ -66,7 +70,8 @@ SearchBox.propTypes = {
 
 const mapStateToProps = (state) => ({
     value: state.searchBox.q,
-    suggestions: state.searchBox.suggestions
+    suggestions: state.searchBox.suggestions,
+    searchResult: state.search.searchResult
 });
 
 const mapDispatchToProps = (dispatch) => ({
