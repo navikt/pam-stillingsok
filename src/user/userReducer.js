@@ -45,6 +45,8 @@ export const SET_EMAIL_FROM_SAVED_SEARCH = 'SET_EMAIL_FROM_SAVED_SEARCH';
 
 const TERMS_VERSION = 'sok_v1';
 
+export const epostRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
 const initialState = {
     user: undefined,
     isCreating: false,
@@ -308,12 +310,13 @@ function* deleteUser() {
 
 function* validateEMail() {
     const email = yield select((state) => state.user.user.email);
-    const error = email && (email.length > 0) && (email.indexOf('@') === -1);
+    const error = email && (email.length > 0) && !email.trim().match(epostRegex);
     if (error) {
         yield put({
             type: SET_VALIDATION_ERROR,
             field: 'email',
-            message: 'E-postadressen er ugyldig. Den må minimum inneholde en «@»'
+            message: 'Din e-postadresse er ikke gyldig. Pass på å fjerne alle mellomrom,' +
+                ' husk å ha med @ og punktum. Eksempel: ola.nordmann@online.no'
         });
     } else {
         yield put({ type: REMOVE_VALIDATION_ERROR, field: 'email' });

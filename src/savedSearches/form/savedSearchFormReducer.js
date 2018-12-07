@@ -12,7 +12,12 @@ import {
     UPDATE_SAVED_SEARCH_FAILURE,
     UPDATE_SAVED_SEARCH_SUCCESS
 } from '../savedSearchesReducer';
-import { SHOW_TERMS_OF_USE_MODAL, HIDE_TERMS_OF_USE_MODAL, CREATE_USER_SUCCESS } from '../../user/userReducer';
+import {
+    SHOW_TERMS_OF_USE_MODAL,
+    HIDE_TERMS_OF_USE_MODAL,
+    CREATE_USER_SUCCESS,
+    epostRegex
+} from '../../user/userReducer';
 
 export const SHOW_SAVED_SEARCH_FORM = 'SHOW_SAVED_SEARCH_FORM';
 export const SHOW_SAVED_SEARCH_FORM_SUCCESS = 'SHOW_SAVED_SEARCH_FORM_SUCCESS';
@@ -161,14 +166,15 @@ function* validateTitle() {
 
 function* validateEmail() {
     const { emailInputValue, showRegisterEmail } = yield select((state) => state.savedSearchForm);
-    const invalid = emailInputValue && (emailInputValue.length > 0) && (emailInputValue.indexOf('@') === -1);
+    const invalid = emailInputValue && (emailInputValue.length > 0) && !emailInputValue.trim().match(epostRegex);
     const empty = emailInputValue === undefined || emailInputValue === null || emailInputValue.trim().length === 0;
 
     if (invalid && showRegisterEmail) {
         yield put({
             type: SET_ERROR,
             field: 'email',
-            message: 'E-postadressen er ugyldig. Den må minimum inneholde en «@»'
+            message: 'Din e-postadresse er ikke gyldig. Pass på å fjerne alle mellomrom,' +
+                ' husk å ha med @ og punktum. Eksempel: ola.nordmann@online.no'
         });
     } else if (empty && showRegisterEmail) {
         yield put({

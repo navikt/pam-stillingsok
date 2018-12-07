@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import './TermsOfUse.less';
-import { CREATE_USER, HIDE_TERMS_OF_USE_MODAL, SET_USER_TERMS_ACCEPTED } from './userReducer';
+import { CREATE_USER, epostRegex, HIDE_TERMS_OF_USE_MODAL, SET_USER_TERMS_ACCEPTED } from './userReducer';
 
 class TermsOfUse extends React.Component {
     constructor(props) {
@@ -35,7 +35,8 @@ class TermsOfUse extends React.Component {
 
     onEmailBlur = () => {
         this.setState({
-            hasValidationError: this.state.email.length > 0 && this.state.email.indexOf('@') === -1
+            email: this.state.email.trim(),
+            hasValidationError: this.state.email && !this.state.email.trim().match(epostRegex)
         });
     };
 
@@ -80,7 +81,8 @@ class TermsOfUse extends React.Component {
                                 onChange={this.onEmailChange}
                                 onBlur={this.onEmailBlur}
                                 feil={this.state.hasValidationError ? {
-                                    feilmelding: 'E-postadressen er ugyldig. Den må minimum inneholde en «@»'
+                                    feilmelding: 'Din e-postadresse er ikke gyldig. Pass på å fjerne alle mellomrom,' +
+                                        ' husk å ha med @ og punktum. Eksempel: ola.nordmann@online.no'
                                 } : undefined}
                             />
                         </div>

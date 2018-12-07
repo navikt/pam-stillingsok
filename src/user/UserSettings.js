@@ -28,6 +28,10 @@ class UserSettings extends React.Component {
     };
 
     onEmailBlur = () => {
+        const { email } = this.props.user;
+        if (email && email.length > 0) {
+            this.props.setUserEmail(email.trim());
+        }
         this.props.validateEmail();
     };
 

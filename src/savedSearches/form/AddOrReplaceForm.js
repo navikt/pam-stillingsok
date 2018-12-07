@@ -30,6 +30,10 @@ class AddOrReplaceForm extends React.Component {
     };
 
     onEmailBlur = () => {
+        const { emailInputValue } = this.props;
+        if (emailInputValue && emailInputValue.length > 0) {
+            this.props.setEmailInputValue(emailInputValue.trim());
+        }
         this.props.validateEmail();
     };
 
@@ -57,18 +61,18 @@ class AddOrReplaceForm extends React.Component {
     };
 
     setFocusOnError = () => {
-        if(this.props.validation.title && this.titleRef){
+        if (this.props.validation.title && this.titleRef) {
             this.titleRef.focus();
-        } else if(this.props.validation.email && this.emailRef){
+        } else if (this.props.validation.email && this.emailRef) {
             this.emailRef.focus();
         }
     };
 
-    emailNotSet = () => {
-        return (this.props.user.email === undefined ||
-            this.props.user.email === null ||
-            this.props.user.email.trim().length === 0);
-    };
+    emailNotSet = () => (
+        this.props.user.email === undefined ||
+        this.props.user.email === null ||
+        this.props.user.email.trim().length === 0
+    );
 
     render() {
         const { formData, validation } = this.props;
@@ -148,7 +152,8 @@ class AddOrReplaceForm extends React.Component {
 
 AddOrReplaceForm.defaultProps = {
     formData: undefined,
-    user: undefined
+    user: undefined,
+    emailInputValue: undefined
 };
 
 AddOrReplaceForm.propTypes = {
@@ -167,7 +172,8 @@ AddOrReplaceForm.propTypes = {
     validation: PropTypes.shape({
         title: PropTypes.string,
         email: PropTypes.string
-    }).isRequired
+    }).isRequired,
+    emailInputValue: PropTypes.string
 };
 
 const mapStateToProps = (state) => ({
