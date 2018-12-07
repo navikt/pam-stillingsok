@@ -25,7 +25,7 @@ class TermsOfUse extends React.Component {
             this.props.createUser(this.state.email);
 
             if (this.props.redirectPage !== undefined && this.props.termsAccepted) {
-                this.props.history.push(this.props.redirectPage);
+                this.props.history.replace(this.props.redirectPage);
             }
         }
     };
@@ -130,7 +130,7 @@ TermsOfUse.propTypes = {
     showUserTermsRequiredMessage: PropTypes.bool.isRequired,
     redirectPage: PropTypes.string,
     history: PropTypes.shape({
-        push: PropTypes.func
+        replace: PropTypes.func
     })
 };
 
