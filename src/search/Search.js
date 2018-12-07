@@ -8,7 +8,7 @@ import FavouriteAlertStripe from '../favourites/alertstripe/FavouriteAlertStripe
 import SavedSearchAlertStripe from '../savedSearches/alertstripe/SavedSearchAlertStripe';
 import CurrentSavedSearch from '../savedSearches/CurrentSavedSearch';
 import SavedSearchesExpand from '../savedSearches/expand/SavedSearchesExpand';
-import ExpandSavedSearchButton from '../savedSearches/ExpandSavedSearchButton';
+import SavedSearchesExpandButton from '../savedSearches/expand/SavedSearchesExpandButton';
 import SavedSearchForm from '../savedSearches/form/SavedSearchForm';
 import SaveSearchButton from '../savedSearches/SaveSearchButton';
 import { RESTORE_STATE_FROM_URL_BEGIN } from '../urlReducer';
@@ -58,27 +58,21 @@ class Search extends React.Component {
                 <div className="Search__header">
                     <Container className="Search__header__container">
                         <Row className="Search__header__row">
-                            <Column xs="12" lg="4" />
-                            <Column xs="12" lg="4">
+                            <Column xs="12" md="4" />
+                            <Column xs="12" md="4">
                                 <Sidetittel className="Search__header__title">Ledige stillinger</Sidetittel>
                             </Column>
-                            <Column xs="12" lg="4">
+                            <Column xs="12" md="4">
                                 {this.props.isAuthenticated === authenticationEnum.IS_AUTHENTICATED && this.props.user ?
                                     <div className="Search__header__left">
-                                        <ExpandSavedSearchButton />
+                                        <SavedSearchesExpandButton />
                                     </div> : null
                                 }
                             </Column>
                         </Row>
                     </Container>
                 </div>
-                {this.props.isSavedSearchesExpanded && (
-                    <div className="Search__header__savedSearches">
-                        <SavedSearchesExpand />
-                    </div>
-                )}
                 <Container className="Search__main">
-
                     {this.props.isSearching && !this.props.initialSearchDone && (
                         <div className="Search__spinner">
                             <DelayedSpinner />
