@@ -36,6 +36,7 @@ class Search extends React.Component {
         super(props);
         this.props.restoreStateFromUrl();
         this.props.initialSearch();
+        this.fraArbeidsplassen = localStorage.getItem('fraArbeidsplassen');
     }
 
     componentDidMount() {
@@ -43,9 +44,13 @@ class Search extends React.Component {
     }
 
     componentWillUpdate(nextProps) {
-        if (window.location.pathname === `${CONTEXT_PATH}/stillinger` && nextProps.userNotFound) {
+        if (this.fraArbeidsplassen && nextProps.userNotFound) {
             this.props.history.replace(`${CONTEXT_PATH}/samtykke`);
         }
+    }
+
+    componentWillUnmount() {
+        localStorage.removeItem('fraArbeidsplassen');
     }
 
 
