@@ -11,6 +11,7 @@ export const HIDE_TERMS_OF_USE_MODAL = 'HIDE_TERMS_OF_USE_MODAL';
 export const FETCH_USER_BEGIN = 'FETCH_USER_BEGIN';
 export const FETCH_USER_SUCCESS = 'FETCH_USER_SUCCESS';
 export const FETCH_USER_FAILURE = 'FETCH_USER_FAILURE';
+export const USER_NOT_FOUND = 'USER_NOT_FOUND';
 
 export const CREATE_USER = 'CREATE_USER';
 export const CREATE_USER_BEGIN = 'CREATE_USER_BEGIN';
@@ -187,6 +188,11 @@ export default function authorizationReducer(state = initialState, action) {
                 ...state,
                 showUserTermsRequiredMessage: true
             };
+        case USER_NOT_FOUND:
+            return {
+                ...state,
+                userNotFound: true
+            };
         default:
             return state;
     }
@@ -211,7 +217,9 @@ function* fetchUser() {
             yield put({ type: FETCH_USER_SUCCESS, response });
         } catch (e) {
             if (e instanceof SearchApiError) {
-                if (e.statusCode !== 404) {
+                if (e.statusCode === 404) {
+                    yield put({ type: USER_NOT_FOUND });
+                } else {
                     yield put({ type: FETCH_USER_FAILURE, error: e });
                 }
             } else {

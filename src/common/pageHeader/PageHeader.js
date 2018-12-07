@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import './PageHeader.less';
 
 export default function PageHeader({
-    backUrl, title, backLabel
+    backUrl, title, backLabel, isInternalRedirect
 }) {
     return (
         <div className="PageHeader">
@@ -16,15 +16,27 @@ export default function PageHeader({
                     <Column xs="12" sm="3">
                         {backUrl && (
                             <div className="PageHeader__left">
-                                <Link
-                                    to={backUrl}
-                                    className="PageHeader__back typo-normal lenke no-print"
-                                >
-                                    <Chevron type="venstre" className="PageHeader__back__chevron" />
-                                    <span className="PageHeader__back__text">
-                                        {backLabel || 'Til stillingsøk'}
-                                    </span>
-                                </Link>
+                                {isInternalRedirect ? (
+                                    <Link
+                                        to={backUrl}
+                                        className="PageHeader__back typo-normal lenke no-print"
+                                    >
+                                        <Chevron type="venstre" className="PageHeader__back__chevron" />
+                                        <span className="PageHeader__back__text">
+                                            {backLabel || 'Til stillingsøk'}
+                                        </span>
+                                    </Link>
+                                ) : (
+                                    <a
+                                        href={backUrl}
+                                        className="PageHeader__back typo-normal lenke no-print"
+                                    >
+                                        <Chevron type="venstre" className="PageHeader__back__chevron" />
+                                        <span className="PageHeader__back__text">
+                                            {backLabel || 'Til stillingsøk'}
+                                        </span>
+                                    </a>
+                                )}
                             </div>
                         )}
                     </Column>
@@ -41,13 +53,14 @@ export default function PageHeader({
 PageHeader.defaultProps = {
     backUrl: undefined,
     backLabel: undefined,
-    buttons: undefined
+    buttons: undefined,
+    isInternalRedirect: true
 };
 
 PageHeader.propTypes = {
     backUrl: PropTypes.string,
     backLabel: PropTypes.string,
     title: PropTypes.string.isRequired,
-    buttons: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node])
+    isInternalRedirect: PropTypes.bool
 };
 

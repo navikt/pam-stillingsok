@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { PersonbrukerHeader } from 'pam-frontend-header';
 import Error from './error/Error';
 import { CONTEXT_PATH } from './fasitProperties';
 import Favourites from './favourites/Favourites';
@@ -10,11 +11,12 @@ import SavedSearches from './savedSearches/SavedSearches';
 import SearchPage from './search/Search';
 import StillingPage from './stilling/Stilling';
 import NotAuthenticatedModal from './authentication/NotAuthenticatedModal';
-import TermsOfUse from './user/TermsOfUse';
 import { FETCH_IS_AUTHENTICATED } from './authentication/authenticationReducer';
 import UserSettings from './user/UserSettings';
 import UserAlertStripe from './user/UserAlertStripe';
 import TopMenu from './common/topMenu/TopMenu';
+import TermsOfUseModal from './user/TermsOfUseModal';
+import TermsOfUsePage from './user/TermsOfUsePage';
 
 class Application extends React.Component {
     componentDidMount() {
@@ -27,6 +29,7 @@ class Application extends React.Component {
                 <div>
                     <Error />
                     <Switch>
+                        <Route exact path={`${CONTEXT_PATH}/samtykke`} component={PersonbrukerHeader} />
                         <Route component={TopMenu} />
                     </Switch>
                     <Switch>
@@ -36,11 +39,12 @@ class Application extends React.Component {
                         <Route path={`${CONTEXT_PATH}/favoritter`} component={Favourites} />
                         <Route path={`${CONTEXT_PATH}/lagrede-sok`} component={SavedSearches} />
                         <Route path={`${CONTEXT_PATH}/innstillinger`} component={UserSettings} />
+                        <Route path={`${CONTEXT_PATH}/samtykke`} component={TermsOfUsePage} />
                         <Route path="*" component={SearchPage} />
                     </Switch>
 
                     {this.props.termsOfUseModalIsVisible && (
-                        <TermsOfUse />
+                        <TermsOfUseModal />
                     )}
 
                     {this.props.authenticationRequiredModalIsVisible && (

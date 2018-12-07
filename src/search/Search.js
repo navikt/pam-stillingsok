@@ -41,6 +41,13 @@ class Search extends React.Component {
         document.title = 'Ledige stillinger';
     }
 
+    componentWillUpdate(nextProps) {
+        if (window.location.pathname === '/pam-stillingsok/stillinger' && nextProps.userNotFound) {
+            this.props.history.push('/pam-stillingsok/samtykke');
+        }
+    }
+
+
     onSearchFormSubmit = (e) => {
         e.preventDefault();
         this.props.search();
@@ -154,7 +161,10 @@ Search.propTypes = {
     initialSearchDone: PropTypes.bool.isRequired,
     isSearching: PropTypes.bool.isRequired,
     isAuthenticated: PropTypes.string.isRequired,
-    user: PropTypes.shape({})
+    user: PropTypes.shape({}),
+    history: PropTypes.shape({
+        push: PropTypes.func
+    }).isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -164,7 +174,8 @@ const mapStateToProps = (state) => ({
     savedSearches: state.savedSearches.savedSearches,
     isSavedSearchesExpanded: state.savedSearchExpand.isSavedSearchesExpanded,
     isAuthenticated: state.authentication.isAuthenticated,
-    user: state.user.user
+    user: state.user.user,
+    userNotFound: state.user.userNotFound
 });
 
 const mapDispatchToProps = (dispatch) => ({
