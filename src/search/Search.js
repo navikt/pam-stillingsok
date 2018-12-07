@@ -29,6 +29,7 @@ import SearchResults from './searchResults/SearchResults';
 import Sorting from './sorting/Sorting';
 import ViewMode from './viewMode/ViewMode';
 import { authenticationEnum } from '../authentication/authenticationReducer';
+import { CONTEXT_PATH } from '../fasitProperties';
 
 class Search extends React.Component {
     constructor(props) {
@@ -42,8 +43,8 @@ class Search extends React.Component {
     }
 
     componentWillUpdate(nextProps) {
-        if (window.location.pathname === '/pam-stillingsok/stillinger' && nextProps.userNotFound) {
-            this.props.history.push('/pam-stillingsok/samtykke');
+        if (window.location.pathname === `${CONTEXT_PATH}/stillinger` && nextProps.userNotFound) {
+            this.props.history.replace(`${CONTEXT_PATH}/samtykke`);
         }
     }
 
@@ -163,7 +164,7 @@ Search.propTypes = {
     isAuthenticated: PropTypes.string.isRequired,
     user: PropTypes.shape({}),
     history: PropTypes.shape({
-        push: PropTypes.func
+        replace: PropTypes.func
     }).isRequired
 };
 

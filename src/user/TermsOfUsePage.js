@@ -1,10 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import TermsOfUse from './TermsOfUse';
 import './TermsOfUsePage.less';
 import PageHeader from '../common/pageHeader/PageHeader';
 
-export default class TermsOfUsePage extends React.Component {
+class TermsOfUsePage extends React.Component {
+    componentWillUpdate(nextProps) {
+        if (nextProps.user !== undefined) {
+            this.props.history.replace('/');
+        }
+    }
+
     onCancelClick = () => {
         window.location.href = 'https://arbeidsplassen.nav.no';
     };
@@ -31,5 +38,13 @@ export default class TermsOfUsePage extends React.Component {
 }
 
 TermsOfUsePage.propTypes = {
-    history: PropTypes.shape({}).isRequired
+    history: PropTypes.shape({
+        replace: PropTypes.func
+    }).isRequired
 };
+
+const mapStateToProps = (state) => ({
+    user: state.user.user
+});
+
+export default connect(mapStateToProps)(TermsOfUsePage);
