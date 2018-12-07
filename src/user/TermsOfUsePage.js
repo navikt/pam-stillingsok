@@ -14,7 +14,7 @@ export default class TermsOfUsePage extends React.Component {
             <div>
                 <PageHeader
                     title="Samtykke"
-                    backUrl="https://arbeidsplassen-q.nav.no"
+                    backUrl="https://arbeidsplassen.nav.no"
                     backLabel="Til forsiden"
                     isInternalRedirect={false}
                 />
