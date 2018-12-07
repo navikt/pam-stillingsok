@@ -190,7 +190,8 @@ function mainQueryOperatorAnd(q) {
                                 fields: [
                                     'category_no^2',
                                     'title_no^1',
-                                    'searchtags_no^0.2',
+                                    'searchtags_no^0.3',
+                                    'geography_all_no^0.2',
                                     'adtext_no^0.2',
                                     'employerdescription_no^0.1'
                                 ],
