@@ -17,7 +17,7 @@ class TopMenu extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="no-print">
                 {this.props.isAuthenticated === authenticationEnum.IS_AUTHENTICATED
                     || this.props.isAuthenticated === authenticationEnum.NOT_AUTHENTICATED ? (
                         <PersonbrukerHeaderMeny
