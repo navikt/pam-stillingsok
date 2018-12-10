@@ -84,7 +84,7 @@ class Search extends React.Component {
                             <DelayedSpinner />
                         </div>
                     )}
-                    {this.props.initialSearchDone && (
+                    {!this.props.initialSearchDone && (
                         <RestoreScroll>
                             <div>
                                 <Row>
