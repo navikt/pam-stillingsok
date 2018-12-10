@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Undertittel } from 'nav-frontend-typografi';
+import './SearchResultCount.less';
 
 function SearchResultCount({ searchResult }) {
     if (searchResult) {
@@ -21,7 +22,7 @@ function SearchResultCount({ searchResult }) {
 
 SearchResultCount.defaultProps = {
     searchResult: undefined
-}
+};
 
 SearchResultCount.propTypes = {
     searchResult: PropTypes.shape({
