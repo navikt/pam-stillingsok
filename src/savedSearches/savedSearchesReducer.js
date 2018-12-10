@@ -220,7 +220,7 @@ function* removeSavedSearch(action) {
 function* updateSavedSearch() {
     yield validateAll();
     const state = yield select();
-    if (state.savedSearchForm.validation.title === undefined && state.savedSearchForm.validation.email === undefined) {
+    if (state.savedSearchForm.validation.title === undefined && state.email.emailError === undefined) {
         try {
             yield put({ type: UPDATE_SAVED_SEARCH_BEGIN });
             const response = yield call(
@@ -243,7 +243,8 @@ function* updateSavedSearch() {
 function* addSavedSearch() {
     yield validateAll();
     const savedSearchForm = yield select((state) => state.savedSearchForm);
-    if (savedSearchForm.validation.title === undefined && savedSearchForm.validation.email === undefined) {
+    const email = yield select((state) => state.email);
+    if (savedSearchForm.validation.title === undefined && email.emailError === undefined) {
         try {
             yield put({ type: ADD_SAVED_SEARCH_BEGIN, added: savedSearchForm.formData });
             const response = yield call(userApiPost, `${AD_USER_API}/api/v1/savedsearches`, {

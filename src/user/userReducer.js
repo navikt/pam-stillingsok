@@ -4,6 +4,7 @@ import { userApiGet, userApiPost, userApiRemove, userApiPut } from '../api/userA
 import { authenticationEnum, FETCH_IS_AUTHENTICATED_SUCCESS } from '../authentication/authenticationReducer';
 import { AD_USER_API } from '../fasitProperties';
 import delay from '../common/delay';
+import { SET_EMAIL } from '../common/email/emailReducer';
 
 export const SHOW_TERMS_OF_USE_MODAL = 'SHOW_TERMS_OF_USE_MODAL';
 export const HIDE_TERMS_OF_USE_MODAL = 'HIDE_TERMS_OF_USE_MODAL';
@@ -37,15 +38,12 @@ export const SET_USER_TERMS_ACCEPTED = 'SET_USER_TERMS_ACCEPTED';
 export const SHOW_USER_TERMS_REQUIRED_MESSAGE = 'SHOW_USER_TERMS_REQUIRED_MESSAGE';
 export const SET_USER_EMAIL = 'SET_USER_EMAIL';
 
-export const VALIDATE_USER_EMAIL = 'VALIDATE_USER_EMAIL';
 export const SET_VALIDATION_ERROR = 'SET_VALIDATION_ERROR';
 export const REMOVE_VALIDATION_ERROR = 'REMOVE_VALIDATION_ERROR';
 
 export const SET_EMAIL_FROM_SAVED_SEARCH = 'SET_EMAIL_FROM_SAVED_SEARCH';
 
 const TERMS_VERSION = 'sok_v1';
-
-export const epostRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 const initialState = {
     user: undefined,
@@ -211,6 +209,7 @@ function* fetchUser() {
         try {
             const response = yield call(userApiGet, `${AD_USER_API}/api/v1/user`);
             yield put({ type: FETCH_USER_SUCCESS, response });
+            yield put({ type: SET_EMAIL, value: response.email });
         } catch (e) {
             if (e instanceof SearchApiError) {
                 if (e.statusCode !== 404) {
@@ -253,12 +252,14 @@ function* createUser(action) {
 
 function* updateUserEmail() {
     const state = yield select();
-    if (state.user.validation.email === undefined) {
-        const isClearingEmail = state.user.user.email === null || state.user.user.email.trim().length === 0;
+    if (state.email.emailError === undefined) {
+        const isClearingEmail = state.email.email === null || state.email.email.trim().length === 0;
         try {
             yield put({ type: UPDATE_USER_EMAIL_BEGIN });
-            const response = yield call(userApiPut, `${AD_USER_API}/api/v1/user`, fixUser(state.user.user));
+            const response = yield call(userApiPut, `${AD_USER_API}/api/v1/user`,
+                fixUser({ ...state.user.user, email: state.email.email }));
             yield put({ type: UPDATE_USER_EMAIL_SUCCESS, response });
+            yield put({ type: SET_EMAIL, value: response.email });
             yield put({
                 type: UPDATE_USER_EMAIL_SHOW_ALERT,
                 mode: isClearingEmail ? 'clear-email' : 'set-email'
@@ -277,10 +278,10 @@ function* updateUserEmail() {
 
 function* setEmailFromSavedSearch() {
     let state = yield select();
-    if (state.savedSearchForm.validation.email === undefined) {
+    if (state.email.emailError === undefined) {
         try {
             yield put({ type: UPDATE_USER_EMAIL_BEGIN });
-            yield put({ type: SET_USER_EMAIL, email: state.savedSearchForm.emailInputValue });
+            yield put({ type: SET_USER_EMAIL, email: state.email.email });
             state = yield select();
             const response = yield call(userApiPut, `${AD_USER_API}/api/v1/user`, state.user.user);
             yield put({ type: UPDATE_USER_EMAIL_SUCCESS, response });
@@ -308,26 +309,10 @@ function* deleteUser() {
     }
 }
 
-function* validateEMail() {
-    const email = yield select((state) => state.user.user.email);
-    const error = email && (email.length > 0) && !email.trim().match(epostRegex);
-    if (error) {
-        yield put({
-            type: SET_VALIDATION_ERROR,
-            field: 'email',
-            message: 'Din e-postadresse er ikke gyldig. Pass på å fjerne alle mellomrom,' +
-                ' husk å ha med @ og punktum. Eksempel: ola.nordmann@online.no'
-        });
-    } else {
-        yield put({ type: REMOVE_VALIDATION_ERROR, field: 'email' });
-    }
-}
-
 export const userSaga = function* saga() {
     yield takeEvery(FETCH_IS_AUTHENTICATED_SUCCESS, fetchUser);
     yield takeLatest(CREATE_USER, createUser);
     yield takeLatest(UPDATE_USER_EMAIL, updateUserEmail);
     yield takeLatest(SET_EMAIL_FROM_SAVED_SEARCH, setEmailFromSavedSearch);
     yield takeLatest(DELETE_USER, deleteUser);
-    yield takeLatest(VALIDATE_USER_EMAIL, validateEMail);
 };
