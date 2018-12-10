@@ -1,3 +1,13 @@
+## RELEASE - 0.56.444-e01032a
+#### New in this release: 
++ 2018-12-10 [PAM-2183] Set AND operator tuning as default
++ 2018-12-10 [PAM-2297] Fix proxy error handling in server.js
++ 2018-12-07 [PAM-2183] Search new geography field in cross-fields AND tuning
++ 2018-12-06 [PAM-2159,PAM-2173,PAM-2183] Search relevance adjustments
++ 2018-12-06 [Fix] Typo discalimer -> disclaimer
++ 2018-12-06 [PAM-2166]: visuell endring på knappen som ekspanderer lagrede søk
++ 2018-12-03 [PAM-2220] Juster marger og avstander
++ 2018-12-03 [PAM-2220} Fix marger og avstander i søket
 ## RELEASE - 0.55.434-ae735cb
 #### New in this release: 
 + 2018-12-04 [enhancement] adding gzip compression to reduce served file sizes
