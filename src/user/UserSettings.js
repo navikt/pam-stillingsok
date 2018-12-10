@@ -1,5 +1,6 @@
 import { Column, Container, Row } from 'nav-frontend-grid';
 import { Flatknapp, Knapp } from 'nav-frontend-knapper';
+import { Input } from 'nav-frontend-skjema';
 import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -10,11 +11,9 @@ import { CONTEXT_PATH } from '../fasitProperties';
 import ConfirmDeleteUserModal from './ConfirmDeleteUserModal';
 import NotAuthenticated from '../authentication/NotAuthenticated';
 import NoUser from './NoUser';
-import { SHOW_CONFIRM_DELETE_USER_MODAL, UPDATE_USER_EMAIL } from './userReducer';
+import { SET_USER_EMAIL, SHOW_CONFIRM_DELETE_USER_MODAL, UPDATE_USER_EMAIL, VALIDATE_USER_EMAIL } from './userReducer';
 import './UserSettings.less';
 import { authenticationEnum } from '../authentication/authenticationReducer';
-import Email from '../common/email/Email';
-import { SET_EMAIL, VALIDATE_EMAIL } from '../common/email/emailReducer';
 
 const PAGE_TITLE = 'Innstillinger';
 
@@ -23,6 +22,18 @@ class UserSettings extends React.Component {
         window.scrollTo(0, 0);
         document.title = PAGE_TITLE;
     }
+
+    onEmailChange = (e) => {
+        this.props.setUserEmail(e.target.value);
+    };
+
+    onEmailBlur = () => {
+        const { email } = this.props.user;
+        if (email && email.length > 0) {
+            this.props.setUserEmail(email.trim());
+        }
+        this.props.validateEmail();
+    };
 
     onUpdateUserEmailClick = () => {
         this.props.updateUserEmail();
@@ -33,12 +44,14 @@ class UserSettings extends React.Component {
     };
 
     onRemoveEmailClick = () => {
-        this.props.setEmail(null);
+        this.props.setUserEmail(null);
         this.props.validateEmail();
         this.props.updateUserEmail();
     };
 
     render() {
+        const { validation } = this.props;
+
         return (
             <div className="UserSettings">
                 <PageHeader
@@ -89,8 +102,14 @@ class UserSettings extends React.Component {
                                                     </Link> eller slette e-postadressen.
                                                 </Normaltekst>
                                                 <div className="UserSettings__email-input">
-                                                    <Email
+                                                    <Input
                                                         label="E-postadressen din (valgfritt)"
+                                                        value={this.props.user.email || ''}
+                                                        onChange={this.onEmailChange}
+                                                        onBlur={this.onEmailBlur}
+                                                        feil={validation.email ? {
+                                                            feilmelding: validation.email
+                                                        } : undefined}
                                                     />
                                                 </div>
                                                 <div className="UserSettings__email-buttons">
@@ -101,7 +120,7 @@ class UserSettings extends React.Component {
                                                     >
                                                         Lagre
                                                     </Knapp>
-                                                    {this.props.email && this.props.email.length > 0 && (
+                                                    {this.props.user.email !== null && (
                                                         <Flatknapp
                                                             onClick={this.onRemoveEmailClick}
                                                             spinner={this.props.isUpdating}
@@ -161,20 +180,23 @@ class UserSettings extends React.Component {
 }
 
 UserSettings.defaultProps = {
-    user: undefined,
-    email: undefined
+    user: undefined
 };
 
 UserSettings.propTypes = {
-    user: PropTypes.shape({}),
+    user: PropTypes.shape({
+        email: PropTypes.string
+    }),
     isAuthenticated: PropTypes.string.isRequired,
-    setEmail: PropTypes.func.isRequired,
+    setUserEmail: PropTypes.func.isRequired,
     validateEmail: PropTypes.func.isRequired,
     showConfirmDeleteUserModal: PropTypes.func.isRequired,
     updateUserEmail: PropTypes.func.isRequired,
     confirmDeleteUserModalIsVisible: PropTypes.bool.isRequired,
     isUpdating: PropTypes.bool.isRequired,
-    email: PropTypes.string
+    validation: PropTypes.shape({
+        email: PropTypes.string
+    }).isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -183,13 +205,12 @@ const mapStateToProps = (state) => ({
     isUpdating: state.user.isUpdating,
     updateUserError: state.user.updateUserError,
     confirmDeleteUserModalIsVisible: state.user.confirmDeleteUserModalIsVisible,
-    validation: state.user.validation,
-    email: state.email.email
+    validation: state.user.validation
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    setEmail: (value) => dispatch({ type: SET_EMAIL, value }),
-    validateEmail: () => dispatch({ type: VALIDATE_EMAIL }),
+    setUserEmail: (email) => dispatch({ type: SET_USER_EMAIL, email }),
+    validateEmail: () => dispatch({ type: VALIDATE_USER_EMAIL }),
     updateUserEmail: () => dispatch({ type: UPDATE_USER_EMAIL }),
     showConfirmDeleteUserModal: () => dispatch({ type: SHOW_CONFIRM_DELETE_USER_MODAL })
 });

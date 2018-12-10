@@ -27,7 +27,6 @@ import stillingReducer, { stillingSaga } from './stilling/stillingReducer';
 import './styles.less';
 import { urlSaga } from './urlReducer';
 import './variables.less';
-import { emailReducer, emailSaga } from './common/email/emailReducer';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -51,8 +50,7 @@ const store = createStore(combineReducers({
     sector: sectorReducer,
     sorting: sortingReducer,
     stilling: stillingReducer,
-    viewMode: viewModeReducer,
-    email: emailReducer
+    viewMode: viewModeReducer
 }), applyMiddleware(sagaMiddleware));
 
 sagaMiddleware.run(saga);
@@ -66,7 +64,6 @@ sagaMiddleware.run(urlSaga);
 sagaMiddleware.run(userSaga);
 sagaMiddleware.run(viewModeSaga);
 sagaMiddleware.run(authenticationSaga);
-sagaMiddleware.run(emailSaga);
 
 
 ReactDOM.render(

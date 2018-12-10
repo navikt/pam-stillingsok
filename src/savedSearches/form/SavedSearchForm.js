@@ -35,7 +35,7 @@ class SavedSearchForm extends React.Component {
             this.props.updateSavedSearch();
         }
 
-        if (this.childForm && this.childForm.current) {
+        if(this.childForm && this.childForm.current) {
             this.childForm.current.getWrappedInstance().setFocusOnError();
         }
     };

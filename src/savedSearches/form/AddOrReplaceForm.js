@@ -8,11 +8,11 @@ import {
     SET_SAVED_SEARCH_DURATION,
     SET_SAVED_SEARCH_NOTIFY_TYPE,
     SET_SAVED_SEARCH_TITLE,
-    SET_SHOW_REGISTER_EMAIL
+    SET_SHOW_REGISTER_EMAIL,
+    VALIDATE_EMAIL,
+    SET_EMAIL_INPUT_VALUE
 } from './savedSearchFormReducer';
 import './SavedSearchForm.less';
-import Email from '../../common/email/Email';
-import { VALIDATE_EMAIL } from '../../common/email/emailReducer';
 
 class AddOrReplaceForm extends React.Component {
     constructor(props) {
@@ -23,6 +23,18 @@ class AddOrReplaceForm extends React.Component {
 
     onTitleChange = (e) => {
         this.props.setTitle(e.target.value);
+    };
+
+    onEmailChange = (e) => {
+        this.props.setEmailInputValue(e.target.value);
+    };
+
+    onEmailBlur = () => {
+        const { emailInputValue } = this.props;
+        if (emailInputValue && emailInputValue.length > 0) {
+            this.props.setEmailInputValue(emailInputValue.trim());
+        }
+        this.props.validateEmail();
     };
 
     onSubscribeChange = (e) => {
@@ -51,7 +63,7 @@ class AddOrReplaceForm extends React.Component {
     setFocusOnError = () => {
         if (this.props.validation.title && this.titleRef) {
             this.titleRef.focus();
-        } else if (this.props.emailError && this.emailRef) {
+        } else if (this.props.validation.email && this.emailRef) {
             this.emailRef.focus();
         }
     };
@@ -120,10 +132,15 @@ class AddOrReplaceForm extends React.Component {
                             </AlertStripe>
                         )}
                         {this.emailNotSet() && (
-                            <Email
+                            <Input
                                 label="Skriv inn e-postadressen din"
+                                value={this.props.emailInputValue || ''}
+                                onChange={this.onEmailChange}
+                                onBlur={this.onEmailBlur}
                                 inputRef={this.setEmailRef}
-                                emailRequired
+                                feil={validation.email ? {
+                                    feilmelding: validation.email
+                                } : undefined}
                             />
                         )}
                     </div>
@@ -136,7 +153,7 @@ class AddOrReplaceForm extends React.Component {
 AddOrReplaceForm.defaultProps = {
     formData: undefined,
     user: undefined,
-    emailError: undefined
+    emailInputValue: undefined
 };
 
 AddOrReplaceForm.propTypes = {
@@ -146,14 +163,17 @@ AddOrReplaceForm.propTypes = {
     setTitle: PropTypes.func.isRequired,
     setNotifyType: PropTypes.func.isRequired,
     setDuration: PropTypes.func.isRequired,
+    setEmailInputValue: PropTypes.func.isRequired,
+    validateEmail: PropTypes.func.isRequired,
     setShowRegisterEmail: PropTypes.func.isRequired,
     formData: PropTypes.shape({
         title: PropTypes.string
     }),
     validation: PropTypes.shape({
-        title: PropTypes.string
+        title: PropTypes.string,
+        email: PropTypes.string
     }).isRequired,
-    emailError: PropTypes.string
+    emailInputValue: PropTypes.string
 };
 
 const mapStateToProps = (state) => ({
@@ -161,13 +181,14 @@ const mapStateToProps = (state) => ({
     formData: state.savedSearchForm.formData,
     validation: state.savedSearchForm.validation,
     showRegisterEmail: state.savedSearchForm.showRegisterEmail,
-    emailError: state.email.emailError
+    emailInputValue: state.savedSearchForm.emailInputValue
 });
 
 const mapDispatchToProps = (dispatch) => ({
     setTitle: (title) => dispatch({ type: SET_SAVED_SEARCH_TITLE, title }),
     setNotifyType: (notifyType) => dispatch({ type: SET_SAVED_SEARCH_NOTIFY_TYPE, notifyType }),
     setDuration: (duration) => dispatch({ type: SET_SAVED_SEARCH_DURATION, duration }),
+    setEmailInputValue: (email) => dispatch({ type: SET_EMAIL_INPUT_VALUE, email }),
     validateEmail: () => dispatch({ type: VALIDATE_EMAIL }),
     setShowRegisterEmail: (showRegisterEmail) => dispatch({ type: SET_SHOW_REGISTER_EMAIL, showRegisterEmail })
 });

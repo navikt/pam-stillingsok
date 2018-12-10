@@ -1,23 +1,43 @@
 import { Flatknapp, Hovedknapp } from 'nav-frontend-knapper';
 import Modal from 'nav-frontend-modal';
-import { Checkbox } from 'nav-frontend-skjema';
+import { Checkbox, Input } from 'nav-frontend-skjema';
 import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import './TermsOfUse.less';
-import { CREATE_USER, HIDE_TERMS_OF_USE_MODAL, SET_USER_TERMS_ACCEPTED } from './userReducer';
-import Email from '../common/email/Email';
+import { CREATE_USER, epostRegex, HIDE_TERMS_OF_USE_MODAL, SET_USER_TERMS_ACCEPTED } from './userReducer';
 
 class TermsOfUse extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            email: '',
+            hasValidationError: false
+        };
+    }
+
     onCheckboxClick = (e) => {
         this.props.setUserTermsAccepted(e.target.checked);
     };
 
     onAcceptTerms = () => {
-        if (this.props.emailError === undefined) {
-            this.props.createUser(this.props.email);
+        if (this.state.hasValidationError === false) {
+            this.props.createUser(this.state.email);
         }
+    };
+
+    onEmailChange = (e) => {
+        this.setState({
+            email: e.target.value
+        });
+    };
+
+    onEmailBlur = () => {
+        this.setState({
+            email: this.state.email.trim(),
+            hasValidationError: this.state.email && !this.state.email.trim().match(epostRegex)
+        });
     };
 
     closeModal = () => {
@@ -55,8 +75,15 @@ class TermsOfUse extends React.Component {
                             e-postvarsling under lagrede søk eller slette e-postadressen under dine innstillinger.
                         </Normaltekst>
                         <div className="TermsOfUse__input">
-                            <Email
+                            <Input
                                 label="Oppgi e-post hvis du ønsker varsling (valgfritt)"
+                                value={this.state.email}
+                                onChange={this.onEmailChange}
+                                onBlur={this.onEmailBlur}
+                                feil={this.state.hasValidationError ? {
+                                    feilmelding: 'Din e-postadresse er ikke gyldig. Pass på å fjerne alle mellomrom,' +
+                                        ' husk å ha med @ og punktum. Eksempel: ola.nordmann@online.no'
+                                } : undefined}
                             />
                         </div>
                     </div>
@@ -95,27 +122,19 @@ class TermsOfUse extends React.Component {
     }
 }
 
-TermsOfUse.defaultProps = {
-    emailError: undefined
-};
-
 TermsOfUse.propTypes = {
     setUserTermsAccepted: PropTypes.func.isRequired,
     createUser: PropTypes.func.isRequired,
     hideModal: PropTypes.func.isRequired,
     isCreating: PropTypes.bool.isRequired,
     termsAccepted: PropTypes.bool.isRequired,
-    showUserTermsRequiredMessage: PropTypes.bool.isRequired,
-    emailError: PropTypes.string,
-    email: PropTypes.string.isRequired
+    showUserTermsRequiredMessage: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => ({
     isCreating: state.user.isCreating,
     termsAccepted: state.user.termsAccepted,
-    showUserTermsRequiredMessage: state.user.showUserTermsRequiredMessage,
-    emailError: state.email.emailError,
-    email: state.email.email
+    showUserTermsRequiredMessage: state.user.showUserTermsRequiredMessage
 });
 
 const mapDispatchToProps = (dispatch) => ({
