@@ -9,12 +9,14 @@ const HOTJAR_URL = 'https://surveys.hotjar.com/s?siteId=118350&surveyId=124493';
 
 const Disclaimer = () => (
     <div className="DisclaimerWrapper no-print">
-        <div role="alert" className="Disclaimer typo-normal">
-            <Normaltekst>
-                <a href={HOTJAR_URL} className="lenke">
-                    Gi tilbakemelding på stillingssøket
-                </a>
-            </Normaltekst>
+        <div className="container">
+            <div role="alert" className="Disclaimer typo-normal">
+                <Normaltekst>
+                    <a href={HOTJAR_URL} className="lenke">
+                        Gi tilbakemelding på stillingssøket
+                    </a>
+                </Normaltekst>
+            </div>
         </div>
     </div>
 );
