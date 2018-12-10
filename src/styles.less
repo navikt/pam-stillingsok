@@ -22,6 +22,12 @@ body {
   color: @navMorkGra;
 }
 
+body.screen-xs-no-scroll {
+  @media (max-width: @screen-xs-max) {
+    overflow-y: hidden;
+  }
+}
+
 .background--light-green {
   background-color: @background-green;
 }

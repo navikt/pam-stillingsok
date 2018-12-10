@@ -1,9 +1,8 @@
-import { Undertittel } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { CONTEXT_PATH } from '../../fasitProperties';
+import { Element } from 'nav-frontend-typografi';
+import Lukknapp from 'nav-frontend-lukknapp';
 import DelayedSpinner from '../../search/loading/DelayedSpinner';
 import NoSavedSearches from '../noresult/NoSavedSearches';
 import './SavedSearchesExpand.less';
@@ -16,10 +15,18 @@ class SavedSearchesExpand extends React.Component {
     }
 
     render() {
-        const { isFetching, savedSearches } = this.props;
+        const { isFetching, savedSearches, onCloseButton } = this.props;
         return (
-            <div className="SavedSearchesExpand">
-                <div className="SavedSearchesExpand__inner">
+            <div>
+                <div className="panel SavedSearches__panel">
+                    <Lukknapp
+                        className="SavedSearches__close"
+                        aria-label="Lukk lagrede søk"
+                        onClick={onCloseButton}
+                        overstHjorne
+                    >
+                        Lukk lagrede søk
+                    </Lukknapp>
                     {isFetching ? (
                         <div className="SavedSearchesExpand__spinner">
                             <DelayedSpinner />
@@ -30,19 +37,16 @@ class SavedSearchesExpand extends React.Component {
                                 <NoSavedSearches showButton={false} />
                             ) : (
                                 <div>
-                                    <Undertittel>Lagrede søk</Undertittel>
-                                    <ul className={savedSearches.length > 2 ? 'SavedSearchesExpand__list SavedSearchesExpand__columns' : 'SavedSearchesExpand__list'}>
-                                        {savedSearches.map((savedSearch) => (
-                                            <SavedSearchesExpandItem
-                                                key={savedSearch.uuid}
-                                                savedSearch={savedSearch}
-                                            />
-                                        ))}
-                                    </ul>
-                                    <div className="SavedSearchesExpand__link-to-saved-searches">
-                                        <Link to={`${CONTEXT_PATH}/lagrede-sok`} className="lenke typo-element">
-                                            Endre lagrede søk og varsler
-                                        </Link>
+                                    <div className="SavedSearchesExpand__panel__inner">
+                                        <Element>Mine lagrede søk</Element>
+                                        <ul className="SavedSearchesExpand__list">
+                                            {savedSearches.map((savedSearch) => (
+                                                <SavedSearchesExpandItem
+                                                    key={savedSearch.uuid}
+                                                    savedSearch={savedSearch}
+                                                />
+                                            ))}
+                                        </ul>
                                     </div>
                                 </div>
                             )}
@@ -60,7 +64,8 @@ SavedSearchesExpand.propTypes = {
     savedSearches: PropTypes.arrayOf(PropTypes.shape({
         uuid: PropTypes.string,
         title: PropTypes.string
-    })).isRequired
+    })).isRequired,
+    onCloseButton: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
