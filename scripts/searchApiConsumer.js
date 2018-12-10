@@ -39,6 +39,7 @@ exports.suggestions = async (query = {}) => {
     const options = {
         method: 'POST',
         json: true,
+        timeout: 8000,
         url,
         body
     };
