@@ -174,10 +174,8 @@ exports.suggestionsTemplate = (match, minLength) => ({
     _source: false
 });
 
-/* Experimental alternative relevance model with AND-logic and using cross-fields matching.
-   In its current form NOT recommended as default. It is not strictly AND across all queried fields either, due
-   to difficulties with analyzer-grouping for cross_field multi-match queries combined with AND-logic. */
-function mainQueryOperatorAnd(q) {
+/* Experimental alternative relevance model with AND-logic and using cross-fields matching. */
+function mainQueryConjunctionTuning(q) {
     return {
         bool: {
             must: {
@@ -260,8 +258,8 @@ function mainQueryOperatorAnd(q) {
     }
 }
 
-/* Generate main matching query object with classic/original relevance model */
-function mainQuery(q) {
+/* Generate main matching query object with classic/original OR match relevance model */
+function mainQueryDisjunctionTuning(q) {
     return {
         bool: {
             must: {
@@ -274,6 +272,7 @@ function mainQuery(q) {
                         'id^1',
                         'employername^0.9',
                         'searchtags_no^0.4',
+                        'geography_all_no^0.2',
                         'adtext_no^0.2',
                         'employerdescription_no^0.1'
                     ],
@@ -345,9 +344,9 @@ exports.searchTemplate = (query) => {
     }
 
     // Resolve if and-operator should be used (experimental)
-    let mainQueryTemplateFunc = mainQuery;
-    if (operator === 'and') {
-        mainQueryTemplateFunc = mainQueryOperatorAnd;
+    let mainQueryTemplateFunc = mainQueryConjunctionTuning;
+    if (operator === 'or') {
+        mainQueryTemplateFunc = mainQueryDisjunctionTuning;
     }
 
     let template = {

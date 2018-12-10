@@ -89,13 +89,13 @@ function fixStilling(stilling) {
     return stilling;
 }
 
-function isAndSearchFeatureEnabled() {
-    return localStorage.getItem('featureToggleAndOperator') === 'true';
+function isOrSearchFeatureEnabled() {
+    return localStorage.getItem('featureToggleOrOperator') === 'true';
 }
 
 export async function fetchSearch(query = {}) {
     const queryString = toQueryString(query);
-    const result = await get(`/api/search${queryString}${isAndSearchFeatureEnabled() ? '&operator=and' : ''}`);
+    const result = await get(`/api/search${queryString}${isOrSearchFeatureEnabled() ? '&operator=or' : ''}`);
     return {
         stillinger: result.hits.hits.map((stilling) => (
             fixStilling(stilling._source)
