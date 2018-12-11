@@ -1,6 +1,5 @@
 import { Column, Container, Row } from 'nav-frontend-grid';
 import { Flatknapp } from 'nav-frontend-knapper';
-import { Sidetittel } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -58,11 +57,18 @@ class Search extends React.Component {
                 <div className="Search__header">
                     <Container className="Search__header__container">
                         <Row className="Search__header__row">
-                            <Column xs="12" md="4" />
-                            <Column xs="12" md="4">
-                                <Sidetittel className="Search__header__title">Ledige stillinger</Sidetittel>
+                            <Column xs="12" sm="4" lg="4" />
+                            <Column xs="12" sm="8" lg="8">
+                                <form
+                                    role="search"
+                                    action="/"
+                                    onSubmit={this.onSearchFormSubmit}
+                                    className="no-print"
+                                >
+                                    <SearchBox />
+                                </form>
                             </Column>
-                            <Column xs="12" md="4">
+                            <Column xs="12" sm="4" lg="4">
                                 {this.props.isAuthenticated === authenticationEnum.IS_AUTHENTICATED && this.props.user ?
                                     <div className="Search__header__left">
                                         <SavedSearchesExpandButton />
@@ -97,7 +103,6 @@ class Search extends React.Component {
                                                     onSubmit={this.onSearchFormSubmit}
                                                     className="no-print"
                                                 >
-                                                    <SearchBox />
                                                     <Published />
                                                     <Occupations />
                                                     <Counties />
