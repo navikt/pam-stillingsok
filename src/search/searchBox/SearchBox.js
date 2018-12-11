@@ -49,7 +49,7 @@ class SearchBox extends React.Component {
                         type="submit"
                         className="SearchBox__button"
                     >
-                        <i className="SearchBox__button__icon" />
+                        <i aria-label="Søk" className="SearchBox__button__icon" />
                     </Knapp>
                 </div>
             </div>
