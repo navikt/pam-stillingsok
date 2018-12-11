@@ -58,7 +58,7 @@ class Countries extends React.Component {
                             <div key={countries}>
                                 <Checkbox
                                     name="deprecatedCountries"
-                                    label={`${countries} (0)`}
+                                    label={`${capitalizeLocation(countries)} (0)`}
                                     value={countries}
                                     onChange={this.onCountriesClick}
                                     checked={checkedCountries.includes(countries)}
