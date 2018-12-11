@@ -29,6 +29,7 @@ import SearchResults from './searchResults/SearchResults';
 import Sorting from './sorting/Sorting';
 import ViewMode from './viewMode/ViewMode';
 import { authenticationEnum } from '../authentication/authenticationReducer';
+import Countries from './facets/countries/Countries';
 
 class Search extends React.Component {
     constructor(props) {
@@ -104,6 +105,7 @@ class Search extends React.Component {
                                                     <Extent />
                                                     <EngagementType />
                                                     <Sector />
+                                                    <Countries />
                                                 </form>
                                             </div>
                                         </div>

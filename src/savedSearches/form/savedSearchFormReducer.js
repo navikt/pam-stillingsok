@@ -214,6 +214,7 @@ function toTitle(state) {
     if (state.extent.checkedExtent.length > 0) title.push(state.extent.checkedExtent.join(', '));
     if (state.engagement.checkedEngagementType.length > 0) title.push(state.engagement.checkedEngagementType.join(', '));
     if (state.sector.checkedSector.length > 0) title.push(state.sector.checkedSector.join(', '));
+    if (state.countries.checkedCountries.length > 0) title.push(state.countries.checkedCountries.join(', '));
 
     const newTitle = title.join(', ');
 
