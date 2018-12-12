@@ -1,3 +1,18 @@
+## RELEASE - 0.57.465-de08380
+#### New in this release: 
++ 2018-12-06 [Fix] Syntaksfeil
++ 2018-12-06 [PAM-2222] Gi kompakt-knapp hoverstate
++ 2018-12-06 [PAM-2236] Flytt søkeboks og fiks utseende
++ 2018-12-06 [PAM-2236] Endre disclaimer til en enkel lenke
++ 2018-12-05 [PAM-2222] Endre peker til pointer ved hover
++ 2018-12-04 [PAM-2219] Endrer fontstørrelser i resultatvisning
++ 2018-12-03 [Fix] Fiks etter rebase
++ 2018-12-03 [PAM-2222] Endre kompakt-knapp
++ 2018-12-03 [PAM-2229] Fjern unødvendig whitelist
++ 2018-11-30 [PAM-2229] Bruk CONTEXT_PATH i stedet for hardkodet verdi
++ 2018-11-30 [PAM-2229] Refaktorer redirect-logikk
++ 2018-11-30 [PAM-2229] Legg til redirect
++ 2018-11-30 [PAM-2229] Fiks redirect
 ## RELEASE - 0.56.444-e01032a
 #### New in this release: 
 + 2018-12-10 [PAM-2183] Set AND operator tuning as default
