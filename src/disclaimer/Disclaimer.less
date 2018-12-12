@@ -6,7 +6,6 @@
   border-top: 1px solid #979797;
   display: flex;
   justify-content: center;
-  pointer-events: none;
   width: 100%;
 }
 
@@ -16,7 +15,6 @@
   background: #fff;
   font-size: 120%;
   position: relative;
-  pointer-events: visible;
 }
 
 .Disclaimer__close {
@@ -31,6 +29,14 @@
   background: #fff;
   font-size: 120%;
   position: relative;
+}
+
+.pointer {
+  pointer-events: visible;
+}
+
+.no-pointer {
+  pointer-events: none;
 }
 
 @media (min-width: @screen-sm-max) {

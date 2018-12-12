@@ -8,11 +8,11 @@ import './Disclaimer.less';
 const HOTJAR_URL = 'https://surveys.hotjar.com/s?siteId=118350&surveyId=124493';
 
 const Disclaimer = () => (
-    <div className="DisclaimerWrapper no-print">
-        <div className="container">
-            <div role="alert" className="Disclaimer typo-normal">
+    <div className="DisclaimerWrapper no-print no-pointer">
+        <div className="container no-pointer">
+            <div role="alert" className="Disclaimer typo-normal no-pointer">
                 <Normaltekst>
-                    <a href={HOTJAR_URL} className="lenke">
+                    <a href={HOTJAR_URL} className="lenke pointer">
                         Gi tilbakemelding på stillingssøket
                     </a>
                 </Normaltekst>
