@@ -38,6 +38,7 @@
 @media (max-width: @screen-sm-max) {
   .Search__main__left__save-search {
     margin-bottom: 1rem;
+    display:flex;
   }
 
   .Search__main__center__header {
@@ -112,6 +113,22 @@
   .Search__header__left {
     justify-content: center;
   }
+
+  .Search__main__center__header {
+    display: flex;
+    padding-top: 16px !important;
+    padding-bottom: 16px !important;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .Search__main__center__header__right {
+    margin-bottom: 0;
+  }
+
+  .Search__main__center__header__left {
+    flex: none;
+  }
 }
 
 .Search__separator {
@@ -128,14 +145,6 @@
   .Search__main {
     padding-left: 16px !important;
     padding-right: 16px !important;
-  }
-
-  .Search__main__center__header__right {
-    margin-bottom: 20px;
-  }
-
-  .Search__main__center__header {
-    padding-top: 16px !important;
   }
 
   .Search__header__row {
