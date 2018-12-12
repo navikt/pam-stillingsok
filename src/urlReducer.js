@@ -1,6 +1,5 @@
 import { put, select, takeLatest } from 'redux-saga/effects';
 import { ADD_SAVED_SEARCH_SUCCESS, SET_CURRENT_SAVED_SEARCH } from './savedSearches/savedSearchesReducer';
-import { SET_VALUE } from './search/searchBox/searchBoxReducer';
 import { LOAD_MORE, PAGE_SIZE, RESET_SEARCH, SEARCH } from './search/searchReducer';
 import { toObject, toQueryString } from './search/url';
 import { SET_VIEW_MODE } from './search/viewMode/viewModeReducer';
@@ -28,6 +27,22 @@ function setCurrentQueryString(queryString) {
     sessionStorage.setItem(LATEST_QUERY_STRING_KEY, queryString);
 }
 
+/**
+ * Dekoder en url til den ikke lenger er kodet.
+ * En kodet url er i dette tilfellet en url som inneholder '%'.
+ * @param url:      Muligens kodet url
+ * @returns string: Dekodet url
+ */
+function fullDecode(url) {
+    let decodedUrl = url;
+
+    while (decodedUrl.includes('%')) {
+        decodedUrl = decodeURIComponent(decodedUrl);
+    }
+
+    return decodedUrl;
+}
+
 function* updateUrl() {
     const state = yield select();
     const query = {
@@ -50,7 +65,7 @@ function* updateUrl() {
 }
 
 function* restoreStateFromUrl() {
-    const searchString = document.location.search;
+    const searchString = fullDecode(document.location.search);
     setCurrentQueryString(searchString || '');
 
     if (searchString.length > 0) {

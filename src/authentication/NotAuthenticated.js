@@ -4,10 +4,11 @@ import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import React from 'react';
 import './NotAuthenticated.less';
 import { LOGIN_URL } from '../fasitProperties';
+import { getRedirect } from '../redirect';
 
 export default class NotAuthenticated extends React.Component {
     onLoginClick = () => {
-        window.location.href = LOGIN_URL;
+        window.location.href = `${LOGIN_URL}${getRedirect()}`;
     };
 
     render() {
