@@ -102,10 +102,10 @@ class Search extends React.Component {
                                                     <Published />
                                                     <Occupations />
                                                     <Counties />
+                                                    <Countries />
                                                     <Extent />
                                                     <EngagementType />
                                                     <Sector />
-                                                    <Countries />
                                                 </form>
                                             </div>
                                         </div>

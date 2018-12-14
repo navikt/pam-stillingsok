@@ -606,7 +606,10 @@ exports.searchTemplate = (query) => {
                 },
                 aggs: {
                     values: {
-                        terms: { field: 'country_facet' }
+                        terms: {
+                            field: 'country_facet',
+                            exclude : "NORGE"
+                        }
                     }
                 }
             },
