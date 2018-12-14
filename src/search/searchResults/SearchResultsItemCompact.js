@@ -4,10 +4,18 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { CONTEXT_PATH } from '../../fasitProperties';
 import ToggleFavouriteStar from '../../favourites/toggleFavoriteButton/ToggleFavouriteStar';
-import { formatISOString } from '../../utils';
+import {formatISOString, isValidISOString} from '../../utils';
 import './SearchResultsItemCompact.less';
 
 export default function SearchResultsItemCompact({ stilling, urlQuery }) {
+    let frist;
+    const { applicationdue } = stilling.properties;
+    if (applicationdue && applicationdue !== undefined) {
+        frist = isValidISOString(applicationdue) ? formatISOString(applicationdue, 'DD.MM.YYYY') : applicationdue;
+    } else {
+        frist = 'Ikke oppgitt';
+    }
+
     return (
         <div className="SearchResultItemCompact">
             {stilling.properties.employer && (
@@ -30,7 +38,7 @@ export default function SearchResultsItemCompact({ stilling, urlQuery }) {
             </Normaltekst>
             {stilling.updated && (
                 <Undertekst className="SearchResultItem__updated">
-                    {formatISOString(stilling.updated, 'DD.MM.YYYY')}
+                    {frist}
                 </Undertekst>
             )}
             <ToggleFavouriteStar uuid={stilling.uuid} className="SearchResultItemCompact__favourite"/>
@@ -51,7 +59,7 @@ SearchResultsItemCompact.propTypes = {
             employer: PropTypes.string,
             jobtitle: PropTypes.string,
             location: PropTypes.string,
-            updated: PropTypes.string
+            applicationdue: PropTypes.string
         })
     }).isRequired,
     shouldFocus: PropTypes.bool,
