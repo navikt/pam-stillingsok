@@ -123,6 +123,10 @@ export async function fetchSearch(query = {}) {
             key: item.key,
             count: item.doc_count
         })),
+        countries: result.aggregations.countries.values.buckets.map((item) => ({
+            key: item.key,
+            count: item.doc_count
+        })),
         engagementTypes: result.aggregations.engagementType.values.buckets.map((item) => ({
             key: item.key,
             count: item.doc_count

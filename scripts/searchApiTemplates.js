@@ -73,6 +73,26 @@ function filterExtent(extent) {
     return filters;
 }
 
+function filterCountries(countries) {
+    const filters = [];
+    if (countries && countries.length > 0) {
+        const filter = {
+            bool: {
+                should: []
+            }
+        };
+        countries.forEach((item) => {
+            filter.bool.should.push({
+                term: {
+                    country_facet: item
+                }
+            });
+        });
+        filters.push(filter);
+    }
+    return filters;
+}
+
 function filterEngagementType(engagementTypes) {
     const filters = {
         bool: {
@@ -330,7 +350,7 @@ function mainQueryDisjunctionTuning(q) {
 
 exports.searchTemplate = (query) => {
     const {
-        from, size, counties, municipals, extent, engagementType, sector, published,
+        from, size, counties, countries, municipals, extent, engagementType, sector, published,
         occupationFirstLevels, occupationSecondLevels
     } = query;
     let { sort, q, operator } = query;
@@ -362,6 +382,7 @@ exports.searchTemplate = (query) => {
                         }
                     },
                     ...filterExtent(extent),
+                    ...filterCountries(countries),
                     filterLocation(counties, municipals),
                     filterOccupation(occupationFirstLevels, occupationSecondLevels),
                     filterEngagementType(engagementType),
@@ -394,6 +415,7 @@ exports.searchTemplate = (query) => {
                                 }
                             },
                             ...filterExtent(extent),
+                            ...filterCountries(countries),
                             filterLocation(counties, municipals),
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
                             filterEngagementType(engagementType),
@@ -425,6 +447,7 @@ exports.searchTemplate = (query) => {
                                 }
                             },
                             ...filterExtent(extent),
+                            ...filterCountries(countries),
                             filterLocation(counties, municipals),
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
                             filterEngagementType(engagementType),
@@ -447,6 +470,7 @@ exports.searchTemplate = (query) => {
                                     status: 'ACTIVE'
                                 }
                             },
+                            ...filterCountries(countries),
                             filterLocation(counties, municipals),
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
                             filterEngagementType(engagementType),
@@ -471,6 +495,7 @@ exports.searchTemplate = (query) => {
                                 }
                             },
                             ...filterExtent(extent),
+                            ...filterCountries(countries),
                             filterLocation(counties, municipals),
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
                             filterSector(sector),
@@ -494,6 +519,7 @@ exports.searchTemplate = (query) => {
                                 }
                             },
                             ...filterExtent(extent),
+                            ...filterCountries(countries),
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
                             filterEngagementType(engagementType),
                             filterSector(sector),
@@ -534,6 +560,7 @@ exports.searchTemplate = (query) => {
                                 }
                             },
                             ...filterExtent(extent),
+                            ...filterCountries(countries),
                             filterLocation(counties, municipals),
                             filterEngagementType(engagementType),
                             filterSector(sector),
@@ -557,7 +584,34 @@ exports.searchTemplate = (query) => {
                         }
                     }
                 }
-            }
+            },
+            countries: {
+                filter: {
+                    bool: {
+                        filter: [
+                            {
+                                term: {
+                                    status: 'ACTIVE'
+                                }
+                            },
+                            ...filterExtent(extent),
+                            filterLocation(counties, municipals),
+                            filterOccupation(occupationFirstLevels, occupationSecondLevels),
+                            filterEngagementType(engagementType),
+                            filterSector(sector),
+                            filterPublished(published)
+                        ]
+                    }
+                },
+                aggs: {
+                    values: {
+                        terms: {
+                            field: 'country_facet',
+                            exclude : "NORGE"
+                        }
+                    }
+                }
+            },
         }
     };
 

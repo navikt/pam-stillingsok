@@ -51,6 +51,7 @@ function* updateUrl() {
         to: state.search.to > PAGE_SIZE ? state.search.to : undefined,
         counties: state.counties.checkedCounties,
         municipals: state.counties.checkedMunicipals,
+        countries: state.countries.checkedCountries,
         published: state.published.checkedPublished,
         engagementType: state.engagement.checkedEngagementType,
         sector: state.sector.checkedSector,
