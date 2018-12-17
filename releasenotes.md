@@ -1,3 +1,8 @@
+## RELEASE - 0.59.470-df55de2
+#### New in this release: 
++ 2018-12-14 [PAM-2291] Compact mode showing application due instead of updated (#125)
++ 2018-12-13 [PAM-2182]: setter farge på visited links
++ 2018-12-12 [Fix] Fiks padding for lagre favoritt-knapp i kompakt mobilvisning
 ## RELEASE - 0.57.465-de08380
 #### New in this release: 
 + 2018-12-06 [Fix] Syntaksfeil
