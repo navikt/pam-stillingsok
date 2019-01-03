@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import './ViewMode.less';
+import './KompaktKnapp.less';
 
 const createLines = (status, count) => {
     return Array(count)
