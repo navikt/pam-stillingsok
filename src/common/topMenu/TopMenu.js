@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { PersonbrukerHeaderMeny, PersonbrukerHeader } from 'pam-frontend-header';
+import { PersonbrukerHeaderMeny, PersonbrukerHeader, PersonbrukerApplikasjon } from 'pam-frontend-header';
 import { LOGIN_URL, LOGOUT_URL } from '../../fasitProperties';
 import Disclaimer from '../../disclaimer/Disclaimer';
 import { authenticationEnum } from '../../authentication/authenticationReducer';
@@ -26,6 +26,7 @@ class TopMenu extends React.Component {
                             onLoggInn={this.onLoginClick}
                             personbruker={{ navn: 'Innstillinger' }}
                             erInnlogget={this.props.isAuthenticated === authenticationEnum.IS_AUTHENTICATED}
+                            applikasjon={PersonbrukerApplikasjon.STILLINGSSOK}
                         />
                     ) : (
                         <PersonbrukerHeader />
