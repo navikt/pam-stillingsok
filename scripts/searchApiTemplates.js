@@ -273,7 +273,12 @@ function mainQueryConjunctionTuning(q) {
                         boost: 3
                     }
                 }
-            ]
+            ],
+            filter: {
+                term: {
+                    status: 'ACTIVE'
+                }
+            }
         }
     }
 }
@@ -343,7 +348,12 @@ function mainQueryDisjunctionTuning(q) {
                         boost: 3
                     }
                 }
-            ]
+            ],
+            filter: {
+                term: {
+                    status: 'ACTIVE'
+                }
+            }
         }
     }
 }
@@ -376,11 +386,6 @@ exports.searchTemplate = (query) => {
         post_filter: {
             bool: {
                 filter: [
-                    {
-                        term: {
-                            status: 'ACTIVE'
-                        }
-                    },
                     ...filterExtent(extent),
                     ...filterCountries(countries),
                     filterLocation(counties, municipals),
@@ -413,11 +418,6 @@ exports.searchTemplate = (query) => {
                 filter: {
                     bool: {
                         filter: [
-                            {
-                                term: {
-                                    status: 'ACTIVE'
-                                }
-                            },
                             ...filterExtent(extent),
                             ...filterCountries(countries),
                             filterLocation(counties, municipals),
@@ -445,11 +445,6 @@ exports.searchTemplate = (query) => {
                 filter: {
                     bool: {
                         filter: [
-                            {
-                                term: {
-                                    status: 'ACTIVE'
-                                }
-                            },
                             ...filterExtent(extent),
                             ...filterCountries(countries),
                             filterLocation(counties, municipals),
@@ -469,11 +464,6 @@ exports.searchTemplate = (query) => {
                 filter: {
                     bool: {
                         filter: [
-                            {
-                                term: {
-                                    status: 'ACTIVE'
-                                }
-                            },
                             ...filterCountries(countries),
                             filterLocation(counties, municipals),
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
@@ -493,11 +483,6 @@ exports.searchTemplate = (query) => {
                 filter: {
                     bool: {
                         filter: [
-                            {
-                                term: {
-                                    status: 'ACTIVE'
-                                }
-                            },
                             ...filterExtent(extent),
                             ...filterCountries(countries),
                             filterLocation(counties, municipals),
@@ -517,11 +502,6 @@ exports.searchTemplate = (query) => {
                 filter: {
                     bool: {
                         filter: [
-                            {
-                                term: {
-                                    status: 'ACTIVE'
-                                }
-                            },
                             ...filterExtent(extent),
                             ...filterCountries(countries),
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
@@ -558,11 +538,6 @@ exports.searchTemplate = (query) => {
                 filter: {
                     bool: {
                         filter: [
-                            {
-                                term: {
-                                    status: 'ACTIVE'
-                                }
-                            },
                             ...filterExtent(extent),
                             ...filterCountries(countries),
                             filterLocation(counties, municipals),
@@ -593,11 +568,6 @@ exports.searchTemplate = (query) => {
                 filter: {
                     bool: {
                         filter: [
-                            {
-                                term: {
-                                    status: 'ACTIVE'
-                                }
-                            },
                             ...filterExtent(extent),
                             filterLocation(counties, municipals),
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
