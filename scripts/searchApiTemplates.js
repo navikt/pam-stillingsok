@@ -117,7 +117,7 @@ function filterNestedFacets(parents, children = [], parentKey, childKey) {
     if (parents && parents.length > 0) {
         parents.forEach((parent) => {
             let must = [{
-                match: {
+                term: {
                     [parentKey]: parent
                 }
             }];
