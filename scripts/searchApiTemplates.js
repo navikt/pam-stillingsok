@@ -393,10 +393,14 @@ exports.searchTemplate = (query) => {
         },
         _source: {
             includes: [
+                'employer.name',
                 'properties.employer',
                 'properties.jobtitle',
                 'properties.location',
                 'properties.applicationdue',
+                'location.city',
+                'location.municipal',
+                'location.country',
                 'applicationdue',
                 'title',
                 'updated',

@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 import { CONTEXT_PATH } from '../../fasitProperties';
 import ToggleFavouriteStar from '../../favourites/toggleFavoriteButton/ToggleFavouriteStar';
 import {formatISOString, isValidISOString} from '../../utils';
+import getWorkLocation from '../../common/getWorkLocation';
+import getEmployer from '../../common/getEmployer';
 import './SearchResultsItemCompact.less';
 
 export default function SearchResultsItemCompact({ stilling, urlQuery }) {
@@ -15,12 +17,12 @@ export default function SearchResultsItemCompact({ stilling, urlQuery }) {
     } else {
         frist = 'Ikke oppgitt';
     }
-
+    const employer = getEmployer(stilling);
     return (
         <div className="SearchResultItemCompact">
-            {stilling.properties.employer && (
+            {employer && (
                 <Normaltekst className="SearchResultItemCompact__employer">
-                    {stilling.properties.employer} - {stilling.properties.location}
+                    {employer} - {getWorkLocation(stilling, true)}
                 </Normaltekst>
             )}
 

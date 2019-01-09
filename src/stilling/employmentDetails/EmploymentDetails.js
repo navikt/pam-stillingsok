@@ -3,8 +3,12 @@ import PropTypes from 'prop-types';
 import { Undertittel } from 'nav-frontend-typografi';
 import { formatISOString, isValidISOString } from '../../utils';
 import worktimeParser from './worktimeParser';
+import getWorkLocation from '../../common/getWorkLocation';
 
-export default function EmploymentDetails({ properties }) {
+export default function EmploymentDetails({ stilling }) {
+    const { properties } = stilling;
+    const location = getWorkLocation(stilling);
+
     return (
         <div className="EmploymentDetails detail-section">
             <Undertittel className="EmploymentDetails__head detail-section__head">Om stillingen</Undertittel>
@@ -13,9 +17,9 @@ export default function EmploymentDetails({ properties }) {
                     <dt key="dt">Stillingstittel:</dt>,
                     <dd key="dd">{properties.jobtitle}</dd>]
                 }
-                {properties.location && [
+                {location && [
                     <dt key="dt">Sted:</dt>,
-                    <dd key="dd">{properties.location}</dd>
+                    <dd key="dd">{location}</dd>
                 ]}
                 {properties.engagementtype && [
                     <dt key="dt">Ansettelsesform:</dt>,
@@ -59,17 +63,20 @@ export default function EmploymentDetails({ properties }) {
 }
 
 EmploymentDetails.propTypes = {
-    properties: PropTypes.shape({
-        jobtitle: PropTypes.string,
-        location: PropTypes.string,
-        engagementtype: PropTypes.string,
-        extent: PropTypes.string,
-        positioncount: PropTypes.string,
-        sector: PropTypes.string,
-        workday: PropTypes.string,
-        workhours: PropTypes.string,
-        jobarrangement: PropTypes.string,
-        starttime: PropTypes.string
+    stilling: PropTypes.shape({
+        properties: PropTypes.shape({
+            jobtitle: PropTypes.string,
+            location: PropTypes.string,
+            engagementtype: PropTypes.string,
+            extent: PropTypes.string,
+            positioncount: PropTypes.string,
+            sector: PropTypes.string,
+            workday: PropTypes.string,
+            workhours: PropTypes.string,
+            jobarrangement: PropTypes.string,
+            starttime: PropTypes.string
+        }),
+        location: PropTypes.shape({})
     }).isRequired
 };
 

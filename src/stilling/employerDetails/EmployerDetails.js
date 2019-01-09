@@ -3,20 +3,24 @@ import PropTypes from 'prop-types';
 import ReactHtmlParser from 'react-html-parser';
 import { Undertittel } from 'nav-frontend-typografi';
 import { isValidUrl } from '../../utils';
+import getEmployer, { getEmployerLocation } from '../../common/getEmployer';
 import './EmployerDetails.less';
 
-export default function EmployerDetails({ properties }) {
+export default function EmployerDetails({ stilling }) {
+    const { properties } = stilling;
+    const employer = getEmployer(stilling);
+    const employerLocation = getEmployerLocation(stilling.employer);
     return (
         <div className="EmployerDetails detail-section">
             <Undertittel className="EmployerDetails__head detail-section__head">Om arbeidsgiveren</Undertittel>
             <dl className="dl-flex typo-normal">
-                {properties.employer && [
+                {employer && [
                     <dt key="dt">Arbeidsgiver:</dt>,
-                    <dd key="dd">{properties.employer}</dd>
+                    <dd key="dd">{employer}</dd>
                 ]}
-                {properties.address && [
+                {employerLocation && [
                     <dt key="dt">Adresse:</dt>,
-                    <dd key="dd">{properties.address}</dd>
+                    <dd key="dd">{employerLocation}</dd>
                 ]}
                 {properties.employerhomepage && [
                     <dt key="dt">Hjemmeside:</dt>,
@@ -83,14 +87,15 @@ export default function EmployerDetails({ properties }) {
 }
 
 EmployerDetails.propTypes = {
-    properties: PropTypes.shape({
-        employer: PropTypes.string,
-        address: PropTypes.string,
-        employerhomepage: PropTypes.string,
-        linkedinpage: PropTypes.string,
-        twitteraddress: PropTypes.string,
-        facebookpage: PropTypes.string,
-        employerdescription: PropTypes.string
+    stilling: PropTypes.shape({
+        properties: PropTypes.shape({
+            employer: PropTypes.string,
+            address: PropTypes.string,
+            employerhomepage: PropTypes.string,
+            linkedinpage: PropTypes.string,
+            twitteraddress: PropTypes.string,
+            facebookpage: PropTypes.string,
+            employerdescription: PropTypes.string
+        }).isRequired
     }).isRequired
 };
-
