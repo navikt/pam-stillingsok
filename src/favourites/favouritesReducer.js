@@ -4,6 +4,8 @@ import { userApiGet, userApiPost, userApiRemove } from '../api/userApi';
 import SearchApiError from '../api/SearchApiError';
 import AuthenticationCaller from '../authentication/AuthenticationCaller';
 import { requiresAuthentication } from '../authentication/authenticationReducer';
+import getWorkLocation from '../common/getWorkLocation';
+import getEmployer from '../common/getEmployer';
 import {
     FETCH_USER_SUCCESS,
     CREATE_USER_SUCCESS,
@@ -156,8 +158,8 @@ function toFavourite(uuid, ad) {
             jobTitle: ad.properties.jobtitle ? ad.properties.jobtitle : null,
             status: ad.status,
             applicationdue: ad.properties.applicationdue ? ad.properties.applicationdue : null,
-            location: ad.properties.location ? ad.properties.location : null,
-            employer: ad.properties.employer ? ad.properties.employer : null
+            location: getWorkLocation(ad),
+            employer: getEmployer(ad)
         }
     };
 }
