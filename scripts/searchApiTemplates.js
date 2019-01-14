@@ -16,24 +16,17 @@ function mapSortByOrder(value) {
 }
 
 function filterPublished(published) {
+    const filters = [];
     if (published) {
-        return {
-            bool: {
-                should: [{
+        filters.push({
                     range: {
                         published: {
                             gte: published
                         }
                     }
-                }]
-            }
-        };
+        });
     }
-    return {
-        bool: {
-            should: []
-        }
-    };
+    return filters;
 }
 
 function suggest(field, match, minLength) {
@@ -94,19 +87,21 @@ function filterCountries(countries) {
 }
 
 function filterEngagementType(engagementTypes) {
-    const filters = {
-        bool: {
-            should: []
-        }
-    };
+    const filters = [];
     if (engagementTypes && engagementTypes.length > 0) {
+        const filter = {
+            bool: {
+                should: []
+            }
+        };
         engagementTypes.forEach((engagementType) => {
-            filters.bool.should.push({
+            filter.bool.should.push({
                 term: {
                     engagementtype_facet: engagementType
                 }
             });
         });
+        filters.push(filter);
     }
     return filters;
 }
@@ -122,7 +117,7 @@ function filterNestedFacets(parents, children = [], parentKey, childKey) {
     if (parents && parents.length > 0) {
         parents.forEach((parent) => {
             let must = [{
-                match: {
+                term: {
                     [parentKey]: parent
                 }
             }];
@@ -163,21 +158,22 @@ function filterOccupation(occupationLevel1, occupationLevel2) {
     return filterNestedFacets(occupationLevel1, occupationLevel2, 'occupation_level1_facet', 'occupation_level2_facet');
 }
 
-
 function filterSector(sector) {
-    const filters = {
-        bool: {
-            should: []
-        }
-    };
+    const filters = [];
     if (sector && sector.length > 0) {
+        const filter = {
+            bool: {
+                should: []
+            }
+        };
         sector.forEach((item) => {
-            filters.bool.should.push({
+            filter.bool.should.push({
                 term: {
                     sector_facet: item
                 }
             });
         });
+        filters.push(filter);
     }
     return filters;
 }
@@ -273,7 +269,12 @@ function mainQueryConjunctionTuning(q) {
                         boost: 3
                     }
                 }
-            ]
+            ],
+            filter: {
+                term: {
+                    status: 'ACTIVE'
+                }
+            }
         }
     }
 }
@@ -343,7 +344,12 @@ function mainQueryDisjunctionTuning(q) {
                         boost: 3
                     }
                 }
-            ]
+            ],
+            filter: {
+                term: {
+                    status: 'ACTIVE'
+                }
+            }
         }
     }
 }
@@ -376,18 +382,13 @@ exports.searchTemplate = (query) => {
         post_filter: {
             bool: {
                 filter: [
-                    {
-                        term: {
-                            status: 'ACTIVE'
-                        }
-                    },
                     ...filterExtent(extent),
                     ...filterCountries(countries),
                     filterLocation(counties, municipals),
                     filterOccupation(occupationFirstLevels, occupationSecondLevels),
-                    filterEngagementType(engagementType),
-                    filterSector(sector),
-                    filterPublished(published)
+                    ...filterEngagementType(engagementType),
+                    ...filterSector(sector),
+                    ...filterPublished(published)
                 ]
             }
         },
@@ -413,17 +414,12 @@ exports.searchTemplate = (query) => {
                 filter: {
                     bool: {
                         filter: [
-                            {
-                                term: {
-                                    status: 'ACTIVE'
-                                }
-                            },
                             ...filterExtent(extent),
                             ...filterCountries(countries),
                             filterLocation(counties, municipals),
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
-                            filterEngagementType(engagementType),
-                            filterSector(sector)
+                            ...filterEngagementType(engagementType),
+                            ...filterSector(sector)
                         ]
                     }
                 },
@@ -445,17 +441,12 @@ exports.searchTemplate = (query) => {
                 filter: {
                     bool: {
                         filter: [
-                            {
-                                term: {
-                                    status: 'ACTIVE'
-                                }
-                            },
                             ...filterExtent(extent),
                             ...filterCountries(countries),
                             filterLocation(counties, municipals),
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
-                            filterEngagementType(engagementType),
-                            filterPublished(published)
+                            ...filterEngagementType(engagementType),
+                            ...filterPublished(published)
                         ]
                     }
                 },
@@ -469,17 +460,12 @@ exports.searchTemplate = (query) => {
                 filter: {
                     bool: {
                         filter: [
-                            {
-                                term: {
-                                    status: 'ACTIVE'
-                                }
-                            },
                             ...filterCountries(countries),
                             filterLocation(counties, municipals),
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
-                            filterEngagementType(engagementType),
-                            filterSector(sector),
-                            filterPublished(published)
+                            ...filterEngagementType(engagementType),
+                            ...filterSector(sector),
+                            ...filterPublished(published)
                         ]
                     }
                 },
@@ -493,17 +479,12 @@ exports.searchTemplate = (query) => {
                 filter: {
                     bool: {
                         filter: [
-                            {
-                                term: {
-                                    status: 'ACTIVE'
-                                }
-                            },
                             ...filterExtent(extent),
                             ...filterCountries(countries),
                             filterLocation(counties, municipals),
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
-                            filterSector(sector),
-                            filterPublished(published)
+                            ...filterSector(sector),
+                            ...filterPublished(published)
                         ]
                     }
                 },
@@ -517,17 +498,12 @@ exports.searchTemplate = (query) => {
                 filter: {
                     bool: {
                         filter: [
-                            {
-                                term: {
-                                    status: 'ACTIVE'
-                                }
-                            },
                             ...filterExtent(extent),
                             ...filterCountries(countries),
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
-                            filterEngagementType(engagementType),
-                            filterSector(sector),
-                            filterPublished(published)
+                            ...filterEngagementType(engagementType),
+                            ...filterSector(sector),
+                            ...filterPublished(published)
                         ]
                     }
                 },
@@ -558,17 +534,12 @@ exports.searchTemplate = (query) => {
                 filter: {
                     bool: {
                         filter: [
-                            {
-                                term: {
-                                    status: 'ACTIVE'
-                                }
-                            },
                             ...filterExtent(extent),
                             ...filterCountries(countries),
                             filterLocation(counties, municipals),
-                            filterEngagementType(engagementType),
-                            filterSector(sector),
-                            filterPublished(published)
+                            ...filterEngagementType(engagementType),
+                            ...filterSector(sector),
+                            ...filterPublished(published)
                         ]
                     }
                 },
@@ -593,17 +564,12 @@ exports.searchTemplate = (query) => {
                 filter: {
                     bool: {
                         filter: [
-                            {
-                                term: {
-                                    status: 'ACTIVE'
-                                }
-                            },
                             ...filterExtent(extent),
                             filterLocation(counties, municipals),
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
-                            filterEngagementType(engagementType),
-                            filterSector(sector),
-                            filterPublished(published)
+                            ...filterEngagementType(engagementType),
+                            ...filterSector(sector),
+                            ...filterPublished(published)
                         ]
                     }
                 },

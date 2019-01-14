@@ -1,3 +1,6 @@
+## RELEASE - 0.61.476-1227771
+#### New in this release: 
++ 2019-01-09 [PAM-2134]: viser strukturerte data for work location og employer
 ## RELEASE - 0.60.472-a4cae7c
 #### New in this release: 
 + 2019-01-03 [PAM-2357] Endre kompaktknapp
