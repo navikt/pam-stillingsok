@@ -1,3 +1,8 @@
+## RELEASE - 0.62.479-02fb140
+#### New in this release: 
++ 2019-01-07 [PAM-2428] Use term query for matching parent facet values
++ 2019-01-07 [PAM-2428] Reduce number of empty boolean clauses for filters
++ 2019-01-04 [PAM-2428] Apply ad status filter in main query
 ## RELEASE - 0.61.476-1227771
 #### New in this release: 
 + 2019-01-09 [PAM-2134]: viser strukturerte data for work location og employer
