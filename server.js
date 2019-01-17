@@ -41,7 +41,7 @@ server.engine('html', mustacheExpress());
 server.use(bodyParser.json());
 
 const fasitProperties = {
-    PAM_CONTEXT_PATH: '/pam-stillingsok',
+    PAM_CONTEXT_PATH: '/stillinger',
     PAM_AD_USER_API: `${process.env.PAMADUSER_URL}/aduser`,
     LOGIN_URL: process.env.LOGINSERVICE_URL,
     LOGOUT_URL: process.env.LOGOUTSERVICE_URL,
@@ -77,22 +77,20 @@ const renderSok = (htmlPages) => (
 const startServer = (htmlPages) => {
     writeEnvironmentVariablesToFile();
 
-    server.use(
-        '/pam-stillingsok/js',
+    server.use(`${fasitProperties.PAM_CONTEXT_PATH}/js`,
         express.static(path.resolve(__dirname, 'dist/js'))
     );
 
-    server.use(
-        '/pam-stillingsok/css',
+    server.use(`${fasitProperties.PAM_CONTEXT_PATH}/css`,
         express.static(path.resolve(__dirname, 'dist/css'))
     );
 
     server.use(
-        '/pam-stillingsok/images',
+        `${fasitProperties.PAM_CONTEXT_PATH}/images`,
         express.static(path.resolve(__dirname, 'images'))
     );
 
-    server.get('/api/search', async (req, res) => {
+    server.get(`${fasitProperties.PAM_CONTEXT_PATH}/api/search`, async (req, res) => {
         await searchApiConsumer.search(req.query)
             .catch((err) => {
                 console.warn('Failed to query search api', err);
@@ -101,7 +99,7 @@ const startServer = (htmlPages) => {
             .then((val) => res.send(val));
     });
 
-    server.post('/api/search', async (req, res) => {
+    server.post(`${fasitProperties.PAM_CONTEXT_PATH}/api/search`, async (req, res) => {
         await searchApiConsumer.search(req.body)
             .catch((err) => {
                 console.warn('Failed to query search api', err);
@@ -110,7 +108,7 @@ const startServer = (htmlPages) => {
             .then((val) => res.send(val));
     });
 
-    server.get('/api/suggestions', async (req, res) => {
+    server.get(`${fasitProperties.PAM_CONTEXT_PATH}/api/suggestions`, async (req, res) => {
         await searchApiConsumer.suggestions(req.query)
             .catch((err) => {
                 console.warn('Failed to fetch suggestions,', err);
@@ -119,7 +117,7 @@ const startServer = (htmlPages) => {
             .then( (result) => res.send(result));
     });
 
-    server.post('/api/suggestions', async (req, res) => {
+    server.post(`${fasitProperties.PAM_CONTEXT_PATH}/api/suggestions`, async (req, res) => {
         await searchApiConsumer.suggestions(req.body)
             .catch((err) => {
                 console.warn('Failed to fetch suggestions,', err);
@@ -128,7 +126,7 @@ const startServer = (htmlPages) => {
             .then((result) => res.send(result));
     });
 
-    server.get('/api/stilling/:uuid', async (req, res) => {
+    server.get(`${fasitProperties.PAM_CONTEXT_PATH}/api/stilling/:uuid`, async (req, res) => {
         await searchApiConsumer.fetchStilling(req.params.uuid)
             .catch((err) => {
                 console.warn('Failed to fetch stilling with uuid', req.params.uuid);
@@ -137,17 +135,26 @@ const startServer = (htmlPages) => {
             .then((val) => res.send(val));
     });
 
+    server.get('/', (req,res) => {
+        res.redirect(`${fasitProperties.PAM_CONTEXT_PATH}`)
+    });
+
+    server.get(/^\/pam-stillingsok.*$/, (req,res) => {
+        var url = req.url.replace("/pam-stillingsok", `${fasitProperties.PAM_CONTEXT_PATH}`);
+        res.redirect(`${url}`)
+    })
+
     server.get(
-        ['/', '/pam-stillingsok/?', /^\/pam-stillingsok\/(?!.*dist).*$/],
+        ['/stillinger/?', /^\/stillinger\/(?!.*dist).*$/],
         (req, res) => {
             res.send(htmlPages.sok);
         }
     );
 
-    server.get('/pam-stillingsok/internal/isAlive', (req, res) => res.sendStatus(200));
-    server.get('/pam-stillingsok/internal/isReady', (req, res) => res.sendStatus(200));
+    server.get(`${fasitProperties.PAM_CONTEXT_PATH}/internal/isAlive`, (req, res) => res.sendStatus(200));
+    server.get(`${fasitProperties.PAM_CONTEXT_PATH}/internal/isReady`, (req, res) => res.sendStatus(200));
 
-    server.get('/metrics', (req, res) => {
+    server.get(`${fasitProperties.PAM_CONTEXT_PATH}/internal/metrics`, (req, res) => {
         res.set('Content-Type', prometheus.register.contentType);
         res.end(prometheus.register.metrics());
     });
