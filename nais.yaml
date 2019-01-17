@@ -8,14 +8,14 @@ replicas:
 port: 8080
 healthcheck:
   liveness:
-    path: /pam-stillingsok/internal/isAlive
+    path: /stillinger/internal/isAlive
     initialDelay: 60
   readiness:
-    path: /pam-stillingsok/internal/isReady
+    path: /stillinger/internal/isReady
     initialDelay: 60
 prometheus:
   enabled: true
-  path: /metrics
+  path: /stillinger/internal/metrics
 resources:
   limits:
     cpu: 500m
