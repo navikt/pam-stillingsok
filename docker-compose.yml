@@ -1,0 +1,50 @@
+version: '3'
+services:
+  pam-stillingsok:
+    image: pam-stillingsok
+    environment:
+    - PAMADUSER_URL=http://localhost:9017
+    - LOGINSERVICE_URL=http://localhost:9018/local/cookie-selvbetjening
+    - LOGOUTSERVICE_URL=http://localhost:9018/local/logout
+    - PAM_STILLINGSOK_URL=http://localhost:8080/stillinger
+    - PAMSEARCHAPI_URL=https://pam-search-api.nais.oera-q.local
+    # OK/Only for development
+    - NODE_TLS_REJECT_UNAUTHORIZED=0
+    build: .
+    command: [sh, -c, "npm start"]
+    volumes:
+    - .:/usr/src/app
+    ports:
+    - "8080:8080"
+    depends_on:
+    - pam-aduser
+  pam-stillingsok-webpack:
+    image: pam-stillingsok
+    command: [sh, -c, "npm run start-webpack"]
+    volumes:
+    - .:/usr/src/app
+    depends_on:
+    - pam-stillingsok
+  pam-aduser:
+    environment:
+    - NO_NAV_SECURITY_OIDC_ISSUER_SELVBETJENING_ACCEPTEDAUDIENCE=aud-localhost
+    - NO_NAV_SECURITY_OIDC_ISSUER_SELVBETJENING_DISCOVERYURL=http://oidc-test:9018/local/metadata
+    - NO_NAV_PAM_ADUSER_ADURL=http://localhost:8080/stillinger/stilling
+    - NO_NAV_PAM_ADUSER_URLTOSEARCHPAGE=http://localhost:8080/stillinger/
+    - NO_NAV_PAM_ADUSER_ALLOWED_ORIGINS=http://localhost:8080
+    - NO_NAV_PAM_ADUSER_SEARCHURL=http://localhost:8080/stillinger/api/search
+    - NAV_TRUSTSTORE_PATH=/nav_truststore.jts
+    - NAV_TRUSTSTORE_PASSWORD=changeit
+    - PAMADUSER_ARBEIDSPLASSEN_COOKIE_DOMAIN=localhost
+    - PAMADUSER_ARBEIDSPLASSEN_COOKIE_SECURE=false
+    build: ../pam-aduser/.
+    ports:
+    - "9017:9017"
+    volumes:
+    - ../dev_nav_truststore/nav_truststore.jts:/nav_truststore.jts
+    depends_on:
+    - oidc-test
+  oidc-test:
+    build: ../pam-devtools/oidc-test/.
+    ports:
+    - "9018:9018"
