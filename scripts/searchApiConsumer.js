@@ -1,7 +1,7 @@
 const rp = require('request-promise');
 const { searchTemplate, suggestionsTemplate } = require('./searchApiTemplates');
 
-const host = process.env.DEV_PROFILE === 'true' ? 'http://localhost:9000' : 'http://pam-search-api';
+const host = process.env.PAMSEARCHAPI_URL ? process.env.PAMSEARCHAPI_URL : 'http://pam-search-api';
 const url = `${host}/stillingsok/ad/_search`;
 
 /* eslint no-console: 0 */
