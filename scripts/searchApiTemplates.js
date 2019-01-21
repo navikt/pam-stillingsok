@@ -395,6 +395,7 @@ exports.searchTemplate = (query) => {
         _source: {
             includes: [
                 'employer.name',
+                'businessName',
                 'properties.employer',
                 'properties.jobtitle',
                 'properties.location',
