@@ -1,6 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import SearchApiError from './SearchApiError';
 import { toQueryString } from '../search/url';
+import {CONTEXT_PATH} from "../fasitProperties";
 
 /* eslint-disable no-underscore-dangle */
 
@@ -95,7 +96,7 @@ function isOrSearchFeatureEnabled() {
 
 export async function fetchSearch(query = {}) {
     const queryString = toQueryString(query);
-    const result = await get(`/api/search${queryString}${isOrSearchFeatureEnabled() ? '&operator=or' : ''}`);
+    const result = await get(`${CONTEXT_PATH}/api/search${queryString}${isOrSearchFeatureEnabled() ? '&operator=or' : ''}`);
     return {
         stillinger: result.hits.hits.map((stilling) => (
             fixStilling(stilling._source)
@@ -144,7 +145,7 @@ export async function fetchSearch(query = {}) {
 
 export async function fetchCategoryAndSearchTagsSuggestions(match, minLength) {
     const queryString = toQueryString({ match, minLength });
-    const result = await get(`/api/suggestions${queryString}`);
+    const result = await get(`${CONTEXT_PATH}/api/suggestions${queryString}`);
 
     return {
         match,
@@ -156,5 +157,5 @@ export async function fetchCategoryAndSearchTagsSuggestions(match, minLength) {
 }
 
 export async function fetchStilling(uuid) {
-    return get(`/api/stilling/${uuid}`);
+    return get(`${CONTEXT_PATH}/api/stilling/${uuid}`);
 }

@@ -4,15 +4,17 @@ import { LOAD_MORE, PAGE_SIZE, RESET_SEARCH, SEARCH } from './search/searchReduc
 import { toObject, toQueryString } from './search/url';
 import { SET_VIEW_MODE } from './search/viewMode/viewModeReducer';
 import { removeUndefinedOrEmptyString } from './utils';
+import {CONTEXT_PATH} from './fasitProperties';
 
 export const RESTORE_STATE_FROM_URL_BEGIN = 'RESTORE_STATE_FROM_URL_BEGIN';
 export const RESTORE_STATE_FROM_URL = 'RESTORE_STATE_FROM_URL';
 
 const LATEST_QUERY_STRING_KEY = 'latestQueryString';
 
+
 export function urlFromSessionStorageOrIndex() {
     const url = sessionStorage.getItem(LATEST_QUERY_STRING_KEY);
-    return url ? `/${url}` : '/';
+    return url ? `${CONTEXT_PATH}/${url}` : `${CONTEXT_PATH}/`;
 }
 
 /**
