@@ -1,3 +1,10 @@
+## RELEASE - 0.63.484-b6ed10d
+#### New in this release: 
++ 2019-01-22 [VERSION] update pam-frontend-header to v2.3.1
++ 2019-01-17 [IMPROVEMENT] Introduced docker-compose for easier dev setup
++ 2019-01-17 [PAM-2449] Stillingsok under arbeidsplassen.nav.no/stillinger
++ 2019-01-17 [REFACTOR] Use global CONTEXT_PATH variable
++ 2019-01-17 [REFACTOR] removed DEV_PROFILE, replaced with PAMSEARCHAPI_URL
 ## RELEASE - 0.62.479-02fb140
 #### New in this release: 
 + 2019-01-07 [PAM-2428] Use term query for matching parent facet values
