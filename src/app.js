@@ -7,7 +7,6 @@ import authenticationReducer, { authenticationSaga } from './authentication/auth
 import errorReducer from './error/errorReducer';
 import Application from './Application';
 import userReducer, { userSaga } from './user/userReducer';
-import disclaimerReducer from './disclaimer/disclaimerReducer';
 import favouritesReducer, { favouritesSaga } from './favourites/favouritesReducer';
 import savedSearchAlertStripeReducer, { savedSearchAlertStripeSaga } from './savedSearches/alertstripe/savedSearchAlertStripeReducer';
 import savedSearchExpandReducer from './savedSearches/expand/savedSearchExpandReducer';
@@ -37,7 +36,6 @@ const store = createStore(combineReducers({
     user: userReducer,
     counties: countiesReducer,
     countries: countriesReducer,
-    disclaimer: disclaimerReducer,
     engagement: engagementReducer,
     extent: extentReducer,
     favourites: favouritesReducer,

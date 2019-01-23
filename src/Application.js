@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Error from './error/Error';
 import { CONTEXT_PATH } from './fasitProperties';
 import Favourites from './favourites/Favourites';
+import Feedback from './feedback/Feedback';
 import Invite from './invite/Invite';
 import SavedSearches from './savedSearches/SavedSearches';
 import SearchPage from './search/Search';
@@ -47,6 +48,7 @@ class Application extends React.Component {
                         <NotAuthenticatedModal />
                     )}
                     <UserAlertStripe />
+                    <Feedback />
                 </div>
             </BrowserRouter>
         );

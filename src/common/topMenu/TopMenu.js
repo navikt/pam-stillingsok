@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { PersonbrukerHeaderMeny, PersonbrukerHeader, PersonbrukerApplikasjon } from 'pam-frontend-header';
 import { LOGIN_URL, LOGOUT_URL } from '../../fasitProperties';
-import Disclaimer from '../../disclaimer/Disclaimer';
 import { authenticationEnum } from '../../authentication/authenticationReducer';
 import { getRedirect } from '../../redirect';
 
@@ -31,7 +30,6 @@ class TopMenu extends React.Component {
                     ) : (
                         <PersonbrukerHeader />
                     )}
-                <Disclaimer />
             </div>
         );
     }
