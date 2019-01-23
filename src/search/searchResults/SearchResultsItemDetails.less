@@ -26,6 +26,17 @@
   font-size: 16px;
 }
 
+.SearchResultItem .SearchResultsItemDetails__title a {
+  &:visited {
+    color: @navLilla;
+  }
+
+  &:visited:hover {
+    color: @navLillaDarken20;
+    border-color: @navLillaDarken20;
+  }
+}
+
 .SearchResultsItemDetails__title,
 .SearchResultsItemDetails__jobtitle,
 .SearchResultsItemDetails__employer,
@@ -46,10 +57,22 @@
 
   .SearchResultsItemDetails__updated {
     margin-bottom: 0;
-
   }
 }
 
+@media (max-width: @screen-xs-max) {
+  .SearchResultsItemDetails__jobtitle,
+  .SearchResultsItemDetails__updated,
+  .SearchResultsItemDetails__employer,
+  .SearchResultsItemDetails__location,
+  .SearchResultsItemDetails__applicationdue {
+    font-size: 12px !important;
+  }
+
+  .SearchResultsItemDetails__title {
+    font-size: 14px !important;
+  }
+}
 
 .SearchResultsItemDetails__jobtitle,
 .SearchResultsItemDetails__applicationdue,
@@ -61,4 +84,15 @@
 .SearchResultsItemDetails__location,
 .SearchResultsItemDetails__applicationdue{
   line-height: 20px;
+}
+
+@media (max-width: @screen-xs-max) {
+  .SearchResultsItemDetails__jobtitle,
+  .SearchResultsItemDetails__employer {
+    margin-bottom: 8px;
+  }
+
+  .SearchResultsItemDetails__title {
+    margin-bottom: 4px;
+  }
 }

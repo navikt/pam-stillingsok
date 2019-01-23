@@ -16,24 +16,17 @@ function mapSortByOrder(value) {
 }
 
 function filterPublished(published) {
+    const filters = [];
     if (published) {
-        return {
-            bool: {
-                should: [{
+        filters.push({
                     range: {
                         published: {
                             gte: published
                         }
                     }
-                }]
-            }
-        };
+        });
     }
-    return {
-        bool: {
-            should: []
-        }
-    };
+    return filters;
 }
 
 function suggest(field, match, minLength) {
@@ -73,20 +66,42 @@ function filterExtent(extent) {
     return filters;
 }
 
+function filterCountries(countries) {
+    const filters = [];
+    if (countries && countries.length > 0) {
+        const filter = {
+            bool: {
+                should: []
+            }
+        };
+        countries.forEach((item) => {
+            filter.bool.should.push({
+                term: {
+                    country_facet: item
+                }
+            });
+        });
+        filters.push(filter);
+    }
+    return filters;
+}
+
 function filterEngagementType(engagementTypes) {
-    const filters = {
-        bool: {
-            should: []
-        }
-    };
+    const filters = [];
     if (engagementTypes && engagementTypes.length > 0) {
+        const filter = {
+            bool: {
+                should: []
+            }
+        };
         engagementTypes.forEach((engagementType) => {
-            filters.bool.should.push({
+            filter.bool.should.push({
                 term: {
                     engagementtype_facet: engagementType
                 }
             });
         });
+        filters.push(filter);
     }
     return filters;
 }
@@ -102,7 +117,7 @@ function filterNestedFacets(parents, children = [], parentKey, childKey) {
     if (parents && parents.length > 0) {
         parents.forEach((parent) => {
             let must = [{
-                match: {
+                term: {
                     [parentKey]: parent
                 }
             }];
@@ -143,21 +158,22 @@ function filterOccupation(occupationLevel1, occupationLevel2) {
     return filterNestedFacets(occupationLevel1, occupationLevel2, 'occupation_level1_facet', 'occupation_level2_facet');
 }
 
-
 function filterSector(sector) {
-    const filters = {
-        bool: {
-            should: []
-        }
-    };
+    const filters = [];
     if (sector && sector.length > 0) {
+        const filter = {
+            bool: {
+                should: []
+            }
+        };
         sector.forEach((item) => {
-            filters.bool.should.push({
+            filter.bool.should.push({
                 term: {
                     sector_facet: item
                 }
             });
         });
+        filters.push(filter);
     }
     return filters;
 }
@@ -174,12 +190,176 @@ exports.suggestionsTemplate = (match, minLength) => ({
     _source: false
 });
 
+/* Experimental alternative relevance model with AND-logic and using cross-fields matching. */
+function mainQueryConjunctionTuning(q) {
+    return {
+        bool: {
+            must: {
+                bool: {
+                    should: [
+                        {
+                            multi_match: {
+                                query: q,
+                                type: 'cross_fields',
+                                fields: [
+                                    'category_no^2',
+                                    'title_no^1',
+                                    'searchtags_no^0.3',
+                                    'geography_all_no^0.2',
+                                    'adtext_no^0.2',
+                                    'employerdescription_no^0.1'
+                                ],
+                                operator: 'and',
+                                tie_breaker: 0.3,
+                                analyzer: 'norwegian',
+                                zero_terms_query: 'all'
+                            }
+                        },
+                        {
+                            match_phrase: {
+                                'employername': {
+                                    query: q,
+                                    slop: 0,
+                                    boost: 2
+                                }
+                            }
+                        },
+                        {
+                            match: {
+                                id: {
+                                    query: q,
+                                    operator: 'and',
+                                    boost: 1
+                                }
+                            }
+                        }
+                    ]
+                }
+            },
+            should: [
+                {
+                    match_phrase: {
+                        title: {
+                            query: q,
+                            slop: 2
+                        }
+                    }
+                },
+                {
+                    constant_score: {
+                        filter: {
+                            match: {
+                                'location.municipal': {
+                                    query: q
+                                }
+                            }
+                        },
+                        boost: 3
+                    }
+                },
+                {
+                    constant_score: {
+                        filter: {
+                            match: {
+                                'location.county': {
+                                    query: q
+                                }
+                            }
+                        },
+                        boost: 3
+                    }
+                }
+            ],
+            filter: {
+                term: {
+                    status: 'ACTIVE'
+                }
+            }
+        }
+    }
+}
+
+/* Generate main matching query object with classic/original OR match relevance model */
+function mainQueryDisjunctionTuning(q) {
+    return {
+        bool: {
+            must: {
+                multi_match: {
+                    query: q,
+                    type: 'best_fields',
+                    fields: [
+                        'category_no^2',
+                        'title_no^1',
+                        'id^1',
+                        'employername^0.9',
+                        'searchtags_no^0.4',
+                        'geography_all_no^0.2',
+                        'adtext_no^0.2',
+                        'employerdescription_no^0.1'
+                    ],
+                    tie_breaker: 0.3,
+                    minimum_should_match: 1,
+                    zero_terms_query: 'all'
+                }
+            },
+            should: [
+                {
+                    match_phrase: {
+                        title: {
+                            query: q,
+                            slop: 2
+                        }
+                    }
+                },
+                {
+                    match_phrase: {
+                        'employername': {
+                            query: q,
+                            slop: 0,
+                            boost: 1
+                        }
+                    }
+                },
+                {
+                    constant_score: {
+                        filter: {
+                            match: {
+                                'location.municipal': {
+                                    query: q
+                                }
+                            }
+                        },
+                        boost: 3
+                    }
+                },
+                {
+                    constant_score: {
+                        filter: {
+                            match: {
+                                'location.county': {
+                                    query: q
+                                }
+                            }
+                        },
+                        boost: 3
+                    }
+                }
+            ],
+            filter: {
+                term: {
+                    status: 'ACTIVE'
+                }
+            }
+        }
+    }
+}
+
 exports.searchTemplate = (query) => {
     const {
-        from, size, counties, municipals, extent, engagementType, sector, published,
+        from, size, counties, countries, municipals, extent, engagementType, sector, published,
         occupationFirstLevels, occupationSecondLevels
     } = query;
-    let { sort, q } = query;
+    let { sort, q, operator } = query;
 
     // To ensure consistent search results across multiple shards in elasticsearch when query is blank
     if (!q || q.trim().length === 0) {
@@ -189,87 +369,39 @@ exports.searchTemplate = (query) => {
         q = '';
     }
 
+    // Resolve if and-operator should be used (experimental)
+    let mainQueryTemplateFunc = mainQueryConjunctionTuning;
+    if (operator === 'or') {
+        mainQueryTemplateFunc = mainQueryDisjunctionTuning;
+    }
+
     let template = {
         from: from || 0,
         size: size || 50,
-        query: {
-            bool: {
-                must: {
-                    multi_match: {
-                        query: q,
-                        type: 'best_fields',
-                        fields: [
-                            'category_no^2',
-                            'title_no^1',
-                            'searchtags_no^0.4',
-                            'adtext_no^0.2',
-                            'employer.name^0.2',
-                            'employerdescription_no^0.1'
-                        ],
-                        tie_breaker: 0.3,
-                        minimum_should_match: 1,
-                        zero_terms_query: 'all'
-                    }
-                },
-                should: [
-                    {
-                        match_phrase: {
-                            title: {
-                                query: q,
-                                slop: 2
-                            }
-                        }
-                    },
-                    {
-                        constant_score: {
-                            filter: {
-                                match: {
-                                    'location.municipal': {
-                                        query: q
-                                    }
-                                }
-                            },
-                            boost: 3
-                        }
-                    },
-                    {
-                        constant_score: {
-                            filter: {
-                                match: {
-                                    'location.county': {
-                                        query: q
-                                    }
-                                }
-                            },
-                            boost: 3
-                        }
-                    }
-                ]
-            }
-        },
+        query: mainQueryTemplateFunc(q),
         post_filter: {
             bool: {
                 filter: [
-                    {
-                        term: {
-                            status: 'ACTIVE'
-                        }
-                    },
                     ...filterExtent(extent),
+                    ...filterCountries(countries),
                     filterLocation(counties, municipals),
                     filterOccupation(occupationFirstLevels, occupationSecondLevels),
-                    filterEngagementType(engagementType),
-                    filterSector(sector),
-                    filterPublished(published)
+                    ...filterEngagementType(engagementType),
+                    ...filterSector(sector),
+                    ...filterPublished(published)
                 ]
             }
         },
         _source: {
             includes: [
+                'employer.name',
                 'properties.employer',
                 'properties.jobtitle',
                 'properties.location',
                 'properties.applicationdue',
+                'location.city',
+                'location.municipal',
+                'location.country',
                 'applicationdue',
                 'title',
                 'updated',
@@ -282,16 +414,12 @@ exports.searchTemplate = (query) => {
                 filter: {
                     bool: {
                         filter: [
-                            {
-                                term: {
-                                    status: 'ACTIVE'
-                                }
-                            },
                             ...filterExtent(extent),
+                            ...filterCountries(countries),
                             filterLocation(counties, municipals),
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
-                            filterEngagementType(engagementType),
-                            filterSector(sector)
+                            ...filterEngagementType(engagementType),
+                            ...filterSector(sector)
                         ]
                     }
                 },
@@ -313,16 +441,12 @@ exports.searchTemplate = (query) => {
                 filter: {
                     bool: {
                         filter: [
-                            {
-                                term: {
-                                    status: 'ACTIVE'
-                                }
-                            },
                             ...filterExtent(extent),
+                            ...filterCountries(countries),
                             filterLocation(counties, municipals),
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
-                            filterEngagementType(engagementType),
-                            filterPublished(published)
+                            ...filterEngagementType(engagementType),
+                            ...filterPublished(published)
                         ]
                     }
                 },
@@ -336,16 +460,12 @@ exports.searchTemplate = (query) => {
                 filter: {
                     bool: {
                         filter: [
-                            {
-                                term: {
-                                    status: 'ACTIVE'
-                                }
-                            },
+                            ...filterCountries(countries),
                             filterLocation(counties, municipals),
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
-                            filterEngagementType(engagementType),
-                            filterSector(sector),
-                            filterPublished(published)
+                            ...filterEngagementType(engagementType),
+                            ...filterSector(sector),
+                            ...filterPublished(published)
                         ]
                     }
                 },
@@ -359,16 +479,12 @@ exports.searchTemplate = (query) => {
                 filter: {
                     bool: {
                         filter: [
-                            {
-                                term: {
-                                    status: 'ACTIVE'
-                                }
-                            },
                             ...filterExtent(extent),
+                            ...filterCountries(countries),
                             filterLocation(counties, municipals),
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
-                            filterSector(sector),
-                            filterPublished(published)
+                            ...filterSector(sector),
+                            ...filterPublished(published)
                         ]
                     }
                 },
@@ -382,16 +498,12 @@ exports.searchTemplate = (query) => {
                 filter: {
                     bool: {
                         filter: [
-                            {
-                                term: {
-                                    status: 'ACTIVE'
-                                }
-                            },
                             ...filterExtent(extent),
+                            ...filterCountries(countries),
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
-                            filterEngagementType(engagementType),
-                            filterSector(sector),
-                            filterPublished(published)
+                            ...filterEngagementType(engagementType),
+                            ...filterSector(sector),
+                            ...filterPublished(published)
                         ]
                     }
                 },
@@ -422,16 +534,12 @@ exports.searchTemplate = (query) => {
                 filter: {
                     bool: {
                         filter: [
-                            {
-                                term: {
-                                    status: 'ACTIVE'
-                                }
-                            },
                             ...filterExtent(extent),
+                            ...filterCountries(countries),
                             filterLocation(counties, municipals),
-                            filterEngagementType(engagementType),
-                            filterSector(sector),
-                            filterPublished(published)
+                            ...filterEngagementType(engagementType),
+                            ...filterSector(sector),
+                            ...filterPublished(published)
                         ]
                     }
                 },
@@ -451,7 +559,29 @@ exports.searchTemplate = (query) => {
                         }
                     }
                 }
-            }
+            },
+            countries: {
+                filter: {
+                    bool: {
+                        filter: [
+                            ...filterExtent(extent),
+                            filterLocation(counties, municipals),
+                            filterOccupation(occupationFirstLevels, occupationSecondLevels),
+                            ...filterEngagementType(engagementType),
+                            ...filterSector(sector),
+                            ...filterPublished(published)
+                        ]
+                    }
+                },
+                aggs: {
+                    values: {
+                        terms: {
+                            field: 'country_facet',
+                            exclude : "NORGE"
+                        }
+                    }
+                }
+            },
         }
     };
 

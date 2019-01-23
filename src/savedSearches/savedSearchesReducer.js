@@ -179,7 +179,8 @@ export const toSavedSearchQuery = function toSavedSearchQuery(state) {
         sector: state.sector.checkedSector,
         extent: state.extent.checkedExtent,
         occupationFirstLevels: state.occupations.checkedFirstLevels,
-        occupationSecondLevels: state.occupations.checkedSecondLevels
+        occupationSecondLevels: state.occupations.checkedSecondLevels,
+        countries: state.countries.checkedCountries
     };
 
     return removeUndefinedOrEmptyString(query);

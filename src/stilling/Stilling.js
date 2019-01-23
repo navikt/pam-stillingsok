@@ -24,6 +24,8 @@ import SoftRequirements from './requirements/SoftRequirements';
 import './Stilling.less';
 import { FETCH_STILLING_BEGIN } from './stillingReducer';
 import { urlFromSessionStorageOrIndex } from '../urlReducer';
+import getWorkLocation from '../common/getWorkLocation';
+import getEmployer from '../common/getEmployer';
 
 class Stilling extends React.Component {
     constructor(props) {
@@ -90,15 +92,15 @@ class Stilling extends React.Component {
                                         {isFetchingStilling && cachedStilling && (
                                             <AdTitle
                                                 title={cachedStilling.title}
-                                                employer={cachedStilling.properties.employer}
-                                                location={cachedStilling.properties.location}
+                                                employer={getEmployer(cachedStilling)}
+                                                location={getWorkLocation(cachedStilling, true)}
                                             />
                                         )}
                                         {!isFetchingStilling && stilling && (
                                             <AdTitle
                                                 title={stilling._source.title}
-                                                employer={stilling._source.properties.employer}
-                                                location={stilling._source.properties.location}
+                                                employer={getEmployer(stilling._source)}
+                                                location={getWorkLocation(stilling._source, true)}
                                             />
                                         )}
                                     </Column>
@@ -148,9 +150,9 @@ class Stilling extends React.Component {
                                             source={stilling._source.source}
                                             properties={stilling._source.properties}
                                         />
-                                        <EmploymentDetails properties={stilling._source.properties} />
+                                        <EmploymentDetails stilling={stilling._source} />
                                         <ContactPerson contactList={stilling._source.contactList} />
-                                        <EmployerDetails properties={stilling._source.properties} />
+                                        <EmployerDetails stilling={stilling._source} />
                                         <AdDetails source={stilling._source} />
                                     </Column>
                                 </Row>

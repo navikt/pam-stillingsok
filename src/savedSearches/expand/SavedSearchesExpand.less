@@ -1,32 +1,38 @@
 @import "../../variables";
 
-.SavedSearchesExpand {
-    background: #fff;
-    padding: 2rem;
-    border-top: 2px solid @border-gray;
-    border-bottom: 2px solid @border-gray;
+
+.SavedSearchesExpand__spinner {
+  min-height: 5rem;
+  text-align: center;
+  margin-top: 1rem;
 }
 
-.SavedSearchesExpand__columns {
-    margin-bottom: 1.25rem;
-    padding-left: 1rem;
+
+.SavedSearchesExpand__chevron {
+    margin-left: 0.25rem;
 }
 
-@media (min-width: @screen-md-min) {
-    .SavedSearchesExpand__columns {
-        columns: 2;
-        column-gap: 8rem;
+.SavedSearchesExpand__button {
+    background: transparent;
+    border: 0;
+    color: @navBla;
+    cursor: pointer;
+    display: inline-block;
+    padding: 2px 2px;
+
+    &:focus {
+        box-shadow: 0 0 0 3px @orangeFocus;
+        outline: none;
     }
 
-    .SavedSearchesExpand {
-        padding: 2rem;
-        display: flex;
-        justify-content: center;
-    }
+    &:hover {
+        .SavedSearchesExpand__chevron[class~='chevron--opp'] {
+            transform: translateY(-0.25rem);
+        }
 
-    .SavedSearchesExpand__inner {
-        width: 45rem;
-        margin: 0 auto;
+        .SavedSearchesExpand__chevron[class~='chevron--ned'] {
+            transform: translateY(0.25rem);
+        }
     }
 }
 
@@ -35,8 +41,85 @@
     padding: 0;
 }
 
-.SavedSearchesExpandItem {
-    margin-bottom: 0.75rem;
-    -webkit-column-break-after: avoid;
+.SavedSearchesExpand__panel__inner {
+  padding: 1rem 1rem 1rem 1rem;
+
+  @media (min-width: @screen-sm-min) {
+    overflow-y: auto;
+    max-height: 20rem;
+  }
+
+  @media (max-width: @screen-xs-max) {
+      margin-top: 2rem;
+  }
 }
 
+.SavedSearchesExpandItem {
+  margin-bottom: 0.75rem;
+  -webkit-column-break-after: avoid;
+}
+
+.SavedSearches__panel {
+    padding: 0!important;
+}
+
+.SavedSearchesExpand__container{
+    position: relative;
+    padding-left: 1.0rem;
+    display: inline-block;
+
+  span {
+    margin-right: 0.1rem;
+    padding: 2px 2px;
+  }
+}
+
+.SavedSearches__panel {
+  position: absolute;
+  min-width: 17.5rem;
+  top: 3rem;
+  left: auto;
+  bottom: auto;
+  right: 0;
+  border-radius: 0.25rem;
+  z-index: 999;
+  border: 1px solid #d8d8d8;
+
+  @media (min-width: @screen-sm-min) {
+    &:before {
+      content: '';
+      display: block;
+      position: absolute;
+      width: 1rem;
+      height: 1rem;
+      background: #FFF;
+      transform: rotate(-45deg);
+      transform-origin: 0 0;
+      border-right: 1px solid #d8d8d8;
+      border-top: 1px solid #d8d8d8;
+      right: 2.5rem;
+      top: 0;
+      z-index: 999;
+    }
+  }
+
+  @media (max-width: @screen-xs-max) {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 999;
+    padding: 1rem;
+    overflow-y:auto;
+  }
+}
+
+
+.SavedSearches__close {
+  z-index: 1000;
+
+  @media (min-width: @screen-sm-min) {
+    visibility: hidden;
+  }
+}

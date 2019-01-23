@@ -1,17 +1,13 @@
 import { Column, Container, Row } from 'nav-frontend-grid';
 import { Flatknapp } from 'nav-frontend-knapper';
-import { Sidetittel } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { CONTEXT_PATH } from '../fasitProperties';
 import FavouriteAlertStripe from '../favourites/alertstripe/FavouriteAlertStripe';
-import ShowFavouriteListLink from '../favourites/ShowFavouriteListLink';
 import SavedSearchAlertStripe from '../savedSearches/alertstripe/SavedSearchAlertStripe';
 import CurrentSavedSearch from '../savedSearches/CurrentSavedSearch';
 import SavedSearchesExpand from '../savedSearches/expand/SavedSearchesExpand';
-import ExpandSavedSearchButton from '../savedSearches/ExpandSavedSearchButton';
+import SavedSearchesExpandButton from '../savedSearches/expand/SavedSearchesExpandButton';
 import SavedSearchForm from '../savedSearches/form/SavedSearchForm';
 import SaveSearchButton from '../savedSearches/SaveSearchButton';
 import { RESTORE_STATE_FROM_URL_BEGIN } from '../urlReducer';
@@ -31,6 +27,8 @@ import SearchResultCount from './searchResults/SearchResultCount';
 import SearchResults from './searchResults/SearchResults';
 import Sorting from './sorting/Sorting';
 import ViewMode from './viewMode/ViewMode';
+import { authenticationEnum } from '../authentication/authenticationReducer';
+import Countries from './facets/countries/Countries';
 
 class Search extends React.Component {
     constructor(props) {
@@ -60,32 +58,29 @@ class Search extends React.Component {
                 <div className="Search__header">
                     <Container className="Search__header__container">
                         <Row className="Search__header__row">
-                            <Column xs="12" lg="4" />
-                            <Column xs="12" lg="4">
-                                <Sidetittel className="Search__header__title">Ledige stillinger</Sidetittel>
+                            <Column xs="12" sm="4" lg="4" />
+                            <Column xs="12" sm="8" lg="8">
+                                <form
+                                    role="search"
+                                    action="/"
+                                    onSubmit={this.onSearchFormSubmit}
+                                    className="no-print"
+                                >
+                                    <SearchBox />
+                                </form>
                             </Column>
-                            <Column xs="12" lg="4">
-                                {this.props.isAuthenticated !== false && this.props.user ?
+                            <Column xs="12" sm="4" lg="4">
+                                {this.props.isAuthenticated === authenticationEnum.IS_AUTHENTICATED && this.props.user ?
                                     <div className="Search__header__left">
-                                        <ShowFavouriteListLink />
-                                        <ExpandSavedSearchButton />
-                                        <Link to={`${CONTEXT_PATH}/innstillinger`} className="Search__innstillinger-lenke lenke typo-element">
-                                            Innstillinger
-                                        </Link>
+                                        <SavedSearchesExpandButton />
                                     </div> : null
                                 }
                             </Column>
                         </Row>
                     </Container>
                 </div>
-                {this.props.isSavedSearchesExpanded && (
-                    <div className="Search__header__savedSearches">
-                        <SavedSearchesExpand />
-                    </div>
-                )}
                 <ShowResultsButton />
                 <Container className="Search__main">
-
                     {this.props.isSearching && !this.props.initialSearchDone && (
                         <div className="Search__spinner">
                             <DelayedSpinner />
@@ -110,10 +105,10 @@ class Search extends React.Component {
                                                     onSubmit={this.onSearchFormSubmit}
                                                     className="no-print"
                                                 >
-                                                    <SearchBox />
                                                     <Published />
                                                     <Occupations />
                                                     <Counties />
+                                                    <Countries />
                                                     <Extent />
                                                     <EngagementType />
                                                     <Sector />
@@ -151,8 +146,7 @@ class Search extends React.Component {
 }
 
 Search.defaultProps = {
-    user: undefined,
-    isAuthenticated: undefined
+    user: undefined
 };
 
 Search.propTypes = {
@@ -163,7 +157,7 @@ Search.propTypes = {
     isSavedSearchesExpanded: PropTypes.bool.isRequired,
     initialSearchDone: PropTypes.bool.isRequired,
     isSearching: PropTypes.bool.isRequired,
-    isAuthenticated: PropTypes.bool,
+    isAuthenticated: PropTypes.string.isRequired,
     user: PropTypes.shape({})
 };
 

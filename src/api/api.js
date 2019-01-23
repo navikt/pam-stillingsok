@@ -89,9 +89,13 @@ function fixStilling(stilling) {
     return stilling;
 }
 
+function isOrSearchFeatureEnabled() {
+    return localStorage.getItem('featureToggleOrOperator') === 'true';
+}
+
 export async function fetchSearch(query = {}) {
     const queryString = toQueryString(query);
-    const result = await get(`/api/search${queryString}`);
+    const result = await get(`/api/search${queryString}${isOrSearchFeatureEnabled() ? '&operator=or' : ''}`);
     return {
         stillinger: result.hits.hits.map((stilling) => (
             fixStilling(stilling._source)
@@ -116,6 +120,10 @@ export async function fetchSearch(query = {}) {
             }))
         })),
         extent: result.aggregations.extent.values.buckets.map((item) => ({
+            key: item.key,
+            count: item.doc_count
+        })),
+        countries: result.aggregations.countries.values.buckets.map((item) => ({
             key: item.key,
             count: item.doc_count
         })),

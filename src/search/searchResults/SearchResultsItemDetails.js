@@ -5,6 +5,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { CONTEXT_PATH } from '../../fasitProperties';
 import { formatISOString, isValidISOString } from '../../utils';
+import getWorkLocation from '../../common/getWorkLocation';
+import getEmployer from '../../common/getEmployer';
 import './SearchResultsItemDetails.less';
 
 export default function SearchResultsItemDetails({ stilling }) {
@@ -15,13 +17,15 @@ export default function SearchResultsItemDetails({ stilling }) {
     } else {
         frist = 'Ikke oppgitt';
     }
+    const location = getWorkLocation(stilling, true);
+    const employer = getEmployer(stilling);
 
     return (
         <Row className="SearchResultsItemDetails">
             <Column xs="12" md="4">
-                {stilling.properties.employer && (
+                {employer && (
                     <Normaltekst className="SearchResultsItemDetails__employer">
-                        {stilling.properties.employer}
+                        {employer}
                     </Normaltekst>
                 )}
             </Column>
@@ -45,9 +49,9 @@ export default function SearchResultsItemDetails({ stilling }) {
                     </Element>
                 )}
 
-                {stilling.properties.location && (
+                {location && (
                     <Normaltekst className="SearchResultsItemDetails__location">
-                        {stilling.properties.location}
+                        {location}
                     </Normaltekst>
                 )}
                 <Normaltekst className="SearchResultsItemDetails__applicationdue">

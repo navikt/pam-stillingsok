@@ -11,6 +11,7 @@ class SavedSearchesExpandItem extends React.Component {
         try {
             this.props.setCurrentSavedSearch(this.props.savedSearch);
             this.props.collapseSavedSearches();
+            document.body.classList.remove('screen-xs-no-scroll');
             this.props.search();
         } catch (error) {
             // Ignore session storage error

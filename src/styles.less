@@ -22,33 +22,9 @@ body {
   color: @navMorkGra;
 }
 
-#top {
-  background: #333;
-  height: 40px;
-  width: 100%;
-}
-
-.header {
-  padding: 15px 1.5rem 18px;
-  background: #fff;
-  border-bottom: 1px solid #d1d1d1;
-  text-align: center;
-}
-
-@media (max-width: @screen-xs-max) {
-  .header {
-    padding: 0;
-  }
-}
-
-.header__nav-logo {
-  display: inline-block;
-  text-decoration: none;
-  border: none;
-
-  &:focus {
-    outline: none;
-    background-color: #ffbd66;
+body.screen-xs-no-scroll {
+  @media (max-width: @screen-xs-max) {
+    overflow-y: hidden;
   }
 }
 

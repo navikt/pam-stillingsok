@@ -1,3 +1,45 @@
+## RELEASE - 0.61.476-1227771
+#### New in this release: 
++ 2019-01-09 [PAM-2134]: viser strukturerte data for work location og employer
+## RELEASE - 0.60.472-a4cae7c
+#### New in this release: 
++ 2019-01-03 [PAM-2357] Endre kompaktknapp
+## RELEASE - 0.59.470-df55de2
+#### New in this release: 
++ 2018-12-14 [PAM-2291] Compact mode showing application due instead of updated (#125)
++ 2018-12-13 [PAM-2182]: setter farge på visited links
++ 2018-12-12 [Fix] Fiks padding for lagre favoritt-knapp i kompakt mobilvisning
+## RELEASE - 0.57.465-de08380
+#### New in this release: 
++ 2018-12-06 [Fix] Syntaksfeil
++ 2018-12-06 [PAM-2222] Gi kompakt-knapp hoverstate
++ 2018-12-06 [PAM-2236] Flytt søkeboks og fiks utseende
++ 2018-12-06 [PAM-2236] Endre disclaimer til en enkel lenke
++ 2018-12-05 [PAM-2222] Endre peker til pointer ved hover
++ 2018-12-04 [PAM-2219] Endrer fontstørrelser i resultatvisning
++ 2018-12-03 [Fix] Fiks etter rebase
++ 2018-12-03 [PAM-2222] Endre kompakt-knapp
++ 2018-12-03 [PAM-2229] Fjern unødvendig whitelist
++ 2018-11-30 [PAM-2229] Bruk CONTEXT_PATH i stedet for hardkodet verdi
++ 2018-11-30 [PAM-2229] Refaktorer redirect-logikk
++ 2018-11-30 [PAM-2229] Legg til redirect
++ 2018-11-30 [PAM-2229] Fiks redirect
+## RELEASE - 0.56.444-e01032a
+#### New in this release: 
++ 2018-12-10 [PAM-2183] Set AND operator tuning as default
++ 2018-12-10 [PAM-2297] Fix proxy error handling in server.js
++ 2018-12-07 [PAM-2183] Search new geography field in cross-fields AND tuning
++ 2018-12-06 [PAM-2159,PAM-2173,PAM-2183] Search relevance adjustments
++ 2018-12-06 [Fix] Typo discalimer -> disclaimer
++ 2018-12-06 [PAM-2166]: visuell endring på knappen som ekspanderer lagrede søk
++ 2018-12-03 [PAM-2220] Juster marger og avstander
++ 2018-12-03 [PAM-2220} Fix marger og avstander i søket
+## RELEASE - 0.55.434-ae735cb
+#### New in this release: 
++ 2018-12-04 [enhancement] adding gzip compression to reduce served file sizes
+## RELEASE - 0.54.433-b2e1417
+#### New in this release: 
++ 2018-11-28 [PAM-2019] Legge til header for personbruker
 ## RELEASE - 0.53.430-8573cee
 #### New in this release: 
 + 2018-11-29 [PAM-2211] Tekstendringer

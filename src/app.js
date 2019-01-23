@@ -7,7 +7,7 @@ import authenticationReducer, { authenticationSaga } from './authentication/auth
 import errorReducer from './error/errorReducer';
 import Application from './Application';
 import userReducer, { userSaga } from './user/userReducer';
-import disclaimerReducer from './discalimer/disclaimerReducer';
+import disclaimerReducer from './disclaimer/disclaimerReducer';
 import favouritesReducer, { favouritesSaga } from './favourites/favouritesReducer';
 import savedSearchAlertStripeReducer, { savedSearchAlertStripeSaga } from './savedSearches/alertstripe/savedSearchAlertStripeReducer';
 import savedSearchExpandReducer from './savedSearches/expand/savedSearchExpandReducer';
@@ -16,6 +16,7 @@ import savedSearchesReducer, { savedSearchesSaga } from './savedSearches/savedSe
 import countiesReducer from './search/facets/counties/countiesReducer';
 import engagementReducer from './search/facets/engagement/engagementReducer';
 import extentReducer from './search/facets/extent/extentReducer';
+import countriesReducer from './search/facets/countries/countriesReducer';
 import occupationsReducer from './search/facets/occupations/occupationsReducer';
 import publishedReducer from './search/facets/published/publishedReducer';
 import sectorReducer from './search/facets/sector/sectorReducer';
@@ -35,6 +36,7 @@ const store = createStore(combineReducers({
     error: errorReducer,
     user: userReducer,
     counties: countiesReducer,
+    countries: countriesReducer,
     disclaimer: disclaimerReducer,
     engagement: engagementReducer,
     extent: extentReducer,

@@ -127,6 +127,7 @@ export function toSearchQuery(state) {
     if (state.extent.checkedExtent.length > 0) query.extent = state.extent.checkedExtent;
     if (state.occupations.checkedFirstLevels.length > 0) query.occupationFirstLevels = state.occupations.checkedFirstLevels;
     if (state.occupations.checkedSecondLevels.length > 0) query.occupationSecondLevels = state.occupations.checkedSecondLevels;
+    if (state.countries.checkedCountries.length > 0) query.countries = state.countries.checkedCountries;
     return query;
 }
 
