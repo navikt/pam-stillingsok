@@ -1,3 +1,7 @@
+## RELEASE - 0.65.488-3ec8a33
+#### New in this release: 
++ 2019-01-24 [BUGFIX] Fix double slash problem in redirects
++ 2019-01-23 [PAM-1378] Legg til rød feedback-link på høyre side
 ## RELEASE - 0.63.484-b6ed10d
 #### New in this release: 
 + 2019-01-22 [VERSION] update pam-frontend-header to v2.3.1
