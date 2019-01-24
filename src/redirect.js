@@ -9,10 +9,9 @@ const whiteList = [
 export function getRedirect() {
     const path = window.location.pathname;
     const query = encodeURIComponent(window.location.search);
-
+    const baseUrl = window.location.origin;
     if (whiteList.includes(path)) {
-        return `${STILLINGSOK_URL}${path}${query}`;
+        return `${baseUrl}${path}${query}`;
     }
-
     return STILLINGSOK_URL;
 }
