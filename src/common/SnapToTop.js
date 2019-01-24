@@ -44,8 +44,9 @@ export default class SnapToTop extends React.Component {
     };
 
     render() {
+        const { className } = this.props;
         return (
-            <div className="SnapToTop">
+            <div className={className ? `SnapToTop ${className}` : 'SnapToTop'}>
                 <div
                     ref={(inlineEl) => {
                         this.inlineEl = inlineEl;
@@ -66,10 +67,12 @@ export default class SnapToTop extends React.Component {
 
 SnapToTop.defaultProps = {
     inlineClassName: undefined,
-    stickyClassName: undefined
+    stickyClassName: undefined,
+    className: undefined
 };
 
 SnapToTop.propTypes = {
+    className: PropTypes.string,
     inlineClassName: PropTypes.string,
     stickyClassName: PropTypes.string,
     children: PropTypes.node.isRequired

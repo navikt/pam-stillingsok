@@ -80,13 +80,17 @@
   white-space: nowrap;
 }
 
-
 .Search__header {
   display: flex;
   align-items: center;
   width: 100%;
   background-color: @background-green;
-  margin-bottom: @site-header-margin-bottom;
+}
+
+@media (min-width: @screen-md-min) {
+  .Search__header {
+    margin-bottom: @site-header-margin-bottom;
+  }
 }
 
 .Search__header__title {
@@ -165,3 +169,15 @@
     margin-right: auto;
   }
 }
+
+.Search__main__tiltoppen {
+  text-align: center;
+  padding: 2rem 0;
+}
+
+@media (max-width: @screen-sm-max) {
+  .Search__main__tiltoppen {
+    display: none;
+  }
+}
+
