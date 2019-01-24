@@ -37,7 +37,7 @@ class SearchBox extends React.Component {
                         name="q"
                         autoComplete="off"
                         ariaLabel="Søk"
-                        placeholder={`Søk i ledige annonser`}
+                        placeholder={`Søk etter ledige stillinger`}
                         onSelect={this.onTypeAheadSuggestionSelected}
                         onChange={this.onTypeAheadValueChange}
                         suggestions={this.props.suggestions}

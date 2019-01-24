@@ -12,6 +12,7 @@ import FavouriteList from './list/FavouriteList';
 import RemoveFavouriteModal from './modal/RemoveFavouriteModal';
 import NoFavourites from './noresult/NoFavourites';
 import { authenticationEnum } from '../authentication/authenticationReducer';
+import {CONTEXT_PATH} from "../fasitProperties";
 
 class Favourites extends React.Component {
     componentDidMount() {
@@ -24,7 +25,7 @@ class Favourites extends React.Component {
             <div className="Favourites">
                 <FavouriteAlertStripe />
                 <PageHeader
-                    backUrl="/"
+                    backUrl={`${CONTEXT_PATH}/`}
                     title={`Favoritter ${!this.props.isFetchingFavourites && this.props.totalElements > 0 ? `(${this.props.totalElements})` : ''}`}
                 />
                 <Container className="Favourites__main">

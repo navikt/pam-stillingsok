@@ -51,7 +51,7 @@ class UserSettings extends React.Component {
         return (
             <div className="UserSettings">
                 <PageHeader
-                    backUrl="/"
+                    backUrl={`${CONTEXT_PATH}/`}
                     title={PAGE_TITLE}
                 />
                 <Container>

@@ -20,7 +20,7 @@ pam-stillingsok lokalt, med følgende innhold:
 
 ```sh
 #!/bin/bash
-export DEV_PROFILE=true
+export PAMSEARCHAPI_URL=http://localhost:9000
 export PAMADUSER_URL=http://localhost:9017
 export LOGINSERVICE_URL=http://localhost:9017/aduser/local/cookie?subject=12345
 export LOGOUTSERVICE_URL=http://localhost:9017/aduser
@@ -35,6 +35,12 @@ npm install
 npm run build
 npm start
 ```
+
+Bruk docker-compose:
+```sh
+docker-compose up --build 
+```
+--build kjøres kun ved første bygging, og ved endring i docker images.
 
 Frontend kjører som default på [localhost:8080](localhost:8080). 
 
