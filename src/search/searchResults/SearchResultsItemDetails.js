@@ -30,9 +30,9 @@ export default function SearchResultsItemDetails({ stilling }) {
                 )}
             </Column>
             <Column xs="12" md="8">
-                {stilling.updated && (
+                {stilling.published && (
                     <Undertekst className="SearchResultsItemDetails__updated">
-                        {formatISOString(stilling.updated, 'DD.MM.YYYY')}
+                        {formatISOString(stilling.published, 'DD.MM.YYYY')}
                     </Undertekst>
                 )}
 
@@ -66,7 +66,7 @@ SearchResultsItemDetails.propTypes = {
     stilling: PropTypes.shape({
         uuid: PropTypes.string,
         title: PropTypes.string,
-        updated: PropTypes.string,
+        published: PropTypes.string,
         properties: PropTypes.shape({
             employer: PropTypes.string,
             jobtitle: PropTypes.string,
