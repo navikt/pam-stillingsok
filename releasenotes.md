@@ -1,3 +1,8 @@
+## RELEASE - 0.66.493-9af0f7d
+#### New in this release: 
++ 2019-01-24 [Fix] Gjør feedback-link grønn og la den åpne i ny fane
++ 2019-01-24 [Fix] Gjør slik at lang tekst i alertstripe bryter over flere linjer
++ 2018-11-28 [PAM-2196] Bytt ut blå rund knapp med "Vis treff" og "Endre søk" knapper på mobil. Plasser disse på toppen i en sticky buttonbar. På pc vises bare en "Til toppen" lenke på bunn av siden
 ## RELEASE - 0.65.488-3ec8a33
 #### New in this release: 
 + 2019-01-24 [BUGFIX] Fix double slash problem in redirects
