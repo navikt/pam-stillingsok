@@ -15,7 +15,7 @@ class FavouriteListItem extends React.Component {
     toAd = (favourite) => ({
         uuid: favourite.uuid,
         title: favourite.title,
-        updated: favourite.updated,
+        published: favourite.published,
         properties: {
             employer: favourite.employer,
             jobtitle: favourite.jobTitle,

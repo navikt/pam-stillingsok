@@ -154,12 +154,12 @@ function toFavourite(uuid, ad) {
         favouriteAd: {
             uuid,
             title: ad.title,
-            updated: ad.updated,
             jobTitle: ad.properties.jobtitle ? ad.properties.jobtitle : null,
             status: ad.status,
             applicationdue: ad.properties.applicationdue ? ad.properties.applicationdue : null,
             location: getWorkLocation(ad),
-            employer: getEmployer(ad)
+            employer: getEmployer(ad),
+            published: ad.published
         }
     };
 }
@@ -167,7 +167,7 @@ function toFavourite(uuid, ad) {
 function* fetchFavourites() {
     yield put({ type: FETCH_FAVOURITES_BEGIN });
     try {
-        const response = yield call(userApiGet, `${AD_USER_API}/api/v1/userfavouriteads?size=999&sort=favouriteAd.updated,desc`);
+        const response = yield call(userApiGet, `${AD_USER_API}/api/v1/userfavouriteads?size=999&sort=favouriteAd.published,desc`);
         yield put({ type: FETCH_FAVOURITES_SUCCESS, response });
     } catch (e) {
         if (e instanceof SearchApiError) {

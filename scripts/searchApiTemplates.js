@@ -2,14 +2,14 @@ function mapSortByValue(value) {
     switch (value) {
         case 'expires':
             return 'expires';
-        case 'updated':
+        case 'published':
         default:
-            return 'updated';
+            return 'published';
     }
 }
 
 function mapSortByOrder(value) {
-    if (value !== 'updated') {
+    if (value !== 'published') {
         return 'asc';
     }
     return 'desc';
@@ -364,7 +364,7 @@ exports.searchTemplate = (query) => {
     // To ensure consistent search results across multiple shards in elasticsearch when query is blank
     if (!q || q.trim().length === 0) {
         if (sort !== 'expires') {
-            sort = 'updated';
+            sort = 'published';
         }
         q = '';
     }
@@ -404,7 +404,7 @@ exports.searchTemplate = (query) => {
                 'location.municipal',
                 'location.country',
                 'title',
-                'updated',
+                'published',
                 'uuid',
                 'status'
             ]

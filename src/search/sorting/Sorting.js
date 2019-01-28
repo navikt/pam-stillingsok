@@ -24,7 +24,7 @@ class Sorting extends React.Component {
                     className="typo-normal Sorting__Select"
                 >
                     <option key="relevant" value="relevant">Mest relevant</option>
-                    <option key="updated" value="updated">Vis nyeste øverst</option>
+                    <option key="published" value="published">Vis nyeste øverst</option>
                     <option key="expires" value="expires">Søknadsfrist</option>
                 </Select>
             </div>
