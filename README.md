@@ -11,11 +11,10 @@ PAMADUSER_URL
 LOGINSERVICE_URL
 LOGOUTSERVICE_URL
 PAM_STILLINGSOK_URL
+PAMSEARCHAPI_URL
 ```
 
-Dersom du kjører en lokal instanse av pam-search-api kan du også sette
-`DEV_PROFILE=true` for at kall mot søkeapiet skal rettes mot denne. For eksempel
-kan man lage et script `run.sh`, dersom man kjører pam-aduser, pam-search-api og
+For eksempel kan man lage et script `run.sh`, dersom man kjører pam-aduser, pam-search-api og
 pam-stillingsok lokalt, med følgende innhold:
 
 ```sh
