@@ -97,11 +97,13 @@ function isOrSearchFeatureEnabled() {
 export async function fetchSearch(query = {}) {
     const queryString = toQueryString(query);
     const result = await get(`${CONTEXT_PATH}/api/search${queryString}${isOrSearchFeatureEnabled() ? '&operator=or' : ''}`);
+
     return {
         stillinger: result.hits.hits.map((stilling) => (
             fixStilling(stilling._source)
         )),
         total: result.hits.total,
+        positioncount: result.aggregations.positioncount.sum.value,
         counties: result.aggregations.counties.values.buckets.map((county) => ({
             key: county.key,
             count: county.doc_count,
