@@ -61,7 +61,6 @@ exports.fetchStilling = async (uuid) => {
         'employer.updatedBy',
         'employer.created',
         'employer.updated',
-        'employer.location',
         'employer.deactivated',
         'employer.employees',
         'employer.orgform',
