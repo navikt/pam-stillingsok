@@ -33,7 +33,7 @@ module.exports = {
 
         verifyFilterCount: function(filter){
             const page = this;
-            page.pagePause(1000).getText('@searchResultCount', function(result){
+            page.waitForElementPresent('@searchResultCount').getText('@searchResultCount', function(result){
                 console.log('DBG treffRawValue=' + result.value);
                 const matchResult = /(\d+) annonse/.exec(result.value);
                 const antallTreff = matchResult ? matchResult[1] : '';
