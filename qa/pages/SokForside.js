@@ -9,6 +9,7 @@ module.exports = {
             locateStrategy: 'xpath'
         },
         searchResultCount:'.SearchResultCount',
+        searchResultCount__text: '.SearchResultCount__text',
         searchResultLocation: '.SearchResultsItemDetails__location'
     },
 
@@ -33,7 +34,7 @@ module.exports = {
 
         verifyFilterCount: function(filter){
             const page = this;
-            page.waitForElementPresent('@searchResultCount').getText('@searchResultCount', function(result){
+            page.waitForElementPresent('@searchResultCount__text').getText('@searchResultCount', function(result){
                 console.log('DBG treffRawValue=' + result.value);
                 const matchResult = /(\d+) annonse/.exec(result.value);
                 const antallTreff = matchResult ? matchResult[1] : '';
