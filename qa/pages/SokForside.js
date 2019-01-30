@@ -33,10 +33,15 @@ module.exports = {
 
         verifyFilterCount: function(filter){
             const page = this;
-            page.getText('@searchResultCount', function(result){
-                const antallTreff = result.value.replace(/\D+/g,'');
+            page.pagePause(5000).getText('@searchResultCount', function(result){
+                console.log('DBG treffRawValue=' + result.value);
+                const matchResult = /(\d+) annonse/.exec(result.value);
+                const antallTreff = matchResult ? matchResult[1] : '';
+                console.log('DBG antallTreff=' + antallTreff);
                 page.getText(getFilterLabel(filter), function(result){
+                    console.log('DBG filterValue=' + result.value);
                     const fasettAntall = result.value.replace(/\D+/g,'');
+                    console.log('DBG fasettAntall=' + fasettAntall);
                     return page.assert.equal(antallTreff,fasettAntall);
                 });
             });
