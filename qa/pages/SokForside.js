@@ -34,7 +34,8 @@ module.exports = {
         verifyFilterCount: function(filter){
             const page = this;
             page.getText('@searchResultCount', function(result){
-                const antallTreff = /(\d+) annonse/.exec(result.value)[1];
+                const matchResult = /(\d+) annonse/.exec(result.value);
+                const antallTreff = matchResult ? matchResult[1] : '';
                 page.getText(getFilterLabel(filter), function(result){
                     const fasettAntall = result.value.replace(/\D+/g,'');
                     return page.assert.equal(antallTreff,fasettAntall);
