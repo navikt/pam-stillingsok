@@ -47,7 +47,7 @@ module.exports = {
             }
         },
         "t1": {
-            "launch_url" : "https://stillingsok-q.nav.no",
+            "launch_url" : "https://arbeidsplassen-q.nav.no/stillinger",
             "globals" : {
                 "environment" : "t1"
             },
@@ -56,7 +56,7 @@ module.exports = {
             }
         },
         "linux-t1": {
-            "launch_url" : "https://stillingsok-q.nav.no",
+            "launch_url" : "https://arbeidsplassen-q.nav.no/stillinger",
             "globals" : {
                 "environment" : "t1"
             },
@@ -68,7 +68,7 @@ module.exports = {
             }
         },
         "jenkins": {
-            "launch_url" : "https://stillingsok-q.nav.no",
+            "launch_url" : "https://arbeidsplassen-q.nav.no/stillinger",
             "globals" : {
                 "environment" : "t1"
             },

@@ -19,7 +19,7 @@ module.exports = {
     },
     test_settings: {
         default: {
-            launch_url: 'https://stillingsok-q.nav.no',
+            launch_url: 'https://arbeidsplassen-q.nav.no/stillinger',
             selenium_port: 4445,
             username: '${SAUCE_USERNAME}',
             access_key: '${SAUCE_ACCESS_KEY}',
