@@ -9,6 +9,7 @@ module.exports = {
             locateStrategy: 'xpath'
         },
         searchResultCount:'.SearchResultCount',
+        searchResultCountMobile: '.ShowResultsButton__flex__count',
         searchResultLocation: '.SearchResultsItemDetails__location'
     },
 
@@ -33,17 +34,30 @@ module.exports = {
 
         verifyFilterCount: function(filter){
             const page = this;
-            page.pagePause(5000).getText('@searchResultCount', function(result){
-                console.log('DBG treffRawValue=' + result.value);
-                const matchResult = /(\d+) annonse/.exec(result.value);
-                const antallTreff = matchResult ? matchResult[1] : '';
-                console.log('DBG antallTreff=' + antallTreff);
-                page.getText(getFilterLabel(filter), function(result){
-                    console.log('DBG filterValue=' + result.value);
-                    const fasettAntall = result.value.replace(/\D+/g,'');
-                    console.log('DBG fasettAntall=' + fasettAntall);
-                    return page.assert.equal(antallTreff,fasettAntall);
-                });
+            const extractResultCount = (resultCountText) => {
+                const matchResult = /(\d+) annonse/.exec(resultCountText);
+                return matchResult ? matchResult[1] : '';
+            }
+
+            return page.isVisible('@searchResultCount', function(result) {
+                if (result.value) {
+                    page.getText('@searchResultCount', function(result) {
+                        const resultCount = extractResultCount(result.value);
+                        page.getText(getFilterLabel(filter), function(result) {
+                            const facetCount = result.value.replace(/\D+/g,'');
+                            page.assert.equal(resultCount,facetCount);
+                        });
+                    });
+                } else {
+                    // try mobile view
+                    page.getText('@searchResultCountMobile', function(result) {
+                        const resultCount = extractResultCount(result.value);
+                        page.getText(getFilterLabel(filter), function(result) {
+                            const facetCount = result.value.replace(/\D+/g,'');
+                            page.assert.equal(resultCount,facetCount);
+                        });
+                    });
+                }
             });
         },
 
