@@ -1,3 +1,10 @@
+## RELEASE - 0.67.513-be5f8fc
+#### New in this release: 
++ 2019-01-30 [PAM-2611] Legg til footer
++ 2019-01-30 [PAM-2420] QA: fix no-match case
++ 2019-01-30 [PAM-2420] QA: fix extraction of result count
++ 2019-01-29 [PAM-2420] Show number of job positions in matching ads
++ 2019-01-28 [Fix] Sørg for at google kan indexere søkesiden
 ## RELEASE - 0.66.493-9af0f7d
 #### New in this release: 
 + 2019-01-24 [Fix] Gjør feedback-link grønn og la den åpne i ny fane
