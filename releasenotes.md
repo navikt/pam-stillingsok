@@ -1,3 +1,6 @@
+## RELEASE - 0.68.514-7c409de
+#### New in this release: 
++ 2019-01-31 [PAM-2580] Oppdaterer til ny versjon av meny (med link til CV osv.)
 ## RELEASE - 0.67.513-be5f8fc
 #### New in this release: 
 + 2019-01-30 [PAM-2611] Legg til footer
