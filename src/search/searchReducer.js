@@ -78,6 +78,7 @@ export default function searchReducer(state = initialState, action) {
                 initialSearchDone: true,
                 searchResult: {
                     total: action.response.total,
+                    positioncount: action.response.positioncount,
                     stillinger: action.response.stillinger
                 }
             };

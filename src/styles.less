@@ -8,19 +8,32 @@
 @import "../node_modules/nav-frontend-grid-style/src/index";
 @import "variables";
 
-html {
+html, body {
   height: 100%;
-  box-sizing: border-box;
+  margin: 0;
 }
 
 body {
-  position: relative;
-  margin: 0;
-  min-height: 100%;
   overflow-y: scroll;
   background: #F6F5F5;
   color: @navMorkGra;
 }
+
+
+#app, .Application {
+  height: 100%;
+}
+
+.Application__main {
+  min-height: 100%;
+}
+
+.Application__main {
+  /* This is the same as the height of the footer */
+  margin-bottom: -177px;
+  padding-bottom: 177px;
+}
+
 
 body.screen-xs-no-scroll {
   @media (max-width: @screen-xs-max) {

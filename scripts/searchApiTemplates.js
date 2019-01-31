@@ -403,7 +403,6 @@ exports.searchTemplate = (query) => {
                 'location.city',
                 'location.municipal',
                 'location.country',
-                'applicationdue',
                 'title',
                 'updated',
                 'uuid',
@@ -411,6 +410,29 @@ exports.searchTemplate = (query) => {
             ]
         },
         aggs: {
+            positioncount: {
+                filter: {
+                    bool: {
+                        filter: [
+                            ...filterExtent(extent),
+                            ...filterCountries(countries),
+                            filterLocation(counties, municipals),
+                            filterOccupation(occupationFirstLevels, occupationSecondLevels),
+                            ...filterEngagementType(engagementType),
+                            ...filterSector(sector),
+                            ...filterPublished(published)
+                        ]
+                    }
+                },
+                aggs: {
+                    sum: {
+                        sum: {
+                            field: 'properties.positioncount',
+                            missing: 1
+                        }
+                    }
+                }
+            },
             published: {
                 filter: {
                     bool: {

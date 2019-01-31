@@ -68,16 +68,27 @@ class ShowResultsButton extends React.Component {
     };
 
     render() {
+        const stillingerWord = this.props.searchResults && this.props.searchResults.positioncount > 1 ? 'stillinger' : 'stilling';
+        const annonserWord = this.props.searchResults && this.props.searchResults.total > 1 ? 'annonser' : 'annonse';
+
         return (
             <SnapToTop className="ShowResultsButton">
                 <div className="ShowResultsButton__flex container">
                     <div className="ShowResultsButton__flex__count">
                         {this.props.searchResults && (
-                            <Element>
-                                {this.props.searchResults.total > 0 ?
-                                    `${this.props.searchResults.total} treff` :
-                                    'Ingen treff'}
-                            </Element>
+                            this.props.searchResults.total > 0 ?
+                                (
+                                    <Element>
+                                        {this.props.searchResults.positioncount} <span
+                                        className="ShowResultsButton__text"> {stillingerWord} i </span>
+                                        {this.props.searchResults.total} <span
+                                        className="ShowResultsButton__text"> {annonserWord}</span>
+                                    </Element>
+                                ) : (
+                                    <Element>
+                                        <span className="ShowResultsButton__text">Ingen treff</span>
+                                    </Element>
+                                )
                         )}
                     </div>
                     <div>
@@ -104,7 +115,8 @@ ShowResultsButton.defaultProps = {
 
 ShowResultsButton.propTypes = {
     searchResults: PropTypes.shape({
-        total: PropTypes.number
+        total: PropTypes.number,
+        positioncount: PropTypes.number
     })
 };
 
