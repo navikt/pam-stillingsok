@@ -41,7 +41,7 @@ services:
     ports:
     - "9017:9017"
     volumes:
-    - ../dev_nav_truststore/nav_truststore.jts:/nav_truststore.jts
+    - ../pam-devtools/tmp/nav_truststore.jts:/nav_truststore.jts
     depends_on:
     - oidc-test
   oidc-test:
