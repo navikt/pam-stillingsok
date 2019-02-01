@@ -43,37 +43,50 @@ class SavedSearches extends React.Component {
                     )}
                     {this.props.isAuthenticated === authenticationEnum.IS_AUTHENTICATED && (
                         <div>
-                            {!this.props.user && (
-                                <div className="UserSettings__main">
-                                    <div className="UserSettings__section">
+                            {(this.props.isFetchingUser || this.props.isFetching) ? (
+                                <Row>
+                                    <Column xs="12">
+                                        <div className="SavedSearches__main__spinner">
+                                            <DelayedSpinner />
+                                        </div>
+                                    </Column>
+                                </Row>
+                            ) : (
+                                <div>
+                                    {!this.props.user && (
+                                        <div className="UserSettings__main">
+                                            <div className="UserSettings__section">
+                                                <Row>
+                                                    <Column xs="12">
+                                                        <NoUser />
+                                                    </Column>
+                                                </Row>
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    {this.props.user && (
                                         <Row>
                                             <Column xs="12">
-                                                <NoUser />
+                                                {this.props.isFetching ? (
+                                                    <div className="SavedSearches__main__spinner">
+                                                        <DelayedSpinner />
+                                                    </div>
+                                                ) : (
+                                                    <div>
+                                                        {this.props.savedSearches.length === 0 ? (
+                                                            <NoSavedSearches />
+                                                        ) : (
+                                                            <SavedSearchList />
+                                                        )}
+                                                    </div>
+                                                )}
                                             </Column>
                                         </Row>
-                                    </div>
+                                    )}
                                 </div>
                             )}
 
-                            {this.props.user && (
-                                <Row>
-                                    <Column xs="12">
-                                        {this.props.isFetching ? (
-                                            <div className="SavedSearches__main__spinner">
-                                                <DelayedSpinner />
-                                            </div>
-                                        ) : (
-                                            <div>
-                                                {this.props.savedSearches.length === 0 ? (
-                                                    <NoSavedSearches />
-                                                ) : (
-                                                    <SavedSearchList />
-                                                )}
-                                            </div>
-                                        )}
-                                    </Column>
-                                </Row>
-                            )}
                         </div>
                     )}
                 </Container>
@@ -91,6 +104,7 @@ SavedSearches.defaultProps = {
 
 SavedSearches.propTypes = {
     user: PropTypes.shape(),
+    isFetchingUser: PropTypes.bool.isRequired,
     isAuthenticated: PropTypes.string.isRequired,
     isFetching: PropTypes.bool.isRequired,
     totalElements: PropTypes.number.isRequired,
@@ -102,6 +116,7 @@ SavedSearches.propTypes = {
 
 const mapStateToProps = (state) => ({
     user: state.user.user,
+    isFetchingUser: state.user.isFetchingUser,
     isAuthenticated: state.authentication.isAuthenticated,
     savedSearches: state.savedSearches.savedSearches,
     totalElements: state.savedSearches.totalElements,
