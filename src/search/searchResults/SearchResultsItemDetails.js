@@ -31,7 +31,7 @@ export default function SearchResultsItemDetails({ stilling }) {
             </Column>
             <Column xs="12" md="8">
                 {stilling.published && (
-                    <Undertekst className="SearchResultsItemDetails__updated">
+                    <Undertekst className="SearchResultsItemDetails__published">
                         {formatISOString(stilling.published, 'DD.MM.YYYY')}
                     </Undertekst>
                 )}
