@@ -18,7 +18,7 @@ import {CONTEXT_PATH} from "../fasitProperties";
 class SavedSearches extends React.Component {
     componentDidMount() {
         window.scrollTo(0, 0);
-        document.title = 'Lagrede søk';
+        document.title = 'Lagrede søk - Arbeidsplassen';
     }
 
     render() {

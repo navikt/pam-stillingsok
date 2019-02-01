@@ -17,7 +17,7 @@ import {CONTEXT_PATH} from "../fasitProperties";
 class Favourites extends React.Component {
     componentDidMount() {
         window.scrollTo(0, 0);
-        document.title = 'Favoritter';
+        document.title = 'Favoritter - Arbeidsplassen';
     }
 
     render() {
