@@ -38,7 +38,7 @@ class Search extends React.Component {
     }
 
     componentDidMount() {
-        document.title = 'Ledige stillinger';
+        document.title = 'Stillingssøk - Arbeidsplassen';
     }
 
     onSearchFormSubmit = (e) => {
