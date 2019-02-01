@@ -12,7 +12,7 @@ export function commaSeparate(...strings) {
 
 export default function AdTitle({ title, employer, location }) {
     return (
-        <div className="AdTitle">
+        <div className="StillingsTitle">
             <Normaltekst>
                 {commaSeparate(employer, location)}
             </Normaltekst>
