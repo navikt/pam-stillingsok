@@ -42,36 +42,42 @@ class Favourites extends React.Component {
                     )}
                     {this.props.isAuthenticated === authenticationEnum.IS_AUTHENTICATED && (
                         <div>
-                            {!this.props.user && (
-                                <div className="UserSettings__main">
-                                    <div className="UserSettings__section">
-                                        <Row>
-                                            <Column xs="12">
-                                                <NoUser />
-                                            </Column>
-                                        </Row>
-                                    </div>
-                                </div>
-                            )}
-
-                            {this.props.user && (
+                            {(this.props.isFetchingUser || this.props.isFetchingFavourites) ? (
                                 <Row>
                                     <Column xs="12">
-                                        {this.props.isFetchingFavourites ? (
-                                            <div className="Favourites__main__spinner">
-                                                <DelayedSpinner />
-                                            </div>
-                                        ) : (
-                                            <div>
-                                                {this.props.favourites.length === 0 ? (
-                                                    <NoFavourites />
-                                                ) : (
-                                                    <FavouriteList />
-                                                )}
-                                            </div>
-                                        )}
+                                        <div className="Favourites__main__spinner">
+                                            <DelayedSpinner />
+                                        </div>
                                     </Column>
                                 </Row>
+                            ) : (
+                                <div>
+                                    {!this.props.user && (
+                                        <div className="UserSettings__main">
+                                            <div className="UserSettings__section">
+                                                <Row>
+                                                    <Column xs="12">
+                                                        <NoUser />
+                                                    </Column>
+                                                </Row>
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    {this.props.user && (
+                                        <Row>
+                                            <Column xs="12">
+                                                <div>
+                                                    {this.props.favourites.length === 0 ? (
+                                                        <NoFavourites />
+                                                    ) : (
+                                                        <FavouriteList />
+                                                    )}
+                                                </div>
+                                            </Column>
+                                        </Row>
+                                    )}
+                                </div>
                             )}
                         </div>
                     )}
@@ -87,6 +93,7 @@ Favourites.defaultProps = {
 
 Favourites.propTypes = {
     user: PropTypes.shape(),
+    isFetchingUser: PropTypes.bool.isRequired,
     isAuthenticated: PropTypes.string.isRequired,
     isFetchingFavourites: PropTypes.bool.isRequired,
     totalElements: PropTypes.number.isRequired,
@@ -98,6 +105,7 @@ Favourites.propTypes = {
 
 const mapStateToProps = (state) => ({
     user: state.user.user,
+    isFetchingUser: state.user.isFetchingUser,
     isAuthenticated: state.authentication.isAuthenticated,
     favourites: state.favourites.favourites,
     totalElements: state.favourites.totalElements,
