@@ -11,6 +11,7 @@ export const HIDE_TERMS_OF_USE_MODAL = 'HIDE_TERMS_OF_USE_MODAL';
 export const FETCH_USER_BEGIN = 'FETCH_USER_BEGIN';
 export const FETCH_USER_SUCCESS = 'FETCH_USER_SUCCESS';
 export const FETCH_USER_FAILURE = 'FETCH_USER_FAILURE';
+export const FETCH_USER_FAILURE_NO_USER = 'FETCH_USER_FAILURE_NO_USER';
 
 export const CREATE_USER = 'CREATE_USER';
 export const CREATE_USER_BEGIN = 'CREATE_USER_BEGIN';
@@ -47,6 +48,7 @@ const TERMS_VERSION = 'sok_v1';
 
 const initialState = {
     user: undefined,
+    isFetchingUser: false,
     isCreating: false,
     isUpdating: false,
     isDeletingUser: false,
@@ -61,10 +63,23 @@ const initialState = {
 
 export default function authorizationReducer(state = initialState, action) {
     switch (action.type) {
+        case FETCH_USER_BEGIN:
+            return {
+                ...state,
+                user: action.response,
+                isFetchingUser: true
+            };
         case FETCH_USER_SUCCESS:
             return {
                 ...state,
-                user: action.response
+                user: action.response,
+                isFetchingUser: false
+            };
+        case FETCH_USER_FAILURE:
+        case FETCH_USER_FAILURE_NO_USER:
+            return {
+                ...state,
+                isFetchingUser: false
             };
         case CREATE_USER_BEGIN:
             return {
@@ -213,6 +228,8 @@ function* fetchUser() {
             if (e instanceof SearchApiError) {
                 if (e.statusCode !== 404) {
                     yield put({ type: FETCH_USER_FAILURE, error: e });
+                } else {
+                    yield put({ type: FETCH_USER_FAILURE_NO_USER });
                 }
             } else {
                 throw e;

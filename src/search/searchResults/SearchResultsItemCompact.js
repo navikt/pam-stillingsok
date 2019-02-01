@@ -38,7 +38,7 @@ export default function SearchResultsItemCompact({ stilling, urlQuery }) {
                     }
                 </Link>
             </Normaltekst>
-            {stilling.updated && (
+            { frist && (
                 <Undertekst className="SearchResultItem__updated">
                     {frist}
                 </Undertekst>

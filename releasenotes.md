@@ -1,3 +1,11 @@
+## RELEASE - 0.69.517-9f97244
+#### New in this release: 
++ 2019-02-01 [Bugfix] Bruk riktig grønnfarge på sidetittelene
++ 2019-02-01 [Bugfix] Bruk riktig bakgrunnsfarge på sidene
++ 2019-02-01 [Bugfix] Vis spinner mens /user lastes
++ 2019-02-01 [Bugfix] Bruk samme page title på tvers av arbeidsplassen
++ 2019-02-01 [Bugfix] Bruk riktig context path på lenker fra Lagrede søk
++ 2019-02-01 [Bugfix] Unngå at teksten "Lagret søk: Kokk, Oslo" skyver sorteringsboksen ut av selve siden på mobil
 ## RELEASE - 0.68.514-7c409de
 #### New in this release: 
 + 2019-01-31 [PAM-2580] Oppdaterer til ny versjon av meny (med link til CV osv.)
