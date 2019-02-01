@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import AlertStripe from 'nav-frontend-alertstriper';
 import { Flatknapp } from 'nav-frontend-knapper';
 import Lenkeknapp from '../../common/Lenkeknapp';
+import { CONTEXT_PATH } from '../../fasitProperties';
 import { formatISOString, isValidISOString } from '../../utils';
 import NotifyTypeEnum from '../enums/NotifyTypeEnum';
 import SavedSearchStatusEnum from '../enums/SavedSearchStatusEnum';
@@ -51,7 +52,11 @@ class SavedSearchListItem extends React.Component {
                         <div className="SavedSearchListItem__top_flex">
                             <div className="SavedSearchListItem__title">
                                 <Element tag="h3">
-                                    <Link className="lenke" to={`/${savedSearch.searchQuery}&saved=${savedSearch.uuid}`} onClick={this.onTitleClick}>
+                                    <Link
+                                        className="lenke"
+                                        to={`${CONTEXT_PATH}/${savedSearch.searchQuery}&saved=${savedSearch.uuid}`}
+                                        onClick={this.onTitleClick}
+                                    >
                                         {savedSearch.title}
                                     </Link>
                                 </Element>
