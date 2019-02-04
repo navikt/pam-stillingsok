@@ -9,7 +9,7 @@ import getWorkLocation from '../../common/getWorkLocation';
 import getEmployer from '../../common/getEmployer';
 import './SearchResultsItemDetails.less';
 
-export default function SearchResultsItemDetails({ stilling }) {
+export default function SearchResultsItemDetails({ stilling, inlineLink }) {
     let frist;
     const { applicationdue } = stilling.properties;
     if (applicationdue && applicationdue !== undefined) {
@@ -37,9 +37,11 @@ export default function SearchResultsItemDetails({ stilling }) {
                 )}
 
                 <Undertittel tag="h3" className="SearchResultsItemDetails__title">
-                    <Link to={`${CONTEXT_PATH}/stilling/${stilling.uuid}`} className="lenke">
-                        {stilling.title}
-                    </Link>
+                    {inlineLink ? (
+                        <Link to={`${CONTEXT_PATH}/stilling/${stilling.uuid}`} className="lenke">
+                            {stilling.title}
+                        </Link>
+                    ) : stilling.title}
                 </Undertittel>
                 {stilling.properties.jobtitle && stilling.title !== stilling.properties.jobtitle && (
                     <Element
@@ -62,7 +64,12 @@ export default function SearchResultsItemDetails({ stilling }) {
     );
 }
 
+SearchResultsItemDetails.defaultProps = {
+    inlineLink: true
+};
+
 SearchResultsItemDetails.propTypes = {
+    inlineLink: PropTypes.bool,
     stilling: PropTypes.shape({
         uuid: PropTypes.string,
         title: PropTypes.string,

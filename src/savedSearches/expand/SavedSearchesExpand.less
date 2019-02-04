@@ -64,9 +64,12 @@
 }
 
 .SavedSearchesExpand__container{
-    position: relative;
-    padding-left: 1.0rem;
-    display: inline-block;
+  position: relative;
+  display: inline-block;
+
+  @media (min-width: @screen-sm-min) {
+    padding-left: 1rem;
+  }
 
   span {
     margin-right: 0.1rem;
