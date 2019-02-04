@@ -1,3 +1,9 @@
+## RELEASE - 0.70.521-09d6757
+#### New in this release: 
++ 2019-02-04 [Fix] Oppdaterer til ny header
++ 2019-02-01 [Fix] Oppdaterer til ny header
++ 2019-02-01 [Bugfix] Endrer className fra AdTitle for å unngå at AdBlocker fjerner teksten
++ 2019-01-28 [PAM-2415]: bytter ut updated med published i søkeresultat, sortering og favoritt-liste
 ## RELEASE - 0.69.517-9f97244
 #### New in this release: 
 + 2019-02-01 [Bugfix] Bruk riktig grønnfarge på sidetittelene
