@@ -1,3 +1,6 @@
+## RELEASE - 0.71.523-99649d6
+#### New in this release: 
++ 2019-02-04 [Fix] Gjør hele feltet klikkbart i trefflisten
 ## RELEASE - 0.70.521-09d6757
 #### New in this release: 
 + 2019-02-04 [Fix] Oppdaterer til ny header
