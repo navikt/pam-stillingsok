@@ -8,8 +8,8 @@ Before(() => {
     return client.useCss(); // I tilfelle et scenario feiler med XPath, så vil neste scenario bruke CSS, som er default.
 });
 
-After(() => {
-    client.end();
+After(async (scenarioContext) => {
+    await client.sauceEnd(scenarioContext);
 });
 
 Given(/^at jeg er på forsiden for søk/, async () => {
