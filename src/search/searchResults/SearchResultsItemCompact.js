@@ -42,8 +42,7 @@ export default function SearchResultsItemCompact({ stilling, urlQuery }) {
             <Undertekst className="SearchResultItemCompact__frist">
                 {frist !== '' && (
                     <span>
-                        <span className="SearchResultItemCompact__frist__label">Søknadsfrist</span>
-                        {frist}
+                        <span className="SearchResultItemCompact__frist__label">Søknadsfrist:</span> {frist}
                     </span>
                 )}
             </Undertekst>

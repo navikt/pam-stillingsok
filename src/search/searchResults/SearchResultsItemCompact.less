@@ -17,7 +17,8 @@
   padding-right: 1rem;
 
   .SearchResultItemCompact__title__h3 {
-    color: @navBla
+    color: @navBla;
+    font-weight: bold;
   }
 
   .SearchResultItemCompact__title__jobTitle {
@@ -27,8 +28,8 @@
 }
 
 .SearchResultItemCompact__employer {
-  flex: 3;
-  padding-right: 1rem;
+  flex: 2;
+  padding-right: 2rem;
 
   .SearchResultItemCompact__title__jobTitle {
     font-size: 12px;
@@ -56,21 +57,11 @@
   }
 }
 
-.SearchResultItemCompact__favourite {
-  //flex: 1;
-}
-
-.SearchResultItemCompact__employer {
-  //white-space: nowrap;
-  //overflow: hidden;
-  //text-overflow: ellipsis;
-}
-
-
 .SearchResultItemCompact .ToggleFavouriteStar {
   border-radius: 50%;
 
-  .ToggleFavouriteStar__flex .ToggleFavouriteStar__star {
+  .ToggleFavouriteStar__flex .ToggleFavouriteStar__star,
+  .ToggleFavouriteStar__flex .ToggleFavouriteStar__star--active {
     background-size: 1rem;
     height: 1rem;
     width: 1rem;
@@ -92,6 +83,13 @@
   .SearchResultItemCompact {
     display: block;
     position: relative;
+  }
+
+  .SearchResultItemCompact__frist {
+    color: #999999;
+    .SearchResultItemCompact__frist__label {
+      display: initial;
+    }
   }
 
   .SearchResultItemCompact__favourite {
