@@ -18,11 +18,6 @@
     "sauce-iphone_x": "node_modules/.bin/nightwatch --config nightwatch-sl.conf.js --env iphone_x",
     "sauce-galaxy_s9_plus_fhd": "node_modules/.bin/nightwatch --config nightwatch-sl.conf.js --env galaxy_s9_plus_fhd",
     "sauce-all": "node_modules/.bin/nightwatch --config nightwatch-sl.conf.js --env default,chrome_W7,chrome_OSX_10.14,chrome_OSX_10.13,firefox_W10,firefox_W7,firefox_OSX_10.14,firefox_OSX_10.13,edge,ie_W10,ie_W7,safari,safari_10.13",
-    "sauce-jenkins-default": "xvfb-run node_modules/.bin/nightwatch --config nightwatch-sl.conf.js",
-    "sauce-jenkins-chrome": "xvfb-run node_modules/.bin/nightwatch --config nightwatch-sl.conf.js --env default,chrome_W8,chrome_W7,chrome_OSX_10.14,chrome_OSX_10.13,chrome_OSX_10.12",
-    "sauce-jenkins-edge-ie": "xvfb-run node_modules/.bin/nightwatch --config nightwatch-sl.conf.js --env edge,ie_W10,ie_W8,ie_W7",
-    "sauce-jenkins-safari": "xvfb-run node_modules/.bin/nightwatch --config nightwatch-sl.conf.js --env safari,safari_10.13,safari_10.12",
-    "sauce-jenkins-all": "xvfb-run node_modules/.bin/nightwatch --config nightwatch-sl.conf.js --env default,chrome_W7,chrome_OSX_10.14,chrome_OSX_10.13,firefox_W10,firefox_W7,firefox_OSX_10.14,firefox_OSX_10.13,edge,ie_W10,ie_W7,safari,safari_10.13",
     "cucumber-report": "node createHtmlReports.js"
   },
   "devDependencies": {
