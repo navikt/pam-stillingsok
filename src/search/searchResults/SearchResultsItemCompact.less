@@ -2,7 +2,7 @@
 
 .SearchResultItemCompact {
   background-color: #fff;
-  padding: 0.5rem 1rem;
+  padding: 0.25rem 0.5rem 0.25rem 1rem;
   color: @navMorkGra;
   border: 0;
   margin-bottom: 1px;
@@ -10,35 +10,70 @@
   align-items: center;
 }
 
-.SearchResultItemCompact__employer {
-  flex: 1;
-}
 
 .SearchResultItemCompact__title {
-  flex: 2;
-}
-
-.SearchResultItemCompact__title__ellipsis {
-  white-space: nowrap;
+  flex: 4;
   overflow: hidden;
-  text-overflow: ellipsis;
+  padding-right: 1rem;
+
+  .SearchResultItemCompact__title__h3 {
+    color: @navBla
+  }
+
+  .SearchResultItemCompact__title__jobTitle {
+    font-size: 12px;
+    color: #999999;
+  }
 }
 
-.SearchResultItemCompact__title,
-.SearchResultItemCompact__location,
 .SearchResultItemCompact__employer {
+  flex: 3;
+  padding-right: 1rem;
+
+  .SearchResultItemCompact__title__jobTitle {
+    font-size: 12px;
+    display: block;
+    color: #999999;
+  }
+}
+
+.SearchResultItemCompact__location {
+  flex: 1;
+  padding-right: 1rem;
+}
+
+.SearchResultItemCompact__frist {
+  flex: 1;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  margin-right: 1rem;
+  font-size: 12px;
+  line-height: initial;
+
+  .SearchResultItemCompact__frist__label {
+    color: #999999;
+    display: block;
+  }
+}
+
+.SearchResultItemCompact__favourite {
+  //flex: 1;
+}
+
+.SearchResultItemCompact__employer {
+  //white-space: nowrap;
+  //overflow: hidden;
+  //text-overflow: ellipsis;
 }
 
 
-.SearchResultItemCompact .ToggleFavouriteButton {
-  margin-left: 0.5rem;
+.SearchResultItemCompact .ToggleFavouriteStar {
   border-radius: 50%;
-  .FavouriteButton__star {
-    font-size: 1.5rem;
+
+  .ToggleFavouriteStar__flex .ToggleFavouriteStar__star {
+    background-size: 1rem;
+    height: 1rem;
+    width: 1rem;
   }
 }
 
