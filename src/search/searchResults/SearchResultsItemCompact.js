@@ -20,32 +20,34 @@ export default function SearchResultsItemCompact({ stilling, urlQuery }) {
     const employer = getEmployer(stilling);
     return (
         <div className="SearchResultItemCompact">
-            <Undertekst className="SearchResultItemCompact__employer">
-                {employer || ''}
-            </Undertekst>
-            <div className="SearchResultItemCompact__title">
-                <Undertekst className="SearchResultItemCompact__title__jobTitle">
-                    {stilling.properties.jobtitle && stilling.title !== stilling.properties.jobtitle ? (
+            <Link to={`${CONTEXT_PATH}/stilling/${stilling.uuid}${urlQuery}`} className="SearchResultItemCompact__flex">
+                <Undertekst className="SearchResultItemCompact__flex__employer">
+                    {employer || ''}
+                </Undertekst>
+                <div className="SearchResultItemCompact__flex__title">
+                    <Undertekst className="SearchResultItemCompact__flex__title__jobTitle">
+                        {stilling.properties.jobtitle && stilling.title !== stilling.properties.jobtitle ? (
+                            <span>
+                                {getWorkLocation(stilling, true)} - {stilling.properties.jobtitle}
+                            </span>
+                        ) : (
+                            <span>
+                                {getWorkLocation(stilling, true)}
+                            </span>
+                        )}
+                    </Undertekst>
+                    <Undertekst tag="h3" className="SearchResultItemCompact__flex__title__h3">
+                        {stilling.title}
+                    </Undertekst>
+                </div>
+                <Undertekst className="SearchResultItemCompact__flex__frist">
+                    {frist !== '' && (
                         <span>
-                            {getWorkLocation(stilling, true)} - {stilling.properties.jobtitle}
-                        </span>
-                    ) : (
-                        <span>
-                            {getWorkLocation(stilling, true)}
+                            <span className="SearchResultItemCompact__flex__frist__label">Søknadsfrist:</span> {frist}
                         </span>
                     )}
                 </Undertekst>
-                <Undertekst tag="h3" className="SearchResultItemCompact__title__h3">
-                    {stilling.title}
-                </Undertekst>
-            </div>
-            <Undertekst className="SearchResultItemCompact__frist">
-                {frist !== '' && (
-                    <span>
-                        <span className="SearchResultItemCompact__frist__label">Søknadsfrist:</span> {frist}
-                    </span>
-                )}
-            </Undertekst>
+            </Link>
             <div className="SearchResultItemCompact__favourite">
                 <ToggleFavouriteStar uuid={stilling.uuid} className="SearchResultItemCompact__favourite" />
             </div>
