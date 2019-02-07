@@ -24,9 +24,9 @@ export default function SearchResultsItemDetails({ stilling, inlineLink }) {
         <Row className="SearchResultsItemDetails">
             <Column xs="12" md="4">
                 {employer && (
-                    <Normaltekst className="SearchResultsItemDetails__employer">
+                    <Element className="SearchResultsItemDetails__employer">
                         {employer}
-                    </Normaltekst>
+                    </Element>
                 )}
             </Column>
             <Column xs="12" md="8">

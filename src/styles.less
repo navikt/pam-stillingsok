@@ -8,6 +8,43 @@
 @import "../node_modules/nav-frontend-grid-style/src/index";
 @import "variables";
 
+/*
+Source Sans Pro som vi får fra nav-frontend-typografi ser ikke bra ut i noen browsere, feks Chrome i Windows 7 og 10.
+Det finnes allerede et issue på dette: https://github.com/navikt/nav-frontend-moduler/issues/46.
+Som en midlertidig løsning overstyrer vi fonten, ved å laste dem inn fra google fonts.
+*/
+@font-face {
+  font-family: 'Source Sans Pro';
+  font-style: italic;
+  font-weight: 400;
+  src: local('Source Sans Pro Italic'), local('SourceSansPro-Italic'), url(https://fonts.gstatic.com/s/sourcesanspro/v10/M2Jd71oPJhLKp0zdtTvoMxgy2Fsj5sj3EzlXpqVXRKo.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;
+}
+
+@font-face {
+  font-family: 'Source Sans Pro';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Source Sans Pro Regular'), local('SourceSansPro-Regular'), url(https://fonts.gstatic.com/s/sourcesanspro/v10/ODelI1aHBYDBqgeIAH2zlNV_2ngZ8dMf8fLgjYEouxg.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;
+}
+
+@font-face {
+  font-family: 'Source Sans Pro';
+  font-style: normal;
+  font-weight: 600;
+  src: local('Source Sans Pro SemiBold'), local('SourceSansPro-SemiBold'), url(https://fonts.gstatic.com/s/sourcesanspro/v10/toadOcfmlt9b38dHJxOBGCOFnW3Jk0f09zW_Yln67Ac.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;
+}
+
+@font-face {
+  font-family: 'Source Sans Pro';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Source Sans Pro Bold'), local('SourceSansPro-Bold'), url(https://fonts.gstatic.com/s/sourcesanspro/v10/toadOcfmlt9b38dHJxOBGEo0As1BFRXtCDhS66znb_k.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;
+}
+
 html, body {
   height: 100%;
   margin: 0;
@@ -15,7 +52,7 @@ html, body {
 
 body {
   overflow-y: scroll;
-  background: @navLysGra;
+  background: @body-bg-color;
   color: @navMorkGra;
 }
 
@@ -39,10 +76,6 @@ body.screen-xs-no-scroll {
   @media (max-width: @screen-xs-max) {
     overflow-y: hidden;
   }
-}
-
-.background--light-green {
-  background-color: @background-green;
 }
 
 input[type=search] {
@@ -83,4 +116,157 @@ input::-ms-clear {
 .knapp--disabled:hover {
   background: @navGra40;
   border-color: transparent;
+}
+
+
+
+/**
+* Overrides
+*/
+
+.HeaderMeny {
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#e7f7ff+0,f7ffff+14,f7fff7+28,eff7e7+100,7db9e8+100 */
+  background: #e7f7ff; /* Old browsers */
+  background: -moz-linear-gradient(-45deg, #e7f7ff 0%, #f7ffff 14%, #f7fff7 28%, #eff7e7 100%, #7db9e8 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(-45deg, #e7f7ff 0%,#f7ffff 14%,#f7fff7 28%,#eff7e7 100%,#7db9e8 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(135deg, #e7f7ff 0%,#f7ffff 14%,#f7fff7 28%,#eff7e7 100%,#7db9e8 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e7f7ff', endColorstr='#7db9e8',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
+  .meny {
+    border-top: 0!important;
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+
+  .meny--lenke-inner {
+    padding: 8px 2px 12px 2px!important;
+  }
+
+  .meny--lenke-active .meny--lenke-inner,
+  .meny--lenke:active .meny--lenke-inner {
+    border-bottom: 10px solid #ffd600!important;
+  }
+}
+
+.ekspanderbartPanel__hode {
+  border-top: 2px solid @fontColorDarkBlue !important;
+  border-radius: 0!important;
+
+  .ekspanderbartPanel__heading {
+    color: @fontColorDarkBlue;
+  }
+}
+
+.ekspanderbartPanel__innhold {
+  background-color: #f7f7f7;
+  padding-top: 1rem!important;
+}
+
+.knapp {
+  border-radius: 5rem;
+
+  background-color: @button-bgColor;
+  border-color: @button-borderColor;
+  color: @button-textColor;
+
+  &:disabled {
+    background-color: @disabledButton-bgColor;
+    border-color:@disabledButton-borderColor;
+    color: @disabledButton-textColor;
+
+    .knapp__spinner {
+      border: 2px solid #9a9a9a;
+      border-left-color: rgba(180, 180, 180, 0.5);
+      border-bottom-color: rgba(180, 180, 180, 0.5);
+    }
+  }
+
+  &:visited {
+    color: @button-textColor;
+  }
+
+  &:hover {
+    background-color: @button--hover-bgColor;
+    border-color: @button--hover-borderColor;
+    color: @button--hover-textColor;
+  }
+
+  &:active {
+    background-color: @button--active-bgColor;
+    border-color: @button--active-borderColor;
+    color: @button--active-textColor;
+  }
+}
+
+.knapp--hoved {
+  background-color: @primaryButton-bgColor;
+  border-color: @primaryButton-borderColor;
+  color: @primaryButton-textColor;
+  box-shadow: none;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  text-transform: none;
+  font-size: 1.125rem;
+
+  &:visited {
+    color: @primaryButton-textColor;
+  }
+
+  &:focus {
+    background-color: @primaryButton-bgColor;
+    border-color: @primaryButton-borderColor;
+    color: @primaryButton-textColor;
+  }
+
+  &:hover {
+    background-color: @primaryButton--hover-bgColor;
+    border-color: @primaryButton--hover-borderColor;
+    color: @primaryButton--hover-textColor;
+    box-shadow: none;
+  }
+
+  &:active, &:active:hover, &:active:focus {
+    background-color: @primaryButton--active-bgColor;
+    border-color: @primaryButton--active-borderColor;
+    color: @primaryButton--active-textColor;
+  }
+}
+
+.knapp--flat {
+  background-color: transparent;
+  border-color: transparent;
+  color: @button-textColor;
+
+  &:focus, &:hover {
+    background-color: transparent;
+    border-color: @button-borderColor;
+    color: @button-textColor;
+  }
+
+  &:active {
+    background-color: @button--active-bgColor;
+    border-color: @button--active-borderColor;
+    color: @button--active-textColor;
+  }
+}
+
+.knapp--disabled {
+  background-color: @disabledButton-bgColor;
+  border-color: @disabledButton-borderColor;
+  color: @disabledButton-textColor;
+
+  &:focus, &:hover, &:active {
+    background-color: @disabledButton-bgColor;
+    border-color: @disabledButton-borderColor;
+    color: @disabledButton-textColor;
+  }
+}
+
+.lenke {
+  color: @fontColorPink;
+
+  &:hover, &:active {
+    color: @fontColorPink;
+    border-bottom-color: @fontColorPink;
+  }
 }

@@ -2,20 +2,27 @@
 
 .SearchResultItem {
   position: relative;
+
+  &:nth-child(even) {
+    background-color: @even-bgColor;
+  }
 }
 
 .SearchResultItem__link {
   display: block;
-  background-color: #fff;
   padding: @list-box-padding;
-  border: 1px solid @border-gray;
-  margin-bottom: @list-box-margin-bottom;
   position: relative;
   color: @navMorkGra!important;
   text-decoration: none;
+  border: 1px solid transparent;
 
   &:hover {
-    border-color: @navBla;
+    border-color: @fontColorPink;
+  }
+
+  &:focus {
+    z-index: 1;
+    outline: 3px solid @navOransjeLighten40;
   }
 
   .SearchResultsItemDetails {
@@ -24,11 +31,11 @@
 }
 
 .SearchResultItem__link:visited .SearchResultsItemDetails__title {
-    color: @navLilla;
+    color: @fontColorPink;
 }
 
 .SearchResultsItemDetails__title {
-  color: @navBla;
+  color: @fontColorPink;
 }
 
 @media (max-width: @screen-sm-max) {

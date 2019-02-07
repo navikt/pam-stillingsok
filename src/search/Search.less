@@ -29,9 +29,11 @@
   .Search__main__center__header {
     min-height: 4rem;
     margin-bottom: 1rem;
+    padding-bottom: 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border-bottom: 3px solid #f4f4f4;
   }
 }
 
@@ -90,12 +92,17 @@
   display: flex;
   align-items: center;
   width: 100%;
-  background-color: @background-green;
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#00214a+1,100021+50,080021+52,000831+100 */
+  background: @pageHeaderDark-bgColor; /* Old browsers */
+  background: -moz-linear-gradient(left, #00214a 1%, #100021 50%, #080021 52%, #000831 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(left, #00214a 1%,#100021 50%,#080021 52%,#000831 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to right, #00214a 1%,#100021 50%,#080021 52%,#000831 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00214a', endColorstr='#000831',GradientType=1 ); /* IE6-9 */
 }
 
 @media (min-width: @screen-md-min) {
   .Search__header {
-    margin-bottom: @site-header-margin-bottom;
+    margin-bottom: @pageHeader-marginBottom;
   }
 }
 
@@ -111,7 +118,7 @@
 
 @media (min-width: @screen-sm-min) {
   .Search__header {
-    height: @site-header-height;
+    height: @pageHeader-height;
   }
 }
 

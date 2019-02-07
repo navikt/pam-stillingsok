@@ -2,13 +2,13 @@
 
 .PageHeader {
     width: 100%;
-    background-color: @background-green;
-    margin-bottom: @site-header-margin-bottom;
+    background-color: @pageHeader-bgColor;
+    margin-bottom: @pageHeader-marginBottom;
 }
 
 @media (min-width: @screen-sm-min) {
     .PageHeader {
-        height: @site-header-height;
+        height: @pageHeader-height;
         display: flex;
         align-items: center;
     }
@@ -56,7 +56,7 @@
 }
 
 .PageHeader__back:hover .PageHeader__back__text {
-    border-bottom: 1px solid @navBla;
+    border-bottom: 1px solid @fontColorPink;
 }
 
 .PageHeader__back__chevron {
@@ -65,4 +65,5 @@
 
 .PageHeader__title {
     text-align: center;
+    color: @pageHeaderTitle-fontColor;
 }

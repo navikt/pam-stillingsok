@@ -2,7 +2,7 @@
 
 .SavedSearchListItem__wrapper {
     margin-bottom: @list-box-margin-bottom;
-    border: 1px solid @border-gray;
+    border: 1px solid @panel-borderColor;
 }
 
 .SavedSearchListItem {
@@ -41,18 +41,18 @@
 .SavedSearchListItem__bottom {
     display: flex;
     justify-content: flex-end;
-    border-top: 1px solid @border-gray;
+    border-top: 1px solid @panel-borderColor;
     margin-top: @list-box-button-bar-margin-top;
     padding-top: @list-box-button-bar-margin-bottom;
 }
 
 .SavedSearchListItem__bottom .Lenkeknapp:not(:last-child) {
-    margin-right: @knapp-margin-right;
+    margin-right: @button-marginRight;
 }
 
 .SavedSearchListItem__created {
     white-space: nowrap;
-    color: @muted-text-color;
+    color: @fontColorGray;
 }
 
 .SavedSearchListItem__alertstripe {
