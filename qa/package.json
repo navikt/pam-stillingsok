@@ -3,24 +3,31 @@
   "version": "1.0.0",
   "description": "Funksjonelle akseptansetester for PAM-stillingsøk",
   "scripts": {
-    "cucumber": "node_modules/.bin/nightwatch --config nightwatch.conf.js --env t1",
-    "cucumber-debug": "node --inspect node_modules/nightwatch/bin/nightwatch --config nightwatch.conf.js --env t1",
-    "cucumber-linux": "node_modules/.bin/nightwatch --config nightwatch.conf.js --env linux-t1",
-    "cucumber-local": "node_modules/.bin/nightwatch --config nightwatch.conf.js",
-    "cucumber-local-debug": "node --inspect node_modules/.bin/nightwatch --config nightwatch.conf.js",
-    "cucumber-linux-local": "node_modules/.bin/nightwatch --config nightwatch.conf.js --env linux-local",
-    "cucumber-jenkins": "xvfb-run node_modules/.bin/nightwatch --env jenkins",
+    "chrome": "node_modules/.bin/nightwatch --config nightwatch.conf.js --env t1",
+    "chrome-debug": "node --inspect node_modules/nightwatch/bin/nightwatch --config nightwatch.conf.js --env t1",
+    "chrome-linux": "node_modules/.bin/nightwatch --config nightwatch.conf.js --env linux-t1",
+    "chrome-local": "node_modules/.bin/nightwatch --config nightwatch.conf.js",
+    "chrome-local-debug": "node --inspect node_modules/.bin/nightwatch --config nightwatch.conf.js",
+    "chrome-linux-local": "node_modules/.bin/nightwatch --config nightwatch.conf.js --env linux-local",
+    "chrome-jenkins": "xvfb-run node_modules/.bin/nightwatch --env jenkins",
+    "sauce": "node_modules/.bin/nightwatch --config nightwatch-sl.conf.js",
+    "sauce-chrome": "node_modules/.bin/nightwatch --config nightwatch-sl.conf.js --env default,chrome_W7,chrome_OSX_10.14,chrome_OSX_10.13",
+    "sauce-firefox": "node_modules/.bin/nightwatch --config nightwatch-sl.conf.js --env firefox_W10,firefox_W7,firefox_OSX_10.14,firefox_OSX_10.13",
+    "sauce-edge-ie": "node_modules/.bin/nightwatch --config nightwatch-sl.conf.js --env edge,ie_W10,ie_W7",
+    "sauce-safari": "node_modules/.bin/nightwatch --config nightwatch-sl.conf.js --env safari,safari_10.13",
+    "sauce-iphone_x": "node_modules/.bin/nightwatch --config nightwatch-sl.conf.js --env iphone_x",
+    "sauce-galaxy_s9_plus_fhd": "node_modules/.bin/nightwatch --config nightwatch-sl.conf.js --env galaxy_s9_plus_fhd",
+    "sauce-all": "node_modules/.bin/nightwatch --config nightwatch-sl.conf.js --env default,chrome_W7,chrome_OSX_10.14,chrome_OSX_10.13,firefox_W10,firefox_W7,firefox_OSX_10.14,firefox_OSX_10.13,edge,ie_W10,ie_W7,safari,safari_10.13",
     "cucumber-report": "node createHtmlReports.js"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-preset-env": "^1.7.0",
-    "chromedriver": "^2.43.0",
-    "cucumber": "^5.0.2",
+    "cucumber": "^5.1.0",
     "cucumber-html-report": "^0.6.5",
-    "cucumber-pretty": "^1.4.4",
+    "cucumber-pretty": "^1.5.0",
     "nightwatch": "0.9.21",
     "nightwatch-cucumber": "^9.1.3",
-    "selenium-server-standalone-jar": "^3.14.0"
+    "saucelabs": "^1.5.0"
   }
 }

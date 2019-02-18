@@ -66,3 +66,40 @@ Verktøystøtte | URL
 Jenkins       | http://a34apvl00015.devillo.no:8080/
 Fasit         | https://fasit.adeo.no/applications/edit?1&application=2372388
 Kibana        | https://logs.adeo.no/app/kibana
+
+## Komme i gang med Sauce Labs
+
+Sauce Labs brukes til å kjøre Nightwatch/Cucumber-tester.
+Logg inn i Sauce Labs her: www.saucelabs.com.
+For å kunne kjøre tester fra egen maskin må man installere og kjøre Sauce Connect.
+Sauce Connect oppretter en secure tunnel mellom maskinen og Sauce Labs.
+Sauce Connect kan finnes her: https://wiki.saucelabs.com/display/DOCS/Sauce+Connect+Proxy.
+Åpne mappen hvor Sauce Connect ligger og kjør med følgende kommando:
+#####Windows
+```
+bin\sc.exe -u username -k ddacfe7c-43e7-4973-1a25-140534f18636 -i tunnel-name
+```
+#####Linux/Mac
+```
+bin/sc -u username -k ddacfe7c-43e7-4973-1a25-140534f18636 -i tunnel-name
+```
+-k er parameter for user key og kan finnes under User Settings etter å ha logget inn i Sauce Labs.
+Sauce Connect vil starte en selenium listener på port 4445, som er default.
+For å kjøre tester på Sauce Labs må man spesifisere samme port i configen til Nightwatch.
+Man må også legge til følgende Environment Variables på maskinen med brukernavn og key:
+```
+SAUCE_ACCESS_KEY=key
+SAUCE_USERNAME=username
+```
+####Kjøre tester
+Først må man installere pakker med ``npm install`` i qa-mappen.
+For å kjøre tester må man kjøre script fra qa/package.json.
+Ex:
+```
+npm run sauce-chrome -- --skiptags ignore
+```
+Kommando for å generere rapport:
+```
+npm run cucumber-report
+```
+Rapporten finnes her ``qa/reports/cucumber_report.html``

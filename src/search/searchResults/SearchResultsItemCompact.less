@@ -2,59 +2,109 @@
 
 .SearchResultItemCompact {
   background-color: #fff;
-  padding: 0.5rem 1rem;
-  color: @navMorkGra;
-  border: 0;
   margin-bottom: 1px;
+  position: relative;
+}
+
+.SearchResultItemCompact__flex {
+  text-decoration: none;
+  color: @navMorkGra;
   display: flex;
   align-items: center;
+  padding: 0.25rem 2.5rem 0.25rem 1rem;
+  border: 1px solid transparent;
+
+  &:hover {
+    border-color: @navBla;
+  }
 
   &:nth-child(even) {
     background-color: @even-bgColor;
   }
 }
 
-.SearchResultItemCompact__employer {
-  flex: 1;
+.SearchResultItemCompact__flex__title {
+  flex: 4;
+  overflow: hidden;
+  padding-right: 1rem;
 }
 
-.SearchResultItemCompact__title {
+.SearchResultItemCompact__flex__title__h3 {
+  color: @navBla;
+  font-weight: bold;
+}
+
+.SearchResultItemCompact__flex__title__jobTitle {
+  font-size: 12px;
+  color: #999999;
+}
+
+.SearchResultItemCompact__flex__employer {
   flex: 2;
+  padding-right: 2rem;
+
 }
 
-.SearchResultItemCompact__title__ellipsis {
+.SearchResultItemCompact__title__jobTitle {
+  font-size: 12px;
+  display: block;
+  color: #999999;
+}
+
+.SearchResultItemCompact__flex__location {
+  flex: 1;
+  padding-right: 1rem;
+}
+
+.SearchResultItemCompact__flex__frist {
+  flex: 1;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-size: 12px;
+  line-height: initial;
 }
 
-.SearchResultItemCompact__title,
-.SearchResultItemCompact__location,
-.SearchResultItemCompact__employer {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin-right: 1rem;
+.SearchResultItemCompact__flex__frist__label {
+  color: #999999;
+  display: block;
 }
 
+.SearchResultItemCompact__favourite {
+  position: absolute;
+  right: 0.25rem;
+  top: 50%;
+  margin-top: -0.5rem;
+  z-index: 1;
 
-.SearchResultItemCompact .ToggleFavouriteButton {
-  margin-left: 0.5rem;
-  border-radius: 50%;
-  .FavouriteButton__star {
-    font-size: 1.5rem;
+  .ToggleFavouriteStar {
+    border-radius: 50%;
+    z-index: 9999;
+
+    .ToggleFavouriteStar__flex .ToggleFavouriteStar__star,
+    .ToggleFavouriteStar__flex .ToggleFavouriteStar__star--active {
+      @media (min-width: @screen-sm-min) {
+        background-size: 1rem;
+        height: 1rem;
+        width: 1rem;
+      }
+    }
   }
 }
 
 @media (max-width: @screen-xs-max) {
-  .SearchResultItemCompact__location,
-  .SearchResultItemCompact__employer {
-    font-size: 90%;
+  .SearchResultItemCompact__flex {
+    display: block;
   }
 
-  .SearchResultItemCompact__title,
-  .SearchResultItemCompact__location,
-  .SearchResultItemCompact__employer {
+  .SearchResultItemCompact__flex__location,
+  .SearchResultItemCompact__flex__employer {
+    font-size: 12px;
+  }
+
+  .SearchResultItemCompact__flex__title,
+  .SearchResultItemCompact__flex__location,
+  .SearchResultItemCompact__flex__employer {
     margin-right: 2.5rem;
   }
 
@@ -63,9 +113,15 @@
     position: relative;
   }
 
+  .SearchResultItemCompact__flex__frist {
+    color: #999999;
+    .SearchResultItemCompact__flex__frist__label {
+      display: initial;
+    }
+  }
+
   .SearchResultItemCompact__favourite {
-    position: absolute;
     top: 0.25rem;
-    right: 0.25rem;
+    margin-top: 0;
   }
 }
