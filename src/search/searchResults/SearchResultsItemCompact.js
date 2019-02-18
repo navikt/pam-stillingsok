@@ -1,10 +1,10 @@
-import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
+import { Normaltekst, Undertekst, Element } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { CONTEXT_PATH } from '../../fasitProperties';
 import ToggleFavouriteStar from '../../favourites/toggleFavoriteButton/ToggleFavouriteStar';
-import {formatISOString, isValidISOString} from '../../utils';
+import { formatISOString, isValidISOString } from '../../utils';
 import getWorkLocation from '../../common/getWorkLocation';
 import getEmployer from '../../common/getEmployer';
 import './SearchResultsItemCompact.less';
@@ -15,35 +15,42 @@ export default function SearchResultsItemCompact({ stilling, urlQuery }) {
     if (applicationdue && applicationdue !== undefined) {
         frist = isValidISOString(applicationdue) ? formatISOString(applicationdue, 'DD.MM.YYYY') : applicationdue;
     } else {
-        frist = 'Ikke oppgitt';
+        frist = '';
     }
     const employer = getEmployer(stilling);
     return (
         <div className="SearchResultItemCompact">
-            {employer && (
-                <Normaltekst className="SearchResultItemCompact__employer">
-                    {employer} - {getWorkLocation(stilling, true)}
-                </Normaltekst>
-            )}
-
-            <Normaltekst tag="h3" className="SearchResultItemCompact__title">
-                <Link to={`${CONTEXT_PATH}/stilling/${stilling.uuid}${urlQuery}`} className="lenke SearchResultItemCompact__title__ellipsis">
-                    {stilling.properties.jobtitle && stilling.title !== stilling.properties.jobtitle ? (
-                        <span>
-                            <b>{stilling.properties.jobtitle}</b> - {stilling.title}
-                        </span>
-                    ) : (
-                        <b>{stilling.title}</b>
-                    )
-                    }
-                </Link>
-            </Normaltekst>
-            { frist && (
-                <Undertekst className="SearchResultItem__updated">
-                    {frist}
+            <Link to={`${CONTEXT_PATH}/stilling/${stilling.uuid}${urlQuery}`} className="SearchResultItemCompact__flex">
+                <Undertekst className="SearchResultItemCompact__flex__employer">
+                    {employer || ''}
                 </Undertekst>
-            )}
-            <ToggleFavouriteStar uuid={stilling.uuid} className="SearchResultItemCompact__favourite"/>
+                <div className="SearchResultItemCompact__flex__title">
+                    <Undertekst className="SearchResultItemCompact__flex__title__jobTitle">
+                        {stilling.properties.jobtitle && stilling.title !== stilling.properties.jobtitle ? (
+                            <span>
+                                {getWorkLocation(stilling, true)} - {stilling.properties.jobtitle}
+                            </span>
+                        ) : (
+                            <span>
+                                {getWorkLocation(stilling, true)}
+                            </span>
+                        )}
+                    </Undertekst>
+                    <Undertekst tag="h3" className="SearchResultItemCompact__flex__title__h3">
+                        {stilling.title}
+                    </Undertekst>
+                </div>
+                <Undertekst className="SearchResultItemCompact__flex__frist">
+                    {frist !== '' && (
+                        <span>
+                            <span className="SearchResultItemCompact__flex__frist__label">Søknadsfrist:</span> {frist}
+                        </span>
+                    )}
+                </Undertekst>
+            </Link>
+            <div className="SearchResultItemCompact__favourite">
+                <ToggleFavouriteStar uuid={stilling.uuid} className="SearchResultItemCompact__favourite" />
+            </div>
         </div>
     );
 }
