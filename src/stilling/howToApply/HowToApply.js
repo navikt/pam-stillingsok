@@ -20,44 +20,46 @@ export default function HowToApply({ source, properties }) {
         return (
             <div className="HowToApply detail-section">
                 <Undertittel className="HowToApply__head detail-section__head">Søknad</Undertittel>
-                <dl className="dl-flex typo-normal">
-                    {properties.applicationdue && [
-                        <dt key="dt">Søknadsfrist:</dt>,
-                        <dd key="dd">
-                            {isValidISOString(properties.applicationdue) ?
-                                formatISOString(properties.applicationdue, 'DD.MM.YYYY') :
-                                properties.applicationdue}
-                        </dd>
-                    ]}
-                    {!finn && properties.applicationemail && [
-                        <dt key="dt">Send søknad til:</dt>,
-                        <dd key="dd">{properties.applicationemail}</dd>
-                    ]}
-                    {sokUrl && !isValidUrl(sokUrl) && [
-                        <dt key="dt">Søknadslenke:</dt>,
-                        <dd key="dd">{sokUrl}</dd>
-                    ]}
-                </dl>
+                <div className="detail-section__body">
+                    <dl className="dl-flex typo-normal">
+                        {properties.applicationdue && [
+                            <dt key="dt">Søknadsfrist:</dt>,
+                            <dd key="dd">
+                                {isValidISOString(properties.applicationdue) ?
+                                    formatISOString(properties.applicationdue, 'DD.MM.YYYY') :
+                                    properties.applicationdue}
+                            </dd>
+                        ]}
+                        {!finn && properties.applicationemail && [
+                            <dt key="dt">Send søknad til:</dt>,
+                            <dd key="dd">{properties.applicationemail}</dd>
+                        ]}
+                        {sokUrl && !isValidUrl(sokUrl) && [
+                            <dt key="dt">Søknadslenke:</dt>,
+                            <dd key="dd">{sokUrl}</dd>
+                        ]}
+                    </dl>
 
-                {sokUrl && isValidUrl(sokUrl) && (
-                    <div className="HowToApply__send-button-wrapper">
-                        <a
-                            className="HowToApply__send-button knapp knapp--hoved blokk-xxs"
-                            href={sokUrl}
-                        >
-                            <div className="HowToApply__send-button-content">
-                                <i className="HowToApply__send-button-icon"/>Søk på stillingen
-                            </div>
-                        </a>
+                    {sokUrl && isValidUrl(sokUrl) && (
+                        <div className="HowToApply__send-button-wrapper">
+                            <a
+                                className="HowToApply__send-button knapp knapp--hoved blokk-xxs"
+                                href={sokUrl}
+                            >
+                                <div className="HowToApply__send-button-content">
+                                    <i className="HowToApply__send-button-icon" />Søk på stillingen
+                                </div>
+                            </a>
 
-                        {finn &&
+                            {finn &&
                             <Undertekst className="blokk-xs"> Denne annonsen er hentet fra{' '}
                                 <a href="https://www.finn.no" className="lenke">FINN.no</a>. Du kan sende søknad via
                                 den opprinnelige annonsen.
                             </Undertekst>
-                        }
-                    </div>)
-                }
+                            }
+                        </div>)
+                    }
+                </div>
             </div>
         );
     }

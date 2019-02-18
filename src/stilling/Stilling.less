@@ -14,21 +14,41 @@
 }
 
 .Stilling__header {
-  padding-top: 2rem;
-  padding-bottom: 11rem;
-  background: @pageHeader-bgColor;
+  padding-top: 1rem;
+  padding-bottom: 2rem;
+  margin-bottom: 2.5rem;
+  background: @gray2;
+
+  @media (max-width: @screen-sm-max) {
+    margin-bottom: 1.5rem;
+  }
+}
+
+.Stilling__header__button-row {
+  margin-bottom: 1rem;
+}
+
+.StillingsTitle__employer-and-location {
+  margin-bottom: 0.5rem;
+}
+
+.StillingsTitle__title {
+  font-family: 'Source Sans Pro', Arial, sans-serif;
+  font-size: 3.125rem;
+  font-weight: 300;
+  line-height: 0.88;
+  margin: 0;
+
+  @media (max-width: @screen-sm-max) {
+    font-size: 2rem;
+    line-height: 1;
+  }
 }
 
 .Stilling__header__favourite {
   display: flex;
   justify-content: flex-end;
   margin-right: 0.5rem;
-}
-
-@media (min-width: @screen-md-min) {
-  .Stilling__header__favourite {
-    padding-top: 1.5rem;
-  }
 }
 
 .Stilling__header__favourite .knapp:not(:last-child) {
@@ -50,32 +70,29 @@
   align-items: center;
 }
 
-.Stilling__main {
-  margin-top: -10.4rem;
-}
-
 @media (max-width: @screen-sm-max) {
-  .Stilling__header {
-    padding-bottom: 0;
-  }
-
-  .Stilling__main {
-    margin-top: 0.5rem;
-  }
-
   .Stilling__header__favourite {
     margin-bottom: 1rem;
   }
 }
 
+@media (max-width: @screen-sm-max) {
+  .Stilling__main__aside {
+    margin-top: 2rem;
+  }
+}
+
 .detail-section {
-  padding: 1rem;
-  border: 1px solid @panel-borderColor;
-  background-color: #fff;
-  margin-bottom: 1rem;
+  margin-bottom: 2.5rem;
+  border-top: 2px solid @gray3;
 
   .detail-section__head {
-    margin-bottom: 0.5rem;
+    padding: 0.75rem 1rem;
+  }
+
+  .detail-section__body {
+    padding: 1rem;
+    background-color: @gray2;
   }
 }
 
@@ -86,7 +103,7 @@
 
   dt {
     flex: 0 42%;
-    color: @navGra60;
+    color: @gray5;
   }
 
   dd:not(:last-of-type),

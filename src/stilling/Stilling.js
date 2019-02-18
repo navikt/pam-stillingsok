@@ -71,21 +71,38 @@ class Stilling extends React.Component {
                     <article className="Stilling">
                         <header className="Stilling__header">
                             <Container>
-                                <Row>
-                                    <Column xs="12">
-                                        <div className="blokk-s">
-                                            <Link
-                                                to={`${urlFromSessionStorageOrIndex()}`}
-                                                className="PageHeader__back typo-normal lenke no-print"
+                                <Row className="Stilling__header__button-row">
+                                    <Column xs="6">
+                                        <Link
+                                            to={`${urlFromSessionStorageOrIndex()}`}
+                                            className="PageHeader__back typo-normal lenke no-print"
+                                        >
+                                            <Chevron type="venstre" className="PageHeader__back__chevron" />
+                                            <span className="PageHeader__back__text">
+                                                Til stillingssøk
+                                            </span>
+                                        </Link>
+                                    </Column>
+                                    <Column xs="6">
+                                        <div className="Stilling__header__favourite">
+                                            {isFetchingStilling && cachedStilling && (
+                                                <ToggleFavouriteButton uuid={cachedStilling.uuid} />
+                                            )}
+                                            {!isFetchingStilling && stilling && (
+                                                <ToggleFavouriteButton uuid={stilling._id} />
+                                            )}
+                                            <Flatknapp
+                                                mini
+                                                className="StillingSubMenu__print"
+                                                onClick={this.onPrintClick}
                                             >
-                                                <Chevron type="venstre" className="PageHeader__back__chevron" />
-                                                <span className="PageHeader__back__text">
-                                                    Til stillingssøk
-                                                </span>
-                                            </Link>
+                                                Skriv ut
+                                            </Flatknapp>
                                         </div>
                                     </Column>
-                                    <Column xs="12" md="8">
+                                </Row>
+                                <Row>
+                                    <Column xs="12">
                                         {!isFetchingStilling && stilling && stilling._source.status === 'INACTIVE' && (
                                             <Expired />
                                         )}
@@ -103,23 +120,6 @@ class Stilling extends React.Component {
                                                 location={getWorkLocation(stilling._source, true)}
                                             />
                                         )}
-                                    </Column>
-                                    <Column xs="12" md="4">
-                                        <div className="Stilling__header__favourite">
-                                            {isFetchingStilling && cachedStilling && (
-                                                <ToggleFavouriteButton uuid={cachedStilling.uuid} />
-                                            )}
-                                            {!isFetchingStilling && stilling && (
-                                                <ToggleFavouriteButton uuid={stilling._id} />
-                                            )}
-                                            <Flatknapp
-                                                mini
-                                                className="StillingSubMenu__print"
-                                                onClick={this.onPrintClick}
-                                            >
-                                                Skriv ut
-                                            </Flatknapp>
-                                        </div>
                                     </Column>
                                 </Row>
                             </Container>
@@ -145,7 +145,7 @@ class Stilling extends React.Component {
                                         <SoftRequirements stilling={stilling} />
                                         <PersonalAttributes stilling={stilling} />
                                     </Column>
-                                    <Column xs="12" md="4">
+                                    <Column xs="12" md="4" className="Stilling__main__aside">
                                         <HowToApply
                                             source={stilling._source.source}
                                             properties={stilling._source.properties}

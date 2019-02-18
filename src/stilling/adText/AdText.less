@@ -3,9 +3,8 @@
 
 
 .AdText {
-  border: 1px solid @panel-borderColor;
   background: #fff;
-  padding: 1.5rem 3rem;
+  padding-right: 5rem;
   font-family: "Source Sans Pro", Arial, sans-serif;
   font-size: 1rem;
   line-height: 1.375rem;
@@ -16,6 +15,12 @@
 
   a {
     .lenke;
+    color: @fontColorPink;
+
+    &:hover, &:active {
+      color: @fontColorPink;
+      border-bottom-color: @fontColorPink;
+    }
   }
 
   h1 {
@@ -41,7 +46,7 @@
 
 @media (max-width: @screen-sm-max) {
   .AdText {
-    padding: 1rem;
+    padding: 0;
     margin-bottom: 1rem;
   }
 }

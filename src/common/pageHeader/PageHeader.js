@@ -29,7 +29,7 @@ export default function PageHeader({
                         )}
                     </Column>
                     <Column xs="12" sm="6">
-                        <Sidetittel className="PageHeader__title">{title}</Sidetittel>
+                        <h1 className="PageHeader__title">{title}</h1>
                     </Column>
                     <Column xs="12" sm="3" />
                 </Row>

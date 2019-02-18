@@ -1,14 +1,17 @@
 @import "../../variables";
 
 .FavouriteListItem__wrapper {
-  border: 1px solid @panel-borderColor;
   margin-bottom: @list-box-margin-bottom;
+
+  &:nth-child(even) {
+    background-color: @even-bgColor;
+  }
 }
 
 .FavouriteListItem {
-  background-color: #fff;
   padding: @list-box-padding;
   display: block;
+
 }
 
 .FavouriteListItem__top {

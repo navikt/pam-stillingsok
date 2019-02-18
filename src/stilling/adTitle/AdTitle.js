@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Innholdstittel, Normaltekst } from 'nav-frontend-typografi';
+import { Innholdstittel, Element } from 'nav-frontend-typografi';
 import './AdTitle.less';
 
 export function commaSeparate(...strings) {
@@ -13,12 +13,12 @@ export function commaSeparate(...strings) {
 export default function AdTitle({ title, employer, location }) {
     return (
         <div className="StillingsTitle">
-            <Normaltekst>
+            <Element className="StillingsTitle__employer-and-location">
                 {commaSeparate(employer, location)}
-            </Normaltekst>
-            <Innholdstittel>
+            </Element>
+            <h1 className="StillingsTitle__title">
                 {title}
-            </Innholdstittel>
+            </h1>
         </div>
     );
 }
