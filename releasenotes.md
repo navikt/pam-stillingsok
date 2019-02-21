@@ -1,3 +1,10 @@
+## RELEASE - 0.72.540-d652819
+#### New in this release: 
++ 2019-02-21 [QA] Use more common term for search result test
++ 2019-02-21 [QA] Make search for word in result page case insensitive
++ 2019-02-21 [Attempt] to fix QA tests without Saucelabs
++ 2019-02-21 [PAM-2789] Round to start of day for "nye i dag" filter
++ 2019-02-07 [Fix] Justerer på kompaktvisning
 ## RELEASE - 0.71.523-99649d6
 #### New in this release: 
 + 2019-02-04 [Fix] Gjør hele feltet klikkbart i trefflisten
