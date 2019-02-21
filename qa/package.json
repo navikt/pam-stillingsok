@@ -9,7 +9,7 @@
     "chrome-local": "node_modules/.bin/nightwatch --config nightwatch.conf.js",
     "chrome-local-debug": "node --inspect node_modules/.bin/nightwatch --config nightwatch.conf.js",
     "chrome-linux-local": "node_modules/.bin/nightwatch --config nightwatch.conf.js --env linux-local",
-    "chrome-jenkins": "xvfb-run node_modules/.bin/nightwatch --env jenkins",
+    "chrome-jenkins": "xvfb-run node_modules/.bin/nightwatch --config nightwatch.conf.js --env jenkins",
     "sauce": "node_modules/.bin/nightwatch --config nightwatch-sl.conf.js",
     "sauce-chrome": "node_modules/.bin/nightwatch --config nightwatch-sl.conf.js --env default,chrome_W7,chrome_OSX_10.14,chrome_OSX_10.13",
     "sauce-firefox": "node_modules/.bin/nightwatch --config nightwatch-sl.conf.js --env firefox_W10,firefox_W7,firefox_OSX_10.14,firefox_OSX_10.13",
