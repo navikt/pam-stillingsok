@@ -9,7 +9,8 @@ require('nightwatch-cucumber')({
     ]
 });
 
-const selenium_port = 4445;
+const selenium_port = process.env['RANDOM_SELENIUM_PORT'] ? process.env['RANDOM_SELENIUM_PORT'] : 4444;
+
 module.exports = {
     "output_folder": "./reports",
     "page_objects_path" : "./pages",
