@@ -23,6 +23,12 @@ class Extent extends React.Component {
         this.props.search();
     };
 
+    labelForExtent = (item) => (
+        item.key === 'Heltid'
+            ? `${item.key} eller ikke oppgitt (${item.count})`
+            : `${item.key} (${item.count})`
+    );
+
     render() {
         const { extent, checkedExtent, deprecatedExtent } = this.props;
         return (
@@ -41,7 +47,7 @@ class Extent extends React.Component {
                             <Checkbox
                                 name="extent"
                                 key={item.key}
-                                label={`${item.key} (${item.count})`}
+                                label={this.labelForExtent(item)}
                                 value={item.key}
                                 onChange={this.onExtentClick}
                                 checked={checkedExtent.includes(item.key)}
