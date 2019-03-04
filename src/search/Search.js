@@ -3,6 +3,7 @@ import { Flatknapp } from 'nav-frontend-knapper';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
+import { CONTEXT_PATH } from '../fasitProperties';
 import FavouriteAlertStripe from '../favourites/alertstripe/FavouriteAlertStripe';
 import SavedSearchAlertStripe from '../savedSearches/alertstripe/SavedSearchAlertStripe';
 import CurrentSavedSearch from '../savedSearches/CurrentSavedSearch';
@@ -39,7 +40,7 @@ class Search extends React.Component {
 
     componentDidMount() {
         document.title = 'Stillingssøk - Arbeidsplassen';
-        ga('set', 'page', '/');
+        ga('set', 'page', `${CONTEXT_PATH}`);
         ga('send', 'pageview');
     }
 
