@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { CONTEXT_PATH } from '../fasitProperties';
 import FavouriteAlertStripe from '../favourites/alertstripe/FavouriteAlertStripe';
 import ToggleFavouriteButton from '../favourites/toggleFavoriteButton/ToggleFavouriteButton';
 import AdDetails from './adDetails/AdDetails';
@@ -36,6 +37,8 @@ class Stilling extends React.Component {
     componentDidMount() {
         window.scrollTo(0, 0);
         this.props.getStilling(this.props.match.params.uuid);
+        ga('set', 'page', `${CONTEXT_PATH}/stilling`);
+        ga('send', 'pageview');
     }
 
     componentDidUpdate() {

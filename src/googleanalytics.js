@@ -5,4 +5,3 @@
 
 ga('create', 'UA-120818438-1', 'auto');
 ga('set', 'anonymizeIp', true);
-ga('send', 'pageview');
