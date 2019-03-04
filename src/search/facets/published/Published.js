@@ -7,7 +7,7 @@ import { SET_PUBLISHED } from './publishedReducer';
 import './Published.less';
 
 const PublishedLabelsEnum = {
-    'now-1d': 'Nye i dag'
+    'now/d': 'Nye i dag'
 };
 
 class Published extends React.Component {

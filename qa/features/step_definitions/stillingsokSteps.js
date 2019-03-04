@@ -9,7 +9,11 @@ Before(() => {
 });
 
 After(async (scenarioContext) => {
-    await client.sauceEnd(scenarioContext);
+    if (client.sauceEnd) { //  Exists only when running with Saucelabs
+        await client.sauceEnd(scenarioContext);
+    } else {
+        client.end();
+    }
 });
 
 Given(/^at jeg er på forsiden for søk/, async () => {

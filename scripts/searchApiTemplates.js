@@ -452,8 +452,8 @@ exports.searchTemplate = (query) => {
                             field: 'published',
                             ranges: [
                                 {
-                                    key: 'now-1d',
-                                    from: 'now-1d'
+                                    key: 'now/d',
+                                    from: 'now/d'
                                 }
                             ]
                         }

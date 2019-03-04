@@ -8,6 +8,9 @@ require('nightwatch-cucumber')({
         'features'
     ]
 });
+
+const selenium_port = process.env['RANDOM_SELENIUM_PORT'] ? process.env['RANDOM_SELENIUM_PORT'] : 4444;
+
 module.exports = {
     "output_folder": "./reports",
     "page_objects_path" : "./pages",
@@ -15,7 +18,7 @@ module.exports = {
         "start_process": true,
         "server_path": seleniumServer.path,
         "host": "127.0.0.1",
-        "port": 4444, // standard selenium port
+        "port": selenium_port
     },
     "test_workers" : {
         "enabled" : true,
@@ -30,6 +33,8 @@ module.exports = {
                 "on_error" : true,
                 "path" : "./screenshots"
             },
+            "selenium_port": selenium_port,
+            "selenium_host": "127.0.0.1",
             "globals" : {
                 "waitForConditionTimeout" : 5000, // sometimes internet is slow so wait.
                 "environment" : "local"
