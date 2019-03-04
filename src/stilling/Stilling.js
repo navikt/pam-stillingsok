@@ -36,6 +36,8 @@ class Stilling extends React.Component {
     componentDidMount() {
         window.scrollTo(0, 0);
         this.props.getStilling(this.props.match.params.uuid);
+        ga('set', 'page', '/stilling');
+        ga('send', 'pageview');
     }
 
     componentDidUpdate() {

@@ -39,6 +39,8 @@ class Search extends React.Component {
 
     componentDidMount() {
         document.title = 'Stillingssøk - Arbeidsplassen';
+        ga('set', 'page', '/');
+        ga('send', 'pageview');
     }
 
     onSearchFormSubmit = (e) => {
