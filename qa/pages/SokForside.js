@@ -29,7 +29,7 @@ module.exports = {
 
         searchResultContainsLocation: function(sted) {
             return this.pagePause(2000).getText('@searchResultLocation', function(result) {
-                this.assert.equal(result.value, sted);
+                this.assert.equal(result.value.toLowerCase(), sted.toLowerCase());
             });
         },
 
