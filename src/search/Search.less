@@ -98,6 +98,8 @@
 }
 
 .Search__main__center__header {
+  border-bottom: 2px solid @gray3;
+
   @media (min-width: @screen-sm-min) {
     min-height: 118px;
     margin-bottom: 1rem;
@@ -105,14 +107,10 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 2px solid @gray3;
-  }
-  @media (max-width: @screen-sm-max) {
-    padding-top: 2rem;
   }
   @media (max-width: @screen-md-max) {
-    padding-top: 16px !important;
-    padding-bottom: 16px !important;
+    padding-top: 2rem;
+    padding-bottom: 16px;
     margin-bottom: 10px;
   }
 }

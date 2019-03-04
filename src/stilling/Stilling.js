@@ -75,7 +75,7 @@ class Stilling extends React.Component {
                                     <Column xs="6">
                                         <Link
                                             to={`${urlFromSessionStorageOrIndex()}`}
-                                            className="PageHeader__back typo-normal lenke no-print"
+                                            className="Stilling__header__button-row__back PageHeader__back typo-normal lenke no-print"
                                         >
                                             <Chevron type="venstre" className="PageHeader__back__chevron" />
                                             <span className="PageHeader__back__text">

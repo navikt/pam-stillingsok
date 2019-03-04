@@ -6,6 +6,11 @@
   &:nth-child(even) {
     background-color: @even-bgColor;
   }
+
+  @media (max-width: @screen-sm-max) {
+    margin-left: -16px;
+    margin-right: -16px;
+  }
 }
 
 .SearchResultItem__link {
