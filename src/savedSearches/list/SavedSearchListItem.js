@@ -1,10 +1,10 @@
-import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
+import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import AlertStripe from 'nav-frontend-alertstriper';
-import { Flatknapp } from 'nav-frontend-knapper';
+import Button from '../../common/button/Button';
 import Lenkeknapp from '../../common/Lenkeknapp';
 import { CONTEXT_PATH } from '../../fasitProperties';
 import { formatISOString, isValidISOString } from '../../utils';
@@ -51,7 +51,7 @@ class SavedSearchListItem extends React.Component {
                     <div className="SavedSearchListItem__top">
                         <div className="SavedSearchListItem__top_flex">
                             <div className="SavedSearchListItem__title">
-                                <Element tag="h3">
+                                <Normaltekst tag="h3">
                                     <Link
                                         className="lenke"
                                         to={`${CONTEXT_PATH}/${savedSearch.searchQuery}&saved=${savedSearch.uuid}`}
@@ -59,7 +59,7 @@ class SavedSearchListItem extends React.Component {
                                     >
                                         {savedSearch.title}
                                     </Link>
-                                </Element>
+                                </Normaltekst>
                             </div>
                             {isValidISOString(savedSearch.updated) && (
                                 <Undertekst className="SavedSearchListItem__created">
@@ -88,13 +88,14 @@ class SavedSearchListItem extends React.Component {
                     savedSearch.notifyType === NotifyTypeEnum.EMAIL && (
                         <AlertStripe type="info" solid className="SavedSearchListItem__alertstripe">
                             Ditt varsel for dette søket har gått ut
-                            <Flatknapp
+                            <Button
+                                type="flat"
                                 className="SavedSearchListItem__button-alertstripe"
                                 onClick={this.onExtendDurationClick}
                                 mini
                             >
                                 Start ny varsling
-                            </Flatknapp>
+                            </Button>
                         </AlertStripe>
                     )}
             </div>

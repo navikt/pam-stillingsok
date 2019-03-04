@@ -1,7 +1,7 @@
 @import "../../variables";
 
 .FavouriteListItem__wrapper {
-  margin-bottom: @list-box-margin-bottom;
+  margin: 0.5rem 0;
 
   &:nth-child(even) {
     background-color: @even-bgColor;
@@ -9,23 +9,27 @@
 }
 
 .FavouriteListItem {
-  padding: @list-box-padding;
   display: block;
+}
 
+.FavouriteListItem--expired {
+  background: @yellowLighten;
 }
 
 .FavouriteListItem__top {
-  margin-bottom: 1rem;
+  padding: @list-box-padding;
 }
 
 .FavouriteListItem__bottom {
-  border-top: 1px solid @panel-borderColor;
-  margin-top: @list-box-button-bar-margin-top;
-  padding-top: @list-box-button-bar-margin-bottom;
+  padding: @list-box-padding;
+  border-top: 1px solid @gray3;
   text-align: right;
 }
 
 .FavouriteListItem__alertstripe {
+
+  background-color: @yellowLighten!important;
+
   .alertstripe__ikon {
     margin: 0!important;
     padding: 0!important;
@@ -43,9 +47,5 @@
 @media (max-width: @screen-xs-max) {
   .FavouriteListItem {
     padding: 16px;
-  }
-
-  .FavouriteListItem__wrapper {
-    margin-bottom: 8px !important;
   }
 }

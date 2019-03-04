@@ -1,4 +1,3 @@
-import { Flatknapp, Hovedknapp } from 'nav-frontend-knapper';
 import Modal from 'nav-frontend-modal';
 import { Checkbox, Input } from 'nav-frontend-skjema';
 import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
@@ -6,6 +5,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import './TermsOfUse.less';
+import Button from '../common/button/Button';
 import { CREATE_USER, HIDE_TERMS_OF_USE_MODAL, SET_USER_TERMS_ACCEPTED } from './userReducer';
 
 class TermsOfUse extends React.Component {
@@ -103,16 +103,17 @@ class TermsOfUse extends React.Component {
                         </Normaltekst>
                     </div>
                     <div className="TermsOfUse__buttons">
-                        <Hovedknapp
+                        <Button
+                            type="primary"
                             onClick={this.onAcceptTerms}
                             spinner={this.props.isCreating}
                             disabled={this.props.isCreating}
                         >
                             Jeg samtykker
-                        </Hovedknapp>
-                        <Flatknapp onClick={this.closeModal}>
+                        </Button>
+                        <Button type="flat" onClick={this.closeModal}>
                             Avbryt
-                        </Flatknapp>
+                        </Button>
                     </div>
                 </div>
             </Modal>

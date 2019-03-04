@@ -1,10 +1,10 @@
-import { Hovedknapp, Flatknapp } from 'nav-frontend-knapper';
 import Modal from 'nav-frontend-modal';
 import { Fieldset, Radio, SkjemaGruppe } from 'nav-frontend-skjema';
 import { Undertittel } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
+import Button from '../../common/button/Button';
 import { ADD_SAVED_SEARCH, UPDATE_SAVED_SEARCH } from '../savedSearchesReducer';
 import './SavedSearchForm.less';
 import {
@@ -110,14 +110,15 @@ class SavedSearchForm extends React.Component {
                         </div>
 
                         <div className="SavedSearchModal__buttons">
-                            <Hovedknapp
+                            <Button
+                                type="primary"
                                 disabled={isSaving}
                                 spinner={isSaving}
                                 onClick={this.onSaveClick}
                             >
                                 Lagre
-                            </Hovedknapp>
-                            <Flatknapp onClick={this.closeModal}>Avbryt</Flatknapp>
+                            </Button>
+                            <Button type="flat" onClick={this.closeModal}>Avbryt</Button>
                         </div>
                     </div>
                 </Modal>

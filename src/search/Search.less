@@ -1,33 +1,89 @@
 @import "../variables";
 
+.Search__header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  background: @darkBlue;
+
+  @media (min-width: @screen-sm-min) {
+    height: 10rem;
+  }
+  @media (min-width: @screen-md-min) {
+    margin-bottom: 2.5rem;
+  }
+  @media (max-width: @screen-md-max) {
+    padding: 1rem 0;
+  }
+}
+
+.Search__header__container {
+  @media (max-width: @screen-xs-max) {
+    width: 100%;
+    margin: 0 !important;
+  }
+}
+
+.Search__header__title {
+  text-align: center;
+}
+
+.Search__header__left {
+  float: right;
+  padding-top: auto;
+  padding-bottom: auto;
+
+  @media (max-width: @screen-xs-max) {
+    float: none;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  @media (min-width: @screen-md-min) {
+    margin-top: 1rem;
+  }
+  @media (min-width: @screen-lg-min) {
+    margin-top: 1.5rem;
+  }
+}
+
+.Search__header__savedSearches {
+  margin-top: -2.5rem;
+  margin-bottom: 2.5rem;
+}
+
 .Search__spinner {
   width: 100%;
   text-align: center;
   padding: 2rem 0;
 }
 
-@media (min-width: @screen-md-min) {
-  .Search__main__left {
-    margin-right: 1.25rem;
+.Search__main__center {
+  @media (max-width: @screen-xs-max) {
+    padding-top: 2rem;
   }
-  .Search__main__center {
+  @media (min-width: @screen-md-min) {
     margin-left: 1.25rem;
   }
-}
-
-@media (min-width: @screen-lg-min) {
-  .Search__main__left {
-    margin-right: 2rem;
-  }
-  .Search__main__center {
+  @media (min-width: @screen-lg-min) {
     margin-left: 2rem;
   }
 }
 
-@media (min-width: @screen-sm-min) {
-  .Search__main__left__save-search,
-  .Search__main__center__header {
-    min-height: 4rem;
+.Search__main__left {
+  @media (max-width: @screen-xs-max) {
+    margin-bottom: 2rem;
+  }
+  @media (min-width: @screen-md-min) {
+    margin-right: 1.25rem;
+  }
+  @media (min-width: @screen-lg-min) {
+    margin-right: 2rem;
+  }
+}
+
+.Search__main__left__save-search {
+  @media (min-width: @screen-sm-min) {
+    min-height: 118px;
     margin-bottom: 1rem;
     padding-bottom: 1rem;
     display: flex;
@@ -35,21 +91,38 @@
     align-items: center;
     border-bottom: 2px solid @gray3;
   }
+  @media (max-width: @screen-sm-max) {
+    margin-bottom: 1rem;
+    display: flex;
+  }
 }
 
-@media (max-width: @screen-sm-max) {
-  .Search__main__left__save-search {
+.Search__main__center__header {
+  @media (min-width: @screen-sm-min) {
+    min-height: 118px;
     margin-bottom: 1rem;
-    display:flex;
+    padding-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid @gray3;
   }
-
-  .Search__main__center__header {
+  @media (max-width: @screen-sm-max) {
     padding-top: 2rem;
+  }
+  @media (max-width: @screen-md-max) {
+    padding-top: 16px !important;
+    padding-bottom: 16px !important;
+    margin-bottom: 10px;
   }
 }
 
 .Search__main__center__header__left {
   flex: 2;
+
+  @media (max-width: @screen-xs-max) {
+    margin-bottom: 1rem;
+  }
 }
 
 .Search__main__center__header__right {
@@ -57,11 +130,11 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
-}
-
-@media (max-width: @screen-xs-max) {
-  .Search__main__center__header__right {
+  @media (max-width: @screen-xs-max) {
     justify-content: space-between;
+  }
+  @media (max-width: @screen-md-max) {
+    margin-bottom: 0;
   }
 }
 
@@ -69,10 +142,6 @@
   margin-left: 0.25rem;
 }
 
-.Search__header__savedSearches {
-  margin-top: -2.5rem;
-  margin-bottom: 2.5rem;
-}
 
 .SaveSearchButton {
   margin-right: 1rem;
@@ -84,68 +153,8 @@
 
 .Search__innstillinger-lenke {
   margin-left: 0.5rem;
-  font-size: 14px!important;
+  font-size: 14px !important;
   white-space: nowrap;
-}
-
-.Search__header {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#00214a+1,100021+50,080021+52,000831+100 */
-  background: @pageHeaderDark-bgColor; /* Old browsers */
-  background: -moz-linear-gradient(left, #00214a 1%, #100021 50%, #080021 52%, #000831 100%); /* FF3.6-15 */
-  background: -webkit-linear-gradient(left, #00214a 1%,#100021 50%,#080021 52%,#000831 100%); /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(to right, #00214a 1%,#100021 50%,#080021 52%,#000831 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00214a', endColorstr='#000831',GradientType=1 ); /* IE6-9 */
-}
-
-@media (min-width: @screen-md-min) {
-  .Search__header {
-    margin-bottom: 2.5rem;
-  }
-}
-
-.Search__header__title {
-  text-align: center;
-}
-
-.Search__header__left {
-  float: left;
-  padding-top: auto;
-  padding-bottom: auto;
-}
-
-@media (min-width: @screen-sm-min) {
-  .Search__header {
-    height: 10rem;
-  }
-}
-
-@media (max-width: @screen-md-max) {
-  .Search__header {
-    padding: 1rem 0;
-  }
-
-  .Search__header__left {
-    justify-content: center;
-  }
-
-  .Search__main__center__header {
-    padding-top: 16px !important;
-    padding-bottom: 16px !important;
-    margin-bottom: 10px;
-  }
-
-  .Search__main__center__header__right {
-    margin-bottom: 0;
-  }
-}
-
-@media (max-width: @screen-xs-max) {
-  .Search__main__center__header__left {
-    margin-bottom: 1rem;
-  }
 }
 
 .Search__separator {
@@ -153,43 +162,12 @@
   margin: 1.25rem -1rem;
 }
 
-.Search__header__row {
-  display: flex;
-  align-items: center;
-}
-
-@media (max-width: @screen-xs-max) {
-  .Search__main {
-    padding-left: 16px !important;
-    padding-right: 16px !important;
-  }
-
-  .Search__header__row {
-    flex-direction: column;
-  }
-
-  .Search__header__container {
-    align-content: stretch;
-    width: 100%;
-    margin: 0 !important;
-    padding-right: 16px !important;
-    padding-left: 16px !important;
-  }
-
-  .Search__header__left {
-    float: none;
-    margin-left: auto;
-    margin-right: auto;
-  }
-}
 
 .Search__main__tiltoppen {
-  text-align: center;
-  padding: 2rem 0;
-}
+  text-align: right;
+  padding: 2rem 0.5rem;
 
-@media (max-width: @screen-sm-max) {
-  .Search__main__tiltoppen {
+  @media (max-width: @screen-sm-max) {
     display: none;
   }
 }

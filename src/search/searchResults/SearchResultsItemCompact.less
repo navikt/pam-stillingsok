@@ -1,9 +1,12 @@
 @import "../../variables";
 
 .SearchResultItemCompact {
-  background-color: #fff;
-  margin-bottom: 1px;
   position: relative;
+  border-radius: 4px;
+
+  &:nth-child(even) {
+    background-color: @gray2;
+  }
 }
 
 .SearchResultItemCompact__flex {
@@ -11,70 +14,47 @@
   color: @navMorkGra;
   display: flex;
   align-items: center;
-  padding: 0.25rem 2.5rem 0.25rem 1rem;
+  padding: 0.25rem 2rem 0.25rem 0.5rem;
   border: 1px solid transparent;
 
   &:hover {
-    border-color: @navBla;
-  }
-
-  &:nth-child(even) {
-    background-color: @even-bgColor;
+    border-color: @pinkDarken;
   }
 }
 
+.SearchResultItemCompact__flex__employer {
+  font-size: 14px;
+  flex: 3;
+  padding-right: 1.5rem;
+  color: @darkBlue;
+}
+
 .SearchResultItemCompact__flex__title {
-  flex: 4;
+  flex: 7;
   overflow: hidden;
   padding-right: 1rem;
 }
 
 .SearchResultItemCompact__flex__title__h3 {
-  color: @navBla;
-  font-weight: bold;
+  font-size: 14px;
+  color: @pinkDarken;
+  text-decoration: underline;
 }
 
-.SearchResultItemCompact__flex__title__jobTitle {
+.SearchResultItemCompact__flex__title__details{
   font-size: 12px;
-  color: #999999;
+  color: @gray4;
 }
 
-.SearchResultItemCompact__flex__employer {
-  flex: 2;
-  padding-right: 2rem;
-
-}
-
-.SearchResultItemCompact__title__jobTitle {
-  font-size: 12px;
-  display: block;
-  color: #999999;
-}
-
-.SearchResultItemCompact__flex__location {
-  flex: 1;
-  padding-right: 1rem;
-}
-
-.SearchResultItemCompact__flex__frist {
-  flex: 1;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-size: 12px;
-  line-height: initial;
-}
-
-.SearchResultItemCompact__flex__frist__label {
-  color: #999999;
-  display: block;
+.SearchResultItemCompact__flex__title__details__jobTitle {
+  color: @darkBlue;
 }
 
 .SearchResultItemCompact__favourite {
   position: absolute;
   right: 0.25rem;
   top: 50%;
-  margin-top: -0.5rem;
+  margin-top: -0.55rem;
   z-index: 1;
 
   .ToggleFavouriteStar {
@@ -105,7 +85,7 @@
   .SearchResultItemCompact__flex__title,
   .SearchResultItemCompact__flex__location,
   .SearchResultItemCompact__flex__employer {
-    margin-right: 2.5rem;
+    margin-right: 1rem;
   }
 
   .SearchResultItemCompact {
@@ -114,7 +94,7 @@
   }
 
   .SearchResultItemCompact__flex__frist {
-    color: #999999;
+    color: @darkBlue;
     .SearchResultItemCompact__flex__frist__label {
       display: initial;
     }

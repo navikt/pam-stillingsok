@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
-import { Flatknapp, Hovedknapp } from 'nav-frontend-knapper';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import React from 'react';
 import './NotAuthenticated.less';
+import Button from '../common/button/Button';
 import { LOGIN_URL } from '../fasitProperties';
 import { getRedirect } from '../redirect';
 
@@ -21,11 +21,11 @@ export default class NotAuthenticated extends React.Component {
                     Logg inn med MinID, BankID, BankID på mobil, Buypass eller Commfides.
                 </Normaltekst>
                 <div className="NotAuthenticated__buttons">
-                    <Hovedknapp onClick={this.onLoginClick}>Logg inn</Hovedknapp>
+                    <Button type="primary" onClick={this.onLoginClick}>Logg inn</Button>
                     {this.props.onCancel && (
-                        <Flatknapp onClick={this.props.onCancel}>
+                        <Button type="flat" onClick={this.props.onCancel}>
                             Avbryt
-                        </Flatknapp>
+                        </Button>
                     )}
                 </div>
             </div>

@@ -1,11 +1,11 @@
 /* eslint-disable no-underscore-dangle */
 import Chevron from 'nav-frontend-chevron';
 import { Column, Container, Row } from 'nav-frontend-grid';
-import { Flatknapp } from 'nav-frontend-knapper';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import Button from '../common/button/Button';
 import FavouriteAlertStripe from '../favourites/alertstripe/FavouriteAlertStripe';
 import ToggleFavouriteButton from '../favourites/toggleFavoriteButton/ToggleFavouriteButton';
 import AdDetails from './adDetails/AdDetails';
@@ -91,13 +91,14 @@ class Stilling extends React.Component {
                                             {!isFetchingStilling && stilling && (
                                                 <ToggleFavouriteButton uuid={stilling._id} />
                                             )}
-                                            <Flatknapp
+                                            <Button
                                                 mini
+                                                type="flat"
                                                 className="StillingSubMenu__print"
                                                 onClick={this.onPrintClick}
                                             >
                                                 Skriv ut
-                                            </Flatknapp>
+                                            </Button>
                                         </div>
                                     </Column>
                                 </Row>
@@ -127,9 +128,10 @@ class Stilling extends React.Component {
                         {isFetchingStilling && (
                             <Container className="Stilling__main">
                                 <Row>
-                                    <Column xs="12" md="8">
+                                    <Column xs="12" md="6">
                                         <Loading />
                                     </Column>
+                                    <Column xs="12" md="2" />
                                     <Column xs="12" md="4">
                                         <Loading spinner={false} />
                                     </Column>
@@ -139,13 +141,13 @@ class Stilling extends React.Component {
                         {!isFetchingStilling && stilling && (
                             <Container className="Stilling__main">
                                 <Row>
-                                    <Column xs="12" md="8">
+                                    <Column xs="12" md="7">
                                         <AdText adText={stilling._source.properties.adtext} />
                                         <HardRequirements stilling={stilling} />
                                         <SoftRequirements stilling={stilling} />
                                         <PersonalAttributes stilling={stilling} />
                                     </Column>
-                                    <Column xs="12" md="4" className="Stilling__main__aside">
+                                    <Column xs="12" md="5" className="Stilling__main__aside">
                                         <HowToApply
                                             source={stilling._source.source}
                                             properties={stilling._source.properties}

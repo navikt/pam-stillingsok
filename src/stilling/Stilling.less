@@ -15,33 +15,34 @@
 
 .Stilling__header {
   padding-top: 1rem;
-  padding-bottom: 2rem;
+  padding-bottom: 2.5rem;
   margin-bottom: 2.5rem;
   background: @gray2;
+  min-height: 10rem;
 
   @media (max-width: @screen-sm-max) {
     margin-bottom: 1.5rem;
   }
 }
 
-.Stilling__header__button-row {
-  margin-bottom: 1rem;
+.StillingsTitle {
+  max-width: 65rem;
+  margin: 0 auto;
 }
 
 .StillingsTitle__employer-and-location {
-  margin-bottom: 0.5rem;
+  line-height: 1;
 }
 
 .StillingsTitle__title {
   font-family: 'Source Sans Pro', Arial, sans-serif;
   font-size: 3.125rem;
+  line-height: 1;
   font-weight: 300;
-  line-height: 0.88;
   margin: 0;
 
   @media (max-width: @screen-sm-max) {
     font-size: 2rem;
-    line-height: 1;
   }
 }
 
@@ -51,16 +52,16 @@
   margin-right: 0.5rem;
 }
 
-.Stilling__header__favourite .knapp:not(:last-child) {
+.Stilling__header__favourite .Button:not(:last-child) {
   margin-right: @button-marginRight;
 }
 
 @media (max-width: @screen-xs-max) {
   .StillingSubMenu__print {
-    display: none!important;
+    display: none !important;
   }
 
-  .Stilling__header__favourite .knapp:not(:last-child) {
+  .Stilling__header__favourite .Button:not(:last-child) {
     margin-right: 0;
   }
 }
@@ -76,13 +77,23 @@
   }
 }
 
-@media (max-width: @screen-sm-max) {
-  .Stilling__main__aside {
+.Stilling__main {
+  max-width: 65rem;
+}
+
+.Stilling__main__aside {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+
+  @media (max-width: @screen-sm-max) {
     margin-top: 2rem;
   }
 }
 
 .detail-section {
+  max-width: 370px;
+  width: 100%;
   margin-bottom: 2.5rem;
   border-top: 2px solid @gray3;
 

@@ -1,12 +1,11 @@
 import { Column, Container, Row } from 'nav-frontend-grid';
-import { Flatknapp } from 'nav-frontend-knapper';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
+import Button from '../common/button/Button';
 import FavouriteAlertStripe from '../favourites/alertstripe/FavouriteAlertStripe';
 import SavedSearchAlertStripe from '../savedSearches/alertstripe/SavedSearchAlertStripe';
 import CurrentSavedSearch from '../savedSearches/CurrentSavedSearch';
-import SavedSearchesExpand from '../savedSearches/expand/SavedSearchesExpand';
 import SavedSearchesExpandButton from '../savedSearches/expand/SavedSearchesExpandButton';
 import SavedSearchForm from '../savedSearches/form/SavedSearchForm';
 import SaveSearchButton from '../savedSearches/SaveSearchButton';
@@ -58,8 +57,8 @@ class Search extends React.Component {
                 <div className="Search__header">
                     <Container className="Search__header__container">
                         <Row className="Search__header__row">
-                            <Column xs="12" sm="4" lg="4" />
-                            <Column xs="12" sm="8" lg="8">
+                            <Column xs="12" sm="12" md="4" lg="4" />
+                            <Column xs="12" sm="12" md="5" lg="6">
                                 <form
                                     role="search"
                                     action="/"
@@ -69,7 +68,7 @@ class Search extends React.Component {
                                     <SearchBox />
                                 </form>
                             </Column>
-                            <Column xs="12" sm="4" lg="4">
+                            <Column xs="12" sm="12" md="3" lg="2">
                                 {this.props.isAuthenticated === authenticationEnum.IS_AUTHENTICATED && this.props.user ?
                                     <div className="Search__header__left">
                                         <SavedSearchesExpandButton />
@@ -94,9 +93,13 @@ class Search extends React.Component {
                                         <div className="Search__main__left">
                                             <div className="Search__main__left__save-search">
                                                 <SaveSearchButton />
-                                                <Flatknapp mini onClick={this.onResetSearchClick}>
+                                                <Button
+                                                    type="flat"
+                                                    mini
+                                                    onClick={this.onResetSearchClick}
+                                                >
                                                             Nullstill kriterier
-                                                </Flatknapp>
+                                                </Button>
                                             </div>
                                             <div id="sok">
                                                 <form
@@ -129,12 +132,12 @@ class Search extends React.Component {
                                                 </div>
                                             </div>
                                             <SearchResults />
-                                            <div className="Search__main__tiltoppen">
-                                                <a href="#top" className="lenke typo-normal">Til toppen</a>
-                                            </div>
                                         </div>
                                     </Column>
                                 </Row>
+                                <div className="Search__main__tiltoppen">
+                                    <a href="#top" className="lenke typo-normal">Til toppen</a>
+                                </div>
                             </div>
                         </RestoreScroll>
                     )}

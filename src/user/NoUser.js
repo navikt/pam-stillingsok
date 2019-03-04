@@ -1,9 +1,9 @@
-import { Hovedknapp } from 'nav-frontend-knapper';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import Button from '../common/button/Button';
 import { SHOW_TERMS_OF_USE_MODAL } from './userReducer';
 import './NoUser.less';
 
@@ -21,12 +21,13 @@ class NoUser extends React.Component {
                 <Normaltekst className="NoUser__text">
                     Du må samtykke for å kunne lagre søk og favoritter.
                 </Normaltekst>
-                <Hovedknapp
+                <Button
+                    type="primary"
                     className="NoUser__button"
                     onClick={this.onCreateUserClick}
                 >
                     Se samtykke
-                </Hovedknapp>
+                </Button>
                 <Link to="/" className="lenke typo-normal">
                     Fortsett uten å samtykke
                 </Link>

@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Knapp } from 'nav-frontend-knapper';
 import Typeahead from './Typeahead';
 import { SEARCH } from '../searchReducer';
 import { FETCH_SUGGESTIONS, SET_VALUE } from './searchBoxReducer';

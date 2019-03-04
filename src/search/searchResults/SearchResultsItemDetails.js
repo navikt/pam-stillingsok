@@ -38,17 +38,17 @@ export default function SearchResultsItemDetails({ stilling, inlineLink }) {
 
                 <Undertittel tag="h3" className="SearchResultsItemDetails__title">
                     {inlineLink ? (
-                        <Link to={`${CONTEXT_PATH}/stilling/${stilling.uuid}`} className="lenke">
+                        <Link to={`${CONTEXT_PATH}/stilling/${stilling.uuid}`} className="SearchResultsItemDetails__title__lenke lenke">
                             {stilling.title}
                         </Link>
                     ) : stilling.title}
                 </Undertittel>
                 {stilling.properties.jobtitle && stilling.title !== stilling.properties.jobtitle && (
-                    <Element
+                    <Normaltekst
                         className="SearchResultsItemDetails__jobtitle"
                     >
                         {stilling.properties.jobtitle}
-                    </Element>
+                    </Normaltekst>
                 )}
 
                 {location && (

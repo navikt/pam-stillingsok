@@ -1,11 +1,11 @@
 import { Column, Container, Row } from 'nav-frontend-grid';
-import { Flatknapp, Knapp } from 'nav-frontend-knapper';
 import { Input } from 'nav-frontend-skjema';
 import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import Button from '../common/button/Button';
 import PageHeader from '../common/pageHeader/PageHeader';
 import { CONTEXT_PATH } from '../fasitProperties';
 import ConfirmDeleteUserModal from './ConfirmDeleteUserModal';
@@ -109,21 +109,22 @@ class UserSettings extends React.Component {
                                                     />
                                                 </div>
                                                 <div className="UserSettings__email-buttons">
-                                                    <Knapp
+                                                    <Button
                                                         onClick={this.onUpdateUserEmailClick}
                                                         spinner={this.props.isUpdating}
                                                         disabled={this.props.isUpdating}
                                                     >
                                                         Lagre
-                                                    </Knapp>
+                                                    </Button>
                                                     {this.props.user.email !== null && (
-                                                        <Flatknapp
+                                                        <Button
+                                                            type="flat"
                                                             onClick={this.onRemoveEmailClick}
                                                             spinner={this.props.isUpdating}
                                                             disabled={this.props.isUpdating}
                                                         >
                                                             Slett
-                                                        </Flatknapp>
+                                                        </Button>
                                                     )}
                                                 </div>
                                             </Column>
@@ -153,11 +154,11 @@ class UserSettings extends React.Component {
                                                         varslinger på e-post, så vil du ikke lenger motta disse.
                                                     </Normaltekst>
                                                 </div>
-                                                <Knapp
+                                                <Button
                                                     onClick={this.onDeleteUserClick}
                                                 >
                                                     Slett samtykke
-                                                </Knapp>
+                                                </Button>
                                             </Column>
                                         </Row>
                                     </div>

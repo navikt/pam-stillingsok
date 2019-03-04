@@ -1,4 +1,4 @@
-import { Normaltekst, Undertekst, Element } from 'nav-frontend-typografi';
+import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'react-router-dom';
@@ -25,28 +25,25 @@ export default function SearchResultsItemCompact({ stilling, urlQuery }) {
                     {employer || ''}
                 </Undertekst>
                 <div className="SearchResultItemCompact__flex__title">
-                    <Undertekst className="SearchResultItemCompact__flex__title__jobTitle">
-                        {stilling.properties.jobtitle && stilling.title !== stilling.properties.jobtitle ? (
-                            <span>
-                                {getWorkLocation(stilling, true)} - {stilling.properties.jobtitle}
+                    <Normaltekst tag="h3" className="SearchResultItemCompact__flex__title__h3">
+                        {stilling.title}
+                    </Normaltekst>
+                    <Undertekst className="SearchResultItemCompact__flex__title__details">
+                        {stilling.properties.jobtitle && stilling.title !== stilling.properties.jobtitle && (
+                            <span className="SearchResultItemCompact__flex__title__details__jobTitle">
+                                {stilling.properties.jobtitle}{' - '}
                             </span>
-                        ) : (
+                        )}
+                        <span>
+                            {getWorkLocation(stilling, true)}
+                        </span>
+                        {frist !== '' && (
                             <span>
-                                {getWorkLocation(stilling, true)}
+                                {' - '}Frist: {frist}
                             </span>
                         )}
                     </Undertekst>
-                    <Undertekst tag="h3" className="SearchResultItemCompact__flex__title__h3">
-                        {stilling.title}
-                    </Undertekst>
                 </div>
-                <Undertekst className="SearchResultItemCompact__flex__frist">
-                    {frist !== '' && (
-                        <span>
-                            <span className="SearchResultItemCompact__flex__frist__label">Søknadsfrist:</span> {frist}
-                        </span>
-                    )}
-                </Undertekst>
             </Link>
             <div className="SearchResultItemCompact__favourite">
                 <ToggleFavouriteStar uuid={stilling.uuid} className="SearchResultItemCompact__favourite" />

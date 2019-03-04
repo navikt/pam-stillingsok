@@ -1,9 +1,9 @@
-import { Flatknapp, Hovedknapp } from 'nav-frontend-knapper';
 import Modal from 'nav-frontend-modal';
 import { Undertittel } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
 import './ConfirmationModal.less';
+import Button from './button/Button';
 
 export default function ConfirmationModal({
     title, children, confirmLabel, cancelLabel, onConfirm, onCancel, spinner
@@ -23,19 +23,21 @@ export default function ConfirmationModal({
                     {children}
                 </div>
                 <div className="ConfirmationModal__buttons">
-                    <Hovedknapp
+                    <Button
+                        type="primary"
                         spinner={spinner}
                         disabled={spinner}
                         onClick={onConfirm}
                     >
                         {confirmLabel}
-                    </Hovedknapp>
-                    <Flatknapp
+                    </Button>
+                    <Button
+                        type="flat"
                         disabled={spinner}
                         onClick={onCancel}
                     >
                         {cancelLabel}
-                    </Flatknapp>
+                    </Button>
                 </div>
             </div>
         </Modal>

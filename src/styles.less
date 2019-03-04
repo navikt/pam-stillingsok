@@ -3,7 +3,6 @@
 @import "../node_modules/nav-frontend-core/less/core";
 @import "../node_modules/nav-frontend-lenker-style/src/lenker-style";
 @import "../node_modules/nav-frontend-paneler-style/src/index";
-@import "../node_modules/nav-frontend-knapper-style/src/index";
 @import "../node_modules/nav-frontend-skjema-style/src/index";
 @import "../node_modules/nav-frontend-grid-style/src/index";
 @import "variables";
@@ -75,8 +74,8 @@ body {
 
 .Application__main {
   /* This is the same as the height of the footer */
-  margin-bottom: -177px;
-  padding-bottom: 177px;
+  margin-bottom: -243px;
+  padding-bottom: 243px;
 }
 
 
@@ -99,147 +98,44 @@ input::-ms-clear {
   max-width: 40rem;
 }
 
-.knapp--disabled:hover {
-  background: @navGra40;
-  border-color: transparent;
-}
-
 
 /**
 * Overrides
 */
 
-.HeaderMeny {
-
-  .meny {
-    border-top: 0!important;
-    text-transform: uppercase;
-    font-weight: bold;
-  }
-
-  .meny--lenke-inner {
-    padding: 8px 2px 12px 2px!important;
-  }
-
-  .meny--lenke-active .meny--lenke-inner,
-  .meny--lenke:active .meny--lenke-inner {
-    border-bottom: 10px solid #ffd600!important;
+@media (max-width: @screen-xs-max) {
+  .container{
+    padding-left: 16px;
+    padding-right: 16px;
   }
 }
 
-.ekspanderbartPanel__hode {
+.ekspanderbartPanel {
   border-top: 2px solid @darkBlue !important;
+}
+
+.ekspanderbartPanel__hode {
   border-radius: 0!important;
   padding-top: 0.5rem;
+
 
   .ekspanderbartPanel__heading {
     color: @fontColorDarkBlue;
   }
 }
 
+.ekspanderbartPanel--lukket .ekspanderbartPanel__hode:hover {
+  box-shadow: none;
+  background: @gray1;
+}
+
+.ekspanderbartPanel .ekspanderbartPanel__hode:hover .ekspanderbartPanel__heading{
+  color: @pinkDarken;
+}
+
 .ekspanderbartPanel__innhold {
   background-color: @gray2;
   padding-top: 1rem!important;
-}
-
-.knapp {
-  border-radius: 5rem;
-
-  background-color: @button-bgColor;
-  border-color: @button-borderColor;
-  color: @button-textColor;
-
-  &:disabled {
-    background-color: @disabledButton-bgColor;
-    border-color:@disabledButton-borderColor;
-    color: @disabledButton-textColor;
-
-    .knapp__spinner {
-      border: 2px solid #9a9a9a;
-      border-left-color: rgba(180, 180, 180, 0.5);
-      border-bottom-color: rgba(180, 180, 180, 0.5);
-    }
-  }
-
-  &:visited {
-    color: @button-textColor;
-  }
-
-  &:hover {
-    background-color: @button--hover-bgColor;
-    border-color: @button--hover-borderColor;
-    color: @button--hover-textColor;
-  }
-
-  &:active {
-    background-color: @button--active-bgColor;
-    border-color: @button--active-borderColor;
-    color: @button--active-textColor;
-  }
-}
-
-.knapp--hoved {
-  background-color: @primaryButton-bgColor;
-  border-color: @primaryButton-borderColor;
-  color: @primaryButton-textColor;
-  box-shadow: none;
-  padding-top: 0.75rem;
-  padding-bottom: 0.75rem;
-  text-transform: none;
-  font-size: 1.125rem;
-
-  &:visited {
-    color: @primaryButton-textColor;
-  }
-
-  &:focus {
-    background-color: @primaryButton-bgColor;
-    border-color: @primaryButton-borderColor;
-    color: @primaryButton-textColor;
-  }
-
-  &:hover {
-    background-color: @primaryButton--hover-bgColor;
-    border-color: @primaryButton--hover-borderColor;
-    color: @primaryButton--hover-textColor;
-    box-shadow: none;
-  }
-
-  &:active, &:active:hover, &:active:focus {
-    background-color: @primaryButton--active-bgColor;
-    border-color: @primaryButton--active-borderColor;
-    color: @primaryButton--active-textColor;
-  }
-}
-
-.knapp--flat {
-  background-color: transparent;
-  border-color: transparent;
-  color: @button-textColor;
-
-  &:focus, &:hover {
-    background-color: transparent;
-    border-color: @button-borderColor;
-    color: @button-textColor;
-  }
-
-  &:active {
-    background-color: @button--active-bgColor;
-    border-color: @button--active-borderColor;
-    color: @button--active-textColor;
-  }
-}
-
-.knapp--disabled {
-  background-color: @disabledButton-bgColor;
-  border-color: @disabledButton-borderColor;
-  color: @disabledButton-textColor;
-
-  &:focus, &:hover, &:active {
-    background-color: @disabledButton-bgColor;
-    border-color: @disabledButton-borderColor;
-    color: @disabledButton-textColor;
-  }
 }
 
 .lenke {

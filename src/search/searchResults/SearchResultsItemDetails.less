@@ -1,40 +1,88 @@
 @import "../../variables";
 
-@media (min-width: @screen-md-min) {
-  .SearchResultsItemDetails {
+.SearchResultsItemDetails {
+  margin-right: 2.25rem;
+
+  @media (min-width: @screen-md-min) {
     display: flex;
     align-items: center;
-  }
-
-  .SearchResultsItemDetails__employer {
-    text-align: center;
-    color: #94949c;
   }
 }
 
 .SearchResultsItemDetails__employer {
+  color: @gray4;
   padding-right: 1rem;
+
+  @media (max-width: @screen-sm-max) {
+    margin-bottom: 1rem;
+  }
+  @media (min-width: @screen-md-min) {
+    text-align: center;
+  }
+  @media (max-width: @screen-xs-max) {
+    font-size: 12px;
+    margin-bottom: 8px;
+  }
 }
 
 .SearchResultsItemDetails__published {
-  color: @fontColorGray;
-  font-size: 12px;
+  color: @gray4;
+  font-size: 14px;
+
+  @media (max-width: @screen-sm-max) {
+    margin-bottom: 0;
+  }
+  @media (max-width: @screen-xs-max) {
+    font-size: 12px;
+  }
 }
 
 .SearchResultsItemDetails__title {
   margin-bottom: 0.2rem;
   font-weight: normal;
   font-size: 16px;
+  text-decoration: underline;
+  color: @pinkDarken;
+
+  @media (max-width: @screen-xs-max) {
+    font-size: 14px;
+  }
+  @media (min-width: @screen-sm-min) {
+    padding-right: 3rem;
+  }
 }
 
-.SearchResultItem .SearchResultsItemDetails__title a {
-  &:visited {
-    color: @navLilla;
-  }
+.SearchResultsItemDetails__title__lenke {
+  border-bottom: 0 !important;
+}
 
-  &:visited:hover {
-    color: @navLillaDarken20;
-    border-color: @navLillaDarken20;
+.SearchResultsItemDetails__jobtitle {
+  color: @darkBlue;
+
+  @media (max-width: @screen-xs-max) {
+    font-size: 12px;
+    margin-bottom: 8px;
+  }
+}
+
+.SearchResultsItemDetails__location {
+  margin-top: 0.5rem;
+  line-height: 1.43;
+  font-size: 14px;
+  color: @gray4;
+
+  @media (max-width: @screen-xs-max) {
+    font-size: 12px;
+  }
+}
+
+.SearchResultsItemDetails__applicationdue {
+  font-size: 14px;
+  color: @gray4;
+  line-height: 1.43;
+
+  @media (max-width: @screen-xs-max) {
+    font-size: 12px;
   }
 }
 
@@ -44,56 +92,4 @@
 .SearchResultsItemDetails__location {
   word-wrap: break-word;
   overflow-wrap: break-word;
-}
-
-.SearchResultsItemDetails__location {
-  margin-top: 0.5rem;
-}
-
-@media (max-width: @screen-sm-max) {
-  .SearchResultsItemDetails__published,
-  .SearchResultsItemDetails__employer {
-    margin-bottom: 1rem;
-  }
-
-  .SearchResultsItemDetails__published {
-    margin-bottom: 0;
-  }
-}
-
-@media (max-width: @screen-xs-max) {
-  .SearchResultsItemDetails__jobtitle,
-  .SearchResultsItemDetails__published,
-  .SearchResultsItemDetails__employer,
-  .SearchResultsItemDetails__location,
-  .SearchResultsItemDetails__applicationdue {
-    font-size: 12px !important;
-  }
-
-  .SearchResultsItemDetails__title {
-    font-size: 14px !important;
-  }
-}
-
-.SearchResultsItemDetails__jobtitle,
-.SearchResultsItemDetails__applicationdue,
-.SearchResultsItemDetails__location,
-.SearchResultsItemDetails__employer {
-  font-size: 14px;
-}
-
-.SearchResultsItemDetails__location,
-.SearchResultsItemDetails__applicationdue{
-  line-height: 20px;
-}
-
-@media (max-width: @screen-xs-max) {
-  .SearchResultsItemDetails__jobtitle,
-  .SearchResultsItemDetails__employer {
-    margin-bottom: 8px;
-  }
-
-  .SearchResultsItemDetails__title {
-    margin-bottom: 4px;
-  }
 }

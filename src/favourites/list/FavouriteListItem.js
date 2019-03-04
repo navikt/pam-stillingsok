@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import AlertStripe from 'nav-frontend-alertstriper';
+import classNames from 'classnames';
 import Lenkeknapp from '../../common/Lenkeknapp';
 import SearchResultsItemDetails from '../../search/searchResults/SearchResultsItemDetails';
 import { SHOW_MODAL_REMOVE_FROM_FAVOURITES } from '../favouritesReducer';
@@ -26,9 +27,11 @@ class FavouriteListItem extends React.Component {
 
     render() {
         const { favourite } = this.props;
+        const expired = favourite.favouriteAd.title === 'Medarbeider';
+        // const expired = favourite.favouriteAd.status === 'INACTIVE';
         return (
             <div className="FavouriteListItem__wrapper">
-                <div className="FavouriteListItem">
+                <div className={classNames('FavouriteListItem', { 'FavouriteListItem--expired': expired })}>
                     <div className="FavouriteListItem__top">
                         <SearchResultsItemDetails stilling={this.toAd(favourite.favouriteAd)} />
                     </div>
@@ -39,9 +42,9 @@ class FavouriteListItem extends React.Component {
                         </Lenkeknapp>
                     </div>
                 </div>
-                {favourite.favouriteAd.status === 'INACTIVE' && (
+                {expired && (
                     <AlertStripe type="info" solid className="FavouriteListItem__alertstripe">
-                        Stillingsannonsen er inaktiv
+                        Denne annonsen er utløpt
                     </AlertStripe>
                 )}
             </div>
