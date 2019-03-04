@@ -1,3 +1,10 @@
+## RELEASE - 0.73.553-a0b52be
+#### New in this release: 
++ 2019-03-04 [QA] Ignorer case på location test
++ 2019-03-04 [Fix] Oppdaterer til ny header
++ 2019-02-26 [PAM-2529] Endre label for Heltid
++ 2019-02-22 [QA] Support reading Selenium port from env
++ 2019-02-21 [QA] Use a slightly non-default Selenium port for slightly less chance of conflict
 ## RELEASE - 0.72.540-d652819
 #### New in this release: 
 + 2019-02-21 [QA] Use more common term for search result test
