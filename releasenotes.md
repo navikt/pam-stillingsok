@@ -1,3 +1,8 @@
+## RELEASE - 0.74.557-1ed5af0
+#### New in this release: 
++ 2019-03-04 [Feature] Legger til google analytics målinger for sidevisninger
++ 2019-03-04 [Feture] Legger til google analytics målinger for sidevisninger
++ 2019-03-04 [Feture] Legger til google analytics målinger for sidevisninger
 ## RELEASE - 0.73.553-a0b52be
 #### New in this release: 
 + 2019-03-04 [QA] Ignorer case på location test
