@@ -104,9 +104,9 @@ export async function fetchSearch(query = {}) {
         )),
         total: result.hits.total,
         positioncount: result.aggregations.positioncount.sum.value,
-        counties: result.aggregations.counties.values.buckets.map((county) => ({
+        counties: result.aggregations.counties.nestedLocations.values.buckets.map((county) => ({
             key: county.key,
-            count: county.doc_count,
+            count: county.root_doc_count.doc_count, // Count number of root docs (ads) per bucket, instead of number of matching nested objects
             municipals: county.municipals.buckets.map((municipal) => ({
                 key: `${county.key}.${municipal.key}`,
                 label: municipal.key,

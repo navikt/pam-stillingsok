@@ -112,7 +112,7 @@ function filterEngagementType(engagementTypes) {
  * Feks (Akershus AND (Asker OR Bærum)) OR (Buskerud AND Drammen) om man ser etter jobb i Asker, Bærum eller Drammen
  * Feks (Akershus) OR (Buskerud AND Drammen) om man ser etter jobb i hele Akershus fylke, men også i Drammen kommune.
  */
-function filterNestedFacets(parents, children = [], parentKey, childKey) {
+function filterNestedFacets(parents, children = [], parentKey, childKey, nestedField=undefined) {
     let allMusts = [];
     if (parents && parents.length > 0) {
         parents.forEach((parent) => {
@@ -139,7 +139,7 @@ function filterNestedFacets(parents, children = [], parentKey, childKey) {
         });
     }
 
-    return {
+    const queryObject = {
         bool: {
             should: allMusts.map((must) => ({
                 bool: {
@@ -148,14 +148,24 @@ function filterNestedFacets(parents, children = [], parentKey, childKey) {
             }))
         }
     };
+
+    return nestedField ? {
+        nested: {
+            path: nestedField,
+            query: queryObject
+        }
+    } : queryObject;
+
 }
 
 function filterLocation(counties, municipals) {
-    return filterNestedFacets(counties, municipals, 'county_facet', 'municipal_facet');
+    return filterNestedFacets(counties, municipals, 'locationList.county.keyword',
+        'locationList.municipal.keyword', 'locationList');
 }
 
 function filterOccupation(occupationLevel1, occupationLevel2) {
-    return filterNestedFacets(occupationLevel1, occupationLevel2, 'occupation_level1_facet', 'occupation_level2_facet');
+    return filterNestedFacets(occupationLevel1, occupationLevel2,
+        'occupation_level1_facet', 'occupation_level2_facet');
 }
 
 function filterSector(sector) {
@@ -531,26 +541,36 @@ exports.searchTemplate = (query) => {
                     }
                 },
                 aggs: {
-                    values: {
-                        terms: {
-                            field: 'county_facet',
-                            size: 50,
-                            order: {
-                                _key: 'asc'
-                            }
-                        },
-                        aggs: {
-                            municipals: {
-                                terms: {
-                                    field: 'municipal_facet',
-                                    size: 100,
-                                    order: {
-                                        _key: 'asc'
-                                    }
-                                }
-                            }
-                        }
-                    }
+                  nestedLocations: {
+                      nested: {
+                          path: 'locationList',
+                      },
+                      aggs: {
+                          values: {
+                              terms: {
+                                  field: 'locationList.county.keyword',
+                                  size: 50,
+                                  order: {
+                                      _key: 'asc'
+                                  }
+                              },
+                              aggs: {
+                                  root_doc_count: {
+                                      reverse_nested: {}
+                                  },
+                                  municipals: {
+                                      terms: {
+                                          field: 'locationList.municipal.keyword',
+                                          size: 200,
+                                          order: {
+                                              _key: 'asc'
+                                          }
+                                      }
+                                  }
+                              }
+                          }
+                      }
+                   }
                 }
             },
             occupationFirstLevels: {
