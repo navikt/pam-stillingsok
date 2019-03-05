@@ -23,12 +23,13 @@ module.exports = {
         },
 
         searchResultContainsWord: function(word) {
-            return this.pagePause(2000).expect.element('@searchResult').text.to.contain(word);
+            const regexpVal = word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            return this.pagePause(2000).expect.element('@searchResult').text.to.match(new RegExp(regexpVal, 'i'));
         },
 
         searchResultContainsLocation: function(sted) {
             return this.pagePause(2000).getText('@searchResultLocation', function(result) {
-                this.assert.equal(result.value, sted);
+                this.assert.equal(result.value.toLowerCase(), sted.toLowerCase());
             });
         },
 

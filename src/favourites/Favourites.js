@@ -20,6 +20,9 @@ class Favourites extends React.Component {
     componentDidMount() {
         window.scrollTo(0, 0);
         document.title = 'Favoritter - Arbeidsplassen';
+        ga('set', 'page', `${CONTEXT_PATH}/favoritter`);
+        ga('set', 'title', 'Favoritter');
+        ga('send', 'pageview');
     }
 
     render() {

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import Button from '../common/button/Button';
+import { CONTEXT_PATH } from '../fasitProperties';
 import FavouriteAlertStripe from '../favourites/alertstripe/FavouriteAlertStripe';
 import SavedSearchAlertStripe from '../savedSearches/alertstripe/SavedSearchAlertStripe';
 import CurrentSavedSearch from '../savedSearches/CurrentSavedSearch';
@@ -38,6 +39,9 @@ class Search extends React.Component {
 
     componentDidMount() {
         document.title = 'Stillingssøk - Arbeidsplassen';
+        ga('set', 'page', `${CONTEXT_PATH}`);
+        ga('set', 'title', 'Stillingssøk');
+        ga('send', 'pageview');
     }
 
     onSearchFormSubmit = (e) => {

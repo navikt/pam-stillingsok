@@ -20,6 +20,9 @@ class SavedSearches extends React.Component {
     componentDidMount() {
         window.scrollTo(0, 0);
         document.title = 'Lagrede søk - Arbeidsplassen';
+        ga('set', 'page', `${CONTEXT_PATH}/lagrede-sok`);
+        ga('set', 'title', 'Lagrede søk');
+        ga('send', 'pageview');
     }
 
     render() {
