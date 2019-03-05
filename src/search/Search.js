@@ -41,6 +41,7 @@ class Search extends React.Component {
     componentDidMount() {
         document.title = 'Stillingssøk - Arbeidsplassen';
         ga('set', 'page', `${CONTEXT_PATH}`);
+        ga('set', 'title', 'Stillingssøk');
         ga('send', 'pageview');
     }
 
