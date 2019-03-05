@@ -1,3 +1,7 @@
+## RELEASE - 0.75.560-cbe0095
+#### New in this release: 
++ 2019-03-05 [Fix] Set default page title in google analytics
++ 2019-03-04 [Fix] Default page title
 ## RELEASE - 0.74.557-1ed5af0
 #### New in this release: 
 + 2019-03-04 [Feature] Legger til google analytics målinger for sidevisninger
