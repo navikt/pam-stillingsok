@@ -2,7 +2,8 @@ import { Column, Container, Row } from 'nav-frontend-grid';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import Button from '../common/button/Button';
+import { authenticationEnum } from '../authentication/authenticationReducer';
+import { FlatButton } from '../common/button';
 import { CONTEXT_PATH } from '../fasitProperties';
 import FavouriteAlertStripe from '../favourites/alertstripe/FavouriteAlertStripe';
 import SavedSearchAlertStripe from '../savedSearches/alertstripe/SavedSearchAlertStripe';
@@ -11,8 +12,8 @@ import SavedSearchesExpandButton from '../savedSearches/expand/SavedSearchesExpa
 import SavedSearchForm from '../savedSearches/form/SavedSearchForm';
 import SaveSearchButton from '../savedSearches/SaveSearchButton';
 import { RESTORE_STATE_FROM_URL_BEGIN } from '../urlReducer';
-import ShowResultsButton from './showResultsButton/ShowResultsButton';
 import Counties from './facets/counties/Counties';
+import Countries from './facets/countries/Countries';
 import EngagementType from './facets/engagement/Engagement';
 import Extent from './facets/extent/Extent';
 import Occupations from './facets/occupations/Occupations';
@@ -25,10 +26,9 @@ import SearchBox from './searchBox/SearchBox';
 import { INITIAL_SEARCH, RESET_SEARCH, SEARCH } from './searchReducer';
 import SearchResultCount from './searchResults/SearchResultCount';
 import SearchResults from './searchResults/SearchResults';
+import ShowResultsButton from './showResultsButton/ShowResultsButton';
 import Sorting from './sorting/Sorting';
 import ViewMode from './viewMode/ViewMode';
-import { authenticationEnum } from '../authentication/authenticationReducer';
-import Countries from './facets/countries/Countries';
 
 class Search extends React.Component {
     constructor(props) {
@@ -97,13 +97,12 @@ class Search extends React.Component {
                                         <div className="Search__main__left">
                                             <div className="Search__main__left__save-search">
                                                 <SaveSearchButton />
-                                                <Button
-                                                    type="flat"
+                                                <FlatButton
                                                     mini
                                                     onClick={this.onResetSearchClick}
                                                 >
                                                             Nullstill kriterier
-                                                </Button>
+                                                </FlatButton>
                                             </div>
                                             <div id="sok">
                                                 <form

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import Button from '../common/button/Button';
+import { FlatButton, Button } from '../common/button';
 import PageHeader from '../common/pageHeader/PageHeader';
 import { CONTEXT_PATH } from '../fasitProperties';
 import ConfirmDeleteUserModal from './ConfirmDeleteUserModal';
@@ -117,14 +117,13 @@ class UserSettings extends React.Component {
                                                         Lagre
                                                     </Button>
                                                     {this.props.user.email !== null && (
-                                                        <Button
-                                                            type="flat"
+                                                        <FlatButton
                                                             onClick={this.onRemoveEmailClick}
                                                             spinner={this.props.isUpdating}
                                                             disabled={this.props.isUpdating}
                                                         >
                                                             Slett
-                                                        </Button>
+                                                        </FlatButton>
                                                     )}
                                                 </div>
                                             </Column>

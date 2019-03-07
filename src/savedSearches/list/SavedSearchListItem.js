@@ -1,26 +1,22 @@
+import AlertStripe from 'nav-frontend-alertstriper';
 import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import AlertStripe from 'nav-frontend-alertstriper';
-import Button from '../../common/button/Button';
+import '../../common/Icons.less';
+import { FlatButton } from '../../common/button';
 import Lenkeknapp from '../../common/Lenkeknapp';
 import { CONTEXT_PATH } from '../../fasitProperties';
 import { formatISOString, isValidISOString } from '../../utils';
 import NotifyTypeEnum from '../enums/NotifyTypeEnum';
 import SavedSearchStatusEnum from '../enums/SavedSearchStatusEnum';
-import {
-    SavedSearchFormMode,
-    SET_FORM_DATA,
-    SHOW_SAVED_SEARCH_FORM
-} from '../form/savedSearchFormReducer';
+import { SavedSearchFormMode, SET_FORM_DATA, SHOW_SAVED_SEARCH_FORM } from '../form/savedSearchFormReducer';
 import {
     SET_CURRENT_SAVED_SEARCH,
     SHOW_CONFIRM_REMOVE_SAVED_SEARCH_MODAL,
     UPDATE_SAVED_SEARCH
 } from '../savedSearchesReducer';
-import '../../common/Icons.less';
 
 class SavedSearchListItem extends React.Component {
     onChangeClick = () => {
@@ -88,14 +84,13 @@ class SavedSearchListItem extends React.Component {
                     savedSearch.notifyType === NotifyTypeEnum.EMAIL && (
                         <AlertStripe type="info" solid className="SavedSearchListItem__alertstripe">
                             Ditt varsel for dette søket har gått ut
-                            <Button
-                                type="flat"
+                            <FlatButton
                                 className="SavedSearchListItem__button-alertstripe"
                                 onClick={this.onExtendDurationClick}
                                 mini
                             >
                                 Start ny varsling
-                            </Button>
+                            </FlatButton>
                         </AlertStripe>
                     )}
             </div>

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import './Error.less';
-import Button from '../common/button/Button';
+import { FlatButton } from '../common/button';
 import { HIDE_ERROR } from './errorReducer';
 
 class Error extends React.Component {
@@ -41,14 +41,13 @@ class Error extends React.Component {
                 {messages.length === 0 && (
                     <div />
                 )}
-                <Button
-                    type="flat"
+                <FlatButton
                     className="Error__reload"
                     mini
                     onClick={this.onReloadClick}
                 >
                     Last siden på nytt
-                </Button>
+                </FlatButton>
                 <Lukknapp
                     className="Error__close"
                     hvit

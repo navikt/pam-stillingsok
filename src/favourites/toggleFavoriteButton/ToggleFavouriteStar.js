@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import Button from '../../common/button/Button';
+import { FlatButton } from '../../common/button';
 import { ADD_TO_FAVOURITES, REMOVE_FROM_FAVOURITES } from '../favouritesReducer';
 import './ToggleFavouriteStar.less';
 
@@ -26,8 +26,7 @@ class ToggleFavouriteStar extends React.Component {
 
         if (isFavourite) {
             return (
-                <Button
-                    type="flat"
+                <FlatButton
                     mini
                     aria-label="Favoritt"
                     aria-pressed="true"
@@ -37,13 +36,12 @@ class ToggleFavouriteStar extends React.Component {
                     <div className="ToggleFavouriteStar__flex">
                         <i className="ToggleFavouriteStar__star--active" />
                     </div>
-                </Button>
+                </FlatButton>
             );
         }
         return (
-            <Button
+            <FlatButton
                 mini
-                type="flat"
                 onClick={this.onAddToFavouritesClick}
                 aria-label="Favoritt"
                 aria-pressed="false"
@@ -52,7 +50,7 @@ class ToggleFavouriteStar extends React.Component {
                 <div className="ToggleFavouriteStar__flex">
                     <i className="ToggleFavouriteStar__star" />
                 </div>
-            </Button>
+            </FlatButton>
         );
     }
 }

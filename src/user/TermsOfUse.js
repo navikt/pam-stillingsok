@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import './TermsOfUse.less';
-import Button from '../common/button/Button';
+import { FlatButton, PrimaryButton } from '../common/button';
 import { CREATE_USER, HIDE_TERMS_OF_USE_MODAL, SET_USER_TERMS_ACCEPTED } from './userReducer';
 
 class TermsOfUse extends React.Component {
@@ -103,17 +103,16 @@ class TermsOfUse extends React.Component {
                         </Normaltekst>
                     </div>
                     <div className="TermsOfUse__buttons">
-                        <Button
-                            type="primary"
+                        <PrimaryButton
                             onClick={this.onAcceptTerms}
                             spinner={this.props.isCreating}
                             disabled={this.props.isCreating}
                         >
                             Jeg samtykker
-                        </Button>
-                        <Button type="flat" onClick={this.closeModal}>
+                        </PrimaryButton>
+                        <FlatButton onClick={this.closeModal}>
                             Avbryt
-                        </Button>
+                        </FlatButton>
                     </div>
                 </div>
             </Modal>

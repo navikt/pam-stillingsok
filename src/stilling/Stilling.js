@@ -5,10 +5,13 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import Button from '../common/button/Button';
+import { FlatButton } from '../common/button';
+import getEmployer from '../common/getEmployer';
+import getWorkLocation from '../common/getWorkLocation';
 import { CONTEXT_PATH } from '../fasitProperties';
 import FavouriteAlertStripe from '../favourites/alertstripe/FavouriteAlertStripe';
 import ToggleFavouriteButton from '../favourites/toggleFavoriteButton/ToggleFavouriteButton';
+import { urlFromSessionStorageOrIndex } from '../urlReducer';
 import AdDetails from './adDetails/AdDetails';
 import AdText from './adText/AdText';
 import AdTitle from './adTitle/AdTitle';
@@ -24,9 +27,6 @@ import PersonalAttributes from './requirements/PersonalAttributes';
 import SoftRequirements from './requirements/SoftRequirements';
 import './Stilling.less';
 import { FETCH_STILLING_BEGIN } from './stillingReducer';
-import { urlFromSessionStorageOrIndex } from '../urlReducer';
-import getWorkLocation from '../common/getWorkLocation';
-import getEmployer from '../common/getEmployer';
 
 class Stilling extends React.Component {
     constructor(props) {
@@ -95,14 +95,13 @@ class Stilling extends React.Component {
                                             {!isFetchingStilling && stilling && (
                                                 <ToggleFavouriteButton uuid={stilling._id} />
                                             )}
-                                            <Button
+                                            <FlatButton
                                                 mini
-                                                type="flat"
                                                 className="StillingSubMenu__print"
                                                 onClick={this.onPrintClick}
                                             >
                                                 Skriv ut
-                                            </Button>
+                                            </FlatButton>
                                         </div>
                                     </Column>
                                 </Row>

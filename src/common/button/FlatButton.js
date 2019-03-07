@@ -1,9 +1,9 @@
 import React from 'react';
 import ButtonBase from './ButtonBase';
 
-export default function Button(props) {
+export default function FlatButton(props) {
     return (
-        <ButtonBase {...props} />
+        <ButtonBase {...props} type="flat" />
     );
 }
 

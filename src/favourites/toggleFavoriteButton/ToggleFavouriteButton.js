@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import Button from '../../common/button/Button';
+import { FlatButton } from '../../common/button';
 import { ADD_TO_FAVOURITES, REMOVE_FROM_FAVOURITES } from '../favouritesReducer';
 import './ToggleFavouriteButton.less';
 
@@ -26,9 +26,8 @@ class ToggleFavouriteButton extends React.Component {
 
         if (isFavourite) {
             return (
-                <Button
+                <FlatButton
                     mini
-                    type="flat"
                     aria-label="Fjern favoritt"
                     onClick={this.onRemoveFromFavouritesClick}
                     className="ToggleFavouriteButton"
@@ -39,13 +38,12 @@ class ToggleFavouriteButton extends React.Component {
                             Slett favoritt
                         </span>
                     </div>
-                </Button>
+                </FlatButton>
             );
         }
         return (
-            <Button
+            <FlatButton
                 mini
-                type="flat"
                 aria-label="Lagre favoritt"
                 onClick={this.onAddToFavouritesClick}
                 className="ToggleFavouriteButton"
@@ -56,7 +54,7 @@ class ToggleFavouriteButton extends React.Component {
                     Lagre favoritt
                     </span>
                 </div>
-            </Button>
+            </FlatButton>
         );
     }
 }
