@@ -1,29 +1,38 @@
 @import "../../variables";
 
 .FavouriteListItem__wrapper {
-  margin: 0.5rem 0;
+  margin: 0;
 
   &:nth-child(even) {
     background-color: @even-bgColor;
+  }
+
+  @media (max-width: @screen-xs-max) {
+    margin-right: -16px;
+    margin-left: -16px;
   }
 }
 
 .FavouriteListItem {
   display: block;
+  position: relative;
 }
 
 .FavouriteListItem--expired {
   background: @yellowLighten;
 }
 
-.FavouriteListItem__top {
-  padding: @list-box-padding;
-}
+.FavouriteListItem__delete {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  padding: 0.25rem;
 
-.FavouriteListItem__bottom {
-  padding: @list-box-padding;
-  border-top: 1px solid @gray3;
-  text-align: right;
+  @media (max-width: @screen-xs-max) {
+    top: 0;
+    right: 0;
+    padding: 1.25rem;
+  }
 }
 
 .FavouriteListItem__alertstripe {
@@ -41,11 +50,5 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-  }
-}
-
-@media (max-width: @screen-xs-max) {
-  .FavouriteListItem {
-    padding: 16px;
   }
 }

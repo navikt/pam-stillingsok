@@ -2,9 +2,12 @@
 
 .TotalSavedSearch {
   color: @darkBlue;
-  padding-left: 1.25rem;
   padding-bottom: 1.25rem;
   border-bottom: 2px solid @gray3;
+
+  @media (min-width: @screen-sm-min) {
+    padding-left: 1.25rem;
+  }
 }
 
 .TotalSavedSearch__label {

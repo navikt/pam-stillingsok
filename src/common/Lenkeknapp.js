@@ -1,15 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './Lenkeknapp.less';
 import classNames from 'classnames';
+import './Lenkeknapp.less';
 
-export default function Lenkeknapp({ children, onClick, className }) {
+export default function Lenkeknapp({
+    children, onClick, className, ariaLabel
+}) {
     return (
         <button
-            className={classNames('Lenkeknapp',
+            className={classNames(
+                'Lenkeknapp',
                 'typo-normal',
-                className)}
+                className
+            )}
             onClick={onClick}
+            aria-label={ariaLabel}
         >
             {children}
         </button>
@@ -18,6 +23,7 @@ export default function Lenkeknapp({ children, onClick, className }) {
 
 Lenkeknapp.defaultProps = {
     onClick: undefined,
+    ariaLabel: undefined,
     className: ''
 };
 
@@ -26,6 +32,7 @@ Lenkeknapp.propTypes = {
     children: PropTypes.oneOfType([
         PropTypes.node, PropTypes.string
     ]).isRequired,
-    className: PropTypes.string
+    className: PropTypes.string,
+    ariaLabel: PropTypes.string
 };
 

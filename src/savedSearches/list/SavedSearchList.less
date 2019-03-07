@@ -1,10 +1,15 @@
 @import "../../variables";
 
 .SavedSearchListItem__wrapper {
-  margin: 0.5rem 0;
+  margin: 0;
 
   &:nth-child(even) {
     background-color: @even-bgColor;
+  }
+
+  @media (max-width: @screen-xs-max) {
+    margin-right: -16px;
+    margin-left: -16px;
   }
 }
 
@@ -71,11 +76,5 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-  }
-}
-
-@media (max-width: @screen-xs-max) {
-  .SavedSearchListItem {
-    padding: 16px;
   }
 }

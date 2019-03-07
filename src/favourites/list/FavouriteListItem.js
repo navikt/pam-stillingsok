@@ -32,15 +32,10 @@ class FavouriteListItem extends React.Component {
         return (
             <div className="FavouriteListItem__wrapper">
                 <div className={classNames('FavouriteListItem', { 'FavouriteListItem--expired': expired })}>
-                    <div className="FavouriteListItem__top">
-                        <SearchResultsItemDetails stilling={this.toAd(favourite.favouriteAd)} />
-                    </div>
-                    <div className="FavouriteListItem__bottom">
-                        <Lenkeknapp onClick={this.onRemoveClick} className="Delete">
-                            <i className="Delete__icon" />
-                            Slett
-                        </Lenkeknapp>
-                    </div>
+                    <SearchResultsItemDetails stilling={this.toAd(favourite.favouriteAd)} />
+                    <Lenkeknapp onClick={this.onRemoveClick} className="FavouriteListItem__delete Delete" ariaLabel="Slett">
+                        <i className="Delete__icon" />
+                    </Lenkeknapp>
                 </div>
                 {expired && (
                     <AlertStripe type="info" solid className="FavouriteListItem__alertstripe">
