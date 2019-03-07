@@ -9,7 +9,7 @@ const Footer = () => (
             <Row>
                 <Column xs="12" md="1" />
                 <Column xs="12" md="11">
-                    <Normaltekst className="Footer__slogan">Alt av arbeid på et sted</Normaltekst>
+                    <Normaltekst className="Footer__slogan">Alt av arbeid på ett sted</Normaltekst>
                 </Column>
             </Row>
             <Row>
