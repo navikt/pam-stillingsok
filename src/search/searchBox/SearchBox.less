@@ -23,7 +23,7 @@
   background: transparent;
   padding: 0.5rem 4rem 0.5rem 0;
   font-size: 1.5rem;
-  color: @pinkLighten2;
+  color: #fff;
 
   @media (min-width: @screen-sm-min) {
     padding: 0.5rem 4rem 0.5rem 0;
@@ -54,19 +54,19 @@
   }
 
   &:focus {
-    border-bottom: 2px solid @navOransjeLighten40;
+    border-bottom: 2px solid @pinkDarken;
 
     &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-      color: mix(@darkBlue, @pinkLighten2, 85%);
+      color: @gray5;
     }
     &::-moz-placeholder { /* Firefox 19+ */
-      color: mix(@darkBlue, @pinkLighten2, 85%);
+      color: @gray5;
     }
     &:-ms-input-placeholder { /* IE 10+ */
-      color: mix(@darkBlue, @pinkLighten2, 85%);
+      color: @gray5;
     }
     &:-moz-placeholder { /* Firefox 18- */
-      color: mix(@darkBlue, @pinkLighten2, 85%);
+      color: @gray5;
     }
   }
 }
