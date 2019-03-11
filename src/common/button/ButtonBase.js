@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import './Button.less';
 
-export default function Button({
-    children, onClick, className, type, htmlType, mini, disabled, spinner
-}) {
+export default function Button(props) {
+    const {
+        children, onClick, className, type, htmlType, mini, disabled, spinner, ...rest
+    } = props;
     const spinnerNode = spinner ? <span className="Button__spinner" /> : null;
     const ariaLabel = spinner ? { 'aria-label': 'Laster' } : {};
     return (
@@ -20,6 +21,7 @@ export default function Button({
             })}
             onClick={onClick}
             {...ariaLabel}
+            {...rest}
         >
             {children}
             {spinnerNode}
