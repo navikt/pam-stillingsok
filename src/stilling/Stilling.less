@@ -15,7 +15,7 @@
 
 .Stilling__header {
   padding-top: 1rem;
-  padding-bottom: 2.5rem;
+  padding-bottom: 2rem;
   margin-bottom: 2.5rem;
   background: @gray2;
   min-height: 10rem;
@@ -26,7 +26,6 @@
 }
 
 .StillingsTitle {
-  max-width: 65rem;
   margin: 0 auto;
 }
 
@@ -40,6 +39,10 @@
   @media (max-width: @screen-sm-max) {
     font-size: 2rem;
   }
+}
+
+.Stilling__header__button-row {
+  margin-bottom: 0.5rem;
 }
 
 .Stilling__header__button-row__back {
@@ -80,10 +83,6 @@
   }
 }
 
-.Stilling__main {
-  max-width: 65rem;
-}
-
 .Stilling__main__aside {
   display: flex;
   flex-direction: column;
@@ -95,10 +94,13 @@
 }
 
 .detail-section {
-  max-width: 370px;
   width: 100%;
   margin-bottom: 2.5rem;
   border-top: 2px solid @gray3;
+
+  @media (min-width: @screen-md-min) {
+    max-width: 370px;
+  }
 
   .detail-section__head {
     padding: 0.75rem 1rem;
