@@ -12,8 +12,7 @@ import {
     UPDATE_SAVED_SEARCH_FAILURE,
     UPDATE_SAVED_SEARCH_SUCCESS
 } from '../savedSearchesReducer';
-import { SHOW_TERMS_OF_USE_MODAL, HIDE_TERMS_OF_USE_MODAL, CREATE_USER_SUCCESS } from '../../user/userReducer';
-
+import { CREATE_USER_SUCCESS } from '../../user/userReducer';
 export const SHOW_SAVED_SEARCH_FORM = 'SHOW_SAVED_SEARCH_FORM';
 export const SHOW_SAVED_SEARCH_FORM_SUCCESS = 'SHOW_SAVED_SEARCH_FORM_SUCCESS';
 export const HIDE_SAVED_SEARCH_FORM = 'HIDE_SAVED_SEARCH_FORM';
@@ -261,8 +260,7 @@ function* showSavedSearchForm(action) {
     if (yield requiresAuthentication(AuthenticationCaller.SAVE_SEARCH)) {
         let state = yield select();
         if (!state.user.user) {
-            yield put({ type: SHOW_TERMS_OF_USE_MODAL });
-            yield take([HIDE_TERMS_OF_USE_MODAL, CREATE_USER_SUCCESS]);
+            yield take([CREATE_USER_SUCCESS]);
         }
         state = yield select();
         if (state.user.user) {

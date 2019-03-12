@@ -39,13 +39,11 @@ class Application extends React.Component {
                             <Route path={`${CONTEXT_PATH}/favoritter`} component={Favourites} />
                             <Route path={`${CONTEXT_PATH}/lagrede-sok`} component={SavedSearches} />
                             <Route path={`${CONTEXT_PATH}/innstillinger`} component={UserSettings} />
+                            <Route path={`${CONTEXT_PATH}/samtykke`} component={
+                                this.props.user ? SearchPage : TermsOfUse
+                            } />
                             <Route path="*" component={SearchPage} />
                         </Switch>
-
-                        {this.props.termsOfUseModalIsVisible && (
-                            <TermsOfUse />
-                        )}
-
                         {this.props.authenticationRequiredModalIsVisible && (
                             <NotAuthenticatedModal />
                         )}
@@ -63,13 +61,13 @@ class Application extends React.Component {
 
 Application.propTypes = {
     fetchIsAuthenticated: PropTypes.func.isRequired,
-    termsOfUseModalIsVisible: PropTypes.bool.isRequired,
-    authenticationRequiredModalIsVisible: PropTypes.bool.isRequired
+    authenticationRequiredModalIsVisible: PropTypes.bool.isRequired,
+    user: PropTypes.shape()
 };
 
 const mapStateToProps = (state) => ({
-    termsOfUseModalIsVisible: state.user.termsOfUseModalIsVisible,
-    authenticationRequiredModalIsVisible: state.authentication.authenticationRequiredModalIsVisible
+    authenticationRequiredModalIsVisible: state.authentication.authenticationRequiredModalIsVisible,
+    user: state.user.user
 });
 
 const mapDispatchToProps = (dispatch) => ({

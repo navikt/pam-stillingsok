@@ -5,9 +5,6 @@ import { authenticationEnum, FETCH_IS_AUTHENTICATED_SUCCESS } from '../authentic
 import { AD_USER_API } from '../fasitProperties';
 import delay from '../common/delay';
 
-export const SHOW_TERMS_OF_USE_MODAL = 'SHOW_TERMS_OF_USE_MODAL';
-export const HIDE_TERMS_OF_USE_MODAL = 'HIDE_TERMS_OF_USE_MODAL';
-
 export const FETCH_USER_BEGIN = 'FETCH_USER_BEGIN';
 export const FETCH_USER_SUCCESS = 'FETCH_USER_SUCCESS';
 export const FETCH_USER_FAILURE = 'FETCH_USER_FAILURE';
@@ -34,17 +31,16 @@ export const DELETE_USER = 'DELETE_USER';
 export const DELETE_USER_BEGIN = 'DELETE_USER_BEGIN';
 export const DELETE_USER_FAILURE = 'DELETE_USER_FAILURE';
 
-export const SET_USER_TERMS_ACCEPTED = 'SET_USER_TERMS_ACCEPTED';
-export const SHOW_USER_TERMS_REQUIRED_MESSAGE = 'SHOW_USER_TERMS_REQUIRED_MESSAGE';
-export const SET_USER_EMAIL = 'SET_USER_EMAIL';
+export const FETCH_TERMS_OF_USE = 'FETCH_TERMS_OF_USE';
+export const SET_TERMS_OF_USE = 'SET_TERMS_OF_USE';
 
+export const SET_USER_EMAIL = 'SET_USER_EMAIL';
 export const VALIDATE_USER_EMAIL = 'VALIDATE_USER_EMAIL';
+
 export const SET_VALIDATION_ERROR = 'SET_VALIDATION_ERROR';
 export const REMOVE_VALIDATION_ERROR = 'REMOVE_VALIDATION_ERROR';
 
 export const SET_EMAIL_FROM_SAVED_SEARCH = 'SET_EMAIL_FROM_SAVED_SEARCH';
-
-const TERMS_VERSION = 'sok_v1';
 
 const initialState = {
     user: undefined,
@@ -54,11 +50,9 @@ const initialState = {
     isDeletingUser: false,
     userAlertStripeIsVisible: false,
     userAlertStripeMode: 'added',
-    termsOfUseModalIsVisible: false,
     confirmDeleteUserModalIsVisible: false,
     validation: {},
-    termsAccepted: false,
-    showUserTermsRequiredMessage: false
+    termsOfUse: undefined
 };
 
 export default function authorizationReducer(state = initialState, action) {
@@ -91,7 +85,6 @@ export default function authorizationReducer(state = initialState, action) {
                 ...state,
                 user: action.response,
                 isCreating: false,
-                termsOfUseModalIsVisible: false,
                 userAlertStripeIsVisible: false
             };
         case CREATE_USER_SHOW_ALERT:
@@ -104,7 +97,6 @@ export default function authorizationReducer(state = initialState, action) {
             return {
                 ...state,
                 isCreating: false,
-                termsOfUseModalIsVisible: false,
                 userAlertStripeIsVisible: false
             };
         case SET_USER_EMAIL:
@@ -144,16 +136,6 @@ export default function authorizationReducer(state = initialState, action) {
                 isUpdating: false,
                 userAlertStripeIsVisible: false
             };
-        case SHOW_TERMS_OF_USE_MODAL:
-            return {
-                ...state,
-                termsOfUseModalIsVisible: true
-            };
-        case HIDE_TERMS_OF_USE_MODAL:
-            return {
-                ...state,
-                termsOfUseModalIsVisible: false
-            };
         case SHOW_CONFIRM_DELETE_USER_MODAL:
             return {
                 ...state,
@@ -191,16 +173,10 @@ export default function authorizationReducer(state = initialState, action) {
                     [action.field]: undefined
                 }
             };
-        case SET_USER_TERMS_ACCEPTED:
+        case SET_TERMS_OF_USE:
             return {
                 ...state,
-                termsAccepted: action.termsAccepted,
-                showUserTermsRequiredMessage: false
-            };
-        case SHOW_USER_TERMS_REQUIRED_MESSAGE:
-            return {
-                ...state,
-                showUserTermsRequiredMessage: true
+                termsOfUse: action.terms
             };
         default:
             return state;
@@ -239,30 +215,22 @@ function* fetchUser() {
 }
 
 function* createUser(action) {
-    const state = yield select();
-    if (state.user.termsAccepted) {
-        yield put({ type: CREATE_USER_BEGIN });
-        try {
-            const user = {
-                acceptedTerms: TERMS_VERSION,
-                email: action.email
-            };
-            const response = yield call(userApiPost, `${AD_USER_API}/api/v1/user`, fixUser(user));
-            yield put({ type: CREATE_USER_SUCCESS, response });
-            if (user.email) {
-                yield put({ type: CREATE_USER_SHOW_ALERT });
-                yield call(delay, 5000);
-                yield put({ type: CREATE_USER_HIDE_ALERT });
-            }
-        } catch (e) {
-            if (e instanceof SearchApiError) {
-                yield put({ type: CREATE_USER_FAILURE, error: e });
-            } else {
-                throw e;
-            }
+    yield put({ type: CREATE_USER_BEGIN });
+    try {
+        const user = { email: action.email };
+        const response = yield call(userApiPost, `${AD_USER_API}/api/v1/user`, fixUser(user));
+        yield put({ type: CREATE_USER_SUCCESS, response });
+        if (user.email) {
+            yield put({ type: CREATE_USER_SHOW_ALERT });
+            yield call(delay, 5000);
+            yield put({ type: CREATE_USER_HIDE_ALERT });
         }
-    } else {
-        yield put({ type: SHOW_USER_TERMS_REQUIRED_MESSAGE });
+    } catch (e) {
+        if (e instanceof SearchApiError) {
+            yield put({ type: CREATE_USER_FAILURE, error: e });
+        } else {
+            throw e;
+        }
     }
 }
 
@@ -337,6 +305,11 @@ function* validateEMail() {
     }
 }
 
+function* fetchTermsOfUse() {
+    const terms = yield call(userApiGet, `${AD_USER_API}/api/v1/user/consent/terms`);
+    yield put({ type: SET_TERMS_OF_USE, terms });
+}
+
 export const userSaga = function* saga() {
     yield takeEvery(FETCH_IS_AUTHENTICATED_SUCCESS, fetchUser);
     yield takeLatest(CREATE_USER, createUser);
@@ -344,4 +317,5 @@ export const userSaga = function* saga() {
     yield takeLatest(SET_EMAIL_FROM_SAVED_SEARCH, setEmailFromSavedSearch);
     yield takeLatest(DELETE_USER, deleteUser);
     yield takeLatest(VALIDATE_USER_EMAIL, validateEMail);
+    yield takeLatest(FETCH_TERMS_OF_USE, fetchTermsOfUse);
 };
