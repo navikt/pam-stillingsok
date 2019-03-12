@@ -1,6 +1,17 @@
-import { select, put, call, takeEvery, takeLatest } from 'redux-saga/effects';
+import {
+    select,
+    put,
+    call,
+    takeEvery,
+    takeLatest
+} from 'redux-saga/effects';
 import SearchApiError from '../api/SearchApiError';
-import { userApiGet, userApiPost, userApiRemove, userApiPut } from '../api/userApi';
+import {
+    userApiGet,
+    userApiPost,
+    userApiRemove,
+    userApiPut
+} from '../api/userApi';
 import { authenticationEnum, FETCH_IS_AUTHENTICATED_SUCCESS } from '../authentication/authenticationReducer';
 import { AD_USER_API } from '../fasitProperties';
 import delay from '../common/delay';

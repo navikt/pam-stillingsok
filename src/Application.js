@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Footer from './common/footer/Footer';
@@ -18,51 +18,54 @@ import UserSettings from './user/UserSettings';
 import UserAlertStripe from './user/UserAlertStripe';
 import TopMenu from './common/topMenu/TopMenu';
 
-class Application extends React.Component {
-    componentDidMount() {
-        this.props.fetchIsAuthenticated();
-    }
+const Application = ({ authenticationRequiredModalIsVisible, fetchIsAuthenticated, user }) => {
+    useEffect(() => {
+        fetchIsAuthenticated();
+    }, []);
 
-    render() {
-        return (
-            <BrowserRouter>
-                <div className="Application">
-                    <main className="Application__main">
-                        <Error />
-                        <Switch>
-                            <Route component={TopMenu} />
-                        </Switch>
-                        <Switch>
-                            <Route exact path="/" component={SearchPage} />
-                            <Route path={`${CONTEXT_PATH}/stilling/:uuid`} component={StillingPage} />
-                            <Route path={`${CONTEXT_PATH}/mobil`} component={Invite} />
-                            <Route path={`${CONTEXT_PATH}/favoritter`} component={Favourites} />
-                            <Route path={`${CONTEXT_PATH}/lagrede-sok`} component={SavedSearches} />
-                            <Route path={`${CONTEXT_PATH}/innstillinger`} component={UserSettings} />
-                            <Route path={`${CONTEXT_PATH}/samtykke`} component={
-                                this.props.user ? SearchPage : TermsOfUse
-                            } />
-                            <Route path="*" component={SearchPage} />
-                        </Switch>
-                        {this.props.authenticationRequiredModalIsVisible && (
-                            <NotAuthenticatedModal />
-                        )}
-                        <UserAlertStripe />
-                        <Feedback />
-                    </main>
-                    <footer className="Application__footer">
-                        <Footer />
-                    </footer>
-                </div>
-            </BrowserRouter>
-        );
-    }
-}
+    return (
+        <BrowserRouter>
+            <div className="Application">
+                <main className="Application__main">
+                    <Error />
+                    <Switch>
+                        <Route component={TopMenu} />
+                    </Switch>
+                    <Switch>
+                        <Route exact path="/" component={SearchPage} />
+                        <Route path={`${CONTEXT_PATH}/stilling/:uuid`} component={StillingPage} />
+                        <Route path={`${CONTEXT_PATH}/mobil`} component={Invite} />
+                        <Route path={`${CONTEXT_PATH}/favoritter`} component={Favourites} />
+                        <Route path={`${CONTEXT_PATH}/lagrede-sok`} component={SavedSearches} />
+                        <Route path={`${CONTEXT_PATH}/innstillinger`} component={UserSettings} />
+                        <Route
+                            path={`${CONTEXT_PATH}/samtykke`}
+                            component={user ? SearchPage : TermsOfUse}
+                        />
+                        <Route path="*" component={SearchPage} />
+                    </Switch>
+                    {authenticationRequiredModalIsVisible && (
+                        <NotAuthenticatedModal />
+                    )}
+                    <UserAlertStripe />
+                    <Feedback />
+                </main>
+                <footer className="Application__footer">
+                    <Footer />
+                </footer>
+            </div>
+        </BrowserRouter>
+    );
+};
+
+Application.defaultProps = {
+    user: undefined
+};
 
 Application.propTypes = {
     fetchIsAuthenticated: PropTypes.func.isRequired,
     authenticationRequiredModalIsVisible: PropTypes.bool.isRequired,
-    user: PropTypes.shape()
+    user: PropTypes.shape({})
 };
 
 const mapStateToProps = (state) => ({

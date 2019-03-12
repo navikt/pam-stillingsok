@@ -1,4 +1,9 @@
-import { put, select, take, takeLatest } from 'redux-saga/es/effects';
+import {
+    put,
+    select,
+    take,
+    takeLatest
+} from 'redux-saga/es/effects';
 import { requiresAuthentication } from '../../authentication/authenticationReducer';
 import AuthenticationCaller from '../../authentication/AuthenticationCaller';
 import capitalizeLocation from '../../common/capitalizeLocation';
@@ -13,6 +18,7 @@ import {
     UPDATE_SAVED_SEARCH_SUCCESS
 } from '../savedSearchesReducer';
 import { CREATE_USER_SUCCESS } from '../../user/userReducer';
+
 export const SHOW_SAVED_SEARCH_FORM = 'SHOW_SAVED_SEARCH_FORM';
 export const SHOW_SAVED_SEARCH_FORM_SUCCESS = 'SHOW_SAVED_SEARCH_FORM_SUCCESS';
 export const HIDE_SAVED_SEARCH_FORM = 'HIDE_SAVED_SEARCH_FORM';
@@ -101,8 +107,9 @@ export default function savedSearchFormReducer(state = initialState, action) {
                     ...state.formData,
                     notifyType: action.notifyType,
                     duration: action.notifyType === NotifyTypeEnum.NONE ? 0 : 30,
-                    status: action.notifyType === NotifyTypeEnum.NONE ?
-                        SavedSearchStatusEnum.INACTIVE : SavedSearchStatusEnum.ACTIVE
+                    status: action.notifyType === NotifyTypeEnum.NONE
+                        ? SavedSearchStatusEnum.INACTIVE
+                        : SavedSearchStatusEnum.ACTIVE
                 }
             };
         }
