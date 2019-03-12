@@ -2,6 +2,7 @@
 @coreModulePath: './../../';
 @import "../node_modules/nav-frontend-core/less/print";
 @import "../node_modules/nav-frontend-typografi-style/src/index";
+@import "variables";
 
 body {
   font-family: @font-family;
@@ -22,6 +23,8 @@ button {
   display: none!important;
 }
 
+.Footer,
+.Feedback,
 .VisTreffButton,
 .TilToppenButton {
   display: none;
@@ -53,6 +56,33 @@ button {
 
 .SearchResultItemCompact__title {
   margin: 0.25rem 0!important;
+}
+
+.StillingsTitle {
+  margin-top: 4rem;
+  margin-bottom: 4rem;
+}
+
+.StillingsTitle__title {
+  font-size: 3rem;
+  line-height: 1;
+  font-weight: 300;
+  padding: 0;
+  margin: 0;
+}
+
+.StillingsTitle__employer-and-location {
+  margin: 0;
+  line-height: 1;
+}
+
+.detail-section {
+  margin: 2rem 0;
+}
+
+.detail-section__head {
+  border-top: 2px solid @gray4;
+  padding-top: 0.5rem;
 }
 
 dl {
