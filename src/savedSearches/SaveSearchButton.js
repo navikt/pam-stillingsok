@@ -1,12 +1,20 @@
 import HjelpetekstBase from 'nav-frontend-hjelpetekst';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Button } from '../common/button';
 import { SavedSearchFormMode, SHOW_SAVED_SEARCH_FORM } from './form/savedSearchFormReducer';
-import { withRouter } from 'react-router-dom';
 
-const SaveSearchButton = withRouter(({ canSaveSearch, currentSavedSearch, user, history, showSavedSearchForm }) => {
+const SaveSearchButton = withRouter((props) => {
+    const {
+        canSaveSearch,
+        currentSavedSearch,
+        history,
+        showSavedSearchForm,
+        user
+    } = props;
+
     const onClick = () => {
         if (user) {
             showSavedSearchForm(
@@ -43,7 +51,7 @@ SaveSearchButton.defaultProps = {
 SaveSearchButton.propTypes = {
     showSavedSearchForm: PropTypes.func.isRequired,
     currentSavedSearch: PropTypes.shape({}),
-    canSaveSearch: PropTypes.bool.isRequired,
+    canSaveSearch: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => ({

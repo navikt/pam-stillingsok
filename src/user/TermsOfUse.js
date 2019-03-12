@@ -10,7 +10,15 @@ import { FlatButton, PrimaryButton } from '../common/button';
 import { CREATE_USER, FETCH_TERMS_OF_USE } from './userReducer';
 import './TermsOfUse.less';
 
-const TermsOfUse = withRouter(({ createUser, history, isCreating, termsOfUse, fetchTermsOfUse }) => {
+/* eslint-disable react/no-danger */
+
+const TermsOfUse = withRouter(({
+    createUser,
+    history,
+    isCreating,
+    termsOfUse,
+    fetchTermsOfUse
+}) => {
     const [accepted, setAccepted] = useState(false);
     const onCheckboxClick = (event) => setAccepted(event.target.checked);
     const redirectToSearch = () => history.push('/stillinger');
