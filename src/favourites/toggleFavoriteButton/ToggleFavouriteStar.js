@@ -26,8 +26,7 @@ class ToggleFavouriteStar extends React.Component {
 
         if (isFavourite) {
             return (
-                <FlatButton
-                    mini
+                <button
                     aria-label="Favoritt"
                     aria-pressed="true"
                     onClick={this.onRemoveFromFavouritesClick}
@@ -36,12 +35,11 @@ class ToggleFavouriteStar extends React.Component {
                     <div className="ToggleFavouriteStar__flex">
                         <i className="ToggleFavouriteStar__star--active" />
                     </div>
-                </FlatButton>
+                </button>
             );
         }
         return (
-            <FlatButton
-                mini
+            <button
                 onClick={this.onAddToFavouritesClick}
                 aria-label="Favoritt"
                 aria-pressed="false"
@@ -50,7 +48,7 @@ class ToggleFavouriteStar extends React.Component {
                 <div className="ToggleFavouriteStar__flex">
                     <i className="ToggleFavouriteStar__star" />
                 </div>
-            </FlatButton>
+            </button>
         );
     }
 }
