@@ -1,64 +1,53 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { FlatButton } from '../../common/button';
 import { ADD_TO_FAVOURITES, REMOVE_FROM_FAVOURITES } from '../favouritesReducer';
 import './ToggleFavouriteButton.less';
 
-class ToggleFavouriteButton extends React.Component {
-    onAddToFavouritesClick = () => {
-        this.props.addToFavourites(this.props.uuid);
-    };
+const ToggleFavouriteButton = withRouter(({
+    addToFavourites,
+    adsMarkedAsFavorite,
+    history,
+    isFetchingFavourites,
+    removeFromFavourites,
+    uuid
+}) => {
+    const isFavourite = adsMarkedAsFavorite.includes(uuid);
 
-    onRemoveFromFavouritesClick = () => {
-        this.props.removeFromFavourites(this.props.uuid);
-    };
+    const onClick = isFavourite
+        ? () => removeFromFavourites(uuid)
+        : () => addToFavourites(uuid, history);
 
-    render() {
-        const {
-            adsMarkedAsFavorite, uuid, isFetchingFavourites
-        } = this.props;
-        const isFavourite = adsMarkedAsFavorite.includes(uuid);
+    const labelValue = isFavourite
+        ? 'Slett favoritt'
+        : 'Lagre favoritt';
 
-        if (isFetchingFavourites) {
-            return null;
-        }
+    const starClassName = isFavourite
+        ? 'ToggleFavouriteButton__star ToggleFavouriteButton__star--active'
+        : 'ToggleFavouriteButton__star';
 
-        if (isFavourite) {
-            return (
-                <FlatButton
-                    mini
-                    aria-label="Fjern favoritt"
-                    onClick={this.onRemoveFromFavouritesClick}
-                    className="ToggleFavouriteButton"
-                >
-                    <div className="ToggleFavouriteButton__flex">
-                        <i className="ToggleFavouriteButton__star ToggleFavouriteButton__star--active" />
-                        <span className="ToggleFavouriteButton__label">
-                            Slett favoritt
-                        </span>
-                    </div>
-                </FlatButton>
-            );
-        }
-        return (
-            <FlatButton
-                mini
-                aria-label="Lagre favoritt"
-                onClick={this.onAddToFavouritesClick}
-                className="ToggleFavouriteButton"
-            >
-                <div className="ToggleFavouriteButton__flex">
-                    <i className="ToggleFavouriteButton__star" />
-                    <span className="ToggleFavouriteButton__label">
-                    Lagre favoritt
-                    </span>
-                </div>
-            </FlatButton>
-        );
+    if (isFetchingFavourites) {
+        return null;
     }
-}
 
+    return (
+        <FlatButton
+            mini
+            aria-label={labelValue}
+            onClick={onClick}
+            className="ToggleFavouriteButton"
+        >
+            <div className="ToggleFavouriteButton__flex">
+                <i className={starClassName} />
+                <span className="ToggleFavouriteButton__label">
+                    {labelValue}
+                </span>
+            </div>
+        </FlatButton>
+    );
+});
 
 ToggleFavouriteButton.propTypes = {
     isFetchingFavourites: PropTypes.bool.isRequired,
@@ -74,7 +63,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    addToFavourites: (uuid) => dispatch({ type: ADD_TO_FAVOURITES, uuid }),
+    addToFavourites: (uuid, history) => dispatch({ type: ADD_TO_FAVOURITES, uuid, history }),
     removeFromFavourites: (uuid) => dispatch({ type: REMOVE_FROM_FAVOURITES, uuid })
 });
 

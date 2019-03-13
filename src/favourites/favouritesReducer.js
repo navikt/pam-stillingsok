@@ -1,4 +1,4 @@
-/* eslint-disable no-underscore-dangle */
+/* eslint-disable no-underscore-dangle,no-unused-expressions */
 import { call, put, select, take, takeLatest } from 'redux-saga/effects';
 import { userApiGet, userApiPost, userApiRemove } from '../api/userApi';
 import SearchApiError from '../api/SearchApiError';
@@ -178,22 +178,22 @@ function* fetchFavourites() {
     }
 }
 
-function* addToFavourites(action) {
+function* addToFavourites({ uuid, history }) {
     if (yield requiresAuthentication(AuthenticationCaller.ADD_FAVORITE)) {
         let state = yield select();
         if (!state.user.user) {
-            yield put({type: SHOW_TERMS_OF_USE_MODAL});
-            yield take([HIDE_TERMS_OF_USE_MODAL, CREATE_USER_SUCCESS]);
+            history && history.push('/stillinger/samtykke');
+            yield take(CREATE_USER_SUCCESS);
         }
         state = yield select();
         if (state.user.user) {
             let favourite;
-            const foundInSearchResult = state.search.searchResult && state.search.searchResult.stillinger &&
-                state.search.searchResult.stillinger.find((s) => s.uuid === action.uuid);
+            const foundInSearchResult = state.search.searchResult && state.search.searchResult.stillinger
+                && state.search.searchResult.stillinger.find((s) => s.uuid === uuid);
 
             if (foundInSearchResult) {
                 favourite = toFavourite(foundInSearchResult.uuid, foundInSearchResult);
-            } else if (state.stilling.stilling._id === action.uuid) {
+            } else if (state.stilling.stilling._id === uuid) {
                 favourite = toFavourite(state.stilling.stilling._id, state.stilling.stilling._source);
             } else {
                 return;
