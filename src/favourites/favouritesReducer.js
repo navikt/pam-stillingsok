@@ -157,7 +157,7 @@ function toFavourite(uuid, ad) {
             jobTitle: ad.properties.jobtitle ? ad.properties.jobtitle : null,
             status: ad.status,
             applicationdue: ad.properties.applicationdue ? ad.properties.applicationdue : null,
-            location: getWorkLocation(ad),
+            location: getWorkLocation(ad.properties.location, ad.locationList),
             employer: getEmployer(ad),
             published: ad.published
         }

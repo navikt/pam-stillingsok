@@ -97,14 +97,16 @@ class Stilling extends React.Component {
                                             <AdTitle
                                                 title={cachedStilling.title}
                                                 employer={getEmployer(cachedStilling)}
-                                                location={getWorkLocation(cachedStilling, true)}
+                                                location={getWorkLocation(cachedStilling.properties.location,
+                                                  cachedStilling.locationList)}
                                             />
                                         )}
                                         {!isFetchingStilling && stilling && (
                                             <AdTitle
                                                 title={stilling._source.title}
                                                 employer={getEmployer(stilling._source)}
-                                                location={getWorkLocation(stilling._source, true)}
+                                                location={getWorkLocation(stilling._source.properties.location,
+                                                    stilling._source.locationList)}
                                             />
                                         )}
                                     </Column>

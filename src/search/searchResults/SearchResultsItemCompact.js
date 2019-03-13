@@ -28,11 +28,11 @@ export default function SearchResultsItemCompact({ stilling, urlQuery }) {
                     <Undertekst className="SearchResultItemCompact__flex__title__jobTitle">
                         {stilling.properties.jobtitle && stilling.title !== stilling.properties.jobtitle ? (
                             <span>
-                                {getWorkLocation(stilling, true)} - {stilling.properties.jobtitle}
+                                {getWorkLocation(stilling.properties.location, stilling.locationList)} - {stilling.properties.jobtitle}
                             </span>
                         ) : (
                             <span>
-                                {getWorkLocation(stilling, true)}
+                                {getWorkLocation(stilling.properties.location, stilling.locationList)}
                             </span>
                         )}
                     </Undertekst>
@@ -56,7 +56,6 @@ export default function SearchResultsItemCompact({ stilling, urlQuery }) {
 }
 
 SearchResultsItemCompact.defaultProps = {
-    shouldFocus: false,
     urlQuery: ''
 };
 
@@ -71,6 +70,5 @@ SearchResultsItemCompact.propTypes = {
             applicationdue: PropTypes.string
         })
     }).isRequired,
-    shouldFocus: PropTypes.bool,
     urlQuery: PropTypes.string
 };
