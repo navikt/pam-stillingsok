@@ -32,6 +32,8 @@ class Published extends React.Component {
                 apen
             >
                 <div
+                    role="group"
+                    aria-label="Publisert"
                     className="Published__inner"
                 >
                     {published && published.map((item) => (
