@@ -11,19 +11,15 @@ const SaveSearchButton = withRouter((props) => {
         canSaveSearch,
         currentSavedSearch,
         history,
-        showSavedSearchForm,
-        user
+        showSavedSearchForm
     } = props;
 
     const onClick = () => {
-        if (user) {
-            showSavedSearchForm(
-                currentSavedSearch ? SavedSearchFormMode.REPLACE : SavedSearchFormMode.ADD,
-                currentSavedSearch !== undefined
-            );
-        } else {
-            history.push('/stillinger/samtykke');
-        }
+        showSavedSearchForm(
+            currentSavedSearch ? SavedSearchFormMode.REPLACE : SavedSearchFormMode.ADD,
+            currentSavedSearch !== undefined,
+            history
+        );
     };
 
     return canSaveSearch ? (
@@ -56,15 +52,15 @@ SaveSearchButton.propTypes = {
 
 const mapStateToProps = (state) => ({
     currentSavedSearch: state.savedSearches.currentSavedSearch,
-    canSaveSearch: state.savedSearches.canSaveSearch,
-    user: state.user.user
+    canSaveSearch: state.savedSearches.canSaveSearch
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    showSavedSearchForm: (formMode, showAddOrReplace) => dispatch({
+    showSavedSearchForm: (formMode, showAddOrReplace, history) => dispatch({
         type: SHOW_SAVED_SEARCH_FORM,
         formMode,
-        showAddOrReplace
+        showAddOrReplace,
+        history
     })
 });
 
