@@ -118,7 +118,6 @@ input::-ms-clear {
   border-radius: 0!important;
   padding-top: 0.5rem;
 
-
   .ekspanderbartPanel__heading {
     color: @fontColorDarkBlue;
   }
@@ -134,8 +133,12 @@ input::-ms-clear {
 }
 
 .ekspanderbartPanel__innhold {
-  background-color: @gray2;
-  padding-top: 1rem!important;
+  padding: 0.25rem 1rem 0;
+
+  @media (min-width: @screen-md-min) {
+    padding: 1rem 1rem 0.5rem;
+    background: @gray2;
+  }
 }
 
 .alertstripe--solid.alertstripe--advarsel {

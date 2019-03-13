@@ -58,6 +58,7 @@ class Search extends React.Component {
             <div className="Search">
                 <FavouriteAlertStripe />
                 <SavedSearchAlertStripe />
+                <ShowResultsButton />
                 <div className="Search__header">
                     <Container className="Search__header__container">
                         <Row className="Search__header__row">
@@ -82,7 +83,6 @@ class Search extends React.Component {
                         </Row>
                     </Container>
                 </div>
-                <ShowResultsButton />
                 <Container className="Search__main">
                     {this.props.isSearching && !this.props.initialSearchDone && (
                         <div className="Search__spinner">

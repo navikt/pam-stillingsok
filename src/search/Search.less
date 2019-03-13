@@ -6,6 +6,9 @@
   width: 100%;
   background: @darkBlue;
 
+  @media (max-width: @screen-xs-max) {
+    margin-bottom: 1rem;
+  }
   @media (min-width: @screen-sm-min) {
     height: 10rem;
   }
@@ -83,13 +86,11 @@
 
 .Search__main__left__save-search {
   @media (min-width: @screen-sm-min) {
-    min-height: 118px;
-    margin-bottom: 1rem;
+    min-height: 116px;
     padding-bottom: 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 2px solid @gray3;
   }
   @media (max-width: @screen-sm-max) {
     margin-bottom: 1rem;
