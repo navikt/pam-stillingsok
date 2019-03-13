@@ -7,7 +7,7 @@ import getWorkLocation from '../../common/getWorkLocation';
 
 export default function EmploymentDetails({ stilling }) {
     const { properties } = stilling;
-    const location = getWorkLocation(stilling);
+    const location = getWorkLocation(stilling.properties.location, stilling.locationList, false);
 
     return (
         <div className="EmploymentDetails detail-section">
