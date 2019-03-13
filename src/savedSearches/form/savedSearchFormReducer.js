@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 import {
     put,
     select,
@@ -267,6 +268,7 @@ function* showSavedSearchForm(action) {
     if (yield requiresAuthentication(AuthenticationCaller.SAVE_SEARCH)) {
         let state = yield select();
         if (!state.user.user) {
+            action.history && action.history.push('/stillinger/samtykke');
             yield take([CREATE_USER_SUCCESS]);
         }
         state = yield select();
