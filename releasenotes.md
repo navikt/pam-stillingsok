@@ -1,3 +1,7 @@
+## RELEASE - 0.76.563-15d4443
+#### New in this release: 
++ 2019-03-12 [PAM-2789] Specify time zone for date ranges
++ 2019-03-05 [PAM-2796] Support for multiple geo aggs and filtering
 ## RELEASE - 0.75.560-cbe0095
 #### New in this release: 
 + 2019-03-05 [Fix] Set default page title in google analytics
