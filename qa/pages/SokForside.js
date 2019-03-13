@@ -8,7 +8,7 @@ module.exports = {
             selector: '//*[@id="treff"]/div[2]/div/div[1]/a',
             locateStrategy: 'xpath'
         },
-        searchResultCount:'.SearchResultCount',
+        searchResultCount:'.SearchResultCount__h3__numberOfPositions',
         searchResultCountMobile: '.ShowResultsButton__flex__count',
         searchResultLocation: '.SearchResultsItemDetails__location'
     },
