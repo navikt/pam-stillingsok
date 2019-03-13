@@ -1,57 +1,44 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { FlatButton } from '../../common/button';
 import { ADD_TO_FAVOURITES, REMOVE_FROM_FAVOURITES } from '../favouritesReducer';
 import './ToggleFavouriteStar.less';
 
-class ToggleFavouriteStar extends React.Component {
-    onAddToFavouritesClick = () => {
-        this.props.addToFavourites(this.props.uuid);
-    };
+const ToggleFavouriteStar = withRouter(({
+    addToFavourites,
+    adsMarkedAsFavorite,
+    className,
+    history,
+    isFetchingFavourites,
+    removeFromFavourites,
+    uuid
+}) => {
+    const isFavourite = adsMarkedAsFavorite.includes(uuid);
 
-    onRemoveFromFavouritesClick = () => {
-        this.props.removeFromFavourites(this.props.uuid);
-    };
+    const onClick = isFavourite
+        ? () => removeFromFavourites(uuid)
+        : () => addToFavourites(uuid, history);
 
-    render() {
-        const {
-            adsMarkedAsFavorite, uuid, className, isFetchingFavourites
-        } = this.props;
-        const isFavourite = adsMarkedAsFavorite.includes(uuid);
-
-        if (isFetchingFavourites) {
-            return null;
-        }
-
-        if (isFavourite) {
-            return (
-                <button
-                    aria-label="Favoritt"
-                    aria-pressed="true"
-                    onClick={this.onRemoveFromFavouritesClick}
-                    className={className ? `ToggleFavouriteStar ${className}` : 'ToggleFavouriteStar'}
-                >
-                    <div className="ToggleFavouriteStar__flex">
-                        <i className="ToggleFavouriteStar__star--active" />
-                    </div>
-                </button>
-            );
-        }
-        return (
-            <button
-                onClick={this.onAddToFavouritesClick}
-                aria-label="Favoritt"
-                aria-pressed="false"
-                className={className ? `ToggleFavouriteStar ${className}` : 'ToggleFavouriteStar'}
-            >
-                <div className="ToggleFavouriteStar__flex">
-                    <i className="ToggleFavouriteStar__star" />
-                </div>
-            </button>
-        );
+    if (isFetchingFavourites) {
+        return null;
     }
-}
+
+    return (
+        <FlatButton
+            mini
+            aria-label="Favoritt"
+            aria-pressed={isFavourite ? 'true' : 'false'}
+            onClick={onClick}
+            className={`ToggleFavouriteStar ${className || ''}`}
+        >
+            <div className="ToggleFavouriteStar__flex">
+                <i className={isFavourite ? 'ToggleFavouriteStar__star--active' : 'ToggleFavouriteStar__star'} />
+            </div>
+        </FlatButton>
+    );
+});
 
 ToggleFavouriteStar.defaultProps = {
     className: undefined
@@ -72,7 +59,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    addToFavourites: (uuid) => dispatch({ type: ADD_TO_FAVOURITES, uuid }),
+    addToFavourites: (uuid, history) => dispatch({ type: ADD_TO_FAVOURITES, uuid, history }),
     removeFromFavourites: (uuid) => dispatch({ type: REMOVE_FROM_FAVOURITES, uuid })
 });
 
