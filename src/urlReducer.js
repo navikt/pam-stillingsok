@@ -1,10 +1,9 @@
 import { put, select, takeLatest } from 'redux-saga/effects';
+import { CONTEXT_PATH } from './fasitProperties';
 import { ADD_SAVED_SEARCH_SUCCESS, SET_CURRENT_SAVED_SEARCH } from './savedSearches/savedSearchesReducer';
 import { LOAD_MORE, PAGE_SIZE, RESET_SEARCH, SEARCH } from './search/searchReducer';
 import { toObject, toQueryString } from './search/url';
-import { SET_VIEW_MODE } from './search/viewMode/viewModeReducer';
 import { removeUndefinedOrEmptyString } from './utils';
-import {CONTEXT_PATH} from './fasitProperties';
 
 export const RESTORE_STATE_FROM_URL_BEGIN = 'RESTORE_STATE_FROM_URL_BEGIN';
 export const RESTORE_STATE_FROM_URL = 'RESTORE_STATE_FROM_URL';
@@ -82,7 +81,6 @@ export const urlSaga = function* saga() {
         RESET_SEARCH,
         SET_CURRENT_SAVED_SEARCH,
         ADD_SAVED_SEARCH_SUCCESS,
-        SET_VIEW_MODE,
         LOAD_MORE
     ], updateUrl);
     yield takeLatest(RESTORE_STATE_FROM_URL_BEGIN, restoreStateFromUrl);

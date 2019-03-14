@@ -28,7 +28,6 @@ import SearchResultCount from './searchResults/SearchResultCount';
 import SearchResults from './searchResults/SearchResults';
 import ShowResultsButton from './showResultsButton/ShowResultsButton';
 import Sorting from './sorting/Sorting';
-import ViewMode from './viewMode/ViewMode';
 
 class Search extends React.Component {
     constructor(props) {
@@ -130,7 +129,6 @@ class Search extends React.Component {
                                                     <CurrentSavedSearch />
                                                 </div>
                                                 <div className="Search__main__center__header__right">
-                                                    <ViewMode />
                                                     <Sorting />
                                                 </div>
                                             </div>
