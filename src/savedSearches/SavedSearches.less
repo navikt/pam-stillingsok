@@ -9,14 +9,20 @@
     margin: 0 auto;
 }
 
+.SavedSearches__section {
+  background: #fff;
+  padding: 2rem;
+  margin-bottom: 1rem;
+  border-radius: 0.125rem;
+}
+
 .SavedSearches__main__spinner {
     margin-top: 3rem;
     display: flex;
     justify-content: center;
 }
 
-
-/* Hjelpetekst-komponeneten er kodet slik at den blir fullscreen på mobil.
+/* Hjelpetekst-komponenten er kodet slik at den blir fullscreen på mobil.
 Endringer på dette skal skje, men bruker koden under intil det er på plass */
 @media (max-width: @screen-xs-max) {
   #tooltip-hjelpetekstLagreknapp  {
@@ -58,7 +64,6 @@ Endringer på dette skal skje, men bruker koden under intil det er på plass */
        bottom: 3rem;
        left: 1.25rem;
      }
-
 
      &:focus:after {
        left: 1rem;
