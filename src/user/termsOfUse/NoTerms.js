@@ -6,25 +6,23 @@ import { Container } from 'nav-frontend-grid';
 import { PrimaryButton } from '../../common/button';
 import { FETCH_TERMS_OF_USE } from '../userReducer';
 
-const NoTerms = ({ fetchTermsOfUse, isFetchingTermsOfUse }) => {
-    return (
-        <Container className="TermsOfUse__main">
-            <Undertittel className="TermsOfUse__title">
-                Kunne ikke hente samtykketekst.
-            </Undertittel>
-            <Normaltekst className="blokk-l">
-                {'Kunne ikke hente samtykketekst. Prøv igjen senere.'}
-            </Normaltekst>
-            <PrimaryButton
-                onClick={fetchTermsOfUse}
-                spinner={isFetchingTermsOfUse}
-                disabled={isFetchingTermsOfUse}
-            >
-                Hent samtykketekst
-            </PrimaryButton>
-        </Container>
-    );
-};
+const NoTerms = ({ fetchTermsOfUse, isFetchingTermsOfUse }) => (
+    <Container className="TermsOfUse__main">
+        <Undertittel className="TermsOfUse__title">
+            Kunne ikke hente samtykketekst.
+        </Undertittel>
+        <Normaltekst className="blokk-l">
+            {'Vennligst prøv igjen senere.'}
+        </Normaltekst>
+        <PrimaryButton
+            onClick={fetchTermsOfUse}
+            spinner={isFetchingTermsOfUse}
+            disabled={isFetchingTermsOfUse}
+        >
+            Hent samtykketekst
+        </PrimaryButton>
+    </Container>
+);
 
 NoTerms.propTypes = {
     fetchTermsOfUse: PropTypes.func.isRequired,
@@ -32,7 +30,8 @@ NoTerms.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-    isFetchingTermsOfUse: state.user.isFetchingTermsOfUse
+    isFetchingTermsOfUse: state.user.isFetchingTermsOfUse,
+    termsAlertStripeIsVisible: state.user.termsAlertStripeIsVisible
 });
 
 const mapDispatchToProps = (dispatch) => ({

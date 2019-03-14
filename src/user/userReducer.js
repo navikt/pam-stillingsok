@@ -46,6 +46,9 @@ export const FETCH_TERMS_OF_USE = 'FETCH_TERMS_OF_USE';
 export const FETCH_TERMS_OF_USE_SUCCESS = 'FETCH_TERMS_OF_USE_SUCCESS';
 export const FETCH_TERMS_OF_USE_FAILURE = 'FETCH_TERMS_OF_USE_FAILURE';
 
+export const SHOW_TERMS_OF_USE_ALERTSTRIPE = 'SHOW_TERMS_OF_USE_ALERTSTRIPE';
+export const HIDE_TERMS_OF_USE_ALERTSTRIPE = 'HIDE_TERMS_OF_USE_ALERTSTRIPE';
+
 export const SET_USER_EMAIL = 'SET_USER_EMAIL';
 export const VALIDATE_USER_EMAIL = 'VALIDATE_USER_EMAIL';
 
@@ -65,7 +68,8 @@ const initialState = {
     confirmDeleteUserModalIsVisible: false,
     validation: {},
     termsOfUse: undefined,
-    isFetchingTermsOfUse: false
+    isFetchingTermsOfUse: false,
+    termsAlertStripeIsVisible: false
 };
 
 export default function authorizationReducer(state = initialState, action) {
@@ -201,6 +205,16 @@ export default function authorizationReducer(state = initialState, action) {
             return {
                 ...state,
                 isFetchingTermsOfUse: false
+            };
+        case SHOW_TERMS_OF_USE_ALERTSTRIPE:
+            return {
+                ...state,
+                termsAlertStripeIsVisible: true
+            };
+        case HIDE_TERMS_OF_USE_ALERTSTRIPE:
+            return {
+                ...state,
+                termsAlertStripeIsVisible: false
             };
         default:
             return state;
@@ -338,6 +352,12 @@ function* fetchTermsOfUse() {
     }
 }
 
+function* showTermsAlertStripe() {
+    yield put({ type: SHOW_TERMS_OF_USE_ALERTSTRIPE });
+    yield call(delay, 5000);
+    yield put({ type: HIDE_TERMS_OF_USE_ALERTSTRIPE });
+}
+
 export const userSaga = function* saga() {
     yield takeEvery(FETCH_IS_AUTHENTICATED_SUCCESS, fetchUser);
     yield takeLatest(CREATE_USER, createUser);
@@ -346,4 +366,5 @@ export const userSaga = function* saga() {
     yield takeLatest(DELETE_USER, deleteUser);
     yield takeLatest(VALIDATE_USER_EMAIL, validateEMail);
     yield takeLatest(FETCH_TERMS_OF_USE, fetchTermsOfUse);
+    yield takeLatest(FETCH_TERMS_OF_USE_FAILURE, showTermsAlertStripe);
 };
