@@ -106,7 +106,7 @@ class Stilling extends React.Component {
                                     </Column>
                                 </Row>
                                 <Row>
-                                    <Column xs="12">
+                                    <Column xs="12" md="8">
                                         {!isFetchingStilling && stilling && stilling._source.status === 'INACTIVE' && (
                                             <Expired />
                                         )}
