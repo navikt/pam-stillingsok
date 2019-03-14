@@ -18,26 +18,33 @@ function UserAlertStripe({ termsAlertStripeIsVisible, userAlertStripeMode, userA
                 </Link>
             </StickyAlertStripe>
         );
-    } else if (userAlertStripeIsVisible && userAlertStripeMode === 'set-email') {
+    }
+
+    if (userAlertStripeIsVisible && userAlertStripeMode === 'set-email') {
         return (
             <StickyAlertStripe type="suksess">
                 Din e-postadresse er lagret
             </StickyAlertStripe>
         );
-    } else if (userAlertStripeIsVisible && userAlertStripeMode === 'clear-email') {
+    }
+
+    if (userAlertStripeIsVisible && userAlertStripeMode === 'clear-email') {
         return (
             <StickyAlertStripe type="suksess">
                 E-postadressen din ble slettet
             </StickyAlertStripe>
         );
-    } else if (termsAlertStripeIsVisible) {
+    }
+
+    if (termsAlertStripeIsVisible) {
         return (
-            <StickyAlertStripe type="stopp">
+            <StickyAlertStripe type="advarsel">
                 Kunne ikke hente samtykketekst
             </StickyAlertStripe>
         );
     }
-    return <div />;
+
+    return null;
 }
 
 UserAlertStripe.propTypes = {
