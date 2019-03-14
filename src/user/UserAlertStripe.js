@@ -34,6 +34,12 @@ function UserAlertStripe({ termsAlertStripeIsVisible, userAlertStripeMode, userA
                 E-postadressen din ble slettet
             </StickyAlertStripe>
         );
+    } else if (termsAlertStripeIsVisible) {
+        return (
+            <StickyAlertStripe type="stopp">
+                Kunne ikke hente samtykketekst
+            </StickyAlertStripe>
+        );
     }
 
     if (termsAlertStripeIsVisible) {
