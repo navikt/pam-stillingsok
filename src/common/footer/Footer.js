@@ -41,7 +41,7 @@ const Footer = ({ useInternalLinks }) => (
                     </li>
                     <li className="Footer__links__ul__li">
                         <InternalOrExternalLink isInternalLink={useInternalLinks} href="/kontaktinfo">
-                            Kontaktinfo
+                            Kontakt oss
                         </InternalOrExternalLink>
                     </li>
                     <li className="Footer__links__ul__li">
