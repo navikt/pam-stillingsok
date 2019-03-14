@@ -12,7 +12,7 @@ import SavedSearches from './savedSearches/SavedSearches';
 import SearchPage from './search/Search';
 import StillingPage from './stilling/Stilling';
 import NotAuthenticatedModal from './authentication/NotAuthenticatedModal';
-import TermsOfUse from './user/TermsOfUse';
+import TermsOfUse from './user/termsOfUse/TermsOfUse';
 import { FETCH_IS_AUTHENTICATED } from './authentication/authenticationReducer';
 import UserSettings from './user/UserSettings';
 import UserAlertStripe from './user/UserAlertStripe';

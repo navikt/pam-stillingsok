@@ -43,7 +43,8 @@ export const DELETE_USER_BEGIN = 'DELETE_USER_BEGIN';
 export const DELETE_USER_FAILURE = 'DELETE_USER_FAILURE';
 
 export const FETCH_TERMS_OF_USE = 'FETCH_TERMS_OF_USE';
-export const SET_TERMS_OF_USE = 'SET_TERMS_OF_USE';
+export const FETCH_TERMS_OF_USE_SUCCESS = 'FETCH_TERMS_OF_USE_SUCCESS';
+export const FETCH_TERMS_OF_USE_FAILURE = 'FETCH_TERMS_OF_USE_FAILURE';
 
 export const SET_USER_EMAIL = 'SET_USER_EMAIL';
 export const VALIDATE_USER_EMAIL = 'VALIDATE_USER_EMAIL';
@@ -63,7 +64,8 @@ const initialState = {
     userAlertStripeMode: 'added',
     confirmDeleteUserModalIsVisible: false,
     validation: {},
-    termsOfUse: undefined
+    termsOfUse: undefined,
+    isFetchingTermsOfUse: false
 };
 
 export default function authorizationReducer(state = initialState, action) {
@@ -184,10 +186,21 @@ export default function authorizationReducer(state = initialState, action) {
                     [action.field]: undefined
                 }
             };
-        case SET_TERMS_OF_USE:
+        case FETCH_TERMS_OF_USE:
             return {
                 ...state,
-                termsOfUse: action.terms
+                isFetchingTermsOfUse: true
+            };
+        case FETCH_TERMS_OF_USE_SUCCESS:
+            return {
+                ...state,
+                termsOfUse: action.terms,
+                isFetchingTermsOfUse: false
+            };
+        case FETCH_TERMS_OF_USE_FAILURE:
+            return {
+                ...state,
+                isFetchingTermsOfUse: false
             };
         default:
             return state;
@@ -317,8 +330,12 @@ function* validateEMail() {
 }
 
 function* fetchTermsOfUse() {
-    const terms = yield call(userApiGet, `${AD_USER_API}/api/v1/user/consent/terms`);
-    yield put({ type: SET_TERMS_OF_USE, terms });
+    try {
+        const terms = yield call(userApiGet, `${AD_USER_API}/api/v1/user/consent/terms`);
+        yield put({ type: FETCH_TERMS_OF_USE_SUCCESS, terms });
+    } catch (e) {
+        yield put({ type: FETCH_TERMS_OF_USE_FAILURE });
+    }
 }
 
 export const userSaga = function* saga() {
