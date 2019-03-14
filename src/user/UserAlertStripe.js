@@ -5,12 +5,17 @@ import { Link } from 'react-router-dom';
 import { CONTEXT_PATH } from '../fasitProperties';
 import StickyAlertStripe from '../common/StickyAlertStripe';
 
-function UserAlertStripe({ userAlertStripeMode, userAlertStripeIsVisible }) {
+function UserAlertStripe({ termsAlertStripeIsVisible, userAlertStripeMode, userAlertStripeIsVisible }) {
     if (userAlertStripeIsVisible && (userAlertStripeMode === 'added')) {
         return (
             <StickyAlertStripe type="suksess">
-                Din e-postadresse er lagret på <Link className="lenke" to={`${CONTEXT_PATH}/innstillinger`}> Innstillinger
-            </Link>
+                {'Din e-postadresse er lagret på '}
+                <Link
+                    className="lenke"
+                    to={`${CONTEXT_PATH}/innstillinger`}
+                >
+                    Innstillinger
+                </Link>
             </StickyAlertStripe>
         );
     } else if (userAlertStripeIsVisible && userAlertStripeMode === 'set-email') {
@@ -25,16 +30,24 @@ function UserAlertStripe({ userAlertStripeMode, userAlertStripeIsVisible }) {
                 E-postadressen din ble slettet
             </StickyAlertStripe>
         );
+    } else if (termsAlertStripeIsVisible) {
+        return (
+            <StickyAlertStripe type="stopp">
+                Kunne ikke hente samtykketekst
+            </StickyAlertStripe>
+        );
     }
     return <div />;
 }
 
 UserAlertStripe.propTypes = {
+    termsAlertStripeIsVisible: PropTypes.bool.isRequired,
     userAlertStripeIsVisible: PropTypes.bool.isRequired,
     userAlertStripeMode: PropTypes.string.isRequired
 };
 
 const mapStateToProps = (state) => ({
+    termsAlertStripeIsVisible: state.user.termsAlertStripeIsVisible,
     userAlertStripeIsVisible: state.user.userAlertStripeIsVisible,
     userAlertStripeMode: state.user.userAlertStripeMode
 });
