@@ -1,3 +1,6 @@
+## RELEASE - 0.77.564-051859b
+#### New in this release: 
++ 2019-03-13 [PAM-2912]: Oppdaterer visning av geografi Intil videre: hvis properties.location finnes vises denne. Hvis ikke vises en kommaseparert liste av alle locations.
 ## RELEASE - 0.76.563-15d4443
 #### New in this release: 
 + 2019-03-12 [PAM-2789] Specify time zone for date ranges
