@@ -95,7 +95,9 @@ class Search extends React.Component {
                                     <Column xs="12" md="4">
                                         <div className="Search__main__left">
                                             <div className="Search__main__left__save-search">
-                                                <SaveSearchButton />
+                                                <div className="Search__main__left__save-search__SaveSearchButton">
+                                                    <SaveSearchButton />
+                                                </div>
                                                 <FlatButton
                                                     mini
                                                     onClick={this.onResetSearchClick}
@@ -129,6 +131,9 @@ class Search extends React.Component {
                                                     <CurrentSavedSearch />
                                                 </div>
                                                 <div className="Search__main__center__header__right">
+                                                    <div className="Search__main__center__header__right__SaveSearchButton">
+                                                        <SaveSearchButton />
+                                                    </div>
                                                     <Sorting />
                                                 </div>
                                             </div>
