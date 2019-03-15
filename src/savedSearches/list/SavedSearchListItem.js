@@ -4,9 +4,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { FlatButton, LinkButton } from '../../common/button';
 import '../../common/Icons.less';
-import { FlatButton } from '../../common/button';
-import Lenkeknapp from '../../common/Lenkeknapp';
 import { CONTEXT_PATH } from '../../fasitProperties';
 import { formatISOString, isValidISOString } from '../../utils';
 import NotifyTypeEnum from '../enums/NotifyTypeEnum';
@@ -70,14 +69,14 @@ class SavedSearchListItem extends React.Component {
                         )}
                     </div>
                     <div className="SavedSearchListItem__bottom">
-                        <Lenkeknapp onClick={this.onChangeClick} className="Edit">
+                        <LinkButton onClick={this.onChangeClick} className="Edit">
                             <i className="Edit__icon" />
                             Endre
-                        </Lenkeknapp>
-                        <Lenkeknapp onClick={this.onRemoveClick} className="Delete">
+                        </LinkButton>
+                        <LinkButton onClick={this.onRemoveClick} className="Delete">
                             <i className="Delete__icon" />
                             Slett
-                        </Lenkeknapp>
+                        </LinkButton>
                     </div>
                 </div>
                 {savedSearch.status === SavedSearchStatusEnum.INACTIVE &&

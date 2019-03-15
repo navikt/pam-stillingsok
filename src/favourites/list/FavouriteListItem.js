@@ -1,12 +1,12 @@
+import classNames from 'classnames';
+import AlertStripe from 'nav-frontend-alertstriper';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import AlertStripe from 'nav-frontend-alertstriper';
-import classNames from 'classnames';
-import Lenkeknapp from '../../common/Lenkeknapp';
+import { LinkButton } from '../../common/button/';
+import '../../common/Icons.less';
 import SearchResultsItemDetails from '../../search/searchResults/SearchResultsItemDetails';
 import { SHOW_MODAL_REMOVE_FROM_FAVOURITES } from '../favouritesReducer';
-import '../../common/Icons.less';
 
 class FavouriteListItem extends React.Component {
     onRemoveClick = () => {
@@ -33,9 +33,9 @@ class FavouriteListItem extends React.Component {
             <div className="FavouriteListItem__wrapper">
                 <div className={classNames('FavouriteListItem', { 'FavouriteListItem--expired': expired })}>
                     <SearchResultsItemDetails stilling={this.toAd(favourite.favouriteAd)} />
-                    <Lenkeknapp onClick={this.onRemoveClick} className="FavouriteListItem__delete Delete" ariaLabel="Slett">
+                    <LinkButton onClick={this.onRemoveClick} className="FavouriteListItem__delete Delete" ariaLabel="Slett">
                         <i className="Delete__icon" />
-                    </Lenkeknapp>
+                    </LinkButton>
                 </div>
                 {expired && (
                     <AlertStripe type="info" solid className="FavouriteListItem__alertstripe">

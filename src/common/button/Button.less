@@ -85,6 +85,37 @@
   }
 }
 
+.Button--link {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  background: none;
+  color: @pinkDarken;
+  text-decoration: none;
+  cursor: pointer;
+  line-height:inherit;
+  font-weight: normal;
+  letter-spacing: normal;
+  border-radius: 0;
+
+  &:hover {
+    background: none;
+    color: @pinkDarken;
+  }
+
+  &:focus {
+    background: none;
+    box-shadow: 0 0 0 2px @orangeFocus;
+    color: @pinkDarken;
+  }
+
+  &:active {
+    background: none;
+    color: @pinkDarken;
+  }
+}
+
+
 .Button--disabled {
   background-color: #ffffff;
   border-color: @gray4;

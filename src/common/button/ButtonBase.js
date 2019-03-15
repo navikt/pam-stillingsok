@@ -16,6 +16,7 @@ export default function Button(props) {
             className={classNames('Button', 'typo-normal', className, {
                 'Button--primary': type === 'primary',
                 'Button--flat': type === 'flat',
+                'Button--link': type === 'link',
                 'Button--mini': mini,
                 'Button--disabled': disabled
             })}
@@ -46,7 +47,7 @@ Button.propTypes = {
     onClick: PropTypes.func,
     className: PropTypes.string,
     htmlType: PropTypes.oneOf(['submit', 'button', 'reset']),
-    type: PropTypes.oneOf(['primary', 'flat', 'secondary']),
+    type: PropTypes.oneOf(['primary', 'flat', 'secondary', 'link']),
     mini: PropTypes.bool,
     disabled: PropTypes.bool,
     spinner: PropTypes.bool
