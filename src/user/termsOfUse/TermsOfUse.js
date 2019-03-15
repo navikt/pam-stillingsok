@@ -84,9 +84,6 @@ const TermsOfUse = withRouter(({
                     </div>
 
                     <div className="TermsOfUse__section">
-                        <button className="TermsOfUse__link-button" onClick={showFullTermsOfUse}>
-                            Se hele samtykke-teksten
-                        </button>
                         <Normaltekst>
                             Du kan trekke samtykket hvis du ikke lenger ønsker å bruke innloggede tjenestene.
                             Dette kan du gjøre under innstillinger.
