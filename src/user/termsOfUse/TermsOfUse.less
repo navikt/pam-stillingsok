@@ -1,4 +1,11 @@
 @import "../../variables";
+@import "../../common/link/mixins";
+
+.TermsOfUse__main  {
+  max-width: 475px;
+  margin: 0 auto;
+  padding: 2rem;
+}
 
 .TermsOfUse__error {
   margin-bottom: 2rem;
@@ -8,8 +15,12 @@
   margin-bottom: 1.25rem;
 }
 
+.TermsOfUse__intro {
+  margin-bottom: 1.5rem;
+}
+
 .TermsOfUse__section {
-  margin-bottom: 2rem;
+  margin: 2rem 0;
 }
 
 .TermsOfUse__section--email {
@@ -34,6 +45,15 @@
   justify-content: center;
 }
 
+.TermsOfUse__link-button {
+  background: none;
+  padding: 0;
+  border: 0;
+  margin: 0 0 1rem;
+
+  .link();
+}
+
 @media (max-width: @screen-xs-max) {
   .TermsOfUse {
     padding: @modal-padding-mobile;
@@ -49,4 +69,17 @@
     margin-right: @button-marginRight;
   }
 }
+
+.TermsOfUse__modal {
+  max-width: 640px;
+  padding: @modal-padding;
+  @media (max-width: @screen-xs-max) {
+      padding: @modal-padding-mobile;
+  }
+}
+
+.TermsOfUse__modal__text {
+  margin-bottom: 2.5rem;
+}
+
 

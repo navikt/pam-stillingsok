@@ -57,6 +57,9 @@ export const REMOVE_VALIDATION_ERROR = 'REMOVE_VALIDATION_ERROR';
 
 export const SET_EMAIL_FROM_SAVED_SEARCH = 'SET_EMAIL_FROM_SAVED_SEARCH';
 
+export const SHOW_FULL_TERMS_OF_USE = 'SHOW_FULL_TERMS_OF_USE';
+export const HIDE_FULL_TERMS_OF_USE = 'HIDE_FULL_TERMS_OF_USE';
+
 const initialState = {
     user: undefined,
     isFetchingUser: false,
@@ -69,7 +72,8 @@ const initialState = {
     validation: {},
     termsOfUse: undefined,
     isFetchingTermsOfUse: false,
-    termsAlertStripeIsVisible: false
+    termsAlertStripeIsVisible: false,
+    isFullTermsOfUseVisible: false
 };
 
 export default function authorizationReducer(state = initialState, action) {
@@ -216,6 +220,18 @@ export default function authorizationReducer(state = initialState, action) {
                 ...state,
                 termsAlertStripeIsVisible: false
             };
+        case SHOW_FULL_TERMS_OF_USE: {
+            return {
+                ...state,
+                isFullTermsOfUseVisible: true
+            };
+        }
+        case HIDE_FULL_TERMS_OF_USE: {
+            return {
+                ...state,
+                isFullTermsOfUseVisible: false
+            };
+        }
         default:
             return state;
     }
