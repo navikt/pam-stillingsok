@@ -17,7 +17,7 @@ export default function SearchResultsItemDetails({ stilling }) {
     } else {
         frist = 'Ikke oppgitt';
     }
-    const location = getWorkLocation(stilling, true);
+    const location = getWorkLocation(stilling.properties.location, stilling.locationList);
     const employer = getEmployer(stilling);
 
     return (
@@ -72,6 +72,7 @@ SearchResultsItemDetails.propTypes = {
             jobtitle: PropTypes.string,
             location: PropTypes.string,
             applicationdue: PropTypes.string
-        })
+        }),
+        locationList: PropTypes.arrayOf(PropTypes.object)
     }).isRequired
 };
