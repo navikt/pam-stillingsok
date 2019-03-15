@@ -75,19 +75,17 @@ class Stilling extends React.Component {
                     <article className="Stilling">
                         <header className="Stilling__header">
                             <Container>
-                                <Row className="Stilling__header__button-row">
-                                    <Column xs="6">
+                                <Row>
+                                    <div className="Stilling__header__button-row">
                                         <Link
                                             to={`${urlFromSessionStorageOrIndex()}`}
-                                            className="Stilling__header__button-row__back PageHeader__back typo-normal link no-print"
+                                            className="Stilling__header__button-row__back PageHeader__back link no-print"
                                         >
                                             <Chevron type="venstre" className="PageHeader__back__chevron" />
                                             <span className="PageHeader__back__text">
-                                                Til stillingssøk
+                                            Til stillingssøk
                                             </span>
                                         </Link>
-                                    </Column>
-                                    <Column xs="6">
                                         <div className="Stilling__header__favourite">
                                             {isFetchingStilling && cachedStilling && (
                                                 <ToggleFavouriteButton uuid={cachedStilling.uuid} />
@@ -100,10 +98,10 @@ class Stilling extends React.Component {
                                                 className="StillingSubMenu__print"
                                                 onClick={this.onPrintClick}
                                             >
-                                                Skriv ut
+                                            Skriv ut
                                             </FlatButton>
                                         </div>
-                                    </Column>
+                                    </div>
                                 </Row>
                                 <Row>
                                     <Column xs="12" md="8">
@@ -114,16 +112,20 @@ class Stilling extends React.Component {
                                             <AdTitle
                                                 title={cachedStilling.title}
                                                 employer={getEmployer(cachedStilling)}
-                                                location={getWorkLocation(cachedStilling.properties.location,
-                                                  cachedStilling.locationList)}
+                                                location={getWorkLocation(
+                                                    cachedStilling.properties.location,
+                                                    cachedStilling.locationList
+                                                )}
                                             />
                                         )}
                                         {!isFetchingStilling && stilling && (
                                             <AdTitle
                                                 title={stilling._source.title}
                                                 employer={getEmployer(stilling._source)}
-                                                location={getWorkLocation(stilling._source.properties.location,
-                                                    stilling._source.locationList)}
+                                                location={getWorkLocation(
+                                                    stilling._source.properties.location,
+                                                    stilling._source.locationList
+                                                )}
                                             />
                                         )}
                                     </Column>

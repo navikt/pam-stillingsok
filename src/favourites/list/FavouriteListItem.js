@@ -33,7 +33,7 @@ class FavouriteListItem extends React.Component {
             <div className="FavouriteListItem__wrapper">
                 <div className={classNames('FavouriteListItem', { 'FavouriteListItem--expired': expired })}>
                     <SearchResultsItemDetails stilling={this.toAd(favourite.favouriteAd)} />
-                    <LinkButton onClick={this.onRemoveClick} className="FavouriteListItem__delete Delete" ariaLabel="Slett">
+                    <LinkButton onClick={this.onRemoveClick} className="FavouriteListItem__delete Delete" aria-label="Slett">
                         <i className="Delete__icon" />
                     </LinkButton>
                 </div>
