@@ -22,7 +22,7 @@ class SavedSearchesExpandItem extends React.Component {
         const { savedSearch } = this.props;
         return (
             <li className="SavedSearchesExpandItem">
-                <a href="#" className="lenke typo-normal" onClick={this.onTitleClick}>
+                <a href="#" className="link" onClick={this.onTitleClick}>
                     {savedSearch.title}
                 </a>
             </li>

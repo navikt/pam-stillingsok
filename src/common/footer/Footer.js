@@ -30,7 +30,7 @@ const Footer = ({ useInternalLinks }) => (
         <div className="Footer__inner">
             <p className="Footer__slogan">Alt av arbeid på ett sted.</p>
             <nav className="Footer__links">
-                <a className="Footer__logo lenke" href="https://www.nav.no/Forsiden" title="Gå til nav.no">
+                <a className="Footer__logo link" href="https://www.nav.no/Forsiden" title="Gå til nav.no">
                     <i className="Footer__logo__nav-icon" aria-label="NAV logo" />
                 </a>
                 <ul className="Footer__links__ul">

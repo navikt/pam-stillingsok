@@ -49,7 +49,7 @@ class SavedSearchListItem extends React.Component {
                             <div className="SavedSearchListItem__title">
                                 <Normaltekst tag="h3">
                                     <Link
-                                        className="lenke"
+                                        className="link"
                                         to={`${CONTEXT_PATH}/${savedSearch.searchQuery}&saved=${savedSearch.uuid}`}
                                         onClick={this.onTitleClick}
                                     >

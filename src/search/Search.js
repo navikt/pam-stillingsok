@@ -142,7 +142,7 @@ class Search extends React.Component {
                                     </Column>
                                 </Row>
                                 <div className="Search__main__tiltoppen">
-                                    <a href="#top" className="lenke typo-normal">Til toppen</a>
+                                    <a href="#top" className="link">Til toppen</a>
                                 </div>
                             </div>
                         </RestoreScroll>

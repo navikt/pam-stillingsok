@@ -11,7 +11,7 @@ export default function NotFound() {
                     <strong>Vi fant ikke stillingsannonsen.</strong> Den kan være utløpt eller avpublisert.
                 </p>
                 <p>
-                    <Link to="/" className="typo-normal lenke no-print">
+                    <Link to="/" className="typo-normal link no-print">
                         Gå til stillingssøk
                     </Link>
                 </p>

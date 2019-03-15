@@ -53,7 +53,7 @@ export default function HowToApply({ source, properties }) {
 
                             {finn &&
                             <Undertekst className="blokk-xs"> Denne annonsen er hentet fra{' '}
-                                <a href="https://www.finn.no" className="lenke">FINN.no</a>. Du kan sende søknad via
+                                <a href="https://www.finn.no" className="link">FINN.no</a>. Du kan sende søknad via
                                 den opprinnelige annonsen.
                             </Undertekst>
                             }

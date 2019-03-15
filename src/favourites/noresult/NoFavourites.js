@@ -10,7 +10,7 @@ export default function NoFavourites() {
             <Normaltekst className="NoFavourites__message">
                 Klikk på stjernen når du ser en stilling du ønsker å ta vare på.
             </Normaltekst>
-            <Link to="/" className="lenke typo-normal">Finn favoritter</Link>
+            <Link to="/" className="link">Finn favoritter</Link>
         </div>
     );
 }

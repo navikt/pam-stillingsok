@@ -93,7 +93,7 @@ class UserSettings extends React.Component {
                                                     e-postadressen din. Den vil bare bli brukt til dette formålet.
                                                     <br /><br />
                                                     Hvis du ikke ønsker å motta e-postvarsling kan du skru den
-                                                    av under <Link to={`${CONTEXT_PATH}/lagrede-sok`} className="lenke">
+                                                    av under <Link to={`${CONTEXT_PATH}/lagrede-sok`} className="link">
                                                     lagrede søk
                                                     </Link> eller slette e-postadressen.
                                                 </Normaltekst>

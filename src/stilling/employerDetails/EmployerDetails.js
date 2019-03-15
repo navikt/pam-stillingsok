@@ -29,7 +29,7 @@ export default function EmployerDetails({ stilling }) {
                             {isValidUrl(properties.employerhomepage) ? (
                                 <a
                                     href={properties.employerhomepage}
-                                    className="lenke"
+                                    className="link"
                                 >
                                     {properties.employerhomepage}
                                 </a>)
@@ -43,7 +43,7 @@ export default function EmployerDetails({ stilling }) {
                             {isValidUrl(properties.linkedinpage) ? (
                                 <a
                                     href={properties.linkedinpage}
-                                    className="lenke"
+                                    className="link"
                                 >
                                     {properties.linkedinpage}
                                 </a>)
@@ -57,7 +57,7 @@ export default function EmployerDetails({ stilling }) {
                             {isValidUrl(properties.twitteraddress) ? (
                                 <a
                                     href={properties.twitteraddress}
-                                    className="lenke"
+                                    className="link"
                                 >
                                     {properties.twitteraddress}
                                 </a>)
@@ -71,7 +71,7 @@ export default function EmployerDetails({ stilling }) {
                             {isValidUrl(properties.facebookpage) ? (
                                 <a
                                     href={properties.facebookpage}
-                                    className="lenke"
+                                    className="link"
                                 >
                                     {properties.facebookpage}
                                 </a>)

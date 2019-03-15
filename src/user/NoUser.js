@@ -27,7 +27,7 @@ class NoUser extends React.Component {
                 >
                     Se samtykke
                 </PrimaryButton>
-                <Link to="/" className="lenke typo-normal">
+                <Link to="/" className="link">
                     Fortsett uten å samtykke
                 </Link>
             </div>

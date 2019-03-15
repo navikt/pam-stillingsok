@@ -1,13 +1,6 @@
 @import "../../variables";
+@import "./mixins";
 
 .link {
-  color: @pinkDarken;
-
-  &:hover, &:active {
-    color: @pink;
-  }
-
-  &:focus {
-    background: @orangeFocus;
-  }
+  .link();
 }

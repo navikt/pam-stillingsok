@@ -13,7 +13,7 @@ export default function NoSavedSearches({ showButton }) {
                 Du kan deretter lagre søket og motta e-postvarsler med nye treff.
             </Normaltekst>
             {showButton && (
-                <Link to="/" className="lenke typo-normal">Søk etter stillinger</Link>
+                <Link to="/" className="link">Søk etter stillinger</Link>
             )}
         </div>
     );
