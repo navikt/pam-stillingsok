@@ -94,12 +94,12 @@ class ShowResultsButton extends React.Component {
                         </div>
                         <div>
                             {this.props.searchResults && this.state.showGoToResults && (
-                                <a href="#treff" className="Button Button--mini">
+                                <a href="#treff" className="PAMButton PAMButton--mini">
                                     Vis treff
                                 </a>
                             )}
                             {this.props.searchResults && this.state.showGoToSearch && (
-                                <a href="#top" className="Button Button--mini">
+                                <a href="#top" className="PAMButton PAMButton--mini">
                                     Endre søk
                                 </a>
                             )}
