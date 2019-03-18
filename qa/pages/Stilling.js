@@ -17,6 +17,6 @@ module.exports = {
 };
 
 function detailSectionElement(section,text){
-    return '//h2[contains(text(), "' + section + '")]//following-sibling::dl//dd[contains(text(), "' + text + '")]';
+    return '//h2[contains(text(), "' + section + '")]//following-sibling::div//dl//dd[contains(text(), "' + text + '")]';
 }
 
