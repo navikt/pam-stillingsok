@@ -1,7 +1,7 @@
-import { Flatknapp } from 'nav-frontend-knapper';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
+import { FlatButton } from '../../common/button';
 import { ADD_TO_FAVOURITES, REMOVE_FROM_FAVOURITES } from '../favouritesReducer';
 import './ToggleFavouriteButton.less';
 
@@ -26,10 +26,11 @@ class ToggleFavouriteButton extends React.Component {
 
         if (isFavourite) {
             return (
-                <Flatknapp
+                <FlatButton
                     mini
                     aria-label="Fjern favoritt"
                     onClick={this.onRemoveFromFavouritesClick}
+                    className="ToggleFavouriteButton"
                 >
                     <div className="ToggleFavouriteButton__flex">
                         <i className="ToggleFavouriteButton__star ToggleFavouriteButton__star--active" />
@@ -37,14 +38,15 @@ class ToggleFavouriteButton extends React.Component {
                             Slett favoritt
                         </span>
                     </div>
-                </Flatknapp>
+                </FlatButton>
             );
         }
         return (
-            <Flatknapp
+            <FlatButton
                 mini
                 aria-label="Lagre favoritt"
                 onClick={this.onAddToFavouritesClick}
+                className="ToggleFavouriteButton"
             >
                 <div className="ToggleFavouriteButton__flex">
                     <i className="ToggleFavouriteButton__star" />
@@ -52,7 +54,7 @@ class ToggleFavouriteButton extends React.Component {
                     Lagre favoritt
                     </span>
                 </div>
-            </Flatknapp>
+            </FlatButton>
         );
     }
 }

@@ -1,10 +1,10 @@
 import AlertStripe from 'nav-frontend-alertstriper';
-import { Flatknapp } from 'nav-frontend-knapper';
 import Lukknapp from 'nav-frontend-lukknapp';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import './Error.less';
+import { FlatButton } from '../common/button';
 import { HIDE_ERROR } from './errorReducer';
 
 class Error extends React.Component {
@@ -41,13 +41,13 @@ class Error extends React.Component {
                 {messages.length === 0 && (
                     <div />
                 )}
-                <Flatknapp
+                <FlatButton
                     className="Error__reload"
                     mini
                     onClick={this.onReloadClick}
                 >
                     Last siden på nytt
-                </Flatknapp>
+                </FlatButton>
                 <Lukknapp
                     className="Error__close"
                     hvit

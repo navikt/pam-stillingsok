@@ -1,11 +1,12 @@
+import classNames from 'classnames';
+import AlertStripe from 'nav-frontend-alertstriper';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import AlertStripe from 'nav-frontend-alertstriper';
-import Lenkeknapp from '../../common/Lenkeknapp';
+import { LinkButton } from '../../common/button/';
+import '../../common/Icons.less';
 import SearchResultsItemDetails from '../../search/searchResults/SearchResultsItemDetails';
 import { SHOW_MODAL_REMOVE_FROM_FAVOURITES } from '../favouritesReducer';
-import '../../common/Icons.less';
 
 class FavouriteListItem extends React.Component {
     onRemoveClick = () => {
@@ -26,22 +27,19 @@ class FavouriteListItem extends React.Component {
 
     render() {
         const { favourite } = this.props;
+        const expired = favourite.favouriteAd.title === 'Medarbeider';
+        // const expired = favourite.favouriteAd.status === 'INACTIVE';
         return (
             <div className="FavouriteListItem__wrapper">
-                <div className="FavouriteListItem">
-                    <div className="FavouriteListItem__top">
-                        <SearchResultsItemDetails stilling={this.toAd(favourite.favouriteAd)} />
-                    </div>
-                    <div className="FavouriteListItem__bottom">
-                        <Lenkeknapp onClick={this.onRemoveClick} className="Delete">
-                            <i className="Delete__icon" />
-                            Slett
-                        </Lenkeknapp>
-                    </div>
+                <div className={classNames('FavouriteListItem', { 'FavouriteListItem--expired': expired })}>
+                    <SearchResultsItemDetails stilling={this.toAd(favourite.favouriteAd)} />
+                    <LinkButton onClick={this.onRemoveClick} className="FavouriteListItem__delete Delete" aria-label="Slett">
+                        <i className="Delete__icon" />
+                    </LinkButton>
                 </div>
-                {favourite.favouriteAd.status === 'INACTIVE' && (
+                {expired && (
                     <AlertStripe type="info" solid className="FavouriteListItem__alertstripe">
-                        Stillingsannonsen er inaktiv
+                        Denne annonsen er utløpt
                     </AlertStripe>
                 )}
             </div>

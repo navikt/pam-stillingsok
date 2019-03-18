@@ -1,14 +1,17 @@
 /* eslint-disable no-underscore-dangle */
 import Chevron from 'nav-frontend-chevron';
 import { Column, Container, Row } from 'nav-frontend-grid';
-import { Flatknapp } from 'nav-frontend-knapper';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { FlatButton } from '../common/button';
+import getEmployer from '../common/getEmployer';
+import getWorkLocation from '../common/getWorkLocation';
 import { CONTEXT_PATH } from '../fasitProperties';
 import FavouriteAlertStripe from '../favourites/alertstripe/FavouriteAlertStripe';
 import ToggleFavouriteButton from '../favourites/toggleFavoriteButton/ToggleFavouriteButton';
+import { urlFromSessionStorageOrIndex } from '../urlReducer';
 import AdDetails from './adDetails/AdDetails';
 import AdText from './adText/AdText';
 import AdTitle from './adTitle/AdTitle';
@@ -24,9 +27,6 @@ import PersonalAttributes from './requirements/PersonalAttributes';
 import SoftRequirements from './requirements/SoftRequirements';
 import './Stilling.less';
 import { FETCH_STILLING_BEGIN } from './stillingReducer';
-import { urlFromSessionStorageOrIndex } from '../urlReducer';
-import getWorkLocation from '../common/getWorkLocation';
-import getEmployer from '../common/getEmployer';
 
 class Stilling extends React.Component {
     constructor(props) {
@@ -76,19 +76,34 @@ class Stilling extends React.Component {
                         <header className="Stilling__header">
                             <Container>
                                 <Row>
-                                    <Column xs="12">
-                                        <div className="blokk-s">
-                                            <Link
-                                                to={`${urlFromSessionStorageOrIndex()}`}
-                                                className="PageHeader__back typo-normal lenke no-print"
+                                    <div className="Stilling__header__button-row">
+                                        <Link
+                                            to={`${urlFromSessionStorageOrIndex()}`}
+                                            className="Stilling__header__button-row__back PageHeader__back link no-print"
+                                        >
+                                            <Chevron type="venstre" className="PageHeader__back__chevron" />
+                                            <span className="PageHeader__back__text">
+                                            Til stillingssøk
+                                            </span>
+                                        </Link>
+                                        <div className="Stilling__header__favourite">
+                                            {isFetchingStilling && cachedStilling && (
+                                                <ToggleFavouriteButton uuid={cachedStilling.uuid} />
+                                            )}
+                                            {!isFetchingStilling && stilling && (
+                                                <ToggleFavouriteButton uuid={stilling._id} />
+                                            )}
+                                            <FlatButton
+                                                mini
+                                                className="StillingSubMenu__print"
+                                                onClick={this.onPrintClick}
                                             >
-                                                <Chevron type="venstre" className="PageHeader__back__chevron" />
-                                                <span className="PageHeader__back__text">
-                                                    Til stillingssøk
-                                                </span>
-                                            </Link>
+                                            Skriv ut
+                                            </FlatButton>
                                         </div>
-                                    </Column>
+                                    </div>
+                                </Row>
+                                <Row>
                                     <Column xs="12" md="8">
                                         {!isFetchingStilling && stilling && stilling._source.status === 'INACTIVE' && (
                                             <Expired />
@@ -97,35 +112,22 @@ class Stilling extends React.Component {
                                             <AdTitle
                                                 title={cachedStilling.title}
                                                 employer={getEmployer(cachedStilling)}
-                                                location={getWorkLocation(cachedStilling.properties.location,
-                                                  cachedStilling.locationList)}
+                                                location={getWorkLocation(
+                                                    cachedStilling.properties.location,
+                                                    cachedStilling.locationList
+                                                )}
                                             />
                                         )}
                                         {!isFetchingStilling && stilling && (
                                             <AdTitle
                                                 title={stilling._source.title}
                                                 employer={getEmployer(stilling._source)}
-                                                location={getWorkLocation(stilling._source.properties.location,
-                                                    stilling._source.locationList)}
+                                                location={getWorkLocation(
+                                                    stilling._source.properties.location,
+                                                    stilling._source.locationList
+                                                )}
                                             />
                                         )}
-                                    </Column>
-                                    <Column xs="12" md="4">
-                                        <div className="Stilling__header__favourite">
-                                            {isFetchingStilling && cachedStilling && (
-                                                <ToggleFavouriteButton uuid={cachedStilling.uuid} />
-                                            )}
-                                            {!isFetchingStilling && stilling && (
-                                                <ToggleFavouriteButton uuid={stilling._id} />
-                                            )}
-                                            <Flatknapp
-                                                mini
-                                                className="StillingSubMenu__print"
-                                                onClick={this.onPrintClick}
-                                            >
-                                                Skriv ut
-                                            </Flatknapp>
-                                        </div>
                                     </Column>
                                 </Row>
                             </Container>
@@ -133,9 +135,10 @@ class Stilling extends React.Component {
                         {isFetchingStilling && (
                             <Container className="Stilling__main">
                                 <Row>
-                                    <Column xs="12" md="8">
+                                    <Column xs="12" md="6">
                                         <Loading />
                                     </Column>
+                                    <Column xs="12" md="2" />
                                     <Column xs="12" md="4">
                                         <Loading spinner={false} />
                                     </Column>
@@ -145,13 +148,13 @@ class Stilling extends React.Component {
                         {!isFetchingStilling && stilling && (
                             <Container className="Stilling__main">
                                 <Row>
-                                    <Column xs="12" md="8">
+                                    <Column xs="12" md="7">
                                         <AdText adText={stilling._source.properties.adtext} />
                                         <HardRequirements stilling={stilling} />
                                         <SoftRequirements stilling={stilling} />
                                         <PersonalAttributes stilling={stilling} />
                                     </Column>
-                                    <Column xs="12" md="4">
+                                    <Column xs="12" md="5" className="Stilling__main__aside">
                                         <HowToApply
                                             source={stilling._source.source}
                                             properties={stilling._source.properties}

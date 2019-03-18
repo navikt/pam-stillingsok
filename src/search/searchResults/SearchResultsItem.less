@@ -2,33 +2,33 @@
 
 .SearchResultItem {
   position: relative;
+
+  &:nth-child(even) {
+    background-color: @even-bgColor;
+  }
+
+  @media (max-width: @screen-sm-max) {
+    margin-left: -16px;
+    margin-right: -16px;
+  }
 }
 
 .SearchResultItem__link {
   display: block;
-  background-color: #fff;
   padding: @list-box-padding;
-  border: 1px solid @border-gray;
-  margin-bottom: @list-box-margin-bottom;
   position: relative;
-  color: @navMorkGra!important;
   text-decoration: none;
+  border: 4px solid transparent;
 
   &:hover {
-    border-color: @navBla;
+    border-color: @greenLighten;
   }
 
-  .SearchResultsItemDetails {
-    margin-right: 2.25rem;
+  &:focus {
+    outline: none;
+    z-index: 1;
+    border-color: @orangeFocus;
   }
-}
-
-.SearchResultItem__link:visited .SearchResultsItemDetails__title {
-    color: @navLilla;
-}
-
-.SearchResultsItemDetails__title {
-  color: @navBla;
 }
 
 @media (max-width: @screen-sm-max) {

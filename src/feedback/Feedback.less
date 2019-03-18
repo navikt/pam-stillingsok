@@ -1,3 +1,5 @@
+@import "../variables";
+
 @media (min-width: 768px) {
   .Feedback {
     position: fixed;
@@ -13,17 +15,17 @@
     -ms-transform: rotate(-90deg);
     -o-transform: rotate(-90deg);
     transform: rotate(-90deg);
-    background: #E5F3EB;
+    background: @greenLighten;
     border-top-left-radius: 0.25rem;
     border-top-right-radius: 0.25rem;
     display: block;
     padding: 0.5rem 1rem;
     text-decoration: none;
-    border: 1px solid #B7B1A9;
+    border: 1px solid @greenDarken;
   }
 
   .Feedback__link:hover {
-    border-color: #0067C5;
+    border-color: @pinkDarken;
   }
 
   .Feedback__link:focus {
@@ -32,7 +34,7 @@
   }
 
   .Feedback__link__inner {
-    color: #3E3832;
+    color: @gray5;
     font-family: 'Source Sans Pro', Arial, sans-serif;
     font-size: 1rem;
   }
@@ -47,7 +49,7 @@
   }
 
   .Feedback__link {
-    color: #0067C5;
+    color: @pinkDarken;
     text-decoration: none;
     border-bottom: solid 1px #B7B1A9;
   }
@@ -58,6 +60,6 @@
   }
 
   .Feedback__link:hover {
-    border-bottom-color: #0067C5;
+    border-bottom-color: @pinkDarken;
   }
 }

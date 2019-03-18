@@ -27,7 +27,7 @@ server.use(helmet.contentSecurityPolicy({
         defaultSrc: ["'none'"],
         scriptSrc: ["'self'", 'https://www.google-analytics.com'],
         styleSrc: ["'self'"],
-        fontSrc: ["'self'", 'data:'],
+        fontSrc: ["'self'", 'data:', 'https://fonts.gstatic.com'],
         imgSrc: ["'self'", 'data:', 'https://www.google-analytics.com',
             'https://www.nav.no/_public/beta.nav.no/images/logo.png'],
         connectSrc: ["'self'", process.env.PAMADUSER_URL, 'https://www.google-analytics.com']

@@ -1,26 +1,21 @@
-import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
+import AlertStripe from 'nav-frontend-alertstriper';
+import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import AlertStripe from 'nav-frontend-alertstriper';
-import { Flatknapp } from 'nav-frontend-knapper';
-import Lenkeknapp from '../../common/Lenkeknapp';
+import { FlatButton, LinkButton } from '../../common/button';
+import '../../common/Icons.less';
 import { CONTEXT_PATH } from '../../fasitProperties';
 import { formatISOString, isValidISOString } from '../../utils';
 import NotifyTypeEnum from '../enums/NotifyTypeEnum';
 import SavedSearchStatusEnum from '../enums/SavedSearchStatusEnum';
-import {
-    SavedSearchFormMode,
-    SET_FORM_DATA,
-    SHOW_SAVED_SEARCH_FORM
-} from '../form/savedSearchFormReducer';
+import { SavedSearchFormMode, SET_FORM_DATA, SHOW_SAVED_SEARCH_FORM } from '../form/savedSearchFormReducer';
 import {
     SET_CURRENT_SAVED_SEARCH,
     SHOW_CONFIRM_REMOVE_SAVED_SEARCH_MODAL,
     UPDATE_SAVED_SEARCH
 } from '../savedSearchesReducer';
-import '../../common/Icons.less';
 
 class SavedSearchListItem extends React.Component {
     onChangeClick = () => {
@@ -51,15 +46,15 @@ class SavedSearchListItem extends React.Component {
                     <div className="SavedSearchListItem__top">
                         <div className="SavedSearchListItem__top_flex">
                             <div className="SavedSearchListItem__title">
-                                <Element tag="h3">
+                                <Normaltekst tag="h3">
                                     <Link
-                                        className="lenke"
+                                        className="link"
                                         to={`${CONTEXT_PATH}/${savedSearch.searchQuery}&saved=${savedSearch.uuid}`}
                                         onClick={this.onTitleClick}
                                     >
                                         {savedSearch.title}
                                     </Link>
-                                </Element>
+                                </Normaltekst>
                             </div>
                             {isValidISOString(savedSearch.updated) && (
                                 <Undertekst className="SavedSearchListItem__created">
@@ -74,27 +69,27 @@ class SavedSearchListItem extends React.Component {
                         )}
                     </div>
                     <div className="SavedSearchListItem__bottom">
-                        <Lenkeknapp onClick={this.onChangeClick} className="Edit">
+                        <LinkButton onClick={this.onChangeClick} className="Edit">
                             <i className="Edit__icon" />
                             Endre
-                        </Lenkeknapp>
-                        <Lenkeknapp onClick={this.onRemoveClick} className="Delete">
+                        </LinkButton>
+                        <LinkButton onClick={this.onRemoveClick} className="Delete">
                             <i className="Delete__icon" />
                             Slett
-                        </Lenkeknapp>
+                        </LinkButton>
                     </div>
                 </div>
                 {savedSearch.status === SavedSearchStatusEnum.INACTIVE &&
                     savedSearch.notifyType === NotifyTypeEnum.EMAIL && (
                         <AlertStripe type="info" solid className="SavedSearchListItem__alertstripe">
                             Ditt varsel for dette søket har gått ut
-                            <Flatknapp
+                            <FlatButton
                                 className="SavedSearchListItem__button-alertstripe"
                                 onClick={this.onExtendDurationClick}
                                 mini
                             >
                                 Start ny varsling
-                            </Flatknapp>
+                            </FlatButton>
                         </AlertStripe>
                     )}
             </div>

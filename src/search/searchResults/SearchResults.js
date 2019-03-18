@@ -3,13 +3,12 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import DelayedSpinner from '../loading/DelayedSpinner';
 import SearchResultItem from './SearchResultsItem';
-import SearchResultsItemCompact from './SearchResultsItemCompact';
 import Pagination from '../pagination/Pagination';
 import NoResults from '../noResults/NoResults';
 import { PAGE_SIZE } from '../searchReducer';
 import './SearchResults.less';
 
-const SearchResults = ({ searchResult, isSearching, page, mode }) => {
+const SearchResults = ({ searchResult, isSearching, page }) => {
     if (searchResult) {
         const { stillinger, total } = searchResult;
         const totalPages = total / PAGE_SIZE;
@@ -18,15 +17,8 @@ const SearchResults = ({ searchResult, isSearching, page, mode }) => {
         return (
             <div role="region" className="SearchResults">
                 <div>
-                    {mode !== 'compact' && stillinger && stillinger.map((stilling) => (
+                    {stillinger && stillinger.map((stilling) => (
                         <SearchResultItem
-                            key={stilling.uuid}
-                            stilling={stilling}
-                        />
-                    ))}
-
-                    {mode === 'compact' && stillinger && stillinger.map((stilling) => (
-                        <SearchResultsItemCompact
                             key={stilling.uuid}
                             stilling={stilling}
                         />
@@ -75,15 +67,13 @@ SearchResults.propTypes = {
         total: PropTypes.number
     }),
     isSearching: PropTypes.bool.isRequired,
-    page: PropTypes.number.isRequired,
-    mode: PropTypes.string.isRequired
+    page: PropTypes.number.isRequired
 };
 
 const mapStateToProps = (state) => ({
     isSearching: state.search.isSearching,
     searchResult: state.search.searchResult,
-    page: state.search.page,
-    mode: state.viewMode.mode
+    page: state.search.page
 });
 
 export default connect(mapStateToProps)(SearchResults);

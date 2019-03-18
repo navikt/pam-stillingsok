@@ -1,7 +1,7 @@
 module.exports = {
     elements : {
         stillingsTekst: '.AdText',
-        stillingsTittel: '.typo-innholdstittel',
+        stillingsTittel: '.StillingsTitle__title',
         detaljer: '.detail-section'
     },
 

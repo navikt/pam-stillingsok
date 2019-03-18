@@ -2,13 +2,13 @@
 
 .PageHeader {
     width: 100%;
-    background-color: @background-green;
-    margin-bottom: @site-header-margin-bottom;
+    background-color: @gray2;
+    margin-bottom: 2.5rem;
 }
 
 @media (min-width: @screen-sm-min) {
     .PageHeader {
-        height: @site-header-height;
+        height: 10rem;
         display: flex;
         align-items: center;
     }
@@ -55,14 +55,16 @@
     border-bottom: 0!important;
 }
 
-.PageHeader__back:hover .PageHeader__back__text {
-    border-bottom: 1px solid @navBla;
-}
-
 .PageHeader__back__chevron {
     margin-top: -3px;
 }
 
 .PageHeader__title {
     text-align: center;
+    color: @darkBlue;
+    font-family: 'Source Sans Pro', Arial, sans-serif;
+    font-size: 3.125rem;
+    font-weight: 300;
+    line-height: 0.88;
+    margin: 0;
 }

@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Knapp } from 'nav-frontend-knapper';
 import Typeahead from './Typeahead';
 import { SEARCH } from '../searchReducer';
 import { FETCH_SUGGESTIONS, SET_VALUE } from './searchBoxReducer';
@@ -43,13 +42,12 @@ class SearchBox extends React.Component {
                         suggestions={this.props.suggestions}
                         value={this.props.value ? this.props.value : ''}
                     />
-                    <Knapp
-                        mini
+                    <button
                         type="submit"
                         className="SearchBox__button"
                     >
                         <i aria-label="Søk" className="SearchBox__button__icon" />
-                    </Knapp>
+                    </button>
                 </div>
             </div>
         );
