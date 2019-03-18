@@ -1,6 +1,6 @@
 @import "../../variables";
 
-.Button {
+.PAMButton {
   background: #fff;
   border: 2px solid @pinkDarken;
   border-radius: 5rem;
@@ -43,7 +43,7 @@
   }
 }
 
-.Button--primary {
+.PAMButton--primary {
   background-color: @pinkDarken;
   border-color: @pinkDarken;
   color: #fff;
@@ -67,7 +67,7 @@
   }
 }
 
-.Button--flat {
+.PAMButton--flat {
   background-color: transparent;
   border-color: transparent;
   color: @pinkDarken;
@@ -85,7 +85,7 @@
   }
 }
 
-.Button--link {
+.PAMButton--link {
   border: 0;
   margin: 0;
   padding: 0;
@@ -116,7 +116,7 @@
 }
 
 
-.Button--disabled {
+.PAMButton--disabled {
   background-color: #ffffff;
   border-color: @gray4;
   color: @gray4;
@@ -128,12 +128,12 @@
   }
 }
 
-.Button--mini {
+.PAMButton--mini {
   padding-left: 1rem;
   padding-right: 1rem;
 }
 
-.Button__spinner {
+.PAMButton__spinner {
   border: 2px solid #9a9a9a;
   border-left-color: rgba(180, 180, 180, 0.5);
   border-bottom-color: rgba(180, 180, 180, 0.5);
@@ -141,13 +141,13 @@
   height: 0.8em;
   display: inline-block;
   border-radius: 100%;
-  animation: Button__spinnerAnimation 1s infinite linear;
+  animation: PAMButton__spinnerAnimation 1s infinite linear;
   position: relative;
   margin-left: 0.5em;
   top: 0.1em;
 }
 
-@keyframes Button__spinnerAnimation {
+@keyframes PAMButton__spinnerAnimation {
   from {
     transform: rotate(0deg);
   }
