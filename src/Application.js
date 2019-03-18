@@ -13,7 +13,6 @@ import StillingPage from './stilling/Stilling';
 import NotAuthenticatedModal from './authentication/NotAuthenticatedModal';
 import TermsOfUse from './user/TermsOfUse';
 import { FETCH_IS_AUTHENTICATED } from './authentication/authenticationReducer';
-import UserSettings from './user/UserSettings';
 import UserAlertStripe from './user/UserAlertStripe';
 import TopMenu from './common/topMenu/TopMenu';
 
@@ -36,7 +35,6 @@ class Application extends React.Component {
                             <Route path={`${CONTEXT_PATH}/stilling/:uuid`} component={StillingPage} />
                             <Route path={`${CONTEXT_PATH}/favoritter`} component={Favourites} />
                             <Route path={`${CONTEXT_PATH}/lagrede-sok`} component={SavedSearches} />
-                            <Route path={`${CONTEXT_PATH}/innstillinger`} component={UserSettings} />
                             <Route path="*" component={SearchPage} />
                         </Switch>
 

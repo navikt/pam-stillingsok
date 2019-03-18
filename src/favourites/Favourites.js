@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import { Column, Container, Row } from 'nav-frontend-grid';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
@@ -13,7 +14,7 @@ import FavouriteList from './list/FavouriteList';
 import RemoveFavouriteModal from './modal/RemoveFavouriteModal';
 import NoFavourites from './noresult/NoFavourites';
 import { authenticationEnum } from '../authentication/authenticationReducer';
-import {CONTEXT_PATH} from "../fasitProperties";
+import { CONTEXT_PATH } from '../fasitProperties';
 import TotalFavourites from './totalFavourites/TotalFavourutes';
 
 class Favourites extends React.Component {
@@ -26,6 +27,14 @@ class Favourites extends React.Component {
     }
 
     render() {
+        const {
+            favourites,
+            isAuthenticated,
+            isFetchingFavourites,
+            isFetchingUser,
+            totalElements,
+            user
+        } = this.props;
         return (
             <div className="Favourites">
                 <FavouriteAlertStripe />
@@ -34,9 +43,9 @@ class Favourites extends React.Component {
                     title="Favoritter"
                 />
                 <Container className="Favourites__main">
-                    {this.props.isAuthenticated === authenticationEnum.NOT_AUTHENTICATED && (
-                        <div className="UserSettings__main">
-                            <div className="UserSettings__section">
+                    {isAuthenticated === authenticationEnum.NOT_AUTHENTICATED && (
+                        <div className="Favourites__main">
+                            <div className="Favourites__section">
                                 <Row>
                                     <Column xs="12">
                                         <NotAuthenticated title="Du må logge inn for å se dine favoritter" />
@@ -45,9 +54,9 @@ class Favourites extends React.Component {
                             </div>
                         </div>
                     )}
-                    {this.props.isAuthenticated === authenticationEnum.IS_AUTHENTICATED && (
+                    {isAuthenticated === authenticationEnum.IS_AUTHENTICATED && (
                         <div>
-                            {(this.props.isFetchingUser || this.props.isFetchingFavourites) ? (
+                            {(isFetchingUser || isFetchingFavourites) ? (
                                 <Row>
                                     <Column xs="12">
                                         <div className="Favourites__main__spinner">
@@ -57,9 +66,9 @@ class Favourites extends React.Component {
                                 </Row>
                             ) : (
                                 <div>
-                                    {!this.props.user && (
-                                        <div className="UserSettings__main">
-                                            <div className="UserSettings__section">
+                                    {!user && (
+                                        <div className="Favourites__main">
+                                            <div className="Favourites__section">
                                                 <Row>
                                                     <Column xs="12">
                                                         <NoUser />
@@ -69,11 +78,11 @@ class Favourites extends React.Component {
                                         </div>
                                     )}
 
-                                    {this.props.user && (
+                                    {user && (
                                         <Row>
                                             <Column xs="12">
                                                 <div>
-                                                    {this.props.favourites.length === 0 ? (
+                                                    {favourites.length === 0 ? (
                                                         <NoFavourites />
                                                     ) : (
                                                         <div>

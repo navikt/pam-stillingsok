@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import { Column, Container, Row } from 'nav-frontend-grid';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -13,7 +14,7 @@ import SavedSearchList from './list/SavedSearchList';
 import NoSavedSearches from './noresult/NoSavedSearches';
 import './SavedSearches.less';
 import { authenticationEnum } from '../authentication/authenticationReducer';
-import {CONTEXT_PATH} from "../fasitProperties";
+import { CONTEXT_PATH } from '../fasitProperties';
 import TotalSavedSearch from './totalSavedSearch/TotalSavedSearch';
 
 class SavedSearches extends React.Component {
@@ -26,6 +27,14 @@ class SavedSearches extends React.Component {
     }
 
     render() {
+        const {
+            isAuthenticated,
+            isFetching,
+            isFetchingUser,
+            savedSearches,
+            totalElements,
+            user
+        } = this.props;
         return (
             <div className="SavedSearches">
                 <SavedSearchAlertStripe />
@@ -34,9 +43,9 @@ class SavedSearches extends React.Component {
                     title="Lagrede søk"
                 />
                 <Container className="SavedSearches__main">
-                    {this.props.isAuthenticated === authenticationEnum.NOT_AUTHENTICATED && (
-                        <div className="UserSettings__main">
-                            <div className="UserSettings__section">
+                    {isAuthenticated === authenticationEnum.NOT_AUTHENTICATED && (
+                        <div className="SavedSearches__main">
+                            <div className="SavedSearches__section">
                                 <Row>
                                     <Column xs="12">
                                         <NotAuthenticated title="Du må logge inn for å se lagrede søk" />
@@ -45,9 +54,9 @@ class SavedSearches extends React.Component {
                             </div>
                         </div>
                     )}
-                    {this.props.isAuthenticated === authenticationEnum.IS_AUTHENTICATED && (
+                    {isAuthenticated === authenticationEnum.IS_AUTHENTICATED && (
                         <div>
-                            {(this.props.isFetchingUser || this.props.isFetching) ? (
+                            {(isFetchingUser || isFetching) ? (
                                 <Row>
                                     <Column xs="12">
                                         <div className="SavedSearches__main__spinner">
@@ -57,9 +66,9 @@ class SavedSearches extends React.Component {
                                 </Row>
                             ) : (
                                 <div>
-                                    {!this.props.user && (
-                                        <div className="UserSettings__main">
-                                            <div className="UserSettings__section">
+                                    {!user && (
+                                        <div className="SavedSearches__main">
+                                            <div className="SavedSearches__section">
                                                 <Row>
                                                     <Column xs="12">
                                                         <NoUser />
@@ -68,17 +77,16 @@ class SavedSearches extends React.Component {
                                             </div>
                                         </div>
                                     )}
-
-                                    {this.props.user && (
+                                    {user && (
                                         <Row>
                                             <Column xs="12">
-                                                {this.props.isFetching ? (
+                                                {isFetching ? (
                                                     <div className="SavedSearches__main__spinner">
                                                         <DelayedSpinner />
                                                     </div>
                                                 ) : (
                                                     <div>
-                                                        {this.props.savedSearches.length === 0 ? (
+                                                        {savedSearches.length === 0 ? (
                                                             <NoSavedSearches />
                                                         ) : (
                                                             <div>
