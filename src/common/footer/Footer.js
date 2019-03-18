@@ -28,7 +28,7 @@ InternalOrExternalLink.propTypes = {
 const Footer = ({ useInternalLinks }) => (
     <div className="Footer">
         <div className="Footer__inner">
-            <p className="Footer__slogan">Alt av arbeid på ett sted.</p>
+            <p className="Footer__slogan">Arbeidsmarkedet på ett sted</p>
             <nav className="Footer__links">
                 <a className="Footer__logo link" href="https://www.nav.no/Forsiden" title="Gå til nav.no">
                     <i className="Footer__logo__nav-icon" aria-label="NAV logo" />
