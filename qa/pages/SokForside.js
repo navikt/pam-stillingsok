@@ -8,7 +8,7 @@ module.exports = {
             selector: '//*[@id="treff"]/div[2]/div/div[1]/a',
             locateStrategy: 'xpath'
         },
-        searchResultCount:'.SearchResultCount',
+        searchResultCount:'.SearchResultCount__h3__count',
         searchResultCountMobile: '.ShowResultsButton__flex__count',
         searchResultLocation: '.SearchResultsItemDetails__location'
     },
@@ -29,7 +29,7 @@ module.exports = {
 
         searchResultContainsLocation: function(sted) {
             return this.pagePause(2000).getText('@searchResultLocation', function(result) {
-                this.assert.equal(result.value.toLowerCase(), sted.toLowerCase());
+                this.assert.equal(result.value.toLowerCase().includes(sted.toLowerCase()), true);
             });
         },
 

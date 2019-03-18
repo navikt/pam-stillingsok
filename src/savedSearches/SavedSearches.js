@@ -15,6 +15,7 @@ import NoSavedSearches from './noresult/NoSavedSearches';
 import './SavedSearches.less';
 import { authenticationEnum } from '../authentication/authenticationReducer';
 import { CONTEXT_PATH } from '../fasitProperties';
+import TotalSavedSearch from './totalSavedSearch/TotalSavedSearch';
 
 class SavedSearches extends React.Component {
     componentDidMount() {
@@ -39,7 +40,7 @@ class SavedSearches extends React.Component {
                 <SavedSearchAlertStripe />
                 <PageHeader
                     backUrl={`${CONTEXT_PATH}/`}
-                    title={`Lagrede søk ${!isFetching && totalElements > 0 ? `(${totalElements})` : ''}`}
+                    title="Lagrede søk"
                 />
                 <Container className="SavedSearches__main">
                     {isAuthenticated === authenticationEnum.NOT_AUTHENTICATED && (
@@ -88,7 +89,10 @@ class SavedSearches extends React.Component {
                                                         {savedSearches.length === 0 ? (
                                                             <NoSavedSearches />
                                                         ) : (
-                                                            <SavedSearchList />
+                                                            <div>
+                                                                <TotalSavedSearch total={this.props.savedSearches.length} />
+                                                                <SavedSearchList />
+                                                            </div>
                                                         )}
                                                     </div>
                                                 )}

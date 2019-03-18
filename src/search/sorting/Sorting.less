@@ -1,3 +1,5 @@
+@import "../../variables";
+
 .Sorting__Select {
   display: flex;
   align-items: baseline;
@@ -5,7 +7,10 @@
   margin-bottom: 0!important;
 
   .selectContainer select {
-    height: 2.5rem;
+    @media (max-width: @screen-xs-max) {
+      padding-top: 0.25rem;
+      padding-bottom: 0.25rem;
+    }
   }
 }
 

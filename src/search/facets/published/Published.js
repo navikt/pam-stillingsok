@@ -2,7 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Checkbox } from 'nav-frontend-skjema';
+import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import { SEARCH } from '../../searchReducer';
+import { toFacetTitleWithCount } from '../utils';
 import { SET_PUBLISHED } from './publishedReducer';
 import './Published.less';
 
@@ -24,20 +26,28 @@ class Published extends React.Component {
     render() {
         const { published, checkedPublished } = this.props;
         return (
-            <div
+            <Ekspanderbartpanel
+                tittel={toFacetTitleWithCount('Publisert', checkedPublished ? 1 : 0)}
                 className="Published"
+                apen
             >
-                {published && published.map((item) => (
-                    <Checkbox
-                        name="published"
-                        key={item.key}
-                        label={`${PublishedLabelsEnum[item.key]} (${item.count})`}
-                        value={item.key}
-                        onChange={this.onPublishedClick}
-                        checked={checkedPublished === item.key}
-                    />
-                ))}
-            </div>
+                <div
+                    role="group"
+                    aria-label="Publisert"
+                    className="Published__inner"
+                >
+                    {published && published.map((item) => (
+                        <Checkbox
+                            name="published"
+                            key={item.key}
+                            label={`${PublishedLabelsEnum[item.key]} (${item.count})`}
+                            value={item.key}
+                            onChange={this.onPublishedClick}
+                            checked={checkedPublished === item.key}
+                        />
+                    ))}
+                </div>
+            </Ekspanderbartpanel>
         );
     }
 }

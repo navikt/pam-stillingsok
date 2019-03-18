@@ -1,12 +1,57 @@
 @nodeModulesPath: './../../';
 @coreModulePath: './../../';
 @import "../node_modules/nav-frontend-core/less/core";
-@import "../node_modules/nav-frontend-lenker-style/src/lenker-style";
 @import "../node_modules/nav-frontend-paneler-style/src/index";
-@import "../node_modules/nav-frontend-knapper-style/src/index";
 @import "../node_modules/nav-frontend-skjema-style/src/index";
 @import "../node_modules/nav-frontend-grid-style/src/index";
+
+@import "common/link/link";
 @import "variables";
+
+/*
+Source Sans Pro som vi får fra nav-frontend-typografi ser ikke bra ut i noen browsere, feks Chrome i Windows 7 og 10.
+Det finnes allerede et issue på dette: https://github.com/navikt/nav-frontend-moduler/issues/46.
+Som en midlertidig løsning overstyrer vi fonten, ved å laste dem inn fra google fonts.
+*/
+@font-face {
+  font-family: 'Source Sans Pro';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Source Sans Pro Light'), local('SourceSansPro-Light'), url(https://fonts.gstatic.com/s/sourcesanspro/v11/6xKydSBYKcSV-LCoeQqfX1RYOo3ik4zwlxdu.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Source Sans Pro';
+  font-style: italic;
+  font-weight: 400;
+  src: local('Source Sans Pro Italic'), local('SourceSansPro-Italic'), url(https://fonts.gstatic.com/s/sourcesanspro/v10/M2Jd71oPJhLKp0zdtTvoMxgy2Fsj5sj3EzlXpqVXRKo.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;
+}
+
+@font-face {
+  font-family: 'Source Sans Pro';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Source Sans Pro Regular'), local('SourceSansPro-Regular'), url(https://fonts.gstatic.com/s/sourcesanspro/v10/ODelI1aHBYDBqgeIAH2zlNV_2ngZ8dMf8fLgjYEouxg.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;
+}
+
+@font-face {
+  font-family: 'Source Sans Pro';
+  font-style: normal;
+  font-weight: 600;
+  src: local('Source Sans Pro SemiBold'), local('SourceSansPro-SemiBold'), url(https://fonts.gstatic.com/s/sourcesanspro/v10/toadOcfmlt9b38dHJxOBGCOFnW3Jk0f09zW_Yln67Ac.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;
+}
+
+@font-face {
+  font-family: 'Source Sans Pro';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Source Sans Pro Bold'), local('SourceSansPro-Bold'), url(https://fonts.gstatic.com/s/sourcesanspro/v10/toadOcfmlt9b38dHJxOBGEo0As1BFRXtCDhS66znb_k.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;
+}
 
 html, body {
   height: 100%;
@@ -15,8 +60,8 @@ html, body {
 
 body {
   overflow-y: scroll;
-  background: @navLysGra;
-  color: @navMorkGra;
+  background: @body-bg-color;
+  color: @fontColorDarkBlue;
 }
 
 
@@ -30,8 +75,8 @@ body {
 
 .Application__main {
   /* This is the same as the height of the footer */
-  margin-bottom: -177px;
-  padding-bottom: 177px;
+  margin-bottom: -278px;
+  padding-bottom: 278px;
 }
 
 
@@ -39,10 +84,6 @@ body.screen-xs-no-scroll {
   @media (max-width: @screen-xs-max) {
     overflow-y: hidden;
   }
-}
-
-.background--light-green {
-  background-color: @background-green;
 }
 
 input[type=search] {
@@ -58,29 +99,115 @@ input::-ms-clear {
   max-width: 40rem;
 }
 
-.AuthButtons {
-  position: absolute;
-  top: 5px;
-  text-align: right;
-  width: 100%;
 
-  .container {
-    margin: 0 auto;
-  }
+/**
+* Overrides
+*/
 
-  .knapp {
-    background: @navLysGra;
-    color: @navMorkGra;
-    border-color: transparent;
-  }
-
-  .knapp:hover {
-    background: @navBla;
-    color: #fff;
+@media (max-width: @screen-xs-max) {
+  .container{
+    padding-left: 16px;
+    padding-right: 16px;
   }
 }
 
-.knapp--disabled:hover {
-  background: @navGra40;
-  border-color: transparent;
+.ekspanderbartPanel {
+  border-top: 2px solid @darkBlue !important;
 }
+
+.ekspanderbartPanel__hode {
+  border-radius: 0!important;
+  padding-top: 0.5rem;
+
+  .ekspanderbartPanel__heading {
+    color: @fontColorDarkBlue;
+  }
+}
+
+.ekspanderbartPanel--lukket .ekspanderbartPanel__hode:hover {
+  box-shadow: none;
+  background: @gray1;
+}
+
+.ekspanderbartPanel .ekspanderbartPanel__hode:hover .ekspanderbartPanel__heading{
+  color: @pinkDarken;
+}
+
+.ekspanderbartPanel__innhold {
+  padding: 0.25rem 1rem 0;
+
+  @media (min-width: @screen-md-min) {
+    padding: 1rem 1rem 0.5rem;
+    background: @gray2;
+  }
+}
+
+.alertstripe--solid.alertstripe--advarsel {
+  background: @red;
+}
+
+.alertstripe--solid.alertstripe--suksess {
+  background: @blueLighten;
+  font-weight: 600;
+
+}
+
+.alertstripe__link {
+  color: @gray5;
+
+  &:hover, &:active {
+    color: @gray5;
+  }
+
+  &:focus {
+    background: @orangeFocus;
+  }
+}
+
+// Workaround pam-frontend-header 4.0.1
+
+@media (max-width: @screen-xs-max) {
+  .PersonbrukerHeaderMeny {
+    padding-left: 0!important;
+    padding-right: 0!important;
+  }
+}
+
+.Mobilmeny {
+  margin: 0 -1rem;
+}
+
+.Mobilmeny--lenke {
+  padding-left: 1rem!important;
+  padding-right: 1rem!important;
+}
+
+.Mobilmeny--lenke-active {
+  background: @yellow!important;
+}
+
+.PersonbrukerHeaderMeny .Mobilmeny--lenke-active .Mobilmeny--lenke-inner > span {
+  border-color: transparent!important;
+}
+
+.Mobilmeny--chevron {
+  display: none!important;
+}
+
+.Mobilmeny__Button--toggle {
+  margin: 0!important;
+  padding: 0.75rem 1rem!important;
+  flex-direction: column!important;
+  flex-flow: column-reverse!important;
+
+  .Mobilmeny--apne, .Mobilmeny--lukk {
+    margin: 0!important;
+  }
+
+  .Mobilmeny__Text--toggle {
+    text-transform: uppercase!important;
+    font-size: 12px!important;
+    margin-top: 0.125rem!important;
+  }
+}
+

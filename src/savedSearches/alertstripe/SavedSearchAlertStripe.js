@@ -12,7 +12,7 @@ function SavedSearchAlertStripe({
     if (showAlertStripe && (alertStripeMode === SavedSearchAlertStripeMode.ADDED)) {
         return (
             <StickyAlertStripe type="suksess">
-                Søket er lagret i <Link className="lenke" to={`${CONTEXT_PATH}/lagrede-sok`}>Lagrede søk</Link>
+                Søket er lagret i <Link className="alertstripe__link" to={`${CONTEXT_PATH}/lagrede-sok`}>Lagrede søk</Link>
             </StickyAlertStripe>
         );
     } else if (showAlertStripe && alertStripeMode === SavedSearchAlertStripeMode.REMOVED) {

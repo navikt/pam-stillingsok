@@ -21,7 +21,8 @@ function filterPublished(published) {
         filters.push({
                     range: {
                         published: {
-                            gte: published
+                            gte: published,
+                            time_zone: 'CET'
                         }
                     }
         });
@@ -410,9 +411,7 @@ exports.searchTemplate = (query) => {
                 'properties.jobtitle',
                 'properties.location',
                 'properties.applicationdue',
-                'location.city',
-                'location.municipal',
-                'location.country',
+                'locationList',
                 'title',
                 'published',
                 'uuid',
@@ -460,6 +459,7 @@ exports.searchTemplate = (query) => {
                     range: {
                         date_range: {
                             field: 'published',
+                            time_zone: 'CET',
                             ranges: [
                                 {
                                     key: 'now/d',

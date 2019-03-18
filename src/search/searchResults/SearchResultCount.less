@@ -1,11 +1,21 @@
 @import '../../variables';
 
-@media (max-width: @screen-sm-max) {
-  .SearchResultCount {
-    display: none;
-  }
+.SearchResultCount__h3 {
+  margin: 0;
+  font-family: 'Source Sans Pro', Arial, sans-serif;
+  color: @darkBlue;
+  display: flex;
+  align-items: baseline;
+  line-height: 1;
 }
 
-.SearchResultCount__text {
-  font-weight: normal !important;
+.SearchResultCount__h3__numberOfPositions {
+  font-size: 3.125rem;
+  font-weight: bold;
+}
+
+.SearchResultCount__h3__count {
+  font-size: 1rem;
+  font-weight: normal;
+  margin-left: 0.25rem;
 }

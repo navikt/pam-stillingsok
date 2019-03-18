@@ -1,56 +1,54 @@
 @import "../../variables";
 
-
 .SavedSearchesExpand__spinner {
   min-height: 5rem;
   text-align: center;
   margin-top: 1rem;
 }
 
-
 .SavedSearchesExpand__chevron {
-    margin-left: 0.25rem;
+  margin-left: 0.25rem;
 }
 
 .SavedSearchesExpand__button {
-    background: transparent;
-    border: 0;
-    color: @navBla;
-    cursor: pointer;
-    display: inline-block;
-    padding: 2px 2px;
+  background: transparent;
+  border: 0;
+  color: @pinkLighten2;
+  cursor: pointer;
+  display: inline-block;
+  padding: 2px 2px;
 
-    &:focus {
-        box-shadow: 0 0 0 3px @orangeFocus;
-        outline: none;
+  &:focus {
+    box-shadow: 0 0 0 3px @orangeFocus;
+    outline: none;
+  }
+
+  &:hover {
+    .SavedSearchesExpand__chevron[class~='chevron--opp'] {
+      transform: translateY(-0.25rem);
     }
 
-    &:hover {
-        .SavedSearchesExpand__chevron[class~='chevron--opp'] {
-            transform: translateY(-0.25rem);
-        }
-
-        .SavedSearchesExpand__chevron[class~='chevron--ned'] {
-            transform: translateY(0.25rem);
-        }
+    .SavedSearchesExpand__chevron[class~='chevron--ned'] {
+      transform: translateY(0.25rem);
     }
+  }
 }
 
 .SavedSearchesExpand__list {
-    list-style: none;
-    padding: 0;
+  list-style: none;
+  padding: 0;
 }
 
 .SavedSearchesExpand__panel__inner {
   padding: 1rem 1rem 1rem 1rem;
 
-  @media (min-width: @screen-sm-min) {
+  @media (min-width: @screen-md-min) {
     overflow-y: auto;
     max-height: 20rem;
   }
 
-  @media (max-width: @screen-xs-max) {
-      margin-top: 2rem;
+  @media (max-width: @screen-sm-max) {
+    margin-top: 2rem;
   }
 }
 
@@ -60,18 +58,15 @@
 }
 
 .SavedSearches__panel {
-    padding: 0!important;
+  padding: 0 !important;
 }
 
-.SavedSearchesExpand__container{
+.SavedSearchesExpand__container {
   position: relative;
   display: inline-block;
 
-  @media (min-width: @screen-sm-min) {
-    padding-left: 1rem;
-  }
-
   span {
+    color: #fff;
     margin-right: 0.1rem;
     padding: 2px 2px;
   }
@@ -88,7 +83,7 @@
   z-index: 999;
   border: 1px solid #d8d8d8;
 
-  @media (min-width: @screen-sm-min) {
+  @media (min-width: @screen-md-min) {
     &:before {
       content: '';
       display: block;
@@ -106,7 +101,7 @@
     }
   }
 
-  @media (max-width: @screen-xs-max) {
+  @media (max-width: @screen-sm-max) {
     position: fixed;
     top: 0;
     left: 0;
@@ -114,15 +109,14 @@
     right: 0;
     z-index: 999;
     padding: 1rem;
-    overflow-y:auto;
+    overflow-y: auto;
   }
 }
-
 
 .SavedSearches__close {
   z-index: 1000;
 
-  @media (min-width: @screen-sm-min) {
+  @media (min-width: @screen-md-min) {
     visibility: hidden;
   }
 }

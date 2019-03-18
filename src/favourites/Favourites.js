@@ -1,5 +1,6 @@
 /* eslint-disable no-undef */
 import { Column, Container, Row } from 'nav-frontend-grid';
+import { Element, Normaltekst } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -14,6 +15,7 @@ import RemoveFavouriteModal from './modal/RemoveFavouriteModal';
 import NoFavourites from './noresult/NoFavourites';
 import { authenticationEnum } from '../authentication/authenticationReducer';
 import { CONTEXT_PATH } from '../fasitProperties';
+import TotalFavourites from './totalFavourites/TotalFavourutes';
 
 class Favourites extends React.Component {
     componentDidMount() {
@@ -38,7 +40,7 @@ class Favourites extends React.Component {
                 <FavouriteAlertStripe />
                 <PageHeader
                     backUrl={`${CONTEXT_PATH}/`}
-                    title={`Favoritter ${!isFetchingFavourites && totalElements > 0 ? `(${totalElements})` : ''}`}
+                    title="Favoritter"
                 />
                 <Container className="Favourites__main">
                     {isAuthenticated === authenticationEnum.NOT_AUTHENTICATED && (
@@ -83,7 +85,10 @@ class Favourites extends React.Component {
                                                     {favourites.length === 0 ? (
                                                         <NoFavourites />
                                                     ) : (
-                                                        <FavouriteList />
+                                                        <div>
+                                                            <TotalFavourites total={this.props.favourites.length} />
+                                                            <FavouriteList />
+                                                        </div>
                                                     )}
                                                 </div>
                                             </Column>

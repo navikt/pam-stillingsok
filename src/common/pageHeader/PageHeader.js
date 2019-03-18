@@ -18,7 +18,7 @@ export default function PageHeader({
                             <div className="PageHeader__left">
                                 <Link
                                     to={backUrl}
-                                    className="PageHeader__back typo-normal lenke no-print"
+                                    className="PageHeader__back typo-normal link no-print"
                                 >
                                     <Chevron type="venstre" className="PageHeader__back__chevron" />
                                     <span className="PageHeader__back__text">
@@ -29,7 +29,7 @@ export default function PageHeader({
                         )}
                     </Column>
                     <Column xs="12" sm="6">
-                        <Sidetittel className="PageHeader__title">{title}</Sidetittel>
+                        <h1 className="PageHeader__title">{title}</h1>
                     </Column>
                     <Column xs="12" sm="3" />
                 </Row>

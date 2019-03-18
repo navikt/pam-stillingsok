@@ -1,17 +1,24 @@
 @import "../../variables";
 
 .ListBox {
-  margin: 1rem 0;
-  display: flex;
-  border: 1px solid @border-gray;
-  min-height: 80px;
+  margin: 2.5rem 0 1rem;
+  padding-top: 1rem;
+  border-top: 2px solid @green;
 }
 
 .ListBox__title {
-  padding-top: 1rem;
-  background-color: @background-green;
+  display: flex;
+  align-items: flex-start;
+  width: 15rem;
 }
 
-.ListBox__content {
-  background-color: #FFFFFF;
+.ListBox__title__h2 {
+  margin: 0 0 1rem;
+  color: @green;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.ListBox__content__ul {
+  margin: 0;
 }

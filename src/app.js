@@ -22,7 +22,6 @@ import sectorReducer from './search/facets/sector/sectorReducer';
 import searchBoxReducer, { searchBoxSaga } from './search/searchBox/searchBoxReducer';
 import searchReducer, { saga } from './search/searchReducer';
 import sortingReducer from './search/sorting/sortingReducer';
-import viewModeReducer, { viewModeSaga } from './search/viewMode/viewModeReducer';
 import stillingReducer, { stillingSaga } from './stilling/stillingReducer';
 import './styles.less';
 import { urlSaga } from './urlReducer';
@@ -50,7 +49,6 @@ const store = createStore(combineReducers({
     sector: sectorReducer,
     sorting: sortingReducer,
     stilling: stillingReducer,
-    viewMode: viewModeReducer
 }), applyMiddleware(sagaMiddleware));
 
 sagaMiddleware.run(saga);
@@ -62,7 +60,6 @@ sagaMiddleware.run(savedSearchFormSaga);
 sagaMiddleware.run(savedSearchAlertStripeSaga);
 sagaMiddleware.run(urlSaga);
 sagaMiddleware.run(userSaga);
-sagaMiddleware.run(viewModeSaga);
 sagaMiddleware.run(authenticationSaga);
 
 

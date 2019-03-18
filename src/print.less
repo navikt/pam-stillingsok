@@ -2,6 +2,7 @@
 @coreModulePath: './../../';
 @import "../node_modules/nav-frontend-core/less/print";
 @import "../node_modules/nav-frontend-typografi-style/src/index";
+@import "variables";
 
 body {
   font-family: @font-family;
@@ -13,6 +14,19 @@ h1, h2, h3 {
   margin-top: 1.5rem!important;
 }
 
+h1{
+  font-size: 2rem!important;
+}
+
+h2 {
+  font-size: 1.5rem!important;
+}
+
+h3 {
+  font-size: 1.25rem!important;
+}
+
+.StickyAlertStripe,
 button {
   display: none;
 }
@@ -21,6 +35,8 @@ button {
   display: none!important;
 }
 
+.Footer,
+.Feedback,
 .VisTreffButton,
 .TilToppenButton {
   display: none;
@@ -54,12 +70,41 @@ button {
   margin: 0.25rem 0!important;
 }
 
+.StillingsTitle {
+  margin-top: 2rem;
+  margin-bottom: 6rem;
+}
+
+.StillingsTitle__title {
+  line-height: 1;
+  font-weight: 600;
+  padding: 0;
+  margin: 0;
+}
+
+.StillingsTitle__employer-and-location {
+  margin: 0;
+  line-height: 1;
+}
+
+.detail-section {
+  margin: 2rem 0;
+  page-break-inside: avoid;
+}
+
+.detail-section__head {
+  font-size: 1.25rem!important;
+  border-top: 1px solid @gray3;
+  padding-top: 0.5rem;
+}
+
 dl {
   display: flex;
   flex-wrap: wrap;
 }
 
 dt {
+  color: @gray5;
   word-break: break-all;
   width: 30%;
 }

@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 function CurrentSavedSearch({ currentSavedSearch }) {
     if (currentSavedSearch) {
         return (
-            <div>
+            <div className="CurrentSavedSearch">
                 <Undertekst><b>Lagret søk:</b> {currentSavedSearch.title}</Undertekst>
             </div>
         );

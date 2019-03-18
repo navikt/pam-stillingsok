@@ -7,7 +7,6 @@ import Error from './error/Error';
 import { CONTEXT_PATH } from './fasitProperties';
 import Favourites from './favourites/Favourites';
 import Feedback from './feedback/Feedback';
-import Invite from './invite/Invite';
 import SavedSearches from './savedSearches/SavedSearches';
 import SearchPage from './search/Search';
 import StillingPage from './stilling/Stilling';
@@ -34,7 +33,6 @@ class Application extends React.Component {
                         <Switch>
                             <Route exact path="/" component={SearchPage} />
                             <Route path={`${CONTEXT_PATH}/stilling/:uuid`} component={StillingPage} />
-                            <Route path={`${CONTEXT_PATH}/mobil`} component={Invite} />
                             <Route path={`${CONTEXT_PATH}/favoritter`} component={Favourites} />
                             <Route path={`${CONTEXT_PATH}/lagrede-sok`} component={SavedSearches} />
                             <Route path="*" component={SearchPage} />

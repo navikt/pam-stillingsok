@@ -14,33 +14,59 @@
 }
 
 .Stilling__header {
-  padding-top: 2rem;
-  padding-bottom: 11rem;
-  background: @background-green;
+  padding-top: 1rem;
+  padding-bottom: 2.5rem;
+  margin-bottom: 2.5rem;
+  background: @gray2;
+  min-height: 10rem;
+
+  @media (max-width: @screen-sm-max) {
+    margin-bottom: 1.5rem;
+  }
+}
+
+.StillingsTitle {
+  margin: 0 auto;
+  font-family: 'Source Sans Pro', Arial, sans-serif;
+}
+
+.StillingsTitle__title {
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1;
+  margin: 0;
+
+  @media (max-width: @screen-sm-max) {
+    font-size: 2rem;
+  }
+}
+
+.Stilling__header__button-row {
+  margin-bottom: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.Stilling__header__button-row__back {
+  display: inline-block;
 }
 
 .Stilling__header__favourite {
   display: flex;
   justify-content: flex-end;
-  margin-right: 0.5rem;
 }
 
-@media (min-width: @screen-md-min) {
-  .Stilling__header__favourite {
-    padding-top: 1.5rem;
-  }
-}
-
-.Stilling__header__favourite .knapp:not(:last-child) {
-  margin-right: @knapp-margin-right;
+.Stilling__header__favourite .PAMButton:not(:last-child) {
+  margin-right: @button-marginRight;
 }
 
 @media (max-width: @screen-xs-max) {
   .StillingSubMenu__print {
-    display: none!important;
+    display: none !important;
   }
 
-  .Stilling__header__favourite .knapp:not(:last-child) {
+  .Stilling__header__favourite .PAMButton:not(:last-child) {
     margin-right: 0;
   }
 }
@@ -50,32 +76,32 @@
   align-items: center;
 }
 
-.Stilling__main {
-  margin-top: -10.4rem;
-}
+.Stilling__main__aside {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 
-@media (max-width: @screen-sm-max) {
-  .Stilling__header {
-    padding-bottom: 0;
-  }
-
-  .Stilling__main {
-    margin-top: 0.5rem;
-  }
-
-  .Stilling__header__favourite {
-    margin-bottom: 1rem;
+  @media (max-width: @screen-sm-max) {
+    margin-top: 2rem;
   }
 }
 
 .detail-section {
-  padding: 1rem;
-  border: 1px solid @border-gray;
-  background-color: #fff;
-  margin-bottom: 1rem;
+  width: 100%;
+  margin-bottom: 2rem;
+  border-top: 2px solid @gray3;
+
+  @media (min-width: @screen-md-min) {
+    max-width: 370px;
+  }
 
   .detail-section__head {
-    margin-bottom: 0.5rem;
+    padding: 0.75rem 1rem;
+  }
+
+  .detail-section__body {
+    padding: 1rem;
+    background-color: @gray2;
   }
 }
 
@@ -86,7 +112,7 @@
 
   dt {
     flex: 0 42%;
-    color: @navGra60;
+    color: @gray5;
   }
 
   dd:not(:last-of-type),

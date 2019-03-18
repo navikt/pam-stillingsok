@@ -73,35 +73,37 @@ class ShowResultsButton extends React.Component {
 
         return (
             <SnapToTop className="ShowResultsButton">
-                <div className="ShowResultsButton__flex container">
-                    <div className="ShowResultsButton__flex__count">
-                        {this.props.searchResults && (
-                            this.props.searchResults.total > 0 ?
-                                (
-                                    <Element>
-                                        {this.props.searchResults.positioncount} <span
-                                        className="ShowResultsButton__text"> {stillingerWord} i </span>
-                                        {this.props.searchResults.total} <span
-                                        className="ShowResultsButton__text"> {annonserWord}</span>
-                                    </Element>
-                                ) : (
-                                    <Element>
-                                        <span className="ShowResultsButton__text">Ingen treff</span>
-                                    </Element>
-                                )
-                        )}
-                    </div>
-                    <div>
-                        {this.props.searchResults && this.state.showGoToResults && (
-                            <a href="#treff" className="knapp knapp--hoved knapp--mini">
-                                Vis treff
-                            </a>
-                        )}
-                        {this.props.searchResults && this.state.showGoToSearch && (
-                            <a href="#top" className="knapp knapp--hoved knapp--mini">
-                                Endre søk
-                            </a>
-                        )}
+                <div className="ShowResultsButton__inner">
+                    <div className="ShowResultsButton__inner__container container">
+                        <div className="ShowResultsButton__flex__count">
+                            {this.props.searchResults && (
+                                this.props.searchResults.total > 0 ?
+                                    (
+                                        <Element>
+                                            {this.props.searchResults.positioncount} <span
+                                            className="ShowResultsButton__text"> {stillingerWord} i </span>
+                                            {this.props.searchResults.total} <span
+                                            className="ShowResultsButton__text"> {annonserWord}</span>
+                                        </Element>
+                                    ) : (
+                                        <Element>
+                                            <span className="ShowResultsButton__text">Ingen treff</span>
+                                        </Element>
+                                    )
+                            )}
+                        </div>
+                        <div>
+                            {this.props.searchResults && this.state.showGoToResults && (
+                                <a href="#treff" className="PAMButton PAMButton--mini">
+                                    Vis treff
+                                </a>
+                            )}
+                            {this.props.searchResults && this.state.showGoToSearch && (
+                                <a href="#top" className="PAMButton PAMButton--mini">
+                                    Endre søk
+                                </a>
+                            )}
+                        </div>
                     </div>
                 </div>
             </SnapToTop>

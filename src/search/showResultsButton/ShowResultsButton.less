@@ -1,19 +1,20 @@
 @import "../../variables";
 
-@media (min-width: @screen-md-min) {
-  .ShowResultsButton {
+.ShowResultsButton {
+  @media (min-width: @screen-md-min) {
     display: none;
   }
 }
 
-.ShowResultsButton__flex {
-  border-bottom: 1px solid @border-gray;
-  padding: 0.75rem 1rem!important;
-  background: @navLysGra;
-  height: 3.25rem;
-  margin-bottom: 1rem;
-  display: flex;
+.ShowResultsButton__inner {
+  border-bottom: 1px solid @gray4;
+  background: @gray2;
   width: 100%;
+}
+
+.ShowResultsButton__inner__container {
+  height: 3.25rem;
+  display: flex;
   align-items: center;
 }
 

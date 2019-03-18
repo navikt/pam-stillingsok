@@ -1,19 +1,19 @@
 import { Column, Container, Row } from 'nav-frontend-grid';
-import { Flatknapp } from 'nav-frontend-knapper';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
+import { authenticationEnum } from '../authentication/authenticationReducer';
+import { FlatButton } from '../common/button';
 import { CONTEXT_PATH } from '../fasitProperties';
 import FavouriteAlertStripe from '../favourites/alertstripe/FavouriteAlertStripe';
 import SavedSearchAlertStripe from '../savedSearches/alertstripe/SavedSearchAlertStripe';
 import CurrentSavedSearch from '../savedSearches/CurrentSavedSearch';
-import SavedSearchesExpand from '../savedSearches/expand/SavedSearchesExpand';
 import SavedSearchesExpandButton from '../savedSearches/expand/SavedSearchesExpandButton';
 import SavedSearchForm from '../savedSearches/form/SavedSearchForm';
 import SaveSearchButton from '../savedSearches/SaveSearchButton';
 import { RESTORE_STATE_FROM_URL_BEGIN } from '../urlReducer';
-import ShowResultsButton from './showResultsButton/ShowResultsButton';
 import Counties from './facets/counties/Counties';
+import Countries from './facets/countries/Countries';
 import EngagementType from './facets/engagement/Engagement';
 import Extent from './facets/extent/Extent';
 import Occupations from './facets/occupations/Occupations';
@@ -26,10 +26,8 @@ import SearchBox from './searchBox/SearchBox';
 import { INITIAL_SEARCH, RESET_SEARCH, SEARCH } from './searchReducer';
 import SearchResultCount from './searchResults/SearchResultCount';
 import SearchResults from './searchResults/SearchResults';
+import ShowResultsButton from './showResultsButton/ShowResultsButton';
 import Sorting from './sorting/Sorting';
-import ViewMode from './viewMode/ViewMode';
-import { authenticationEnum } from '../authentication/authenticationReducer';
-import Countries from './facets/countries/Countries';
 
 class Search extends React.Component {
     constructor(props) {
@@ -59,11 +57,12 @@ class Search extends React.Component {
             <div className="Search">
                 <FavouriteAlertStripe />
                 <SavedSearchAlertStripe />
+                <ShowResultsButton />
                 <div className="Search__header">
                     <Container className="Search__header__container">
                         <Row className="Search__header__row">
-                            <Column xs="12" sm="4" lg="4" />
-                            <Column xs="12" sm="8" lg="8">
+                            <Column xs="12" sm="12" md="4" lg="4" />
+                            <Column xs="12" sm="12" md="5" lg="6">
                                 <form
                                     role="search"
                                     action="/"
@@ -73,7 +72,7 @@ class Search extends React.Component {
                                     <SearchBox />
                                 </form>
                             </Column>
-                            <Column xs="12" sm="4" lg="4">
+                            <Column xs="12" sm="12" md="3" lg="2">
                                 {this.props.isAuthenticated === authenticationEnum.IS_AUTHENTICATED && this.props.user ?
                                     <div className="Search__header__left">
                                         <SavedSearchesExpandButton />
@@ -83,7 +82,6 @@ class Search extends React.Component {
                         </Row>
                     </Container>
                 </div>
-                <ShowResultsButton />
                 <Container className="Search__main">
                     {this.props.isSearching && !this.props.initialSearchDone && (
                         <div className="Search__spinner">
@@ -97,10 +95,15 @@ class Search extends React.Component {
                                     <Column xs="12" md="4">
                                         <div className="Search__main__left">
                                             <div className="Search__main__left__save-search">
-                                                <SaveSearchButton />
-                                                <Flatknapp mini onClick={this.onResetSearchClick}>
+                                                <div className="Search__main__left__save-search__SaveSearchButton">
+                                                    <SaveSearchButton />
+                                                </div>
+                                                <FlatButton
+                                                    mini
+                                                    onClick={this.onResetSearchClick}
+                                                >
                                                             Nullstill kriterier
-                                                </Flatknapp>
+                                                </FlatButton>
                                             </div>
                                             <div id="sok">
                                                 <form
@@ -128,17 +131,19 @@ class Search extends React.Component {
                                                     <CurrentSavedSearch />
                                                 </div>
                                                 <div className="Search__main__center__header__right">
-                                                    <ViewMode />
+                                                    <div className="Search__main__center__header__right__SaveSearchButton">
+                                                        <SaveSearchButton />
+                                                    </div>
                                                     <Sorting />
                                                 </div>
                                             </div>
                                             <SearchResults />
-                                            <div className="Search__main__tiltoppen">
-                                                <a href="#top" className="lenke typo-normal">Til toppen</a>
-                                            </div>
                                         </div>
                                     </Column>
                                 </Row>
+                                <div className="Search__main__tiltoppen">
+                                    <a href="#top" className="link">Til toppen</a>
+                                </div>
                             </div>
                         </RestoreScroll>
                     )}
