@@ -21,7 +21,7 @@ class SaveSearchButton extends React.Component {
                 type="over"
                 id="hjelpetekstLagreknapp"
                 anchor={() => (
-                    <div role="button" className="PAMButton PAMButton--mini PAMButton--disabled SaveSearchButton">
+                    <div role="button" className="Button Button--mini Button--disabled SaveSearchButton">
                         Lagre søk
                     </div>
                 )}

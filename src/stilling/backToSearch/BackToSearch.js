@@ -10,7 +10,7 @@ export default function BackToSearch() {
         <SnapToTop inlineClassName="BackToSearch__inline" stickyClassName="BackToSearch__sticky">
             <Link
                 to={`${CONTEXT_PATH}/`}
-                className="BackToSearchLink PAMButton PAMButton--flat no-print"
+                className="BackToSearchLink Button Button--flat no-print"
             >
                 <Chevron type="venstre" className="BackToSearchLink__chevron" />
                 <span className="BackToSearchLink__text">

@@ -7,18 +7,18 @@ export default function Button(props) {
     const {
         children, onClick, className, type, htmlType, mini, disabled, spinner, ...rest
     } = props;
-    const spinnerNode = spinner ? <span className="PAMButton__spinner" /> : null;
+    const spinnerNode = spinner ? <span className="Button__spinner" /> : null;
     const ariaLabel = spinner ? { 'aria-label': 'Laster' } : {};
     return (
         <button
             disabled={disabled}
             type={htmlType}
-            className={classNames('PAMButton', 'typo-normal', className, {
-                'PAMButton--primary': type === 'primary',
-                'PAMButton--flat': type === 'flat',
-                'PAMButton--link': type === 'link',
-                'PAMButton--mini': mini,
-                'PAMButton--disabled': disabled
+            className={classNames('Button', 'typo-normal', className, {
+                'Button--primary': type === 'primary',
+                'Button--flat': type === 'flat',
+                'Button--link': type === 'link',
+                'Button--mini': mini,
+                'Button--disabled': disabled
             })}
             onClick={onClick}
             {...ariaLabel}
