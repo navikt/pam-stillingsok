@@ -12,15 +12,21 @@
   margin-bottom: 2.5rem;
 }
 
-@media (max-width: @screen-xs-max) {
-  .NoUser .Button {
-    display: block;
-    margin-bottom: @button-marginBottom;
+.NoUser__buttons {
+  @media (max-width: @screen-xs-max) {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
   }
 }
 
-@media (min-width: @screen-sm-min) {
-  .NoUser__button {
+.NoUser__button__button {
+  @media (max-width: @screen-xs-max) {
+    margin-bottom: @button-marginBottom;
+  }
+
+  @media (min-width: @screen-sm-min) {
     margin-right: @button-marginRight;
   }
 }
+

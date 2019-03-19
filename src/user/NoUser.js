@@ -21,15 +21,17 @@ class NoUser extends React.Component {
                 <Normaltekst className="NoUser__text">
                     Du må samtykke for å kunne lagre søk og favoritter.
                 </Normaltekst>
-                <PrimaryButton
-                    className="NoUser__button"
-                    onClick={this.onCreateUserClick}
-                >
-                    Se samtykke
-                </PrimaryButton>
-                <Link to="/" className="link">
-                    Fortsett uten å samtykke
-                </Link>
+                <div className="NoUser__buttons">
+                    <PrimaryButton
+                        className="NoUser__button__button"
+                        onClick={this.onCreateUserClick}
+                    >
+                        Se samtykke
+                    </PrimaryButton>
+                    <Link to="/" className="link">
+                        Fortsett uten å samtykke
+                    </Link>
+                </div>
             </div>
         );
     }
