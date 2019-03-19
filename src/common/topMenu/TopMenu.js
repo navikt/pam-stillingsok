@@ -13,7 +13,7 @@ const TopMenu = ({ isAuthenticated }) => (
                 loggInnUrl={`${LOGIN_URL}${getRedirect()}`}
                 loggUtUrl={LOGOUT_URL}
                 personbruker={{ navn: 'Innstillinger' }}
-                erInnlogget={this.props.isAuthenticated === authenticationEnum.IS_AUTHENTICATED}
+                erInnlogget={isAuthenticated === authenticationEnum.IS_AUTHENTICATED}
                 applikasjon={PersonbrukerApplikasjon.STILLINGSSOK}
             />
         ) : (
