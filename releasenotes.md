@@ -1,3 +1,7 @@
+## RELEASE - 0.78.575-2859004
+#### New in this release: 
++ 2019-03-14 [PAM-2922] Fjern innstillinger fra stillingssøket
++ 2019-03-07 [Fix] Tweak på searchbox css
 ## RELEASE - 0.77.564-051859b
 #### New in this release: 
 + 2019-03-13 [PAM-2912]: Oppdaterer visning av geografi Intil videre: hvis properties.location finnes vises denne. Hvis ikke vises en kommaseparert liste av alle locations.
