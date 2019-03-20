@@ -11,6 +11,7 @@ const TopMenu = ({ isAuthenticated }) => (
         {isAuthenticated === authenticationEnum.IS_AUTHENTICATED || isAuthenticated === authenticationEnum.NOT_AUTHENTICATED ? (
             <PersonbrukerHeaderMeny
                 loggInnUrl={`${LOGIN_URL}${getRedirect()}`}
+                loggInnUrlArbeidsgiver={`${LOGIN_URL}/stillingsregistrering`}
                 loggUtUrl={LOGOUT_URL}
                 personbruker={{ navn: 'Innstillinger' }}
                 erInnlogget={isAuthenticated === authenticationEnum.IS_AUTHENTICATED}
