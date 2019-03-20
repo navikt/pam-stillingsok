@@ -16,10 +16,11 @@ class ToggleFavouriteStar extends React.Component {
 
     render() {
         const {
-            adsMarkedAsFavorite, uuid, className, isFetchingFavourites
+            adsMarkedAsFavorite, uuid, className, isFetchingFavourites, pendingFavouritesByAdUuid
         } = this.props;
-        const isFavourite = adsMarkedAsFavorite.includes(uuid);
 
+        const isFavourite = adsMarkedAsFavorite.includes(uuid);
+        const isPending = pendingFavouritesByAdUuid.includes(uuid);
         if (isFetchingFavourites) {
             return null;
         }
@@ -27,6 +28,7 @@ class ToggleFavouriteStar extends React.Component {
         if (isFavourite) {
             return (
                 <button
+                    disabled={isPending}
                     aria-label="Favoritt"
                     aria-pressed="true"
                     onClick={this.onRemoveFromFavouritesClick}
@@ -40,6 +42,7 @@ class ToggleFavouriteStar extends React.Component {
         }
         return (
             <button
+                disabled={isPending}
                 onClick={this.onAddToFavouritesClick}
                 aria-label="Favoritt"
                 aria-pressed="false"
@@ -63,12 +66,14 @@ ToggleFavouriteStar.propTypes = {
     addToFavourites: PropTypes.func.isRequired,
     removeFromFavourites: PropTypes.func.isRequired,
     adsMarkedAsFavorite: PropTypes.arrayOf(PropTypes.string).isRequired,
+    pendingFavouritesByAdUuid: PropTypes.arrayOf(PropTypes.string).isRequired,
     uuid: PropTypes.string.isRequired
 };
 
 const mapStateToProps = (state) => ({
     adsMarkedAsFavorite: state.favourites.adsMarkedAsFavorite,
-    isFetchingFavourites: state.favourites.isFetchingFavourites
+    isFetchingFavourites: state.favourites.isFetchingFavourites,
+    pendingFavouritesByAdUuid: state.favourites.pendingFavouritesByAdUuid
 });
 
 const mapDispatchToProps = (dispatch) => ({
