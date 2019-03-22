@@ -2,6 +2,27 @@
 
 .TermsOfUse {
   padding: 0.7rem;
+
+  > .bekreftCheckboksPanel {
+    display: flex;
+    flex-direction: column-reverse;
+    margin: 1rem 0 2rem 0;
+
+    .skjemaelement {
+      display: flex;
+      flex-direction: column;
+
+      label {
+        font-weight: 600;
+        padding-left: 2.5rem;
+      }
+    }
+
+    .bekreftCheckboksPanel__innhold {
+      margin-left: 2.5rem;
+      margin-bottom: 0;
+    }
+  }
 }
 
 .TermsOfUse__error {
@@ -26,7 +47,6 @@
 
 .TermsOfUse__input {
   margin-top: 1.25rem;
-  min-height: 6.5rem; // Unngår at Lagre knapp hopper opp/ned når feilmelding under input forsvinner/vises
 }
 
 .TermsOfUse__buttons {

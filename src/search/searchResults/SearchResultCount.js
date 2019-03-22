@@ -10,7 +10,7 @@ function SearchResultCount({ searchResult }) {
         return (
             <div className="SearchResultCount">
                 <Element className="SearchResultCount__label">Antall stillinger:</Element>
-                <h3
+                <span
                     className="SearchResultCount__h3"
                     aria-live="polite"
                 >
@@ -18,7 +18,7 @@ function SearchResultCount({ searchResult }) {
                     {searchResult.total > 0 && (
                         <span className="SearchResultCount__h3__count">({searchResult.total} {annonserWord})</span>
                     )}
-                </h3>
+                </span>
             </div>
         );
     }

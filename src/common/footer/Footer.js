@@ -33,6 +33,23 @@ const Footer = ({ useInternalLinks }) => (
                 <a className="Footer__logo link" href="https://www.nav.no/Forsiden" title="Gå til nav.no">
                     <i className="Footer__logo__nav-icon" aria-label="NAV logo" />
                 </a>
+                <ul className="Footer__links__ul">
+                    <li className="Footer__links__ul__li">
+                        <InternalOrExternalLink isInternalLink={useInternalLinks} href="/kontakt">
+                            Kontakt oss
+                        </InternalOrExternalLink>
+                    </li>
+                    <li className="Footer__links__ul__li">
+                        <InternalOrExternalLink isInternalLink={useInternalLinks} href="/tilgjengelighet">
+                            Tilgjengelighet
+                        </InternalOrExternalLink>
+                    </li>
+                    <li className="Footer__links__ul__li">
+                        <InternalOrExternalLink isInternalLink={useInternalLinks} href="/personvern">
+                            Personvern
+                        </InternalOrExternalLink>
+                    </li>
+                </ul>
             </nav>
         </div>
     </div>

@@ -1,3 +1,13 @@
+## RELEASE - 0.82.594-0afbf1e
+#### New in this release: 
++ 2019-03-22 [Fix] Legger til canonical url https://arbeidsplassen.nav.no/stillinger
++ 2019-03-21 [PAM-3007] Show expired banner for any ad status except ACTIVE
+## RELEASE - 0.81.592-b6a3743
+#### New in this release: 
++ 2019-03-22 [Bugfix] Øker kontrast på gråfargen i trefflisten
++ 2019-03-21 [PAM-2226] Endre utseende på samtykkemodal
++ 2019-03-20 [Bugfix] Hvis man klikker flere ganger på en favorittstjerne, vil det oppstå feil om backend-kall er pending. Disabler derfor favorittstjernen inntil backend-kall er fullført.
++ 2019-03-20 [Fix] Legger inn logg-ut url for arbeidsgiver
 ## RELEASE - 0.78.575-2859004
 #### New in this release: 
 + 2019-03-14 [PAM-2922] Fjern innstillinger fra stillingssøket
