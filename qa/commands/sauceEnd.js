@@ -10,7 +10,8 @@ exports.command = function (scenarioContext) {
     const saucelabs = new SauceLabs({
         username: process.env.SAUCE_USERNAME,
         password: process.env.SAUCE_ACCESS_KEY,
-        proxy: build ? 'http://webproxy-internett.nav.no:8088' : ''
+        proxy: build ? 'http://webproxy-internett.nav.no:8088' : '',
+        hostname: 'eu-central-1.saucelabs.com'
     });
 
     saucelabs.updateJob(
