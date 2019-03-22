@@ -1,5 +1,5 @@
 import Modal from 'nav-frontend-modal';
-import { Checkbox, Input } from 'nav-frontend-skjema';
+import { Input, BekreftCheckboksPanel } from 'nav-frontend-skjema';
 import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -58,24 +58,26 @@ class TermsOfUse extends React.Component {
                     <Normaltekst className="TermsOfUse__section">
                         Du må samtykke for å bruke innloggede tjenester i stillingssøk.
                     </Normaltekst>
-                    <div className="TermsOfUse__section">
-                        <Element>Vi lagrer:</Element>
-                        <ul className="typo-normal">
-                            <li>dine favoritter</li>
-                            <li>søk med søkekriterier</li>
-                            <li>e-postadresse (valgfritt)</li>
-                        </ul>
-                    </div>
-                    <div className="TermsOfUse__section TermsOfUse__section--email">
-                        <Element>E-post til lagrede søk</Element>
+                    <BekreftCheckboksPanel
+                        className="TermsOfUse__section"
+                        label="Dine favoritter, søk og søkekriterier"
+                        checked={this.props.termsAccepted}
+                        onChange={this.onCheckboxClick}
+                    >
                         <Normaltekst>
-                            Ønsker du å motta varslinger på et lagret søk trenger vi e-postadressen din.
-                            Den vil bare bli brukt til dette formålet. Du kan senere velge å skru av
-                            e-postvarsling under lagrede søk eller slette e-postadressen under dine innstillinger.
+                            Vi lagrer dine favoritter, søk med søkekriterier og e-postadresse (valgfri).
+                            Det er kun du som kan se hva du har lagret.
+                        </Normaltekst>
+                    </BekreftCheckboksPanel>
+                    <div className="TermsOfUse__section TermsOfUse__section--email">
+                        <Element>E-postvarslinger for lagrede søk</Element>
+                        <Normaltekst>
+                            Du kan motta varslinger på lagrede søk.
+                            E-postadressen din vil bare bli brukt til dette formålet.
                         </Normaltekst>
                         <div className="TermsOfUse__input">
                             <Input
-                                label="Oppgi e-post hvis du ønsker varsling (valgfritt)"
+                                label="E-post for å motta treff på mine lagrede søk"
                                 value={this.state.email}
                                 onChange={this.onEmailChange}
                                 onBlur={this.onEmailBlur}
@@ -86,22 +88,18 @@ class TermsOfUse extends React.Component {
                         </div>
                     </div>
                     <div className="TermsOfUse__section TermsOfUse__section--last">
-                        <Checkbox
-                            name="terms"
-                            label="Jeg samtykker til at Arbeidsplassen lagrer favoritter, søk og e-postadresse (valgfri)"
-                            value="terms"
-                            onChange={this.onCheckboxClick}
-                            checked={this.props.termsAccepted}
-                            feil={{
-                                feilmelding: this.props.showUserTermsRequiredMessage ?
-                                    'Du må huke av i avkryssingsboksen for å samtykke' : ''
-                            }}
-                        />
                         <Normaltekst>
-                            Du kan trekke samtykket hvis du ikke lenger ønsker å bruke innloggede tjenester
-                            i stillingssøket. Dette kan du gjøre under dine innstillinger.
+                            Du kan trekke samtykket hvis du ikke lenger ønsker å bruke de innloggede tjenestene.
+                            Dette kan du gjøre under innstillinger.
                         </Normaltekst>
                     </div>
+                    {this.props.showUserTermsRequiredMessage && (
+                        <div role="alert" aria-live="assertive">
+                            <div className="skjemaelement__feilmelding blokk-s">
+                                Du må huke av i avkryssingsboksen for å samtykke
+                            </div>
+                        </div>
+                    )}
                     <div className="TermsOfUse__buttons">
                         <PrimaryButton
                             onClick={this.onAcceptTerms}
