@@ -13,7 +13,7 @@ const LATEST_QUERY_STRING_KEY = 'latestQueryString';
 
 export function urlFromSessionStorageOrIndex() {
     const url = sessionStorage.getItem(LATEST_QUERY_STRING_KEY);
-    return url ? `${CONTEXT_PATH}/${url}` : `${CONTEXT_PATH}/`;
+    return url ? `${CONTEXT_PATH}/${url}` : `${CONTEXT_PATH}`;
 }
 
 /**
