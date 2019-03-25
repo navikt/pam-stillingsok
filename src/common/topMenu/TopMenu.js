@@ -10,7 +10,7 @@ const login = (role) => {
     if (role === 'personbruker') {
         window.location.href = LOGIN_URL + getRedirect();
     } else {
-        window.location.href = LOGIN_URL + '/stillingsregistrering';
+        window.location.href = LOGIN_URL + `${window.location.origin}/stillingsregistrering`;
     }
 }
 
