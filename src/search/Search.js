@@ -64,7 +64,6 @@ class Search extends React.Component {
                             <Column xs="12" sm="12" md="4" lg="4" />
                             <Column xs="12" sm="12" md="5" lg="6">
                                 <form
-                                    role="search"
                                     action="/"
                                     onSubmit={this.onSearchFormSubmit}
                                     className="no-print"
@@ -107,7 +106,6 @@ class Search extends React.Component {
                                             </div>
                                             <div id="sok">
                                                 <form
-                                                    role="search"
                                                     action="/"
                                                     onSubmit={this.onSearchFormSubmit}
                                                     className="no-print"

@@ -19,7 +19,7 @@ class Sorting extends React.Component {
                 <Select
                     onChange={this.onSortingChange}
                     value={this.props.sort}
-                    label=""
+                    label="Sortér etter"
                     aria-label="Sortér treff"
                     className="typo-normal Sorting__Select"
                 >
