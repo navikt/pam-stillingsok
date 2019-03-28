@@ -43,7 +43,7 @@ export default function HowToApply({ source, properties }) {
                     {sokUrl && isValidUrl(sokUrl) && (
                         <div className="HowToApply__send-button-wrapper">
                             <a
-                                className="HowToApply__send-button Knapp Knapp--primary blokk-xxs"
+                                className="HowToApply__send-button Knapp Knapp--hoved blokk-xxs"
                                 href={sokUrl}
                             >
                                 <div className="HowToApply__send-button-content">
