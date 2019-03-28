@@ -56,8 +56,11 @@ class Stilling extends React.Component {
             this.hasSetTitle = true;
         }
 
-        if (!this.props.isFetchingStilling
-            && this.props.stilling && this.props.stilling._source.status !== 'ACTIVE') {
+        if ((this.props.error && this.props.error.statusCode === 404)
+            ||
+            (!this.props.isFetchingStilling
+             && this.props.stilling && this.props.stilling._source.status !== 'ACTIVE')) {
+
             setMetaRobotsTag('noindex');
         }
     }
