@@ -27,8 +27,7 @@ class FavouriteListItem extends React.Component {
 
     render() {
         const { favourite } = this.props;
-        const expired = favourite.favouriteAd.title === 'Medarbeider';
-        // const expired = favourite.favouriteAd.status === 'INACTIVE';
+        const expired = favourite.favouriteAd.status !== 'ACTIVE';
         return (
             <div className="FavouriteListItem__wrapper">
                 <div className={classNames('FavouriteListItem', { 'FavouriteListItem--expired': expired })}>

@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import Footer from './common/footer/Footer';
+import { Footer } from 'pam-frontend-footer';
 import Error from './error/Error';
 import { CONTEXT_PATH } from './fasitProperties';
 import Favourites from './favourites/Favourites';

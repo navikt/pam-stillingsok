@@ -1,3 +1,12 @@
+## RELEASE - 0.85.603-5a500ff
+#### New in this release: 
++ 2019-03-28 [FIX] expired co-worker
++ 2019-03-28 [PAM-3007] Also set noindex if ad is 404 not found (gone from ES)
++ 2019-03-25 [PAM-3007] Set noindex robots directive for inactive ads
+## RELEASE - 0.83.600-45bd6d8
+#### New in this release: 
++ 2019-03-25 [Feautre] Legger til meta description for bedre treff i google
++ 2019-03-22 [Feautre] Viser lenker til infosider i footer
 ## RELEASE - 0.82.594-0afbf1e
 #### New in this release: 
 + 2019-03-22 [Fix] Legger til canonical url https://arbeidsplassen.nav.no/stillinger

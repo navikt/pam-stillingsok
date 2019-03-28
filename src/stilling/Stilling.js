@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import { Flatknapp } from 'pam-frontend-knapper';
 import getEmployer from '../common/getEmployer';
 import getWorkLocation from '../common/getWorkLocation';
+import { setMetaRobotsTag, removeMetaRobotsTag } from '../common/metaRobots';
 import { CONTEXT_PATH } from '../fasitProperties';
 import FavouriteAlertStripe from '../favourites/alertstripe/FavouriteAlertStripe';
 import ToggleFavouriteButton from '../favourites/toggleFavoriteButton/ToggleFavouriteButton';
@@ -42,6 +43,10 @@ class Stilling extends React.Component {
         ga('send', 'pageview');
     }
 
+    componentWillUnmount() {
+        removeMetaRobotsTag();
+    }
+
     componentDidUpdate() {
         if (!this.hasSetTitle
             && this.props.stilling
@@ -49,6 +54,14 @@ class Stilling extends React.Component {
             && this.props.stilling._source.title) {
             document.title = this.props.stilling._source.title;
             this.hasSetTitle = true;
+        }
+
+        if ((this.props.error && this.props.error.statusCode === 404)
+            ||
+            (!this.props.isFetchingStilling
+             && this.props.stilling && this.props.stilling._source.status !== 'ACTIVE')) {
+
+            setMetaRobotsTag('noindex');
         }
     }
 
