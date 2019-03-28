@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { Button } from '../../common/button';
+import { Knapp } from 'pam-frontend-knapper';
 import { LOAD_MORE } from '../searchReducer';
 import './Pagination.less';
 
@@ -14,14 +14,14 @@ class Pagination extends React.Component {
         const { isLoadingMore } = this.props;
         return (
             <div className="Pagination">
-                <Button
+                <Knapp
                     disabled={isLoadingMore}
                     spinner={isLoadingMore}
                     className="Pagination__button"
                     onClick={this.onLoadMoreClick}
                 >
                     Se flere
-                </Button>
+                </Knapp>
             </div>
         );
     }

@@ -3,8 +3,8 @@ import Lukknapp from 'nav-frontend-lukknapp';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
+import { Flatknapp } from 'pam-frontend-knapper';
 import './Error.less';
-import { FlatButton } from '../common/button';
 import { HIDE_ERROR } from './errorReducer';
 
 class Error extends React.Component {
@@ -41,13 +41,13 @@ class Error extends React.Component {
                 {messages.length === 0 && (
                     <div />
                 )}
-                <FlatButton
+                <Flatknapp
                     className="Error__reload"
                     mini
                     onClick={this.onReloadClick}
                 >
                     Last siden på nytt
-                </FlatButton>
+                </Flatknapp>
                 <Lukknapp
                     className="Error__close"
                     hvit

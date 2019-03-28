@@ -2,7 +2,7 @@ import HjelpetekstBase from 'nav-frontend-hjelpetekst';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { Button } from '../common/button';
+import { Knapp } from 'pam-frontend-knapper';
 import { SavedSearchFormMode, SHOW_SAVED_SEARCH_FORM } from './form/savedSearchFormReducer';
 
 class SaveSearchButton extends React.Component {
@@ -15,13 +15,13 @@ class SaveSearchButton extends React.Component {
 
     render() {
         return this.props.canSaveSearch ? (
-            <Button mini className="SaveSearchButton" onClick={this.onClick}>Lagre søk</Button>
+            <Knapp mini className="SaveSearchButton" onClick={this.onClick}>Lagre søk</Knapp>
         ) : (
             <HjelpetekstBase
                 type="over"
                 id="hjelpetekstLagreknapp"
                 anchor={() => (
-                    <div role="button" className="Button Button--mini Button--disabled SaveSearchButton">
+                    <div role="button" className="Knapp Knapp--mini Knapp--disabled SaveSearchButton">
                         Lagre søk
                     </div>
                 )}

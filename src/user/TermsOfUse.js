@@ -4,8 +4,8 @@ import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
+import { Flatknapp, Hovedknapp } from 'pam-frontend-knapper';
 import './TermsOfUse.less';
-import { FlatButton, PrimaryButton } from '../common/button';
 import { CREATE_USER, HIDE_TERMS_OF_USE_MODAL, SET_USER_TERMS_ACCEPTED } from './userReducer';
 
 class TermsOfUse extends React.Component {
@@ -101,16 +101,16 @@ class TermsOfUse extends React.Component {
                         </div>
                     )}
                     <div className="TermsOfUse__buttons">
-                        <PrimaryButton
+                        <Hovedknapp
                             onClick={this.onAcceptTerms}
                             spinner={this.props.isCreating}
                             disabled={this.props.isCreating}
                         >
                             Jeg samtykker
-                        </PrimaryButton>
-                        <FlatButton onClick={this.closeModal}>
+                        </Hovedknapp>
+                        <Flatknapp onClick={this.closeModal}>
                             Avbryt
-                        </FlatButton>
+                        </Flatknapp>
                     </div>
                 </div>
             </Modal>

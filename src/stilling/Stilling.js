@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { FlatButton } from '../common/button';
+import { Flatknapp } from 'pam-frontend-knapper';
 import getEmployer from '../common/getEmployer';
 import getWorkLocation from '../common/getWorkLocation';
 import { CONTEXT_PATH } from '../fasitProperties';
@@ -93,13 +93,13 @@ class Stilling extends React.Component {
                                             {!isFetchingStilling && stilling && (
                                                 <ToggleFavouriteButton uuid={stilling._id} />
                                             )}
-                                            <FlatButton
+                                            <Flatknapp
                                                 mini
                                                 className="StillingSubMenu__print"
                                                 onClick={this.onPrintClick}
                                             >
                                             Skriv ut
-                                            </FlatButton>
+                                            </Flatknapp>
                                         </div>
                                     </div>
                                 </Row>

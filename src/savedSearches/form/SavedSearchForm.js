@@ -4,7 +4,7 @@ import { Undertittel } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { FlatButton, PrimaryButton } from '../../common/button';
+import { Flatknapp, Hovedknapp } from 'pam-frontend-knapper';
 import { SET_EMAIL_FROM_SAVED_SEARCH } from '../../user/userReducer';
 import { ADD_SAVED_SEARCH, UPDATE_SAVED_SEARCH } from '../savedSearchesReducer';
 import AddOrReplaceForm from './AddOrReplaceForm';
@@ -106,14 +106,14 @@ class SavedSearchForm extends React.Component {
                         </div>
 
                         <div className="SavedSearchModal__buttons">
-                            <PrimaryButton
+                            <Hovedknapp
                                 disabled={isSaving}
                                 spinner={isSaving}
                                 onClick={this.onSaveClick}
                             >
                                 Lagre
-                            </PrimaryButton>
-                            <FlatButton onClick={this.closeModal}>Avbryt</FlatButton>
+                            </Hovedknapp>
+                            <Flatknapp onClick={this.closeModal}>Avbryt</Flatknapp>
                         </div>
                     </div>
                 </Modal>

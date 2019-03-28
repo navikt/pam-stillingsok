@@ -2,8 +2,8 @@ import { Column, Container, Row } from 'nav-frontend-grid';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
+import { Flatknapp } from 'pam-frontend-knapper';
 import { authenticationEnum } from '../authentication/authenticationReducer';
-import { FlatButton } from '../common/button';
 import { CONTEXT_PATH } from '../fasitProperties';
 import FavouriteAlertStripe from '../favourites/alertstripe/FavouriteAlertStripe';
 import SavedSearchAlertStripe from '../savedSearches/alertstripe/SavedSearchAlertStripe';
@@ -98,12 +98,12 @@ class Search extends React.Component {
                                                 <div className="Search__main__left__save-search__SaveSearchButton">
                                                     <SaveSearchButton />
                                                 </div>
-                                                <FlatButton
+                                                <Flatknapp
                                                     mini
                                                     onClick={this.onResetSearchClick}
                                                 >
                                                             Nullstill kriterier
-                                                </FlatButton>
+                                                </Flatknapp>
                                             </div>
                                             <div id="sok">
                                                 <form

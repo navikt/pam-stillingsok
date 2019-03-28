@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { FlatButton, LinkButton } from '../../common/button';
+import { Flatknapp, Lenkeknapp } from 'pam-frontend-knapper';
 import '../../common/Icons.less';
 import { CONTEXT_PATH } from '../../fasitProperties';
 import { formatISOString, isValidISOString } from '../../utils';
@@ -69,27 +69,27 @@ class SavedSearchListItem extends React.Component {
                         )}
                     </div>
                     <div className="SavedSearchListItem__bottom">
-                        <LinkButton onClick={this.onChangeClick} className="Edit">
+                        <Lenkeknapp onClick={this.onChangeClick} className="Edit">
                             <i className="Edit__icon" />
                             Endre
-                        </LinkButton>
-                        <LinkButton onClick={this.onRemoveClick} className="Delete">
+                        </Lenkeknapp>
+                        <Lenkeknapp onClick={this.onRemoveClick} className="Delete">
                             <i className="Delete__icon" />
                             Slett
-                        </LinkButton>
+                        </Lenkeknapp>
                     </div>
                 </div>
                 {savedSearch.status === SavedSearchStatusEnum.INACTIVE &&
                     savedSearch.notifyType === NotifyTypeEnum.EMAIL && (
                         <AlertStripe type="info" solid className="SavedSearchListItem__alertstripe">
                             Ditt varsel for dette søket har gått ut
-                            <FlatButton
+                            <Flatknapp
                                 className="SavedSearchListItem__button-alertstripe"
                                 onClick={this.onExtendDurationClick}
                                 mini
                             >
                                 Start ny varsling
-                            </FlatButton>
+                            </Flatknapp>
                         </AlertStripe>
                     )}
             </div>

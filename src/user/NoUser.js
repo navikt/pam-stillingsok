@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { Hovedknapp } from 'pam-frontend-knapper';
 import './NoUser.less';
-import { PrimaryButton } from '../common/button';
 import { SHOW_TERMS_OF_USE_MODAL } from './userReducer';
 
 class NoUser extends React.Component {
@@ -22,12 +22,12 @@ class NoUser extends React.Component {
                     Du må samtykke for å kunne lagre søk og favoritter.
                 </Normaltekst>
                 <div className="NoUser__buttons">
-                    <PrimaryButton
+                    <Hovedknapp
                         className="NoUser__button__button"
                         onClick={this.onCreateUserClick}
                     >
                         Se samtykke
-                    </PrimaryButton>
+                    </Hovedknapp>
                     <Link to="/" className="link">
                         Fortsett uten å samtykke
                     </Link>
