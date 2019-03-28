@@ -1,3 +1,8 @@
+## RELEASE - 0.85.603-5a500ff
+#### New in this release: 
++ 2019-03-28 [FIX] expired co-worker
++ 2019-03-28 [PAM-3007] Also set noindex if ad is 404 not found (gone from ES)
++ 2019-03-25 [PAM-3007] Set noindex robots directive for inactive ads
 ## RELEASE - 0.83.600-45bd6d8
 #### New in this release: 
 + 2019-03-25 [Feautre] Legger til meta description for bedre treff i google
