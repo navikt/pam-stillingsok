@@ -46,7 +46,9 @@ class SearchBox extends React.Component {
                         type="submit"
                         className="SearchBox__button"
                     >
-                        <i aria-label="Søk" className="SearchBox__button__icon" />
+                        <i className="SearchBox__button__icon">
+                            <span className="sr-only">Søk</span>
+                        </i>
                     </button>
                 </div>
             </div>
