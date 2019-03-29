@@ -47,7 +47,7 @@ export default function HowToApply({ source, properties }) {
                                 href={sokUrl}
                             >
                                 <div className="HowToApply__send-button-content">
-                                    <i className="HowToApply__send-button-icon" />Søk på stillingen
+                                    <span className="HowToApply__send-button-icon" />Søk på stillingen
                                 </div>
                             </a>
 

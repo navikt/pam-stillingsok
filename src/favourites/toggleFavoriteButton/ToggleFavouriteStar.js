@@ -34,7 +34,7 @@ class ToggleFavouriteStar extends React.Component {
                     className={className ? `ToggleFavouriteStar ${className}` : 'ToggleFavouriteStar'}
                 >
                     <div className="ToggleFavouriteStar__flex">
-                        <i className="ToggleFavouriteStar__star--active" />
+                        <span className="ToggleFavouriteStar__star--active" />
                     </div>
                 </button>
             );
@@ -48,7 +48,7 @@ class ToggleFavouriteStar extends React.Component {
                 className={className ? `ToggleFavouriteStar ${className}` : 'ToggleFavouriteStar'}
             >
                 <div className="ToggleFavouriteStar__flex">
-                    <i className="ToggleFavouriteStar__star" />
+                    <span className="ToggleFavouriteStar__star" />
                 </div>
             </button>
         );

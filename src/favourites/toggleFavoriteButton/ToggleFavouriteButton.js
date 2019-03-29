@@ -36,7 +36,7 @@ class ToggleFavouriteButton extends React.Component {
                     className="ToggleFavouriteButton"
                 >
                     <div className="ToggleFavouriteButton__flex">
-                        <i className="ToggleFavouriteButton__star ToggleFavouriteButton__star--active" />
+                        <span className="ToggleFavouriteButton__star ToggleFavouriteButton__star--active" />
                         <span className="ToggleFavouriteButton__label">
                             Slett favoritt
                         </span>
@@ -53,7 +53,7 @@ class ToggleFavouriteButton extends React.Component {
                 className="ToggleFavouriteButton"
             >
                 <div className="ToggleFavouriteButton__flex">
-                    <i className="ToggleFavouriteButton__star" />
+                    <span className="ToggleFavouriteButton__star" />
                     <span className="ToggleFavouriteButton__label">
                     Lagre favoritt
                     </span>

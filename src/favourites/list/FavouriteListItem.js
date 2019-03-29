@@ -33,7 +33,7 @@ class FavouriteListItem extends React.Component {
                 <div className={classNames('FavouriteListItem', { 'FavouriteListItem--expired': expired })}>
                     <SearchResultsItemDetails stilling={this.toAd(favourite.favouriteAd)} />
                     <Lenkeknapp onClick={this.onRemoveClick} className="FavouriteListItem__delete Delete" aria-label="Slett">
-                        <i className="Delete__icon" />
+                        <span className="Delete__icon" />
                     </Lenkeknapp>
                 </div>
                 {expired && (
