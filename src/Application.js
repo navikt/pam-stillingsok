@@ -46,9 +46,9 @@ class Application extends React.Component {
                             <NotAuthenticatedModal />
                         )}
                         <UserAlertStripe />
+                        <Feedback />
                     </main>
                     <footer className="Application__footer">
-                        <Footer />
                     </footer>
                 </div>
             </BrowserRouter>
