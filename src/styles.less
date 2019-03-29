@@ -4,8 +4,7 @@
 @import "../node_modules/nav-frontend-paneler-style/src/index";
 @import "../node_modules/nav-frontend-skjema-style/src/index";
 @import "../node_modules/nav-frontend-grid-style/src/index";
-
-@import "common/link/link";
+@import "../node_modules/pam-frontend-core/less/link/link";
 @import "variables";
 
 /*
@@ -60,7 +59,7 @@ html, body {
 
 body {
   overflow-y: scroll;
-  background: @body-bg-color;
+  background: #fff;
   color: @fontColorDarkBlue;
 }
 
@@ -111,7 +110,7 @@ input::-ms-clear {
 }
 
 .ekspanderbartPanel {
-  border-top: 2px solid @darkBlue !important;
+  border-top: 2px solid @blueDarken !important;
 }
 
 .ekspanderbartPanel__hode {
