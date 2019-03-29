@@ -49,6 +49,7 @@ class Application extends React.Component {
                         <Feedback />
                     </main>
                     <footer className="Application__footer">
+                        <Footer />
                     </footer>
                 </div>
             </BrowserRouter>
