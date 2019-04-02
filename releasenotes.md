@@ -1,3 +1,26 @@
+## RELEASE - 0.86.625-703cb57
+#### New in this release: 
++ 2019-04-01 [Fix] Unngå at meta tag description er for lang
++ 2019-04-01 [Fix] Ikke åpne feedback-skjema i ny fane pga UU
++ 2019-04-01 [Fix] Bytter til rem for bedre skalering av tekst
++ 2019-04-01 [Fix] Fjerner modal som ikke lengre er i bruk
++ 2019-04-01 [Fix] Fjerner unødvending less variabel
++ 2019-03-29 [Fix] CSS tweaks
++ 2019-03-29 [Fix] CSS tweaks
++ 2019-03-29 [Fix] CSS tweaks
++ 2019-03-29 [Fix] CSS tweaks
++ 2019-03-29 [Fix] CSS tweaks
++ 2019-03-29 [Fix] CSS tweaks
++ 2019-03-29 [Fix] Venstrestiller tittel
++ 2019-03-29 [Fix] Bruker moduler fra pam-frontend
++ 2019-03-29 [Fix] Fixer UU issues med italic
++ 2019-03-29 [Fix] Fjerner ubrukt css
++ 2019-03-29 [Fix] Unngå at charset settes 2 ganger i meta-taggene
++ 2019-03-28 [Fix] Feil farge på søk på stillingen knapp
++ 2019-03-28 [Fix] UU issue i footer
++ 2019-03-28 [Fix] UU issue i søkeboks
++ 2019-03-28 [Fix] Noen mindre UU issues
++ 2019-03-28 [Fix] Bruker knapper fra pam-nav-frontend-knapper
 ## RELEASE - 0.85.603-5a500ff
 #### New in this release: 
 + 2019-03-28 [FIX] expired co-worker
