@@ -6,11 +6,12 @@ import './Typeahead.less';
 
 export default class Typeahead extends React.Component {
     constructor(props) {
-        super();
+        super(props);
         this.state = {
             activeSuggestionIndex: -1,
             hasFocus: false,
-            shouldShowSuggestions: true
+            shouldShowSuggestions: true,
+            setAriaActiveDescendant: false
         };
         this.shouldBlur = true;
     }
@@ -41,6 +42,19 @@ export default class Typeahead extends React.Component {
     onKeyDown = (e) => {
         let { activeSuggestionIndex } = this.state;
         const hasSelectedSuggestion = activeSuggestionIndex > -1;
+
+        /**
+         * It’s important to only set aria-activedescendant after the Down arrow key is used to start traversing the
+         * associated Listbox options, and to clear aria-activedescendant by removing the attribute or setting it to “”
+         * every time the Left/Right arrow keys are pressed, as with Home/End, Escape, or when typing characters or
+         * pasting content into the edit field. Otherwise the accessibility tree will report that focus is within the
+         * Listbox and it will be impossible for screen reader users to review the text that has been typed into the
+         * edit field.
+         * https://www.levelaccess.com/differences-aria-1-0-1-1-changes-rolecombobox/
+         */
+        this.setState({
+            setAriaActiveDescendant: e.keyCode === 38 || e.keyCode === 40
+        });
 
         switch (e.keyCode) {
             case 9: // Tab
@@ -158,25 +172,29 @@ export default class Typeahead extends React.Component {
     };
 
     render() {
+        const { activeSuggestionIndex, setAriaActiveDescendant } = this.state;
+
         const showSuggestions = this.state.hasFocus &&
             this.state.shouldShowSuggestions &&
             this.props.suggestions.length > 0;
 
-        const activeDescendant = this.state.activeSuggestionIndex > -1 ?
-            `${this.props.id}-item-${this.state.activeSuggestionIndex}` : undefined;
+        const activeDescendant = setAriaActiveDescendant && activeSuggestionIndex > -1 ?
+            `${this.props.id}-item-${activeSuggestionIndex}` : undefined;
 
         return (
-            <div className="Typeahead">
+            <div
+                className="Typeahead"
+                role="combobox"
+                aria-expanded={showSuggestions}
+                aria-owns={`${this.props.id}-suggestions`}
+                aria-haspopup="listbox"
+            >
                 <input
                     id={this.props.id}
-                    role="combobox"
                     type="search"
                     aria-label={this.props.ariaLabel}
                     aria-autocomplete="list"
                     aria-controls={`${this.props.id}-suggestions`}
-                    aria-owns={`${this.props.id}-suggestions`}
-                    aria-expanded={showSuggestions}
-                    aria-haspopup={showSuggestions}
                     aria-activedescendant={activeDescendant}
                     placeholder={this.props.placeholder}
                     value={this.props.value}
