@@ -1,7 +1,7 @@
 @import "../../variables";
 
 .SavedSearchListItem__wrapper {
-  margin: 0;
+  margin: 0 0 1rem;
 
   &:nth-child(even) {
     background-color: @even-bgColor;
@@ -15,6 +15,10 @@
 
 .SavedSearchListItem {
   display: block;
+
+  &--expired {
+    background: @yellowLighten;
+  }
 }
 
 .SavedSearchListItem__top {
@@ -65,11 +69,9 @@
 }
 
 .SavedSearchListItem__alertstripe {
-  .alertstripe__ikon {
-    margin: 0 !important;
-    padding: 0 !important;
-    width: 2rem !important;
-  }
+  border-radius: 0;
+  display: flex;
+  align-items: center;
 
   .alertstripe__tekst {
     flex: 1;

@@ -37,7 +37,7 @@ class FavouriteListItem extends React.Component {
                     </Lenkeknapp>
                 </div>
                 {expired && (
-                    <AlertStripe type="info" solid className="FavouriteListItem__alertstripe">
+                    <AlertStripe type="advarsel" solid className="FavouriteListItem__alertstripe">
                         Denne annonsen er utløpt
                     </AlertStripe>
                 )}

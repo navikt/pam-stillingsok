@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import classNames from 'classnames';
 import { Flatknapp, Lenkeknapp } from 'pam-frontend-knapper';
 import '../../common/Icons.less';
 import { CONTEXT_PATH } from '../../fasitProperties';
@@ -40,9 +41,12 @@ class SavedSearchListItem extends React.Component {
 
     render() {
         const { savedSearch } = this.props;
+        // const expired = savedSearch.status === SavedSearchStatusEnum.INACTIVE &&
+        //     savedSearch.notifyType === NotifyTypeEnum.EMAIL;
+        const expired = true;
         return (
             <div className="SavedSearchListItem__wrapper">
-                <div className="SavedSearchListItem">
+                <div className={classNames('SavedSearchListItem', { 'SavedSearchListItem--expired': expired })}>
                     <div className="SavedSearchListItem__top">
                         <div className="SavedSearchListItem__top_flex">
                             <div className="SavedSearchListItem__title">
@@ -79,19 +83,18 @@ class SavedSearchListItem extends React.Component {
                         </Lenkeknapp>
                     </div>
                 </div>
-                {savedSearch.status === SavedSearchStatusEnum.INACTIVE &&
-                    savedSearch.notifyType === NotifyTypeEnum.EMAIL && (
-                        <AlertStripe type="info" solid className="SavedSearchListItem__alertstripe">
-                            Ditt varsel for dette søket har gått ut
-                            <Flatknapp
-                                className="SavedSearchListItem__button-alertstripe"
-                                onClick={this.onExtendDurationClick}
-                                mini
-                            >
-                                Start ny varsling
-                            </Flatknapp>
-                        </AlertStripe>
-                    )}
+                {expired && (
+                    <AlertStripe type="advarsel" solid className="SavedSearchListItem__alertstripe">
+                        Ditt varsel for dette søket har gått ut
+                        <Flatknapp
+                            className="SavedSearchListItem__button-alertstripe"
+                            onClick={this.onExtendDurationClick}
+                            mini
+                        >
+                            Start ny varsling
+                        </Flatknapp>
+                    </AlertStripe>
+                )}
             </div>
         );
     }

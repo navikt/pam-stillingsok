@@ -3,7 +3,7 @@ import Lukknapp from 'nav-frontend-lukknapp';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { Flatknapp } from 'pam-frontend-knapper';
+import { Knapp } from 'pam-frontend-knapper';
 import './Error.less';
 import { HIDE_ERROR } from './errorReducer';
 
@@ -20,7 +20,7 @@ class Error extends React.Component {
         const { messages } = this.props;
         return (
             <AlertStripe
-                type="advarsel"
+                type="feil"
                 solid
                 aria-atomic="true"
                 className={`Error StickyAlertStripe${messages.length === 0 ? ' StickyAlertStripe--hidden' : ''}`}
@@ -41,16 +41,15 @@ class Error extends React.Component {
                 {messages.length === 0 && (
                     <div />
                 )}
-                <Flatknapp
+                <Knapp
                     className="Error__reload"
                     mini
                     onClick={this.onReloadClick}
                 >
                     Last siden på nytt
-                </Flatknapp>
+                </Knapp>
                 <Lukknapp
                     className="Error__close"
-                    hvit
                     onClick={this.onCloseClick}
                 >
                     Lukk

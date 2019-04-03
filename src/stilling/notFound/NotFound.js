@@ -1,11 +1,11 @@
 import React from 'react';
-import { AlertStripeInfo } from 'nav-frontend-alertstriper';
-import './NotFound.less';
 import { Link } from 'react-router-dom';
+import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
+import './NotFound.less';
 
 export default function NotFound() {
     return (
-        <AlertStripeInfo className="NotFound">
+        <AlertStripeAdvarsel className="NotFound">
             <div className="NotFound__message">
                 <p>
                     <strong>Vi fant ikke stillingsannonsen.</strong> Den kan være utløpt eller avpublisert.
@@ -16,6 +16,6 @@ export default function NotFound() {
                     </Link>
                 </p>
             </div>
-        </AlertStripeInfo>
+        </AlertStripeAdvarsel>
     );
 }
