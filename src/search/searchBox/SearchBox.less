@@ -1,7 +1,9 @@
 @import "../../variables";
 
 .SearchBox {
-  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
   @media (min-width: @screen-md-min) {
     margin-left: 1.25rem;
@@ -10,99 +12,63 @@
   @media (min-width: @screen-lg-min) {
     margin-left: 2rem;
   }
-
-  @media (max-width: @screen-sm-max) {
-    margin-bottom: 1rem;
-  }
 }
 
 #search-form-fritekst-input {
   border: 0;
-  border-bottom: 2px solid @pinkLighten;
-  background: transparent;
-  padding: 0.5rem 4rem 0.5rem 0;
+  border-bottom: 2px solid #fff;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.5rem;
   font-size: 1.5rem;
   color: #fff;
 
   @media (min-width: @screen-sm-min) {
-    padding: 0.5rem 4rem 0.5rem 0;
-    font-size: 1.75rem;
+    font-size: 2rem;
   }
 
-  @media (min-width: @screen-md-min) {
-    padding: 0.5rem 4rem 0.5rem 0;
-    font-size: 1.75rem;
-  }
-
-  @media (min-width: @screen-lg-min) {
-    padding: 0.5rem 4rem 1rem 0;
-    font-size: 2.5rem;
+  &:hover {
+    border-bottom: 2px solid @greenHover;
   }
 
   &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-    color: @pinkLighten;
+    color: #fff;
   }
   &::-moz-placeholder { /* Firefox 19+ */
-    color: @pinkLighten;
+    color: #fff;
   }
   &:-ms-input-placeholder { /* IE 10+ */
-    color: @pinkLighten;
+    color: #fff;
   }
   &:-moz-placeholder { /* Firefox 18- */
-    color: @pinkLighten;
+    color: #fff;
   }
 
   &:focus {
-    border-bottom: 2px solid @pinkDarken;
+    border-bottom: 2px solid @green;
 
     &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-      color: @gray5;
+      color: rgba(255, 255, 255, 0.2);
     }
     &::-moz-placeholder { /* Firefox 19+ */
-      color: @gray5;
+      color: rgba(255, 255, 255, 0.2);
     }
     &:-ms-input-placeholder { /* IE 10+ */
-      color: @gray5;
+      color: rgba(255, 255, 255, 0.2);
     }
     &:-moz-placeholder { /* Firefox 18- */
-      color: @gray5;
+      color: rgba(255, 255, 255, 0.2);
     }
   }
 }
 
 .SearchBox__button {
+  margin-left: 1rem;
   background-color: transparent;
-  border: 0!important;
-  padding: 0 0.25rem!important;
-  position: absolute;
+  width: 3rem;
   height: 3rem;
-  top: 50%;
-  right: 0;
-  margin-top: -1.5rem;
-
-  @media (max-width: @screen-xs-max) {
-    height: 2rem;
-    margin-top: -1rem;
-  }
-
-  &:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px @orangeFocus;
-  }
-
-  &:hover, &:active {
-    color: #fff;
-  }
-}
-
-.SearchBox__button__icon {
-  width: 34px;
-  height: 34px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cg stroke='%23fbd8e7' stroke-linejoin='round' stroke-miterlimit='10' fill='none'%3E%3Ccircle cx='10' cy='10' r='5.5'/%3E%3Cpath stroke-linecap='round' d='M14.156 14.156l9.344 9.344'/%3E%3C/g%3E%3C/svg%3E");
-  background-size: 50px;
-  background-repeat: no-repeat;
-  background-position: -8px -8px;
-  display: block;
+  border: 2px solid @green;
+  border-radius: 50%;
+  padding: 0;
 
   &:focus {
     outline: none;
@@ -110,10 +76,26 @@
   }
 
   &:hover {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cg stroke='%23A84499' stroke-linejoin='round' stroke-miterlimit='10' fill='none'%3E%3Ccircle cx='10' cy='10' r='5.5'/%3E%3Cpath stroke-linecap='round' d='M14.156 14.156l9.344 9.344'/%3E%3C/g%3E%3C/svg%3E");
+    border-color: @greenHover;
+    .SearchBox__button__icon {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cg stroke='%2398f1d7' stroke-linejoin='round' stroke-miterlimit='10' fill='none'%3E%3Ccircle cx='10' cy='10' r='5.5'/%3E%3Cpath stroke-linecap='round' d='M14.156 14.156l9.344 9.344'/%3E%3C/g%3E%3C/svg%3E");
+    }
   }
 
   &:active {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cg stroke='%238C368E' stroke-linejoin='round' stroke-miterlimit='10' fill='none'%3E%3Ccircle cx='10' cy='10' r='5.5'/%3E%3Cpath stroke-linecap='round' d='M14.156 14.156l9.344 9.344'/%3E%3C/g%3E%3C/svg%3E");
+    border-color: @green;
+    .SearchBox__button__icon {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cg stroke='%2340C1AC' stroke-linejoin='round' stroke-miterlimit='10' fill='none'%3E%3Ccircle cx='10' cy='10' r='5.5'/%3E%3Cpath stroke-linecap='round' d='M14.156 14.156l9.344 9.344'/%3E%3C/g%3E%3C/svg%3E");
+    }
   }
+}
+
+.SearchBox__button__icon {
+  width: 2.5rem;
+  height: 1.5rem;
+  background-size: 2.25rem;
+  background-repeat: no-repeat;
+  background-position: center -0.385rem;
+  display: block;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cg stroke='%2340C1AC' stroke-linejoin='round' stroke-miterlimit='10' fill='none'%3E%3Ccircle cx='10' cy='10' r='5.5'/%3E%3Cpath stroke-linecap='round' d='M14.156 14.156l9.344 9.344'/%3E%3C/g%3E%3C/svg%3E");
 }

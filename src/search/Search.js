@@ -62,7 +62,7 @@ class Search extends React.Component {
                     <Container className="Search__header__container">
                         <Row className="Search__header__row">
                             <Column xs="12" sm="12" md="4" lg="4" />
-                            <Column xs="12" sm="12" md="5" lg="6">
+                            <Column xs="12" sm="12" md="6" lg="6">
                                 <form
                                     action="/"
                                     onSubmit={this.onSearchFormSubmit}
@@ -71,7 +71,7 @@ class Search extends React.Component {
                                     <SearchBox />
                                 </form>
                             </Column>
-                            <Column xs="12" sm="12" md="3" lg="2">
+                            <Column xs="12" sm="12" md="2" lg="2">
                                 {this.props.isAuthenticated === authenticationEnum.IS_AUTHENTICATED && this.props.user ?
                                     <div className="Search__header__left">
                                         <SavedSearchesExpandButton />

@@ -1,5 +1,11 @@
 @import "../../variables";
 
+.SavedSearchesExpand__container {
+  @media (max-width: @screen-sm-max) {
+    margin-top: 1rem;
+  }
+}
+
 .SavedSearchesExpand__spinner {
   min-height: 5rem;
   text-align: center;
@@ -13,7 +19,7 @@
 .SavedSearchesExpand__button {
   background: transparent;
   border: 0;
-  color: @pinkLighten;
+  color: @green;
   cursor: pointer;
   display: inline-block;
   padding: 2px 2px;
@@ -24,6 +30,7 @@
   }
 
   &:hover {
+    color: @greenHover;
     .SavedSearchesExpand__chevron[class~='chevron--opp'] {
       transform: translateY(-0.25rem);
     }
@@ -31,6 +38,10 @@
     .SavedSearchesExpand__chevron[class~='chevron--ned'] {
       transform: translateY(0.25rem);
     }
+  }
+
+  &:active {
+    color: @green;
   }
 }
 
