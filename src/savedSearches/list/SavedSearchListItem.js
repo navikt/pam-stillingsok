@@ -41,9 +41,8 @@ class SavedSearchListItem extends React.Component {
 
     render() {
         const { savedSearch } = this.props;
-        // const expired = savedSearch.status === SavedSearchStatusEnum.INACTIVE &&
-        //     savedSearch.notifyType === NotifyTypeEnum.EMAIL;
-        const expired = true;
+        const expired = savedSearch.status === SavedSearchStatusEnum.INACTIVE &&
+            savedSearch.notifyType === NotifyTypeEnum.EMAIL;
         return (
             <div className="SavedSearchListItem__wrapper">
                 <div className={classNames('SavedSearchListItem', { 'SavedSearchListItem--expired': expired })}>

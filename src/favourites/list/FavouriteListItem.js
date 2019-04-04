@@ -35,12 +35,12 @@ class FavouriteListItem extends React.Component {
                     <Lenkeknapp onClick={this.onRemoveClick} className="FavouriteListItem__delete Delete" aria-label="Slett">
                         <span className="Delete__icon" />
                     </Lenkeknapp>
+                    {expired && (
+                        <AlertStripe type="advarsel" solid className="FavouriteListItem__alertstripe">
+                            Denne annonsen er utløpt
+                        </AlertStripe>
+                    )}
                 </div>
-                {expired && (
-                    <AlertStripe type="advarsel" solid className="FavouriteListItem__alertstripe">
-                        Denne annonsen er utløpt
-                    </AlertStripe>
-                )}
             </div>
         );
     }
