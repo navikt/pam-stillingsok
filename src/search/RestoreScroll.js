@@ -24,7 +24,9 @@ export default class RestoreScroll extends React.Component {
             const scrollTop = sessionStorage.getItem('scrollTop');
             if (scrollTop && scrollTop !== null) {
                 sessionStorage.removeItem('scrollTop');
-                window.scrollTo(0, parseInt(scrollTop, 10));
+                requestAnimationFrame(() => {
+                    window.scrollTo(0, parseInt(scrollTop, 10));
+                });
             } else {
                 window.scrollTo(0, 0);
             }
