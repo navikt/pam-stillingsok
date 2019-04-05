@@ -1,3 +1,8 @@
+## RELEASE - 0.88.631-351decc
+#### New in this release: 
++ 2019-04-05 [Fix] Juster line-height i trefflisten
++ 2019-04-05 [Fix] Juster font-weight i trefflisten
++ 2019-04-05 [Fix] Fikser issue med scrollTo på mobil.
 ## RELEASE - 0.87.629-3dc85e5
 #### New in this release: 
 + 2019-04-04 [Fix] Endrer farger i trefflisten
