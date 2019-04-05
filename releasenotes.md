@@ -1,3 +1,9 @@
+## RELEASE - 0.87.629-3dc85e5
+#### New in this release: 
++ 2019-04-04 [Fix] Endrer farger i trefflisten
++ 2019-04-04 [Fix] Oppdaterer til grønne farger i iht. siste designendringer
++ 2019-04-03 [Fix] Opdatere typeahead iht aria 1.1
++ 2019-04-03 [Fix] Oppdaterer til nyeste versjon av nav-frontend-alerstriper
 ## RELEASE - 0.86.625-703cb57
 #### New in this release: 
 + 2019-04-01 [Fix] Unngå at meta tag description er for lang
