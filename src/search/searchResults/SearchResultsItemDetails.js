@@ -1,5 +1,5 @@
 import { Column, Row } from 'nav-frontend-grid';
-import { Element, Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
+import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'react-router-dom';
@@ -25,9 +25,9 @@ export default function SearchResultsItemDetails({ stilling }) {
             <Row className="SearchResultsItemDetails">
                 <Column xs="12" md="4">
                     {employer && (
-                        <Element className="SearchResultsItemDetails__employer">
+                        <Normaltekst className="SearchResultsItemDetails__employer">
                             {employer}
-                        </Element>
+                        </Normaltekst>
                     )}
                 </Column>
                 <Column xs="12" md="8">
