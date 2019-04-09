@@ -15,7 +15,7 @@ const SearchResults = ({ searchResult, isSearching, page }) => {
         const hasMore = page + 1 < totalPages;
         const count = ((page * PAGE_SIZE) + PAGE_SIZE) > total ? total : (page * PAGE_SIZE) + PAGE_SIZE;
         return (
-            <div role="region" className="SearchResults">
+            <div role="region" aria-label="Søkeresultat" className="SearchResults">
                 <div>
                     {stillinger && stillinger.map((stilling) => (
                         <SearchResultItem
