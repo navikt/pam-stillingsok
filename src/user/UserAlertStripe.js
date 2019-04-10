@@ -2,14 +2,13 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { CONTEXT_PATH } from '../fasitProperties';
 import StickyAlertStripe from '../common/StickyAlertStripe';
 
 function UserAlertStripe({ userAlertStripeMode, userAlertStripeIsVisible }) {
     if (userAlertStripeIsVisible && (userAlertStripeMode === 'added')) {
         return (
             <StickyAlertStripe type="suksess">
-                Din e-postadresse er lagret på <Link className="alertstripe__link" to={`${CONTEXT_PATH}/innstillinger`}> Innstillinger
+                Din e-postadresse er lagret på <Link className="alertstripe__link" to="/personinnstillinger"> Innstillinger
             </Link>
             </StickyAlertStripe>
         );
