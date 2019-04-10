@@ -9,7 +9,7 @@ function FavouriteAlertStripe({ showAlertStripe, alertStripeMode }) {
     if (showAlertStripe && (alertStripeMode === 'added')) {
         return (
             <StickyAlertStripe type="suksess">
-                Stillingsannonsen er lagret i <Link className="alertstripe__link" to={`${CONTEXT_PATH}/favoritter`}>favoritter</Link>
+                Stillingsannonsen er lagret i <Link className="link link--dark" to={`${CONTEXT_PATH}/favoritter`}>favoritter</Link>
             </StickyAlertStripe>
         );
     } else if (showAlertStripe && alertStripeMode === 'removed') {
