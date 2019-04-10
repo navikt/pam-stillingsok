@@ -1,3 +1,6 @@
+## RELEASE - 0.90.636-f3f7da3
+#### New in this release: 
++ 2019-04-09 [PAM-3115] Bytte til nav sin google analytics
 ## RELEASE - 0.89.635-b128fec
 #### New in this release: 
 + 2019-04-09 [Fix] Legger til aria på typehead og søkeresultat region

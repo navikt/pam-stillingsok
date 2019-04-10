@@ -63,7 +63,6 @@ body {
   color: @blueDarken;
 }
 
-
 #app, .Application {
   height: 100%;
 }
@@ -76,7 +75,6 @@ body {
   margin-bottom: -@footer-height;
   padding-bottom: @footer-height;
 }
-
 
 body.screen-xs-no-scroll {
   @media (max-width: @screen-xs-max) {
@@ -97,13 +95,12 @@ input::-ms-clear {
   max-width: 40rem;
 }
 
-
 /**
 * Overrides
 */
 
 @media (max-width: @screen-xs-max) {
-  .container{
+  .container {
     padding-left: 16px;
     padding-right: 16px;
   }
@@ -111,32 +108,39 @@ input::-ms-clear {
 
 .ekspanderbartPanel {
   border-top: 2px solid @blueDarken !important;
-}
+  border-radius: 0 !important;
 
-.ekspanderbartPanel__hode {
-  border-radius: 0!important;
-  padding-top: 0.5rem;
+  .ekspanderbartPanel__hode {
+    border-radius: 0 !important;
+    padding-top: 0.5rem;
 
-  .ekspanderbartPanel__heading {
-    color: @blueDarken;
+    &:focus {
+      box-shadow: none;
+      outline: 3px solid @orangeFocus;
+    }
+
+    &:hover {
+      box-shadow: none;
+      background: @greenLighten;
+
+      .ekspanderbartPanel__heading {
+        color: @blueDarken;
+      }
+    }
+
+    .ekspanderbartPanel__heading {
+      color: @blueDarken;
+    }
   }
-}
 
-.ekspanderbartPanel .ekspanderbartPanel__hode:hover {
-  box-shadow: none;
-  background: @greenLighten;
-}
 
-.ekspanderbartPanel .ekspanderbartPanel__hode:hover .ekspanderbartPanel__heading{
-  color: @blueDarken;
-}
+  .ekspanderbartPanel__innhold {
+    padding: 0.25rem 1rem 0;
 
-.ekspanderbartPanel__innhold {
-  padding: 0.25rem 1rem 0;
-
-  @media (min-width: @screen-md-min) {
-    padding: 1rem 1rem 0.5rem;
-    background: @gray2;
+    @media (min-width: @screen-md-min) {
+      padding: 1rem 1rem 0.5rem;
+      background: @gray2;
+    }
   }
 }
 
