@@ -1,3 +1,11 @@
+## RELEASE - 0.90.636-f3f7da3
+#### New in this release: 
++ 2019-04-09 [PAM-3115] Bytte til nav sin google analytics
+## RELEASE - 0.89.635-b128fec
+#### New in this release: 
++ 2019-04-09 [Fix] Legger til aria på typehead og søkeresultat region
++ 2019-04-09 [PAM-3037] Oppdatere til siste versjon av header og footer
++ 2019-04-05 [Fix] Bruk default line-height i annonsetittel
 ## RELEASE - 0.88.631-351decc
 #### New in this release: 
 + 2019-04-05 [Fix] Juster line-height i trefflisten
