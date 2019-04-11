@@ -5,6 +5,8 @@
 @import "../node_modules/nav-frontend-skjema-style/src/index";
 @import "../node_modules/nav-frontend-grid-style/src/index";
 @import "../node_modules/pam-frontend-core/less/link/link";
+@import "../node_modules/pam-frontend-core/less/skjema/mixins";
+@import "../node_modules/pam-frontend-core/less/panel/panel";
 @import "variables";
 
 /*
@@ -61,6 +63,8 @@ body {
   overflow-y: scroll;
   background: #fff;
   color: @blueDarken;
+
+  .skjemaelement--pink();
 }
 
 #app, .Application {
@@ -103,43 +107,5 @@ input::-ms-clear {
   .container {
     padding-left: 16px;
     padding-right: 16px;
-  }
-}
-
-.ekspanderbartPanel {
-  border-top: 2px solid @blueDarken !important;
-  border-radius: 0 !important;
-
-  .ekspanderbartPanel__hode {
-    border-radius: 0 !important;
-    padding-top: 0.5rem;
-
-    &:focus {
-      box-shadow: none;
-      outline: 3px solid @orangeFocus;
-    }
-
-    &:hover {
-      box-shadow: none;
-      background: @greenLighten;
-
-      .ekspanderbartPanel__heading {
-        color: @blueDarken;
-      }
-    }
-
-    .ekspanderbartPanel__heading {
-      color: @blueDarken;
-    }
-  }
-
-
-  .ekspanderbartPanel__innhold {
-    padding: 0.25rem 1rem 0;
-
-    @media (min-width: @screen-md-min) {
-      padding: 1rem 1rem 0.5rem;
-      background: @gray2;
-    }
   }
 }

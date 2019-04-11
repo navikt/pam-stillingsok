@@ -28,7 +28,7 @@ class Published extends React.Component {
         return (
             <Ekspanderbartpanel
                 tittel={toFacetTitleWithCount('Publisert', checkedPublished ? 1 : 0)}
-                className="Published"
+                className="Published ekspanderbartPanel--green"
                 apen
             >
                 <div

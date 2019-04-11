@@ -43,7 +43,7 @@ class Counties extends React.Component {
         return (
             <Ekspanderbartpanel
                 tittel={toFacetTitleWithCount('Område', checkedCounties.length + checkedMunicipals.length)}
-                className="Counties"
+                className="Counties ekspanderbartPanel--green"
                 apen
             >
                 <div

@@ -44,7 +44,7 @@ class Occupations extends React.Component {
         return (
             <Ekspanderbartpanel
                 tittel={toFacetTitleWithCount('Yrke', checkedFirstLevels.length + checkedSecondLevels.length)}
-                className="Occupations"
+                className="Occupations ekspanderbartPanel--green"
                 apen
             >
                 <div
