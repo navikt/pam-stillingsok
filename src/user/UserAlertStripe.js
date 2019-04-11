@@ -1,16 +1,17 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { CONTEXT_PATH } from '../fasitProperties';
 import StickyAlertStripe from '../common/StickyAlertStripe';
 
 function UserAlertStripe({ userAlertStripeMode, userAlertStripeIsVisible }) {
     if (userAlertStripeIsVisible && (userAlertStripeMode === 'added')) {
         return (
             <StickyAlertStripe type="suksess">
-                Din e-postadresse er lagret på <Link className="link link--dark" to={`${CONTEXT_PATH}/innstillinger`}> Innstillinger
-            </Link>
+                Din e-postadresse er lagret på
+                {' '}
+                <a className="link link--dark" href="/personinnstillinger">
+                    Innstillinger
+                </a>
             </StickyAlertStripe>
         );
     } else if (userAlertStripeIsVisible && userAlertStripeMode === 'set-email') {
