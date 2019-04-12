@@ -1,3 +1,7 @@
+## RELEASE - 0.93.647-b6270e7
+#### New in this release: 
++ 2019-04-12 [Fix] Justerer opp font-størrelse i trefflisten for mobil
++ 2019-04-12 [Fix] Justerer på spinner og loading placeholdere
 ## RELEASE - 0.92.644-d6a732b
 #### New in this release: 
 + 2019-04-11 [Fix] Bruker skjemaelementer og paneler fra pam-frontend-moduler
