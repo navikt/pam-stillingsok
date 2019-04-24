@@ -1,3 +1,15 @@
+## RELEASE - 0.93.647-b6270e7
+#### New in this release: 
++ 2019-04-12 [Fix] Justerer opp font-størrelse i trefflisten for mobil
++ 2019-04-12 [Fix] Justerer på spinner og loading placeholdere
+## RELEASE - 0.92.644-d6a732b
+#### New in this release: 
++ 2019-04-11 [Fix] Bruker skjemaelementer og paneler fra pam-frontend-moduler
++ 2019-04-10 [Fix] Skrive om inntillinger-lenke til a-tag
++ 2019-04-10 [Fix] Bruker link--dark i stedet for custom css class
++ 2019-04-10 [Fix] Sletter UserSettings.js
++ 2019-04-10 [PAM-3125] Fikser fokusmarkeing på ekspanderende paneler
++ 2019-04-10 [PAM-3125] Fikser fokusmarkeing på ekspanderende paneler
 ## RELEASE - 0.90.636-f3f7da3
 #### New in this release: 
 + 2019-04-09 [PAM-3115] Bytte til nav sin google analytics

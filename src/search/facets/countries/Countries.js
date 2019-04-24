@@ -29,7 +29,7 @@ class Countries extends React.Component {
         return (
             <Ekspanderbartpanel
                 tittel={toFacetTitleWithCount('Land', checkedCountries.length)}
-                className="Countries"
+                className="Countries ekspanderbartPanel--green"
                 apen
             >
                 <div

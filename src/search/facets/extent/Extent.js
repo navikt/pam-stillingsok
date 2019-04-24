@@ -34,7 +34,7 @@ class Extent extends React.Component {
         return (
             <Ekspanderbartpanel
                 tittel={toFacetTitleWithCount('Heltid/deltid', checkedExtent.length)}
-                className="Extent"
+                className="Extent ekspanderbartPanel--green"
                 apen
             >
                 <div

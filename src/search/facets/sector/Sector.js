@@ -25,7 +25,7 @@ class Sector extends React.Component {
         return (
             <Ekspanderbartpanel
                 tittel={toFacetTitleWithCount('Sektor', checkedSector.length)}
-                className="Sector"
+                className="Sector ekspanderbartPanel--green"
                 apen
             >
                 <div

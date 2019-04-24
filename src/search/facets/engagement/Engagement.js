@@ -25,7 +25,7 @@ class Engagement extends React.Component {
         return (
             <Ekspanderbartpanel
                 tittel={toFacetTitleWithCount('Ansettelsesform', checkedEngagement.length)}
-                className="Engagement"
+                className="Engagement ekspanderbartPanel--green"
                 apen
             >
                 <div
