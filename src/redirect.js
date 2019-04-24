@@ -3,7 +3,8 @@ import { STILLINGSOK_URL, CONTEXT_PATH } from './fasitProperties';
 const whiteList = [
     `${CONTEXT_PATH}/favoritter`,
     `${CONTEXT_PATH}/lagrede-sok`,
-    `${CONTEXT_PATH}/innstillinger`
+    `${CONTEXT_PATH}/innstillinger`,
+    CONTEXT_PATH
 ];
 
 export function getRedirect() {
