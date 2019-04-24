@@ -1,3 +1,6 @@
+## RELEASE - 0.94.648-f7f9e60
+#### New in this release: 
++ 2019-04-24 [Fix] Oppdatere pam-frontend-header med tekstendring fra personbrukere til jobbsøkere
 ## RELEASE - 0.93.647-b6270e7
 #### New in this release: 
 + 2019-04-12 [Fix] Justerer opp font-størrelse i trefflisten for mobil
