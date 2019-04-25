@@ -1,3 +1,6 @@
+## RELEASE - 0.98.660-4c58d67
+#### New in this release: 
++ 2019-04-25 [Fix] Login
 ## RELEASE - 0.96.657-5cf5805
 #### New in this release: 
 + 2019-04-25 [Fix] Bytter om til /stillinger/stilling/?uuid= i url kun ved redirect til login. Endrer url tilbake igjen til /stillinger/stilling/uuid etter login
