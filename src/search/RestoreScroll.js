@@ -1,13 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import debounce from '../common/debounce';
 
 export default class RestoreScroll extends React.Component {
+    constructor(props) {
+        super(props);
+        this.debounced = debounce(this.keepScrollPosition, 100);
+    }
+
     componentDidMount() {
         this.restoreScrollPosition();
+        window.addEventListener('scroll', this.debounced);
     }
 
     componentWillUnmount() {
-        this.keepScrollPosition();
+        window.removeEventListener('scroll', this.debounced);
+        this.debounced = null;
     }
 
     keepScrollPosition = () => {
