@@ -44,9 +44,13 @@ class Stilling extends React.Component {
         } else {
             const query = toObject(document.location.search);
             uuid = query.uuid;
-            window.history.replaceState({}, '', `${CONTEXT_PATH}/stilling/${uuid}`);
+            if (uuid) {
+                window.history.replaceState({}, '', `${CONTEXT_PATH}/stilling/${uuid}`);
+            }
         }
-        this.props.getStilling(uuid);
+        if (uuid) {
+            this.props.getStilling(uuid);
+        }
         ga('set', 'page', `${CONTEXT_PATH}/stilling`);
         ga('set', 'title', 'Stilling');
         ga('send', 'pageview');
