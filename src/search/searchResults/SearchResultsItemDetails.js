@@ -21,7 +21,7 @@ export default function SearchResultsItemDetails({ stilling }) {
     const employer = getEmployer(stilling);
 
     return (
-        <Link to={`${CONTEXT_PATH}/stilling?uuid=${stilling.uuid}`} className="SearchResultItem__link">
+        <Link to={`${CONTEXT_PATH}/stilling/${stilling.uuid}`} className="SearchResultItem__link">
             <Row className="SearchResultsItemDetails">
                 <Column xs="12" md="4">
                     {employer && (

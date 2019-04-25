@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Footer } from 'pam-frontend-footer';
 import Error from './error/Error';
 import { CONTEXT_PATH } from './fasitProperties';
@@ -32,7 +32,7 @@ class Application extends React.Component {
                         </Switch>
                         <Switch>
                             <Route exact path="/" component={SearchPage} />
-                            <Redirect from={`${CONTEXT_PATH}/stilling/:uuid`} to={`${CONTEXT_PATH}/stilling?uuid=:uuid`} />
+                            <Route path={`${CONTEXT_PATH}/stilling/:uuid`} component={StillingPage} />
                             <Route path={`${CONTEXT_PATH}/stilling`} component={StillingPage} />
                             <Route path={`${CONTEXT_PATH}/favoritter`} component={Favourites} />
                             <Route path={`${CONTEXT_PATH}/lagrede-sok`} component={SavedSearches} />
