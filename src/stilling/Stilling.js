@@ -12,6 +12,7 @@ import { setMetaRobotsTag, removeMetaRobotsTag } from '../common/metaRobots';
 import { CONTEXT_PATH } from '../fasitProperties';
 import FavouriteAlertStripe from '../favourites/alertstripe/FavouriteAlertStripe';
 import ToggleFavouriteButton from '../favourites/toggleFavoriteButton/ToggleFavouriteButton';
+import { toObject } from '../search/url';
 import { urlFromSessionStorageOrIndex } from '../urlReducer';
 import AdDetails from './adDetails/AdDetails';
 import AdText from './adText/AdText';
@@ -37,7 +38,8 @@ class Stilling extends React.Component {
 
     componentDidMount() {
         window.scrollTo(0, 0);
-        this.props.getStilling(this.props.match.params.uuid);
+        const query = toObject(document.location.search);
+        this.props.getStilling(query.uuid);
         ga('set', 'page', `${CONTEXT_PATH}/stilling`);
         ga('set', 'title', 'Stilling');
         ga('send', 'pageview');
