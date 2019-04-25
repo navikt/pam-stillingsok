@@ -105,11 +105,11 @@ class Stilling extends React.Component {
                                     <div className="Stilling__header__button-row">
                                         <Link
                                             to={`${urlFromSessionStorageOrIndex()}`}
-                                            className="Stilling__header__button-row__back PageHeader__back link no-print"
+                                            className="Stilling__header__button-row__back PageHeader__back no-print"
                                         >
                                             <Chevron type="venstre" className="PageHeader__back__chevron" />
                                             <span className="PageHeader__back__text">
-                                            Til stillingssøk
+                                                Til stillingssøk
                                             </span>
                                         </Link>
                                         <div className="Stilling__header__favourite">

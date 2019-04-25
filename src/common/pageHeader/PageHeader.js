@@ -1,5 +1,4 @@
 import { Column, Container, Row } from 'nav-frontend-grid';
-import { Sidetittel } from 'nav-frontend-typografi';
 import Chevron from 'nav-frontend-chevron';
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -18,11 +17,11 @@ export default function PageHeader({
                             <div className="PageHeader__left">
                                 <Link
                                     to={backUrl}
-                                    className="PageHeader__back typo-normal link no-print"
+                                    className="PageHeader__back no-print"
                                 >
                                     <Chevron type="venstre" className="PageHeader__back__chevron" />
                                     <span className="PageHeader__back__text">
-                                        {backLabel || 'Til stillingsøk'}
+                                        {backLabel || 'Til stillingssøk'}
                                     </span>
                                 </Link>
                             </div>
