@@ -1,3 +1,9 @@
+## RELEASE - 0.96.657-5cf5805
+#### New in this release: 
++ 2019-04-25 [Fix] Bytter om til /stillinger/stilling/?uuid= i url kun ved redirect til login. Endrer url tilbake igjen til /stillinger/stilling/uuid etter login
++ 2019-04-25 [Fix] Bytter om til ?uuid i url.
++ 2019-04-25 [Fix] Når man klikker på favoritt-stjernen og deretter må logge inn, mister man scroll position. Gjør slik at man alltid scroller ned igjen i trefflisten.
++ 2019-04-25 [PAM-2824]: endrer typeahead til å bruke bold på søkte bokstaver
 ## RELEASE - 0.94.648-f7f9e60
 #### New in this release: 
 + 2019-04-24 [Fix] Oppdatere pam-frontend-header med tekstendring fra personbrukere til jobbsøkere
