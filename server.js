@@ -30,7 +30,7 @@ server.use(helmet.contentSecurityPolicy({
         fontSrc: ["'self'", 'data:', 'https://fonts.gstatic.com'],
         imgSrc: ["'self'", 'data:', 'https://www.google-analytics.com',
             'https://www.nav.no/_public/beta.nav.no/images/logo.png'],
-        connectSrc: ["'self'", process.env.PAMADUSER_URL, 'https://www.google-analytics.com']
+        connectSrc: ["'self'", process.env.PAMADUSER_URL, 'https://www.google-analytics.com', process.env.LOGOUT_URL]
     }
 }));
 
