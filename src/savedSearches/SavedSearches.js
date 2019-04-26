@@ -39,7 +39,7 @@ class SavedSearches extends React.Component {
             <div className="SavedSearches">
                 <SavedSearchAlertStripe />
                 <PageHeader
-                    backUrl={`${CONTEXT_PATH}/`}
+                    backUrl={`${CONTEXT_PATH}`}
                     title="Lagrede søk"
                 />
                 <Container className="SavedSearches__main">

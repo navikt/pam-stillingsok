@@ -39,7 +39,7 @@ class Favourites extends React.Component {
             <div className="Favourites">
                 <FavouriteAlertStripe />
                 <PageHeader
-                    backUrl={`${CONTEXT_PATH}/`}
+                    backUrl={`${CONTEXT_PATH}`}
                     title="Favoritter"
                 />
                 <Container className="Favourites__main">
