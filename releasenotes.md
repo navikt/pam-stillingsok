@@ -1,3 +1,6 @@
+## RELEASE - 0.99.666-e8e4947
+#### New in this release: 
++ 2019-04-26 [Fix] Fjerne unødvendig slash slik at riktig menypunkt blir markert
 ## RELEASE - 0.98.660-4c58d67
 #### New in this release: 
 + 2019-04-25 [Fix] Login
