@@ -29,7 +29,7 @@ server.use(helmet.contentSecurityPolicy({
         styleSrc: ["'self'"],
         fontSrc: ["'self'", 'data:', 'https://fonts.gstatic.com'],
         imgSrc: ["'self'", 'data:', 'https://www.google-analytics.com',
-            'https://www.nav.no/_public/beta.nav.no/images/logo.png'],
+            'https://arbeidsplassen.nav.no/images/arbeidsplassen-logo.svg'],
         connectSrc: ["'self'", process.env.PAMADUSER_URL, 'https://www.google-analytics.com']
     }
 }));
