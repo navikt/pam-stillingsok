@@ -28,8 +28,7 @@ server.use(helmet.contentSecurityPolicy({
         scriptSrc: ["'self'", 'https://www.google-analytics.com'],
         styleSrc: ["'self'"],
         fontSrc: ["'self'", 'data:', 'https://fonts.gstatic.com'],
-        imgSrc: ["'self'", 'data:', 'https://www.google-analytics.com',
-            'https://arbeidsplassen.nav.no/images/arbeidsplassen-logo.svg'],
+        imgSrc: ["'self'", 'data:', 'https://www.google-analytics.com'],
         connectSrc: ["'self'", process.env.PAMADUSER_URL, 'https://www.google-analytics.com']
     }
 }));
