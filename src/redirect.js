@@ -1,10 +1,9 @@
 import { STILLINGSOK_URL, CONTEXT_PATH } from './fasitProperties';
 
 const whiteList = [
-    //`${CONTEXT_PATH}/stilling`, // TODO: Må whitelistes
+    `${CONTEXT_PATH}/stilling`,
     `${CONTEXT_PATH}/favoritter`,
     `${CONTEXT_PATH}/lagrede-sok`,
-    `${CONTEXT_PATH}/innstillinger`, // TODO: Denne kan slettes når /stillinger er whitelisted
     CONTEXT_PATH
 ];
 
@@ -14,7 +13,7 @@ export function getRedirect() {
     const baseUrl = window.location.origin;
     if (path.startsWith(`${CONTEXT_PATH}/stilling/`)) {
         const uuid = path.split(`${CONTEXT_PATH}/stilling/`)[1];
-        return `${baseUrl}${CONTEXT_PATH}/innstillinger?uuid=${uuid}`; // TODO: Endre til stillinger
+        return `${baseUrl}${CONTEXT_PATH}/stilling?uuid=${uuid}`;
     } else
     if (whiteList.includes(path)) {
         return `${baseUrl}${path}${query}`;

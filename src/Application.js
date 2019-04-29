@@ -32,11 +32,10 @@ class Application extends React.Component {
                         </Switch>
                         <Switch>
                             <Route exact path="/" component={SearchPage} />
-                            <Route path={`${CONTEXT_PATH}/stilling/:uuid`} component={StillingPage} />
                             <Route exact path={`${CONTEXT_PATH}/stilling`} component={StillingPage} />
+                            <Route path={`${CONTEXT_PATH}/stilling/:uuid`} component={StillingPage} />
                             <Route path={`${CONTEXT_PATH}/favoritter`} component={Favourites} />
                             <Route path={`${CONTEXT_PATH}/lagrede-sok`} component={SavedSearches} />
-                            <Redirect from={`${CONTEXT_PATH}/innstillinger`} to={`${CONTEXT_PATH}/stilling${window.location.search}`} />
                             <Route path="*" component={SearchPage} />
                         </Switch>
 
