@@ -1,3 +1,7 @@
+## RELEASE - 0.100.671-9019866
+#### New in this release: 
++ 2019-04-29 [Fix] Legger til "Slett" på slettknapp i favorittlisten
++ 2019-04-29 [Fix] Fjerner workaround for login fra /stilling/:uuid
 ## RELEASE - 0.99.666-e8e4947
 #### New in this release: 
 + 2019-04-26 [Fix] Fjerne unødvendig slash slik at riktig menypunkt blir markert
