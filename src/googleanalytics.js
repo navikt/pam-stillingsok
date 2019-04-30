@@ -3,5 +3,16 @@
     m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-ga('create', 'UA-9127381-24', 'auto');
-ga('set', 'anonymizeIp', true);
+// Noen browsere kan blokkere analytics, og window.ga kan derfor være undefined
+window.analytics = (...args) => {
+    if (window.ga !== undefined && window.ga !== null) {
+        try {
+            window.ga(args);
+        } catch (e) {
+            // ignore error
+        }
+    }
+};
+
+window.analytics('create', 'UA-9127381-24', 'auto');
+window.analytics('set', 'anonymizeIp', true);
