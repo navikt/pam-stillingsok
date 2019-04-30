@@ -51,9 +51,9 @@ class Stilling extends React.Component {
         if (uuid) {
             this.props.getStilling(uuid);
         }
-        ga('set', 'page', `${CONTEXT_PATH}/stilling`);
-        ga('set', 'title', 'Stilling');
-        ga('send', 'pageview');
+        window.analytics('set', 'page', `${CONTEXT_PATH}/stilling`);
+        window.analytics('set', 'title', 'Stilling');
+        window.analytics('send', 'pageview');
     }
 
     componentWillUnmount() {
