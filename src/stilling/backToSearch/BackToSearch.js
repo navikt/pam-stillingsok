@@ -14,7 +14,7 @@ export default function BackToSearch() {
             >
                 <Chevron type="venstre" className="BackToSearchLink__chevron" />
                 <span className="BackToSearchLink__text">
-                    Til stillingssøk
+                    Ledige stillinger
                 </span>
             </Link>
         </SnapToTop>

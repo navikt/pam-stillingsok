@@ -109,7 +109,7 @@ class Stilling extends React.Component {
                                         >
                                             <Chevron type="venstre" className="PageHeader__back__chevron" />
                                             <span className="PageHeader__back__text">
-                                                Til stillingssøk
+                                                Ledige stillinger
                                             </span>
                                         </Link>
                                         <div className="Stilling__header__favourite">

@@ -21,7 +21,7 @@ export default function PageHeader({
                                 >
                                     <Chevron type="venstre" className="PageHeader__back__chevron" />
                                     <span className="PageHeader__back__text">
-                                        {backLabel || 'Til stillingssøk'}
+                                        {backLabel || 'Ledige stillinger'}
                                     </span>
                                 </Link>
                             </div>
