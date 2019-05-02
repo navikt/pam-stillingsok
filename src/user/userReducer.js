@@ -20,6 +20,10 @@ export const CREATE_USER_HIDE_ALERT = 'CREATE_USER_HIDE_ALERT';
 export const CREATE_USER_SHOW_ALERT = 'CREATE_USER_SHOW_ALERT';
 export const CREATE_USER_FAILURE = 'CREATE_USER_FAILURE';
 
+export const FETCH_PERSON_BEGIN = 'FETCH_PERSON_BEGIN';
+export const FETCH_PERSON_SUCCESS = 'FETCH_PERSON_SUCCESS';
+export const FETCH_PERSON_FAILURE = 'FETCH_PERSON_FAILURE';
+
 export const UPDATE_USER_EMAIL = 'UPDATE_USER_EMAIL';
 export const UPDATE_USER_EMAIL_BEGIN = 'UPDATE_USER_EMAIL_BEGIN';
 export const UPDATE_USER_EMAIL_SUCCESS = 'UPDATE_USER_EMAIL_SUCCESS';
@@ -58,7 +62,8 @@ const initialState = {
     confirmDeleteUserModalIsVisible: false,
     validation: {},
     termsAccepted: false,
-    showUserTermsRequiredMessage: false
+    showUserTermsRequiredMessage: false,
+    personIsUnderOppfolging: false
 };
 
 export default function authorizationReducer(state = initialState, action) {
@@ -202,6 +207,11 @@ export default function authorizationReducer(state = initialState, action) {
                 ...state,
                 showUserTermsRequiredMessage: true
             };
+        case FETCH_PERSON_SUCCESS:
+            return {
+                ...state,
+                personIsUnderOppfolging: action.underOppfolging
+            };
         default:
             return state;
     }
@@ -224,6 +234,7 @@ function* fetchUser() {
         try {
             const response = yield call(userApiGet, `${AD_USER_API}/api/v1/user`);
             yield put({ type: FETCH_USER_SUCCESS, response });
+            yield put({ type: FETCH_PERSON_BEGIN });
         } catch (e) {
             if (e instanceof SearchApiError) {
                 if (e.statusCode !== 404) {
@@ -249,6 +260,7 @@ function* createUser(action) {
             };
             const response = yield call(userApiPost, `${AD_USER_API}/api/v1/user`, fixUser(user));
             yield put({ type: CREATE_USER_SUCCESS, response });
+            yield put({ type: FETCH_PERSON_BEGIN });
             if (user.email) {
                 yield put({ type: CREATE_USER_SHOW_ALERT });
                 yield call(delay, 5000);
@@ -337,6 +349,24 @@ function* validateEMail() {
     }
 }
 
+function* fetchPerson() {
+    const state = yield select();
+    if (state.authentication.isAuthenticated === authenticationEnum.IS_AUTHENTICATED) {
+        try {
+            const response = yield call(userApiGet, `${AD_USER_API}/api/v1/person`);
+            console.log({response});
+            yield put({ type: FETCH_PERSON_SUCCESS, underOppfolging: response.underOppfolging });
+        } catch (e) {
+            console.log({e});
+            if (e instanceof SearchApiError) {
+                yield put({ type: FETCH_PERSON_FAILURE, error: e });
+            } else {
+                throw e;
+            }
+        }
+    }
+}
+
 export const userSaga = function* saga() {
     yield takeEvery(FETCH_IS_AUTHENTICATED_SUCCESS, fetchUser);
     yield takeLatest(CREATE_USER, createUser);
@@ -344,4 +374,5 @@ export const userSaga = function* saga() {
     yield takeLatest(SET_EMAIL_FROM_SAVED_SEARCH, setEmailFromSavedSearch);
     yield takeLatest(DELETE_USER, deleteUser);
     yield takeLatest(VALIDATE_USER_EMAIL, validateEMail);
+    yield takeLatest(FETCH_PERSON_BEGIN, fetchPerson);
 };

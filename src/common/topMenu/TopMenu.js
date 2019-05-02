@@ -6,7 +6,7 @@ import { LOGIN_URL, LOGOUT_URL } from '../../fasitProperties';
 import { authenticationEnum } from '../../authentication/authenticationReducer';
 import { getRedirect } from '../../redirect';
 
-const TopMenu = ({ isAuthenticated }) => {
+const TopMenu = ({ isAuthenticated, personErUnderOppfolging }) => {
     const login = (role) => {
         if (role === 'personbruker') {
             window.location.href = `${LOGIN_URL}${getRedirect()}`;
@@ -37,18 +37,22 @@ const TopMenu = ({ isAuthenticated }) => {
                 useMenu='personbruker'
                 authenticationStatus={authenticationStatus(isAuthenticated)}
                 applikasjon={PersonbrukerApplikasjon.STILLINGSSOK}
+                visAktivitetsplanLenke={personErUnderOppfolging}
                 visInnstillinger
+
             />
         </div>
     );
 };
 
 TopMenu.propTypes = {
-    isAuthenticated: PropTypes.string.isRequired
+    isAuthenticated: PropTypes.string.isRequired,
+    personErUnderOppfolging: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => ({
-    isAuthenticated: state.authentication.isAuthenticated
+    isAuthenticated: state.authentication.isAuthenticated,
+    personErUnderOppfolging: state.user.personIsUnderOppfolging
 });
 
 export default connect(mapStateToProps)(TopMenu);
