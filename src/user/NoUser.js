@@ -23,12 +23,12 @@ class NoUser extends React.Component {
                 </Normaltekst>
                 <div className="NoUser__buttons">
                     <Hovedknapp
-                        className="NoUser__button__button"
+                        className="NoUser__buttons__button"
                         onClick={this.onCreateUserClick}
                     >
                         Se samtykke
                     </Hovedknapp>
-                    <Link to="/" className="link">
+                    <Link to="/" className="link NoUser__buttons__link">
                         Fortsett uten å samtykke
                     </Link>
                 </div>

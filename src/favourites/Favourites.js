@@ -44,15 +44,11 @@ class Favourites extends React.Component {
                 />
                 <Container className="Favourites__main">
                     {isAuthenticated === authenticationEnum.NOT_AUTHENTICATED && (
-                        <div className="Favourites__main">
-                            <div className="Favourites__section">
-                                <Row>
-                                    <Column xs="12">
-                                        <NotAuthenticated title="Du må logge inn for å se dine favoritter" />
-                                    </Column>
-                                </Row>
-                            </div>
-                        </div>
+                        <Row>
+                            <Column xs="12">
+                                <NotAuthenticated title="Du må logge inn for å se dine favoritter" />
+                            </Column>
+                        </Row>
                     )}
                     {isAuthenticated === authenticationEnum.IS_AUTHENTICATED && (
                         <div>
@@ -67,15 +63,11 @@ class Favourites extends React.Component {
                             ) : (
                                 <div>
                                     {!user && (
-                                        <div className="Favourites__main">
-                                            <div className="Favourites__section">
-                                                <Row>
-                                                    <Column xs="12">
-                                                        <NoUser />
-                                                    </Column>
-                                                </Row>
-                                            </div>
-                                        </div>
+                                        <Row>
+                                            <Column xs="12">
+                                                <NoUser />
+                                            </Column>
+                                        </Row>
                                     )}
 
                                     {user && (
