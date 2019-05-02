@@ -44,15 +44,11 @@ class SavedSearches extends React.Component {
                 />
                 <Container className="SavedSearches__main">
                     {isAuthenticated === authenticationEnum.NOT_AUTHENTICATED && (
-                        <div className="SavedSearches__main">
-                            <div className="SavedSearches__section">
-                                <Row>
-                                    <Column xs="12">
-                                        <NotAuthenticated title="Du må logge inn for å se lagrede søk" />
-                                    </Column>
-                                </Row>
-                            </div>
-                        </div>
+                        <Row>
+                            <Column xs="12">
+                                <NotAuthenticated title="Du må logge inn for å se lagrede søk" />
+                            </Column>
+                        </Row>
                     )}
                     {isAuthenticated === authenticationEnum.IS_AUTHENTICATED && (
                         <div>
@@ -67,15 +63,11 @@ class SavedSearches extends React.Component {
                             ) : (
                                 <div>
                                     {!user && (
-                                        <div className="SavedSearches__main">
-                                            <div className="SavedSearches__section">
-                                                <Row>
-                                                    <Column xs="12">
-                                                        <NoUser />
-                                                    </Column>
-                                                </Row>
-                                            </div>
-                                        </div>
+                                        <Row>
+                                            <Column xs="12">
+                                                <NoUser />
+                                            </Column>
+                                        </Row>
                                     )}
                                     {user && (
                                         <Row>

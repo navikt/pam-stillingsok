@@ -1,9 +1,5 @@
 @import "../variables";
 
-.NoUser {
-  text-align: center;
-}
-
 .NoUser__title {
   margin-bottom: @undertittel-margin-bottom;
 }
@@ -12,21 +8,11 @@
   margin-bottom: 2.5rem;
 }
 
-.NoUser__buttons {
-  @media (max-width: @screen-xs-max) {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-  }
+.NoUser__buttons__button {
+  margin-right: @button-marginRight;
+  margin-bottom: @button-marginBottom;
 }
 
-.NoUser__button__button {
-  @media (max-width: @screen-xs-max) {
-    margin-bottom: @button-marginBottom;
-  }
-
-  @media (min-width: @screen-sm-min) {
-    margin-right: @button-marginRight;
-  }
+.NoUser__buttons__link {
+  white-space: nowrap;
 }
-
