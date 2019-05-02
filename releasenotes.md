@@ -1,3 +1,9 @@
+## RELEASE - 0.101.675-5efd8ef
+#### New in this release: 
++ 2019-04-30 [Fix] Legger til cursor: pointer der det mangler
++ 2019-04-30 [Fix] Fjerner canonical url
++ 2019-04-30 [Fix] Flytter ikon på lenkeknapper
++ 2019-04-30 [PAM-3179] Oppdatere header
 ## RELEASE - 0.100.671-9019866
 #### New in this release: 
 + 2019-04-29 [Fix] Legger til "Slett" på slettknapp i favorittlisten
