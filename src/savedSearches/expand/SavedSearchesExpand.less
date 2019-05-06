@@ -19,7 +19,7 @@
 .SavedSearchesExpand__button {
   background: transparent;
   border: 0;
-  color: @green;
+  color: @blueDarken;
   cursor: pointer;
   display: inline-block;
   padding: 2px 2px;
@@ -30,7 +30,7 @@
   }
 
   &:hover {
-    color: @greenLighten;
+    color: @blueDarken;
     .SavedSearchesExpand__chevron[class~='chevron--opp'] {
       transform: translateY(-0.25rem);
     }
@@ -41,7 +41,7 @@
   }
 
   &:active {
-    color: @green;
+    color: @blueDarken;
   }
 }
 
@@ -68,16 +68,12 @@
   -webkit-column-break-after: avoid;
 }
 
-.SavedSearches__panel {
-  padding: 0 !important;
-}
-
 .SavedSearchesExpand__container {
   position: relative;
   display: inline-block;
 
   span {
-    color: #fff;
+    color: @blueDarken;
     margin-right: 0.1rem;
     padding: 2px 2px;
   }
