@@ -9,11 +9,13 @@
     top: 100%;
     left: 0;
     z-index: 1000;
-    min-width: 100%;
+    min-width: ~"calc(100% - 4rem)";
     padding: 0;
-    margin: 0;
+    margin: 0 2rem;
     background-color: #fff;
-    border: 1px solid @green;
+    border-left: 2px solid @blueDarken;
+    border-bottom: 2px solid @blueDarken;
+    border-right: 2px solid @blueDarken;
     overflow: auto;
   }
 
@@ -45,7 +47,7 @@
 }
 
 .Typeahead__suggestions{
-  width: 100%;
+  width: ~"calc(100% - 4rem)";
   overflow-x: hidden;
 }
 
