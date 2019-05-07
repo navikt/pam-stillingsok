@@ -1,3 +1,11 @@
+## RELEASE - 0.102.684-e44360e
+#### New in this release: 
++ 2019-05-07 [Fix] Sentrere søke-ikon i ie
++ 2019-05-07 [Fix] Oppdaterer header
++ 2019-05-07 [Fix] Sentrere søke-ikon i firefox og fjerne contentScriptType
++ 2019-05-07 [Fix] Oppdatere active på søkeknapp og farger på typeahead-forslag
++ 2019-05-06 [Fix] Oppdaterer css på søkeboks
++ 2019-05-02 [Fix] Venstrestiller tekst
 ## RELEASE - 0.101.675-5efd8ef
 #### New in this release: 
 + 2019-04-30 [Fix] Legger til cursor: pointer der det mangler
