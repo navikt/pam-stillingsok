@@ -6,14 +6,15 @@ const Promise = require('promise');
 const fs = require('fs');
 const prometheus = require('prom-client');
 const bodyParser = require('body-parser');
-const searchApiConsumer = require('./scripts/searchApiConsumer');
 const compression = require('compression');
+const searchApiConsumer = require('./api/searchApiConsumer');
 
 /* eslint no-console: 0 */
 
 prometheus.collectDefaultMetrics();
 
 const currentDirectory = __dirname;
+const rootDirectory = `${currentDirectory}/../`;
 const server = express();
 const port = process.env.PORT || 8080;
 server.set('port', port);
@@ -33,7 +34,7 @@ server.use(helmet.contentSecurityPolicy({
     }
 }));
 
-server.set('views', `${currentDirectory}/views`);
+server.set('views', `${currentDirectory}/../views`);
 server.set('view engine', 'mustache');
 server.engine('html', mustacheExpress());
 
@@ -54,7 +55,7 @@ const writeEnvironmentVariablesToFile = () => {
         + `window.__LOGIN_URL__="${fasitProperties.LOGIN_URL}";\n`
         + `window.__LOGOUT_URL__="${fasitProperties.LOGOUT_URL}";\n`;
 
-    fs.writeFile(path.resolve(__dirname, 'dist/js/env.js'), fileContent, (err) => {
+    fs.writeFile(path.resolve(rootDirectory, 'dist/js/env.js'), fileContent, (err) => {
         if (err) throw err;
     });
 };
@@ -77,16 +78,16 @@ const startServer = (htmlPages) => {
     writeEnvironmentVariablesToFile();
 
     server.use(`${fasitProperties.PAM_CONTEXT_PATH}/js`,
-        express.static(path.resolve(__dirname, 'dist/js'))
+        express.static(path.resolve(rootDirectory, 'dist/js'))
     );
 
     server.use(`${fasitProperties.PAM_CONTEXT_PATH}/css`,
-        express.static(path.resolve(__dirname, 'dist/css'))
+        express.static(path.resolve(rootDirectory, 'dist/css'))
     );
 
     server.use(
         `${fasitProperties.PAM_CONTEXT_PATH}/images`,
-        express.static(path.resolve(__dirname, 'images'))
+        express.static(path.resolve(rootDirectory, 'images'))
     );
 
     server.get(`${fasitProperties.PAM_CONTEXT_PATH}/api/search`, async (req, res) => {
