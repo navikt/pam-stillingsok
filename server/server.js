@@ -34,7 +34,7 @@ server.use(helmet.contentSecurityPolicy({
     }
 }));
 
-server.set('views', `${currentDirectory}/../views`);
+server.set('views', `${rootDirectory}views`);
 server.set('view engine', 'mustache');
 server.engine('html', mustacheExpress());
 
