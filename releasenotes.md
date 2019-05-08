@@ -1,3 +1,7 @@
+## RELEASE - 0.103.689-0f58060
+#### New in this release: 
++ 2019-05-07 [Fix] Oppdaterer header
++ 2019-05-07 [Fix] Oppdaterer header
 ## RELEASE - 0.102.684-e44360e
 #### New in this release: 
 + 2019-05-07 [Fix] Sentrere søke-ikon i ie

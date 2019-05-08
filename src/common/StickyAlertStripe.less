@@ -1,3 +1,5 @@
+@import '../variables';
+
 .StickyAlertStripe {
     position: fixed;
     top: 0;
@@ -8,7 +10,34 @@
     width: 100%;
 
     .alertstripe__tekst {
-        flex: unset!important;
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 40rem;
+
+        .Error__messages {
+            margin: 0;
+        }
+
+        @media (max-width: @screen-sm) {
+            flex-wrap: wrap;
+        }
+
+        > *:not(:last-child) {
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+    }
+
+    .alertstripe__ikon {
+        align-items: center;
+    }
+
+    @media (max-width: @screen-sm) {
+        .alertstripe__tekst .Error__messages {
+            margin-right: 3rem;
+        }
     }
 }
 
