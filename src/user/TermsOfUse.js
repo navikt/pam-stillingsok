@@ -63,6 +63,7 @@ class TermsOfUse extends React.Component {
                         label="Dine favoritter, søk og søkekriterier"
                         checked={this.props.termsAccepted}
                         onChange={this.onCheckboxClick}
+                        inputProps={{ id: 'TermsOfUse__checkbox' }}
                     >
                         <Normaltekst>
                             Vi lagrer dine favoritter, søk med søkekriterier og e-postadresse (valgfri).
@@ -77,6 +78,7 @@ class TermsOfUse extends React.Component {
                         </Normaltekst>
                         <div className="TermsOfUse__input">
                             <Input
+                                id="TermsOfUse__email"
                                 label="E-post for å motta treff på mine lagrede søk"
                                 value={this.state.email}
                                 onChange={this.onEmailChange}
@@ -102,6 +104,7 @@ class TermsOfUse extends React.Component {
                     )}
                     <div className="TermsOfUse__buttons">
                         <Hovedknapp
+                            id="TermsOfUse__acceptButton"
                             onClick={this.onAcceptTerms}
                             spinner={this.props.isCreating}
                             disabled={this.props.isCreating}
