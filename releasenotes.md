@@ -1,3 +1,9 @@
+## RELEASE - 0.104.694-49efb96
+#### New in this release: 
++ 2019-05-08 [Fix] Oppdaterer header og footer
++ 2019-05-08 [Fix] Legger til :visited color i trefflisten
++ 2019-05-08 [Fix] Justerer størrelse på pagetitle for mobil
++ 2019-05-08 [Fix] Fiks styling på feilmeldinger
 ## RELEASE - 0.103.689-0f58060
 #### New in this release: 
 + 2019-05-07 [Fix] Oppdaterer header
