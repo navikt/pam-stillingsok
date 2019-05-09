@@ -1,3 +1,7 @@
+## RELEASE - 0.105.695-131c829
+#### New in this release: 
++ 2019-05-09 [Fix] Fjerner import av source sans pro 700 da den ikke er i bruk
++ 2019-05-09 [Fix] Gjør om til font-weight 600, siden font-weight 700 ikke finnes i nav-frontend
 ## RELEASE - 0.104.694-49efb96
 #### New in this release: 
 + 2019-05-08 [Fix] Oppdaterer header og footer
