@@ -1,3 +1,6 @@
+## RELEASE - 0.106.698-e7fdb4f
+#### New in this release: 
++ 2019-05-09 [Fix] Fjerner separatorlinje inne i listelementer
 ## RELEASE - 0.105.695-131c829
 #### New in this release: 
 + 2019-05-09 [Fix] Fjerner import av source sans pro 700 da den ikke er i bruk
