@@ -7,6 +7,10 @@
     background-color: @even-bgColor;
   }
 
+  &:last-child:not(:nth-child(even)) {
+    border-bottom: 2px solid @gray3;
+  }
+
   @media (max-width: @screen-xs-max) {
     margin-right: -16px;
     margin-left: -16px;
@@ -14,11 +18,12 @@
 }
 
 .SavedSearchListItem {
+  padding: @list-box-padding;
   display: block;
 }
 
 .SavedSearchListItem__top {
-  padding: @list-box-padding;
+  padding-bottom: 1rem;
 }
 
 @media (min-width: @screen-md-min) {
@@ -49,10 +54,8 @@
 }
 
 .SavedSearchListItem__bottom {
-  padding: @list-box-padding;
   display: flex;
   justify-content: flex-end;
-  border-top: 1px solid @gray3;
 }
 
 .SavedSearchListItem__bottom .Knapp--link:not(:last-child) {

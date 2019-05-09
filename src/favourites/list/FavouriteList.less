@@ -7,6 +7,10 @@
     background-color: @even-bgColor;
   }
 
+  &:last-child:not(:nth-child(even)) {
+    border-bottom: 2px solid @gray3;
+  }
+
   @media (max-width: @screen-xs-max) {
     margin-right: -16px;
     margin-left: -16px;

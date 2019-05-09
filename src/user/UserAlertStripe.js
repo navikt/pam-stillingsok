@@ -7,11 +7,13 @@ function UserAlertStripe({ userAlertStripeMode, userAlertStripeIsVisible }) {
     if (userAlertStripeIsVisible && (userAlertStripeMode === 'added')) {
         return (
             <StickyAlertStripe type="suksess">
-                Din e-postadresse er lagret på
-                {' '}
-                <a className="link link--dark" href="/personinnstillinger">
-                    Innstillinger
-                </a>
+                <span>
+                    Din e-postadresse er lagret på
+                    {' '}
+                    <a className="link link--dark" href="/personinnstillinger">
+                        Innstillinger
+                    </a>
+                </span>
             </StickyAlertStripe>
         );
     } else if (userAlertStripeIsVisible && userAlertStripeMode === 'set-email') {
