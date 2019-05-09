@@ -14,6 +14,7 @@ const selenium_port = process.env['RANDOM_SELENIUM_PORT'] ? process.env['RANDOM_
 module.exports = {
     "output_folder": "./reports",
     "page_objects_path" : "./pages",
+    "custom_commands_path": "./commands",
     "selenium": {
         "start_process": true,
         "server_path": seleniumServer.path,
