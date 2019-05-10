@@ -3,10 +3,7 @@ module.exports = {
         goToFavourites: 'a[href="/stillinger/favoritter"]',
         favouritesContent: '.Favourites__main',
         searchResultTitle: '.SearchResultsItemDetails__title',
-        deleteFavouriteButton: 'button[class*="FavouriteListItem__delete"]',
-        favouriteItem: '.FavouriteListItem',
         confirmDeleteButton: '.Knapp--hoved'
-
     },
 
     commands: [{
@@ -25,20 +22,19 @@ module.exports = {
 
             self.api.elements('css selector', '.FavouriteListItem', (favoritter) => {
                 favoritter.value.forEach((favoritt) => {
-                    self.api.elementIdElement(favoritt.ELEMENT, 'css selector','.SearchResultsItemDetails__title', (tittel) => {
-                        self.api.elementIdText(tittel.value.ELEMENT, (tekst) => {
-                            if (tekst.value && tekst.value.includes(lagretFavoritt.tittel)) {
-                                // Lagre element-ID'en til elementet som har en tittel som matcher input-tittelen
+                    self.api.elementIdElement(favoritt.ELEMENT,
+                        'xpath',
+                        `//*[contains(@class, 'SearchResultsItemDetails__title') and contains(text(),'${lagretFavoritt.tittel}')]`,
+                        (element) => {
+                            if (element.value) {
                                 tmp.itemElementId = favoritt.ELEMENT;
                             }
                         });
-                    });
                 });
             });
 
             return this;
         },
-
 
         deleteFavourite(lagretFavoritt) {
             const self = this;
@@ -52,7 +48,6 @@ module.exports = {
 
             return this;
         },
-
 
         verifyFavouriteDeleted(title) {
             this.api.useXpath();

@@ -3,10 +3,15 @@ const { Before, After, Given, When, Then } = require('cucumber');
 
 const forside = client.page.SokForside();
 const favoritterPage = client.page.FavoritterPage();
+const savedSearchesPage = client.page.LagredeSokPage();
 
 const lagretFavoritt = {
     tittel: undefined,
     itemElementId: undefined
+};
+
+const savedSearch = {
+    itemElementIds: []
 };
 
 Before(() => {
@@ -25,18 +30,15 @@ Given(/^at jeg er logget inn som "(.*)"$/, (brukernavn) => {
     return client.loggInn(brukernavn, 'MinID');
 });
 
-
 When(/^jeg lagrer første annonse som favoritt$/, () => {
     return forside.getFirstAdTitle(lagretFavoritt)
         .lagreFavoritt() // Lagre navnet på annonsen som blir favoritt
         .giSamtykke();
 });
 
-
 When(/^jeg går til favoritter i menyen$/, () => {
     return forside.gaTilFavoritter();
 });
-
 
 Then(/^skal annonsen vises i favorittlisten$/, () => {
     return favoritterPage.getFavorittListItem(lagretFavoritt)
@@ -51,21 +53,25 @@ Then(/^skal ikke annonsen vises i favorittlisten$/, () => {
     return favoritterPage.verifyFavouriteDeleted(lagretFavoritt.tittel);
 });
 
-When(/^jeg lagrer søket som "(.*)"$/, () => {
-
+When(/^jeg lagrer søket som "(.*)"$/, (name) => {
+    return forside.saveSearch(name);
 });
 
 
-Then(/^skal "(.*)" vises i listen med lagrede søk $/, () => {
+When(/^jeg går til lagrede søk i menyen$/, () => {
+    return forside.gotoSavedSearches();
+});
+
+Then(/^skal "(.*)" vises i listen$/, (name) => {
+    return savedSearchesPage.getSavedSearchListItem(savedSearch, name)
+        .savedSearchListContainsName(name);
+});
+
+When(/^jeg sletter søket$/, () => {
+    return savedSearchesPage.deleteSavedSearches(savedSearch.itemElementIds);
 
 });
 
-
-When(/^jeg sletter "(.*)" fra lagrede søk$/, (menyValg) => {
-
+Then(/^skal "(.*)" ikke vises i listen$/, (name) => {
+    return savedSearchesPage.verifySavedSearchesDeleted(name);
 });
-
-Then(/^skal "(.*)" ikke vises i listen med lagrede søk $/, () => {
-
-});
-

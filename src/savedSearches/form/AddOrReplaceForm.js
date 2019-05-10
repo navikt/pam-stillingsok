@@ -75,6 +75,7 @@ class AddOrReplaceForm extends React.Component {
         return (
             <div>
                 <Input
+                    id="SavedSearchModal__name"
                     className="SavedSearchModal__body__name"
                     label="Navn*"
                     onChange={this.onTitleChange}

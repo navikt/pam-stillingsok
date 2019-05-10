@@ -16,11 +16,11 @@ Egenskap: Bruke stillingssøket som innlogget bruker
   Scenario: Se lagret søk
     Gitt at jeg er logget inn som "01065500791"
     Når jeg filtrerer på "OSLO"
-    Og jeg filterer på "IT"
-    Når jeg lagrer søket som "mitt testsøk"
+    Og jeg filtrerer på "IT"
+    Når jeg lagrer søket som "nightwatch testsøk"
     Og jeg går til lagrede søk i menyen
-    Så skal "mitt testsøk" vises i listen
-    Når jeg sletter "mitt testsøk" fra lagrede søk
-    Så skal "mitt testsøk" ikke vises i listen
+    Så skal "nightwatch testsøk" vises i listen
+    Når jeg sletter søket
+    Så skal "nightwatch testsøk" ikke vises i listen
 
 
