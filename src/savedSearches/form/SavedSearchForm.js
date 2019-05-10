@@ -107,6 +107,7 @@ class SavedSearchForm extends React.Component {
 
                         <div className="SavedSearchModal__buttons">
                             <Hovedknapp
+                                id="SavedSearchModal__saveButton"
                                 disabled={isSaving}
                                 spinner={isSaving}
                                 onClick={this.onSaveClick}

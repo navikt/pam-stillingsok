@@ -17,8 +17,10 @@ module.exports = {
         loggInnPersonButton: 'button[class*="Header__Button"]:nth-child(2)',
         samtykkeCheckbox: 'input[id=TermsOfUse__checkbox]',
         samtykkeButton: 'button[id=TermsOfUse__acceptButton]',
-        samtykkeModal: 'div[class*="TermsOfUse"]',
-        samtykkeEpost: 'input[id=TermsOfUse__email]'
+        samtykkeEpost: 'input[id=TermsOfUse__email]',
+        saveSearchButton: '.SaveSearchButton',
+        savedSearchName: 'input[id=SavedSearchModal__name]',
+        confirmSaveSearchButton: 'button[id=SavedSearchModal__saveButton]'
     },
 
     commands: [{
@@ -129,7 +131,25 @@ module.exports = {
 
         slettSamtykke() {
             //TODO: implementer og kall etter innlogget-tester er ferdig.
-        }
+        },
+
+        saveSearch(name) {
+            return this.waitForElementPresent('@saveSearchButton', 20000)
+                .click('@saveSearchButton')
+                .waitForElementPresent('@savedSearchName', 20000)
+                .clearValue('@savedSearchName')
+                .setValue('@savedSearchName', name)
+                .click('@confirmSaveSearchButton');
+        },
+
+        gotoSavedSearches() {
+            // Alertstripe blir vist som skjuler lenken, så scroll til toppen så man kan trykke på den
+            this.getLocationInView('@loggInnButton');
+            const savedSearches = this.api.page.LagredeSokPage();
+            savedSearches.click('@gotoSavedSearches')
+                .waitForElementPresent('@savedSearchesContent', 20000);
+            return this;
+        },
     }]
 };
 
