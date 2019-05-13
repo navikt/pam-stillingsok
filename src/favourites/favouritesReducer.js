@@ -35,6 +35,8 @@ export const REMOVE_FROM_FAVOURITES_FAILURE = 'REMOVE_FROM_FAVOURITES_FAILURE';
 export const SHOW_FAVOURITES_ALERT_STRIPE = 'SHOW_FAVOURITES_ALERT_STRIPE';
 export const HIDE_FAVOURITES_ALERT_STRIPE = 'HIDE_FAVOURITES_ALERT_STRIPE';
 
+let delayTimeout;
+
 const initialState = {
     isFetchingFavourites: false,
     favourites: [],
@@ -154,7 +156,14 @@ export const withoutPendingFavorites = function withoutPendingFavorites(state) {
     return state.favourites.filter((favourite) => !state.pending.includes(favourite.uuid));
 };
 
-const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+const delay = (ms) => {
+    if (delayTimeout) {
+        clearTimeout(delayTimeout);
+    }
+    return new Promise((resolve) => {
+        delayTimeout = setTimeout(resolve, ms);
+    });
+};
 
 function toFavourite(uuid, ad) {
     return {

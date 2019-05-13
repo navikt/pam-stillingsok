@@ -19,6 +19,8 @@ export const SavedSearchAlertStripeMode = {
     REMOVED: 'REMOVED'
 };
 
+let delayTimeout;
+
 const initialState = {
     showAlertStripe: false,
     alertStripeMode: 'added'
@@ -65,7 +67,14 @@ export default function savedSearchAlertStripeReducer(state = initialState, acti
     }
 }
 
-const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+const delay = (ms) => {
+    if (delayTimeout) {
+        clearTimeout(delayTimeout);
+    }
+    return new Promise((resolve) => {
+        delayTimeout = setTimeout(resolve, ms);
+    });
+};
 
 function* showAlertStripe() {
     yield put({ type: SHOW_SAVED_SEARCH_ALERT_STRIPE });
