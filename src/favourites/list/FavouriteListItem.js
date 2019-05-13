@@ -37,7 +37,7 @@ class FavouriteListItem extends React.Component {
                         <span className="Delete__icon" />
                     </Lenkeknapp>
                     {expired && (
-                        <AlertStripe type="advarsel" solid className="FavouriteListItem__alertstripe">
+                        <AlertStripe type="advarsel" className="FavouriteListItem__alertstripe">
                             Denne annonsen er utløpt
                         </AlertStripe>
                     )}

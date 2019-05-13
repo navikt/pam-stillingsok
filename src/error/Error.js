@@ -21,7 +21,6 @@ class Error extends React.Component {
         return (
             <AlertStripe
                 type="feil"
-                solid
                 aria-atomic="true"
                 className={`Error StickyAlertStripe${messages.length === 0 ? ' StickyAlertStripe--hidden' : ''}`}
             >

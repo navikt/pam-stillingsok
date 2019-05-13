@@ -122,7 +122,7 @@ class AddOrReplaceForm extends React.Component {
                             </Fieldset>
                         </SkjemaGruppe>
                         {this.emailNotSet() && (
-                            <AlertStripe className="blokk-s" type="advarsel" solid>
+                            <AlertStripe className="blokk-s" type="advarsel">
                                 <b>Du har ikke registrert e-postadresse</b> <br />
                                 For å motta varsler på e-post må du registrere e-postadressen din.
                             </AlertStripe>

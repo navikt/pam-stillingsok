@@ -1,21 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { AlertStripeAdvarsel } from 'nav-frontend-alertstriper';
+import AlertStripe from 'nav-frontend-alertstriper';
 import './NotFound.less';
+import { CONTEXT_PATH } from '../../fasitProperties';
 
 export default function NotFound() {
     return (
-        <AlertStripeAdvarsel className="NotFound">
-            <div className="NotFound__message">
-                <p>
-                    <strong>Vi fant ikke stillingsannonsen.</strong> Den kan være utløpt eller avpublisert.
-                </p>
-                <p>
-                    <Link to="/" className="typo-normal link no-print">
-                        Gå til stillingssøk
-                    </Link>
-                </p>
-            </div>
-        </AlertStripeAdvarsel>
+        <AlertStripe type="advarsel" className="NotFound">
+            <strong>Vi fant ikke stillingsannonsen.</strong> Den kan være utløpt eller avpublisert.
+            <br />
+            <Link to={CONTEXT_PATH} className="typo-normal link link--dark no-print">
+                Gå til ledige stillinger
+            </Link>
+        </AlertStripe>
     );
 }

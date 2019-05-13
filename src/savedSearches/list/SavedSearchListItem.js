@@ -81,7 +81,7 @@ class SavedSearchListItem extends React.Component {
                     </div>
                 </div>
                 {expired && (
-                    <AlertStripe type="advarsel" solid className="SavedSearchListItem__alertstripe">
+                    <AlertStripe type="advarsel" className="SavedSearchListItem__alertstripe">
                         Ditt varsel for dette søket har gått ut
                         <Flatknapp
                             className="SavedSearchListItem__button-alertstripe"
