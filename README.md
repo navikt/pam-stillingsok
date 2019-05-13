@@ -47,7 +47,7 @@ Eventuelt kan man kjøre server og automatisk bygging av frontend separat:
 
 ```sh
 # Start node server:
-npm run start-wexpress
+npm run start-express
 
 # Start automatisk bygging av frontend:
 npm run start-webpack
