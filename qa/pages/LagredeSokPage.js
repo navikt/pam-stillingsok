@@ -1,3 +1,7 @@
+function getSavedSearchNameElement(name) {
+    return `//a[contains(text(),'${name}')]`;
+}
+
 module.exports = {
     elements: {
         gotoSavedSearches: 'a[href="/stillinger/lagrede-sok"]',
@@ -9,36 +13,30 @@ module.exports = {
         savedSearchListContainsName(name) {
             this.api.useXpath();
             this.expect
-                .element(`//a[contains(text(),'${name}')]`)
+                .element(getSavedSearchNameElement(name))
                 .to.be.present.before(2000);
             this.api.useCss();
             return this;
         },
 
-        getSavedSearchListItem(savedSearch, navn) {
-            const tmp = savedSearch;
+        deleteSavedSearch() {
             const self = this;
-
-            self.api.elements('css selector', '.SavedSearchListItem', (searches) => {
-                searches.value.forEach((search) => {
-                    self.api.elementIdElement(search.ELEMENT, 'xpath', `//a[contains(text(),'${navn}')]`, (tittel) => {
-                        // Lagre element-ID'en til alle søk som har det gitte navnet
-                        if (tittel.value) {
-                            tmp.itemElementIds.push(search.ELEMENT);
-                        }
-                    });
-                });
+            self.api.element('css selector', 'button[class*="Delete"]', (knapp) => {
+                // Klikk slett-knappen
+                self.api.elementIdClick(knapp.value.ELEMENT);
+                // bekreft sletting
+                self.waitForElementPresent('@confirmDeleteButton', 20000)
+                    .click('@confirmDeleteButton');
             });
-
             return this;
         },
 
-        deleteSavedSearches(ids) {
+        deleteAllItems() {
             const self = this;
-            ids.forEach((id) => {
-                self.api.elementIdElement(id, 'css selector', 'button[class*="Delete"]', (knapp) => {
+            self.api.elements('css selector', 'button[class*="Delete"]', (knapper) => {
+                knapper.value.forEach((knapp) => {
                     // Klikk slett-knappen
-                    self.api.elementIdClick(knapp.value.ELEMENT);
+                    self.api.elementIdClick(knapp.ELEMENT);
                     // bekreft sletting
                     self.waitForElementPresent('@confirmDeleteButton', 20000)
                         .click('@confirmDeleteButton');
@@ -47,10 +45,10 @@ module.exports = {
             return this;
         },
 
-        verifySavedSearchesDeleted(navn) {
+        verifySavedSearchesDeleted(name) {
             this.api.useXpath();
             this.expect
-                .element(`//a[contains(text(),'${navn}')]`)
+                .element(getSavedSearchNameElement(name))
                 .to.not.be.present;
             this.api.useCss();
             return this;

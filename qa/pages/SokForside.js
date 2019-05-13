@@ -1,5 +1,6 @@
 module.exports = {
     elements: {
+        goToForside: 'a[href="/stillinger"]',
         searchTextField: 'input[id=search-form-fritekst-input]',
         searchResult: '#treff',
         noResult: '.NoResults',
@@ -72,6 +73,7 @@ module.exports = {
             });
         },
 
+
         showFilterElement: function(filter){
             const page = this;
             page.api.pause(1000).element('css selector', this.getFilterCheckbox(filter), function(result) {
@@ -94,12 +96,12 @@ module.exports = {
             const tmp = lagretFavoritt;
             this.waitForElementPresent('@searchResultTitle', 20000)
                 .getText('@searchResultTitle', (result) => {
-                    tmp.tittel = result.value;
+                    tmp.title = result.value;
                 });
             return this;
         },
 
-        lagreFavoritt() {
+        saveFavourite() {
             // Klikk favorittstjerne på første annonse som ikke er favoritt
             return this.waitForElementPresent('@toggleFavoriteButton', 20000)
                 .click('@toggleFavoriteButton');
@@ -119,7 +121,7 @@ module.exports = {
             return this;
         },
 
-        gaTilFavoritter() {
+        goToFavourites() {
             // Alertstripe blir vist som skjuler favoritter-lenken, så scroll til toppen så man kan
             // trykke på lenken
             this.getLocationInView('@loggInnButton');
@@ -127,10 +129,6 @@ module.exports = {
             favoritter.click('@goToFavourites')
                 .waitForElementPresent('@favouritesContent', 20000);
             return this;
-        },
-
-        slettSamtykke() {
-            //TODO: implementer og kall etter innlogget-tester er ferdig.
         },
 
         saveSearch(name) {

@@ -2,16 +2,12 @@ const { client } = require('nightwatch-cucumber');
 const { Before, After, Given, When, Then } = require('cucumber');
 
 const forside = client.page.SokForside();
-const favoritterPage = client.page.FavoritterPage();
+const favouritePage = client.page.FavoritterPage();
 const savedSearchesPage = client.page.LagredeSokPage();
 
-const lagretFavoritt = {
-    tittel: undefined,
-    itemElementId: undefined
-};
-
-const savedSearch = {
-    itemElementIds: []
+const savedFavourite = {
+    title: undefined,
+    elementId: undefined
 };
 
 Before(() => {
@@ -27,49 +23,46 @@ After(async (scenarioContext) => {
 });
 
 Given(/^at jeg er logget inn som "(.*)"$/, (brukernavn) => {
-    return client.loggInn(brukernavn, 'MinID');
+    return client.loggInn(brukernavn, 'MinID')
+        .cleanupUserData();
 });
 
-When(/^jeg lagrer første annonse som favoritt$/, () => {
-    return forside.getFirstAdTitle(lagretFavoritt)
-        .lagreFavoritt() // Lagre navnet på annonsen som blir favoritt
+When(/^jeg lagrer første annonse som favoritt$/,async () => {
+    await forside.getFirstAdTitle(savedFavourite);
+    await forside.saveFavourite() // Lagre navnet på annonsen som blir favoritt
         .giSamtykke();
 });
 
 When(/^jeg går til favoritter i menyen$/, () => {
-    return forside.gaTilFavoritter();
+    return forside.goToFavourites();
 });
 
 Then(/^skal annonsen vises i favorittlisten$/, () => {
-    return favoritterPage.getFavorittListItem(lagretFavoritt)
-        .favouritesListContainsTitle(lagretFavoritt.tittel);
+    return favouritePage.favouritesListContainsTitle(savedFavourite.title);
 });
 
 When(/^jeg sletter favoritten$/, () => {
-    return favoritterPage.deleteFavourite(lagretFavoritt);
+    return favouritePage.deleteFavourite();
 });
 
 Then(/^skal ikke annonsen vises i favorittlisten$/, () => {
-    return favoritterPage.verifyFavouriteDeleted(lagretFavoritt.tittel);
+    return favouritePage.verifyFavouriteDeleted(savedFavourite.title);
 });
 
 When(/^jeg lagrer søket som "(.*)"$/, (name) => {
     return forside.saveSearch(name);
 });
 
-
 When(/^jeg går til lagrede søk i menyen$/, () => {
     return forside.gotoSavedSearches();
 });
 
 Then(/^skal "(.*)" vises i listen$/, (name) => {
-    return savedSearchesPage.getSavedSearchListItem(savedSearch, name)
-        .savedSearchListContainsName(name);
+    return savedSearchesPage.savedSearchListContainsName(name);
 });
 
 When(/^jeg sletter søket$/, () => {
-    return savedSearchesPage.deleteSavedSearches(savedSearch.itemElementIds);
-
+    return savedSearchesPage.deleteSavedSearch();
 });
 
 Then(/^skal "(.*)" ikke vises i listen$/, (name) => {
