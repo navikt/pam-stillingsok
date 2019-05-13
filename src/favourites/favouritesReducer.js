@@ -212,7 +212,7 @@ function* addToFavourites(action) {
                 yield put({ type: ADD_TO_FAVOURITES_SUCCESS, response, adUuid });
                 yield put({ type: SHOW_FAVOURITES_ALERT_STRIPE, alertStripeMode: 'added' });
                 yield call(delay, 5000);
-               // yield put({ type: HIDE_FAVOURITES_ALERT_STRIPE });
+                yield put({ type: HIDE_FAVOURITES_ALERT_STRIPE });
             } catch (e) {
                 if (e instanceof SearchApiError) {
                     yield put({ type: ADD_TO_FAVOURITES_FAILURE, error: e, adUuid });
