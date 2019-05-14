@@ -38,10 +38,10 @@ module.exports = {
             const extractResultCount = (resultCountText) => {
                 const matchResult = /(\d+) annonse/.exec(resultCountText);
                 return matchResult ? matchResult[1] : '';
-            }
+            };
 
             return page.isVisible('@searchResultCount', function(result) {
-                if (result.value) {
+                if (result.status === 0) {
                     page.getText('@searchResultCount', function(result) {
                         const resultCount = extractResultCount(result.value);
                         page.getText(getFilterLabel(filter), function(result) {
@@ -66,7 +66,7 @@ module.exports = {
             const page = this;
             page.api.pause(1000).element('css selector', this.getFilterCheckbox(filter), function(result) {
                 if(result.status === -1){ // is not visible;
-                    page.api.elements('css selector', getLukketEkspanderbartPanel(), function(result) {;
+                    page.api.elements('css selector', getLukketEkspanderbartPanel(), function(result) {
                         result.value.forEach(function(element) {
                             page.api.elementIdClick(element.ELEMENT).pause(1000);
                         })
