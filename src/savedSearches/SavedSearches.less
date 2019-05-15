@@ -24,6 +24,15 @@
 
 /* Hjelpetekst-komponenten er kodet slik at den blir fullscreen på mobil.
 Endringer på dette skal skje, men bruker koden under intil det er på plass */
+
+#tooltip-hjelpetekstLagreknapp {
+  background-color: @blueDarken;
+
+  &:before {
+    background-color: @blueDarken;
+  }
+}
+
 @media (max-width: @screen-xs-max) {
   #tooltip-hjelpetekstLagreknapp  {
       position: absolute;
@@ -40,7 +49,6 @@ Endringer på dette skal skje, men bruker koden under intil det er på plass */
       content: '';
       height: sqrt(2.25rem / 2); // Pythagoras
       width: sqrt(2.25rem / 2); // Pythagoras
-      background-color: @navMorkGra;
       display: block;
       position: absolute;
       transform: rotate(-45deg);
