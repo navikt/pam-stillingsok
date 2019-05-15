@@ -1,3 +1,9 @@
+## RELEASE - 0.107.706-024d258
+#### New in this release: 
++ 2019-05-13 [Fix] Hvis bruker trykker flere ganger på favorittstjernen, må vi unngå race condition som gjør at alertstripe kan skjules før det har gått fem sekunder
++ 2019-05-13 [PAM-3360] Oppdaterer til siste versjon av alertstriper fra nav-frontend-moduler
++ 2019-05-13 [PAM-3362] Fjerner border-radius når alertstripe er fixed på topp av siden
++ 2019-05-13 [PAM-3362] Fjerner border-radius når alertstripe er fixed på topp av siden
 ## RELEASE - 0.106.698-e7fdb4f
 #### New in this release: 
 + 2019-05-09 [Fix] Fjerner separatorlinje inne i listelementer
