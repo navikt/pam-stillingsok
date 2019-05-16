@@ -1,4 +1,4 @@
-exports.command = function (brukernavn, loggInnType) {
+exports.command = function (brukernavn) {
     const idPortenPage = this.page.IdPortenPage();
     const sokForside = this.page.SokForside();
 
@@ -23,7 +23,7 @@ exports.command = function (brukernavn, loggInnType) {
             sokForside.waitForElementPresent('@searchResult', 20000);
         } else {
             idPortenPage
-                .loggInnIdPorten(brukernavn, loggInnType);
+                .loggInnIdPorten(brukernavn);
         }
     }
 };

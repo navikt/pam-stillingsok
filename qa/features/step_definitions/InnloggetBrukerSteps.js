@@ -5,6 +5,8 @@ const forside = client.page.SokForside();
 const favouritePage = client.page.FavoritterPage();
 const savedSearchesPage = client.page.LagredeSokPage();
 
+const brukernavn = process.env['QA_TEST_USERID'] ? process.env['QA_TEST_USERID'] : undefined;
+
 const savedFavourite = {
     title: undefined,
     elementId: undefined
@@ -22,8 +24,8 @@ After(async (scenarioContext) => {
     }
 });
 
-Given(/^at jeg er logget inn som "(.*)"$/, (brukernavn) => {
-    return client.loggInn(brukernavn, 'MinID')
+Given(/^at jeg er logget inn$/, () => {
+    return client.loggInn(brukernavn)
         .cleanupUserData();
 });
 
