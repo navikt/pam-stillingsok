@@ -1,3 +1,6 @@
+## RELEASE - 0.108.710-fde0b46
+#### New in this release: 
++ 2019-05-15 [PAM-3372] Endre bakgrunnsfarge på tooltip, slik at den er i henhold til styleguide
 ## RELEASE - 0.107.706-024d258
 #### New in this release: 
 + 2019-05-13 [Fix] Hvis bruker trykker flere ganger på favorittstjernen, må vi unngå race condition som gjør at alertstripe kan skjules før det har gått fem sekunder
