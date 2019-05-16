@@ -81,7 +81,8 @@ module.exports = {
             desiredCapabilities: {
                 platform: 'Windows 10',
                 browserName: 'firefox',
-                marionette: true
+                marionette: true,
+                pageLoadingStrategy: 'eager'
             }
         },
         firefox_W7: {
