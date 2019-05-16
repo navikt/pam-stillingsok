@@ -29,13 +29,13 @@ spec:
       cpu: 200m
       memory: 256Mi
   ingresses:
-    - https://arbeidsplassen.nav.no/stillinger
+    - https://arbeidsplassen-q.nav.no/stillinger
   env:
     - name: LOGINSERVICE_URL
-      value: https://loginservice.nav.no/login
+      value: https://loginservice-q.nav.no/login
     - name: LOGOUTSERVICE_URL
-      value: https://loginservice.nav.no/slo
+      value: https://loginservice-q.nav.no/slo
     - name: PAMADUSER_URL
-      value: https://arbeidsplassen.nav.no
+      value: https://arbeidsplassen-q.nav.no
     - name: PAM_STILLINGSOK_URL
-      value: https://arbeidsplassen.nav.no/stillinger
+      value: https://arbeidsplassen-q.nav.no/stillinger
