@@ -30,6 +30,9 @@ spec:
       memory: 256Mi
   ingresses:
     - https://arbeidsplassen.nav.no/stillinger
+    - https://pam-stillingsok.nais.oera.no
+    - https://tjenester.nav.no/pam-stillingsok
+    - https://stillingsok.nav.no
   env:
     - name: LOGINSERVICE_URL
       value: https://loginservice.nav.no/login
@@ -39,3 +42,6 @@ spec:
       value: https://arbeidsplassen.nav.no
     - name: PAM_STILLINGSOK_URL
       value: https://arbeidsplassen.nav.no/stillinger
+
+
+
