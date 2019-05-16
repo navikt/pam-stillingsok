@@ -12,18 +12,6 @@ const savedFavourite = {
     elementId: undefined
 };
 
-Before(() => {
-    return client.useCss(); // I tilfelle et scenario feiler med XPath, så vil neste scenario bruke CSS, som er default.
-});
-
-After(async (scenarioContext) => {
-    if (client.sauceEnd) { //  Exists only when running with Saucelabs
-        await client.sauceEnd(scenarioContext);
-    } else {
-        client.end();
-    }
-});
-
 Given(/^at jeg er logget inn$/, () => {
     return client.loggInn(brukernavn)
         .cleanupUserData();
