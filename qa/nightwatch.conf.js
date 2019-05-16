@@ -36,9 +36,10 @@ module.exports = {
             },
             "selenium_port": selenium_port,
             "selenium_host": "127.0.0.1",
-            "globals" : {
-                "waitForConditionTimeout" : 5000, // sometimes internet is slow so wait.
-                "environment" : "local",
+            persist_globals: true,
+            globals : {
+                waitForConditionTimeout: 5000, // sometimes internet is slow so wait.
+                environment: 'local',
                 loginCookie: {
                     domain: '',
                     secure: '',

@@ -32,9 +32,18 @@ module.exports = {
                 on_error: true,
                 path: './screenshots'
             },
+            persist_globals: true,
             globals: {
                 waitForConditionTimeout: 5000, // sometimes internet is slow so wait.
-                environment: 'q6'
+                environment: 'q6',
+                loginCookie: {
+                    domain: '',
+                    secure: '',
+                    value: '',
+                    path: '',
+                    httpOnly: '',
+                    name: ''
+                }
             },
             desiredCapabilities: {
                 platform: 'Windows 10',
