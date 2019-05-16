@@ -3,17 +3,12 @@ import Lukknapp from 'nav-frontend-lukknapp';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { Knapp } from 'pam-frontend-knapper';
 import './Error.less';
 import { HIDE_ERROR } from './errorReducer';
 
 class Error extends React.Component {
     onCloseClick = () => {
         this.props.hideError();
-    };
-
-    onReloadClick = () => {
-        window.location.reload();
     };
 
     render() {
@@ -30,23 +25,17 @@ class Error extends React.Component {
                         {messages.map((message) => (
                             <div>{message}.</div>
                         ))}
+                        <p>Forsøk å laste siden på nytt</p>
                     </div>
                 )}
                 {messages.length === 1 && (
                     <div className="Error__messages">
-                        <b>Det har oppstått en feil:</b> {messages[0]}.
+                        <b>Det har oppstått en feil:</b> {messages[0]}. Forsøk å laste siden på nytt
                     </div>
                 )}
                 {messages.length === 0 && (
                     <div />
                 )}
-                <Knapp
-                    className="Error__reload"
-                    mini
-                    onClick={this.onReloadClick}
-                >
-                    Last siden på nytt
-                </Knapp>
                 <Lukknapp
                     className="Error__close"
                     onClick={this.onCloseClick}
