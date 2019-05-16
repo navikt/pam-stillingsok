@@ -189,26 +189,28 @@ export default class Typeahead extends React.Component {
                 aria-owns={`${this.props.id}-suggestions`}
                 aria-haspopup="listbox"
             >
-                <input
-                    id={this.props.id}
-                    type="search"
-                    role="textbox"
-                    aria-label={this.props.ariaLabel}
-                    aria-autocomplete="list"
-                    aria-controls={`${this.props.id}-suggestions`}
-                    aria-activedescendant={activeDescendant}
-                    placeholder={this.props.placeholder}
-                    value={this.props.value}
-                    autoComplete="off"
-                    onChange={this.onChange}
-                    onBlur={this.onBlur}
-                    onKeyDown={this.onKeyDown}
-                    onFocus={this.onFocus}
-                    ref={(input) => {
-                        this.input = input;
-                    }}
-                    className="Typeahead__input typo-normal"
-                />
+                <div className="Typeahead__input-wrapper">
+                    <input
+                        id={this.props.id}
+                        type="search"
+                        role="textbox"
+                        aria-label={this.props.ariaLabel}
+                        aria-autocomplete="list"
+                        aria-controls={`${this.props.id}-suggestions`}
+                        aria-activedescendant={activeDescendant}
+                        placeholder={this.props.placeholder}
+                        value={this.props.value}
+                        autoComplete="off"
+                        onChange={this.onChange}
+                        onBlur={this.onBlur}
+                        onKeyDown={this.onKeyDown}
+                        onFocus={this.onFocus}
+                        ref={(input) => {
+                            this.input = input;
+                        }}
+                        className="Typeahead__input typo-normal"
+                    />
+                </div>
                 <ul
                     id={`${this.props.id}-suggestions`}
                     role="listbox"
