@@ -8,24 +8,15 @@
     position: absolute;
     top: 100%;
     left: 0;
-    z-index: 2;
-    min-width: 100%;
+    z-index: 1000;
+    min-width: ~"calc(100% - 4rem)";
     padding: 0;
-    margin: 0.5rem 0 0 0;
+    margin: 0 2rem;
     background-color: #fff;
+    border-left: 2px solid @blueDarken;
+    border-bottom: 2px solid @blueDarken;
+    border-right: 2px solid @blueDarken;
     overflow: auto;
-
-    @media (max-width: @screen-xs-max) {
-      box-shadow: 0px 6px 6px -3px @gray4;
-    }
-
-    @media (min-width: @screen-sm-min) {
-      margin: 0 2rem;
-      min-width: ~"calc(100% - 4rem)";
-      border-bottom: 2px solid @blueDarken;
-      border-left: 2px solid @blueDarken;
-      border-right: 2px solid @blueDarken;
-    }
   }
 
   ul li {
@@ -40,12 +31,6 @@
     -ms-user-select: none;
     user-select: none;
     cursor: pointer;
-  }
-}
-
-.Typeahead__input-wrapper {
-  @media (max-width: @screen-xs-max) {
-    margin: 0 1rem;
   }
 }
 
