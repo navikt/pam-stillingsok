@@ -15,7 +15,7 @@ module.exports = {
         searchResultLocation: '.SearchResultsItemDetails__location',
         toggleFavoriteButton: 'button[class*="ToggleFavouriteStar"][aria-pressed="false"]',
         loggInnButton: 'button[class*="Header__Button"]',
-        loggInnPersonButton: 'button[class*="Header__Button"]:nth-child(2)',
+        loggInnPersonButton: 'button[class*="Header__VelgRolle__row"]', // første knapp med denne klassen er for jobbsøker
         samtykkeCheckbox: 'input[id=TermsOfUse__checkbox]',
         samtykkeButton: 'button[id=TermsOfUse__acceptButton]',
         samtykkeEpost: 'input[id=TermsOfUse__email]',
