@@ -20,7 +20,7 @@ server.set('port', port);
 
 server.disable('x-powered-by');
 server.use(compression());
-server.use(helmet());
+server.use(helmet({ xssFilter: false }));
 
 server.use(helmet.contentSecurityPolicy({
     directives: {
