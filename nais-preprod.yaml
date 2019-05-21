@@ -29,19 +29,16 @@ spec:
       cpu: 200m
       memory: 256Mi
   ingresses:
-    - https://arbeidsplassen.nav.no/stillinger
-    - https://pam-stillingsok.nais.oera.no
-    - https://tjenester.nav.no/pam-stillingsok
-    - https://stillingsok.nav.no
+    - https://arbeidsplassen-q.nav.no/stillinger
+    - https://pam-stillingsok.nais.oera-q.local
+    - https://tjenester-t5.nav.no/pam-stillingsok
+    - https://stillingsok-q.nav.no
   env:
     - name: LOGINSERVICE_URL
-      value: https://loginservice.nav.no/login
+      value: https://loginservice-q.nav.no/login
     - name: LOGOUTSERVICE_URL
-      value: https://loginservice.nav.no/slo
+      value: https://loginservice-q.nav.no/slo
     - name: PAMADUSER_URL
-      value: https://arbeidsplassen.nav.no
+      value: https://arbeidsplassen-q.nav.no
     - name: PAM_STILLINGSOK_URL
-      value: https://arbeidsplassen.nav.no/stillinger
-
-
-
+      value: https://arbeidsplassen-q.nav.no/stillinger
