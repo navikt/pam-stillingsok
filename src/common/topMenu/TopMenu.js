@@ -38,6 +38,7 @@ const TopMenu = ({ isAuthenticated }) => {
                 authenticationStatus={authenticationStatus(isAuthenticated)}
                 applikasjon={PersonbrukerApplikasjon.STILLINGSSOK}
                 visInnstillinger
+                showName
             />
         </div>
     );
