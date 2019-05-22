@@ -134,6 +134,7 @@ module.exports = {
         saveSearch(name) {
             return this.waitForElementPresent('@saveSearchButton', 20000)
                 .click('@saveSearchButton')
+                .pagePause(500).giSamtykke()
                 .waitForElementPresent('@savedSearchName', 20000)
                 .clearValue('@savedSearchName')
                 .setValue('@savedSearchName', name)

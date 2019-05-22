@@ -4,7 +4,6 @@ Egenskap: Bruke stillingssøket som innlogget bruker
 
   Bakgrunn: Logg inn og naviger til forsiden for søk
     Gitt at jeg er logget inn
-    Og at jeg er på forsiden for søk
 
   @favoritter
   Scenario: Se favoritter
