@@ -11,28 +11,25 @@ export function toObject(queryString = '?') {
         const pair = parameter.split('=');
         if (pair[0] !== undefined || pair[0] !== '') {
             let key = decodeURIComponent(pair[0]);
-            const val = pair[1] !== undefined ? decodeURIComponent(pair[1]) : '';
+            const values = pair[1] !== undefined ? pair[1].split("_") : [];
+            values.forEach((value) => {
+                const val = value !== undefined ? decodeURIComponent(value) : '';
+                if (key.includes('[]')) {
+                    const newKey = key.replace('[]', '');
 
-            if (key.includes('[]')) {
-                key = key.replace('[]', '');
-
-                if (object[key] === undefined) {
-                    object[key] = [val];
+                    if (object[newKey] === undefined) {
+                        object[newKey] = [val];
+                    } else {
+                        object[newKey].push(val);
+                    }
                 } else {
-                    object[key].push(val);
+                    object[key] = val;
                 }
-            } else {
-                object[key] = val;
-            }
+            });
         }
     });
 
     return object;
-}
-
-function arrayToQueryString(key, array) {
-    return array.map((val) => `${encodeURIComponent(key)}[]=${encodeURIComponent(val)}`)
-        .join('&');
 }
 
 /**
@@ -44,10 +41,12 @@ export function toQueryString(object = {}) {
     const string = Object.keys(object)
         .map((key) => {
             const value = object[key];
-            if (Array.isArray(value)) {
-                return arrayToQueryString(key, value);
+            if (value === undefined || value === '' || (value && value.length === 0)) {
+                return '';
+            } else if (Array.isArray(value)) {
+                return `${encodeURIComponent(key)}[]=${value.map((val) => encodeURIComponent(val)).join("_")}`;
             }
-            return `${encodeURIComponent(key)}=${encodeURIComponent(object[key])}`;
+            return `${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
         })
         .filter((elem) => elem !== '')
         .join('&');

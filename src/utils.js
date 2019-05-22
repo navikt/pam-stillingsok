@@ -33,7 +33,7 @@ export function isValidUrl(input) {
 export function removeUndefinedOrEmptyString(obj) {
     const newObj = {};
     Object.keys(obj).forEach((prop) => {
-        if (obj[prop] !== undefined && obj[prop] !== '') {
+        if (obj[prop] !== undefined && (obj[prop] !== '') || obj[prop] !== []) {
             newObj[prop] = obj[prop];
         }
     });

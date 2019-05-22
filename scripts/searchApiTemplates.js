@@ -55,7 +55,7 @@ function filterExtent(extent) {
                 should: []
             }
         };
-        extent.forEach((item) => {
+        safeRetrieveFacetAsList(extent).forEach((item) => {
             filter.bool.should.push({
                 term: {
                     extent_facet: item
@@ -95,7 +95,7 @@ function filterEngagementType(engagementTypes) {
                 should: []
             }
         };
-        engagementTypes.forEach((engagementType) => {
+        safeRetrieveFacetAsList(engagementTypes).forEach((engagementType) => {
             filter.bool.should.push({
                 term: {
                     engagementtype_facet: engagementType
@@ -115,30 +115,30 @@ function filterEngagementType(engagementTypes) {
  */
 function filterNestedFacets(parents, children = [], parentKey, childKey, nestedField=undefined) {
     let allMusts = [];
-    if (parents && parents.length > 0) {
-        parents.forEach((parent) => {
-            let must = [{
-                term: {
-                    [parentKey]: parent
+    
+    parents = safeRetrieveFacetAsList(parents);
+    parents.forEach((parent) => {
+        let must = [{
+            term: {
+                [parentKey]: parent
+            }
+        }];
+
+        const childrenOfCurrentParent = safeRetrieveFacetAsList(children).filter((m) => (m.split('.')[0] === parent));
+        if (childrenOfCurrentParent.length > 0) {
+            must = [...must, {
+                bool: {
+                    should: childrenOfCurrentParent.map((child) => ({
+                        term: {
+                            [childKey]: child.split('.')[1] // child kan feks være AKERSHUS.ASKER
+                        }
+                    }))
                 }
             }];
+        }
 
-            const childrenOfCurrentParent = children.filter((m) => (m.split('.')[0] === parent));
-            if (childrenOfCurrentParent.length > 0) {
-                must = [...must, {
-                    bool: {
-                        should: childrenOfCurrentParent.map((child) => ({
-                            term: {
-                                [childKey]: child.split('.')[1] // child kan feks være AKERSHUS.ASKER
-                            }
-                        }))
-                    }
-                }];
-            }
-
-            allMusts = [...allMusts, must];
-        });
-    }
+        allMusts = [...allMusts, must];
+    });
 
     const queryObject = {
         bool: {
@@ -177,7 +177,7 @@ function filterSector(sector) {
                 should: []
             }
         };
-        sector.forEach((item) => {
+        safeRetrieveFacetAsList(sector).forEach((item) => {
             filter.bool.should.push({
                 term: {
                     sector_facet: item
@@ -187,6 +187,13 @@ function filterSector(sector) {
         filters.push(filter);
     }
     return filters;
+}
+
+function safeRetrieveFacetAsList(facet) {
+    if (facet && facet.length > 0) {
+        return facet[0].split("_");
+    }
+    return [];
 }
 
 exports.suggestionsTemplate = (match, minLength) => ({
