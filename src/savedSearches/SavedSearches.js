@@ -1,4 +1,4 @@
-/* eslint-disable no-undef */
+/* eslint-disable no-undef,no-nested-ternary */
 import { Column, Container, Row } from 'nav-frontend-grid';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -16,94 +16,81 @@ import './SavedSearches.less';
 import { authenticationEnum } from '../authentication/authenticationReducer';
 import { CONTEXT_PATH } from '../fasitProperties';
 import TotalSavedSearch from './totalSavedSearch/TotalSavedSearch';
+import { useDocumentTitle, useGoogleAnalytics, useScrollToTop } from '../common/hooks';
 
-class SavedSearches extends React.Component {
-    componentDidMount() {
-        window.scrollTo(0, 0);
-        document.title = 'Lagrede søk - Arbeidsplassen';
-        ga('set', 'page', `${CONTEXT_PATH}/lagrede-sok`);
-        ga('set', 'title', 'Lagrede søk');
-        ga('send', 'pageview');
-    }
+const SavedSearches = ({
+    isAuthenticated,
+    isFetching,
+    isFetchingUser,
+    savedSearches,
+    user
+}) => {
+    useDocumentTitle('Lagrede søk - Arbeidsplassen');
+    useGoogleAnalytics(`${CONTEXT_PATH}/lagrede-sok`, 'Lagrede søk');
+    useScrollToTop();
 
-    render() {
-        const {
-            isAuthenticated,
-            isFetching,
-            isFetchingUser,
-            savedSearches,
-            totalElements,
-            user
-        } = this.props;
-        return (
-            <div className="SavedSearches">
-                <SavedSearchAlertStripe />
-                <PageHeader
-                    backUrl={`${CONTEXT_PATH}`}
-                    title="Lagrede søk"
-                />
-                <Container className="SavedSearches__main">
-                    {isAuthenticated === authenticationEnum.NOT_AUTHENTICATED && (
+    return (
+        <div className="SavedSearches">
+            <SavedSearchAlertStripe />
+            <PageHeader
+                backUrl={`${CONTEXT_PATH}`}
+                title="Lagrede søk"
+            />
+            <Container className="SavedSearches__main">
+                {isAuthenticated === authenticationEnum.NOT_AUTHENTICATED && (
+                    <Row>
+                        <Column xs="12">
+                            <NotAuthenticated title="Du må logge inn for å se lagrede søk" />
+                        </Column>
+                    </Row>
+                )}
+                {isAuthenticated === authenticationEnum.IS_AUTHENTICATED && (
+                    (isFetchingUser || isFetching) ? (
                         <Row>
                             <Column xs="12">
-                                <NotAuthenticated title="Du må logge inn for å se lagrede søk" />
+                                <div className="SavedSearches__main__spinner">
+                                    <DelayedSpinner />
+                                </div>
                             </Column>
                         </Row>
-                    )}
-                    {isAuthenticated === authenticationEnum.IS_AUTHENTICATED && (
-                        <div>
-                            {(isFetchingUser || isFetching) ? (
+                    ) : (
+                        <React.Fragment>
+                            {!user && (
                                 <Row>
                                     <Column xs="12">
-                                        <div className="SavedSearches__main__spinner">
-                                            <DelayedSpinner />
-                                        </div>
+                                        <NoUser />
                                     </Column>
                                 </Row>
-                            ) : (
-                                <div>
-                                    {!user && (
-                                        <Row>
-                                            <Column xs="12">
-                                                <NoUser />
-                                            </Column>
-                                        </Row>
-                                    )}
-                                    {user && (
-                                        <Row>
-                                            <Column xs="12">
-                                                {isFetching ? (
-                                                    <div className="SavedSearches__main__spinner">
-                                                        <DelayedSpinner />
-                                                    </div>
-                                                ) : (
-                                                    <div>
-                                                        {savedSearches.length === 0 ? (
-                                                            <NoSavedSearches />
-                                                        ) : (
-                                                            <div>
-                                                                <TotalSavedSearch total={this.props.savedSearches.length} />
-                                                                <SavedSearchList />
-                                                            </div>
-                                                        )}
-                                                    </div>
-                                                )}
-                                            </Column>
-                                        </Row>
-                                    )}
-                                </div>
                             )}
-
-                        </div>
-                    )}
-                </Container>
-                <SavedSearchForm />
-                <ConfirmRemoveModal />
-            </div>
-        );
-    }
-}
-
+                            {user && (
+                                <Row>
+                                    <Column xs="12">
+                                        {isFetching ? (
+                                            <div className="SavedSearches__main__spinner">
+                                                <DelayedSpinner />
+                                            </div>
+                                        ) : (
+                                            savedSearches.length === 0 ? (
+                                                <NoSavedSearches />
+                                            ) : (
+                                                <React.Fragment>
+                                                    <TotalSavedSearch total={savedSearches.length} />
+                                                    <SavedSearchList />
+                                                </React.Fragment>
+                                            )
+                                        )}
+                                    </Column>
+                                </Row>
+                            )}
+                        </React.Fragment>
+                    )
+                )}
+            </Container>
+            <SavedSearchForm />
+            <ConfirmRemoveModal />
+        </div>
+    )
+};
 
 SavedSearches.defaultProps = {
     user: undefined
@@ -114,7 +101,6 @@ SavedSearches.propTypes = {
     isFetchingUser: PropTypes.bool.isRequired,
     isAuthenticated: PropTypes.string.isRequired,
     isFetching: PropTypes.bool.isRequired,
-    totalElements: PropTypes.number.isRequired,
     savedSearches: PropTypes.arrayOf(PropTypes.shape({
         uuid: PropTypes.string,
         title: PropTypes.string
@@ -126,7 +112,6 @@ const mapStateToProps = (state) => ({
     isFetchingUser: state.user.isFetchingUser,
     isAuthenticated: state.authentication.isAuthenticated,
     savedSearches: state.savedSearches.savedSearches,
-    totalElements: state.savedSearches.totalElements,
     isFetching: state.savedSearches.isFetching
 });
 

@@ -1,6 +1,5 @@
-/* eslint-disable no-undef */
+/* eslint-disable no-undef,no-nested-ternary */
 import { Column, Container, Row } from 'nav-frontend-grid';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -16,86 +15,72 @@ import NoFavourites from './noresult/NoFavourites';
 import { authenticationEnum } from '../authentication/authenticationReducer';
 import { CONTEXT_PATH } from '../fasitProperties';
 import TotalFavourites from './totalFavourites/TotalFavourutes';
+import { useDocumentTitle, useGoogleAnalytics, useScrollToTop } from '../common/hooks';
 
-class Favourites extends React.Component {
-    componentDidMount() {
-        window.scrollTo(0, 0);
-        document.title = 'Favoritter - Arbeidsplassen';
-        ga('set', 'page', `${CONTEXT_PATH}/favoritter`);
-        ga('set', 'title', 'Favoritter');
-        ga('send', 'pageview');
-    }
+const Favourites = ({
+    favourites,
+    isAuthenticated,
+    isFetchingFavourites,
+    isFetchingUser,
+    user
+}) => {
+    useDocumentTitle('Favoritter - Arbeidsplassen');
+    useGoogleAnalytics(`${CONTEXT_PATH}/favoritter`, 'Favoritter');
+    useScrollToTop();
 
-    render() {
-        const {
-            favourites,
-            isAuthenticated,
-            isFetchingFavourites,
-            isFetchingUser,
-            totalElements,
-            user
-        } = this.props;
-        return (
-            <div className="Favourites">
-                <FavouriteAlertStripe />
-                <PageHeader
-                    backUrl={`${CONTEXT_PATH}`}
-                    title="Favoritter"
-                />
-                <Container className="Favourites__main">
-                    {isAuthenticated === authenticationEnum.NOT_AUTHENTICATED && (
+    return (
+        <div className="Favourites">
+            <FavouriteAlertStripe />
+            <PageHeader
+                backUrl={`${CONTEXT_PATH}`}
+                title="Favoritter"
+            />
+            <Container className="Favourites__main">
+                {isAuthenticated === authenticationEnum.NOT_AUTHENTICATED && (
+                    <Row>
+                        <Column xs="12">
+                            <NotAuthenticated title="Du må logge inn for å se dine favoritter" />
+                        </Column>
+                    </Row>
+                )}
+                {isAuthenticated === authenticationEnum.IS_AUTHENTICATED && (
+                    (isFetchingUser || isFetchingFavourites) ? (
                         <Row>
                             <Column xs="12">
-                                <NotAuthenticated title="Du må logge inn for å se dine favoritter" />
+                                <div className="Favourites__main__spinner">
+                                    <DelayedSpinner />
+                                </div>
                             </Column>
                         </Row>
-                    )}
-                    {isAuthenticated === authenticationEnum.IS_AUTHENTICATED && (
-                        <div>
-                            {(isFetchingUser || isFetchingFavourites) ? (
-                                <Row>
-                                    <Column xs="12">
-                                        <div className="Favourites__main__spinner">
-                                            <DelayedSpinner />
-                                        </div>
-                                    </Column>
-                                </Row>
-                            ) : (
-                                <div>
-                                    {!user && (
-                                        <Row>
-                                            <Column xs="12">
-                                                <NoUser />
-                                            </Column>
-                                        </Row>
+                    ) : (
+                        user ? (
+                            <Row>
+                                <Column xs="12">
+                                    {favourites.length === 0 ? (
+                                        <NoFavourites />
+                                    ) : (
+                                        <React.Fragment>
+                                            <TotalFavourites total={favourites.length} />
+                                            <FavouriteList />
+                                        </React.Fragment>
                                     )}
+                                </Column>
+                            </Row>
+                        ) : (
+                            <Row>
+                                <Column xs="12">
+                                    <NoUser />
+                                </Column>
+                            </Row>
+                        )
+                    )
+                )}
+            </Container>
+            <RemoveFavouriteModal />
+        </div>
+    );
+};
 
-                                    {user && (
-                                        <Row>
-                                            <Column xs="12">
-                                                <div>
-                                                    {favourites.length === 0 ? (
-                                                        <NoFavourites />
-                                                    ) : (
-                                                        <div>
-                                                            <TotalFavourites total={this.props.favourites.length} />
-                                                            <FavouriteList />
-                                                        </div>
-                                                    )}
-                                                </div>
-                                            </Column>
-                                        </Row>
-                                    )}
-                                </div>
-                            )}
-                        </div>
-                    )}
-                </Container>
-                <RemoveFavouriteModal />
-            </div>
-        );
-    }
-}
 Favourites.defaultProps = {
     user: undefined
 };
@@ -105,7 +90,6 @@ Favourites.propTypes = {
     isFetchingUser: PropTypes.bool.isRequired,
     isAuthenticated: PropTypes.string.isRequired,
     isFetchingFavourites: PropTypes.bool.isRequired,
-    totalElements: PropTypes.number.isRequired,
     favourites: PropTypes.arrayOf(PropTypes.shape({
         uuid: PropTypes.string,
         title: PropTypes.string
@@ -117,7 +101,6 @@ const mapStateToProps = (state) => ({
     isFetchingUser: state.user.isFetchingUser,
     isAuthenticated: state.authentication.isAuthenticated,
     favourites: state.favourites.favourites,
-    totalElements: state.favourites.totalElements,
     isFetchingFavourites: state.favourites.isFetchingFavourites
 });
 
