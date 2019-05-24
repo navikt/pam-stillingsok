@@ -16,34 +16,29 @@ const SearchResults = ({ searchResult, isSearching, page }) => {
         const count = ((page * PAGE_SIZE) + PAGE_SIZE) > total ? total : (page * PAGE_SIZE) + PAGE_SIZE;
         return (
             <div role="region" aria-label="Søkeresultat" className="SearchResults">
-                <div>
-                    {stillinger && stillinger.map((stilling) => (
-                        <SearchResultItem
-                            key={stilling.uuid}
-                            stilling={stilling}
-                        />
-                    ))}
-
-                    {hasMore && (
+                {stillinger && stillinger.map((stilling) => (
+                    <SearchResultItem
+                        key={stilling.uuid}
+                        stilling={stilling}
+                    />
+                ))}
+                {hasMore && (
+                    <div className="SearchResults__numberOfTotal typo-normal">
+                            Viser {count} av {total} treff
+                    </div>
+                )}
+                {!isSearching && total === 0 && (
+                    <NoResults />
+                )}
+                <div className="SearchResults__end">
+                    {total > 0 && !isSearching && !hasMore && (
                         <div className="SearchResults__numberOfTotal typo-normal">
                                 Viser {count} av {total} treff
                         </div>
                     )}
-
-                    {!isSearching && total === 0 && (
-                        <NoResults />
+                    {hasMore && (
+                        <Pagination />
                     )}
-
-                    <div className="SearchResults__end">
-                        {total > 0 && !isSearching && !hasMore && (
-                            <div className="SearchResults__numberOfTotal typo-normal">
-                                    Viser {count} av {total} treff
-                            </div>
-                        )}
-                        {hasMore && (
-                            <Pagination />
-                        )}
-                    </div>
                 </div>
             </div>
         );
