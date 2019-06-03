@@ -92,6 +92,7 @@ const startServer = (htmlPages) => {
     server.get(`${fasitProperties.PAM_CONTEXT_PATH}/api/search`, async (req, res) => {
         await searchApiConsumer.search(req.query)
             .catch((err) => {
+                res.send("Feil: " + err)
                 console.warn('Failed to query search api', err);
                 res.status(err.statusCode ? err.statusCode : 502); // For TCP level errors, no http status code will be available
             })
