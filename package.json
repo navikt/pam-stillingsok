@@ -1,13 +1,13 @@
 {
   "name": "pam-stillingsok-frontend",
-  "version": "0.109.0",
+  "version": "0.112.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node ./server.js",
+    "start": "concurrently \"npm run start-webpack\" \"npm run start-express\"",
     "clean-build": "rimraf ./dist",
     "build": "npm run clean-build && webpack -p",
-    "start-express": "node ./server.js",
+    "start-express": "node server/server.js",
     "start-webpack": "webpack --watch --config webpack.config.dev.js",
     "docker-build": "npm run build && docker build . -t pam-stillingsok",
     "docker-start": "docker run --name pam-stillingsok -p 8080:8080 -d pam-stillingsok",
@@ -64,9 +64,9 @@
     "nav-frontend-spinner-style": "^0.2.5",
     "nav-frontend-typografi": "^2.0.10",
     "nav-frontend-typografi-style": "^1.0.12",
-    "pam-frontend-core": "^1.2.1",
-    "pam-frontend-footer": "^1.0.5",
-    "pam-frontend-header": "^4.5.2",
+    "pam-frontend-core": "^1.3.4",
+    "pam-frontend-footer": "^1.0.7",
+    "pam-frontend-header": "^4.5.10",
     "pam-frontend-knapper": "^1.0.2",
     "prom-client": "^11.1.3",
     "promise": "^8.0.2",
@@ -88,5 +88,8 @@
     "webpack-cli": "^3.2.1",
     "webpack-merge": "^4.2.1",
     "whatwg-fetch": "^2.0.4"
+  },
+  "devDependencies": {
+    "concurrently": "^4.1.0"
   }
 }

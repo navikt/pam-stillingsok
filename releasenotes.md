@@ -1,3 +1,15 @@
+## RELEASE - 0.111.735-86be176
+#### New in this release: 
++ 2019-05-28 [PAM-3231] Oppdatere til siste versjon av pam-frontend-core
++ 2019-05-28 [PAM-3231] Oppdatere farger på alertstripe, og fikse slik at meldingen ikke blir kuttet på mobil
+## RELEASE - 0.109.729-e7c44f1
+#### New in this release: 
++ 2019-05-21 [PAM-3259]  pam-stillingsok på naiserator (#160)
++ 2019-05-20 [PAM-3377] Disable xssFilter siden denne settes automatisk av BigIp
++ 2019-05-09 [PAM-3249]: qa-tester for innlogging og lagring av favoritt
++ 2019-05-16 [Rollback] Gjør slik at dropdown i typehead på mobil dekker hele window-bredden
++ 2019-05-16 [Fix] Gjør slik at dropdown i typehead på mobil dekker hele window-bredden
++ 2019-05-16 [PAM-3385] Midtstillier tekst i sticky alertstriper
 ## RELEASE - 0.108.710-fde0b46
 #### New in this release: 
 + 2019-05-15 [PAM-3372] Endre bakgrunnsfarge på tooltip, slik at den er i henhold til styleguide

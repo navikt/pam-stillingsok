@@ -2,9 +2,7 @@
 
 ## Hvordan kjøre applikasjonen lokalt
 
-### 1. Start node server
-
-For å starte `server.js` lokalt trenger du å sette følgende miljøvariabler:
+Før man starter applikasjonen trenger man å sette følgende miljøvariabler:
 
 ```
 PAMADUSER_URL
@@ -14,7 +12,7 @@ PAM_STILLINGSOK_URL
 PAMSEARCHAPI_URL
 ```
 
-For eksempel kan man lage et script `run.sh`, dersom man kjører pam-aduser, pam-search-api og
+Man kan for eksempel kan man lage et script `run.sh`, dersom man kjører pam-aduser, pam-search-api og
 pam-stillingsok lokalt, med følgende innhold:
 
 ```sh
@@ -43,14 +41,15 @@ docker-compose up --build
 
 Frontend kjører som default på [localhost:8080](localhost:8080). 
 
-### 2. Starte automatisk bygging av frontendkoden
-```sh 
-webpack --watch  --config webpack.config.dev.js
-```
+---
 
-eller:
+Eventuelt kan man kjøre server og automatisk bygging av frontend separat:
 
 ```sh
+# Start node server:
+npm run start-express
+
+# Start automatisk bygging av frontend:
 npm run start-webpack
 ```
 

@@ -1,6 +1,6 @@
 import { Column, Container, Row } from 'nav-frontend-grid';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Flatknapp } from 'pam-frontend-knapper';
 import { authenticationEnum } from '../authentication/authenticationReducer';
@@ -28,129 +28,126 @@ import SearchResultCount from './searchResults/SearchResultCount';
 import SearchResults from './searchResults/SearchResults';
 import ShowResultsButton from './showResultsButton/ShowResultsButton';
 import Sorting from './sorting/Sorting';
+import { useDocumentTitle, useGoogleAnalytics } from '../common/hooks';
 
-class Search extends React.Component {
-    constructor(props) {
-        super(props);
-        this.props.restoreStateFromUrl();
-        this.props.initialSearch();
-    }
+const Search = ({
+    initialSearch,
+    initialSearchDone,
+    isAuthenticated,
+    isSearching,
+    resetSearch,
+    restoreStateFromUrl,
+    search,
+    user
+}) => {
+    useDocumentTitle('Ledige stillinger - Arbeidsplassen');
+    useGoogleAnalytics(CONTEXT_PATH, 'Ledige stillinger');
 
-    componentDidMount() {
-        document.title = 'Ledige stillinger - Arbeidsplassen';
-        ga('set', 'page', `${CONTEXT_PATH}`);
-        ga('set', 'title', 'Ledige stillinger');
-        ga('send', 'pageview');
-    }
+    useEffect(() => {
+        restoreStateFromUrl();
+        initialSearch();
+    }, []);
 
-    onSearchFormSubmit = (e) => {
+    const onSearchFormSubmit = (e) => {
         e.preventDefault();
-        this.props.search();
+        search();
     };
 
-    onResetSearchClick = () => {
-        this.props.resetSearch();
-    };
-
-    render() {
-        return (
-            <div className="Search">
-                <FavouriteAlertStripe />
-                <SavedSearchAlertStripe />
-                <ShowResultsButton />
-                <div className="Search__header">
-                    <Container className="Search__header__container">
-                        <Row className="Search__header__row">
-                            <Column xs="12" sm="12" md="4" lg="4" />
-                            <Column xs="12" sm="12" md="6" lg="6">
-                                <form
-                                    action="/"
-                                    onSubmit={this.onSearchFormSubmit}
-                                    className="no-print"
-                                >
-                                    <SearchBox />
-                                </form>
+    return (
+        <div className="Search">
+            <FavouriteAlertStripe />
+            <SavedSearchAlertStripe />
+            <ShowResultsButton />
+            <div className="Search__header">
+                <Container className="Search__header__container">
+                    <Row className="Search__header__row">
+                        <Column xs="12" sm="12" md="4" lg="4" />
+                        <Column xs="12" sm="12" md="6" lg="6">
+                            <form
+                                action="/"
+                                onSubmit={onSearchFormSubmit}
+                                className="no-print"
+                            >
+                                <SearchBox />
+                            </form>
+                        </Column>
+                        <Column xs="12" sm="12" md="2" lg="2">
+                            {(isAuthenticated === authenticationEnum.IS_AUTHENTICATED && user) && (
+                                <div className="Search__header__left">
+                                    <SavedSearchesExpandButton />
+                                </div>
+                            )}
+                        </Column>
+                    </Row>
+                </Container>
+            </div>
+            <Container className="Search__main">
+                {isSearching && !initialSearchDone && (
+                    <div className="Search__spinner">
+                        <DelayedSpinner />
+                    </div>
+                )}
+                {initialSearchDone && (
+                    <RestoreScroll>
+                        <Row>
+                            <Column xs="12" md="4">
+                                <div className="Search__main__left">
+                                    <div className="Search__main__left__save-search">
+                                        <div className="Search__main__left__save-search__SaveSearchButton">
+                                            <SaveSearchButton />
+                                        </div>
+                                        <Flatknapp
+                                            mini
+                                            onClick={() => resetSearch()}
+                                        >
+                                            Nullstill kriterier
+                                        </Flatknapp>
+                                    </div>
+                                    <div id="sok">
+                                        <form
+                                            action="/"
+                                            onSubmit={onSearchFormSubmit}
+                                            className="no-print"
+                                        >
+                                            <Published />
+                                            <Occupations />
+                                            <Counties />
+                                            <Countries />
+                                            <Extent />
+                                            <EngagementType />
+                                            <Sector />
+                                        </form>
+                                    </div>
+                                </div>
                             </Column>
-                            <Column xs="12" sm="12" md="2" lg="2">
-                                {this.props.isAuthenticated === authenticationEnum.IS_AUTHENTICATED && this.props.user ?
-                                    <div className="Search__header__left">
-                                        <SavedSearchesExpandButton />
-                                    </div> : null
-                                }
+                            <Column xs="12" md="8">
+                                <div id="treff" className="Search__main__center">
+                                    <div className="Search__main__center__header">
+                                        <div className="Search__main__center__header__left">
+                                            <SearchResultCount />
+                                            <CurrentSavedSearch />
+                                        </div>
+                                        <div className="Search__main__center__header__right">
+                                            <div className="Search__main__center__header__right__SaveSearchButton">
+                                                <SaveSearchButton />
+                                            </div>
+                                            <Sorting />
+                                        </div>
+                                    </div>
+                                    <SearchResults />
+                                </div>
                             </Column>
                         </Row>
-                    </Container>
-                </div>
-                <Container className="Search__main">
-                    {this.props.isSearching && !this.props.initialSearchDone && (
-                        <div className="Search__spinner">
-                            <DelayedSpinner />
+                        <div className="Search__main__tiltoppen">
+                            <a href="#top" className="link">Til toppen</a>
                         </div>
-                    )}
-                    {this.props.initialSearchDone && (
-                        <RestoreScroll>
-                            <div>
-                                <Row>
-                                    <Column xs="12" md="4">
-                                        <div className="Search__main__left">
-                                            <div className="Search__main__left__save-search">
-                                                <div className="Search__main__left__save-search__SaveSearchButton">
-                                                    <SaveSearchButton />
-                                                </div>
-                                                <Flatknapp
-                                                    mini
-                                                    onClick={this.onResetSearchClick}
-                                                >
-                                                            Nullstill kriterier
-                                                </Flatknapp>
-                                            </div>
-                                            <div id="sok">
-                                                <form
-                                                    action="/"
-                                                    onSubmit={this.onSearchFormSubmit}
-                                                    className="no-print"
-                                                >
-                                                    <Published />
-                                                    <Occupations />
-                                                    <Counties />
-                                                    <Countries />
-                                                    <Extent />
-                                                    <EngagementType />
-                                                    <Sector />
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </Column>
-                                    <Column xs="12" md="8">
-                                        <div id="treff" className="Search__main__center">
-                                            <div className="Search__main__center__header">
-                                                <div className="Search__main__center__header__left">
-                                                    <SearchResultCount />
-                                                    <CurrentSavedSearch />
-                                                </div>
-                                                <div className="Search__main__center__header__right">
-                                                    <div className="Search__main__center__header__right__SaveSearchButton">
-                                                        <SaveSearchButton />
-                                                    </div>
-                                                    <Sorting />
-                                                </div>
-                                            </div>
-                                            <SearchResults />
-                                        </div>
-                                    </Column>
-                                </Row>
-                                <div className="Search__main__tiltoppen">
-                                    <a href="#top" className="link">Til toppen</a>
-                                </div>
-                            </div>
-                        </RestoreScroll>
-                    )}
-                </Container>
-                <SavedSearchForm />
-            </div>
-        );
-    }
-}
+                    </RestoreScroll>
+                )}
+            </Container>
+            <SavedSearchForm />
+        </div>
+    );
+};
 
 Search.defaultProps = {
     user: undefined
@@ -161,7 +158,6 @@ Search.propTypes = {
     initialSearch: PropTypes.func.isRequired,
     search: PropTypes.func.isRequired,
     resetSearch: PropTypes.func.isRequired,
-    isSavedSearchesExpanded: PropTypes.bool.isRequired,
     initialSearchDone: PropTypes.bool.isRequired,
     isSearching: PropTypes.bool.isRequired,
     isAuthenticated: PropTypes.string.isRequired,
