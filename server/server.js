@@ -91,7 +91,7 @@ const startServer = (htmlPages) => {
     );
 
     server.get(`${fasitProperties.PAM_CONTEXT_PATH}/api/search`, async (req, res) => {
-        console.log(req.headers.referer.length)
+        res.send("okdd")
         await searchApiConsumer.search(req.query)
             .catch((err) => {
                 if(err.statusCode) {
