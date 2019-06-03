@@ -6,7 +6,7 @@ import { CONTEXT_PATH } from '../../fasitProperties';
 
 export default function NotFound() {
     return (
-        <AlertStripe type="advarsel" className="NotFound">
+        <AlertStripe type="advarsel" className="NotFound alertstripe--solid">
             <strong>Vi fant ikke stillingsannonsen.</strong> Den kan være utløpt eller avpublisert.
             <br />
             <Link to={CONTEXT_PATH} className="typo-normal link link--dark no-print">

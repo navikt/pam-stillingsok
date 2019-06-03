@@ -4,7 +4,7 @@ import './Expired.less';
 
 export default function Expired() {
     return (
-        <AlertStripe type="advarsel" className="Expired">
+        <AlertStripe type="advarsel" className="Expired alertstripe--solid">
             Stillingsannonsen er inaktiv.
         </AlertStripe>
     );
