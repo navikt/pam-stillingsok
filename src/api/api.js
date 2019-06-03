@@ -9,8 +9,7 @@ export async function get(url) {
     let response;
     try {
         response = await fetch(url, {
-            method: 'GET',
-            referrer: 'no-referrer'
+            method: 'GET'
         });
     } catch (e) {
         throw new SearchApiError(e.message, 0);
