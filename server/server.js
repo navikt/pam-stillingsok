@@ -94,7 +94,7 @@ const startServer = (htmlPages) => {
         await searchApiConsumer.search(req.query)
             .catch((err) => {
                 console.warn('Failed to query search api', err);
-                res.status(500); // For TCP level errors, no http status code will be available
+                res.status(err.statusCode ? err.statusCode : 502); // For TCP level errors, no http status code will be available
             })
             .then((val) => res.send(val));
     });
