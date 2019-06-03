@@ -91,11 +91,16 @@ const startServer = (htmlPages) => {
     );
 
     server.get(`${fasitProperties.PAM_CONTEXT_PATH}/api/search`, async (req, res) => {
+        console.log(req.headers.referer.length)
         await searchApiConsumer.search(req.query)
             .catch((err) => {
-                res.send("Feil: " + err)
-                console.warn('Failed to query search api', err);
-                res.status(err.statusCode ? err.statusCode : 502); // For TCP level errors, no http status code will be available
+                if(err.statusCode) {
+                    res.send("Feil 1: " + err.statusCode + " " + err.message + " ---- " + JSON.stringify(err));
+                } else {
+                    res.send(err)
+                }
+                //console.warn('Failed to query search api', err);
+                //res.status(err.statusCode ? err.statusCode : 502); // For TCP level errors, no http status code will be available
             })
             .then((val) => res.send(val));
     });
