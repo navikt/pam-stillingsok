@@ -51,7 +51,7 @@ export default function authenticationReducer(state = initialState, action) {
 
 function* fetchIsAuthenticated() {
     try {
-        const response = yield fetch(`${AD_USER_API}/isAuthenticated`, { credentials: 'include' });
+        const response = yield fetch(`${AD_USER_API}/isAuthenticated`, { credentials: 'include', referrer: 'stillinger' });
         if (response.status === 200) {
             yield put({ type: FETCH_IS_AUTHENTICATED_SUCCESS, isAuthenticated: authenticationEnum.IS_AUTHENTICATED });
         } else if (response.status === 401) {

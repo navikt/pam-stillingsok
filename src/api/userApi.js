@@ -11,7 +11,8 @@ export async function userApiGet(url) {
     try {
         response = await fetch(url, {
             credentials: 'include',
-            method: 'GET'
+            method: 'GET',
+            referrer: 'stillinger'
         });
     } catch (e) {
         throw new SearchApiError(e.message, 0);
@@ -30,6 +31,7 @@ export async function userApiPost(url, query) {
             credentials: 'include',
             body: JSON.stringify(query),
             method: 'POST',
+            referrer: 'stillinger',
             headers: {
                 'Content-Type': 'application/json',
                 'X-XSRF-TOKEN-ARBEIDSPLASSEN': getCookie('XSRF-TOKEN-ARBEIDSPLASSEN')
@@ -52,6 +54,7 @@ export async function userApiPut(url, query) {
             credentials: 'include',
             body: JSON.stringify(query),
             method: 'PUT',
+            referrer: 'stillinger',
             headers: {
                 'Content-Type': 'application/json',
                 'X-XSRF-TOKEN-ARBEIDSPLASSEN': getCookie('XSRF-TOKEN-ARBEIDSPLASSEN')
@@ -73,6 +76,7 @@ export async function userApiRemove(url) {
         response = await fetch(url, {
             credentials: 'include',
             method: 'DELETE',
+            referrer: 'stillinger',
             headers: {
                 'Content-Type': 'application/json',
                 'X-XSRF-TOKEN-ARBEIDSPLASSEN': getCookie('XSRF-TOKEN-ARBEIDSPLASSEN')
