@@ -1,4 +1,5 @@
 import SearchApiError from '../api/SearchApiError';
+import { CONTEXT_PATH } from '../fasitProperties';
 
 const getCookie = (name) => {
     const re = new RegExp(`${name}=([^;]+)`);
@@ -11,7 +12,8 @@ export async function userApiGet(url) {
     try {
         response = await fetch(url, {
             credentials: 'include',
-            method: 'GET'
+            method: 'GET',
+            referrer: CONTEXT_PATH
         });
     } catch (e) {
         throw new SearchApiError(e.message, 0);
@@ -30,6 +32,7 @@ export async function userApiPost(url, query) {
             credentials: 'include',
             body: JSON.stringify(query),
             method: 'POST',
+            referrer: CONTEXT_PATH,
             headers: {
                 'Content-Type': 'application/json',
                 'X-XSRF-TOKEN-ARBEIDSPLASSEN': getCookie('XSRF-TOKEN-ARBEIDSPLASSEN')
@@ -52,6 +55,7 @@ export async function userApiPut(url, query) {
             credentials: 'include',
             body: JSON.stringify(query),
             method: 'PUT',
+            referrer: CONTEXT_PATH,
             headers: {
                 'Content-Type': 'application/json',
                 'X-XSRF-TOKEN-ARBEIDSPLASSEN': getCookie('XSRF-TOKEN-ARBEIDSPLASSEN')
@@ -73,6 +77,7 @@ export async function userApiRemove(url) {
         response = await fetch(url, {
             credentials: 'include',
             method: 'DELETE',
+            referrer: CONTEXT_PATH,
             headers: {
                 'Content-Type': 'application/json',
                 'X-XSRF-TOKEN-ARBEIDSPLASSEN': getCookie('XSRF-TOKEN-ARBEIDSPLASSEN')
