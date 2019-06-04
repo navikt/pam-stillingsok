@@ -1,5 +1,5 @@
 import { put, takeEvery, select } from 'redux-saga/effects';
-import { AD_USER_API } from '../fasitProperties';
+import { AD_USER_API, CONTEXT_PATH } from '../fasitProperties';
 import AuthenticationCaller from './AuthenticationCaller';
 
 export const FETCH_IS_AUTHENTICATED = 'FETCH_IS_AUTHENTICATED';
@@ -51,7 +51,7 @@ export default function authenticationReducer(state = initialState, action) {
 
 function* fetchIsAuthenticated() {
     try {
-        const response = yield fetch(`${AD_USER_API}/isAuthenticated`, { credentials: 'include', referrer: 'stillinger' });
+        const response = yield fetch(`${AD_USER_API}/isAuthenticated`, { credentials: 'include', referrer: CONTEXT_PATH });
         if (response.status === 200) {
             yield put({ type: FETCH_IS_AUTHENTICATED_SUCCESS, isAuthenticated: authenticationEnum.IS_AUTHENTICATED });
         } else if (response.status === 401) {

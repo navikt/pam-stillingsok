@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import SearchApiError from './SearchApiError';
 import { toQueryString } from '../search/url';
-import {CONTEXT_PATH} from "../fasitProperties";
+import { CONTEXT_PATH } from "../fasitProperties";
 
 /* eslint-disable no-underscore-dangle */
 
@@ -10,7 +10,7 @@ export async function get(url) {
     try {
         response = await fetch(url, {
             method: 'GET',
-            referrer: 'stillinger'
+            referrer: CONTEXT_PATH
         });
     } catch (e) {
         throw new SearchApiError(e.message, 0);
