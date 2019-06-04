@@ -91,13 +91,9 @@ function fixStilling(stilling) {
     return stilling;
 }
 
-function isOrSearchFeatureEnabled() {
-    return localStorage.getItem('featureToggleOrOperator') === 'true';
-}
-
 export async function fetchSearch(query = {}) {
     const queryString = toQueryString(query);
-    const result = await get(`${CONTEXT_PATH}/api/search${queryString}${isOrSearchFeatureEnabled() ? '&operator=or' : ''}`);
+    const result = await get(`${CONTEXT_PATH}/api/search${queryString}`);
 
     return {
         stillinger: result.hits.hits.map((stilling) => (
