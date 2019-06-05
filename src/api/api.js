@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import SearchApiError from './SearchApiError';
 import { toQueryString } from '../search/url';
-import {CONTEXT_PATH} from "../fasitProperties";
+import { CONTEXT_PATH } from "../fasitProperties";
 
 /* eslint-disable no-underscore-dangle */
 
@@ -10,7 +10,7 @@ export async function get(url) {
     try {
         response = await fetch(url, {
             method: 'GET',
-            referrer: ''
+            referrer: CONTEXT_PATH
         });
     } catch (e) {
         throw new SearchApiError(e.message, 0);
@@ -22,64 +22,6 @@ export async function get(url) {
     return response.json();
 }
 
-export async function post(url, query) {
-    let response;
-    try {
-        response = await fetch(url, {
-            body: JSON.stringify(query),
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
-    } catch (e) {
-        throw new SearchApiError(e.message, 0);
-    }
-
-    if (response.status !== 200) {
-        throw new SearchApiError(response.statusText, response.status);
-    }
-    return response.json();
-}
-
-export async function put(url, query) {
-    let response;
-    try {
-        response = await fetch(url, {
-            body: JSON.stringify(query),
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
-    } catch (e) {
-        throw new SearchApiError(e.message, 0);
-    }
-
-    if (response.status !== 200) {
-        throw new SearchApiError(response.statusText, response.status);
-    }
-    return response.json();
-}
-
-export async function remove(url) {
-    let response;
-    try {
-        response = await fetch(url, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
-    } catch (e) {
-        throw new SearchApiError(e.message, 0);
-    }
-
-    if (response.status !== 200) {
-        throw new SearchApiError(response.statusText, response.status);
-    }
-    return response;
-}
 
 function fixStilling(stilling) {
     if (stilling.properties === undefined) {

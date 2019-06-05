@@ -1,3 +1,16 @@
+## RELEASE - 0.112.750-2897901
+#### New in this release: 
++ 2019-06-04 [PAM-3391] Sette CONTEXT_PATH som referrer
++ 2019-06-04 [PAM-3391] Sette referrer på alle kall og fjerne ubrukt kode
++ 2019-06-03 [PAM-3391] Sette referrer til tom string for å forhindre problemer med node-serveren og for lang referrer-verdi
++ 2019-06-03 [Rollback] Forsøker å debugge issue med 502
++ 2019-06-03 [Debug] Forsøker å debugge issue med 502
++ 2019-06-03 [Rollback] Forsøker å debugge issue med 502
++ 2019-06-03 [Debug] Forsøker å debugge issue med 502
++ 2019-06-03 [Debug] Forsøker å debugge issue med 502
++ 2019-06-03 [Debug] Forsøker å debugge issue med 502
++ 2019-06-03 [Debug] Forsøker å debugge issue med 502
++ 2019-06-03 [Fix] Setter korrekt alertstripe ved inaktivitet eller stilling ikke funnet
 ## RELEASE - 0.111.735-86be176
 #### New in this release: 
 + 2019-05-28 [PAM-3231] Oppdatere til siste versjon av pam-frontend-core
