@@ -69,10 +69,7 @@ function* updateUrl() {
 function* restoreStateFromUrl() {
     const searchString = fullDecode(document.location.search);
     setCurrentQueryString(searchString || '');
-
-    if (searchString.length > 0) {
-        yield put({ type: RESTORE_STATE_FROM_URL, query: toObject(searchString) });
-    }
+    yield put({ type: RESTORE_STATE_FROM_URL, query: toObject(searchString) });
 }
 
 export const urlSaga = function* saga() {

@@ -1,6 +1,6 @@
 import { Column, Container, Row } from 'nav-frontend-grid';
 import PropTypes from 'prop-types';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Flatknapp } from 'pam-frontend-knapper';
 import { authenticationEnum } from '../authentication/authenticationReducer';
@@ -40,11 +40,14 @@ const Search = ({
     search,
     user
 }) => {
+    useState(() => {
+        restoreStateFromUrl();
+    });
+
     useDocumentTitle('Ledige stillinger - Arbeidsplassen');
     useGoogleAnalytics(CONTEXT_PATH, 'Ledige stillinger');
 
     useEffect(() => {
-        restoreStateFromUrl();
         initialSearch();
     }, []);
 

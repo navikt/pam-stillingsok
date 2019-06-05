@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import PageHeader from '../common/pageHeader/PageHeader';
 import DelayedSpinner from '../search/loading/DelayedSpinner';
 import NotAuthenticated from '../authentication/NotAuthenticated';
+import { urlFromSessionStorageOrIndex } from '../urlReducer';
 import NoUser from '../user/NoUser';
 import FavouriteAlertStripe from './alertstripe/FavouriteAlertStripe';
 import './Favourites.less';
@@ -32,7 +33,7 @@ const Favourites = ({
         <div className="Favourites">
             <FavouriteAlertStripe />
             <PageHeader
-                backUrl={`${CONTEXT_PATH}`}
+                backUrl={`${urlFromSessionStorageOrIndex()}`}
                 title="Favoritter"
             />
             <Container className="Favourites__main">
