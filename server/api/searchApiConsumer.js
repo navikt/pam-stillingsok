@@ -90,6 +90,7 @@ exports.fetchStilling = async (uuid) => {
     const path = `/stillingsok/ad/ad/${uuid}?_source_exclude=${excludes}`;
     const options = {
         method: 'GET',
+        json: true,
         url: `${host}${path}`
     };
 

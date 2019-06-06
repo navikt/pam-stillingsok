@@ -91,7 +91,7 @@ const startServer = (htmlPages) => {
     );
 
     server.get(`${fasitProperties.PAM_CONTEXT_PATH}/api/search`, async (req, res) => {
-        await searchApiConsumer.search(req.query)
+        searchApiConsumer.search(req.query)
             .catch((err) => {
                 console.warn('Failed to query search api', err);
                 res.status(err.statusCode ? err.statusCode : 502); // For TCP level errors, no http status code will be available
@@ -100,7 +100,7 @@ const startServer = (htmlPages) => {
     });
 
     server.post(`${fasitProperties.PAM_CONTEXT_PATH}/api/search`, async (req, res) => {
-        await searchApiConsumer.search(req.body)
+        searchApiConsumer.search(req.body)
             .catch((err) => {
                 console.warn('Failed to query search api', err);
                 res.status(err.statusCode ? err.statusCode : 502);
@@ -109,7 +109,7 @@ const startServer = (htmlPages) => {
     });
 
     server.get(`${fasitProperties.PAM_CONTEXT_PATH}/api/suggestions`, async (req, res) => {
-        await searchApiConsumer.suggestions(req.query)
+        searchApiConsumer.suggestions(req.query)
             .catch((err) => {
                 console.warn('Failed to fetch suggestions,', err);
                 res.status(err.statusCode ? err.statusCode : 502);
@@ -118,7 +118,7 @@ const startServer = (htmlPages) => {
     });
 
     server.post(`${fasitProperties.PAM_CONTEXT_PATH}/api/suggestions`, async (req, res) => {
-        await searchApiConsumer.suggestions(req.body)
+        searchApiConsumer.suggestions(req.body)
             .catch((err) => {
                 console.warn('Failed to fetch suggestions,', err);
                 res.status(err.statusCode ? err.statusCode : 502);
@@ -127,7 +127,7 @@ const startServer = (htmlPages) => {
     });
 
     server.get(`${fasitProperties.PAM_CONTEXT_PATH}/api/stilling/:uuid`, async (req, res) => {
-        await searchApiConsumer.fetchStilling(req.params.uuid)
+        searchApiConsumer.fetchStilling(req.params.uuid)
             .catch((err) => {
                 console.warn('Failed to fetch stilling with uuid', req.params.uuid);
                 res.status(err.statusCode ? err.statusCode : 502);
