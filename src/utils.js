@@ -21,13 +21,11 @@ export function formatISOString(isoString, format = 'DD.MM.YYYY') {
 }
 
 export function isValidUrl(input) {
-    const pattern = new RegExp('^(https?:\\/\\/)' // protocol (requires http://or https://)
-        + '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,})' // domain name
-        + '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' // port and path
-        + '(\\?[;&a-z\\d%_.~+=-]*)?' // query string
-        + '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locater
-
-    return pattern.test(input);
+    try {
+        return new URL(input).protocol.startsWith('http');
+    } catch (e) {
+        return false;
+    }
 }
 
 export function removeUndefinedOrEmptyString(obj) {
