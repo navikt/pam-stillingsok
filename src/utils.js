@@ -39,3 +39,5 @@ export function removeUndefinedOrEmptyString(obj) {
     });
     return newObj;
 }
+
+export const isMobile = () => window.matchMedia('(max-width: 991px)').matches;

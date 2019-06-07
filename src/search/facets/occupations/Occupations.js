@@ -12,7 +12,8 @@ import {
     CHECK_SECOND_LEVEL,
     OCCUPATION_ANNET,
     UNCHECK_FIRST_LEVEL,
-    UNCHECK_SECOND_LEVEL
+    UNCHECK_SECOND_LEVEL,
+    TOGGLE_OCCUPATIONS_PANEL_OPEN
 } from './occupationsReducer';
 
 class Occupations extends React.Component {
@@ -39,13 +40,14 @@ class Occupations extends React.Component {
     render() {
         const {
             occupationFirstLevels, checkedFirstLevels, checkedSecondLevels, deprecatedFirstLevels,
-            deprecatedSecondLevels
+            deprecatedSecondLevels, togglePanelOpen, panelOpen
         } = this.props;
         return (
             <Ekspanderbartpanel
                 tittel={toFacetTitleWithCount('Yrke', checkedFirstLevels.length + checkedSecondLevels.length)}
                 className="Occupations ekspanderbartPanel--green"
-                apen
+                onClick={togglePanelOpen}
+                apen={panelOpen}
             >
                 <div
                     role="group"
@@ -135,7 +137,9 @@ Occupations.propTypes = {
     uncheckFirstLevel: PropTypes.func.isRequired,
     checkSecondLevel: PropTypes.func.isRequired,
     uncheckSecondLevel: PropTypes.func.isRequired,
-    search: PropTypes.func.isRequired
+    search: PropTypes.func.isRequired,
+    togglePanelOpen: PropTypes.func.isRequired,
+    panelOpen: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -143,7 +147,8 @@ const mapStateToProps = (state) => ({
     checkedFirstLevels: state.occupations.checkedFirstLevels,
     checkedSecondLevels: state.occupations.checkedSecondLevels,
     deprecatedFirstLevels: state.occupations.deprecatedFirstLevels,
-    deprecatedSecondLevels: state.occupations.deprecatedSecondLevels
+    deprecatedSecondLevels: state.occupations.deprecatedSecondLevels,
+    panelOpen: state.occupations.occupationsPanelOpen
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -151,8 +156,8 @@ const mapDispatchToProps = (dispatch) => ({
     checkFirstLevel: (firstLevel) => dispatch({ type: CHECK_FIRST_LEVEL, firstLevel }),
     uncheckFirstLevel: (firstLevel) => dispatch({ type: UNCHECK_FIRST_LEVEL, firstLevel }),
     checkSecondLevel: (secondLevel) => dispatch({ type: CHECK_SECOND_LEVEL, secondLevel }),
-    uncheckSecondLevel: (secondLevel) => dispatch({ type: UNCHECK_SECOND_LEVEL, secondLevel })
+    uncheckSecondLevel: (secondLevel) => dispatch({ type: UNCHECK_SECOND_LEVEL, secondLevel }),
+    togglePanelOpen: () => dispatch({ type: TOGGLE_OCCUPATIONS_PANEL_OPEN })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Occupations);
-

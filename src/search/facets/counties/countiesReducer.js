@@ -1,19 +1,26 @@
 import { RESTORE_STATE_FROM_SAVED_SEARCH } from '../../../savedSearches/savedSearchesReducer';
 import { RESTORE_STATE_FROM_URL } from '../../../urlReducer';
-import { FETCH_INITIAL_FACETS_SUCCESS, RESET_SEARCH, SEARCH_SUCCESS } from '../../searchReducer';
+import {
+    FETCH_INITIAL_FACETS_SUCCESS,
+    RESET_SEARCH,
+    SEARCH_SUCCESS,
+    SET_FACET_PANELS_INITIAL_CLOSED
+} from '../../searchReducer';
 import { findDeprecatedFacets } from '../utils';
 
 export const CHECK_COUNTY = 'CHECK_COUNTY';
 export const UNCHECK_COUNTY = 'UNCHECK_COUNTY';
 export const CHECK_MUNICIPAL = 'CHECK_MUNICIPAL';
 export const UNCHECK_MUNICIPAL = 'UNCHECK_MUNICIPAL';
+export const TOGGLE_COUNTIES_PANEL_OPEN = 'TOGGLE_COUNTIES_PANEL_OPEN';
 
 const initialState = {
     counties: [],
     checkedCounties: [],
     checkedMunicipals: [],
     deprecatedCounties: [],
-    deprecatedMunicipals: []
+    deprecatedMunicipals: [],
+    countiesPanelOpen: true
 };
 
 function uncheckMunicipalsInCounty(state, county) {
@@ -111,6 +118,16 @@ export default function countiesReducer(state = initialState, action) {
             return {
                 ...state,
                 checkedMunicipals: state.checkedMunicipals.filter((m) => (m !== action.municipal))
+            };
+        case TOGGLE_COUNTIES_PANEL_OPEN:
+            return {
+                ...state,
+                countiesPanelOpen: !state.countiesPanelOpen
+            };
+        case SET_FACET_PANELS_INITIAL_CLOSED:
+            return {
+                ...state,
+                countiesPanelOpen: false
             };
         default:
             return state;

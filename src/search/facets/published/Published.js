@@ -5,7 +5,7 @@ import { Checkbox } from 'nav-frontend-skjema';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import { SEARCH } from '../../searchReducer';
 import { toFacetTitleWithCount } from '../utils';
-import { SET_PUBLISHED } from './publishedReducer';
+import { SET_PUBLISHED, TOGGLE_PUBLISHED_PANEL_OPEN } from './publishedReducer';
 import './Published.less';
 
 const PublishedLabelsEnum = {
@@ -24,12 +24,13 @@ class Published extends React.Component {
     };
 
     render() {
-        const { published, checkedPublished } = this.props;
+        const { published, checkedPublished, togglePanelOpen, panelOpen } = this.props;
         return (
             <Ekspanderbartpanel
                 tittel={toFacetTitleWithCount('Publisert', checkedPublished ? 1 : 0)}
                 className="Published ekspanderbartPanel--green"
-                apen
+                onClick={togglePanelOpen}
+                apen={panelOpen}
             >
                 <div
                     role="group"
@@ -63,17 +64,21 @@ Published.propTypes = {
     })).isRequired,
     checkedPublished: PropTypes.string,
     setPublished: PropTypes.func.isRequired,
-    search: PropTypes.func.isRequired
+    search: PropTypes.func.isRequired,
+    togglePanelOpen: PropTypes.func.isRequired,
+    panelOpen: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => ({
     published: state.published.published,
-    checkedPublished: state.published.checkedPublished
+    checkedPublished: state.published.checkedPublished,
+    panelOpen: state.published.publishedPanelOpen
 });
 
 const mapDispatchToProps = (dispatch) => ({
     search: () => dispatch({ type: SEARCH }),
-    setPublished: (value) => dispatch({ type: SET_PUBLISHED, value })
+    setPublished: (value) => dispatch({ type: SET_PUBLISHED, value }),
+    togglePanelOpen: () => dispatch({ type: TOGGLE_PUBLISHED_PANEL_OPEN })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Published);

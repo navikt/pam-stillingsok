@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { SEARCH } from '../../searchReducer';
 import './Engagement.less';
 import { toFacetTitleWithCount } from '../utils';
-import { CHECK_ENGAGEMENT_TYPE, UNCHECK_ENGAGEMENT_TYPE } from './engagementReducer';
+import { CHECK_ENGAGEMENT_TYPE, UNCHECK_ENGAGEMENT_TYPE, TOGGLE_ENGAGEMENT_PANEL_OPEN } from './engagementReducer';
 
 class Engagement extends React.Component {
     onEngagementClick = (e) => {
@@ -21,12 +21,13 @@ class Engagement extends React.Component {
     };
 
     render() {
-        const { engagementType, checkedEngagement, deprecatedEngagementType } = this.props;
+        const { engagementType, checkedEngagement, deprecatedEngagementType, togglePanelOpen, panelOpen } = this.props;
         return (
             <Ekspanderbartpanel
                 tittel={toFacetTitleWithCount('Ansettelsesform', checkedEngagement.length)}
                 className="Engagement ekspanderbartPanel--green"
-                apen
+                onClick={togglePanelOpen}
+                apen={panelOpen}
             >
                 <div
                     role="group"
@@ -77,19 +78,23 @@ Engagement.propTypes = {
     deprecatedEngagementType: PropTypes.arrayOf(PropTypes.string).isRequired,
     checkEngagement: PropTypes.func.isRequired,
     uncheckEngagement: PropTypes.func.isRequired,
-    search: PropTypes.func.isRequired
+    search: PropTypes.func.isRequired,
+    togglePanelOpen: PropTypes.func.isRequired,
+    panelOpen: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => ({
     engagementType: state.engagement.engagementType,
     checkedEngagement: state.engagement.checkedEngagementType,
-    deprecatedEngagementType: state.engagement.deprecatedEngagementType
+    deprecatedEngagementType: state.engagement.deprecatedEngagementType,
+    panelOpen: state.engagement.engagementPanelOpen
 });
 
 const mapDispatchToProps = (dispatch) => ({
     search: () => dispatch({ type: SEARCH }),
     checkEngagement: (value) => dispatch({ type: CHECK_ENGAGEMENT_TYPE, value }),
-    uncheckEngagement: (value) => dispatch({ type: UNCHECK_ENGAGEMENT_TYPE, value })
+    uncheckEngagement: (value) => dispatch({ type: UNCHECK_ENGAGEMENT_TYPE, value }),
+    togglePanelOpen: () => dispatch({ type: TOGGLE_ENGAGEMENT_PANEL_OPEN })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Engagement);

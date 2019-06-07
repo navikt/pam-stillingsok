@@ -1,15 +1,22 @@
 import { RESTORE_STATE_FROM_SAVED_SEARCH } from '../../../savedSearches/savedSearchesReducer';
 import { RESTORE_STATE_FROM_URL } from '../../../urlReducer';
-import { FETCH_INITIAL_FACETS_SUCCESS, RESET_SEARCH, SEARCH_SUCCESS } from '../../searchReducer';
+import {
+    FETCH_INITIAL_FACETS_SUCCESS,
+    RESET_SEARCH,
+    SEARCH_SUCCESS,
+    SET_FACET_PANELS_INITIAL_CLOSED
+} from '../../searchReducer';
 import { findDeprecatedFacets } from '../utils';
 
 export const CHECK_EXTENT = 'CHECK_EXTENT';
 export const UNCHECK_EXTENT = 'UNCHECK_EXTENT';
+export const TOGGLE_EXTENT_PANEL_OPEN = 'TOGGLE_EXTENT_PANEL_OPEN';
 
 const initialState = {
     extent: [],
     checkedExtent: [],
-    deprecatedExtent: []
+    deprecatedExtent: [],
+    extentPanelOpen: true
 };
 
 export default function extentReducer(state = initialState, action) {
@@ -59,6 +66,16 @@ export default function extentReducer(state = initialState, action) {
             return {
                 ...state,
                 checkedExtent: state.checkedExtent.filter((m) => (m !== action.value))
+            };
+        case TOGGLE_EXTENT_PANEL_OPEN:
+            return {
+                ...state,
+                extentPanelOpen: !state.extentPanelOpen
+            };
+        case SET_FACET_PANELS_INITIAL_CLOSED:
+            return {
+                ...state,
+                extentPanelOpen: false
             };
         default:
             return state;

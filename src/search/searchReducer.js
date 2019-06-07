@@ -5,6 +5,7 @@ import { fetchSearch } from '../api/api';
 import SearchApiError from '../api/SearchApiError';
 import { RESTORE_STATE_FROM_SAVED_SEARCH } from '../savedSearches/savedSearchesReducer';
 import { RESTORE_STATE_FROM_URL } from '../urlReducer';
+import { isMobile } from '../utils';
 
 export const FETCH_INITIAL_FACETS_SUCCESS = 'FETCH_INITIAL_FACETS_SUCCESS';
 export const INITIAL_SEARCH = 'INITIAL_SEARCH';
@@ -18,6 +19,7 @@ export const RESET_FROM = 'RESET_FROM';
 export const LOAD_MORE = 'LOAD_MORE';
 export const LOAD_MORE_BEGIN = 'LOAD_MORE_BEGIN';
 export const LOAD_MORE_SUCCESS = 'LOAD_MORE_SUCCESS';
+export const SET_FACET_PANELS_INITIAL_CLOSED = 'SET_FACET_PANELS_INITIAL_CLOSED';
 
 export const PAGE_SIZE = 50;
 
@@ -152,6 +154,10 @@ function* initialSearch() {
             const query = toSearchQuery(state);
             if (Object.keys(query).length > 0) {
                 response = yield call(fetchSearch, query);
+            }
+
+            if (isMobile()) {
+                yield put({ type: SET_FACET_PANELS_INITIAL_CLOSED });
             }
 
             yield put({ type: SEARCH_SUCCESS, response });
