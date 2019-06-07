@@ -4,7 +4,7 @@ import {
     FETCH_INITIAL_FACETS_SUCCESS,
     RESET_SEARCH,
     SEARCH_SUCCESS,
-    SET_FACET_PANELS_INITIAL_CLOSED
+    SET_FACET_PANELS_INITIAL_OPEN
 } from '../../searchReducer';
 import { findDeprecatedFacets, moveFacetToBottom } from '../utils';
 
@@ -73,10 +73,10 @@ export default function engagementReducer(state = initialState, action) {
                 ...state,
                 engagementPanelOpen: !state.engagementPanelOpen
             };
-        case SET_FACET_PANELS_INITIAL_CLOSED:
+        case SET_FACET_PANELS_INITIAL_OPEN:
             return {
                 ...state,
-                engagementPanelOpen: false
+                engagementPanelOpen: action.isOpen
             };
         default:
             return state;

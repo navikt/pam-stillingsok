@@ -4,7 +4,7 @@ import {
     FETCH_INITIAL_FACETS_SUCCESS,
     RESET_SEARCH,
     SEARCH_SUCCESS,
-    SET_FACET_PANELS_INITIAL_CLOSED
+    SET_FACET_PANELS_INITIAL_OPEN
 } from '../../searchReducer';
 import { findDeprecatedFacets } from '../utils';
 
@@ -124,10 +124,10 @@ export default function countiesReducer(state = initialState, action) {
                 ...state,
                 countiesPanelOpen: !state.countiesPanelOpen
             };
-        case SET_FACET_PANELS_INITIAL_CLOSED:
+        case SET_FACET_PANELS_INITIAL_OPEN:
             return {
                 ...state,
-                countiesPanelOpen: false
+                countiesPanelOpen: action.isOpen
             };
         default:
             return state;

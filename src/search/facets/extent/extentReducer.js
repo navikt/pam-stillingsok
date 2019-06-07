@@ -4,7 +4,7 @@ import {
     FETCH_INITIAL_FACETS_SUCCESS,
     RESET_SEARCH,
     SEARCH_SUCCESS,
-    SET_FACET_PANELS_INITIAL_CLOSED
+    SET_FACET_PANELS_INITIAL_OPEN
 } from '../../searchReducer';
 import { findDeprecatedFacets } from '../utils';
 
@@ -72,10 +72,10 @@ export default function extentReducer(state = initialState, action) {
                 ...state,
                 extentPanelOpen: !state.extentPanelOpen
             };
-        case SET_FACET_PANELS_INITIAL_CLOSED:
+        case SET_FACET_PANELS_INITIAL_OPEN:
             return {
                 ...state,
-                extentPanelOpen: false
+                extentPanelOpen: action.isOpen
             };
         default:
             return state;

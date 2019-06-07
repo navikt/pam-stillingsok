@@ -4,7 +4,7 @@ import {
     FETCH_INITIAL_FACETS_SUCCESS,
     RESET_SEARCH,
     SEARCH_SUCCESS,
-    SET_FACET_PANELS_INITIAL_CLOSED
+    SET_FACET_PANELS_INITIAL_OPEN
 } from '../../searchReducer';
 
 export const SET_PUBLISHED = 'SET_PUBLISHED';
@@ -57,10 +57,10 @@ export default function publishedReducer(state = initialState, action) {
                 ...state,
                 publishedPanelOpen: !state.publishedPanelOpen
             };
-        case SET_FACET_PANELS_INITIAL_CLOSED:
+        case SET_FACET_PANELS_INITIAL_OPEN:
             return {
                 ...state,
-                publishedPanelOpen: false
+                publishedPanelOpen: action.isOpen
             };
         default:
             return state;
