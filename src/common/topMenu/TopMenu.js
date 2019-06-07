@@ -6,9 +6,9 @@ import { LOGIN_URL, LOGOUT_URL } from '../../fasitProperties';
 import { authenticationEnum } from '../../authentication/authenticationReducer';
 import { getRedirect } from '../../redirect';
 import { isMobile } from '../../utils';
-import { SET_FACET_PANELS_INITIAL_CLOSED } from '../../search/searchReducer';
+import { SET_FACET_PANELS_INITIAL_OPEN } from '../../search/searchReducer';
 
-const TopMenu = ({ isAuthenticated, closeFacetPanels }) => {
+const TopMenu = ({ isAuthenticated, setFacetPanelsOpen }) => {
     const login = (role) => {
         if (role === 'personbruker') {
             window.location.href = `${LOGIN_URL}${getRedirect()}`;
@@ -24,7 +24,8 @@ const TopMenu = ({ isAuthenticated, closeFacetPanels }) => {
     const authenticationStatus = (status) => {
         if (status === authenticationEnum.IS_AUTHENTICATED) {
             return AuthStatus.IS_AUTHENTICATED;
-        } if (status === authenticationEnum.NOT_AUTHENTICATED) {
+        }
+        if (status === authenticationEnum.NOT_AUTHENTICATED) {
             return AuthStatus.NOT_AUTHENTICATED;
         }
         return AuthStatus.UNKNOWN;
@@ -35,10 +36,8 @@ const TopMenu = ({ isAuthenticated, closeFacetPanels }) => {
             <Header
                 validerNavigasjon={{
                     redirectTillates: () => {
-                        // Close facet panels if on mobile, and return true to complete the redirect
-                        if (isMobile) {
-                            closeFacetPanels();
-                        }
+                        // Reset state of facet panel (closed if on mobile) and return true to complete the redirect
+                        setFacetPanelsOpen(!isMobile());
                         return true;
                     }
                 }}
@@ -56,7 +55,7 @@ const TopMenu = ({ isAuthenticated, closeFacetPanels }) => {
 
 TopMenu.propTypes = {
     isAuthenticated: PropTypes.string.isRequired,
-    closeFacetPanels: PropTypes.func.isRequired
+    setFacetPanelsOpen: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -64,7 +63,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    closeFacetPanels: () => dispatch({ type: SET_FACET_PANELS_INITIAL_CLOSED })
+    setFacetPanelsOpen: (isOpen) => dispatch({ type: SET_FACET_PANELS_INITIAL_OPEN, isOpen })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TopMenu);

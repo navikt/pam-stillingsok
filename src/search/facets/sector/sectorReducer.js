@@ -4,7 +4,7 @@ import {
     FETCH_INITIAL_FACETS_SUCCESS,
     RESET_SEARCH,
     SEARCH_SUCCESS,
-    SET_FACET_PANELS_INITIAL_CLOSED
+    SET_FACET_PANELS_INITIAL_OPEN
 } from '../../searchReducer';
 import { findDeprecatedFacets, moveFacetToBottom } from '../utils';
 
@@ -72,10 +72,10 @@ export default function sectorReducer(state = initialState, action) {
                 ...state,
                 sectorPanelOpen: !state.sectorPanelOpen
             };
-        case SET_FACET_PANELS_INITIAL_CLOSED:
+        case SET_FACET_PANELS_INITIAL_OPEN:
             return {
                 ...state,
-                sectorPanelOpen: false
+                sectorPanelOpen: action.isOpen
             };
         default:
             return state;

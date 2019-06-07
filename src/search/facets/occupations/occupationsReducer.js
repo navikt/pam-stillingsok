@@ -4,7 +4,7 @@ import {
     FETCH_INITIAL_FACETS_SUCCESS,
     RESET_SEARCH,
     SEARCH_SUCCESS,
-    SET_FACET_PANELS_INITIAL_CLOSED
+    SET_FACET_PANELS_INITIAL_OPEN
 } from '../../searchReducer';
 import { findDeprecatedFacets, moveFacetToBottom } from '../utils';
 
@@ -127,10 +127,10 @@ export default function occupations(state = initialState, action) {
                 ...state,
                 occupationsPanelOpen: !state.occupationsPanelOpen
             };
-        case SET_FACET_PANELS_INITIAL_CLOSED:
+        case SET_FACET_PANELS_INITIAL_OPEN:
             return {
                 ...state,
-                occupationsPanelOpen: false
+                occupationsPanelOpen: action.isOpen
             };
         default:
             return state;

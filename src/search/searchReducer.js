@@ -19,7 +19,7 @@ export const RESET_FROM = 'RESET_FROM';
 export const LOAD_MORE = 'LOAD_MORE';
 export const LOAD_MORE_BEGIN = 'LOAD_MORE_BEGIN';
 export const LOAD_MORE_SUCCESS = 'LOAD_MORE_SUCCESS';
-export const SET_FACET_PANELS_INITIAL_CLOSED = 'SET_FACET_PANELS_INITIAL_CLOSED';
+export const SET_FACET_PANELS_INITIAL_OPEN = 'SET_FACET_PANELS_INITIAL_OPEN';
 
 export const PAGE_SIZE = 50;
 
@@ -157,7 +157,7 @@ function* initialSearch() {
             }
 
             if (isMobile()) {
-                yield put({ type: SET_FACET_PANELS_INITIAL_CLOSED });
+                yield put({ type: SET_FACET_PANELS_INITIAL_OPEN, isOpen: false });
             }
 
             yield put({ type: SEARCH_SUCCESS, response });
