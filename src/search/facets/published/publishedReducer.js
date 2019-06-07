@@ -1,12 +1,19 @@
 import { RESTORE_STATE_FROM_SAVED_SEARCH } from '../../../savedSearches/savedSearchesReducer';
 import { RESTORE_STATE_FROM_URL } from '../../../urlReducer';
-import { FETCH_INITIAL_FACETS_SUCCESS, RESET_SEARCH, SEARCH_SUCCESS } from '../../searchReducer';
+import {
+    FETCH_INITIAL_FACETS_SUCCESS,
+    RESET_SEARCH,
+    SEARCH_SUCCESS,
+    SET_FACET_PANELS_INITIAL_CLOSED
+} from '../../searchReducer';
 
 export const SET_PUBLISHED = 'SET_PUBLISHED';
+export const TOGGLE_PUBLISHED_PANEL_OPEN = 'TOGGLE_PUBLISHED_PANEL_OPEN';
 
 const initialState = {
     published: [],
-    checkedPublished: undefined
+    checkedPublished: undefined,
+    publishedPanelOpen: true
 };
 
 export default function publishedReducer(state = initialState, action) {
@@ -44,6 +51,16 @@ export default function publishedReducer(state = initialState, action) {
             return {
                 ...state,
                 checkedPublished: action.value
+            };
+        case TOGGLE_PUBLISHED_PANEL_OPEN:
+            return {
+                ...state,
+                publishedPanelOpen: !state.publishedPanelOpen
+            };
+        case SET_FACET_PANELS_INITIAL_CLOSED:
+            return {
+                ...state,
+                publishedPanelOpen: false
             };
         default:
             return state;

@@ -12,7 +12,8 @@ import {
     CHECK_COUNTY,
     CHECK_MUNICIPAL,
     UNCHECK_COUNTY,
-    UNCHECK_MUNICIPAL
+    UNCHECK_MUNICIPAL,
+    TOGGLE_COUNTIES_PANEL_OPEN
 } from './countiesReducer';
 
 class Counties extends React.Component {
@@ -38,13 +39,15 @@ class Counties extends React.Component {
 
     render() {
         const {
-            counties, checkedCounties, checkedMunicipals, deprecatedCounties, deprecatedMunicipals
+            counties, checkedCounties, checkedMunicipals, deprecatedCounties, deprecatedMunicipals, togglePanelOpen,
+            panelOpen
         } = this.props;
         return (
             <Ekspanderbartpanel
                 tittel={toFacetTitleWithCount('Område', checkedCounties.length + checkedMunicipals.length)}
                 className="Counties ekspanderbartPanel--green"
-                apen
+                onClick={togglePanelOpen}
+                apen={panelOpen}
             >
                 <div
                     role="group"
@@ -132,7 +135,9 @@ Counties.propTypes = {
     uncheckCounty: PropTypes.func.isRequired,
     checkMunicipal: PropTypes.func.isRequired,
     uncheckMunicipal: PropTypes.func.isRequired,
-    search: PropTypes.func.isRequired
+    search: PropTypes.func.isRequired,
+    togglePanelOpen: PropTypes.func.isRequired,
+    panelOpen: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -140,7 +145,8 @@ const mapStateToProps = (state) => ({
     checkedCounties: state.counties.checkedCounties,
     checkedMunicipals: state.counties.checkedMunicipals,
     deprecatedCounties: state.counties.deprecatedCounties,
-    deprecatedMunicipals: state.counties.deprecatedMunicipals
+    deprecatedMunicipals: state.counties.deprecatedMunicipals,
+    panelOpen: state.counties.countiesPanelOpen
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -148,8 +154,8 @@ const mapDispatchToProps = (dispatch) => ({
     checkCounty: (county) => dispatch({ type: CHECK_COUNTY, county }),
     uncheckCounty: (county) => dispatch({ type: UNCHECK_COUNTY, county }),
     checkMunicipal: (municipal) => dispatch({ type: CHECK_MUNICIPAL, municipal }),
-    uncheckMunicipal: (municipal) => dispatch({ type: UNCHECK_MUNICIPAL, municipal })
+    uncheckMunicipal: (municipal) => dispatch({ type: UNCHECK_MUNICIPAL, municipal }),
+    togglePanelOpen: () => dispatch({ type: TOGGLE_COUNTIES_PANEL_OPEN })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Counties);
-

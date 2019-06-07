@@ -1,21 +1,27 @@
 import { RESTORE_STATE_FROM_SAVED_SEARCH } from '../../../savedSearches/savedSearchesReducer';
 import { RESTORE_STATE_FROM_URL } from '../../../urlReducer';
-import { FETCH_INITIAL_FACETS_SUCCESS, RESET_SEARCH, SEARCH_SUCCESS } from '../../searchReducer';
+import {
+    FETCH_INITIAL_FACETS_SUCCESS,
+    RESET_SEARCH,
+    SEARCH_SUCCESS,
+    SET_FACET_PANELS_INITIAL_CLOSED
+} from '../../searchReducer';
 import { findDeprecatedFacets, moveFacetToBottom } from '../utils';
 
 export const CHECK_FIRST_LEVEL = 'CHECK_FIRST_LEVEL';
 export const UNCHECK_FIRST_LEVEL = 'UNCHECK_FIRST_LEVEL';
 export const CHECK_SECOND_LEVEL = 'CHECK_SECOND_LEVEL';
 export const UNCHECK_SECOND_LEVEL = 'UNCHECK_SECOND_LEVEL';
-
 export const OCCUPATION_ANNET = 'Uoppgitt/ ikke identifiserbare';
+export const TOGGLE_OCCUPATIONS_PANEL_OPEN = 'TOGGLE_OCCUPATIONS_PANEL_OPEN';
 
 const initialState = {
     occupationFirstLevels: [],
     checkedFirstLevels: [],
     checkedSecondLevels: [],
     deprecatedFirstLevels: [],
-    deprecatedSecondLevels: []
+    deprecatedSecondLevels: [],
+    occupationsPanelOpen: true
 };
 
 function uncheckSecondsLevels(state, firstLevel) {
@@ -115,6 +121,16 @@ export default function occupations(state = initialState, action) {
             return {
                 ...state,
                 checkedSecondLevels: state.checkedSecondLevels.filter((m) => (m !== action.secondLevel))
+            };
+        case TOGGLE_OCCUPATIONS_PANEL_OPEN:
+            return {
+                ...state,
+                occupationsPanelOpen: !state.occupationsPanelOpen
+            };
+        case SET_FACET_PANELS_INITIAL_CLOSED:
+            return {
+                ...state,
+                occupationsPanelOpen: false
             };
         default:
             return state;

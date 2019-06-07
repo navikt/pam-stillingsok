@@ -9,7 +9,8 @@ import { SEARCH } from '../../searchReducer';
 import { toFacetTitleWithCount } from '../utils';
 import {
     CHECK_COUNTRIES,
-    UNCHECK_COUNTRIES
+    UNCHECK_COUNTRIES,
+    TOGGLE_COUNTRIES_PANEL_OPEN
 } from './countriesReducer';
 import './Countries.less';
 
@@ -25,12 +26,13 @@ class Countries extends React.Component {
     };
 
     render() {
-        const { countries, checkedCountries, deprecatedCountries } = this.props;
+        const { countries, checkedCountries, deprecatedCountries, togglePanelOpen, panelOpen } = this.props;
         return (
             <Ekspanderbartpanel
                 tittel={toFacetTitleWithCount('Land', checkedCountries.length)}
                 className="Countries ekspanderbartPanel--green"
-                apen
+                onClick={togglePanelOpen}
+                apen={panelOpen}
             >
                 <div
                     role="group"
@@ -81,19 +83,23 @@ Countries.propTypes = {
     deprecatedCountries: PropTypes.arrayOf(PropTypes.string).isRequired,
     checkCountries: PropTypes.func.isRequired,
     uncheckCountries: PropTypes.func.isRequired,
-    search: PropTypes.func.isRequired
+    search: PropTypes.func.isRequired,
+    togglePanelOpen: PropTypes.func.isRequired,
+    panelOpen: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => ({
     countries: state.countries.countries,
     checkedCountries: state.countries.checkedCountries,
-    deprecatedCountries: state.countries.deprecatedCountries
+    deprecatedCountries: state.countries.deprecatedCountries,
+    panelOpen: state.countries.countriesPanelOpen
 });
 
 const mapDispatchToProps = (dispatch) => ({
     search: () => dispatch({ type: SEARCH }),
     checkCountries: (value) => dispatch({ type: CHECK_COUNTRIES, value }),
-    uncheckCountries: (value) => dispatch({ type: UNCHECK_COUNTRIES, value })
+    uncheckCountries: (value) => dispatch({ type: UNCHECK_COUNTRIES, value }),
+    togglePanelOpen: () => dispatch({ type: TOGGLE_COUNTRIES_PANEL_OPEN })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Countries);

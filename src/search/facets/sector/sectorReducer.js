@@ -1,15 +1,22 @@
 import { RESTORE_STATE_FROM_SAVED_SEARCH } from '../../../savedSearches/savedSearchesReducer';
 import { RESTORE_STATE_FROM_URL } from '../../../urlReducer';
-import { FETCH_INITIAL_FACETS_SUCCESS, RESET_SEARCH, SEARCH_SUCCESS } from '../../searchReducer';
+import {
+    FETCH_INITIAL_FACETS_SUCCESS,
+    RESET_SEARCH,
+    SEARCH_SUCCESS,
+    SET_FACET_PANELS_INITIAL_CLOSED
+} from '../../searchReducer';
 import { findDeprecatedFacets, moveFacetToBottom } from '../utils';
 
 export const CHECK_SECTOR = 'CHECK_SECTOR';
 export const UNCHECK_SECTOR = 'UNCHECK_SECTOR';
+export const TOGGLE_SECTOR_PANEL_OPEN = 'TOGGLE_SECTOR_PANEL_OPEN';
 
 const initialState = {
     sector: [],
     checkedSector: [],
-    deprecatedSector: []
+    deprecatedSector: [],
+    sectorPanelOpen: true
 };
 
 export default function sectorReducer(state = initialState, action) {
@@ -59,6 +66,16 @@ export default function sectorReducer(state = initialState, action) {
             return {
                 ...state,
                 checkedSector: state.checkedSector.filter((m) => (m !== action.value))
+            };
+        case TOGGLE_SECTOR_PANEL_OPEN:
+            return {
+                ...state,
+                sectorPanelOpen: !state.sectorPanelOpen
+            };
+        case SET_FACET_PANELS_INITIAL_CLOSED:
+            return {
+                ...state,
+                sectorPanelOpen: false
             };
         default:
             return state;

@@ -8,7 +8,8 @@ import { SEARCH } from '../../searchReducer';
 import { toFacetTitleWithCount } from '../utils';
 import {
     CHECK_EXTENT,
-    UNCHECK_EXTENT
+    UNCHECK_EXTENT,
+    TOGGLE_EXTENT_PANEL_OPEN
 } from './extentReducer';
 import './Extent.less';
 
@@ -30,12 +31,13 @@ class Extent extends React.Component {
     );
 
     render() {
-        const { extent, checkedExtent, deprecatedExtent } = this.props;
+        const { extent, checkedExtent, deprecatedExtent, togglePanelOpen, panelOpen } = this.props;
         return (
             <Ekspanderbartpanel
                 tittel={toFacetTitleWithCount('Heltid/deltid', checkedExtent.length)}
                 className="Extent ekspanderbartPanel--green"
-                apen
+                onClick={togglePanelOpen}
+                apen={panelOpen}
             >
                 <div
                     role="group"
@@ -86,19 +88,23 @@ Extent.propTypes = {
     deprecatedExtent: PropTypes.arrayOf(PropTypes.string).isRequired,
     checkExtent: PropTypes.func.isRequired,
     uncheckExtent: PropTypes.func.isRequired,
-    search: PropTypes.func.isRequired
+    search: PropTypes.func.isRequired,
+    togglePanelOpen: PropTypes.func.isRequired,
+    panelOpen: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => ({
     extent: state.extent.extent,
     checkedExtent: state.extent.checkedExtent,
-    deprecatedExtent: state.extent.deprecatedExtent
+    deprecatedExtent: state.extent.deprecatedExtent,
+    panelOpen: state.extent.extentPanelOpen
 });
 
 const mapDispatchToProps = (dispatch) => ({
     search: () => dispatch({ type: SEARCH }),
     checkExtent: (value) => dispatch({ type: CHECK_EXTENT, value }),
-    uncheckExtent: (value) => dispatch({ type: UNCHECK_EXTENT, value })
+    uncheckExtent: (value) => dispatch({ type: UNCHECK_EXTENT, value }),
+    togglePanelOpen: () => dispatch({ type: TOGGLE_EXTENT_PANEL_OPEN })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Extent);
