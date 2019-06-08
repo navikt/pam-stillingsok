@@ -20,7 +20,17 @@ export function formatISOString(isoString, format = 'DD.MM.YYYY') {
     return isoString;
 }
 
+export function userAgentIsInternetExplorer() {
+    const userAgent = window.navigator.userAgent;
+    return userAgent.indexOf('MSIE ') >= 0 || userAgent.indexOf('Trident/') >= 0;
+}
+
 export function isValidUrl(input) {
+    if (userAgentIsInternetExplorer()) {
+        // Gracefully degrade, 'new URL(..)' is unsupported in IE
+        return false;
+    }
+
     try {
         return new URL(input).protocol.startsWith('http');
     } catch (e) {
