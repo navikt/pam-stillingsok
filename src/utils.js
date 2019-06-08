@@ -20,14 +20,22 @@ export function formatISOString(isoString, format = 'DD.MM.YYYY') {
     return isoString;
 }
 
-export function isValidUrl(input) {
-    const pattern = new RegExp('^(https?:\\/\\/)' // protocol (requires http://or https://)
-        + '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,})' // domain name
-        + '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' // port and path
-        + '(\\?[;&a-z\\d%_.~+=-]*)?' // query string
-        + '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locater
+export function userAgentIsInternetExplorer() {
+    const userAgent = window.navigator.userAgent;
+    return userAgent.indexOf('MSIE ') >= 0 || userAgent.indexOf('Trident/') >= 0;
+}
 
-    return pattern.test(input);
+export function isValidUrl(input) {
+    if (userAgentIsInternetExplorer()) {
+        // Gracefully degrade, 'new URL(..)' is unsupported in IE
+        return false;
+    }
+
+    try {
+        return new URL(input).protocol.startsWith('http');
+    } catch (e) {
+        return false;
+    }
 }
 
 export function removeUndefinedOrEmptyString(obj) {
