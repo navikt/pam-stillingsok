@@ -28,7 +28,7 @@
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-preset-env": "^1.7.0",
-    "chromedriver": "^2.46.0",
+    "chromedriver": "^75.0.0",
     "cucumber": "^5.1.0",
     "cucumber-html-report": "^0.6.5",
     "cucumber-pretty": "^1.5.0",
