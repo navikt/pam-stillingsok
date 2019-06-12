@@ -48,7 +48,7 @@ module.exports = {
             desiredCapabilities: {
                 platform: 'Windows 10',
                 browserName: 'chrome',
-                version: 'latest',
+                version: '74',
                 tunnelIdentifier: tunnel_name
             }
         },
