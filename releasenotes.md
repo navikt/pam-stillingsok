@@ -1,3 +1,13 @@
+## RELEASE - 0.114.764-3c5241f
+#### New in this release: 
++ 2019-06-12 [qa] Hardcode browserversion to 74 to get the tests running with saucelabs
++ 2019-06-12 Revert "[QA] Test SauceLabs build without specifying chromedriver and selenium"
++ 2019-06-11 [QA] Test SauceLabs build without specifying chromedriver and selenium
++ 2019-06-11 [QA] use chromedriver v75.0.X
++ 2019-06-07 [PAM-3432]: Setter filtere default lukket på mobil
++ 2019-06-04 [PAM-3431]: fikser issue med at print ikke virker første gang i chrome fordi fonten ikke er lastet
++ 2019-06-06 [PAM-3456] Do not use regexp for URL validation
++ 2019-06-06 [Fix] content-type for ad lookups and remove await-s in node server
 ## RELEASE - 0.112.750-2897901
 #### New in this release: 
 + 2019-06-04 [PAM-3391] Sette CONTEXT_PATH som referrer
