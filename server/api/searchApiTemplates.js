@@ -164,9 +164,9 @@ function filterLocation(counties, municipals) {
         'locationList.municipal.keyword', 'locationList');
 }
 
-function filterOccupation(occupationLevel1, occupationLevel2) {
-    return filterNestedFacets(occupationLevel1, occupationLevel2,
-        'occupation_level1_facet', 'occupation_level2_facet');
+function filterOccupation(occupationFirstLevels, occupationSecondLevels) {
+    return filterNestedFacets(occupationFirstLevels, occupationSecondLevels,
+        'occupationList.level1', 'occupationList.level2', 'occupationList');
 }
 
 function filterSector(sector) {
@@ -573,7 +573,7 @@ exports.searchTemplate = (query) => {
                    }
                 }
             },
-            occupationFirstLevels: {
+            occupations: {
                 filter: {
                     bool: {
                         filter: [
@@ -587,16 +587,26 @@ exports.searchTemplate = (query) => {
                     }
                 },
                 aggs: {
-                    values: {
-                        terms: {
-                            size: 50,
-                            field: 'occupation_level1_facet'
+                    nestedOccupations: {
+                        nested: {
+                            path: 'occupationList',
                         },
                         aggs: {
-                            occupationSecondLevels: {
+                            occupationFirstLevels: {
                                 terms: {
-                                    size: 50,
-                                    field: 'occupation_level2_facet'
+                                    field: 'occupationList.level1',
+                                    size: 50
+                                },
+                                aggs: {
+                                    root_doc_count: {
+                                        reverse_nested: {}
+                                    },
+                                    occupationSecondLevels: {
+                                        terms: {
+                                            field: 'occupationList.level2',
+                                            size: 100
+                                        }
+                                    }
                                 }
                             }
                         }

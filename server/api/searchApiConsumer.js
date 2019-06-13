@@ -76,6 +76,7 @@ exports.fetchStilling = async (uuid) => {
         'location.latitude',
         'location.longitude',
         'location.county',
+        'occupationList',
         'properties.author',
         'properties.industry',
         'properties.keywords',
