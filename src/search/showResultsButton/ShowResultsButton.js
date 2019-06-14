@@ -1,16 +1,19 @@
+/* eslint-disable react/no-did-update-set-state */
 import { Element } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import SnapToTop from '../../common/SnapToTop';
 import './ShowResultsButton.less';
+import CountDown from './CountDown';
 
 class ShowResultsButton extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             showGoToSearch: false,
-            showGoToResults: true
+            showGoToResults: true,
+            fadeClassName: ''
         };
     }
 
@@ -18,8 +21,40 @@ class ShowResultsButton extends React.Component {
         window.addEventListener('scroll', this.onWindowScroll);
     }
 
+    componentDidUpdate(prevProps) {
+        if (this.props.searchResults &&
+            prevProps.searchResults &&
+            this.props.searchResults.positioncount !== prevProps.searchResults.positioncount) {
+            this.clearTimeouts();
+            this.setState({
+                fadeClassName: 'ShowResultsButton__inner--faded'
+            });
+            this.timeout1 = setTimeout(() => {
+                this.setState({
+                    fadeClassName: 'ShowResultsButton__inner--fade-out'
+                });
+            }, 10);
+
+            this.timeout2 = setTimeout(() => {
+                this.setState({
+                    fadeClassName: ''
+                });
+            }, 2010);
+        }
+    }
+
     componentWillUnmount() {
+        this.clearTimeouts();
         window.removeEventListener('scroll', this.onWindowScroll);
+    }
+
+    clearTimeouts() {
+        if (this.timeout1) {
+            clearTimeout(this.timeout1);
+        }
+        if (this.timeout2) {
+            clearTimeout(this.timeout2);
+        }
     }
 
     onWindowScroll = () => {
@@ -68,23 +103,18 @@ class ShowResultsButton extends React.Component {
     };
 
     render() {
-        const stillingerWord = this.props.searchResults && this.props.searchResults.positioncount > 1 ? 'stillinger' : 'stilling';
-        const annonserWord = this.props.searchResults && this.props.searchResults.total > 1 ? 'annonser' : 'annonse';
-
         return (
             <SnapToTop className="ShowResultsButton">
-                <div className="ShowResultsButton__inner">
+                <div className={`ShowResultsButton__inner ${this.state.fadeClassName}`}>
                     <div className="ShowResultsButton__inner__container container">
                         <div className="ShowResultsButton__flex__count">
                             {this.props.searchResults && (
                                 this.props.searchResults.total > 0 ?
                                     (
-                                        <Element>
-                                            {this.props.searchResults.positioncount} <span
-                                            className="ShowResultsButton__text"> {stillingerWord} i </span>
-                                            {this.props.searchResults.total} <span
-                                            className="ShowResultsButton__text"> {annonserWord}</span>
-                                        </Element>
+                                        <CountDown
+                                            numberOfPositions={this.props.searchResults.positioncount}
+                                            numberOfAds={this.props.searchResults.total}
+                                        />
                                     ) : (
                                         <Element>
                                             <span className="ShowResultsButton__text">Ingen treff</span>
