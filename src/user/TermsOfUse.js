@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { Flatknapp, Hovedknapp } from 'pam-frontend-knapper';
 import './TermsOfUse.less';
 import { CREATE_USER, HIDE_TERMS_OF_USE_MODAL, SET_USER_TERMS_ACCEPTED } from './userReducer';
+import { isValidEmail } from '../utils';
 
 class TermsOfUse extends React.Component {
     constructor(props) {
@@ -35,7 +36,7 @@ class TermsOfUse extends React.Component {
 
     onEmailBlur = () => {
         this.setState({
-            hasValidationError: this.state.email.length > 0 && this.state.email.indexOf('@') === -1
+            hasValidationError: this.state.email.length > 0 && !isValidEmail(this.state.email)
         });
     };
 
