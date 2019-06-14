@@ -13,6 +13,7 @@ import {
     UPDATE_SAVED_SEARCH_SUCCESS
 } from '../savedSearchesReducer';
 import { SHOW_TERMS_OF_USE_MODAL, HIDE_TERMS_OF_USE_MODAL, CREATE_USER_SUCCESS } from '../../user/userReducer';
+import { isValidEmail } from '../../utils';
 
 export const SHOW_SAVED_SEARCH_FORM = 'SHOW_SAVED_SEARCH_FORM';
 export const SHOW_SAVED_SEARCH_FORM_SUCCESS = 'SHOW_SAVED_SEARCH_FORM_SUCCESS';
@@ -161,7 +162,7 @@ function* validateTitle() {
 
 function* validateEmail() {
     const { emailInputValue, showRegisterEmail } = yield select((state) => state.savedSearchForm);
-    const invalid = emailInputValue && (emailInputValue.length > 0) && (emailInputValue.indexOf('@') === -1);
+    const invalid = emailInputValue && (emailInputValue.length > 0) && !isValidEmail(emailInputValue);
     const empty = emailInputValue === undefined || emailInputValue === null || emailInputValue.trim().length === 0;
 
     if (invalid && showRegisterEmail) {
