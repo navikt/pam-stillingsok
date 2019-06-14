@@ -10,6 +10,15 @@
   border-bottom: 1px solid @gray4;
   background: @gray2;
   width: 100%;
+
+  &--faded {
+    background-color: #98f1d7;
+  }
+
+  &--fade-out {
+    transition: background-color 2s ease;
+    background-color: @gray2;
+  }
 }
 
 .ShowResultsButton__inner__container {
