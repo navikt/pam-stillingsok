@@ -169,7 +169,8 @@ function* validateEmail() {
         yield put({
             type: SET_ERROR,
             field: 'email',
-            message: 'E-postadressen er ugyldig. Den må minimum inneholde en «@»'
+            message: 'E-postadressen er ugyldig. Den må minimum inneholde en «@» og et punktum. '
+            + 'Den kan ikke inneholde noen mellomrom. For eksempel: navn.navnesen@gmail.com'
         });
     } else if (empty && showRegisterEmail) {
         yield put({

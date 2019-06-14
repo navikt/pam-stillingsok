@@ -4,6 +4,7 @@ import { userApiGet, userApiPost, userApiRemove, userApiPut } from '../api/userA
 import { authenticationEnum, FETCH_IS_AUTHENTICATED_SUCCESS } from '../authentication/authenticationReducer';
 import { AD_USER_API } from '../fasitProperties';
 import delay from '../common/delay';
+import { isValidEmail } from '../utils';
 
 export const SHOW_TERMS_OF_USE_MODAL = 'SHOW_TERMS_OF_USE_MODAL';
 export const HIDE_TERMS_OF_USE_MODAL = 'HIDE_TERMS_OF_USE_MODAL';
@@ -325,12 +326,13 @@ function* deleteUser() {
 
 function* validateEMail() {
     const email = yield select((state) => state.user.user.email);
-    const error = email && (email.length > 0) && (email.indexOf('@') === -1);
+    const error = email && (email.length > 0) && !isValidEmail(email);
     if (error) {
         yield put({
             type: SET_VALIDATION_ERROR,
             field: 'email',
-            message: 'E-postadressen er ugyldig. Den må minimum inneholde en «@»'
+            message: 'E-postadressen er ugyldig. Den må minimum inneholde en «@» og et punktum. '
+            + 'Den kan ikke inneholde noen mellomrom. For eksempel: navn.navnesen@gmail.com'
         });
     } else {
         yield put({ type: REMOVE_VALIDATION_ERROR, field: 'email' });

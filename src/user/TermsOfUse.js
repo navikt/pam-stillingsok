@@ -85,7 +85,8 @@ class TermsOfUse extends React.Component {
                                 onChange={this.onEmailChange}
                                 onBlur={this.onEmailBlur}
                                 feil={this.state.hasValidationError ? {
-                                    feilmelding: 'E-postadressen er ugyldig. Den må minimum inneholde en «@»'
+                                    feilmelding: 'E-postadressen er ugyldig. Den må minimum inneholde en «@» og et punktum. '
+                                    + 'Den kan ikke inneholde noen mellomrom. For eksempel: navn.navnesen@gmail.com'
                                 } : undefined}
                             />
                         </div>
