@@ -28,6 +28,8 @@ spec:
     requests:
       cpu: 200m
       memory: 256Mi
+  vault:
+    enabled: false
   ingresses:
     - https://arbeidsplassen.nav.no/stillinger
     - https://pam-stillingsok.nais.oera.no
