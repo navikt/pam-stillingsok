@@ -1,3 +1,11 @@
+## RELEASE - 0.115.775-cee04e4
+#### New in this release: 
++ 2019-06-14 [Fix] Disable vault to try and fix deployment
++ 2019-06-14 [PAM-3058] Oppdatere feilmelding ved epostvalidering
++ 2019-06-14 [Fix] Optimaliserer typehead for mobil
++ 2019-06-14 [PAM-3058] Oppdatere epostvalidering for å forhindre at brukeren ikke får mail
++ 2019-06-14 [PAM-3105] Legger til count down animasjon av antall stillinger på mobil.
++ 2019-06-03 [PAM-3373] Support filtering on nested occupations field
 ## RELEASE - 0.114.764-3c5241f
 #### New in this release: 
 + 2019-06-12 [qa] Hardcode browserversion to 74 to get the tests running with saucelabs
