@@ -8,7 +8,7 @@ import { toFacetTitleWithCount } from '../utils';
 import { SET_PUBLISHED, TOGGLE_PUBLISHED_PANEL_OPEN } from './publishedReducer';
 import './Published.less';
 
-const PublishedLabelsEnum = {
+export const PublishedLabelsEnum = {
     'now/d': 'Nye i dag'
 };
 
