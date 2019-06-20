@@ -6,7 +6,7 @@ export default function Feedback() {
         <div className="Feedback">
             <a
                 className="Feedback__link"
-                href="https://surveys.hotjar.com/s?siteId=118350&surveyId=124493"
+                href="https://surveys.hotjar.com/s?siteId=118350&surveyId=133837"
             >
                 <span className="Feedback__link__inner">
                     Gi tilbakemelding
