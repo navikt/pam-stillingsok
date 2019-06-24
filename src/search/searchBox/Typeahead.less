@@ -4,6 +4,10 @@
   flex: 1;
   position: relative;
 
+  @media (max-width: @screen-xs-max) {
+    padding: 0 1rem;
+  }
+
   ul {
     position: absolute;
     top: 100%;
@@ -40,12 +44,6 @@
     -ms-user-select: none;
     user-select: none;
     cursor: pointer;
-  }
-}
-
-.Typeahead__input-wrapper {
-  @media (max-width: @screen-xs-max) {
-    margin: 0 1rem;
   }
 }
 
