@@ -84,12 +84,12 @@
     "request": "^2.88.0",
     "request-promise": "^4.2.2",
     "rimraf": "^2.6.2",
-    "webpack": "^4.28.4",
-    "webpack-cli": "^3.2.1",
-    "webpack-merge": "^4.2.1",
     "whatwg-fetch": "^2.0.4"
   },
   "devDependencies": {
+    "webpack": "^4.28.4",
+    "webpack-cli": "^3.2.1",
+    "webpack-merge": "^4.2.1",
     "concurrently": "^4.1.0"
   }
 }
