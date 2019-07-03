@@ -1,3 +1,6 @@
+## RELEASE - 0.118.779-68f6fc2
+#### New in this release: 
++ 2019-07-03 [Fix] Unngår at forrige stilling vises et kort øyeblikk når man går inn på annonsesiden. Unngår også at footer vises når man scroller til toppen av siden.
 ## RELEASE - 0.115.775-cee04e4
 #### New in this release: 
 + 2019-06-14 [Fix] Disable vault to try and fix deployment
