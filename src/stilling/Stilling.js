@@ -28,7 +28,7 @@ import HardRequirements from './requirements/HardRequirements';
 import PersonalAttributes from './requirements/PersonalAttributes';
 import SoftRequirements from './requirements/SoftRequirements';
 import './Stilling.less';
-import { FETCH_STILLING_BEGIN } from './stillingReducer';
+import { FETCH_STILLING_BEGIN, RESET_STILLING } from './stillingReducer';
 import { useGoogleAnalytics, useScrollToTop } from '../common/hooks';
 
 const Stilling = ({
@@ -37,7 +37,8 @@ const Stilling = ({
     getStilling,
     isFetchingStilling,
     match,
-    stilling
+    stilling,
+    resetStilling
 }) => {
     useGoogleAnalytics(`${CONTEXT_PATH}/stilling`, 'Stilling');
     useScrollToTop();
@@ -53,7 +54,10 @@ const Stilling = ({
         } else {
             getStilling(uuid);
         }
-        return () => removeMetaRobotsTag();
+        return () => {
+            resetStilling();
+            removeMetaRobotsTag();
+        }
     }, []);
 
     useEffect(() => {
@@ -143,7 +147,7 @@ const Stilling = ({
                             </Row>
                         </Container>
                     </header>
-                    {isFetchingStilling && (
+                    {(stilling === undefined || isFetchingStilling) && (
                         <Container className="Stilling__main">
                             <Row>
                                 <Column xs="12" md="6">
@@ -205,6 +209,7 @@ Stilling.propTypes = {
     cachedStilling: PropTypes.shape({
         title: PropTypes.string
     }),
+    resetStilling: PropTypes.func.isRequired,
     getStilling: PropTypes.func.isRequired,
     isFetchingStilling: PropTypes.bool,
     error: PropTypes.shape({
@@ -225,7 +230,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    getStilling: (uuid) => dispatch({ type: FETCH_STILLING_BEGIN, uuid })
+    getStilling: (uuid) => dispatch({ type: FETCH_STILLING_BEGIN, uuid }),
+    resetStilling: () => dispatch({ type: RESET_STILLING })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Stilling);

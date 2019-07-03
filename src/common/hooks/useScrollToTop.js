@@ -1,7 +1,7 @@
-import { useEffect } from 'react';
+import { useLayoutEffect } from 'react';
 
 export default () => {
-    useEffect(() => {
+    useLayoutEffect(() => {
         window.scrollTo(0, 0);
     }, []);
 };

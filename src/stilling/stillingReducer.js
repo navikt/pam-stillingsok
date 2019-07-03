@@ -2,6 +2,7 @@ import { call, put, takeLatest, select } from 'redux-saga/effects';
 import { fetchStilling } from '../api/api';
 import SearchApiError from '../api/SearchApiError';
 
+export const RESET_STILLING = 'RESET_STILLING';
 export const FETCH_STILLING_BEGIN = 'FETCH_STILLING_BEGIN';
 export const FETCH_STILLING_SUCCESS = 'FETCH_STILLING_SUCCESS';
 export const FETCH_STILLING_FAILURE = 'FETCH_STILLING_FAILURE';
@@ -16,6 +17,11 @@ const initialState = {
 
 export default function stillingReducer(state = initialState, action) {
     switch (action.type) {
+        case RESET_STILLING:
+            return {
+                ...state,
+                stilling: undefined
+            };
         case FETCH_STILLING_BEGIN:
             return {
                 ...state,
