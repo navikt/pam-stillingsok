@@ -3,6 +3,7 @@ import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './NoSavedSearches.less';
+import { CONTEXT_PATH } from '../../fasitProperties';
 
 export default function NoSavedSearches({ showButton }) {
     return (
@@ -13,7 +14,7 @@ export default function NoSavedSearches({ showButton }) {
                 Du kan deretter lagre søket og motta e-postvarsler med nye treff.
             </Normaltekst>
             {showButton && (
-                <Link to="/" className="link">Søk etter stillinger</Link>
+                <Link to={CONTEXT_PATH} className="link">Søk etter stillinger</Link>
             )}
         </div>
     );

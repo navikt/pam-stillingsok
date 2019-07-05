@@ -2,6 +2,7 @@ import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './NoFavourites.less';
+import { CONTEXT_PATH } from '../../fasitProperties';
 
 export default function NoFavourites() {
     return (
@@ -10,7 +11,7 @@ export default function NoFavourites() {
             <Normaltekst className="NoFavourites__message">
                 Klikk på stjernen når du ser en stilling du ønsker å ta vare på.
             </Normaltekst>
-            <Link to="/" className="link">Finn favoritter</Link>
+            <Link to={CONTEXT_PATH} className="link">Finn favoritter</Link>
         </div>
     );
 }

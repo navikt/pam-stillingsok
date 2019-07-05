@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Hovedknapp } from 'pam-frontend-knapper';
 import './NoUser.less';
+import { CONTEXT_PATH } from '../fasitProperties';
 import { SHOW_TERMS_OF_USE_MODAL } from './userReducer';
 
 class NoUser extends React.Component {
@@ -28,7 +29,7 @@ class NoUser extends React.Component {
                     >
                         Se samtykke
                     </Hovedknapp>
-                    <Link to="/" className="link NoUser__buttons__link">
+                    <Link to={CONTEXT_PATH} className="link NoUser__buttons__link">
                         Fortsett uten å samtykke
                     </Link>
                 </div>

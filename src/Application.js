@@ -31,7 +31,7 @@ class Application extends React.Component {
                             <Route component={TopMenu} />
                         </Switch>
                         <Switch>
-                            <Route exact path="/" component={SearchPage} />
+                            <Route exact path={CONTEXT_PATH} component={SearchPage} />
                             <Route exact path={`${CONTEXT_PATH}/stilling`} component={StillingPage} />
                             <Route path={`${CONTEXT_PATH}/stilling/:uuid`} component={StillingPage} />
                             <Route path={`${CONTEXT_PATH}/favoritter`} component={Favourites} />
