@@ -67,7 +67,7 @@ const Search = ({
                         <Column xs="12" sm="12" md="4" lg="4" />
                         <Column xs="12" sm="12" md="6" lg="6">
                             <form
-                                action="/"
+                                action={CONTEXT_PATH}
                                 onSubmit={onSearchFormSubmit}
                                 className="no-print"
                             >
@@ -108,7 +108,7 @@ const Search = ({
                                     </div>
                                     <div id="sok">
                                         <form
-                                            action="/"
+                                            action={CONTEXT_PATH}
                                             onSubmit={onSearchFormSubmit}
                                             className="no-print"
                                         >
