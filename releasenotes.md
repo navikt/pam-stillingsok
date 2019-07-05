@@ -1,3 +1,8 @@
+## RELEASE - 0.119.783-e057340
+#### New in this release: 
++ 2019-07-03 [Fix] Oppdaterer deps
++ 2019-07-03 [Fix] Rydder opp i devDependecies
++ 2019-07-03 [Fix] Rydder opp i devDependecies
 ## RELEASE - 0.118.779-68f6fc2
 #### New in this release: 
 + 2019-07-03 [Fix] Unngår at forrige stilling vises et kort øyeblikk når man går inn på annonsesiden. Unngår også at footer vises når man scroller til toppen av siden.
