@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import PageHeader from '../common/pageHeader/PageHeader';
 import DelayedSpinner from '../search/loading/DelayedSpinner';
 import NotAuthenticated from '../authentication/NotAuthenticated';
-import { urlFromSessionStorageOrIndex } from '../urlReducer';
+import RestoreScroll from '../search/RestoreScroll';
 import NoUser from '../user/NoUser';
 import FavouriteAlertStripe from './alertstripe/FavouriteAlertStripe';
 import './Favourites.less';
@@ -30,55 +30,56 @@ const Favourites = ({
     useScrollToTop();
 
     return (
-        <div className="Favourites">
-            <FavouriteAlertStripe />
-            <PageHeader
-                backUrl={`${urlFromSessionStorageOrIndex()}`}
-                title="Favoritter"
-            />
-            <Container className="Favourites__main">
-                {isAuthenticated === authenticationEnum.NOT_AUTHENTICATED && (
-                    <Row>
-                        <Column xs="12">
-                            <NotAuthenticated title="Du må logge inn for å se dine favoritter" />
-                        </Column>
-                    </Row>
-                )}
-                {isAuthenticated === authenticationEnum.IS_AUTHENTICATED && (
-                    (isFetchingUser || isFetchingFavourites) ? (
+        <RestoreScroll id="Favourites">
+            <div className="Favourites">
+                <FavouriteAlertStripe/>
+                <PageHeader
+                    title="Favoritter"
+                />
+                <Container className="Favourites__main">
+                    {isAuthenticated === authenticationEnum.NOT_AUTHENTICATED && (
                         <Row>
                             <Column xs="12">
-                                <div className="Favourites__main__spinner">
-                                    <DelayedSpinner />
-                                </div>
+                                <NotAuthenticated title="Du må logge inn for å se dine favoritter"/>
                             </Column>
                         </Row>
-                    ) : (
-                        user ? (
+                    )}
+                    {isAuthenticated === authenticationEnum.IS_AUTHENTICATED && (
+                        (isFetchingUser || isFetchingFavourites) ? (
                             <Row>
                                 <Column xs="12">
-                                    {favourites.length === 0 ? (
-                                        <NoFavourites />
-                                    ) : (
-                                        <React.Fragment>
-                                            <TotalFavourites total={favourites.length} />
-                                            <FavouriteList />
-                                        </React.Fragment>
-                                    )}
+                                    <div className="Favourites__main__spinner">
+                                        <DelayedSpinner/>
+                                    </div>
                                 </Column>
                             </Row>
                         ) : (
-                            <Row>
-                                <Column xs="12">
-                                    <NoUser />
-                                </Column>
-                            </Row>
+                            user ? (
+                                <Row>
+                                    <Column xs="12">
+                                        {favourites.length === 0 ? (
+                                            <NoFavourites/>
+                                        ) : (
+                                            <React.Fragment>
+                                                <TotalFavourites total={favourites.length}/>
+                                                <FavouriteList/>
+                                            </React.Fragment>
+                                        )}
+                                    </Column>
+                                </Row>
+                            ) : (
+                                <Row>
+                                    <Column xs="12">
+                                        <NoUser/>
+                                    </Column>
+                                </Row>
+                            )
                         )
-                    )
-                )}
-            </Container>
-            <RemoveFavouriteModal />
-        </div>
+                    )}
+                </Container>
+                <RemoveFavouriteModal/>
+            </div>
+        </RestoreScroll>
     );
 };
 

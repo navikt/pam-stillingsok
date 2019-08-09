@@ -18,10 +18,7 @@ const initialState = {
 export default function stillingReducer(state = initialState, action) {
     switch (action.type) {
         case RESET_STILLING:
-            return {
-                ...state,
-                stilling: undefined
-            };
+            return initialState;
         case FETCH_STILLING_BEGIN:
             return {
                 ...state,

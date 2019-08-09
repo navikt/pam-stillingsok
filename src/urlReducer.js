@@ -1,5 +1,4 @@
 import { put, select, takeLatest } from 'redux-saga/effects';
-import { CONTEXT_PATH } from './fasitProperties';
 import { ADD_SAVED_SEARCH_SUCCESS, SET_CURRENT_SAVED_SEARCH } from './savedSearches/savedSearchesReducer';
 import { LOAD_MORE, PAGE_SIZE, RESET_SEARCH, SEARCH } from './search/searchReducer';
 import { toObject, toQueryString } from './search/url';
@@ -11,9 +10,9 @@ export const RESTORE_STATE_FROM_URL = 'RESTORE_STATE_FROM_URL';
 const LATEST_QUERY_STRING_KEY = 'latestQueryString';
 
 
-export function urlFromSessionStorageOrIndex() {
+export function getLastSearchQueryFromSessionStorage() {
     const queryString = sessionStorage.getItem(LATEST_QUERY_STRING_KEY);
-    return queryString ? `${CONTEXT_PATH}${queryString}` : `${CONTEXT_PATH}`;
+    return queryString ? queryString : '';
 }
 
 /**

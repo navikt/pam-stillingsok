@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { applyMiddleware, combineReducers, createStore } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import authenticationReducer, { authenticationSaga } from './authentication/authenticationReducer';
+import backLinkReducer, { backLinkSaga } from './backLink/backLinkReducer';
 import errorReducer from './error/errorReducer';
 import Application from './Application';
 import userReducer, { userSaga } from './user/userReducer';
@@ -31,6 +32,7 @@ const sagaMiddleware = createSagaMiddleware();
 
 const store = createStore(combineReducers({
     authentication: authenticationReducer,
+    backLink: backLinkReducer,
     error: errorReducer,
     user: userReducer,
     counties: countiesReducer,
@@ -52,6 +54,7 @@ const store = createStore(combineReducers({
 }), applyMiddleware(sagaMiddleware));
 
 sagaMiddleware.run(saga);
+sagaMiddleware.run(backLinkSaga);
 sagaMiddleware.run(searchBoxSaga);
 sagaMiddleware.run(stillingSaga);
 sagaMiddleware.run(favouritesSaga);
