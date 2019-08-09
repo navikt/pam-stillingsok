@@ -30,7 +30,7 @@ function* fetchSuggestions() {
         try {
             const response = yield call(fetchCategoryAndSearchTagsSuggestions, value, MIN_LENGTH);
             const newState = yield select();
-            if (newState.searchBox.q.length >= MIN_LENGTH) {
+            if (newState.searchQuery.q.length >= MIN_LENGTH) {
                 yield put({ type: FETCH_SUGGESTIONS_SUCCESS, suggestions: response.result });
             } else {
                 yield put({ type: FETCH_SUGGESTIONS_SUCCESS, suggestions: [] });
