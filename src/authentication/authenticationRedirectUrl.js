@@ -1,4 +1,4 @@
-import { STILLINGSOK_URL, CONTEXT_PATH } from './fasitProperties';
+import { STILLINGSOK_URL, CONTEXT_PATH } from '../fasitProperties';
 
 const whiteList = [
     `${CONTEXT_PATH}/stilling`,
@@ -7,7 +7,10 @@ const whiteList = [
     CONTEXT_PATH
 ];
 
-export function getRedirect() {
+/**
+ * Returner den url'en bruker skal bli redirected til etter å ha logget inn
+ */
+export default function authenticationRedirectUrl() {
     const path = window.location.pathname;
     const query = encodeURIComponent(window.location.search);
     const baseUrl = window.location.origin;

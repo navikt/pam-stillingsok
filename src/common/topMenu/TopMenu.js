@@ -4,14 +4,14 @@ import { connect } from 'react-redux';
 import { PersonbrukerApplikasjon, Header, AuthStatus } from 'pam-frontend-header';
 import { LOGIN_URL, LOGOUT_URL } from '../../fasitProperties';
 import { authenticationEnum } from '../../authentication/authenticationReducer';
-import { getRedirect } from '../../redirect';
+import authenticationRedirectUrl from '../../authentication/authenticationRedirectUrl';
 import { COLLAPSE_ALL_FACET_PANELS, EXPAND_ALL_FACET_PANELS } from '../../search/facets/facetPanelsReducer';
 import { isMobile } from '../../utils';
 
 const TopMenu = ({ isAuthenticated, collapseAllFacetPanels, expandAllFacetPanels }) => {
     const login = (role) => {
         if (role === 'personbruker') {
-            window.location.href = `${LOGIN_URL}${getRedirect()}`;
+            window.location.href = `${LOGIN_URL}${authenticationRedirectUrl()}`;
         } else {
             window.location.href = `${LOGIN_URL}${window.location.origin}/stillingsregistrering`;
         }
