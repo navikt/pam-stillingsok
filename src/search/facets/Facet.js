@@ -17,7 +17,7 @@ export function toFacetTitleWithCount(facetName, facetCount) {
 class Facet extends React.Component {
 
     onPanelClick = () => {
-        if(this.props.expandedSearchCriteriaPanels.includes(this.props.panelId)) {
+        if(this.props.expandedFacetPanels.includes(this.props.panelId)) {
             this.props.collapsePanel(this.props.panelId);
         } else {
             this.props.expandPanel(this.props.panelId);
@@ -25,13 +25,14 @@ class Facet extends React.Component {
     };
 
     render() {
-        const { panelId, count, expandedSearchCriteriaPanels, title, children } = this.props;
+        const { panelId, count, expandedFacetPanels, title, children } = this.props;
+        console.log(expandedFacetPanels)
         return (
             <Ekspanderbartpanel
                 tittel={toFacetTitleWithCount(title, count.length)}
                 className="Facet ekspanderbartPanel--green"
                 onClick={this.onPanelClick}
-                apen={expandedSearchCriteriaPanels.includes(panelId)}
+                apen={expandedFacetPanels.includes(panelId)}
             >
                 <div
                     role="group"
@@ -48,7 +49,7 @@ class Facet extends React.Component {
 Facet.propTypes = {
     panelId: PropTypes.string.isRequired,
     count: PropTypes.number.isRequired,
-    expandedSearchCriteriaPanels: PropTypes.array.isRequired,
+    expandedFacetPanels: PropTypes.array.isRequired,
     title: PropTypes.string.isRequired,
     children: PropTypes.oneOfType([
         PropTypes.node,
@@ -57,7 +58,7 @@ Facet.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-    expandedSearchCriteriaPanels: state.facetPanels.expandedFacetPanels
+    expandedFacetPanels: state.facetPanels.expandedFacetPanels
 });
 
 const mapDispatchToProps = (dispatch) => ({

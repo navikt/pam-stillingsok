@@ -33,7 +33,7 @@ export default function facetPanelsReducer(state = initialState, action) {
         case EXPAND_FACET_PANEL:
             return {
                 ...state,
-                expandedFacetPanels: [...state, action.panelId]
+                expandedFacetPanels: [...state.expandedFacetPanels, action.panelId]
             };
         case COLLAPSE_FACET_PANEL:
             return {

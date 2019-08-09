@@ -25,7 +25,7 @@ class Countries extends React.Component {
         const { countries, checkedCountries, deprecatedCountries } = this.props;
         return (
             <Facet
-                panelId={SearchCriteriaPanels.COUNTIES_PANEL}
+                panelId={SearchCriteriaPanels.COUNTRIES_PANEL}
                 count={checkedCountries.length}
                 title="Land"
             >
