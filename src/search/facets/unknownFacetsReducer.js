@@ -31,7 +31,7 @@ export default function unknownFacetsReducer(state = initialState, action) {
         case SET_UNKNOWN_FACETS:
             return {
                 ...state,
-                ...action.unknownFacets
+                ...action.unknownValues
             };
         default:
             return state;
@@ -63,7 +63,7 @@ function* handleFetchInitialFacetsSuccess(action) {
     const state = yield select();
     yield put({
         type: SET_UNKNOWN_FACETS,
-        unknownFacets: {
+        unknownValues: {
             unknownOccupationFirstLevels: findUnknownFacets(state.searchQuery.occupationFirstLevels, action.response.occupationFirstLevels),
             unknownOccupationSecondLevels: findUnknownFacets(state.searchQuery.occupationSecondLevels, action.response.occupationFirstLevels, 'occupationSecondLevels'),
             unknownCounties: findUnknownFacets(state.searchQuery.counties, action.response.counties),
@@ -83,7 +83,7 @@ function* handleRestoreStateFromSavedSearch() {
     const state = yield select();
     yield put({
         type: SET_UNKNOWN_FACETS,
-        unknownFacets: {
+        unknownValues: {
             unknownOccupationFirstLevels: findUnknownFacets(state.searchQuery.occupationFirstLevels, state.facets.occupationFirstLevelFacets),
             unknownOccupationSecondLevels: findUnknownFacets(state.searchQuery.occupationSecondLevels, state.facets.occupationFirstLevelFacets, 'occupationSecondLevels'),
             unknownCounties: findUnknownFacets(state.searchQuery.counties, state.facets.countyFacets),

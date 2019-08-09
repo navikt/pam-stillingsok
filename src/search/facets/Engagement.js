@@ -1,14 +1,13 @@
 import { Checkbox } from 'nav-frontend-skjema';
-import { Element } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { SearchCriteriaPanels } from './facetPanelsReducer';
 import { ADD_ENGAGEMENT_TYPE, REMOVE_ENGAGEMENT_TYPE } from '../searchQueryReducer';
 import { SEARCH } from '../searchReducer';
 import Facet from './Facet';
 import './Facet.less';
-import UnknownFacets from './UnknownFacets';
+import { SearchCriteriaPanels } from './facetPanelsReducer';
+import UnknownFacetValues from './UnknownFacetValues';
 
 class Engagement extends React.Component {
     onEngagementClick = (e) => {
@@ -39,11 +38,11 @@ class Engagement extends React.Component {
                         checked={checkedEngagement.includes(item.key)}
                     />
                 ))}
-                <UnknownFacets
+                <UnknownFacetValues
                     namePrefix="engagementType"
-                    unknownFacets={deprecatedEngagementType}
-                    checkedFacets={checkedEngagement}
-                    onUnknownFacetClick={this.onEngagementClick}
+                    unknownValues={deprecatedEngagementType}
+                    checkedValues={checkedEngagement}
+                    onClick={this.onEngagementClick}
                 />
             </Facet>
         );

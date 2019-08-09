@@ -1,5 +1,4 @@
 import { Checkbox } from 'nav-frontend-skjema';
-import { Element } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -8,7 +7,7 @@ import { ADD_EXTENT, REMOVE_EXTENT } from '../searchQueryReducer';
 import { SEARCH } from '../searchReducer';
 import './Facet.less';
 import Facet from './Facet';
-import UnknownFacets from './UnknownFacets';
+import UnknownFacetValues from './UnknownFacetValues';
 
 class Extent extends React.Component {
     onExtentClick = (e) => {
@@ -45,11 +44,11 @@ class Extent extends React.Component {
                         checked={checkedExtent.includes(item.key)}
                     />
                 ))}
-                <UnknownFacets
+                <UnknownFacetValues
                     namePrefix="extent"
-                    unknownFacets={deprecatedExtent}
-                    checkedFacets={checkedExtent}
-                    onUnknownFacetClick={this.onExtentClick}
+                    unknownValues={deprecatedExtent}
+                    checkedValues={checkedExtent}
+                    onClick={this.onExtentClick}
                 />
             </Facet>
         );

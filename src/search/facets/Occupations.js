@@ -13,7 +13,7 @@ import Facet from './Facet';
 import './Facet.less';
 import { SearchCriteriaPanels } from './facetPanelsReducer';
 import { OCCUPATION_LEVEL_OTHER } from './facetsReducer';
-import UnknownFacets from './UnknownFacets';
+import UnknownFacetValues from './UnknownFacetValues';
 
 class Occupations extends React.Component {
     onFirstLevelClick = (e) => {
@@ -80,14 +80,14 @@ class Occupations extends React.Component {
                     </div>
                 ))}
 
-                <UnknownFacets
+                <UnknownFacetValues
                     namePrefix="occupation"
-                    unknownFacets={deprecatedFirstLevels}
-                    checkedFacets={checkedFirstLevels}
-                    onUnknownFacetClick={this.onFirstLevelClick}
-                    unknownFacetsSecondLevel={deprecatedSecondLevels}
-                    checkedFacetsSecondLevels={checkedSecondLevels}
-                    onUnknownFacetSecondLevelClick={this.onSecondLevelClick}
+                    unknownValues={deprecatedFirstLevels}
+                    checkedValues={checkedFirstLevels}
+                    onClick={this.onFirstLevelClick}
+                    unknownNestedValues={deprecatedSecondLevels}
+                    checkedNestedValues={checkedSecondLevels}
+                    onNestedLevelClick={this.onSecondLevelClick}
                 />
             </Facet>
         );

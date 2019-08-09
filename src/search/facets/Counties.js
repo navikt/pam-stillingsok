@@ -1,5 +1,4 @@
 import { Checkbox } from 'nav-frontend-skjema';
-import { Element } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -9,7 +8,7 @@ import { ADD_COUNTY, ADD_MUNICIPAL, REMOVE_COUNTY, REMOVE_MUNICIPAL } from '../s
 import { SEARCH } from '../searchReducer';
 import './Facet.less';
 import Facet from './Facet';
-import UnknownFacets from './UnknownFacets';
+import UnknownFacetValues from './UnknownFacetValues';
 
 class Counties extends React.Component {
     onCountyClick = (e) => {
@@ -72,14 +71,14 @@ class Counties extends React.Component {
                     </div>
                 ))}
 
-                <UnknownFacets
+                <UnknownFacetValues
                     namePrefix="counties"
-                    unknownFacets={deprecatedCounties}
-                    checkedFacets={checkedCounties}
-                    onUnknownFacetClick={this.onCountyClick}
-                    unknownFacetsSecondLevel={deprecatedMunicipals}
-                    checkedFacetsSecondLevels={checkedMunicipals}
-                    onUnknownFacetSecondLevelClick={this.onMunicipalClick}
+                    unknownValues={deprecatedCounties}
+                    checkedValues={checkedCounties}
+                    onClick={this.onCountyClick}
+                    unknownNestedValues={deprecatedMunicipals}
+                    checkedNestedValues={checkedMunicipals}
+                    onNestedLevelClick={this.onMunicipalClick}
                 />
             </Facet>
         );

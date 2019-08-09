@@ -1,15 +1,14 @@
 import { Checkbox } from 'nav-frontend-skjema';
-import { Element } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import capitalizeLocation from '../../common/capitalizeLocation';
-import { SearchCriteriaPanels } from './facetPanelsReducer';
 import { ADD_COUNTRY, REMOVE_COUNTRY } from '../searchQueryReducer';
 import { SEARCH } from '../searchReducer';
-import './Facet.less';
 import Facet from './Facet';
-import UnknownFacets from './UnknownFacets';
+import './Facet.less';
+import { SearchCriteriaPanels } from './facetPanelsReducer';
+import UnknownFacetValues from './UnknownFacetValues';
 
 class Countries extends React.Component {
     onCountriesClick = (e) => {
@@ -40,11 +39,11 @@ class Countries extends React.Component {
                         checked={checkedCountries.includes(item.key)}
                     />
                 ))}
-                <UnknownFacets
+                <UnknownFacetValues
                     namePrefix="countries"
-                    unknownFacets={deprecatedCountries}
-                    checkedFacets={checkedCountries}
-                    onUnknownFacetClick={this.onCountriesClick}
+                    unknownValues={deprecatedCountries}
+                    checkedValues={checkedCountries}
+                    onClick={this.onCountriesClick}
                 />
             </Facet>
         );

@@ -7,7 +7,7 @@ import { SEARCH } from '../searchReducer';
 import Facet from './Facet';
 import './Facet.less';
 import { SearchCriteriaPanels } from './facetPanelsReducer';
-import UnknownFacets from './UnknownFacets';
+import UnknownFacetValues from './UnknownFacetValues';
 
 class Sector extends React.Component {
     onSectorClick = (e) => {
@@ -38,11 +38,11 @@ class Sector extends React.Component {
                         checked={checkedSector.includes(item.key)}
                     />
                 ))}
-                <UnknownFacets
+                <UnknownFacetValues
                     namePrefix="sector"
-                    unknownFacets={deprecatedSector}
-                    checkedFacets={checkedSector}
-                    onUnknownFacetClick={this.onSectorClick}
+                    unknownValues={deprecatedSector}
+                    checkedValues={checkedSector}
+                    onClick={this.onSectorClick}
                 />
             </Facet>
         );
