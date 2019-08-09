@@ -1,9 +1,12 @@
+import { Footer } from 'pam-frontend-footer';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
-import { Footer } from 'pam-frontend-footer';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { FETCH_IS_AUTHENTICATED } from './authentication/authenticationReducer';
+import NotAuthenticatedModal from './authentication/NotAuthenticatedModal';
 import BackLinkManager from './backLink/BackLinkManager';
+import TopMenu from './common/topMenu/TopMenu';
 import Error from './error/Error';
 import { CONTEXT_PATH } from './fasitProperties';
 import Favourites from './favourites/Favourites';
@@ -11,11 +14,8 @@ import Feedback from './feedback/Feedback';
 import SavedSearches from './savedSearches/SavedSearches';
 import SearchPage from './search/Search';
 import StillingPage from './stilling/Stilling';
-import NotAuthenticatedModal from './authentication/NotAuthenticatedModal';
 import TermsOfUse from './user/TermsOfUse';
-import { FETCH_IS_AUTHENTICATED } from './authentication/authenticationReducer';
 import UserAlertStripe from './user/UserAlertStripe';
-import TopMenu from './common/topMenu/TopMenu';
 
 class Application extends React.Component {
     componentDidMount() {

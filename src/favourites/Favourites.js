@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import PageHeader from '../common/pageHeader/PageHeader';
 import DelayedSpinner from '../common/DelayedSpinner';
 import NotAuthenticated from '../authentication/NotAuthenticated';
-import RestoreScroll from '../search/RestoreScroll';
+import RestoreScroll from '../common/RestoreScroll';
 import NoUser from '../user/NoUser';
 import FavouriteAlertStripe from './alertstripe/FavouriteAlertStripe';
 import './Favourites.less';
@@ -18,19 +18,20 @@ import { CONTEXT_PATH } from '../fasitProperties';
 import TotalFavourites from './totalFavourites/TotalFavourutes';
 import { useDocumentTitle, useGoogleAnalytics, useScrollToTop } from '../common/hooks';
 
-const Favourites = ({
-                        favourites,
-                        isAuthenticated,
-                        isFetchingFavourites,
-                        isFetchingUser,
-                        user
-                    }) => {
+const Favourites = (
+    {
+        favourites,
+        isAuthenticated,
+        isFetchingFavourites,
+        isFetchingUser,
+        user
+    }
+) => {
     useDocumentTitle('Favoritter - Arbeidsplassen');
     useGoogleAnalytics(`${CONTEXT_PATH}/favoritter`, 'Favoritter');
     useScrollToTop();
 
     return (
-        <RestoreScroll id="Favourites">
         <RestoreScroll id="Favourites">
             <div className="Favourites">
                 <FavouriteAlertStripe/>
