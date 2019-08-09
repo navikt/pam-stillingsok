@@ -91,7 +91,7 @@ const Search = ({
                     </div>
                 )}
                 {initialSearchDone && (
-                    <RestoreScroll>
+                    <RestoreScroll id="Search">
                         <Row>
                             <Column xs="12" md="4">
                                 <div className="Search__main__left">

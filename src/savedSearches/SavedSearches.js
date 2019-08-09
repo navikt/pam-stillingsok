@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 import PageHeader from '../common/pageHeader/PageHeader';
 import DelayedSpinner from '../common/DelayedSpinner';
 import NotAuthenticated from '../authentication/NotAuthenticated';
-import { getLastSearchQueryFromSessionStorage } from '../search/searchQueryReducer';
 import NoUser from '../user/NoUser';
 import SavedSearchAlertStripe from './alertstripe/SavedSearchAlertStripe';
 import ConfirmRemoveModal from './ConfirmRemoveModal';
@@ -34,7 +33,6 @@ const SavedSearches = ({
         <div className="SavedSearches">
             <SavedSearchAlertStripe />
             <PageHeader
-                backUrl={`${getLastSearchQueryFromSessionStorage()}`}
                 title="Lagrede søk"
             />
             <Container className="SavedSearches__main">

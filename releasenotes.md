@@ -1,3 +1,7 @@
+## RELEASE - 0.120.793-13635f0
+#### New in this release: 
++ 2019-07-05 [Fix] Sørger for at alle linker som går tilbake til Ledige stillinger inneholder CONTEXT_PATH
++ 2019-06-17 [PAM-2352] Legger til tekst "Ingen treff på" +  søkekriterer man har huket av
 ## RELEASE - 0.119.783-e057340
 #### New in this release: 
 + 2019-07-03 [Fix] Oppdaterer deps

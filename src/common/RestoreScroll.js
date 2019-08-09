@@ -5,6 +5,7 @@ import debounce from './debounce';
 export default class RestoreScroll extends React.Component {
     constructor(props) {
         super(props);
+        this.sessionStorageId = `scrollTop-${props.id}`;
         this.debounced = debounce(this.keepScrollPosition, 100);
     }
 
@@ -21,7 +22,7 @@ export default class RestoreScroll extends React.Component {
     keepScrollPosition = () => {
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
         try {
-            sessionStorage.setItem('scrollTop', `${scrollTop}`);
+            sessionStorage.setItem(this.sessionStorageId, `${scrollTop}`);
         } catch (error) {
             // Ignore any session storage error
         }
@@ -29,9 +30,9 @@ export default class RestoreScroll extends React.Component {
 
     restoreScrollPosition = () => {
         try {
-            const scrollTop = sessionStorage.getItem('scrollTop');
+            const scrollTop = sessionStorage.getItem(this.sessionStorageId);
             if (scrollTop && scrollTop !== null) {
-                sessionStorage.removeItem('scrollTop');
+                sessionStorage.removeItem(this.sessionStorageId);
                 requestAnimationFrame(() => {
                     window.scrollTo(0, parseInt(scrollTop, 10));
                 });
@@ -53,6 +54,7 @@ RestoreScroll.defaultProps = {
 };
 
 RestoreScroll.propTypes = {
+    id: PropTypes.string.isRequired,
     children: PropTypes.oneOfType([
         PropTypes.arrayOf(PropTypes.node),
         PropTypes.node

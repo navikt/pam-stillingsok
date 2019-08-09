@@ -1,0 +1,21 @@
+@import "../variables";
+
+.BackLink {
+  border-bottom: 0!important;
+  color: @pinkDarken;
+  font-family: 'Source Sans Pro', Arial, sans-serif;
+
+  &:active {
+    color: @pink;
+  }
+
+  &:focus {
+    .BackLink__label {
+      background: @orangeFocus;
+    }
+  }
+}
+
+.BackLink__chevron {
+  margin-top: -3px;
+}

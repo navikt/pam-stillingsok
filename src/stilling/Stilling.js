@@ -1,18 +1,16 @@
 /* eslint-disable no-underscore-dangle,prefer-destructuring */
-import Chevron from 'nav-frontend-chevron';
 import { Column, Container, Row } from 'nav-frontend-grid';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { Flatknapp } from 'pam-frontend-knapper';
+import BackLink from '../backLink/BackLink';
 import getEmployer from '../common/getEmployer';
 import getWorkLocation from '../common/getWorkLocation';
 import { setMetaRobotsTag, removeMetaRobotsTag } from '../common/metaRobots';
 import { CONTEXT_PATH } from '../fasitProperties';
 import FavouriteAlertStripe from '../favourites/alertstripe/FavouriteAlertStripe';
 import ToggleFavouriteButton from '../favourites/toggleFavoriteButton/ToggleFavouriteButton';
-import { getLastSearchQueryFromSessionStorage } from '../search/searchQueryReducer';
 import { toObject } from '../utils';
 import AdDetails from './adDetails/AdDetails';
 import AdText from './adText/AdText';
@@ -92,15 +90,7 @@ const Stilling = ({
                         <Container>
                             <Row>
                                 <div className="Stilling__header__button-row">
-                                    <Link
-                                        to={`${getLastSearchQueryFromSessionStorage()}`}
-                                        className="Stilling__header__button-row__back PageHeader__back no-print"
-                                    >
-                                        <Chevron type="venstre" className="PageHeader__back__chevron" />
-                                        <span className="PageHeader__back__text">
-                                            Ledige stillinger
-                                        </span>
-                                    </Link>
+                                    <BackLink />
                                     <div className="Stilling__header__favourite">
                                         {isFetchingStilling && cachedStilling && (
                                             <ToggleFavouriteButton uuid={cachedStilling.uuid} />
