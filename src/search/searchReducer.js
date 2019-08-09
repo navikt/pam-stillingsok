@@ -3,8 +3,6 @@ import { fetchSearch } from '../api/api';
 import SearchApiError from '../api/SearchApiError';
 import { RESTORE_STATE_FROM_SAVED_SEARCH } from '../savedSearches/savedSearchesReducer';
 import { RESTORE_STATE_FROM_URL } from '../search/searchQueryReducer';
-import { isMobile } from '../utils';
-import { COLLAPSE_ALL_FACET_PANELS } from './facets/facetPanelsReducer';
 import { RESET_PAGINATION, toApiSearchQuery } from './searchQueryReducer';
 
 export const FETCH_INITIAL_FACETS_SUCCESS = 'FETCH_INITIAL_FACETS_SUCCESS';
@@ -115,21 +113,18 @@ function* initialSearch() {
     try {
         let response;
         if (!state.search.initialSearchDone) {
-            // For å hente alle tilgjengelige fasetter (yrke, sted ), gjør vi først
-            // et søk uten noen søkekriterier.
+            // For å få tak i alle tilgjengelige fasetter (yrke, område osv), så gjør vi først
+            // et søk uten noen søkekriterier. Dette vil returnere alle kjente fasettverdier på
+            // tverss av alle annonsene i backend
             response = yield call(fetchSearch, {});
             yield put({ type: FETCH_INITIAL_FACETS_SUCCESS, response });
 
-            // Gjør et nytt søk hvis det finnes noen krysset av noen
-            // fasetter/søkekriterier
+            // Hvis bruker allerede har noen søkekriterier (f.eks fra en bokmerket lenke), så må vi
+            // foreta et nytt søk med disse kriteriene.
             state = yield select();
             const query = toApiSearchQuery(state.searchQuery);
             if (Object.keys(query).length > 0) {
                 response = yield call(fetchSearch, query);
-            }
-
-            if (isMobile()) {
-                yield put({ type: COLLAPSE_ALL_FACET_PANELS });
             }
 
             yield put({ type: SEARCH_SUCCESS, response });

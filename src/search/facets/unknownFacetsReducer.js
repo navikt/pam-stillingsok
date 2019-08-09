@@ -18,11 +18,11 @@ const initialState = {
 /**
  * Oversikten over mulige fasetter lages dynamisk av backend, basert på de stillingene som finnes nå.
  * Hvilke fasetter som er tilgjengelige vil derfor variere over tid.
- * F.eks hvis det ikke finnes ledige stilinger med * ansetteleseform "Sesong" akkuratt nå, vil heller
- * ikke dette være en mulig fasett. Bruker kan likevel åpne et lagret søk, eller en gammel
+ * F.eks hvis det ikke finnes ledige stilinger med ansetteleseform "Sesong" akkuratt nå, vil heller
+ * ikke dette være en mulig fasettverdi. Bruker kan likevel åpne et lagret søk, eller en gammel
  * lenke/bokmerke med '&engagementType=Sesong'.
  *
- * Denne reduceren holder derfor oversikt over ukjente fasetter som er i bruk, men som ikke vil gi treff.
+ * Denne reduceren holder derfor oversikt over ukjente fasettverdier som er i bruk, men som ikke vil gi treff.
  */
 export default function unknownFacetsReducer(state = initialState, action) {
     switch (action.type) {
@@ -39,7 +39,7 @@ export default function unknownFacetsReducer(state = initialState, action) {
 }
 
 /**
- * Returnerer en liste med ukjente fasetter.
+ * Returnerer en liste med ukjente fasettverdier.
  * @param usersSearchCriteria: De fasettverdiene som bruker har valgt
  * @param searchCriteriaFromBackend: Tilgjengelig fasettverdier fra backend
  * @param nestedName, f.eks 'municipals'.
@@ -57,7 +57,7 @@ export function findUnknownFacets(usersSearchCriteria, searchCriteriaFromBackend
 }
 
 /**
- * Finner ukjente fasetter etter at vi har fått alle tilgjengelige fasetter fra backend.
+ * Finner ukjente fasettverdier etter at vi har fått alle tilgjengelige fasetter fra backend.
  */
 function* handleFetchInitialFacetsSuccess(action) {
     const state = yield select();
@@ -77,7 +77,7 @@ function* handleFetchInitialFacetsSuccess(action) {
 }
 
 /**
- * Finner ukjente fasetter etter bruker har åpnet et lagret søk.
+ * Finner ukjente fasettverdier etter bruker har åpnet et lagret søk.
  */
 function* handleRestoreStateFromSavedSearch() {
     const state = yield select();

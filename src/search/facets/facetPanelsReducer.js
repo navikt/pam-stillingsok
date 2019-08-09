@@ -1,3 +1,6 @@
+import { isMobile } from '../../utils';
+import { FETCH_INITIAL_FACETS_SUCCESS } from '../searchReducer';
+
 export const EXPAND_ALL_FACET_PANELS = 'EXPAND_ALL_FACET_PANELS';
 export const COLLAPSE_ALL_FACET_PANELS = 'COLLAPSE_ALL_FACET_PANELS';
 export const EXPAND_FACET_PANEL = 'EXPAND_FACET_PANEL';
@@ -49,6 +52,11 @@ export default function facetPanelsReducer(state = initialState, action) {
             return {
                 ...state,
                 expandedFacetPanels: []
+            };
+        case FETCH_INITIAL_FACETS_SUCCESS:
+            return {
+                ...state,
+                expandedFacetPanels: isMobile() ? [] : initialState.expandedFacetPanels
             };
         default:
             return state;
