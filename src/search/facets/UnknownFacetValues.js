@@ -2,6 +2,7 @@ import { Checkbox } from 'nav-frontend-skjema';
 import { Element } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
+import './UnknownFacetValues.less';
 
 export default function UnknownFacetValues(
     {
@@ -19,11 +20,8 @@ export default function UnknownFacetValues(
     }
 
     return (
-        <div>
-            <div>
-                <div className="Search__separator"/>
-                <Element className="blokk-xs">Følgende kriterier gir 0 treff:</Element>
-            </div>
+        <div className="UnknownFacetValues">
+            <Element className="UnknownFacetValues__label">Følgende kriterier gir 0 treff:</Element>
             {unknownValues && unknownValues.map((sec) => (
                 <div key={sec}>
                     <Checkbox
