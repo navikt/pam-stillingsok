@@ -321,7 +321,7 @@ export function isSearchQueryEmpty(searchQuery) {
  */
 export function getLastSearchQueryFromSessionStorage() {
     const queryString = sessionStorage.getItem(LATEST_QUERY_STRING_KEY);
-    return queryString ? `${CONTEXT_PATH}${queryString}` : `${CONTEXT_PATH}`;
+    return queryString ? queryString : '';
 }
 
 /**
