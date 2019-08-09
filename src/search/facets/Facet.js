@@ -26,7 +26,6 @@ class Facet extends React.Component {
 
     render() {
         const { panelId, count, expandedFacetPanels, title, children } = this.props;
-        console.log(expandedFacetPanels)
         return (
             <Ekspanderbartpanel
                 tittel={toFacetTitleWithCount(title, count.length)}
