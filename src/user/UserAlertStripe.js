@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import StickyAlertStripe from '../common/StickyAlertStripe';
+import StickyAlertStripe from '../common/components/StickyAlertStripe';
 
 function UserAlertStripe({ userAlertStripeMode, userAlertStripeIsVisible }) {
     if (userAlertStripeIsVisible && (userAlertStripeMode === 'added')) {

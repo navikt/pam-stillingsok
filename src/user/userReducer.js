@@ -3,7 +3,7 @@ import SearchApiError from '../api/SearchApiError';
 import { userApiGet, userApiPost, userApiRemove, userApiPut } from '../api/userApi';
 import { authenticationEnum, FETCH_IS_AUTHENTICATED_SUCCESS } from '../authentication/authenticationReducer';
 import { AD_USER_API } from '../fasitProperties';
-import delay from '../common/delay';
+import delay from '../common/utils/delay';
 import { isValidEmail } from '../utils';
 
 export const SHOW_TERMS_OF_USE_MODAL = 'SHOW_TERMS_OF_USE_MODAL';

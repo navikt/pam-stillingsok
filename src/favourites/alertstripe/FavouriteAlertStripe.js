@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import StickyAlertStripe from '../../common/StickyAlertStripe';
+import StickyAlertStripe from '../../common/components/StickyAlertStripe';
 import { CONTEXT_PATH } from '../../fasitProperties';
 
 function FavouriteAlertStripe({ showAlertStripe, alertStripeMode }) {

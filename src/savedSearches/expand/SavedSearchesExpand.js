@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Element } from 'nav-frontend-typografi';
 import Lukknapp from 'nav-frontend-lukknapp';
-import DelayedSpinner from '../../common/DelayedSpinner';
+import DelayedSpinner from '../../common/components/DelayedSpinner';
 import NoSavedSearches from '../noresult/NoSavedSearches';
 import './SavedSearchesExpand.less';
 import SavedSearchesExpandItem from './SavedSearchesExpandItem';

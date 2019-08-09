@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ReactHtmlParser from 'react-html-parser';
 import { Undertittel } from 'nav-frontend-typografi';
 import { isValidUrl } from '../../utils';
-import getEmployer, { getEmployerLocation } from '../../common/getEmployer';
+import getEmployer, { getEmployerLocation } from '../../common/utils/getEmployer';
 import './EmployerDetails.less';
 
 export default function EmployerDetails({ stilling }) {

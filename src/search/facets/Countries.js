@@ -2,7 +2,7 @@ import { Checkbox } from 'nav-frontend-skjema';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import capitalizeLocation from '../../common/capitalizeLocation';
+import capitalizeLocation from '../../common/utils/capitalizeLocation';
 import { ADD_COUNTRY, REMOVE_COUNTRY } from '../searchQueryReducer';
 import { SEARCH } from '../searchReducer';
 import Facet from './Facet';

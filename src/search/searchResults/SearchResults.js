@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import DelayedSpinner from '../../common/DelayedSpinner';
+import DelayedSpinner from '../../common/components/DelayedSpinner';
 import SearchResultItem from './SearchResultsItem';
 import Pagination from './Pagination';
 import NoResults from './NoResults';

@@ -4,8 +4,8 @@ import { userApiGet, userApiPost, userApiRemove } from '../api/userApi';
 import SearchApiError from '../api/SearchApiError';
 import AuthenticationCaller from '../authentication/AuthenticationCaller';
 import { requiresAuthentication } from '../authentication/authenticationReducer';
-import getWorkLocation from '../common/getWorkLocation';
-import getEmployer from '../common/getEmployer';
+import getWorkLocation from '../common/utils/getWorkLocation';
+import getEmployer from '../common/utils/getEmployer';
 import {
     FETCH_USER_SUCCESS,
     CREATE_USER_SUCCESS,
