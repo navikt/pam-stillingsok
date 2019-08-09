@@ -19,7 +19,7 @@ export const LOAD_MORE = 'LOAD_MORE';
 export const LOAD_MORE_BEGIN = 'LOAD_MORE_BEGIN';
 export const LOAD_MORE_SUCCESS = 'LOAD_MORE_SUCCESS';
 
-export const PAGE_SIZE = 3;
+export const PAGE_SIZE = 50;
 
 const initialState = {
     initialSearchDone: false,
