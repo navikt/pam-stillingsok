@@ -2,13 +2,13 @@ import { Ingress } from 'nav-frontend-typografi';
 import React from 'react';
 import { connect } from 'react-redux';
 import './NoResults.less';
-import searchCriteriaToString from '../../common/searchCriteriaToString';
+import { toReadableSearchQuery } from '../searchQueryReducer';
 
-function NoResults({ state }) {
+function NoResults({ readableSearchQuery }) {
     return (
         <div className="NoResults">
             <Ingress>
-                Ingen treff på <b>&#34;{searchCriteriaToString(state)}&#34;</b>
+                Ingen treff på <b>&#34;{readableSearchQuery}&#34;</b>
             </Ingress>
         </div>
     );
@@ -16,7 +16,7 @@ function NoResults({ state }) {
 
 
 const mapStateToProps = (state) => ({
-    state
+    readableSearchQuery: toReadableSearchQuery(state.searchQuery)
 });
 
 const mapDispatchToProps = () => ({});

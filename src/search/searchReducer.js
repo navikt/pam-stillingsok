@@ -1,11 +1,11 @@
-import {
-    call, put, select, takeLatest, throttle
-} from 'redux-saga/effects';
+import { call, put, select, takeLatest, throttle } from 'redux-saga/effects';
 import { fetchSearch } from '../api/api';
 import SearchApiError from '../api/SearchApiError';
 import { RESTORE_STATE_FROM_SAVED_SEARCH } from '../savedSearches/savedSearchesReducer';
-import { RESTORE_STATE_FROM_URL } from '../urlReducer';
+import { RESTORE_STATE_FROM_URL } from '../search/searchQueryReducer';
 import { isMobile } from '../utils';
+import { COLLAPSE_ALL_FACET_PANELS } from './facets/facetPanelsReducer';
+import { RESET_PAGINATION, toApiSearchQuery } from './searchQueryReducer';
 
 export const FETCH_INITIAL_FACETS_SUCCESS = 'FETCH_INITIAL_FACETS_SUCCESS';
 export const INITIAL_SEARCH = 'INITIAL_SEARCH';
@@ -15,11 +15,9 @@ export const SEARCH_BEGIN = 'SEARCH_BEGIN';
 export const SEARCH_END = 'SEARCH_END';
 export const SEARCH_SUCCESS = 'SEARCH_SUCCESS';
 export const SEARCH_FAILURE = 'SEARCH_FAILURE';
-export const RESET_FROM = 'RESET_FROM';
 export const LOAD_MORE = 'LOAD_MORE';
 export const LOAD_MORE_BEGIN = 'LOAD_MORE_BEGIN';
 export const LOAD_MORE_SUCCESS = 'LOAD_MORE_SUCCESS';
-export const SET_FACET_PANELS_INITIAL_OPEN = 'SET_FACET_PANELS_INITIAL_OPEN';
 
 export const PAGE_SIZE = 50;
 
@@ -28,8 +26,6 @@ const initialState = {
     isSearching: true,
     isLoadingMore: false,
     searchResult: undefined,
-    from: 0,
-    to: PAGE_SIZE,
     page: 0
 };
 
@@ -47,15 +43,11 @@ export default function searchReducer(state = initialState, action) {
         case RESTORE_STATE_FROM_URL:
             return {
                 ...state,
-                from: 0,
-                to: action.query.to ? parseInt(action.query.to, 10) : PAGE_SIZE,
                 page: action.query.to ? (parseInt(action.query.to, 10) - PAGE_SIZE) / PAGE_SIZE : 0
             };
-        case RESET_FROM:
+        case RESET_PAGINATION:
             return {
                 ...state,
-                from: 0,
-                to: PAGE_SIZE,
                 page: 0
             };
         case RESTORE_STATE_FROM_SAVED_SEARCH:
@@ -89,12 +81,6 @@ export default function searchReducer(state = initialState, action) {
                 ...state,
                 isSearching: false
             };
-        case LOAD_MORE:
-            return {
-                ...state,
-                from: state.to,
-                to: state.to + PAGE_SIZE
-            };
         case LOAD_MORE_BEGIN:
             return {
                 ...state,
@@ -116,24 +102,6 @@ export default function searchReducer(state = initialState, action) {
     }
 }
 
-export function toSearchQuery(state) {
-    const query = {};
-    if (state.searchBox.q.length > 0) query.q = state.searchBox.q;
-    if (state.search.from > 0) query.from = state.search.from;
-    if (state.search.to > PAGE_SIZE) query.size = state.search.to - state.search.from;
-    if (state.sorting.sort.length > 0) query.sort = state.sorting.sort;
-    if (state.counties.checkedCounties.length > 0) query.counties = state.counties.checkedCounties;
-    if (state.counties.checkedMunicipals.length > 0) query.municipals = state.counties.checkedMunicipals;
-    if (state.published.checkedPublished) query.published = state.published.checkedPublished;
-    if (state.engagement.checkedEngagementType.length > 0) query.engagementType = state.engagement.checkedEngagementType;
-    if (state.sector.checkedSector.length > 0) query.sector = state.sector.checkedSector;
-    if (state.extent.checkedExtent.length > 0) query.extent = state.extent.checkedExtent;
-    if (state.occupations.checkedFirstLevels.length > 0) query.occupationFirstLevels = state.occupations.checkedFirstLevels;
-    if (state.occupations.checkedSecondLevels.length > 0) query.occupationSecondLevels = state.occupations.checkedSecondLevels;
-    if (state.countries.checkedCountries.length > 0) query.countries = state.countries.checkedCountries;
-    return query;
-}
-
 /**
  * Fetcher alle tilgjengelige fasetter og gjør deretter det første søket.
  */
@@ -151,13 +119,13 @@ function* initialSearch() {
             // Gjør et nytt søk hvis det finnes noen krysset av noen
             // fasetter/søkekriterier
             state = yield select();
-            const query = toSearchQuery(state);
+            const query = toApiSearchQuery(state.searchQuery);
             if (Object.keys(query).length > 0) {
                 response = yield call(fetchSearch, query);
             }
 
             if (isMobile()) {
-                yield put({ type: SET_FACET_PANELS_INITIAL_OPEN, isOpen: false });
+                yield put({ type: COLLAPSE_ALL_FACET_PANELS });
             }
 
             yield put({ type: SEARCH_SUCCESS, response });
@@ -175,9 +143,9 @@ function* initialSearch() {
 function* search() {
     yield put({ type: SEARCH_BEGIN });
     try {
-        yield put({ type: RESET_FROM });
+        yield put({ type: RESET_PAGINATION });
         const state = yield select();
-        const query = toSearchQuery(state);
+        const query = toApiSearchQuery(state.searchQuery);
         const searchResult = yield call(fetchSearch, query);
         yield put({ type: SEARCH_SUCCESS, response: searchResult });
     } catch (e) {
@@ -194,7 +162,7 @@ function* loadMore() {
     try {
         const state = yield select();
         yield put({ type: LOAD_MORE_BEGIN });
-        const response = yield call(fetchSearch, toSearchQuery(state));
+        const response = yield call(fetchSearch, toApiSearchQuery(state.searchQuery));
         yield put({ type: LOAD_MORE_SUCCESS, response });
     } catch (e) {
         if (e instanceof SearchApiError) {

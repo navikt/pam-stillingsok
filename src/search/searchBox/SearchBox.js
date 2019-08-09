@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { SET_SEARCH_STRING } from '../searchQueryReducer';
 import Typeahead from './Typeahead';
 import { SEARCH } from '../searchReducer';
-import { FETCH_SUGGESTIONS, SET_VALUE } from './searchBoxReducer';
+import { FETCH_SUGGESTIONS } from './searchBoxReducer';
 import './SearchBox.less';
 
 
@@ -65,13 +66,13 @@ SearchBox.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-    value: state.searchBox.q,
+    value: state.searchQuery.q,
     suggestions: state.searchBox.suggestions
 });
 
 const mapDispatchToProps = (dispatch) => ({
     search: () => dispatch({ type: SEARCH }),
-    setValue: (value) => dispatch({ type: SET_VALUE, value }),
+    setValue: (value) => dispatch({ type: SET_SEARCH_STRING, value }),
     fetchSuggestions: () => dispatch({ type: FETCH_SUGGESTIONS })
 });
 

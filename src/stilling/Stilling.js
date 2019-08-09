@@ -12,8 +12,8 @@ import { setMetaRobotsTag, removeMetaRobotsTag } from '../common/metaRobots';
 import { CONTEXT_PATH } from '../fasitProperties';
 import FavouriteAlertStripe from '../favourites/alertstripe/FavouriteAlertStripe';
 import ToggleFavouriteButton from '../favourites/toggleFavoriteButton/ToggleFavouriteButton';
-import { toObject } from '../search/url';
-import { urlFromSessionStorageOrIndex } from '../urlReducer';
+import { getLastSearchQueryFromSessionStorage } from '../search/searchQueryReducer';
+import { toObject } from '../utils';
 import AdDetails from './adDetails/AdDetails';
 import AdText from './adText/AdText';
 import AdTitle from './adTitle/AdTitle';
@@ -93,7 +93,7 @@ const Stilling = ({
                             <Row>
                                 <div className="Stilling__header__button-row">
                                     <Link
-                                        to={`${urlFromSessionStorageOrIndex()}`}
+                                        to={`${getLastSearchQueryFromSessionStorage()}`}
                                         className="Stilling__header__button-row__back PageHeader__back no-print"
                                     >
                                         <Chevron type="venstre" className="PageHeader__back__chevron" />

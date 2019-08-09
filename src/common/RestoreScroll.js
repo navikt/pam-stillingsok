@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import debounce from '../common/debounce';
+import debounce from './debounce';
 
 export default class RestoreScroll extends React.Component {
     constructor(props) {

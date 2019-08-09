@@ -5,10 +5,10 @@ import { PersonbrukerApplikasjon, Header, AuthStatus } from 'pam-frontend-header
 import { LOGIN_URL, LOGOUT_URL } from '../../fasitProperties';
 import { authenticationEnum } from '../../authentication/authenticationReducer';
 import { getRedirect } from '../../redirect';
+import { COLLAPSE_ALL_FACET_PANELS, EXPAND_ALL_FACET_PANELS } from '../../search/facets/facetPanelsReducer';
 import { isMobile } from '../../utils';
-import { SET_FACET_PANELS_INITIAL_OPEN } from '../../search/searchReducer';
 
-const TopMenu = ({ isAuthenticated, setFacetPanelsOpen }) => {
+const TopMenu = ({ isAuthenticated, collapseAllFacetPanels, expandAllFacetPanels }) => {
     const login = (role) => {
         if (role === 'personbruker') {
             window.location.href = `${LOGIN_URL}${getRedirect()}`;
@@ -37,7 +37,11 @@ const TopMenu = ({ isAuthenticated, setFacetPanelsOpen }) => {
                 validerNavigasjon={{
                     redirectTillates: () => {
                         // Reset state of facet panel (closed if on mobile) and return true to complete the redirect
-                        setFacetPanelsOpen(!isMobile());
+                        if(isMobile()) {
+                            collapseAllFacetPanels();
+                        } else {
+                            expandAllFacetPanels();
+                        }
                         return true;
                     }
                 }}
@@ -55,7 +59,8 @@ const TopMenu = ({ isAuthenticated, setFacetPanelsOpen }) => {
 
 TopMenu.propTypes = {
     isAuthenticated: PropTypes.string.isRequired,
-    setFacetPanelsOpen: PropTypes.func.isRequired
+    collapseAllFacetPanels: PropTypes.func.isRequired,
+    expandAllFacetPanels: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -63,7 +68,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    setFacetPanelsOpen: (isOpen) => dispatch({ type: SET_FACET_PANELS_INITIAL_OPEN, isOpen })
+    collapseAllFacetPanels: () => dispatch({ type: COLLAPSE_ALL_FACET_PANELS }),
+    expandAllFacetPanels: () => dispatch({ type: EXPAND_ALL_FACET_PANELS })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TopMenu);

@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import DelayedSpinner from '../loading/DelayedSpinner';
+import DelayedSpinner from '../../common/DelayedSpinner';
 import SearchResultItem from './SearchResultsItem';
-import Pagination from '../pagination/Pagination';
-import NoResults from '../noResults/NoResults';
+import Pagination from './Pagination';
+import NoResults from './NoResults';
 import { PAGE_SIZE } from '../searchReducer';
 import './SearchResults.less';
 
