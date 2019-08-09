@@ -29,15 +29,6 @@ const initialState = {
     page: 0
 };
 
-export function mergeAndRemoveDuplicates(array1, array2) {
-    return [...array1, ...array2.filter((a) => {
-        const duplicate = array1.find((b) => (
-            a.uuid === b.uuid
-        ));
-        return !duplicate;
-    })];
-}
-
 export default function searchReducer(state = initialState, action) {
     switch (action.type) {
         case RESTORE_STATE_FROM_URL:
@@ -93,13 +84,26 @@ export default function searchReducer(state = initialState, action) {
                 page: state.page + 1,
                 searchResult: {
                     ...state.searchResult,
-                    // Når man pager kan en allerede lastet annonse komme på nytt på neste page.
                     stillinger: mergeAndRemoveDuplicates(state.searchResult.stillinger, action.response.stillinger)
                 }
             };
         default:
             return state;
     }
+}
+
+/**
+ * Når man laster inn flere annonser, kan en allerede lastet annonse komme på nytt. Dette kan f.eks skje
+ * ved at annonser legges til/slettes i backend, noe som fører til at pagineringen og det faktiske datasettet
+ * blir usynkronisert. Funskjonen fjerner derfor duplikate annonser i søkeresultatet.
+ */
+export function mergeAndRemoveDuplicates(stillingerAlreadyInMemory, stillingerFromBackend) {
+    return [...stillingerAlreadyInMemory, ...stillingerFromBackend.filter((a) => {
+        const duplicate = stillingerAlreadyInMemory.find((b) => (
+            a.uuid === b.uuid
+        ));
+        return !duplicate;
+    })];
 }
 
 /**
