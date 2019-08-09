@@ -1,5 +1,6 @@
 import { put, select, takeLatest } from 'redux-saga/es/effects';
 import { RESTORE_STATE_FROM_SAVED_SEARCH } from '../../savedSearches/savedSearchesReducer';
+import { RESTORE_STATE_FROM_URL } from '../searchQueryReducer';
 import { FETCH_INITIAL_FACETS_SUCCESS, RESET_SEARCH } from '../searchReducer';
 
 const SET_UNKNOWN_FACETS = 'SET_UNKNOWN_FACETS';
@@ -98,5 +99,5 @@ function* handleRestoreStateFromSavedSearch() {
 
 export const unknownFacetsSaga = function* saga() {
     yield takeLatest(FETCH_INITIAL_FACETS_SUCCESS, handleFetchInitialFacetsSuccess);
-    yield takeLatest([RESTORE_STATE_FROM_SAVED_SEARCH], handleRestoreStateFromSavedSearch);
+    yield takeLatest([RESTORE_STATE_FROM_URL, RESTORE_STATE_FROM_SAVED_SEARCH], handleRestoreStateFromSavedSearch);
 };
