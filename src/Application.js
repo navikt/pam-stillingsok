@@ -6,7 +6,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { FETCH_IS_AUTHENTICATED } from './authentication/authenticationReducer';
 import NotAuthenticatedModal from './authentication/NotAuthenticatedModal';
 import BackLinkManager from './backLink/BackLinkManager';
-import TopMenu from './common/components/TopMenu';
+import TopMenu from './topMenu/TopMenu';
 import Error from './error/Error';
 import { CONTEXT_PATH } from './fasitProperties';
 import Favourites from './favourites/Favourites';

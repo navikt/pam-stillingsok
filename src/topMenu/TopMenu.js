@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { PersonbrukerApplikasjon, Header, AuthStatus } from 'pam-frontend-header';
-import { LOGIN_URL, LOGOUT_URL } from '../../fasitProperties';
-import { authenticationEnum } from '../../authentication/authenticationReducer';
-import authenticationRedirectUrl from '../../authentication/authenticationRedirectUrl';
-import { COLLAPSE_ALL_FACET_PANELS, EXPAND_ALL_FACET_PANELS } from '../../search/facets/facetPanelsReducer';
-import { isMobile } from '../../utils';
+import { LOGIN_URL, LOGOUT_URL } from '../fasitProperties';
+import { authenticationEnum } from '../authentication/authenticationReducer';
+import authenticationRedirectUrl from '../authentication/authenticationRedirectUrl';
+import { COLLAPSE_ALL_FACET_PANELS, EXPAND_ALL_FACET_PANELS } from '../search/facets/facetPanelsReducer';
+import { isMobile } from '../utils';
 
 const TopMenu = ({ isAuthenticated, collapseAllFacetPanels, expandAllFacetPanels }) => {
     const login = (role) => {

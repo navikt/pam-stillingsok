@@ -2,9 +2,28 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ReactHtmlParser from 'react-html-parser';
 import { Undertittel } from 'nav-frontend-typografi';
+import capitalizeLocation from '../../common/utils/capitalizeLocation';
 import { isValidUrl } from '../../utils';
-import getEmployer, { getEmployerLocation } from '../../common/utils/getEmployer';
+import getEmployer from '../../common/utils/getEmployer';
 import './EmployerDetails.less';
+
+function getEmployerLocation(employer) {
+    let employerLocation = null;
+
+    if (employer && employer.location) {
+        const { location } = employer;
+
+        if (location.postalCode) {
+            employerLocation = location.address ? `${location.address}, ` : '';
+            employerLocation += `${location.postalCode} ${capitalizeLocation(location.city)}`;
+        } else if (location.municipal) {
+            employerLocation = `${capitalizeLocation(location.municipal)}`;
+        } else if (location.country) {
+            employerLocation = `${capitalizeLocation(location.country)}`;
+        }
+    }
+    return employerLocation;
+}
 
 export default function EmployerDetails({ stilling }) {
     const { properties } = stilling;
