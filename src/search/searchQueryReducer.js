@@ -216,7 +216,7 @@ function removeEmptyProperties(obj) {
  * Returnerer searchQuery optimimalisert for browser url'en
  * @param searchQuery
  */
-export function toBrowserSearchQuery(searchQuery) {
+export function toBrowserSearchQuery(searchQuery, currentSavedSearch) {
     const browserSearchQuery = {
         ...searchQuery
     };
@@ -228,6 +228,10 @@ export function toBrowserSearchQuery(searchQuery) {
     }
 
     delete browserSearchQuery.from;
+
+    if (currentSavedSearch) {
+        browserSearchQuery.saved = currentSavedSearch.uuid;
+    }
 
     return removeEmptyProperties(browserSearchQuery);
 }
@@ -321,7 +325,11 @@ export function isSearchQueryEmpty(searchQuery) {
  */
 export function getLastSearchQueryFromSessionStorage() {
     const queryString = sessionStorage.getItem(LATEST_QUERY_STRING_KEY);
-    return queryString ? queryString : '';
+
+    if(queryString && queryString.startsWith('?')) {
+        return queryString
+    }
+    return '';
 }
 
 /**
@@ -331,15 +339,10 @@ export function getLastSearchQueryFromSessionStorage() {
  */
 function* synchronizeBrowserUrl() {
     const state = yield select();
-    const browserSearchQuery = toBrowserSearchQuery(state.searchQuery);
+    const browserSearchQuery = toQueryString(toBrowserSearchQuery(state.searchQuery, state.savedSearches.currentSavedSearch));
 
-    if (state.savedSearches.currentSavedSearch) {
-        browserSearchQuery.saved = state.savedSearches.currentSavedSearch.uuid;
-    }
-
-    const queryString = toQueryString(browserSearchQuery);
-    window.history.replaceState({}, '', CONTEXT_PATH + queryString);
-    sessionStorage.setItem(LATEST_QUERY_STRING_KEY, queryString);
+    window.history.replaceState({}, '', CONTEXT_PATH + browserSearchQuery);
+    sessionStorage.setItem(LATEST_QUERY_STRING_KEY, browserSearchQuery);
 }
 
 /**
@@ -347,7 +350,6 @@ function* synchronizeBrowserUrl() {
  */
 function* restoreStateFromBrowserUrl() {
     let url = document.location.search;
-    sessionStorage.setItem(LATEST_QUERY_STRING_KEY, url);
 
     // Dekoder en url til den ikke lenger er kodet.
     // En kodet url er i dette tilfellet en url som inneholder '%'.
@@ -357,6 +359,12 @@ function* restoreStateFromBrowserUrl() {
     }
 
     yield put({ type: RESTORE_STATE_FROM_URL, query: toObject(decodedUrl) });
+
+    // Lagre det gjennopprettede søket i session storage
+    const state = yield select();
+    const browserSearchQuery = toQueryString(toBrowserSearchQuery(state.searchQuery, state.savedSearches.currentSavedSearch));
+
+    sessionStorage.setItem(LATEST_QUERY_STRING_KEY, browserSearchQuery);
 }
 
 export const searchQuerySaga = function* saga() {
