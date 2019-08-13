@@ -1,4 +1,4 @@
-import { put, select, takeLatest } from 'redux-saga/effects';
+import { put, select, takeLatest, call } from 'redux-saga/effects';
 import { ADD_SAVED_SEARCH_SUCCESS, SET_CURRENT_SAVED_SEARCH } from './savedSearches/savedSearchesReducer';
 import { LOAD_MORE, PAGE_SIZE, RESET_SEARCH, SEARCH } from './search/searchReducer';
 import { toObject, toQueryString } from './search/url';
@@ -12,7 +12,10 @@ const LATEST_QUERY_STRING_KEY = 'latestQueryString';
 
 export function getLastSearchQueryFromSessionStorage() {
     const queryString = sessionStorage.getItem(LATEST_QUERY_STRING_KEY);
-    return queryString ? queryString : '';
+    if(queryString && queryString.startsWith('?')) {
+        return queryString;
+    }
+    return '';
 }
 
 /**
@@ -67,8 +70,8 @@ function* updateUrl() {
 
 function* restoreStateFromUrl() {
     const searchString = fullDecode(document.location.search);
-    setCurrentQueryString(searchString || '');
     yield put({ type: RESTORE_STATE_FROM_URL, query: toObject(searchString) });
+    yield call(updateUrl);
 }
 
 export const urlSaga = function* saga() {

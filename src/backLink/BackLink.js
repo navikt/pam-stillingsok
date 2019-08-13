@@ -4,27 +4,30 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import './BackLink.less';
-import { CONTEXT_PATH } from '../fasitProperties';
+import { TopLevelPages } from './backLinkReducer';
 
 function renderLabel(path) {
-    if(path === `${CONTEXT_PATH}/favoritter`) {
+    if(path === TopLevelPages.FAVORITTER.url) {
         return "Til favoritter"
     }
     return "Ledige stillinger"
 }
 
 function BackLink({ backLinkUrl }) {
-    return (
-        <Link
-            to={backLinkUrl}
-            className="BackLink no-print"
-        >
-            <Chevron type="venstre" className="BackLink__chevron"/>
-            <span className="BackLink__label">
-                {renderLabel(backLinkUrl)}
-            </span>
-        </Link>
-    );
+    if(backLinkUrl.startsWith('/')) {
+        return (
+            <Link
+                to={backLinkUrl}
+                className="BackLink no-print"
+            >
+                <Chevron type="venstre" className="BackLink__chevron"/>
+                <span className="BackLink__label">
+                    {renderLabel(backLinkUrl)}
+                </span>
+            </Link>
+        );
+    }
+    return <div />;
 }
 
 BackLink.propTypes = {
