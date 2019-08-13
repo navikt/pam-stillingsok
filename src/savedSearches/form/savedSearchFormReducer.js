@@ -1,14 +1,13 @@
 import { put, select, take, takeLatest } from 'redux-saga/es/effects';
 import { requiresAuthentication } from '../../authentication/authenticationReducer';
 import AuthenticationCaller from '../../authentication/AuthenticationCaller';
-import searchCriteriaToString from '../../common/searchCriteriaToString';
-import { toQueryString } from '../../search/url';
+import { toReadableSearchQuery, toSavedSearchQuery } from '../../search/searchQueryReducer';
+import { toQueryString } from '../../utils';
 import NotifyTypeEnum from '../enums/NotifyTypeEnum';
 import SavedSearchStatusEnum from '../enums/SavedSearchStatusEnum';
 import {
     ADD_SAVED_SEARCH_FAILURE,
     ADD_SAVED_SEARCH_SUCCESS,
-    toSavedSearchQuery,
     UPDATE_SAVED_SEARCH_FAILURE,
     UPDATE_SAVED_SEARCH_SUCCESS
 } from '../savedSearchesReducer';
@@ -190,7 +189,7 @@ export function* validateAll() {
 }
 
 function toTitle(state) {
-    const newTitle = searchCriteriaToString(state);
+    const newTitle = toReadableSearchQuery(state.searchQuery);
     return newTitle.length > 255 ? `${newTitle.substr(0, 252)}...` : newTitle;
 }
 
@@ -206,7 +205,7 @@ function* setDefaultFormData(action) {
             type: SET_FORM_DATA,
             formData: {
                 title: toTitle(state),
-                searchQuery: toQueryString(toSavedSearchQuery(state)),
+                searchQuery: toQueryString(toSavedSearchQuery(state.searchQuery)),
                 notifyType: NotifyTypeEnum.NONE,
                 status: SavedSearchStatusEnum.INACTIVE
             }
@@ -221,7 +220,7 @@ function* setDefaultFormData(action) {
             type: SET_FORM_DATA,
             formData: {
                 ...state.savedSearches.currentSavedSearch,
-                searchQuery: toQueryString(toSavedSearchQuery(state))
+                searchQuery: toQueryString(toSavedSearchQuery(state.searchQuery))
             }
         });
     }

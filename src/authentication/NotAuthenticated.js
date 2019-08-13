@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Flatknapp, Hovedknapp } from 'pam-frontend-knapper';
 import { LOGIN_URL } from '../fasitProperties';
-import { getRedirect } from '../redirect';
+import authenticationRedirectUrl from '../authentication/authenticationRedirectUrl';
 import './NotAuthenticated.less';
 
 export default class NotAuthenticated extends React.Component {
     onLoginClick = () => {
-        window.location.href = `${LOGIN_URL}${getRedirect()}`;
+        window.location.href = `${LOGIN_URL}${authenticationRedirectUrl()}`;
     };
 
     render() {

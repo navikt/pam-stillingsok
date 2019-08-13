@@ -5,13 +5,12 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Flatknapp } from 'pam-frontend-knapper';
 import BackLink from '../backLink/BackLink';
-import getEmployer from '../common/getEmployer';
-import getWorkLocation from '../common/getWorkLocation';
-import { setMetaRobotsTag, removeMetaRobotsTag } from '../common/metaRobots';
+import getEmployer from '../common/utils/getEmployer';
+import getWorkLocation from '../common/utils/getWorkLocation';
 import { CONTEXT_PATH } from '../fasitProperties';
 import FavouriteAlertStripe from '../favourites/alertstripe/FavouriteAlertStripe';
 import ToggleFavouriteButton from '../favourites/toggleFavoriteButton/ToggleFavouriteButton';
-import { toObject } from '../search/url';
+import { toObject } from '../utils';
 import AdDetails from './adDetails/AdDetails';
 import AdText from './adText/AdText';
 import AdTitle from './adTitle/AdTitle';
@@ -54,7 +53,11 @@ const Stilling = ({
         }
         return () => {
             resetStilling();
-            removeMetaRobotsTag();
+
+            let metaRobots = document.querySelector('meta[name=robots]');
+            if (metaRobots) {
+                document.querySelector('head').removeChild(metaRobots);
+            }
         }
     }, []);
 
@@ -68,7 +71,17 @@ const Stilling = ({
         const pageNotFound = error && error.statusCode === 404;
         const adIsNotActive = !isFetchingStilling && stilling && stilling._source.status !== 'ACTIVE';
         if (pageNotFound || adIsNotActive) {
-            setMetaRobotsTag('noindex');
+            const content = 'noindex';
+            let metaRobots = document.querySelector('meta[name=robots]');
+
+            if (!metaRobots) {
+                metaRobots = document.createElement('meta');
+                metaRobots.setAttribute('name', 'robots');
+                metaRobots.setAttribute('content', content);
+                document.querySelector('head').appendChild(metaRobots);
+            } else {
+                metaRobots.setAttribute('content', content);
+            }
         }
     }, [error, isFetchingStilling, stilling]);
 

@@ -1,38 +1,17 @@
 import { call, put, select, throttle } from 'redux-saga/effects';
 import { fetchCategoryAndSearchTagsSuggestions } from '../../api/api';
 import SearchApiError from '../../api/SearchApiError';
-import { RESTORE_STATE_FROM_SAVED_SEARCH } from '../../savedSearches/savedSearchesReducer';
-import { RESTORE_STATE_FROM_URL } from '../../urlReducer';
-import { RESET_SEARCH } from '../searchReducer';
 
-export const SET_VALUE = 'SET_VALUE';
 export const FETCH_SUGGESTIONS = 'FETCH_SUGGESTIONS';
 export const FETCH_SUGGESTIONS_SUCCESS = 'FETCH_SUGGESTIONS_SUCCESS';
 export const FETCH_SUGGESTIONS_FAILURE = 'FETCH_SUGGESTIONS_FAILURE';
 
 const initialState = {
-    suggestions: [],
-    q: ''
+    suggestions: []
 };
 
 export default function searchBoxReducer(state = initialState, action) {
     switch (action.type) {
-        case RESTORE_STATE_FROM_URL:
-        case RESTORE_STATE_FROM_SAVED_SEARCH:
-            return {
-                ...state,
-                q: action.query.q || ''
-            };
-        case RESET_SEARCH:
-            return {
-                ...state,
-                q: ''
-            };
-        case SET_VALUE:
-            return {
-                ...state,
-                q: action.value
-            };
         case FETCH_SUGGESTIONS_SUCCESS:
             return {
                 ...state,
@@ -45,13 +24,13 @@ export default function searchBoxReducer(state = initialState, action) {
 
 function* fetchSuggestions() {
     const state = yield select();
-    const value = state.searchBox.q;
+    const value = state.searchQuery.q;
     const MIN_LENGTH = 3;
     if (value.length >= MIN_LENGTH) {
         try {
             const response = yield call(fetchCategoryAndSearchTagsSuggestions, value, MIN_LENGTH);
             const newState = yield select();
-            if (newState.searchBox.q.length >= MIN_LENGTH) {
+            if (newState.searchQuery.q.length >= MIN_LENGTH) {
                 yield put({ type: FETCH_SUGGESTIONS_SUCCESS, suggestions: response.result });
             } else {
                 yield put({ type: FETCH_SUGGESTIONS_SUCCESS, suggestions: [] });

@@ -3,7 +3,7 @@ import { Element } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import SnapToTop from '../../common/SnapToTop';
+import SnapToTop from '../../common/components/SnapToTop';
 import './ShowResultsButton.less';
 import CountDown from './CountDown';
 

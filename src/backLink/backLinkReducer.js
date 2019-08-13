@@ -1,6 +1,6 @@
 import { takeEvery, select, put } from 'redux-saga/es/effects';
 import { CONTEXT_PATH } from '../fasitProperties';
-import { getLastSearchQueryFromSessionStorage } from '../urlReducer';
+import { getLastSearchQueryFromSessionStorage } from '../search/searchQueryReducer';
 
 export const TRACK_NAVIGATION = 'TRACK_NAVIGATION';
 export const SET_BACK_LINK_URL = 'SET_BACK_LINK_URL';

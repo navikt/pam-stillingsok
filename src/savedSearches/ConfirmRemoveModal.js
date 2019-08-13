@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import ConfirmationModal from '../common/ConfirmationModal';
+import ConfirmationModal from '../common/components/ConfirmationModal';
 import { HIDE_MODAL_REMOVE_SAVED_SEARCH, REMOVE_SAVED_SEARCH } from './savedSearchesReducer';
 
 class ConfirmRemoveModal extends React.Component {

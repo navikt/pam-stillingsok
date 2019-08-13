@@ -2,12 +2,15 @@ import { call, put, select, take, takeEvery, takeLatest } from 'redux-saga/effec
 import SearchApiError from '../api/SearchApiError';
 import { userApiGet, userApiPost, userApiPut, userApiRemove } from '../api/userApi';
 import { AD_USER_API } from '../fasitProperties';
-import { SET_VALUE } from '../search/searchBox/searchBoxReducer';
+import {
+    isSearchQueryEmpty,
+    RESTORE_STATE_FROM_URL,
+    SET_SEARCH_STRING,
+    toSavedSearchQuery
+} from '../search/searchQueryReducer';
 import { INITIAL_SEARCH, RESET_SEARCH, SEARCH } from '../search/searchReducer';
-import { toObject, toQueryString } from '../search/url';
-import { RESTORE_STATE_FROM_URL } from '../urlReducer';
 import { FETCH_USER_SUCCESS } from '../user/userReducer';
-import { removeUndefinedOrEmptyString } from '../utils';
+import { toObject } from '../utils';
 import { validateAll } from './form/savedSearchFormReducer';
 
 export const FETCH_SAVED_SEARCHES = 'FETCH_SAVED_SEARCHES';
@@ -169,23 +172,6 @@ export const withoutPending = function withoutPending(state) {
     return state.savedSearches.filter((savedSearch) => !state.pending.includes(savedSearch.uuid));
 };
 
-export const toSavedSearchQuery = function toSavedSearchQuery(state) {
-    const query = {
-        q: state.searchBox.q,
-        counties: state.counties.checkedCounties,
-        municipals: state.counties.checkedMunicipals,
-        published: state.published.checkedPublished,
-        engagementType: state.engagement.checkedEngagementType,
-        sector: state.sector.checkedSector,
-        extent: state.extent.checkedExtent,
-        occupationFirstLevels: state.occupations.checkedFirstLevels,
-        occupationSecondLevels: state.occupations.checkedSecondLevels,
-        countries: state.countries.checkedCountries
-    };
-
-    return removeUndefinedOrEmptyString(query);
-};
-
 function* fetchSavedSearches() {
     yield put({ type: FETCH_SAVED_SEARCHES_BEGIN });
     try {
@@ -291,13 +277,12 @@ function* restoreCurrentSavedSearch(action) {
 
 function* setCanSaveSearch() {
     const state = yield select();
-    const queryString = toQueryString(toSavedSearchQuery(state));
-    const canSaveSearch = queryString.length > 0 && queryString !== '?';
+    const canSaveSearch = !isSearchQueryEmpty(toSavedSearchQuery(state.searchQuery));
     yield put({ type: SET_CAN_SAVE_SEARCH, canSaveSearch });
 }
 
 export const savedSearchesSaga = function* saga() {
-    yield takeEvery([SEARCH, INITIAL_SEARCH, RESET_SEARCH, SET_VALUE], setCanSaveSearch);
+    yield takeEvery([SEARCH, INITIAL_SEARCH, RESET_SEARCH, SET_SEARCH_STRING], setCanSaveSearch);
     yield takeEvery(FETCH_USER_SUCCESS, fetchSavedSearches);
     yield takeLatest(REMOVE_SAVED_SEARCH, removeSavedSearch);
     yield takeLatest(UPDATE_SAVED_SEARCH, updateSavedSearch);

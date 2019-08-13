@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Select } from 'nav-frontend-skjema';
 import { SEARCH } from '../searchReducer';
-import { SET_SORTING } from './sortingReducer';
+import { SET_SORTING } from '../searchQueryReducer';
 import './Sorting.less';
 
 class Sorting extends React.Component {
@@ -39,7 +39,7 @@ Sorting.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-    sort: state.sorting.sort
+    sort: state.searchQuery.sort
 });
 
 const mapDispatchToProps = (dispatch) => ({

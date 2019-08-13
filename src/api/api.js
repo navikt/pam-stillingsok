@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import SearchApiError from './SearchApiError';
-import { toQueryString } from '../search/url';
+import { toQueryString } from '../utils';
 import { CONTEXT_PATH } from "../fasitProperties";
 
 /* eslint-disable no-underscore-dangle */
