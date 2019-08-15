@@ -240,6 +240,16 @@ function* addStillingToFavourites() {
 function* addToFavourites(uuid, stilling, callback) {
     if (yield requiresAuthentication(AuthenticationCaller.ADD_FAVORITE, callback)) {
         let state = yield select();
+
+        // Unngå at det legges til duplikate favoritter. Dette kan f.eks skje om bruker ikke var innlogget
+        // da man favorittmarkerte en stilling
+        if (state.favourites.favourites.find((favourite) => favourite.favouriteAd.uuid === uuid)) {
+            yield put({ type: SHOW_FAVOURITES_ALERT_STRIPE, alertStripeMode: 'added' });
+            yield call(delay, 5000);
+            yield put({ type: HIDE_FAVOURITES_ALERT_STRIPE });
+            return;
+        }
+
         if (!state.user.user) {
             yield put({ type: SHOW_TERMS_OF_USE_MODAL });
             yield take([HIDE_TERMS_OF_USE_MODAL, CREATE_USER_SUCCESS]);
