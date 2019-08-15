@@ -1,20 +1,15 @@
-import React from 'react';
+import { AuthStatus, Header, PersonbrukerApplikasjon } from 'pam-frontend-header';
 import PropTypes from 'prop-types';
+import React from 'react';
 import { connect } from 'react-redux';
-import { PersonbrukerApplikasjon, Header, AuthStatus } from 'pam-frontend-header';
-import { LOGIN_URL, LOGOUT_URL } from '../fasitProperties';
-import { authenticationEnum } from '../authentication/authenticationReducer';
-import authenticationRedirectUrl from '../authentication/authenticationRedirectUrl';
+import { authenticationEnum, REDIRECT_TO_LOGIN } from '../authentication/authenticationReducer';
+import { LOGOUT_URL } from '../fasitProperties';
 import { COLLAPSE_ALL_FACET_PANELS, EXPAND_ALL_FACET_PANELS } from '../search/facets/facetPanelsReducer';
 import { isMobile } from '../utils';
 
-const TopMenu = ({ isAuthenticated, collapseAllFacetPanels, expandAllFacetPanels }) => {
+const TopMenu = ({ isAuthenticated, collapseAllFacetPanels, expandAllFacetPanels, redirectToLogin }) => {
     const login = (role) => {
-        if (role === 'personbruker') {
-            window.location.href = `${LOGIN_URL}${authenticationRedirectUrl()}`;
-        } else {
-            window.location.href = `${LOGIN_URL}${window.location.origin}/stillingsregistrering`;
-        }
+        redirectToLogin(role);
     };
 
     const logout = () => {
@@ -60,7 +55,8 @@ const TopMenu = ({ isAuthenticated, collapseAllFacetPanels, expandAllFacetPanels
 TopMenu.propTypes = {
     isAuthenticated: PropTypes.string.isRequired,
     collapseAllFacetPanels: PropTypes.func.isRequired,
-    expandAllFacetPanels: PropTypes.func.isRequired
+    expandAllFacetPanels: PropTypes.func.isRequired,
+    redirectToLogin: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -68,6 +64,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
+    redirectToLogin: (role) => dispatch({ type: REDIRECT_TO_LOGIN, role }),
     collapseAllFacetPanels: () => dispatch({ type: COLLAPSE_ALL_FACET_PANELS }),
     expandAllFacetPanels: () => dispatch({ type: EXPAND_ALL_FACET_PANELS })
 });

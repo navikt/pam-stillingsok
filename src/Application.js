@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { FETCH_IS_AUTHENTICATED } from './authentication/authenticationReducer';
+import { FETCH_IS_AUTHENTICATED, HANDLE_CALLBACK_AFTER_LOGIN } from './authentication/authenticationReducer';
 import NotAuthenticatedModal from './authentication/NotAuthenticatedModal';
 import BackLinkManager from './backLink/BackLinkManager';
 import TopMenu from './topMenu/TopMenu';
@@ -20,6 +20,7 @@ import UserAlertStripe from './user/UserAlertStripe';
 class Application extends React.Component {
     componentDidMount() {
         this.props.fetchIsAuthenticated();
+        this.props.handleCallbackAfterLogin();
     }
 
     render() {
@@ -63,6 +64,7 @@ class Application extends React.Component {
 
 Application.propTypes = {
     fetchIsAuthenticated: PropTypes.func.isRequired,
+    handleCallbackAfterLogin: PropTypes.func.isRequired,
     termsOfUseModalIsVisible: PropTypes.bool.isRequired,
     authenticationRequiredModalIsVisible: PropTypes.bool.isRequired
 };
@@ -73,7 +75,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    fetchIsAuthenticated: () => dispatch({ type: FETCH_IS_AUTHENTICATED })
+    fetchIsAuthenticated: () => dispatch({ type: FETCH_IS_AUTHENTICATED }),
+    handleCallbackAfterLogin: () => dispatch({ type: HANDLE_CALLBACK_AFTER_LOGIN })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Application);

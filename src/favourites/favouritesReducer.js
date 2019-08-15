@@ -1,25 +1,33 @@
 /* eslint-disable no-underscore-dangle */
-import { call, put, select, take, takeLatest, takeEvery } from 'redux-saga/effects';
-import { userApiGet, userApiPost, userApiRemove } from '../api/userApi';
+import { call, put, select, take, takeEvery, takeLatest } from 'redux-saga/effects';
 import SearchApiError from '../api/SearchApiError';
+import { userApiGet, userApiPost, userApiRemove } from '../api/userApi';
 import AuthenticationCaller from '../authentication/AuthenticationCaller';
-import { requiresAuthentication } from '../authentication/authenticationReducer';
-import getWorkLocation from '../common/utils/getWorkLocation';
-import getEmployer from '../common/utils/getEmployer';
 import {
-    FETCH_USER_SUCCESS,
-    CREATE_USER_SUCCESS,
-    SHOW_TERMS_OF_USE_MODAL,
-    HIDE_TERMS_OF_USE_MODAL
-} from '../user/userReducer';
+    authenticationEnum,
+    FETCH_IS_AUTHENTICATED_SUCCESS,
+    requiresAuthentication
+} from '../authentication/authenticationReducer';
+import getEmployer from '../common/utils/getEmployer';
+import getWorkLocation from '../common/utils/getWorkLocation';
 import { AD_USER_API } from '../fasitProperties';
+import { SEARCH_END } from '../search/searchReducer';
+import { FETCH_STILLING_SUCCESS } from '../stilling/stillingReducer';
+import {
+    CREATE_USER_SUCCESS,
+    FETCH_USER_FAILURE_NO_USER,
+    FETCH_USER_SUCCESS,
+    HIDE_TERMS_OF_USE_MODAL,
+    SHOW_TERMS_OF_USE_MODAL
+} from '../user/userReducer';
 
 export const FETCH_FAVOURITES = 'FETCH_FAVOURITES';
 export const FETCH_FAVOURITES_BEGIN = 'FETCH_FAVOURITES_BEGIN';
 export const FETCH_FAVOURITES_SUCCESS = 'FETCH_FAVOURITES_SUCCESS';
 export const FETCH_FAVOURITES_FAILURE = 'FETCH_FAVOURITES_FAILURE';
 
-export const ADD_TO_FAVOURITES = 'ADD_TO_FAVOURITES';
+export const ADD_SEARCH_RESULT_TO_FAVOURITES = 'ADD_SEARCH_RESULT_TO_FAVOURITES';
+export const ADD_STILLING_TO_FAVOURITES = 'ADD_STILLING_TO_FAVOURITES';
 export const ADD_TO_FAVOURITES_BEGIN = 'ADD_TO_FAVOURITES_BEGIN';
 export const ADD_TO_FAVOURITES_SUCCESS = 'ADD_TO_FAVOURITES_SUCCESS';
 export const ADD_TO_FAVOURITES_FAILURE = 'ADD_TO_FAVOURITES_FAILURE';
@@ -35,11 +43,15 @@ export const REMOVE_FROM_FAVOURITES_FAILURE = 'REMOVE_FROM_FAVOURITES_FAILURE';
 export const SHOW_FAVOURITES_ALERT_STRIPE = 'SHOW_FAVOURITES_ALERT_STRIPE';
 export const HIDE_FAVOURITES_ALERT_STRIPE = 'HIDE_FAVOURITES_ALERT_STRIPE';
 
+export const RESTORE_ADD_FAVOURITE_WORKFLOW_AFTER_LOGIN_SEARCH = 'RESTORE_ADD_FAVOURITE_WORKFLOW_AFTER_LOGIN_SEARCH';
+export const RESTORE_ADD_FAVOURITE_WORKFLOW_AFTER_LOGIN_AD = 'RESTORE_ADD_FAVOURITE_WORKFLOW_AFTER_LOGIN_AD';
+
 let delayTimeout;
 
 const initialState = {
     isFetchingFavourites: false,
     favourites: [],
+    hasFetchedInitialFavourites: false,
     confirmationVisible: false,
     favouriteAboutToBeRemoved: undefined,
     showAlertStripe: false,
@@ -72,7 +84,8 @@ export default function favouritesReducer(state = initialState, action) {
                 favourites: action.response.content,
                 adsMarkedAsFavorite: action.response.content.map((favourite) => (favourite.favouriteAd.uuid)),
                 totalElements: action.response.totalElements,
-                isFetchingFavourites: false
+                isFetchingFavourites: false,
+                hasFetchedInitialFavourites: true
             };
         case FETCH_FAVOURITES_FAILURE:
             return {
@@ -194,8 +207,38 @@ function* fetchFavourites() {
     }
 }
 
-function* addToFavourites(action) {
-    if (yield requiresAuthentication(AuthenticationCaller.ADD_FAVORITE)) {
+function* addSearchResultToFavourites(action) {
+    const state = yield select();
+    const foundInSearchResult = state.search.searchResult && state.search.searchResult.stillinger &&
+        state.search.searchResult.stillinger.find((s) => s.uuid === action.uuid);
+    if (foundInSearchResult) {
+        yield call(
+            addToFavourites,
+            foundInSearchResult.uuid,
+            foundInSearchResult,
+            {
+                callbackId: 'add-to-favourite-search',
+                data: action.uuid
+            }
+        )
+    }
+}
+
+function* addStillingToFavourites() {
+    const state = yield select();
+    yield call(
+        addToFavourites,
+        state.stilling.stilling._id,
+        state.stilling.stilling._source,
+        {
+            callbackId: 'add-to-favourite-ad',
+            data: state.stilling.stilling._id
+        }
+    );
+}
+
+function* addToFavourites(uuid, stilling, callback) {
+    if (yield requiresAuthentication(AuthenticationCaller.ADD_FAVORITE, callback)) {
         let state = yield select();
         if (!state.user.user) {
             yield put({ type: SHOW_TERMS_OF_USE_MODAL });
@@ -203,20 +246,10 @@ function* addToFavourites(action) {
         }
         state = yield select();
         if (state.user.user) {
-            let favourite;
-            const foundInSearchResult = state.search.searchResult && state.search.searchResult.stillinger &&
-                state.search.searchResult.stillinger.find((s) => s.uuid === action.uuid);
-
-            if (foundInSearchResult) {
-                favourite = toFavourite(foundInSearchResult.uuid, foundInSearchResult);
-            } else if (state.stilling.stilling._id === action.uuid) {
-                favourite = toFavourite(state.stilling.stilling._id, state.stilling.stilling._source);
-            } else {
-                return;
-            }
+            const favourite = toFavourite(uuid, stilling);
             const adUuid = favourite.favouriteAd.uuid;
             try {
-                yield put({ type: ADD_TO_FAVOURITES_BEGIN, adUuid: action.uuid });
+                yield put({ type: ADD_TO_FAVOURITES_BEGIN, adUuid: uuid });
                 const response = yield call(userApiPost, `${AD_USER_API}/api/v1/userfavouriteads`, favourite);
                 yield put({ type: ADD_TO_FAVOURITES_SUCCESS, response, adUuid });
                 yield put({ type: SHOW_FAVOURITES_ALERT_STRIPE, alertStripeMode: 'added' });
@@ -230,6 +263,56 @@ function* addToFavourites(action) {
                 }
             }
         }
+    }
+}
+
+/**
+ * Hvis brukeren måtte logge inn for å kunne legge til en favoritt, så skal favoritten
+ * bli lagret når man returneres fra login-siden.
+ * @see handleCallbackAfterLogin
+ */
+function* restoreWorkflowAfterLoginSearch(action) {
+    let state = yield select();
+
+    // Sørg først for at alle nødvendige data er lastet og gjennoprettet
+    if (state.authentication.isAuthenticated === authenticationEnum.AUTHENTICATION_PENDING) {
+        yield take(FETCH_IS_AUTHENTICATED_SUCCESS);
+        state = yield select();
+    }
+    if (state.user.user === undefined) {
+        yield take([FETCH_USER_SUCCESS, FETCH_USER_FAILURE_NO_USER]);
+        state = yield select();
+    }
+    if (state.search.initialSearchDone) {
+        yield take(SEARCH_END);
+        state = yield select();
+    }
+    if (state.favourites.hasFetchedInitialFavourites === false) {
+        yield take(FETCH_FAVOURITES_SUCCESS);
+    }
+
+    yield call(addSearchResultToFavourites, { uuid: action.data })
+}
+
+function* restoreWorkflowAfterLoginAd(action) {
+    let state = yield select();
+    if (state.authentication.isAuthenticated === authenticationEnum.AUTHENTICATION_PENDING) {
+        yield take(FETCH_IS_AUTHENTICATED_SUCCESS);
+    }
+    state = yield select();
+    if (state.user.user === undefined) {
+        yield take([FETCH_USER_SUCCESS, FETCH_USER_FAILURE_NO_USER]);
+    }
+    state = yield select();
+    if (state.stilling.stilling === undefined) {
+        yield take(FETCH_STILLING_SUCCESS);
+    }
+    state = yield select();
+    if (state.favourites.hasFetchedInitialFavourites === false) {
+        yield take(FETCH_FAVOURITES_SUCCESS);
+    }
+    if(state.stilling.stilling._id === action.data) {
+        yield call(addStillingToFavourites)
     }
 }
 
@@ -258,6 +341,9 @@ function* removeFromFavourites(action) {
 
 export const favouritesSaga = function* saga() {
     yield takeLatest(FETCH_USER_SUCCESS, fetchFavourites);
-    yield takeEvery(ADD_TO_FAVOURITES, addToFavourites);
+    yield takeEvery(ADD_SEARCH_RESULT_TO_FAVOURITES, addSearchResultToFavourites);
+    yield takeEvery(ADD_STILLING_TO_FAVOURITES, addStillingToFavourites);
     yield takeEvery(REMOVE_FROM_FAVOURITES, removeFromFavourites);
+    yield takeLatest(RESTORE_ADD_FAVOURITE_WORKFLOW_AFTER_LOGIN_SEARCH, restoreWorkflowAfterLoginSearch);
+    yield takeLatest(RESTORE_ADD_FAVOURITE_WORKFLOW_AFTER_LOGIN_AD, restoreWorkflowAfterLoginAd);
 };

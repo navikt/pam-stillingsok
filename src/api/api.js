@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import SearchApiError from './SearchApiError';
-import { toQueryString } from '../utils';
+import { stringifyQueryObject } from '../utils';
 import { CONTEXT_PATH } from "../fasitProperties";
 
 /* eslint-disable no-underscore-dangle */
@@ -34,7 +34,7 @@ function fixStilling(stilling) {
 }
 
 export async function fetchSearch(query = {}) {
-    const queryString = toQueryString(query);
+    const queryString = stringifyQueryObject(query);
     const result = await get(`${CONTEXT_PATH}/api/search${queryString}`);
 
     return {
@@ -85,7 +85,7 @@ export async function fetchSearch(query = {}) {
 }
 
 export async function fetchCategoryAndSearchTagsSuggestions(match, minLength) {
-    const queryString = toQueryString({ match, minLength });
+    const queryString = stringifyQueryObject({ match, minLength });
     const result = await get(`${CONTEXT_PATH}/api/suggestions${queryString}`);
 
     return {

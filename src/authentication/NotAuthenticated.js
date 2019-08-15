@@ -2,13 +2,13 @@ import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Flatknapp, Hovedknapp } from 'pam-frontend-knapper';
-import { LOGIN_URL } from '../fasitProperties';
-import authenticationRedirectUrl from '../authentication/authenticationRedirectUrl';
+import { connect } from 'react-redux';
 import './NotAuthenticated.less';
+import { REDIRECT_TO_LOGIN } from './authenticationReducer';
 
-export default class NotAuthenticated extends React.Component {
+class NotAuthenticated extends React.Component {
     onLoginClick = () => {
-        window.location.href = `${LOGIN_URL}${authenticationRedirectUrl()}`;
+        this.props.redirectToLogin();
     };
 
     render() {
@@ -40,5 +40,15 @@ NotAuthenticated.defaultProps = {
 
 NotAuthenticated.propTypes = {
     title: PropTypes.string,
-    onCancel: PropTypes.func
+    onCancel: PropTypes.func,
+    redirectToLogin: PropTypes.func.isRequired
 };
+
+const mapStateToProps = (state) => ({
+});
+
+const mapDispatchToProps = (dispatch) => ({
+    redirectToLogin: () => dispatch({ type: REDIRECT_TO_LOGIN })
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(NotAuthenticated);

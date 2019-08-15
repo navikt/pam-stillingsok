@@ -44,6 +44,8 @@ spec:
       value: https://arbeidsplassen.nav.no
     - name: PAM_STILLINGSOK_URL
       value: https://arbeidsplassen.nav.no/stillinger
+    - name: PAM_VAR_SIDE_URL
+      value: https://arbeidsplassen.nav.no/stillingsregistrering
 
 
 
