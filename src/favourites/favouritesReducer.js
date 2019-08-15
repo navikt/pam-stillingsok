@@ -283,11 +283,11 @@ function* restoreWorkflowAfterLoginSearch(action) {
         yield take([FETCH_USER_SUCCESS, FETCH_USER_FAILURE_NO_USER]);
         state = yield select();
     }
-    if (state.search.initialSearchDone) {
+    if (!state.search.initialSearchDone) {
         yield take(SEARCH_END);
         state = yield select();
     }
-    if (state.favourites.hasFetchedInitialFavourites === false) {
+    if (state.user.user !== undefined && state.favourites.hasFetchedInitialFavourites === false) {
         yield take(FETCH_FAVOURITES_SUCCESS);
     }
 
