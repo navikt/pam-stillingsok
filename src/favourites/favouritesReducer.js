@@ -241,9 +241,9 @@ function* addToFavourites(uuid, stilling, callback) {
     if (yield requiresAuthentication(AuthenticationCaller.ADD_FAVORITE, callback)) {
         let state = yield select();
 
-        // Unngå å legge til duplikate favoritter. Dette kan f.eks skje hvis brukeren ikke var innlogget
-        // da man favorittmarkerte en stilling, og at samme stilling viser seg å allerede være en favoritt
-        // når man logger inn.
+        // Unngå å legge til duplikate favoritter.
+        // Dette kan f.eks skje hvis brukeren ikke var innlogget da man favorittmarkerte
+        // en stilling, og at samme stilling viser seg å allerede være en favoritt når man logger inn.
         if (state.favourites.favourites.find((favourite) => favourite.favouriteAd.uuid === uuid)) {
             yield put({ type: SHOW_FAVOURITES_ALERT_STRIPE, alertStripeMode: 'added' });
             yield call(delay, 5000);
@@ -251,11 +251,13 @@ function* addToFavourites(uuid, stilling, callback) {
             return;
         }
 
+        // Hvis man ikke har opprettet en bruker, så må dette bli gjort først
         if (!state.user.user) {
             yield put({ type: SHOW_TERMS_OF_USE_MODAL });
             yield take([HIDE_TERMS_OF_USE_MODAL, CREATE_USER_SUCCESS]);
+            state = yield select();
         }
-        state = yield select();
+
         if (state.user.user) {
             const favourite = toFavourite(uuid, stilling);
             const adUuid = favourite.favouriteAd.uuid;
