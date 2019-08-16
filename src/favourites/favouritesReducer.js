@@ -43,8 +43,7 @@ export const REMOVE_FROM_FAVOURITES_FAILURE = 'REMOVE_FROM_FAVOURITES_FAILURE';
 export const SHOW_FAVOURITES_ALERT_STRIPE = 'SHOW_FAVOURITES_ALERT_STRIPE';
 export const HIDE_FAVOURITES_ALERT_STRIPE = 'HIDE_FAVOURITES_ALERT_STRIPE';
 
-export const RESTORE_ADD_FAVOURITE_WORKFLOW_AFTER_LOGIN_SEARCH = 'RESTORE_ADD_FAVOURITE_WORKFLOW_AFTER_LOGIN_SEARCH';
-export const RESTORE_ADD_FAVOURITE_WORKFLOW_AFTER_LOGIN_AD = 'RESTORE_ADD_FAVOURITE_WORKFLOW_AFTER_LOGIN_AD';
+export const RESTORE_ADD_FAVOURITE_WORKFLOW_AFTER_LOGIN = 'RESTORE_ADD_FAVOURITE_WORKFLOW_AFTER_LOGIN';
 
 let delayTimeout;
 
@@ -284,7 +283,7 @@ function* addToFavourites(uuid, stilling, callback) {
  * bli lagret når man returneres fra login-siden.
  * @see handleCallbackAfterLogin
  */
-function* restoreWorkflowAfterLoginSearch(action) {
+function* restoreWorkflowAfterLogin(action) {
     let state = yield select();
 
     // Sørg først for at alle nødvendige data er lastet og gjennoprettet
@@ -296,36 +295,24 @@ function* restoreWorkflowAfterLoginSearch(action) {
         yield take([FETCH_USER_SUCCESS, FETCH_USER_FAILURE_NO_USER]);
         state = yield select();
     }
-    if (!state.search.initialSearchDone) {
-        yield take(SEARCH_END);
-        state = yield select();
-    }
     if (state.user.user !== undefined && state.favourites.hasFetchedInitialFavourites === false) {
         yield take(FETCH_FAVOURITES_SUCCESS);
+        state = yield select();
     }
 
-    yield call(addSearchResultToFavourites, { uuid: action.data })
-}
-
-function* restoreWorkflowAfterLoginAd(action) {
-    let state = yield select();
-    if (state.authentication.isAuthenticated === authenticationEnum.AUTHENTICATION_PENDING) {
-        yield take(FETCH_IS_AUTHENTICATED_SUCCESS);
-    }
-    state = yield select();
-    if (state.user.user === undefined) {
-        yield take([FETCH_USER_SUCCESS, FETCH_USER_FAILURE_NO_USER]);
-    }
-    state = yield select();
-    if (state.stilling.stilling === undefined) {
-        yield take(FETCH_STILLING_SUCCESS);
-    }
-    state = yield select();
-    if (state.favourites.hasFetchedInitialFavourites === false) {
-        yield take(FETCH_FAVOURITES_SUCCESS);
-    }
-    if(state.stilling.stilling._id === action.data) {
-        yield call(addStillingToFavourites)
+    if (action.source === 'search') {
+        if (!state.search.initialSearchDone) {
+            yield take(SEARCH_END);
+        }
+        yield call(addSearchResultToFavourites, { uuid: action.data })
+    } else {
+        if (state.stilling.stilling === undefined) {
+            yield take(FETCH_STILLING_SUCCESS);
+            state = yield select();
+        }
+        if (state.stilling.stilling._id === action.data) {
+            yield call(addStillingToFavourites)
+        }
     }
 }
 
@@ -357,6 +344,5 @@ export const favouritesSaga = function* saga() {
     yield takeEvery(ADD_SEARCH_RESULT_TO_FAVOURITES, addSearchResultToFavourites);
     yield takeEvery(ADD_STILLING_TO_FAVOURITES, addStillingToFavourites);
     yield takeEvery(REMOVE_FROM_FAVOURITES, removeFromFavourites);
-    yield takeLatest(RESTORE_ADD_FAVOURITE_WORKFLOW_AFTER_LOGIN_SEARCH, restoreWorkflowAfterLoginSearch);
-    yield takeLatest(RESTORE_ADD_FAVOURITE_WORKFLOW_AFTER_LOGIN_AD, restoreWorkflowAfterLoginAd);
+    yield takeLatest(RESTORE_ADD_FAVOURITE_WORKFLOW_AFTER_LOGIN, restoreWorkflowAfterLogin);
 };
