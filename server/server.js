@@ -35,6 +35,7 @@ server.use(helmet.contentSecurityPolicy({
 server.use(bodyParser.json());
 
 const fasitProperties = {
+    PAM_CONTEXT_PATH: '/stillinger',
     PAM_AD_USER_API: `${process.env.PAMADUSER_URL}/aduser`,
     LOGIN_URL: process.env.LOGINSERVICE_URL,
     LOGOUT_URL: process.env.LOGOUTSERVICE_URL,
@@ -43,6 +44,7 @@ const fasitProperties = {
 
 const writeEnvironmentVariablesToFile = () => {
     const fileContent = `window.__PAM_STILLINGSOK_URL__="${fasitProperties.PAM_STILLINGSOK_URL}";\n`
+        + `window.__PAM_CONTEXT_PATH__="${fasitProperties.PAM_CONTEXT_PATH}";\n`
         + `window.__PAM_AD_USER_API__="${fasitProperties.PAM_AD_USER_API}";\n`
         + `window.__LOGIN_URL__="${fasitProperties.LOGIN_URL}";\n`
         + `window.__LOGOUT_URL__="${fasitProperties.LOGOUT_URL}";\n`;
