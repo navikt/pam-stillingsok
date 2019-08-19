@@ -79,7 +79,7 @@
     "request-promise": "^4.2.4",
     "snyk": "^1.190.0"
   },
-  "snyk": true,
+  "snyk": false,
   "eslintConfig": {
     "extends": "react-app"
   },
