@@ -77,9 +77,9 @@
     "redux-saga": "^0.16.2",
     "request": "^2.88.0",
     "request-promise": "^4.2.4",
-    "snyk": "^1.190.0"
+    "snyk": "^1.217.1"
   },
-  "snyk": false,
+  "snyk": true,
   "eslintConfig": {
     "extends": "react-app"
   },
