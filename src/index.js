@@ -29,7 +29,6 @@ import facetPanelsReducer from './search/facets/facetPanelsReducer';
 import searchBoxReducer, { searchBoxSaga } from './search/searchBox/searchBoxReducer';
 import searchReducer, { saga } from './search/searchReducer';
 import stillingReducer, { stillingSaga } from './stilling/stillingReducer';
-import * as serviceWorker from './serviceWorker';
 import './styles.less';
 import './variables.less';
 
@@ -74,8 +73,3 @@ ReactDOM.render(
     </Provider>,
     document.getElementById('app')
 );
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
