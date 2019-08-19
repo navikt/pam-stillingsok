@@ -49,7 +49,7 @@ const writeEnvironmentVariablesToFile = () => {
         + `window.__LOGIN_URL__="${fasitProperties.LOGIN_URL}";\n`
         + `window.__LOGOUT_URL__="${fasitProperties.LOGOUT_URL}";\n`;
 
-    fs.writeFile(path.resolve(rootDirectory, 'build/static/js/env.js'), fileContent, (err) => {
+    fs.writeFile(path.resolve(rootDirectory, 'build/env.js'), fileContent, (err) => {
         if (err) throw err;
     });
 };
