@@ -1,3 +1,6 @@
+## RELEASE - 0.121.798-59a670b
+#### New in this release: 
++ 2019-08-05 [PAM-3358] Vis link tilbake til Favoritter, når bruker har åpnet en stilling derfra
 ## RELEASE - 0.120.793-13635f0
 #### New in this release: 
 + 2019-07-05 [Fix] Sørger for at alle linker som går tilbake til Ledige stillinger inneholder CONTEXT_PATH
