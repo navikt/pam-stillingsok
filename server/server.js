@@ -1,8 +1,6 @@
 const express = require('express');
 const helmet = require('helmet');
 const path = require('path');
-const mustacheExpress = require('mustache-express');
-const Promise = require('promise');
 const fs = require('fs');
 const prometheus = require('prom-client');
 const bodyParser = require('body-parser');
@@ -34,10 +32,6 @@ server.use(helmet.contentSecurityPolicy({
     }
 }));
 
-server.set('views', `${rootDirectory}views`);
-server.set('view engine', 'mustache');
-server.engine('html', mustacheExpress());
-
 server.use(bodyParser.json());
 
 const fasitProperties = {
@@ -55,39 +49,24 @@ const writeEnvironmentVariablesToFile = () => {
         + `window.__LOGIN_URL__="${fasitProperties.LOGIN_URL}";\n`
         + `window.__LOGOUT_URL__="${fasitProperties.LOGOUT_URL}";\n`;
 
-    fs.writeFile(path.resolve(rootDirectory, 'dist/js/env.js'), fileContent, (err) => {
+    fs.writeFile(path.resolve(rootDirectory, 'build/static/js/env.js'), fileContent, (err) => {
         if (err) throw err;
     });
 };
-const renderSok = (htmlPages) => (
-    new Promise((resolve, reject) => {
-        server.render(
-            'index.html',
-            (err, html) => {
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve(Object.assign({ sok: html }, htmlPages));
-                }
-            }
-        );
-    })
-);
 
-const startServer = (htmlPages) => {
+const startServer = () => {
     writeEnvironmentVariablesToFile();
 
-    server.use(`${fasitProperties.PAM_CONTEXT_PATH}/js`,
-        express.static(path.resolve(rootDirectory, 'dist/js'))
+    server.use(`${fasitProperties.PAM_CONTEXT_PATH}`,
+        express.static(path.resolve(rootDirectory, 'build'))
     );
 
-    server.use(`${fasitProperties.PAM_CONTEXT_PATH}/css`,
-        express.static(path.resolve(rootDirectory, 'dist/css'))
+    server.use(`${fasitProperties.PAM_CONTEXT_PATH}/static/js`,
+        express.static(path.resolve(rootDirectory, 'build/static/js'))
     );
 
-    server.use(
-        `${fasitProperties.PAM_CONTEXT_PATH}/images`,
-        express.static(path.resolve(rootDirectory, 'images'))
+    server.use(`${fasitProperties.PAM_CONTEXT_PATH}/static/css`,
+        express.static(path.resolve(rootDirectory, 'build/static/css'))
     );
 
     server.get(`${fasitProperties.PAM_CONTEXT_PATH}/api/search`, async (req, res) => {
@@ -147,7 +126,7 @@ const startServer = (htmlPages) => {
     server.get(
         ['/stillinger/?', /^\/stillinger\/(?!.*dist).*$/],
         (req, res) => {
-            res.send(htmlPages.sok);
+            res.sendFile(path.resolve(rootDirectory, 'build/index.html'));
         }
     );
 
@@ -164,5 +143,4 @@ const startServer = (htmlPages) => {
     });
 };
 
-renderSok({})
-    .then(startServer, (error) => console.error('Failed to render app', error));
+startServer();
