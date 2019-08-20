@@ -414,6 +414,7 @@ exports.searchTemplate = (query) => {
                 'locationList',
                 'title',
                 'published',
+                'expires',
                 'uuid',
                 'status'
             ]
