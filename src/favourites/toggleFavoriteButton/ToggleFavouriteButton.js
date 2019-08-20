@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Flatknapp } from 'pam-frontend-knapper';
-import { ADD_TO_FAVOURITES, REMOVE_FROM_FAVOURITES } from '../favouritesReducer';
+import { ADD_STILLING_TO_FAVOURITES, REMOVE_FROM_FAVOURITES } from '../favouritesReducer';
 import './ToggleFavouriteButton.less';
 
 class ToggleFavouriteButton extends React.Component {
@@ -80,7 +80,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    addToFavourites: (uuid) => dispatch({ type: ADD_TO_FAVOURITES, uuid }),
+    addToFavourites: (uuid) => dispatch({ type: ADD_STILLING_TO_FAVOURITES, uuid }),
     removeFromFavourites: (uuid) => dispatch({ type: REMOVE_FROM_FAVOURITES, uuid })
 });
 
