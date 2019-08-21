@@ -1,3 +1,6 @@
+const getEmployer = require('../src/common/utils/getEmployer');
+const getWorkLocation = require('../src/common/utils/getWorkLocation');
+
 const express = require('express');
 const helmet = require('helmet');
 const path = require('path');
@@ -35,7 +38,7 @@ server.use(helmet.contentSecurityPolicy({
 }));
 
 server.set('views', `${rootDirectory}views`);
-server.set('view engine', 'mustache');
+server.set('view engine', 'html');
 server.engine('html', mustacheExpress());
 
 server.use(bodyParser.json());
@@ -63,6 +66,10 @@ const renderSok = (htmlPages) => (
     new Promise((resolve, reject) => {
         server.render(
             'index.html',
+            {
+                title: 'Ledige stillinger - Arbeidsplassen',
+                description: 'Søk etter ledige stillinger. Heltid- og deltidsjobber i offentlig og privat sektor i Oslo, Bergen, Trondheim, Stavanger, Tromsø og alle kommuner i Norge'
+            },
             (err, html) => {
                 if (err) {
                     reject(err);
@@ -143,6 +150,60 @@ const startServer = (htmlPages) => {
         var url = req.url.replace("/pam-stillingsok", `${fasitProperties.PAM_CONTEXT_PATH}`);
         res.redirect(`${url}`)
     })
+
+    server.get(
+        ['/stillinger/stilling/:uuid'],
+        (req, res) => {
+            searchApiConsumer.fetchStilling(req.params.uuid)
+                .catch((err) => {
+                    res.send(htmlPages.sok);
+                })
+                .then((data) => {
+                    try {
+                        // Lager meta description content
+                        // f.eks "Brukerstyrt personlig assistent, Firmaet AS, Drammen. Søknadsfrist: Snarest"
+                        if (data._source && data._source.title && data._source.properties) {
+                            const descriptionFragments = [];
+                            const employer = getEmployer(data._source);
+                            const location = getWorkLocation(data._source.properties.location, data._source.locationList);
+
+                            const commaSeparatedFragments = [];
+                            if (data._source.properties.jobtitle && data._source.title !== data._source.properties.jobtitle) {
+                                commaSeparatedFragments.push(data._source.properties.jobtitle)
+                            }
+                            if (employer) {
+                                commaSeparatedFragments.push(employer)
+                            }
+                            if (data._source.properties.location) {
+                                commaSeparatedFragments.push(location)
+                            }
+
+                            if (commaSeparatedFragments.length > 0) {
+                                descriptionFragments.push(commaSeparatedFragments.join(', '));
+                            }
+
+                            if (data._source.properties.applicationdue) {
+                                descriptionFragments.push(`Søknadsfrist: ${data._source.properties.applicationdue}`)
+                            }
+
+                            res.render('index', {
+                                title: data._source.title,
+                                description: descriptionFragments.join('. ')
+                            })
+                        } else if (data._source && data._source.title) {
+                            res.render('index', {
+                                title: data._source.title,
+                                description: ''
+                            })
+                        } else {
+                            res.send(htmlPages.sok);
+                        }
+                    } catch (err) {
+                        res.send(htmlPages.sok);
+                    }
+                });
+        }
+    );
 
     server.get(
         ['/stillinger/?', /^\/stillinger\/(?!.*dist).*$/],

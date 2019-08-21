@@ -1,6 +1,6 @@
-import capitalizeLocation from './capitalizeLocation';
+const capitalizeLocation = require('./capitalizeLocation');
 
-export default function getWorkLocation(propertyLocation, locationList, hidePostAddress = true) {
+function getWorkLocation(propertyLocation, locationList, hidePostAddress = true) {
     if (propertyLocation) {
         return propertyLocation;
     }
@@ -28,3 +28,5 @@ export default function getWorkLocation(propertyLocation, locationList, hidePost
 
     return workLocations.join(', ');
 }
+
+module.exports = getWorkLocation;
