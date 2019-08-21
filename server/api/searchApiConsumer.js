@@ -83,7 +83,6 @@ exports.fetchStilling = async (uuid) => {
         'properties.occupation',
         'properties.searchtags',
         'properties.sourceupdated',
-        'published',
         'updatedBy',
         'uuid'
     ].join(',');
