@@ -10,7 +10,7 @@ import getWorkLocation from '../common/utils/getWorkLocation';
 import { CONTEXT_PATH } from '../fasitProperties';
 import FavouriteAlertStripe from '../favourites/alertstripe/FavouriteAlertStripe';
 import ToggleFavouriteButton from '../favourites/toggleFavoriteButton/ToggleFavouriteButton';
-import { toObject } from '../utils';
+import { parseQueryString } from '../utils';
 import AdDetails from './adDetails/AdDetails';
 import AdText from './adText/AdText';
 import AdTitle from './adTitle/AdTitle';
@@ -43,7 +43,7 @@ const Stilling = ({
     useEffect(() => {
         let uuid = match.params.uuid;
         if (!uuid) {
-            uuid = toObject(document.location.search).uuid;
+            uuid = parseQueryString(document.location.search).uuid;
             if (uuid) {
                 window.history.replaceState({}, '', `${CONTEXT_PATH}/stilling/${uuid}`);
                 getStilling(uuid);

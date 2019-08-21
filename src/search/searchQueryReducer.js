@@ -6,9 +6,9 @@ import {
     RESTORE_STATE_FROM_SAVED_SEARCH,
     SET_CURRENT_SAVED_SEARCH
 } from '../savedSearches/savedSearchesReducer';
+import { decodeUrl, parseQueryString, stringifyQueryObject } from '../utils';
 import { PublishedLabelsEnum } from './facets/Published';
 import { LOAD_MORE, PAGE_SIZE, RESET_SEARCH, SEARCH } from './searchReducer';
-import { toObject, toQueryString } from '../utils';
 
 
 const LATEST_QUERY_STRING_KEY = 'latestQueryString';
@@ -50,7 +50,8 @@ const initialState = {
     occupationSecondLevels: [],
     published: undefined,
     sector: [],
-    sort: ''
+    sort: '',
+    saved: undefined
 };
 
 /**
@@ -61,7 +62,6 @@ export default function searchQueryReducer(state = initialState, action) {
         case RESET_SEARCH:
             return initialState;
         case RESTORE_STATE_FROM_URL:
-        case RESTORE_STATE_FROM_SAVED_SEARCH:
             return {
                 ...state,
                 from: 0,
@@ -76,7 +76,26 @@ export default function searchQueryReducer(state = initialState, action) {
                 occupationSecondLevels: action.query.occupationSecondLevels || [],
                 published: action.query.published,
                 sector: action.query.sector || [],
-                sort: action.query.sort || ''
+                sort: action.query.sort || '',
+                saved: action.query.saved
+            };
+        case RESTORE_STATE_FROM_SAVED_SEARCH:
+            return {
+                ...state,
+                from: 0,
+                to: PAGE_SIZE,
+                q: action.query.q || '',
+                counties: action.query.counties || [],
+                countries: action.query.countries || [],
+                engagementType: action.query.engagementType || [],
+                extent: action.query.extent || [],
+                municipals: action.query.municipals || [],
+                occupationFirstLevels: action.query.occupationFirstLevels || [],
+                occupationSecondLevels: action.query.occupationSecondLevels || [],
+                published: action.query.published,
+                sector: action.query.sector || [],
+                sort: '',
+                saved: state.saved
             };
         case RESET_PAGINATION:
             return {
@@ -187,6 +206,18 @@ export default function searchQueryReducer(state = initialState, action) {
                 from: state.to,
                 to: state.to + PAGE_SIZE
             };
+        case SET_CURRENT_SAVED_SEARCH: {
+            return {
+                ...state,
+                saved: action.savedSearch.uuid
+            };
+        }
+        case ADD_SAVED_SEARCH_SUCCESS: {
+            return {
+                ...state,
+                saved: action.response.uuid
+            };
+        }
         default:
             return state;
     }
@@ -216,7 +247,7 @@ function removeEmptyProperties(obj) {
  * Returnerer searchQuery optimimalisert for browser url'en
  * @param searchQuery
  */
-export function toBrowserSearchQuery(searchQuery, currentSavedSearch) {
+export function toBrowserSearchQuery(searchQuery) {
     const browserSearchQuery = {
         ...searchQuery
     };
@@ -228,11 +259,6 @@ export function toBrowserSearchQuery(searchQuery, currentSavedSearch) {
     }
 
     delete browserSearchQuery.from;
-
-    if (currentSavedSearch) {
-        browserSearchQuery.saved = currentSavedSearch.uuid;
-    }
-
     return removeEmptyProperties(browserSearchQuery);
 }
 
@@ -250,6 +276,7 @@ export function toApiSearchQuery(searchQuery) {
     }
 
     delete apiSearchQuery.to;
+    delete apiSearchQuery.saved;
 
     return removeEmptyProperties(apiSearchQuery);
 }
@@ -267,6 +294,8 @@ export function toSavedSearchQuery(searchQuery) {
     delete savedSearchQuery.to;
     delete savedSearchQuery.from;
     delete savedSearchQuery.sort;
+
+    delete savedSearchQuery.saved;
 
     return removeEmptyProperties(savedSearchQuery);
 }
@@ -339,8 +368,7 @@ export function getLastSearchQueryFromSessionStorage() {
  */
 function* synchronizeBrowserUrl() {
     const state = yield select();
-    const browserSearchQuery = toQueryString(toBrowserSearchQuery(state.searchQuery, state.savedSearches.currentSavedSearch));
-
+    const browserSearchQuery = stringifyQueryObject(toBrowserSearchQuery(state.searchQuery));
     window.history.replaceState({}, '', CONTEXT_PATH + browserSearchQuery);
     sessionStorage.setItem(LATEST_QUERY_STRING_KEY, browserSearchQuery);
 }
@@ -349,20 +377,13 @@ function* synchronizeBrowserUrl() {
  * Hvis bruker åpner en lenke med søkeparametere eller bare refresher browseren, så skal dette søket gjenskapes.
  */
 function* restoreStateFromBrowserUrl() {
-    let url = document.location.search;
+    const decodedUrl = decodeUrl(document.location.search);
 
-    // Dekoder en url til den ikke lenger er kodet.
-    // En kodet url er i dette tilfellet en url som inneholder '%'.
-    let decodedUrl = url;
-    while (decodedUrl.includes('%')) {
-        decodedUrl = decodeURIComponent(decodedUrl);
-    }
-
-    yield put({ type: RESTORE_STATE_FROM_URL, query: toObject(decodedUrl) });
+    yield put({ type: RESTORE_STATE_FROM_URL, query: parseQueryString(decodedUrl) });
 
     // Lagre det gjennopprettede søket i session storage
     const state = yield select();
-    const browserSearchQuery = toQueryString(toBrowserSearchQuery(state.searchQuery, state.savedSearches.currentSavedSearch));
+    const browserSearchQuery = stringifyQueryObject(toBrowserSearchQuery(state.searchQuery));
 
     sessionStorage.setItem(LATEST_QUERY_STRING_KEY, browserSearchQuery);
 }
@@ -371,6 +392,7 @@ export const searchQuerySaga = function* saga() {
     yield takeLatest([
         SEARCH,
         RESET_SEARCH,
+        RESTORE_STATE_FROM_SAVED_SEARCH,
         SET_CURRENT_SAVED_SEARCH,
         ADD_SAVED_SEARCH_SUCCESS,
         LOAD_MORE

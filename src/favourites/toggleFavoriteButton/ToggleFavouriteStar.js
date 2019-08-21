@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { ADD_TO_FAVOURITES, REMOVE_FROM_FAVOURITES } from '../favouritesReducer';
+import { ADD_SEARCH_RESULT_TO_FAVOURITES, REMOVE_FROM_FAVOURITES } from '../favouritesReducer';
 import './ToggleFavouriteStar.less';
 
 class ToggleFavouriteStar extends React.Component {
@@ -76,7 +76,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    addToFavourites: (uuid) => dispatch({ type: ADD_TO_FAVOURITES, uuid }),
+    addToFavourites: (uuid) => dispatch({ type: ADD_SEARCH_RESULT_TO_FAVOURITES, uuid }),
     removeFromFavourites: (uuid) => dispatch({ type: REMOVE_FROM_FAVOURITES, uuid })
 });
 

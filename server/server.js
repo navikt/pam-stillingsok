@@ -45,7 +45,8 @@ const fasitProperties = {
     PAM_AD_USER_API: `${process.env.PAMADUSER_URL}/aduser`,
     LOGIN_URL: process.env.LOGINSERVICE_URL,
     LOGOUT_URL: process.env.LOGOUTSERVICE_URL,
-    PAM_STILLINGSOK_URL: process.env.PAM_STILLINGSOK_URL
+    PAM_STILLINGSOK_URL: process.env.PAM_STILLINGSOK_URL,
+    PAM_VAR_SIDE_URL: process.env.PAM_VAR_SIDE_URL
 };
 
 const writeEnvironmentVariablesToFile = () => {
@@ -53,7 +54,8 @@ const writeEnvironmentVariablesToFile = () => {
         + `window.__PAM_CONTEXT_PATH__="${fasitProperties.PAM_CONTEXT_PATH}";\n`
         + `window.__PAM_AD_USER_API__="${fasitProperties.PAM_AD_USER_API}";\n`
         + `window.__LOGIN_URL__="${fasitProperties.LOGIN_URL}";\n`
-        + `window.__LOGOUT_URL__="${fasitProperties.LOGOUT_URL}";\n`;
+        + `window.__LOGOUT_URL__="${fasitProperties.LOGOUT_URL}";\n`
+        + `window.__PAM_VAR_SIDE_URL__="${fasitProperties.PAM_VAR_SIDE_URL}";\n`;
 
     fs.writeFile(path.resolve(rootDirectory, 'dist/js/env.js'), fileContent, (err) => {
         if (err) throw err;
