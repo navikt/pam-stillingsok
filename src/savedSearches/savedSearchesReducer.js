@@ -1,6 +1,7 @@
 import { call, put, select, take, takeEvery, takeLatest } from 'redux-saga/effects';
 import SearchApiError from '../api/SearchApiError';
 import { userApiGet, userApiPost, userApiPut, userApiRemove } from '../api/userApi';
+import { authenticationEnum, FETCH_IS_AUTHENTICATED_SUCCESS } from '../authentication/authenticationReducer';
 import { AD_USER_API } from '../fasitProperties';
 import {
     isSearchQueryEmpty,
@@ -8,10 +9,10 @@ import {
     SET_SEARCH_STRING,
     toSavedSearchQuery
 } from '../search/searchQueryReducer';
-import { INITIAL_SEARCH, RESET_SEARCH, SEARCH } from '../search/searchReducer';
-import { FETCH_USER_SUCCESS } from '../user/userReducer';
-import { toObject } from '../utils';
-import { validateAll } from './form/savedSearchFormReducer';
+import { INITIAL_SEARCH, RESET_SEARCH, SEARCH, SEARCH_SUCCESS } from '../search/searchReducer';
+import { FETCH_USER_FAILURE_NO_USER, FETCH_USER_SUCCESS } from '../user/userReducer';
+import { parseQueryString } from '../utils';
+import { SavedSearchFormMode, SHOW_SAVED_SEARCH_FORM, validateAll } from './form/savedSearchFormReducer';
 
 export const FETCH_SAVED_SEARCHES = 'FETCH_SAVED_SEARCHES';
 export const FETCH_SAVED_SEARCHES_BEGIN = 'FETCH_SAVED_SEARCHES_BEGIN';
@@ -38,7 +39,9 @@ export const UPDATE_SAVED_SEARCH_FAILURE = 'UPDATE_SAVED_SEARCH_FAILURE';
 export const SET_CURRENT_SAVED_SEARCH = 'SET_CURRENT_SAVED_SEARCH';
 export const RESTORE_STATE_FROM_SAVED_SEARCH = 'RESTORE_STATE_FROM_SAVED_SEARCH';
 export const RESTORE_CURRENT_SAVED_SEARCH = 'RESTORE_CURRENT_SAVED_SEARCH';
+export const RESTORE_CURRENT_SAVED_SEARCH_DONE = 'RESTORE_CURRENT_SAVED_SEARCH_DONE';
 export const SET_CAN_SAVE_SEARCH = 'SET_CAN_SAVE_SEARCH';
+export const RESTORE_SAVED_SEARCH_WORKFLOW_AFTER_LOGIN = 'RESTORE_SAVED_SEARCH_WORKFLOW_AFTER_LOGIN';
 
 const initialState = {
     savedSearches: [],
@@ -251,7 +254,7 @@ function* setCurrentSavedSearch() {
     const state = yield select();
     yield put({
         type: RESTORE_STATE_FROM_SAVED_SEARCH,
-        query: toObject(state.savedSearches.currentSavedSearch.searchQuery)
+        query: parseQueryString(state.savedSearches.currentSavedSearch.searchQuery)
     });
     if (state.search.initialSearchDone) {
         yield put({ type: SEARCH });
@@ -273,6 +276,36 @@ function* restoreCurrentSavedSearch(action) {
             yield put({ type: RESTORE_CURRENT_SAVED_SEARCH, savedSearch: found });
         }
     }
+    yield put({ type: RESTORE_CURRENT_SAVED_SEARCH_DONE });
+}
+
+/**
+ * Hvis brukeren måtte logge inn for å kunne lagre et søk, så skal man igjen se
+ * modalen for å lagre søk når man returneres fra login-siden.
+ * @see handleCallbackAfterLogin
+ */
+function* restoreWorkflowAfterLogin() {
+    let state = yield select();
+
+    // Sørg først for at alle nødvendige data er lastet og gjennoprettet
+    if (state.authentication.isAuthenticated === authenticationEnum.AUTHENTICATION_PENDING) {
+        yield take(FETCH_IS_AUTHENTICATED_SUCCESS);
+        state = yield select();
+    }
+    if (state.user.user === undefined) {
+        yield take([FETCH_USER_SUCCESS, FETCH_USER_FAILURE_NO_USER]);
+        state = yield select();
+    }
+    if (state.searchQuery.saved && state.savedSearches.shouldFetch) {
+        yield take(RESTORE_CURRENT_SAVED_SEARCH_DONE);
+        state = yield select();
+    }
+
+    yield put({
+        type: SHOW_SAVED_SEARCH_FORM,
+        formMode: state.savedSearches.currentSavedSearch ? SavedSearchFormMode.REPLACE : SavedSearchFormMode.ADD,
+        showAddOrReplace: state.savedSearches.currentSavedSearch !== undefined
+    });
 }
 
 function* setCanSaveSearch() {
@@ -288,5 +321,6 @@ export const savedSearchesSaga = function* saga() {
     yield takeLatest(UPDATE_SAVED_SEARCH, updateSavedSearch);
     yield takeLatest(ADD_SAVED_SEARCH, addSavedSearch);
     yield takeLatest(RESTORE_STATE_FROM_URL, restoreCurrentSavedSearch);
+    yield takeLatest(RESTORE_SAVED_SEARCH_WORKFLOW_AFTER_LOGIN, restoreWorkflowAfterLogin);
     yield takeLatest(SET_CURRENT_SAVED_SEARCH, setCurrentSavedSearch);
 };

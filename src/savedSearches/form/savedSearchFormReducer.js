@@ -2,7 +2,7 @@ import { put, select, take, takeLatest } from 'redux-saga/es/effects';
 import { requiresAuthentication } from '../../authentication/authenticationReducer';
 import AuthenticationCaller from '../../authentication/AuthenticationCaller';
 import { toReadableSearchQuery, toSavedSearchQuery } from '../../search/searchQueryReducer';
-import { toQueryString } from '../../utils';
+import { stringifyQueryObject } from '../../utils';
 import NotifyTypeEnum from '../enums/NotifyTypeEnum';
 import SavedSearchStatusEnum from '../enums/SavedSearchStatusEnum';
 import {
@@ -205,7 +205,7 @@ function* setDefaultFormData(action) {
             type: SET_FORM_DATA,
             formData: {
                 title: toTitle(state),
-                searchQuery: toQueryString(toSavedSearchQuery(state.searchQuery)),
+                searchQuery: stringifyQueryObject(toSavedSearchQuery(state.searchQuery)),
                 notifyType: NotifyTypeEnum.NONE,
                 status: SavedSearchStatusEnum.INACTIVE
             }
@@ -220,7 +220,7 @@ function* setDefaultFormData(action) {
             type: SET_FORM_DATA,
             formData: {
                 ...state.savedSearches.currentSavedSearch,
-                searchQuery: toQueryString(toSavedSearchQuery(state.searchQuery))
+                searchQuery: stringifyQueryObject(toSavedSearchQuery(state.searchQuery))
             }
         });
     }
@@ -230,7 +230,7 @@ function* setDefaultFormData(action) {
 }
 
 function* showSavedSearchForm(action) {
-    if (yield requiresAuthentication(AuthenticationCaller.SAVE_SEARCH)) {
+    if (yield requiresAuthentication(AuthenticationCaller.SAVE_SEARCH, { callbackId: 'save-search' })) {
         let state = yield select();
         if (!state.user.user) {
             yield put({ type: SHOW_TERMS_OF_USE_MODAL });

@@ -62,13 +62,12 @@ export const isMobile = () => window.matchMedia('(max-width: 991px)').matches;
  * @param queryString   Query-stringen som skal parseres til et objekt.
  * @returns {Object}    En Object-representasjon av 'queryString'.
  */
-export function toObject(queryString = '?') {
+export function parseQueryString(queryString = '?') {
     const parameters = queryString.substring(1).split('&');
     const object = {};
-
     parameters.forEach((parameter) => {
         const pair = parameter.split('=');
-        if (pair[0] !== undefined || pair[0] !== '') {
+        if (pair[0] !== undefined && pair[0] !== '') {
             let key = decodeURIComponent(pair[0]);
             const val = pair[1] !== undefined ? decodeURIComponent(pair[1]) : '';
 
@@ -85,7 +84,6 @@ export function toObject(queryString = '?') {
             }
         }
     });
-
     return object;
 }
 
@@ -99,7 +97,7 @@ function arrayToQueryString(key, array) {
  * @param object        Objekt som skal gjøres om til en query-string.
  * @returns {string}    En query-string-representasjon av 'object'.
  */
-export function toQueryString(object = {}) {
+export function stringifyQueryObject(object = {}) {
     const string = Object.keys(object)
         .map((key) => {
             const value = object[key];
@@ -115,4 +113,16 @@ export function toQueryString(object = {}) {
         return `?${string}`;
     }
     return ''
+}
+
+/**
+ * Dekoder en url til den ikke lenger er kodet.
+ * En kodet url er i dette tilfellet en url som inneholder '%'.
+ */
+export function decodeUrl(url) {
+    let decodedUrl = url;
+    while (decodedUrl.includes('%')) {
+        decodedUrl = decodeURIComponent(decodedUrl);
+    }
+    return decodedUrl;
 }
