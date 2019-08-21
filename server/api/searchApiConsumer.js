@@ -69,7 +69,6 @@ exports.fetchStilling = async (uuid) => {
         'employer.properties',
         'employer.publicName',
         'employer.status',
-        'expires',
         'geopoint',
         'mediaList',
         'privacy',
