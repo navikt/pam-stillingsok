@@ -1,4 +1,5 @@
 import { put, takeEvery, select } from 'redux-saga/effects';
+import analytics from '../analytics';
 import { AD_USER_API, CONTEXT_PATH, LOGIN_URL, PAM_VAR_SIDE_URL, STILLINGSOK_URL } from '../fasitProperties';
 import { RESTORE_ADD_FAVOURITE_WORKFLOW_AFTER_LOGIN } from '../favourites/favouritesReducer';
 import { RESTORE_SAVED_SEARCH_WORKFLOW_AFTER_LOGIN } from '../savedSearches/savedSearchesReducer';
@@ -78,6 +79,7 @@ function* fetchIsAuthenticated() {
         const response = yield fetch(`${AD_USER_API}/isAuthenticated`, { credentials: 'include', referrer: CONTEXT_PATH });
         if (response.status === 200) {
             yield put({ type: FETCH_IS_AUTHENTICATED_SUCCESS, isAuthenticated: authenticationEnum.IS_AUTHENTICATED });
+            analytics('send', 'event', 'Authentication', 'role', localStorage.getItem('innloggetBrukerKontekst') || 'ukjent');
         } else if (response.status === 401) {
             yield put({ type: FETCH_IS_AUTHENTICATED_SUCCESS, isAuthenticated: authenticationEnum.NOT_AUTHENTICATED });
         } else {
