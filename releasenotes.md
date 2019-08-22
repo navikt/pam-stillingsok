@@ -1,3 +1,6 @@
+## RELEASE - 0.126.842-6faf238
+#### New in this release: 
++ 2019-08-22 [Fix] Legger til mer decription for å unngå at facebook skipper korte descriptions
 ## RELEASE - 0.125.840-08f6d86
 #### New in this release: 
 + 2019-08-22 [Fix] Legger til labler i description for å unngå at korte descritpions kuttes vekk av facebook.
