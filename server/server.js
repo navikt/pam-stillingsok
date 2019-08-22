@@ -1,6 +1,3 @@
-const getEmployer  = require('./../src/common/utils/getEmployer');
-const getWorkLocation = require('./../src/common/utils/getWorkLocation');
-
 const express = require('express');
 const helmet = require('helmet');
 const path = require('path');
@@ -11,6 +8,8 @@ const prometheus = require('prom-client');
 const bodyParser = require('body-parser');
 const compression = require('compression');
 const searchApiConsumer = require('./api/searchApiConsumer');
+const getEmployer = require('./common/getEmployer');
+const getWorkLocation = require('./common/getWorkLocation');
 
 /* eslint no-console: 0 */
 
@@ -166,8 +165,8 @@ const startServer = (htmlPages) => {
                         // f.eks "Brukerstyrt personlig assistent, Firmaet AS, Drammen. Søknadsfrist: Snarest"
                         if (data._source && data._source.title && data._source.properties) {
                             const descriptionFragments = [];
-                            const employer = getEmployer.getEmployer(data._source);
-                            const location = getWorkLocation.getWorkLocation(data._source.properties.location, data._source.locationList);
+                            const employer = getEmployer(data._source);
+                            const location = getWorkLocation(data._source.properties.location, data._source.locationList);
 
                             const commaSeparatedFragments = [];
                             if (data._source.properties.jobtitle && data._source.title !== data._source.properties.jobtitle) {
