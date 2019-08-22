@@ -166,28 +166,33 @@ const startServer = (htmlPages) => {
                         // Lager meta description content
                         // f.eks "Brukerstyrt personlig assistent, Firmaet AS, Drammen. Søknadsfrist: Snarest"
                         if (data._source && data._source.title && data._source.properties) {
+                            const descriptionFragments = [];
                             const employer = getEmployer(data._source);
                             const location = getWorkLocation(data._source.properties.location, data._source.locationList);
 
-                            const fragments = [];
+                            const commaSeparatedFragments = [];
                             if (data._source.properties.jobtitle && data._source.title !== data._source.properties.jobtitle) {
-                                fragments.push(`Stillingstittel: ${data._source.properties.jobtitle}`)
+                                commaSeparatedFragments.push(data._source.properties.jobtitle)
                             }
                             if (employer) {
-                                fragments.push(`Arbeidsgiver: ${employer}`)
+                                commaSeparatedFragments.push(employer)
                             }
                             if (data._source.properties.location) {
-                                fragments.push(`Arbeidsted: ${location}`)
+                                commaSeparatedFragments.push(location)
+                            }
+
+                            if (commaSeparatedFragments.length > 0) {
+                                descriptionFragments.push(commaSeparatedFragments.join(', '));
                             }
 
                             if (data._source.properties.applicationdue) {
                                 const applicationDue = date.formatISOString(data._source.properties.applicationdue, 'DD.MM.YYYY');
-                                fragments.push(`Søknadsfrist: ${applicationDue}`)
+                                descriptionFragments.push(`Søknadsfrist: ${applicationDue}`)
                             }
 
                             res.render('index', {
                                 title: data._source.title,
-                                description: fragments.join('. ')
+                                description: `${descriptionFragments.join('. ')}. På arbeidsplassen.no kan du se hele stillingen, sende søknad eller finne andre ledige stillinger fra ${employer || 'samme arbeidsgiver'}.`
                             })
                         } else if (data._source && data._source.title) {
                             res.render('index', {
