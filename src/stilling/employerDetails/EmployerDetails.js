@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ReactHtmlParser from 'react-html-parser';
 import { Undertittel } from 'nav-frontend-typografi';
-import capitalizeLocation from '../../common/utils/capitalizeLocation';
+import { capitalizeLocation } from '../../common/utils/capitalizeLocation';
 import { isValidUrl } from '../../utils';
-import getEmployer from '../../common/utils/getEmployer';
+import { getEmployer } from '../../common/utils/getEmployer';
 import './EmployerDetails.less';
 
 function getEmployerLocation(employer) {

@@ -1,6 +1,6 @@
-const capitalizeEmployerName = require('./capitalizeEmployerName');
+const { capitalizeEmployerName } = require('./capitalizeEmployerName');
 
-function getEmployer(stilling) {
+exports.getEmployer = function getEmployer(stilling) {
     if (stilling && stilling.properties && stilling.properties.employer) {
         return stilling.properties.employer;
     }
@@ -12,6 +12,4 @@ function getEmployer(stilling) {
     }
 
     return null;
-}
-
-module.exports = getEmployer;
+};

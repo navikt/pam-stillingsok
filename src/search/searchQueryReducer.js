@@ -1,5 +1,5 @@
 import { put, select, takeLatest } from 'redux-saga/es/effects';
-import capitalizeLocation from '../common/utils/capitalizeLocation';
+import { capitalizeLocation } from '../common/utils/capitalizeLocation';
 import { CONTEXT_PATH } from '../fasitProperties';
 import {
     ADD_SAVED_SEARCH_SUCCESS,
