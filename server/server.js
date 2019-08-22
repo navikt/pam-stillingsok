@@ -1,3 +1,4 @@
+
 const express = require('express');
 const helmet = require('helmet');
 const path = require('path');
@@ -10,6 +11,7 @@ const compression = require('compression');
 const searchApiConsumer = require('./api/searchApiConsumer');
 const getEmployer = require('./common/getEmployer');
 const getWorkLocation = require('./common/getWorkLocation');
+const  date = require('./common/date');
 
 /* eslint no-console: 0 */
 
@@ -184,7 +186,8 @@ const startServer = (htmlPages) => {
                             }
 
                             if (data._source.properties.applicationdue) {
-                                descriptionFragments.push(`Søknadsfrist: ${data._source.properties.applicationdue}`)
+                                const applicationDue = date.formatISOString(data._source.properties.applicationdue, 'DD.MM.YYYY');
+                                descriptionFragments.push(`Søknadsfrist: ${applicationDue}`)
                             }
 
                             res.render('index', {
