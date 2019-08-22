@@ -1,3 +1,7 @@
+## RELEASE - 0.124.838-58f1443
+#### New in this release: 
++ 2019-08-22 [Fix] Forsøker å bygge med annen require
++ 2019-08-21 [PAM-3606] Legg til meta data for deling av annonser på facebook etc.
 ## RELEASE - 0.123.819-0eda120
 #### New in this release: 
 + 2019-08-22 [Fix] Tweaker må analytics måling
