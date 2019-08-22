@@ -1,3 +1,7 @@
+## RELEASE - 0.125.840-08f6d86
+#### New in this release: 
++ 2019-08-22 [Fix] Legger til labler i description for å unngå at korte descritpions kuttes vekk av facebook.
++ 2019-08-22 [Fix] Fromaterer søknadsfrist i meta data tag
 ## RELEASE - 0.124.838-58f1443
 #### New in this release: 
 + 2019-08-22 [Fix] Forsøker å bygge med annen require
