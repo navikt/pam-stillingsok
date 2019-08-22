@@ -1,6 +1,6 @@
-const { capitalizeEmployerName } = require('./capitalizeEmployerName');
+import capitalizeEmployerName from './capitalizeEmployerName';
 
-exports.getEmployer = function getEmployer(stilling) {
+export default function getEmployer(stilling) {
     if (stilling && stilling.properties && stilling.properties.employer) {
         return stilling.properties.employer;
     }
@@ -12,4 +12,4 @@ exports.getEmployer = function getEmployer(stilling) {
     }
 
     return null;
-};
+}

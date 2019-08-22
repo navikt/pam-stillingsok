@@ -1,4 +1,4 @@
-exports.capitalizeEmployerName = function capitalizeEmployerName(text) {
+export default function capitalizeEmployerName(text) {
     const separators = [' ', '-', '(', '/'];
 
     const ignore = [
@@ -29,4 +29,4 @@ exports.capitalizeEmployerName = function capitalizeEmployerName(text) {
         return capitalized;
     }
     return text;
-};
+}

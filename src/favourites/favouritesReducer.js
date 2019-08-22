@@ -9,8 +9,8 @@ import {
     FETCH_IS_AUTHENTICATED_SUCCESS,
     requiresAuthentication
 } from '../authentication/authenticationReducer';
-import { getEmployer } from '../common/utils/getEmployer';
-import { getWorkLocation } from '../common/utils/getWorkLocation';
+import getEmployer from '../common/utils/getEmployer';
+import getWorkLocation from '../common/utils/getWorkLocation';
 import { AD_USER_API } from '../fasitProperties';
 import { SEARCH_END } from '../search/searchReducer';
 import { FETCH_STILLING_SUCCESS } from '../stilling/stillingReducer';

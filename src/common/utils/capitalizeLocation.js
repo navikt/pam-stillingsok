@@ -1,4 +1,4 @@
-exports.capitalizeLocation = function (text) {
+export default function capitalizeLocation(text) {
     const separators = [
         ' ', // NORDRE LAND skal bli Nordre Land
         '-', // AUST-AGDER skal bli Aust-Agder
@@ -25,4 +25,4 @@ exports.capitalizeLocation = function (text) {
         return capitalized;
     }
     return text;
-};
+}
