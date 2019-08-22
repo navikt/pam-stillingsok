@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Undertittel } from 'nav-frontend-typografi';
 import { formatISOString, isValidISOString } from '../../utils';
 import worktimeParser from './worktimeParser';
-import getWorkLocation from '../../common/utils/getWorkLocation';
+import { getWorkLocation } from '../../common/utils/getWorkLocation';
 
 export default function EmploymentDetails({ stilling }) {
     const { properties } = stilling;
