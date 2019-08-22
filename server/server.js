@@ -1,5 +1,5 @@
-const getEmployer = require('../src/common/utils/getEmployer');
-const getWorkLocation = require('../src/common/utils/getWorkLocation');
+const getEmployer = require('./../src/common/utils/getEmployer');
+const getWorkLocation = require('./../src/common/utils/getWorkLocation');
 
 const express = require('express');
 const helmet = require('helmet');
