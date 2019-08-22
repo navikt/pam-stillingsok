@@ -199,7 +199,7 @@ function* fetchFavourites() {
     try {
         const response = yield call(userApiGet, `${AD_USER_API}/api/v1/userfavouriteads?size=999&sort=favouriteAd.published,desc`);
         yield put({ type: FETCH_FAVOURITES_SUCCESS, response });
-        analytics('send', 'event', 'Favoritter', 'fetchTotalElements', 'Antall favoritter', response.totalElements);
+        analytics('send', 'event', 'Favoritter', 'fetchTotalElements', 'Total elements', response.totalElements);
     } catch (e) {
         if (e instanceof SearchApiError) {
             yield put({ type: FETCH_FAVOURITES_FAILURE, error: e });
