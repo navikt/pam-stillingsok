@@ -1,3 +1,7 @@
+## RELEASE - 0.122.818-baae125
+#### New in this release: 
++ 2019-08-21 [Bugfix] Vi kan ikke excludere published i stillingsiden, vi trenger den når man skal lagre en annonse som favoritt
++ 2019-08-15 [PAM-2293/1970] Fikser slik at man mister et lagret søk / favoritt etter login.
 ## RELEASE - 0.121.798-59a670b
 #### New in this release: 
 + 2019-08-05 [PAM-3358] Vis link tilbake til Favoritter, når bruker har åpnet en stilling derfra
