@@ -192,7 +192,7 @@ const startServer = (htmlPages) => {
 
                             res.render('index', {
                                 title: data._source.title,
-                                description: `${descriptionFragments.join('. ')}. På arbeidsplassen.no kan du se hele stillingen, sende søknad eller finne andre ledige stillinger fra ${employer || 'samme arbeidsgiver'}.`
+                                description: `${descriptionFragments.join('. ')}. Her kan du se hele stillingen, sende søknad eller søke etter andre ledige stillinger fra ${employer || 'samme arbeidsgiver'}.`
                             })
                         } else if (data._source && data._source.title) {
                             res.render('index', {
