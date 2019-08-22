@@ -1,3 +1,6 @@
+## RELEASE - 0.123.819-0eda120
+#### New in this release: 
++ 2019-08-22 [Fix] Tweaker må analytics måling
 ## RELEASE - 0.122.818-baae125
 #### New in this release: 
 + 2019-08-21 [Bugfix] Vi kan ikke excludere published i stillingsiden, vi trenger den når man skal lagre en annonse som favoritt
