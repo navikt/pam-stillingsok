@@ -1,3 +1,7 @@
+## RELEASE - 0.127.844-b412fb3
+#### New in this release: 
++ 2019-08-22 [Fix] Tweak på tekst
++ 2019-08-22 [Fix] Tweak på tekst
 ## RELEASE - 0.126.842-6faf238
 #### New in this release: 
 + 2019-08-22 [Fix] Legger til mer decription for å unngå at facebook skipper korte descriptions
