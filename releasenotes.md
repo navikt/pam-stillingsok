@@ -1,3 +1,7 @@
+## RELEASE - 0.128.847-bce286d
+#### New in this release: 
++ 2019-08-23 [Fix] Rydder opp i koden for html meta data
++ 2019-08-23 [Fix] Tweak description tekst etter qa
 ## RELEASE - 0.127.844-b412fb3
 #### New in this release: 
 + 2019-08-22 [Fix] Tweak på tekst
