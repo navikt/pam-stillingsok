@@ -10,11 +10,11 @@ function analytics(...props) {
 }
 
 function trackAuthenticationStatus(action) {
-    analytics('send', 'event', 'Authentication', 'status', action.isAuthenticated ? 'innlogget': 'ikke-innlogget');
+    analytics('send', 'event', 'Authentication', 'status', action.isAuthenticated);
 }
 
 function trackAuthenticationFailure() {
-    analytics('send', 'event', 'Authentication', 'status', 'feilet');
+    analytics('send', 'event', 'Authentication', 'status', 'failure');
 }
 
 /**
