@@ -1,3 +1,6 @@
+## RELEASE - 0.129.848-15c6b89
+#### New in this release: 
++ 2019-08-23 [Analytics] Legger til måling for hvor mange som trykker print-knappen
 ## RELEASE - 0.128.847-bce286d
 #### New in this release: 
 + 2019-08-23 [Fix] Rydder opp i koden for html meta data

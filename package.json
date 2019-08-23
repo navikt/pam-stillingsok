@@ -1,6 +1,6 @@
 {
   "name": "pam-stillingsok-frontend",
-  "version": "0.129.0",
+  "version": "0.130.0",
   "description": "",
   "main": "index.js",
   "scripts": {
