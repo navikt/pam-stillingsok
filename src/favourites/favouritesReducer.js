@@ -187,8 +187,7 @@ function toFavourite(uuid, ad) {
             applicationdue: ad.properties.applicationdue ? ad.properties.applicationdue : null,
             location: getWorkLocation(ad.properties.location, ad.locationList),
             employer: getEmployer(ad),
-            published: ad.published,
-            expires: ad.expires
+            published: ad.published
         }
     };
 }
