@@ -1,6 +1,8 @@
 /* eslint-disable no-underscore-dangle */
 import { call, put, select, take, takeEvery, takeLatest } from 'redux-saga/effects';
-import analytics from '../analytics';
+import getEmployer from '../../server/common/getEmployer';
+import getWorkLocation from '../../server/common/getWorkLocation';
+import { trackTotalFavourites } from '../analytics';
 import SearchApiError from '../api/SearchApiError';
 import { userApiGet, userApiPost, userApiRemove } from '../api/userApi';
 import AuthenticationCaller from '../authentication/AuthenticationCaller';
@@ -9,8 +11,6 @@ import {
     FETCH_IS_AUTHENTICATED_SUCCESS,
     requiresAuthentication
 } from '../authentication/authenticationReducer';
-import getEmployer from '../../server/common/getEmployer';
-import getWorkLocation from '../../server/common/getWorkLocation';
 import { AD_USER_API } from '../fasitProperties';
 import { SEARCH_END } from '../search/searchReducer';
 import { FETCH_STILLING_SUCCESS } from '../stilling/stillingReducer';
@@ -199,7 +199,8 @@ function* fetchFavourites() {
     try {
         const response = yield call(userApiGet, `${AD_USER_API}/api/v1/userfavouriteads?size=999&sort=favouriteAd.published,desc`);
         yield put({ type: FETCH_FAVOURITES_SUCCESS, response });
-        analytics('send', 'event', 'Favoritter', 'fetchTotalElements', response.totalElements);
+
+        trackTotalFavourites(response.totalElements);
     } catch (e) {
         if (e instanceof SearchApiError) {
             yield put({ type: FETCH_FAVOURITES_FAILURE, error: e });

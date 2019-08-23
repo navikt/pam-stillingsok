@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Flatknapp } from 'pam-frontend-knapper';
+import { trackStillingPrint } from '../analytics';
 import BackLink from '../backLink/BackLink';
 import getEmployer from '../../server/common/getEmployer';
 import getWorkLocation from '../../server/common/getWorkLocation';
@@ -86,6 +87,7 @@ const Stilling = ({
     }, [error, isFetchingStilling, stilling]);
 
     const onPrintClick = () => {
+        trackStillingPrint();
         window.print();
     };
 
