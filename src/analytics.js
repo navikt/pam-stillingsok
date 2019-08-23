@@ -4,7 +4,6 @@ import { FETCH_FAVOURITES_SUCCESS } from './favourites/favouritesReducer';
 import { COLLAPSE_FACET_PANEL, EXPAND_FACET_PANEL } from './search/facets/facetPanelsReducer';
 
 function analytics(...props) {
-    console.log(props)
     if (window.ga) {
         window.ga(...props);
     }
