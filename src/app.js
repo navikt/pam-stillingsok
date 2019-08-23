@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { applyMiddleware, combineReducers, createStore } from 'redux';
 import createSagaMiddleware from 'redux-saga';
+import { analyticsSaga } from './analytics';
 import authenticationReducer, { authenticationSaga } from './authentication/authenticationReducer';
 import backLinkReducer, { backLinkSaga } from './backLink/backLinkReducer';
 import errorReducer from './error/errorReducer';
@@ -57,6 +58,7 @@ sagaMiddleware.run(userSaga);
 sagaMiddleware.run(authenticationSaga);
 sagaMiddleware.run(unknownFacetsSaga);
 sagaMiddleware.run(searchQuerySaga);
+sagaMiddleware.run(analyticsSaga);
 
 
 ReactDOM.render(

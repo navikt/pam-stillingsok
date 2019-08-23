@@ -2,7 +2,6 @@
 import { call, put, select, take, takeEvery, takeLatest } from 'redux-saga/effects';
 import getEmployer from '../../server/common/getEmployer';
 import getWorkLocation from '../../server/common/getWorkLocation';
-import { trackTotalFavourites } from '../analytics';
 import SearchApiError from '../api/SearchApiError';
 import { userApiGet, userApiPost, userApiRemove } from '../api/userApi';
 import AuthenticationCaller from '../authentication/AuthenticationCaller';
@@ -199,8 +198,6 @@ function* fetchFavourites() {
     try {
         const response = yield call(userApiGet, `${AD_USER_API}/api/v1/userfavouriteads?size=999&sort=favouriteAd.published,desc`);
         yield put({ type: FETCH_FAVOURITES_SUCCESS, response });
-
-        trackTotalFavourites(response.totalElements);
     } catch (e) {
         if (e instanceof SearchApiError) {
             yield put({ type: FETCH_FAVOURITES_FAILURE, error: e });
