@@ -1,3 +1,7 @@
+## RELEASE - 0.130.852-18a12b5
+#### New in this release: 
++ 2019-08-23 [Analytics] Måle expand/collapse av facet-panelene
++ 2019-08-23 [Analytics] Legger alt med analytics i egen saga, slik at det ikke blir anlytics kode over hele prosjektet
 ## RELEASE - 0.129.848-15c6b89
 #### New in this release: 
 + 2019-08-23 [Analytics] Legger til måling for hvor mange som trykker print-knappen
