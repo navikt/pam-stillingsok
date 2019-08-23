@@ -1,3 +1,6 @@
+## RELEASE - 0.131.854-b0f3ed7
+#### New in this release: 
++ 2019-08-23 [Fix] Fikser analytics måling for authentication
 ## RELEASE - 0.130.852-18a12b5
 #### New in this release: 
 + 2019-08-23 [Analytics] Måle expand/collapse av facet-panelene
