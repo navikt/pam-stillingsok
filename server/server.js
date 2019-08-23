@@ -9,9 +9,7 @@ const prometheus = require('prom-client');
 const bodyParser = require('body-parser');
 const compression = require('compression');
 const searchApiConsumer = require('./api/searchApiConsumer');
-const getEmployer = require('./common/getEmployer');
-const getWorkLocation = require('./common/getWorkLocation');
-const  date = require('./common/date');
+const htmlMeta = require('./common/htmlMeta');
 
 /* eslint no-console: 0 */
 
@@ -70,8 +68,8 @@ const renderSok = (htmlPages) => (
         server.render(
             'index.html',
             {
-                title: 'Ledige stillinger - Arbeidsplassen',
-                description: 'Søk etter ledige stillinger. Heltid- og deltidsjobber i offentlig og privat sektor i Oslo, Bergen, Trondheim, Stavanger, Tromsø og alle kommuner i Norge'
+                title: htmlMeta.getDefaultTitle(),
+                description: htmlMeta.getDefaultDescription()
             },
             (err, html) => {
                 if (err) {
@@ -163,45 +161,10 @@ const startServer = (htmlPages) => {
                 })
                 .then((data) => {
                     try {
-                        // Lager meta description content
-                        // f.eks "Brukerstyrt personlig assistent, Firmaet AS, Drammen. Søknadsfrist: Snarest"
-                        if (data._source && data._source.title && data._source.properties) {
-                            const descriptionFragments = [];
-                            const employer = getEmployer(data._source);
-                            const location = getWorkLocation(data._source.properties.location, data._source.locationList);
-
-                            const commaSeparatedFragments = [];
-                            if (data._source.properties.jobtitle && data._source.title !== data._source.properties.jobtitle) {
-                                commaSeparatedFragments.push(data._source.properties.jobtitle)
-                            }
-                            if (employer) {
-                                commaSeparatedFragments.push(employer)
-                            }
-                            if (data._source.properties.location) {
-                                commaSeparatedFragments.push(location)
-                            }
-
-                            if (commaSeparatedFragments.length > 0) {
-                                descriptionFragments.push(commaSeparatedFragments.join(', '));
-                            }
-
-                            if (data._source.properties.applicationdue) {
-                                const applicationDue = date.formatISOString(data._source.properties.applicationdue, 'DD.MM.YYYY');
-                                descriptionFragments.push(`Søknadsfrist: ${applicationDue}`)
-                            }
-
-                            res.render('index', {
-                                title: data._source.title,
-                                description: `${descriptionFragments.join('. ')}. Her kan du se hele stillingen, sende søknad eller finne andre ledige stillinger.`
-                            })
-                        } else if (data._source && data._source.title) {
-                            res.render('index', {
-                                title: data._source.title,
-                                description: 'Her kan du se hele stillingen, sende søknad eller finne andre ledige stillinger.'
-                            })
-                        } else {
-                            res.send(htmlPages.sok);
-                        }
+                        res.render('index', {
+                            title: htmlMeta.getStillingTitle(data._source),
+                            description: htmlMeta.getStillingDescription(data._source)
+                        });
                     } catch (err) {
                         res.send(htmlPages.sok);
                     }
