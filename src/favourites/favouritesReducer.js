@@ -1,5 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import { call, put, select, take, takeEvery, takeLatest } from 'redux-saga/effects';
+import getEmployer from '../../server/common/getEmployer';
+import getWorkLocation from '../../server/common/getWorkLocation';
 import SearchApiError from '../api/SearchApiError';
 import { userApiGet, userApiPost, userApiRemove } from '../api/userApi';
 import AuthenticationCaller from '../authentication/AuthenticationCaller';
@@ -8,8 +10,6 @@ import {
     FETCH_IS_AUTHENTICATED_SUCCESS,
     requiresAuthentication
 } from '../authentication/authenticationReducer';
-import getEmployer from '../common/utils/getEmployer';
-import getWorkLocation from '../common/utils/getWorkLocation';
 import { AD_USER_API } from '../fasitProperties';
 import { SEARCH_END } from '../search/searchReducer';
 import { FETCH_STILLING_SUCCESS } from '../stilling/stillingReducer';

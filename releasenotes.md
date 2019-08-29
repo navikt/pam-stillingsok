@@ -1,3 +1,39 @@
+## RELEASE - 0.131.854-b0f3ed7
+#### New in this release: 
++ 2019-08-23 [Fix] Fikser analytics måling for authentication
+## RELEASE - 0.130.852-18a12b5
+#### New in this release: 
++ 2019-08-23 [Analytics] Måle expand/collapse av facet-panelene
++ 2019-08-23 [Analytics] Legger alt med analytics i egen saga, slik at det ikke blir anlytics kode over hele prosjektet
+## RELEASE - 0.129.848-15c6b89
+#### New in this release: 
++ 2019-08-23 [Analytics] Legger til måling for hvor mange som trykker print-knappen
+## RELEASE - 0.128.847-bce286d
+#### New in this release: 
++ 2019-08-23 [Fix] Rydder opp i koden for html meta data
++ 2019-08-23 [Fix] Tweak description tekst etter qa
+## RELEASE - 0.127.844-b412fb3
+#### New in this release: 
++ 2019-08-22 [Fix] Tweak på tekst
++ 2019-08-22 [Fix] Tweak på tekst
+## RELEASE - 0.126.842-6faf238
+#### New in this release: 
++ 2019-08-22 [Fix] Legger til mer decription for å unngå at facebook skipper korte descriptions
+## RELEASE - 0.125.840-08f6d86
+#### New in this release: 
++ 2019-08-22 [Fix] Legger til labler i description for å unngå at korte descritpions kuttes vekk av facebook.
++ 2019-08-22 [Fix] Fromaterer søknadsfrist i meta data tag
+## RELEASE - 0.124.838-58f1443
+#### New in this release: 
++ 2019-08-22 [Fix] Forsøker å bygge med annen require
++ 2019-08-21 [PAM-3606] Legg til meta data for deling av annonser på facebook etc.
+## RELEASE - 0.123.819-0eda120
+#### New in this release: 
++ 2019-08-22 [Fix] Tweaker må analytics måling
+## RELEASE - 0.122.818-baae125
+#### New in this release: 
++ 2019-08-21 [Bugfix] Vi kan ikke excludere published i stillingsiden, vi trenger den når man skal lagre en annonse som favoritt
++ 2019-08-15 [PAM-2293/1970] Fikser slik at man mister et lagret søk / favoritt etter login.
 ## RELEASE - 0.121.798-59a670b
 #### New in this release: 
 + 2019-08-05 [PAM-3358] Vis link tilbake til Favoritter, når bruker har åpnet en stilling derfra

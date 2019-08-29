@@ -1,4 +1,4 @@
-import { put, takeEvery, select } from 'redux-saga/effects';
+import { put, select, takeEvery } from 'redux-saga/effects';
 import { AD_USER_API, CONTEXT_PATH, LOGIN_URL, PAM_VAR_SIDE_URL, STILLINGSOK_URL } from '../fasitProperties';
 import { RESTORE_ADD_FAVOURITE_WORKFLOW_AFTER_LOGIN } from '../favourites/favouritesReducer';
 import { RESTORE_SAVED_SEARCH_WORKFLOW_AFTER_LOGIN } from '../savedSearches/savedSearchesReducer';

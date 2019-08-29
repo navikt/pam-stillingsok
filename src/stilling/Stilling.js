@@ -4,9 +4,10 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Flatknapp } from 'pam-frontend-knapper';
+import { trackStillingPrint } from '../analytics';
 import BackLink from '../backLink/BackLink';
-import getEmployer from '../common/utils/getEmployer';
-import getWorkLocation from '../common/utils/getWorkLocation';
+import getEmployer from '../../server/common/getEmployer';
+import getWorkLocation from '../../server/common/getWorkLocation';
 import { CONTEXT_PATH } from '../fasitProperties';
 import FavouriteAlertStripe from '../favourites/alertstripe/FavouriteAlertStripe';
 import ToggleFavouriteButton from '../favourites/toggleFavoriteButton/ToggleFavouriteButton';
@@ -86,6 +87,7 @@ const Stilling = ({
     }, [error, isFetchingStilling, stilling]);
 
     const onPrintClick = () => {
+        trackStillingPrint();
         window.print();
     };
 

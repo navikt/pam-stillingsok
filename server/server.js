@@ -1,3 +1,4 @@
+
 const express = require('express');
 const helmet = require('helmet');
 const path = require('path');
@@ -8,6 +9,7 @@ const prometheus = require('prom-client');
 const bodyParser = require('body-parser');
 const compression = require('compression');
 const searchApiConsumer = require('./api/searchApiConsumer');
+const htmlMeta = require('./common/htmlMeta');
 
 /* eslint no-console: 0 */
 
@@ -35,7 +37,7 @@ server.use(helmet.contentSecurityPolicy({
 }));
 
 server.set('views', `${rootDirectory}views`);
-server.set('view engine', 'mustache');
+server.set('view engine', 'html');
 server.engine('html', mustacheExpress());
 
 server.use(bodyParser.json());
@@ -65,6 +67,10 @@ const renderSok = (htmlPages) => (
     new Promise((resolve, reject) => {
         server.render(
             'index.html',
+            {
+                title: htmlMeta.getDefaultTitle(),
+                description: htmlMeta.getDefaultDescription()
+            },
             (err, html) => {
                 if (err) {
                     reject(err);
@@ -145,6 +151,26 @@ const startServer = (htmlPages) => {
         var url = req.url.replace("/pam-stillingsok", `${fasitProperties.PAM_CONTEXT_PATH}`);
         res.redirect(`${url}`)
     })
+
+    server.get(
+        ['/stillinger/stilling/:uuid'],
+        (req, res) => {
+            searchApiConsumer.fetchStilling(req.params.uuid)
+                .catch((err) => {
+                    res.send(htmlPages.sok);
+                })
+                .then((data) => {
+                    try {
+                        res.render('index', {
+                            title: htmlMeta.getStillingTitle(data._source),
+                            description: htmlMeta.getStillingDescription(data._source)
+                        });
+                    } catch (err) {
+                        res.send(htmlPages.sok);
+                    }
+                });
+        }
+    );
 
     server.get(
         ['/stillinger/?', /^\/stillinger\/(?!.*dist).*$/],
