@@ -1,3 +1,6 @@
+## RELEASE - 0.133.859-85ad64e
+#### New in this release: 
++ 2019-08-22 [Fix] Vis når varsling på et lagret søk utløper i listevisningen
 ## RELEASE - 0.131.854-b0f3ed7
 #### New in this release: 
 + 2019-08-23 [Fix] Fikser analytics måling for authentication
