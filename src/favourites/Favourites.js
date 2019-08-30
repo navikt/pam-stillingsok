@@ -35,7 +35,6 @@ const Favourites = (
     useScrollToTop();
 
     useEffect(() => {
-        console.log('fetchFavourites')
         fetchFavourites();
     }, []);
 

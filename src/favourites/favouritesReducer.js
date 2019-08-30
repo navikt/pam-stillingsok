@@ -222,9 +222,7 @@ function* fetchFavourites() {
 
 function* fetchFavouritesIfAdded() {
     const state = yield select();
-    console.log(1)
     if (state.favourites.shouldReloadFavourites) {
-        console.log(2)
         yield call(fetchFavourites)
     }
 }
