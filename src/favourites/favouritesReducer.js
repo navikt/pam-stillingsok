@@ -220,6 +220,10 @@ function* fetchFavourites() {
     }
 }
 
+/**
+ * Henter favoritttene på nytt bare hvis en favoritt har blitt lagt til siden forrige innlasting.
+ * Hvis man har lagt til en ny favoritt må man hente inn favorittene på nytt, slik at sorteringen blir riktig.
+ */
 function* fetchFavouritesIfAdded() {
     const state = yield select();
     if (state.favourites.shouldReloadFavourites) {
