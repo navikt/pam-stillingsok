@@ -1,3 +1,6 @@
+## RELEASE - 0.134.861-435bdb4
+#### New in this release: 
++ 2019-08-20 [PAM-3153] Sortere favoritter
 ## RELEASE - 0.133.859-85ad64e
 #### New in this release: 
 + 2019-08-22 [Fix] Vis når varsling på et lagret søk utløper i listevisningen
