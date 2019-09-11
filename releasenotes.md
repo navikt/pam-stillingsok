@@ -1,3 +1,6 @@
+## RELEASE - 0.135.862-f7f689a
+#### New in this release: 
++ 2019-09-11 [SEO] Mer spesifikk document title for søk i oslo, bergen, trondheim og tromsø
 ## RELEASE - 0.134.861-435bdb4
 #### New in this release: 
 + 2019-08-20 [PAM-3153] Sortere favoritter
