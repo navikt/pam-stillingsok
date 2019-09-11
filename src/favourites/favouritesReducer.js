@@ -44,6 +44,7 @@ export const SHOW_FAVOURITES_ALERT_STRIPE = 'SHOW_FAVOURITES_ALERT_STRIPE';
 export const HIDE_FAVOURITES_ALERT_STRIPE = 'HIDE_FAVOURITES_ALERT_STRIPE';
 
 export const RESTORE_ADD_FAVOURITE_WORKFLOW_AFTER_LOGIN = 'RESTORE_ADD_FAVOURITE_WORKFLOW_AFTER_LOGIN';
+export const SET_FAVOURITES_SORTING = 'SET_FAVOURITES_SORTING';
 
 let delayTimeout;
 
@@ -60,7 +61,10 @@ const initialState = {
     adsMarkedAsFavorite: [],
     pendingFavouritesByAdUuid: [],
     pending: [],
-    favouritesAboutToBeDeleted: []
+    favouritesAboutToBeDeleted: [],
+    sortField: 'published',
+    sortDirection: 'desc',
+    shouldReloadFavourites: false
 };
 
 export default function favouritesReducer(state = initialState, action) {
@@ -84,6 +88,7 @@ export default function favouritesReducer(state = initialState, action) {
                 adsMarkedAsFavorite: action.response.content.map((favourite) => (favourite.favouriteAd.uuid)),
                 totalElements: action.response.totalElements,
                 isFetchingFavourites: false,
+                shouldReloadFavourites: false,
                 hasFetchedInitialFavourites: true
             };
         case FETCH_FAVOURITES_FAILURE:
@@ -103,7 +108,8 @@ export default function favouritesReducer(state = initialState, action) {
                 ...state,
                 favourites: [action.response, ...state.favourites],
                 totalElements: state.totalElements + 1,
-                pendingFavouritesByAdUuid: state.pendingFavouritesByAdUuid.filter((adUuid) => adUuid !== action.adUuid)
+                pendingFavouritesByAdUuid: state.pendingFavouritesByAdUuid.filter((adUuid) => adUuid !== action.adUuid),
+                shouldReloadFavourites: true
             };
         case ADD_TO_FAVOURITES_FAILURE:
             return {
@@ -159,6 +165,12 @@ export default function favouritesReducer(state = initialState, action) {
                 ...state,
                 showAlertStripe: false
             };
+        case SET_FAVOURITES_SORTING:
+            return {
+                ...state,
+                sortField: action.sortField,
+                sortDirection: action.sortField === 'expires' ? 'asc' : 'desc'
+            };
         default:
             return state;
     }
@@ -196,7 +208,8 @@ function toFavourite(uuid, ad) {
 function* fetchFavourites() {
     yield put({ type: FETCH_FAVOURITES_BEGIN });
     try {
-        const response = yield call(userApiGet, `${AD_USER_API}/api/v1/userfavouriteads?size=999&sort=favouriteAd.published,desc`);
+        let state = yield select();
+        const response = yield call(userApiGet, `${AD_USER_API}/api/v1/userfavouriteads?size=999&sort=favouriteAd.${state.favourites.sortField},${state.favourites.sortDirection}`);
         yield put({ type: FETCH_FAVOURITES_SUCCESS, response });
     } catch (e) {
         if (e instanceof SearchApiError) {
@@ -204,6 +217,17 @@ function* fetchFavourites() {
         } else {
             throw e;
         }
+    }
+}
+
+/**
+ * Henter favoritttene på nytt bare hvis en favoritt har blitt lagt til siden forrige innlasting.
+ * Hvis man har lagt til en ny favoritt må man hente inn favorittene på nytt, slik at sorteringen blir riktig.
+ */
+function* fetchFavouritesIfAdded() {
+    const state = yield select();
+    if (state.favourites.shouldReloadFavourites) {
+        yield call(fetchFavourites)
     }
 }
 
@@ -341,6 +365,8 @@ function* removeFromFavourites(action) {
 }
 
 export const favouritesSaga = function* saga() {
+    yield takeLatest(SET_FAVOURITES_SORTING, fetchFavourites);
+    yield takeLatest(FETCH_FAVOURITES, fetchFavouritesIfAdded);
     yield takeLatest(FETCH_USER_SUCCESS, fetchFavourites);
     yield takeEvery(ADD_SEARCH_RESULT_TO_FAVOURITES, addSearchResultToFavourites);
     yield takeEvery(ADD_STILLING_TO_FAVOURITES, addStillingToFavourites);

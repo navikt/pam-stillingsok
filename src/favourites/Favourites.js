@@ -1,7 +1,7 @@
 /* eslint-disable no-undef,no-nested-ternary */
 import { Column, Container, Row } from 'nav-frontend-grid';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PageHeader from '../common/components/PageHeader';
 import DelayedSpinner from '../common/components/DelayedSpinner';
@@ -10,11 +10,13 @@ import RestoreScroll from '../common/components/RestoreScroll';
 import NoUser from '../user/NoUser';
 import FavouriteAlertStripe from './alertstripe/FavouriteAlertStripe';
 import './Favourites.less';
+import { FETCH_FAVOURITES, SET_FAVOURITES_SORTING } from './favouritesReducer';
 import FavouriteList from './list/FavouriteList';
 import RemoveFavouriteModal from './modal/RemoveFavouriteModal';
 import NoFavourites from './noresult/NoFavourites';
 import { authenticationEnum } from '../authentication/authenticationReducer';
 import { CONTEXT_PATH } from '../fasitProperties';
+import Sorting from './sorting/Sorting';
 import TotalFavourites from './totalFavourites/TotalFavourutes';
 import { useDocumentTitle, useGoogleAnalytics, useScrollToTop } from '../common/hooks';
 
@@ -24,12 +26,17 @@ const Favourites = (
         isAuthenticated,
         isFetchingFavourites,
         isFetchingUser,
-        user
+        user,
+        fetchFavourites
     }
 ) => {
     useDocumentTitle('Favoritter - Arbeidsplassen');
     useGoogleAnalytics(`${CONTEXT_PATH}/favoritter`, 'Favoritter');
     useScrollToTop();
+
+    useEffect(() => {
+        fetchFavourites();
+    }, []);
 
     return (
         <RestoreScroll id="Favourites">
@@ -63,7 +70,10 @@ const Favourites = (
                                             <NoFavourites/>
                                         ) : (
                                             <React.Fragment>
-                                                <TotalFavourites total={favourites.length}/>
+                                                <div className="Favourites__main__total-and-sorting">
+                                                    <TotalFavourites total={favourites.length}/>
+                                                    <Sorting />
+                                                </div>
                                                 <FavouriteList/>
                                             </React.Fragment>
                                         )}
@@ -97,7 +107,8 @@ Favourites.propTypes = {
     favourites: PropTypes.arrayOf(PropTypes.shape({
         uuid: PropTypes.string,
         title: PropTypes.string
-    })).isRequired
+    })).isRequired,
+    fetchFavourites: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -108,4 +119,8 @@ const mapStateToProps = (state) => ({
     isFetchingFavourites: state.favourites.isFetchingFavourites
 });
 
-export default connect(mapStateToProps)(Favourites);
+const mapDispatchToProps = (dispatch) => ({
+    fetchFavourites: () => dispatch({ type: FETCH_FAVOURITES })
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Favourites);

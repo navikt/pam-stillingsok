@@ -1,6 +1,6 @@
 import { takeEvery } from 'redux-saga/es/effects';
 import { FETCH_IS_AUTHENTICATED_FAILURE, FETCH_IS_AUTHENTICATED_SUCCESS } from './authentication/authenticationReducer';
-import { FETCH_FAVOURITES_SUCCESS } from './favourites/favouritesReducer';
+import { FETCH_FAVOURITES_SUCCESS, SET_FAVOURITES_SORTING } from './favourites/favouritesReducer';
 import { COLLAPSE_FACET_PANEL, EXPAND_FACET_PANEL } from './search/facets/facetPanelsReducer';
 
 function analytics(...props) {
@@ -37,6 +37,10 @@ function trackTotalFavourites(action) {
     analytics('send', 'event', 'Favoritter', 'fetchTotalElements', action.response.totalElements);
 }
 
+function trackFavouritesSorting(action) {
+    analytics('send', 'event', 'Favoritter', 'sort', action.sortField);
+}
+
 /**
  * Viser hvor mange bruker print-knappen på stillingsiden.
  */
@@ -59,4 +63,5 @@ export const analyticsSaga = function* saga() {
     yield takeEvery(FETCH_FAVOURITES_SUCCESS, trackTotalFavourites);
     yield takeEvery(EXPAND_FACET_PANEL, trackExpandFacetPanel);
     yield takeEvery(COLLAPSE_FACET_PANEL, trackCollapseFacetPanel);
+    yield takeEvery(SET_FAVOURITES_SORTING, trackFavouritesSorting);
 };

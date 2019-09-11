@@ -64,7 +64,14 @@ class SavedSearchListItem extends React.Component {
                             )}
                         </div>
                         {savedSearch.notifyType === NotifyTypeEnum.EMAIL ? (
-                            <Normaltekst>Varighet på varsel: {savedSearch.duration} dager</Normaltekst>
+                            <React.Fragment>
+                                <Normaltekst>Varighet på varsel: {savedSearch.duration} dager</Normaltekst>
+                                {isValidISOString(savedSearch.expires) && (
+                                    <Normaltekst>
+                                        Utløper: {formatISOString(savedSearch.expires, 'DD.MM.YYYY')}
+                                    </Normaltekst>
+                                )}
+                            </React.Fragment>
                         ) : (
                             <Normaltekst>Ingen varsling</Normaltekst>
                         )}
