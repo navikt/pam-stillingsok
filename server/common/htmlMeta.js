@@ -15,6 +15,10 @@ exports.getDefaultDescription = function (){
     return DEFAULT_DESCRIPTION;
 };
 
+exports.getDescriptionForPredefinedCity = function (city){
+    return `Søk etter ledige stillinger i ${city}, eller finn heltid- og deltidsjobber i offentlig og privat sektor i alle byer og kommuner i Norge.`
+};
+
 exports.getStillingTitle = function (source){
     if(source && source.title) {
         return source.title;
