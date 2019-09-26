@@ -1,3 +1,7 @@
+## RELEASE - 0.137.870-29bb763
+#### New in this release: 
++ 2019-09-26 [SEO] Legger til parameter for å spore kilde
++ 2019-09-26 [SEO] Legger til parameter for å spore kilde
 ## RELEASE - 0.136.866-5d4ee35
 #### New in this release: 
 + 2019-09-26 [UX] Tester bruk av "For bedrift" lenke i toppmenyen
