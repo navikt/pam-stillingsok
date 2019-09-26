@@ -28,7 +28,9 @@ const TopMenu = ({ isAuthenticated, collapseAllFacetPanels, expandAllFacetPanels
 
     return (
         <div className="no-print">
-            <div id="BedriftLinkHack-wrapper">
+            <div
+                className={authenticationStatus(isAuthenticated) === AuthStatus.IS_AUTHENTICATED ? "BedriftLinkHack-wrapper--hidden" : "BedriftLinkHack-wrapper--shown"}
+            >
                 <Header
                     validerNavigasjon={{
                         redirectTillates: () => {
