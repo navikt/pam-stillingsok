@@ -53,7 +53,7 @@ const TopMenu = ({ isAuthenticated, collapseAllFacetPanels, expandAllFacetPanels
                 />
                 {authenticationStatus(isAuthenticated) !== AuthStatus.IS_AUTHENTICATED && (
                     <nav id="BedriftLinkHack-nav">
-                        <a href="/bedrift&s=sok" className="link">For bedrifter</a>
+                        <a href="/bedrift?s=sok" className="link">For bedrifter</a>
                     </nav>
                 )}
             </div>
