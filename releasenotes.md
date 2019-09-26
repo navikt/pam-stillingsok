@@ -1,3 +1,6 @@
+## RELEASE - 0.136.866-5d4ee35
+#### New in this release: 
++ 2019-09-26 [UX] Tester bruk av "For bedrift" lenke i toppmenyen
 ## RELEASE - 0.135.862-f7f689a
 #### New in this release: 
 + 2019-09-11 [SEO] Mer spesifikk document title for søk i oslo, bergen, trondheim og tromsø
