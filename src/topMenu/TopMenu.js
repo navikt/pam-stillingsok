@@ -28,26 +28,33 @@ const TopMenu = ({ isAuthenticated, collapseAllFacetPanels, expandAllFacetPanels
 
     return (
         <div className="no-print">
-            <Header
-                validerNavigasjon={{
-                    redirectTillates: () => {
-                        // Reset state of facet panel (closed if on mobile) and return true to complete the redirect
-                        if(isMobile()) {
-                            collapseAllFacetPanels();
-                        } else {
-                            expandAllFacetPanels();
+            <div id="BedriftLinkHack-wrapper">
+                <Header
+                    validerNavigasjon={{
+                        redirectTillates: () => {
+                            // Reset state of facet panel (closed if on mobile) and return true to complete the redirect
+                            if(isMobile()) {
+                                collapseAllFacetPanels();
+                            } else {
+                                expandAllFacetPanels();
+                            }
+                            return true;
                         }
-                        return true;
-                    }
-                }}
-                onLoginClick={login}
-                onLogoutClick={logout}
-                useMenu="personbruker"
-                authenticationStatus={authenticationStatus(isAuthenticated)}
-                applikasjon={PersonbrukerApplikasjon.STILLINGSSOK}
-                visInnstillinger
-                showName
-            />
+                    }}
+                    onLoginClick={login}
+                    onLogoutClick={logout}
+                    useMenu="personbruker"
+                    authenticationStatus={authenticationStatus(isAuthenticated)}
+                    applikasjon={PersonbrukerApplikasjon.STILLINGSSOK}
+                    visInnstillinger
+                    showName
+                />
+                {authenticationStatus(isAuthenticated) !== AuthStatus.IS_AUTHENTICATED && (
+                    <nav id="BedriftLinkHack-nav">
+                        <a href="/bedrift" className="link">For bedrifter</a>
+                    </nav>
+                )}
+            </div>
         </div>
     );
 };
