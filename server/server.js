@@ -5,7 +5,6 @@ const path = require('path');
 const mustacheExpress = require('mustache-express');
 const Promise = require('promise');
 const fs = require('fs');
-const prometheus = require('prom-client');
 const bodyParser = require('body-parser');
 const compression = require('compression');
 const searchApiConsumer = require('./api/searchApiConsumer');
@@ -14,13 +13,20 @@ const predefinedSearches = require('./common/predefinedSearches');
 
 /* eslint no-console: 0 */
 
-prometheus.collectDefaultMetrics();
 
 const currentDirectory = __dirname;
 const rootDirectory = `${currentDirectory}/../`;
 const server = express();
 const port = process.env.PORT || 8080;
 server.set('port', port);
+
+const instrumentation = require('./instrumentation').setup(server);
+
+const lagredeSokCounter = instrumentation.lagredeSokCounter();
+
+const favoritterCounter = instrumentation.favoritterCounter();
+
+const stillingsokCounter = instrumentation.stillingsokCounter();
 
 server.disable('x-powered-by');
 server.use(compression());
@@ -152,6 +158,21 @@ const startServer = (htmlPages) => {
         var url = req.url.replace("/pam-stillingsok", `${fasitProperties.PAM_CONTEXT_PATH}`);
         res.redirect(`${url}`)
     })
+
+    server.get(['/stillinger/favoritter'], (req, res, next) => {
+        favoritterCounter.inc();
+        next();
+    });
+
+    server.get(['/stillinger/lagrede-sok'], (req, res, next) => {
+        lagredeSokCounter.inc();
+        next();
+    });
+
+    server.get(['/stillinger'], (req, res, next) => {
+        stillingsokCounter.inc();
+        next();
+    });
 
     server.get(
         ['/stillinger/stilling/:uuid'],
