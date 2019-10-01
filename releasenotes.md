@@ -1,3 +1,6 @@
+## RELEASE - 0.139.873-90b4ff1
+#### New in this release: 
++ 2019-10-01 [Analytics] Legger til måling for favoritter og lagrede søk
 ## RELEASE - 0.137.870-29bb763
 #### New in this release: 
 + 2019-09-26 [SEO] Legger til parameter for å spore kilde
