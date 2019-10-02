@@ -1,3 +1,7 @@
+## RELEASE - 0.140.878-c45448b
+#### New in this release: 
++ 2019-10-02 [Analytics] Legger til måling for måle om bruker gjør minst et søk
++ 2019-10-01 [Analytics] Legger til måling for slette favoritter
 ## RELEASE - 0.139.873-90b4ff1
 #### New in this release: 
 + 2019-10-01 [Analytics] Legger til måling for favoritter og lagrede søk
