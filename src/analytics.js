@@ -1,12 +1,11 @@
-import { takeLatest, takeEvery } from 'redux-saga/es/effects';
+import { takeEvery } from 'redux-saga/es/effects';
 import { ADD_TO_FAVOURITES_SUCCESS, REMOVE_FROM_FAVOURITES_SUCCESS } from './favourites/favouritesReducer';
 import { ADD_SAVED_SEARCH_SUCCESS } from './savedSearches/savedSearchesReducer';
 import { SEARCH } from './search/searchReducer';
 
-let igonreFutherEvents = false;
+let ignoreFurtherEvents = false;
 
 function analytics(...props) {
-    console.log(JSON.stringify(props))
     if (window.ga) {
         window.ga(...props);
     }
@@ -25,9 +24,9 @@ function trackAddSavedSearchSuccess(action) {
 }
 
 function trackFirstSearch() {
-    if(!igonreFutherEvents) {
+    if(!ignoreFurtherEvents) {
         analytics('send', 'event', 'Ledige stillinger', 'Utført minst et søk');
-        igonreFutherEvents = true;
+        ignoreFurtherEvents = true;
     }
 }
 
