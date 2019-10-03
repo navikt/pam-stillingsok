@@ -21,7 +21,6 @@ const sendUrlEndring = async (page) => {
     let response;
     try {
         response = fetch({ CONTEXT_PATH } + '/instrumentation', {
-            credentials: 'include',
             body: JSON.stringify(page),
             method: 'POST',
             referrer: CONTEXT_PATH,
@@ -31,7 +30,7 @@ const sendUrlEndring = async (page) => {
             }
         });
     } catch (e) {
-        throw new SearchApiError(e.message, 0);
+        console.error("Kall til instrumentering feilet.")
     }
 
     if (response.status !== 200) {
