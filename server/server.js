@@ -114,7 +114,9 @@ const startServer = (htmlPages) => {
         if(req.body && req.body.page
             && (req.body.page === '/stillinger/favoritter'
                 || req.body.page === '/stillinger/lagrede-sok'
+                || req.body.page === '/stillinger/stilling'
                 || req.body.page === '/stillinger')){
+
             pageHitCounter.inc(req.body.page);
         }
         res.status(200).send({});
