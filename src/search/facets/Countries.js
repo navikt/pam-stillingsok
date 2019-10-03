@@ -2,7 +2,7 @@ import { Checkbox } from 'nav-frontend-skjema';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import capitalizeLocation from '../../../server/common/capitalizeLocation';
+import fixLocationName from '../../../server/common/fixLocationName';
 import { ADD_COUNTRY, REMOVE_COUNTRY } from '../searchQueryReducer';
 import { SEARCH } from '../searchReducer';
 import Facet from './Facet';
@@ -33,7 +33,7 @@ class Countries extends React.Component {
                     <Checkbox
                         name="countries"
                         key={item.key}
-                        label={`${capitalizeLocation(item.key)} (${item.count})`}
+                        label={`${fixLocationName(item.key)} (${item.count})`}
                         value={item.key}
                         onChange={this.onCountriesClick}
                         checked={checkedCountries.includes(item.key)}
