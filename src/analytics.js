@@ -6,38 +6,38 @@ import { SEARCH } from './search/searchReducer';
 
 const ignoreFurther = [];
 
-function analytics(...props) {
+function track(...props) {
     if (window.ga) {
         window.ga(...props);
     }
 }
 
-function once(...props) {
+function trackOnce(...props) {
     const key = props.join();
     if(!ignoreFurther.includes(key)) {
         ignoreFurther.push(key);
-        analytics(props);
+        track(props);
     }
 }
 
 function trackAddToFavouritesSuccess() {
-    analytics('send', 'event', 'Favoritter', 'La til favoritt');
+    track('send', 'event', 'Favoritter', 'La til favoritt');
 }
 
 function trackRemoveFromFavouritesSuccess() {
-    analytics('send', 'event', 'Favoritter', 'Slettet favoritt');
+    track('send', 'event', 'Favoritter', 'Slettet favoritt');
 }
 
 function trackAddSavedSearchSuccess(action) {
-    analytics('send', 'event', 'Lagrede søk', 'La til lagret søk');
+    track('send', 'event', 'Lagrede søk', 'La til lagret søk');
 }
 
 function trackFirstSearch() {
-    once('send', 'event', 'Ledige stillinger', 'Utførte første søk');
+    trackOnce('send', 'event', 'Ledige stillinger', 'Utførte første søk');
 }
 
 function trackFirstInteractionWithSearchBox() {
-    once('send', 'event', 'Ledige stillinger', 'Endret fritekst første gang');
+    trackOnce('send', 'event', 'Ledige stillinger', 'Endret fritekst første gang');
 }
 
 export const analyticsSaga = function* saga() {
