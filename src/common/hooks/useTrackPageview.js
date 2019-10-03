@@ -20,7 +20,7 @@ export default (page, title) => {
 const sendUrlEndring = async (page) => {
     let response;
     try {
-        response = fetch({ CONTEXT_PATH } + '/instrumentation', {
+        response = fetch(`${CONTEXT_PATH}/instrumentation`, {
             body: JSON.stringify(page),
             method: 'POST',
             referrer: CONTEXT_PATH,
