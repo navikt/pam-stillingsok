@@ -1,11 +1,11 @@
 import { takeLatest } from 'redux-saga/effects';
-import { sendUrlEndring } from '../api/instrumentationApi';
+import instrumentationApi from '../api/instrumentationApi';
 
 export const SEND_URL_ENDRING = 'SEND_URL_ENDRING';
 
 function* sendUrlEndring(action) {
     try {
-        yield (sendUrlEndring(action.url));
+        yield (instrumentationApi.sendUrlEndring(action.url));
     } catch (e) {
         console.error('Feil ved instrumentering av page-hit');
 

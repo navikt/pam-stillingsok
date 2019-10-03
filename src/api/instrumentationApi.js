@@ -1,7 +1,7 @@
 import { CONTEXT_PATH } from '../fasitProperties';
 import SearchApiError from './SearchApiError';
 
-export function sendUrlEndring(page) {
+const sendUrlEndring = async (page) => {
     let response;
     try {
         response = fetch({CONTEXT_PATH} + '/instrumentation', {
@@ -21,4 +21,9 @@ export function sendUrlEndring(page) {
     if (response.status !== 201) {
         throw new SearchApiError(response.statusText, response.status);
     }
+};
+
+export default {
+    sendUrlEndring
 }
+
