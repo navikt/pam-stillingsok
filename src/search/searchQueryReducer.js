@@ -1,5 +1,5 @@
 import { put, select, takeLatest } from 'redux-saga/es/effects';
-import capitalizeLocation from '../../server/common/capitalizeLocation';
+import fixLocationName from '../../server/common/fixLocationName';
 import { CONTEXT_PATH } from '../fasitProperties';
 import {
     ADD_SAVED_SEARCH_SUCCESS,
@@ -324,12 +324,12 @@ export function toReadableSearchQuery(searchQuery) {
     if (searchQuery.q) title.push(searchQuery.q);
     if (occupationFirstLevels.length > 0) title.push(occupationFirstLevels.join(', '));
     if (searchQuery.occupationSecondLevels.length > 0) title.push(searchQuery.occupationSecondLevels.map((o) => (o.split('.')[1])).join(', '));
-    if (counties.length > 0) title.push(counties.map((c) => (capitalizeLocation(c))).join(', '));
-    if (searchQuery.municipals.length > 0) title.push(searchQuery.municipals.map((m) => (capitalizeLocation(m.split('.')[1]))).join(', '));
+    if (counties.length > 0) title.push(counties.map((c) => (fixLocationName(c))).join(', '));
+    if (searchQuery.municipals.length > 0) title.push(searchQuery.municipals.map((m) => (fixLocationName(m.split('.')[1]))).join(', '));
     if (searchQuery.extent.length > 0) title.push(searchQuery.extent.join(', '));
     if (searchQuery.engagementType.length > 0) title.push(searchQuery.engagementType.join(', '));
     if (searchQuery.sector.length > 0) title.push(searchQuery.sector.join(', '));
-    if (searchQuery.countries.length > 0) title.push(searchQuery.countries.map((c) => (capitalizeLocation(c))).join(', '));
+    if (searchQuery.countries.length > 0) title.push(searchQuery.countries.map((c) => (fixLocationName(c))).join(', '));
     if (searchQuery.published) title.push(PublishedLabelsEnum[searchQuery.published]);
 
     return title.join(', ');

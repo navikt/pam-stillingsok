@@ -2,7 +2,7 @@ import { Checkbox } from 'nav-frontend-skjema';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import capitalizeLocation from '../../../server/common/capitalizeLocation';
+import fixLocationName from '../../../server/common/fixLocationName';
 import { SearchCriteriaPanels } from './facetPanelsReducer';
 import { ADD_COUNTY, ADD_MUNICIPAL, REMOVE_COUNTY, REMOVE_MUNICIPAL } from '../searchQueryReducer';
 import { SEARCH } from '../searchReducer';
@@ -45,7 +45,7 @@ class Counties extends React.Component {
                     <div key={county.key}>
                         <Checkbox
                             name="location"
-                            label={`${capitalizeLocation(county.key)} (${county.count})`}
+                            label={`${fixLocationName(county.key)} (${county.count})`}
                             value={county.key}
                             onChange={this.onCountyClick}
                             checked={checkedCounties.includes(county.key)}
@@ -54,13 +54,13 @@ class Counties extends React.Component {
                             <div
                                 className="Facet__inner__items"
                                 role="group"
-                                aria-label={`Underområder ${capitalizeLocation(county.key)}`}
+                                aria-label={`Underområder ${fixLocationName(county.key)}`}
                             >
                                 {county.municipals && county.municipals.map((municipal) => (
                                     <Checkbox
                                         name="location"
                                         key={municipal.key}
-                                        label={`${capitalizeLocation(municipal.label)} (${municipal.count})`}
+                                        label={`${fixLocationName(municipal.label)} (${municipal.count})`}
                                         value={municipal.key}
                                         onChange={this.onMunicipalClick}
                                         checked={checkedMunicipals.includes(municipal.key)}

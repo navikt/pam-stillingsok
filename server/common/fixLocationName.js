@@ -1,4 +1,4 @@
-function capitalizeLocation(text) {
+function capitalizeLocationName(text) {
     const separators = [
         ' ', // NORDRE LAND skal bli Nordre Land
         '-', // AUST-AGDER skal bli Aust-Agder
@@ -27,4 +27,17 @@ function capitalizeLocation(text) {
     return text;
 }
 
-module.exports = capitalizeLocation;
+function fixTyposInLocationName(text) {
+    if (text === 'Unjargga Nesseby') {
+        return 'Unjárga Nesseby';
+    }
+    return text;
+}
+
+function fixLocationName(text) {
+    let fixedLocationName = capitalizeLocationName(text);
+    fixedLocationName = fixTyposInLocationName(fixedLocationName);
+    return fixedLocationName;
+}
+
+module.exports = fixLocationName;

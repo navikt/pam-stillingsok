@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Flatknapp } from 'pam-frontend-knapper';
-import { isPredefinedDocumentTitle } from '../../server/common/predefinedSearches';
 import { authenticationEnum } from '../authentication/authenticationReducer';
 import { CONTEXT_PATH } from '../fasitProperties';
 import FavouriteAlertStripe from '../favourites/alertstripe/FavouriteAlertStripe';
@@ -45,14 +44,8 @@ const Search = ({
         restoreStateFromUrl();
     });
 
+    useDocumentTitle('Ledige stillinger - Arbeidsplassen');
     useGoogleAnalytics(CONTEXT_PATH, 'Ledige stillinger');
-
-    useEffect(() => {
-        const doNotOverrideDocumentTitle = isPredefinedDocumentTitle(document.title);
-        if (!doNotOverrideDocumentTitle) {
-            document.title = 'Ledige stillinger - Arbeidsplassen';
-        }
-    }, []);
 
     useEffect(() => {
         initialSearch();

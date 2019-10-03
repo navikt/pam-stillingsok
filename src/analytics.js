@@ -25,7 +25,7 @@ function trackAddSavedSearchSuccess(action) {
 
 function trackFirstSearch() {
     if(!ignoreFurtherEvents) {
-        analytics('send', 'event', 'Ledige stillinger', 'Utført minst et søk');
+        analytics('send', 'event', 'Ledige stillinger', 'Utført minst ett søk');
         ignoreFurtherEvents = true;
     }
 }

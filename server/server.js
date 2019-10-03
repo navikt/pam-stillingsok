@@ -10,7 +10,6 @@ const bodyParser = require('body-parser');
 const compression = require('compression');
 const searchApiConsumer = require('./api/searchApiConsumer');
 const htmlMeta = require('./common/htmlMeta');
-const predefinedSearches = require('./common/predefinedSearches');
 
 /* eslint no-console: 0 */
 
@@ -176,16 +175,7 @@ const startServer = (htmlPages) => {
     server.get(
         ['/stillinger/?', /^\/stillinger\/(?!.*dist).*$/],
         (req, res) => {
-            const searchString = req.originalUrl.substr(req.originalUrl.indexOf('?'));
-            const predefinedSearch = predefinedSearches.isPredefinedQuery(searchString);
-            if (predefinedSearch) {
-                res.render('index', {
-                    title: predefinedSearch.documentTitle,
-                    description: htmlMeta.getDescriptionForPredefinedCity(predefinedSearch.city)
-                });
-            } else {
-                res.send(htmlPages.sok);
-            }
+            res.send(htmlPages.sok);
         }
     );
 
