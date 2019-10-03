@@ -2,7 +2,6 @@ import * as React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { sendUrlEndring } from '../api/instrumentationApi';
-import { SET_SHOW_REGISTER_EMAIL } from '../savedSearches/form/savedSearchFormReducer';
 import { SEND_URL_ENDRING } from './instrumentationReducer';
 
 class Instrumentation extends React.Component {
