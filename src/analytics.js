@@ -7,8 +7,10 @@ import { SEARCH } from './search/searchReducer';
 const ignoreFurther = [];
 
 function track(...props) {
-    if (window.ga) {
-        window.ga(...props);
+    try {
+        ga(...props);
+    } catch (e) {
+        // Google Analytics er ikke definert (dette skjer f.eks. om en bruker blokkerer tracking).
     }
 }
 
