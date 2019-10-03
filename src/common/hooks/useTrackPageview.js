@@ -30,7 +30,7 @@ const sendUrlEndring = async (page) => {
             }
         });
     } catch (e) {
-        console.error("Kall til instrumentering feilet.")
+        console.error(e.toString())
     }
 
     if (response.status !== 200) {

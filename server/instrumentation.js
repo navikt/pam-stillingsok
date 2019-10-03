@@ -8,8 +8,8 @@ const routes = (app) => {
 };
 const pageHitCounter = () => {
     const counter = new prometheus.Counter({
-        name: 'arbeidsplassen_cv_page_hits',
-        help: 'nr of reqests to cv-pages',
+        name: 'arbeidsplassen_stillingsok_page_hits',
+        help: 'nr of reqests to stillingsok-pages',
         labelNames: ['page']
     });
 
