@@ -5,7 +5,7 @@ export const SEND_URL_ENDRING = 'SEND_URL_ENDRING';
 
 function* sendUrlEndring(action) {
     try {
-        yield (instrumentationApi.sendUrlEndring(action.url));
+        yield (instrumentationApi.sendUrlEndring(action.page));
     } catch (e) {
         console.error('Feil ved instrumentering av page-hit');
 

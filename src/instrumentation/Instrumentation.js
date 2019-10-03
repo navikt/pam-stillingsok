@@ -2,6 +2,8 @@ import * as React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { sendUrlEndring } from '../api/instrumentationApi';
+import { SET_SHOW_REGISTER_EMAIL } from '../savedSearches/form/savedSearchFormReducer';
+import { SEND_URL_ENDRING } from './instrumentationReducer';
 
 class Instrumentation extends React.Component {
     componentDidMount() {
@@ -31,7 +33,7 @@ class Instrumentation extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    sendUrlEndring: (page) => dispatch(sendUrlEndring(page))
+    sendUrlEndring: (page) => dispatch({ type: SEND_URL_ENDRING, page })
 });
 
 export default withRouter(connect(null, mapDispatchToProps)(Instrumentation));
