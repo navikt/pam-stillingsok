@@ -17,7 +17,7 @@ export default (page, title) => {
     }, []);
 };
 
-const sendUrlEndring = async (page) => {
+const sendUrlEndring = (page) => {
     let response;
     try {
         response = fetch(`${CONTEXT_PATH}/instrumentation`, {
