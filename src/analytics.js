@@ -21,23 +21,23 @@ function once(...props) {
 }
 
 function trackAddToFavouritesSuccess() {
-    analytics('send', 'event', 'Favoritter', 'Legg til favoritt');
+    analytics('send', 'event', 'Favoritter', 'La til favoritt');
 }
 
 function trackRemoveFromFavouritesSuccess() {
-    analytics('send', 'event', 'Favoritter', 'Slett favoritt');
+    analytics('send', 'event', 'Favoritter', 'Slettet favoritt');
 }
 
 function trackAddSavedSearchSuccess(action) {
-    analytics('send', 'event', 'Lagrede søk', 'Legg til lagret søk');
+    analytics('send', 'event', 'Lagrede søk', 'La til lagret søk');
 }
 
 function trackFirstSearch() {
-    once('send', 'event', 'Ledige stillinger', 'Utført minst ett søk');
+    once('send', 'event', 'Ledige stillinger', 'Utførte første søk');
 }
 
 function trackFirstInteractionWithSearchBox() {
-    once('send', 'event', 'Ledige stillinger', 'Tar i bruk søkeboks');
+    once('send', 'event', 'Ledige stillinger', 'Endret fritekst første gang');
 }
 
 export const analyticsSaga = function* saga() {
