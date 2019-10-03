@@ -1,3 +1,6 @@
+## RELEASE - 0.141.879-ef8da15
+#### New in this release: 
++ 2019-10-03 [Fix] Fikser skrivefeil i location name. Rydder opp i meta descriptions tags
 ## RELEASE - 0.140.878-c45448b
 #### New in this release: 
 + 2019-10-02 [Analytics] Legger til måling for måle om bruker gjør minst et søk
