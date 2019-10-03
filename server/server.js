@@ -160,21 +160,6 @@ const startServer = (htmlPages) => {
         res.redirect(`${url}`)
     })
 
-    server.get(['/stillinger/favoritter'], (req, res, next) => {
-        favoritterCounter.inc();
-        next();
-    });
-
-    server.get(['/stillinger/lagrede-sok'], (req, res, next) => {
-        lagredeSokCounter.inc();
-        next();
-    });
-
-    server.get(['/stillinger'], (req, res, next) => {
-        stillingsokCounter.inc();
-        next();
-    });
-
     server.get(
         ['/stillinger/stilling/:uuid'],
         (req, res) => {
