@@ -1,3 +1,8 @@
+## RELEASE - 0.144.891-15d3002
+#### New in this release: 
++ 2019-10-03 [Analytics] Sender event når man tar i bruk søkeboksen første gang
++ 2019-10-03 [Analytics] Sender event når man tar i bruk søkeboksen første gang
++ 2019-10-03 [Analytics] Sender event når man tar i bruk søkeboksen første gang
 ## RELEASE - 0.141.879-ef8da15
 #### New in this release: 
 + 2019-10-03 [Fix] Fikser skrivefeil i location name. Rydder opp i meta descriptions tags
