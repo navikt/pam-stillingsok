@@ -22,11 +22,7 @@ server.set('port', port);
 
 const instrumentation = require('./instrumentation').setup(server);
 
-const lagredeSokCounter = instrumentation.lagredeSokCounter();
-
-const favoritterCounter = instrumentation.favoritterCounter();
-
-const stillingsokCounter = instrumentation.stillingsokCounter();
+const pageHitCounter = instrumentation.pageHitCounter();
 
 server.disable('x-powered-by');
 server.use(compression());
@@ -112,6 +108,11 @@ const startServer = (htmlPages) => {
                 res.status(err.statusCode ? err.statusCode : 502); // For TCP level errors, no http status code will be available
             })
             .then((val) => res.send(val));
+    });
+
+    server.post(`${fasitProperties.PAM_CONTEXT_PATH}/instrumentation`, (req, res) => {
+        pageHitCounter.inc(req.body.page);
+        res.status(201).send({});
     });
 
     server.post(`${fasitProperties.PAM_CONTEXT_PATH}/api/search`, async (req, res) => {
