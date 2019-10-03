@@ -16,7 +16,6 @@ import SearchPage from './search/Search';
 import StillingPage from './stilling/Stilling';
 import TermsOfUse from './user/TermsOfUse';
 import UserAlertStripe from './user/UserAlertStripe';
-import Instrumentation from './instrumentation/Instrumentation';
 
 class Application extends React.Component {
     componentDidMount() {
@@ -30,7 +29,6 @@ class Application extends React.Component {
                 <BackLinkManager>
                     <div className="Application">
                         <main className="Application__main">
-                            <Instrumentation />
                             <Error />
                             <Switch>
                                 <Route component={TopMenu}/>

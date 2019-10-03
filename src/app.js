@@ -24,7 +24,6 @@ import searchReducer, { saga } from './search/searchReducer';
 import stillingReducer, { stillingSaga } from './stilling/stillingReducer';
 import './styles.less';
 import './variables.less';
-import { instrumentationSaga } from './instrumentation/instrumentationReducer';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -60,7 +59,6 @@ sagaMiddleware.run(authenticationSaga);
 sagaMiddleware.run(unknownFacetsSaga);
 sagaMiddleware.run(searchQuerySaga);
 sagaMiddleware.run(analyticsSaga);
-sagaMiddleware.run(instrumentationSaga);
 
 
 ReactDOM.render(

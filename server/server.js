@@ -111,8 +111,13 @@ const startServer = (htmlPages) => {
     });
 
     server.post(`${fasitProperties.PAM_CONTEXT_PATH}/instrumentation`, (req, res) => {
-        pageHitCounter.inc(req.body.page);
-        res.status(201).send({});
+        if(req.body && req.body.page
+            && (req.body.page === '/stillinger/favoritter'
+                || req.body.page === '/stillinger/lagrede-sok'
+                || req.body.page === '/stillinger')){
+            pageHitCounter.inc(req.body.page);
+        }
+        res.status(200).send({});
     });
 
     server.post(`${fasitProperties.PAM_CONTEXT_PATH}/api/search`, async (req, res) => {
