@@ -25,8 +25,7 @@ const sendUrlEndring = async (page) => {
             method: 'POST',
             referrer: CONTEXT_PATH,
             headers: {
-                'Content-Type': 'application/json',
-                'X-XSRF-TOKEN-ARBEIDSPLASSEN': getCookie('XSRF-TOKEN-ARBEIDSPLASSEN')
+                'Content-Type': 'application/json'
             }
         });
     } catch (e) {
