@@ -18,7 +18,7 @@ import { authenticationEnum } from '../authentication/authenticationReducer';
 import { CONTEXT_PATH } from '../fasitProperties';
 import Sorting from './sorting/Sorting';
 import TotalFavourites from './totalFavourites/TotalFavourutes';
-import { useDocumentTitle, useGoogleAnalytics, useScrollToTop } from '../common/hooks';
+import { useDocumentTitle, useTrackPageview, useScrollToTop } from '../common/hooks';
 
 const Favourites = (
     {
@@ -31,7 +31,7 @@ const Favourites = (
     }
 ) => {
     useDocumentTitle('Favoritter - Arbeidsplassen');
-    useGoogleAnalytics(`${CONTEXT_PATH}/favoritter`, 'Favoritter');
+    useTrackPageview(`${CONTEXT_PATH}/favoritter`, 'Favoritter');
     useScrollToTop();
 
     useEffect(() => {

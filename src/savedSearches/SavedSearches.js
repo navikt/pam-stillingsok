@@ -16,7 +16,7 @@ import './SavedSearches.less';
 import { authenticationEnum } from '../authentication/authenticationReducer';
 import { CONTEXT_PATH } from '../fasitProperties';
 import TotalSavedSearch from './totalSavedSearch/TotalSavedSearch';
-import { useDocumentTitle, useGoogleAnalytics, useScrollToTop } from '../common/hooks';
+import { useDocumentTitle, useTrackPageview, useScrollToTop } from '../common/hooks';
 
 const SavedSearches = ({
     isAuthenticated,
@@ -26,7 +26,7 @@ const SavedSearches = ({
     user
 }) => {
     useDocumentTitle('Lagrede søk - Arbeidsplassen');
-    useGoogleAnalytics(`${CONTEXT_PATH}/lagrede-sok`, 'Lagrede søk');
+    useTrackPageview(`${CONTEXT_PATH}/lagrede-sok`, 'Lagrede søk');
     useScrollToTop();
 
     return (

@@ -28,7 +28,7 @@ import SearchResultCount from './searchResults/SearchResultCount';
 import SearchResults from './searchResults/SearchResults';
 import ShowResultsButton from './showResultsButton/ShowResultsButton';
 import Sorting from './sorting/Sorting';
-import { useDocumentTitle, useGoogleAnalytics } from '../common/hooks';
+import { useDocumentTitle, useTrackPageview } from '../common/hooks';
 
 const Search = ({
     initialSearch,
@@ -44,8 +44,8 @@ const Search = ({
         restoreStateFromUrl();
     });
 
+    useTrackPageview(CONTEXT_PATH, 'Ledige stillinger');
     useDocumentTitle('Ledige stillinger - Arbeidsplassen');
-    useGoogleAnalytics(CONTEXT_PATH, 'Ledige stillinger');
 
     useEffect(() => {
         initialSearch();
