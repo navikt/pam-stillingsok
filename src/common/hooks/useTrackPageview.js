@@ -1,7 +1,6 @@
 /* eslint-disable no-undef */
 import { useEffect } from 'react';
 import { CONTEXT_PATH } from '../../fasitProperties';
-import SearchApiError from '../../api/SearchApiError';
 
 export default (page, title) => {
     useEffect(() => {
@@ -18,9 +17,8 @@ export default (page, title) => {
 };
 
 const sendUrlEndring = (page) => {
-    let response;
     try {
-        response = fetch(`${CONTEXT_PATH}/instrumentation`, {
+        fetch(`${CONTEXT_PATH}/instrumentation`, {
             body: JSON.stringify(page),
             method: 'POST',
             referrer: CONTEXT_PATH,
@@ -29,10 +27,6 @@ const sendUrlEndring = (page) => {
             }
         });
     } catch (e) {
-        console.error(e.toString())
-    }
-
-    if (response.status !== 200) {
-        throw new SearchApiError(response.statusText, response.status);
+        // ignore
     }
 };
