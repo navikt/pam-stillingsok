@@ -6,6 +6,20 @@ import { SEARCH } from '../searchReducer';
 import { SET_SORTING } from '../searchQueryReducer';
 import './Sorting.less';
 
+export function sortingValueToLabel(value) {
+    switch (value) {
+        case 'relevant':
+            return "Mest relevant";
+        case 'published':
+            return "Vis nyeste øverst";
+        case 'expires':
+            return "Søknadsfrist";
+        default:
+            return value
+
+    }
+}
+
 class Sorting extends React.Component {
     onSortingChange = (e) => {
         this.props.setSorting(e.target.value);
@@ -23,9 +37,9 @@ class Sorting extends React.Component {
                     aria-label="Sortér treff"
                     className="typo-normal Sorting__Select"
                 >
-                    <option key="relevant" value="relevant">Mest relevant</option>
-                    <option key="published" value="published">Vis nyeste øverst</option>
-                    <option key="expires" value="expires">Søknadsfrist</option>
+                    <option key="relevant" value="relevant">{sortingValueToLabel('relevant')}</option>
+                    <option key="published" value="published">{sortingValueToLabel('published')}</option>
+                    <option key="expires" value="expires">{sortingValueToLabel('expires')}</option>
                 </Select>
             </div>
         );
