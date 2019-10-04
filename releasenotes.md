@@ -1,3 +1,7 @@
+## RELEASE - 0.146.896-07a15f8
+#### New in this release: 
++ 2019-10-04 [Analytics] Legger til måling av fasetter
++ 2019-10-04 [Analytics] Legger til måling av fasetter
 ## RELEASE - 0.145.893-0ca41b1
 #### New in this release: 
 + 2019-10-03 [Analytics] Sender event når man tar i bruk søkeboksen første gang
