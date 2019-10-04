@@ -31,7 +31,6 @@ const FACET_USAGE = 'Ledige stillinger - Bruk av søkekriterier';
 const ignoreFurther = [];
 
 function track(...props) {
-    console.log(...props)
     if (window.ga) {
         window.ga(...props);
     }
