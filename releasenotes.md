@@ -1,3 +1,8 @@
+## RELEASE - 0.149.903-bfa8ed1
+#### New in this release: 
++ 2019-10-04 [Analytics] Justerer målinger
++ 2019-10-04 [Analytics] Justerer målinger
++ 2019-10-04 [Analytics] Justerer målinger
 ## RELEASE - 0.148.901-29a22bc
 #### New in this release: 
 + 2019-10-04 [Analytics] Justerer målinger
