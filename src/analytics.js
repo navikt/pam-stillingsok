@@ -22,7 +22,6 @@ const LEDIGE_STILLINGER_UNIQUE_EVENTS = 'Ledige stillinger (Unike hendelser)';
 const ignoreFurther = [];
 
 function track(...props) {
-    console.log(...props);
     if (window.ga) {
         window.ga(...props);
     }
