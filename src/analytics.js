@@ -58,23 +58,23 @@ export const analyticsSaga = function* saga() {
     });
 
     yield takeEvery(SEARCH, () => {
-        trackOnce('send', 'event', FIRST_INTERACTION, 'Utførte søk første gang');
+        trackOnce('send', 'event', FIRST_INTERACTION, 'Utførte søk (første gang)');
     });
 
     yield takeEvery(SET_SEARCH_STRING, () => {
-        trackOnce('send', 'event', FIRST_INTERACTION, 'Endret fritekst første gang');
+        trackOnce('send', 'event', FIRST_INTERACTION, 'Endret fritekst (første gang)');
     });
 
     yield takeEvery([ADD_OCCUPATION_FIRST_LEVEL, REMOVE_OCCUPATION_FIRST_LEVEL], (action) => {
-        trackOnce('send', 'event', FIRST_INTERACTION, 'Valgte yrke første gang');
+        trackOnce('send', 'event', FIRST_INTERACTION, 'Valgte yrke (første gang)');
     });
 
     yield takeEvery(ADD_OCCUPATION_FIRST_LEVEL, (action) => {
-        trackOnce('send', 'event', FACET_USAGE, 'Valgte yrkesnivå 1', action.firstLevel);
+        trackOnce('send', 'event', FACET_USAGE, 'Valgte yrkesnivå 1 (minst en gang)', action.firstLevel);
     });
 
     yield takeEvery([ADD_OCCUPATION_SECOND_LEVEL, REMOVE_OCCUPATION_SECOND_LEVEL], (action) => {
-        trackOnce('send', 'event', FIRST_INTERACTION, 'Valgte yrke første gang');
+        trackOnce('send', 'event', FIRST_INTERACTION, 'Valgte yrke (første gang)');
     });
 
     yield takeEvery(ADD_OCCUPATION_SECOND_LEVEL, (action) => {
@@ -86,27 +86,27 @@ export const analyticsSaga = function* saga() {
             label = action.secondLevel;
         }
 
-        trackOnce('send', 'event', FACET_USAGE, 'Valgte yrkesnivå 2', label);
+        trackOnce('send', 'event', FACET_USAGE, 'Valgte yrkesnivå 2 (minst en gang)', label);
     });
 
     yield takeEvery([ADD_COUNTRY, REMOVE_COUNTRY], (action) => {
-        trackOnce('send', 'event', FIRST_INTERACTION, 'Valgte land første gang');
+        trackOnce('send', 'event', FIRST_INTERACTION, 'Valgte land (første gang)');
     });
 
     yield takeEvery(ADD_COUNTRY, (action) => {
-        trackOnce('send', 'event', FACET_USAGE, 'Valgte land', fixLocationName(action.value));
+        trackOnce('send', 'event', FACET_USAGE, 'Valgte land (minst en gang)', fixLocationName(action.value));
     });
 
     yield takeEvery([ADD_COUNTY, REMOVE_COUNTY], (action) => {
-        trackOnce('send', 'event', FIRST_INTERACTION, 'Valgte område første gang');
+        trackOnce('send', 'event', FIRST_INTERACTION, 'Valgte område (første gang)');
     });
 
     yield takeEvery(ADD_COUNTY, (action) => {
-        trackOnce('send', 'event', FACET_USAGE, 'Valgte fylke', fixLocationName(action.county));
+        trackOnce('send', 'event', FACET_USAGE, 'Valgte fylke (minst en gang)', fixLocationName(action.county));
     });
 
     yield takeEvery([ADD_MUNICIPAL, REMOVE_MUNICIPAL], (action) => {
-        trackOnce('send', 'event', FIRST_INTERACTION, 'Valgte område første gang');
+        trackOnce('send', 'event', FIRST_INTERACTION, 'Valgte område (første gang)');
     });
 
     yield takeEvery(ADD_MUNICIPAL, (action) => {
@@ -117,42 +117,42 @@ export const analyticsSaga = function* saga() {
         } else {
             label = action.municipal;
         }
-        trackOnce('send', 'event', FACET_USAGE, 'Valgte kommune', label);
+        trackOnce('send', 'event', FACET_USAGE, 'Valgte kommune (minst en gang)', label);
     });
 
     yield takeEvery(SET_PUBLISHED, (action) => {
-        trackOnce('send', 'event', FIRST_INTERACTION, 'Valgte publisert første gang');
+        trackOnce('send', 'event', FIRST_INTERACTION, 'Valgte publisert (første gang)');
         if(action.value !== undefined) {
-            trackOnce('send', 'event', FACET_USAGE, 'Valgte publisert', PublishedLabelsEnum[action.value]);
+            trackOnce('send', 'event', FACET_USAGE, 'Valgte publisert (minst en gang)', PublishedLabelsEnum[action.value]);
         }
     });
 
     yield takeEvery([ADD_EXTENT, REMOVE_EXTENT], (action) => {
-        trackOnce('send', 'event', FIRST_INTERACTION, 'Valgte heltid/deltid første gang');
+        trackOnce('send', 'event', FIRST_INTERACTION, 'Valgte heltid/deltid (første gang)');
     });
 
     yield takeEvery(ADD_EXTENT, (action) => {
-        trackOnce('send', 'event', FACET_USAGE, 'Valgte heltid/deltid', action.value);
+        trackOnce('send', 'event', FACET_USAGE, 'Valgte heltid/deltid (minst en gang)', action.value);
     });
 
     yield takeEvery([ADD_SECTOR, REMOVE_SECTOR], (action) => {
-        trackOnce('send', 'event', FIRST_INTERACTION, 'Valgte sektor første gang');
+        trackOnce('send', 'event', FIRST_INTERACTION, 'Valgte sektor (første gang)');
     });
 
     yield takeEvery(ADD_SECTOR, (action) => {
-        trackOnce('send', 'event', FACET_USAGE, 'Valgte sektor', action.value);
+        trackOnce('send', 'event', FACET_USAGE, 'Valgte sektor (minst en gang)', action.value);
     });
 
     yield takeEvery([ADD_ENGAGEMENT_TYPE, REMOVE_ENGAGEMENT_TYPE], (action) => {
-        trackOnce('send', 'event', FIRST_INTERACTION, 'Valgte ansettelsesform første gang');
+        trackOnce('send', 'event', FIRST_INTERACTION, 'Valgte ansettelsesform (første gang)');
     });
 
     yield takeEvery(ADD_ENGAGEMENT_TYPE, (action) => {
-        trackOnce('send', 'event', FACET_USAGE, 'Valgte ansettelsesform', action.value);
+        trackOnce('send', 'event', FACET_USAGE, 'Valgte ansettelsesform (minst en gang)', action.value);
     });
 
     yield takeEvery(SET_SORTING, (action) => {
-        trackOnce('send', 'event', FIRST_INTERACTION, 'Endret sortering første gang');
-        trackOnce('send', 'event', FACET_USAGE, 'Endret sortering', sortingValueToLabel(action.sortField));
+        trackOnce('send', 'event', FIRST_INTERACTION, 'Endret sortering (første gang)');
+        trackOnce('send', 'event', FACET_USAGE, 'Endret sortering (minst en gang)', sortingValueToLabel(action.sortField));
     });
 };
