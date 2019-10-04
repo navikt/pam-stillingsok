@@ -12,16 +12,26 @@ import {
     ADD_OCCUPATION_FIRST_LEVEL,
     ADD_OCCUPATION_SECOND_LEVEL,
     ADD_SECTOR,
+    REMOVE_COUNTRY,
+    REMOVE_COUNTY,
+    REMOVE_ENGAGEMENT_TYPE,
+    REMOVE_EXTENT,
+    REMOVE_MUNICIPAL, REMOVE_OCCUPATION_FIRST_LEVEL,
+    REMOVE_OCCUPATION_SECOND_LEVEL,
+    REMOVE_SECTOR,
     SET_PUBLISHED,
-    SET_SEARCH_STRING, SET_SORTING
+    SET_SEARCH_STRING,
+    SET_SORTING
 } from './search/searchQueryReducer';
 import { SEARCH } from './search/searchReducer';
 import { sortingValueToLabel } from './search/sorting/Sorting';
 
-const LEDIGE_STILLINGER_UNIQUE_EVENTS = 'Ledige stillinger (Unike hendelser)';
+const FIRST_INTERACTION_WITH_SEARCH = 'Ledige stillinger - Første gangs bruk av søk';
+const LEDIGE_STILLINGER = 'Ledige stillinger';
 const ignoreFurther = [];
 
 function track(...props) {
+    console.log(...props)
     if (window.ga) {
         window.ga(...props);
     }
@@ -49,15 +59,23 @@ export const analyticsSaga = function* saga() {
     });
 
     yield takeEvery(SEARCH, () => {
-        trackOnce('send', 'event', LEDIGE_STILLINGER_UNIQUE_EVENTS, 'Utførte søk');
+        trackOnce('send', 'event', FIRST_INTERACTION_WITH_SEARCH, 'Utførte søk første gang');
     });
 
     yield takeEvery(SET_SEARCH_STRING, () => {
-        trackOnce('send', 'event', LEDIGE_STILLINGER_UNIQUE_EVENTS, 'Endret fritekst');
+        trackOnce('send', 'event', FIRST_INTERACTION_WITH_SEARCH, 'Endret fritekst første gang');
+    });
+
+    yield takeEvery([ADD_OCCUPATION_FIRST_LEVEL, REMOVE_OCCUPATION_FIRST_LEVEL], (action) => {
+        trackOnce('send', 'event', FIRST_INTERACTION_WITH_SEARCH, 'Valgte yrke første gang');
     });
 
     yield takeEvery(ADD_OCCUPATION_FIRST_LEVEL, (action) => {
-        trackOnce('send', 'event', LEDIGE_STILLINGER_UNIQUE_EVENTS, 'Valgte yrke nivå 1', action.firstLevel);
+        trackOnce('send', 'event', LEDIGE_STILLINGER, 'Valgte yrkesnivå 1', action.firstLevel);
+    });
+
+    yield takeEvery([ADD_OCCUPATION_SECOND_LEVEL, REMOVE_OCCUPATION_SECOND_LEVEL], (action) => {
+        trackOnce('send', 'event', FIRST_INTERACTION_WITH_SEARCH, 'Valgte yrke første gang');
     });
 
     yield takeEvery(ADD_OCCUPATION_SECOND_LEVEL, (action) => {
@@ -69,15 +87,27 @@ export const analyticsSaga = function* saga() {
             label = action.secondLevel;
         }
 
-        trackOnce('send', 'event', LEDIGE_STILLINGER_UNIQUE_EVENTS, 'Valgte yrke nivå 2', label);
+        trackOnce('send', 'event', LEDIGE_STILLINGER, 'Valgte yrkesnivå 2', label);
+    });
+
+    yield takeEvery([ADD_COUNTRY, REMOVE_COUNTRY], (action) => {
+        trackOnce('send', 'event', FIRST_INTERACTION_WITH_SEARCH, 'Valgte land første gang');
     });
 
     yield takeEvery(ADD_COUNTRY, (action) => {
-        trackOnce('send', 'event', LEDIGE_STILLINGER_UNIQUE_EVENTS, 'Valgte land', fixLocationName(action.value));
+        trackOnce('send', 'event', LEDIGE_STILLINGER, 'Valgte land', fixLocationName(action.value));
+    });
+
+    yield takeEvery([ADD_COUNTY, REMOVE_COUNTY], (action) => {
+        trackOnce('send', 'event', FIRST_INTERACTION_WITH_SEARCH, 'Valgte område første gang');
     });
 
     yield takeEvery(ADD_COUNTY, (action) => {
-        trackOnce('send', 'event', LEDIGE_STILLINGER_UNIQUE_EVENTS, 'Valgte fylke', fixLocationName(action.county));
+        trackOnce('send', 'event', LEDIGE_STILLINGER, 'Valgte fylke', fixLocationName(action.county));
+    });
+
+    yield takeEvery([ADD_MUNICIPAL, REMOVE_MUNICIPAL], (action) => {
+        trackOnce('send', 'event', FIRST_INTERACTION_WITH_SEARCH, 'Valgte område første gang');
     });
 
     yield takeEvery(ADD_MUNICIPAL, (action) => {
@@ -88,28 +118,42 @@ export const analyticsSaga = function* saga() {
         } else {
             label = action.municipal;
         }
-        trackOnce('send', 'event', LEDIGE_STILLINGER_UNIQUE_EVENTS, 'Valgte kommune', label);
+        trackOnce('send', 'event', LEDIGE_STILLINGER, 'Valgte kommune', label);
     });
 
     yield takeEvery(SET_PUBLISHED, (action) => {
+        trackOnce('send', 'event', FIRST_INTERACTION_WITH_SEARCH, 'Valgte publisert første gang');
         if(action.value !== undefined) {
-            trackOnce('send', 'event', LEDIGE_STILLINGER_UNIQUE_EVENTS, 'Valgte publisert', PublishedLabelsEnum[action.value]);
+            trackOnce('send', 'event', LEDIGE_STILLINGER, 'Valgte publisert', PublishedLabelsEnum[action.value]);
         }
     });
 
+    yield takeEvery([ADD_EXTENT, REMOVE_EXTENT], (action) => {
+        trackOnce('send', 'event', FIRST_INTERACTION_WITH_SEARCH, 'Valgte heltid/deltid første gang');
+    });
+
     yield takeEvery(ADD_EXTENT, (action) => {
-        trackOnce('send', 'event', LEDIGE_STILLINGER_UNIQUE_EVENTS, 'Valgte heltid/deltid', action.value);
+        trackOnce('send', 'event', LEDIGE_STILLINGER, 'Valgte heltid/deltid', action.value);
+    });
+
+    yield takeEvery([ADD_SECTOR, REMOVE_SECTOR], (action) => {
+        trackOnce('send', 'event', FIRST_INTERACTION_WITH_SEARCH, 'Valgte sektor første gang');
     });
 
     yield takeEvery(ADD_SECTOR, (action) => {
-        trackOnce('send', 'event', LEDIGE_STILLINGER_UNIQUE_EVENTS, 'Valgte sektor', action.value);
+        trackOnce('send', 'event', LEDIGE_STILLINGER, 'Valgte sektor', action.value);
+    });
+
+    yield takeEvery([ADD_ENGAGEMENT_TYPE, REMOVE_ENGAGEMENT_TYPE], (action) => {
+        trackOnce('send', 'event', FIRST_INTERACTION_WITH_SEARCH, 'Valgte ansettelsesform første gang');
     });
 
     yield takeEvery(ADD_ENGAGEMENT_TYPE, (action) => {
-        trackOnce('send', 'event', LEDIGE_STILLINGER_UNIQUE_EVENTS, 'Valgte ansettelsesform', action.value);
+        trackOnce('send', 'event', LEDIGE_STILLINGER, 'Valgte ansettelsesform', action.value);
     });
 
     yield takeEvery(SET_SORTING, (action) => {
-        trackOnce('send', 'event', LEDIGE_STILLINGER_UNIQUE_EVENTS, 'Endret sortering', sortingValueToLabel(action.sortField));
+        trackOnce('send', 'event', FIRST_INTERACTION_WITH_SEARCH, 'Endret sortering første gang');
+        trackOnce('send', 'event', LEDIGE_STILLINGER, 'Endret sortering', sortingValueToLabel(action.sortField));
     });
 };
