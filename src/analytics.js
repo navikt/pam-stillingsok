@@ -27,8 +27,8 @@ import { SEARCH } from './search/searchReducer';
 import { sortingValueToLabel } from './search/sorting/Sorting';
 
 const LEDIGE_STILLINGER = 'Ledige stillinger';
-const FIRST_INTERACTION_WITH_FACET = 'Ledige stillinger - Søkekriterier - Første bruk av søkekriterie';
-const FIRST_USAGE_OF_FACET_VALUE = 'Ledige stillinger - Søkekriterier - Første bruk av verdier';
+const FIRST_INTERACTION_WITH_FACET = 'Ledige stillinger - Første bruk av fasett';
+const FIRST_USAGE_OF_FACET_VALUE = 'Ledige stillinger - Første bruk av fasettverdi';
 const ignoreFurther = [];
 
 function track(...props) {
@@ -67,7 +67,7 @@ export const analyticsSaga = function* saga() {
     });
 
     yield takeEvery([ADD_OCCUPATION_FIRST_LEVEL, REMOVE_OCCUPATION_FIRST_LEVEL], (action) => {
-        trackOnce('send', 'event', FIRST_INTERACTION_WITH_FACET, 'Brukte søkekriteriet "Yrke" første gang');
+        trackOnce('send', 'event', FIRST_INTERACTION_WITH_FACET, 'Brukte fasetten "Yrke" første gang');
     });
 
     yield takeEvery(ADD_OCCUPATION_FIRST_LEVEL, (action) => {
@@ -75,7 +75,7 @@ export const analyticsSaga = function* saga() {
     });
 
     yield takeEvery([ADD_OCCUPATION_SECOND_LEVEL, REMOVE_OCCUPATION_SECOND_LEVEL], (action) => {
-        trackOnce('send', 'event', FIRST_INTERACTION_WITH_FACET, 'Brukte søkekriteriet "Yrke" første gang');
+        trackOnce('send', 'event', FIRST_INTERACTION_WITH_FACET, 'Brukte fasetten "Yrke" første gang');
     });
 
     yield takeEvery(ADD_OCCUPATION_SECOND_LEVEL, (action) => {
@@ -91,7 +91,7 @@ export const analyticsSaga = function* saga() {
     });
 
     yield takeEvery([ADD_COUNTRY, REMOVE_COUNTRY], (action) => {
-        trackOnce('send', 'event', FIRST_INTERACTION_WITH_FACET, 'Brukte søkekriteriet "Land" første gang');
+        trackOnce('send', 'event', FIRST_INTERACTION_WITH_FACET, 'Brukte fasetten "Land" første gang');
     });
 
     yield takeEvery(ADD_COUNTRY, (action) => {
@@ -99,7 +99,7 @@ export const analyticsSaga = function* saga() {
     });
 
     yield takeEvery([ADD_COUNTY, REMOVE_COUNTY], (action) => {
-        trackOnce('send', 'event', FIRST_INTERACTION_WITH_FACET, 'Brukte søkekriteriet "Område" første gang');
+        trackOnce('send', 'event', FIRST_INTERACTION_WITH_FACET, 'Brukte fasetten "Område" første gang');
     });
 
     yield takeEvery(ADD_COUNTY, (action) => {
@@ -107,7 +107,7 @@ export const analyticsSaga = function* saga() {
     });
 
     yield takeEvery([ADD_MUNICIPAL, REMOVE_MUNICIPAL], (action) => {
-        trackOnce('send', 'event', FIRST_INTERACTION_WITH_FACET, 'Brukte søkekriteriet "Område" første gang');
+        trackOnce('send', 'event', FIRST_INTERACTION_WITH_FACET, 'Brukte fasetten "Område" første gang');
     });
 
     yield takeEvery(ADD_MUNICIPAL, (action) => {
@@ -122,14 +122,14 @@ export const analyticsSaga = function* saga() {
     });
 
     yield takeEvery(SET_PUBLISHED, (action) => {
-        trackOnce('send', 'event', FIRST_INTERACTION_WITH_FACET, 'Brukte søkekriteriet "Publisert" første gang');
+        trackOnce('send', 'event', FIRST_INTERACTION_WITH_FACET, 'Brukte fasetten "Publisert" første gang');
         if(action.value !== undefined) {
             trackOnce('send', 'event', FIRST_USAGE_OF_FACET_VALUE, 'Valgte publisert (minst en gang)', PublishedLabelsEnum[action.value]);
         }
     });
 
     yield takeEvery([ADD_EXTENT, REMOVE_EXTENT], (action) => {
-        trackOnce('send', 'event', FIRST_INTERACTION_WITH_FACET, 'Brukte søkekriteriet "Heltid/deltid" første gang');
+        trackOnce('send', 'event', FIRST_INTERACTION_WITH_FACET, 'Brukte fasetten "Heltid/deltid" første gang');
     });
 
     yield takeEvery(ADD_EXTENT, (action) => {
@@ -137,7 +137,7 @@ export const analyticsSaga = function* saga() {
     });
 
     yield takeEvery([ADD_SECTOR, REMOVE_SECTOR], (action) => {
-        trackOnce('send', 'event', FIRST_INTERACTION_WITH_FACET, 'Brukte søkekriteriet "Sektor" første gang');
+        trackOnce('send', 'event', FIRST_INTERACTION_WITH_FACET, 'Brukte fasetten "Sektor" første gang');
     });
 
     yield takeEvery(ADD_SECTOR, (action) => {
@@ -145,7 +145,7 @@ export const analyticsSaga = function* saga() {
     });
 
     yield takeEvery([ADD_ENGAGEMENT_TYPE, REMOVE_ENGAGEMENT_TYPE], (action) => {
-        trackOnce('send', 'event', FIRST_INTERACTION_WITH_FACET, 'Brukte søkekriteriet "Ansettelsesform" første gang');
+        trackOnce('send', 'event', FIRST_INTERACTION_WITH_FACET, 'Brukte fasetten "Ansettelsesform" første gang');
     });
 
     yield takeEvery(ADD_ENGAGEMENT_TYPE, (action) => {
@@ -153,7 +153,7 @@ export const analyticsSaga = function* saga() {
     });
 
     yield takeEvery(SET_SORTING, (action) => {
-        trackOnce('send', 'event', FIRST_INTERACTION_WITH_FACET, 'Brukte søkekriteriet sortering første gang');
+        trackOnce('send', 'event', FIRST_INTERACTION_WITH_FACET, 'Brukte fasetten sortering første gang');
         trackOnce('send', 'event', FIRST_USAGE_OF_FACET_VALUE, 'Endret sortering (minst en gang)', sortingValueToLabel(action.sortField));
     });
 };
