@@ -1,3 +1,8 @@
+## RELEASE - 0.147.897-53a41fe
+#### New in this release: 
++ 2019-10-04 [Analytics] Justerer målinger
++ 2019-10-04 [Analytics] Justerer målinger
++ 2019-10-04 [Analytics] Justerer målinger
 ## RELEASE - 0.146.896-07a15f8
 #### New in this release: 
 + 2019-10-04 [Analytics] Legger til måling av fasetter
