@@ -1,3 +1,6 @@
+## RELEASE - 0.152.913-9ca0a95
+#### New in this release: 
++ 2019-10-09 [Fix] Legger til paginering i analytics
 ## RELEASE - 0.151.912-479d24f
 #### New in this release: 
 + 2019-10-09 [Fix] Fjerner console.log
