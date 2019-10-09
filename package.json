@@ -76,7 +76,7 @@
     "request-promise": "^4.2.4",
     "rimraf": "^2.6.2",
     "whatwg-fetch": "^2.0.4",
-    "snyk": "^1.230.3"
+    "snyk": "^1.232.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
