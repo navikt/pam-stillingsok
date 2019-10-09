@@ -23,7 +23,7 @@ import {
     SET_SEARCH_STRING,
     SET_SORTING
 } from './search/searchQueryReducer';
-import { SEARCH } from './search/searchReducer';
+import { LOAD_MORE, SEARCH } from './search/searchReducer';
 import { sortingValueToLabel } from './search/sorting/Sorting';
 
 const LEDIGE_STILLINGER_UNIQUE_EVENTS = 'Ledige stillinger > Unike hendelser';
@@ -104,6 +104,9 @@ export const analyticsSaga = function* saga() {
 
     yield takeEvery(ADD_COUNTY, (action) => {
         trackOnce(LEDIGE_STILLINGER_UNIQUE_EVENTS, 'Valgte fylke', fixLocationName(action.county));
+        if (action.county.toLowerCase() === 'oslo') {
+            trackOnce(LEDIGE_STILLINGER_UNIQUE_EVENTS, 'Valgte kommune', fixLocationName(action.county));
+        }
     });
 
     yield takeEvery([ADD_MUNICIPAL, REMOVE_MUNICIPAL], (action) => {
@@ -153,7 +156,11 @@ export const analyticsSaga = function* saga() {
     });
 
     yield takeEvery(SET_SORTING, (action) => {
-        trackOnce(LEDIGE_STILLINGER_UNIQUE_EVENTS, 'Endret søkekriter', 'Sortér etter');
+        trackOnce(LEDIGE_STILLINGER_UNIQUE_EVENTS, 'Endret søkekriter', 'Sortering');
         trackOnce(LEDIGE_STILLINGER_UNIQUE_EVENTS, 'Endret sortering', sortingValueToLabel(action.sortField));
+    });
+
+    yield takeEvery(LOAD_MORE, (action) => {
+        trackOnce(LEDIGE_STILLINGER_UNIQUE_EVENTS, 'Endret søkekriter', 'Paginiering');
     });
 };
