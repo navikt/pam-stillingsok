@@ -26,12 +26,13 @@ import {
 import { SEARCH } from './search/searchReducer';
 import { sortingValueToLabel } from './search/sorting/Sorting';
 
-const LEDIGE_STILLINGER = 'Ledige stillinger';
-const FIRST_INTERACTION_WITH_FACET = 'Ledige stillinger - Fasetter';
-const FIRST_USAGE_OF_FACET_VALUE = 'Ledige stillinger - Fasettverdier';
+const LEDIGE_STILLINGER_UNIQUE_EVENTS = 'Ledige stillinger > Unike hendelser';
+const LEDIGE_STILLINGER_FAVOURITES = 'Ledige stillinger > Favoritter';
+const LEDIGE_STILLINGER_SAVED_SEARCHES = 'Ledige stillinger > Lagrede søk';
 const ignoreFurther = [];
 
 function track(...props) {
+    console.log(...props)
     if (window.ga) {
         window.ga(...props);
     }
@@ -41,41 +42,41 @@ function trackOnce(...props) {
     const key = props.join();
     if(!ignoreFurther.includes(key)) {
         ignoreFurther.push(key);
-        track(...props);
+        track('send', 'event', ...props);
     }
 }
 
 export const analyticsSaga = function* saga() {
     yield takeEvery(ADD_TO_FAVOURITES_SUCCESS, () => {
-        track('send', 'event', 'Favoritter', 'La til favoritt');
+        track('send', 'event', LEDIGE_STILLINGER_FAVOURITES, 'La til favoritt');
     });
 
     yield takeEvery(REMOVE_FROM_FAVOURITES_SUCCESS, () => {
-        track('send', 'event', 'Favoritter', 'Slettet favoritt');
+        track('send', 'event', LEDIGE_STILLINGER_FAVOURITES, 'Slettet favoritt');
     });
 
     yield takeEvery(ADD_SAVED_SEARCH_SUCCESS, () => {
-        track('send', 'event', 'Lagrede søk', 'La til lagret søk');
+        track('send', 'event', LEDIGE_STILLINGER_SAVED_SEARCHES, 'La til lagret søk');
     });
 
     yield takeEvery(SEARCH, () => {
-        trackOnce('send', 'event', LEDIGE_STILLINGER, 'Utførte første søk');
+        trackOnce(LEDIGE_STILLINGER_UNIQUE_EVENTS, 'Utførte søk');
     });
 
     yield takeEvery(SET_SEARCH_STRING, () => {
-        trackOnce('send', 'event', FIRST_INTERACTION_WITH_FACET, 'Brukte fritekstfeltet minst en gang');
+        trackOnce(LEDIGE_STILLINGER_UNIQUE_EVENTS, 'Endret søkekriterie', 'Fritekstfelt');
     });
 
     yield takeEvery([ADD_OCCUPATION_FIRST_LEVEL, REMOVE_OCCUPATION_FIRST_LEVEL], (action) => {
-        trackOnce('send', 'event', FIRST_INTERACTION_WITH_FACET, 'Brukte fasetten "Yrke" minst en gang');
+        trackOnce(LEDIGE_STILLINGER_UNIQUE_EVENTS, 'Endret søkekriterie', 'Yrke');
     });
 
     yield takeEvery(ADD_OCCUPATION_FIRST_LEVEL, (action) => {
-        trackOnce('send', 'event', FIRST_USAGE_OF_FACET_VALUE, 'Valgte yrkesnivå 1 minst en gang', action.firstLevel);
+        trackOnce(LEDIGE_STILLINGER_UNIQUE_EVENTS, 'Valgte yrkesnivå 1', action.firstLevel);
     });
 
     yield takeEvery([ADD_OCCUPATION_SECOND_LEVEL, REMOVE_OCCUPATION_SECOND_LEVEL], (action) => {
-        trackOnce('send', 'event', FIRST_INTERACTION_WITH_FACET, 'Brukte fasetten "Yrke" minst en gang');
+        trackOnce(LEDIGE_STILLINGER_UNIQUE_EVENTS, 'Endret søkekriterie', 'Yrke');
     });
 
     yield takeEvery(ADD_OCCUPATION_SECOND_LEVEL, (action) => {
@@ -87,27 +88,27 @@ export const analyticsSaga = function* saga() {
             label = action.secondLevel;
         }
 
-        trackOnce('send', 'event', FIRST_USAGE_OF_FACET_VALUE, 'Valgte yrkesnivå 2 minst en gang', label);
+        trackOnce(LEDIGE_STILLINGER_UNIQUE_EVENTS, 'Valgte yrkesnivå 2', label);
     });
 
     yield takeEvery([ADD_COUNTRY, REMOVE_COUNTRY], (action) => {
-        trackOnce('send', 'event', FIRST_INTERACTION_WITH_FACET, 'Brukte fasetten "Land" minst en gang');
+        trackOnce(LEDIGE_STILLINGER_UNIQUE_EVENTS, 'Endret søkekriterie', 'Land');
     });
 
     yield takeEvery(ADD_COUNTRY, (action) => {
-        trackOnce('send', 'event', FIRST_USAGE_OF_FACET_VALUE, 'Valgte land minst en gang', fixLocationName(action.value));
+        trackOnce(LEDIGE_STILLINGER_UNIQUE_EVENTS, 'Valgte land', fixLocationName(action.value));
     });
 
     yield takeEvery([ADD_COUNTY, REMOVE_COUNTY], (action) => {
-        trackOnce('send', 'event', FIRST_INTERACTION_WITH_FACET, 'Brukte fasetten "Område" minst en gang');
+        trackOnce(LEDIGE_STILLINGER_UNIQUE_EVENTS, 'Endret søkekriterie', 'Område');
     });
 
     yield takeEvery(ADD_COUNTY, (action) => {
-        trackOnce('send', 'event', FIRST_USAGE_OF_FACET_VALUE, 'Valgte fylke minst en gang', fixLocationName(action.county));
+        trackOnce(LEDIGE_STILLINGER_UNIQUE_EVENTS, 'Valgte fylke', fixLocationName(action.county));
     });
 
     yield takeEvery([ADD_MUNICIPAL, REMOVE_MUNICIPAL], (action) => {
-        trackOnce('send', 'event', FIRST_INTERACTION_WITH_FACET, 'Brukte fasetten "Område" minst en gang');
+        trackOnce(LEDIGE_STILLINGER_UNIQUE_EVENTS, 'Endret søkekriterie', 'Område');
     });
 
     yield takeEvery(ADD_MUNICIPAL, (action) => {
@@ -118,42 +119,42 @@ export const analyticsSaga = function* saga() {
         } else {
             label = action.municipal;
         }
-        trackOnce('send', 'event', FIRST_USAGE_OF_FACET_VALUE, 'Valgte kommune minst en gang', label);
+        trackOnce(LEDIGE_STILLINGER_UNIQUE_EVENTS, 'Valgte kommune', label);
     });
 
     yield takeEvery(SET_PUBLISHED, (action) => {
-        trackOnce('send', 'event', FIRST_INTERACTION_WITH_FACET, 'Brukte fasetten "Publisert" minst en gang');
+        trackOnce(LEDIGE_STILLINGER_UNIQUE_EVENTS, 'Endret søkekriterie', 'Publisert');
         if(action.value !== undefined) {
-            trackOnce('send', 'event', FIRST_USAGE_OF_FACET_VALUE, 'Valgte publisert minst en gang', PublishedLabelsEnum[action.value]);
+            trackOnce(LEDIGE_STILLINGER_UNIQUE_EVENTS, 'Valgte publisert', PublishedLabelsEnum[action.value]);
         }
     });
 
     yield takeEvery([ADD_EXTENT, REMOVE_EXTENT], (action) => {
-        trackOnce('send', 'event', FIRST_INTERACTION_WITH_FACET, 'Brukte fasetten "Heltid/deltid" minst en gang');
+        trackOnce(LEDIGE_STILLINGER_UNIQUE_EVENTS, 'Endret søkekriterie', 'Heltid/deltid');
     });
 
     yield takeEvery(ADD_EXTENT, (action) => {
-        trackOnce('send', 'event', FIRST_USAGE_OF_FACET_VALUE, 'Valgte heltid/deltid minst en gang', action.value);
+        trackOnce(LEDIGE_STILLINGER_UNIQUE_EVENTS, 'Valgte heltid/deltid', action.value);
     });
 
     yield takeEvery([ADD_SECTOR, REMOVE_SECTOR], (action) => {
-        trackOnce('send', 'event', FIRST_INTERACTION_WITH_FACET, 'Brukte fasetten "Sektor" minst en gang');
+        trackOnce(LEDIGE_STILLINGER_UNIQUE_EVENTS, 'Endret søkekriterie', 'Sektor');
     });
 
     yield takeEvery(ADD_SECTOR, (action) => {
-        trackOnce('send', 'event', FIRST_USAGE_OF_FACET_VALUE, 'Valgte sektor minst en gang', action.value);
+        trackOnce(LEDIGE_STILLINGER_UNIQUE_EVENTS, 'Valgte sektor', action.value);
     });
 
     yield takeEvery([ADD_ENGAGEMENT_TYPE, REMOVE_ENGAGEMENT_TYPE], (action) => {
-        trackOnce('send', 'event', FIRST_INTERACTION_WITH_FACET, 'Brukte fasetten "Ansettelsesform" minst en gang');
+        trackOnce(LEDIGE_STILLINGER_UNIQUE_EVENTS, 'Endret søkekriterie', 'Ansettelsesform');
     });
 
     yield takeEvery(ADD_ENGAGEMENT_TYPE, (action) => {
-        trackOnce('send', 'event', FIRST_USAGE_OF_FACET_VALUE, 'Valgte ansettelsesform minst en gang', action.value);
+        trackOnce(LEDIGE_STILLINGER_UNIQUE_EVENTS, 'Valgte ansettelsesform', action.value);
     });
 
     yield takeEvery(SET_SORTING, (action) => {
-        trackOnce('send', 'event', FIRST_INTERACTION_WITH_FACET, 'Brukte fasetten "Sorter etter" minst en gang');
-        trackOnce('send', 'event', FIRST_USAGE_OF_FACET_VALUE, 'Endret sortering minst en gang', sortingValueToLabel(action.sortField));
+        trackOnce(LEDIGE_STILLINGER_UNIQUE_EVENTS, 'Endret søkekriter', 'Sortér etter');
+        trackOnce(LEDIGE_STILLINGER_UNIQUE_EVENTS, 'Endret sortering', sortingValueToLabel(action.sortField));
     });
 };
