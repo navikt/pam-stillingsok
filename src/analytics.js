@@ -26,9 +26,9 @@ import {
 import { LOAD_MORE, SEARCH } from './search/searchReducer';
 import { sortingValueToLabel } from './search/sorting/Sorting';
 
-const LEDIGE_STILLINGER_UNIQUE_EVENTS = 'Ledige stillinger > Unike hendelser';
-const LEDIGE_STILLINGER_FAVOURITES = 'Ledige stillinger > Favoritter';
-const LEDIGE_STILLINGER_SAVED_SEARCHES = 'Ledige stillinger > Lagrede søk';
+const EVENT_CATEGORY_SEARCH = 'Ledige stillinger > Søk';
+const EVENT_CATEGORY_FAVOURITES = 'Ledige stillinger > Favoritter';
+const EVENT_CATEGORY_SAVED_SEARCHES = 'Ledige stillinger > Lagrede søk';
 const ignoreFurther = [];
 
 function track(...props) {
@@ -47,35 +47,35 @@ function trackOnce(...props) {
 
 export const analyticsSaga = function* saga() {
     yield takeEvery(ADD_TO_FAVOURITES_SUCCESS, () => {
-        track('send', 'event', LEDIGE_STILLINGER_FAVOURITES, 'La til favoritt');
+        track('send', 'event', EVENT_CATEGORY_FAVOURITES, 'La til favoritt');
     });
 
     yield takeEvery(REMOVE_FROM_FAVOURITES_SUCCESS, () => {
-        track('send', 'event', LEDIGE_STILLINGER_FAVOURITES, 'Slettet favoritt');
+        track('send', 'event', EVENT_CATEGORY_FAVOURITES, 'Slettet favoritt');
     });
 
     yield takeEvery(ADD_SAVED_SEARCH_SUCCESS, () => {
-        track('send', 'event', LEDIGE_STILLINGER_SAVED_SEARCHES, 'La til lagret søk');
+        track('send', 'event', EVENT_CATEGORY_SAVED_SEARCHES, 'La til lagret søk');
     });
 
     yield takeEvery(SEARCH, () => {
-        trackOnce(LEDIGE_STILLINGER_UNIQUE_EVENTS, 'Utførte søk');
+        trackOnce(EVENT_CATEGORY_SEARCH, 'Utførte søk');
     });
 
     yield takeEvery(SET_SEARCH_STRING, () => {
-        trackOnce(LEDIGE_STILLINGER_UNIQUE_EVENTS, 'Endret søkekriterie', 'Fritekstfelt');
+        trackOnce(EVENT_CATEGORY_SEARCH, 'Endret søkekriterie', 'Fritekstfelt');
     });
 
     yield takeEvery([ADD_OCCUPATION_FIRST_LEVEL, REMOVE_OCCUPATION_FIRST_LEVEL], (action) => {
-        trackOnce(LEDIGE_STILLINGER_UNIQUE_EVENTS, 'Endret søkekriterie', 'Yrke');
+        trackOnce(EVENT_CATEGORY_SEARCH, 'Endret søkekriterie', 'Yrke');
     });
 
     yield takeEvery(ADD_OCCUPATION_FIRST_LEVEL, (action) => {
-        trackOnce(LEDIGE_STILLINGER_UNIQUE_EVENTS, 'Valgte yrkesnivå 1', action.firstLevel);
+        trackOnce(EVENT_CATEGORY_SEARCH, 'Valgte yrkesnivå 1', action.firstLevel);
     });
 
     yield takeEvery([ADD_OCCUPATION_SECOND_LEVEL, REMOVE_OCCUPATION_SECOND_LEVEL], (action) => {
-        trackOnce(LEDIGE_STILLINGER_UNIQUE_EVENTS, 'Endret søkekriterie', 'Yrke');
+        trackOnce(EVENT_CATEGORY_SEARCH, 'Endret søkekriterie', 'Yrke');
     });
 
     yield takeEvery(ADD_OCCUPATION_SECOND_LEVEL, (action) => {
@@ -87,30 +87,30 @@ export const analyticsSaga = function* saga() {
             label = action.secondLevel;
         }
 
-        trackOnce(LEDIGE_STILLINGER_UNIQUE_EVENTS, 'Valgte yrkesnivå 2', label);
+        trackOnce(EVENT_CATEGORY_SEARCH, 'Valgte yrkesnivå 2', label);
     });
 
     yield takeEvery([ADD_COUNTRY, REMOVE_COUNTRY], (action) => {
-        trackOnce(LEDIGE_STILLINGER_UNIQUE_EVENTS, 'Endret søkekriterie', 'Land');
+        trackOnce(EVENT_CATEGORY_SEARCH, 'Endret søkekriterie', 'Land');
     });
 
     yield takeEvery(ADD_COUNTRY, (action) => {
-        trackOnce(LEDIGE_STILLINGER_UNIQUE_EVENTS, 'Valgte land', fixLocationName(action.value));
+        trackOnce(EVENT_CATEGORY_SEARCH, 'Valgte land', fixLocationName(action.value));
     });
 
     yield takeEvery([ADD_COUNTY, REMOVE_COUNTY], (action) => {
-        trackOnce(LEDIGE_STILLINGER_UNIQUE_EVENTS, 'Endret søkekriterie', 'Område');
+        trackOnce(EVENT_CATEGORY_SEARCH, 'Endret søkekriterie', 'Område');
     });
 
     yield takeEvery(ADD_COUNTY, (action) => {
-        trackOnce(LEDIGE_STILLINGER_UNIQUE_EVENTS, 'Valgte fylke', fixLocationName(action.county));
+        trackOnce(EVENT_CATEGORY_SEARCH, 'Valgte fylke', fixLocationName(action.county));
         if (action.county.toLowerCase() === 'oslo') {
-            trackOnce(LEDIGE_STILLINGER_UNIQUE_EVENTS, 'Valgte kommune', fixLocationName(action.county));
+            trackOnce(EVENT_CATEGORY_SEARCH, 'Valgte kommune', fixLocationName(action.county));
         }
     });
 
     yield takeEvery([ADD_MUNICIPAL, REMOVE_MUNICIPAL], (action) => {
-        trackOnce(LEDIGE_STILLINGER_UNIQUE_EVENTS, 'Endret søkekriterie', 'Område');
+        trackOnce(EVENT_CATEGORY_SEARCH, 'Endret søkekriterie', 'Område');
     });
 
     yield takeEvery(ADD_MUNICIPAL, (action) => {
@@ -121,46 +121,45 @@ export const analyticsSaga = function* saga() {
         } else {
             label = action.municipal;
         }
-        trackOnce(LEDIGE_STILLINGER_UNIQUE_EVENTS, 'Valgte kommune', label);
+        trackOnce(EVENT_CATEGORY_SEARCH, 'Valgte kommune', label);
     });
 
     yield takeEvery(SET_PUBLISHED, (action) => {
-        trackOnce(LEDIGE_STILLINGER_UNIQUE_EVENTS, 'Endret søkekriterie', 'Publisert');
+        trackOnce(EVENT_CATEGORY_SEARCH, 'Endret søkekriterie', 'Publisert');
         if(action.value !== undefined) {
-            trackOnce(LEDIGE_STILLINGER_UNIQUE_EVENTS, 'Valgte publisert', PublishedLabelsEnum[action.value]);
+            trackOnce(EVENT_CATEGORY_SEARCH, 'Valgte publisert', PublishedLabelsEnum[action.value]);
         }
     });
 
     yield takeEvery([ADD_EXTENT, REMOVE_EXTENT], (action) => {
-        trackOnce(LEDIGE_STILLINGER_UNIQUE_EVENTS, 'Endret søkekriterie', 'Heltid/deltid');
+        trackOnce(EVENT_CATEGORY_SEARCH, 'Endret søkekriterie', 'Heltid/deltid');
     });
 
     yield takeEvery(ADD_EXTENT, (action) => {
-        trackOnce(LEDIGE_STILLINGER_UNIQUE_EVENTS, 'Valgte heltid/deltid', action.value);
+        trackOnce(EVENT_CATEGORY_SEARCH, 'Valgte heltid/deltid', action.value);
     });
 
     yield takeEvery([ADD_SECTOR, REMOVE_SECTOR], (action) => {
-        trackOnce(LEDIGE_STILLINGER_UNIQUE_EVENTS, 'Endret søkekriterie', 'Sektor');
+        trackOnce(EVENT_CATEGORY_SEARCH, 'Endret søkekriterie', 'Sektor');
     });
 
     yield takeEvery(ADD_SECTOR, (action) => {
-        trackOnce(LEDIGE_STILLINGER_UNIQUE_EVENTS, 'Valgte sektor', action.value);
+        trackOnce(EVENT_CATEGORY_SEARCH, 'Valgte sektor', action.value);
     });
 
     yield takeEvery([ADD_ENGAGEMENT_TYPE, REMOVE_ENGAGEMENT_TYPE], (action) => {
-        trackOnce(LEDIGE_STILLINGER_UNIQUE_EVENTS, 'Endret søkekriterie', 'Ansettelsesform');
+        trackOnce(EVENT_CATEGORY_SEARCH, 'Endret søkekriterie', 'Ansettelsesform');
     });
 
     yield takeEvery(ADD_ENGAGEMENT_TYPE, (action) => {
-        trackOnce(LEDIGE_STILLINGER_UNIQUE_EVENTS, 'Valgte ansettelsesform', action.value);
+        trackOnce(EVENT_CATEGORY_SEARCH, 'Valgte ansettelsesform', action.value);
     });
 
     yield takeEvery(SET_SORTING, (action) => {
-        trackOnce(LEDIGE_STILLINGER_UNIQUE_EVENTS, 'Endret søkekriter', 'Sortering');
-        trackOnce(LEDIGE_STILLINGER_UNIQUE_EVENTS, 'Endret sortering', sortingValueToLabel(action.sortField));
+        trackOnce(EVENT_CATEGORY_SEARCH, 'Endret sortering', sortingValueToLabel(action.sortField));
     });
 
     yield takeEvery(LOAD_MORE, (action) => {
-        trackOnce(LEDIGE_STILLINGER_UNIQUE_EVENTS, 'Endret søkekriterie', 'Paginiering');
+        trackOnce(EVENT_CATEGORY_SEARCH, 'Endret paginering');
     });
 };
