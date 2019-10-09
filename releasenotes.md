@@ -1,3 +1,6 @@
+## RELEASE - 0.153.919-1f0862c
+#### New in this release: 
++ 2019-10-09 [Bug] Fikser printknapp
 ## RELEASE - 0.152.913-9ca0a95
 #### New in this release: 
 + 2019-10-09 [Fix] Legger til paginering i analytics
