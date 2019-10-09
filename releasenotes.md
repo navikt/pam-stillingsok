@@ -1,3 +1,6 @@
+## RELEASE - 0.150.908-8ccc468
+#### New in this release: 
++ 2019-10-09 [Fix] Fjerner ubrukt dependency
 ## RELEASE - 0.149.903-bfa8ed1
 #### New in this release: 
 + 2019-10-04 [Analytics] Justerer målinger
