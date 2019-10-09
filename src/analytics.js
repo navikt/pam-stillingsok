@@ -161,6 +161,6 @@ export const analyticsSaga = function* saga() {
     });
 
     yield takeEvery(LOAD_MORE, (action) => {
-        trackOnce(LEDIGE_STILLINGER_UNIQUE_EVENTS, 'Endret søkekriter', 'Paginiering');
+        trackOnce(LEDIGE_STILLINGER_UNIQUE_EVENTS, 'Endret søkekriterie', 'Paginiering');
     });
 };
