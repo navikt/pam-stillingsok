@@ -32,7 +32,6 @@ const LEDIGE_STILLINGER_SAVED_SEARCHES = 'Ledige stillinger > Lagrede søk';
 const ignoreFurther = [];
 
 function track(...props) {
-    console.log(...props)
     if (window.ga) {
         window.ga(...props);
     }
