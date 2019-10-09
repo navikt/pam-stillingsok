@@ -1,6 +1,6 @@
 {
   "name": "pam-stillingsok-frontend",
-  "version": "0.150.0",
+  "version": "0.144.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -24,6 +24,7 @@
     "classnames": "^2.2.6",
     "compression": "^1.7.3",
     "express": "^4.16.4",
+    "express-http-proxy": "^1.4.0",
     "helmet": "^3.21.1",
     "lodash.throttle": "^4.1.1",
     "mustache-express": "^1.2.8",
@@ -76,7 +77,7 @@
     "request-promise": "^4.2.4",
     "rimraf": "^2.6.2",
     "whatwg-fetch": "^2.0.4",
-    "snyk": "^1.230.3"
+    "snyk": "^1.230.5"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
