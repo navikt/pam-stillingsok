@@ -5,22 +5,23 @@ const path = require('path');
 const mustacheExpress = require('mustache-express');
 const Promise = require('promise');
 const fs = require('fs');
-const prometheus = require('prom-client');
 const bodyParser = require('body-parser');
 const compression = require('compression');
 const searchApiConsumer = require('./api/searchApiConsumer');
 const htmlMeta = require('./common/htmlMeta');
-const predefinedSearches = require('./common/predefinedSearches');
 
 /* eslint no-console: 0 */
 
-prometheus.collectDefaultMetrics();
 
 const currentDirectory = __dirname;
 const rootDirectory = `${currentDirectory}/../`;
 const server = express();
 const port = process.env.PORT || 8080;
 server.set('port', port);
+
+const instrumentation = require('./instrumentation').setup(server);
+
+const pageHitCounter = instrumentation.pageHitCounter();
 
 server.disable('x-powered-by');
 server.use(compression());
@@ -108,6 +109,18 @@ const startServer = (htmlPages) => {
             .then((val) => res.send(val));
     });
 
+    server.post(`${fasitProperties.PAM_CONTEXT_PATH}/instrumentation`, (req, res) => {
+        if(req.body && req.body.page
+            && (req.body.page === '/stillinger/favoritter'
+                || req.body.page === '/stillinger/lagrede-sok'
+                || req.body.page === '/stillinger/stilling'
+                || req.body.page === '/stillinger')){
+
+            pageHitCounter.inc(req.body.page);
+        }
+        res.status(200).send({});
+    });
+
     server.post(`${fasitProperties.PAM_CONTEXT_PATH}/api/search`, async (req, res) => {
         searchApiConsumer.search(req.body)
             .catch((err) => {
@@ -176,16 +189,7 @@ const startServer = (htmlPages) => {
     server.get(
         ['/stillinger/?', /^\/stillinger\/(?!.*dist).*$/],
         (req, res) => {
-            const searchString = req.originalUrl.substr(req.originalUrl.indexOf('?'));
-            const predefinedSearch = predefinedSearches.isPredefinedQuery(searchString);
-            if (predefinedSearch) {
-                res.render('index', {
-                    title: predefinedSearch.documentTitle,
-                    description: htmlMeta.getDescriptionForPredefinedCity(predefinedSearch.city)
-                });
-            } else {
-                res.send(htmlPages.sok);
-            }
+            res.send(htmlPages.sok);
         }
     );
 

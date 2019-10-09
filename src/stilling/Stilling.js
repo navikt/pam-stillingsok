@@ -27,7 +27,7 @@ import PersonalAttributes from './requirements/PersonalAttributes';
 import SoftRequirements from './requirements/SoftRequirements';
 import './Stilling.less';
 import { FETCH_STILLING_BEGIN, RESET_STILLING } from './stillingReducer';
-import { useGoogleAnalytics, useScrollToTop } from '../common/hooks';
+import { useTrackPageview, useScrollToTop } from '../common/hooks';
 
 const Stilling = ({
     cachedStilling,
@@ -38,7 +38,7 @@ const Stilling = ({
     stilling,
     resetStilling
 }) => {
-    useGoogleAnalytics(`${CONTEXT_PATH}/stilling`, 'Stilling');
+    useTrackPageview(`${CONTEXT_PATH}/stilling`, 'Stilling');
     useScrollToTop();
 
     useEffect(() => {

@@ -1,3 +1,37 @@
+## RELEASE - 0.149.903-bfa8ed1
+#### New in this release: 
++ 2019-10-04 [Analytics] Justerer målinger
++ 2019-10-04 [Analytics] Justerer målinger
++ 2019-10-04 [Analytics] Justerer målinger
+## RELEASE - 0.148.901-29a22bc
+#### New in this release: 
++ 2019-10-04 [Analytics] Justerer målinger
++ 2019-10-04 [Analytics] Justerer målinger
+## RELEASE - 0.147.897-53a41fe
+#### New in this release: 
++ 2019-10-04 [Analytics] Justerer målinger
++ 2019-10-04 [Analytics] Justerer målinger
++ 2019-10-04 [Analytics] Justerer målinger
+## RELEASE - 0.146.896-07a15f8
+#### New in this release: 
++ 2019-10-04 [Analytics] Legger til måling av fasetter
++ 2019-10-04 [Analytics] Legger til måling av fasetter
+## RELEASE - 0.145.893-0ca41b1
+#### New in this release: 
++ 2019-10-03 [Analytics] Sender event når man tar i bruk søkeboksen første gang
++ 2019-10-03 [Analytics] Sender event når man tar i bruk søkeboksen første gang
+## RELEASE - 0.144.891-15d3002
+#### New in this release: 
++ 2019-10-03 [Analytics] Sender event når man tar i bruk søkeboksen første gang
++ 2019-10-03 [Analytics] Sender event når man tar i bruk søkeboksen første gang
++ 2019-10-03 [Analytics] Sender event når man tar i bruk søkeboksen første gang
+## RELEASE - 0.141.879-ef8da15
+#### New in this release: 
++ 2019-10-03 [Fix] Fikser skrivefeil i location name. Rydder opp i meta descriptions tags
+## RELEASE - 0.140.878-c45448b
+#### New in this release: 
++ 2019-10-02 [Analytics] Legger til måling for måle om bruker gjør minst et søk
++ 2019-10-01 [Analytics] Legger til måling for slette favoritter
 ## RELEASE - 0.139.873-90b4ff1
 #### New in this release: 
 + 2019-10-01 [Analytics] Legger til måling for favoritter og lagrede søk

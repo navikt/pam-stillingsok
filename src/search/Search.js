@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Flatknapp } from 'pam-frontend-knapper';
-import { isPredefinedDocumentTitle } from '../../server/common/predefinedSearches';
 import { authenticationEnum } from '../authentication/authenticationReducer';
 import { CONTEXT_PATH } from '../fasitProperties';
 import FavouriteAlertStripe from '../favourites/alertstripe/FavouriteAlertStripe';
@@ -29,7 +28,7 @@ import SearchResultCount from './searchResults/SearchResultCount';
 import SearchResults from './searchResults/SearchResults';
 import ShowResultsButton from './showResultsButton/ShowResultsButton';
 import Sorting from './sorting/Sorting';
-import { useDocumentTitle, useGoogleAnalytics } from '../common/hooks';
+import { useDocumentTitle, useTrackPageview } from '../common/hooks';
 
 const Search = ({
     initialSearch,
@@ -45,14 +44,8 @@ const Search = ({
         restoreStateFromUrl();
     });
 
-    useGoogleAnalytics(CONTEXT_PATH, 'Ledige stillinger');
-
-    useEffect(() => {
-        const doNotOverrideDocumentTitle = isPredefinedDocumentTitle(document.title);
-        if (!doNotOverrideDocumentTitle) {
-            document.title = 'Ledige stillinger - Arbeidsplassen';
-        }
-    }, []);
+    useTrackPageview(CONTEXT_PATH, 'Ledige stillinger');
+    useDocumentTitle('Ledige stillinger - Arbeidsplassen');
 
     useEffect(() => {
         initialSearch();

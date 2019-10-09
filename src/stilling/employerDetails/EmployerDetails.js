@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ReactHtmlParser from 'react-html-parser';
 import { Undertittel } from 'nav-frontend-typografi';
-import capitalizeLocation from '../../../server/common/capitalizeLocation';
+import fixLocationName from '../../../server/common/fixLocationName';
 import { isValidUrl } from '../../utils';
 import getEmployer from '../../../server/common/getEmployer';
 import './EmployerDetails.less';
@@ -15,11 +15,11 @@ function getEmployerLocation(employer) {
 
         if (location.postalCode) {
             employerLocation = location.address ? `${location.address}, ` : '';
-            employerLocation += `${location.postalCode} ${capitalizeLocation(location.city)}`;
+            employerLocation += `${location.postalCode} ${fixLocationName(location.city)}`;
         } else if (location.municipal) {
-            employerLocation = `${capitalizeLocation(location.municipal)}`;
+            employerLocation = `${fixLocationName(location.municipal)}`;
         } else if (location.country) {
-            employerLocation = `${capitalizeLocation(location.country)}`;
+            employerLocation = `${fixLocationName(location.country)}`;
         }
     }
     return employerLocation;
