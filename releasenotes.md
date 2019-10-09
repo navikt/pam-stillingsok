@@ -1,3 +1,7 @@
+## RELEASE - 0.151.912-479d24f
+#### New in this release: 
++ 2019-10-09 [Fix] Fjerner console.log
++ 2019-10-09 [Fix] Rydder opp i google events
 ## RELEASE - 0.150.908-8ccc468
 #### New in this release: 
 + 2019-10-09 [Fix] Fjerner ubrukt dependency
