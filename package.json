@@ -75,8 +75,9 @@
     "request": "^2.88.0",
     "request-promise": "^4.2.4",
     "rimraf": "^2.6.2",
-    "whatwg-fetch": "^2.0.4",
-    "snyk": "^1.232.0"
+    "snyk": "^1.232.0",
+    "ua-parser-js": "^0.7.20",
+    "whatwg-fetch": "^2.0.4"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
