@@ -24,6 +24,7 @@ import NotFound from './notFound/NotFound';
 import HardRequirements from './requirements/HardRequirements';
 import PersonalAttributes from './requirements/PersonalAttributes';
 import SoftRequirements from './requirements/SoftRequirements';
+import SocialShare from './socialShare/SocialShare';
 import './Stilling.less';
 import { FETCH_STILLING_BEGIN, RESET_STILLING } from './stillingReducer';
 import { useTrackPageview, useScrollToTop } from '../common/hooks';
@@ -171,6 +172,7 @@ const Stilling = ({
                                     <HardRequirements stilling={stilling} />
                                     <SoftRequirements stilling={stilling} />
                                     <PersonalAttributes stilling={stilling} />
+                                    <SocialShare title={stilling._source.title} />
                                 </Column>
                                 <Column xs="12" md="5" className="Stilling__main__aside">
                                     <HowToApply
