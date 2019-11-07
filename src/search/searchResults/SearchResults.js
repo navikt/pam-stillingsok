@@ -10,7 +10,8 @@ import './SearchResults.less';
 
 const SearchResults = ({ searchResult, isSearching, page }) => {
     if (searchResult) {
-        const { stillinger, total } = searchResult;
+        const { stillinger } = searchResult;
+        const total = searchResult.total.value;
         const totalPages = total / PAGE_SIZE;
         const hasMore = page + 1 < totalPages;
         const count = ((page * PAGE_SIZE) + PAGE_SIZE) > total ? total : (page * PAGE_SIZE) + PAGE_SIZE;
@@ -59,7 +60,7 @@ SearchResults.defaultProps = {
 SearchResults.propTypes = {
     searchResult: PropTypes.shape({
         stillinger: PropTypes.arrayOf(PropTypes.object),
-        total: PropTypes.number
+        value: PropTypes.number
     }),
     isSearching: PropTypes.bool.isRequired,
     page: PropTypes.number.isRequired

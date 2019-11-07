@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Element, Undertittel } from 'nav-frontend-typografi';
+import { Element } from 'nav-frontend-typografi';
 import './SearchResultCount.less';
 
 function SearchResultCount({ searchResult }) {
     if (searchResult) {
-        const annonserWord = searchResult.total > 1 ? 'annonser' : 'annonse';
+        const annonserWord = searchResult.total.value > 1 ? 'annonser' : 'annonse';
         return (
             <div className="SearchResultCount">
                 <Element className="SearchResultCount__label">Antall stillinger:</Element>
@@ -15,8 +15,8 @@ function SearchResultCount({ searchResult }) {
                     aria-live="polite"
                 >
                     <span className="SearchResultCount__h3__numberOfPositions">{searchResult.positioncount}</span>
-                    {searchResult.total > 0 && (
-                        <span className="SearchResultCount__h3__count">({searchResult.total} {annonserWord})</span>
+                    {searchResult.total.value > 0 && (
+                        <span className="SearchResultCount__h3__count">({searchResult.total.value} {annonserWord})</span>
                     )}
                 </span>
             </div>
@@ -34,7 +34,7 @@ SearchResultCount.defaultProps = {
 
 SearchResultCount.propTypes = {
     searchResult: PropTypes.shape({
-        total: PropTypes.number,
+        value: PropTypes.number,
         positioncount: PropTypes.number
     })
 };
