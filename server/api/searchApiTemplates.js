@@ -389,6 +389,7 @@ exports.searchTemplate = (query) => {
     let template = {
         from: from || 0,
         size: size || 50,
+        track_total_hits: true,
         query: mainQueryTemplateFunc(q),
         post_filter: {
             bool: {
