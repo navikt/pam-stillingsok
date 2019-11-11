@@ -109,11 +109,11 @@ class ShowResultsButton extends React.Component {
                     <div className="ShowResultsButton__inner__container container">
                         <div className="ShowResultsButton__flex__count">
                             {this.props.searchResults && (
-                                this.props.searchResults.total > 0 ?
+                                this.props.searchResults.total.value > 0 ?
                                     (
                                         <CountDown
                                             numberOfPositions={this.props.searchResults.positioncount}
-                                            numberOfAds={this.props.searchResults.total}
+                                            numberOfAds={this.props.searchResults.total.value}
                                         />
                                     ) : (
                                         <Element>
@@ -147,7 +147,7 @@ ShowResultsButton.defaultProps = {
 
 ShowResultsButton.propTypes = {
     searchResults: PropTypes.shape({
-        total: PropTypes.number,
+        value: PropTypes.number,
         positioncount: PropTypes.number
     })
 };

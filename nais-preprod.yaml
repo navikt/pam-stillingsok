@@ -46,3 +46,5 @@ spec:
       value: https://arbeidsplassen-q.nav.no/stillinger
     - name: PAM_VAR_SIDE_URL
       value: https://arbeidsplassen-q.nav.no/stillingsregistrering
+    - name: PAMSEARCHAPI_URL
+      value: http://pam-search-api-odfe
