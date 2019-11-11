@@ -6,8 +6,8 @@ Egenskap: Søke og filtrere på stillingsannonser
 
   @søk
   Scenario: Verifiser at søk på annonser gir et fornuftig resultat
-    Når jeg søker på "bygg"
-    Så skal det forekomme minst ett treff der "bygg" finnes i resultatvisningen
+    Når jeg søker på "jobb"
+    Så skal det forekomme minst ett treff der "jobb" finnes i resultatvisningen
 
   @ingentreff
   Scenario: Verifiser ingen treff
