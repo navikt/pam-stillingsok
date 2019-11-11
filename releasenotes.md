@@ -1,3 +1,6 @@
+## RELEASE - 0.154.926-b1a3120
+#### New in this release: 
++ 2019-11-11 [ES 7.2] peker mot ny search-api
 ## RELEASE - 0.153.919-1f0862c
 #### New in this release: 
 + 2019-10-09 [Bug] Fikser printknapp
