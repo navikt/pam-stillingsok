@@ -17,6 +17,7 @@ export default function SocialShare({ title }) {
             </div>
             <div className="facebook">
                 <a
+                    data-ga-id="del-pa-facebook"
                     href={"https://www.facebook.com/sharer/sharer.php?u=" + location.href}
                     title="Del på Facebook"
                     aria-label="Del på Facebook"
@@ -28,6 +29,7 @@ export default function SocialShare({ title }) {
             </div>
             <div className="linkedin">
                 <a
+                    data-ga-id="del-pa-linkedin"
                     href={"https://www.linkedin.com/shareArticle?mini=true&url=" + location.href}
                     title="Del på Linkedin"
                     aria-label="Del på Linkedin"
@@ -39,6 +41,7 @@ export default function SocialShare({ title }) {
             </div>
             <div className="twitter">
                 <a
+                    data-ga-id="del-pa-twitter"
                     href={"https://twitter.com/intent/tweet?url=" + location.href + "&text=" + encodeURI(title)}
                     title="Del på Twitter"
                     aria-label="Del på Twitter"
@@ -51,6 +54,7 @@ export default function SocialShare({ title }) {
             {(deviceType === "mobile" || deviceType === "tablet") && (
                 <div className="messenger">
                     <a
+                        data-ga-id="del-pa-fb-messenger"
                         href={"fb-messenger://share/?link=" + encodeURIComponent(location.href)}
                         title="Del i Messenger"
                         aria-label="Del i Messenger"

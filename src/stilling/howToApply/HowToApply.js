@@ -43,17 +43,18 @@ export default function HowToApply({ source, properties }) {
                     {sokUrl && isValidUrl(sokUrl) && (
                         <div className="HowToApply__send-button-wrapper">
                             <a
+                                data-ga-id={`sok-pa-stillingen-${finn ? "finn" : "annen-kilde"}`}
                                 className="HowToApply__send-button Knapp Knapp--hoved blokk-xxs"
                                 href={sokUrl}
                             >
-                                <div className="HowToApply__send-button-content">
+                                <span className="HowToApply__send-button-content">
                                     <span className="HowToApply__send-button-icon" />Søk på stillingen
-                                </div>
+                                </span>
                             </a>
 
                             {finn &&
                             <Undertekst className="blokk-xs"> Denne annonsen er hentet fra{' '}
-                                <a href="https://www.finn.no" className="link">FINN.no</a>. Du kan sende søknad via
+                                <a data-ga-id="denne-annonsen-er-hentet-fra-finn" href="https://www.finn.no" className="link">FINN.no</a>. Du kan sende søknad via
                                 den opprinnelige annonsen.
                             </Undertekst>
                             }
