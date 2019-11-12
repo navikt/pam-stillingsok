@@ -41,6 +41,7 @@ const Stilling = ({
 }) => {
     useTrackPageview(`${CONTEXT_PATH}/stilling`, 'Stilling');
     useScrollToTop();
+    useTrackLinks();
 
     useEffect(() => {
         let uuid = match.params.uuid;
@@ -87,7 +88,6 @@ const Stilling = ({
         }
     }, [error, isFetchingStilling, stilling]);
 
-    useTrackLinks();
 
     const onPrintClick = () => {
         window.print();
