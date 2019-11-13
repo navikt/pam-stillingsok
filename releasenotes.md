@@ -1,3 +1,6 @@
+## RELEASE - 0.155.927-3478c57
+#### New in this release: 
++ 2019-11-13 [ES 7.2] peke på riktig search-api
 ## RELEASE - 0.154.926-b1a3120
 #### New in this release: 
 + 2019-11-11 [ES 7.2] peker mot ny search-api
