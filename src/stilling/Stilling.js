@@ -28,7 +28,6 @@ import SocialShare from './socialShare/SocialShare';
 import './Stilling.less';
 import { FETCH_STILLING_BEGIN, RESET_STILLING } from './stillingReducer';
 import { useTrackPageview, useScrollToTop } from '../common/hooks';
-import useTrackLinks from "../common/hooks/useTrackLinks";
 
 const Stilling = ({
     cachedStilling,
@@ -41,7 +40,6 @@ const Stilling = ({
 }) => {
     useTrackPageview(`${CONTEXT_PATH}/stilling`, 'Stilling');
     useScrollToTop();
-    useTrackLinks();
 
     useEffect(() => {
         let uuid = match.params.uuid;

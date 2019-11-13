@@ -5,3 +5,15 @@
 
 ga('create', 'UA-9127381-24', 'auto');
 ga('set', 'anonymizeIp', true);
+
+const sendGAEvent = (eventLabel) => {
+    if (!eventLabel) return;
+    ga('send', 'event', {
+        eventCategory: 'Interaksjon',
+        eventAction: 'Klikket lenke',
+        eventLabel: eventLabel,
+        transport: 'beacon'
+    });
+};
+
+export default sendGAEvent;
