@@ -51,9 +51,9 @@ export default function HowToApply({ source, properties }) {
                                 className="HowToApply__send-button Knapp Knapp--hoved blokk-xxs"
                                 href={sokUrl}
                             >
-                                <span className="HowToApply__send-button-content">
+                                <div className="HowToApply__send-button-content">
                                     <span className="HowToApply__send-button-icon" />Søk på stillingen
-                                </span>
+                                </div>
                             </a>
 
                             {finn &&
