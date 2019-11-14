@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Undertittel, Undertekst } from 'nav-frontend-typografi';
 import { formatISOString, isValidISOString, isValidUrl } from '../../utils';
 import './HowToApply.less';
+import sendGAEvent from "../../googleanalytics";
 
 export function getApplicationUrl(source, properties) {
     if (source === 'FINN') {
@@ -43,6 +44,10 @@ export default function HowToApply({ source, properties }) {
                     {sokUrl && isValidUrl(sokUrl) && (
                         <div className="HowToApply__send-button-wrapper">
                             <a
+                                onClick={() => {
+                                    const eventLabel = `sok-pa-stillingen-${finn ? "finn" : "annen-kilde"}`;
+                                    sendGAEvent(eventLabel);
+                                }}
                                 className="HowToApply__send-button Knapp Knapp--hoved blokk-xxs"
                                 href={sokUrl}
                             >
@@ -53,7 +58,11 @@ export default function HowToApply({ source, properties }) {
 
                             {finn &&
                             <Undertekst className="blokk-xs"> Denne annonsen er hentet fra{' '}
-                                <a href="https://www.finn.no" className="link">FINN.no</a>. Du kan sende søknad via
+                                <a
+                                    onClick={() => {
+                                        sendGAEvent("denne-annonsen-er-hentet-fra-finn" );
+                                    }}
+                                   href="https://www.finn.no" className="link">FINN.no</a>. Du kan sende søknad via
                                 den opprinnelige annonsen.
                             </Undertekst>
                             }

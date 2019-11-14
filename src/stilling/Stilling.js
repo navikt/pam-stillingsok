@@ -86,6 +86,7 @@ const Stilling = ({
         }
     }, [error, isFetchingStilling, stilling]);
 
+
     const onPrintClick = () => {
         window.print();
     };
