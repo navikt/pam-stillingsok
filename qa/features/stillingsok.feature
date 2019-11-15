@@ -21,9 +21,9 @@ Egenskap: Søke og filtrere på stillingsannonser
 
   @fylke
   Scenario: Verifisere at filtrering på fylke fungerer
-    Når jeg filtrerer på "OSLO"
-    Så skal "Oslo" vises som sted i annonsetreffene
-    Og antall treff skal stemme overens med antall i fasett "OSLO"
+    #Når jeg filtrerer på "OSLO"
+    #Så skal "Oslo" vises som sted i annonsetreffene
+    #Og antall treff skal stemme overens med antall i fasett "OSLO"
     #Når jeg åpner en stillingsannonse
     #Så skal "Oslo" vises under "Om stillingen"
 
