@@ -9,12 +9,14 @@ export default (page, title) => {
             ga('set', 'title', title);
             ga('send', 'pageview');
 
-            if(sessionStorage.getItem('trackedRole') !== 'true') {
-                sessionStorage.setItem('trackedRole', 'true');
+            if(window.trackedRole === undefined) {
                 const role = localStorage.getItem('innloggetBrukerKontekst');
-                ga('send', 'event', 'Ledige stillinger', 'Rolle', role || 'unknown', {
-                    nonInteraction: true
-                });
+                if(role) {
+                    window.trackedRole = true;
+                    ga('send', 'event', 'Ledige stillinger', 'Rolle', role, {
+                        nonInteraction: true
+                    });
+                }
             }
         } catch (e) {
             // Google Analytics er ikke definert (dette skjer f.eks. om en bruker blokkerer tracking).
