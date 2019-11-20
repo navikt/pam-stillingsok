@@ -1,3 +1,6 @@
+## RELEASE - 0.159.935-c96042b
+#### New in this release: 
++ 2019-11-20 [Fix] Legger til bilde som vises ved deling på facebook
 ## RELEASE - 0.155.927-3478c57
 #### New in this release: 
 + 2019-11-13 [ES 7.2] peke på riktig search-api
