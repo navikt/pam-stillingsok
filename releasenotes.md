@@ -1,3 +1,6 @@
+## RELEASE - 0.160.936-b6a59b0
+#### New in this release: 
++ 2019-11-26 [Fix] Legger til målinger for antall endringer av lagrede søk
 ## RELEASE - 0.159.935-c96042b
 #### New in this release: 
 + 2019-11-20 [Fix] Legger til bilde som vises ved deling på facebook
