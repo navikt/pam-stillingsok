@@ -28,7 +28,7 @@ import { sortingValueToLabel } from './search/sorting/Sorting';
 
 const EVENT_CATEGORY_SEARCH = 'Ledige stillinger > Søk';
 const EVENT_CATEGORY_FAVOURITES = 'Ledige stillinger > Favoritter';
-const EVENT_CATEGORY_SAVED_SEARCHES = 'Ledige stillinger > Lagrede søk';
+export const EVENT_CATEGORY_SAVED_SEARCHES = 'Ledige stillinger > Lagrede søk';
 const ignoreFurther = [];
 
 function track(...props) {
@@ -37,7 +37,7 @@ function track(...props) {
     }
 }
 
-function trackOnce(...props) {
+export function trackOnce(...props) {
     const key = props.join();
     if(!ignoreFurther.includes(key)) {
         ignoreFurther.push(key);
