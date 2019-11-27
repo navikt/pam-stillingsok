@@ -1,3 +1,7 @@
+## RELEASE - 0.161.939-d541f6f
+#### New in this release: 
++ 2019-11-27 [Fix] Tester ny meta title
++ 2019-11-27 [Fix] Tester ny meta title
 ## RELEASE - 0.160.936-b6a59b0
 #### New in this release: 
 + 2019-11-26 [Fix] Legger til målinger for antall endringer av lagrede søk
