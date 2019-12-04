@@ -1,21 +1,21 @@
 
 # language: no
-#Egenskap: Bruke stillingssøket som innlogget bruker
-#
-#  Bakgrunn: Logg inn og naviger til forsiden for søk
-#    Gitt at jeg er logget inn
-#
-#  @favoritter
-#  Scenario: Se favoritter
+Egenskap: Bruke stillingssøket som innlogget bruker
+
+  Bakgrunn: Logg inn og naviger til forsiden for søk
+    Gitt at jeg er logget inn
+
+  @favoritter
+  Scenario: Se favoritter
 #    Og jeg lagrer første annonse som favoritt
 #    Når jeg går til favoritter i menyen
 #    Så skal annonsen vises i favorittlisten
 #    Når jeg sletter favoritten
 #    Så skal ikke annonsen vises i favorittlisten
-#
-#
-#  @lagredeSok
-#  Scenario: Se lagret søk
+
+
+  @lagredeSok
+  Scenario: Se lagret søk
 #    Når jeg filtrerer på "OSLO"
 #    Og jeg filtrerer på "IT"
 #    Når jeg lagrer søket som "nightwatch testsøk"
