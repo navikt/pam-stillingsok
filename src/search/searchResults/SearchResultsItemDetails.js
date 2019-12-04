@@ -30,7 +30,7 @@ const trackTest = (testVersion, source) => {
 };
 
 
-function getTestVersion() {
+export function getTestVersion() {
     if (window.testVersion === undefined) {
         try {
             let stored = localStorage.getItem("linkTestVersion");
