@@ -50,7 +50,7 @@ function getTestVersion() {
 
 function LinkTestVersion({ children, stilling, isFinn, testVersion }) {
     if (isFinn && testVersion === 'c') {
-        if (isValidUrl(stilling.properties.sourceurl)) {
+        if (stilling.properties && isValidUrl(stilling.properties.sourceurl)) {
             return (
                 <a href={stilling.properties.sourceurl} className="SearchResultItem__link" target="_blank"
                    onClick={() => {
@@ -60,11 +60,15 @@ function LinkTestVersion({ children, stilling, isFinn, testVersion }) {
                 </a>
             )
         } else {
-            return null;
+            return (
+                <div className="SearchResultItem__link">
+                    {children}
+                </div>
+            )
         }
     }
     if (isFinn && testVersion === 'b') {
-        if (isValidUrl(stilling.properties.sourceurl)) {
+        if (stilling.properties && isValidUrl(stilling.properties.sourceurl)) {
             return (
                 <a href={stilling.properties.sourceurl} className="SearchResultItem__link" onClick={() => {
                     trackTest(testVersion, "finn")
@@ -73,7 +77,11 @@ function LinkTestVersion({ children, stilling, isFinn, testVersion }) {
                 </a>
             )
         } else {
-            return null;
+            return (
+                <div className="SearchResultItem__link">
+                    {children}
+                </div>
+            )
         }
     }
     return (
@@ -96,7 +104,7 @@ export default function SearchResultsItemDetails({ stilling }) {
     const location = getWorkLocation(stilling.properties.location, stilling.locationList);
     const employer = getEmployer(stilling);
     const testVersion = getTestVersion();
-    const isFinn = stilling.source.toLowerCase() === "finn";
+    const isFinn = stilling.source && stilling.source.toLowerCase() === "finn";
 
     return (
         <LinkTestVersion testVersion={testVersion} stilling={stilling} isFinn={isFinn}>
