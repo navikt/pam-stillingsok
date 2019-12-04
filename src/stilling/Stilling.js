@@ -18,6 +18,7 @@ import ContactPerson from './contactPerson/ContactPerson';
 import EmployerDetails from './employerDetails/EmployerDetails';
 import EmploymentDetails from './employmentDetails/EmploymentDetails';
 import Expired from './expired/Expired';
+import ExternalAd from './externalAd/ExternalAd';
 import HowToApply from './howToApply/HowToApply';
 import Loading from './loading/Loading';
 import NotFound from './notFound/NotFound';
@@ -167,25 +168,33 @@ const Stilling = ({
                     )}
                     {!isFetchingStilling && stilling && (
                         <Container className="Stilling__main">
-                            <Row>
-                                <Column xs="12" md="7">
-                                    <AdText adText={stilling._source.properties.adtext} />
-                                    <HardRequirements stilling={stilling} />
-                                    <SoftRequirements stilling={stilling} />
-                                    <PersonalAttributes stilling={stilling} />
-                                    <SocialShare title={stilling._source.title} />
-                                </Column>
-                                <Column xs="12" md="5" className="Stilling__main__aside">
-                                    <HowToApply
-                                        source={stilling._source.source}
-                                        properties={stilling._source.properties}
-                                    />
-                                    <EmploymentDetails stilling={stilling._source} />
-                                    <ContactPerson contactList={stilling._source.contactList} />
-                                    <EmployerDetails stilling={stilling._source} />
-                                    <AdDetails source={stilling._source} />
-                                </Column>
-                            </Row>
+                            {stilling._source && stilling._source.source && stilling._source.source.toLowerCase() === 'finn' ? (
+                                <Row>
+                                    <Column xs="12">
+                                        <ExternalAd url={stilling._source.properties.sourceurl} />
+                                    </Column>
+                                </Row>
+                            ) : (
+                                <Row>
+                                    <Column xs="12" md="7">
+                                        <AdText adText={stilling._source.properties.adtext} />
+                                        <HardRequirements stilling={stilling} />
+                                        <SoftRequirements stilling={stilling} />
+                                        <PersonalAttributes stilling={stilling} />
+                                        <SocialShare title={stilling._source.title} />
+                                    </Column>
+                                    <Column xs="12" md="5" className="Stilling__main__aside">
+                                        <HowToApply
+                                            source={stilling._source.source}
+                                            properties={stilling._source.properties}
+                                        />
+                                        <EmploymentDetails stilling={stilling._source} />
+                                        <ContactPerson contactList={stilling._source.contactList} />
+                                        <EmployerDetails stilling={stilling._source} />
+                                        <AdDetails source={stilling._source} />
+                                    </Column>
+                                </Row>
+                            )}
                         </Container>
                     )}
                 </article>
