@@ -72,10 +72,37 @@
   color: @blueDarken;
 }
 
+.SearchResultsItemDetails__external-link,
 .SearchResultsItemDetails__applicationdue {
   font-size: 0.875rem;
   color: @blueDarken;
   line-height: 1.43;
+}
+
+.SearchResultsItemDetails__applicationdue {
+  margin-right: 1rem;
+}
+
+.SearchResultsItemDetails__external-link {
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+}
+
+.SearchResultsItemDetails__external-link-icon {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12px' height='12px' version='1.1'%3E%3Cg id='Stilling-send-soknad' fill='none' fill-rule='evenodd' stroke='none' stroke-linecap='round' stroke-width='1'%3E%3Cg id='Stillingsannonse_send-soknad_1' stroke='%238C368E' transform='translate(-1155 -246)'%3E%3Cg id='external-link_white' transform='translate(1156 247)'%3E%3Cg id='external-link'%3E%3Cpath id='Rectangle-6' d='M 10 7.07713 L 10 8.33333 C 10 9.25381 9.25381 10 8.33333 10 L 1.66667 10 C 0.746192 10 0 9.25381 0 8.33333 L 0 1.66667 C 0 0.746192 0.746192 0 1.66667 0 L 2.94199 0'/%3E%3Cg id='Group-7' transform='translate(4)'%3E%3Cpath id='Line-6' stroke-width='2' d='M 0.0409365 6.0798 L 5 1'/%3E%3Cpolygon id='Path-2' fill='%238C368E' stroke-linejoin='round' points='2.00719,0 6,0 6,4.06131'/%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  display: inline-block;
+  width: 16px;
+  height: 12px;
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  margin-left: .25rem;
+}
+
+.SearchResultsItemDetails__applicationdue-wrapper {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
 }
 
 .SearchResultsItemDetails__title,
