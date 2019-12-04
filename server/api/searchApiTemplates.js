@@ -412,7 +412,7 @@ exports.searchTemplate = (query) => {
                 'properties.jobtitle',
                 'properties.location',
                 'properties.applicationdue',
-                'properties.sourceUrl',
+                'properties.sourceurl',
                 'locationList',
                 'title',
                 'published',
