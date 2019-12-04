@@ -11,12 +11,12 @@ import './SearchResultsItemDetails.less';
 
 const trackTest = (testVersion, source) => {
     let action;
-    if (testVersion === 1) {
+    if (testVersion === 'a') {
         action = "Åpnet annonse (Test A - Intern visning)"
-    } else if (testVersion === 2) {
-        action = "Åpnet annonse (Test B - Ekstern visning, ny fane)"
-    } else if (testVersion === 3) {
-        action = "Åpnet annonse (Test C - Ekstern visning, samme fane)"
+    } else if (testVersion === 'b') {
+        action = "Åpnet annonse (Test B - Ekstern visning, samme fane)"
+    } else if (testVersion === 'c') {
+        action = "Åpnet annonse (Test C - Ekstern visning, ny fane)"
     } else {
         action = "Åpnet annonse"
     }
