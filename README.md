@@ -1,7 +1,5 @@
 # PAM Stillingsøk
 
-:-)
-
 ## Hvordan kjøre applikasjonen lokalt
 
 Før man starter applikasjonen trenger man å sette følgende miljøvariabler:
