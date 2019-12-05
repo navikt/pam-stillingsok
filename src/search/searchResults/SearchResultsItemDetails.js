@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import getEmployer from '../../../server/common/getEmployer';
 import getWorkLocation from '../../../server/common/getWorkLocation';
 import { CONTEXT_PATH } from '../../fasitProperties';
-import { formatISOString, isValidISOString, isValidUrl } from '../../utils';
+import { formatISOString, isValidISOString } from '../../utils';
 import './SearchResultsItemDetails.less';
 
 const trackTest = (testVersion, source) => {
@@ -50,39 +50,23 @@ export function getTestVersion() {
 
 function LinkTestVersion({ children, stilling, isFinn, testVersion }) {
     if (isFinn && testVersion === 'c') {
-        if (stilling.properties && isValidUrl(stilling.properties.sourceurl)) {
-            return (
-                <a href={stilling.properties.sourceurl} className="SearchResultItem__link" target="_blank"
-                   onClick={() => {
-                       trackTest(testVersion, "finn")
-                   }}>
-                    {children}
-                </a>
-            )
-        } else {
-            return (
-                <div className="SearchResultItem__link">
-                    {children}
-                </div>
-            )
-        }
+        return (
+            <a href={`https://www.finn.no/${stilling.reference}`} className="SearchResultItem__link" target="_blank"
+               onClick={() => {
+                   trackTest(testVersion, "finn")
+               }}>
+                {children}
+            </a>
+        )
     }
     if (isFinn && testVersion === 'b') {
-        if (stilling.properties && isValidUrl(stilling.properties.sourceurl)) {
-            return (
-                <a href={stilling.properties.sourceurl} className="SearchResultItem__link" onClick={() => {
-                    trackTest(testVersion, "finn")
-                }}>
-                    {children}
-                </a>
-            )
-        } else {
-            return (
-                <div className="SearchResultItem__link">
-                    {children}
-                </div>
-            )
-        }
+        return (
+            <a href={`https://www.finn.no/${stilling.reference}`} className="SearchResultItem__link" onClick={() => {
+                trackTest(testVersion, "finn")
+            }}>
+                {children}
+            </a>
+        )
     }
     return (
         <Link to={`${CONTEXT_PATH}/stilling/${stilling.uuid}`} className="SearchResultItem__link" onClick={() => {

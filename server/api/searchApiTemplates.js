@@ -412,14 +412,14 @@ exports.searchTemplate = (query) => {
                 'properties.jobtitle',
                 'properties.location',
                 'properties.applicationdue',
-                'properties.sourceurl',
                 'locationList',
                 'title',
                 'published',
                 'expires',
                 'uuid',
                 'status',
-                'source'
+                'source',
+                'reference'
             ]
         },
         aggs: {
