@@ -1,3 +1,13 @@
+## RELEASE - 0.162.955-1ff7e75
+#### New in this release: 
++ 2019-12-04 [Fix] Legger til lenke for eksterne annonser i annonsevisningen
++ 2019-12-04 [Fix] Legger til lenke for eksterne annonser i annonsevisningen
++ 2019-12-04 [Fix] Legger til lenke for eksterne annonser i annonsevisningen
++ 2019-12-04 [Fix] Legger til lenke for eksterne annonser i annonsevisningen
++ 2019-12-04 [Fix] Legger til lenke for eksterne annonser i annonsevisningen
++ 2019-12-04 [Fix] Disabler QA-tester
++ 2019-12-04 [Test] Tester ulike måter å åpne eksterne annonser
++ 2019-12-04 [Test] Tester ulike måter å åpne eksterne annonser
 ## RELEASE - 0.161.939-d541f6f
 #### New in this release: 
 + 2019-11-27 [Fix] Tester ny meta title
