@@ -1,3 +1,6 @@
+## RELEASE - 0.163.956-1e37e65
+#### New in this release: 
++ 2019-12-05 [Fix] IE issue med isValidUrl
 ## RELEASE - 0.162.955-1ff7e75
 #### New in this release: 
 + 2019-12-04 [Fix] Legger til lenke for eksterne annonser i annonsevisningen
