@@ -1,6 +1,6 @@
 # PAM Stillingsøk
 
-:)
+:-)
 
 ## Hvordan kjøre applikasjonen lokalt
 
