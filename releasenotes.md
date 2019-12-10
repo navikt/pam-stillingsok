@@ -1,3 +1,7 @@
+## RELEASE - 0.164.960-6691698
+#### New in this release: 
++ 2019-12-10 [Fix] Unngår dobbelt søk første gang
++ 2019-12-06 [Fix] Oppdaterer dependecier
 ## RELEASE - 0.163.956-1e37e65
 #### New in this release: 
 + 2019-12-05 [Fix] IE issue med isValidUrl
