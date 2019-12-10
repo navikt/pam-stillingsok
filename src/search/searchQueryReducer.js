@@ -39,7 +39,7 @@ export const SET_SORTING = 'SET_SORTING';
 
 const initialState = {
     q: '',
-    from: 0,
+    from: undefined,
     to: PAGE_SIZE,
     counties: [],
     countries: [],
@@ -64,7 +64,6 @@ export default function searchQueryReducer(state = initialState, action) {
         case RESTORE_STATE_FROM_URL:
             return {
                 ...state,
-                from: 0,
                 to: action.query.to ? parseInt(action.query.to, 10) : PAGE_SIZE,
                 q: action.query.q || '',
                 counties: action.query.counties || [],
@@ -268,11 +267,10 @@ export function toBrowserSearchQuery(searchQuery) {
  */
 export function toApiSearchQuery(searchQuery) {
     const apiSearchQuery = {
-        size: PAGE_SIZE,
         ...searchQuery
     };
     if (searchQuery.to > PAGE_SIZE) {
-        apiSearchQuery.size = searchQuery.to - searchQuery.from;
+        apiSearchQuery.size = searchQuery.to - (searchQuery.from || 0);
     }
 
     delete apiSearchQuery.to;
