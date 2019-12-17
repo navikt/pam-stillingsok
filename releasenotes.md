@@ -1,3 +1,10 @@
+## RELEASE - 0.165.972-3d1900c
+#### New in this release: 
++ 2019-12-17 [Fix] Husker hvilke av panelene som er åpne, slik de forblir åpnet når bruker kommer tilbake fra en ekstern side eller refresher nettsiden.
++ 2019-12-17 [Fix] Unngår at QA-test velger ekstern annonse
++ 2019-12-17 [Fix] Unngår at QA-test velger ekstern annonse
++ 2019-12-17 [Fix] Legger inn igjen QA-tester
++ 2019-08-29 [Fix] Finetuning av CSP og sikkerhetsheadere
 ## RELEASE - 0.164.960-6691698
 #### New in this release: 
 + 2019-12-10 [Fix] Unngår dobbelt søk første gang
