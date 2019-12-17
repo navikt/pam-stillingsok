@@ -25,12 +25,16 @@ const pageHitCounter = instrumentation.pageHitCounter();
 
 server.disable('x-powered-by');
 server.use(compression());
-server.use(helmet({ xssFilter: false }));
+// En del sikkerhets headere er allerede lagt i bigip, dropper de derfor her for å unngå duplkiate headere
+server.use(helmet({ xssFilter: false, hsts: false, noSniff: false, frameguard: false }));
 
 server.use(helmet.contentSecurityPolicy({
     directives: {
         defaultSrc: ["'none'"],
         scriptSrc: ["'self'", 'https://www.google-analytics.com'],
+        objectSrc: ["'none'"],
+        frameAncestors: ["'none'"],
+        formAction: ["'self'"],
         styleSrc: ["'self'"],
         fontSrc: ["'self'", 'data:', 'https://fonts.gstatic.com'],
         imgSrc: ["'self'", 'data:', 'https://www.google-analytics.com'],
