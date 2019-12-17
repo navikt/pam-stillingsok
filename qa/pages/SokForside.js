@@ -6,7 +6,7 @@ module.exports = {
         noResult: '.NoResults',
         searchResultItem: '.SearchResultItem',
         searchResultItemLink: {
-            selector: '//*[@id="treff"]/div[2]/div[1]/a[starts-with(@href,\'/stillinger/stilling/\')]',
+            selector: '//*[@id="treff"]/div[2]/div/a[starts-with(@href,\'/stillinger/stilling/\')]',
             locateStrategy: 'xpath'
         },
         searchResultCount: '.SearchResultCount__h3__count',
