@@ -1,3 +1,6 @@
+## RELEASE - 0.167.974-bcfa9b7
+#### New in this release: 
++ 2019-12-17 [Fix] Legger til referrer policy header
 ## RELEASE - 0.166.973-23951aa
 #### New in this release: 
 + 2019-12-17 [Fix] Legger til baseUri i CSP-headers
