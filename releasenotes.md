@@ -1,3 +1,6 @@
+## RELEASE - 0.168.976-da72e5c
+#### New in this release: 
++ 2019-12-17 [Fix] Legger til flere CSP headere
 ## RELEASE - 0.167.974-bcfa9b7
 #### New in this release: 
 + 2019-12-17 [Fix] Legger til referrer policy header
