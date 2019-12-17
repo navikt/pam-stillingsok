@@ -1,5 +1,5 @@
-import {isMobile} from '../../utils';
-import {select, takeLatest} from 'redux-saga/effects';
+import { isMobile } from '../../utils';
+import { select, takeLatest } from 'redux-saga/effects';
 
 export const EXPAND_ALL_FACET_PANELS = 'EXPAND_ALL_FACET_PANELS';
 export const COLLAPSE_ALL_FACET_PANELS = 'COLLAPSE_ALL_FACET_PANELS';
