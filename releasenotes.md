@@ -1,3 +1,6 @@
+## RELEASE - 0.166.973-23951aa
+#### New in this release: 
++ 2019-12-17 [Fix] Legger til baseUri i CSP-headers
 ## RELEASE - 0.165.972-3d1900c
 #### New in this release: 
 + 2019-12-17 [Fix] Husker hvilke av panelene som er åpne, slik de forblir åpnet når bruker kommer tilbake fra en ekstern side eller refresher nettsiden.
