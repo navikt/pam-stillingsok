@@ -31,6 +31,7 @@ server.use(helmet({ xssFilter: false, hsts: false, noSniff: false, frameguard: f
 server.use(helmet.contentSecurityPolicy({
     directives: {
         defaultSrc: ["'none'"],
+        baseUri: ["'none'"],
         scriptSrc: ["'self'", 'https://www.google-analytics.com'],
         objectSrc: ["'none'"],
         frameAncestors: ["'none'"],
