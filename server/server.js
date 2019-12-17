@@ -34,6 +34,7 @@ server.use(helmet.contentSecurityPolicy({
     directives: {
         defaultSrc: ["'none'"],
         baseUri: ["'none'"],
+        mediaSrc: ["'none'"],
         scriptSrc: ["'self'", 'https://www.google-analytics.com'],
         objectSrc: ["'none'"],
         frameAncestors: ["'none'"],
@@ -41,7 +42,8 @@ server.use(helmet.contentSecurityPolicy({
         styleSrc: ["'self'"],
         fontSrc: ["'self'", 'data:', 'https://fonts.gstatic.com'],
         imgSrc: ["'self'", 'data:', 'https://www.google-analytics.com'],
-        connectSrc: ["'self'", process.env.PAMADUSER_URL, 'https://www.google-analytics.com']
+        connectSrc: ["'self'", process.env.PAMADUSER_URL, 'https://www.google-analytics.com'],
+        frameSrc: ["'none'"]
     }
 }));
 
