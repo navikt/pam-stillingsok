@@ -28,6 +28,7 @@ const SavedSearches = ({
 }) => {
     useDocumentTitle('Lagrede søk - Arbeidsplassen');
 
+    // TODO - Remove after KOR2020 update
     if (location.href.includes("?notificationEmail=true")){
         sendGAEvent("dedikert-epost-kor");
         location.href = location.href.replace("?notificationEmail=true", "")
