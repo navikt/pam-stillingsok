@@ -17,6 +17,7 @@ import { authenticationEnum } from '../authentication/authenticationReducer';
 import { CONTEXT_PATH } from '../fasitProperties';
 import TotalSavedSearch from './totalSavedSearch/TotalSavedSearch';
 import { useDocumentTitle, useTrackPageview, useScrollToTop } from '../common/hooks';
+import sendGAEvent from "../googleanalytics";
 
 const SavedSearches = ({
     isAuthenticated,
@@ -26,6 +27,13 @@ const SavedSearches = ({
     user
 }) => {
     useDocumentTitle('Lagrede søk - Arbeidsplassen');
+
+    // TODO - Remove after KOR2020 update
+    if (location.href.includes("?notificationEmail=true")){
+        sendGAEvent("dedikert-epost-kor");
+        location.href = location.href.replace("?notificationEmail=true", "")
+    }
+
     useTrackPageview(`${CONTEXT_PATH}/lagrede-sok`, 'Lagrede søk');
     useScrollToTop();
 
