@@ -1,3 +1,6 @@
+## RELEASE - 0.170.982-d43da32
+#### New in this release: 
++ 2019-12-19 [PAM-3864] Legge til alertstripe med info om fylke/kommunesammenslåing
 ## RELEASE - 0.168.976-da72e5c
 #### New in this release: 
 + 2019-12-17 [Fix] Legger til flere CSP headere
