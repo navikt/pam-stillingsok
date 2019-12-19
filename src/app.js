@@ -18,7 +18,7 @@ import savedSearchAlertStripeReducer, { savedSearchAlertStripeSaga } from './sav
 import savedSearchExpandReducer from './savedSearches/expand/savedSearchExpandReducer';
 import savedSearchFormReducer, { savedSearchFormSaga } from './savedSearches/form/savedSearchFormReducer';
 import savedSearchesReducer, { savedSearchesSaga } from './savedSearches/savedSearchesReducer';
-import facetPanelsReducer from './search/facets/facetPanelsReducer';
+import facetPanelsReducer, {facetPanelsSaga} from './search/facets/facetPanelsReducer';
 import searchBoxReducer, { searchBoxSaga } from './search/searchBox/searchBoxReducer';
 import searchReducer, { saga } from './search/searchReducer';
 import stillingReducer, { stillingSaga } from './stilling/stillingReducer';
@@ -59,6 +59,7 @@ sagaMiddleware.run(authenticationSaga);
 sagaMiddleware.run(unknownFacetsSaga);
 sagaMiddleware.run(searchQuerySaga);
 sagaMiddleware.run(analyticsSaga);
+sagaMiddleware.run(facetPanelsSaga);
 
 
 ReactDOM.render(
