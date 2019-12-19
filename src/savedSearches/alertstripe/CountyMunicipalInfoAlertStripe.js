@@ -1,10 +1,11 @@
 import React from 'react';
 import AlertStripe from 'nav-frontend-alertstriper';
+import './CountyMunicipalInfoAlertStripe.less';
 
 export default function CountyMunicipalInfoAlertStripe() {
     return (
         <div>
-            <AlertStripe type="info" className="blokk-m alertstripe--solid">
+            <AlertStripe type="info" className="CountyMunicipalInfoAlertStripe blokk-m alertstripe--solid">
                 <strong>Fylker og kommuner slås sammen: Sjekk søkene dine</strong>
                 <br />
                 Har du et søk som inneholder kommuner eller fylker som blir endret?
