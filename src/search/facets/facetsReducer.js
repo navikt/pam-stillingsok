@@ -1,4 +1,5 @@
-import { FETCH_INITIAL_FACETS_SUCCESS, SEARCH_SUCCESS } from '../searchReducer';
+import {FETCH_INITIAL_FACETS_SUCCESS, SEARCH_SUCCESS} from '../searchReducer';
+import allCounties from '../data/allCounties';
 
 export const OCCUPATION_LEVEL_OTHER = 'Uoppgitt/ ikke identifiserbare';
 
@@ -28,7 +29,7 @@ export default function facetsReducer(state = initialState, action) {
                 engagementTypeFacets: moveFacetToBottom(action.response.engagementTypes, 'Annet'),
                 publishedFacets: action.response.published,
                 occupationFirstLevelFacets: moveFacetToBottom(action.response.occupationFirstLevels, OCCUPATION_LEVEL_OTHER),
-                countyFacets: action.response.counties,
+                countyFacets: createFullCountiesArray(action.response.counties),
                 countryFacets: action.response.countries
             };
         case SEARCH_SUCCESS:
@@ -39,7 +40,7 @@ export default function facetsReducer(state = initialState, action) {
                 engagementTypeFacets: updateCount(state.engagementTypeFacets, action.response.engagementTypes),
                 publishedFacets: updateCount(state.publishedFacets, action.response.published),
                 occupationFirstLevelFacets: updateCount(state.occupationFirstLevelFacets, action.response.occupationFirstLevels, 'occupationSecondLevels'),
-                countyFacets: updateCount(state.countyFacets, action.response.counties, 'municipals'),
+                countyFacets: createFullCountiesArray(updateCount(state.countyFacets, action.response.counties, 'municipals')),
                 countryFacets: updateCount(state.countryFacets, action.response.countries),
             };
         default:
@@ -66,6 +67,40 @@ function moveFacetToBottom(facets, facetKey) {
 }
 
 /**
+ * Bygg array som inneholder alle fylker og kommuner i norge, sortert alfabetisk
+ *
+ * @param counties: forrige versjon av counties array
+ * @returns array med counties
+ */
+function createFullCountiesArray(counties) {
+    const countMap = {};
+
+    counties.forEach(c => {
+        countMap[c.key] = c.count;
+
+        c.municipals.forEach(m => {
+            countMap[m.key] = m.count;
+        })
+    });
+
+    allCounties.forEach(c => {
+        c.count = countMap[c.key] === undefined ? 0 : countMap[c.key];
+
+        c.municipals.forEach(m => {
+            m.count = countMap[m.key] === undefined ? 0 : countMap[m.key];
+        });
+
+        c.municipals = c.municipals.sort((a, b) => {
+            return a.key > b.key ? 1 : -1;
+        });
+    });
+
+    return allCounties.sort((a, b) => {
+        return a.key > b.key ? 1 : -1;
+    });
+}
+
+/**
  * Når det er utført et søk, oppdateres antall treff per fasett, f.eks "Oslo (25)"
  *
  * @param initialValues: Alle opprinnelige fasetter
@@ -74,7 +109,7 @@ function moveFacetToBottom(facets, facetKey) {
  * @returns Returnerer en ny liste, hvor antall treff per fasett er oppdatert
  */
 function updateCount(initialValues, newValues, nestedKey) {
-    if(nestedKey === undefined) {
+    if (nestedKey === undefined) {
         return initialValues.map((item) => {
             const found = newValues.find((e) => (
                 e.key === item.key

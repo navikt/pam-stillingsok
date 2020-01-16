@@ -1,18 +1,17 @@
-import { Checkbox } from 'nav-frontend-skjema';
+import {Checkbox} from 'nav-frontend-skjema';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { connect } from 'react-redux';
-import fixLocationName from '../../../server/common/fixLocationName';
-import { SearchCriteriaPanels } from './facetPanelsReducer';
-import { ADD_COUNTY, ADD_MUNICIPAL, REMOVE_COUNTY, REMOVE_MUNICIPAL } from '../searchQueryReducer';
-import { SEARCH } from '../searchReducer';
+import {connect} from 'react-redux';
+import {SearchCriteriaPanels} from './facetPanelsReducer';
+import {ADD_COUNTY, ADD_MUNICIPAL, REMOVE_COUNTY, REMOVE_MUNICIPAL} from '../searchQueryReducer';
+import {SEARCH} from '../searchReducer';
 import './Facet.less';
 import Facet from './Facet';
 import UnknownFacetValues from './UnknownFacetValues';
 
 class Counties extends React.Component {
     onCountyClick = (e) => {
-        const { value } = e.target;
+        const {value} = e.target;
         if (e.target.checked) {
             this.props.checkCounty(value);
         } else {
@@ -22,7 +21,7 @@ class Counties extends React.Component {
     };
 
     onMunicipalClick = (e) => {
-        const { value } = e.target;
+        const {value} = e.target;
         if (e.target.checked) {
             this.props.checkMunicipal(value);
         } else {
@@ -35,6 +34,7 @@ class Counties extends React.Component {
         const {
             counties, checkedCounties, checkedMunicipals, deprecatedCounties, deprecatedMunicipals
         } = this.props;
+
         return (
             <Facet
                 panelId={SearchCriteriaPanels.COUNTIES_PANEL}
@@ -44,8 +44,9 @@ class Counties extends React.Component {
                 {counties && counties.map((county) => (
                     <div key={county.key}>
                         <Checkbox
+                            className={county.count > 0 ? '' : 'Facet__zero__count'}
                             name="location"
-                            label={`${fixLocationName(county.key)} (${county.count})`}
+                            label={`${county.label} (${county.count})`}
                             value={county.key}
                             onChange={this.onCountyClick}
                             checked={checkedCounties.includes(county.key)}
@@ -54,13 +55,14 @@ class Counties extends React.Component {
                             <div
                                 className="Facet__inner__items"
                                 role="group"
-                                aria-label={`Underområder ${fixLocationName(county.key)}`}
+                                aria-label={`Underområder ${county.label}`}
                             >
                                 {county.municipals && county.municipals.map((municipal) => (
                                     <Checkbox
+                                        className={municipal.count > 0 ? '' : 'Facet__zero__count'}
                                         name="location"
                                         key={municipal.key}
-                                        label={`${fixLocationName(municipal.label)} (${municipal.count})`}
+                                        label={`${municipal.label} (${municipal.count})`}
                                         value={municipal.key}
                                         onChange={this.onMunicipalClick}
                                         checked={checkedMunicipals.includes(municipal.key)}
@@ -114,11 +116,11 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    search: () => dispatch({ type: SEARCH }),
-    checkCounty: (county) => dispatch({ type: ADD_COUNTY, county }),
-    uncheckCounty: (county) => dispatch({ type: REMOVE_COUNTY, county }),
-    checkMunicipal: (municipal) => dispatch({ type: ADD_MUNICIPAL, municipal }),
-    uncheckMunicipal: (municipal) => dispatch({ type: REMOVE_MUNICIPAL, municipal })
+    search: () => dispatch({type: SEARCH}),
+    checkCounty: (county) => dispatch({type: ADD_COUNTY, county}),
+    uncheckCounty: (county) => dispatch({type: REMOVE_COUNTY, county}),
+    checkMunicipal: (municipal) => dispatch({type: ADD_MUNICIPAL, municipal}),
+    uncheckMunicipal: (municipal) => dispatch({type: REMOVE_MUNICIPAL, municipal})
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Counties);
