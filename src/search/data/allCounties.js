@@ -427,185 +427,185 @@ export default [
     {
         "label": "Trøndelag",
         "key": "Trøndelag",
-        "municipals": [{"key": "Trøndelag.TRONDHEIM", "label": "Trondheim"}, {
+        "municipals": [{"key": "TRØNDELAG.TRONDHEIM", "label": "Trondheim"}, {
             "label": "Steinkjer",
-            "key": "Trøndelag.STEINKJER"
-        }, {"label": "Namsos", "key": "Trøndelag.NAMSOS"}, {
+            "key": "TRØNDELAG.STEINKJER"
+        }, {"label": "Namsos", "key": "TRØNDELAG.NAMSOS"}, {
             "label": "Frøya",
-            "key": "Trøndelag.FRØYA"
-        }, {"label": "Osen", "key": "Trøndelag.OSEN"}, {
+            "key": "TRØNDELAG.FRØYA"
+        }, {"label": "Osen", "key": "TRØNDELAG.OSEN"}, {
             "label": "Oppdal",
-            "key": "Trøndelag.OPPDAL"
-        }, {"label": "Rennebu", "key": "Trøndelag.RENNEBU"}, {
+            "key": "TRØNDELAG.OPPDAL"
+        }, {"label": "Rennebu", "key": "TRØNDELAG.RENNEBU"}, {
             "label": "Røros",
-            "key": "Trøndelag.RØROS"
-        }, {"label": "Holtålen", "key": "Trøndelag.HOLTÅLEN"}, {
+            "key": "TRØNDELAG.RØROS"
+        }, {"label": "Holtålen", "key": "TRØNDELAG.HOLTÅLEN"}, {
             "label": "Midtre Gauldal",
-            "key": "Trøndelag.MIDTRE GAULDAL"
-        }, {"label": "Melhus", "key": "Trøndelag.MELHUS"}, {
+            "key": "TRØNDELAG.MIDTRE GAULDAL"
+        }, {"label": "Melhus", "key": "TRØNDELAG.MELHUS"}, {
             "label": "Skaun",
-            "key": "Trøndelag.SKAUN"
-        }, {"label": "Malvik", "key": "Trøndelag.MALVIK"}, {
+            "key": "TRØNDELAG.SKAUN"
+        }, {"label": "Malvik", "key": "TRØNDELAG.MALVIK"}, {
             "label": "Selbu",
-            "key": "Trøndelag.SELBU"
-        }, {"label": "Tydal", "key": "Trøndelag.TYDAL"}, {
+            "key": "TRØNDELAG.SELBU"
+        }, {"label": "Tydal", "key": "TRØNDELAG.TYDAL"}, {
             "label": "Meråker",
-            "key": "Trøndelag.MERÅKER"
-        }, {"label": "Stjørdal", "key": "Trøndelag.STJØRDAL"}, {
+            "key": "TRØNDELAG.MERÅKER"
+        }, {"label": "Stjørdal", "key": "TRØNDELAG.STJØRDAL"}, {
             "label": "Frosta",
-            "key": "Trøndelag.FROSTA"
-        }, {"label": "Levanger", "key": "Trøndelag.LEVANGER"}, {
+            "key": "TRØNDELAG.FROSTA"
+        }, {"label": "Levanger", "key": "TRØNDELAG.LEVANGER"}, {
             "label": "Verdal",
-            "key": "Trøndelag.VERDAL"
-        }, {"label": "Snåase - Snåsa", "key": "Trøndelag.SNÅASE - SNÅSA"}, {
+            "key": "TRØNDELAG.VERDAL"
+        }, {"label": "Snåase - Snåsa", "key": "TRØNDELAG.SNÅASE - SNÅSA"}, {
             "label": "Lierne",
-            "key": "Trøndelag.LIERNE"
+            "key": "TRØNDELAG.LIERNE"
         }, {
             "label": "Raarvihke - Røyrvik",
-            "key": "Trøndelag.RAARVIHKE - RØYRVIK"
-        }, {"label": "Namsskogan", "key": "Trøndelag.NAMSSKOGAN"}, {
+            "key": "TRØNDELAG.RAARVIHKE - RØYRVIK"
+        }, {"label": "Namsskogan", "key": "TRØNDELAG.NAMSSKOGAN"}, {
             "label": "Grong",
-            "key": "Trøndelag.GRONG"
-        }, {"label": "Høylandet", "key": "Trøndelag.HØYLANDET"}, {
+            "key": "TRØNDELAG.GRONG"
+        }, {"label": "Høylandet", "key": "TRØNDELAG.HØYLANDET"}, {
             "label": "Overhalla",
-            "key": "Trøndelag.OVERHALLA"
-        }, {"label": "Flatanger", "key": "Trøndelag.FLATANGER"}, {
+            "key": "TRØNDELAG.OVERHALLA"
+        }, {"label": "Flatanger", "key": "TRØNDELAG.FLATANGER"}, {
             "label": "Leka",
-            "key": "Trøndelag.LEKA"
-        }, {"label": "Inderøy", "key": "Trøndelag.INDERØY"}, {
+            "key": "TRØNDELAG.LEKA"
+        }, {"label": "Inderøy", "key": "TRØNDELAG.INDERØY"}, {
             "label": "Indre Fosen",
-            "key": "Trøndelag.INDRE FOSEN"
-        }, {"label": "Heim", "key": "Trøndelag.HEIM"}, {
+            "key": "TRØNDELAG.INDRE FOSEN"
+        }, {"label": "Heim", "key": "TRØNDELAG.HEIM"}, {
             "label": "Hitra",
-            "key": "Trøndelag.HITRA"
-        }, {"label": "Ørland", "key": "Trøndelag.ØRLAND"}, {
+            "key": "TRØNDELAG.HITRA"
+        }, {"label": "Ørland", "key": "TRØNDELAG.ØRLAND"}, {
             "label": "Åfjord",
-            "key": "Trøndelag.ÅFJORD"
-        }, {"label": "Orkland", "key": "Trøndelag.ORKLAND"}, {
+            "key": "TRØNDELAG.ÅFJORD"
+        }, {"label": "Orkland", "key": "TRØNDELAG.ORKLAND"}, {
             "label": "Nærøysund",
-            "key": "Trøndelag.NÆRØYSUND"
-        }, {"label": "Rindal", "key": "Trøndelag.RINDAL"}]
+            "key": "TRØNDELAG.NÆRØYSUND"
+        }, {"label": "Rindal", "key": "TRØNDELAG.RINDAL"}]
     },
     {
         "label": "Troms og Finnmark",
         "key": "Troms og Finnmark",
         "municipals": [{
-            "key": "Troms og Finnmark.TROMSØ",
+            "key": "TROMS OG FINNMARK.TROMSØ",
             "label": "Tromsø"
         }, {
             "label": "Harstad - Hárstták",
-            "key": "Troms og Finnmark.HARSTAD - HÁRSTTÁK"
+            "key": "TROMS OG FINNMARK.HARSTAD - HÁRSTTÁK"
         }, {
             "label": "Alta",
-            "key": "Troms og Finnmark.ALTA"
+            "key": "TROMS OG FINNMARK.ALTA"
         }, {
             "label": "Vardø",
-            "key": "Troms og Finnmark.VARDØ"
+            "key": "TROMS OG FINNMARK.VARDØ"
         }, {
             "label": "Vadsø",
-            "key": "Troms og Finnmark.VADSØ"
+            "key": "TROMS OG FINNMARK.VADSØ"
         }, {
             "label": "Hammerfest",
-            "key": "Troms og Finnmark.HAMMERFEST"
+            "key": "TROMS OG FINNMARK.HAMMERFEST"
         }, {
             "label": "Kvæfjord",
-            "key": "Troms og Finnmark.KVÆFJORD"
+            "key": "TROMS OG FINNMARK.KVÆFJORD"
         }, {
             "label": "Tjeldsund ",
-            "key": "Troms og Finnmark.TJELDSUND "
+            "key": "TROMS OG FINNMARK.TJELDSUND "
         }, {
             "label": "Ibestad",
-            "key": "Troms og Finnmark.IBESTAD"
+            "key": "TROMS OG FINNMARK.IBESTAD"
         }, {
             "label": "Gratangen",
-            "key": "Troms og Finnmark.GRATANGEN"
+            "key": "TROMS OG FINNMARK.GRATANGEN"
         }, {
             "label": "Loabák - Lavangen",
-            "key": "Troms og Finnmark.LOABÁK - LAVANGEN"
+            "key": "TROMS OG FINNMARK.LOABÁK - LAVANGEN"
         }, {
             "label": "Bardu",
-            "key": "Troms og Finnmark.BARDU"
+            "key": "TROMS OG FINNMARK.BARDU"
         }, {
             "label": "Salangen",
-            "key": "Troms og Finnmark.SALANGEN"
+            "key": "TROMS OG FINNMARK.SALANGEN"
         }, {
             "label": "Målselv",
-            "key": "Troms og Finnmark.MÅLSELV"
+            "key": "TROMS OG FINNMARK.MÅLSELV"
         }, {
             "label": "Sørreisa",
-            "key": "Troms og Finnmark.SØRREISA"
+            "key": "TROMS OG FINNMARK.SØRREISA"
         }, {
             "label": "Dyrøy",
-            "key": "Troms og Finnmark.DYRØY"
+            "key": "TROMS OG FINNMARK.DYRØY"
         }, {
             "label": "Senja",
-            "key": "Troms og Finnmark.SENJA"
+            "key": "TROMS OG FINNMARK.SENJA"
         }, {
             "label": "Balsfjord",
-            "key": "Troms og Finnmark.BALSFJORD"
+            "key": "TROMS OG FINNMARK.BALSFJORD"
         }, {
             "label": "Karlsøy",
-            "key": "Troms og Finnmark.KARLSØY"
+            "key": "TROMS OG FINNMARK.KARLSØY"
         }, {
             "label": "Lyngen",
-            "key": "Troms og Finnmark.LYNGEN"
+            "key": "TROMS OG FINNMARK.LYNGEN"
         }, {
             "label": "Storfjord - Omasvuotna - Omasvuono",
-            "key": "Troms og Finnmark.STORFJORD - OMASVUOTNA - OMASVUONO"
+            "key": "TROMS OG FINNMARK.STORFJORD - OMASVUOTNA - OMASVUONO"
         }, {
             "label": "Gáivuotna - Kåfjord - Kaivuono",
-            "key": "Troms og Finnmark.GÁIVUOTNA - KÅFJORD - KAIVUONO"
+            "key": "TROMS OG FINNMARK.GÁIVUOTNA - KÅFJORD - KAIVUONO"
         }, {
             "label": "Skjervøy",
-            "key": "Troms og Finnmark.SKJERVØY"
+            "key": "TROMS OG FINNMARK.SKJERVØY"
         }, {
             "label": "Nordreisa - Ráisa - Raisi",
-            "key": "Troms og Finnmark.NORDREISA - RÁISA - RAISI"
+            "key": "TROMS OG FINNMARK.NORDREISA - RÁISA - RAISI"
         }, {
             "label": "Kvænangen",
-            "key": "Troms og Finnmark.KVÆNANGEN"
+            "key": "TROMS OG FINNMARK.KVÆNANGEN"
         }, {
             "label": "Guovdageaidnu - Kautokeino",
-            "key": "Troms og Finnmark.GUOVDAGEAIDNU - KAUTOKEINO"
+            "key": "TROMS OG FINNMARK.GUOVDAGEAIDNU - KAUTOKEINO"
         }, {
             "label": "Loppa",
-            "key": "Troms og Finnmark.LOPPA"
+            "key": "TROMS OG FINNMARK.LOPPA"
         }, {
             "label": "Hasvik",
-            "key": "Troms og Finnmark.HASVIK"
+            "key": "TROMS OG FINNMARK.HASVIK"
         }, {
             "label": "Måsøy",
-            "key": "Troms og Finnmark.MÅSØY"
+            "key": "TROMS OG FINNMARK.MÅSØY"
         }, {
             "label": "Nordkapp",
-            "key": "Troms og Finnmark.NORDKAPP"
+            "key": "TROMS OG FINNMARK.NORDKAPP"
         }, {
             "label": "Porsanger - Porsáŋgu - Porsanki",
-            "key": "Troms og Finnmark.PORSANGER - PORSÁŊGU - PORSANKI"
+            "key": "TROMS OG FINNMARK.PORSANGER - PORSÁŊGU - PORSANKI"
         }, {
             "label": "Kárášjohka - Karasjok",
-            "key": "Troms og Finnmark.KÁRÁŠJOHKA - KARASJOK"
+            "key": "TROMS OG FINNMARK.KÁRÁŠJOHKA - KARASJOK"
         }, {
             "label": "Lebesby",
-            "key": "Troms og Finnmark.LEBESBY"
+            "key": "TROMS OG FINNMARK.LEBESBY"
         }, {
             "label": "Gamvik",
-            "key": "Troms og Finnmark.GAMVIK"
+            "key": "TROMS OG FINNMARK.GAMVIK"
         }, {
             "label": "Berlevåg",
-            "key": "Troms og Finnmark.BERLEVÅG"
+            "key": "TROMS OG FINNMARK.BERLEVÅG"
         }, {
             "label": "Deatnu - Tana",
-            "key": "Troms og Finnmark.DEATNU - TANA"
+            "key": "TROMS OG FINNMARK.DEATNU - TANA"
         }, {
             "label": "Unjárga - Nesseby",
-            "key": "Troms og Finnmark.UNJÁRGA - NESSEBY"
+            "key": "TROMS OG FINNMARK.UNJÁRGA - NESSEBY"
         }, {
             "label": "Båtsfjord",
-            "key": "Troms og Finnmark.BÅTSFJORD"
+            "key": "TROMS OG FINNMARK.BÅTSFJORD"
         }, {
             "label": "Sør-Varanger",
-            "key": "Troms og Finnmark.SØR-VARANGER"
+            "key": "TROMS OG FINNMARK.SØR-VARANGER"
         }]
     },
 ];
