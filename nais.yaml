@@ -48,5 +48,7 @@ spec:
       value: https://arbeidsplassen.nav.no/stillingsregistrering
     - name: PAMSEARCHAPI_URL
       value: http://pam-search-api
+    - name: PAM_STILLINGSREGISTRERING_API_URL
+      value: http://pam-stillingsregistrering-api
 
 
