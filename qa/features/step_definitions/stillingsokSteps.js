@@ -63,6 +63,6 @@ Then(/^antall treff skal stemme overens med antall i fasett "(.*)"$/, (filter) =
     return forside.verifyFilterCount(filter);
 });
 
-Then(/^skal "(.*)" vises under "(.*)"$/, (filter, kategori) => {
-    return stilling.detailSectionContainsText(kategori, filter);
-});
+// Then(/^skal "(.*)" vises under "(.*)"$/, (filter, kategori) => {
+//     return stilling.detailSectionContainsText(kategori, filter);
+// });
