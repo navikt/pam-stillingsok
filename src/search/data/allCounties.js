@@ -100,7 +100,7 @@ export default [
         }, {"label": "Vefsn ", "key": "NORDLAND.VEFSN"}, {
             "label": "Grane ",
             "key": "NORDLAND.GRANE "
-        }, {"label": "Aarborte - Hattfjelldal ", "key": "NORDLAND.AARBORTE - HATTFJELLDAL"}, {
+        }, {"label": "Hattfjelldal ", "key": "NORDLAND.HATTFJELLDAL"}, {
             "label": "Dønna ",
             "key": "NORDLAND.DØNNA "
         }, {"label": "Nesna ", "key": "NORDLAND.NESNA"}, {
@@ -118,7 +118,7 @@ export default [
         }, {"label": "Beiarn ", "key": "NORDLAND.BEIARN"}, {
             "label": "Saltdal ",
             "key": "NORDLAND.SALTDAL "
-        }, {"label": "Fauske - Fuossko", "key": "NORDLAND.FAUSKE - FUOSSKO"}, {
+        }, {"label": "Fauske", "key": "NORDLAND.FAUSKE"}, {
             "label": "Sørfold ",
             "key": "NORDLAND.SØRFOLD "
         }, {"label": "Steigen ", "key": "NORDLAND.STEIGEN"}, {
@@ -137,12 +137,12 @@ export default [
             "label": "Bø ",
             "key": "NORDLAND.BØ "
         }, {"label": "Øksnes ", "key": "NORDLAND.ØKSNES"}, {
-            "label": "Sortland - Suortá",
-            "key": "NORDLAND.SORTLAND - SUORTÁ"
+            "label": "Sortland",
+            "key": "NORDLAND.SORTLAND"
         }, {"label": "Andøy ", "key": "NORDLAND.ANDØY"}, {
             "label": "Moskenes ",
             "key": "NORDLAND.MOSKENES "
-        }, {"label": "Hamarøy - Hábmer", "key": "NORDLAND.HAMARØY - HÁBMER"}]
+        }, {"label": "Hamarøy", "key": "NORDLAND.HAMARØY"}]
     },
     {
         "label": "Viken",
@@ -457,12 +457,12 @@ export default [
         }, {"label": "Levanger", "key": "TRØNDELAG.LEVANGER"}, {
             "label": "Verdal",
             "key": "TRØNDELAG.VERDAL"
-        }, {"label": "Snåase - Snåsa", "key": "TRØNDELAG.SNÅASE - SNÅSA"}, {
+        }, {"label": "Snåsa", "key": "TRØNDELAG.SNÅSA"}, {
             "label": "Lierne",
             "key": "TRØNDELAG.LIERNE"
         }, {
-            "label": "Raarvihke - Røyrvik",
-            "key": "TRØNDELAG.RAARVIHKE - RØYRVIK"
+            "label": "Røyrvik",
+            "key": "TRØNDELAG.RØYRVIK"
         }, {"label": "Namsskogan", "key": "TRØNDELAG.NAMSSKOGAN"}, {
             "label": "Grong",
             "key": "TRØNDELAG.GRONG"
@@ -493,8 +493,8 @@ export default [
             "key": "TROMS OG FINNMARK.TROMSØ",
             "label": "Tromsø"
         }, {
-            "label": "Harstad - Hárstták",
-            "key": "TROMS OG FINNMARK.HARSTAD - HÁRSTTÁK"
+            "label": "Harstad",
+            "key": "TROMS OG FINNMARK.HARSTAD"
         }, {
             "label": "Alta",
             "key": "TROMS OG FINNMARK.ALTA"
@@ -520,8 +520,8 @@ export default [
             "label": "Gratangen",
             "key": "TROMS OG FINNMARK.GRATANGEN"
         }, {
-            "label": "Loabák - Lavangen",
-            "key": "TROMS OG FINNMARK.LOABÁK - LAVANGEN"
+            "label": "Lavangen",
+            "key": "TROMS OG FINNMARK.LAVANGEN"
         }, {
             "label": "Bardu",
             "key": "TROMS OG FINNMARK.BARDU"
@@ -550,23 +550,23 @@ export default [
             "label": "Lyngen",
             "key": "TROMS OG FINNMARK.LYNGEN"
         }, {
-            "label": "Storfjord - Omasvuotna - Omasvuono",
-            "key": "TROMS OG FINNMARK.STORFJORD - OMASVUOTNA - OMASVUONO"
+            "label": "Storfjord",
+            "key": "TROMS OG FINNMARK.STORFJORD"
         }, {
-            "label": "Gáivuotna - Kåfjord - Kaivuono",
-            "key": "TROMS OG FINNMARK.GÁIVUOTNA - KÅFJORD - KAIVUONO"
+            "label": "Kåfjord",
+            "key": "TROMS OG FINNMARK.KÅFJORD"
         }, {
             "label": "Skjervøy",
             "key": "TROMS OG FINNMARK.SKJERVØY"
         }, {
-            "label": "Nordreisa - Ráisa - Raisi",
-            "key": "TROMS OG FINNMARK.NORDREISA - RÁISA - RAISI"
+            "label": "Nordreisa",
+            "key": "TROMS OG FINNMARK.NORDREISA"
         }, {
             "label": "Kvænangen",
             "key": "TROMS OG FINNMARK.KVÆNANGEN"
         }, {
-            "label": "Guovdageaidnu - Kautokeino",
-            "key": "TROMS OG FINNMARK.GUOVDAGEAIDNU - KAUTOKEINO"
+            "label": "Kautokeino",
+            "key": "TROMS OG FINNMARK.KAUTOKEINO"
         }, {
             "label": "Loppa",
             "key": "TROMS OG FINNMARK.LOPPA"
@@ -580,11 +580,11 @@ export default [
             "label": "Nordkapp",
             "key": "TROMS OG FINNMARK.NORDKAPP"
         }, {
-            "label": "Porsanger - Porsáŋgu - Porsanki",
-            "key": "TROMS OG FINNMARK.PORSANGER - PORSÁŊGU - PORSANKI"
+            "label": "Porsanger",
+            "key": "TROMS OG FINNMARK.PORSANGER"
         }, {
-            "label": "Kárášjohka - Karasjok",
-            "key": "TROMS OG FINNMARK.KÁRÁŠJOHKA - KARASJOK"
+            "label": "Karasjok",
+            "key": "TROMS OG FINNMARK.KARASJOK"
         }, {
             "label": "Lebesby",
             "key": "TROMS OG FINNMARK.LEBESBY"
@@ -595,11 +595,11 @@ export default [
             "label": "Berlevåg",
             "key": "TROMS OG FINNMARK.BERLEVÅG"
         }, {
-            "label": "Deatnu - Tana",
-            "key": "TROMS OG FINNMARK.DEATNU - TANA"
+            "label": "Tana",
+            "key": "TROMS OG FINNMARK.TANA"
         }, {
-            "label": "Unjárga - Nesseby",
-            "key": "TROMS OG FINNMARK.UNJÁRGA - NESSEBY"
+            "label": "Nesseby",
+            "key": "TROMS OG FINNMARK.NESSEBY"
         }, {
             "label": "Båtsfjord",
             "key": "TROMS OG FINNMARK.BÅTSFJORD"
@@ -610,47 +610,3 @@ export default [
     },
 ];
 
-/*
-// HENTE OPPDATERT FYLKESDATA
-
-// STEG 1: Åpne browser og gå til https://www.kartverket.no/kunnskap/fakta-om-norge/fylker-og-kommuner/tabell/
-
-// STEG 2: Åpne konsoll og kopier/lim inn følgende script:
-var data = [];
-
-$('.data-grid-view').find('tr').each(function (i, el) {
-    const $tds = $(this).find('td');
-    const county = $tds.eq(1).text();
-    const munName = $tds.eq(3).text();
-
-    if (typeof county === 'string' && county !== '') {
-        let index = -1;
-
-        data.forEach(i => {
-            if (i.key === county.toUpperCase()) index = data.indexOf(i);
-        });
-
-        if (index === -1) {
-            data.push({
-                label: county,
-                key: county.toUpperCase(),
-                municipals: [
-                    {
-                        key: `${county.toUpperCase()}.${munName.toUpperCase()}`,
-                        label: munName,
-                    }
-                ]
-            });
-        } else {
-            data[index].municipals.push({
-                label: munName,
-                key: `${county.toUpperCase()}.${munName.toUpperCase()}`,
-            });
-        }
-    }
-});
-
-// STEG 3: kjør følgende kode i konsoll og kopier innhold inn i counties arrayet
-// PS: mulig at den stringify'a dataen blir for stor for browser. Kjør da stringify på et og et fylke og kopier det over
-console.log(JSON.stringify(data));
- */
