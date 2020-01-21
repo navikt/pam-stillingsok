@@ -27,13 +27,13 @@ export default [
         }, {"label": "Suldal", "key": "ROGALAND.SULDAL"}, {
             "label": "Sauda",
             "key": "ROGALAND.SAUDA"
-        }, {"label": "Kvitsøy ", "key": "ROGALAND.KVITSØY "}, {
-            "label": "Bokn ",
+        }, {"label": "Kvitsøy", "key": "ROGALAND.KVITSØY"}, {
+            "label": "Bokn",
             "key": "ROGALAND.BOKN "
-        }, {"label": "Tysvær ", "key": "ROGALAND.TYSVÆR "}, {
-            "label": "Karmøy ",
+        }, {"label": "Tysvær", "key": "ROGALAND.TYSVÆR"}, {
+            "label": "Karmøy",
             "key": "ROGALAND.KARMØY "
-        }, {"label": "Utsira ", "key": "ROGALAND.UTSIRA "}, {"label": "Vindafjord ", "key": "ROGALAND.VINDAFJORD "}]
+        }, {"label": "Utsira", "key": "ROGALAND.UTSIRA"}, {"label": "Vindafjord", "key": "ROGALAND.VINDAFJORD"}]
     },
     {
         "label": "Møre og Romsdal",
@@ -69,9 +69,9 @@ export default [
             "label": "Sunndal",
             "key": "MØRE OG ROMSDAL.SUNNDAL"
         }, {"label": "Surnadal", "key": "MØRE OG ROMSDAL.SURNADAL"}, {
-            "label": "Smøla ",
+            "label": "Smøla",
             "key": "MØRE OG ROMSDAL.SMØLA "
-        }, {"label": "Aure ", "key": "MØRE OG ROMSDAL.AURE "}, {
+        }, {"label": "Aure", "key": "MØRE OG ROMSDAL.AURE"}, {
             "label": "Volda",
             "key": "MØRE OG ROMSDAL.VOLDA"
         }, {"label": "Fjord", "key": "MØRE OG ROMSDAL.FJORD"}, {
@@ -82,66 +82,66 @@ export default [
     {
         "label": "Nordland",
         "key": "NORDLAND",
-        "municipals": [{"key": "NORDLAND.BODØ ", "label": "Bodø"}, {
-            "label": "Narvik ",
-            "key": "NORDLAND.NARVIK "
-        }, {"label": "Bindal ", "key": "NORDLAND.BINDAL"}, {
-            "label": "Sømna ",
-            "key": "NORDLAND.SØMNA "
-        }, {"label": "Brønnøy ", "key": "NORDLAND.BRØNNØY"}, {
-            "label": "Vega ",
-            "key": "NORDLAND.VEGA "
-        }, {"label": "Vevelstad ", "key": "NORDLAND.VEVELSTAD"}, {
-            "label": "Herøy ",
-            "key": "NORDLAND.HERØY "
-        }, {"label": "Alstahaug ", "key": "NORDLAND.ALSTAHAUG"}, {
-            "label": "Leirfjord ",
-            "key": "NORDLAND.LEIRFJORD "
-        }, {"label": "Vefsn ", "key": "NORDLAND.VEFSN"}, {
-            "label": "Grane ",
-            "key": "NORDLAND.GRANE "
-        }, {"label": "Hattfjelldal ", "key": "NORDLAND.HATTFJELLDAL"}, {
-            "label": "Dønna ",
-            "key": "NORDLAND.DØNNA "
-        }, {"label": "Nesna ", "key": "NORDLAND.NESNA"}, {
-            "label": "Hemnes ",
-            "key": "NORDLAND.HEMNES "
-        }, {"label": "Rana ", "key": "NORDLAND.RANA"}, {
-            "label": "Lurøy ",
-            "key": "NORDLAND.LURØY "
-        }, {"label": "Træna ", "key": "NORDLAND.TRÆNA"}, {
-            "label": "Rødøy ",
-            "key": "NORDLAND.RØDØY "
-        }, {"label": "Meløy ", "key": "NORDLAND.MELØY"}, {
-            "label": "Gildeskål ",
-            "key": "NORDLAND.GILDESKÅL "
-        }, {"label": "Beiarn ", "key": "NORDLAND.BEIARN"}, {
-            "label": "Saltdal ",
-            "key": "NORDLAND.SALTDAL "
+        "municipals": [{"key": "NORDLAND.BODØ", "label": "Bodø"}, {
+            "label": "Narvik",
+            "key": "NORDLAND.NARVIK"
+        }, {"label": "Bindal", "key": "NORDLAND.BINDAL"}, {
+            "label": "Sømna",
+            "key": "NORDLAND.SØMNA"
+        }, {"label": "Brønnøy", "key": "NORDLAND.BRØNNØY"}, {
+            "label": "Vega",
+            "key": "NORDLAND.VEGA"
+        }, {"label": "Vevelstad", "key": "NORDLAND.VEVELSTAD"}, {
+            "label": "Herøy",
+            "key": "NORDLAND.HERØY"
+        }, {"label": "Alstahaug", "key": "NORDLAND.ALSTAHAUG"}, {
+            "label": "Leirfjord",
+            "key": "NORDLAND.LEIRFJORD"
+        }, {"label": "Vefsn", "key": "NORDLAND.VEFSN"}, {
+            "label": "Grane",
+            "key": "NORDLAND.GRANE"
+        }, {"label": "Hattfjelldal", "key": "NORDLAND.HATTFJELLDAL"}, {
+            "label": "Dønna",
+            "key": "NORDLAND.DØNNA"
+        }, {"label": "Nesna", "key": "NORDLAND.NESNA"}, {
+            "label": "Hemnes",
+            "key": "NORDLAND.HEMNES"
+        }, {"label": "Rana", "key": "NORDLAND.RANA"}, {
+            "label": "Lurøy",
+            "key": "NORDLAND.LURØY"
+        }, {"label": "Træna", "key": "NORDLAND.TRÆNA"}, {
+            "label": "Rødøy",
+            "key": "NORDLAND.RØDØY"
+        }, {"label": "Meløy", "key": "NORDLAND.MELØY"}, {
+            "label": "Gildeskål",
+            "key": "NORDLAND.GILDESKÅL"
+        }, {"label": "Beiarn", "key": "NORDLAND.BEIARN"}, {
+            "label": "Saltdal",
+            "key": "NORDLAND.SALTDAL"
         }, {"label": "Fauske", "key": "NORDLAND.FAUSKE"}, {
-            "label": "Sørfold ",
-            "key": "NORDLAND.SØRFOLD "
-        }, {"label": "Steigen ", "key": "NORDLAND.STEIGEN"}, {
-            "label": "Lødingen ",
-            "key": "NORDLAND.LØDINGEN "
-        }, {"label": "Evenes ", "key": "NORDLAND.EVENES"}, {
-            "label": "Røst ",
-            "key": "NORDLAND.RØST "
-        }, {"label": "Værøy ", "key": "NORDLAND.VÆRØY"}, {
-            "label": "Flakstad ",
-            "key": "NORDLAND.FLAKSTAD "
-        }, {"label": "Vestvågøy ", "key": "NORDLAND.VESTVÅGØY"}, {
-            "label": "Vågan ",
-            "key": "NORDLAND.VÅGAN "
-        }, {"label": "Hadsel ", "key": "NORDLAND.HADSEL"}, {
-            "label": "Bø ",
-            "key": "NORDLAND.BØ "
-        }, {"label": "Øksnes ", "key": "NORDLAND.ØKSNES"}, {
+            "label": "Sørfold",
+            "key": "NORDLAND.SØRFOLD"
+        }, {"label": "Steigen", "key": "NORDLAND.STEIGEN"}, {
+            "label": "Lødingen",
+            "key": "NORDLAND.LØDINGEN"
+        }, {"label": "Evenes", "key": "NORDLAND.EVENES"}, {
+            "label": "Røst",
+            "key": "NORDLAND.RØST"
+        }, {"label": "Værøy", "key": "NORDLAND.VÆRØY"}, {
+            "label": "Flakstad",
+            "key": "NORDLAND.FLAKSTAD"
+        }, {"label": "Vestvågøy", "key": "NORDLAND.VESTVÅGØY"}, {
+            "label": "Vågan",
+            "key": "NORDLAND.VÅGAN"
+        }, {"label": "Hadsel", "key": "NORDLAND.HADSEL"}, {
+            "label": "Bø",
+            "key": "NORDLAND.BØ"
+        }, {"label": "Øksnes", "key": "NORDLAND.ØKSNES"}, {
             "label": "Sortland",
             "key": "NORDLAND.SORTLAND"
-        }, {"label": "Andøy ", "key": "NORDLAND.ANDØY"}, {
-            "label": "Moskenes ",
-            "key": "NORDLAND.MOSKENES "
+        }, {"label": "Andøy", "key": "NORDLAND.ANDØY"}, {
+            "label": "Moskenes",
+            "key": "NORDLAND.MOSKENES"
         }, {"label": "Hamarøy", "key": "NORDLAND.HAMARØY"}]
     },
     {
@@ -511,7 +511,7 @@ export default [
             "label": "Kvæfjord",
             "key": "TROMS OG FINNMARK.KVÆFJORD"
         }, {
-            "label": "Tjeldsund ",
+            "label": "Tjeldsund",
             "key": "TROMS OG FINNMARK.TJELDSUND "
         }, {
             "label": "Ibestad",
