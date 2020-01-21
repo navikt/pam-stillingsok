@@ -82,64 +82,64 @@ export default [
     {
         "label": "Nordland",
         "key": "NORDLAND",
-        "municipals": [{"key": "NORDLAND.BODØ ", "label": "Bodø "}, {
+        "municipals": [{"key": "NORDLAND.BODØ ", "label": "Bodø"}, {
             "label": "Narvik ",
             "key": "NORDLAND.NARVIK "
-        }, {"label": "Bindal ", "key": "NORDLAND.BINDAL "}, {
+        }, {"label": "Bindal ", "key": "NORDLAND.BINDAL"}, {
             "label": "Sømna ",
             "key": "NORDLAND.SØMNA "
-        }, {"label": "Brønnøy ", "key": "NORDLAND.BRØNNØY "}, {
+        }, {"label": "Brønnøy ", "key": "NORDLAND.BRØNNØY"}, {
             "label": "Vega ",
             "key": "NORDLAND.VEGA "
-        }, {"label": "Vevelstad ", "key": "NORDLAND.VEVELSTAD "}, {
+        }, {"label": "Vevelstad ", "key": "NORDLAND.VEVELSTAD"}, {
             "label": "Herøy ",
             "key": "NORDLAND.HERØY "
-        }, {"label": "Alstahaug ", "key": "NORDLAND.ALSTAHAUG "}, {
+        }, {"label": "Alstahaug ", "key": "NORDLAND.ALSTAHAUG"}, {
             "label": "Leirfjord ",
             "key": "NORDLAND.LEIRFJORD "
-        }, {"label": "Vefsn ", "key": "NORDLAND.VEFSN "}, {
+        }, {"label": "Vefsn ", "key": "NORDLAND.VEFSN"}, {
             "label": "Grane ",
             "key": "NORDLAND.GRANE "
-        }, {"label": "Aarborte - Hattfjelldal ", "key": "NORDLAND.AARBORTE - HATTFJELLDAL "}, {
+        }, {"label": "Aarborte - Hattfjelldal ", "key": "NORDLAND.AARBORTE - HATTFJELLDAL"}, {
             "label": "Dønna ",
             "key": "NORDLAND.DØNNA "
-        }, {"label": "Nesna ", "key": "NORDLAND.NESNA "}, {
+        }, {"label": "Nesna ", "key": "NORDLAND.NESNA"}, {
             "label": "Hemnes ",
             "key": "NORDLAND.HEMNES "
-        }, {"label": "Rana ", "key": "NORDLAND.RANA "}, {
+        }, {"label": "Rana ", "key": "NORDLAND.RANA"}, {
             "label": "Lurøy ",
             "key": "NORDLAND.LURØY "
-        }, {"label": "Træna ", "key": "NORDLAND.TRÆNA "}, {
+        }, {"label": "Træna ", "key": "NORDLAND.TRÆNA"}, {
             "label": "Rødøy ",
             "key": "NORDLAND.RØDØY "
-        }, {"label": "Meløy ", "key": "NORDLAND.MELØY "}, {
+        }, {"label": "Meløy ", "key": "NORDLAND.MELØY"}, {
             "label": "Gildeskål ",
             "key": "NORDLAND.GILDESKÅL "
-        }, {"label": "Beiarn ", "key": "NORDLAND.BEIARN "}, {
+        }, {"label": "Beiarn ", "key": "NORDLAND.BEIARN"}, {
             "label": "Saltdal ",
             "key": "NORDLAND.SALTDAL "
         }, {"label": "Fauske - Fuossko", "key": "NORDLAND.FAUSKE - FUOSSKO"}, {
             "label": "Sørfold ",
             "key": "NORDLAND.SØRFOLD "
-        }, {"label": "Steigen ", "key": "NORDLAND.STEIGEN "}, {
+        }, {"label": "Steigen ", "key": "NORDLAND.STEIGEN"}, {
             "label": "Lødingen ",
             "key": "NORDLAND.LØDINGEN "
-        }, {"label": "Evenes ", "key": "NORDLAND.EVENES "}, {
+        }, {"label": "Evenes ", "key": "NORDLAND.EVENES"}, {
             "label": "Røst ",
             "key": "NORDLAND.RØST "
-        }, {"label": "Værøy ", "key": "NORDLAND.VÆRØY "}, {
+        }, {"label": "Værøy ", "key": "NORDLAND.VÆRØY"}, {
             "label": "Flakstad ",
             "key": "NORDLAND.FLAKSTAD "
-        }, {"label": "Vestvågøy ", "key": "NORDLAND.VESTVÅGØY "}, {
+        }, {"label": "Vestvågøy ", "key": "NORDLAND.VESTVÅGØY"}, {
             "label": "Vågan ",
             "key": "NORDLAND.VÅGAN "
-        }, {"label": "Hadsel ", "key": "NORDLAND.HADSEL "}, {
+        }, {"label": "Hadsel ", "key": "NORDLAND.HADSEL"}, {
             "label": "Bø ",
             "key": "NORDLAND.BØ "
-        }, {"label": "Øksnes ", "key": "NORDLAND.ØKSNES "}, {
+        }, {"label": "Øksnes ", "key": "NORDLAND.ØKSNES"}, {
             "label": "Sortland - Suortá",
             "key": "NORDLAND.SORTLAND - SUORTÁ"
-        }, {"label": "Andøy ", "key": "NORDLAND.ANDØY "}, {
+        }, {"label": "Andøy ", "key": "NORDLAND.ANDØY"}, {
             "label": "Moskenes ",
             "key": "NORDLAND.MOSKENES "
         }, {"label": "Hamarøy - Hábmer", "key": "NORDLAND.HAMARØY - HÁBMER"}]
