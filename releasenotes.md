@@ -1,3 +1,12 @@
+## RELEASE - 0.171.999-8c43186
+#### New in this release: 
++ 2020-01-21 [Fix] Disabler qa-test
++ 2020-01-21 [Fix] Disabler qa-test
++ 2020-01-21 [Fix] Disabler qa-test
++ 2020-01-21 [Fix] Disabler qa-test
++ 2020-01-21 [Fix] Disabler qa-test
++ 2020-01-21 [Fix] Disabler qa-test
++ 2020-01-21 [Fix] Fjerner lenke-test for åpning av finn-annonser. Åpner alle finn-annonser i samme fane.
 ## RELEASE - 0.170.982-d43da32
 #### New in this release: 
 + 2019-12-19 [PAM-3864] Legge til alertstripe med info om fylke/kommunesammenslåing
