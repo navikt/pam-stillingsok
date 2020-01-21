@@ -426,7 +426,7 @@ export default [
     },
     {
         "label": "Trøndelag",
-        "key": "Trøndelag",
+        "key": "TRØNDELAG",
         "municipals": [{"key": "TRØNDELAG.TRONDHEIM", "label": "Trondheim"}, {
             "label": "Steinkjer",
             "key": "TRØNDELAG.STEINKJER"
@@ -488,7 +488,7 @@ export default [
     },
     {
         "label": "Troms og Finnmark",
-        "key": "Troms og Finnmark",
+        "key": "TROMS OG FINNMARK",
         "municipals": [{
             "key": "TROMS OG FINNMARK.TROMSØ",
             "label": "Tromsø"
