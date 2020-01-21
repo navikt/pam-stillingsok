@@ -1,3 +1,7 @@
+## RELEASE - 0.172.1003-ed10be1
+#### New in this release: 
++ 2020-01-21 [Fix] Fikser feil case i fylkesnavn
++ 2020-01-21 [Fix] Fikser feil case i fylkesnavn
 ## RELEASE - 0.171.999-8c43186
 #### New in this release: 
 + 2020-01-21 [Fix] Disabler qa-test
