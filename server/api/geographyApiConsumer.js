@@ -1,7 +1,7 @@
 const fetch = require('node-fetch');
 
-const host = process.env.PAM_STILLINGSREGISTRERING_API_URL ? process.env.PAM_STILLINGSREGISTRERING_API_URL : 'http://pam-stillingsregistrering-api';
-const baseUrl = `${host}/stillingsregistrering-api/api/geografi/`;
+const host = process.env.PAM_AD_USER_API ? process.env.PAM_AD_USER_API : 'https://arbeidsplassen.nav.no';
+const baseUrl = `${host}/aduser/api/v1/geography/`;
 
 const buildPrettyLabel = (s) => {
     if (typeof s !== 'string') return '';
@@ -19,7 +19,7 @@ const buildPrettyLabel = (s) => {
     return label;
 };
 
-const fetchGeography = async (type = "fylke") => {
+const fetchGeography = async (type = "counties") => {
     const url = `${baseUrl}${type}`;
     try {
         const response = await fetch(url);
@@ -30,7 +30,7 @@ const fetchGeography = async (type = "fylke") => {
 };
 
 exports.fetchAndProcessGeography = async () => {
-    const [municipals, counties] = await Promise.all([fetchGeography("kommune"), fetchGeography()]);
+    const [municipals, counties] = await Promise.all([fetchGeography("municipals"), fetchGeography()]);
 
     if ((typeof counties === 'object' && counties.status > 200) ||
         typeof municipals === 'object' && municipals.status > 200) {

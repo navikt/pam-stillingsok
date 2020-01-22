@@ -23,6 +23,7 @@ class Countries extends React.Component {
 
     render() {
         const { countries, checkedCountries, deprecatedCountries } = this.props;
+
         return (
             <Facet
                 panelId={SearchCriteriaPanels.COUNTRIES_PANEL}
