@@ -138,7 +138,7 @@ function addHitCountToGeographyList(counties, geographyList) {
  * @returns Returnerer en ny liste, hvor antall treff per fasett er oppdatert
  */
 function updateCount(initialValues, newValues, nestedKey) {
-    if (nestedKey === undefined) {
+    if(nestedKey === undefined) {
         return initialValues.map((item) => {
             const found = newValues.find((e) => (
                 e.key === item.key

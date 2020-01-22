@@ -10,7 +10,6 @@ import TopMenu from './topMenu/TopMenu';
 import Error from './error/Error';
 import { CONTEXT_PATH } from './fasitProperties';
 import Favourites from './favourites/Favourites';
-import Feedback from './feedback/Feedback';
 import SavedSearches from './savedSearches/SavedSearches';
 import SearchPage from './search/Search';
 import StillingPage from './stilling/Stilling';
@@ -50,7 +49,6 @@ class Application extends React.Component {
                                 <NotAuthenticatedModal />
                             )}
                             <UserAlertStripe/>
-                            <Feedback />
                         </main>
                         <footer className="Application__footer">
                             <Footer />
