@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import SearchApiError from './SearchApiError';
-import { stringifyQueryObject } from '../utils';
-import { CONTEXT_PATH } from "../fasitProperties";
+import {stringifyQueryObject} from '../utils';
+import {CONTEXT_PATH} from "../fasitProperties";
 
 /* eslint-disable no-underscore-dangle */
 
@@ -31,6 +31,10 @@ function fixStilling(stilling) {
         };
     }
     return stilling;
+}
+
+export async function fetchGeographyList() {
+    return await get(`${CONTEXT_PATH}/api/geography`);
 }
 
 export async function fetchSearch(query = {}) {
