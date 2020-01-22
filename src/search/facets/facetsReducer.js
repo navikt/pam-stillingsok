@@ -1,9 +1,10 @@
 import {FETCH_INITIAL_FACETS_SUCCESS, SEARCH_SUCCESS} from '../searchReducer';
-import allCounties from '../data/allCounties';
+import fixLocationName from '../../../server/common/fixLocationName';
 
 export const OCCUPATION_LEVEL_OTHER = 'Uoppgitt/ ikke identifiserbare';
 
 const initialState = {
+    geographyList: [],
     countyFacets: [],
     municipalFacets: [],
     countryFacets: [],
@@ -24,12 +25,13 @@ export default function facetsReducer(state = initialState, action) {
         case FETCH_INITIAL_FACETS_SUCCESS:
             return {
                 ...state,
+                geographyList: action.response.geographyList,
                 extentFacets: action.response.extent,
                 sectorFacets: moveFacetToBottom(action.response.sector, 'Ikke oppgitt'),
                 engagementTypeFacets: moveFacetToBottom(action.response.engagementTypes, 'Annet'),
                 publishedFacets: action.response.published,
                 occupationFirstLevelFacets: moveFacetToBottom(action.response.occupationFirstLevels, OCCUPATION_LEVEL_OTHER),
-                countyFacets: createFullCountiesArray(action.response.counties),
+                countyFacets: addHitCountToGeographyList(action.response.counties, action.response.geographyList),
                 countryFacets: action.response.countries
             };
         case SEARCH_SUCCESS:
@@ -40,7 +42,7 @@ export default function facetsReducer(state = initialState, action) {
                 engagementTypeFacets: updateCount(state.engagementTypeFacets, action.response.engagementTypes),
                 publishedFacets: updateCount(state.publishedFacets, action.response.published),
                 occupationFirstLevelFacets: updateCount(state.occupationFirstLevelFacets, action.response.occupationFirstLevels, 'occupationSecondLevels'),
-                countyFacets: createFullCountiesArray(updateCount(state.countyFacets, action.response.counties, 'municipals')),
+                countyFacets: addHitCountToGeographyList(updateCount(state.countyFacets, action.response.counties, 'municipals'), state.geographyList),
                 countryFacets: updateCount(state.countryFacets, action.response.countries),
             };
         default:
@@ -67,12 +69,31 @@ function moveFacetToBottom(facets, facetKey) {
 }
 
 /**
- * Bygg array som inneholder alle fylker og kommuner i norge, sortert alfabetisk
+ * Bygg array som inneholder alle fylker og kommuner i norge, sortert alfabetisk, med antall søketreff
  *
- * @param counties: forrige versjon av counties array
- * @returns array med counties
+ * @param counties: forrige versjon av geography list
+ * @param geographyList: full liste med fylker og kommuner
+ * @returns array med fylker og kommuner
  */
-function createFullCountiesArray(counties) {
+function addHitCountToGeographyList(counties, geographyList) {
+    // Fallback til gammel visning om henting av geography list feilet
+    if (!Array.isArray(geographyList) || geographyList.length < 1) {
+        return counties.map(c => {
+            return {
+                key: c.key,
+                count: c.count,
+                label: fixLocationName(c.key),
+                municipals: c.municipals.map(m => {
+                    return {
+                        key: m.key,
+                        count: m.count,
+                        label: fixLocationName(m.key.split('.')[1]),
+                    }
+                })
+            }
+        });
+    }
+
     const countMap = {};
 
     counties.forEach(c => {
@@ -83,8 +104,12 @@ function createFullCountiesArray(counties) {
         })
     });
 
-    allCounties.forEach(c => {
+    const toRemove = [];
+
+    geographyList.forEach(c => {
         c.count = countMap[c.key] === undefined ? 0 : countMap[c.key];
+
+        if ((c.key === 'KONTINENTALSOKKELEN' || c.key === 'JAN MAYEN') && c.count === 0) toRemove.push(c);
 
         c.municipals.forEach(m => {
             m.count = countMap[m.key] === undefined ? 0 : countMap[m.key];
@@ -95,7 +120,11 @@ function createFullCountiesArray(counties) {
         });
     });
 
-    return allCounties.sort((a, b) => {
+    toRemove.forEach(r => {
+        geographyList.splice(geographyList.indexOf(r), 1);
+    });
+
+    return geographyList.sort((a, b) => {
         return a.key > b.key ? 1 : -1;
     });
 }

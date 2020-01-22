@@ -1,9 +1,9 @@
-import { call, put, select, takeLatest, throttle } from 'redux-saga/effects';
-import { fetchSearch } from '../api/api';
+import {call, put, select, takeLatest, throttle} from 'redux-saga/effects';
+import {fetchGeographyList, fetchSearch} from '../api/api';
 import SearchApiError from '../api/SearchApiError';
-import { RESTORE_STATE_FROM_SAVED_SEARCH } from '../savedSearches/savedSearchesReducer';
-import { RESTORE_STATE_FROM_URL } from '../search/searchQueryReducer';
-import { RESET_PAGINATION, toApiSearchQuery } from './searchQueryReducer';
+import {RESTORE_STATE_FROM_SAVED_SEARCH} from '../savedSearches/savedSearchesReducer';
+import {RESTORE_STATE_FROM_URL} from '../search/searchQueryReducer';
+import {RESET_PAGINATION, toApiSearchQuery} from './searchQueryReducer';
 
 export const FETCH_INITIAL_FACETS_SUCCESS = 'FETCH_INITIAL_FACETS_SUCCESS';
 export const INITIAL_SEARCH = 'INITIAL_SEARCH';
@@ -108,64 +108,67 @@ export function mergeAndRemoveDuplicates(stillingerAlreadyInMemory, stillingerFr
  * Fetcher alle tilgjengelige fasetter og gjør deretter det første søket.
  */
 function* initialSearch() {
-    yield put({ type: SEARCH_BEGIN });
+    yield put({type: SEARCH_BEGIN});
     let state = yield select();
     try {
-        let response;
         if (!state.search.initialSearchDone) {
             // For å få tak i alle tilgjengelige fasetter (yrke, område osv), så gjør vi først
             // et søk uten noen søkekriterier. Dette vil returnere alle kjente fasettverdier på
-            // tverss av alle annonsene i backend
-            response = yield call(fetchSearch, {});
-            yield put({ type: FETCH_INITIAL_FACETS_SUCCESS, response });
+            // tverss av alle annonsene i backend. Vi henter også all geografi info fra server.
+            let searchRes = yield call(fetchSearch, {});
+            const geographyRes = yield call(fetchGeographyList);
+
+            if (typeof searchRes === 'object') searchRes['geographyList'] = geographyRes;
+
+            yield put({type: FETCH_INITIAL_FACETS_SUCCESS, response: searchRes});
 
             // Hvis bruker allerede har noen søkekriterier (f.eks fra en bokmerket lenke), så må vi
             // foreta et nytt søk med disse kriteriene.
             state = yield select();
             const query = toApiSearchQuery(state.searchQuery);
             if (Object.keys(query).length > 0) {
-                response = yield call(fetchSearch, query);
+                searchRes = yield call(fetchSearch, query);
             }
 
-            yield put({ type: SEARCH_SUCCESS, response });
+            yield put({type: SEARCH_SUCCESS, response: searchRes});
         }
     } catch (e) {
         if (e instanceof SearchApiError) {
-            yield put({ type: SEARCH_FAILURE, error: e });
+            yield put({type: SEARCH_FAILURE, error: e});
         } else {
             throw e;
         }
     }
-    yield put({ type: SEARCH_END });
+    yield put({type: SEARCH_END});
 }
 
 function* search() {
-    yield put({ type: SEARCH_BEGIN });
+    yield put({type: SEARCH_BEGIN});
     try {
-        yield put({ type: RESET_PAGINATION });
+        yield put({type: RESET_PAGINATION});
         const state = yield select();
         const query = toApiSearchQuery(state.searchQuery);
         const searchResult = yield call(fetchSearch, query);
-        yield put({ type: SEARCH_SUCCESS, response: searchResult });
+        yield put({type: SEARCH_SUCCESS, response: searchResult});
     } catch (e) {
         if (e instanceof SearchApiError) {
-            yield put({ type: SEARCH_FAILURE, error: e });
+            yield put({type: SEARCH_FAILURE, error: e});
         } else {
             throw e;
         }
     }
-    yield put({ type: SEARCH_END });
+    yield put({type: SEARCH_END});
 }
 
 function* loadMore() {
     try {
         const state = yield select();
-        yield put({ type: LOAD_MORE_BEGIN });
+        yield put({type: LOAD_MORE_BEGIN});
         const response = yield call(fetchSearch, toApiSearchQuery(state.searchQuery));
-        yield put({ type: LOAD_MORE_SUCCESS, response });
+        yield put({type: LOAD_MORE_SUCCESS, response});
     } catch (e) {
         if (e instanceof SearchApiError) {
-            yield put({ type: SEARCH_FAILURE, error: e });
+            yield put({type: SEARCH_FAILURE, error: e});
         } else {
             throw e;
         }

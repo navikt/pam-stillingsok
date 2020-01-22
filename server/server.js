@@ -1,4 +1,3 @@
-
 const express = require('express');
 const helmet = require('helmet');
 const path = require('path');
@@ -9,6 +8,7 @@ const bodyParser = require('body-parser');
 const compression = require('compression');
 const searchApiConsumer = require('./api/searchApiConsumer');
 const htmlMeta = require('./common/htmlMeta');
+const geographyApiConsumer = require('./api/geographyApiConsumer');
 
 /* eslint no-console: 0 */
 
@@ -23,12 +23,17 @@ const instrumentation = require('./instrumentation').setup(server);
 
 const pageHitCounter = instrumentation.pageHitCounter();
 
+let geographyList = [];
+geographyApiConsumer.fetchAndProcessGeography().then(res => {
+    geographyList = res;
+});
+
 server.disable('x-powered-by');
 server.use(compression());
 // En del sikkerhets headere er allerede lagt i bigip, dropper de derfor her for å unngå duplkiate headere
-server.use(helmet({ xssFilter: false, hsts: false, noSniff: false, frameguard: false }));
+server.use(helmet({xssFilter: false, hsts: false, noSniff: false, frameguard: false}));
 
-server.use(helmet.referrerPolicy({ policy: 'no-referrer' }));
+server.use(helmet.referrerPolicy({policy: 'no-referrer'}));
 
 server.use(helmet.contentSecurityPolicy({
     directives: {
@@ -87,7 +92,7 @@ const renderSok = (htmlPages) => (
                 if (err) {
                     reject(err);
                 } else {
-                    resolve(Object.assign({ sok: html }, htmlPages));
+                    resolve(Object.assign({sok: html}, htmlPages));
                 }
             }
         );
@@ -110,6 +115,10 @@ const startServer = (htmlPages) => {
         express.static(path.resolve(rootDirectory, 'images'))
     );
 
+    server.get(`${fasitProperties.PAM_CONTEXT_PATH}/api/geography`, (req, res) => {
+        res.send(geographyList);
+    });
+
     server.get(`${fasitProperties.PAM_CONTEXT_PATH}/api/search`, async (req, res) => {
         searchApiConsumer.search(req.query)
             .catch((err) => {
@@ -120,11 +129,11 @@ const startServer = (htmlPages) => {
     });
 
     server.post(`${fasitProperties.PAM_CONTEXT_PATH}/instrumentation`, (req, res) => {
-        if(req.body && req.body.page
+        if (req.body && req.body.page
             && (req.body.page === '/stillinger/favoritter'
                 || req.body.page === '/stillinger/lagrede-sok'
                 || req.body.page === '/stillinger/stilling'
-                || req.body.page === '/stillinger')){
+                || req.body.page === '/stillinger')) {
 
             pageHitCounter.inc(req.body.page);
         }
@@ -146,7 +155,7 @@ const startServer = (htmlPages) => {
                 console.warn('Failed to fetch suggestions,', err);
                 res.status(err.statusCode ? err.statusCode : 502);
             })
-            .then( (result) => res.send(result));
+            .then((result) => res.send(result));
     });
 
     server.post(`${fasitProperties.PAM_CONTEXT_PATH}/api/suggestions`, async (req, res) => {
@@ -167,11 +176,11 @@ const startServer = (htmlPages) => {
             .then((val) => res.send(val));
     });
 
-    server.get('/', (req,res) => {
+    server.get('/', (req, res) => {
         res.redirect(`${fasitProperties.PAM_CONTEXT_PATH}`)
     });
 
-    server.get(/^\/pam-stillingsok.*$/, (req,res) => {
+    server.get(/^\/pam-stillingsok.*$/, (req, res) => {
         var url = req.url.replace("/pam-stillingsok", `${fasitProperties.PAM_CONTEXT_PATH}`);
         res.redirect(`${url}`)
     })
