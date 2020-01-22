@@ -1,3 +1,6 @@
+## RELEASE - 0.175.1013-e36faa4
+#### New in this release: 
++ 2020-01-22 [Fix] Fjerner hotjar feedbacklenke
 ## RELEASE - 0.172.1003-ed10be1
 #### New in this release: 
 + 2020-01-21 [Fix] Fikser feil case i fylkesnavn
