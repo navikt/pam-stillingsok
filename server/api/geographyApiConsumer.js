@@ -1,6 +1,6 @@
 const fetch = require('node-fetch');
 
-const host = process.env.PAM_AD_USER_API ? process.env.PAM_AD_USER_API : 'https://arbeidsplassen.nav.no';
+const host = process.env.PAMADUSER_URL ? process.env.PAMADUSER_URL : 'https://arbeidsplassen.nav.no';
 const baseUrl = `${host}/aduser/api/v1/geography/`;
 
 const buildPrettyLabel = (s) => {
