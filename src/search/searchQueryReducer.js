@@ -35,6 +35,7 @@ export const REMOVE_SECTOR = 'REMOVE_SECTOR';
 export const SET_PUBLISHED = 'SET_PUBLISHED';
 export const SET_SEARCH_STRING = 'SET_SEARCH_STRING';
 export const SET_SORTING = 'SET_SORTING';
+export const SET_INTERNATIONAL = 'SET_INTERNATIONAL';
 
 
 const initialState = {
@@ -51,6 +52,7 @@ const initialState = {
     published: undefined,
     sector: [],
     sort: '',
+    international: false,
     saved: undefined
 };
 
@@ -64,6 +66,7 @@ export default function searchQueryReducer(state = initialState, action) {
         case RESTORE_STATE_FROM_URL:
             return {
                 ...state,
+                international: action.query.international === true,
                 to: action.query.to ? parseInt(action.query.to, 10) : PAGE_SIZE,
                 q: action.query.q || '',
                 counties: action.query.counties || [],
@@ -81,6 +84,7 @@ export default function searchQueryReducer(state = initialState, action) {
         case RESTORE_STATE_FROM_SAVED_SEARCH:
             return {
                 ...state,
+                international: action.query.international === true,
                 from: 0,
                 to: PAGE_SIZE,
                 q: action.query.q || '',
@@ -101,6 +105,11 @@ export default function searchQueryReducer(state = initialState, action) {
                 ...state,
                 from: 0,
                 to: PAGE_SIZE
+            };
+        case SET_INTERNATIONAL:
+            return {
+                ...state,
+                international: action.value,
             };
         case ADD_COUNTY:
             return {
@@ -231,7 +240,10 @@ function removeEmptyProperties(obj) {
     const newObj = {};
     Object.keys(obj).forEach((prop) => {
         const value = obj[prop];
-        if (Array.isArray(value)) {
+
+        if (prop === 'international' && value === false) {
+            // behøver ikke ta med international flag om det er false
+        } else if (Array.isArray(value)) {
             if (value.length > 0) {
                 newObj[prop] = value;
             }
@@ -239,6 +251,7 @@ function removeEmptyProperties(obj) {
             newObj[prop] = value;
         }
     });
+
     return newObj;
 }
 
@@ -329,6 +342,7 @@ export function toReadableSearchQuery(searchQuery) {
     if (searchQuery.sector.length > 0) title.push(searchQuery.sector.join(', '));
     if (searchQuery.countries.length > 0) title.push(searchQuery.countries.map((c) => (fixLocationName(c))).join(', '));
     if (searchQuery.published) title.push(PublishedLabelsEnum[searchQuery.published]);
+    if (searchQuery.international) title.push('Utland');
 
     return title.join(', ');
 }

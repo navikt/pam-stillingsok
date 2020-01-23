@@ -71,7 +71,9 @@ export function parseQueryString(queryString = '?') {
             let key = decodeURIComponent(pair[0]);
             const val = pair[1] !== undefined ? decodeURIComponent(pair[1]) : '';
 
-            if (key.includes('[]')) {
+            if (key === 'international') {
+                object[key] = val === 'true' ? true : 'false';
+            } else if (key.includes('[]')) {
                 key = key.replace('[]', '');
 
                 if (object[key] === undefined) {
@@ -84,6 +86,7 @@ export function parseQueryString(queryString = '?') {
             }
         }
     });
+
     return object;
 }
 

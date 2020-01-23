@@ -1,12 +1,15 @@
 @import '../../variables';
 
 .Facet {
-  background: #fff;
   margin-bottom: @facet-marginBottom;
   color: @blueDarken;
 
   .skjemaelement {
     margin-bottom: 0.5rem;
+  }
+
+  .ekspanderbartPanel__innhold {
+    background: transparent !important;
   }
 }
 
@@ -14,6 +17,6 @@
   margin-left: 1.5rem;
 }
 
-.Facet__zero__count {
-  //opacity: 0.35;
+.Facet__zero__count label {
+  color: #78706A !important;
 }

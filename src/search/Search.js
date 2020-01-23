@@ -12,8 +12,7 @@ import SavedSearchesExpandButton from '../savedSearches/expand/SavedSearchesExpa
 import SavedSearchForm from '../savedSearches/form/SavedSearchForm';
 import SaveSearchButton from '../savedSearches/SaveSearchButton';
 import { RESTORE_STATE_FROM_URL_BEGIN } from '../search/searchQueryReducer';
-import Counties from './facets/Counties';
-import Countries from './facets/Countries';
+import Counties from './facets/Locations';
 import EngagementType from './facets/Engagement';
 import Extent from './facets/Extent';
 import Occupations from './facets/Occupations';
@@ -115,7 +114,6 @@ const Search = ({
                                             <Published />
                                             <Occupations />
                                             <Counties />
-                                            <Countries />
                                             <Extent />
                                             <EngagementType />
                                             <Sector />

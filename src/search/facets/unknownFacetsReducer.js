@@ -89,7 +89,6 @@ function* handleRestoreStateFromSavedSearch() {
             unknownOccupationSecondLevels: findUnknownFacets(state.searchQuery.occupationSecondLevels, state.facets.occupationFirstLevelFacets, 'occupationSecondLevels'),
             unknownCounties: findUnknownFacets(state.searchQuery.counties, state.facets.countyFacets),
             unknownMunicipals: findUnknownFacets(state.searchQuery.municipals, state.facets.countyFacets, 'municipals'),
-            unknownCountries: findUnknownFacets(state.searchQuery.countries, state.facets.countryFacets),
             unknownEngagementTypes: findUnknownFacets(state.searchQuery.engagementType, state.facets.engagementTypeFacets),
             unknownExtents: findUnknownFacets(state.searchQuery.extent, state.facets.extentFacets),
             unknownSectors: findUnknownFacets(state.searchQuery.sector, state.facets.sectorFacets)
