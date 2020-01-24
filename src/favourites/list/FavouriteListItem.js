@@ -2,11 +2,11 @@ import classNames from 'classnames';
 import AlertStripe from 'nav-frontend-alertstriper';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { connect } from 'react-redux';
-import { Lenkeknapp } from 'pam-frontend-knapper';
+import {connect} from 'react-redux';
+import {Lenkeknapp} from 'pam-frontend-knapper';
 import '../../common/components/Icons.less';
 import SearchResultsItemDetails from '../../search/searchResults/SearchResultsItemDetails';
-import { SHOW_MODAL_REMOVE_FROM_FAVOURITES } from '../favouritesReducer';
+import {SHOW_MODAL_REMOVE_FROM_FAVOURITES} from '../favouritesReducer';
 
 class FavouriteListItem extends React.Component {
     onRemoveClick = () => {
@@ -17,6 +17,8 @@ class FavouriteListItem extends React.Component {
         uuid: favourite.uuid,
         title: favourite.title,
         published: favourite.published,
+        source: favourite.source,
+        reference: favourite.reference,
         properties: {
             employer: favourite.employer,
             jobtitle: favourite.jobTitle,
@@ -26,15 +28,16 @@ class FavouriteListItem extends React.Component {
     });
 
     render() {
-        const { favourite } = this.props;
+        const {favourite} = this.props;
         const expired = favourite.favouriteAd.status !== 'ACTIVE';
         return (
             <div className="FavouriteListItem__wrapper">
-                <div className={classNames('FavouriteListItem', { 'FavouriteListItem--expired': expired })}>
-                    <SearchResultsItemDetails stilling={this.toAd(favourite.favouriteAd)} />
-                    <Lenkeknapp onClick={this.onRemoveClick} className="FavouriteListItem__delete Delete" aria-label="Slett">
+                <div className={classNames('FavouriteListItem', {'FavouriteListItem--expired': expired})}>
+                    <SearchResultsItemDetails stilling={this.toAd(favourite.favouriteAd)}/>
+                    <Lenkeknapp onClick={this.onRemoveClick} className="FavouriteListItem__delete Delete"
+                                aria-label="Slett">
                         Slett
-                        <span className="Delete__icon" />
+                        <span className="Delete__icon"/>
                     </Lenkeknapp>
                     {expired && (
                         <AlertStripe type="advarsel" className="FavouriteListItem__alertstripe alertstripe--solid">
@@ -60,7 +63,7 @@ FavouriteListItem.propTypes = {
 const mapStateToProps = (state) => ({});
 
 const mapDispatchToProps = (dispatch) => ({
-    showModal: (uuid) => dispatch({ type: SHOW_MODAL_REMOVE_FROM_FAVOURITES, uuid })
+    showModal: (uuid) => dispatch({type: SHOW_MODAL_REMOVE_FROM_FAVOURITES, uuid})
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(FavouriteListItem);
