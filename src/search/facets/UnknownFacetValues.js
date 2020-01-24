@@ -3,6 +3,7 @@ import { Element } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
 import './UnknownFacetValues.less';
+import fixLocationName from '../../../server/common/fixLocationName';
 
 export default function UnknownFacetValues(
     {
@@ -26,7 +27,7 @@ export default function UnknownFacetValues(
                 <div key={sec}>
                     <Checkbox
                         name={`${namePrefix}-unknownFacetValue`}
-                        label={`${sec} (0)`}
+                        label={`${fixLocationName(sec)} (0)`}
                         value={sec}
                         onChange={onClick}
                         checked={checkedValues.includes(sec)}
@@ -37,7 +38,7 @@ export default function UnknownFacetValues(
                 <div key={second}>
                     <Checkbox
                         name={`${namePrefix}-unknownFacetNestedValue`}
-                        label={`${second.split('.')[1]} (0)`}
+                        label={`${fixLocationName(second.split('.')[1])} (0)`}
                         value={second}
                         onChange={onNestedLevelClick}
                         checked={checkedNestedValues.includes(second)}

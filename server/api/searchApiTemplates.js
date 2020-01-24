@@ -139,87 +139,50 @@ function filterNestedFacets(parents, children = [], parentKey, childKey, nestedF
 
 }
 
-function filterInternational(international) {
-    if (international === 'true') {
-        return [
-            {
-                bool: {
-                    should: [
-                        {
-                            term: {
-                                country_facet: 'UTLAND'
-                            }
-                        }
-                    ]
-                }
-            }
-        ]
-    }
-
-    return [];
-}
-
+// Filtrer på alle type locations (land, kommune, fylke, internasjonalt)
 function filterLocation(counties, municipals, countries, international = false) {
-    const countiesMunicipalsFilter = filterNestedFacets(counties, municipals, 'locationList.county.keyword',
-        'locationList.municipal.keyword', 'locationList');
-
-    const countriesFilter = filterNestedFacets(countries, [], 'locationList.country.keyword', '', 'locationList');
-
-    console.log(JSON.stringify(countiesMunicipalsFilter));
-
-    return {
-        query: {
-            bool: {
-                should: [
-                    {
-                        term: {
-                            country_facet: 'UTLAND'
-                        }
-                    },
-                    {
-                        nested: {
-                            path: 'locationList',
-                            query: {
-                                bool: {
-                                    must: [
-                                        {
-                                            bool: {
-                                                must: [
-                                                    {
-                                                        match: {
-                                                            'locationList.county.keyword': 'OSLO'
-                                                        }
-                                                    }
-                                                ]
-                                            }
-                                        }
-                                    ]
-                                }
-                            },
-                        }
-                    }
-                ]
+    const filter = {
+        nested: {
+            path: 'locationList',
+            query: {
+                bool: {
+                    should: []
+                }
             }
         }
     };
 
-    console.log(countiesMunicipalsFilter);
-    console.log(countriesFilter);
+    if (international) {
+        filter.nested.query.bool.should.push({
+            bool: {
+                must_not: {
+                    term: {
+                        "locationList.country.keyword": "NORGE"
+                    }
+                }
+            }
+        });
+    }
 
-    return [countiesMunicipalsFilter, countriesFilter];
+    addLocationsToFilter(countries, filter, 'country');
+    addLocationsToFilter(counties, filter, 'county');
+    addLocationsToFilter(municipals, filter, 'municipal');
+
+    return filter;
 }
 
-/*
-function filterCountries(countries) {
-    return filterNestedFacets(countries, [], 'locationList.country.keyword', '', 'locationList');
-}
+function addLocationsToFilter(locations, filter, type) {
+    if (Array.isArray(locations)) {
+        locations.forEach(l => {
+            const term = {};
+            term[`locationList.${type}.keyword`] = type === 'municipal' ? l.split('.')[1] : l;
 
-function filterLocation(counties, municipals) {
-    return filterNestedFacets(counties, municipals, 'locationList.county.keyword',
-        'locationList.municipal.keyword', 'locationList');
+            filter.nested.query.bool.should.push({
+                term
+            });
+        });
+    }
 }
-
- */
 
 function filterOccupation(occupationFirstLevels, occupationSecondLevels) {
     return filterNestedFacets(occupationFirstLevels, occupationSecondLevels,
@@ -587,7 +550,6 @@ exports.searchTemplate = (query) => {
                     bool: {
                         filter: [
                             ...filterExtent(extent),
-                            filterLocation(counties, municipals, countries, international),
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
                             ...filterEngagementType(engagementType),
                             ...filterSector(sector),
@@ -672,7 +634,6 @@ exports.searchTemplate = (query) => {
                     bool: {
                         filter: [
                             ...filterExtent(extent),
-                            filterLocation(counties, municipals, countries, international),
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
                             ...filterEngagementType(engagementType),
                             ...filterSector(sector),
