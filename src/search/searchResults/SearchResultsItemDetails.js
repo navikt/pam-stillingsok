@@ -12,7 +12,7 @@ import './SearchResultsItemDetails.less';
 function LinkToAd({children, stilling, isFinn}) {
     if (isFinn) {
         return (
-            <a href={`https://www.finn.no/${stilling.reference}`} className="SearchResultItem__link" target="_blank">
+            <a href={`https://www.finn.no/${stilling.reference}`} className="SearchResultItem__link">
                 {children}
             </a>
         )
