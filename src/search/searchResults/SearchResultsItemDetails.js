@@ -1,18 +1,18 @@
-import { Column, Row } from 'nav-frontend-grid';
-import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
+import {Column, Row} from 'nav-frontend-grid';
+import {Normaltekst, Undertekst, Undertittel} from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import getEmployer from '../../../server/common/getEmployer';
 import getWorkLocation from '../../../server/common/getWorkLocation';
-import { CONTEXT_PATH } from '../../fasitProperties';
-import { formatISOString, isValidISOString } from '../../utils';
+import {CONTEXT_PATH} from '../../fasitProperties';
+import {formatISOString, isValidISOString} from '../../utils';
 import './SearchResultsItemDetails.less';
 
-function LinkToAd({ children, stilling, isFinn }) {
+function LinkToAd({children, stilling, isFinn}) {
     if (isFinn) {
         return (
-            <a href={`https://www.finn.no/${stilling.reference}`} className="SearchResultItem__link">
+            <a href={`https://www.finn.no/${stilling.reference}`} className="SearchResultItem__link" target="_blank">
                 {children}
             </a>
         )
@@ -24,9 +24,9 @@ function LinkToAd({ children, stilling, isFinn }) {
     )
 }
 
-export default function SearchResultsItemDetails({ stilling }) {
+export default function SearchResultsItemDetails({stilling}) {
     let frist;
-    const { applicationdue } = stilling.properties;
+    const {applicationdue} = stilling.properties;
     if (applicationdue && applicationdue !== undefined) {
         frist = isValidISOString(applicationdue) ? formatISOString(applicationdue, 'DD.MM.YYYY') : applicationdue;
     } else {
@@ -75,7 +75,8 @@ export default function SearchResultsItemDetails({ stilling }) {
                         </Normaltekst>
                         {isFinn && (
                             <Normaltekst className="SearchResultsItemDetails__external-link">
-                                Annonsen åpnes på FINN <span className="SearchResultsItemDetails__external-link-icon" aria-label="Ekstern lenke" />
+                                Annonsen åpnes på FINN <span className="SearchResultsItemDetails__external-link-icon"
+                                                             aria-label="Ekstern lenke"/>
                             </Normaltekst>
                         )}
                     </div>
