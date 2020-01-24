@@ -56,8 +56,6 @@ class Locations extends React.Component {
             international, deprecatedMunicipals
         } = this.props;
 
-        console.log(international);
-
         return (
             <Facet
                 panelId={SearchCriteriaPanels.COUNTIES_PANEL}
