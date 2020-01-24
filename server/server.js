@@ -8,7 +8,7 @@ const bodyParser = require('body-parser');
 const compression = require('compression');
 const searchApiConsumer = require('./api/searchApiConsumer');
 const htmlMeta = require('./common/htmlMeta');
-const geographyApiConsumer = require('./api/geographyApiConsumer');
+const locationApiConsumer = require('./api/locationApiConsumer');
 
 /* eslint no-console: 0 */
 
@@ -23,9 +23,9 @@ const instrumentation = require('./instrumentation').setup(server);
 
 const pageHitCounter = instrumentation.pageHitCounter();
 
-let geographyList = [];
-geographyApiConsumer.fetchAndProcessGeography().then(res => {
-    geographyList = res;
+let locations = [];
+locationApiConsumer.fetchAndProcessLocations().then(res => {
+    locations = res;
 });
 
 server.disable('x-powered-by');
@@ -114,8 +114,8 @@ const startServer = (htmlPages) => {
         express.static(path.resolve(rootDirectory, 'images'))
     );
 
-    server.get(`${fasitProperties.PAM_CONTEXT_PATH}/api/geography`, (req, res) => {
-        res.send(geographyList);
+    server.get(`${fasitProperties.PAM_CONTEXT_PATH}/api/locations`, (req, res) => {
+        res.send(locations);
     });
 
     server.get(`${fasitProperties.PAM_CONTEXT_PATH}/api/search`, async (req, res) => {

@@ -33,29 +33,38 @@ function fixStilling(stilling) {
     return stilling;
 }
 
-export async function fetchGeographyList() {
-    return await get(`${CONTEXT_PATH}/api/geography`);
+export async function fetchLocations() {
+    return await get(`${CONTEXT_PATH}/api/locations`);
 }
 
 export async function fetchSearch(query = {}) {
     const queryString = stringifyQueryObject(query);
     const result = await get(`${CONTEXT_PATH}/api/search${queryString}`);
 
+    // Map containing geo keys : count of hits
+    const nationalCountMap = {};
+    const internationalCountMap = {};
+
+    result.aggregations.counties.nestedLocations.values.buckets.forEach(c => {
+        nationalCountMap[c.key] = c.doc_count;
+
+        c.municipals.buckets.forEach(m => {
+            nationalCountMap[`${c.key}.${m.key}`] = m.doc_count;
+        });
+    });
+
+    result.aggregations.countries.nestedLocations.values.buckets.forEach(c => {
+        internationalCountMap[c.key.toUpperCase()] = c.doc_count;
+    });
+
     return {
         stillinger: result.hits.hits.map((stilling) => (
             fixStilling(stilling._source)
         )),
+        nationalCountMap,
+        internationalCountMap,
         total: result.hits.total,
         positioncount: result.aggregations.positioncount.sum.value,
-        counties: result.aggregations.counties.nestedLocations.values.buckets.map((county) => ({
-            key: county.key,
-            count: county.root_doc_count.doc_count, // Count number of root docs (ads) per bucket, instead of number of matching nested objects
-            municipals: county.municipals.buckets.map((municipal) => ({
-                key: `${county.key}.${municipal.key}`,
-                label: municipal.key,
-                count: municipal.doc_count
-            }))
-        })),
         occupationFirstLevels: result.aggregations.occupations.nestedOccupations.occupationFirstLevels.buckets.map((firstLevel) => ({
             key: firstLevel.key,
             count: firstLevel.root_doc_count.doc_count,
@@ -66,10 +75,6 @@ export async function fetchSearch(query = {}) {
             }))
         })),
         extent: result.aggregations.extent.values.buckets.map((item) => ({
-            key: item.key,
-            count: item.doc_count
-        })),
-        countries: result.aggregations.countries.values.buckets.map((item) => ({
             key: item.key,
             count: item.doc_count
         })),
@@ -89,7 +94,7 @@ export async function fetchSearch(query = {}) {
 }
 
 export async function fetchCategoryAndSearchTagsSuggestions(match, minLength) {
-    const queryString = stringifyQueryObject({ match, minLength });
+    const queryString = stringifyQueryObject({match, minLength});
     const result = await get(`${CONTEXT_PATH}/api/suggestions${queryString}`);
 
     return {

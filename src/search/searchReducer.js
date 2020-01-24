@@ -1,5 +1,5 @@
 import {call, put, select, takeLatest, throttle} from 'redux-saga/effects';
-import {fetchGeographyList, fetchSearch} from '../api/api';
+import {fetchLocations, fetchSearch} from '../api/api';
 import SearchApiError from '../api/SearchApiError';
 import {RESTORE_STATE_FROM_SAVED_SEARCH} from '../savedSearches/savedSearchesReducer';
 import {RESTORE_STATE_FROM_URL} from '../search/searchQueryReducer';
@@ -116,9 +116,9 @@ function* initialSearch() {
             // et søk uten noen søkekriterier. Dette vil returnere alle kjente fasettverdier på
             // tverss av alle annonsene i backend. Vi henter også all geografi info fra server.
             let searchRes = yield call(fetchSearch, {});
-            const geographyRes = yield call(fetchGeographyList);
+            const locationRes = yield call(fetchLocations);
 
-            if (typeof searchRes === 'object') searchRes['geographyList'] = geographyRes;
+            if (typeof searchRes === 'object') searchRes['locations'] = locationRes;
 
             yield put({type: FETCH_INITIAL_FACETS_SUCCESS, response: searchRes});
 

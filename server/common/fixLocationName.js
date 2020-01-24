@@ -34,7 +34,9 @@ function fixTyposInLocationName(text) {
     return text;
 }
 
-function fixLocationName(text) {
+function fixLocationName(text, splitOnDot = false) {
+    if (splitOnDot && text.includes('.')) text = text.split('.')[1];
+
     let fixedLocationName = capitalizeLocationName(text);
     fixedLocationName = fixTyposInLocationName(fixedLocationName);
     return fixedLocationName;

@@ -1,13 +1,10 @@
 import {FETCH_INITIAL_FACETS_SUCCESS, SEARCH_SUCCESS} from '../searchReducer';
-import fixLocationName from '../../../server/common/fixLocationName';
 
 export const OCCUPATION_LEVEL_OTHER = 'Uoppgitt/ ikke identifiserbare';
 
 const initialState = {
-    geographyList: [],
-    countyFacets: [],
-    municipalFacets: [],
-    countryFacets: [],
+    locations: [],
+    locationFacets: [],
     engagementTypeFacets: [],
     extentFacets: [],
     occupationFirstLevelFacets: [],
@@ -25,14 +22,13 @@ export default function facetsReducer(state = initialState, action) {
         case FETCH_INITIAL_FACETS_SUCCESS:
             return {
                 ...state,
-                geographyList: action.response.geographyList,
+                locations: action.response.locations,
                 extentFacets: action.response.extent,
                 sectorFacets: moveFacetToBottom(action.response.sector, 'Ikke oppgitt'),
                 engagementTypeFacets: moveFacetToBottom(action.response.engagementTypes, 'Annet'),
                 publishedFacets: action.response.published,
                 occupationFirstLevelFacets: moveFacetToBottom(action.response.occupationFirstLevels, OCCUPATION_LEVEL_OTHER),
-                countyFacets: addHitCountToGeographyList(action.response.counties, action.response.geographyList),
-                countryFacets: action.response.countries
+                locationFacets: buildLocationFacets(action.response.nationalCountMap, action.response.internationalCountMap, action.response.locations),
             };
         case SEARCH_SUCCESS:
             return {
@@ -42,8 +38,7 @@ export default function facetsReducer(state = initialState, action) {
                 engagementTypeFacets: updateCount(state.engagementTypeFacets, action.response.engagementTypes),
                 publishedFacets: updateCount(state.publishedFacets, action.response.published),
                 occupationFirstLevelFacets: updateCount(state.occupationFirstLevelFacets, action.response.occupationFirstLevels, 'occupationSecondLevels'),
-                countyFacets: addHitCountToGeographyList(updateCount(state.countyFacets, action.response.counties, 'municipals'), state.geographyList),
-                countryFacets: updateCount(state.countryFacets, action.response.countries),
+                locationFacets: buildLocationFacets(action.response.nationalCountMap, action.response.internationalCountMap, state.locations),
             };
         default:
             return state;
@@ -69,62 +64,65 @@ function moveFacetToBottom(facets, facetKey) {
 }
 
 /**
- * Bygg array som inneholder alle fylker og kommuner i norge, sortert alfabetisk, med antall søketreff
+ * Bygg array som inneholder alle fylker og kommuner i norge, samt andre land (utland),
+ * sortert alfabetisk, med antall søketreff
  *
- * @param counties: forrige versjon av geography list
- * @param geographyList: full liste med fylker og kommuner
- * @returns array med fylker og kommuner
+ * @param nationalCountMap: map med antall treff for nasjonale lokasjoner
+ * @param internationalCountMap: map med antall treff for internasjonale lokasjoner
+ * @param locations: liste med lokasjoner hentet fra backend (fylker, kommuner, utland)
+ * @returns array med lokasjon facets
  */
-function addHitCountToGeographyList(counties, geographyList) {
-    // Fallback til gammel visning om henting av geography list feilet
-    if (!Array.isArray(geographyList) || geographyList.length < 1) {
-        return counties.map(c => {
-            return {
-                key: c.key,
-                count: c.count,
-                label: fixLocationName(c.key),
-                municipals: c.municipals.map(m => {
-                    return {
-                        key: m.key,
-                        count: m.count,
-                        label: fixLocationName(m.key.split('.')[1]),
-                    }
-                })
+function buildLocationFacets(nationalCountMap, internationalCountMap, locations) {
+    const facets = [];
+
+    locations.forEach(l => {
+        const facet = {
+            type: 'county',
+            key: l.key,
+            count: 0,
+            subLocations: []
+        };
+
+        if (l.key === 'UTLAND') {
+            facet.type = 'international';
+
+            for (let key in internationalCountMap) {
+                if (internationalCountMap.hasOwnProperty(key)) {
+                    facet.subLocations.push({
+                        type: 'country',
+                        key: key.toUpperCase(),
+                        count: internationalCountMap[key],
+                    });
+
+                    facet.count += internationalCountMap[key];
+                }
             }
-        });
-    }
+        } else {
+            facet.count = nationalCountMap[l.key] === undefined ? 0 : nationalCountMap[l.key];
 
-    const countMap = {};
+            l.municipals.forEach(m => {
+                facet.subLocations.push({
+                    type: 'municipal',
+                    key: m.key,
+                    count: nationalCountMap[m.key] === undefined ? 0 : nationalCountMap[m.key]
+                });
+            });
+        }
 
-    counties.forEach(c => {
-        countMap[c.key] = c.count;
+        if ((facet.key === 'JAN MAYEN' || facet.key === 'KONTINENTALSOKKELEN') && facet.count === 0) {
+            // Ikke vis disse to fylkene om de ikke har noen annonser
+        } else {
+            facet.subLocations.sort((a, b) => {
+                return a.key > b.key ? 1 : -1;
+            });
 
-        c.municipals.forEach(m => {
-            countMap[m.key] = m.count;
-        })
+            facets.push(facet);
+        }
     });
 
-    const toRemove = [];
-
-    geographyList.forEach(c => {
-        c.count = countMap[c.key] === undefined ? 0 : countMap[c.key];
-
-        if ((c.key === 'KONTINENTALSOKKELEN' || c.key === 'JAN MAYEN') && c.count === 0) toRemove.push(c);
-
-        c.municipals.forEach(m => {
-            m.count = countMap[m.key] === undefined ? 0 : countMap[m.key];
-        });
-
-        c.municipals = c.municipals.sort((a, b) => {
-            return a.key > b.key ? 1 : -1;
-        });
-    });
-
-    toRemove.forEach(r => {
-        geographyList.splice(geographyList.indexOf(r), 1);
-    });
-
-    return geographyList.sort((a, b) => {
+    return facets.sort((a, b) => {
+        if (a.key === 'UTLAND') return 1;
+        if (b.key === 'UTLAND') return -1;
         return a.key > b.key ? 1 : -1;
     });
 }
@@ -138,7 +136,7 @@ function addHitCountToGeographyList(counties, geographyList) {
  * @returns Returnerer en ny liste, hvor antall treff per fasett er oppdatert
  */
 function updateCount(initialValues, newValues, nestedKey) {
-    if(nestedKey === undefined) {
+    if (nestedKey === undefined) {
         return initialValues.map((item) => {
             const found = newValues.find((e) => (
                 e.key === item.key

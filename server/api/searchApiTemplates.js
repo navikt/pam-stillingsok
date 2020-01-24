@@ -19,12 +19,12 @@ function filterPublished(published) {
     const filters = [];
     if (published) {
         filters.push({
-                    range: {
-                        published: {
-                            gte: published,
-                            time_zone: 'CET'
-                        }
-                    }
+            range: {
+                published: {
+                    gte: published,
+                    time_zone: 'CET'
+                }
+            }
         });
     }
     return filters;
@@ -67,26 +67,6 @@ function filterExtent(extent) {
     return filters;
 }
 
-function filterCountries(countries) {
-    const filters = [];
-    if (countries && countries.length > 0) {
-        const filter = {
-            bool: {
-                should: []
-            }
-        };
-        countries.forEach((item) => {
-            filter.bool.should.push({
-                term: {
-                    country_facet: item
-                }
-            });
-        });
-        filters.push(filter);
-    }
-    return filters;
-}
-
 function filterEngagementType(engagementTypes) {
     const filters = [];
     if (engagementTypes && engagementTypes.length > 0) {
@@ -113,7 +93,7 @@ function filterEngagementType(engagementTypes) {
  * Feks (Akershus AND (Asker OR Bærum)) OR (Buskerud AND Drammen) om man ser etter jobb i Asker, Bærum eller Drammen
  * Feks (Akershus) OR (Buskerud AND Drammen) om man ser etter jobb i hele Akershus fylke, men også i Drammen kommune.
  */
-function filterNestedFacets(parents, children = [], parentKey, childKey, nestedField=undefined) {
+function filterNestedFacets(parents, children = [], parentKey, childKey, nestedField = undefined) {
     let allMusts = [];
     if (parents && parents.length > 0) {
         parents.forEach((parent) => {
@@ -159,9 +139,49 @@ function filterNestedFacets(parents, children = [], parentKey, childKey, nestedF
 
 }
 
-function filterLocation(counties, municipals) {
-    return filterNestedFacets(counties, municipals, 'locationList.county.keyword',
-        'locationList.municipal.keyword', 'locationList');
+// Filtrer på alle type locations (land, kommune, fylke, internasjonalt)
+function filterLocation(counties, municipals, countries, international = false) {
+    const filter = {
+        nested: {
+            path: 'locationList',
+            query: {
+                bool: {
+                    should: []
+                }
+            }
+        }
+    };
+
+    if (international) {
+        filter.nested.query.bool.should.push({
+            bool: {
+                must_not: {
+                    term: {
+                        "locationList.country.keyword": "NORGE"
+                    }
+                }
+            }
+        });
+    }
+
+    addLocationsToFilter(countries, filter, 'country');
+    addLocationsToFilter(counties, filter, 'county');
+    addLocationsToFilter(municipals, filter, 'municipal');
+
+    return filter;
+}
+
+function addLocationsToFilter(locations, filter, type) {
+    if (Array.isArray(locations)) {
+        locations.forEach(l => {
+            const term = {};
+            term[`locationList.${type}.keyword`] = type === 'municipal' ? l.split('.')[1] : l;
+
+            filter.nested.query.bool.should.push({
+                term
+            });
+        });
+    }
 }
 
 function filterOccupation(occupationFirstLevels, occupationSecondLevels) {
@@ -368,9 +388,9 @@ function mainQueryDisjunctionTuning(q) {
 exports.searchTemplate = (query) => {
     const {
         from, size, counties, countries, municipals, extent, engagementType, sector, published,
-        occupationFirstLevels, occupationSecondLevels
+        occupationFirstLevels, occupationSecondLevels, international
     } = query;
-    let { sort, q, operator } = query;
+    let {sort, q, operator} = query;
 
     // To ensure consistent search results across multiple shards in elasticsearch when query is blank
     if (!q || q.trim().length === 0) {
@@ -395,12 +415,11 @@ exports.searchTemplate = (query) => {
             bool: {
                 filter: [
                     ...filterExtent(extent),
-                    ...filterCountries(countries),
-                    filterLocation(counties, municipals),
+                    filterLocation(counties, municipals, countries, international),
                     filterOccupation(occupationFirstLevels, occupationSecondLevels),
                     ...filterEngagementType(engagementType),
                     ...filterSector(sector),
-                    ...filterPublished(published)
+                    ...filterPublished(published),
                 ]
             }
         },
@@ -428,8 +447,7 @@ exports.searchTemplate = (query) => {
                     bool: {
                         filter: [
                             ...filterExtent(extent),
-                            ...filterCountries(countries),
-                            filterLocation(counties, municipals),
+                            filterLocation(counties, municipals, countries, international),
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
                             ...filterEngagementType(engagementType),
                             ...filterSector(sector),
@@ -451,8 +469,7 @@ exports.searchTemplate = (query) => {
                     bool: {
                         filter: [
                             ...filterExtent(extent),
-                            ...filterCountries(countries),
-                            filterLocation(counties, municipals),
+                            filterLocation(counties, municipals, countries, international),
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
                             ...filterEngagementType(engagementType),
                             ...filterSector(sector)
@@ -479,8 +496,7 @@ exports.searchTemplate = (query) => {
                     bool: {
                         filter: [
                             ...filterExtent(extent),
-                            ...filterCountries(countries),
-                            filterLocation(counties, municipals),
+                            filterLocation(counties, municipals, countries, international),
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
                             ...filterEngagementType(engagementType),
                             ...filterPublished(published)
@@ -489,7 +505,7 @@ exports.searchTemplate = (query) => {
                 },
                 aggs: {
                     values: {
-                        terms: { field: 'sector_facet' }
+                        terms: {field: 'sector_facet'}
                     }
                 }
             },
@@ -497,8 +513,7 @@ exports.searchTemplate = (query) => {
                 filter: {
                     bool: {
                         filter: [
-                            ...filterCountries(countries),
-                            filterLocation(counties, municipals),
+                            filterLocation(counties, municipals, countries, international),
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
                             ...filterEngagementType(engagementType),
                             ...filterSector(sector),
@@ -508,7 +523,7 @@ exports.searchTemplate = (query) => {
                 },
                 aggs: {
                     values: {
-                        terms: { field: 'extent_facet' }
+                        terms: {field: 'extent_facet'}
                     }
                 }
             },
@@ -517,8 +532,7 @@ exports.searchTemplate = (query) => {
                     bool: {
                         filter: [
                             ...filterExtent(extent),
-                            ...filterCountries(countries),
-                            filterLocation(counties, municipals),
+                            filterLocation(counties, municipals, countries, international),
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
                             ...filterSector(sector),
                             ...filterPublished(published)
@@ -527,7 +541,7 @@ exports.searchTemplate = (query) => {
                 },
                 aggs: {
                     values: {
-                        terms: { field: 'engagementtype_facet' }
+                        terms: {field: 'engagementtype_facet'}
                     }
                 }
             },
@@ -536,7 +550,6 @@ exports.searchTemplate = (query) => {
                     bool: {
                         filter: [
                             ...filterExtent(extent),
-                            ...filterCountries(countries),
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
                             ...filterEngagementType(engagementType),
                             ...filterSector(sector),
@@ -545,36 +558,36 @@ exports.searchTemplate = (query) => {
                     }
                 },
                 aggs: {
-                  nestedLocations: {
-                      nested: {
-                          path: 'locationList',
-                      },
-                      aggs: {
-                          values: {
-                              terms: {
-                                  field: 'locationList.county.keyword',
-                                  size: 50,
-                                  order: {
-                                      _key: 'asc'
-                                  }
-                              },
-                              aggs: {
-                                  root_doc_count: {
-                                      reverse_nested: {}
-                                  },
-                                  municipals: {
-                                      terms: {
-                                          field: 'locationList.municipal.keyword',
-                                          size: 200,
-                                          order: {
-                                              _key: 'asc'
-                                          }
-                                      }
-                                  }
-                              }
-                          }
-                      }
-                   }
+                    nestedLocations: {
+                        nested: {
+                            path: 'locationList',
+                        },
+                        aggs: {
+                            values: {
+                                terms: {
+                                    field: 'locationList.county.keyword',
+                                    size: 50,
+                                    order: {
+                                        _key: 'asc'
+                                    }
+                                },
+                                aggs: {
+                                    root_doc_count: {
+                                        reverse_nested: {}
+                                    },
+                                    municipals: {
+                                        terms: {
+                                            field: 'locationList.municipal.keyword',
+                                            size: 200,
+                                            order: {
+                                                _key: 'asc'
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             },
             occupations: {
@@ -582,8 +595,7 @@ exports.searchTemplate = (query) => {
                     bool: {
                         filter: [
                             ...filterExtent(extent),
-                            ...filterCountries(countries),
-                            filterLocation(counties, municipals),
+                            filterLocation(counties, municipals, countries, international),
                             ...filterEngagementType(engagementType),
                             ...filterSector(sector),
                             ...filterPublished(published)
@@ -622,7 +634,6 @@ exports.searchTemplate = (query) => {
                     bool: {
                         filter: [
                             ...filterExtent(extent),
-                            filterLocation(counties, municipals),
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
                             ...filterEngagementType(engagementType),
                             ...filterSector(sector),
@@ -631,10 +642,26 @@ exports.searchTemplate = (query) => {
                     }
                 },
                 aggs: {
-                    values: {
-                        terms: {
-                            field: 'country_facet',
-                            exclude : "NORGE"
+                    nestedLocations: {
+                        nested: {
+                            path: 'locationList',
+                        },
+                        aggs: {
+                            values: {
+                                terms: {
+                                    field: 'locationList.country.keyword',
+                                    exclude: "NORGE",
+                                    size: 50,
+                                    order: {
+                                        _key: 'asc'
+                                    }
+                                },
+                                aggs: {
+                                    root_doc_count: {
+                                        reverse_nested: {}
+                                    },
+                                }
+                            }
                         }
                     }
                 }

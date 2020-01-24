@@ -47,6 +47,8 @@ export default function unknownFacetsReducer(state = initialState, action) {
  */
 export function findUnknownFacets(usersSearchCriteria, searchCriteriaFromBackend, nestedName) {
     return usersSearchCriteria.filter((used) => {
+        if (searchCriteriaFromBackend === undefined) return true;
+
         const found = searchCriteriaFromBackend.find((knownValue) => {
             if (nestedName !== undefined && knownValue[nestedName]) {
                 return knownValue[nestedName].find((nested) => used === nested.key);
@@ -62,6 +64,7 @@ export function findUnknownFacets(usersSearchCriteria, searchCriteriaFromBackend
  */
 function* handleFetchInitialFacetsSuccess(action) {
     const state = yield select();
+
     yield put({
         type: SET_UNKNOWN_FACETS,
         unknownValues: {
@@ -82,14 +85,14 @@ function* handleFetchInitialFacetsSuccess(action) {
  */
 function* handleRestoreStateFromSavedSearch() {
     const state = yield select();
+
     yield put({
         type: SET_UNKNOWN_FACETS,
         unknownValues: {
             unknownOccupationFirstLevels: findUnknownFacets(state.searchQuery.occupationFirstLevels, state.facets.occupationFirstLevelFacets),
             unknownOccupationSecondLevels: findUnknownFacets(state.searchQuery.occupationSecondLevels, state.facets.occupationFirstLevelFacets, 'occupationSecondLevels'),
-            unknownCounties: findUnknownFacets(state.searchQuery.counties, state.facets.countyFacets),
-            unknownMunicipals: findUnknownFacets(state.searchQuery.municipals, state.facets.countyFacets, 'municipals'),
-            unknownCountries: findUnknownFacets(state.searchQuery.countries, state.facets.countryFacets),
+            unknownCounties: findUnknownFacets(state.searchQuery.counties, state.facets.locationFacets),
+            unknownMunicipals: findUnknownFacets(state.searchQuery.municipals, state.facets.locationFacets, 'municipals'),
             unknownEngagementTypes: findUnknownFacets(state.searchQuery.engagementType, state.facets.engagementTypeFacets),
             unknownExtents: findUnknownFacets(state.searchQuery.extent, state.facets.extentFacets),
             unknownSectors: findUnknownFacets(state.searchQuery.sector, state.facets.sectorFacets)
