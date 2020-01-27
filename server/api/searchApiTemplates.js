@@ -164,9 +164,9 @@ function filterLocation(counties, municipals, countries, international = false) 
 
         countiesComputed.forEach(c => {
             const must = [{
-                    term: {
-                        'locationList.county.keyword': c.key,
-                    }
+                term: {
+                    'locationList.county.keyword': c.key,
+                }
             }];
 
             if (c.municipals.length > 0) {
@@ -195,34 +195,32 @@ function filterLocation(counties, municipals, countries, international = false) 
         });
     }
 
-    if (Array.isArray(countries) && countries.length > 0) {
-        const must = [];
-
-        countries.forEach(c => {
-            must.push({
-                term: {
-                    'locationList.country.keyword': c,
-                }
-            });
-        });
-
-        filter.nested.query.bool.should.push({
-            bool: {
-                must: must,
-            }
-        });
-    }
+    const internationalObject = {
+        bool: {}
+    };
 
     if (international) {
-        filter.nested.query.bool.should.push({
-            bool: {
-                must_not: {
+        internationalObject.bool['must_not'] = {
+            term: {
+                'locationList.country.keyword': 'NORGE'
+            }
+        }
+    }
+
+    if (Array.isArray(countries) && countries.length > 0) {
+        internationalObject.bool['should'] = [
+            countries.map(c => {
+                return {
                     term: {
-                        "locationList.country.keyword": "NORGE"
+                        'locationList.country.keyword': c
                     }
                 }
-            }
-        });
+            }),
+        ]
+    }
+
+    if (internationalObject.bool.hasOwnProperty('must_not') || internationalObject.bool.hasOwnProperty('should')) {
+        filter.nested.query.bool.should.push(internationalObject);
     }
 
     return filter;

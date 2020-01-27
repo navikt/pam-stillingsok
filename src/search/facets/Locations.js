@@ -88,7 +88,7 @@ class Locations extends React.Component {
                             onChange={this.onCheckboxClick(location.key, location.type)}
                             checked={checkedCounties.includes(location.key) || (location.key === 'UTLAND' && international === true)}
                         />
-                        {(checkedCounties.includes(location.key) || (location.key === 'UTLAND' && international === true)) && location.key !== 'OSLO' && (
+                        {(checkedCounties.includes(location.key) || (location.key === 'UTLAND' && international === true)) && location.key !== 'OSLO' && location.key !== 'SVALBARD' && (
                             <div
                                 className="Facet__inner__items"
                                 role="group"
