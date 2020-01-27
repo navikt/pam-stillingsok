@@ -195,19 +195,21 @@ function filterLocation(counties, municipals, countries, international = false) 
         });
     }
 
-    if (Array.isArray(countries)) {
+    if (Array.isArray(countries) && countries.length > 0) {
+        const must = [];
+
         countries.forEach(c => {
-            filter.nested.query.bool.should.push({
-                bool: {
-                    must: [
-                        {
-                            term: {
-                                'locationList.country.keyword': c,
-                            }
-                        }
-                    ]
+            must.push({
+                term: {
+                    'locationList.country.keyword': c,
                 }
-            })
+            });
+        });
+
+        filter.nested.query.bool.should.push({
+            bool: {
+                must: must,
+            }
         });
     }
 

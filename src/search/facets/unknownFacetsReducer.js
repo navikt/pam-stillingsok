@@ -1,7 +1,7 @@
-import { put, select, takeLatest } from 'redux-saga/es/effects';
-import { RESTORE_STATE_FROM_SAVED_SEARCH } from '../../savedSearches/savedSearchesReducer';
-import { RESTORE_STATE_FROM_URL } from '../searchQueryReducer';
-import { FETCH_INITIAL_FACETS_SUCCESS, RESET_SEARCH } from '../searchReducer';
+import {put, select, takeLatest} from 'redux-saga/es/effects';
+import {RESTORE_STATE_FROM_SAVED_SEARCH} from '../../savedSearches/savedSearchesReducer';
+import {RESTORE_STATE_FROM_URL} from '../searchQueryReducer';
+import {FETCH_INITIAL_FACETS_SUCCESS, RESET_SEARCH} from '../searchReducer';
 
 const SET_UNKNOWN_FACETS = 'SET_UNKNOWN_FACETS';
 
@@ -47,16 +47,26 @@ export default function unknownFacetsReducer(state = initialState, action) {
  */
 export function findUnknownFacets(usersSearchCriteria, searchCriteriaFromBackend, nestedName) {
     return usersSearchCriteria.filter((used) => {
-        if (searchCriteriaFromBackend === undefined) return true;
-
         const found = searchCriteriaFromBackend.find((knownValue) => {
             if (nestedName !== undefined && knownValue[nestedName]) {
                 return knownValue[nestedName].find((nested) => used === nested.key);
             }
             return used === knownValue.key;
         });
+
         return found === undefined;
     });
+}
+
+export function findZeroCountLocationFacets(usersSearchCriteria, nationalCountMap, internationalCountMap) {
+    if (Array.isArray(usersSearchCriteria) && usersSearchCriteria.length > 0) {
+        return usersSearchCriteria.filter(c => {
+            return !(nationalCountMap.hasOwnProperty(c) || internationalCountMap.hasOwnProperty(c));
+
+        });
+    }
+
+    return [];
 }
 
 /**
@@ -70,9 +80,9 @@ function* handleFetchInitialFacetsSuccess(action) {
         unknownValues: {
             unknownOccupationFirstLevels: findUnknownFacets(state.searchQuery.occupationFirstLevels, action.response.occupationFirstLevels),
             unknownOccupationSecondLevels: findUnknownFacets(state.searchQuery.occupationSecondLevels, action.response.occupationFirstLevels, 'occupationSecondLevels'),
-            unknownCounties: findUnknownFacets(state.searchQuery.counties, action.response.counties),
-            unknownMunicipals: findUnknownFacets(state.searchQuery.municipals, action.response.counties, 'municipals'),
-            unknownCountries: findUnknownFacets(state.searchQuery.countries, action.response.countries),
+            unknownCounties: findZeroCountLocationFacets(state.searchQuery.counties, action.response.nationalCountMap, action.response.internationalCountMap),
+            unknownMunicipals: findZeroCountLocationFacets(state.searchQuery.municipals, action.response.nationalCountMap, action.response.internationalCountMap),
+            unknownCountries: findZeroCountLocationFacets(state.searchQuery.countries, action.response.nationalCountMap, action.response.internationalCountMap),
             unknownEngagementTypes: findUnknownFacets(state.searchQuery.engagementType, action.response.engagementTypes),
             unknownExtents: findUnknownFacets(state.searchQuery.extent, action.response.extent),
             unknownSectors: findUnknownFacets(state.searchQuery.sector, action.response.sector)

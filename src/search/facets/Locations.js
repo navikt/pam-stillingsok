@@ -19,18 +19,24 @@ import UnknownFacetValues from './UnknownFacetValues';
 
 class Locations extends React.Component {
 
-    onCheckboxClick = (key, type) => (e) => {
-        // Spesialhåndtering for deprecated counties/municipals
-        if (key === null) {
-            const {value} = e.target;
-            key = value;
-        }
+    onZeroCountFacetClick = (countries, counties, municipals) => (e) => {
+        const {value} = e.target;
 
+        if (countries.includes(value)) this.checkUncheckLocation(value, 'country', e.target.checked);
+        else if (counties.includes(value)) this.checkUncheckLocation(value, 'county', e.target.checked);
+        else if (municipals.includes(value)) this.checkUncheckLocation(value, 'municipal', e.target.checked);
+    };
+
+    onCheckboxClick = (key, type) => (e) => {
+        this.checkUncheckLocation(key, type, e.target.checked);
+    };
+
+    checkUncheckLocation(key, type, checked) {
         if (type === 'county') {
-            if (e.target.checked) this.props.checkCounty(key);
+            if (checked) this.props.checkCounty(key);
             else this.props.uncheckCounty(key);
         } else if (type === 'municipal') {
-            if (e.target.checked) this.props.checkMunicipal(key);
+            if (checked) this.props.checkMunicipal(key);
             else this.props.uncheckMunicipal(key);
         } else if (type === 'international') {
             if (this.props.international) {
@@ -41,20 +47,30 @@ class Locations extends React.Component {
 
             this.props.setInternational(!this.props.international);
         } else {
-            if (e.target.checked) this.props.checkCountries(key);
+            if (checked) this.props.checkCountries(key);
             else this.props.uncheckCountries(key);
-
-            console.log(this.props.checkedCountries);
         }
 
         this.props.search();
-    };
+    }
 
     render() {
         const {
             locations, checkedCounties, checkedMunicipals, checkedCountries, deprecatedCounties,
-            international, deprecatedMunicipals
+            international, deprecatedMunicipals, deprecatedCountries
         } = this.props;
+
+        const zeroCountLocations = [...new Set([
+            ...deprecatedCountries,
+            ...deprecatedCounties,
+            ...deprecatedMunicipals,
+        ])];
+
+        const checkedLocations = [
+            ...checkedCountries,
+            ...checkedCounties,
+            ...checkedMunicipals,
+        ];
 
         return (
             <Facet
@@ -95,13 +111,11 @@ class Locations extends React.Component {
                 ))}
 
                 <UnknownFacetValues
+                    splitLocationNameOnDot={true}
                     namePrefix="counties"
-                    unknownValues={deprecatedCounties}
-                    checkedValues={checkedCounties}
-                    onClick={this.onCheckboxClick(null, 'county')}
-                    unknownNestedValues={deprecatedMunicipals}
-                    checkedNestedValues={checkedMunicipals}
-                    onNestedLevelClick={this.onCheckboxClick(null, 'municipal')}
+                    unknownValues={zeroCountLocations}
+                    checkedValues={checkedLocations}
+                    onClick={this.onZeroCountFacetClick(deprecatedCountries, deprecatedCounties, deprecatedMunicipals)}
                 />
             </Facet>
         );
@@ -124,6 +138,7 @@ Locations.propTypes = {
     checkedMunicipals: PropTypes.arrayOf(PropTypes.string).isRequired,
     deprecatedCounties: PropTypes.arrayOf(PropTypes.string).isRequired,
     deprecatedMunicipals: PropTypes.arrayOf(PropTypes.string).isRequired,
+    deprecatedCountries: PropTypes.arrayOf(PropTypes.string).isRequired,
     checkCounty: PropTypes.func.isRequired,
     uncheckCounty: PropTypes.func.isRequired,
     checkMunicipal: PropTypes.func.isRequired,
@@ -140,7 +155,8 @@ const mapStateToProps = (state) => ({
     checkedCounties: state.searchQuery.counties,
     checkedMunicipals: state.searchQuery.municipals,
     deprecatedCounties: state.unknownFacets.unknownCounties,
-    deprecatedMunicipals: state.unknownFacets.unknownMunicipals
+    deprecatedMunicipals: state.unknownFacets.unknownMunicipals,
+    deprecatedCountries: state.unknownFacets.unknownCountries,
 });
 
 const mapDispatchToProps = (dispatch) => ({

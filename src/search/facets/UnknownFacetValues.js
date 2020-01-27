@@ -13,7 +13,8 @@ export default function UnknownFacetValues(
         onClick,
         unknownNestedValues,
         checkedNestedValues,
-        onNestedLevelClick
+        onNestedLevelClick,
+        splitLocationNameOnDot,
     }
 ) {
     if (unknownValues.length + unknownNestedValues.length === 0) {
@@ -27,7 +28,7 @@ export default function UnknownFacetValues(
                 <div key={sec}>
                     <Checkbox
                         name={`${namePrefix}-unknownFacetValue`}
-                        label={`${fixLocationName(sec)} (0)`}
+                        label={`${fixLocationName(sec, splitLocationNameOnDot)} (0)`}
                         value={sec}
                         onChange={onClick}
                         checked={checkedValues.includes(sec)}
@@ -52,7 +53,8 @@ export default function UnknownFacetValues(
 UnknownFacetValues.defaultProps = {
     unknownNestedValues: [],
     checkedNestedValues: [],
-    onNestedLevelClick: undefined
+    onNestedLevelClick: undefined,
+    splitLocationNameOnDot: false,
 };
 
 UnknownFacetValues.propTypes = {
@@ -62,6 +64,7 @@ UnknownFacetValues.propTypes = {
     onClick: PropTypes.func.isRequired,
     unknownNestedValues: PropTypes.array,
     checkedNestedValues: PropTypes.array,
-    onNestedLevelClick: PropTypes.func
+    onNestedLevelClick: PropTypes.func,
+    splitLocationNameOnDot: PropTypes.bool,
 };
 
