@@ -152,6 +152,65 @@ function filterLocation(counties, municipals, countries, international = false) 
         }
     };
 
+    if (Array.isArray(counties)) {
+        const countiesComputed = [];
+
+        counties.forEach(c => {
+            countiesComputed.push({
+                key: c,
+                municipals: Array.isArray(municipals) ? municipals.filter(m => m.split('.')[0] === c) : [],
+            });
+        });
+
+        countiesComputed.forEach(c => {
+            const must = [{
+                    term: {
+                        'locationList.county.keyword': c.key,
+                    }
+            }];
+
+            if (c.municipals.length > 0) {
+                const mustObject = {
+                    bool: {
+                        should: []
+                    }
+                };
+
+                c.municipals.forEach(m => {
+                    mustObject.bool.should.push({
+                        term: {
+                            'locationList.municipal.keyword': m.split('.')[1],
+                        }
+                    })
+                });
+
+                must.push(mustObject);
+            }
+
+            filter.nested.query.bool.should.push({
+                bool: {
+                    must: must,
+                }
+            });
+        });
+    }
+
+    if (Array.isArray(countries)) {
+        countries.forEach(c => {
+            filter.nested.query.bool.should.push({
+                bool: {
+                    must: [
+                        {
+                            term: {
+                                'locationList.country.keyword': c,
+                            }
+                        }
+                    ]
+                }
+            })
+        });
+    }
+
     if (international) {
         filter.nested.query.bool.should.push({
             bool: {
@@ -164,24 +223,7 @@ function filterLocation(counties, municipals, countries, international = false) 
         });
     }
 
-    addLocationsToFilter(countries, filter, 'country');
-    addLocationsToFilter(counties, filter, 'county');
-    addLocationsToFilter(municipals, filter, 'municipal');
-
     return filter;
-}
-
-function addLocationsToFilter(locations, filter, type) {
-    if (Array.isArray(locations)) {
-        locations.forEach(l => {
-            const term = {};
-            term[`locationList.${type}.keyword`] = type === 'municipal' ? l.split('.')[1] : l;
-
-            filter.nested.query.bool.should.push({
-                term
-            });
-        });
-    }
 }
 
 function filterOccupation(occupationFirstLevels, occupationSecondLevels) {
