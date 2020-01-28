@@ -1,7 +1,51 @@
 @import "../../variables";
 
 .NoResults {
-  background: #fff;
-  padding: 4rem 1rem;
-  text-align: center;
+  width: 100%;
+  height: 241px;
+  background-color: #e6f4ef;
+  padding-left: 40px;
+  padding-right: 40px;
+
+  .NoResults__text__container {
+    width: 100%;
+    height: 160px;
+    font-family: 'Source Sans Pro', Arial, sans-serif;
+    font-size: 16px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #062140;
+    padding-top: 40px;
+
+    .NoResults__text__title {
+      font-weight: bold;
+      font-size: 24px;
+    }
+
+    .NoResults__text__desc {
+      padding-top: 8px;
+      font-size: 16px;
+    }
+  }
+}
+
+@media (max-width: 991px) {
+  .NoResults {
+    height: 180px;
+
+    button {
+      display: none;
+    }
+
+    .NoResults__text__title {
+      font-size: 1.2rem !important;
+    }
+
+    .NoResults__text__desc {
+      font-size: 1rem !important;
+    }
+  }
 }
