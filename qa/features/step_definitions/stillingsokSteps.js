@@ -55,11 +55,7 @@ When(/^jeg filtrerer på "(.*)"$/, (filter) => {
         .setValue(element, forside.api.Keys.SPACE);
 });
 
-Then(/^skal "(.*)" vises som sted i annonsetreffene$/, (sted) => {
-    return forside.searchResultContainsLocation(sted);
-});
-
-Then(/^antall treff skal stemme overens med antall i fasett "(.*)"$/, (filter) => {
+Then(/^skal antall treff stemme overens med antall i fasett "(.*)"$/, (filter) => {
     return forside.verifyFilterCount(filter);
 });
 
