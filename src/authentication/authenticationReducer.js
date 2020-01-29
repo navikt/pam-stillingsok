@@ -172,8 +172,6 @@ export function* redirectToLogin(action) {
         redirectUrlAfterSuccessfulLogin = `${redirectUrl}${encodeURIComponent(stringifyQueryObject(redirectQuery))}`;
     }
 
-    console.log(redirectUrlAfterSuccessfulLogin);
-
     window.location.href = `${LOGIN_URL}?level=Level3&redirect=${redirectUrlAfterSuccessfulLogin}`;
 }
 
