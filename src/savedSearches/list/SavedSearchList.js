@@ -7,21 +7,14 @@ import {
 import SavedSearchListItem from './SavedSearchListItem';
 import './SavedSearchList.less';
 import {SavedSearchFormMode, SHOW_SAVED_SEARCH_FORM} from "../form/savedSearchFormReducer";
+import LocationSearchParser from "../../common/utils/LocationSearchParser";
 
 
 class SavedSearchList extends React.Component {
 
     componentDidMount() {
         const {savedSearches} = this.props;
-        let uuid = null;
-
-        location.search.split('&').forEach(q => {
-            const split = q.split('=');
-
-            if (split.length === 2 && split[0].includes('uuid')) {
-                uuid = split[1];
-            }
-        });
+        let uuid = LocationSearchParser.extractParam('uuid');
 
         if (typeof uuid === 'string') {
             const savedSearch = savedSearches.filter(s => s.uuid === uuid)[0];
