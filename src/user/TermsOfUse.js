@@ -71,26 +71,6 @@ class TermsOfUse extends React.Component {
                             Det er kun du som kan se hva du har lagret.
                         </Normaltekst>
                     </BekreftCheckboksPanel>
-                    <div className="TermsOfUse__section TermsOfUse__section--email">
-                        <Element>E-postvarslinger for lagrede søk</Element>
-                        <Normaltekst>
-                            Du kan motta varslinger på lagrede søk.
-                            E-postadressen din vil bare bli brukt til dette formålet.
-                        </Normaltekst>
-                        <div className="TermsOfUse__input">
-                            <Input
-                                id="TermsOfUse__email"
-                                label="E-post for å motta treff på mine lagrede søk"
-                                value={this.state.email}
-                                onChange={this.onEmailChange}
-                                onBlur={this.onEmailBlur}
-                                feil={this.state.hasValidationError ? {
-                                    feilmelding: 'E-postadressen er ugyldig. Den må minimum inneholde en «@» og et punktum. '
-                                    + 'Den kan ikke inneholde noen mellomrom. For eksempel: navn.navnesen@gmail.com'
-                                } : undefined}
-                            />
-                        </div>
-                    </div>
                     <div className="TermsOfUse__section TermsOfUse__section--last">
                         <Normaltekst>
                             Du kan trekke samtykket hvis du ikke lenger ønsker å bruke de innloggede tjenestene.

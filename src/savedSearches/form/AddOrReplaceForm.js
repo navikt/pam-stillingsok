@@ -57,9 +57,9 @@ class AddOrReplaceForm extends React.Component {
     };
 
     setFocusOnError = () => {
-        if(this.props.validation.title && this.titleRef){
+        if (this.props.validation.title && this.titleRef) {
             this.titleRef.focus();
-        } else if(this.props.validation.email && this.emailRef){
+        } else if (this.props.validation.email && this.emailRef) {
             this.emailRef.focus();
         }
     };
@@ -68,6 +68,11 @@ class AddOrReplaceForm extends React.Component {
         return (this.props.user.email === undefined ||
             this.props.user.email === null ||
             this.props.user.email.trim().length === 0);
+    };
+
+    emailSet = () => {
+        console.log('email: ' + this.props.user.email);
+        return (this.props.user.email !== undefined && this.props.user.email !== null && this.props.user.email.trim().length !== 0);
     };
 
     render() {
@@ -139,6 +144,9 @@ class AddOrReplaceForm extends React.Component {
                                     feilmelding: validation.email
                                 } : undefined}
                             />
+                        )}
+                        {this.emailSet() && this.props.showRegisterEmail && (
+                            <p>{this.props.user.email}</p>
                         )}
                     </div>
                 )}
