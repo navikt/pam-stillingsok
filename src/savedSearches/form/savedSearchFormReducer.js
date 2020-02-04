@@ -67,7 +67,6 @@ export default function savedSearchFormReducer(state = initialState, action) {
                 emailInputValue: action.email
             };
         case HIDE_SAVED_SEARCH_FORM:
-            console.log('Hide saved search form: false')
             return {
                 ...state,
                 showSavedSearchForm: false

@@ -71,7 +71,6 @@ class AddOrReplaceForm extends React.Component {
     };
 
     emailSet = () => {
-        console.log('email: ' + this.props.user.email);
         return (this.props.user.email !== undefined && this.props.user.email !== null && this.props.user.email.trim().length !== 0);
     };
 
