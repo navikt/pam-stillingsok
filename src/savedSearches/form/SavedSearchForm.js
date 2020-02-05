@@ -25,22 +25,11 @@ class SavedSearchForm extends React.Component {
 
     onSaveClick = () => {
         if (!this.props.showRegisterEmail) {
-            if (this.props.formMode === SavedSearchFormMode.ADD) {
-                this.props.addSavedSearch();
-            } else {
-                trackOnce(EVENT_CATEGORY_SAVED_SEARCHES, 'Endret et lagret søk');
-                this.props.updateSavedSearch();
-            }
+            this.addOrUpdateSavedSearch();
             this.closeModal();
         } else {
             this.props.setEmailFromSavedSearch();
-
-            if (this.props.formMode === SavedSearchFormMode.ADD) {
-                this.props.addSavedSearch();
-            } else {
-                trackOnce(EVENT_CATEGORY_SAVED_SEARCHES, 'Endret et lagret søk');
-                this.props.updateSavedSearch();
-            }
+            this.addOrUpdateSavedSearch();
         }
 
         if (this.childForm && this.childForm.current) {
@@ -48,8 +37,17 @@ class SavedSearchForm extends React.Component {
         }
     };
 
+    addOrUpdateSavedSearch() {
+        if (this.props.formMode === SavedSearchFormMode.ADD) {
+            this.props.addSavedSearch();
+        } else {
+            trackOnce(EVENT_CATEGORY_SAVED_SEARCHES, 'Endret et lagret søk');
+            this.props.updateSavedSearch();
+        }
+    }
+
     emailSet = () => {
-        return (this.props.user.email !== undefined && this.props.user.email !== null && this.props.user.email.trim().length !== 0);
+        return (this.props.user.email && this.props.user.email.trim().length !== 0);
     };
 
     closeModal = () => {
@@ -81,7 +79,7 @@ class SavedSearchForm extends React.Component {
                                     <div className="alertstripe__divider" />
                                     <Normaltekst>
                                         Du må bekrefte e-postadressen din. Klikk på lenken i e-posten du har
-                                            mottatt.
+                                        mottatt.
                                     </Normaltekst>
                                 </AlertStripeInfo>
 
