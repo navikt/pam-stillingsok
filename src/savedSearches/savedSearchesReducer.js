@@ -220,6 +220,7 @@ function* updateSavedSearch() {
                 }
             );
             yield put({ type: UPDATE_SAVED_SEARCH_SUCCESS, response });
+
         } catch (e) {
             if (e instanceof SearchApiError) {
                 yield put({ type: UPDATE_SAVED_SEARCH_FAILURE, error: e });

@@ -67,13 +67,16 @@ export default function savedSearchFormReducer(state = initialState, action) {
                 emailInputValue: action.email
             };
         case HIDE_SAVED_SEARCH_FORM:
+            return {
+                ...state,
+                showSavedSearchForm: false
+            };
         case UPDATE_SAVED_SEARCH_SUCCESS:
         case UPDATE_SAVED_SEARCH_FAILURE:
         case ADD_SAVED_SEARCH_SUCCESS:
         case ADD_SAVED_SEARCH_FAILURE:
             return {
-                ...state,
-                showSavedSearchForm: false
+                ...state
             };
         case SET_SAVED_SEARCH_FORM_MODE:
             return {
