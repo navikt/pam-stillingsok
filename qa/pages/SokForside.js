@@ -18,7 +18,6 @@ module.exports = {
         loggInnPersonButton: 'button[aria-label="Logg inn som jobbsøker"]',
         samtykkeCheckbox: 'input[id=TermsOfUse__checkbox]',
         samtykkeButton: 'button[id=TermsOfUse__acceptButton]',
-        samtykkeEpost: 'input[id=TermsOfUse__email]',
         saveSearchButton: '.SaveSearchButton',
         savedSearchName: 'input[id=SavedSearchModal__name]',
         confirmSaveSearchButton: 'button[id=SavedSearchModal__saveButton]'
@@ -114,7 +113,6 @@ module.exports = {
                 if (result.status !== -1) {
                     // samtykkemodal eksisteren, avgi samtykke
                     self.setValue('@samtykkeCheckbox', self.api.Keys.SPACE)
-                        .setValue('@samtykkeEpost', 'test@test.com')
                         .click('@samtykkeButton');
                 }
             });
