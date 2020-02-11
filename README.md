@@ -16,6 +16,7 @@ PAM_VAR_SIDE_URL
 Man kan for eksempel kan man lage et script `run.sh`, dersom man kjører pam-aduser, pam-search-api og
 pam-stillingsok lokalt, med følgende innhold:
 
+
 ```sh
 #!/bin/bash
 export PAMSEARCHAPI_URL=http://localhost:9000
