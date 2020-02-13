@@ -75,23 +75,6 @@ node {
             }
         }
 
-        stage("Run functional acceptance tests") {
-            withEnv(['HTTP_PROXY=http://webproxy-utvikler.nav.no:8088', 'NO_PROXY=nav.no']) {
-                try {
-                    qaDir = "./qa"
-                    sh "cd ${qaDir} && npm install --chromedriver_filepath=/usr/local/chromedriver/chromedriver_linux64.zip"
-                    sh "cd ${qaDir} && npm run-script cucumber-jenkins "
-                } catch (Exception e) {
-                    sh "cd ${qaDir} && npm run-script cucumber-report "
-                    publishHTML([allowMissing: false, alwaysLinkToLastBuild: true, keepAll: false, reportDir: 'qa/reports', reportFiles: 'cucumber_report.html', reportName: 'Nightwatch Report'])
-                    throw new Exception("Nightwatch-tester feilet, se Nightwatch-rapport for detaljer", e)
-                }
-
-                sh "cd ${qaDir} && npm run-script cucumber-report "
-                publishHTML([allowMissing: false, alwaysLinkToLastBuild: true, keepAll: false, reportDir: 'qa/reports', reportFiles: 'cucumber_report.html', reportName: 'Nightwatch Report'])
-            }
-        }
-
         if (production.trim().equals("true")) {
             stage("PRODUCTION") {
                 deployToProduction(app, releaseVersion, zone, namespace, committer)
