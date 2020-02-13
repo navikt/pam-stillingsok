@@ -29,6 +29,7 @@ import SocialShare from './socialShare/SocialShare';
 import './Stilling.less';
 import { FETCH_STILLING_BEGIN, RESET_STILLING } from './stillingReducer';
 import { useTrackPageview, useScrollToTop } from '../common/hooks';
+import {sendUrlEndring} from "../common/hooks/useTrackPageview";
 
 const Stilling = ({
     cachedStilling,
@@ -66,6 +67,7 @@ const Stilling = ({
     useEffect(() => {
         if (stilling && stilling._source && stilling._source.title) {
             document.title = stilling._source.title;
+            sendUrlEndring({ page: `${CONTEXT_PATH}/stilling`, source:stilling._source.source })
         }
     }, [stilling]);
 

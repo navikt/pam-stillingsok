@@ -133,8 +133,7 @@ const startServer = (htmlPages) => {
                 || req.body.page === '/stillinger/lagrede-sok'
                 || req.body.page === '/stillinger/stilling'
                 || req.body.page === '/stillinger')) {
-
-            pageHitCounter.inc(req.body.page);
+            pageHitCounter.inc(req.body.page, req.body.source);
         }
         res.status(200).send({});
     });

@@ -8,11 +8,20 @@ import getWorkLocation from '../../../server/common/getWorkLocation';
 import {CONTEXT_PATH} from '../../fasitProperties';
 import {formatISOString, isValidISOString} from '../../utils';
 import './SearchResultsItemDetails.less';
+import {sendUrlEndring} from "../../common/hooks/useTrackPageview";
 
 function LinkToAd({children, stilling, isFinn}) {
+
+    const logMetrics = () => {
+        sendUrlEndring({
+            page: `${CONTEXT_PATH}/stilling`,
+            source: 'FINN'
+        })
+    };
+
     if (isFinn) {
         return (
-            <a href={`https://www.finn.no/${stilling.reference}`} className="SearchResultItem__link">
+            <a onClick={logMetrics} href={`https://www.finn.no/${stilling.reference}`} className="SearchResultItem__link">
                 {children}
             </a>
         )
