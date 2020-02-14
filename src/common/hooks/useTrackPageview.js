@@ -21,14 +21,18 @@ export default (page, title) => {
         } catch (e) {
             // Google Analytics er ikke definert (dette skjer f.eks. om en bruker blokkerer tracking).
         }
-        sendUrlEndring({page});
+        // Sender ikke eventer herfra om de kommer fra stilling. Eventer fra stilling blir lagret gjennom
+        // useEffect i Stilling.js
+        if (title !== 'Stilling') {
+            sendUrlEndring({page});
+        }
     }, []);
 };
 
-const sendUrlEndring = (page) => {
+export const sendUrlEndring = (payload) => {
     try {
         fetch(`${CONTEXT_PATH}/instrumentation`, {
-            body: JSON.stringify(page),
+            body: JSON.stringify(payload),
             method: 'POST',
             referrer: CONTEXT_PATH,
             headers: {

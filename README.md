@@ -105,3 +105,8 @@ Kommando for å generere rapport:
 npm run cucumber-report
 ```
 Rapporten finnes her ``qa/reports/cucumber_report.html``
+
+
+####Notater
+Snyktester for qa er disabled. For å enable igjen gå på 
+https://app.snyk.io/org/navikt/project/0eb029db-d927-47ab-89a1-4f909785c485/settings
