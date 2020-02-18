@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Undertittel, Undertekst } from 'nav-frontend-typografi';
-import { formatISOString, isValidISOString, isValidUrl } from '../../utils';
+import {formatISOString, isValidEmail, isValidISOString, isValidUrl} from '../../utils';
 import './HowToApply.less';
 import sendGAEvent from "../../googleanalytics";
 
@@ -33,7 +33,13 @@ export default function HowToApply({ source, properties }) {
                         ]}
                         {!finn && properties.applicationemail && [
                             <dt key="dt">Send søknad til:</dt>,
-                            <dd key="dd">{properties.applicationemail}</dd>
+                            <dd key="dd">{
+                                isValidEmail(properties.applicationemail) ?
+                                    <a className="link" href={`mailto:${properties.applicationemail}`}>
+                                        {properties.applicationemail}
+                                    </a>
+                                    : properties.applicationemail
+                            }</dd>
                         ]}
                         {sokUrl && !isValidUrl(sokUrl) && [
                             <dt key="dt">Søknadslenke:</dt>,
