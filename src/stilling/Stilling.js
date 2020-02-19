@@ -67,7 +67,7 @@ const Stilling = ({
     useEffect(() => {
         if (stilling && stilling._source && stilling._source.title) {
             document.title = stilling._source.title;
-            sendUrlEndring({ page: `${CONTEXT_PATH}/stilling`, source:stilling._source.source })
+            sendUrlEndring({ page: `${CONTEXT_PATH}/stilling`, source:stilling._source.source });
         }
     }, [stilling]);
 

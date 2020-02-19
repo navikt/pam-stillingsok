@@ -23,7 +23,9 @@ export default function ContactPerson({ contactList }) {
                         ]}
                         {contactList[0].email && [
                             <dt key="dt">Epost:</dt>,
-                            <dd key="dd">{contactList[0].email}</dd>
+                            <dd key="dd">
+                                <a rel="nofollow" href={`mailto:${contactList[0].email}`}>{contactList[0].email}</a>
+                            </dd>
                         ]}
                     </dl>
                 </div>
