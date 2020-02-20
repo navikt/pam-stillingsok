@@ -9,17 +9,16 @@ const fetchLocations = async (type = "counties") => {
         const response = await fetch(url);
         return response.json();
     } catch (e) {
-        throw e;
+        return null;
     }
 };
 
 exports.fetchAndProcessLocations = async () => {
     let [municipals, counties] = await Promise.all([fetchLocations("municipals"), fetchLocations()]);
 
-    if ((typeof counties === 'object' && counties.status > 200) ||
-        typeof municipals === 'object' && municipals.status > 200) {
-        console.error('Location fetch failed!!!');
-        return [];
+    // Aduser is unresponsive
+    if (municipals === null || counties === null) {
+        return null;
     }
 
     const countyMap = {};

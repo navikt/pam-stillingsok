@@ -23,10 +23,20 @@ const instrumentation = require('./instrumentation').setup(server);
 
 const pageHitCounter = instrumentation.pageHitCounter();
 
-let locations = [];
+// Cache locations from adusers and reuse them
+let locationsFromAduser = null;
+let locationsFromFile = [];
+
 locationApiConsumer.fetchAndProcessLocations().then(res => {
-    locations = res;
+    if (res !== null) {
+        locationsFromAduser = res;
+    }
 });
+
+fs.readFile(__dirname + '/api/resources/locations.json', 'utf-8',
+    function (err, data) {
+        locationsFromFile = err ? [] : JSON.parse(data);
+    });
 
 server.disable('x-powered-by');
 server.use(compression());
@@ -114,8 +124,20 @@ const startServer = (htmlPages) => {
         express.static(path.resolve(rootDirectory, 'images'))
     );
 
+    // Give users fallback locations from local file if aduser is unresponsive
     server.get(`${fasitProperties.PAM_CONTEXT_PATH}/api/locations`, (req, res) => {
-        res.send(locations);
+        if (locationsFromAduser === null) {
+            locationApiConsumer.fetchAndProcessLocations().then(locationRes => {
+                if (locationRes === null) {
+                    res.send(locationsFromFile);
+                } else {
+                    locationsFromAduser = locationRes;
+                    res.send(locationsFromAduser);
+                }
+            });
+        } else {
+            res.send(locationsFromAduser);
+        }
     });
 
     server.get(`${fasitProperties.PAM_CONTEXT_PATH}/api/search`, async (req, res) => {
