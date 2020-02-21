@@ -109,25 +109,24 @@ export function mergeAndRemoveDuplicates(stillingerAlreadyInMemory, stillingerFr
  */
 function* initialSearch() {
     yield put({type: SEARCH_BEGIN});
-    let state = yield select();
+    const state = yield select();
     try {
         if (!state.search.initialSearchDone) {
             // Do all 3 required calls in one yield all
+            // First call is empty, to request all available search facets
             const calls = [
                 call(fetchSearch, {}),
                 call(fetchLocations)
             ];
 
             // Query search only if a query exists
-            state = yield select();
             const query = toApiSearchQuery(state.searchQuery);
             if (Object.keys(query).length > 0) {
                 calls.push(call(fetchSearch, query));
             }
 
             const [initialSearch, locations, querySearch] = yield all(calls);
-
-            if (typeof initialSearch === 'object') initialSearch['locations'] = locations;
+            initialSearch['locations'] = locations;
 
             yield put({type: FETCH_INITIAL_FACETS_SUCCESS, response: initialSearch});
             yield put({type: SEARCH_SUCCESS, response: querySearch !== undefined ? querySearch : initialSearch});
