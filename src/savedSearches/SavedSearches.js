@@ -17,7 +17,6 @@ import { authenticationEnum } from '../authentication/authenticationReducer';
 import { CONTEXT_PATH } from '../fasitProperties';
 import TotalSavedSearch from './totalSavedSearch/TotalSavedSearch';
 import { useDocumentTitle, useTrackPageview, useScrollToTop } from '../common/hooks';
-import CountyMunicipalInfoAlertStripe from "./alertstripe/CountyMunicipalInfoAlertStripe";
 
 const SavedSearches = ({
     isAuthenticated,
@@ -74,7 +73,6 @@ const SavedSearches = ({
                                                 <NoSavedSearches />
                                             ) : (
                                                 <React.Fragment>
-                                                    <CountyMunicipalInfoAlertStripe />
                                                     <TotalSavedSearch total={savedSearches.length} />
                                                     <SavedSearchList />
                                                 </React.Fragment>
