@@ -1,4 +1,4 @@
-import {call, put, select, takeLatest, throttle} from 'redux-saga/effects';
+import {call, put, select, takeLatest, throttle, all} from 'redux-saga/effects';
 import {fetchLocations, fetchSearch} from '../api/api';
 import SearchApiError from '../api/SearchApiError';
 import {RESTORE_STATE_FROM_SAVED_SEARCH} from '../savedSearches/savedSearchesReducer';
@@ -109,28 +109,27 @@ export function mergeAndRemoveDuplicates(stillingerAlreadyInMemory, stillingerFr
  */
 function* initialSearch() {
     yield put({type: SEARCH_BEGIN});
-    let state = yield select();
+    const state = yield select();
     try {
         if (!state.search.initialSearchDone) {
-            // For å få tak i alle tilgjengelige fasetter (yrke, område osv), så gjør vi først
-            // et søk uten noen søkekriterier. Dette vil returnere alle kjente fasettverdier på
-            // tverss av alle annonsene i backend. Vi henter også all geografi info fra server.
-            let searchRes = yield call(fetchSearch, {});
-            const locationRes = yield call(fetchLocations);
+            // Do all 3 required calls in one yield all
+            // First call is empty, to request all available search facets
+            const calls = [
+                call(fetchSearch, {}),
+                call(fetchLocations)
+            ];
 
-            if (typeof searchRes === 'object') searchRes['locations'] = locationRes;
-
-            yield put({type: FETCH_INITIAL_FACETS_SUCCESS, response: searchRes});
-
-            // Hvis bruker allerede har noen søkekriterier (f.eks fra en bokmerket lenke), så må vi
-            // foreta et nytt søk med disse kriteriene.
-            state = yield select();
+            // Query search only if a query exists
             const query = toApiSearchQuery(state.searchQuery);
             if (Object.keys(query).length > 0) {
-                searchRes = yield call(fetchSearch, query);
+                calls.push(call(fetchSearch, query));
             }
 
-            yield put({type: SEARCH_SUCCESS, response: searchRes});
+            const [initialSearch, locations, querySearch] = yield all(calls);
+            initialSearch['locations'] = locations;
+
+            yield put({type: FETCH_INITIAL_FACETS_SUCCESS, response: initialSearch});
+            yield put({type: SEARCH_SUCCESS, response: querySearch !== undefined ? querySearch : initialSearch});
         }
     } catch (e) {
         if (e instanceof SearchApiError) {
