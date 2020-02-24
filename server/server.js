@@ -23,9 +23,13 @@ const instrumentation = require('./instrumentation').setup(server);
 
 const pageHitCounter = instrumentation.pageHitCounter();
 
-let locations = [];
+// Cache locations from adusers and reuse them
+let cachedLocations = [];
+
 locationApiConsumer.fetchAndProcessLocations().then(res => {
-    locations = res;
+    if (res !== null) {
+        cachedLocations = res;
+    }
 });
 
 server.disable('x-powered-by');
@@ -114,8 +118,16 @@ const startServer = (htmlPages) => {
         express.static(path.resolve(rootDirectory, 'images'))
     );
 
-    server.get(`${fasitProperties.PAM_CONTEXT_PATH}/api/locations`, (req, res) => {
-        res.send(locations);
+    server.get(`${fasitProperties.PAM_CONTEXT_PATH}/api/locations`, async (req, res) => {
+        if (cachedLocations.length === 0) {
+            const locations = await locationApiConsumer.fetchAndProcessLocations();
+
+            if (locations !== null) {
+                cachedLocations = locations;
+            }
+        }
+
+        res.send(cachedLocations);
     });
 
     server.get(`${fasitProperties.PAM_CONTEXT_PATH}/api/search`, async (req, res) => {
