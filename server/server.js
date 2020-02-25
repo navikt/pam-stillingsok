@@ -24,13 +24,19 @@ const instrumentation = require('./instrumentation').setup(server);
 const pageHitCounter = instrumentation.pageHitCounter();
 
 // Cache locations from adusers and reuse them
-let cachedLocations = [];
+let locationsFromAduser = null;
+let locationsFromFile = [];
 
 locationApiConsumer.fetchAndProcessLocations().then(res => {
     if (res !== null) {
-        cachedLocations = res;
+        locationsFromAduser = res;
     }
 });
+
+fs.readFile(__dirname + '/api/resources/locations.json', 'utf-8',
+    function (err, data) {
+        locationsFromFile = err ? [] : JSON.parse(data);
+    });
 
 server.disable('x-powered-by');
 server.use(compression());
@@ -118,16 +124,20 @@ const startServer = (htmlPages) => {
         express.static(path.resolve(rootDirectory, 'images'))
     );
 
-    server.get(`${fasitProperties.PAM_CONTEXT_PATH}/api/locations`, async (req, res) => {
-        if (cachedLocations.length === 0) {
-            const locations = await locationApiConsumer.fetchAndProcessLocations();
-
-            if (locations !== null) {
-                cachedLocations = locations;
-            }
+    // Give users fallback locations from local file if aduser is unresponsive
+    server.get(`${fasitProperties.PAM_CONTEXT_PATH}/api/locations`, (req, res) => {
+        if (locationsFromAduser === null) {
+            locationApiConsumer.fetchAndProcessLocations().then(locationRes => {
+                if (locationRes === null) {
+                    res.send(locationsFromFile);
+                } else {
+                    locationsFromAduser = locationRes;
+                    res.send(locationsFromAduser);
+                }
+            });
+        } else {
+            res.send(locationsFromAduser);
         }
-
-        res.send(cachedLocations);
     });
 
     server.get(`${fasitProperties.PAM_CONTEXT_PATH}/api/search`, async (req, res) => {
