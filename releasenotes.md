@@ -1,3 +1,9 @@
+## RELEASE - 0.189.1064-1a30f1a
+#### New in this release: 
++ 2020-03-17 [FIx] Legger til menypunkter css tweak
++ 2020-03-17 [FIx] Legger til menypunkter css tweak
++ 2020-03-17 [FIx] Legger til menypunkter css tweak
++ 2020-03-17 [FIx] Legger til menypunkter css tweak
 ## RELEASE - 0.188.1058-c284b25
 #### New in this release: 
 + 2020-03-17 [FIx] Legger til menypunkter
