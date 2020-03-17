@@ -6,6 +6,7 @@ import { authenticationEnum, REDIRECT_TO_LOGIN } from '../authentication/authent
 import { LOGOUT_URL } from '../fasitProperties';
 import { COLLAPSE_ALL_FACET_PANELS, EXPAND_ALL_FACET_PANELS } from '../search/facets/facetPanelsReducer';
 import { isMobile } from '../utils';
+import './TopMenu.less';
 
 const TopMenu = ({ isAuthenticated, collapseAllFacetPanels, expandAllFacetPanels, redirectToLogin }) => {
     const login = (role) => {
@@ -53,7 +54,8 @@ const TopMenu = ({ isAuthenticated, collapseAllFacetPanels, expandAllFacetPanels
                 />
                 {authenticationStatus(isAuthenticated) !== AuthStatus.IS_AUTHENTICATED && (
                     <nav id="BedriftLinkHack-nav">
-                        <a href="/bedrift" className="link">For bedrifter</a>
+                        <a className="Header__tab" href="/stillinger">Ledige stillinger</a>
+                        <a className="Header__tab" href="/ledige-kandidater">Ledige kandidater</a>
                     </nav>
                 )}
             </div>

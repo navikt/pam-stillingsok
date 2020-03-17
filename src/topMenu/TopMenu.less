@@ -1,0 +1,24 @@
+@import (reference) "../variables";
+
+.Header__nav {
+  flex: 1;
+  padding: 0 2rem;
+
+  @media (max-width: @screen-sm-max) {
+    display: none;
+  }
+}
+
+.Header__tab {
+  font-family: "Source Sans Pro", Arial, sans-serif;
+  padding: 1rem;
+  margin: 0 0.5rem;
+  font-weight: 600;
+  text-decoration: none;
+  color: @blueDarken;
+  font-size: 1.125rem;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
