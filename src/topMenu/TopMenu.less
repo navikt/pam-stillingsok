@@ -11,14 +11,19 @@
 
 .Header__tab {
   font-family: "Source Sans Pro", Arial, sans-serif;
-  padding: 1rem;
-  margin: 0 0.5rem;
+  padding-bottom: 0.25rem;
+  margin: 0 1rem;
   font-weight: 600;
   text-decoration: none;
   color: @blueDarken;
   font-size: 1.125rem;
+  border-bottom: 3px solid transparent;
 
   &:hover {
-    text-decoration: underline;
+    border-color: @pink;
+  }
+
+  &--active {
+    border-color: @blueDarken;
   }
 }
