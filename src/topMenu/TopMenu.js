@@ -29,9 +29,7 @@ const TopMenu = ({ isAuthenticated, collapseAllFacetPanels, expandAllFacetPanels
 
     return (
         <div className="no-print">
-            <div
-                className={authenticationStatus(isAuthenticated) === AuthStatus.IS_AUTHENTICATED ? "BedriftLinkHack-wrapper--hidden" : "BedriftLinkHack-wrapper--shown"}
-            >
+            <div>
                 <Header
                     validerNavigasjon={{
                         redirectTillates: () => {
@@ -53,10 +51,16 @@ const TopMenu = ({ isAuthenticated, collapseAllFacetPanels, expandAllFacetPanels
                     showName
                 />
                 {authenticationStatus(isAuthenticated) !== AuthStatus.IS_AUTHENTICATED && (
-                    <nav id="BedriftLinkHack-nav">
-                        <a className="Header__tab Header__tab--active" href="/stillinger">Ledige stillinger</a>
-                        <a className="Header__tab" href="/ledige-kandidater">Ledige kandidater</a>
-                    </nav>
+                    <div className="Header__nav__wrapper">
+                        <nav className="Header__nav">
+                            <div className="Header__tab">
+                                <a className="Header__tab__link Header__tab__link--active" href="/stillinger">Ledige stillinger</a>
+                            </div>
+                            <div className="Header__tab">
+                                <a className="Header__tab__link" href="/ledige-kandidater">Ledige kandidater</a>
+                            </div>
+                        </nav>
+                    </div>
                 )}
             </div>
         </div>
