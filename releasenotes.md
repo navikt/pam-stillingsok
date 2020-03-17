@@ -1,3 +1,6 @@
+## RELEASE - 0.188.1058-c284b25
+#### New in this release: 
++ 2020-03-17 [FIx] Legger til menypunkter
 ## RELEASE - 0.175.1013-e36faa4
 #### New in this release: 
 + 2020-01-22 [Fix] Fjerner hotjar feedbacklenke
