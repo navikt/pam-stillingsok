@@ -54,7 +54,7 @@ const TopMenu = ({ isAuthenticated, collapseAllFacetPanels, expandAllFacetPanels
                 />
                 {authenticationStatus(isAuthenticated) !== AuthStatus.IS_AUTHENTICATED && (
                     <nav id="BedriftLinkHack-nav">
-                        <a className="Header__tab" href="/stillinger">Ledige stillinger</a>
+                        <a className="Header__tab Header__tab--active" href="/stillinger">Ledige stillinger</a>
                         <a className="Header__tab" href="/ledige-kandidater">Ledige kandidater</a>
                     </nav>
                 )}
