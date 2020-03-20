@@ -106,6 +106,6 @@ export async function fetchCategoryAndSearchTagsSuggestions(match, minLength) {
     };
 }
 
-export async function fetchStilling(uuid) {
-    return get(`${CONTEXT_PATH}/api/stilling/${uuid}`);
+export async function fetchStilling(uuid, query="") {
+    return get(`${CONTEXT_PATH}/api/stilling/${uuid}${query}`);
 }

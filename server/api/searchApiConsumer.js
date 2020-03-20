@@ -3,6 +3,7 @@ const { searchTemplate, suggestionsTemplate } = require('./searchApiTemplates');
 
 const host = process.env.PAMSEARCHAPI_URL ? process.env.PAMSEARCHAPI_URL : 'http://pam-search-api';
 const url = `${host}/stillingsok/ad/_search`;
+const intSearchHost = process.env.PAM_INTERNAL_SEARCH_API_URL ? process.env.PAM_INTERNAL_SEARCH_API_URL : 'http://pam-internal-search-api';
 
 /* eslint no-console: 0 */
 
@@ -47,7 +48,7 @@ exports.suggestions = async (query = {}) => {
     return rp(options);
 };
 
-exports.fetchStilling = async (uuid) => {
+exports.fetchStilling = async (uuid, query = {}) => {
     const excludes = [
         'administration',
         'categoryList',
@@ -85,12 +86,12 @@ exports.fetchStilling = async (uuid) => {
         'updatedBy',
         'uuid'
     ].join(',');
-
-    const path = `/stillingsok/ad/ad/${uuid}?_source_exclude=${excludes}`;
+    const stillingUrl = query.internal ? `${intSearchHost}/stillingsok/ad/${uuid}?_source_excludes=${excludes}` :
+            `${host}/stillingsok/ad/ad/${uuid}?_source_excludes=${excludes}`;
     const options = {
         method: 'GET',
         json: true,
-        url: `${host}${path}`
+        url: `${stillingUrl}`
     };
 
     return rp(options);

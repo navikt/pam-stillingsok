@@ -188,7 +188,7 @@ const startServer = (htmlPages) => {
     });
 
     server.get(`${fasitProperties.PAM_CONTEXT_PATH}/api/stilling/:uuid`, async (req, res) => {
-        searchApiConsumer.fetchStilling(req.params.uuid)
+        searchApiConsumer.fetchStilling(req.params.uuid, req.query)
             .catch((err) => {
                 console.warn('Failed to fetch stilling with uuid', req.params.uuid);
                 res.status(err.statusCode ? err.statusCode : 502);
@@ -208,7 +208,7 @@ const startServer = (htmlPages) => {
     server.get(
         ['/stillinger/stilling/:uuid'],
         (req, res) => {
-            searchApiConsumer.fetchStilling(req.params.uuid)
+            searchApiConsumer.fetchStilling(req.params.uuid,req.query)
                 .catch((err) => {
                     res.send(htmlPages.sok);
                 })
