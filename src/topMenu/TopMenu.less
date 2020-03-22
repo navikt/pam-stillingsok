@@ -1,56 +1,74 @@
 @import (reference) "../variables";
 
-.Header__wrapper {
-  border-bottom: 0!important; //from pam-frontend
-}
+.TopMenu--uinnlogget {
+  background: #e2f5f2 !important;
 
-.Header__nav__wrapper {
-  border-bottom: 1px solid @green;
-}
+  .Header__wrapper {
+    background: transparent !important;
+    border-bottom: 0 !important;
+    padding: 0 0 4px 0!important;
 
-.Header__nav {
-  max-width: 1156px;
-  margin: 0 auto;
-  padding: 0 0.25rem;
-  display: flex;
-
-  @media (min-width: @screen-sm-min) {
-    padding: 0 1rem;
-  }
-}
-
-.Header__tab {
-  padding: 0 0.75rem;
-  margin-right: 0.5rem;
-
-  @media (min-width: @screen-sm-min) {
-    margin-right: 1rem;
-  }
-}
-
-.Header__tab__link {
-  display: inline-block;
-  font-family: "Source Sans Pro", Arial, sans-serif;
-  padding: 0.5rem 2px;
-  font-weight: 600;
-  text-decoration: none;
-  color: @blueDarken;
-  border-bottom: 8px solid transparent;
-  text-transform: uppercase;
-
-  @media (max-width: 320px) {
-    text-transform: none;
-    font-size: 90%;
+    @media (min-width: @screen-sm-min) {
+      padding: 1.55rem 1rem 0.25rem 1rem !important;
+    }
   }
 
-  @media (min-width: @screen-sm-min) {
+  .Header {
+    max-width: 1160px!important;
+    margin: auto!important;
+    padding: 0!important;
+
+    @media (min-width: @screen-md-min) {
+      padding: 0 1rem!important;
+    }
   }
 
-  &:hover {
-    border-color: @green;
+
+  .Header__topp {
+    padding-bottom: 0 !important;
   }
 
-  &--active {
-    border-color: @green;
+  .Header__nav__wrapper {
+    background: #e2f5f2;
+  }
+
+  .Header__nav {
+    font-family: "Source Sans Pro", Arial, sans-serif;
+    max-width: 1156px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+  }
+
+  .Header__tab {
+    display: inline-block;
+    padding: 1rem 1.25rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: @blueDarken;
+    line-height: 1.33;
+
+    border-top: 4px solid transparent;
+    border-bottom: 2px solid @green;
+
+    &--active {
+      border-top-color: @green;
+      border-bottom-color: transparent;
+      background: #fff;
+    }
+
+    @media (max-width: 320px) {
+      text-transform: none;
+      font-size: 90%;
+    }
+
+    &:hover {
+      background: @greenLighten;
+    }
+
+    &:focus {
+      outline: 3px solid @orangeFocus;
+      z-index: 1;
+    }
   }
 }

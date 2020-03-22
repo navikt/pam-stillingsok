@@ -1,5 +1,6 @@
 import { AuthStatus, Header, PersonbrukerApplikasjon } from 'pam-frontend-header';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import React from 'react';
 import { connect } from 'react-redux';
 import { authenticationEnum, REDIRECT_TO_LOGIN } from '../authentication/authenticationReducer';
@@ -29,7 +30,7 @@ const TopMenu = ({ isAuthenticated, collapseAllFacetPanels, expandAllFacetPanels
 
     return (
         <div className="no-print">
-            <div>
+            <div className={classNames("TopMenu", {"TopMenu--uinnlogget": authenticationStatus(isAuthenticated) !== AuthStatus.IS_AUTHENTICATED}) }>
                 <Header
                     validerNavigasjon={{
                         redirectTillates: () => {
@@ -53,12 +54,8 @@ const TopMenu = ({ isAuthenticated, collapseAllFacetPanels, expandAllFacetPanels
                 {authenticationStatus(isAuthenticated) !== AuthStatus.IS_AUTHENTICATED && (
                     <div className="Header__nav__wrapper">
                         <nav className="Header__nav">
-                            <div className="Header__tab">
-                                <a className="Header__tab__link Header__tab__link--active" href="/stillinger">Ledige stillinger</a>
-                            </div>
-                            <div className="Header__tab">
-                                <a className="Header__tab__link" href="/ledige-kandidater">Ledige kandidater</a>
-                            </div>
+                            <a className="Header__tab Header__tab--active" href="/stillinger">Ledige stillinger</a>
+                            <a className="Header__tab" href="/ledige-kandidater">Ledige kandidater</a>
                         </nav>
                     </div>
                 )}

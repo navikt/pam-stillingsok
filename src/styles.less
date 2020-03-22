@@ -60,6 +60,26 @@ body {
   .skjemaelement--pink();
 }
 
+.TjenesteLevertAvNav {
+  font-family: "Source Sans Pro", Arial, sans-serif;
+  background: @blueDarken;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 1rem 0.7rem;
+  color: #fff;
+  font-style: italic;
+  line-height: 1.33;
+}
+
+.TjenesteLevertAvNav__icon {
+  margin-left: 2px;
+
+  &:focus {
+    outline: 3px solid @orangeFocus;
+  }
+}
+
 #app, .Application {
   height: 100%;
 }
