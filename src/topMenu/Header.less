@@ -1,0 +1,110 @@
+@import (reference) "../variables";
+
+#UinnloggetHeader {
+  font-family: "Source Sans Pro", Arial, sans-serif;
+
+  &--hidden {
+    display: none;
+  }
+}
+
+.UinnloggetHeader--hidden {
+    display: none;
+}
+
+.Header__levert-av {
+  background: @blueDarken;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 1rem 0.7rem;
+  color: #fff;
+  font-style: italic;
+  line-height: 1.33;
+}
+
+.Header__nav-icon {
+  margin-left: 2px;
+
+  &:focus {
+    outline: 3px solid @orangeFocus;
+  }
+}
+
+.Header__green {
+  background: lighten(@green, 42%);
+}
+
+.Header__menu {
+  max-width: 1160px;
+  margin: auto;
+  padding: 1rem 1rem;
+
+  @media (min-width: @screen-sm-min) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    padding: 2.55rem 1rem 0.25rem 1rem;
+  }
+
+  svg {
+    width: 190px;
+    height: 40px;
+  }
+}
+
+.Header__arbeidsplassen-logo {
+  display: inline-block;
+  height: 40px;
+
+  &:focus {
+    outline: 3px solid @orangeFocus;
+  }
+}
+
+.Header__tabs {
+  max-width: 1156px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+
+  @media (min-width: @screen-sm-min) {
+    padding: 0 1rem;
+  }
+}
+
+.Header__tab   {
+  display: inline-block;
+  padding: 1rem 1.25rem;
+  font-weight: 600;
+  text-decoration: none;
+  color: @blueDarken;
+  line-height: 1.33;
+
+  border-top: 4px solid transparent;
+  border-bottom: 2px solid @green;
+
+  &--active {
+    border-top-color: @green;
+    border-bottom-color: transparent;
+    background: #fff;
+  }
+
+  @media (max-width: 320px) {
+    text-transform: none;
+    font-size: 90%;
+  }
+
+  &:hover {
+    background: @greenLighten;
+  }
+
+  &:focus {
+    outline: 3px solid @orangeFocus;
+    z-index: 1;
+  }
+}
+
+
+
