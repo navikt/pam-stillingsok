@@ -137,6 +137,14 @@ export function* redirectToLogin(action) {
                 uuid: path.split(`${CONTEXT_PATH}/stilling/`)[1]
             };
             redirectUrl = `${STILLINGSOK_URL}/stilling`;
+        } else if (path.startsWith(`${CONTEXT_PATH}/intern/`)) {
+            // 'intern/:uuid' er ikke en whitelisted url, så vi må mappe om til /intern?uuid=<uuid>
+            // Dette blir mappet tilbake av InternalStilling-siden, når man returnerer fra login
+            redirectQuery = {
+                ...redirectQuery,
+                uuid: path.split(`${CONTEXT_PATH}/intern/`)[1]
+            };
+            redirectUrl = `${STILLINGSOK_URL}/stilling`;
         } else if (path.startsWith(`${CONTEXT_PATH}/lagrede-sok`)) {
             redirectQuery = {
                 ...redirectQuery,

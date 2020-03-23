@@ -13,6 +13,7 @@ import Favourites from './favourites/Favourites';
 import SavedSearches from './savedSearches/SavedSearches';
 import SearchPage from './search/Search';
 import StillingPage from './stilling/Stilling';
+import InternalStilling from './stilling/InternalStilling';
 import TermsOfUse from './user/TermsOfUse';
 import UserAlertStripe from './user/UserAlertStripe';
 
@@ -36,6 +37,7 @@ class Application extends React.Component {
                                 <Route exact path={CONTEXT_PATH} component={SearchPage}/>
                                 <Route exact path={`${CONTEXT_PATH}/stilling`} component={StillingPage} />
                                 <Route path={`${CONTEXT_PATH}/stilling/:uuid`} component={StillingPage} />
+                                <Route path={`${CONTEXT_PATH}/intern/:uuid`} component={InternalStilling} />
                                 <Route path={`${CONTEXT_PATH}/favoritter`} component={Favourites} />
                                 <Route path={`${CONTEXT_PATH}/lagrede-sok`} component={SavedSearches} />
                                 <Route path="*" component={SearchPage}/>

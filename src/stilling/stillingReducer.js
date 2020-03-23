@@ -56,7 +56,6 @@ export default function stillingReducer(state = initialState, action) {
 
 function* getStilling(action) {
     try {
-        const query = location.search
         const state = yield select();
         const found = state.search.searchResult && state.search.searchResult.stillinger ?
             state.search.searchResult.stillinger.find((stilling) => (
@@ -66,7 +65,7 @@ function* getStilling(action) {
         if (found) {
             yield put({ type: FOUND_CACHED_STILLING, found });
         }
-        const response = yield call(fetchStilling, action.uuid, query);
+        const response = yield call(fetchStilling, action.uuid);
         yield put({ type: FETCH_STILLING_SUCCESS, response });
     } catch (e) {
         if (e instanceof SearchApiError) {
