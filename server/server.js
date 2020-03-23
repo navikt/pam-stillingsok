@@ -258,9 +258,7 @@ const startServer = (htmlPages) => {
         }
     });
 
-    server.get(
-        ['/stillinger/intern/:uuid'],
-        (req, res) => {
+    server.get('/stillinger/intern/:uuid', (req, res) => {
             searchApiConsumer.fetchInternStilling(req.params.uuid)
                 .catch((err) => {
                     res.send(htmlPages.sok);
