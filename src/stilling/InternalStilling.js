@@ -29,7 +29,7 @@ import { FETCH_INTERAL_STILLING_BEGIN, RESET_INTERAL_STILLING } from './internal
 
 const InternalStilling = ({
     error,
-    getStilling,
+    getInternalStilling,
     isFetchingStilling,
     match,
     stilling,
@@ -43,10 +43,10 @@ const InternalStilling = ({
             uuid = parseQueryString(document.location.search).uuid;
             if (uuid) {
                 window.history.replaceState({}, '', `${CONTEXT_PATH}/intern/${uuid}`);
-                getStilling(uuid);
+                getInternalStilling(uuid);
             }
         } else {
-            getStilling(uuid);
+            getInternalStilling(uuid);
         }
         return () => {
             resetStilling();
@@ -194,7 +194,7 @@ InternalStilling.propTypes = {
         })
     }),
     resetStilling: PropTypes.func.isRequired,
-    getStilling: PropTypes.func.isRequired,
+    getInternalStilling: PropTypes.func.isRequired,
     isFetchingStilling: PropTypes.bool,
     error: PropTypes.shape({
         statusCode: PropTypes.number
@@ -213,7 +213,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    getStilling: (uuid) => dispatch({ type: FETCH_INTERAL_STILLING_BEGIN, uuid }),
+    getInternalStilling: (uuid) => dispatch({ type: FETCH_INTERAL_STILLING_BEGIN, uuid }),
     resetStilling: () => dispatch({ type: RESET_INTERAL_STILLING })
 });
 
