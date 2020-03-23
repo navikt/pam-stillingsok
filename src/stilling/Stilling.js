@@ -30,6 +30,7 @@ import './Stilling.less';
 import { FETCH_STILLING_BEGIN, RESET_STILLING } from './stillingReducer';
 import { useTrackPageview, useScrollToTop } from '../common/hooks';
 import {sendUrlEndring} from "../common/hooks/useTrackPageview";
+import { addRobotsNoIndexMetaTag, removeRobotsMetaTag } from '../common/utils/metaRobots';
 
 const Stilling = ({
     cachedStilling,
@@ -56,11 +57,7 @@ const Stilling = ({
         }
         return () => {
             resetStilling();
-
-            let metaRobots = document.querySelector('meta[name=robots]');
-            if (metaRobots) {
-                document.querySelector('head').removeChild(metaRobots);
-            }
+            removeRobotsMetaTag();
         }
     }, []);
 
@@ -75,17 +72,7 @@ const Stilling = ({
         const pageNotFound = error && error.statusCode === 404;
         const adIsNotActive = !isFetchingStilling && stilling && stilling._source.status !== 'ACTIVE';
         if (pageNotFound || adIsNotActive) {
-            const content = 'noindex';
-            let metaRobots = document.querySelector('meta[name=robots]');
-
-            if (!metaRobots) {
-                metaRobots = document.createElement('meta');
-                metaRobots.setAttribute('name', 'robots');
-                metaRobots.setAttribute('content', content);
-                document.querySelector('head').appendChild(metaRobots);
-            } else {
-                metaRobots.setAttribute('content', content);
-            }
+            addRobotsNoIndexMetaTag()
         }
     }, [error, isFetchingStilling, stilling]);
 

@@ -26,6 +26,7 @@ import SoftRequirements from './requirements/SoftRequirements';
 import './Stilling.less';
 import { useScrollToTop } from '../common/hooks';
 import { FETCH_INTERAL_STILLING_BEGIN, RESET_INTERAL_STILLING } from './internalStillingReducer';
+import { addRobotsNoIndexMetaTag, removeRobotsMetaTag } from '../common/utils/metaRobots';
 
 const InternalStilling = ({
     error,
@@ -50,11 +51,7 @@ const InternalStilling = ({
         }
         return () => {
             resetStilling();
-
-            let metaRobots = document.querySelector('meta[name=robots]');
-            if (metaRobots) {
-                document.querySelector('head').removeChild(metaRobots);
-            }
+            removeRobotsMetaTag();
         }
     }, []);
 
@@ -65,17 +62,7 @@ const InternalStilling = ({
     }, [stilling]);
 
     useEffect(() => {
-        const content = 'noindex';
-        let metaRobots = document.querySelector('meta[name=robots]');
-
-        if (!metaRobots) {
-            metaRobots = document.createElement('meta');
-            metaRobots.setAttribute('name', 'robots');
-            metaRobots.setAttribute('content', content);
-            document.querySelector('head').appendChild(metaRobots);
-        } else {
-            metaRobots.setAttribute('content', content);
-        }
+        addRobotsNoIndexMetaTag();
     }, [error, isFetchingStilling, stilling]);
 
 
