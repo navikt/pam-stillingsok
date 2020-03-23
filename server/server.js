@@ -236,10 +236,23 @@ const startServer = (htmlPages) => {
      * Redirect-url fra loginservice vil inneholde uuid som url paramteter (/stillinger/stilling?uuid=12345).
      * Må derfor redirecte til /stillinger/stilling/:uuid
      */
-    server.get(['/stillinger/stilling', '/stillinger/internal'], (req, res) => {
+    server.get('/stillinger/stilling', (req, res) => {
         const uuid = req.query.uuid;
         if (uuid) {
             res.redirect(`${fasitProperties.PAM_CONTEXT_PATH}/stilling/${uuid}`);
+        } else {
+            res.send(htmlPages.sok);
+        }
+    });
+
+    /**
+     * Redirect-url fra loginservice vil inneholde uuid som url paramteter (/stillinger/intern?uuid=12345).
+     * Må derfor redirecte til /stillinger/intern/:uuid
+     */
+    server.get( '/stillinger/intern', (req, res) => {
+        const uuid = req.query.uuid;
+        if (uuid) {
+            res.redirect(`${fasitProperties.PAM_CONTEXT_PATH}/intern/${uuid}`);
         } else {
             res.send(htmlPages.sok);
         }
