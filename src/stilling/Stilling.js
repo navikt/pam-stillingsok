@@ -45,16 +45,8 @@ const Stilling = ({
     useScrollToTop();
 
     useEffect(() => {
-        let uuid = match.params.uuid;
-        if (!uuid) {
-            uuid = parseQueryString(document.location.search).uuid;
-            if (uuid) {
-                window.history.replaceState({}, '', `${CONTEXT_PATH}/stilling/${uuid}`);
-                getStilling(uuid);
-            }
-        } else {
-            getStilling(uuid);
-        }
+        getStilling(match.params.uuid);
+
         return () => {
             resetStilling();
             removeRobotsMetaTag();

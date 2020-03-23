@@ -40,17 +40,8 @@ const InternalStilling = ({
 
     useEffect(() => {
         addRobotsNoIndexMetaTag();
+        getInternalStilling(match.params.uuid);
 
-        let uuid = match.params.uuid;
-        if (!uuid) {
-            uuid = parseQueryString(document.location.search).uuid;
-            if (uuid) {
-                window.history.replaceState({}, '', `${CONTEXT_PATH}/intern/${uuid}`);
-                getInternalStilling(uuid);
-            }
-        } else {
-            getInternalStilling(uuid);
-        }
         return () => {
             resetStilling();
             removeRobotsMetaTag();

@@ -214,25 +214,36 @@ const startServer = (htmlPages) => {
         res.redirect(`${url}`)
     })
 
-    server.get(
-        ['/stillinger/stilling/:uuid'],
-        (req, res) => {
-            searchApiConsumer.fetchStilling(req.params.uuid)
-                .catch((err) => {
+    server.get(['/stillinger/stilling/:uuid'], (req, res) => {
+        searchApiConsumer.fetchStilling(req.params.uuid)
+            .catch((err) => {
+                res.send(htmlPages.sok);
+            })
+            .then((data) => {
+                try {
+                    res.render('index', {
+                        title: htmlMeta.getStillingTitle(data._source),
+                        description: htmlMeta.getStillingDescription(data._source)
+                    });
+                } catch (err) {
                     res.send(htmlPages.sok);
-                })
-                .then((data) => {
-                    try {
-                        res.render('index', {
-                            title: htmlMeta.getStillingTitle(data._source),
-                            description: htmlMeta.getStillingDescription(data._source)
-                        });
-                    } catch (err) {
-                        res.send(htmlPages.sok);
-                    }
-                });
+                }
+            });
         }
     );
+
+    /**
+     * Redirect-url fra loginservice vil inneholde uuid som url paramteter (/stillinger/stilling?uuid=12345).
+     * Må derfor redirecte til /stillinger/stilling/:uuid
+     */
+    server.get(['/stillinger/stilling', '/stillinger/internal'], (req, res) => {
+        const uuid = req.query.uuid;
+        if (uuid) {
+            res.redirect(`${fasitProperties.PAM_CONTEXT_PATH}/stilling/${uuid}`);
+        } else {
+            res.send(htmlPages.sok);
+        }
+    });
 
     server.get(
         ['/stillinger/intern/:uuid'],
