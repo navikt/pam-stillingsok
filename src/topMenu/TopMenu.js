@@ -1,6 +1,5 @@
 import { AuthStatus, Header, PersonbrukerApplikasjon } from 'pam-frontend-header';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
@@ -8,10 +7,8 @@ import { authenticationEnum, REDIRECT_TO_LOGIN } from '../authentication/authent
 import { LOGOUT_URL } from '../fasitProperties';
 import { COLLAPSE_ALL_FACET_PANELS, EXPAND_ALL_FACET_PANELS } from '../search/facets/facetPanelsReducer';
 import { isMobile } from '../utils';
-import './Header.less';
-import './TopMenu.less';
-import './Login.less';
-import LoginLogout from './LoginLogout';
+import LoginButton from './LoginButton';
+import './UinnloggetHeader.less';
 
 const uinnloggetHeader = document.getElementById('UinnloggetHeader');
 
@@ -39,36 +36,33 @@ const TopMenu = ({ isAuthenticated, collapseAllFacetPanels, expandAllFacetPanels
 
         return (
             <div className="no-print">
-                <div
-                    className={classNames("TopMenu", { "TopMenu--usinnlogget": authenticationStatus(isAuthenticated) !== AuthStatus.IS_AUTHENTICATED })}>
-                    <Header
-                        validerNavigasjon={{
-                            redirectTillates: () => {
-                                // Reset state of facet panel (closed if on mobile) and return true to complete the redirect
-                                if (isMobile()) {
-                                    collapseAllFacetPanels();
-                                } else {
-                                    expandAllFacetPanels();
-                                }
-                                return true;
+                <Header
+                    validerNavigasjon={{
+                        redirectTillates: () => {
+                            // Reset state of facet panel (closed if on mobile) and return true to complete the redirect
+                            if (isMobile()) {
+                                collapseAllFacetPanels();
+                            } else {
+                                expandAllFacetPanels();
                             }
-                        }}
-                        onLoginClick={login}
-                        onLogoutClick={logout}
-                        useMenu="personbruker"
-                        authenticationStatus={authenticationStatus(isAuthenticated)}
-                        applikasjon={PersonbrukerApplikasjon.STILLINGSSOK}
-                        visInnstillinger
-                        showName
-                    />
-                </div>
+                            return true;
+                        }
+                    }}
+                    onLoginClick={login}
+                    onLogoutClick={logout}
+                    useMenu="personbruker"
+                    authenticationStatus={authenticationStatus(isAuthenticated)}
+                    applikasjon={PersonbrukerApplikasjon.STILLINGSSOK}
+                    visInnstillinger
+                    showName
+                />
             </div>
         );
     } else if (authenticationStatus(isAuthenticated) === AuthStatus.NOT_AUTHENTICATED) {
         return (
             ReactDOM.createPortal(
-                <div><LoginLogout /></div>,
-                document.getElementById('LoginLogout-wrapper')
+                <LoginButton redirectToLogin={login}/>,
+                document.getElementById('LoginButton__placeholder')
             )
         );
     }
