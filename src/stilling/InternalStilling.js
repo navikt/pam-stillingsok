@@ -39,6 +39,8 @@ const InternalStilling = ({
     useScrollToTop();
 
     useEffect(() => {
+        addRobotsNoIndexMetaTag();
+
         let uuid = match.params.uuid;
         if (!uuid) {
             uuid = parseQueryString(document.location.search).uuid;
@@ -60,11 +62,6 @@ const InternalStilling = ({
             document.title = stilling._source.title;
         }
     }, [stilling]);
-
-    useEffect(() => {
-        addRobotsNoIndexMetaTag();
-    }, [error, isFetchingStilling, stilling]);
-
 
     const onPrintClick = () => {
         window.print();
