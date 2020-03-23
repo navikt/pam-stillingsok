@@ -131,10 +131,18 @@ export function* redirectToLogin(action) {
 
         if (path.startsWith(`${CONTEXT_PATH}/stilling/`)) {
             // 'stilling/:uuid' er ikke en whitelisted url, så vi må mappe om til /stilling?uuid=<uuid>
-            // Dette blir mappet tilbake av Stilling-siden, når man returnerer fra login
+            // Man blir redirectet til rett url igjen i server.js
             redirectQuery = {
                 ...redirectQuery,
                 uuid: path.split(`${CONTEXT_PATH}/stilling/`)[1]
+            };
+            redirectUrl = `${STILLINGSOK_URL}/stilling`;
+        } else if (path.startsWith(`${CONTEXT_PATH}/intern/`)) {
+            // 'intern/:uuid' er ikke en whitelisted url, så vi må mappe om til /intern?uuid=<uuid>
+            // Man blir redirectet til rett url igjen i server.js
+            redirectQuery = {
+                ...redirectQuery,
+                uuid: path.split(`${CONTEXT_PATH}/intern/`)[1]
             };
             redirectUrl = `${STILLINGSOK_URL}/stilling`;
         } else if (path.startsWith(`${CONTEXT_PATH}/lagrede-sok`)) {

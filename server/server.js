@@ -196,6 +196,15 @@ const startServer = (htmlPages) => {
             .then((val) => res.send(val));
     });
 
+    server.get(`${fasitProperties.PAM_CONTEXT_PATH}/api/intern/:uuid`, async (req, res) => {
+        searchApiConsumer.fetchInternStilling(req.params.uuid)
+            .catch((err) => {
+                console.warn('Failed to fetch stilling with uuid', req.params.uuid);
+                res.status(err.statusCode ? err.statusCode : 502);
+            })
+            .then((val) => res.send(val));
+    });
+
     server.get('/', (req, res) => {
         res.redirect(`${fasitProperties.PAM_CONTEXT_PATH}`)
     });
@@ -205,10 +214,52 @@ const startServer = (htmlPages) => {
         res.redirect(`${url}`)
     })
 
-    server.get(
-        ['/stillinger/stilling/:uuid'],
-        (req, res) => {
-            searchApiConsumer.fetchStilling(req.params.uuid)
+    server.get(['/stillinger/stilling/:uuid'], (req, res) => {
+        searchApiConsumer.fetchStilling(req.params.uuid)
+            .catch((err) => {
+                res.send(htmlPages.sok);
+            })
+            .then((data) => {
+                try {
+                    res.render('index', {
+                        title: htmlMeta.getStillingTitle(data._source),
+                        description: htmlMeta.getStillingDescription(data._source)
+                    });
+                } catch (err) {
+                    res.send(htmlPages.sok);
+                }
+            });
+        }
+    );
+
+    /**
+     * Redirect-url fra loginservice vil inneholde uuid som url paramteter (/stillinger/stilling?uuid=12345).
+     * Må derfor redirecte til /stillinger/stilling/:uuid
+     */
+    server.get('/stillinger/stilling', (req, res) => {
+        const uuid = req.query.uuid;
+        if (uuid) {
+            res.redirect(`${fasitProperties.PAM_CONTEXT_PATH}/stilling/${uuid}`);
+        } else {
+            res.redirect(`${fasitProperties.PAM_CONTEXT_PATH}`)
+        }
+    });
+
+    /**
+     * Redirect-url fra loginservice vil inneholde uuid som url paramteter (/stillinger/intern?uuid=12345).
+     * Må derfor redirecte til /stillinger/intern/:uuid
+     */
+    server.get( '/stillinger/intern', (req, res) => {
+        const uuid = req.query.uuid;
+        if (uuid) {
+            res.redirect(`${fasitProperties.PAM_CONTEXT_PATH}/intern/${uuid}`);
+        } else {
+            res.redirect(`${fasitProperties.PAM_CONTEXT_PATH}`)
+        }
+    });
+
+    server.get('/stillinger/intern/:uuid', (req, res) => {
+            searchApiConsumer.fetchInternStilling(req.params.uuid)
                 .catch((err) => {
                     res.send(htmlPages.sok);
                 })

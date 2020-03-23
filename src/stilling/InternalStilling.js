@@ -1,15 +1,13 @@
 /* eslint-disable no-underscore-dangle,prefer-destructuring */
 import { Column, Container, Row } from 'nav-frontend-grid';
 import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Flatknapp } from 'pam-frontend-knapper';
 import BackLink from '../backLink/BackLink';
 import getEmployer from '../../server/common/getEmployer';
 import getWorkLocation from '../../server/common/getWorkLocation';
 import { CONTEXT_PATH } from '../fasitProperties';
-import FavouriteAlertStripe from '../favourites/alertstripe/FavouriteAlertStripe';
-import ToggleFavouriteButton from '../favourites/toggleFavoriteButton/ToggleFavouriteButton';
 import { parseQueryString } from '../utils';
 import AdDetails from './adDetails/AdDetails';
 import AdText from './adText/AdText';
@@ -25,27 +23,24 @@ import NotFound from './notFound/NotFound';
 import HardRequirements from './requirements/HardRequirements';
 import PersonalAttributes from './requirements/PersonalAttributes';
 import SoftRequirements from './requirements/SoftRequirements';
-import SocialShare from './socialShare/SocialShare';
 import './Stilling.less';
-import { FETCH_STILLING_BEGIN, RESET_STILLING } from './stillingReducer';
-import { useTrackPageview, useScrollToTop } from '../common/hooks';
-import {sendUrlEndring} from "../common/hooks/useTrackPageview";
+import { useScrollToTop } from '../common/hooks';
+import { FETCH_INTERAL_STILLING_BEGIN, RESET_INTERAL_STILLING } from './internalStillingReducer';
 import { addRobotsNoIndexMetaTag, removeRobotsMetaTag } from '../common/utils/metaRobots';
 
-const Stilling = ({
-    cachedStilling,
+const InternalStilling = ({
     error,
-    getStilling,
+    getInternalStilling,
     isFetchingStilling,
     match,
     stilling,
     resetStilling
 }) => {
-    useTrackPageview(`${CONTEXT_PATH}/stilling`, 'Stilling');
     useScrollToTop();
 
     useEffect(() => {
-        getStilling(match.params.uuid);
+        addRobotsNoIndexMetaTag();
+        getInternalStilling(match.params.uuid);
 
         return () => {
             resetStilling();
@@ -56,18 +51,8 @@ const Stilling = ({
     useEffect(() => {
         if (stilling && stilling._source && stilling._source.title) {
             document.title = stilling._source.title;
-            sendUrlEndring({ page: `${CONTEXT_PATH}/stilling`, source:stilling._source.source });
         }
     }, [stilling]);
-
-    useEffect(() => {
-        const pageNotFound = error && error.statusCode === 404;
-        const adIsNotActive = !isFetchingStilling && stilling && stilling._source.status !== 'ACTIVE';
-        if (pageNotFound || adIsNotActive) {
-            addRobotsNoIndexMetaTag()
-        }
-    }, [error, isFetchingStilling, stilling]);
-
 
     const onPrintClick = () => {
         window.print();
@@ -75,7 +60,6 @@ const Stilling = ({
 
     return (
         <React.Fragment>
-            <FavouriteAlertStripe />
             {error && error.statusCode === 404 && (
                 <Container>
                     <NotFound />
@@ -89,12 +73,6 @@ const Stilling = ({
                                 <div className="Stilling__header__button-row">
                                     <BackLink />
                                     <div className="Stilling__header__favourite">
-                                        {isFetchingStilling && cachedStilling && (
-                                            <ToggleFavouriteButton uuid={cachedStilling.uuid} />
-                                        )}
-                                        {!isFetchingStilling && stilling && (
-                                            <ToggleFavouriteButton uuid={stilling._id} />
-                                        )}
                                         <Flatknapp
                                             mini
                                             className="StillingSubMenu__print"
@@ -109,16 +87,6 @@ const Stilling = ({
                                 <Column xs="12" md="8">
                                     {!isFetchingStilling && stilling && stilling._source.status !== 'ACTIVE' && (
                                         <Expired />
-                                    )}
-                                    {isFetchingStilling && cachedStilling && (
-                                        <AdTitle
-                                            title={cachedStilling.title}
-                                            employer={getEmployer(cachedStilling)}
-                                            location={getWorkLocation(
-                                                cachedStilling.properties.location,
-                                                cachedStilling.locationList
-                                            )}
-                                        />
                                     )}
                                     {!isFetchingStilling && stilling && (
                                         <AdTitle
@@ -162,7 +130,6 @@ const Stilling = ({
                                         <HardRequirements stilling={stilling} />
                                         <SoftRequirements stilling={stilling} />
                                         <PersonalAttributes stilling={stilling} />
-                                        <SocialShare title={stilling._source.title} />
                                     </Column>
                                     <Column xs="12" md="5" className="Stilling__main__aside">
                                         <HowToApply
@@ -184,15 +151,14 @@ const Stilling = ({
     );
 };
 
-Stilling.defaultProps = {
+InternalStilling.defaultProps = {
     stilling: undefined,
-    cachedStilling: undefined,
     isFetchingStilling: false,
     error: undefined,
     match: { params: {} }
 };
 
-Stilling.propTypes = {
+InternalStilling.propTypes = {
     stilling: PropTypes.shape({
         _source: PropTypes.shape({
             status: PropTypes.string,
@@ -202,11 +168,8 @@ Stilling.propTypes = {
             })
         })
     }),
-    cachedStilling: PropTypes.shape({
-        title: PropTypes.string
-    }),
     resetStilling: PropTypes.func.isRequired,
-    getStilling: PropTypes.func.isRequired,
+    getInternalStilling: PropTypes.func.isRequired,
     isFetchingStilling: PropTypes.bool,
     error: PropTypes.shape({
         statusCode: PropTypes.number
@@ -219,15 +182,14 @@ Stilling.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-    isFetchingStilling: state.stilling.isFetchingStilling,
-    stilling: state.stilling.stilling,
-    cachedStilling: state.stilling.cachedStilling,
-    error: state.stilling.error
+    isFetchingStilling: state.internalStilling.isFetchingStilling,
+    stilling: state.internalStilling.stilling,
+    error: state.internalStilling.error
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    getStilling: (uuid) => dispatch({ type: FETCH_STILLING_BEGIN, uuid }),
-    resetStilling: () => dispatch({ type: RESET_STILLING })
+    getInternalStilling: (uuid) => dispatch({ type: FETCH_INTERAL_STILLING_BEGIN, uuid }),
+    resetStilling: () => dispatch({ type: RESET_INTERAL_STILLING })
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Stilling);
+export default connect(mapStateToProps, mapDispatchToProps)(InternalStilling);
