@@ -22,6 +22,7 @@ const SESSION_STORAGE_KEY_CALLBACK = 'callback';
 const SESSION_STORAGE_KEY_CALLBACK_DATA = 'callback-data';
 
 const whiteList = [
+    `${CONTEXT_PATH}/intern`,
     `${CONTEXT_PATH}/stilling`,
     `${CONTEXT_PATH}/favoritter`,
     `${CONTEXT_PATH}/lagrede-sok`,
@@ -144,7 +145,7 @@ export function* redirectToLogin(action) {
                 ...redirectQuery,
                 uuid: path.split(`${CONTEXT_PATH}/intern/`)[1]
             };
-            redirectUrl = `${STILLINGSOK_URL}/stilling`;
+            redirectUrl = `${STILLINGSOK_URL}/intern`;
         } else if (path.startsWith(`${CONTEXT_PATH}/lagrede-sok`)) {
             redirectQuery = {
                 ...redirectQuery,
