@@ -1,3 +1,6 @@
+## RELEASE - 0.195.1081-60c8b72
+#### New in this release: 
++ 2020-03-20 [FEATURE] supports lookup to internal index
 ## RELEASE - 0.189.1064-1a30f1a
 #### New in this release: 
 + 2020-03-17 [FIx] Legger til menypunkter css tweak
