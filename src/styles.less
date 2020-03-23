@@ -13,7 +13,7 @@
 /*
 Source Sans Pro som vi får fra nav-frontend-typografi ser ikke bra ut i noen browsere, feks Chrome i Windows 7 og 10.
 Det finnes allerede et issue på dette: https://github.com/navikt/nav-frontend-moduler/issues/46.
-Som en midlertidig løsning overstyrer vi fonten, ved å laste dem inn fra google fonts.
+Som en midlertidig løsning overstyrer vi fonten, ved å laste dem inn fra google fonts
 */
 @font-face {
   font-family: 'Source Sans Pro';
@@ -58,6 +58,26 @@ body {
   color: @blueDarken;
 
   .skjemaelement--pink();
+}
+
+.TjenesteLevertAvNav {
+  font-family: "Source Sans Pro", Arial, sans-serif;
+  background: @blueDarken;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 1rem 0.7rem;
+  color: #fff;
+  font-style: italic;
+  line-height: 1.33;
+}
+
+.TjenesteLevertAvNav__icon {
+  margin-left: 2px;
+
+  &:focus {
+    outline: 3px solid @orangeFocus;
+  }
 }
 
 #app, .Application {

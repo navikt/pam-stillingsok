@@ -57,7 +57,11 @@
 
 
 .Search__main {
-  margin-bottom: 4rem;
+  margin: 2rem 0;
+
+  @media (min-width: @screen-md-min) {
+    margin: 4rem 0;
+  }
 }
 
 .Search__main__center {
@@ -85,11 +89,13 @@
 }
 
 .Search__main__left__save-search {
-  padding: 1rem 0;
+  padding: 0 0 1rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
   @media (min-width: @screen-md-min) {
-    min-height: 116px;
-    padding-bottom: 1rem;
+    padding-bottom: 2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -174,3 +180,6 @@
   }
 }
 
+.Search__nullstill {
+  margin-bottom: 1rem;
+}
