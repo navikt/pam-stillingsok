@@ -69,5 +69,5 @@ ReactDOM.render(
     <Provider store={store}>
         <Application />
     </Provider>,
-    document.getElementById('app')
+    document.getElementById('reactApp')
 );

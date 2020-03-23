@@ -1,4 +1,3 @@
-import { Footer } from 'pam-frontend-footer';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -27,34 +26,27 @@ class Application extends React.Component {
         return (
             <BrowserRouter>
                 <BackLinkManager>
-                    <div className="Application">
-                        <main className="Application__main">
-                            <Error />
-                            <Switch>
-                                <Route component={TopMenu}/>
-                            </Switch>
-                            <Switch>
-                                <Route exact path={CONTEXT_PATH} component={SearchPage}/>
-                                <Route path={`${CONTEXT_PATH}/stilling/:uuid`} component={StillingPage} />
-                                <Route path={`${CONTEXT_PATH}/intern/:uuid`} component={InternalStilling} />
-                                <Route path={`${CONTEXT_PATH}/favoritter`} component={Favourites} />
-                                <Route path={`${CONTEXT_PATH}/lagrede-sok`} component={SavedSearches} />
-                                <Route path="*" component={SearchPage}/>
-                            </Switch>
+                    <Error />
+                    <Switch>
+                        <Route component={TopMenu}/>
+                    </Switch>
+                    <Switch>
+                        <Route exact path={CONTEXT_PATH} component={SearchPage}/>
+                        <Route path={`${CONTEXT_PATH}/stilling/:uuid`} component={StillingPage} />
+                        <Route path={`${CONTEXT_PATH}/intern/:uuid`} component={InternalStilling} />
+                        <Route path={`${CONTEXT_PATH}/favoritter`} component={Favourites} />
+                        <Route path={`${CONTEXT_PATH}/lagrede-sok`} component={SavedSearches} />
+                        <Route path="*" component={SearchPage}/>
+                    </Switch>
 
-                            {this.props.termsOfUseModalIsVisible && (
-                                <TermsOfUse />
-                            )}
+                    {this.props.termsOfUseModalIsVisible && (
+                        <TermsOfUse />
+                    )}
 
-                            {this.props.authenticationRequiredModalIsVisible && (
-                                <NotAuthenticatedModal />
-                            )}
-                            <UserAlertStripe/>
-                        </main>
-                        <footer className="Application__footer">
-                            <Footer />
-                        </footer>
-                    </div>
+                    {this.props.authenticationRequiredModalIsVisible && (
+                        <NotAuthenticatedModal />
+                    )}
+                    <UserAlertStripe/>
                 </BackLinkManager>
             </BrowserRouter>
         );

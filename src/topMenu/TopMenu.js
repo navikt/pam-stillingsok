@@ -8,7 +8,6 @@ import { LOGOUT_URL } from '../fasitProperties';
 import { COLLAPSE_ALL_FACET_PANELS, EXPAND_ALL_FACET_PANELS } from '../search/facets/facetPanelsReducer';
 import { isMobile } from '../utils';
 import LoginButton from './LoginButton';
-import './UinnloggetHeader.less';
 
 const uinnloggetHeader = document.getElementById('UinnloggetHeader');
 
