@@ -241,7 +241,7 @@ const startServer = (htmlPages) => {
         if (uuid) {
             res.redirect(`${fasitProperties.PAM_CONTEXT_PATH}/stilling/${uuid}`);
         } else {
-            res.send(htmlPages.sok);
+            res.redirect(`${fasitProperties.PAM_CONTEXT_PATH}`)
         }
     });
 
@@ -254,7 +254,7 @@ const startServer = (htmlPages) => {
         if (uuid) {
             res.redirect(`${fasitProperties.PAM_CONTEXT_PATH}/intern/${uuid}`);
         } else {
-            res.send(htmlPages.sok);
+            res.redirect(`${fasitProperties.PAM_CONTEXT_PATH}`)
         }
     });
 
