@@ -1,3 +1,6 @@
+## RELEASE - 0.197.1089-f381c4e
+#### New in this release: 
++ 2020-03-24 [Fix] Fikser callback etter login også for stillingssiden
 ## RELEASE - 0.195.1081-60c8b72
 #### New in this release: 
 + 2020-03-20 [FEATURE] supports lookup to internal index
