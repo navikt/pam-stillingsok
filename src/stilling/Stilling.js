@@ -10,7 +10,7 @@ import getWorkLocation from '../../server/common/getWorkLocation';
 import { CONTEXT_PATH } from '../fasitProperties';
 import FavouriteAlertStripe from '../favourites/alertstripe/FavouriteAlertStripe';
 import ToggleFavouriteButton from '../favourites/toggleFavoriteButton/ToggleFavouriteButton';
-import { parseQueryString } from '../utils';
+import { parseQueryString, stringifyQueryObject } from '../utils';
 import AdDetails from './adDetails/AdDetails';
 import AdText from './adText/AdText';
 import AdTitle from './adTitle/AdTitle';
@@ -45,11 +45,23 @@ const Stilling = ({
     useScrollToTop();
 
     useEffect(() => {
-        getStilling(match.params.uuid);
+        let uuidParam = match.params.uuid;
+        if (!uuidParam) {
+             // Om man logget inn mens man var inne på en stillingsannonse, så vil loginservice
+             // redirecte til en url med dette url-formatet: '/stillinger/stilling?uuid=12345'.
+             // Redirecter derfor til riktig url-format: '/stillinger/stilling/:uuid'
+             // @see src/authentication/authenticationReducer.js
+            const {uuid, ...otherQueryParams } = parseQueryString(document.location.search);
 
+            if (uuid && typeof uuid === "string") {
+                window.history.replaceState({}, '', `${CONTEXT_PATH}/stilling/${uuid}${stringifyQueryObject(otherQueryParams)}`);
+                getStilling(uuid);
+            }
+        } else {
+            getStilling(uuidParam);
+        }
         return () => {
             resetStilling();
-            removeRobotsMetaTag();
         }
     }, []);
 
@@ -65,6 +77,9 @@ const Stilling = ({
         const adIsNotActive = !isFetchingStilling && stilling && stilling._source.status !== 'ACTIVE';
         if (pageNotFound || adIsNotActive) {
             addRobotsNoIndexMetaTag()
+        }
+        return () => {
+            removeRobotsMetaTag();
         }
     }, [error, isFetchingStilling, stilling]);
 

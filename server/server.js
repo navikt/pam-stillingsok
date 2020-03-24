@@ -212,13 +212,10 @@ const startServer = (htmlPages) => {
     server.get(/^\/pam-stillingsok.*$/, (req, res) => {
         var url = req.url.replace("/pam-stillingsok", `${fasitProperties.PAM_CONTEXT_PATH}`);
         res.redirect(`${url}`)
-    })
+    });
 
     server.get(['/stillinger/stilling/:uuid'], (req, res) => {
         searchApiConsumer.fetchStilling(req.params.uuid)
-            .catch((err) => {
-                res.send(htmlPages.sok);
-            })
             .then((data) => {
                 try {
                     res.render('index', {
@@ -228,41 +225,15 @@ const startServer = (htmlPages) => {
                 } catch (err) {
                     res.send(htmlPages.sok);
                 }
+            })
+            .catch((err) => {
+                res.send(htmlPages.sok);
             });
         }
     );
 
-    /**
-     * Redirect-url fra loginservice vil inneholde uuid som url paramteter (/stillinger/stilling?uuid=12345).
-     * Må derfor redirecte til /stillinger/stilling/:uuid
-     */
-    server.get('/stillinger/stilling', (req, res) => {
-        const uuid = req.query.uuid;
-        if (uuid) {
-            res.redirect(`${fasitProperties.PAM_CONTEXT_PATH}/stilling/${uuid}`);
-        } else {
-            res.redirect(`${fasitProperties.PAM_CONTEXT_PATH}`)
-        }
-    });
-
-    /**
-     * Redirect-url fra loginservice vil inneholde uuid som url paramteter (/stillinger/intern?uuid=12345).
-     * Må derfor redirecte til /stillinger/intern/:uuid
-     */
-    server.get( '/stillinger/intern', (req, res) => {
-        const uuid = req.query.uuid;
-        if (uuid) {
-            res.redirect(`${fasitProperties.PAM_CONTEXT_PATH}/intern/${uuid}`);
-        } else {
-            res.redirect(`${fasitProperties.PAM_CONTEXT_PATH}`)
-        }
-    });
-
     server.get('/stillinger/intern/:uuid', (req, res) => {
             searchApiConsumer.fetchInternStilling(req.params.uuid)
-                .catch((err) => {
-                    res.send(htmlPages.sok);
-                })
                 .then((data) => {
                     try {
                         res.render('index', {
@@ -272,6 +243,9 @@ const startServer = (htmlPages) => {
                     } catch (err) {
                         res.send(htmlPages.sok);
                     }
+                })
+                .catch((err) => {
+                    res.send(htmlPages.sok);
                 });
         }
     );

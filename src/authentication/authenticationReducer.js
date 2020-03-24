@@ -195,7 +195,7 @@ function* handleCallbackAfterLogin() {
     if (query.callback) {
         // Fjern '?callback' fra adresselinjen i nettleseren
         const {callback, ...queryWithoutCallback} = query;
-        window.history.replaceState({}, '', CONTEXT_PATH + stringifyQueryObject(queryWithoutCallback));
+        window.history.replaceState({}, '', window.location.pathname + stringifyQueryObject(queryWithoutCallback));
 
         // For å unngå at callbacks kjøres på nytt (hvis man for eksempel trykker tilbake i browser),
         // så  utfører vi kun callback hvis samme callback er lagret i sessionStorage.

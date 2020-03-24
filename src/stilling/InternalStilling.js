@@ -8,7 +8,7 @@ import BackLink from '../backLink/BackLink';
 import getEmployer from '../../server/common/getEmployer';
 import getWorkLocation from '../../server/common/getWorkLocation';
 import { CONTEXT_PATH } from '../fasitProperties';
-import { parseQueryString } from '../utils';
+import { parseQueryString, stringifyQueryObject } from '../utils';
 import AdDetails from './adDetails/AdDetails';
 import AdText from './adText/AdText';
 import AdTitle from './adTitle/AdTitle';
@@ -39,11 +39,29 @@ const InternalStilling = ({
     useScrollToTop();
 
     useEffect(() => {
-        addRobotsNoIndexMetaTag();
-        getInternalStilling(match.params.uuid);
+        let uuidParam = match.params.uuid;
+        if (!uuidParam) {
+            // Om man logget inn mens man var inne på en stillingsannonse, så vil loginservice
+            // redirecte til en url med dette url-formatet: '/stillinger/intern?uuid=12345'.
+            // Redirecter derfor til riktig url-format: '/stillinger/intern/:uuid'
+            // @see src/authentication/authenticationReducer.js
+            const {uuid, ...otherQueryParams } = parseQueryString(document.location.search);
 
+            if (uuid && typeof uuid === "string") {
+                window.history.replaceState({}, '', `${CONTEXT_PATH}/intern/${uuid}${stringifyQueryObject(otherQueryParams)}`);
+                getInternalStilling(uuid);
+            }
+        } else {
+            getInternalStilling(uuidParam);
+        }
         return () => {
             resetStilling();
+        }
+    }, []);
+
+    useEffect(() => {
+        addRobotsNoIndexMetaTag();
+        return () => {
             removeRobotsMetaTag();
         }
     }, []);
