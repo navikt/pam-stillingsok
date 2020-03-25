@@ -26,7 +26,7 @@ import SoftRequirements from './requirements/SoftRequirements';
 import SocialShare from './socialShare/SocialShare';
 import './Stilling.less';
 import { FETCH_STILLING_BEGIN, RESET_STILLING } from './stillingReducer';
-import { useTrackPageview, useScrollToTop } from '../common/hooks';
+import { useScrollToTop } from '../common/hooks';
 import { sendUrlEndring } from "../common/hooks/useTrackPageview";
 import { addRobotsNoIndexMetaTag, removeRobotsMetaTag } from '../common/utils/metaRobots';
 
@@ -38,8 +38,6 @@ function commaSeparate(...strings) {
 }
 
 const Stilling = ({ cachedStilling, error, getStilling, isFetchingStilling, match, stilling, resetStilling }) => {
-
-    useTrackPageview(`${CONTEXT_PATH}/stilling`, 'Stilling');
 
     useScrollToTop();
 
@@ -65,8 +63,17 @@ const Stilling = ({ cachedStilling, error, getStilling, isFetchingStilling, matc
     }, []);
 
     useEffect(() => {
-        if (stilling && stilling._source && stilling._source.title) {
+        if (stilling && stilling._source && stilling._id && stilling._source.title) {
             document.title = stilling._source.title;
+
+            try {
+                ga('set', 'page', `${CONTEXT_PATH}/stilling/${stilling._id}`);
+                ga('set', 'title', stilling._source.title);
+                ga('send', 'pageview');
+            } catch (e) {
+                // ignore
+            }
+
             sendUrlEndring({ page: `${CONTEXT_PATH}/stilling`, source:stilling._source.source });
         }
     }, [stilling]);
