@@ -90,7 +90,6 @@ function* fetchIsAuthenticated() {
         }
     } catch (error) {
         yield put({type: FETCH_IS_AUTHENTICATED_FAILURE});
-        throw error;
     }
 }
 

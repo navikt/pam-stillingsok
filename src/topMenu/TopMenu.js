@@ -61,7 +61,7 @@ const TopMenu = ({ isAuthenticated, collapseAllFacetPanels, expandAllFacetPanels
         return (
             ReactDOM.createPortal(
                 <LoginButton redirectToLogin={login}/>,
-                document.getElementById('LoginButton__placeholder')
+                document.getElementById('ArbeidsplassenHeader__login')
             )
         );
     }

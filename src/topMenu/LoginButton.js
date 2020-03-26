@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
-import './LoginButton.less'
+import ReactDOM from 'react-dom';
 
 export default function LoginButton({ redirectToLogin }) {
     const [showPopover, setShowPopover] = useState(false);
 
     return (
-        <div className="LoginButton">
+        <React.Fragment>
             <button
                 type="button"
-                className="LoginButton__toggle Knapp Knapp--mini"
-                aria-haspopup="true"
-                aria-expanded="false"
+                className="Knapp Knapp--mini"
+                aria-expanded={showPopover}
+                aria-controls="ArbeidsplassenHeader__expand"
                 onClick={() => {
                     setShowPopover(!showPopover);
                 }}
@@ -19,23 +19,32 @@ export default function LoginButton({ redirectToLogin }) {
             </button>
 
             {showPopover && (
-                <div className="LoginButton__popover">
-                    <button
-                        className="LoginButton__popover__link"
-                        aria-label="Logg inn som jobbsøker"
-                        onClick={() => redirectToLogin('personbruker')}
-                    >
-                        For jobbsøkere
-                    </button>
-                    <button
-                        className="LoginButton__popover__link"
-                        aria-label="Logg inn som arbeidsgiver"
-                        onClick={() => redirectToLogin('arbeidsgiver')}
-                    >
-                        For arbeidsgivere
-                    </button>
-                </div>
+                ReactDOM.createPortal(
+                    <div className="ArbeidsplassenHeader__options-wrapper">
+                        <div className="ArbeidsplassenHeader__options">
+                            <button
+                                className="ArbeidsplassenHeader__option"
+                                onClick={() => redirectToLogin('personbruker')}
+                            >
+                                <div className="ArbeidsplassenHeader__login-as">
+                                    Logg inn som jobbsøker
+                                </div>
+                                <div className="ArbeidsplassenHeader__chevron" />
+                            </button>
+                            <button
+                                className="ArbeidsplassenHeader__option"
+                                onClick={() => redirectToLogin('arbeidsgiver')}
+                            >
+                                <div className="ArbeidsplassenHeader__login-as">
+                                    Logg inn som arbeidsgiver
+                                </div>
+                                <div className="ArbeidsplassenHeader__chevron" />
+                            </button>
+                        </div>
+                    </div>,
+                    document.getElementById('ArbeidsplassenHeader__expand')
+                )
             )}
-        </div>
+        </React.Fragment>
     );
 }
