@@ -9,7 +9,7 @@ import { COLLAPSE_ALL_FACET_PANELS, EXPAND_ALL_FACET_PANELS } from '../search/fa
 import { isMobile } from '../utils';
 import LoginButton from './LoginButton';
 
-const uinnloggetHeader = document.getElementById('UinnloggetHeader');
+const uinnloggetHeader = document.getElementById('ArbeidsplassenHeader');
 
 const TopMenu = ({ isAuthenticated, collapseAllFacetPanels, expandAllFacetPanels, redirectToLogin }) => {
     const login = (role) => {
@@ -31,7 +31,7 @@ const TopMenu = ({ isAuthenticated, collapseAllFacetPanels, expandAllFacetPanels
     };
 
     if (authenticationStatus(isAuthenticated) === AuthStatus.IS_AUTHENTICATED) {
-        uinnloggetHeader.className = 'UinnloggetHeader--hidden';
+        uinnloggetHeader.className = 'ArbeidsplassenHeader--hidden';
 
         return (
             <div className="no-print">
