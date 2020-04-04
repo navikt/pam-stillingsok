@@ -37,7 +37,7 @@ function track(...props) {
             window.ga(...props);
         }
     } catch (e) {
-        // ignore
+        // ignore ga error
     }
 }
 
