@@ -32,8 +32,12 @@ export const EVENT_CATEGORY_SAVED_SEARCHES = 'Ledige stillinger > Lagrede søk';
 const ignoreFurther = [];
 
 function track(...props) {
-    if (window.ga) {
-        window.ga(...props);
+    try {
+        if (window.ga) {
+            window.ga(...props);
+        }
+    } catch (e) {
+        // ignore
     }
 }
 
