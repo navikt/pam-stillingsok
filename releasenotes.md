@@ -1,3 +1,6 @@
+## RELEASE - 0.204.1106-73542b6
+#### New in this release: 
++ 2020-04-04 [Fix] Wrap ga i try catch
 ## RELEASE - 0.197.1089-f381c4e
 #### New in this release: 
 + 2020-03-24 [Fix] Fikser callback etter login også for stillingssiden
