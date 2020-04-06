@@ -22,6 +22,7 @@ const SESSION_STORAGE_KEY_CALLBACK = 'callback';
 const SESSION_STORAGE_KEY_CALLBACK_DATA = 'callback-data';
 
 const whiteList = [
+    `${CONTEXT_PATH}/intern`,
     `${CONTEXT_PATH}/stilling`,
     `${CONTEXT_PATH}/favoritter`,
     `${CONTEXT_PATH}/lagrede-sok`,
@@ -89,7 +90,6 @@ function* fetchIsAuthenticated() {
         }
     } catch (error) {
         yield put({type: FETCH_IS_AUTHENTICATED_FAILURE});
-        throw error;
     }
 }
 
@@ -131,12 +131,20 @@ export function* redirectToLogin(action) {
 
         if (path.startsWith(`${CONTEXT_PATH}/stilling/`)) {
             // 'stilling/:uuid' er ikke en whitelisted url, så vi må mappe om til /stilling?uuid=<uuid>
-            // Dette blir mappet tilbake av Stilling-siden, når man returnerer fra login
+            // Man blir redirectet til rett url igjen i server.js
             redirectQuery = {
                 ...redirectQuery,
                 uuid: path.split(`${CONTEXT_PATH}/stilling/`)[1]
             };
             redirectUrl = `${STILLINGSOK_URL}/stilling`;
+        } else if (path.startsWith(`${CONTEXT_PATH}/intern/`)) {
+            // 'intern/:uuid' er ikke en whitelisted url, så vi må mappe om til /intern?uuid=<uuid>
+            // Man blir redirectet til rett url igjen i server.js
+            redirectQuery = {
+                ...redirectQuery,
+                uuid: path.split(`${CONTEXT_PATH}/intern/`)[1]
+            };
+            redirectUrl = `${STILLINGSOK_URL}/intern`;
         } else if (path.startsWith(`${CONTEXT_PATH}/lagrede-sok`)) {
             redirectQuery = {
                 ...redirectQuery,
@@ -186,7 +194,7 @@ function* handleCallbackAfterLogin() {
     if (query.callback) {
         // Fjern '?callback' fra adresselinjen i nettleseren
         const {callback, ...queryWithoutCallback} = query;
-        window.history.replaceState({}, '', CONTEXT_PATH + stringifyQueryObject(queryWithoutCallback));
+        window.history.replaceState({}, '', window.location.pathname + stringifyQueryObject(queryWithoutCallback));
 
         // For å unngå at callbacks kjøres på nytt (hvis man for eksempel trykker tilbake i browser),
         // så  utfører vi kun callback hvis samme callback er lagret i sessionStorage.

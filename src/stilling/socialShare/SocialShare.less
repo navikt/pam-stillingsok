@@ -1,27 +1,27 @@
 @import "../../variables";
 
-.share-section__body {
+.SocialShare {
   display: flex;
   flex-wrap: wrap;
   justify-content: left;
   align-items: center;
   word-break: break-word;
-  padding: 1rem;
   margin-top: 5rem;
-  background-color: @gray2;
 }
 
-.share-section__body > div {
+.SocialShare__link {
+  display: flex;
+  align-items: center;
+}
+
+.SocialShare__label {
   margin-right: 1rem;
+  font-size: 18px;
+  font-weight: 600;
 }
 
-.label {
-  font-size: 20px;
-}
-
-.facebook {
-  padding-top: 0.3rem;
-
+.SocialShare__facebook {
+  margin-right: 1rem;
   svg {
     .cls-1 {
       fill: #1877f2;
@@ -33,9 +33,8 @@
   }
 }
 
-.linkedin {
-  padding-top: 0.3rem;
-
+.SocialShare__linkedin {
+  margin-right: 1rem;
   svg {
     .cls-1 {
       fill:#2867b2;
@@ -47,9 +46,8 @@
   }
 }
 
-.twitter {
-  padding-top: 0.3rem;
-
+.SocialShare__twitter {
+  margin-right: 1rem;
   svg {
     .cls-1 {
       fill:#1da1f2;
@@ -61,9 +59,8 @@
   }
 }
 
-.messenger {
-  padding-top: 0.3rem;
-
+.SocialShare__messenger {
+  margin-right: 1rem;
   svg {
     .cls-1 {
       fill:url(#linear-gradient);

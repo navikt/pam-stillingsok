@@ -19,7 +19,19 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-180.png" />
 </head>
 <body>
-<div id="app"></div>
+
+{{> components/header}}
+
+<main id="app">
+    <div class="Application">
+        <div class="Application__main">
+            <div id="reactApp"></div>
+        </div>
+        <div class="Application__footer">
+            {{> components/footer}}
+        </div>
+    </div>
+</main>
 
 <script type="application/javascript" src="/stillinger/js/sok.js"></script>
 </body>

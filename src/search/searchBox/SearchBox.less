@@ -2,6 +2,7 @@
 
 .SearchBox {
   position: relative;
+  margin-bottom: 2rem;
 
   @media (max-width: @screen-xs-max) {
     margin-left: -1rem;
@@ -11,16 +12,15 @@
 
 #search-form-fritekst-input {
   width: 100%;
-  border: 2px solid @green;
+  border: 1px solid @blueDarken;
   color: @blueDarken;
   line-height: inherit;
-  border-radius: 5rem;
-  padding: 1rem 4rem 1rem 1.5rem;
+  border-radius: 0.25rem;
+  padding: 1rem;
   min-height: 4rem;
 
   @media (min-width: @screen-sm-min) {
-    padding: 1rem 4rem 1rem 2rem;
-    font-size: 1.5rem;
+    font-size: 1.125rem;
   }
 
   &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
@@ -37,8 +37,7 @@
   }
 
   &:focus {
-    outline: none;
-    border: 2px solid @blueDarken;
+    box-shadow: 0 0 0  3px @orangeFocus;
 
     &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
       color: rgba(6, 33, 64, 0.4);

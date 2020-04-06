@@ -1,11 +1,15 @@
 import { AuthStatus, Header, PersonbrukerApplikasjon } from 'pam-frontend-header';
 import PropTypes from 'prop-types';
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import { authenticationEnum, REDIRECT_TO_LOGIN } from '../authentication/authenticationReducer';
 import { LOGOUT_URL } from '../fasitProperties';
 import { COLLAPSE_ALL_FACET_PANELS, EXPAND_ALL_FACET_PANELS } from '../search/facets/facetPanelsReducer';
 import { isMobile } from '../utils';
+import LoginButton from './LoginButton';
+
+const uinnloggetHeader = document.getElementById('ArbeidsplassenHeader');
 
 const TopMenu = ({ isAuthenticated, collapseAllFacetPanels, expandAllFacetPanels, redirectToLogin }) => {
     const login = (role) => {
@@ -26,16 +30,16 @@ const TopMenu = ({ isAuthenticated, collapseAllFacetPanels, expandAllFacetPanels
         return AuthStatus.UNKNOWN;
     };
 
-    return (
-        <div className="no-print">
-            <div
-                className={authenticationStatus(isAuthenticated) === AuthStatus.IS_AUTHENTICATED ? "BedriftLinkHack-wrapper--hidden" : "BedriftLinkHack-wrapper--shown"}
-            >
+    if (authenticationStatus(isAuthenticated) === AuthStatus.IS_AUTHENTICATED) {
+        uinnloggetHeader.className = 'ArbeidsplassenHeader--hidden';
+
+        return (
+            <div className="no-print">
                 <Header
                     validerNavigasjon={{
                         redirectTillates: () => {
                             // Reset state of facet panel (closed if on mobile) and return true to complete the redirect
-                            if(isMobile()) {
+                            if (isMobile()) {
                                 collapseAllFacetPanels();
                             } else {
                                 expandAllFacetPanels();
@@ -51,14 +55,17 @@ const TopMenu = ({ isAuthenticated, collapseAllFacetPanels, expandAllFacetPanels
                     visInnstillinger
                     showName
                 />
-                {authenticationStatus(isAuthenticated) !== AuthStatus.IS_AUTHENTICATED && (
-                    <nav id="BedriftLinkHack-nav">
-                        <a href="/bedrift" className="link">For bedrifter</a>
-                    </nav>
-                )}
             </div>
-        </div>
-    );
+        );
+    } else if (authenticationStatus(isAuthenticated) === AuthStatus.NOT_AUTHENTICATED) {
+        return (
+            ReactDOM.createPortal(
+                <LoginButton redirectToLogin={login}/>,
+                document.getElementById('ArbeidsplassenHeader__login')
+            )
+        );
+    }
+    return null;
 };
 
 TopMenu.propTypes = {
