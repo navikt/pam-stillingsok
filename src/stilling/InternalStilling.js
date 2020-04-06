@@ -7,8 +7,6 @@ import BackLink from '../backLink/BackLink';
 import getEmployer from '../../server/common/getEmployer';
 import getWorkLocation from '../../server/common/getWorkLocation';
 import { CONTEXT_PATH } from '../fasitProperties';
-import FavouriteAlertStripe from '../favourites/alertstripe/FavouriteAlertStripe';
-import ToggleFavouriteButton from '../favourites/toggleFavoriteButton/ToggleFavouriteButton';
 import { parseQueryString, stringifyQueryObject } from '../utils';
 import AdDetails from './adDetails/AdDetails';
 import AdText from './adText/AdText';
@@ -23,11 +21,9 @@ import NotFound from './notFound/NotFound';
 import HardRequirements from './requirements/HardRequirements';
 import PersonalAttributes from './requirements/PersonalAttributes';
 import SoftRequirements from './requirements/SoftRequirements';
-import SocialShare from './socialShare/SocialShare';
 import './Stilling.less';
-import { FETCH_STILLING_BEGIN, RESET_STILLING } from './stillingReducer';
 import { useScrollToTop } from '../common/hooks';
-import { sendUrlEndring } from "../common/hooks/useTrackPageview";
+import { FETCH_INTERAL_STILLING_BEGIN, RESET_INTERAL_STILLING } from './internalStillingReducer';
 import { addRobotsNoIndexMetaTag, removeRobotsMetaTag } from '../common/utils/metaRobots';
 
 function commaSeparate(...strings) {
@@ -37,7 +33,7 @@ function commaSeparate(...strings) {
     return onlyStrings.join(', ');
 }
 
-const Stilling = ({ cachedStilling, error, getStilling, isFetchingStilling, match, stilling, resetStilling }) => {
+const InternalStilling = ({ error, getInternalStilling, isFetchingStilling, match, stilling, resetStilling }) => {
 
     useScrollToTop();
 
@@ -45,17 +41,17 @@ const Stilling = ({ cachedStilling, error, getStilling, isFetchingStilling, matc
         let uuidParam = match.params.uuid;
         if (!uuidParam) {
             // Om man logget inn mens man var inne på en stillingsannonse, så vil loginservice
-            // redirecte til en url med dette url-formatet: '/stillinger/stilling?uuid=12345'.
-            // Redirecter derfor til riktig url-format: '/stillinger/stilling/:uuid'
+            // redirecte til en url med dette url-formatet: '/stillinger/intern?uuid=12345'.
+            // Redirecter derfor til riktig url-format: '/stillinger/intern/:uuid'
             // @see src/authentication/authenticationReducer.js
-            const { uuid, ...otherQueryParams } = parseQueryString(document.location.search);
+            const {uuid, ...otherQueryParams } = parseQueryString(document.location.search);
 
             if (uuid && typeof uuid === "string") {
-                window.history.replaceState({}, '', `${CONTEXT_PATH}/stilling/${uuid}${stringifyQueryObject(otherQueryParams)}`);
-                getStilling(uuid);
+                window.history.replaceState({}, '', `${CONTEXT_PATH}/intern/${uuid}${stringifyQueryObject(otherQueryParams)}`);
+                getInternalStilling(uuid);
             }
         } else {
-            getStilling(uuidParam);
+            getInternalStilling(uuidParam);
         }
         return () => {
             resetStilling();
@@ -63,32 +59,17 @@ const Stilling = ({ cachedStilling, error, getStilling, isFetchingStilling, matc
     }, []);
 
     useEffect(() => {
-        if (stilling && stilling._source && stilling._id && stilling._source.title) {
-            document.title = stilling._source.title;
-
-            try {
-                ga('set', 'page', `${CONTEXT_PATH}/stilling/${stilling._id}`);
-                ga('set', 'title', stilling._source.title);
-                ga('send', 'pageview');
-            } catch (e) {
-                // ignore
-            }
-
-            sendUrlEndring({ page: `${CONTEXT_PATH}/stilling`, source:stilling._source.source });
-        }
-    }, [stilling]);
-
-    useEffect(() => {
-        const pageNotFound = error && error.statusCode === 404;
-        const adIsNotActive = !isFetchingStilling && stilling && stilling._source.status !== 'ACTIVE';
-        if (pageNotFound || adIsNotActive) {
-            addRobotsNoIndexMetaTag()
-        }
+        addRobotsNoIndexMetaTag();
         return () => {
             removeRobotsMetaTag();
         }
-    }, [error, isFetchingStilling, stilling]);
+    }, []);
 
+    useEffect(() => {
+        if (stilling && stilling._source && stilling._source.title) {
+            document.title = stilling._source.title;
+        }
+    }, [stilling]);
 
     const onPrintClick = () => {
         window.print();
@@ -98,25 +79,17 @@ const Stilling = ({ cachedStilling, error, getStilling, isFetchingStilling, matc
 
     return (
         <React.Fragment>
-            <FavouriteAlertStripe/>
-
             {error && error.statusCode === 404 && (
                 <div className="Stilling">
-                    <NotFound />
+                    <NotFound/>
                 </div>
             )}
 
             {!error && (
                 <div className="Stilling">
                     <div className="Stilling__header">
-                        <BackLink/>
+                        <BackLink />
                         <div className="Stilling__buttons">
-                            {isFetchingStilling && cachedStilling && (
-                                <ToggleFavouriteButton uuid={cachedStilling.uuid} />
-                            )}
-                            {!isFetchingStilling && stilling && (
-                                <ToggleFavouriteButton uuid={stilling._id} />
-                            )}
                             <Flatknapp
                                 mini
                                 className="Stilling__print"
@@ -130,19 +103,6 @@ const Stilling = ({ cachedStilling, error, getStilling, isFetchingStilling, matc
                         <div className="Stilling__left">
                             {!isFetchingStilling && stilling && stilling._source.status !== 'ACTIVE' && (
                                 <Expired />
-                            )}
-                            {isFetchingStilling && cachedStilling && (
-                                <React.Fragment>
-                                    <div className="Stilling__employer-and-location">
-                                        {commaSeparate(getEmployer(cachedStilling), getWorkLocation(
-                                            cachedStilling.properties.location,
-                                            cachedStilling.locationList
-                                        ))}
-                                    </div>
-                                    <h1 className="Stilling__h1">
-                                        {cachedStilling.title}
-                                    </h1>
-                                </React.Fragment>
                             )}
                             {!isFetchingStilling && stilling && (
                                 <React.Fragment>
@@ -165,17 +125,16 @@ const Stilling = ({ cachedStilling, error, getStilling, isFetchingStilling, matc
                             )}
                             {!isFetchingStilling && stilling && !isFinn && (
                                 <React.Fragment>
-                                    <AdText adText={stilling._source.properties.adtext}/>
-                                    <HardRequirements stilling={stilling}/>
-                                    <SoftRequirements stilling={stilling}/>
-                                    <PersonalAttributes stilling={stilling}/>
-                                    <SocialShare title={stilling._source.title}/>
+                                    <AdText adText={stilling._source.properties.adtext} />
+                                    <HardRequirements stilling={stilling} />
+                                    <SoftRequirements stilling={stilling} />
+                                    <PersonalAttributes stilling={stilling} />
                                 </React.Fragment>
                             )}
                         </div>
                         <div className="Stilling__right">
                             {(stilling === undefined || isFetchingStilling) && (
-                                <Loading spinner={false} />
+                                <Loading spinner={false}/>
                             )}
                             {!isFetchingStilling && stilling && !isFinn && (
                                 <React.Fragment>
@@ -197,15 +156,14 @@ const Stilling = ({ cachedStilling, error, getStilling, isFetchingStilling, matc
     );
 };
 
-Stilling.defaultProps = {
+InternalStilling.defaultProps = {
     stilling: undefined,
-    cachedStilling: undefined,
     isFetchingStilling: false,
     error: undefined,
     match: { params: {} }
 };
 
-Stilling.propTypes = {
+InternalStilling.propTypes = {
     stilling: PropTypes.shape({
         _source: PropTypes.shape({
             status: PropTypes.string,
@@ -215,11 +173,8 @@ Stilling.propTypes = {
             })
         })
     }),
-    cachedStilling: PropTypes.shape({
-        title: PropTypes.string
-    }),
     resetStilling: PropTypes.func.isRequired,
-    getStilling: PropTypes.func.isRequired,
+    getInternalStilling: PropTypes.func.isRequired,
     isFetchingStilling: PropTypes.bool,
     error: PropTypes.shape({
         statusCode: PropTypes.number
@@ -232,15 +187,14 @@ Stilling.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-    isFetchingStilling: state.stilling.isFetchingStilling,
-    stilling: state.stilling.stilling,
-    cachedStilling: state.stilling.cachedStilling,
-    error: state.stilling.error
+    isFetchingStilling: state.internalStilling.isFetchingStilling,
+    stilling: state.internalStilling.stilling,
+    error: state.internalStilling.error
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    getStilling: (uuid) => dispatch({ type: FETCH_STILLING_BEGIN, uuid }),
-    resetStilling: () => dispatch({ type: RESET_STILLING })
+    getInternalStilling: (uuid) => dispatch({ type: FETCH_INTERAL_STILLING_BEGIN, uuid }),
+    resetStilling: () => dispatch({ type: RESET_INTERAL_STILLING })
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Stilling);
+export default connect(mapStateToProps, mapDispatchToProps)(InternalStilling);

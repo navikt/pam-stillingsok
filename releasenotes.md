@@ -1,3 +1,21 @@
+## RELEASE - 0.204.1106-73542b6
+#### New in this release: 
++ 2020-04-04 [Fix] Wrap ga i try catch
+## RELEASE - 0.197.1089-f381c4e
+#### New in this release: 
++ 2020-03-24 [Fix] Fikser callback etter login også for stillingssiden
+## RELEASE - 0.195.1081-60c8b72
+#### New in this release: 
++ 2020-03-20 [FEATURE] supports lookup to internal index
+## RELEASE - 0.189.1064-1a30f1a
+#### New in this release: 
++ 2020-03-17 [FIx] Legger til menypunkter css tweak
++ 2020-03-17 [FIx] Legger til menypunkter css tweak
++ 2020-03-17 [FIx] Legger til menypunkter css tweak
++ 2020-03-17 [FIx] Legger til menypunkter css tweak
+## RELEASE - 0.188.1058-c284b25
+#### New in this release: 
++ 2020-03-17 [FIx] Legger til menypunkter
 ## RELEASE - 0.175.1013-e36faa4
 #### New in this release: 
 + 2020-01-22 [Fix] Fjerner hotjar feedbacklenke

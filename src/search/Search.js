@@ -60,29 +60,7 @@ const Search = ({
             <FavouriteAlertStripe />
             <SavedSearchAlertStripe />
             <ShowResultsButton />
-            <div className="Search__header">
-                <Container className="Search__header__container">
-                    <Row className="Search__header__row">
-                        <Column xs="12" sm="12" md="4" lg="4" />
-                        <Column xs="12" sm="12" md="6" lg="6">
-                            <form
-                                action={CONTEXT_PATH}
-                                onSubmit={onSearchFormSubmit}
-                                className="no-print"
-                            >
-                                <SearchBox />
-                            </form>
-                        </Column>
-                        <Column xs="12" sm="12" md="2" lg="2">
-                            {(isAuthenticated === authenticationEnum.IS_AUTHENTICATED && user) && (
-                                <div className="Search__header__left">
-                                    <SavedSearchesExpandButton />
-                                </div>
-                            )}
-                        </Column>
-                    </Row>
-                </Container>
-            </div>
+
             <Container className="Search__main">
                 {isSearching && !initialSearchDone && (
                     <div className="Search__spinner">
@@ -94,16 +72,12 @@ const Search = ({
                         <Row>
                             <Column xs="12" md="4">
                                 <div className="Search__main__left">
+
                                     <div className="Search__main__left__save-search">
-                                        <div className="Search__main__left__save-search__SaveSearchButton">
-                                            <SaveSearchButton />
-                                        </div>
-                                        <Flatknapp
-                                            mini
-                                            onClick={() => resetSearch()}
-                                        >
-                                            Nullstill kriterier
-                                        </Flatknapp>
+                                        <SaveSearchButton />
+                                        {(isAuthenticated === authenticationEnum.IS_AUTHENTICATED && user) && (
+                                            <SavedSearchesExpandButton />
+                                        )}
                                     </div>
                                     <div id="sok">
                                         <form
@@ -111,6 +85,14 @@ const Search = ({
                                             onSubmit={onSearchFormSubmit}
                                             className="no-print"
                                         >
+                                            <SearchBox />
+                                            <Flatknapp
+                                                className="Search__nullstill"
+                                                mini
+                                                onClick={() => resetSearch()}
+                                            >
+                                                Nullstill kriterier
+                                            </Flatknapp>
                                             <Published />
                                             <Occupations />
                                             <Counties />
@@ -129,9 +111,6 @@ const Search = ({
                                             <CurrentSavedSearch />
                                         </div>
                                         <div className="Search__main__center__header__right">
-                                            <div className="Search__main__center__header__right__SaveSearchButton">
-                                                <SaveSearchButton />
-                                            </div>
                                             <Sorting />
                                         </div>
                                     </div>

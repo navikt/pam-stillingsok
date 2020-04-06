@@ -22,6 +22,7 @@ import facetPanelsReducer, {facetPanelsSaga} from './search/facets/facetPanelsRe
 import searchBoxReducer, { searchBoxSaga } from './search/searchBox/searchBoxReducer';
 import searchReducer, { saga } from './search/searchReducer';
 import stillingReducer, { stillingSaga } from './stilling/stillingReducer';
+import internalStillingReducer, { internalStillingSaga } from './stilling/internalStillingReducer';
 import './styles.less';
 import './variables.less';
 
@@ -41,6 +42,7 @@ const store = createStore(combineReducers({
     searchBox: searchBoxReducer,
     searchQuery: searchQueryReducer,
     stilling: stillingReducer,
+    internalStilling: internalStillingReducer,
     facets: facetsReducer,
     unknownFacets: unknownFacetsReducer,
     facetPanels: facetPanelsReducer
@@ -50,6 +52,7 @@ sagaMiddleware.run(saga);
 sagaMiddleware.run(backLinkSaga);
 sagaMiddleware.run(searchBoxSaga);
 sagaMiddleware.run(stillingSaga);
+sagaMiddleware.run(internalStillingSaga);
 sagaMiddleware.run(favouritesSaga);
 sagaMiddleware.run(savedSearchesSaga);
 sagaMiddleware.run(savedSearchFormSaga);
@@ -66,5 +69,5 @@ ReactDOM.render(
     <Provider store={store}>
         <Application />
     </Provider>,
-    document.getElementById('app')
+    document.getElementById('reactApp')
 );
