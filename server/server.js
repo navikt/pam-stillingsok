@@ -196,6 +196,15 @@ const startServer = (htmlPages) => {
             .then((val) => res.send(val));
     });
 
+    server.get(`${fasitProperties.PAM_CONTEXT_PATH}/api/intern/:uuid`, async (req, res) => {
+        searchApiConsumer.fetchInternStilling(req.params.uuid)
+            .catch((err) => {
+                console.warn('Failed to fetch stilling with uuid', req.params.uuid);
+                res.status(err.statusCode ? err.statusCode : 502);
+            })
+            .then((val) => res.send(val));
+    });
+
     server.get('/', (req, res) => {
         res.redirect(`${fasitProperties.PAM_CONTEXT_PATH}`)
     });
@@ -203,15 +212,28 @@ const startServer = (htmlPages) => {
     server.get(/^\/pam-stillingsok.*$/, (req, res) => {
         var url = req.url.replace("/pam-stillingsok", `${fasitProperties.PAM_CONTEXT_PATH}`);
         res.redirect(`${url}`)
-    })
+    });
 
-    server.get(
-        ['/stillinger/stilling/:uuid'],
-        (req, res) => {
-            searchApiConsumer.fetchStilling(req.params.uuid)
-                .catch((err) => {
+    server.get(['/stillinger/stilling/:uuid'], (req, res) => {
+        searchApiConsumer.fetchStilling(req.params.uuid)
+            .then((data) => {
+                try {
+                    res.render('index', {
+                        title: htmlMeta.getStillingTitle(data._source),
+                        description: htmlMeta.getStillingDescription(data._source)
+                    });
+                } catch (err) {
                     res.send(htmlPages.sok);
-                })
+                }
+            })
+            .catch((err) => {
+                res.send(htmlPages.sok);
+            });
+        }
+    );
+
+    server.get('/stillinger/intern/:uuid', (req, res) => {
+            searchApiConsumer.fetchInternStilling(req.params.uuid)
                 .then((data) => {
                     try {
                         res.render('index', {
@@ -221,6 +243,9 @@ const startServer = (htmlPages) => {
                     } catch (err) {
                         res.send(htmlPages.sok);
                     }
+                })
+                .catch((err) => {
+                    res.send(htmlPages.sok);
                 });
         }
     );
