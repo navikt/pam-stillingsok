@@ -1,3 +1,9 @@
+## RELEASE - 0.205.1111-04d40db
+#### New in this release: 
++ 2020-04-06 Revert "[Snyk] Upgrade nav-frontend-skjema from 1.0.60 to 1.0.78"
++ 2020-04-06 Revert "[Snyk] Upgrade nav-frontend-skjema-style from 1.0.38 to 1.0.48"
++ 2020-04-06 Revert "[Snyk] Upgrade nav-frontend-ekspanderbartpanel from 1.0.25 to 1.0.35"
++ 2020-03-17 Bump acorn from 6.1.1 to 6.4.1
 ## RELEASE - 0.204.1106-73542b6
 #### New in this release: 
 + 2020-04-04 [Fix] Wrap ga i try catch
