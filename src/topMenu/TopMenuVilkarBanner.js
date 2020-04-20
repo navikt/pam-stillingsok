@@ -21,7 +21,7 @@ const TopMenuVilkarBanner = () => {
             <div className="TopMenuVilkarBanner__content">
                 <div className="TopMenuVilkarBanner__content--container">
                     <p>Vi har oppdatert vilkårene for å bruke tjenestene.&nbsp;
-                        <Link to="/personinnstillinger" className="lenke typo-element">
+                        <Link to="/personinnstillinger" className="link">
                             Gå til innstillinger
                         </Link>
                         &nbsp;for å lese mer.
