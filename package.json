@@ -1,6 +1,6 @@
 {
   "name": "pam-stillingsok-frontend",
-  "version": "0.204.0",
+  "version": "0.206.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -75,7 +75,7 @@
     "request": "^2.88.0",
     "request-promise": "^4.2.4",
     "rimraf": "^2.6.2",
-    "snyk": "^1.278.2",
+    "snyk": "^1.290.1",
     "ua-parser-js": "^0.7.20",
     "whatwg-fetch": "^2.0.4"
   },
