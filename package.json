@@ -28,7 +28,7 @@
     "lodash.throttle": "^4.1.1",
     "mustache-express": "^1.2.8",
     "nav-frontend-alertstriper": "^3.0.2",
-    "nav-frontend-alertstriper-style": "^2.0.2",
+    "nav-frontend-alertstriper-style": "^2.0.12",
     "nav-frontend-chevron": "^1.0.9",
     "nav-frontend-chevron-style": "^0.3.4",
     "nav-frontend-core": "^4.0.8",
