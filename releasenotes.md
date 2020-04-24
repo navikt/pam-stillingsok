@@ -1,3 +1,7 @@
+## RELEASE - 0.206.1117-ab8ce0c
+#### New in this release: 
++ 2020-04-22 [Fix] Css tweak for å unngå skaleringsproblem av mobilside ved veldig lange ord i stillingstittel - revert
++ 2020-04-22 [Fix] Css tweak for å unngå skaleringsproblem av mobilside ved veldig lange ord i stillingstittel
 ## RELEASE - 0.205.1111-04d40db
 #### New in this release: 
 + 2020-04-06 Revert "[Snyk] Upgrade nav-frontend-skjema from 1.0.60 to 1.0.78"
