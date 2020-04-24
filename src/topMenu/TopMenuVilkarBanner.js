@@ -12,6 +12,10 @@ const TopMenuVilkarBanner = () => {
         localStorage.setItem('topMenuVilkarBanner', 'true');
     };
 
+    const goToSettings = () => {
+        location.href = '/personinnstillinger';
+    };
+
     if (!showBanner) {
         return null;
     }
@@ -21,7 +25,7 @@ const TopMenuVilkarBanner = () => {
             <div className="TopMenuVilkarBanner__content">
                 <div className="TopMenuVilkarBanner__content--container">
                     <p>Vi har oppdatert vilkårene for å bruke tjenestene.&nbsp;
-                        <Link to="/personinnstillinger" className="link">
+                        <Link to="/personinnstillinger" className="link" onClick={goToSettings}>
                             Gå til innstillinger
                         </Link>
                         &nbsp;for å lese mer.
