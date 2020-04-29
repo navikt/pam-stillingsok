@@ -130,7 +130,7 @@ const Stilling = ({ cachedStilling, error, getStilling, isFetchingStilling, matc
                         </Column>
                     </Row>
                     <Row>
-                        <Column xs={12} md={8}>
+                        <Column xs={12} md={7}>
                             <div className="Stilling__left">
                                 {!isFetchingStilling && stilling && stilling._source.status !== 'ACTIVE' && (
                                     <Expired />
@@ -178,7 +178,7 @@ const Stilling = ({ cachedStilling, error, getStilling, isFetchingStilling, matc
                                 )}
                             </div>
                         </Column>
-                        <Column xs={12} md={4}>
+                        <Column xs={12} md={5}>
                             {(stilling === undefined || isFetchingStilling) && (
                                 <Loading spinner={false} />
                             )}
