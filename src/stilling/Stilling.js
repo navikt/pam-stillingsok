@@ -109,25 +109,29 @@ const Stilling = ({ cachedStilling, error, getStilling, isFetchingStilling, matc
 
             {!error && (
                 <div className="Stilling">
-                    <div className="Stilling__header">
-                        <BackLink/>
-                        <div className="Stilling__buttons">
-                            {isFetchingStilling && cachedStilling && (
-                                <ToggleFavouriteButton uuid={cachedStilling.uuid} />
-                            )}
-                            {!isFetchingStilling && stilling && (
-                                <ToggleFavouriteButton uuid={stilling._id} />
-                            )}
-                            <Flatknapp
-                                mini
-                                className="Stilling__print"
-                                onClick={onPrintClick}
-                            >
-                                Skriv ut
-                            </Flatknapp>
-                        </div>
-                    </div>
                     <Container>
+                        <Row>
+                            <Column xs={12} md={8}>
+                                <BackLink/>
+                            </Column>
+                            <Column xs={12} md={4}>
+                                <div className="Stilling__buttons">
+                                    {isFetchingStilling && cachedStilling && (
+                                        <ToggleFavouriteButton uuid={cachedStilling.uuid} />
+                                    )}
+                                    {!isFetchingStilling && stilling && (
+                                        <ToggleFavouriteButton uuid={stilling._id} />
+                                    )}
+                                    <Flatknapp
+                                        mini
+                                        className="Stilling__print"
+                                        onClick={onPrintClick}
+                                    >
+                                        Skriv ut
+                                    </Flatknapp>
+                                </div>
+                            </Column>
+                        </Row>
                         <Row>
                             <Column xs={12} md={8}>
                                 <div className="Stilling__left">
