@@ -110,19 +110,22 @@ const Stilling = ({ cachedStilling, error, getStilling, isFetchingStilling, matc
                     <Row>
                         <Column xs={12}>
                             <div className="Stilling__header">
-                                {isFetchingStilling && cachedStilling && (
-                                    <ToggleFavouriteButton uuid={cachedStilling.uuid} />
-                                )}
-                                {!isFetchingStilling && stilling && (
-                                    <ToggleFavouriteButton uuid={stilling._id} />
-                                )}
-                                <Flatknapp
-                                    mini
-                                    className="Stilling__print"
-                                    onClick={onPrintClick}
-                                >
-                                    Skriv ut
-                                </Flatknapp>
+                                <BackLink/>
+                                <div className="Stilling__buttons">
+                                    {isFetchingStilling && cachedStilling && (
+                                        <ToggleFavouriteButton uuid={cachedStilling.uuid} />
+                                    )}
+                                    {!isFetchingStilling && stilling && (
+                                        <ToggleFavouriteButton uuid={stilling._id} />
+                                    )}
+                                    <Flatknapp
+                                        mini
+                                        className="Stilling__print"
+                                        onClick={onPrintClick}
+                                    >
+                                        Skriv ut
+                                    </Flatknapp>
+                                </div>
                             </div>
                         </Column>
                     </Row>
