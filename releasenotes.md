@@ -1,3 +1,15 @@
+## RELEASE - 0.207.1134-3b16192
+#### New in this release: 
++ 2020-04-29 [Fix] Dropper arbeidsplassen header fra print
++ 2020-04-29 [Fix] Gjør adtext smalere
++ 2020-04-29 [Fix] Gjør høyre kolonne bredere
++ 2020-04-29 [Fix] Legger til luft i bunn av stillingsannonsen
++ 2020-04-29 [Fix] Fikser plassering av tilbakelenke
++ 2020-04-29 [Fix] Legger header i column
++ 2020-04-29 [Fix] Ruller tilbake til grid, i istedet for flex
++ 2020-04-29 [Fix] Ruller tilbake til grid, i istedet for flex
++ 2020-04-29 [Fix] Css tweak for å unngå skaleringsproblem av mobilside ved veldig lange ord i stillingstittel
++ 2020-04-29 [Fix] Css tweak for å unngå skaleringsproblem av mobilside ved veldig lange ord i stillingstittel - revert
 ## RELEASE - 0.206.1117-ab8ce0c
 #### New in this release: 
 + 2020-04-22 [Fix] Css tweak for å unngå skaleringsproblem av mobilside ved veldig lange ord i stillingstittel - revert
