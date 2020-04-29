@@ -98,111 +98,104 @@ const Stilling = ({ cachedStilling, error, getStilling, isFetchingStilling, matc
     const isFinn = stilling && stilling._source && stilling._source.source && stilling._source.source.toLowerCase() === 'finn';
 
     return (
-        <React.Fragment>
+        <div className="Stilling">
             <FavouriteAlertStripe/>
 
             {error && error.statusCode === 404 && (
-                <div className="Stilling">
-                    <NotFound />
-                </div>
+                <NotFound />
             )}
 
             {!error && (
-                <div className="Stilling">
-                    <Container>
-                        <Row>
-                            <Column xs={12} md={8}>
-                                <BackLink/>
-                            </Column>
-                            <Column xs={12} md={4}>
-                                <div className="Stilling__buttons">
-                                    {isFetchingStilling && cachedStilling && (
-                                        <ToggleFavouriteButton uuid={cachedStilling.uuid} />
-                                    )}
-                                    {!isFetchingStilling && stilling && (
-                                        <ToggleFavouriteButton uuid={stilling._id} />
-                                    )}
-                                    <Flatknapp
-                                        mini
-                                        className="Stilling__print"
-                                        onClick={onPrintClick}
-                                    >
-                                        Skriv ut
-                                    </Flatknapp>
-                                </div>
-                            </Column>
-                        </Row>
-                        <Row>
-                            <Column xs={12} md={8}>
-                                <div className="Stilling__left">
-                                    {!isFetchingStilling && stilling && stilling._source.status !== 'ACTIVE' && (
-                                        <Expired />
-                                    )}
-                                    {isFetchingStilling && cachedStilling && (
-                                        <React.Fragment>
-                                            <div className="Stilling__employer-and-location">
-                                                {commaSeparate(getEmployer(cachedStilling), getWorkLocation(
-                                                    cachedStilling.properties.location,
-                                                    cachedStilling.locationList
-                                                ))}
-                                            </div>
-                                            <h1 className="Stilling__h1">
-                                                {cachedStilling.title}
-                                            </h1>
-                                        </React.Fragment>
-                                    )}
-                                    {!isFetchingStilling && stilling && (
-                                        <React.Fragment>
-                                            <div className="Stilling__employer-and-location">
-                                                {commaSeparate(getEmployer(stilling._source), getWorkLocation(
-                                                    stilling._source.properties.location,
-                                                    stilling._source.locationList
-                                                ))}
-                                            </div>
-                                            <h1 className="Stilling__h1">
-                                                {stilling._source.title}
-                                            </h1>
-                                        </React.Fragment>
-                                    )}
-                                    {(stilling === undefined || isFetchingStilling) && (
-                                        <Loading />
-                                    )}
-                                    {!isFetchingStilling && stilling && isFinn && (
-                                        <FinnAd stilling={stilling} />
-                                    )}
-                                    {!isFetchingStilling && stilling && !isFinn && (
-                                        <React.Fragment>
-                                            <AdText adText={stilling._source.properties.adtext}/>
-                                            <HardRequirements stilling={stilling}/>
-                                            <SoftRequirements stilling={stilling}/>
-                                            <PersonalAttributes stilling={stilling}/>
-                                            <SocialShare title={stilling._source.title}/>
-                                        </React.Fragment>
-                                    )}
-                                </div>
-                            </Column>
-                            <Column xs={12} md={4}>
+                <Container>
+                    <Row>
+                        <Column xs={12}>
+                            <div className="Stilling__header">
+                                {isFetchingStilling && cachedStilling && (
+                                    <ToggleFavouriteButton uuid={cachedStilling.uuid} />
+                                )}
+                                {!isFetchingStilling && stilling && (
+                                    <ToggleFavouriteButton uuid={stilling._id} />
+                                )}
+                                <Flatknapp
+                                    mini
+                                    className="Stilling__print"
+                                    onClick={onPrintClick}
+                                >
+                                    Skriv ut
+                                </Flatknapp>
+                            </div>
+                        </Column>
+                    </Row>
+                    <Row>
+                        <Column xs={12} md={8}>
+                            <div className="Stilling__left">
+                                {!isFetchingStilling && stilling && stilling._source.status !== 'ACTIVE' && (
+                                    <Expired />
+                                )}
+                                {isFetchingStilling && cachedStilling && (
+                                    <React.Fragment>
+                                        <div className="Stilling__employer-and-location">
+                                            {commaSeparate(getEmployer(cachedStilling), getWorkLocation(
+                                                cachedStilling.properties.location,
+                                                cachedStilling.locationList
+                                            ))}
+                                        </div>
+                                        <h1 className="Stilling__h1">
+                                            {cachedStilling.title}
+                                        </h1>
+                                    </React.Fragment>
+                                )}
+                                {!isFetchingStilling && stilling && (
+                                    <React.Fragment>
+                                        <div className="Stilling__employer-and-location">
+                                            {commaSeparate(getEmployer(stilling._source), getWorkLocation(
+                                                stilling._source.properties.location,
+                                                stilling._source.locationList
+                                            ))}
+                                        </div>
+                                        <h1 className="Stilling__h1">
+                                            {stilling._source.title}
+                                        </h1>
+                                    </React.Fragment>
+                                )}
                                 {(stilling === undefined || isFetchingStilling) && (
-                                    <Loading spinner={false} />
+                                    <Loading />
+                                )}
+                                {!isFetchingStilling && stilling && isFinn && (
+                                    <FinnAd stilling={stilling} />
                                 )}
                                 {!isFetchingStilling && stilling && !isFinn && (
                                     <React.Fragment>
-                                        <HowToApply
-                                            source={stilling._source.source}
-                                            properties={stilling._source.properties}
-                                        />
-                                        <EmploymentDetails stilling={stilling._source} />
-                                        <ContactPerson contactList={stilling._source.contactList} />
-                                        <EmployerDetails stilling={stilling._source} />
-                                        <AdDetails source={stilling._source} />
+                                        <AdText adText={stilling._source.properties.adtext}/>
+                                        <HardRequirements stilling={stilling}/>
+                                        <SoftRequirements stilling={stilling}/>
+                                        <PersonalAttributes stilling={stilling}/>
+                                        <SocialShare title={stilling._source.title}/>
                                     </React.Fragment>
                                 )}
-                            </Column>
-                        </Row>
-                    </Container>
-                </div>
+                            </div>
+                        </Column>
+                        <Column xs={12} md={4}>
+                            {(stilling === undefined || isFetchingStilling) && (
+                                <Loading spinner={false} />
+                            )}
+                            {!isFetchingStilling && stilling && !isFinn && (
+                                <React.Fragment>
+                                    <HowToApply
+                                        source={stilling._source.source}
+                                        properties={stilling._source.properties}
+                                    />
+                                    <EmploymentDetails stilling={stilling._source} />
+                                    <ContactPerson contactList={stilling._source.contactList} />
+                                    <EmployerDetails stilling={stilling._source} />
+                                    <AdDetails source={stilling._source} />
+                                </React.Fragment>
+                            )}
+                        </Column>
+                    </Row>
+                </Container>
             )}
-        </React.Fragment>
+        </div>
     );
 };
 
