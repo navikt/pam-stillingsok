@@ -1,3 +1,6 @@
+## RELEASE - 0.209.1137-4e6db67
+#### New in this release: 
++ 2020-04-29 [Fix] Gjør ad text litt smalere på store skjemer
 ## RELEASE - 0.207.1134-3b16192
 #### New in this release: 
 + 2020-04-29 [Fix] Dropper arbeidsplassen header fra print
