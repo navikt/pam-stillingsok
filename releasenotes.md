@@ -1,3 +1,7 @@
+## RELEASE - 0.210.1139-41e20b7
+#### New in this release: 
++ 2020-05-25 [Fix] Css på intern stilling
++ 2020-04-29 [Fix] Legger til overflow-wrap på tekst over stillingstittel
 ## RELEASE - 0.209.1137-4e6db67
 #### New in this release: 
 + 2020-04-29 [Fix] Gjør ad text litt smalere på store skjemer
