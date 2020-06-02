@@ -42,7 +42,7 @@ spec:
     - name: PAMADUSER_URL
       value: {{ pamaduser_url }}
     - name: PAM_STILLINGSOK_URL
-      value: {{ PAM_STILLINGSOK_URL }}
+      value: {{ pam_stillingsok_url }}
     - name: PAM_VAR_SIDE_URL
       value: {{ pam_var_side_url }}
     - name: PAMSEARCHAPI_URL
