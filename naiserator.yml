@@ -1,0 +1,49 @@
+apiVersion: "nais.io/v1alpha1"
+kind: "Application"
+metadata:
+  name: pam-stillingsok
+  namespace: default
+  labels:
+    team: teampam
+spec:
+  image: {{ image }}
+  port: 8080
+  replicas:
+    min: 3
+    max: 4
+    cpuThresholdPercentage: 50
+  prometheus:
+    enabled: true
+    path: /stillinger/internal/metrics
+  liveness:
+    initialDelay: 60
+    path: /stillinger/internal/isAlive
+  readiness:
+    initialDelay: 60
+    path: /stillinger/internal/isReady
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 200m
+      memory: 256Mi
+  vault:
+    enabled: false
+  ingresses:
+  {{#each ingress as |url|}}
+     - {{url}}
+  {{/each}}
+  env:
+    - name: LOGINSERVICE_URL
+      value: {{ loginservice_url }}
+    - name: LOGOUTSERVICE_URL
+      value: {{ logoutservice_url }}
+    - name: PAMADUSER_URL
+      value: {{ pamaduser_url }}
+    - name: PAM_STILLINGSOK_URL
+      value: {{ PAM_STILLINGSOK_URL }}
+    - name: PAM_VAR_SIDE_URL
+      value: {{ pam_var_side_url }}
+    - name: PAMSEARCHAPI_URL
+      value: {{ pamsearchapi_url }}
