@@ -25,6 +25,7 @@ import stillingReducer, { stillingSaga } from './stilling/stillingReducer';
 import internalStillingReducer, { internalStillingSaga } from './stilling/internalStillingReducer';
 import './styles.less';
 import './variables.less';
+import * as Sentry from '@sentry/browser';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -64,6 +65,7 @@ sagaMiddleware.run(searchQuerySaga);
 sagaMiddleware.run(analyticsSaga);
 sagaMiddleware.run(facetPanelsSaga);
 
+Sentry.init({dsn: "https://76170ea4b79246638c1d9eb1c0e4fca9@sentry.gc.nav.no/37"});
 
 ReactDOM.render(
     <Provider store={store}>
