@@ -6,5 +6,6 @@
   "pamaduser_url": "https://arbeidsplassen.nav.no",
   "pam_stillingsok_url": "https://arbeidsplassen.nav.no/stillinger",
   "pam_var_side_url": "https://arbeidsplassen.nav.no/stillingsregistrering",
-  "pamsearchapi_url": "http://pam-search-api"
+  "pamsearchapi_url": "http://pam-search-api",
+  "amplitude_token": "6be27fdbdc689cec2885954380c5964d"
 }

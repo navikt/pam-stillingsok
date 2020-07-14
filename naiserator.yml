@@ -47,3 +47,5 @@ spec:
       value: {{ pam_var_side_url }}
     - name: PAMSEARCHAPI_URL
       value: {{ pamsearchapi_url }}
+    - name: AMPLITUDE_TOKEN
+      value: {{ amplitude_token }}
