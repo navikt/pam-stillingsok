@@ -21,6 +21,7 @@
   "license": "ISC",
   "dependencies": {
     "@sentry/browser": "^5.20.1",
+    "amplitude-js": "^7.1.0",
     "body-parser": "^1.18.3",
     "classnames": "^2.2.6",
     "compression": "^1.7.3",
