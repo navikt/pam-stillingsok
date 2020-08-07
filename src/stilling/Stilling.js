@@ -1,69 +1,98 @@
 /* eslint-disable no-underscore-dangle,prefer-destructuring */
-import { Column, Container, Row } from 'nav-frontend-grid';
 import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Flatknapp } from 'pam-frontend-knapper';
+import { Column, Container, Row } from 'nav-frontend-grid';
 import BackLink from '../backLink/BackLink';
 import getEmployer from '../../server/common/getEmployer';
 import getWorkLocation from '../../server/common/getWorkLocation';
 import { CONTEXT_PATH } from '../fasitProperties';
 import FavouriteAlertStripe from '../favourites/alertstripe/FavouriteAlertStripe';
 import ToggleFavouriteButton from '../favourites/toggleFavoriteButton/ToggleFavouriteButton';
-import { parseQueryString } from '../utils';
+import { parseQueryString, stringifyQueryObject } from '../utils';
 import AdDetails from './adDetails/AdDetails';
 import AdText from './adText/AdText';
-import AdTitle from './adTitle/AdTitle';
 import ContactPerson from './contactPerson/ContactPerson';
 import EmployerDetails from './employerDetails/EmployerDetails';
 import EmploymentDetails from './employmentDetails/EmploymentDetails';
 import Expired from './expired/Expired';
+import FinnAd from './finnAd/FinnAd';
 import HowToApply from './howToApply/HowToApply';
 import Loading from './loading/Loading';
 import NotFound from './notFound/NotFound';
 import HardRequirements from './requirements/HardRequirements';
 import PersonalAttributes from './requirements/PersonalAttributes';
 import SoftRequirements from './requirements/SoftRequirements';
+import SocialShare from './socialShare/SocialShare';
 import './Stilling.less';
 import { FETCH_STILLING_BEGIN, RESET_STILLING } from './stillingReducer';
-import { useTrackPageview, useScrollToTop } from '../common/hooks';
+import { useScrollToTop } from '../common/hooks';
+import { sendUrlEndring } from "../common/hooks/useTrackPageview";
+import { addRobotsNoIndexMetaTag, removeRobotsMetaTag } from '../common/utils/metaRobots';
+import logAmplitudeEvent, {logAmplitudePageview} from "../amplitudeTracker";
 
-const Stilling = ({
-    cachedStilling,
-    error,
-    getStilling,
-    isFetchingStilling,
-    match,
-    stilling,
-    resetStilling
-}) => {
-    useTrackPageview(`${CONTEXT_PATH}/stilling`, 'Stilling');
+function commaSeparate(...strings) {
+    const onlyStrings = strings.filter((string) => (
+        typeof string === 'string'
+    ));
+    return onlyStrings.join(', ');
+}
+
+const Stilling = ({ cachedStilling, error, getStilling, isFetchingStilling, match, stilling, resetStilling }) => {
+
     useScrollToTop();
 
     useEffect(() => {
-        let uuid = match.params.uuid;
-        if (!uuid) {
-            uuid = parseQueryString(document.location.search).uuid;
-            if (uuid) {
-                window.history.replaceState({}, '', `${CONTEXT_PATH}/stilling/${uuid}`);
+        let uuidParam = match.params.uuid;
+        if (!uuidParam) {
+            // Om man logget inn mens man var inne på en stillingsannonse, så vil loginservice
+            // redirecte til en url med dette url-formatet: '/stillinger/stilling?uuid=12345'.
+            // Redirecter derfor til riktig url-format: '/stillinger/stilling/:uuid'
+            // @see src/authentication/authenticationReducer.js
+            const { uuid, ...otherQueryParams } = parseQueryString(document.location.search);
+
+            if (uuid && typeof uuid === "string") {
+                window.history.replaceState({}, '', `${CONTEXT_PATH}/stilling/${uuid}${stringifyQueryObject(otherQueryParams)}`);
                 getStilling(uuid);
             }
         } else {
-            getStilling(uuid);
+            getStilling(uuidParam);
         }
         return () => {
             resetStilling();
-
-            let metaRobots = document.querySelector('meta[name=robots]');
-            if (metaRobots) {
-                document.querySelector('head').removeChild(metaRobots);
-            }
         }
     }, []);
 
     useEffect(() => {
-        if (stilling && stilling._source && stilling._source.title) {
+        if (stilling && stilling._source && stilling._id && stilling._source.title) {
             document.title = stilling._source.title;
+
+            try {
+                ga('set', 'page', `${CONTEXT_PATH}/stilling/${stilling._id}`);
+                ga('set', 'title', stilling._source.title);
+                ga('send', 'pageview');
+            } catch (e) {
+                // ignore
+            }
+
+            try {
+                logAmplitudeEvent('Stilling visning', {
+                    title: stilling._source.title || "N/A",
+                    id: stilling._id,
+                    businessName: stilling._source.businessName || "N/A",
+                    country: stilling._source.employer.location.country || "N/A",
+                    county: stilling._source.employer.location.county || "N/A",
+                    city: stilling._source.employer.location.city || "N/A",
+                    employer: stilling._source.employer.name || "N/A",
+                    expires: stilling._source.expires || "N/A",
+                    published: stilling._source.published || "N/A"
+                })
+            } catch (e) {
+                // ignore
+            }
+
+            sendUrlEndring({ page: `${CONTEXT_PATH}/stilling`, source:stilling._source.source });
         }
     }, [stilling]);
 
@@ -71,108 +100,107 @@ const Stilling = ({
         const pageNotFound = error && error.statusCode === 404;
         const adIsNotActive = !isFetchingStilling && stilling && stilling._source.status !== 'ACTIVE';
         if (pageNotFound || adIsNotActive) {
-            const content = 'noindex';
-            let metaRobots = document.querySelector('meta[name=robots]');
-
-            if (!metaRobots) {
-                metaRobots = document.createElement('meta');
-                metaRobots.setAttribute('name', 'robots');
-                metaRobots.setAttribute('content', content);
-                document.querySelector('head').appendChild(metaRobots);
-            } else {
-                metaRobots.setAttribute('content', content);
-            }
+            addRobotsNoIndexMetaTag()
+        }
+        return () => {
+            removeRobotsMetaTag();
         }
     }, [error, isFetchingStilling, stilling]);
+
 
     const onPrintClick = () => {
         window.print();
     };
 
+    const isFinn = stilling && stilling._source && stilling._source.source && stilling._source.source.toLowerCase() === 'finn';
+
     return (
-        <React.Fragment>
-            <FavouriteAlertStripe />
+        <div className="Stilling">
+            <FavouriteAlertStripe/>
+
             {error && error.statusCode === 404 && (
-                <Container>
-                    <NotFound />
-                </Container>
+                <NotFound />
             )}
+
             {!error && (
-                <article className="Stilling">
-                    <header className="Stilling__header">
-                        <Container>
-                            <Row>
-                                <div className="Stilling__header__button-row">
-                                    <BackLink />
-                                    <div className="Stilling__header__favourite">
-                                        {isFetchingStilling && cachedStilling && (
-                                            <ToggleFavouriteButton uuid={cachedStilling.uuid} />
-                                        )}
-                                        {!isFetchingStilling && stilling && (
-                                            <ToggleFavouriteButton uuid={stilling._id} />
-                                        )}
-                                        <Flatknapp
-                                            mini
-                                            className="StillingSubMenu__print"
-                                            onClick={onPrintClick}
-                                        >
-                                            Skriv ut
-                                        </Flatknapp>
-                                    </div>
-                                </div>
-                            </Row>
-                            <Row>
-                                <Column xs="12" md="8">
-                                    {!isFetchingStilling && stilling && stilling._source.status !== 'ACTIVE' && (
-                                        <Expired />
-                                    )}
+                <Container>
+                    <Row>
+                        <Column xs={12}>
+                            <div className="Stilling__header">
+                                <BackLink/>
+                                <div className="Stilling__buttons">
                                     {isFetchingStilling && cachedStilling && (
-                                        <AdTitle
-                                            title={cachedStilling.title}
-                                            employer={getEmployer(cachedStilling)}
-                                            location={getWorkLocation(
-                                                cachedStilling.properties.location,
-                                                cachedStilling.locationList
-                                            )}
-                                        />
+                                        <ToggleFavouriteButton uuid={cachedStilling.uuid} />
                                     )}
                                     {!isFetchingStilling && stilling && (
-                                        <AdTitle
-                                            title={stilling._source.title}
-                                            employer={getEmployer(stilling._source)}
-                                            location={getWorkLocation(
+                                        <ToggleFavouriteButton uuid={stilling._id} />
+                                    )}
+                                    <Flatknapp
+                                        mini
+                                        className="Stilling__print"
+                                        onClick={onPrintClick}
+                                    >
+                                        Skriv ut
+                                    </Flatknapp>
+                                </div>
+                            </div>
+                        </Column>
+                    </Row>
+                    <Row>
+                        <Column xs={12} md={7} lg={8}>
+                            <div className="Stilling__left">
+                                {!isFetchingStilling && stilling && stilling._source.status !== 'ACTIVE' && (
+                                    <Expired />
+                                )}
+                                {isFetchingStilling && cachedStilling && (
+                                    <React.Fragment>
+                                        <div className="Stilling__employer-and-location">
+                                            {commaSeparate(getEmployer(cachedStilling), getWorkLocation(
+                                                cachedStilling.properties.location,
+                                                cachedStilling.locationList
+                                            ))}
+                                        </div>
+                                        <h1 className="Stilling__h1">
+                                            {cachedStilling.title}
+                                        </h1>
+                                    </React.Fragment>
+                                )}
+                                {!isFetchingStilling && stilling && (
+                                    <React.Fragment>
+                                        <div className="Stilling__employer-and-location">
+                                            {commaSeparate(getEmployer(stilling._source), getWorkLocation(
                                                 stilling._source.properties.location,
                                                 stilling._source.locationList
-                                            )}
-                                        />
-                                    )}
-                                </Column>
-                            </Row>
-                        </Container>
-                    </header>
-                    {(stilling === undefined || isFetchingStilling) && (
-                        <Container className="Stilling__main">
-                            <Row>
-                                <Column xs="12" md="6">
+                                            ))}
+                                        </div>
+                                        <h1 className="Stilling__h1">
+                                            {stilling._source.title}
+                                        </h1>
+                                    </React.Fragment>
+                                )}
+                                {(stilling === undefined || isFetchingStilling) && (
                                     <Loading />
-                                </Column>
-                                <Column xs="12" md="2" />
-                                <Column xs="12" md="4">
-                                    <Loading spinner={false} />
-                                </Column>
-                            </Row>
-                        </Container>
-                    )}
-                    {!isFetchingStilling && stilling && (
-                        <Container className="Stilling__main">
-                            <Row>
-                                <Column xs="12" md="7">
-                                    <AdText adText={stilling._source.properties.adtext} />
-                                    <HardRequirements stilling={stilling} />
-                                    <SoftRequirements stilling={stilling} />
-                                    <PersonalAttributes stilling={stilling} />
-                                </Column>
-                                <Column xs="12" md="5" className="Stilling__main__aside">
+                                )}
+                                {!isFetchingStilling && stilling && isFinn && (
+                                    <FinnAd stilling={stilling} />
+                                )}
+                                {!isFetchingStilling && stilling && !isFinn && (
+                                    <React.Fragment>
+                                        <AdText adText={stilling._source.properties.adtext}/>
+                                        <HardRequirements stilling={stilling}/>
+                                        <SoftRequirements stilling={stilling}/>
+                                        <PersonalAttributes stilling={stilling}/>
+                                        <SocialShare title={stilling._source.title}/>
+                                    </React.Fragment>
+                                )}
+                            </div>
+                        </Column>
+                        <Column xs={12} md={5} lg={4}>
+                            {(stilling === undefined || isFetchingStilling) && (
+                                <Loading spinner={false} />
+                            )}
+                            {!isFetchingStilling && stilling && !isFinn && (
+                                <React.Fragment>
                                     <HowToApply
                                         source={stilling._source.source}
                                         properties={stilling._source.properties}
@@ -181,13 +209,13 @@ const Stilling = ({
                                     <ContactPerson contactList={stilling._source.contactList} />
                                     <EmployerDetails stilling={stilling._source} />
                                     <AdDetails source={stilling._source} />
-                                </Column>
-                            </Row>
-                        </Container>
-                    )}
-                </article>
+                                </React.Fragment>
+                            )}
+                        </Column>
+                    </Row>
+                </Container>
             )}
-        </React.Fragment>
+        </div>
     );
 };
 

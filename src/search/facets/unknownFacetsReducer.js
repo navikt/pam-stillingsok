@@ -1,7 +1,7 @@
-import { put, select, takeLatest } from 'redux-saga/es/effects';
-import { RESTORE_STATE_FROM_SAVED_SEARCH } from '../../savedSearches/savedSearchesReducer';
-import { RESTORE_STATE_FROM_URL } from '../searchQueryReducer';
-import { FETCH_INITIAL_FACETS_SUCCESS, RESET_SEARCH } from '../searchReducer';
+import {put, select, takeLatest} from 'redux-saga/es/effects';
+import {RESTORE_STATE_FROM_SAVED_SEARCH} from '../../savedSearches/savedSearchesReducer';
+import {RESTORE_STATE_FROM_URL} from '../searchQueryReducer';
+import {FETCH_INITIAL_FACETS_SUCCESS, RESET_SEARCH} from '../searchReducer';
 
 const SET_UNKNOWN_FACETS = 'SET_UNKNOWN_FACETS';
 
@@ -53,8 +53,20 @@ export function findUnknownFacets(usersSearchCriteria, searchCriteriaFromBackend
             }
             return used === knownValue.key;
         });
+
         return found === undefined;
     });
+}
+
+export function findZeroCountLocationFacets(usersSearchCriteria, nationalCountMap, internationalCountMap) {
+    if (Array.isArray(usersSearchCriteria) && usersSearchCriteria.length > 0) {
+        return usersSearchCriteria.filter(c => {
+            return !(nationalCountMap.hasOwnProperty(c) || internationalCountMap.hasOwnProperty(c));
+
+        });
+    }
+
+    return [];
 }
 
 /**
@@ -62,14 +74,15 @@ export function findUnknownFacets(usersSearchCriteria, searchCriteriaFromBackend
  */
 function* handleFetchInitialFacetsSuccess(action) {
     const state = yield select();
+
     yield put({
         type: SET_UNKNOWN_FACETS,
         unknownValues: {
             unknownOccupationFirstLevels: findUnknownFacets(state.searchQuery.occupationFirstLevels, action.response.occupationFirstLevels),
             unknownOccupationSecondLevels: findUnknownFacets(state.searchQuery.occupationSecondLevels, action.response.occupationFirstLevels, 'occupationSecondLevels'),
-            unknownCounties: findUnknownFacets(state.searchQuery.counties, action.response.counties),
-            unknownMunicipals: findUnknownFacets(state.searchQuery.municipals, action.response.counties, 'municipals'),
-            unknownCountries: findUnknownFacets(state.searchQuery.countries, action.response.countries),
+            unknownCounties: findZeroCountLocationFacets(state.searchQuery.counties, action.response.nationalCountMap, action.response.internationalCountMap),
+            unknownMunicipals: findZeroCountLocationFacets(state.searchQuery.municipals, action.response.nationalCountMap, action.response.internationalCountMap),
+            unknownCountries: findZeroCountLocationFacets(state.searchQuery.countries, action.response.nationalCountMap, action.response.internationalCountMap),
             unknownEngagementTypes: findUnknownFacets(state.searchQuery.engagementType, action.response.engagementTypes),
             unknownExtents: findUnknownFacets(state.searchQuery.extent, action.response.extent),
             unknownSectors: findUnknownFacets(state.searchQuery.sector, action.response.sector)
@@ -82,14 +95,14 @@ function* handleFetchInitialFacetsSuccess(action) {
  */
 function* handleRestoreStateFromSavedSearch() {
     const state = yield select();
+
     yield put({
         type: SET_UNKNOWN_FACETS,
         unknownValues: {
             unknownOccupationFirstLevels: findUnknownFacets(state.searchQuery.occupationFirstLevels, state.facets.occupationFirstLevelFacets),
             unknownOccupationSecondLevels: findUnknownFacets(state.searchQuery.occupationSecondLevels, state.facets.occupationFirstLevelFacets, 'occupationSecondLevels'),
-            unknownCounties: findUnknownFacets(state.searchQuery.counties, state.facets.countyFacets),
-            unknownMunicipals: findUnknownFacets(state.searchQuery.municipals, state.facets.countyFacets, 'municipals'),
-            unknownCountries: findUnknownFacets(state.searchQuery.countries, state.facets.countryFacets),
+            unknownCounties: findUnknownFacets(state.searchQuery.counties, state.facets.locationFacets),
+            unknownMunicipals: findUnknownFacets(state.searchQuery.municipals, state.facets.locationFacets, 'municipals'),
             unknownEngagementTypes: findUnknownFacets(state.searchQuery.engagementType, state.facets.engagementTypeFacets),
             unknownExtents: findUnknownFacets(state.searchQuery.extent, state.facets.extentFacets),
             unknownSectors: findUnknownFacets(state.searchQuery.sector, state.facets.sectorFacets)

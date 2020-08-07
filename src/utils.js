@@ -45,6 +45,29 @@ export function isValidEmail(input) {
     return pattern.test(input);
 }
 
+export function containsEmail(input) {
+    // Regex from https://emailregex.com
+    const preprocessedInput = input.replace(/&#64;/, "@");
+    const pattern = new RegExp(/(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/);
+
+    return pattern.test(preprocessedInput);
+}
+
+export function extractEmail(input) {
+    // Regex from https://emailregex.com
+    const preprocessedInput = input.replace(/&#64;/g, "@");
+    const pattern = new RegExp(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/gi);
+
+    return preprocessedInput.match(pattern);
+}
+
+export function mailtoInString(input, email) {
+    const pattern = new RegExp(`mailto:${email}`, 'g')
+    
+    return pattern.test(input);
+}
+
+
 export function removeUndefinedOrEmptyString(obj) {
     const newObj = {};
     Object.keys(obj).forEach((prop) => {
@@ -71,7 +94,9 @@ export function parseQueryString(queryString = '?') {
             let key = decodeURIComponent(pair[0]);
             const val = pair[1] !== undefined ? decodeURIComponent(pair[1]) : '';
 
-            if (key.includes('[]')) {
+            if (key === 'international') {
+                object[key] = val === 'true' ? true : 'false';
+            } else if (key.includes('[]')) {
                 key = key.replace('[]', '');
 
                 if (object[key] === undefined) {
@@ -84,6 +109,7 @@ export function parseQueryString(queryString = '?') {
             }
         }
     });
+
     return object;
 }
 

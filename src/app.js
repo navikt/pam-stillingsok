@@ -18,12 +18,14 @@ import savedSearchAlertStripeReducer, { savedSearchAlertStripeSaga } from './sav
 import savedSearchExpandReducer from './savedSearches/expand/savedSearchExpandReducer';
 import savedSearchFormReducer, { savedSearchFormSaga } from './savedSearches/form/savedSearchFormReducer';
 import savedSearchesReducer, { savedSearchesSaga } from './savedSearches/savedSearchesReducer';
-import facetPanelsReducer from './search/facets/facetPanelsReducer';
+import facetPanelsReducer, {facetPanelsSaga} from './search/facets/facetPanelsReducer';
 import searchBoxReducer, { searchBoxSaga } from './search/searchBox/searchBoxReducer';
 import searchReducer, { saga } from './search/searchReducer';
 import stillingReducer, { stillingSaga } from './stilling/stillingReducer';
+import internalStillingReducer, { internalStillingSaga } from './stilling/internalStillingReducer';
 import './styles.less';
 import './variables.less';
+import * as Sentry from '@sentry/browser';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -41,6 +43,7 @@ const store = createStore(combineReducers({
     searchBox: searchBoxReducer,
     searchQuery: searchQueryReducer,
     stilling: stillingReducer,
+    internalStilling: internalStillingReducer,
     facets: facetsReducer,
     unknownFacets: unknownFacetsReducer,
     facetPanels: facetPanelsReducer
@@ -50,6 +53,7 @@ sagaMiddleware.run(saga);
 sagaMiddleware.run(backLinkSaga);
 sagaMiddleware.run(searchBoxSaga);
 sagaMiddleware.run(stillingSaga);
+sagaMiddleware.run(internalStillingSaga);
 sagaMiddleware.run(favouritesSaga);
 sagaMiddleware.run(savedSearchesSaga);
 sagaMiddleware.run(savedSearchFormSaga);
@@ -59,11 +63,19 @@ sagaMiddleware.run(authenticationSaga);
 sagaMiddleware.run(unknownFacetsSaga);
 sagaMiddleware.run(searchQuerySaga);
 sagaMiddleware.run(analyticsSaga);
+sagaMiddleware.run(facetPanelsSaga);
 
+Sentry.init({
+    dsn: "https://76170ea4b79246638c1d9eb1c0e4fca9@sentry.gc.nav.no/37",
+    blacklistUrls: [
+        new RegExp('localhost'),
+        new RegExp('arbeidsplassen-q.nav.no')
+    ]
+});
 
 ReactDOM.render(
     <Provider store={store}>
         <Application />
     </Provider>,
-    document.getElementById('app')
+    document.getElementById('reactApp')
 );

@@ -1,24 +1,22 @@
-import { Ingress } from 'nav-frontend-typografi';
 import React from 'react';
-import { connect } from 'react-redux';
 import './NoResults.less';
-import { toReadableSearchQuery } from '../searchQueryReducer';
+import SaveSearchButton from "../../savedSearches/SaveSearchButton";
 
-function NoResults({ readableSearchQuery }) {
+function NoResults() {
     return (
         <div className="NoResults">
-            <Ingress>
-                Ingen treff på <b>&#34;{readableSearchQuery}&#34;</b>
-            </Ingress>
+            <div className="NoResults__text__container">
+                <div className="NoResults__text__title">
+                    Ingen stillinger akkurat nå
+                </div>
+                <br/>
+                <div className="NoResults__text__desc">
+                    Vil du lagre dette søket? Da kan du få varsel når det kommer nye stillinger.
+                </div>
+            </div>
+            <SaveSearchButton/>
         </div>
     );
 }
 
-
-const mapStateToProps = (state) => ({
-    readableSearchQuery: toReadableSearchQuery(state.searchQuery)
-});
-
-const mapDispatchToProps = () => ({});
-
-export default connect(mapStateToProps, mapDispatchToProps)(NoResults);
+export default NoResults;

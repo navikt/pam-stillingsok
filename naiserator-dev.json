@@ -1,0 +1,12 @@
+{
+  "ingress": ["https://arbeidsplassen-q.nav.no/stillinger", "https://pam-stillingsok.nais.oera-q.local",
+    "https://tjenester-t5.nav.no/pam-stillingsok", "https://stillingsok-q.nav.no"],
+  "loginservice_url": "https://loginservice-q.nav.no/login",
+  "logoutservice_url": "https://loginservice-q.nav.no/slo",
+  "pamaduser_url": "https://arbeidsplassen-q.nav.no",
+  "pam_stillingsok_url": "https://arbeidsplassen-q.nav.no/stillinger",
+  "pam_var_side_url": "https://arbeidsplassen-q.nav.no/stillingsregistrering",
+  "pamsearchapi_url": "http://pam-search-api",
+  "amplitude_token": "b6143dedf1d17c3e73d3ad440bf54e8b"
+
+}

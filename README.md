@@ -16,6 +16,7 @@ PAM_VAR_SIDE_URL
 Man kan for eksempel kan man lage et script `run.sh`, dersom man kjører pam-aduser, pam-search-api og
 pam-stillingsok lokalt, med følgende innhold:
 
+
 ```sh
 #!/bin/bash
 export PAMSEARCHAPI_URL=http://localhost:9000
@@ -104,3 +105,8 @@ Kommando for å generere rapport:
 npm run cucumber-report
 ```
 Rapporten finnes her ``qa/reports/cucumber_report.html``
+
+
+####Notater
+Snyktester for qa er disabled. For å enable igjen gå på 
+https://app.snyk.io/org/navikt/project/0eb029db-d927-47ab-89a1-4f909785c485/settings

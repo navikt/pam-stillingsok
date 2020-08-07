@@ -1,15 +1,17 @@
 import Modal from 'nav-frontend-modal';
 import { Fieldset, Radio, SkjemaGruppe } from 'nav-frontend-skjema';
-import { Undertittel } from 'nav-frontend-typografi';
+import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Flatknapp, Hovedknapp } from 'pam-frontend-knapper';
+import { EVENT_CATEGORY_SAVED_SEARCHES, trackOnce } from '../../analytics';
 import { SET_EMAIL_FROM_SAVED_SEARCH } from '../../user/userReducer';
 import { ADD_SAVED_SEARCH, UPDATE_SAVED_SEARCH } from '../savedSearchesReducer';
 import AddOrReplaceForm from './AddOrReplaceForm';
 import './SavedSearchForm.less';
 import { HIDE_SAVED_SEARCH_FORM, SavedSearchFormMode, SET_SAVED_SEARCH_FORM_MODE } from './savedSearchFormReducer';
+import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 
 class SavedSearchForm extends React.Component {
     constructor(props) {
@@ -22,22 +24,38 @@ class SavedSearchForm extends React.Component {
     };
 
     onSaveClick = () => {
-        if (this.props.showRegisterEmail) {
-            this.props.setEmailFromSavedSearch();
-        }
-        if (this.props.formMode === SavedSearchFormMode.ADD) {
-            this.props.addSavedSearch();
+        if (!this.props.showRegisterEmail) {
+            this.addOrUpdateSavedSearch();
+            this.closeModal();
         } else {
-            this.props.updateSavedSearch();
+            this.props.setEmailFromSavedSearch();
+            this.addOrUpdateSavedSearch();
         }
 
-        if(this.childForm && this.childForm.current) {
+        if (this.childForm && this.childForm.current) {
             this.childForm.current.getWrappedInstance().setFocusOnError();
         }
     };
 
+    addOrUpdateSavedSearch() {
+        if (this.props.formMode === SavedSearchFormMode.ADD) {
+            this.props.addSavedSearch();
+        } else {
+            trackOnce(EVENT_CATEGORY_SAVED_SEARCHES, 'Endret et lagret søk');
+            this.props.updateSavedSearch();
+        }
+    }
+
+    emailSet = () => {
+        return (this.props.user.email && this.props.user.email.trim().length !== 0);
+    };
+
     closeModal = () => {
         this.props.hideForm();
+    };
+
+    harLagretNyEpost = () => {
+        return this.props.showRegisterEmail && this.emailSet();
     };
 
     render() {
@@ -54,68 +72,90 @@ class SavedSearchForm extends React.Component {
                     appElement={document.getElementById('app')}
                 >
                     <div className="SavedSearchModal">
-                        {showAddOrReplace ? (
+
+                        {this.harLagretNyEpost() ? (
                             <div>
-                                <Undertittel className="SavedSearchModal__title">
-                                    Du har endret et lagret søk
-                                </Undertittel>
-                                <SkjemaGruppe className="SavedSearchModal__form-mode">
-                                    <Fieldset
-                                        legend={`Ønsker du å lagre endringene for "${currentSavedSearch.title}" eller lagre et nytt søk?`}
-                                    >
-                                        <Radio
-                                            label="Lagre endringene"
-                                            name="add_or_replace"
-                                            key="replace"
-                                            value={SavedSearchFormMode.REPLACE}
-                                            onChange={this.onFormModeChange}
-                                            checked={formMode === SavedSearchFormMode.REPLACE}
-                                        />
-                                        <Radio
-                                            label="Lagre nytt søk"
-                                            name="add_or_replace"
-                                            key="add"
-                                            value={SavedSearchFormMode.ADD}
-                                            onChange={this.onFormModeChange}
-                                            checked={formMode === SavedSearchFormMode.ADD}
-                                        />
-                                    </Fieldset>
-                                </SkjemaGruppe>
+                                <AlertStripeInfo className="alertstripe--solid infoboks">
+                                    <div className="alertstripe__divider" />
+                                    <Normaltekst>
+                                        Du må bekrefte e-postadressen din. Klikk på lenken i e-posten du har
+                                        mottatt.
+                                    </Normaltekst>
+                                </AlertStripeInfo>
+
+                                <div className="SavedSearchModal__buttons">
+                                    <Hovedknapp onClick={this.closeModal}>OK</Hovedknapp>
+                                </div>
                             </div>
                         ) : (
                             <div>
-                                {formMode === SavedSearchFormMode.ADD && (
-                                    <Undertittel className="SavedSearchModal__title">Lagre søk</Undertittel>
+                                {showAddOrReplace ? (
+                                    <div>
+                                        <Undertittel className="SavedSearchModal__title">
+                                            Du har endret et lagret søk
+                                        </Undertittel>
+                                        <SkjemaGruppe className="SavedSearchModal__form-mode">
+                                            <Fieldset
+                                                legend={`Ønsker du å lagre endringene for "${currentSavedSearch.title}" eller lagre et nytt søk?`}
+                                            >
+                                                <Radio
+                                                    label="Lagre endringene"
+                                                    name="add_or_replace"
+                                                    key="replace"
+                                                    value={SavedSearchFormMode.REPLACE}
+                                                    onChange={this.onFormModeChange}
+                                                    checked={formMode === SavedSearchFormMode.REPLACE}
+                                                />
+                                                <Radio
+                                                    label="Lagre nytt søk"
+                                                    name="add_or_replace"
+                                                    key="add"
+                                                    value={SavedSearchFormMode.ADD}
+                                                    onChange={this.onFormModeChange}
+                                                    checked={formMode === SavedSearchFormMode.ADD}
+                                                />
+                                            </Fieldset>
+                                        </SkjemaGruppe>
+                                    </div>
+                                ) : (
+                                    <div>
+                                        {formMode === SavedSearchFormMode.ADD && (
+                                            <Undertittel className="SavedSearchModal__title">Lagre søk</Undertittel>
+                                        )}
+                                        {formMode === SavedSearchFormMode.EDIT && (
+                                            <Undertittel className="SavedSearchModal__title">Endre lagret
+                                                søk</Undertittel>
+                                        )}
+                                    </div>
                                 )}
-                                {formMode === SavedSearchFormMode.EDIT && (
-                                    <Undertittel className="SavedSearchModal__title">Endre lagret søk</Undertittel>
-                                )}
+                                <div className="SavedSearchModal__body">
+                                    {formMode !== SavedSearchFormMode.REPLACE && !showAddOrReplace && (
+                                        <AddOrReplaceForm ref={this.childForm} />
+                                    )}
+                                    {formMode !== SavedSearchFormMode.REPLACE && showAddOrReplace && (
+                                        <SkjemaGruppe>
+                                            <Fieldset legend="Lagre nytt søk">
+                                                <AddOrReplaceForm ref={this.childForm} />
+                                            </Fieldset>
+                                        </SkjemaGruppe>
+                                    )}
+                                </div>
+
+                                <div className="SavedSearchModal__buttons">
+                                    <Hovedknapp
+                                        id="SavedSearchModal__saveButton"
+                                        disabled={isSaving}
+                                        spinner={isSaving}
+                                        onClick={this.onSaveClick}
+                                    >
+                                        Lagre
+                                    </Hovedknapp>
+                                    <Flatknapp onClick={this.closeModal}>Avbryt</Flatknapp>
+                                </div>
                             </div>
                         )}
-                        <div className="SavedSearchModal__body">
-                            {formMode !== SavedSearchFormMode.REPLACE && !showAddOrReplace && (
-                                <AddOrReplaceForm ref={this.childForm} />
-                            )}
-                            {formMode !== SavedSearchFormMode.REPLACE && showAddOrReplace && (
-                                <SkjemaGruppe>
-                                    <Fieldset legend="Lagre nytt søk">
-                                        <AddOrReplaceForm ref={this.childForm} />
-                                    </Fieldset>
-                                </SkjemaGruppe>
-                            )}
-                        </div>
 
-                        <div className="SavedSearchModal__buttons">
-                            <Hovedknapp
-                                id="SavedSearchModal__saveButton"
-                                disabled={isSaving}
-                                spinner={isSaving}
-                                onClick={this.onSaveClick}
-                            >
-                                Lagre
-                            </Hovedknapp>
-                            <Flatknapp onClick={this.closeModal}>Avbryt</Flatknapp>
-                        </div>
+
                     </div>
                 </Modal>
             );
@@ -129,6 +169,9 @@ SavedSearchForm.defaultProps = {
 };
 
 SavedSearchForm.propTypes = {
+    user: PropTypes.shape({
+        email: PropTypes.string
+    }),
     showAddOrReplace: PropTypes.bool.isRequired,
     isSaving: PropTypes.bool.isRequired,
     showSavedSearchForm: PropTypes.bool.isRequired,
@@ -145,12 +188,13 @@ SavedSearchForm.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
+    user: state.user.user,
     showSavedSearchForm: state.savedSearchForm.showSavedSearchForm,
     formMode: state.savedSearchForm.formMode,
     showAddOrReplace: state.savedSearchForm.showAddOrReplace,
     currentSavedSearch: state.savedSearches.currentSavedSearch,
     isSaving: state.savedSearches.isSaving,
-    showRegisterEmail: state.savedSearchForm.showRegisterEmail,
+    showRegisterEmail: state.savedSearchForm.showRegisterEmail
 });
 
 const mapDispatchToProps = (dispatch) => ({

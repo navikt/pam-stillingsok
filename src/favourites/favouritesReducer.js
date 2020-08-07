@@ -1,18 +1,18 @@
 /* eslint-disable no-underscore-dangle */
-import { call, put, select, take, takeEvery, takeLatest } from 'redux-saga/effects';
+import {call, put, select, take, takeEvery, takeLatest} from 'redux-saga/effects';
 import getEmployer from '../../server/common/getEmployer';
 import getWorkLocation from '../../server/common/getWorkLocation';
 import SearchApiError from '../api/SearchApiError';
-import { userApiGet, userApiPost, userApiRemove } from '../api/userApi';
+import {userApiGet, userApiPost, userApiRemove} from '../api/userApi';
 import AuthenticationCaller from '../authentication/AuthenticationCaller';
 import {
     authenticationEnum,
     FETCH_IS_AUTHENTICATED_SUCCESS,
     requiresAuthentication
 } from '../authentication/authenticationReducer';
-import { AD_USER_API } from '../fasitProperties';
-import { SEARCH_END } from '../search/searchReducer';
-import { FETCH_STILLING_SUCCESS } from '../stilling/stillingReducer';
+import {AD_USER_API} from '../fasitProperties';
+import {SEARCH_END} from '../search/searchReducer';
+import {FETCH_STILLING_SUCCESS} from '../stilling/stillingReducer';
 import {
     CREATE_USER_SUCCESS,
     FETCH_USER_FAILURE_NO_USER,
@@ -193,6 +193,8 @@ function toFavourite(uuid, ad) {
     return {
         favouriteAd: {
             uuid,
+            source: ad.source,
+            reference: ad.reference,
             title: ad.title,
             jobTitle: ad.properties.jobtitle ? ad.properties.jobtitle : null,
             status: ad.status,
@@ -206,14 +208,14 @@ function toFavourite(uuid, ad) {
 }
 
 function* fetchFavourites() {
-    yield put({ type: FETCH_FAVOURITES_BEGIN });
+    yield put({type: FETCH_FAVOURITES_BEGIN});
     try {
         let state = yield select();
         const response = yield call(userApiGet, `${AD_USER_API}/api/v1/userfavouriteads?size=999&sort=favouriteAd.${state.favourites.sortField},${state.favourites.sortDirection}`);
-        yield put({ type: FETCH_FAVOURITES_SUCCESS, response });
+        yield put({type: FETCH_FAVOURITES_SUCCESS, response});
     } catch (e) {
         if (e instanceof SearchApiError) {
-            yield put({ type: FETCH_FAVOURITES_FAILURE, error: e });
+            yield put({type: FETCH_FAVOURITES_FAILURE, error: e});
         } else {
             throw e;
         }
@@ -235,6 +237,7 @@ function* addSearchResultToFavourites(action) {
     const state = yield select();
     const foundInSearchResult = state.search.searchResult && state.search.searchResult.stillinger &&
         state.search.searchResult.stillinger.find((s) => s.uuid === action.uuid);
+
     if (foundInSearchResult) {
         yield call(
             addToFavourites,
@@ -269,15 +272,15 @@ function* addToFavourites(uuid, stilling, callback) {
         // Dette kan f.eks skje hvis brukeren ikke var innlogget da man favorittmarkerte
         // en stilling, og at samme stilling viser seg å allerede være en favoritt når man logger inn.
         if (state.favourites.favourites.find((favourite) => favourite.favouriteAd.uuid === uuid)) {
-            yield put({ type: SHOW_FAVOURITES_ALERT_STRIPE, alertStripeMode: 'added' });
+            yield put({type: SHOW_FAVOURITES_ALERT_STRIPE, alertStripeMode: 'added'});
             yield call(delay, 5000);
-            yield put({ type: HIDE_FAVOURITES_ALERT_STRIPE });
+            yield put({type: HIDE_FAVOURITES_ALERT_STRIPE});
             return;
         }
 
         // Hvis man ikke har opprettet en bruker, så må dette bli gjort først
         if (!state.user.user) {
-            yield put({ type: SHOW_TERMS_OF_USE_MODAL });
+            yield put({type: SHOW_TERMS_OF_USE_MODAL});
             yield take([HIDE_TERMS_OF_USE_MODAL, CREATE_USER_SUCCESS]);
             state = yield select();
         }
@@ -286,15 +289,15 @@ function* addToFavourites(uuid, stilling, callback) {
             const favourite = toFavourite(uuid, stilling);
             const adUuid = favourite.favouriteAd.uuid;
             try {
-                yield put({ type: ADD_TO_FAVOURITES_BEGIN, adUuid: uuid });
+                yield put({type: ADD_TO_FAVOURITES_BEGIN, adUuid: uuid});
                 const response = yield call(userApiPost, `${AD_USER_API}/api/v1/userfavouriteads`, favourite);
-                yield put({ type: ADD_TO_FAVOURITES_SUCCESS, response, adUuid });
-                yield put({ type: SHOW_FAVOURITES_ALERT_STRIPE, alertStripeMode: 'added' });
+                yield put({type: ADD_TO_FAVOURITES_SUCCESS, response, adUuid});
+                yield put({type: SHOW_FAVOURITES_ALERT_STRIPE, alertStripeMode: 'added'});
                 yield call(delay, 5000);
-                yield put({ type: HIDE_FAVOURITES_ALERT_STRIPE });
+                yield put({type: HIDE_FAVOURITES_ALERT_STRIPE});
             } catch (e) {
                 if (e instanceof SearchApiError) {
-                    yield put({ type: ADD_TO_FAVOURITES_FAILURE, error: e, adUuid });
+                    yield put({type: ADD_TO_FAVOURITES_FAILURE, error: e, adUuid});
                 } else {
                     throw e;
                 }
@@ -329,7 +332,7 @@ function* restoreWorkflowAfterLogin(action) {
         if (!state.search.initialSearchDone) {
             yield take(SEARCH_END);
         }
-        yield call(addSearchResultToFavourites, { uuid: action.data })
+        yield call(addSearchResultToFavourites, {uuid: action.data})
     } else {
         if (state.stilling.stilling === undefined) {
             yield take(FETCH_STILLING_SUCCESS);
@@ -347,12 +350,12 @@ function* removeFromFavourites(action) {
     const adUuid = favourite.favouriteAd.uuid;
     const favouriteUuid = favourite.uuid;
     try {
-        yield put({ type: REMOVE_FROM_FAVOURITES_BEGIN, adUuid, favouriteUuid });
+        yield put({type: REMOVE_FROM_FAVOURITES_BEGIN, adUuid, favouriteUuid});
         yield call(userApiRemove, `${AD_USER_API}/api/v1/userfavouriteads/${favourite.uuid}`);
-        yield put({ type: REMOVE_FROM_FAVOURITES_SUCCESS, adUuid, favouriteUuid });
-        yield put({ type: SHOW_FAVOURITES_ALERT_STRIPE, alertStripeMode: 'removed' });
+        yield put({type: REMOVE_FROM_FAVOURITES_SUCCESS, adUuid, favouriteUuid});
+        yield put({type: SHOW_FAVOURITES_ALERT_STRIPE, alertStripeMode: 'removed'});
         yield call(delay, 5000);
-        yield put({ type: HIDE_FAVOURITES_ALERT_STRIPE });
+        yield put({type: HIDE_FAVOURITES_ALERT_STRIPE});
     } catch (e) {
         if (e instanceof SearchApiError) {
             yield put({

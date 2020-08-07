@@ -1,5 +1,5 @@
 import { isMobile } from '../../utils';
-import { FETCH_INITIAL_FACETS_SUCCESS } from '../searchReducer';
+import { select, takeLatest } from 'redux-saga/effects';
 
 export const EXPAND_ALL_FACET_PANELS = 'EXPAND_ALL_FACET_PANELS';
 export const COLLAPSE_ALL_FACET_PANELS = 'COLLAPSE_ALL_FACET_PANELS';
@@ -16,8 +16,11 @@ export const SearchCriteriaPanels = {
     SECTOR_PANEL: 'SECTOR_PANEL'
 };
 
-const initialState = {
-    expandedFacetPanels: [
+function getDefaultExpandedPanels() {
+    if(isMobile()) {
+        return [];
+    }
+    return [
         SearchCriteriaPanels.ENGAGEMENT_TYPE_PANEL,
         SearchCriteriaPanels.EXTENT_PANEL,
         SearchCriteriaPanels.COUNTIES_PANEL,
@@ -25,7 +28,41 @@ const initialState = {
         SearchCriteriaPanels.OCCUPATIONS_PANEL,
         SearchCriteriaPanels.PUBLISHED_PANEL,
         SearchCriteriaPanels.SECTOR_PANEL
-    ],
+    ];
+}
+
+/**
+ * Husker hvilke av panelene som er åpne, slik de forblir åpnet
+ * når bruker kommer tilbake fra en ekstern side eller refresher nettsiden.
+ */
+function* rememberWhichPanelsAreExpanded() {
+    const state = yield select();
+    const expandedFacetPanels = state.facetPanels.expandedFacetPanels;
+
+    try  {
+        sessionStorage.setItem('expandedFacetPanels', expandedFacetPanels.join(','));
+    } catch (e) {
+        // ignore session storage error
+    }
+}
+
+function restoreExpandedPanels() {
+    try  {
+        const valueFromSessionStorage = sessionStorage.getItem('expandedFacetPanels');
+        if (valueFromSessionStorage !== null) {
+            const valuesAsArray = valueFromSessionStorage.split(',');
+            const allowedValues = valuesAsArray.filter((p) => SearchCriteriaPanels[p] !== undefined);
+            return allowedValues;
+        } else {
+            return getDefaultExpandedPanels();
+        }
+    } catch (e) {
+        return getDefaultExpandedPanels();
+    }
+}
+
+const initialState = {
+    expandedFacetPanels: restoreExpandedPanels()
 };
 
 /**
@@ -53,12 +90,11 @@ export default function facetPanelsReducer(state = initialState, action) {
                 ...state,
                 expandedFacetPanels: []
             };
-        case FETCH_INITIAL_FACETS_SUCCESS:
-            return {
-                ...state,
-                expandedFacetPanels: isMobile() ? [] : initialState.expandedFacetPanels
-            };
         default:
             return state;
     }
 }
+
+export const facetPanelsSaga = function* saga() {
+    yield takeLatest([EXPAND_FACET_PANEL, COLLAPSE_FACET_PANEL], rememberWhichPanelsAreExpanded);
+};

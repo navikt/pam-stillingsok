@@ -2,7 +2,7 @@ const getEmployer = require('./getEmployer');
 const getWorkLocation = require('./getWorkLocation');
 const date = require('./date');
 
-const DEFAULT_TITLE = 'Ledige stillinger - Arbeidsplassen';
+const DEFAULT_TITLE = 'Ledige stillinger - Arbeidsplassen - Norges nye jobbsøk';
 const DEFAULT_DESCRIPTION = 'Søk etter ledige stillinger. Heltid- og deltidsjobber i offentlig og privat sektor i Oslo, Bergen, Trondheim, Stavanger, Tromsø og alle kommuner i Norge.';
 const DEFAULT_DESCRIPTION_STILLING = 'Her kan du se hele stillingen, sende søknad eller finne andre ledige stillinger.';
 

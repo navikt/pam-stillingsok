@@ -1,10 +1,11 @@
-import { put, select, takeEvery } from 'redux-saga/effects';
-import { AD_USER_API, CONTEXT_PATH, LOGIN_URL, PAM_VAR_SIDE_URL, STILLINGSOK_URL } from '../fasitProperties';
-import { RESTORE_ADD_FAVOURITE_WORKFLOW_AFTER_LOGIN } from '../favourites/favouritesReducer';
-import { RESTORE_SAVED_SEARCH_WORKFLOW_AFTER_LOGIN } from '../savedSearches/savedSearchesReducer';
-import { toBrowserSearchQuery } from '../search/searchQueryReducer';
-import { decodeUrl, parseQueryString, stringifyQueryObject } from '../utils';
+import {put, select, takeEvery} from 'redux-saga/effects';
+import {AD_USER_API, CONTEXT_PATH, LOGIN_URL, PAM_VAR_SIDE_URL, STILLINGSOK_URL} from '../fasitProperties';
+import {RESTORE_ADD_FAVOURITE_WORKFLOW_AFTER_LOGIN} from '../favourites/favouritesReducer';
+import {RESTORE_SAVED_SEARCH_WORKFLOW_AFTER_LOGIN} from '../savedSearches/savedSearchesReducer';
+import {toBrowserSearchQuery} from '../search/searchQueryReducer';
+import {decodeUrl, parseQueryString, stringifyQueryObject} from '../utils';
 import AuthenticationCaller from './AuthenticationCaller';
+import LocationSearchParser from '../common/utils/LocationSearchParser';
 
 export const REDIRECT_TO_LOGIN = 'REDIRECT_TO_LOGIN';
 export const SET_CALLBACK_AFTER_LOGIN = 'SET_CALLBACK_AFTER_LOGIN';
@@ -21,6 +22,7 @@ const SESSION_STORAGE_KEY_CALLBACK = 'callback';
 const SESSION_STORAGE_KEY_CALLBACK_DATA = 'callback-data';
 
 const whiteList = [
+    `${CONTEXT_PATH}/intern`,
     `${CONTEXT_PATH}/stilling`,
     `${CONTEXT_PATH}/favoritter`,
     `${CONTEXT_PATH}/lagrede-sok`,
@@ -75,17 +77,19 @@ export default function authenticationReducer(state = initialState, action) {
 
 function* fetchIsAuthenticated() {
     try {
-        const response = yield fetch(`${AD_USER_API}/isAuthenticated`, { credentials: 'include', referrer: CONTEXT_PATH });
+        const response = yield fetch(`${AD_USER_API}/isAuthenticated`, {
+            credentials: 'include',
+            referrer: CONTEXT_PATH
+        });
         if (response.status === 200) {
-            yield put({ type: FETCH_IS_AUTHENTICATED_SUCCESS, isAuthenticated: authenticationEnum.IS_AUTHENTICATED });
+            yield put({type: FETCH_IS_AUTHENTICATED_SUCCESS, isAuthenticated: authenticationEnum.IS_AUTHENTICATED});
         } else if (response.status === 401) {
-            yield put({ type: FETCH_IS_AUTHENTICATED_SUCCESS, isAuthenticated: authenticationEnum.NOT_AUTHENTICATED });
+            yield put({type: FETCH_IS_AUTHENTICATED_SUCCESS, isAuthenticated: authenticationEnum.NOT_AUTHENTICATED});
         } else {
-            yield put({ type: FETCH_IS_AUTHENTICATED_FAILURE });
+            yield put({type: FETCH_IS_AUTHENTICATED_FAILURE});
         }
     } catch (error) {
-        yield put({ type: FETCH_IS_AUTHENTICATED_FAILURE });
-        throw error;
+        yield put({type: FETCH_IS_AUTHENTICATED_FAILURE});
     }
 }
 
@@ -104,7 +108,7 @@ export function* requiresAuthentication(caller, callbackAfterLogin) {
         callbackAfterLogin
     });
 
-    yield put({ type: SHOW_AUTHENTICATION_REQUIRED_MODAL, title: caller || AuthenticationCaller.DEFAULT});
+    yield put({type: SHOW_AUTHENTICATION_REQUIRED_MODAL, title: caller || AuthenticationCaller.DEFAULT});
     return false;
 };
 
@@ -112,7 +116,7 @@ export function* requiresAuthentication(caller, callbackAfterLogin) {
  * Sender brukeren til loginsiden. Sørger også for å sende med den url'en bruker skal redirectes tilbake
  * til etter vellykket innlogging.
  */
-export function* redirectToLogin (action) {
+export function* redirectToLogin(action) {
     let redirectUrlAfterSuccessfulLogin;
 
     if (action.role === 'arbeidsgiver') {
@@ -127,12 +131,29 @@ export function* redirectToLogin (action) {
 
         if (path.startsWith(`${CONTEXT_PATH}/stilling/`)) {
             // 'stilling/:uuid' er ikke en whitelisted url, så vi må mappe om til /stilling?uuid=<uuid>
-            // Dette blir mappet tilbake av Stilling-siden, når man returnerer fra login
+            // Man blir redirectet til rett url igjen i server.js
             redirectQuery = {
                 ...redirectQuery,
                 uuid: path.split(`${CONTEXT_PATH}/stilling/`)[1]
             };
             redirectUrl = `${STILLINGSOK_URL}/stilling`;
+        } else if (path.startsWith(`${CONTEXT_PATH}/intern/`)) {
+            // 'intern/:uuid' er ikke en whitelisted url, så vi må mappe om til /intern?uuid=<uuid>
+            // Man blir redirectet til rett url igjen i server.js
+            redirectQuery = {
+                ...redirectQuery,
+                uuid: path.split(`${CONTEXT_PATH}/intern/`)[1]
+            };
+            redirectUrl = `${STILLINGSOK_URL}/intern`;
+        } else if (path.startsWith(`${CONTEXT_PATH}/lagrede-sok`)) {
+            redirectQuery = {
+                ...redirectQuery,
+            };
+
+            const uuid = LocationSearchParser.extractParam('uuid');
+            if (uuid !== null) redirectQuery['uuid'] = uuid;
+
+            redirectUrl = `${STILLINGSOK_URL}/lagrede-sok`;
         } else if (path === CONTEXT_PATH) {
             redirectQuery = {
                 ...redirectQuery,
@@ -158,6 +179,7 @@ export function* redirectToLogin (action) {
         }
         redirectUrlAfterSuccessfulLogin = `${redirectUrl}${encodeURIComponent(stringifyQueryObject(redirectQuery))}`;
     }
+
     window.location.href = `${LOGIN_URL}?level=Level3&redirect=${redirectUrlAfterSuccessfulLogin}`;
 }
 
@@ -169,22 +191,22 @@ function* handleCallbackAfterLogin() {
     const queryString = decodeUrl(document.location.search);
     const query = parseQueryString(queryString);
 
-    if(query.callback) {
+    if (query.callback) {
         // Fjern '?callback' fra adresselinjen i nettleseren
-        const { callback, ...queryWithoutCallback } = query;
-        window.history.replaceState({}, '', CONTEXT_PATH + stringifyQueryObject(queryWithoutCallback));
+        const {callback, ...queryWithoutCallback} = query;
+        window.history.replaceState({}, '', window.location.pathname + stringifyQueryObject(queryWithoutCallback));
 
         // For å unngå at callbacks kjøres på nytt (hvis man for eksempel trykker tilbake i browser),
         // så  utfører vi kun callback hvis samme callback er lagret i sessionStorage.
         const found = sessionStorage.getItem(SESSION_STORAGE_KEY_CALLBACK);
-        if(found === 'save-search' && callback === 'save-search') {
-            yield put({ type: RESTORE_SAVED_SEARCH_WORKFLOW_AFTER_LOGIN });
-        } else if(found === 'add-to-favourite-search' && callback === 'add-to-favourite-search') {
+        if (found === 'save-search' && callback === 'save-search') {
+            yield put({type: RESTORE_SAVED_SEARCH_WORKFLOW_AFTER_LOGIN});
+        } else if (found === 'add-to-favourite-search' && callback === 'add-to-favourite-search') {
             const data = sessionStorage.getItem(SESSION_STORAGE_KEY_CALLBACK_DATA);
-            yield put({ type: RESTORE_ADD_FAVOURITE_WORKFLOW_AFTER_LOGIN, data, source: 'search' });
-        } else if(found === 'add-to-favourite-ad' && callback === 'add-to-favourite-ad') {
+            yield put({type: RESTORE_ADD_FAVOURITE_WORKFLOW_AFTER_LOGIN, data, source: 'search'});
+        } else if (found === 'add-to-favourite-ad' && callback === 'add-to-favourite-ad') {
             const data = sessionStorage.getItem(SESSION_STORAGE_KEY_CALLBACK_DATA);
-            yield put({ type: RESTORE_ADD_FAVOURITE_WORKFLOW_AFTER_LOGIN, data, source: 'ad' });
+            yield put({type: RESTORE_ADD_FAVOURITE_WORKFLOW_AFTER_LOGIN, data, source: 'ad'});
         }
     }
 
@@ -194,7 +216,7 @@ function* handleCallbackAfterLogin() {
     sessionStorage.removeItem(SESSION_STORAGE_KEY_CALLBACK_DATA);
 }
 
-function* cancelCallbackAfterLogin () {
+function* cancelCallbackAfterLogin() {
     yield put({
         type: SET_CALLBACK_AFTER_LOGIN,
         callback: undefined

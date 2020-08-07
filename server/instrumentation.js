@@ -10,13 +10,14 @@ const pageHitCounter = () => {
     const counter = new prometheus.Counter({
         name: 'arbeidsplassen_stillingsok_page_hits',
         help: 'nr of reqests to stillingsok-pages',
-        labelNames: ['page']
+        labelNames: ['page', 'source']
     });
 
     return {
-        inc: (page) => {
+        inc: (page, source) => {
             counter.inc({
-                page: page
+                page: page,
+                source: source
             });
         }
     };

@@ -1,7 +1,7 @@
 /* eslint-disable no-undef,no-nested-ternary */
 import { Column, Container, Row } from 'nav-frontend-grid';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useEffect} from 'react';
 import { connect } from 'react-redux';
 import PageHeader from '../common/components/PageHeader';
 import DelayedSpinner from '../common/components/DelayedSpinner';

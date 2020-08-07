@@ -1,3 +1,118 @@
+## RELEASE - 0.210.1139-41e20b7
+#### New in this release: 
++ 2020-05-25 [Fix] Css på intern stilling
++ 2020-04-29 [Fix] Legger til overflow-wrap på tekst over stillingstittel
+## RELEASE - 0.209.1137-4e6db67
+#### New in this release: 
++ 2020-04-29 [Fix] Gjør ad text litt smalere på store skjemer
+## RELEASE - 0.207.1134-3b16192
+#### New in this release: 
++ 2020-04-29 [Fix] Dropper arbeidsplassen header fra print
++ 2020-04-29 [Fix] Gjør adtext smalere
++ 2020-04-29 [Fix] Gjør høyre kolonne bredere
++ 2020-04-29 [Fix] Legger til luft i bunn av stillingsannonsen
++ 2020-04-29 [Fix] Fikser plassering av tilbakelenke
++ 2020-04-29 [Fix] Legger header i column
++ 2020-04-29 [Fix] Ruller tilbake til grid, i istedet for flex
++ 2020-04-29 [Fix] Ruller tilbake til grid, i istedet for flex
++ 2020-04-29 [Fix] Css tweak for å unngå skaleringsproblem av mobilside ved veldig lange ord i stillingstittel
++ 2020-04-29 [Fix] Css tweak for å unngå skaleringsproblem av mobilside ved veldig lange ord i stillingstittel - revert
+## RELEASE - 0.206.1117-ab8ce0c
+#### New in this release: 
++ 2020-04-22 [Fix] Css tweak for å unngå skaleringsproblem av mobilside ved veldig lange ord i stillingstittel - revert
++ 2020-04-22 [Fix] Css tweak for å unngå skaleringsproblem av mobilside ved veldig lange ord i stillingstittel
+## RELEASE - 0.205.1111-04d40db
+#### New in this release: 
++ 2020-04-06 Revert "[Snyk] Upgrade nav-frontend-skjema from 1.0.60 to 1.0.78"
++ 2020-04-06 Revert "[Snyk] Upgrade nav-frontend-skjema-style from 1.0.38 to 1.0.48"
++ 2020-04-06 Revert "[Snyk] Upgrade nav-frontend-ekspanderbartpanel from 1.0.25 to 1.0.35"
++ 2020-03-17 Bump acorn from 6.1.1 to 6.4.1
+## RELEASE - 0.204.1106-73542b6
+#### New in this release: 
++ 2020-04-04 [Fix] Wrap ga i try catch
+## RELEASE - 0.197.1089-f381c4e
+#### New in this release: 
++ 2020-03-24 [Fix] Fikser callback etter login også for stillingssiden
+## RELEASE - 0.195.1081-60c8b72
+#### New in this release: 
++ 2020-03-20 [FEATURE] supports lookup to internal index
+## RELEASE - 0.189.1064-1a30f1a
+#### New in this release: 
++ 2020-03-17 [FIx] Legger til menypunkter css tweak
++ 2020-03-17 [FIx] Legger til menypunkter css tweak
++ 2020-03-17 [FIx] Legger til menypunkter css tweak
++ 2020-03-17 [FIx] Legger til menypunkter css tweak
+## RELEASE - 0.188.1058-c284b25
+#### New in this release: 
++ 2020-03-17 [FIx] Legger til menypunkter
+## RELEASE - 0.175.1013-e36faa4
+#### New in this release: 
++ 2020-01-22 [Fix] Fjerner hotjar feedbacklenke
+## RELEASE - 0.172.1003-ed10be1
+#### New in this release: 
++ 2020-01-21 [Fix] Fikser feil case i fylkesnavn
++ 2020-01-21 [Fix] Fikser feil case i fylkesnavn
+## RELEASE - 0.171.999-8c43186
+#### New in this release: 
++ 2020-01-21 [Fix] Disabler qa-test
++ 2020-01-21 [Fix] Disabler qa-test
++ 2020-01-21 [Fix] Disabler qa-test
++ 2020-01-21 [Fix] Disabler qa-test
++ 2020-01-21 [Fix] Disabler qa-test
++ 2020-01-21 [Fix] Disabler qa-test
++ 2020-01-21 [Fix] Fjerner lenke-test for åpning av finn-annonser. Åpner alle finn-annonser i samme fane.
+## RELEASE - 0.170.982-d43da32
+#### New in this release: 
++ 2019-12-19 [PAM-3864] Legge til alertstripe med info om fylke/kommunesammenslåing
+## RELEASE - 0.168.976-da72e5c
+#### New in this release: 
++ 2019-12-17 [Fix] Legger til flere CSP headere
+## RELEASE - 0.167.974-bcfa9b7
+#### New in this release: 
++ 2019-12-17 [Fix] Legger til referrer policy header
+## RELEASE - 0.166.973-23951aa
+#### New in this release: 
++ 2019-12-17 [Fix] Legger til baseUri i CSP-headers
+## RELEASE - 0.165.972-3d1900c
+#### New in this release: 
++ 2019-12-17 [Fix] Husker hvilke av panelene som er åpne, slik de forblir åpnet når bruker kommer tilbake fra en ekstern side eller refresher nettsiden.
++ 2019-12-17 [Fix] Unngår at QA-test velger ekstern annonse
++ 2019-12-17 [Fix] Unngår at QA-test velger ekstern annonse
++ 2019-12-17 [Fix] Legger inn igjen QA-tester
++ 2019-08-29 [Fix] Finetuning av CSP og sikkerhetsheadere
+## RELEASE - 0.164.960-6691698
+#### New in this release: 
++ 2019-12-10 [Fix] Unngår dobbelt søk første gang
++ 2019-12-06 [Fix] Oppdaterer dependecier
+## RELEASE - 0.163.956-1e37e65
+#### New in this release: 
++ 2019-12-05 [Fix] IE issue med isValidUrl
+## RELEASE - 0.162.955-1ff7e75
+#### New in this release: 
++ 2019-12-04 [Fix] Legger til lenke for eksterne annonser i annonsevisningen
++ 2019-12-04 [Fix] Legger til lenke for eksterne annonser i annonsevisningen
++ 2019-12-04 [Fix] Legger til lenke for eksterne annonser i annonsevisningen
++ 2019-12-04 [Fix] Legger til lenke for eksterne annonser i annonsevisningen
++ 2019-12-04 [Fix] Legger til lenke for eksterne annonser i annonsevisningen
++ 2019-12-04 [Fix] Disabler QA-tester
++ 2019-12-04 [Test] Tester ulike måter å åpne eksterne annonser
++ 2019-12-04 [Test] Tester ulike måter å åpne eksterne annonser
+## RELEASE - 0.161.939-d541f6f
+#### New in this release: 
++ 2019-11-27 [Fix] Tester ny meta title
++ 2019-11-27 [Fix] Tester ny meta title
+## RELEASE - 0.160.936-b6a59b0
+#### New in this release: 
++ 2019-11-26 [Fix] Legger til målinger for antall endringer av lagrede søk
+## RELEASE - 0.159.935-c96042b
+#### New in this release: 
++ 2019-11-20 [Fix] Legger til bilde som vises ved deling på facebook
+## RELEASE - 0.155.927-3478c57
+#### New in this release: 
++ 2019-11-13 [ES 7.2] peke på riktig search-api
+## RELEASE - 0.154.926-b1a3120
+#### New in this release: 
++ 2019-11-11 [ES 7.2] peker mot ny search-api
 ## RELEASE - 0.153.919-1f0862c
 #### New in this release: 
 + 2019-10-09 [Bug] Fikser printknapp

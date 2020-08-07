@@ -1,6 +1,6 @@
 {
   "name": "pam-stillingsok-frontend",
-  "version": "0.154.0",
+  "version": "0.211.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -20,6 +20,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@sentry/browser": "^5.20.1",
+    "amplitude-js": "^7.1.0",
     "body-parser": "^1.18.3",
     "classnames": "^2.2.6",
     "compression": "^1.7.3",
@@ -55,8 +57,8 @@
     "nav-frontend-spinner-style": "^0.2.5",
     "nav-frontend-typografi": "^2.0.10",
     "nav-frontend-typografi-style": "^1.0.12",
+    "node-fetch": "^2.6.0",
     "pam-frontend-core": "^1.3.4",
-    "pam-frontend-footer": "^1.0.7",
     "pam-frontend-header": "^4.5.10",
     "pam-frontend-knapper": "^1.0.2",
     "prom-client": "^11.1.3",
@@ -75,8 +77,9 @@
     "request": "^2.88.0",
     "request-promise": "^4.2.4",
     "rimraf": "^2.6.2",
-    "whatwg-fetch": "^2.0.4",
-    "snyk": "^1.232.0"
+    "snyk": "^1.316.1",
+    "ua-parser-js": "^0.7.20",
+    "whatwg-fetch": "^2.0.4"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
