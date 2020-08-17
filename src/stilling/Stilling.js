@@ -72,6 +72,7 @@ const Stilling = ({ cachedStilling, error, getStilling, isFetchingStilling, matc
                 ga('set', 'page', `${CONTEXT_PATH}/stilling/${stilling._id}`);
                 ga('set', 'title', stilling._source.title);
                 ga('send', 'pageview');
+                logAmplitudePageview();
             } catch (e) {
                 // ignore
             }
