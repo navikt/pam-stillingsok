@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 import { useEffect } from 'react';
 import { CONTEXT_PATH } from '../../fasitProperties';
+import {logAmplitudePageview} from "../../amplitudeTracker";
 
 export default (page, title) => {
     useEffect(() => {
@@ -8,6 +9,7 @@ export default (page, title) => {
             ga('set', 'page', page);
             ga('set', 'title', title);
             ga('send', 'pageview');
+            logAmplitudePageview();
         } catch (e) {
             // Google Analytics er ikke definert (dette skjer f.eks. om en bruker blokkerer tracking).
         }
