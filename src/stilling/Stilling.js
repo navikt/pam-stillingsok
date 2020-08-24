@@ -30,6 +30,7 @@ import { FETCH_STILLING_BEGIN, RESET_STILLING } from './stillingReducer';
 import { useScrollToTop } from '../common/hooks';
 import { sendUrlEndring } from "../common/hooks/useTrackPageview";
 import { addRobotsNoIndexMetaTag, removeRobotsMetaTag } from '../common/utils/metaRobots';
+import logAmplitudeEvent, {logAmplitudePageview} from "../amplitudeTracker";
 
 function commaSeparate(...strings) {
     const onlyStrings = strings.filter((string) => (
@@ -71,6 +72,23 @@ const Stilling = ({ cachedStilling, error, getStilling, isFetchingStilling, matc
                 ga('set', 'page', `${CONTEXT_PATH}/stilling/${stilling._id}`);
                 ga('set', 'title', stilling._source.title);
                 ga('send', 'pageview');
+                logAmplitudePageview();
+            } catch (e) {
+                // ignore
+            }
+
+            try {
+                logAmplitudeEvent('Stilling visning', {
+                    title: stilling._source.title || "N/A",
+                    id: stilling._id,
+                    businessName: stilling._source.businessName || "N/A",
+                    country: stilling._source.employer.location.country || "N/A",
+                    county: stilling._source.employer.location.county || "N/A",
+                    city: stilling._source.employer.location.city || "N/A",
+                    employer: stilling._source.employer.name || "N/A",
+                    expires: stilling._source.expires || "N/A",
+                    published: stilling._source.published || "N/A"
+                })
             } catch (e) {
                 // ignore
             }

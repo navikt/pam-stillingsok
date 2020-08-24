@@ -57,7 +57,7 @@ server.use(helmet.contentSecurityPolicy({
         styleSrc: ["'self'"],
         fontSrc: ["'self'", 'data:', 'https://fonts.gstatic.com'],
         imgSrc: ["'self'", 'data:', 'https://www.google-analytics.com'],
-        connectSrc: ["'self'", process.env.PAMADUSER_URL, 'https://www.google-analytics.com'],
+        connectSrc: ["'self'", process.env.PAMADUSER_URL, 'https://www.google-analytics.com', 'https://amplitude.nav.no'],
         frameSrc: ["'none'"]
     }
 }));
@@ -74,7 +74,8 @@ const fasitProperties = {
     LOGIN_URL: process.env.LOGINSERVICE_URL,
     LOGOUT_URL: process.env.LOGOUTSERVICE_URL,
     PAM_STILLINGSOK_URL: process.env.PAM_STILLINGSOK_URL,
-    PAM_VAR_SIDE_URL: process.env.PAM_VAR_SIDE_URL
+    PAM_VAR_SIDE_URL: process.env.PAM_VAR_SIDE_URL,
+    AMPLITUDE_TOKEN: process.env.AMPLITUDE_TOKEN
 };
 
 const writeEnvironmentVariablesToFile = () => {
@@ -83,7 +84,8 @@ const writeEnvironmentVariablesToFile = () => {
         + `window.__PAM_AD_USER_API__="${fasitProperties.PAM_AD_USER_API}";\n`
         + `window.__LOGIN_URL__="${fasitProperties.LOGIN_URL}";\n`
         + `window.__LOGOUT_URL__="${fasitProperties.LOGOUT_URL}";\n`
-        + `window.__PAM_VAR_SIDE_URL__="${fasitProperties.PAM_VAR_SIDE_URL}";\n`;
+        + `window.__PAM_VAR_SIDE_URL__="${fasitProperties.PAM_VAR_SIDE_URL}";\n`
+        + `window.__AMPLITUDE_TOKEN__="${fasitProperties.AMPLITUDE_TOKEN}";`;
 
     fs.writeFile(path.resolve(rootDirectory, 'dist/js/env.js'), fileContent, (err) => {
         if (err) throw err;
@@ -110,6 +112,18 @@ const renderSok = (htmlPages) => (
 
 const startServer = (htmlPages) => {
     writeEnvironmentVariablesToFile();
+
+    server.use((req, res, next) => {
+        if (req.path.includes('internal')) {
+            return next();
+        }
+        if ((req && req.headers.cookie && !req.headers.cookie.includes('amplitudeIsEnabled')) || !req.headers.cookie){
+            // Valid for two weeks
+            const twoWeeks = 604800000 * 2;
+            res.cookie('amplitudeIsEnabled', true, { maxAge: twoWeeks });
+        }
+        next();
+    });
 
     server.use(`${fasitProperties.PAM_CONTEXT_PATH}/js`,
         express.static(path.resolve(rootDirectory, 'dist/js'))

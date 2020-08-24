@@ -6,7 +6,7 @@ metadata:
   labels:
     team: teampam
 spec:
-  image: repo.adeo.no:5443/pam-stillingsok
+  image: {{ image }}
   port: 8080
   replicas:
     min: 3
@@ -31,20 +31,21 @@ spec:
   vault:
     enabled: false
   ingresses:
-    - https://arbeidsplassen-q.nav.no/stillinger
-    - https://pam-stillingsok.nais.oera-q.local
-    - https://tjenester-t5.nav.no/pam-stillingsok
-    - https://stillingsok-q.nav.no
+  {{#each ingress as |url|}}
+     - {{url}}
+  {{/each}}
   env:
     - name: LOGINSERVICE_URL
-      value: https://loginservice-q.nav.no/login
+      value: {{ loginservice_url }}
     - name: LOGOUTSERVICE_URL
-      value: https://loginservice-q.nav.no/slo
+      value: {{ logoutservice_url }}
     - name: PAMADUSER_URL
-      value: https://arbeidsplassen-q.nav.no
+      value: {{ pamaduser_url }}
     - name: PAM_STILLINGSOK_URL
-      value: https://arbeidsplassen-q.nav.no/stillinger
+      value: {{ pam_stillingsok_url }}
     - name: PAM_VAR_SIDE_URL
-      value: https://arbeidsplassen-q.nav.no/stillingsregistrering
+      value: {{ pam_var_side_url }}
     - name: PAMSEARCHAPI_URL
-      value: http://pam-search-api
+      value: {{ pamsearchapi_url }}
+    - name: AMPLITUDE_TOKEN
+      value: {{ amplitude_token }}

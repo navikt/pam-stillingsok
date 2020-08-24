@@ -15,6 +15,7 @@ import StillingPage from './stilling/Stilling';
 import InternalStilling from './stilling/InternalStilling';
 import TermsOfUse from './user/TermsOfUse';
 import UserAlertStripe from './user/UserAlertStripe';
+import BrowserSupportInfo from './BrowserSupportInfo/BrowserSupportInfo';
 
 class Application extends React.Component {
     componentDidMount() {
@@ -26,6 +27,7 @@ class Application extends React.Component {
         return (
             <BrowserRouter>
                 <BackLinkManager>
+                    <BrowserSupportInfo tillatLukking={true} />
                     <Error />
                     <Switch>
                         <Route component={TopMenu}/>
