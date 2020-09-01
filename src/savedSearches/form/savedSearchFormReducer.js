@@ -1,4 +1,4 @@
-import { put, select, take, takeLatest } from 'redux-saga/es/effects';
+import { put, select, take, takeLatest } from 'redux-saga/effects';
 import { requiresAuthentication } from '../../authentication/authenticationReducer';
 import AuthenticationCaller from '../../authentication/AuthenticationCaller';
 import { toReadableSearchQuery, toSavedSearchQuery } from '../../search/searchQueryReducer';

@@ -1,4 +1,4 @@
-import { takeEvery, select, put } from 'redux-saga/es/effects';
+import { takeEvery, select, put } from 'redux-saga/effects';
 import { CONTEXT_PATH } from '../fasitProperties';
 import { getLastSearchQueryFromSessionStorage } from '../search/searchQueryReducer';
 

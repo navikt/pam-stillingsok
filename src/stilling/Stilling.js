@@ -126,7 +126,7 @@ const Stilling = ({ cachedStilling, error, getStilling, isFetchingStilling, matc
             {!error && (
                 <Container>
                     <Row>
-                        <Column xs={12}>
+                        <Column xs="12">
                             <div className="Stilling__header">
                                 <BackLink/>
                                 <div className="Stilling__buttons">
@@ -148,7 +148,7 @@ const Stilling = ({ cachedStilling, error, getStilling, isFetchingStilling, matc
                         </Column>
                     </Row>
                     <Row>
-                        <Column xs={12} md={7} lg={8}>
+                        <Column xs="12" md="7" lg="8">
                             <div className="Stilling__left">
                                 {!isFetchingStilling && stilling && stilling._source.status !== 'ACTIVE' && (
                                     <Expired />
@@ -196,7 +196,7 @@ const Stilling = ({ cachedStilling, error, getStilling, isFetchingStilling, matc
                                 )}
                             </div>
                         </Column>
-                        <Column xs={12} md={5} lg={4}>
+                        <Column xs="12" md="5" lg="4">
                             {(stilling === undefined || isFetchingStilling) && (
                                 <Loading spinner={false} />
                             )}
