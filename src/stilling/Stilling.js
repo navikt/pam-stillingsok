@@ -1,7 +1,6 @@
 /* eslint-disable no-underscore-dangle,prefer-destructuring */
 import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
 import { Flatknapp } from 'pam-frontend-knapper';
 import { Column, Container, Row } from 'nav-frontend-grid';
 import BackLink from '../backLink/BackLink';
@@ -31,6 +30,7 @@ import { useScrollToTop } from '../common/hooks';
 import { sendUrlEndring } from "../common/hooks/useTrackPageview";
 import { addRobotsNoIndexMetaTag, removeRobotsMetaTag } from '../common/utils/metaRobots';
 import logAmplitudeEvent, {logAmplitudePageview} from "../amplitudeTracker";
+import {connect} from "react-redux";
 
 function commaSeparate(...strings) {
     const onlyStrings = strings.filter((string) => (
@@ -126,7 +126,7 @@ const Stilling = ({ cachedStilling, error, getStilling, isFetchingStilling, matc
             {!error && (
                 <Container>
                     <Row>
-                        <Column xs={12}>
+                        <Column xs="12">
                             <div className="Stilling__header">
                                 <BackLink/>
                                 <div className="Stilling__buttons">
@@ -148,7 +148,7 @@ const Stilling = ({ cachedStilling, error, getStilling, isFetchingStilling, matc
                         </Column>
                     </Row>
                     <Row>
-                        <Column xs={12} md={7} lg={8}>
+                        <Column xs="12" md="7" lg="8">
                             <div className="Stilling__left">
                                 {!isFetchingStilling && stilling && stilling._source.status !== 'ACTIVE' && (
                                     <Expired />
@@ -196,7 +196,7 @@ const Stilling = ({ cachedStilling, error, getStilling, isFetchingStilling, matc
                                 )}
                             </div>
                         </Column>
-                        <Column xs={12} md={5} lg={4}>
+                        <Column xs="12" md="5" lg="4">
                             {(stilling === undefined || isFetchingStilling) && (
                                 <Loading spinner={false} />
                             )}
