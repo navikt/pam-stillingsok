@@ -1,7 +1,6 @@
 /* eslint-disable no-underscore-dangle,prefer-destructuring */
 import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
 import { Flatknapp } from 'pam-frontend-knapper';
 import { Column, Container, Row } from 'nav-frontend-grid';
 import BackLink from '../backLink/BackLink';
@@ -31,6 +30,7 @@ import { useScrollToTop } from '../common/hooks';
 import { sendUrlEndring } from "../common/hooks/useTrackPageview";
 import { addRobotsNoIndexMetaTag, removeRobotsMetaTag } from '../common/utils/metaRobots';
 import logAmplitudeEvent, {logAmplitudePageview} from "../amplitudeTracker";
+import {connect} from "react-redux";
 
 function commaSeparate(...strings) {
     const onlyStrings = strings.filter((string) => (
