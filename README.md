@@ -1,7 +1,41 @@
 # PAM Stillingsøk
 
-## Hvordan kjøre applikasjonen lokalt
+## Før kjøring av applikasjonen
+Før du starter må du installere alle npm pakkene, dette kan du gjøre ved å kjøre kommandoen: 
+```
+$ npm install
+```
 
+
+## Kjøring av applikasjonen lokalt ved hjelp av dev script 
+Du kan enkelt kjøre applikasjonen ved hjelp av dev scripten `runDev.sh`
+
+Denne setter følgende verdier som miljøvariabler: 
+```
+PAMSEARCHAPI_URL=http://localhost:9000
+PAMADUSER_URL=http://localhost:9017
+LOGINSERVICE_URL=http://localhost:9017/aduser/local/cookie?subject=12345
+LOGOUTSERVICE_URL=http://localhost:9017/aduser
+PAM_STILLINGSOK_URL=http://localhost:8080/stillinger
+PAM_VAR_SIDE_URL=http://localhost:8080/stillingsregistrering
+PAM_INTERNAL_SEARCH_API_URL=http://localhost:9027
+AMPLITUDE_TOKEN=(Dev Token)
+```
+
+Applikasjonen vil da forsøke å koble seg til pam-search-api gjennom `localhost:9000`.
+Dersom du vil få inn teststillinger kan du koble deg direkte til et kjørende instans av pam-search-api i kubernetes. Dette gjør du med følgende kommando:
+```
+$ kubectl config use-context dev-sbs
+$ kubectl port-forward deployment/pam-search-api 9000:9000
+```
+
+Om du får følgende output betyr det at port-forwarden funket og pam-search-api er tilgjengelig på port 9000. 
+```
+Forwarding from 127.0.0.1:9000 -> 9000
+Forwarding from [::1]:9000 -> 9000
+```
+
+## Manuell kjøring av applikasjonen lokalt 
 Før man starter applikasjonen trenger man å sette følgende miljøvariabler:
 
 ```
@@ -13,100 +47,12 @@ PAMSEARCHAPI_URL
 PAM_VAR_SIDE_URL
 ```
 
-Man kan for eksempel kan man lage et script `run.sh`, dersom man kjører pam-aduser, pam-search-api og
-pam-stillingsok lokalt, med følgende innhold:
+Etter variablene er satt kan man kjøre applikasjonen ved å kjøre kommandoen: 
+``npm start``
+
+Applikasjonen vil da forsøke å hente inn stillinger fra addressen spesifisert på ``PAMADUSER_URL`` miljøvariabelen
 
 
-```sh
-#!/bin/bash
-export PAMSEARCHAPI_URL=http://localhost:9000
-export PAMADUSER_URL=http://localhost:9017
-export LOGINSERVICE_URL=http://localhost:9017/aduser/local/cookie?subject=12345
-export LOGOUTSERVICE_URL=http://localhost:9017/aduser
-export PAM_STILLINGSOK_URL=http://localhost:8080/stillinger
-export PAM_VAR_SIDE_URL=http://localhost:8080/stillingsregistrering
-exec npm start
-```
+## Bruk av innloggede tjenester
+For å kunne bruke innloggede tjenester (dvs. favoritter og lagrede søk), må du først kjøre `pam-aduser`.
 
-Generelle byggetrinn:
-
-```sh 
-npm install
-npm run build
-npm start
-```
-
-Bruk docker-compose:
-```sh
-docker-compose up --build 
-```
---build kjøres kun ved første bygging, og ved endring i docker images.
-
-Frontend kjører som default på [localhost:8080](localhost:8080). 
-
----
-
-Eventuelt kan man kjøre server og automatisk bygging av frontend separat:
-
-```sh
-# Start node server:
-npm run start-express
-
-# Start automatisk bygging av frontend:
-npm run start-webpack
-```
-
-## I miljø
-
-Applikasjonen kjører på nais i miljø. Jenkins bygger applikasjonen med webpack,
-og så bygges et docker-image med en express-server. Man kan også kjøre
-dockerimaget lokalt, men man må da sende med adressen til pam-search-api som en
-miljøvariabel (`STILLINGSOKES_URL`)
-
-Verktøystøtte | URL
---------------|------------------------------------------------------------------
-Jenkins       | http://a34apvl00015.devillo.no:8080/
-Fasit         | https://fasit.adeo.no/applications/edit?1&application=2372388
-Kibana        | https://logs.adeo.no/app/kibana
-
-## Komme i gang med Sauce Labs
-
-Sauce Labs brukes til å kjøre Nightwatch/Cucumber-tester.
-Logg inn i Sauce Labs her: www.saucelabs.com.
-For å kunne kjøre tester fra egen maskin må man installere og kjøre Sauce Connect.
-Sauce Connect oppretter en secure tunnel mellom maskinen og Sauce Labs.
-Sauce Connect kan finnes her: https://wiki.saucelabs.com/display/DOCS/Sauce+Connect+Proxy.
-Åpne mappen hvor Sauce Connect ligger og kjør med følgende kommando:
-#####Windows
-```
-bin\sc.exe -u username -k ddacfe7c-43e7-4973-1a25-140534f18636 -i tunnel-name
-```
-#####Linux/Mac
-```
-bin/sc -u username -k ddacfe7c-43e7-4973-1a25-140534f18636 -i tunnel-name
-```
--k er parameter for user key og kan finnes under User Settings etter å ha logget inn i Sauce Labs.
-Sauce Connect vil starte en selenium listener på port 4445, som er default.
-For å kjøre tester på Sauce Labs må man spesifisere samme port i configen til Nightwatch.
-Man må også legge til følgende Environment Variables på maskinen med brukernavn og key:
-```
-SAUCE_ACCESS_KEY=key
-SAUCE_USERNAME=username
-```
-####Kjøre tester
-Først må man installere pakker med ``npm install`` i qa-mappen.
-For å kjøre tester må man kjøre script fra qa/package.json.
-Ex:
-```
-npm run sauce-chrome -- --skiptags ignore
-```
-Kommando for å generere rapport:
-```
-npm run cucumber-report
-```
-Rapporten finnes her ``qa/reports/cucumber_report.html``
-
-
-####Notater
-Snyktester for qa er disabled. For å enable igjen gå på 
-https://app.snyk.io/org/navikt/project/0eb029db-d927-47ab-89a1-4f909785c485/settings
