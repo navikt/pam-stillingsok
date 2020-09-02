@@ -66,7 +66,7 @@
     "pam-frontend-core": "^1.3.4",
     "pam-frontend-header": "^4.5.12",
     "pam-frontend-knapper": "^1.0.2",
-    "prom-client": "^11.1.3",
+    "prom-client": "^11.5.3",
     "promise": "^8.0.2",
     "prop-types": "^15.6.2",
     "react": "^16.13.1",
