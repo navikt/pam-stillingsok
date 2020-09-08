@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle,prefer-destructuring */
 import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
-import { Flatknapp } from 'pam-frontend-knapper';
+import {Flatknapp, Lenkeknapp} from 'pam-frontend-knapper';
 import { Column, Container, Row } from 'nav-frontend-grid';
 import BackLink from '../backLink/BackLink';
 import getEmployer from '../../server/common/getEmployer';
@@ -31,6 +31,7 @@ import { sendUrlEndring } from "../common/hooks/useTrackPageview";
 import { addRobotsNoIndexMetaTag, removeRobotsMetaTag } from '../common/utils/metaRobots';
 import logAmplitudeEvent, {logAmplitudePageview} from "../amplitudeTracker";
 import {connect} from "react-redux";
+import {Link} from "react-router-dom";
 
 function commaSeparate(...strings) {
     const onlyStrings = strings.filter((string) => (
@@ -194,6 +195,11 @@ const Stilling = ({ cachedStilling, error, getStilling, isFetchingStilling, matc
                                         <SocialShare title={stilling._source.title}/>
                                     </React.Fragment>
                                 )}
+                                <div className="Rapport__link">
+                                    <Link to="/rapporter-annonse" aria-label="Rapporter annonse">
+                                    Rapporter annonse
+                                    </Link>
+                                </div>
                             </div>
                         </Column>
                         <Column xs="12" md="5" lg="4">
