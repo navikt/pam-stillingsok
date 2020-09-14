@@ -196,7 +196,7 @@ const Stilling = ({ cachedStilling, error, getStilling, isFetchingStilling, matc
                                     </React.Fragment>
                                 )}
                                 <div className="Rapport__link">
-                                    <Link to="/rapporter-annonse" aria-label="Rapporter annonse">
+                                    <Link to="/stillinger/rapporter-annonse" aria-label="Rapporter annonse">
                                     Rapporter annonse
                                     </Link>
                                 </div>

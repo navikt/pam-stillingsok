@@ -16,6 +16,7 @@ import InternalStilling from './stilling/InternalStilling';
 import TermsOfUse from './user/TermsOfUse';
 import UserAlertStripe from './user/UserAlertStripe';
 import BrowserSupportInfo from './BrowserSupportInfo/BrowserSupportInfo';
+import RapporterAnnonse from "./rapporterAnnonse/RapporterAnnonse";
 
 class Application extends React.Component {
     componentDidMount() {
@@ -40,6 +41,7 @@ class Application extends React.Component {
                         <Route path={`${CONTEXT_PATH}/intern`} component={InternalStilling} />
                         <Route path={`${CONTEXT_PATH}/favoritter`} component={Favourites} />
                         <Route path={`${CONTEXT_PATH}/lagrede-sok`} component={SavedSearches} />
+                        <Route path={`${CONTEXT_PATH}/rapporter-annonse`} component={RapporterAnnonse} />
                         <Route path="*" component={SearchPage}/>
                     </Switch>
 
