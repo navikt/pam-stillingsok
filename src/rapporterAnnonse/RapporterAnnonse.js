@@ -6,9 +6,11 @@ import "./RapporterAnnonse.less";
 import Checkbox from "nav-frontend-skjema/lib/checkbox";
 import {useState, useEffect} from 'react';
 import {Hovedknapp} from 'pam-frontend-knapper';
-import {CONTEXT_PATH} from "../fasitProperties";
+import {AD_USER_API, CONTEXT_PATH} from "../fasitProperties";
 import Chevron from "nav-frontend-chevron";
 import {Link} from "react-router-dom";
+import {call} from "redux-saga/effects";
+import {userApiGet, userApiPost} from "../api/userApi";
 
 const violationCategories = [
     {label: "Diskriminerende innhold", key: "discrimination"},
@@ -22,7 +24,7 @@ const scamCategories = [
 ]
 
 const RapporterAnnonse = () => {
-    const [finished, setFinished] = useState(true);
+    const [finished, setFinished] = useState(false);
     const [stillingId, setStillingId] = useState(null);
     const [violation, setViolation] = useState(false);
     const [violationCategory, setViolationCategory] = useState(null);
@@ -57,8 +59,19 @@ const RapporterAnnonse = () => {
         setScamCategory(e.target.value);
     }
 
-    const onSendTip = () => {
-        console.log(stillingId);
+    const onSendTip = async () => {
+        const category = violation ? "Regelbrudd" : "Mistanke om svindel";
+        const subCategory = violation ? violationCategories.filter(c => c.key === violationCategory)[0].label :
+            scamCategories.filter(c => c.key === scamCategory)[0].label;
+
+        const response = await userApiPost(`${AD_USER_API}/api/v1/reportposting`, {
+            category: category,
+            subCategory: subCategory,
+            title: "En stilling har blitt rapportert for " + category.toLowerCase(),
+            link: `${location.origin}/stillinger/stilling/${stillingId}`,
+        });
+
+        console.log(response);
     }
 
     return (
