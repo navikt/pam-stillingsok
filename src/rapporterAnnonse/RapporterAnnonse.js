@@ -9,8 +9,8 @@ import {Hovedknapp} from 'pam-frontend-knapper';
 import {AD_USER_API, CONTEXT_PATH} from "../fasitProperties";
 import Chevron from "nav-frontend-chevron";
 import {Link} from "react-router-dom";
-import {call} from "redux-saga/effects";
-import {userApiGet, userApiPost} from "../api/userApi";
+import {userApiPost} from "../api/userApi";
+import AlertStripeFeil from "nav-frontend-alertstriper/lib/feil-alertstripe";
 
 const violationCategories = [
     {label: "Diskriminerende innhold", key: "discrimination"},
@@ -24,6 +24,7 @@ const scamCategories = [
 ]
 
 const RapporterAnnonse = () => {
+    const [error, setError] = useState(false);
     const [finished, setFinished] = useState(false);
     const [stillingId, setStillingId] = useState(null);
     const [violation, setViolation] = useState(false);
@@ -64,18 +65,28 @@ const RapporterAnnonse = () => {
         const subCategory = violation ? violationCategories.filter(c => c.key === violationCategory)[0].label :
             scamCategories.filter(c => c.key === scamCategory)[0].label;
 
-        const response = await userApiPost(`${AD_USER_API}/api/v1/reportposting`, {
-            category: category,
-            subCategory: subCategory,
-            title: "En stilling har blitt rapportert for " + category.toLowerCase(),
-            link: `${location.origin}/stillinger/stilling/${stillingId}`,
-        });
+        try {
+            const response = await userApiPost(`${AD_USER_API}/api/v1/reportposting`, {
+                category: category,
+                subCategory: subCategory,
+                title: "En stilling har blitt rapportert for " + category.toLowerCase(),
+                link: `${location.origin}/stillinger/stilling/${stillingId}`,
+            });
 
-        console.log(response);
+            if (response.statusCode === 200) {
+                setFinished(true);
+            }
+        } catch (e) {
+            setError(true);
+        }
     }
 
     return (
         <Container className="RapporterAnnonse">
+            {error && (
+                <AlertStripeFeil className="alertstripe--solid infoboks">Rapportering feilet - prøv igjen</AlertStripeFeil>
+            )}
+
             <br/>
             <Link
                 to={CONTEXT_PATH + "/stilling/" + stillingId}
