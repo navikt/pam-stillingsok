@@ -25,7 +25,7 @@ export async function userApiGet(url) {
     return response.json();
 }
 
-export async function userApiPost(url, query) {
+export async function userApiPost(url, query, toJson = true) {
     let response;
     try {
         response = await fetch(url, {
@@ -42,10 +42,15 @@ export async function userApiPost(url, query) {
         throw new SearchApiError(e.message, 0);
     }
 
-    if (response.status !== 200) {
-        throw new SearchApiError(response.statusText, response.status);
+    if (toJson) {
+        if (response.status !== 200) {
+            throw new SearchApiError(response.statusText, response.status);
+        }
+
+        return response.json();
     }
-    return response.json();
+
+    return response;
 }
 
 export async function userApiPut(url, query) {

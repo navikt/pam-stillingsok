@@ -71,10 +71,12 @@ const RapporterAnnonse = () => {
                 subCategory: subCategory,
                 title: "En stilling har blitt rapportert for " + category.toLowerCase(),
                 link: `${location.origin}/stillinger/stilling/${stillingId}`,
-            });
+            }, false);
 
             if (response.statusCode === 200) {
                 setFinished(true);
+            } else {
+                setError(true);
             }
         } catch (e) {
             setError(true);
