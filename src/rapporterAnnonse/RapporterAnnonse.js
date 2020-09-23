@@ -1,16 +1,19 @@
-import React from "react";
+import * as React from 'react';
 import Container from "nav-frontend-grid/lib/container";
 import Sidetittel from "nav-frontend-typografi/lib/sidetittel";
 import Undertittel from "nav-frontend-typografi/lib/undertittel";
 import "./RapporterAnnonse.less";
 import Checkbox from "nav-frontend-skjema/lib/checkbox";
 import {useState, useEffect} from 'react';
+import {useSelector} from 'react-redux';
 import {Hovedknapp} from 'pam-frontend-knapper';
 import {AD_USER_API, CONTEXT_PATH} from "../fasitProperties";
 import Chevron from "nav-frontend-chevron";
 import {Link} from "react-router-dom";
 import {userApiPost} from "../api/userApi";
 import AlertStripeFeil from "nav-frontend-alertstriper/lib/feil-alertstripe";
+import {authenticationEnum} from "../authentication/authenticationReducer";
+import NotAuthenticated from "../authentication/NotAuthenticated";
 
 const violationCategories = [
     {label: "Diskriminerende innhold", key: "discrimination"},
@@ -24,6 +27,7 @@ const scamCategories = [
 ]
 
 const RapporterAnnonse = () => {
+    const isAuthenticated = useSelector(state => state.authentication.isAuthenticated);
     const [error, setError] = useState(false);
     const [finished, setFinished] = useState(false);
     const [stillingId, setStillingId] = useState(null);
@@ -100,85 +104,95 @@ const RapporterAnnonse = () => {
                 </span>
             </Link>
 
-            {finished && (
-                <div>
-                    <Sidetittel>Takk for din tilbakemelding</Sidetittel>
-
-                    <div className="report-form">
-                        <p>Takk for at du tok deg tid til rapportere denne annonsen.</p>
-                        <br/>
-                        <p>Har du spørsmål kan du <a href={CONTEXT_PATH + "/kontakt"}>kontakte NAV.</a></p>
-                        <br/>
-                        <p>Med vennlig hilsen,<br/>Arbeidsplassen</p>
-                    </div>
-
-                    <div className="shape-container">
-                        <div className="diamond"/>
-                        <div className="circle"/>
-                    </div>
-                </div>
-            )}
-            {!finished && (
-                <div>
-                    <Sidetittel>Rapporter annonse</Sidetittel>
-
-                    <div className="report-form">
-                        <Undertittel>Henveldensen gjelder</Undertittel>
-
-                        <Checkbox name="regelbrudd" label="Regelbrudd" onChange={onViolationCheck}
-                                  checked={violation === true}/>
-
-                        {violation &&
-                        violationCategories.map(c => {
-                            return (
-                                <Checkbox
-                                    className="sub-checkbox"
-                                    key={c.key}
-                                    label={c.label}
-                                    value={c.key}
-                                    onChange={onViolationCategoryCheck}
-                                    checked={violationCategory === c.key}
-                                />
-                            )
-                        })
-                        }
-
-                        <Checkbox label="Mistanke om svindel" name="svindel" onChange={onScamCheck}
-                                  checked={scam === true}/>
-
-                        {scam &&
-                        scamCategories.map(c => {
-                            return (
-                                <Checkbox
-                                    className="sub-checkbox"
-                                    key={c.key}
-                                    label={c.label}
-                                    value={c.key}
-                                    onChange={onScamCategoryCheck}
-                                    checked={scamCategory === c.key}
-                                />
-                            )
-                        })
-                        }
-
-                        <br/><br/>
-
-                        <a href="https://www.nav.no/no/bedrift/rekruttering/relatert-informasjon/stillingsregistrering">
-                            Les om gjeldende regler
-                        </a>
-                    </div>
-
-                    <Hovedknapp disabled={violationCategory === null && scamCategory === null} onClick={onSendTip}>
-                        Send tips
-                    </Hovedknapp>
-                </div>
+            {isAuthenticated !== authenticationEnum.IS_AUTHENTICATED && (
+                <NotAuthenticated title="Du må være innlogget for å rapportere en annonse" />
             )}
 
-            <p className="disclaimer">
-                Stillingsannonser blir som regel umiddelbart publisert på Arbeidsplassen.no.
-                Etter publisering vil alle annonser bli kontrollert etter NAVs retningslinjer.
-                I tilfeller der det er brudd på retningslinjene vil disse bli avpublisert.
-            </p>
+            {isAuthenticated === authenticationEnum.IS_AUTHENTICATED && (
+                <div>
+                    {finished && (
+                        <div>
+                            <Sidetittel>Takk for din tilbakemelding</Sidetittel>
+
+                            <div className="report-form">
+                                <p>Takk for at du tok deg tid til rapportere denne annonsen.</p>
+                                <br/>
+                                <p>Har du spørsmål kan du <a href={CONTEXT_PATH + "/kontakt"}>kontakte NAV.</a></p>
+                                <br/>
+                                <p>Med vennlig hilsen,<br/>Arbeidsplassen</p>
+                            </div>
+
+                            <div className="shape-container">
+                                <div className="diamond"/>
+                                <div className="circle"/>
+                            </div>
+                        </div>
+                    )}
+                    {!finished && (
+                        <div>
+                            <Sidetittel>Rapporter annonse</Sidetittel>
+
+                            <div className="report-form">
+                                <Undertittel>Henveldensen gjelder</Undertittel>
+
+                                <Checkbox name="regelbrudd" label="Regelbrudd" onChange={onViolationCheck}
+                                          checked={violation === true}/>
+
+                                {violation &&
+                                violationCategories.map(c => {
+                                    return (
+                                        <Checkbox
+                                            className="sub-checkbox"
+                                            key={c.key}
+                                            label={c.label}
+                                            value={c.key}
+                                            onChange={onViolationCategoryCheck}
+                                            checked={violationCategory === c.key}
+                                        />
+                                    )
+                                })
+                                }
+
+                                <Checkbox label="Mistanke om svindel" name="svindel" onChange={onScamCheck}
+                                          checked={scam === true}/>
+
+                                {scam &&
+                                scamCategories.map(c => {
+                                    return (
+                                        <Checkbox
+                                            className="sub-checkbox"
+                                            key={c.key}
+                                            label={c.label}
+                                            value={c.key}
+                                            onChange={onScamCategoryCheck}
+                                            checked={scamCategory === c.key}
+                                        />
+                                    )
+                                })
+                                }
+
+                                <br/><br/>
+
+                                <a href="https://www.nav.no/no/bedrift/rekruttering/relatert-informasjon/stillingsregistrering">
+                                    Les om gjeldende regler
+                                </a>
+                            </div>
+
+                            {isAuthenticated === authenticationEnum.IS_AUTHENTICATED && (
+                                <Hovedknapp disabled={violationCategory === null && scamCategory === null} onClick={onSendTip}>
+                                    Send tips
+                                </Hovedknapp>
+                            )}
+                        </div>
+                    )}
+
+                    <p className="disclaimer">
+                        Stillingsannonser blir som regel umiddelbart publisert på Arbeidsplassen.no.
+                        Etter publisering vil alle annonser bli kontrollert etter NAVs retningslinjer.
+                        I tilfeller der det er brudd på retningslinjene vil disse bli avpublisert.
+                    </p>
+                </div>
+            )}
         </Container>
     )
 };
