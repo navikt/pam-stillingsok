@@ -1,5 +1,5 @@
 import SearchApiError from '../api/SearchApiError';
-import { CONTEXT_PATH } from '../fasitProperties';
+import {CONTEXT_PATH} from '../fasitProperties';
 
 const getCookie = (name) => {
     const re = new RegExp(`${name}=([^;]+)`);
@@ -42,15 +42,11 @@ export async function userApiPost(url, query, toJson = true) {
         throw new SearchApiError(e.message, 0);
     }
 
-    if (toJson) {
-        if (response.status !== 200) {
-            throw new SearchApiError(response.statusText, response.status);
-        }
-
-        return response.json();
+    if (response.status !== 200) {
+        throw new SearchApiError(response.statusText, response.status);
     }
 
-    return response;
+    return toJson ? response.json() : response;
 }
 
 export async function userApiPut(url, query) {

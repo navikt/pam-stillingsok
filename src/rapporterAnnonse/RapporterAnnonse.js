@@ -77,12 +77,10 @@ const RapporterAnnonse = () => {
                 link: `${location.origin}/stillinger/stilling/${stillingId}`,
             }, false);
 
-            if (response.statusCode === 200) {
-                setFinished(true);
-            } else {
-                setError(true);
-            }
+            console.log(response);
+            setFinished(true);
         } catch (e) {
+            console.log(e);
             setError(true);
         }
     }
@@ -90,7 +88,8 @@ const RapporterAnnonse = () => {
     return (
         <Container className="RapporterAnnonse">
             {error && (
-                <AlertStripeFeil className="alertstripe--solid infoboks">Rapportering feilet - prøv igjen</AlertStripeFeil>
+                <AlertStripeFeil className="alertstripe--solid infoboks">Rapportering feilet - prøv
+                    igjen</AlertStripeFeil>
             )}
 
             <br/>
@@ -105,7 +104,7 @@ const RapporterAnnonse = () => {
             </Link>
 
             {isAuthenticated !== authenticationEnum.IS_AUTHENTICATED && (
-                <NotAuthenticated title="Du må være innlogget for å rapportere en annonse" />
+                <NotAuthenticated title="Du må være innlogget for å rapportere en annonse"/>
             )}
 
             {isAuthenticated === authenticationEnum.IS_AUTHENTICATED && (
@@ -179,7 +178,8 @@ const RapporterAnnonse = () => {
                             </div>
 
                             {isAuthenticated === authenticationEnum.IS_AUTHENTICATED && (
-                                <Hovedknapp disabled={violationCategory === null && scamCategory === null} onClick={onSendTip}>
+                                <Hovedknapp disabled={violationCategory === null && scamCategory === null}
+                                            onClick={onSendTip}>
                                     Send tips
                                 </Hovedknapp>
                             )}
