@@ -120,7 +120,7 @@ const RapporterAnnonse = () => {
                             <div className="report-form">
                                 <p>Takk for at du tok deg tid til rapportere denne annonsen.</p>
                                 <br/>
-                                <p>Har du spørsmål kan du <a href={CONTEXT_PATH + "/kontakt"}>kontakte NAV.</a></p>
+                                <p>Har du spørsmål kan du <a href="/kontakt">kontakte oss.</a></p>
                                 <br/>
                                 <p>Med vennlig hilsen,<br/>Arbeidsplassen</p>
                             </div>
