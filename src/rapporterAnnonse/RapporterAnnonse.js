@@ -14,16 +14,19 @@ import {userApiPost} from "../api/userApi";
 import AlertStripeFeil from "nav-frontend-alertstriper/lib/feil-alertstripe";
 import {authenticationEnum} from "../authentication/authenticationReducer";
 import NotAuthenticated from "../authentication/NotAuthenticated";
+import logAmplitudeEvent from "../amplitudeTracker";
 
 const violationCategories = [
     {label: "Diskriminerende innhold", key: "discrimination"},
     {label: "Det er markedsføring", key: "marketing"},
+    {label: "Annet", key: "other"},
 ]
 
 const scamCategories = [
     {label: "Falsk stillingannonse og arbeidsgiver", key: "fake"},
     {label: "Krever betaling for å søke stilling", key: "payment"},
     {label: "Ber om kredittinfo og/eller BankID", key: "creditInfo"},
+    {label: "Annet", key: "other"},
 ]
 
 const RapporterAnnonse = () => {
@@ -68,19 +71,20 @@ const RapporterAnnonse = () => {
         const category = violation ? "Regelbrudd" : "Mistanke om svindel";
         const subCategory = violation ? violationCategories.filter(c => c.key === violationCategory)[0].label :
             scamCategories.filter(c => c.key === scamCategory)[0].label;
+        const title = "En stilling har blitt rapportert for " + category.toLowerCase();
+        const link = `${location.origin}/stillinger/stilling/${stillingId}`;
 
         try {
-            const response = await userApiPost(`${AD_USER_API}/api/v1/reportposting`, {
-                category: category,
-                subCategory: subCategory,
-                title: "En stilling har blitt rapportert for " + category.toLowerCase(),
-                link: `${location.origin}/stillinger/stilling/${stillingId}`,
+            await userApiPost(`${AD_USER_API}/api/v1/reportposting`, {
+                category, subCategory, title, link,
             }, false);
 
-            console.log(response);
             setFinished(true);
+
+            logAmplitudeEvent('Rapportering av stillingsannonse', {
+                category, subCategory, link, title,
+            });
         } catch (e) {
-            console.log(e);
             setError(true);
         }
     }

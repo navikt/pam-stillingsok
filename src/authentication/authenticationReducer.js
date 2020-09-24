@@ -129,7 +129,14 @@ export function* redirectToLogin(action) {
         let redirectQuery = {};
         let path = window.location.pathname;
 
-        if (path.startsWith(`${CONTEXT_PATH}/stilling/`)) {
+        if (path.includes('/rapporter-annonse')) {
+            // Send bruker tilbake til stillingen de vil rapportere etter logg inn
+            redirectQuery = {
+                ...redirectQuery,
+                uuid: window.location.search.split('=')[1],
+            };
+            redirectUrl = `${STILLINGSOK_URL}/stilling`;
+        } else if (path.startsWith(`${CONTEXT_PATH}/stilling/`)) {
             // 'stilling/:uuid' er ikke en whitelisted url, så vi må mappe om til /stilling?uuid=<uuid>
             // Man blir redirectet til rett url igjen i server.js
             redirectQuery = {
