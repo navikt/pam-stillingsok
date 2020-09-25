@@ -72,17 +72,16 @@ const RapporterAnnonse = () => {
         const subCategory = violation ? violationCategories.filter(c => c.key === violationCategory)[0].label :
             scamCategories.filter(c => c.key === scamCategory)[0].label;
         const title = "En stilling har blitt rapportert for " + category.toLowerCase();
-        const link = `${location.origin}/stillinger/stilling/${stillingId}`;
 
         try {
             await userApiPost(`${AD_USER_API}/api/v1/reportposting`, {
-                category, subCategory, title, link,
+                category, subCategory, title, postingId: stillingId,
             }, false);
 
             setFinished(true);
 
             logAmplitudeEvent('Rapportering av stillingsannonse', {
-                category, subCategory, link, title,
+                category, subCategory, title, postingId: stillingId,
             });
         } catch (e) {
             setError(true);
