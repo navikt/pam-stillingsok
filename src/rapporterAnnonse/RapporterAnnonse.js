@@ -192,7 +192,7 @@ const RapporterAnnonse = () => {
                     <p className="disclaimer">
                         Stillingsannonser blir som regel umiddelbart publisert på Arbeidsplassen.no.
                         Etter publisering vil alle annonser bli kontrollert etter NAVs retningslinjer.
-                        I tilfeller der det er brudd på retningslinjene vil disse bli avpublisert.
+                        I tilfeller der det er brudd på retningslinjene vil stillingsannonsene bli fjernet.
                     </p>
                 </div>
             )}
