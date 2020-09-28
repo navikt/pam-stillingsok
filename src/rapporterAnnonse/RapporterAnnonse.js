@@ -117,9 +117,9 @@ const RapporterAnnonse = () => {
                             <Sidetittel>Takk for din tilbakemelding</Sidetittel>
 
                             <div className="report-form">
-                                <p>Takk for at du tok deg tid til rapportere denne annonsen.</p>
+                                <p>Takk for at du tok deg tid til å rapportere denne annonsen.</p>
                                 <br/>
-                                <p>Har du spørsmål kan du <a href="/kontakt">kontakte oss.</a></p>
+                                <p>Har du spørsmål kan du <a href="/kontakt">kontakte oss her.</a></p>
                                 <br/>
                                 <p>Med vennlig hilsen,<br/>Arbeidsplassen</p>
                             </div>
