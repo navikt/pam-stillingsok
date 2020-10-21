@@ -1,17 +1,17 @@
-import { Column, Container, Row } from 'nav-frontend-grid';
+import {Column, Container, Row} from 'nav-frontend-grid';
 import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
-import { Flatknapp } from 'pam-frontend-knapper';
-import { authenticationEnum } from '../authentication/authenticationReducer';
-import { CONTEXT_PATH } from '../fasitProperties';
+import React, {useEffect, useState} from 'react';
+import {connect} from 'react-redux';
+import {Lenkeknapp, Flatknapp} from 'pam-frontend-knapper';
+import {authenticationEnum} from '../authentication/authenticationReducer';
+import {CONTEXT_PATH, STILLINGSOK_URL} from '../fasitProperties';
 import FavouriteAlertStripe from '../favourites/alertstripe/FavouriteAlertStripe';
 import SavedSearchAlertStripe from '../savedSearches/alertstripe/SavedSearchAlertStripe';
 import CurrentSavedSearch from '../savedSearches/CurrentSavedSearch';
 import SavedSearchesExpandButton from '../savedSearches/expand/SavedSearchesExpandButton';
 import SavedSearchForm from '../savedSearches/form/SavedSearchForm';
 import SaveSearchButton from '../savedSearches/SaveSearchButton';
-import { RESTORE_STATE_FROM_URL_BEGIN } from '../search/searchQueryReducer';
+import { RESTORE_STATE_FROM_URL_BEGIN } from './searchQueryReducer';
 import Counties from './facets/Locations';
 import EngagementType from './facets/Engagement';
 import Extent from './facets/Extent';
@@ -27,7 +27,8 @@ import SearchResultCount from './searchResults/SearchResultCount';
 import SearchResults from './searchResults/SearchResults';
 import ShowResultsButton from './showResultsButton/ShowResultsButton';
 import Sorting from './sorting/Sorting';
-import { useDocumentTitle, useTrackPageview } from '../common/hooks';
+import {useDocumentTitle, useTrackPageview} from '../common/hooks';
+import CoronaInfobox from "../common/components/CoronaInfobox";
 
 const Search = ({
     initialSearch,
@@ -105,6 +106,19 @@ const Search = ({
                             </Column>
                             <Column xs="12" md="8">
                                 <div id="treff" className="Search__main__center">
+                                    <CoronaInfobox
+                                        title={"Kritiske yrker akkurat nå"}
+                                        color={"yellow"}
+                                    >
+                                        <Lenkeknapp
+                                            href={`https://${STILLINGSOK_URL}/stillinger?q=NordNorgeKorona`} >
+                                            <h3>
+                                                <li className="Lenkeknapp__corona_list-item">
+                                                    Ledige stillinger innen helse
+                                                </li>
+                                            </h3>
+                                        </Lenkeknapp>
+                                    </CoronaInfobox>
                                     <div className="Search__main__center__header">
                                         <div className="Search__main__center__header__left">
                                             <SearchResultCount />

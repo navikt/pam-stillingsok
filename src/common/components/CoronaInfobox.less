@@ -1,0 +1,93 @@
+@import '../../variables.less';
+
+.CoronaInfobox {
+  .CoronaInfobox__circle {
+    height: 20px;
+    width: 20px;
+    border-radius: 10rem;
+    display: inline-block;
+    margin: 0 0.5rem 0 0;
+    position: relative;
+  }
+
+  .Lenkeknapp__corona_list-item {
+    text-align: start;
+    text-decoration: underline;
+    color: #062140;
+  }
+
+  @media (min-width: @screen-sm-min) {
+    &:last-child {
+      margin-left: 0.5rem;
+    }
+
+    &:only-child {
+      margin: 0;
+    }
+  }
+
+  flex: 1;
+  margin-bottom: 1rem;
+
+  h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+    flex: 1;
+  }
+
+  section {
+    display: flex;
+    flex-direction: column;
+    padding: 0.75rem 1rem;
+  }
+
+  .CoronaInfobox__header {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0.5rem 1rem;
+  }
+
+  .CoronaInfobox__circle {
+    height: 20px;
+    width: 20px;
+    border-radius: 10rem;
+    display: inline-block;
+    margin: 0 0.5rem 0 0;
+    position: relative;
+  }
+}
+
+.CoronaInfobox__yellow {
+  border: 0.5rem solid @beredskap-yellow;
+  .CoronaInfobox__header {
+    background: @beredskap-yellow;
+  }
+  .CoronaInfobox__circle {
+    background: @beredskap-orange;
+  }
+}
+
+.CoronaInfobox__green {
+  border: 0.5rem solid @beredskap-green;
+
+  .CoronaInfobox__header {
+    background: @beredskap-green;
+  }
+
+  .CoronaInfobox__circle {
+    background: @beredskap-dark-green;
+  }
+}
+
+.CoronaInfobox__blue {
+  border: 0.5rem solid @beredskap-blue;
+
+  .CoronaInfobox__header {
+    background: @beredskap-blue;
+  }
+
+  .CoronaInfobox__circle {
+    background: @beredskap-dark-blue;
+  }
+}
