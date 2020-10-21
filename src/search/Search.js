@@ -56,6 +56,10 @@ const Search = ({
         search();
     };
 
+    const redirectToSearchQuery = () => {
+        window.location = `${STILLINGSOK_URL}/stillinger?q=NordNorgeKorona`;
+    }
+
     return (
         <div className="Search">
             <FavouriteAlertStripe />
@@ -111,7 +115,7 @@ const Search = ({
                                         color={"yellow"}
                                     >
                                         <Lenkeknapp
-                                            href={`https://${STILLINGSOK_URL}/stillinger?q=NordNorgeKorona`} >
+                                            onClick={redirectToSearchQuery}>
                                             <h3>
                                                 <li className="Lenkeknapp__corona_list-item">
                                                     Ledige stillinger innen helse
