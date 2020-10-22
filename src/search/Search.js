@@ -57,7 +57,7 @@ const Search = ({
     };
 
     const redirectToSearchQuery = () => {
-        window.location = `${STILLINGSOK_URL}/stillinger?q=NordNorgeKorona`;
+        window.location = `${STILLINGSOK_URL}/stillinger?q=KoronaBeredskapNord`;
     }
 
     return (
