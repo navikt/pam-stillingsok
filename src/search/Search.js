@@ -115,6 +115,7 @@ const Search = ({
                                         color={"yellow"}
                                     >
                                         <Lenkeknapp
+                                            type="link"
                                             onClick={redirectToSearchQuery}>
                                             <h3>
                                                 <li className="Lenkeknapp__corona_list-item">
