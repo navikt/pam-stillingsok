@@ -119,7 +119,7 @@ const Search = ({
                                             onClick={redirectToSearchQuery}>
                                             <h3>
                                                 <li className="Lenkeknapp__corona_list-item">
-                                                    Ledige stillinger innen helse
+                                                    Ledige stillinger innen helse i Troms og Finnmark
                                                 </li>
                                             </h3>
                                         </Lenkeknapp>
