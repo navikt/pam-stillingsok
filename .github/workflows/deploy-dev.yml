@@ -7,7 +7,7 @@ on:
       - "LICENCE"
       - "CODEOWNERS"
     branches:
-      - master
+      - PAM-4560
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
