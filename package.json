@@ -20,6 +20,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@navikt/analytics-taxonomy": "^0.3.2",
     "amplitude-js": "^7.1.1",
     "body-parser": "^1.19.0",
     "classnames": "^2.2.6",

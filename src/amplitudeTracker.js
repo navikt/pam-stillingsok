@@ -1,4 +1,5 @@
 import amplitude from 'amplitude-js';
+import {initTaxonomy, logSidevisning} from '@navikt/analytics-taxonomy';
 
 const getCookie = (name) => {
     const re = new RegExp(`${name}=([^;]+)`);
@@ -21,6 +22,7 @@ if (amplitudeIsEnabled()) {
             saveEvents: false
         }
     );
+    initTaxonomy(amplitude)
 }
 
 export const logAmplitudePageview = (additionalData) => {
@@ -37,7 +39,8 @@ export const logAmplitudePageview = (additionalData) => {
         }
     }
 
-    logAmplitudeEvent('Sidevisning', data);
+    logSidevisning(enrichData(data));
+
 };
 
 const enrichData = (data) => {
