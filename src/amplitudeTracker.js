@@ -40,10 +40,26 @@ export const logAmplitudePageview = (additionalData) => {
     logAmplitudeEvent('Sidevisning', data);
 };
 
+const enrichData = (data) => {
+    let enrichedData = {...data}
+
+    const erMellom25og30 = sessionStorage.getItem('erMellom25og30');
+    const under30 = sessionStorage.getItem('under30');
+
+    if (erMellom25og30 !== 'undefined' && erMellom25og30 === 'true') {
+        enrichedData = {...enrichedData, ageGroup: '25-30' }
+    }
+
+    if (under30 !== 'undefined') {
+        enrichedData = {...enrichedData, under30: under30 === 'true' }
+    }
+
+    return enrichedData;
+}
 
 const logAmplitudeEvent = (event, data) => {
     if (!amplitudeIsEnabled()) {return;}
-    amplitude.logEvent(event, data);
+    amplitude.logEvent(event, enrichData(data));
 };
 
 export default logAmplitudeEvent;
