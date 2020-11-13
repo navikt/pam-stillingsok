@@ -15,6 +15,7 @@ import AlertStripeFeil from "nav-frontend-alertstriper/lib/feil-alertstripe";
 import {authenticationEnum} from "../authentication/authenticationReducer";
 import NotAuthenticated from "../authentication/NotAuthenticated";
 import logAmplitudeEvent from "../amplitudeTracker";
+import {Textarea} from "nav-frontend-skjema";
 
 const violationCategories = [
     {label: "Diskriminerende innhold", key: "discrimination"},
@@ -38,6 +39,8 @@ const RapporterAnnonse = () => {
     const [violationCategory, setViolationCategory] = useState(null);
     const [scam, setScam] = useState(false);
     const [scamCategory, setScamCategory] = useState(null);
+    const [description, setDescription] = useState('');
+    const [descriptionLabel, setDescriptionLabel] = useState("Beskrivelse - må fylles ut");
 
     useEffect(() => {
         if (document.location.search.includes('uuid')) {
@@ -45,11 +48,16 @@ const RapporterAnnonse = () => {
         }
     }, []);
 
+    const onDescriptionChange = (e) => {
+        setDescription(e.target.value);
+    }
+
     const onViolationCheck = () => {
         setViolation(!violation);
         setScam(false);
         setViolationCategory(null);
         setScamCategory(null);
+        setDescriptionLabel("Beskriv regelbruddet - må fylles ut");
     }
 
     const onViolationCategoryCheck = (e) => {
@@ -61,6 +69,7 @@ const RapporterAnnonse = () => {
         setViolation(false);
         setViolationCategory(null);
         setScamCategory(null);
+        setDescriptionLabel("Beskriv svindelen - må fylles ut");
     }
 
     const onScamCategoryCheck = (e) => {
@@ -75,13 +84,13 @@ const RapporterAnnonse = () => {
 
         try {
             await userApiPost(`${AD_USER_API}/api/v1/reportposting`, {
-                category, subCategory, title, postingId: stillingId,
+                category, subCategory, title, postingId: stillingId, description
             }, false);
 
             setFinished(true);
 
             logAmplitudeEvent('Rapportering av stillingsannonse', {
-                category, subCategory, title, postingId: stillingId,
+                category, subCategory, title, postingId: stillingId, description
             });
         } catch (e) {
             setError(true);
@@ -173,6 +182,15 @@ const RapporterAnnonse = () => {
                                 })
                                 }
 
+                                <br/>
+
+                                <Textarea
+                                    label={descriptionLabel}
+                                    maxLength={255}
+                                    value={description}
+                                    onChange={onDescriptionChange}
+                                />
+
                                 <br/><br/>
 
                                 <a href="https://www.nav.no/no/bedrift/rekruttering/relatert-informasjon/stillingsregistrering">
@@ -181,7 +199,8 @@ const RapporterAnnonse = () => {
                             </div>
 
                             {isAuthenticated === authenticationEnum.IS_AUTHENTICATED && (
-                                <Hovedknapp disabled={violationCategory === null && scamCategory === null}
+                                <Hovedknapp disabled={(violationCategory === null && scamCategory === null) ||
+                                !description}
                                             onClick={onSendTip}>
                                     Send tips
                                 </Hovedknapp>
