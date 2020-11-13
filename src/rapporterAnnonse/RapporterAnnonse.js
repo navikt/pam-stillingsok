@@ -189,6 +189,7 @@ const RapporterAnnonse = () => {
                                     maxLength={255}
                                     value={description}
                                     onChange={onDescriptionChange}
+                                    tellerTekst={() => {return "Legg ikke igjen personopplysinger i dette feltet"}}
                                 />
 
                                 <br/><br/>
