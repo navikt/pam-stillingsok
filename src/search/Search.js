@@ -110,20 +110,6 @@ const Search = ({
                             </Column>
                             <Column xs="12" md="8">
                                 <div id="treff" className="Search__main__center">
-                                    <CoronaInfobox
-                                        title={"Kritiske yrker akkurat nå"}
-                                        color={"yellow"}
-                                    >
-                                        <Lenkeknapp
-                                            type="link"
-                                            onClick={redirectToSearchQuery}>
-                                            <h3>
-                                                <li className="Lenkeknapp__corona_list-item">
-                                                    Ledige stillinger innen helse i Troms og Finnmark
-                                                </li>
-                                            </h3>
-                                        </Lenkeknapp>
-                                    </CoronaInfobox>
                                     <div className="Search__main__center__header">
                                         <div className="Search__main__center__header__left">
                                             <SearchResultCount />
