@@ -1,0 +1,363 @@
+@import "../../node_modules/nav-frontend-core/less/_variabler";
+@import "variabler.less";
+
+.Header__wrapper {
+    background-color: white;
+    color: #4a4a4a;
+    font-family: "Source Sans Pro", Arial, sans-serif;
+    border-bottom: 1px solid @grey;
+}
+
+.Header__topp {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.Header__logo {
+  display: flex;
+  padding: 1rem;
+  font-size: 24px;
+  font-weight: 600;
+
+  a {
+    width: 190px;
+    height: 40px;
+    color: #4a4a4a;
+    text-decoration: none;
+    border-bottom: none;
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px @orangeFocus;
+    }
+  }
+}
+
+.Header__Authentication, .Menu__wrapper {
+    display: none;
+}
+
+.Header__Authentication__logout {
+    text-align: right;
+    .Header__AktivitetsplanLenke {
+        margin-right: auto;
+        display: inline-block;
+        padding: 1rem;
+    }
+}
+
+.Mobilmeny__Button--toggle {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    align-items: center;
+}
+
+.Headermenu__mobile {
+    border-top: 1px solid @grey;
+}
+
+.Mobilmeny__Text--toggle {
+    margin-top: 2px;
+    font-size: 12px;
+    text-transform: uppercase;
+    color: @darkBlue;
+    width: 28.5px;
+}
+
+.Mobilmeny--apne {
+    background-image: url("data:image/svg+xml,%3Csvg id='Layer_1' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cstyle%3E.st0%7Bfill:none;stroke:%23062140;stroke-width:2;stroke-linecap:round;stroke-miterlimit:10%7D%3C/style%3E%3Cpath class='st0' d='M1 1h22M1 9h22M1 17h22'/%3E%3C/svg%3E");
+    width: 24px;
+    height: 24px;
+    display: inline-flex;
+    vertical-align: bottom;
+}
+
+.Mobilmeny--lukk-wrapper {
+    height: 24px;
+
+    .Mobilmeny--lukk {
+        background-image: url("data:image/svg+xml,%3Csvg id='Layer_1' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 22'%3E%3Cstyle%3E.st0%7Bfill:none;stroke:%23062140;stroke-width:2;stroke-linecap:round;stroke-miterlimit:10%7D%3C/style%3E%3Cpath class='st0' d='M1 1l20 20M21 1L1 21'/%3E%3C/svg%3E");
+        width: 22px;
+        height: 22px;
+        display: inline-flex;
+        vertical-align: bottom;
+    }
+}
+
+.Headermenu__mobile {
+    a {
+        text-decoration: none;
+        border-bottom: none;
+    }
+}
+
+.ArbeidsgiverSelect__mobile__wrapper {
+    padding: 1rem;
+    border-bottom: 1px solid #dbdbdb;
+}
+
+.Header__Innstillinger__wrapper {
+    display: none;
+}
+
+.Header__name__wrapper {
+    display: inline-flex;
+    padding: 1rem 1rem 1rem 0;
+}
+
+.Header__name {
+    padding: 0.438rem 3rem 0.438rem 1rem;
+    border-radius: 20px;
+    background-color: @gray2;
+    color: @darkBlue;
+    max-width: 14.5rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.Header__logout-name {
+    margin-left: -2rem !important;
+}
+
+.Header__VelgRolle {
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+}
+
+.Header__VelgRolle__row {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    padding: 1rem;
+    min-width: 14rem;
+    color: @pinkDarken;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    background: @gray2;
+
+    &:hover {
+        background: @pinkDarken;
+        color: #fff;
+        text-decoration: underline;
+
+        .Login__Icon {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23FFF' %3E%3Cpath d='M0 12.5C0 18.8 5.2 24 11.5 24S23 18.8 23 12.5 17.8 1 11.5 1 0 6.2 0 12.5zm12.9-5.9l5.5 5.5c.1.1.1.2.1.4 0 .1-.1.3-.1.4l-5.5 5.5c-.2.2-.5.2-.7 0-.2-.2-.2-.5 0-.7l4.6-4.6H5c-.3 0-.5-.2-.5-.5 0-.4.2-.6.5-.6h11.8l-4.6-4.6c-.2-.2-.2-.5 0-.7.1-.2.5-.2.7-.1z'/%3E%3C/svg%3E");
+        }
+    }
+
+    &:focus {
+        outline: 3px solid @orangeFocus;
+    }
+}
+
+.Login__Icon {
+    width: 24px;
+    height: 24px;
+    background-size: 24px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%238C368E' %3E%3Cpath d='M0 12.5C0 18.8 5.2 24 11.5 24S23 18.8 23 12.5 17.8 1 11.5 1 0 6.2 0 12.5zm12.9-5.9l5.5 5.5c.1.1.1.2.1.4 0 .1-.1.3-.1.4l-5.5 5.5c-.2.2-.5.2-.7 0-.2-.2-.2-.5 0-.7l4.6-4.6H5c-.3 0-.5-.2-.5-.5 0-.4.2-.6.5-.6h11.8l-4.6-4.6c-.2-.2-.2-.5 0-.7.1-.2.5-.2.7-.1z'/%3E%3C/svg%3E");
+    margin-left: 1rem;
+}
+
+.border--solid {
+    border-bottom: 1px solid #fff;
+}
+
+.Header__Authentication--mobile {
+    margin-right: 1rem;
+}
+
+
+@media (min-width: @screen-sm-min) {
+    .Header__wrapper {
+        padding-left: 1rem;
+        padding-right: 1rem;
+        border-bottom: none;
+    }
+
+    .Header__wrapper__border {
+        border-bottom: 2px solid @turquoise;
+    }
+
+    .Header {
+        max-width: 1156px;
+        margin: auto;
+        padding: 0 8px;
+    }
+
+    .Header__topp {
+        padding: 1rem 0;
+    }
+
+    .Header__logo {
+        padding: 0;
+    }
+
+    .Header__VelgRolle__row {
+        justify-content: space-between;
+    }
+
+    .Login__Icon {
+        margin-left: 0;
+    }
+
+    .Headermenu__mobile, .Header__Authentication--mobile, .Menu__wrapper__mobile {
+        display: none;
+    }
+
+    .Header__Authentication, .Menu__wrapper {
+        display: block;
+    }
+
+    .Header__Authentication__logout {
+        display: flex;
+        justify-content: flex-end;
+        padding: 0;
+    }
+
+    .Header__Innstillinger__wrapper {
+        display: flex;
+        align-items: center;
+
+        > :not(:first-child) {
+            margin-left: 1rem;
+        }
+    }
+
+    .Header__name {
+        padding: 0.688rem 3rem 0.688rem 1rem;
+        max-width: 12.5rem;
+    }
+
+    .Header__Innstillinger {
+        border: none;
+        display: flex;
+        color: @pinkDarken;
+
+        .Header__Innstillinger-inner {
+            display: flex;
+            justify-content: center;
+            border: none;
+            outline: none;
+        }
+
+        .Header__Tannhjul {
+            background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg viewBox='0 0 20 20' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Cg id='08.2018---kandidatsøk-+-Lagre-søk---etter-brukertest' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd' stroke-linecap='round' stroke-linejoin='round'%3E%3Cg id='kandidatliste_liste_ingen_kandidater' stroke='%238B368D'%3E%3Cg id='cog'%3E%3Cpath d='M16.8783333,11.25 L19.5833333,11.25 L19.5833333,8.75 L16.8775,8.75 C16.7033333,8.0275 16.4183333,6.9325 16.0416667,6.315 L17.955,4.4025 L15.5975,2.045 L13.6833333,3.95833333 C13.0666667,3.5825 11.9725,3.2975 11.25,3.12333333 L11.25,0.416666667 L8.75,0.416666667 L8.75,3.12333333 C8.0275,3.2975 6.9325,3.5825 6.31583333,3.95833333 L4.40166667,2.045 L2.04416667,4.4025 L3.95833333,6.31583333 C3.58166667,6.9325 3.29666667,8.0275 3.12166667,8.75 L0.416666667,8.75 L0.416666667,11.25 L3.12166667,11.25 C3.29666667,11.9725 3.58166667,13.0683333 3.95833333,13.6841667 L2.04416667,15.5983333 L4.40166667,17.955 L6.315,16.04 C6.9325,16.4183333 8.0275,16.7033333 8.75,16.8783333 L8.75,19.5833333 L11.25,19.5833333 L11.25,16.8783333 C11.9725,16.7033333 13.0675,16.4183333 13.6833333,16.0416667 L15.5983333,17.955 L17.955,15.5983333 L16.0416667,13.6841667 C16.4183333,13.0683333 16.7033333,11.9725 16.8783333,11.25 L16.8783333,11.25 Z' id='Path'%3E%3C/path%3E%3Ccircle id='Oval' cx='10' cy='10' r='3.75'%3E%3C/circle%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/svg%3E");;;
+            width: 22px;
+            height: 22px;
+            display: inline-flex;
+            vertical-align: bottom;
+            margin: 0.1rem 0 0 0.5rem;
+        }
+
+        &:hover {
+            .Header__Tannhjul {
+                background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg width='22px' height='22px' viewBox='0 0 21 21' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3C!-- Generator: Sketch 54.1 (76490) - https://sketchapp.com --%3E%3Ctitle%3Ecog%3C/title%3E%3Cdesc%3ECreated with Sketch.%3C/desc%3E%3Cg id='08.2018---kandidatsøk-+-Lagre-søk---etter-brukertest' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'%3E%3Cg id='kandidatliste_liste_ingen_kandidater' transform='translate(-295.000000, -674.000000)' fill='%23A84499' fill-rule='nonzero'%3E%3Cg id='cog' transform='translate(295.000000, 674.000000)'%3E%3Cpath d='M19.5833333,8.33333333 L17.205,8.33333333 C17.0383333,7.675 16.8266667,6.94416667 16.5566667,6.39 L18.25,4.69666667 C18.3291667,4.61833333 18.3725,4.51166667 18.3725,4.40166667 C18.3725,4.29166667 18.3283333,4.185 18.25,4.10666667 L15.8916667,1.75166667 C15.7291667,1.58833333 15.465,1.58833333 15.3025,1.75166667 L13.6091667,3.44416667 C13.055,3.17416667 12.3241667,2.9625 11.6666667,2.79666667 L11.6666667,0.416666667 C11.6666667,0.186666667 11.48,0 11.25,0 L8.75,0 C8.52083333,0 8.33333333,0.186666667 8.33333333,0.416666667 L8.33333333,2.79666667 C7.67583333,2.9625 6.945,3.17416667 6.39083333,3.44416667 L4.6975,1.75166667 C4.53416667,1.58833333 4.27083333,1.58833333 4.10833333,1.75166667 L1.75083333,4.1075 C1.58833333,4.26916667 1.58833333,4.53416667 1.75083333,4.69666667 L3.445,6.39083333 C3.17583333,6.9425 2.96333333,7.67416667 2.79583333,8.33333333 L0.416666667,8.33333333 C0.1875,8.33333333 0,8.52 0,8.75 L0,11.25 C0,11.48 0.1875,11.6666667 0.416666667,11.6666667 L2.79583333,11.6666667 C2.9625,12.3258333 3.175,13.0566667 3.44416667,13.6091667 L1.75,15.3033333 C1.67166667,15.3816667 1.62833333,15.4875 1.62833333,15.5983333 C1.62833333,15.7091667 1.6725,15.815 1.75,15.8933333 L4.10833333,18.25 C4.265,18.4066667 4.54166667,18.4066667 4.6975,18.25 L6.39083333,16.5566667 C6.94333333,16.825 7.67416667,17.0375 8.33333333,17.205 L8.33333333,19.5833333 C8.33333333,19.8133333 8.52083333,20 8.75,20 L11.25,20 C11.48,20 11.6666667,19.8133333 11.6666667,19.5833333 L11.6666667,17.205 C12.3258333,17.0375 13.0566667,16.825 13.6091667,16.5566667 L15.3041667,18.25 C15.4666667,18.4125 15.7308333,18.4125 15.8933333,18.25 L18.2491667,15.8933333 C18.4125,15.7308333 18.4125,15.4666667 18.2491667,15.3041667 L16.5558333,13.61 C16.825,13.0575 17.0375,12.3266667 17.2041667,11.6675 L19.5833333,11.6675 C19.8133333,11.6675 20,11.4808333 20,11.2508333 L20,8.75083333 C20,8.52 19.8133333,8.33333333 19.5833333,8.33333333 Z M10,13.3333333 C8.1625,13.3333333 6.66666667,11.8375 6.66666667,10 C6.66666667,8.1625 8.1625,6.66666667 10,6.66666667 C11.8383333,6.66666667 13.3333333,8.1625 13.3333333,10 C13.3333333,11.8375 11.8383333,13.3333333 10,13.3333333 Z' id='Shape'%3E%3C/path%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            }
+
+            .Header__Innstillinger__text {
+                border-bottom-color: @pink;
+                color: @pink;
+            }
+        }
+
+        &:active {
+            .Header__Tannhjul {
+                background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg width='22px' height='22px' viewBox='0 0 21 21' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3C!-- Generator: Sketch 54.1 (76490) - https://sketchapp.com --%3E%3Ctitle%3Ecog%3C/title%3E%3Cdesc%3ECreated with Sketch.%3C/desc%3E%3Cg id='08.2018---kandidatsøk-+-Lagre-søk---etter-brukertest' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'%3E%3Cg id='kandidatliste_liste_ingen_kandidater' transform='translate(-295.000000, -674.000000)' fill='%23A84499' fill-rule='nonzero'%3E%3Cg id='cog' transform='translate(295.000000, 674.000000)'%3E%3Cpath d='M19.5833333,8.33333333 L17.205,8.33333333 C17.0383333,7.675 16.8266667,6.94416667 16.5566667,6.39 L18.25,4.69666667 C18.3291667,4.61833333 18.3725,4.51166667 18.3725,4.40166667 C18.3725,4.29166667 18.3283333,4.185 18.25,4.10666667 L15.8916667,1.75166667 C15.7291667,1.58833333 15.465,1.58833333 15.3025,1.75166667 L13.6091667,3.44416667 C13.055,3.17416667 12.3241667,2.9625 11.6666667,2.79666667 L11.6666667,0.416666667 C11.6666667,0.186666667 11.48,0 11.25,0 L8.75,0 C8.52083333,0 8.33333333,0.186666667 8.33333333,0.416666667 L8.33333333,2.79666667 C7.67583333,2.9625 6.945,3.17416667 6.39083333,3.44416667 L4.6975,1.75166667 C4.53416667,1.58833333 4.27083333,1.58833333 4.10833333,1.75166667 L1.75083333,4.1075 C1.58833333,4.26916667 1.58833333,4.53416667 1.75083333,4.69666667 L3.445,6.39083333 C3.17583333,6.9425 2.96333333,7.67416667 2.79583333,8.33333333 L0.416666667,8.33333333 C0.1875,8.33333333 0,8.52 0,8.75 L0,11.25 C0,11.48 0.1875,11.6666667 0.416666667,11.6666667 L2.79583333,11.6666667 C2.9625,12.3258333 3.175,13.0566667 3.44416667,13.6091667 L1.75,15.3033333 C1.67166667,15.3816667 1.62833333,15.4875 1.62833333,15.5983333 C1.62833333,15.7091667 1.6725,15.815 1.75,15.8933333 L4.10833333,18.25 C4.265,18.4066667 4.54166667,18.4066667 4.6975,18.25 L6.39083333,16.5566667 C6.94333333,16.825 7.67416667,17.0375 8.33333333,17.205 L8.33333333,19.5833333 C8.33333333,19.8133333 8.52083333,20 8.75,20 L11.25,20 C11.48,20 11.6666667,19.8133333 11.6666667,19.5833333 L11.6666667,17.205 C12.3258333,17.0375 13.0566667,16.825 13.6091667,16.5566667 L15.3041667,18.25 C15.4666667,18.4125 15.7308333,18.4125 15.8933333,18.25 L18.2491667,15.8933333 C18.4125,15.7308333 18.4125,15.4666667 18.2491667,15.3041667 L16.5558333,13.61 C16.825,13.0575 17.0375,12.3266667 17.2041667,11.6675 L19.5833333,11.6675 C19.8133333,11.6675 20,11.4808333 20,11.2508333 L20,8.75083333 C20,8.52 19.8133333,8.33333333 19.5833333,8.33333333 Z M10,13.3333333 C8.1625,13.3333333 6.66666667,11.8375 6.66666667,10 C6.66666667,8.1625 8.1625,6.66666667 10,6.66666667 C11.8383333,6.66666667 13.3333333,8.1625 13.3333333,10 C13.3333333,11.8375 11.8383333,13.3333333 10,13.3333333 Z' id='Shape'%3E%3C/path%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/svg%3E");;
+            }
+
+            .Header__Innstillinger__text {
+                border-bottom-color: @pink;
+                color: @pink;
+            }
+        }
+
+        &:focus {
+            border: none;
+            outline: none;
+            .Header__Innstillinger__text {
+                background-color: @orangeFocus; /* keyboard-only focus styles */
+            }
+        }
+    }
+
+
+    .Header__Innstillinger-active {
+        .Header__Tannhjul {
+            background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg width='22px' height='22px' viewBox='0 0 21 21' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3C!-- Generator: Sketch 54.1 (76490) - https://sketchapp.com --%3E%3Ctitle%3Ecog%3C/title%3E%3Cdesc%3ECreated with Sketch.%3C/desc%3E%3Cg id='08.2018---kandidatsøk-+-Lagre-søk---etter-brukertest' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'%3E%3Cg id='kandidatliste_liste_ingen_kandidater' transform='translate(-295.000000, -674.000000)' fill='%23A84499' fill-rule='nonzero'%3E%3Cg id='cog' transform='translate(295.000000, 674.000000)'%3E%3Cpath d='M19.5833333,8.33333333 L17.205,8.33333333 C17.0383333,7.675 16.8266667,6.94416667 16.5566667,6.39 L18.25,4.69666667 C18.3291667,4.61833333 18.3725,4.51166667 18.3725,4.40166667 C18.3725,4.29166667 18.3283333,4.185 18.25,4.10666667 L15.8916667,1.75166667 C15.7291667,1.58833333 15.465,1.58833333 15.3025,1.75166667 L13.6091667,3.44416667 C13.055,3.17416667 12.3241667,2.9625 11.6666667,2.79666667 L11.6666667,0.416666667 C11.6666667,0.186666667 11.48,0 11.25,0 L8.75,0 C8.52083333,0 8.33333333,0.186666667 8.33333333,0.416666667 L8.33333333,2.79666667 C7.67583333,2.9625 6.945,3.17416667 6.39083333,3.44416667 L4.6975,1.75166667 C4.53416667,1.58833333 4.27083333,1.58833333 4.10833333,1.75166667 L1.75083333,4.1075 C1.58833333,4.26916667 1.58833333,4.53416667 1.75083333,4.69666667 L3.445,6.39083333 C3.17583333,6.9425 2.96333333,7.67416667 2.79583333,8.33333333 L0.416666667,8.33333333 C0.1875,8.33333333 0,8.52 0,8.75 L0,11.25 C0,11.48 0.1875,11.6666667 0.416666667,11.6666667 L2.79583333,11.6666667 C2.9625,12.3258333 3.175,13.0566667 3.44416667,13.6091667 L1.75,15.3033333 C1.67166667,15.3816667 1.62833333,15.4875 1.62833333,15.5983333 C1.62833333,15.7091667 1.6725,15.815 1.75,15.8933333 L4.10833333,18.25 C4.265,18.4066667 4.54166667,18.4066667 4.6975,18.25 L6.39083333,16.5566667 C6.94333333,16.825 7.67416667,17.0375 8.33333333,17.205 L8.33333333,19.5833333 C8.33333333,19.8133333 8.52083333,20 8.75,20 L11.25,20 C11.48,20 11.6666667,19.8133333 11.6666667,19.5833333 L11.6666667,17.205 C12.3258333,17.0375 13.0566667,16.825 13.6091667,16.5566667 L15.3041667,18.25 C15.4666667,18.4125 15.7308333,18.4125 15.8933333,18.25 L18.2491667,15.8933333 C18.4125,15.7308333 18.4125,15.4666667 18.2491667,15.3041667 L16.5558333,13.61 C16.825,13.0575 17.0375,12.3266667 17.2041667,11.6675 L19.5833333,11.6675 C19.8133333,11.6675 20,11.4808333 20,11.2508333 L20,8.75083333 C20,8.52 19.8133333,8.33333333 19.5833333,8.33333333 Z M10,13.3333333 C8.1625,13.3333333 6.66666667,11.8375 6.66666667,10 C6.66666667,8.1625 8.1625,6.66666667 10,6.66666667 C11.8383333,6.66666667 13.3333333,8.1625 13.3333333,10 C13.3333333,11.8375 11.8383333,13.3333333 10,13.3333333 Z' id='Shape'%3E%3C/path%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .Header__Innstillinger__text {
+            color: @pink;
+        }
+    }
+}
+
+.Header__AktivitetsplanLenke {
+    border: none;
+    display: flex;
+    color: @pinkDarken;
+
+    .Header__AktivitetsplanLenke-inner {
+        display: flex;
+        justify-content: center;
+        border: none;
+        outline: none;
+    }
+
+    .Header__Lenkeikon {
+        background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg viewBox='0 0 20 20' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3C!-- Generator: Sketch 54.1 (76490) - https://sketchapp.com --%3E%3Ctitle%3ERectangle%3C/title%3E%3Cdesc%3ECreated with Sketch.%3C/desc%3E%3Cg id='08.2018---kandidatsøk-+-Lagre-søk---etter-brukertest' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'%3E%3Cg id='kandidatliste_liste_ingen_kandidater'%3E%3Cg id='Group'%3E%3Cg id='Rectangle'%3E%3Crect fill-opacity='0' fill='%23D8D8D8' x='0' y='0' width='20' height='20'%3E%3C/rect%3E%3Cg id='Group-2' stroke-width='1' transform='translate(2.000000, 2.000000)' stroke='%238B368D'%3E%3Cpath d='M16,11.3234066 L16,13.3333333 C16,14.8060927 14.8060927,16 13.3333333,16 L2.66666667,16 C1.19390733,16 0,14.8060927 0,13.3333333 L0,2.66666667 C0,1.19390733 1.19390733,0 2.66666667,0 L4.70718905,0' id='Rectangle-6'%3E%3C/path%3E%3Cpath d='M6.32470588,9.61026734 C12.7309804,3.20342245 15.9341176,8.22453217e-13 15.9341176,8.22453217e-13' id='Line-6'%3E%3C/path%3E%3Cpolyline id='Path-2' points='9.6 -1.41486822e-12 15.995324 -1.41486822e-12 15.995324 6.50504052'%3E%3C/polyline%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/svg%3E");;
+        width: 18px;
+        height: 18px;
+        display: inline-flex;
+        vertical-align: bottom;
+        margin: 0.1rem 0 0 0.5rem;
+    }
+
+    &:hover {
+        .Header__Lenkeikon {
+            background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg viewBox='0 0 20 20' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Cg id='08.2018---kandidatsøk-+-Lagre-søk---etter-brukertest' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'%3E%3Cg id='kandidatliste_liste_ingen_kandidater'%3E%3Cg id='Group-Copy'%3E%3Cg id='ekstern_link'%3E%3Crect id='Rectangle' fill-opacity='0' fill='%23D8D8D8' x='0' y='0' width='20' height='20'%3E%3C/rect%3E%3Cg id='external-link' stroke-width='1' transform='translate(2.000000, 2.000000)' stroke='%23A84499'%3E%3Cpath d='M16,11.3234066 L16,13.3333334 C16,14.8060927 14.8060926,16 13.3333334,16 L2.66666667,16 C1.19390734,16 0,14.8060927 0,13.3333334 L0,2.66666666 C0,1.19390734 1.19390734,0 2.66666667,0 L4.70718906,0' id='Rectangle-6'%3E%3C/path%3E%3Cg id='Group-7' transform='translate(5.480000, 0.000000)'%3E%3Cpath d='M0.874705882,9.61026734 L8.74623522,1.79519542' id='Line-6' stroke-width='2'%3E%3C/path%3E%3Cpolygon id='Path-2' fill='%23A84499' fill-rule='nonzero' stroke-linejoin='round' points='4.18602042 0 10.5238095 0 10.5238095 6.24816411'%3E%3C/polygon%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/svg%3E");;;
+        }
+
+        .Header__AktivitetsplanLenke__text {
+            border-bottom-color: @pink;
+            color: @pink;
+        }
+    }
+
+    &:active {
+        .Header__Lenkeikon {
+            background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg viewBox='0 0 20 20' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Cg id='08.2018---kandidatsøk-+-Lagre-søk---etter-brukertest' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'%3E%3Cg id='kandidatliste_liste_ingen_kandidater'%3E%3Cg id='Group-Copy'%3E%3Cg id='ekstern_link'%3E%3Crect id='Rectangle' fill-opacity='0' fill='%23D8D8D8' x='0' y='0' width='20' height='20'%3E%3C/rect%3E%3Cg id='external-link' stroke-width='1' transform='translate(2.000000, 2.000000)' stroke='%23A84499'%3E%3Cpath d='M16,11.3234066 L16,13.3333334 C16,14.8060927 14.8060926,16 13.3333334,16 L2.66666667,16 C1.19390734,16 0,14.8060927 0,13.3333334 L0,2.66666666 C0,1.19390734 1.19390734,0 2.66666667,0 L4.70718906,0' id='Rectangle-6'%3E%3C/path%3E%3Cg id='Group-7' transform='translate(5.480000, 0.000000)'%3E%3Cpath d='M0.874705882,9.61026734 L8.74623522,1.79519542' id='Line-6' stroke-width='2'%3E%3C/path%3E%3Cpolygon id='Path-2' fill='%23A84499' fill-rule='nonzero' stroke-linejoin='round' points='4.18602042 0 10.5238095 0 10.5238095 6.24816411'%3E%3C/polygon%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/svg%3E");;
+        }
+
+        .Header__AktivitetsplanLenke__text {
+            border-bottom-color: @pink;
+            color: @pink;
+        }
+    }
+
+    &:focus {
+        border: none;
+        outline: none;
+        .Header__AktivitetsplanLenke__text {
+            background-color: @orangeFocus; /* keyboard-only focus styles */
+        }
+    }
+}
+
+@media (min-width: @screen-md-min) {
+    .Header__Innstillinger__wrapper > :not(:first-child) {
+        margin-left: 2rem;
+    }
+
+    .Header__name {
+        max-width: 15rem;
+    }
+}
+
