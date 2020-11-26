@@ -49,3 +49,7 @@ spec:
       value: {{ pamsearchapi_url }}
     - name: AMPLITUDE_TOKEN
       value: {{ amplitude_token }}
+    - name: UNLEASH_URL
+      value: {{ unleash_url }}
+    - name: NY_CV_URL
+      value: {{ ny_cv_url }}
