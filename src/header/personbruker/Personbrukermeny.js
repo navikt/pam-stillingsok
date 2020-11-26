@@ -2,6 +2,7 @@ import * as React from 'react';
 import './Personbrukermeny.less';
 import { NavLink } from 'react-router-dom';
 import Cookies from "universal-cookie";
+import {NY_CV_URL} from "../../fasitProperties";
 
 const tabs = [
     {
@@ -72,11 +73,11 @@ export const InnstillingerLenkeMobil = ({
 export const Personbrukermeny = ({ applikasjon, onNavigationClick }) => {
     const cookies = new Cookies();
     const useNewCv = cookies.get('useNewCv') === 'true';
-    const cvUris = ['/cv', window.__NY_CV_URL__];
+    const cvUris = ['/cv', NY_CV_URL];
 
     const filteredTabs = useNewCv
         ? tabs.filter((it) => it.tittel !== 'Jobbprofil')
-            .map((it) => it.tittel === 'CV' ? {...it, href: window.__NY_CV_URL__ } : it)
+            .map((it) => it.tittel === 'CV' ? {...it, href: NY_CV_URL } : it)
         : tabs;
 
     return (
