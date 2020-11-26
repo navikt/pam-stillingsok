@@ -53,7 +53,8 @@ const Header = ({
 
     useEffect(() => {
         const cookies = new Cookies();
-        setShowNewCvLink(cookies.get('useNewCv') !== 'true');
+        setShowNewCvLink(cookies.get('useNewCv') !== 'true'
+            && cookies.get('newCvRolloutGroup') === 'true');
 
         if (role) {
             localStorage.setItem('innloggetBrukerKontekst', role);
