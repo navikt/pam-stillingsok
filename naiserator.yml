@@ -16,10 +16,10 @@ spec:
     enabled: true
     path: /stillinger/internal/metrics
   liveness:
-    initialDelay: 60
+    initialDelay: 10
     path: /stillinger/internal/isAlive
   readiness:
-    initialDelay: 60
+    initialDelay: 10
     path: /stillinger/internal/isReady
   resources:
     limits:

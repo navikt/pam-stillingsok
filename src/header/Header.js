@@ -6,6 +6,7 @@ import {NavLink} from 'react-router-dom';
 import {InnstillingerLenkeMobil, Personbrukermeny} from './personbruker/Personbrukermeny';
 import {AuthStatus} from "pam-frontend-header";
 import {usePrevious} from "../common/hooks/usePrevious";
+import NewCvLink from "./newCvLink/NewCvLink";
 
 
 const AuthButton = ({label, onClick}) => (
@@ -147,6 +148,7 @@ const Header = ({
                                             </div>
                                         </a>
                                         }
+                                        {!underOppfolging && <NewCvLink />}
                                         {visInnstillinger && (
                                             <div>
                                                 {(applikasjon === 'CV' ? (
