@@ -72,11 +72,9 @@ export const InnstillingerLenkeMobil = ({
 export const Personbrukermeny = ({ applikasjon, onNavigationClick }) => {
     const cookies = new Cookies();
     const useNewCv = cookies.get('useNewCv') === 'true';
-    const cvUris = ['/cv', window.__NY_CV_URL__];
-
     const filteredTabs = useNewCv
         ? tabs.filter((it) => it.tittel !== 'Jobbprofil')
-            .map((it) => it.tittel === 'CV' ? {...it, href: window.__NY_CV_URL__ } : it)
+            .map((it) => it.tittel === 'CV' ? {...it, href: '/v2/cv'} : it)
         : tabs;
 
     return (
@@ -96,7 +94,7 @@ export const Personbrukermeny = ({ applikasjon, onNavigationClick }) => {
                             </NavLink>
                         </div>
                     ) : (
-                        <div className={ cvUris.includes(tab.href) ? 'Personbrukermeny--lenke-wrapper-CV' : 'Personbrukermeny--lenke-wrapper'} key={tab.href}>
+                        <div className={tab.href === '/cv' ? 'Personbrukermeny--lenke-wrapper-CV' : 'Personbrukermeny--lenke-wrapper'} key={tab.href}>
                             <NavLink
                                 to={tab.href}
                                 onClick={onNavigationClick(tab.href)}
@@ -108,7 +106,7 @@ export const Personbrukermeny = ({ applikasjon, onNavigationClick }) => {
                         </div>
                     )
                 ) : (
-                    <div className={ cvUris.includes(tab.href) ? 'Personbrukermeny--lenke-wrapper-CV' : 'Personbrukermeny--lenke-wrapper'} key={tab.href}>
+                    <div className={tab.href === '/cv' ? 'Personbrukermeny--lenke-wrapper-CV' : 'Personbrukermeny--lenke-wrapper'} key={tab.href}>
                         <a
                             href={tab.href}
                             onClick={onNavigationClick(tab.href)}

@@ -9,7 +9,6 @@ const compression = require('compression');
 const searchApiConsumer = require('./api/searchApiConsumer');
 const htmlMeta = require('./common/htmlMeta');
 const locationApiConsumer = require('./api/locationApiConsumer');
-const { initialize } = require('unleash-client');
 
 /* eslint no-console: 0 */
 
@@ -76,9 +75,7 @@ const fasitProperties = {
     LOGOUT_URL: process.env.LOGOUTSERVICE_URL,
     PAM_STILLINGSOK_URL: process.env.PAM_STILLINGSOK_URL,
     PAM_VAR_SIDE_URL: process.env.PAM_VAR_SIDE_URL,
-    AMPLITUDE_TOKEN: process.env.AMPLITUDE_TOKEN,
-    NY_CV_URL: process.env.NY_CV_URL,
-    UNLEASH_URL: process.env.UNLEASH_URL
+    AMPLITUDE_TOKEN: process.env.AMPLITUDE_TOKEN
 };
 
 const writeEnvironmentVariablesToFile = () => {
@@ -88,8 +85,7 @@ const writeEnvironmentVariablesToFile = () => {
         + `window.__LOGIN_URL__="${fasitProperties.LOGIN_URL}";\n`
         + `window.__LOGOUT_URL__="${fasitProperties.LOGOUT_URL}";\n`
         + `window.__PAM_VAR_SIDE_URL__="${fasitProperties.PAM_VAR_SIDE_URL}";\n`
-        + `window.__AMPLITUDE_TOKEN__="${fasitProperties.AMPLITUDE_TOKEN}";\n`
-        + `window.__NY_CV_URL__="${fasitProperties.NY_CV_URL};\n`;
+        + `window.__AMPLITUDE_TOKEN__="${fasitProperties.AMPLITUDE_TOKEN}";`;
 
     fs.writeFile(path.resolve(rootDirectory, 'dist/js/env.js'), fileContent, (err) => {
         if (err) throw err;
@@ -114,14 +110,6 @@ const renderSok = (htmlPages) => (
     })
 );
 
-const unleash = initialize({
-    url: fasitProperties.UNLEASH_URL,
-    appName: 'pam-stillingsok'
-})
-
-const oneWeek = 604800;
-const newCvRollbackFeatureToggle = `pam-cv.new-cv-rollback${process.env.NAIS_CLUSTER_NAME.includes('dev') ? '-dev' : ''}`;
-
 const startServer = (htmlPages) => {
     writeEnvironmentVariablesToFile();
 
@@ -130,15 +118,9 @@ const startServer = (htmlPages) => {
             return next();
         }
         if ((req && req.headers.cookie && !req.headers.cookie.includes('amplitudeIsEnabled')) || !req.headers.cookie){
-            res.cookie('amplitudeIsEnabled', true, { maxAge: oneWeek * 2 });
-        }
-        if ((req && req.headers.cookie
-            && req.headers.cookie.includes('newCvRolloutGroup'))
-            // NOTE: Using pam-cv's feature toggle, since the rollback happens on both apps.
-            && unleash.isEnabled(newCvRollbackFeatureToggle, {})) {
-
-            res.cookie('newCvRolloutGroup', false, { maxAge: oneWeek * 4 });
-            res.cookie('useNewCv', false, { maxAge: oneWeek * 4 })
+            // Valid for two weeks
+            const twoWeeks = 604800000 * 2;
+            res.cookie('amplitudeIsEnabled', true, { maxAge: twoWeeks });
         }
         next();
     });
