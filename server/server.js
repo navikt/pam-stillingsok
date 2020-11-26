@@ -89,7 +89,7 @@ const writeEnvironmentVariablesToFile = () => {
         + `window.__LOGOUT_URL__="${fasitProperties.LOGOUT_URL}";\n`
         + `window.__PAM_VAR_SIDE_URL__="${fasitProperties.PAM_VAR_SIDE_URL}";\n`
         + `window.__AMPLITUDE_TOKEN__="${fasitProperties.AMPLITUDE_TOKEN}";\n`
-        + `window.__NY_CV_URL__="${fasitProperties.NY_CV_URL};`;
+        + `window.__NY_CV_URL__="${fasitProperties.NY_CV_URL};\n`;
 
     fs.writeFile(path.resolve(rootDirectory, 'dist/js/env.js'), fileContent, (err) => {
         if (err) throw err;
