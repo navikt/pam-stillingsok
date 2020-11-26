@@ -1,6 +1,5 @@
 import * as React from "react";
 import Cookies from "universal-cookie";
-import {NavLink} from "react-router-dom";
 import {NY_CV_URL} from "../../fasitProperties";
 
 const NewCvLink = () => {
@@ -17,8 +16,8 @@ const NewCvLink = () => {
         return null;
     }
 
-    return(<NavLink
-        to={NY_CV_URL}
+    return(<a
+        href={NY_CV_URL}
         onClick={onNewCvNavigationClick()}
         className="Header__AktivitetsplanLenke"
     >
@@ -27,7 +26,7 @@ const NewCvLink = () => {
                     Prøv den nye CV-løsningen
                 </span>
         </div>
-    </NavLink>)
+    </a>)
 }
 
 export default NewCvLink;
