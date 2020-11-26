@@ -130,15 +130,15 @@ const startServer = (htmlPages) => {
             return next();
         }
         if ((req && req.headers.cookie && !req.headers.cookie.includes('amplitudeIsEnabled')) || !req.headers.cookie){
-            res.cookie('amplitudeIsEnabled', true, { maxAge: oneWeek * 2 });
+            res.cookie('amplitudeIsEnabled', true, { maxAge: oneWeek * 2, domain: '.nav.no' });
         }
         if ((req && req.headers.cookie
             && req.headers.cookie.includes('newCvRolloutGroup'))
             // NOTE: Using pam-cv's feature toggle, since the rollback happens on both apps.
             && unleash.isEnabled(newCvRollbackFeatureToggle, {})) {
 
-            res.cookie('newCvRolloutGroup', false, { maxAge: oneWeek * 4 });
-            res.cookie('useNewCv', false, { maxAge: oneWeek * 4 })
+            res.cookie('newCvRolloutGroup', false, { maxAge: oneWeek * 4, domain: '.nav.no' });
+            res.cookie('useNewCv', false, { maxAge: oneWeek * 4, domain: '.nav.no' })
         }
         next();
     });

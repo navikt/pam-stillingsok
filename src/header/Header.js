@@ -7,6 +7,7 @@ import {InnstillingerLenkeMobil, Personbrukermeny} from './personbruker/Personbr
 import {AuthStatus} from "pam-frontend-header";
 import {usePrevious} from "../common/hooks/usePrevious";
 import NewCvLink from "./newCvLink/NewCvLink";
+import Cookies from "universal-cookie";
 
 
 const AuthButton = ({label, onClick}) => (
@@ -43,6 +44,7 @@ const Header = ({
 
     const [showPopover, setShowPopover] = useState(false);
     const [showMobileMenu, setShowMobileMenu] = useState(false);
+    const [showNewCvLink, setShowNewCvLink] = useState(false);
     const [userInfo, setUserInfo] = useState(undefined);
     const [underOppfolging, setUnderOppfolging] = useState(false);
 
@@ -50,6 +52,9 @@ const Header = ({
     const previousArbeidsgiverSelect = usePrevious(arbeidsgiverSelect);
 
     useEffect(() => {
+        const cookies = new Cookies();
+        setShowNewCvLink(cookies.get('useNewCv') === 'false');
+
         if (role) {
             localStorage.setItem('innloggetBrukerKontekst', role);
         }
@@ -148,7 +153,7 @@ const Header = ({
                                             </div>
                                         </a>
                                         }
-                                        {!underOppfolging && <NewCvLink />}
+                                        {!underOppfolging && showNewCvLink && <NewCvLink />}
                                         {visInnstillinger && (
                                             <div>
                                                 {(applikasjon === 'CV' ? (
