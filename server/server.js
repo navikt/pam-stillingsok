@@ -120,6 +120,7 @@ const unleash = initialize({
 })
 
 const oneWeek = 604800;
+const newCvRollbackFeatureToggle = `pam-cv.new-cv-rollback${process.env.NAIS_CLUSTER_NAME.includes('dev') ? '-dev' : ''}`;
 
 const startServer = (htmlPages) => {
     writeEnvironmentVariablesToFile();
@@ -129,20 +130,15 @@ const startServer = (htmlPages) => {
             return next();
         }
         if ((req && req.headers.cookie && !req.headers.cookie.includes('amplitudeIsEnabled')) || !req.headers.cookie){
-            // Valid for two weeks
-            const twoWeeks = oneWeek * 2;
-            res.cookie('amplitudeIsEnabled', true, { maxAge: twoWeeks });
+            res.cookie('amplitudeIsEnabled', true, { maxAge: oneWeek * 2 });
         }
         if ((req && req.headers.cookie
             && req.headers.cookie.includes('newCvRolloutGroup'))
-            // Using pam-cv's feature toggle, since the rollback happens
-            // on both apps.
-            && unleash.isEnabled('pam-cv.new-cv-rollback', {})) {
+            // NOTE: Using pam-cv's feature toggle, since the rollback happens on both apps.
+            && unleash.isEnabled(newCvRollbackFeatureToggle, {})) {
 
-            const fourWeeks = oneWeek * 4;
-
-            res.cookie('newCvRolloutGroup', false, { maxAge: fourWeeks });
-            res.cookie('useNewCv', false, { maxAge: fourWeeks })
+            res.cookie('newCvRolloutGroup', false, { maxAge: oneWeek * 4 });
+            res.cookie('useNewCv', false, { maxAge: oneWeek * 4 })
         }
         next();
     });
