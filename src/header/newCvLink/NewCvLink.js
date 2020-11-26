@@ -8,7 +8,8 @@ const NewCvLink = () => {
     const onNewCvNavigationClick = () => () => {
         cookies.set('useNewCv', 'true', {
             path: '/',
-            maxAge: (604800 * 8) // 8 weeks
+            maxAge: (604800 * 8), // 8 weeks
+            domain: '.nav.no'
         })
     };
 
