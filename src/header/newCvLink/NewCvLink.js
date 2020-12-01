@@ -1,6 +1,7 @@
 import * as React from "react";
 import Cookies from "universal-cookie";
 import {NY_CV_URL} from "../../fasitProperties";
+import "./NewCvLink.less";
 
 const NewCvLink = () => {
     const cookies = new Cookies();
@@ -19,11 +20,11 @@ const NewCvLink = () => {
 
     return(<a
         href={NY_CV_URL}
-        onClick={onNewCvNavigationClick()}
-        className="Header__AktivitetsplanLenke"
+        onClick={onNewCvNavigationClick}
+        className="Header__NewCvLenke"
     >
-        <div className="Header__AktivitetsplanLenke-inner">
-                <span className="Header__AktivitetsplanLenke__text">
+        <div className="Header__NewCvLenke-inner">
+                <span>
                     Prøv den nye CV-løsningen
                 </span>
         </div>
