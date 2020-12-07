@@ -2,6 +2,7 @@ import * as React from "react";
 import Cookies from "universal-cookie";
 import {NY_CV_URL} from "../../fasitProperties";
 import "./NewCvLink.less";
+import logAmplitudeEvent from "../../amplitudeTracker";
 
 const NewCvLink = () => {
     const cookies = new Cookies();
@@ -12,6 +13,8 @@ const NewCvLink = () => {
             maxAge: (604800 * 8), // 8 weeks
             domain: '.nav.no'
         })
+
+        logAmplitudeEvent('Use new CV', {});
     };
 
     if (cookies.get('newCvRolloutGroup')  !== 'true') {
