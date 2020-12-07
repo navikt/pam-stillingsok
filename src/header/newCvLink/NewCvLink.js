@@ -3,8 +3,14 @@ import Cookies from "universal-cookie";
 import {NY_CV_URL} from "../../fasitProperties";
 import "./NewCvLink.less";
 import logAmplitudeEvent from "../../amplitudeTracker";
+import {useEffect} from "react";
 
 const NewCvLink = () => {
+
+    useEffect(() => {
+        logAmplitudeEvent('Showed New CV Link', {});
+    }, []);
+
     const cookies = new Cookies();
 
     const onNewCvNavigationClick = () => () => {
@@ -12,7 +18,7 @@ const NewCvLink = () => {
             path: '/',
             maxAge: (604800 * 8), // 8 weeks
             domain: '.nav.no'
-        })
+        });
 
         logAmplitudeEvent('Use new CV', {});
     };
