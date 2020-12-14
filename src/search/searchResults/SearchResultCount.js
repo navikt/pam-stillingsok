@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Element } from 'nav-frontend-typografi';
 import './SearchResultCount.less';
+import AdStatisticsLink from "../../common/components/AdStatisticsLink";
 
 function SearchResultCount({ searchResult }) {
     if (searchResult) {
@@ -18,6 +19,8 @@ function SearchResultCount({ searchResult }) {
                     {searchResult.total.value > 0 && (
                         <span className="SearchResultCount__h3__count">({searchResult.total.value} {annonserWord})</span>
                     )}
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                {true && <AdStatisticsLink />}
                 </span>
             </div>
         );
