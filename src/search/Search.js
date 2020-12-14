@@ -29,6 +29,7 @@ import ShowResultsButton from './showResultsButton/ShowResultsButton';
 import Sorting from './sorting/Sorting';
 import {useDocumentTitle, useTrackPageview} from '../common/hooks';
 import CoronaInfobox from "../common/components/CoronaInfobox";
+import AdStatisticsLink from "../common/components/AdStatisticsLink";
 
 const Search = ({
     initialSearch,
@@ -91,6 +92,7 @@ const Search = ({
                                             className="no-print"
                                         >
                                             <SearchBox />
+                                            <AdStatisticsLink/>
                                             <Flatknapp
                                                 className="Search__nullstill"
                                                 mini
