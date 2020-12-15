@@ -41,6 +41,22 @@ fs.readFile(__dirname + '/api/resources/locations.json', 'utf-8',
 
 server.disable('x-powered-by');
 server.use(compression());
+
+/**
+ Hotjar requires a bunch of CSP exceptions.
+ Not super happy about 'unsafe-eval' 'unsafe-inline', remove them if they are not needed in the future.
+ From here https://help.hotjar.com/hc/en-us/articles/115011640307-Content-Security-Policies
+ */
+const hotJarSources = {
+    img: ['https://script.hotjar.com', 'http://script.hotjar.com'],
+    script: ['http://static.hotjar.com', 'https://static.hotjar.com', 'https://script.hotjar.com'],
+    connect: ['http://*.hotjar.com:*', 'https://*.hotjar.com:*', 'https://vc.hotjar.io:*', 'wss://*.hotjar.com'],
+    frame: ['https://vars.hotjar.com'],
+    font: ['http://script.hotjar.com', 'https://script.hotjar.com'],
+    UNSAFE: ["'unsafe-eval'", "'unsafe-inline'"]
+};
+
+
 // En del sikkerhets headere er allerede lagt i bigip, dropper de derfor her for å unngå duplkiate headere
 server.use(helmet({xssFilter: false, hsts: false, noSniff: false, frameguard: false}));
 
@@ -51,15 +67,15 @@ server.use(helmet.contentSecurityPolicy({
         defaultSrc: ["'none'"],
         baseUri: ["'none'"],
         mediaSrc: ["'none'"],
-        scriptSrc: ["'self'", 'https://www.google-analytics.com'],
+        scriptSrc: ["'self'", 'https://www.google-analytics.com', ...hotJarSources.script, ...hotJarSources.UNSAFE],
         objectSrc: ["'none'"],
         frameAncestors: ["'none'"],
         formAction: ["'self'"],
-        styleSrc: ["'self'"],
-        fontSrc: ["'self'", 'data:', 'https://fonts.gstatic.com'],
-        imgSrc: ["'self'", 'data:', 'https://www.google-analytics.com'],
-        connectSrc: ["'self'", process.env.PAMADUSER_URL, 'https://www.google-analytics.com', 'https://amplitude.nav.no'],
-        frameSrc: ["'none'"]
+        styleSrc: ["'self'", hotJarSources.UNSAFE[1]],
+        fontSrc: ["'self'", 'data:', 'https://fonts.gstatic.com', ...hotJarSources.font],
+        imgSrc: ["'self'", 'data:', 'https://www.google-analytics.com', ...hotJarSources.img],
+        connectSrc: ["'self'", process.env.PAMADUSER_URL, 'https://www.google-analytics.com', 'https://amplitude.nav.no', ...hotJarSources.connect],
+        frameSrc: ["'none'", ...hotJarSources.frame]
     }
 }));
 
