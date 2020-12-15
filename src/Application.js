@@ -17,11 +17,13 @@ import TermsOfUse from './user/TermsOfUse';
 import UserAlertStripe from './user/UserAlertStripe';
 import BrowserSupportInfo from './BrowserSupportInfo/BrowserSupportInfo';
 import RapporterAnnonse from "./rapporterAnnonse/RapporterAnnonse";
+import enableHotjar from "./hotjarTracking";
 
 class Application extends React.Component {
     componentDidMount() {
         this.props.fetchIsAuthenticated();
         this.props.handleCallbackAfterLogin();
+        enableHotjar();
     }
 
     render() {
