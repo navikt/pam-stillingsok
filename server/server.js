@@ -121,6 +121,8 @@ const unleash = initialize({
 
 const oneWeek = 604800;
 const newCvRollbackFeatureToggle = `pam-cv.new-cv-rollback${process.env.NAIS_CLUSTER_NAME.includes('dev') ? '-dev' : ''}`;
+const showAdStatisticsLinkToggle = `pam-stillingsok.show-add-statistics-link${process.env.NAIS_CLUSTER_NAME.includes('dev') ? '-dev' : ''}`;
+
 
 const startServer = (htmlPages) => {
     writeEnvironmentVariablesToFile();
@@ -132,6 +134,10 @@ const startServer = (htmlPages) => {
         if ((req && req.headers.cookie && !req.headers.cookie.includes('amplitudeIsEnabled')) || !req.headers.cookie){
             res.cookie('amplitudeIsEnabled', true, { maxAge: oneWeek * 2, domain: '.nav.no' });
         }
+        if ((req && req.headers.cookie && !req.headers.cookie.includes('showAdStatisticsLink'))) {
+            res.cookie('showAdStatisticsLink', unleash.isEnabled(showAdStatisticsLinkToggle, {}), { maxAge: oneWeek * 4, domain: '.nav.no' });
+        }
+
         if ((req && req.headers.cookie
             && req.headers.cookie.includes('newCvRolloutGroup'))
             // NOTE: Using pam-cv's feature toggle, since the rollback happens on both apps.

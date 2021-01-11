@@ -2,7 +2,7 @@ import * as React from "react";
 import './AdStatisticsLink.less';
 import logAmplitudeEvent from "../../amplitudeTracker";
 
-const AD_STATISTICS_URL = 'https://data.adeo.no/datapakke/8bad56547ac4f91eaf0d697f2f965351';
+const AD_STATISTICS_URL = 'https://data.nav.no/datapakke/703bc2e74c271ee895609ebd93c52460';
 
 const AdStatisticsLink = () => (
     <a
@@ -12,7 +12,7 @@ const AdStatisticsLink = () => (
         onClick={logAmplitudeEvent('Viewed Ad Statistics')}
     >
         <div className="AdStatisticsLink-inner">
-            <span className="AdStatisticsLink__text">Se status for jobbmarkedet</span>
+            <span className="AdStatisticsLink__text">Se konkurransen på arbeidsplassen.no</span>
             <span className="Header__Lenkeikon"/>
         </div>
     </a>
