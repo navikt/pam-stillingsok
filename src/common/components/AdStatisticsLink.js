@@ -2,7 +2,7 @@ import * as React from "react";
 import './AdStatisticsLink.less';
 import logAmplitudeEvent from "../../amplitudeTracker";
 import {useEffect, useState} from "react";
-import Cookies from "universal-cookie/index";
+import Cookies from "universal-cookie";
 
 const AD_STATISTICS_URL = 'https://data.nav.no/datapakke/703bc2e74c271ee895609ebd93c52460';
 
