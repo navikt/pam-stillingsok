@@ -22,7 +22,9 @@ const AdStatisticsLink = () => {
         href={AD_STATISTICS_URL}
         className="AdStatisticsLink"
         target="_blank"
-        onClick={logAmplitudeEvent('Viewed Ad Statistics')}
+        onClick={logAmplitudeEvent("Clicked Link", {
+            label: "Viewed competition statistics"
+        })}
     >
         <div className="AdStatisticsLink-inner">
             <span className="AdStatisticsLink__text">Se konkurransen på arbeidsplassen.no</span>
