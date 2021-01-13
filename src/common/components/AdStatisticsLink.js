@@ -12,7 +12,15 @@ const AdStatisticsLink = () => {
     useEffect(() => {
         const cookies = new Cookies();
         setShowAdStatistics(cookies.get('showAdStatisticsLink') === 'true')
-    }, [])
+    }, []);
+
+    const logAmplitudeEventAndRedirect = (event) => {
+        event.preventDefault();
+        logAmplitudeEvent("Clicked Link", {
+            label: "Viewed competition statistics"
+        });
+        window.open(AD_STATISTICS_URL, "_blank")
+    };
 
     if (!showAdStatistics) {
         return null;
@@ -22,9 +30,7 @@ const AdStatisticsLink = () => {
         href={AD_STATISTICS_URL}
         className="AdStatisticsLink"
         target="_blank"
-        onClick={logAmplitudeEvent("Clicked Link", {
-            label: "Viewed competition statistics"
-        })}
+        onClick={logAmplitudeEventAndRedirect}
     >
         <div className="AdStatisticsLink-inner">
             <span className="AdStatisticsLink__text">Se konkurransen på arbeidsplassen.no</span>
