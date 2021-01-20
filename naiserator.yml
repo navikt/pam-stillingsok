@@ -56,6 +56,6 @@ spec:
   accessPolicy:
     outbound:
       external:
-        - host: { { pamaduser_url } }
+        - host: {{ pamaduser_url }}
       rules:
         - application: pam-search-api
