@@ -55,5 +55,7 @@ spec:
       value: {{ ny_cv_url }}
   accessPolicy:
     outbound:
+      external:
+        - host: unleash.nais.io
       rules:
         - application: pam-search-api
