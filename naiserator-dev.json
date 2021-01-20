@@ -1,8 +1,6 @@
 {
   "ingress": [
-    "https://arbeidsplassen.dev.nav.no/stillinger",
-    "https://arbeidsplassen.dev.nav.no/stillinger/api/locations",
-    "https://arbeidsplassen.dev.nav.no/stillinger/api/search"
+    "https://arbeidsplassen.dev.nav.no/stillinger"
   ],
   "loginservice_url": "https://loginservice.dev.nav.no/login",
   "logoutservice_url": "https://loginservice.dev.nav.no/slo",
