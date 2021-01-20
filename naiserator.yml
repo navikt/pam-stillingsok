@@ -53,3 +53,7 @@ spec:
       value: {{ unleash_url }}
     - name: NY_CV_URL
       value: {{ ny_cv_url }}
+  accessPolicy:
+    outbound:
+      rules:
+        - application: pam-search-api
