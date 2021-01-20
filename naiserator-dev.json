@@ -1,5 +1,10 @@
 {
-  "ingress": ["https://arbeidsplassen.dev.nav.no/stillinger", "https://pam-stillingsok.dev-gcp.nais.io"],
+  "ingress": [
+    "https://arbeidsplassen.dev.nav.no/stillinger",
+    "https://arbeidsplassen.dev.nav.no/stillinger/api/locations",
+    "https://arbeidsplassen.dev.nav.no/stillinger/api/search",
+    "https://pam-stillingsok.dev-gcp.nais.io"
+  ],
   "loginservice_url": "https://loginservice.dev.nav.no/login",
   "logoutservice_url": "https://loginservice.dev.nav.no/slo",
   "pamaduser_url": "https://arbeidsplassen.dev.nav.no",
