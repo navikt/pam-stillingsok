@@ -1,0 +1,55 @@
+@import '../../variables.less';
+
+.AdStatisticsLink {
+  border: none;
+  display: flex;
+  color: #8C368E;
+
+  margin: 1rem;
+
+  @media (max-width: 1279px) {
+    display: none;
+  }
+}
+
+.AdStatisticsLink__text {
+  font-weight: 600;
+}
+
+.AdStatisticsLink .AdStatisticsLink-inner {
+  display: flex;
+  justify-content: center;
+  border: none;
+  outline: none;
+}
+.AdStatisticsLink .Header__Lenkeikon {
+  background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg viewBox='0 0 20 20' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3C!-- Generator: Sketch 54.1 (76490) - https://sketchapp.com --%3E%3Ctitle%3ERectangle%3C/title%3E%3Cdesc%3ECreated with Sketch.%3C/desc%3E%3Cg id='08.2018---kandidatsøk-+-Lagre-søk---etter-brukertest' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'%3E%3Cg id='kandidatliste_liste_ingen_kandidater'%3E%3Cg id='Group'%3E%3Cg id='Rectangle'%3E%3Crect fill-opacity='0' fill='%23D8D8D8' x='0' y='0' width='20' height='20'%3E%3C/rect%3E%3Cg id='Group-2' stroke-width='1' transform='translate(2.000000, 2.000000)' stroke='%238B368D'%3E%3Cpath d='M16,11.3234066 L16,13.3333333 C16,14.8060927 14.8060927,16 13.3333333,16 L2.66666667,16 C1.19390733,16 0,14.8060927 0,13.3333333 L0,2.66666667 C0,1.19390733 1.19390733,0 2.66666667,0 L4.70718905,0' id='Rectangle-6'%3E%3C/path%3E%3Cpath d='M6.32470588,9.61026734 C12.7309804,3.20342245 15.9341176,8.22453217e-13 15.9341176,8.22453217e-13' id='Line-6'%3E%3C/path%3E%3Cpolyline id='Path-2' points='9.6 -1.41486822e-12 15.995324 -1.41486822e-12 15.995324 6.50504052'%3E%3C/polyline%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  width: 20px;
+  display: inline-flex;
+  vertical-align: bottom;
+  margin: 0.1rem 0 0 0.5rem;
+}
+.AdStatisticsLink:hover .Header__Lenkeikon {
+  background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg viewBox='0 0 20 20' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Cg id='08.2018---kandidatsøk-+-Lagre-søk---etter-brukertest' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'%3E%3Cg id='kandidatliste_liste_ingen_kandidater'%3E%3Cg id='Group-Copy'%3E%3Cg id='ekstern_link'%3E%3Crect id='Rectangle' fill-opacity='0' fill='%23D8D8D8' x='0' y='0' width='20' height='20'%3E%3C/rect%3E%3Cg id='external-link' stroke-width='1' transform='translate(2.000000, 2.000000)' stroke='%23A84499'%3E%3Cpath d='M16,11.3234066 L16,13.3333334 C16,14.8060927 14.8060926,16 13.3333334,16 L2.66666667,16 C1.19390734,16 0,14.8060927 0,13.3333334 L0,2.66666666 C0,1.19390734 1.19390734,0 2.66666667,0 L4.70718906,0' id='Rectangle-6'%3E%3C/path%3E%3Cg id='Group-7' transform='translate(5.480000, 0.000000)'%3E%3Cpath d='M0.874705882,9.61026734 L8.74623522,1.79519542' id='Line-6' stroke-width='2'%3E%3C/path%3E%3Cpolygon id='Path-2' fill='%23A84499' fill-rule='nonzero' stroke-linejoin='round' points='4.18602042 0 10.5238095 0 10.5238095 6.24816411'%3E%3C/polygon%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+.AdStatisticsLink:hover .AdStatisticsLink__text {
+  border-bottom-color: #A84499;
+  color: #A84499;
+}
+.AdStatisticsLink:active .Header__Lenkeikon {
+  background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg viewBox='0 0 20 20' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Cg id='08.2018---kandidatsøk-+-Lagre-søk---etter-brukertest' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'%3E%3Cg id='kandidatliste_liste_ingen_kandidater'%3E%3Cg id='Group-Copy'%3E%3Cg id='ekstern_link'%3E%3Crect id='Rectangle' fill-opacity='0' fill='%23D8D8D8' x='0' y='0' width='20' height='20'%3E%3C/rect%3E%3Cg id='external-link' stroke-width='1' transform='translate(2.000000, 2.000000)' stroke='%23A84499'%3E%3Cpath d='M16,11.3234066 L16,13.3333334 C16,14.8060927 14.8060926,16 13.3333334,16 L2.66666667,16 C1.19390734,16 0,14.8060927 0,13.3333334 L0,2.66666666 C0,1.19390734 1.19390734,0 2.66666667,0 L4.70718906,0' id='Rectangle-6'%3E%3C/path%3E%3Cg id='Group-7' transform='translate(5.480000, 0.000000)'%3E%3Cpath d='M0.874705882,9.61026734 L8.74623522,1.79519542' id='Line-6' stroke-width='2'%3E%3C/path%3E%3Cpolygon id='Path-2' fill='%23A84499' fill-rule='nonzero' stroke-linejoin='round' points='4.18602042 0 10.5238095 0 10.5238095 6.24816411'%3E%3C/polygon%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+.AdStatisticsLink:active .AdStatisticsLink__text {
+  border-bottom-color: #A84499;
+  color: #A84499;
+}
+.AdStatisticsLink:focus {
+  border: none;
+  outline: none;
+}
+.AdStatisticsLink:focus .AdStatisticsLink__text {
+  background-color: #FFBD66;
+  /* keyboard-only focus styles */
+}
+

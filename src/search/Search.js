@@ -1,17 +1,17 @@
-import { Column, Container, Row } from 'nav-frontend-grid';
+import {Column, Container, Row} from 'nav-frontend-grid';
 import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
-import { Flatknapp } from 'pam-frontend-knapper';
-import { authenticationEnum } from '../authentication/authenticationReducer';
-import { CONTEXT_PATH } from '../fasitProperties';
+import React, {useEffect, useState} from 'react';
+import {connect} from 'react-redux';
+import {Lenkeknapp, Flatknapp} from 'pam-frontend-knapper';
+import {authenticationEnum} from '../authentication/authenticationReducer';
+import {CONTEXT_PATH, STILLINGSOK_URL} from '../fasitProperties';
 import FavouriteAlertStripe from '../favourites/alertstripe/FavouriteAlertStripe';
 import SavedSearchAlertStripe from '../savedSearches/alertstripe/SavedSearchAlertStripe';
 import CurrentSavedSearch from '../savedSearches/CurrentSavedSearch';
 import SavedSearchesExpandButton from '../savedSearches/expand/SavedSearchesExpandButton';
 import SavedSearchForm from '../savedSearches/form/SavedSearchForm';
 import SaveSearchButton from '../savedSearches/SaveSearchButton';
-import { RESTORE_STATE_FROM_URL_BEGIN } from '../search/searchQueryReducer';
+import { RESTORE_STATE_FROM_URL_BEGIN } from './searchQueryReducer';
 import Counties from './facets/Locations';
 import EngagementType from './facets/Engagement';
 import Extent from './facets/Extent';
@@ -27,7 +27,9 @@ import SearchResultCount from './searchResults/SearchResultCount';
 import SearchResults from './searchResults/SearchResults';
 import ShowResultsButton from './showResultsButton/ShowResultsButton';
 import Sorting from './sorting/Sorting';
-import { useDocumentTitle, useTrackPageview } from '../common/hooks';
+import {useDocumentTitle, useTrackPageview} from '../common/hooks';
+import CoronaInfobox from "../common/components/CoronaInfobox";
+import AdStatisticsLink from "../common/components/AdStatisticsLink";
 
 const Search = ({
     initialSearch,
@@ -54,6 +56,10 @@ const Search = ({
         e.preventDefault();
         search();
     };
+
+    const redirectToSearchQuery = () => {
+        window.location = `${STILLINGSOK_URL}/stillinger?q=KoronaBeredskapNord`;
+    }
 
     return (
         <div className="Search">
@@ -86,6 +92,7 @@ const Search = ({
                                             className="no-print"
                                         >
                                             <SearchBox />
+                                            <AdStatisticsLink/>
                                             <Flatknapp
                                                 className="Search__nullstill"
                                                 mini

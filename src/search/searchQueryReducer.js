@@ -1,4 +1,4 @@
-import { put, select, takeLatest } from 'redux-saga/es/effects';
+import { put, select, takeLatest } from 'redux-saga/effects';
 import fixLocationName from '../../server/common/fixLocationName';
 import { CONTEXT_PATH } from '../fasitProperties';
 import {

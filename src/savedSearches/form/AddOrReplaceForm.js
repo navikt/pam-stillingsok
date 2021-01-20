@@ -195,4 +195,4 @@ const mapDispatchToProps = (dispatch) => ({
     setShowRegisterEmail: (showRegisterEmail) => dispatch({ type: SET_SHOW_REGISTER_EMAIL, showRegisterEmail })
 });
 
-export default connect(mapStateToProps, mapDispatchToProps, null, { withRef: true })(AddOrReplaceForm);
+export default connect(mapStateToProps, mapDispatchToProps, null, { forwardRef: true })(AddOrReplaceForm);

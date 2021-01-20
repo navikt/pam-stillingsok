@@ -15,7 +15,7 @@ function capitalizeLocationName(text) {
         for (let i = 0, len = separators.length; i < len; i += 1) {
             const fragments = capitalized.split(separators[i]);
             for (let j = 0, x = fragments.length; j < x; j += 1) {
-                if (!ignore.includes(fragments[j])) {
+                if (!ignore.includes(fragments[j]) && fragments[j][0]!=null) {
                     fragments[j] = fragments[j][0].toUpperCase() + fragments[j].substr(1);
                 }
             }
