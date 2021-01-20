@@ -1,0 +1,117 @@
+@import "../variabler.less";
+
+.Personbrukermeny {
+  padding-bottom: 0;
+
+  a {
+    text-decoration: none;
+    border-bottom: none;
+  }
+}
+
+.Personbrukermeny--lenke {
+  padding: 1rem;
+  display: block;
+  background-color: transparent;
+}
+
+.Personbrukermeny--lenke-inner {
+  padding-bottom: 0;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: @darkBlue;
+  border-bottom: 2px solid transparent;
+}
+
+.Personbrukermeny--lenke-active {
+  background-color: @turquoise2;
+  .Personbrukermeny--lenke-inner > span {
+    border-bottom: 2px solid @turquoise;
+  }
+}
+
+.Personbrukermeny--lenke-wrapper, .Personbrukermeny--lenke-wrapper-CV {
+  border-bottom: 1px solid #dbdbdb;
+}
+
+@media(min-width: @screen-sm-min) {
+  .Personbrukermeny {
+    display: flex;
+    justify-content: space-between;
+    max-width: 800px;
+    margin: auto;
+  }
+
+  .Personbrukermeny--lenke-inner,
+  .Personbrukermeny--navn-inner {
+    &:focus {
+      outline: none;
+      background-color: transparent;
+    }
+  }
+
+  .Personbrukermeny--lenke:focus {
+    outline: none;
+    .Personbrukermeny--lenke-inner > span {
+      background-color: @orangeFocus; /* keyboard-only focus styles */
+      outline: none;
+    }
+  }
+
+  .Personbrukermeny--lenke {
+    font-size: 16px;
+    text-transform: uppercase;
+    padding: 0;
+    color: @navMorkGra;
+  }
+
+  .Personbrukermeny--lenke-inner {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 2px 17px 2px;
+    border-bottom: 8px solid transparent;
+    font-weight: 600;
+    color: @darkBlue;
+  }
+
+  .Personbrukermeny--lenke:hover .Personbrukermeny--lenke-inner {
+    border-bottom: 8px solid @turquoise;
+  }
+
+  .Personbrukermeny--lenke-active .Personbrukermeny--lenke-inner,
+  .Personbrukermeny--lenke:active .Personbrukermeny--lenke-inner {
+    border-bottom: 8px solid @turquoise;
+    font-weight: 600;
+    color: @darkBlue;
+    > span {
+      border-bottom: none;
+    }
+  }
+
+  .Personbrukermeny--lenke-active {
+    background-color: #fff;
+  }
+
+  .Personbrukermeny--lenke-active:hover .Personbrukermeny--lenke-inner {
+    border-bottom: 8px solid @turquoise;
+    color: @darkBlue;
+  }
+
+  .Personbrukermeny--lenke-wrapper {
+    border-bottom: none;
+  }
+
+  .Personbrukermeny--lenke-wrapper-CV {
+    border-bottom: none;
+    margin: 0 -15px;
+
+    .Personbrukermeny--lenke-inner {
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+  }
+
+  .Personbrukermeny__Innstillinger--mobile {
+    display: none;
+  }
+}

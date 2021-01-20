@@ -1,0 +1,31 @@
+@import "../variabler.less";
+
+.Header__NewCvLenke {
+  border: none;
+  display: flex;
+  color: @pinkDarken;
+  height: 20px;
+
+  .Header__NewCvLenke-inner {
+    display: flex;
+    justify-content: center;
+    border: none;
+    outline: none;
+  }
+
+  &:hover {
+    border-bottom-color: @pink;
+    color: @pink;
+  }
+
+  &:active {
+    border-bottom-color: @pink;
+    color: @pink;
+  }
+
+  &:focus {
+    border: none;
+    outline: none;
+    background-color: @orangeFocus; /* keyboard-only focus styles */
+  }
+}

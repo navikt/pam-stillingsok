@@ -16,10 +16,10 @@ spec:
     enabled: true
     path: /stillinger/internal/metrics
   liveness:
-    initialDelay: 60
+    initialDelay: 10
     path: /stillinger/internal/isAlive
   readiness:
-    initialDelay: 60
+    initialDelay: 10
     path: /stillinger/internal/isReady
   resources:
     limits:
@@ -47,3 +47,9 @@ spec:
       value: {{ pam_var_side_url }}
     - name: PAMSEARCHAPI_URL
       value: {{ pamsearchapi_url }}
+    - name: AMPLITUDE_TOKEN
+      value: {{ amplitude_token }}
+    - name: UNLEASH_URL
+      value: {{ unleash_url }}
+    - name: NY_CV_URL
+      value: {{ ny_cv_url }}

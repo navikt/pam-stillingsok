@@ -1,4 +1,4 @@
-import { AuthStatus, Header, PersonbrukerApplikasjon } from 'pam-frontend-header';
+import { AuthStatus, PersonbrukerApplikasjon } from 'pam-frontend-header';
 import PropTypes from 'prop-types';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -10,6 +10,7 @@ import { isMobile } from '../utils';
 import LoginButton from './LoginButton';
 import TopMenuVilkarBanner from "./TopMenuVilkarBanner";
 import './TopMenu.less';
+import Header from "../header/Header";
 
 const uinnloggetHeader = document.getElementById('ArbeidsplassenHeader');
 

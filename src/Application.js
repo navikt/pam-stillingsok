@@ -15,17 +15,22 @@ import StillingPage from './stilling/Stilling';
 import InternalStilling from './stilling/InternalStilling';
 import TermsOfUse from './user/TermsOfUse';
 import UserAlertStripe from './user/UserAlertStripe';
+import BrowserSupportInfo from './BrowserSupportInfo/BrowserSupportInfo';
+import RapporterAnnonse from "./rapporterAnnonse/RapporterAnnonse";
+import enableHotjar from "./hotjarTracking";
 
 class Application extends React.Component {
     componentDidMount() {
         this.props.fetchIsAuthenticated();
         this.props.handleCallbackAfterLogin();
+        enableHotjar();
     }
 
     render() {
         return (
             <BrowserRouter>
                 <BackLinkManager>
+                    <BrowserSupportInfo tillatLukking={true} />
                     <Error />
                     <Switch>
                         <Route component={TopMenu}/>
@@ -38,6 +43,7 @@ class Application extends React.Component {
                         <Route path={`${CONTEXT_PATH}/intern`} component={InternalStilling} />
                         <Route path={`${CONTEXT_PATH}/favoritter`} component={Favourites} />
                         <Route path={`${CONTEXT_PATH}/lagrede-sok`} component={SavedSearches} />
+                        <Route path={`${CONTEXT_PATH}/rapporter-annonse`} component={RapporterAnnonse} />
                         <Route path="*" component={SearchPage}/>
                     </Switch>
 

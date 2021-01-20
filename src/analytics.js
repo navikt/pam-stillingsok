@@ -1,4 +1,4 @@
-import { takeEvery } from 'redux-saga/es/effects';
+import { takeEvery } from 'redux-saga/effects';
 import fixLocationName from '../server/common/fixLocationName';
 import { ADD_TO_FAVOURITES_SUCCESS, REMOVE_FROM_FAVOURITES_SUCCESS } from './favourites/favouritesReducer';
 import { ADD_SAVED_SEARCH_SUCCESS } from './savedSearches/savedSearchesReducer';

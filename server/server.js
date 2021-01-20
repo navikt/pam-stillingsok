@@ -9,6 +9,7 @@ const compression = require('compression');
 const searchApiConsumer = require('./api/searchApiConsumer');
 const htmlMeta = require('./common/htmlMeta');
 const locationApiConsumer = require('./api/locationApiConsumer');
+const { initialize } = require('unleash-client');
 
 /* eslint no-console: 0 */
 
@@ -40,6 +41,22 @@ fs.readFile(__dirname + '/api/resources/locations.json', 'utf-8',
 
 server.disable('x-powered-by');
 server.use(compression());
+
+/**
+ Hotjar requires a bunch of CSP exceptions.
+ Not super happy about 'unsafe-eval' 'unsafe-inline', remove them if they are not needed in the future.
+ From here https://help.hotjar.com/hc/en-us/articles/115011640307-Content-Security-Policies
+ */
+const hotJarSources = {
+    img: ['https://script.hotjar.com', 'http://script.hotjar.com'],
+    script: ['http://static.hotjar.com', 'https://static.hotjar.com', 'https://script.hotjar.com'],
+    connect: ['http://*.hotjar.com:*', 'https://*.hotjar.com:*', 'https://vc.hotjar.io:*', 'wss://*.hotjar.com'],
+    frame: ['https://vars.hotjar.com'],
+    font: ['http://script.hotjar.com', 'https://script.hotjar.com'],
+    UNSAFE: ["'unsafe-eval'", "'unsafe-inline'"]
+};
+
+
 // En del sikkerhets headere er allerede lagt i bigip, dropper de derfor her for å unngå duplkiate headere
 server.use(helmet({xssFilter: false, hsts: false, noSniff: false, frameguard: false}));
 
@@ -50,15 +67,15 @@ server.use(helmet.contentSecurityPolicy({
         defaultSrc: ["'none'"],
         baseUri: ["'none'"],
         mediaSrc: ["'none'"],
-        scriptSrc: ["'self'", 'https://www.google-analytics.com'],
+        scriptSrc: ["'self'", 'https://www.google-analytics.com', ...hotJarSources.script, ...hotJarSources.UNSAFE],
         objectSrc: ["'none'"],
         frameAncestors: ["'none'"],
         formAction: ["'self'"],
-        styleSrc: ["'self'"],
-        fontSrc: ["'self'", 'data:', 'https://fonts.gstatic.com'],
-        imgSrc: ["'self'", 'data:', 'https://www.google-analytics.com'],
-        connectSrc: ["'self'", process.env.PAMADUSER_URL, 'https://www.google-analytics.com'],
-        frameSrc: ["'none'"]
+        styleSrc: ["'self'", hotJarSources.UNSAFE[1]],
+        fontSrc: ["'self'", 'data:', 'https://fonts.gstatic.com', ...hotJarSources.font],
+        imgSrc: ["'self'", 'data:', 'https://www.google-analytics.com', ...hotJarSources.img],
+        connectSrc: ["'self'", process.env.PAMADUSER_URL, 'https://www.google-analytics.com', 'https://amplitude.nav.no', ...hotJarSources.connect],
+        frameSrc: ["'self'", ...hotJarSources.frame]
     }
 }));
 
@@ -74,7 +91,10 @@ const fasitProperties = {
     LOGIN_URL: process.env.LOGINSERVICE_URL,
     LOGOUT_URL: process.env.LOGOUTSERVICE_URL,
     PAM_STILLINGSOK_URL: process.env.PAM_STILLINGSOK_URL,
-    PAM_VAR_SIDE_URL: process.env.PAM_VAR_SIDE_URL
+    PAM_VAR_SIDE_URL: process.env.PAM_VAR_SIDE_URL,
+    AMPLITUDE_TOKEN: process.env.AMPLITUDE_TOKEN,
+    NY_CV_URL: process.env.NY_CV_URL,
+    UNLEASH_URL: process.env.UNLEASH_URL
 };
 
 const writeEnvironmentVariablesToFile = () => {
@@ -83,7 +103,9 @@ const writeEnvironmentVariablesToFile = () => {
         + `window.__PAM_AD_USER_API__="${fasitProperties.PAM_AD_USER_API}";\n`
         + `window.__LOGIN_URL__="${fasitProperties.LOGIN_URL}";\n`
         + `window.__LOGOUT_URL__="${fasitProperties.LOGOUT_URL}";\n`
-        + `window.__PAM_VAR_SIDE_URL__="${fasitProperties.PAM_VAR_SIDE_URL}";\n`;
+        + `window.__PAM_VAR_SIDE_URL__="${fasitProperties.PAM_VAR_SIDE_URL}";\n`
+        + `window.__AMPLITUDE_TOKEN__="${fasitProperties.AMPLITUDE_TOKEN}";\n`
+        + `window.__NY_CV_URL__="${fasitProperties.NY_CV_URL}";\n`;
 
     fs.writeFile(path.resolve(rootDirectory, 'dist/js/env.js'), fileContent, (err) => {
         if (err) throw err;
@@ -108,8 +130,40 @@ const renderSok = (htmlPages) => (
     })
 );
 
+const unleash = initialize({
+    url: fasitProperties.UNLEASH_URL,
+    appName: 'pam-stillingsok'
+})
+
+const oneWeek = 604800;
+const newCvRollbackFeatureToggle = `pam-cv.new-cv-rollback${process.env.NAIS_CLUSTER_NAME.includes('dev') ? '-dev' : ''}`;
+const showAdStatisticsLinkToggle = `pam-stillingsok.show-add-statistics-link${process.env.NAIS_CLUSTER_NAME.includes('dev') ? '-dev' : ''}`;
+
+
 const startServer = (htmlPages) => {
     writeEnvironmentVariablesToFile();
+
+    server.use((req, res, next) => {
+        if (req.path.includes('internal')) {
+            return next();
+        }
+        if ((req && req.headers.cookie && !req.headers.cookie.includes('amplitudeIsEnabled')) || !req.headers.cookie){
+            res.cookie('amplitudeIsEnabled', true, { maxAge: oneWeek * 2, domain: '.nav.no' });
+        }
+        if ((req && req.headers.cookie && !req.headers.cookie.includes('showAdStatisticsLink'))) {
+            res.cookie('showAdStatisticsLink', unleash.isEnabled(showAdStatisticsLinkToggle, {}), { maxAge: oneWeek * 4, domain: '.nav.no' });
+        }
+
+        if ((req && req.headers.cookie
+            && req.headers.cookie.includes('newCvRolloutGroup'))
+            // NOTE: Using pam-cv's feature toggle, since the rollback happens on both apps.
+            && unleash.isEnabled(newCvRollbackFeatureToggle, {})) {
+
+            res.cookie('newCvRolloutGroup', false, { maxAge: oneWeek * 4, domain: '.nav.no' });
+            res.cookie('useNewCv', false, { maxAge: oneWeek * 4, domain: '.nav.no' })
+        }
+        next();
+    });
 
     server.use(`${fasitProperties.PAM_CONTEXT_PATH}/js`,
         express.static(path.resolve(rootDirectory, 'dist/js'))

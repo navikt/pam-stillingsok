@@ -1,4 +1,4 @@
-import {put, select, takeLatest} from 'redux-saga/es/effects';
+import {put, select, takeLatest} from 'redux-saga/effects';
 import {RESTORE_STATE_FROM_SAVED_SEARCH} from '../../savedSearches/savedSearchesReducer';
 import {RESTORE_STATE_FROM_URL} from '../searchQueryReducer';
 import {FETCH_INITIAL_FACETS_SUCCESS, RESET_SEARCH} from '../searchReducer';
