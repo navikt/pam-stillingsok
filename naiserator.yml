@@ -2,7 +2,7 @@ apiVersion: "nais.io/v1alpha1"
 kind: "Application"
 metadata:
   name: pam-stillingsok
-  namespace: teampam
+  namespace: default
   labels:
     team: teampam
 spec:
@@ -53,9 +53,3 @@ spec:
       value: {{ unleash_url }}
     - name: NY_CV_URL
       value: {{ ny_cv_url }}
-  accessPolicy:
-    outbound:
-      external:
-        - host: unleash.nais.io
-      rules:
-        - application: pam-search-api

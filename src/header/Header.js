@@ -61,14 +61,14 @@ const Header = ({
         }
         if (!userInfo) {
             if (process.env.NODE_ENV === 'production') {
-                fetch('/api/cv/rest/person/headerinfo', {
+                fetch('/cv/api/rest/person/headerinfo', {
                     method: 'GET',
                     credentials: 'include'
                 })
                     .then((response) => response.json())
                     .then((result) => {
                         setUserInfo(result);
-                        setUnderOppfolging(result.underOppfolging || false);
+                        setUnderOppfolging(result.underOppfolging);
                     });
             } else {
                 setUserInfo({
