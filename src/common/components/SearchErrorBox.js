@@ -8,11 +8,11 @@ const SearchErrorBox = () => {
         <AlertStripeFeil className="alertstripe--solid feilboks" type={"feil"}>
             <div className="alertstripe__divider"/>
             <Undertittel>
-                Det har oppstått en feil
+                Du kan dessverre ikke søke etter stillinger nå
             </Undertittel>
             <Normaltekst>
-                På grunn av feil i systemene våre kan du ikke søke etter stillinger nå.
-                Vi beklager ulempen dette medfører, og vi jobber med å løse problemet.
+                På grunn av en feil i våre systemer er ikke stillingssøket tilgjengelig.
+                Vi jobber raskt med å løse problemet og beklager ulempen dette vil medføre.
                 Vennligst prøv igjen senere.
             </Normaltekst>
         </AlertStripeFeil>
