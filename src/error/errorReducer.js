@@ -23,7 +23,8 @@ import { FETCH_INTERAL_STILLING_FAILURE } from '../stilling/internalStillingRedu
 export const HIDE_ERROR = 'HIDE_ERROR';
 
 const initialState = {
-    messages: []
+    messages: [],
+    searchFailed: false
 };
 
 function prependMessage(messages, message) {
@@ -48,7 +49,9 @@ export default function errorReducer(state = initialState, action) {
         case SEARCH_FAILURE:
             return {
                 ...state,
-                messages: prependMessage(state.messages, 'Klarte ikke å utføre søket')
+                searchFailed: true
+                // TODO - Is this message necessary
+                // messages: prependMessage(state.messages, 'Klarte ikke å utføre søket')
             };
         case FETCH_STILLING_FAILURE:
         case FETCH_INTERAL_STILLING_FAILURE:

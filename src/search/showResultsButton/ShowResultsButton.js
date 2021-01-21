@@ -103,7 +103,7 @@ class ShowResultsButton extends React.Component {
     };
 
     render() {
-        return (
+        return (!this.props.searchFailed &&
             <SnapToTop className="ShowResultsButton">
                 <div className={`ShowResultsButton__inner ${this.state.fadeClassName}`}>
                     <div className="ShowResultsButton__inner__container container">
@@ -149,11 +149,13 @@ ShowResultsButton.propTypes = {
     searchResults: PropTypes.shape({
         value: PropTypes.number,
         positioncount: PropTypes.number
-    })
+    }),
+    searchFailed: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => ({
-    searchResults: state.search.searchResult
+    searchResults: state.search.searchResult,
+    searchFailed: state.error.searchFailed
 });
 
 
