@@ -33,7 +33,7 @@ const AdStatisticsLink = () => {
         onClick={logAmplitudeEventAndRedirect}
     >
         <div className="AdStatisticsLink-inner">
-            <span className="AdStatisticsLink__text">Se konkurransen på arbeidsplassen.no</span>
+            <span className="AdStatisticsLink__text">Se vår oversikt over arbeidsmarkedet</span>
             <span className="Header__Lenkeikon"/>
         </div>
     </a>);
