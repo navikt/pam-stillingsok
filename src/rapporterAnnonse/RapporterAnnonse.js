@@ -194,7 +194,7 @@ const RapporterAnnonse = () => {
 
                                 <br/><br/>
 
-                                <a href="https://www.nav.no/no/bedrift/rekruttering/relatert-informasjon/stillingsregistrering">
+                                <a href="https://arbeidsplassen.nav.no/retningslinjer">
                                     Les om gjeldende regler
                                 </a>
                             </div>
