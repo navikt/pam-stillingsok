@@ -6,7 +6,7 @@ import "./RapporterAnnonse.less";
 import Checkbox from "nav-frontend-skjema/lib/checkbox";
 import {useState, useEffect} from 'react';
 import {useSelector} from 'react-redux';
-import {Hovedknapp} from 'pam-frontend-knapper';
+import {Hovedknapp} from '@navikt/arbeidsplassen-knapper';
 import {AD_USER_API, CONTEXT_PATH} from "../fasitProperties";
 import Chevron from "nav-frontend-chevron";
 import {Link} from "react-router-dom";

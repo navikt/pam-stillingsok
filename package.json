@@ -50,6 +50,9 @@
     "whatwg-fetch": "^2.0.4"
   },
   "devDependencies": {
+    "@navikt/arbeidsplassen-knapper": "2.0.0",
+    "@navikt/arbeidsplassen-core": "2.0.0",
+    "@navikt/arbeidsplassen-footer": "2.0.0",
     "@navikt/fnrvalidator": "^1.1.3",
     "@sentry/browser": "^5.20.1",
     "@types/react-router-dom": "^4.3.5",
@@ -95,9 +98,7 @@
     "nav-frontend-spinner-style": "^0.2.5",
     "nav-frontend-typografi": "^2.0.26",
     "nav-frontend-typografi-style": "^1.0.22",
-    "pam-frontend-core": "^1.3.4",
     "pam-frontend-header": "^4.5.12",
-    "pam-frontend-knapper": "^1.0.2",
     "rimraf": "^2.7.1",
     "webpack": "^4.44.1",
     "webpack-cli": "^3.2.1",

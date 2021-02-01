@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { Flatknapp } from 'pam-frontend-knapper';
+import { Flatknapp } from '@navikt/arbeidsplassen-knapper';
 import { ADD_STILLING_TO_FAVOURITES, REMOVE_FROM_FAVOURITES } from '../favouritesReducer';
 import './ToggleFavouriteButton.less';
 

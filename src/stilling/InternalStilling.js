@@ -2,7 +2,7 @@
 import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Flatknapp } from 'pam-frontend-knapper';
+import { Flatknapp } from '@navikt/arbeidsplassen-knapper';
 import { Column, Container, Row } from 'nav-frontend-grid';
 import BackLink from '../backLink/BackLink';
 import getEmployer from '../../server/common/getEmployer';

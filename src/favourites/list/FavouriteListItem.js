@@ -3,7 +3,7 @@ import AlertStripe from 'nav-frontend-alertstriper';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {connect} from 'react-redux';
-import {Lenkeknapp} from 'pam-frontend-knapper';
+import {Lenkeknapp} from '@navikt/arbeidsplassen-knapper';
 import '../../common/components/Icons.less';
 import SearchResultsItemDetails from '../../search/searchResults/SearchResultsItemDetails';
 import {SHOW_MODAL_REMOVE_FROM_FAVOURITES} from '../favouritesReducer';

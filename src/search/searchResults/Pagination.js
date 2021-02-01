@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { Knapp } from 'pam-frontend-knapper';
+import { Knapp } from '@navikt/arbeidsplassen-knapper';
 import { LOAD_MORE } from '../searchReducer';
 import './Pagination.less';
 

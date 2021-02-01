@@ -2,7 +2,7 @@ import {Column, Container, Row} from 'nav-frontend-grid';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
-import {Flatknapp} from 'pam-frontend-knapper';
+import {Flatknapp} from '@navikt/arbeidsplassen-knapper';
 import {authenticationEnum} from '../authentication/authenticationReducer';
 import {CONTEXT_PATH, STILLINGSOK_URL} from '../fasitProperties';
 import FavouriteAlertStripe from '../favourites/alertstripe/FavouriteAlertStripe';

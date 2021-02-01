@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle,prefer-destructuring */
 import PropTypes from 'prop-types';
 import React, {useEffect} from 'react';
-import {Flatknapp, Lenkeknapp} from 'pam-frontend-knapper';
+import {Flatknapp, Lenkeknapp} from '@navikt/arbeidsplassen-knapper';
 import {Column, Container, Row} from 'nav-frontend-grid';
 import BackLink from '../backLink/BackLink';
 import getEmployer from '../../server/common/getEmployer';

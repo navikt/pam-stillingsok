@@ -1,7 +1,7 @@
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Flatknapp, Hovedknapp } from 'pam-frontend-knapper';
+import { Flatknapp, Hovedknapp } from '@navikt/arbeidsplassen-knapper';
 import { connect } from 'react-redux';
 import './NotAuthenticated.less';
 import { REDIRECT_TO_LOGIN } from './authenticationReducer';

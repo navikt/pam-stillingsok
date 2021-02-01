@@ -18,6 +18,7 @@ import UserAlertStripe from './user/UserAlertStripe';
 import BrowserSupportInfo from './BrowserSupportInfo/BrowserSupportInfo';
 import RapporterAnnonse from "./rapporterAnnonse/RapporterAnnonse";
 import enableHotjar from "./hotjarTracking";
+import {Footer} from "@navikt/arbeidsplassen-footer";
 
 class Application extends React.Component {
     componentDidMount() {
