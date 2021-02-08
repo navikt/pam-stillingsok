@@ -2,7 +2,7 @@
 
 .Facet {
   margin-bottom: @facet-marginBottom;
-  color: @blueDarken;
+  color: @primaryDarkBlue;
 
   .skjemaelement {
     margin-bottom: 0.5rem;
@@ -15,19 +15,19 @@
 
   .ekspanderbartPanel__hode:focus,
   .ekspanderbartPanel__hode--focus {
-    box-shadow: 0 0 0 3px #FFBD66;
+    box-shadow: 0 0 0 3px @primaryDarkBlue;
     outline: none;
   }
 
   .checkboks {
     &:focus + .skjemaelement__label:before {
-      box-shadow: 0 0 0 2px #FFBD66;
+      box-shadow: 0 0 0 3px @primaryDarkBlue;
     }
 
     &:checked {
       &:focus {
         + .skjemaelement__label:before {
-          background-color: #8C368E;
+          background-color: @primaryPurple;
           background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMyAxMCI+ICAgIDxnPiAgICA8cGF0aCBmaWxsPSIjRkZGRkZGIiBkPSJNNCwxMGMtMC40LDAtMC44LTAuMS0xLjEtMC40TDAuNCw3LjFDMC4xLDYuOCwwLDYuNCwwLDZzMC4yLTAuOCwwLjUtMS4xQzEsNC40LDIsNC40LDIuNSw0LjlMNCw2LjRsNi40LTYgICAgQzEwLjgsMC4xLDExLjEsMCwxMS41LDBjMC40LDAsMC44LDAuMiwxLDAuNWMwLjYsMC42LDAuNSwxLjYtMC4xLDIuMXYwTDUsOS42QzQuNyw5LjksNC40LDEwLDQsMTB6IE0xMS44LDEuOUwxMS44LDEuOSAgICBDMTEuOCwxLjksMTEuOCwxLjksMTEuOCwxLjl6IE0xMS4yLDEuMUMxMS4yLDEuMSwxMS4yLDEuMSwxMS4yLDEuMUwxMS4yLDEuMXoiLz4gICAgPC9nPjwvc3ZnPg==);
         }
       }
@@ -44,4 +44,43 @@
 
 .Facet__zero__count label {
   color: #78706A !important;
+}
+
+/* This goes through pam-frontend-moduler and eventually reaches
+   NAV frontend moduler. Hence the ugly hack to overwrite it. */
+.ekspanderbartPanel {
+
+  &--lukket,
+  &--apen {
+    .ekspanderbartPanel__hode {
+      &:hover,
+      &--hover {
+        .ekspanderbartPanel__indikator {
+          &:before,
+          &:after {
+            background-color: @primaryDarkBlue;
+          }
+        }
+      }
+
+      .ekspanderbartPanel__indikator {
+        &:before,
+        &:after {
+          background-color: @primaryPurple;
+        }
+      }
+
+    }
+  }
+
+  &__hode {
+
+    &:hover,
+    &--hover {
+      .ekspanderbartPanel__heading {
+        text-decoration: none;
+      }
+    }
+
+  }
 }

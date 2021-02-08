@@ -71,11 +71,6 @@ body {
   min-height: 100%;
 }
 
-.Application__main {
-  margin-bottom: -@footer-height;
-  padding-bottom: @footer-height;
-}
-
 body.screen-xs-no-scroll {
   @media (max-width: @screen-xs-max) {
     overflow-y: hidden;
@@ -120,4 +115,12 @@ input::-ms-clear {
   @media (max-width: @screen-xs-max) {
     display: none;
   }
+}
+
+.selectContainer:before, .selectContainer:after {
+  background: @primaryPurple;
+}
+
+.skjemaelement__input:focus, .skjemaelement__input:active {
+  border: none;
 }
