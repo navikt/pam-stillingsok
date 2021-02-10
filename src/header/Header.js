@@ -2,14 +2,13 @@ import * as React from 'react';
 import {useEffect, useState} from 'react';
 import Popover from './popover/Popover';
 import './Header.less';
-import {NavLink} from 'react-router-dom';
 import {InnstillingerLenkeMobil, Personbrukermeny} from './personbruker/Personbrukermeny';
 import {AuthStatus} from "pam-frontend-header";
 import {usePrevious} from "../common/hooks/usePrevious";
 import NewCvLink from "./newCvLink/NewCvLink";
 import Cookies from "universal-cookie";
 import {Lenkeknapp, Knapp} from "@navikt/arbeidsplassen-knapper";
-import MainContentLink from "../common/components/MainContentLink";
+import SkipLink from "../common/components/SkipLink";
 
 const AuthButton = ({label, onClick}) => (
     <Knapp onClick={onClick} className="Header__Button Header__Button--mini">
@@ -123,7 +122,7 @@ const Header = ({
 
     return (
         <div className={`Header__wrapper${authenticationStatus === AuthStatus.IS_AUTHENTICATED ? ' Header__wrapper__border' : ''}`}>
-            <MainContentLink />
+            <SkipLink />
             <div className="Header">
                 <div className="Header__topp">
                     <div className="Header__logo">
