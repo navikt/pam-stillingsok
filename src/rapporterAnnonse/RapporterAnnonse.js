@@ -6,7 +6,7 @@ import "./RapporterAnnonse.less";
 import Checkbox from "nav-frontend-skjema/lib/checkbox";
 import {useState, useEffect} from 'react';
 import {useSelector} from 'react-redux';
-import {Hovedknapp} from '@navikt/arbeidsplassen-knapper';
+import {Hovedknapp, Lenkeknapp} from '@navikt/arbeidsplassen-knapper';
 import {AD_USER_API, CONTEXT_PATH} from "../fasitProperties";
 import Chevron from "nav-frontend-chevron";
 import {Link} from "react-router-dom";
@@ -192,11 +192,9 @@ const RapporterAnnonse = () => {
                                     tellerTekst={() => {return "Legg ikke igjen personopplysinger i dette feltet"}}
                                 />
 
-                                <br/><br/>
-
-                                <a href="https://www.nav.no/no/bedrift/rekruttering/relatert-informasjon/stillingsregistrering">
+                                <Lenkeknapp onClick={() => window.location.href="https://www.nav.no/no/bedrift/rekruttering/relatert-informasjon/stillingsregistrering"}>
                                     Les om gjeldende regler
-                                </a>
+                                </Lenkeknapp>
                             </div>
 
                             {isAuthenticated === authenticationEnum.IS_AUTHENTICATED && (

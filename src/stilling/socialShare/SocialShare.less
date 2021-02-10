@@ -12,6 +12,11 @@
 .SocialShare__link {
   display: flex;
   align-items: center;
+
+  &:focus, &:active {
+    box-shadow: 0 0 0 3px @primaryDarkBlue;
+    outline: none;
+  }
 }
 
 .SocialShare__label {

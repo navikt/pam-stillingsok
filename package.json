@@ -39,6 +39,7 @@
     "react-modal": "^3.12.1",
     "react-motion": "^0.5.2",
     "react-redux": "^7.2.2",
+    "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "redux": "^4.0.5",
     "redux-saga": "^1.1.3",
@@ -50,7 +51,7 @@
     "whatwg-fetch": "^2.0.4"
   },
   "devDependencies": {
-    "@navikt/arbeidsplassen-knapper": "2.0.0",
+    "@navikt/arbeidsplassen-knapper": "2.0.1",
     "@navikt/arbeidsplassen-core": "2.0.0",
     "@navikt/arbeidsplassen-footer": "2.0.0",
     "@navikt/arbeidsplassen-header": "4.7.0",

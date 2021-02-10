@@ -78,12 +78,12 @@ class SavedSearchListItem extends React.Component {
                     </div>
                     <div className="SavedSearchListItem__bottom">
                         <Lenkeknapp onClick={this.onChangeClick} className="Edit">
-                            Endre
                             <span className="Edit__icon" />
+                            Endre
                         </Lenkeknapp>
                         <Lenkeknapp onClick={this.onRemoveClick} className="Delete">
-                            Slett
                             <span className="Delete__icon" />
+                            Slett
                         </Lenkeknapp>
                     </div>
                 </div>

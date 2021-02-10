@@ -4,6 +4,7 @@ import { Undertittel, Undertekst } from 'nav-frontend-typografi';
 import {formatISOString, isValidEmail, isValidISOString, isValidUrl} from '../../utils';
 import './HowToApply.less';
 import sendGAEvent from "../../googleanalytics";
+import {Hovedknapp} from "@navikt/arbeidsplassen-knapper";
 
 export function getApplicationUrl(source, properties) {
     if (source === 'FINN') {
@@ -49,7 +50,7 @@ export default function HowToApply({ source, properties }) {
 
                     {sokUrl && isValidUrl(sokUrl) && (
                         <div className="HowToApply__send-button-wrapper">
-                            <a
+                            <Hovedknapp
                                 onClick={() => {
                                     const eventLabel = `sok-pa-stillingen-${finn ? "finn" : "annen-kilde"}`;
                                     sendGAEvent(eventLabel);
@@ -60,7 +61,7 @@ export default function HowToApply({ source, properties }) {
                                 <div className="HowToApply__send-button-content">
                                     <span className="HowToApply__send-button-icon" />Søk på stillingen
                                 </div>
-                            </a>
+                            </Hovedknapp>
 
                             {finn &&
                             <Undertekst className="blokk-xs"> Denne annonsen er hentet fra{' '}

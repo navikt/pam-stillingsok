@@ -114,6 +114,11 @@ const Stilling = ({cachedStilling, error, getStilling, isFetchingStilling, match
         window.print();
     };
 
+    const onRapporterAnnonseClick = (e) => {
+        e.preventDefault();
+        window.location.href = `${CONTEXT_PATH}/rapporter-annonse?uuid=${stilling._id}`;
+    }
+
     const isFinn = stilling && stilling._source && stilling._source.source && stilling._source.source.toLowerCase() === 'finn';
 
     return (
@@ -197,12 +202,12 @@ const Stilling = ({cachedStilling, error, getStilling, isFetchingStilling, match
                                 )}
                                 {stilling !== undefined &&
                                 <div className="Rapport__link">
-                                    <Link
-                                        to={`${CONTEXT_PATH}/rapporter-annonse?uuid=${stilling._id}`}
+                                    <Lenkeknapp
+                                        onClick={onRapporterAnnonseClick}
                                         aria-label="Rapporter annonse"
                                     >
                                         Rapporter annonse
-                                    </Link>
+                                    </Lenkeknapp>
                                 </div>
                                 }
                             </div>

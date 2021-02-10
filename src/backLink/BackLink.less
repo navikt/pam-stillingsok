@@ -2,17 +2,21 @@
 
 .BackLink {
   border-bottom: 0!important;
-  color: @pinkDarken;
+  color: @primaryPurple;
   font-family: 'Source Sans Pro', Arial, sans-serif;
+  font-size: 18px;
+
+  &:hover {
+    text-decoration: none;
+  }
 
   &:active {
-    color: @pink;
+    color: @primaryPurple;
   }
 
   &:focus {
-    .BackLink__label {
-      background: @orangeFocus;
-    }
+    background: @infoYellow;
+    outline: none;
   }
 }
 
