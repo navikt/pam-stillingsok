@@ -9,6 +9,7 @@ import {usePrevious} from "../common/hooks/usePrevious";
 import NewCvLink from "./newCvLink/NewCvLink";
 import Cookies from "universal-cookie";
 import {Lenkeknapp, Knapp} from "@navikt/arbeidsplassen-knapper";
+import MainContentLink from "../common/components/MainContentLink";
 
 const AuthButton = ({label, onClick}) => (
     <Knapp onClick={onClick} className="Header__Button Header__Button--mini">
@@ -121,8 +122,8 @@ const Header = ({
     };
 
     return (
-        <div
-            className={`Header__wrapper${authenticationStatus === AuthStatus.IS_AUTHENTICATED ? ' Header__wrapper__border' : ''}`}>
+        <div className={`Header__wrapper${authenticationStatus === AuthStatus.IS_AUTHENTICATED ? ' Header__wrapper__border' : ''}`}>
+            <MainContentLink />
             <div className="Header">
                 <div className="Header__topp">
                     <div className="Header__logo">

@@ -99,6 +99,7 @@ const RapporterAnnonse = () => {
 
     return (
         <Container className="RapporterAnnonse">
+            <a id="main-content" tabIndex="-1" />
             {error && (
                 <AlertStripeFeil className="alertstripe--solid infoboks">Rapportering feilet - prøv
                     igjen</AlertStripeFeil>

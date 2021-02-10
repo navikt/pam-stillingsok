@@ -123,6 +123,7 @@ const Stilling = ({cachedStilling, error, getStilling, isFetchingStilling, match
 
     return (
         <div className="Stilling">
+            <a id="main-content" tabIndex="-1" />
             <FavouriteAlertStripe/>
 
             {error && error.statusCode === 404 && (

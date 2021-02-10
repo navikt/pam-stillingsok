@@ -64,6 +64,7 @@ const Search = ({
 
     return (
         <div className="Search">
+            <a id="main-content" tabIndex="-1" />
             <FavouriteAlertStripe/>
             <SavedSearchAlertStripe/>
             <ShowResultsButton/>
@@ -128,7 +129,7 @@ const Search = ({
                             </Column>
                         </Row>
                         <div className="Search__main__tiltoppen">
-                            <a href="#top" className="link">Til toppen</a>
+                            <a href="#top" className="Knapp--link">Til toppen</a>
                         </div>
                     </RestoreScroll>
                 )}
