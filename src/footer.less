@@ -3,20 +3,17 @@
 .Footer {
   background-color: @secondaryPurple;
   font-family: 'Source Sans Pro', Arial, sans-serif;
-
-  @media (min-width: @screen-sm-min) {
-    padding: 0 2rem;
-  }
+  font-size: 18px;
 }
 
 .Footer__inner {
+  max-width: 1200px;
   min-height: @footer-height;
-  max-width: 1156px;
   margin: 0 auto;
   padding: 2.5rem 1rem;
 
   @media (min-width: @screen-sm-min) {
-    padding: 2.5rem 0.5rem;
+    padding: 2.5rem 2.5rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -41,7 +38,7 @@
   }
 
   @media (min-width: @screen-md-min) {
-    margin-right: 7.5rem;
+    margin-right: 2rem;
   }
 }
 
@@ -59,7 +56,7 @@
   margin: -1px;
   padding: 0;
   overflow: hidden;
-  clip: rect(0,0,0,0);
+  clip: rect(0, 0, 0, 0);
   border: 0;
 }
 
@@ -86,30 +83,11 @@
 }
 
 .Footer__links__ul__li {
-  padding: 0.5rem 0;
-
-  @media (min-width: @screen-md-min) {
-    &:not(:last-child) {
-      padding: 0 1rem;
-    }
-    &:last-child {
-      padding-top: 0;
-      padding-left: 1.5rem;
-    }
-  }
-
-  @media (min-width: @screen-lg-min) {
-    &:not(:last-child) {
-      padding: 0 1.5rem;
-    }
-    &:last-child {
-      padding-top: 0;
-      padding-left: 2rem;
-    }
-  }
+  padding: 0.5rem 1rem;
 }
 
 .Footer__links__ul__li__link {
+  font-size: 18px;
   color: @primaryPurple;
 
   &:focus {
