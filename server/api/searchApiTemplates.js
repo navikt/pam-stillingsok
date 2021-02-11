@@ -209,7 +209,7 @@ function filterLocation(counties, municipals, countries, international = false) 
 
     if (Array.isArray(countries) && countries.length > 0) {
         internationalObject.bool['should'] = [
-            countries.map(c => {
+            ...countries.map(c => {
                 return {
                     term: {
                         'locationList.country.keyword': c
