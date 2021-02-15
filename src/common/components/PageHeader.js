@@ -17,7 +17,7 @@ export default function PageHeader({
                         </div>
                     </Column>
                     <Column xs="12" sm="6">
-                        <h1 className="PageHeader__title">{title}</h1>
+                        <h1 tabIndex={0} className="PageHeader__title">{title}</h1>
                     </Column>
                     <Column xs="12" sm="3" />
                 </Row>
