@@ -30,13 +30,11 @@ const NewCvLink = () => {
     return(<a
         href={NY_CV_URL}
         onClick={onNewCvNavigationClick}
-        className="Header__NewCvLenke"
+        className="Knapp Knapp--link"
     >
-        <div className="Header__NewCvLenke-inner">
                 <span>
                     Prøv den nye CV-løsningen
                 </span>
-        </div>
     </a>)
 }
 

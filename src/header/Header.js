@@ -20,10 +20,10 @@ const AktivitetsplanLenkeMobil = ({onNavigationClick}) => (
     <a
         href="https://aktivitetsplan.nav.no"
         className="Header__AktivitetsplanLenke"
-        onClick={onNavigationClick('https://aktivitetsplan.nav.no')}
+        onClick={onNavigationClick('https://www.nav.no/person/dittnav')}
     >
         <div className="Header__AktivitetsplanLenke-inner">
-            <span className="Header__AktivitetsplanLenke__text">Aktivitetsplan</span>
+            <span className="Header__AktivitetsplanLenke__text">Ditt NAV</span>
             <span className="Header__Lenkeikon"/>
         </div>
     </a>
@@ -142,19 +142,19 @@ const Header = ({
                                 {authenticationStatus === AuthStatus.IS_AUTHENTICATED ? (
                                     <div className="Header__Innstillinger__wrapper">
                                         {arbeidsgiverSelect && arbeidsgiverSelect}
+                                        {showNewCvLink && <NewCvLink />}
                                         {underOppfolging &&
                                         <Lenkeknapp
-                                            onClick={onNavigationClick("https://aktivitetsplan.nav.no")}
+                                            onClick={onNavigationClick("https://www.nav.no/person/dittnav")}
                                             className="Header__AktivitetsplanLenke"
                                         >
                                             <div className="Header__AktivitetsplanLenke-inner">
                                                     <span
-                                                        className="Header__AktivitetsplanLenke__text">Aktivitetsplan</span>
+                                                        className="Header__AktivitetsplanLenke__text">Ditt NAV</span>
                                                 <span className="Header__Lenkeikon"/>
                                             </div>
                                         </Lenkeknapp>
                                         }
-                                        {!underOppfolging && showNewCvLink && <NewCvLink />}
                                         {visInnstillinger && (
                                             <div>
                                                 <Lenkeknapp
@@ -220,8 +220,7 @@ const Header = ({
                         <div className="Header__Authentication--mobile">
                             {authenticationStatus === AuthStatus.IS_AUTHENTICATED ? (
                                 showMobileMenu ? (
-                                    <div
-                                        role="button"
+                                    <button
                                         onClick={onToggleMenu}
                                         id="Mobilmeny__Button--toggle"
                                         className="Mobilmeny__Button--toggle"
@@ -232,9 +231,9 @@ const Header = ({
                                             <div className="Mobilmeny--lukk"/>
                                         </div>
                                         <span className="Mobilmeny__Text--toggle">Lukk</span>
-                                    </div>
+                                    </button>
                                 ) : (
-                                    <div
+                                    <button
                                         role="button"
                                         onClick={onToggleMenu}
                                         id="Mobilmeny__Button--toggle"
@@ -244,7 +243,7 @@ const Header = ({
                                     >
                                         <div className="Mobilmeny--apne"/>
                                         <span className="Mobilmeny__Text--toggle">Meny</span>
-                                    </div>
+                                    </button>
                                 )
                             ) : (
                                 <button

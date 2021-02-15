@@ -1,6 +1,6 @@
 import * as React from 'react';
 import './Personbrukermeny.less';
-import { NavLink } from 'react-router-dom';
+import {NavLink} from 'react-router-dom';
 import Cookies from "universal-cookie";
 import {NY_CV_URL} from "../../fasitProperties";
 
@@ -31,7 +31,7 @@ const tabs = [
         app: 'CV'
     },
     {
-        tittel: 'Jobbprofil',
+        tittel: 'Jobbønsker',
         href: '/jobbprofil',
         app: 'CV'
     }
@@ -70,14 +70,28 @@ export const InnstillingerLenkeMobil = ({
     </div>
 );
 
+export const NyCVLenkeMobil = ({onNavigationClick}) => (
+    <div role="list" className="Personbrukermeny--lenke-wrapper Personbrukermeny__Innstillinger--mobile">
+        <a
+            href="/v2/cv"
+            onClick={onNavigationClick("/v2/cv")}
+            className="Personbrukermeny--lenke"
+        >
+            <div className="Personbrukermeny--lenke-inner"><span>Prøv den nye CV-løsningen</span></div>
+        </a>
+    </div>
+);
+
+
 export const Personbrukermeny = ({ applikasjon, onNavigationClick }) => {
     const cookies = new Cookies();
     const useNewCv = cookies.get('useNewCv') === 'true';
+    const showNewCvLink =   !useNewCv && cookies.get('newCvRolloutGroup') === 'true';
     const cvUris = ['/cv', NY_CV_URL];
 
     const filteredTabs = useNewCv
-        ? tabs.filter((it) => it.tittel !== 'Jobbprofil')
-            .map((it) => it.tittel === 'CV' ? {...it, href: NY_CV_URL } : it)
+        ? tabs.filter((it) => it.tittel !== 'Jobbønsker')
+            .map((it) => it.tittel === 'CV' ? {...it, href: NY_CV_URL} : it)
         : tabs;
 
     return (
@@ -97,7 +111,9 @@ export const Personbrukermeny = ({ applikasjon, onNavigationClick }) => {
                             </NavLink>
                         </div>
                     ) : (
-                        <div className={ cvUris.includes(tab.href) ? 'Personbrukermeny--lenke-wrapper-CV' : 'Personbrukermeny--lenke-wrapper'} key={tab.href}>
+                        <div
+                            className={cvUris.includes(tab.href) ? 'Personbrukermeny--lenke-wrapper-CV' : 'Personbrukermeny--lenke-wrapper'}
+                            key={tab.href}>
                             <NavLink
                                 to={tab.href}
                                 onClick={onNavigationClick(tab.href)}
@@ -109,7 +125,9 @@ export const Personbrukermeny = ({ applikasjon, onNavigationClick }) => {
                         </div>
                     )
                 ) : (
-                    <div className={ cvUris.includes(tab.href) ? 'Personbrukermeny--lenke-wrapper-CV' : 'Personbrukermeny--lenke-wrapper'} key={tab.href}>
+                    <div
+                        className={cvUris.includes(tab.href) ? 'Personbrukermeny--lenke-wrapper-CV' : 'Personbrukermeny--lenke-wrapper'}
+                        key={tab.href}>
                         <a
                             href={tab.href}
                             onClick={onNavigationClick(tab.href)}
@@ -120,7 +138,8 @@ export const Personbrukermeny = ({ applikasjon, onNavigationClick }) => {
                     </div>
                 )
             ))}
-            <InnstillingerLenkeMobil applikasjon={applikasjon} onNavigationClick={onNavigationClick} />
+            {showNewCvLink && <NyCVLenkeMobil onNavigationClick={onNavigationClick}/>}
+            <InnstillingerLenkeMobil applikasjon={applikasjon} onNavigationClick={onNavigationClick}/>
         </nav>
     );
 }
