@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Hovedknapp } from 'pam-frontend-knapper';
+import { Hovedknapp } from '@navikt/arbeidsplassen-knapper';
 import './NoUser.less';
 import { CONTEXT_PATH } from '../fasitProperties';
 import { SHOW_TERMS_OF_USE_MODAL } from './userReducer';

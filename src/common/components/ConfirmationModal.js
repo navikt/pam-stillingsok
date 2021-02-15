@@ -2,7 +2,7 @@ import Modal from 'nav-frontend-modal';
 import { Undertittel } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Flatknapp, Hovedknapp } from 'pam-frontend-knapper';
+import { Flatknapp, Hovedknapp } from '@navikt/arbeidsplassen-knapper';
 import './ConfirmationModal.less';
 
 export default function ConfirmationModal({

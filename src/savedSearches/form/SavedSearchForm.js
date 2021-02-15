@@ -4,7 +4,7 @@ import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { Flatknapp, Hovedknapp } from 'pam-frontend-knapper';
+import { Flatknapp, Hovedknapp } from '@navikt/arbeidsplassen-knapper';
 import { EVENT_CATEGORY_SAVED_SEARCHES, trackOnce } from '../../analytics';
 import { SET_EMAIL_FROM_SAVED_SEARCH } from '../../user/userReducer';
 import { ADD_SAVED_SEARCH, UPDATE_SAVED_SEARCH } from '../savedSearchesReducer';

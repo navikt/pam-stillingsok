@@ -1,6 +1,6 @@
 import {useState} from "react";
 import * as React from 'react';
-import { Knapp } from 'pam-frontend-knapper';
+import { Knapp } from '@navikt/arbeidsplassen-knapper';
 import {Link} from "react-router-dom";
 
 const TopMenuVilkarBanner = () => {

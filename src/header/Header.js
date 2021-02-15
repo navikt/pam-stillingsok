@@ -2,18 +2,18 @@ import * as React from 'react';
 import {useEffect, useState} from 'react';
 import Popover from './popover/Popover';
 import './Header.less';
-import {NavLink} from 'react-router-dom';
 import {InnstillingerLenkeMobil, Personbrukermeny} from './personbruker/Personbrukermeny';
 import {AuthStatus} from "pam-frontend-header";
 import {usePrevious} from "../common/hooks/usePrevious";
 import NewCvLink from "./newCvLink/NewCvLink";
 import Cookies from "universal-cookie";
-
+import {Lenkeknapp, Knapp} from "@navikt/arbeidsplassen-knapper";
+import SkipLink from "../common/components/SkipLink";
 
 const AuthButton = ({label, onClick}) => (
-    <button onClick={onClick} className="Header__Button Header__Button--mini">
+    <Knapp onClick={onClick} className="Header__Button Header__Button--mini">
         {label}
-    </button>
+    </Knapp>
 );
 
 const AktivitetsplanLenkeMobil = ({onNavigationClick}) => (
@@ -121,8 +121,8 @@ const Header = ({
     };
 
     return (
-        <div
-            className={`Header__wrapper${authenticationStatus === AuthStatus.IS_AUTHENTICATED ? ' Header__wrapper__border' : ''}`}>
+        <div className={`Header__wrapper${authenticationStatus === AuthStatus.IS_AUTHENTICATED ? ' Header__wrapper__border' : ''}`}>
+            <SkipLink />
             <div className="Header">
                 <div className="Header__topp">
                     <div className="Header__logo">
@@ -143,8 +143,8 @@ const Header = ({
                                     <div className="Header__Innstillinger__wrapper">
                                         {arbeidsgiverSelect && arbeidsgiverSelect}
                                         {underOppfolging &&
-                                        <a
-                                            href="https://aktivitetsplan.nav.no"
+                                        <Lenkeknapp
+                                            onClick={onNavigationClick("https://aktivitetsplan.nav.no")}
                                             className="Header__AktivitetsplanLenke"
                                         >
                                             <div className="Header__AktivitetsplanLenke-inner">
@@ -152,37 +152,21 @@ const Header = ({
                                                         className="Header__AktivitetsplanLenke__text">Aktivitetsplan</span>
                                                 <span className="Header__Lenkeikon"/>
                                             </div>
-                                        </a>
+                                        </Lenkeknapp>
                                         }
                                         {!underOppfolging && showNewCvLink && <NewCvLink />}
                                         {visInnstillinger && (
                                             <div>
-                                                {(applikasjon === 'CV' ? (
-                                                    <NavLink
-                                                        to='/personinnstillinger'
-                                                        onClick={onNavigationClick('/personinnstillinger')}
-                                                        className="Header__Innstillinger typo-normal"
-                                                        activeClassName="Header__Innstillinger-active"
-                                                    >
-                                                        <div className="Header__Innstillinger-inner">
-                                                                <span
-                                                                    className="Header__Innstillinger__text">Innstillinger</span>
-                                                            <span className="Header__Tannhjul"/>
-                                                        </div>
-                                                    </NavLink>
-                                                ) : (
-                                                    <a
-                                                        href="/personinnstillinger"
-                                                        onClick={onNavigationClick('/personinnstillinger')}
-                                                        className="Header__Innstillinger typo-normal"
-                                                    >
-                                                        <div className="Header__Innstillinger-inner">
-                                                                <span
-                                                                    className="Header__Innstillinger__text">Innstillinger</span>
-                                                            <span className="Header__Tannhjul"/>
-                                                        </div>
-                                                    </a>
-                                                ))}
+                                                <Lenkeknapp
+                                                    onClick={onNavigationClick('/personinnstillinger')}
+                                                    className="Header__Innstillinger typo-normal"
+                                                >
+                                                    <div className="Header__Innstillinger-inner">
+                                                            <span
+                                                                className="Header__Innstillinger__text">Innstillinger</span>
+                                                        <span className="Header__Tannhjul"/>
+                                                    </div>
+                                                </Lenkeknapp>
                                             </div>
                                         )}
                                         {userInfo && (

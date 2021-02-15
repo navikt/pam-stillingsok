@@ -4,10 +4,10 @@
 @import "../node_modules/nav-frontend-paneler-style/src/index";
 @import "../node_modules/nav-frontend-skjema-style/src/index";
 @import "../node_modules/nav-frontend-grid-style/src/index";
-@import "../node_modules/pam-frontend-core/less/link/link";
-@import "../node_modules/pam-frontend-core/less/skjema/mixins";
-@import "../node_modules/pam-frontend-core/less/panel/panel";
-@import "../node_modules/pam-frontend-core/less/alertstripe/alertstripe";
+@import "../node_modules/@navikt/arbeidsplassen-core/less/link/link";
+@import "../node_modules/@navikt/arbeidsplassen-core/less/skjema/mixins";
+@import "../node_modules/@navikt/arbeidsplassen-core/less/panel/panel";
+@import "../node_modules/@navikt/arbeidsplassen-core/less/alertstripe/alertstripe";
 @import "variables";
 @import "footer";
 @import "header";
@@ -71,11 +71,6 @@ body {
   min-height: 100%;
 }
 
-.Application__main {
-  margin-bottom: -@footer-height;
-  padding-bottom: @footer-height;
-}
-
 body.screen-xs-no-scroll {
   @media (max-width: @screen-xs-max) {
     overflow-y: hidden;
@@ -120,4 +115,12 @@ input::-ms-clear {
   @media (max-width: @screen-xs-max) {
     display: none;
   }
+}
+
+.selectContainer:before, .selectContainer:after {
+  background: @primaryPurple;
+}
+
+.skjemaelement__input:focus, .skjemaelement__input:active {
+  border: none;
 }

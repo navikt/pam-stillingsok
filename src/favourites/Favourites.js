@@ -40,6 +40,7 @@ const Favourites = (
 
     return (
         <RestoreScroll id="Favourites">
+            <a id="main-content" tabIndex="-1" />
             <div className="Favourites">
                 <FavouriteAlertStripe/>
                 <PageHeader

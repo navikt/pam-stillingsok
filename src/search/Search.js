@@ -2,7 +2,7 @@ import {Column, Container, Row} from 'nav-frontend-grid';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
-import {Flatknapp} from 'pam-frontend-knapper';
+import {Flatknapp} from '@navikt/arbeidsplassen-knapper';
 import {authenticationEnum} from '../authentication/authenticationReducer';
 import {CONTEXT_PATH, STILLINGSOK_URL} from '../fasitProperties';
 import FavouriteAlertStripe from '../favourites/alertstripe/FavouriteAlertStripe';
@@ -64,6 +64,7 @@ const Search = ({
 
     return (
         <div className="Search">
+            <a id="main-content" tabIndex="-1" />
             <FavouriteAlertStripe/>
             <SavedSearchAlertStripe/>
             <ShowResultsButton/>
@@ -128,7 +129,7 @@ const Search = ({
                             </Column>
                         </Row>
                         <div className="Search__main__tiltoppen">
-                            <a href="#top" className="link">Til toppen</a>
+                            <a href="#top" className="Knapp--link">Til toppen</a>
                         </div>
                     </RestoreScroll>
                 )}

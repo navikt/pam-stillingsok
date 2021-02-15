@@ -31,6 +31,7 @@ const SavedSearches = ({
 
     return (
         <div className="SavedSearches">
+            <a id="main-content" tabIndex="-1" />
             <SavedSearchAlertStripe />
             <PageHeader
                 title="Lagrede søk"

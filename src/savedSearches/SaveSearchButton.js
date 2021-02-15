@@ -2,7 +2,7 @@ import HjelpetekstBase from 'nav-frontend-hjelpetekst';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { Knapp } from 'pam-frontend-knapper';
+import { Knapp } from '@navikt/arbeidsplassen-knapper';
 import { SavedSearchFormMode, SHOW_SAVED_SEARCH_FORM } from './form/savedSearchFormReducer';
 
 class SaveSearchButton extends React.Component {

@@ -1,8 +1,9 @@
 import Chevron from 'nav-frontend-chevron';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { useHistory } from "react-router";
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Lenkeknapp } from '@navikt/arbeidsplassen-knapper';
 import './BackLink.less';
 import { TopLevelPages } from './backLinkReducer';
 
@@ -14,17 +15,24 @@ function renderLabel(path) {
 }
 
 function BackLink({ backLinkUrl }) {
+    const history = useHistory();
+
+    const onBackLinkUrlClick = (e) => {
+        e.preventDefault();
+        history.push(backLinkUrl);
+    }
+
     if(backLinkUrl.startsWith('/')) {
         return (
-            <Link
-                to={backLinkUrl}
+            <Lenkeknapp
+                onClick={onBackLinkUrlClick}
                 className="BackLink no-print"
             >
                 <Chevron type="venstre" className="BackLink__chevron"/>
                 <span className="BackLink__label">
                     {renderLabel(backLinkUrl)}
                 </span>
-            </Link>
+            </Lenkeknapp>
         );
     }
     return <div />;

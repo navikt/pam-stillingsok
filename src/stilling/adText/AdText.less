@@ -1,5 +1,5 @@
 @import "../../variables";
-@import "../../../node_modules/pam-frontend-core/less/link/mixins";
+@import "../../../node_modules/@navikt/arbeidsplassen-core/less/link/mixins";
 
 
 .AdText {
@@ -34,6 +34,17 @@
     font-size: 1.25rem;
     line-height: 1.5rem;
     font-weight: 600;
+  }
+
+  .SokPaaStilling--knapp {
+    display: table;
+    margin: 20px 0;
+    color: white;
+    font-size: 18px;
+
+    &:focus {
+      background-color: @secondaryPurple;
+    }
   }
 }
 

@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle,prefer-destructuring */
 import PropTypes from 'prop-types';
 import React, {useEffect} from 'react';
-import {Flatknapp, Lenkeknapp} from 'pam-frontend-knapper';
+import {Flatknapp, Lenkeknapp} from '@navikt/arbeidsplassen-knapper';
 import {Column, Container, Row} from 'nav-frontend-grid';
 import BackLink from '../backLink/BackLink';
 import getEmployer from '../../server/common/getEmployer';
@@ -114,10 +114,16 @@ const Stilling = ({cachedStilling, error, getStilling, isFetchingStilling, match
         window.print();
     };
 
+    const onRapporterAnnonseClick = (e) => {
+        e.preventDefault();
+        window.location.href = `${CONTEXT_PATH}/rapporter-annonse?uuid=${stilling._id}`;
+    }
+
     const isFinn = stilling && stilling._source && stilling._source.source && stilling._source.source.toLowerCase() === 'finn';
 
     return (
         <div className="Stilling">
+            <a id="main-content" tabIndex="-1" />
             <FavouriteAlertStripe/>
 
             {error && error.statusCode === 404 && (
@@ -197,12 +203,12 @@ const Stilling = ({cachedStilling, error, getStilling, isFetchingStilling, match
                                 )}
                                 {stilling !== undefined &&
                                 <div className="Rapport__link">
-                                    <Link
-                                        to={`${CONTEXT_PATH}/rapporter-annonse?uuid=${stilling._id}`}
+                                    <Lenkeknapp
+                                        onClick={onRapporterAnnonseClick}
                                         aria-label="Rapporter annonse"
                                     >
                                         Rapporter annonse
-                                    </Link>
+                                    </Lenkeknapp>
                                 </div>
                                 }
                             </div>

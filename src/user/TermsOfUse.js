@@ -4,7 +4,7 @@ import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { Flatknapp, Hovedknapp } from 'pam-frontend-knapper';
+import { Flatknapp, Hovedknapp } from '@navikt/arbeidsplassen-knapper';
 import './TermsOfUse.less';
 import { CREATE_USER, HIDE_TERMS_OF_USE_MODAL, SET_USER_TERMS_ACCEPTED } from './userReducer';
 import { isValidEmail } from '../utils';
