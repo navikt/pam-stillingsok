@@ -3,6 +3,7 @@ import './Personbrukermeny.less';
 import {NavLink} from 'react-router-dom';
 import Cookies from "universal-cookie";
 import {NY_CV_URL} from "../../fasitProperties";
+import {useSelector} from "react-redux";
 
 const tabs = [
     {
@@ -83,7 +84,7 @@ export const NyCVLenkeMobil = ({onNavigationClick}) => (
 );
 
 
-export const Personbrukermeny = ({ applikasjon, onNavigationClick }) => {
+export const Personbrukermeny = ({ applikasjon, onNavigationClick, underOppfolging }) => {
     const cookies = new Cookies();
     const useNewCv = cookies.get('useNewCv') === 'true';
     const showNewCvLink =   !useNewCv && cookies.get('newCvRolloutGroup') === 'true';
@@ -138,7 +139,7 @@ export const Personbrukermeny = ({ applikasjon, onNavigationClick }) => {
                     </div>
                 )
             ))}
-            {showNewCvLink && <NyCVLenkeMobil onNavigationClick={onNavigationClick}/>}
+            {underOppfolging && showNewCvLink && <NyCVLenkeMobil onNavigationClick={onNavigationClick} />}
             <InnstillingerLenkeMobil applikasjon={applikasjon} onNavigationClick={onNavigationClick}/>
         </nav>
     );

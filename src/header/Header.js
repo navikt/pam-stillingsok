@@ -142,7 +142,7 @@ const Header = ({
                                 {authenticationStatus === AuthStatus.IS_AUTHENTICATED ? (
                                     <div className="Header__Innstillinger__wrapper">
                                         {arbeidsgiverSelect && arbeidsgiverSelect}
-                                        {showNewCvLink && <NewCvLink />}
+                                        {!underOppfolging && showNewCvLink && <NewCvLink />}
                                         {underOppfolging &&
                                         <Lenkeknapp
                                             onClick={onNavigationClick("https://www.nav.no/person/dittnav")}
@@ -266,6 +266,7 @@ const Header = ({
                                             applikasjon={applikasjon}
                                             validerNavigasjon={validerNavigasjon}
                                             onNavigationClick={onNavigationClick}
+                                            underOppfolging={underOppfolging}
                                         />
                                     </div>
                                 )}
@@ -319,6 +320,7 @@ const Header = ({
                             applikasjon={applikasjon}
                             validerNavigasjon={validerNavigasjon}
                             onNavigationClick={onNavigationClick}
+                            underOppfolging={underOppfolging}
                         />
                     </div>
                 )}
