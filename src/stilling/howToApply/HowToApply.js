@@ -15,6 +15,12 @@ export function getApplicationUrl(source, properties) {
     return properties.sourceurl;
 }
 
+const applyForPosition  = (finn, sokUrl) => {
+    const eventLabel = `sok-pa-stillingen-${finn ? "finn" : "annen-kilde"}`;
+    sendGAEvent(eventLabel);
+    window.location.href = sokUrl;
+}
+
 export default function HowToApply({ source, properties }) {
     const sokUrl = getApplicationUrl(source, properties);
     const finn = source === 'FINN';
@@ -51,12 +57,8 @@ export default function HowToApply({ source, properties }) {
                     {sokUrl && isValidUrl(sokUrl) && (
                         <div className="HowToApply__send-button-wrapper">
                             <Hovedknapp
-                                onClick={() => {
-                                    const eventLabel = `sok-pa-stillingen-${finn ? "finn" : "annen-kilde"}`;
-                                    sendGAEvent(eventLabel);
-                                }}
+                                onClick={() => applyForPosition(finn, sokUrl)}
                                 className="HowToApply__send-button Knapp Knapp--hoved blokk-xxs"
-                                href={sokUrl}
                             >
                                 <div className="HowToApply__send-button-content">
                                     <span className="HowToApply__send-button-icon" />Søk på stillingen
