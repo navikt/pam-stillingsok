@@ -19,21 +19,6 @@ const preprocessAd = (adText) => {
 };
 
 export default function AdText({adText}) {
-
-    useEffect(() => {
-        const elements = document.querySelectorAll('a');
-        let el;
-        elements.forEach((it) => {
-            if (it.innerHTML === 'Søk på stillingen') el = it;
-        });
-        console.log(el)
-        if (el) {
-            el.classList.add('Knapp');
-            el.classList.add('Knapp--hoved');
-            el.classList.add('SokPaaStilling--knapp');
-        }
-    }, []);
-
     if (adText) {
         const preprocessedAd = preprocessAd(adText);
         return (
