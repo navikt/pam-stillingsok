@@ -147,10 +147,10 @@ function* search() {
     try {
         yield put({type: RESET_PAGINATION});
         const state = yield select();
+
+        logAmplitudeEvent('Utførte søk',{ query: state.searchQuery });
+
         const query = toApiSearchQuery(state.searchQuery);
-
-        logAmplitudeEvent('Utførte søk',{ query });
-
         const searchResult = yield call(fetchSearch, query);
         yield put({type: SEARCH_SUCCESS, response: searchResult});
     } catch (e) {
