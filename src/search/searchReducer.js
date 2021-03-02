@@ -4,6 +4,7 @@ import SearchApiError from '../api/SearchApiError';
 import {RESTORE_STATE_FROM_SAVED_SEARCH} from '../savedSearches/savedSearchesReducer';
 import {RESTORE_STATE_FROM_URL} from '../search/searchQueryReducer';
 import {RESET_PAGINATION, toApiSearchQuery} from './searchQueryReducer';
+import logAmplitudeEvent from "../amplitudeTracker";
 
 export const FETCH_INITIAL_FACETS_SUCCESS = 'FETCH_INITIAL_FACETS_SUCCESS';
 export const INITIAL_SEARCH = 'INITIAL_SEARCH';
@@ -146,6 +147,9 @@ function* search() {
     try {
         yield put({type: RESET_PAGINATION});
         const state = yield select();
+
+        logAmplitudeEvent('Utførte søk',{ query: state.searchQuery });
+
         const query = toApiSearchQuery(state.searchQuery);
         const searchResult = yield call(fetchSearch, query);
         yield put({type: SEARCH_SUCCESS, response: searchResult});
