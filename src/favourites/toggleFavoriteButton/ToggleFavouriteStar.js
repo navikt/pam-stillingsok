@@ -3,13 +3,16 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { ADD_SEARCH_RESULT_TO_FAVOURITES, REMOVE_FROM_FAVOURITES } from '../favouritesReducer';
 import './ToggleFavouriteStar.less';
+import logAmplitudeEvent from "../../amplitudeTracker";
 
 class ToggleFavouriteStar extends React.Component {
     onAddToFavouritesClick = () => {
+        logAmplitudeEvent('Favoritter aktivitet', { type: 'Add' })
         this.props.addToFavourites(this.props.uuid);
     };
 
     onRemoveFromFavouritesClick = () => {
+        logAmplitudeEvent('Favoritter aktivitet', { type: 'Remove' })
         this.props.removeFromFavourites(this.props.uuid);
     };
 
