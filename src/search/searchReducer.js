@@ -148,7 +148,7 @@ function* search() {
         yield put({type: RESET_PAGINATION});
         const state = yield select();
 
-        logAmplitudeEvent('Utførte søk',{ query: state.searchQuery });
+        logAmplitudeEvent('Stillinger - Utførte søk',{ query: state.searchQuery });
 
         const query = toApiSearchQuery(state.searchQuery);
         const searchResult = yield call(fetchSearch, query);
