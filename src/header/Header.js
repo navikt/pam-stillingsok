@@ -161,8 +161,9 @@ const Header = ({
                                                     className="Header__Innstillinger typo-normal"
                                                 >
                                                     <div className="Header__Innstillinger-inner">
-                                                            <span
-                                                                className="Header__Innstillinger__text">Innstillinger</span>
+                                                            <a
+                                                                href="/personinnstillinger"
+                                                                className="Header__Innstillinger__text Knapp--link">Innstillinger</a>
                                                         <span className="Header__Tannhjul"/>
                                                     </div>
                                                 </Lenkeknapp>
