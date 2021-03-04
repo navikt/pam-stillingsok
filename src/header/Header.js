@@ -115,7 +115,6 @@ const Header = ({
 
     const onNavigationClick = (url) => (e) => {
         if (validerNavigasjon && !validerNavigasjon.redirectTillates()) {
-            e.preventDefault();
             validerNavigasjon.redirectForhindretCallback(url);
         }
     };
