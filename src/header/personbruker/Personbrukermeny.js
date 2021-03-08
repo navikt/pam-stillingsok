@@ -26,7 +26,7 @@ const tabs = [
         app: 'STILLINGSSOK'
     },
     {
-        tittel: 'CV',
+        tittel: 'Min CV',
         href: '/cv',
         app: 'CV'
     },

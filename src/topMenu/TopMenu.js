@@ -8,7 +8,6 @@ import { LOGOUT_URL } from '../fasitProperties';
 import { COLLAPSE_ALL_FACET_PANELS, EXPAND_ALL_FACET_PANELS } from '../search/facets/facetPanelsReducer';
 import { isMobile } from '../utils';
 import LoginButton from './LoginButton';
-import TopMenuVilkarBanner from "./TopMenuVilkarBanner";
 import './TopMenu.less';
 import Header from "../header/Header";
 
@@ -58,7 +57,6 @@ const TopMenu = ({ isAuthenticated, collapseAllFacetPanels, expandAllFacetPanels
                     visInnstillinger
                     showName
                 />
-                <TopMenuVilkarBanner/>
             </div>
         );
     } else if (authenticationStatus(isAuthenticated) === AuthStatus.NOT_AUTHENTICATED) {
