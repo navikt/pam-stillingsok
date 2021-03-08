@@ -29,11 +29,6 @@ const tabs = [
         tittel: 'Min CV',
         href: '/cv',
         app: 'CV'
-    },
-    {
-        tittel: 'Jobbønsker',
-        href: '/jobbprofil',
-        app: 'CV'
     }
 ];
 
