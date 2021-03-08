@@ -5,8 +5,6 @@ import './Header.less';
 import {InnstillingerLenkeMobil, Personbrukermeny} from './personbruker/Personbrukermeny';
 import {AuthStatus} from "pam-frontend-header";
 import {usePrevious} from "../common/hooks/usePrevious";
-import NewCvLink from "./newCvLink/NewCvLink";
-import Cookies from "universal-cookie";
 import {Lenkeknapp, Knapp} from "@navikt/arbeidsplassen-knapper";
 import SkipLink from "../common/components/SkipLink";
 
@@ -44,7 +42,6 @@ const Header = ({
 
     const [showPopover, setShowPopover] = useState(false);
     const [showMobileMenu, setShowMobileMenu] = useState(false);
-    const [showNewCvLink, setShowNewCvLink] = useState(false);
     const [userInfo, setUserInfo] = useState(undefined);
     const [underOppfolging, setUnderOppfolging] = useState(false);
 
@@ -52,9 +49,6 @@ const Header = ({
     const previousArbeidsgiverSelect = usePrevious(arbeidsgiverSelect);
 
     useEffect(() => {
-        const cookies = new Cookies();
-        setShowNewCvLink(cookies.get('useNewCv') !== 'true'
-            && cookies.get('newCvRolloutGroup') === 'true');
 
         if (role) {
             localStorage.setItem('innloggetBrukerKontekst', role);
@@ -141,7 +135,6 @@ const Header = ({
                                 {authenticationStatus === AuthStatus.IS_AUTHENTICATED ? (
                                     <div className="Header__Innstillinger__wrapper">
                                         {arbeidsgiverSelect && arbeidsgiverSelect}
-                                        {showNewCvLink && <NewCvLink />}
                                         {underOppfolging &&
                                         <Lenkeknapp
                                             onClick={onNavigationClick("https://www.nav.no/person/dittnav")}
