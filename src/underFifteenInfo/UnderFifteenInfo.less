@@ -1,3 +1,4 @@
+@import "../variables";
 
 .UnderFifteenInfo {
   display: flex;
@@ -5,13 +6,17 @@
   justify-content: center;
   align-items: center;
   padding: 16px;
-  margin-top: 32px;
+  margin-top: 48px;
+
+  @media(max-width: @screen-sm-max) {
+    margin-top: 32px;
+  }
 
   &_Content {
     padding: 48px 24px 48px 24px;
     flex-flow: column;
     max-width: 690px;
-    border: 3px solid #E6F4EF;
+    border: 3px solid @secondaryLightTurquoise;
     box-sizing: border-box;
 
     h2 {
@@ -35,7 +40,7 @@
 
   .ChildIllustration {
     padding: 16px 16px 2px 16px;
-    background-color: #E6F4EF;
+    background-color: @secondaryLightTurquoise;
     margin-bottom: -46px;
     z-index: 1;
   }

@@ -172,7 +172,7 @@ const Header = ({
                                         )}
                                         {userInfo && (
                                             <div className="Header__name">
-                                                {userInfo.fornavn + " " + userInfo.etternavn}
+                                                {userInfo.fornavn && userInfo.etternavn ? userInfo.fornavn + " " + userInfo.etternavn : "Ukjent"}
                                             </div>
                                         )}
                                         <div className={userInfo ? 'Header__logout-name' : ''}>
