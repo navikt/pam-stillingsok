@@ -9,6 +9,8 @@ import { isValidEmail } from '../utils';
 export const SHOW_TERMS_OF_USE_MODAL = 'SHOW_TERMS_OF_USE_MODAL';
 export const HIDE_TERMS_OF_USE_MODAL = 'HIDE_TERMS_OF_USE_MODAL';
 
+export const USER_IS_UNDER_FIFTEEN = 'USER_IS_UNDER_FIFTEEN';
+
 export const FETCH_USER_BEGIN = 'FETCH_USER_BEGIN';
 export const FETCH_USER_SUCCESS = 'FETCH_USER_SUCCESS';
 export const FETCH_USER_FAILURE = 'FETCH_USER_FAILURE';
@@ -59,7 +61,8 @@ const initialState = {
     confirmDeleteUserModalIsVisible: false,
     validation: {},
     termsAccepted: false,
-    showUserTermsRequiredMessage: false
+    showUserTermsRequiredMessage: false,
+    erUnderFemten: false,
 };
 
 export default function authorizationReducer(state = initialState, action) {
@@ -203,6 +206,11 @@ export default function authorizationReducer(state = initialState, action) {
                 ...state,
                 showUserTermsRequiredMessage: true
             };
+        case USER_IS_UNDER_FIFTEEN:
+            return {
+                ...state,
+               erUnderFemten: action.erUnderFemten
+            }
         default:
             return state;
     }

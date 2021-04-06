@@ -31,6 +31,7 @@ const Header = ({
                     useMenu,
                     onLoginClick,
                     onLogoutClick,
+                    onErUnderFemten,
                     applikasjon,
                     arbeidsgiverSelect,
                     authenticationStatus,
@@ -68,12 +69,19 @@ const Header = ({
                 setUserInfo({
                     underOppfolging: true,
                     fornavn: 'Navn',
-                    etternavn: 'Navnesen'
+                    etternavn: 'Navnesen',
+                    erUnderFemten: false
                 });
                 setUnderOppfolging(true);
             }
         }
     }, []);
+
+    useEffect(() => {
+        if (userInfo) {
+            onErUnderFemten(userInfo.erUnderFemten)
+        }
+    }, [userInfo])
 
     useEffect(() => {
         if (previousArbeidsgiverSelect !== undefined &&
