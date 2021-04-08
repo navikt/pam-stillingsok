@@ -2,7 +2,7 @@ import React from 'react';
 import './UnderFifteenInfo.less';
 import { Hovedknapp } from '@navikt/arbeidsplassen-knapper';
 
-const UnderFifteenInfo = () => {
+const UnderFifteenInfo = ({ knapperad }) => {
     const redirectToFrontpage = () => {
         window.location.href = '/';
     }
@@ -112,11 +112,11 @@ const UnderFifteenInfo = () => {
                 <p>
                     Kom gjerne tilbake igjen ved en senere anledning.
                 </p>
-                <div className="UnderFifteenInfo_Knapperad">
+                {knapperad && <div className="UnderFifteenInfo_Knapperad">
                     <Hovedknapp onClick={redirectToFrontpage}>
                         Gå til forsiden
                     </Hovedknapp>
-                </div>
+                </div>}
             </div>
         </div>
     )

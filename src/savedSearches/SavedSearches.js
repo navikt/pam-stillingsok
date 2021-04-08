@@ -32,7 +32,7 @@ const SavedSearches = ({
     useScrollToTop();
 
     if (erUnderFemten) {
-        return <UnderFifteenInfo />
+        return <UnderFifteenInfo knapperad={true} />
     }
 
     return (

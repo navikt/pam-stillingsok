@@ -1,6 +1,6 @@
 import Modal from 'nav-frontend-modal';
-import { Input, BekreftCheckboksPanel } from 'nav-frontend-skjema';
-import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
+import { BekreftCheckboksPanel } from 'nav-frontend-skjema';
+import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -8,6 +8,7 @@ import { Flatknapp, Hovedknapp } from '@navikt/arbeidsplassen-knapper';
 import './TermsOfUse.less';
 import { CREATE_USER, HIDE_TERMS_OF_USE_MODAL, SET_USER_TERMS_ACCEPTED } from './userReducer';
 import { isValidEmail } from '../utils';
+import UnderFifteenInfo from "../underFifteenInfo/UnderFifteenInfo";
 
 class TermsOfUse extends React.Component {
     constructor(props) {
@@ -52,52 +53,62 @@ class TermsOfUse extends React.Component {
                 contentLabel="Ta i bruk innloggede tjenester"
                 appElement={document.getElementById('app')}
             >
-                <div className="TermsOfUse">
-                    <Undertittel className="TermsOfUse__title">
-                        Ta i bruk innloggede tjenester
-                    </Undertittel>
-                    <Normaltekst className="TermsOfUse__section">
-                        Du må samtykke for å bruke innloggede tjenester i stillingssøk.
-                    </Normaltekst>
-                    <BekreftCheckboksPanel
-                        className="TermsOfUse__section"
-                        label="Dine favoritter, søk og søkekriterier"
-                        checked={this.props.termsAccepted}
-                        onChange={this.onCheckboxClick}
-                        inputProps={{ id: 'TermsOfUse__checkbox' }}
-                    >
-                        <Normaltekst>
-                            Vi lagrer dine favoritter, søk med søkekriterier og e-postadresse (valgfri).
-                            Det er kun du som kan se hva du har lagret.
-                        </Normaltekst>
-                    </BekreftCheckboksPanel>
-                    <div className="TermsOfUse__section TermsOfUse__section--last">
-                        <Normaltekst>
-                            Du kan trekke samtykket hvis du ikke lenger ønsker å bruke de innloggede tjenestene.
-                            Dette kan du gjøre under innstillinger.
-                        </Normaltekst>
-                    </div>
-                    {this.props.showUserTermsRequiredMessage && (
-                        <div role="alert" aria-live="assertive">
-                            <div className="skjemaelement__feilmelding blokk-s">
-                                Du må huke av i avkryssingsboksen for å samtykke
-                            </div>
+                {this.props.erUnderFemten
+                    ? <div className="TermsOfUse">
+                        <UnderFifteenInfo knapperad={false} />
+                        <div className="TermsOfUse__buttons">
+                            <Hovedknapp onClick={this.closeModal} >
+                                Lukk
+                            </Hovedknapp>
                         </div>
-                    )}
-                    <div className="TermsOfUse__buttons">
-                        <Hovedknapp
-                            id="TermsOfUse__acceptButton"
-                            onClick={this.onAcceptTerms}
-                            spinner={this.props.isCreating}
-                            disabled={this.props.isCreating}
-                        >
-                            Jeg samtykker
-                        </Hovedknapp>
-                        <Flatknapp onClick={this.closeModal}>
-                            Avbryt
-                        </Flatknapp>
                     </div>
-                </div>
+                    : <div className="TermsOfUse">
+                        <Undertittel className="TermsOfUse__title">
+                            Ta i bruk innloggede tjenester
+                        </Undertittel>
+                        <Normaltekst className="TermsOfUse__section">
+                            Du må samtykke for å bruke innloggede tjenester i stillingssøk.
+                        </Normaltekst>
+                        <BekreftCheckboksPanel
+                            className="TermsOfUse__section"
+                            label="Dine favoritter, søk og søkekriterier"
+                            checked={this.props.termsAccepted}
+                            onChange={this.onCheckboxClick}
+                            inputProps={{ id: 'TermsOfUse__checkbox' }}
+                        >
+                            <Normaltekst>
+                                Vi lagrer dine favoritter, søk med søkekriterier og e-postadresse (valgfri).
+                                Det er kun du som kan se hva du har lagret.
+                            </Normaltekst>
+                        </BekreftCheckboksPanel>
+                        <div className="TermsOfUse__section TermsOfUse__section--last">
+                            <Normaltekst>
+                                Du kan trekke samtykket hvis du ikke lenger ønsker å bruke de innloggede tjenestene.
+                                Dette kan du gjøre under innstillinger.
+                            </Normaltekst>
+                        </div>
+                        {this.props.showUserTermsRequiredMessage && (
+                            <div role="alert" aria-live="assertive">
+                                <div className="skjemaelement__feilmelding blokk-s">
+                                    Du må huke av i avkryssingsboksen for å samtykke
+                                </div>
+                            </div>
+                        )}
+                        <div className="TermsOfUse__buttons">
+                            <Hovedknapp
+                                id="TermsOfUse__acceptButton"
+                                onClick={this.onAcceptTerms}
+                                spinner={this.props.isCreating}
+                                disabled={this.props.isCreating}
+                            >
+                                Jeg samtykker
+                            </Hovedknapp>
+                            <Flatknapp onClick={this.closeModal}>
+                                Avbryt
+                            </Flatknapp>
+                        </div>
+                    </div>
+                }
             </Modal>
         );
     }
@@ -115,7 +126,8 @@ TermsOfUse.propTypes = {
 const mapStateToProps = (state) => ({
     isCreating: state.user.isCreating,
     termsAccepted: state.user.termsAccepted,
-    showUserTermsRequiredMessage: state.user.showUserTermsRequiredMessage
+    showUserTermsRequiredMessage: state.user.showUserTermsRequiredMessage,
+    erUnderFemten: state.user.erUnderFemten
 });
 
 const mapDispatchToProps = (dispatch) => ({
