@@ -149,9 +149,11 @@ const Header = ({
                                             className="Header__AktivitetsplanLenke"
                                         >
                                             <div className="Header__AktivitetsplanLenke-inner">
-                                                    <span
-                                                        className="Header__AktivitetsplanLenke__text">Ditt NAV</span>
-                                                <span className="Header__Lenkeikon"/>
+                                                <a href="https://www.nav.no/person/dittnav"
+                                                   className="Header__AktivitetsplanLenke__text Knapp--link">
+                                                    Ditt NAV
+                                                    <span className="Header__Lenkeikon"/>
+                                                </a>
                                             </div>
                                         </Lenkeknapp>
                                         }
@@ -164,8 +166,9 @@ const Header = ({
                                                     <div className="Header__Innstillinger-inner">
                                                             <a
                                                                 href="/personinnstillinger"
-                                                                className="Header__Innstillinger__text Knapp--link">Innstillinger</a>
-                                                        <span className="Header__Tannhjul"/>
+                                                                className="Header__Innstillinger__text Knapp--link">Innstillinger
+                                                                <span className="Header__Tannhjul"/>
+                                                            </a>
                                                     </div>
                                                 </Lenkeknapp>
                                             </div>
