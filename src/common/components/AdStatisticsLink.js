@@ -1,18 +1,10 @@
 import * as React from "react";
 import './AdStatisticsLink.less';
 import logAmplitudeEvent from "../../amplitudeTracker";
-import {useEffect, useState} from "react";
-import Cookies from "universal-cookie";
 
 const AD_STATISTICS_URL = 'https://data.nav.no/datapakke/703bc2e74c271ee895609ebd93c52460';
 
 const AdStatisticsLink = () => {
-    const [showAdStatistics, setShowAdStatistics] = useState(false);
-
-    useEffect(() => {
-        const cookies = new Cookies();
-        setShowAdStatistics(cookies.get('showAdStatisticsLink') === 'true')
-    }, []);
 
     const logAmplitudeEventAndRedirect = (event) => {
         event.preventDefault();
@@ -21,10 +13,6 @@ const AdStatisticsLink = () => {
         });
         window.open(AD_STATISTICS_URL, "_blank")
     };
-
-    if (!showAdStatistics) {
-        return null;
-    }
 
     return (<a
         href={AD_STATISTICS_URL}

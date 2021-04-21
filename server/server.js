@@ -9,7 +9,6 @@ const compression = require('compression');
 const searchApiConsumer = require('./api/searchApiConsumer');
 const htmlMeta = require('./common/htmlMeta');
 const locationApiConsumer = require('./api/locationApiConsumer');
-const { initialize } = require('unleash-client');
 
 /* eslint no-console: 0 */
 
@@ -130,37 +129,17 @@ const renderSok = (htmlPages) => (
     })
 );
 
-const unleash = initialize({
-    url: fasitProperties.UNLEASH_URL,
-    appName: 'pam-stillingsok'
-})
-
-const oneWeek = 604800;
-const newCvRollbackFeatureToggle = `pam-cv.new-cv-rollback${process.env.NAIS_CLUSTER_NAME.includes('dev') ? '-dev' : ''}`;
-const showAdStatisticsLinkToggle = `pam-stillingsok.show-add-statistics-link${process.env.NAIS_CLUSTER_NAME.includes('dev') ? '-dev' : ''}`;
-
-
 const startServer = (htmlPages) => {
     writeEnvironmentVariablesToFile();
-
     server.use((req, res, next) => {
+        const oneWeek = 604800;
+
         if (req.path.includes('internal')) {
             return next();
         }
+
         if ((req && req.headers.cookie && !req.headers.cookie.includes('amplitudeIsEnabled')) || !req.headers.cookie){
             res.cookie('amplitudeIsEnabled', true, { maxAge: oneWeek * 2, domain: '.nav.no' });
-        }
-        if ((req && req.headers.cookie && !req.headers.cookie.includes('showAdStatisticsLink'))) {
-            res.cookie('showAdStatisticsLink', unleash.isEnabled(showAdStatisticsLinkToggle, {}), { maxAge: oneWeek * 4, domain: '.nav.no' });
-        }
-
-        if ((req && req.headers.cookie
-            && req.headers.cookie.includes('newCvRolloutGroup'))
-            // NOTE: Using pam-cv's feature toggle, since the rollback happens on both apps.
-            && unleash.isEnabled(newCvRollbackFeatureToggle, {})) {
-
-            res.cookie('newCvRolloutGroup', false, { maxAge: oneWeek * 4, domain: '.nav.no' });
-            res.cookie('useNewCv', false, { maxAge: oneWeek * 4, domain: '.nav.no' })
         }
         next();
     });

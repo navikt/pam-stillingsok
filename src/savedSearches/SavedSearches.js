@@ -1,7 +1,7 @@
 /* eslint-disable no-undef,no-nested-ternary */
 import { Column, Container, Row } from 'nav-frontend-grid';
 import PropTypes from 'prop-types';
-import React, {useEffect} from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import PageHeader from '../common/components/PageHeader';
 import DelayedSpinner from '../common/components/DelayedSpinner';
@@ -17,17 +17,23 @@ import { authenticationEnum } from '../authentication/authenticationReducer';
 import { CONTEXT_PATH } from '../fasitProperties';
 import TotalSavedSearch from './totalSavedSearch/TotalSavedSearch';
 import { useDocumentTitle, useTrackPageview, useScrollToTop } from '../common/hooks';
+import UnderFifteenInfo from "../underFifteenInfo/UnderFifteenInfo";
 
 const SavedSearches = ({
     isAuthenticated,
     isFetching,
     isFetchingUser,
     savedSearches,
-    user
+    user,
+    erUnderFemten,
 }) => {
     useDocumentTitle('Lagrede søk - Arbeidsplassen');
     useTrackPageview(`${CONTEXT_PATH}/lagrede-sok`, 'Lagrede søk');
     useScrollToTop();
+
+    if (erUnderFemten) {
+        return <UnderFifteenInfo knapperad={true} />
+    }
 
     return (
         <div className="SavedSearches">
@@ -112,7 +118,8 @@ const mapStateToProps = (state) => ({
     isFetchingUser: state.user.isFetchingUser,
     isAuthenticated: state.authentication.isAuthenticated,
     savedSearches: state.savedSearches.savedSearches,
-    isFetching: state.savedSearches.isFetching
+    isFetching: state.savedSearches.isFetching,
+    erUnderFemten: state.user.erUnderFemten
 });
 
 export default connect(mapStateToProps)(SavedSearches);

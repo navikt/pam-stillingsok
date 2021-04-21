@@ -5,8 +5,6 @@ import './Header.less';
 import {InnstillingerLenkeMobil, Personbrukermeny} from './personbruker/Personbrukermeny';
 import {AuthStatus} from "pam-frontend-header";
 import {usePrevious} from "../common/hooks/usePrevious";
-import NewCvLink from "./newCvLink/NewCvLink";
-import Cookies from "universal-cookie";
 import {Lenkeknapp, Knapp} from "@navikt/arbeidsplassen-knapper";
 import SkipLink from "../common/components/SkipLink";
 
@@ -33,6 +31,7 @@ const Header = ({
                     useMenu,
                     onLoginClick,
                     onLogoutClick,
+                    onErUnderFemten,
                     applikasjon,
                     arbeidsgiverSelect,
                     authenticationStatus,
@@ -44,7 +43,6 @@ const Header = ({
 
     const [showPopover, setShowPopover] = useState(false);
     const [showMobileMenu, setShowMobileMenu] = useState(false);
-    const [showNewCvLink, setShowNewCvLink] = useState(false);
     const [userInfo, setUserInfo] = useState(undefined);
     const [underOppfolging, setUnderOppfolging] = useState(false);
 
@@ -52,9 +50,6 @@ const Header = ({
     const previousArbeidsgiverSelect = usePrevious(arbeidsgiverSelect);
 
     useEffect(() => {
-        const cookies = new Cookies();
-        setShowNewCvLink(cookies.get('useNewCv') !== 'true'
-            && cookies.get('newCvRolloutGroup') === 'true');
 
         if (role) {
             localStorage.setItem('innloggetBrukerKontekst', role);
@@ -74,12 +69,19 @@ const Header = ({
                 setUserInfo({
                     underOppfolging: true,
                     fornavn: 'Navn',
-                    etternavn: 'Navnesen'
+                    etternavn: 'Navnesen',
+                    erUnderFemten: false
                 });
                 setUnderOppfolging(true);
             }
         }
     }, []);
+
+    useEffect(() => {
+        if (userInfo) {
+            onErUnderFemten(userInfo.erUnderFemten)
+        }
+    }, [userInfo])
 
     useEffect(() => {
         if (previousArbeidsgiverSelect !== undefined &&
@@ -115,7 +117,6 @@ const Header = ({
 
     const onNavigationClick = (url) => (e) => {
         if (validerNavigasjon && !validerNavigasjon.redirectTillates()) {
-            e.preventDefault();
             validerNavigasjon.redirectForhindretCallback(url);
         }
     };
@@ -142,16 +143,17 @@ const Header = ({
                                 {authenticationStatus === AuthStatus.IS_AUTHENTICATED ? (
                                     <div className="Header__Innstillinger__wrapper">
                                         {arbeidsgiverSelect && arbeidsgiverSelect}
-                                        {showNewCvLink && <NewCvLink />}
                                         {underOppfolging &&
                                         <Lenkeknapp
                                             onClick={onNavigationClick("https://www.nav.no/person/dittnav")}
                                             className="Header__AktivitetsplanLenke"
                                         >
                                             <div className="Header__AktivitetsplanLenke-inner">
-                                                    <span
-                                                        className="Header__AktivitetsplanLenke__text">Ditt NAV</span>
-                                                <span className="Header__Lenkeikon"/>
+                                                <a href="https://www.nav.no/person/dittnav"
+                                                   className="Header__AktivitetsplanLenke__text Knapp--link">
+                                                    Ditt NAV
+                                                    <span className="Header__Lenkeikon"/>
+                                                </a>
                                             </div>
                                         </Lenkeknapp>
                                         }
@@ -162,16 +164,18 @@ const Header = ({
                                                     className="Header__Innstillinger typo-normal"
                                                 >
                                                     <div className="Header__Innstillinger-inner">
-                                                            <span
-                                                                className="Header__Innstillinger__text">Innstillinger</span>
-                                                        <span className="Header__Tannhjul"/>
+                                                            <a
+                                                                href="/personinnstillinger"
+                                                                className="Header__Innstillinger__text Knapp--link">Innstillinger
+                                                                <span className="Header__Tannhjul"/>
+                                                            </a>
                                                     </div>
                                                 </Lenkeknapp>
                                             </div>
                                         )}
                                         {userInfo && (
                                             <div className="Header__name">
-                                                {userInfo.fornavn + " " + userInfo.etternavn}
+                                                {userInfo.fornavn && userInfo.etternavn ? userInfo.fornavn + " " + userInfo.etternavn : "Ukjent"}
                                             </div>
                                         )}
                                         <div className={userInfo ? 'Header__logout-name' : ''}>
@@ -281,7 +285,7 @@ const Header = ({
                                     <div className="Header__name__wrapper">
                                         {userInfo && (
                                             <div className="Header__name">
-                                                {userInfo.fornavn + " " + userInfo.etternavn}
+                                                {userInfo.fornavn && userInfo.etternavn ? userInfo.fornavn + " " + userInfo.etternavn : "Ukjent"}
                                             </div>
                                         )}
                                         <div className={userInfo ? 'Header__logout-name' : ''}>

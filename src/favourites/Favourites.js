@@ -19,6 +19,7 @@ import { CONTEXT_PATH } from '../fasitProperties';
 import Sorting from './sorting/Sorting';
 import TotalFavourites from './totalFavourites/TotalFavourutes';
 import { useDocumentTitle, useTrackPageview, useScrollToTop } from '../common/hooks';
+import UnderFifteenInfo from "../underFifteenInfo/UnderFifteenInfo";
 
 const Favourites = (
     {
@@ -27,7 +28,8 @@ const Favourites = (
         isFetchingFavourites,
         isFetchingUser,
         user,
-        fetchFavourites
+        fetchFavourites,
+        erUnderFemten
     }
 ) => {
     useDocumentTitle('Favoritter - Arbeidsplassen');
@@ -37,6 +39,10 @@ const Favourites = (
     useEffect(() => {
         fetchFavourites();
     }, []);
+
+    if (erUnderFemten) {
+       return <UnderFifteenInfo knapperad={true} />
+    }
 
     return (
         <RestoreScroll id="Favourites">
@@ -117,7 +123,8 @@ const mapStateToProps = (state) => ({
     isFetchingUser: state.user.isFetchingUser,
     isAuthenticated: state.authentication.isAuthenticated,
     favourites: state.favourites.favourites,
-    isFetchingFavourites: state.favourites.isFetchingFavourites
+    isFetchingFavourites: state.favourites.isFetchingFavourites,
+    erUnderFemten: state.user.erUnderFemten
 });
 
 const mapDispatchToProps = (dispatch) => ({

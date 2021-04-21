@@ -8,13 +8,13 @@ import { LOGOUT_URL } from '../fasitProperties';
 import { COLLAPSE_ALL_FACET_PANELS, EXPAND_ALL_FACET_PANELS } from '../search/facets/facetPanelsReducer';
 import { isMobile } from '../utils';
 import LoginButton from './LoginButton';
-import TopMenuVilkarBanner from "./TopMenuVilkarBanner";
 import './TopMenu.less';
 import Header from "../header/Header";
+import {USER_IS_UNDER_FIFTEEN} from "../user/userReducer";
 
 const uinnloggetHeader = document.getElementById('ArbeidsplassenHeader');
 
-const TopMenu = ({ isAuthenticated, collapseAllFacetPanels, expandAllFacetPanels, redirectToLogin }) => {
+const TopMenu = ({ isAuthenticated, collapseAllFacetPanels, expandAllFacetPanels, redirectToLogin, setErUnderFemten }) => {
     const login = (role) => {
         redirectToLogin(role);
     };
@@ -52,13 +52,13 @@ const TopMenu = ({ isAuthenticated, collapseAllFacetPanels, expandAllFacetPanels
                     }}
                     onLoginClick={login}
                     onLogoutClick={logout}
+                    onErUnderFemten={setErUnderFemten}
                     useMenu="personbruker"
                     authenticationStatus={authenticationStatus(isAuthenticated)}
                     applikasjon={PersonbrukerApplikasjon.STILLINGSSOK}
                     visInnstillinger
                     showName
                 />
-                <TopMenuVilkarBanner/>
             </div>
         );
     } else if (authenticationStatus(isAuthenticated) === AuthStatus.NOT_AUTHENTICATED) {
@@ -86,7 +86,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
     redirectToLogin: (role) => dispatch({ type: REDIRECT_TO_LOGIN, role }),
     collapseAllFacetPanels: () => dispatch({ type: COLLAPSE_ALL_FACET_PANELS }),
-    expandAllFacetPanels: () => dispatch({ type: EXPAND_ALL_FACET_PANELS })
+    expandAllFacetPanels: () => dispatch({ type: EXPAND_ALL_FACET_PANELS }),
+    setErUnderFemten: (erUnderFemten) => dispatch({ type: USER_IS_UNDER_FIFTEEN, erUnderFemten})
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TopMenu);
