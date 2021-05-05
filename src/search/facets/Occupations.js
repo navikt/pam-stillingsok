@@ -36,6 +36,25 @@ class Occupations extends React.Component {
         this.props.search();
     };
 
+    /**
+     * This ensures that 'Tannhelse/-pleie' is displayed as 'Tannlege og tannpleier'
+     * in the search filters. It's a mere cosmetic change since the value attributed
+     * to the checkbox remains the same. The decision behind this particular change
+     * came due to a problem in the categorization of STYRK codes.
+     *
+     * "Tannhelsesekretærer ligger under samme STYRK som legesekretærer så
+     * det er ikke mulig å skille de fra hverandre, og nå er det nærliggende
+     * å tro at også tannhelsesekretær-annonser ligger i denne kategorien."
+     *
+     * @param key
+     * @returns {string|*}
+     */
+    editedSecondLevelItemKey(key) {
+        return key === 'Tannhelse/-pleie' ? 'Tannlege og tannpleier' : key;
+    }
+
+
+
     render() {
         const {
             occupationFirstLevels, checkedFirstLevels, checkedSecondLevels, deprecatedFirstLevels,
@@ -68,8 +87,8 @@ class Occupations extends React.Component {
                                 firstLevel.occupationSecondLevels.map((secondLevel) => (
                                     <Checkbox
                                         name="occupation"
-                                        key={secondLevel.key}
-                                        label={`${secondLevel.label} (${secondLevel.count})`}
+                                        key={this.editedSecondLevelItemKey(secondLevel.key)}
+                                        label={`${this.editedSecondLevelItemKey(secondLevel.label)} (${secondLevel.count})`}
                                         value={secondLevel.key}
                                         onChange={this.onSecondLevelClick}
                                         checked={checkedSecondLevels.includes(secondLevel.key)}

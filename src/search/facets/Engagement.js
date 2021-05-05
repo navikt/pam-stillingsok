@@ -20,6 +20,19 @@ class Engagement extends React.Component {
         this.props.search();
     };
 
+    /**
+     * This ensures that 'Annet' is displayed as 'Ikke oppgitt' in the search filters.
+     * It's a mere cosmetic change since the value attributed to the checkbox
+     * remains the same. The decision behind this particular change came due to
+     * a problem in our structured data where most of the ads coming from different
+     * stakeholders don't include the correct classification 'Fast'.
+     * @param key
+     * @returns {string|*}
+     */
+    editedItemKey(key) {
+        return key === 'Annet' ? 'Ikke oppgitt' : key;
+    }
+
     render() {
         const { engagementType, checkedEngagement, deprecatedEngagementType } = this.props;
         return (
@@ -31,8 +44,8 @@ class Engagement extends React.Component {
                 {engagementType && engagementType.map((item) => (
                     <Checkbox
                         name="engagementType"
-                        key={item.key}
-                        label={`${item.key} (${item.count})`}
+                        key={this.editedItemKey(item.key)}
+                        label={`${this.editedItemKey(item.key)} (${item.count})`}
                         value={item.key}
                         onChange={this.onEngagementClick}
                         checked={checkedEngagement.includes(item.key)}

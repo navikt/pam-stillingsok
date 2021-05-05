@@ -25,7 +25,7 @@ export default function facetsReducer(state = initialState, action) {
                 locations: action.response.locations,
                 extentFacets: action.response.extent,
                 sectorFacets: moveFacetToBottom(action.response.sector, 'Ikke oppgitt'),
-                engagementTypeFacets: moveFacetToBottom(action.response.engagementTypes, 'Annet'),
+                engagementTypeFacets: action.response.engagementTypes,
                 publishedFacets: action.response.published,
                 occupationFirstLevelFacets: moveFacetToBottom(action.response.occupationFirstLevels, OCCUPATION_LEVEL_OTHER),
                 locationFacets: buildLocationFacets(action.response.nationalCountMap, action.response.internationalCountMap, action.response.locations),
