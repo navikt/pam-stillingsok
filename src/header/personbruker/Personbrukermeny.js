@@ -28,6 +28,11 @@ const tabs = [
         tittel: 'Min CV',
         href: '/v2/cv',
         app: 'CV'
+    },
+    {
+        tittel: 'Arrangement',
+        href: '/moteplass/arrangement',
+        app: 'MOTEPLASS'
     }
 ];
 
