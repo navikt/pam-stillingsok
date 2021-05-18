@@ -92,7 +92,6 @@ const fasitProperties = {
     PAM_STILLINGSOK_URL: process.env.PAM_STILLINGSOK_URL,
     PAM_VAR_SIDE_URL: process.env.PAM_VAR_SIDE_URL,
     AMPLITUDE_TOKEN: process.env.AMPLITUDE_TOKEN,
-    NY_CV_URL: process.env.NY_CV_URL,
     UNLEASH_URL: process.env.UNLEASH_URL
 };
 
@@ -104,7 +103,6 @@ const writeEnvironmentVariablesToFile = () => {
         + `window.__LOGOUT_URL__="${fasitProperties.LOGOUT_URL}";\n`
         + `window.__PAM_VAR_SIDE_URL__="${fasitProperties.PAM_VAR_SIDE_URL}";\n`
         + `window.__AMPLITUDE_TOKEN__="${fasitProperties.AMPLITUDE_TOKEN}";\n`
-        + `window.__NY_CV_URL__="${fasitProperties.NY_CV_URL}";\n`;
 
     fs.writeFile(path.resolve(rootDirectory, 'dist/js/env.js'), fileContent, (err) => {
         if (err) throw err;

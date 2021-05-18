@@ -4,4 +4,3 @@ export const STILLINGSOK_URL = __PAM_STILLINGSOK_URL__;
 export const LOGIN_URL = __LOGIN_URL__;
 export const LOGOUT_URL = __LOGOUT_URL__;
 export const PAM_VAR_SIDE_URL = __PAM_VAR_SIDE_URL__;
-export const NY_CV_URL = __NY_CV_URL__;

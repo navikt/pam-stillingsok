@@ -9,6 +9,5 @@
   "pam_var_side_url": "https://arbeidsplassen.dev.nav.no/stillingsregistrering",
   "pamsearchapi_url": "http://pam-search-api",
   "amplitude_token": "b6143dedf1d17c3e73d3ad440bf54e8b",
-  "unleash_url": "https://unleash.nais.io/api/",
-  "ny_cv_url": "https://arbeidsplassen.dev.nav.no/v2/cv"
+  "unleash_url": "https://unleash.nais.io/api/"
 }

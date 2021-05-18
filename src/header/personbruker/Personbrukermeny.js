@@ -1,7 +1,6 @@
 import * as React from 'react';
 import './Personbrukermeny.less';
 import {NavLink} from 'react-router-dom';
-import {NY_CV_URL} from "../../fasitProperties";
 
 const tabs = [
     {
@@ -26,7 +25,7 @@ const tabs = [
     },
     {
         tittel: 'Min CV',
-        href: '/v2/cv',
+        href: '/cv',
         app: 'CV'
     },
     {
@@ -71,7 +70,7 @@ export const InnstillingerLenkeMobil = ({
 
 
 export const Personbrukermeny = ({ applikasjon, onNavigationClick }) => {
-    const cvUris = ['/cv', NY_CV_URL];
+    const cvUris = ['/cv'];
 
     return (
         <nav role="list" className="Personbrukermeny">
