@@ -1,9 +1,7 @@
 import Chevron from 'nav-frontend-chevron';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { useHistory } from "react-router";
 import { connect } from 'react-redux';
-import { Lenkeknapp } from '@navikt/arbeidsplassen-knapper';
 import './BackLink.less';
 import { TopLevelPages } from './backLinkReducer';
 import {Link} from "react-router-dom";
