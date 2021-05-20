@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { Lenkeknapp } from '@navikt/arbeidsplassen-knapper';
 import './BackLink.less';
 import { TopLevelPages } from './backLinkReducer';
+import {Link} from "react-router-dom";
 
 function renderLabel(path) {
     if(path === TopLevelPages.FAVORITTER.url) {
@@ -15,24 +16,18 @@ function renderLabel(path) {
 }
 
 function BackLink({ backLinkUrl }) {
-    const history = useHistory();
-
-    const onBackLinkUrlClick = (e) => {
-        e.preventDefault();
-        history.push(backLinkUrl);
-    }
 
     if(backLinkUrl.startsWith('/')) {
         return (
-            <Lenkeknapp
-                onClick={onBackLinkUrlClick}
+            <Link
+                to={backLinkUrl}
                 className="BackLink no-print"
             >
                 <Chevron type="venstre" className="BackLink__chevron"/>
                 <span className="BackLink__label">
                     {renderLabel(backLinkUrl)}
                 </span>
-            </Lenkeknapp>
+            </Link>
         );
     }
     return <div />;
