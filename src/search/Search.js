@@ -2,7 +2,7 @@ import {Column, Container, Row} from 'nav-frontend-grid';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
-import {Flatknapp} from '@navikt/arbeidsplassen-knapper';
+import { Knapp } from '@navikt/arbeidsplassen-knapper';
 import {authenticationEnum} from '../authentication/authenticationReducer';
 import {CONTEXT_PATH, STILLINGSOK_URL} from '../fasitProperties';
 import FavouriteAlertStripe from '../favourites/alertstripe/FavouriteAlertStripe';
@@ -96,13 +96,12 @@ const Search = ({
                                         >
                                             <SearchBox/>
                                             <AdStatisticsLink/>
-                                            <Flatknapp
+                                            <Knapp
                                                 className="Search__nullstill"
-                                                mini
                                                 onClick={() => resetSearch()}
                                             >
                                                 Nullstill kriterier
-                                            </Flatknapp>
+                                            </Knapp>
                                             <Published/>
                                             <Occupations/>
                                             <Counties/>
