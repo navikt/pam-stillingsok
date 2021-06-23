@@ -57,7 +57,7 @@ const Favourites = (
                 <Container className="Favourites__main">
                     <InfoBox
                         color="yellow"
-                        title="Vi oppdaterer systemet. Litt nedetid kan forekomme frem til 14.00."
+                        title="Vi oppdaterer systemet. Litt nedetid kan forekomme i løpet av dagen."
                     />
 
                     {isAuthenticated === authenticationEnum.NOT_AUTHENTICATED && (

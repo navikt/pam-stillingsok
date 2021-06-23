@@ -82,7 +82,7 @@ const Search = ({
                         <InfoBox
                             margin-top="0"
                             color="yellow"
-                            title="Vi oppdaterer systemet. Litt nedetid kan forekomme frem til 14.00."
+                            title="Vi oppdaterer systemet. Litt nedetid kan forekomme i løpet av dagen."
                         />
 
                         <Row>

@@ -27,12 +27,12 @@ import SocialShare from './socialShare/SocialShare';
 import './Stilling.less';
 import {FETCH_STILLING_BEGIN, RESET_STILLING} from './stillingReducer';
 import {useScrollToTop} from '../common/hooks';
-import {sendUrlEndring} from "../common/hooks/useTrackPageview";
+import {sendUrlEndring} from '../common/hooks/useTrackPageview';
 import {addRobotsNoIndexMetaTag, removeRobotsMetaTag} from '../common/utils/metaRobots';
-import logAmplitudeEvent, {logAmplitudePageview} from "../amplitudeTracker";
-import {connect} from "react-redux";
-import {Link} from "react-router-dom";
-import InfoBox from "../common/components/InfoBox";
+import logAmplitudeEvent, {logAmplitudePageview} from '../amplitudeTracker';
+import {connect} from 'react-redux';
+import {Link} from 'react-router-dom';
+import InfoBox from '../common/components/InfoBox';
 
 function commaSeparate(...strings) {
     const onlyStrings = strings.filter((string) => (
@@ -131,7 +131,7 @@ const Stilling = ({cachedStilling, error, getStilling, isFetchingStilling, match
                     <InfoBox
                         marginTop="1.5rem"
                         color="yellow"
-                        title="Vi oppdaterer systemet. Litt nedetid kan forekomme frem til 14.00."
+                        title="Vi oppdaterer systemet. Litt nedetid kan forekomme i løpet av dagen."
                     />
 
                     <Row>
