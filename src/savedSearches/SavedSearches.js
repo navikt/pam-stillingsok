@@ -43,6 +43,7 @@ const SavedSearches = ({
                 title="Lagrede søk"
             />
             <Container className="SavedSearches__main">
+
                 {isAuthenticated === authenticationEnum.NOT_AUTHENTICATED && (
                     <Row>
                         <Column xs="12">

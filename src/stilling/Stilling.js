@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle,prefer-destructuring */
 import PropTypes from 'prop-types';
 import React, {useEffect} from 'react';
-import {Flatknapp, Lenkeknapp} from '@navikt/arbeidsplassen-knapper';
+import {Flatknapp} from '@navikt/arbeidsplassen-knapper';
 import {Column, Container, Row} from 'nav-frontend-grid';
 import BackLink from '../backLink/BackLink';
 import getEmployer from '../../server/common/getEmployer';
@@ -27,11 +27,11 @@ import SocialShare from './socialShare/SocialShare';
 import './Stilling.less';
 import {FETCH_STILLING_BEGIN, RESET_STILLING} from './stillingReducer';
 import {useScrollToTop} from '../common/hooks';
-import {sendUrlEndring} from "../common/hooks/useTrackPageview";
+import {sendUrlEndring} from '../common/hooks/useTrackPageview';
 import {addRobotsNoIndexMetaTag, removeRobotsMetaTag} from '../common/utils/metaRobots';
-import logAmplitudeEvent, {logAmplitudePageview} from "../amplitudeTracker";
-import {connect} from "react-redux";
-import {Link} from "react-router-dom";
+import logAmplitudeEvent, {logAmplitudePageview} from '../amplitudeTracker';
+import {connect} from 'react-redux';
+import {Link} from 'react-router-dom';
 import { track } from '../analytics';
 
 function commaSeparate(...strings) {
@@ -116,11 +116,6 @@ const Stilling = ({cachedStilling, error, getStilling, isFetchingStilling, match
         window.print();
     };
 
-    const onRapporterAnnonseClick = (e) => {
-        e.preventDefault();
-        window.location.href = `${CONTEXT_PATH}/rapporter-annonse?uuid=${stilling._id}`;
-    }
-
     const isFinn = stilling && stilling._source && stilling._source.source && stilling._source.source.toLowerCase() === 'finn';
 
     return (
@@ -134,6 +129,7 @@ const Stilling = ({cachedStilling, error, getStilling, isFetchingStilling, match
 
             {!error && (
                 <Container>
+
                     <Row>
                         <Column xs="12">
                             <div className="Stilling__header">
@@ -205,12 +201,13 @@ const Stilling = ({cachedStilling, error, getStilling, isFetchingStilling, match
                                 )}
                                 {stilling !== undefined &&
                                 <div className="Rapport__link">
-                                    <Lenkeknapp
-                                        onClick={onRapporterAnnonseClick}
+                                    <Link
+                                        className={"link"}
+                                        to={`${CONTEXT_PATH}/rapporter-annonse?uuid=${stilling._id}`}
                                         aria-label="Rapporter annonse"
                                     >
                                         Rapporter annonse
-                                    </Lenkeknapp>
+                                    </Link>
                                 </div>
                                 }
                             </div>

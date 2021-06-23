@@ -10,7 +10,7 @@ import RestoreScroll from '../common/components/RestoreScroll';
 import NoUser from '../user/NoUser';
 import FavouriteAlertStripe from './alertstripe/FavouriteAlertStripe';
 import './Favourites.less';
-import { FETCH_FAVOURITES, SET_FAVOURITES_SORTING } from './favouritesReducer';
+import { FETCH_FAVOURITES } from './favouritesReducer';
 import FavouriteList from './list/FavouriteList';
 import RemoveFavouriteModal from './modal/RemoveFavouriteModal';
 import NoFavourites from './noresult/NoFavourites';
@@ -52,7 +52,9 @@ const Favourites = (
                 <PageHeader
                     title="Favoritter"
                 />
+
                 <Container className="Favourites__main">
+
                     {isAuthenticated === authenticationEnum.NOT_AUTHENTICATED && (
                         <Row>
                             <Column xs="12">
