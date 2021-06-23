@@ -32,7 +32,6 @@ import {addRobotsNoIndexMetaTag, removeRobotsMetaTag} from '../common/utils/meta
 import logAmplitudeEvent, {logAmplitudePageview} from '../amplitudeTracker';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
-import InfoBox from '../common/components/InfoBox';
 
 function commaSeparate(...strings) {
     const onlyStrings = strings.filter((string) => (
@@ -128,11 +127,6 @@ const Stilling = ({cachedStilling, error, getStilling, isFetchingStilling, match
 
             {!error && (
                 <Container>
-                    <InfoBox
-                        marginTop="1.5rem"
-                        color="yellow"
-                        title="Vi oppdaterer systemet. Litt nedetid kan forekomme i løpet av dagen."
-                    />
 
                     <Row>
                         <Column xs="12">

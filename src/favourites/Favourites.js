@@ -10,7 +10,7 @@ import RestoreScroll from '../common/components/RestoreScroll';
 import NoUser from '../user/NoUser';
 import FavouriteAlertStripe from './alertstripe/FavouriteAlertStripe';
 import './Favourites.less';
-import { FETCH_FAVOURITES, SET_FAVOURITES_SORTING } from './favouritesReducer';
+import { FETCH_FAVOURITES } from './favouritesReducer';
 import FavouriteList from './list/FavouriteList';
 import RemoveFavouriteModal from './modal/RemoveFavouriteModal';
 import NoFavourites from './noresult/NoFavourites';
@@ -20,7 +20,6 @@ import Sorting from './sorting/Sorting';
 import TotalFavourites from './totalFavourites/TotalFavourutes';
 import { useDocumentTitle, useTrackPageview, useScrollToTop } from '../common/hooks';
 import UnderFifteenInfo from "../underFifteenInfo/UnderFifteenInfo";
-import InfoBox from "../common/components/InfoBox";
 
 const Favourites = (
     {
@@ -55,10 +54,6 @@ const Favourites = (
                 />
 
                 <Container className="Favourites__main">
-                    <InfoBox
-                        color="yellow"
-                        title="Vi oppdaterer systemet. Litt nedetid kan forekomme i løpet av dagen."
-                    />
 
                     {isAuthenticated === authenticationEnum.NOT_AUTHENTICATED && (
                         <Row>

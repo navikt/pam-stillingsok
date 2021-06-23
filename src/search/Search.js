@@ -30,7 +30,6 @@ import Sorting from './sorting/Sorting';
 import {useDocumentTitle, useTrackPageview} from '../common/hooks';
 import AdStatisticsLink from "../common/components/AdStatisticsLink";
 import SearchErrorBox from "../common/components/SearchErrorBox";
-import InfoBox from "../common/components/InfoBox";
 
 const Search = ({
                     initialSearch,
@@ -79,12 +78,6 @@ const Search = ({
                 )}
                 {!searchFailed && initialSearchDone && (
                     <RestoreScroll id="Search">
-                        <InfoBox
-                            margin-top="0"
-                            color="yellow"
-                            title="Vi oppdaterer systemet. Litt nedetid kan forekomme i løpet av dagen."
-                        />
-
                         <Row>
                             <Column xs="12" md="4">
                                 <div className="Search__main__left">

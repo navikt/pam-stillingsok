@@ -18,7 +18,6 @@ import { CONTEXT_PATH } from '../fasitProperties';
 import TotalSavedSearch from './totalSavedSearch/TotalSavedSearch';
 import { useDocumentTitle, useTrackPageview, useScrollToTop } from '../common/hooks';
 import UnderFifteenInfo from "../underFifteenInfo/UnderFifteenInfo";
-import InfoBox from "../common/components/InfoBox";
 
 const SavedSearches = ({
     isAuthenticated,
@@ -44,10 +43,6 @@ const SavedSearches = ({
                 title="Lagrede søk"
             />
             <Container className="SavedSearches__main">
-                <InfoBox
-                    color="yellow"
-                    title="Vi oppdaterer systemet. Litt nedetid kan forekomme i løpet av dagen."
-                />
 
                 {isAuthenticated === authenticationEnum.NOT_AUTHENTICATED && (
                     <Row>
