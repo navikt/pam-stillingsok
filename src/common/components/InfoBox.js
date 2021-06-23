@@ -1,5 +1,5 @@
 import * as React from "react";
-import './Infobox.less';
+import './InfoBox.less';
 
 const InfoBox = ({color, title, marginTop}) => {
     return (
