@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle,prefer-destructuring */
 import PropTypes from 'prop-types';
 import React, {useEffect} from 'react';
-import {Flatknapp, Lenkeknapp} from '@navikt/arbeidsplassen-knapper';
+import {Flatknapp} from '@navikt/arbeidsplassen-knapper';
 import {Column, Container, Row} from 'nav-frontend-grid';
 import BackLink from '../backLink/BackLink';
 import getEmployer from '../../server/common/getEmployer';
@@ -32,7 +32,7 @@ import {addRobotsNoIndexMetaTag, removeRobotsMetaTag} from '../common/utils/meta
 import logAmplitudeEvent, {logAmplitudePageview} from "../amplitudeTracker";
 import {connect} from "react-redux";
 import {Link} from "react-router-dom";
-import InfoBox from "../common/components/Infobox";
+import InfoBox from "../common/components/InfoBox";
 
 function commaSeparate(...strings) {
     const onlyStrings = strings.filter((string) => (
