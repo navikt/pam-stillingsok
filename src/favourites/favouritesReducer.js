@@ -20,6 +20,7 @@ import {
     HIDE_TERMS_OF_USE_MODAL,
     SHOW_TERMS_OF_USE_MODAL
 } from '../user/userReducer';
+import { track } from '../analytics';
 
 export const FETCH_FAVOURITES = 'FETCH_FAVOURITES';
 export const FETCH_FAVOURITES_BEGIN = 'FETCH_FAVOURITES_BEGIN';
@@ -238,6 +239,14 @@ function* addSearchResultToFavourites(action) {
     const foundInSearchResult = state.search.searchResult && state.search.searchResult.stillinger &&
         state.search.searchResult.stillinger.find((s) => s.uuid === action.uuid);
 
+
+    if (state.user.user) {
+        track('send', 'event', 'ux-test-juni-2021', 'Trykket lagre som favoritt i trefflisten (innlogget)');
+    } else {
+        track('send', 'event', 'ux-test-juni-2021', 'Trykket lagre som favoritt i trefflisten (uinnlogget)');
+    }
+
+
     if (foundInSearchResult) {
         yield call(
             addToFavourites,
@@ -253,6 +262,13 @@ function* addSearchResultToFavourites(action) {
 
 function* addStillingToFavourites() {
     const state = yield select();
+
+    if (state.user.user) {
+        track('send', 'event', 'ux-test-juni-2021', 'Trykket lagre som favoritt fra annonsen (innlogget)');
+    } else {
+        track('send', 'event', 'ux-test-juni-2021', 'Trykket lagre som favoritt fra annonsen (uinnlogget)');
+    }
+
     yield call(
         addToFavourites,
         state.stilling.stilling._id,

@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import SnapToTop from '../../common/components/SnapToTop';
 import './ShowResultsButton.less';
 import CountDown from './CountDown';
+import { track } from '../../analytics';
 
 class ShowResultsButton extends React.Component {
     constructor(props) {
@@ -124,12 +125,16 @@ class ShowResultsButton extends React.Component {
                         </div>
                         <div>
                             {this.state.showGoToResults && (
-                                <a href="#treff" className="Knapp Knapp--mini">
+                                <a href="#treff" className="Knapp Knapp--mini" onClick={() => {
+                                    track('send', 'event', 'ux-test-juni-2021', 'Klikket Vis treff-knapp på mobil');
+                                }}>
                                     Vis treff
                                 </a>
                             )}
                             {this.state.showGoToSearch && (
-                                <a href="#top" className="Knapp Knapp--mini">
+                                <a href="#top" className="Knapp Knapp--mini"onClick={() => {
+                                    track('send', 'event', 'ux-test-juni-2021', 'Klikket Endre søk-knapp på mobil');
+                                }}>
                                     Endre søk
                                 </a>
                             )}

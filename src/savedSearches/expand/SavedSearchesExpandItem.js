@@ -4,10 +4,12 @@ import { connect } from 'react-redux';
 import { INITIAL_SEARCH } from '../../search/searchReducer';
 import { SET_CURRENT_SAVED_SEARCH } from '../savedSearchesReducer';
 import { COLLAPSE_SAVED_SEARCHES } from './savedSearchExpandReducer';
+import { track } from '../../analytics';
 
 class SavedSearchesExpandItem extends React.Component {
     onTitleClick = (e) => {
         e.preventDefault();
+        track('send', 'event', 'ux-test-juni-2021', 'Åpnet et lagret søk fra popover')
         try {
             this.props.setCurrentSavedSearch(this.props.savedSearch);
             this.props.collapseSavedSearches();

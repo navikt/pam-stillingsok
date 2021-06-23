@@ -31,7 +31,7 @@ const EVENT_CATEGORY_FAVOURITES = 'Ledige stillinger > Favoritter';
 export const EVENT_CATEGORY_SAVED_SEARCHES = 'Ledige stillinger > Lagrede søk';
 const ignoreFurther = [];
 
-function track(...props) {
+export function track(...props) {
     try {
         if (window.ga) {
             window.ga(...props);

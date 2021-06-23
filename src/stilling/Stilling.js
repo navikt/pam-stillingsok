@@ -32,6 +32,7 @@ import {addRobotsNoIndexMetaTag, removeRobotsMetaTag} from '../common/utils/meta
 import logAmplitudeEvent, {logAmplitudePageview} from "../amplitudeTracker";
 import {connect} from "react-redux";
 import {Link} from "react-router-dom";
+import { track } from '../analytics';
 
 function commaSeparate(...strings) {
     const onlyStrings = strings.filter((string) => (
@@ -111,6 +112,7 @@ const Stilling = ({cachedStilling, error, getStilling, isFetchingStilling, match
 
 
     const onPrintClick = () => {
+        track('send', 'event', 'ux-test-juni-2021', 'Klikket Print-knappen inne i en annonse');
         window.print();
     };
 

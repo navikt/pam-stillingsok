@@ -4,6 +4,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Knapp } from '@navikt/arbeidsplassen-knapper';
 import { SavedSearchFormMode, SHOW_SAVED_SEARCH_FORM } from './form/savedSearchFormReducer';
+import { track } from '../analytics';
 
 class SaveSearchButton extends React.Component {
     onClick = () => {
@@ -21,7 +22,9 @@ class SaveSearchButton extends React.Component {
                 type="over"
                 id="hjelpetekstLagreknapp"
                 anchor={() => (
-                    <div role="button" className="Knapp Knapp--mini Knapp--disabled SaveSearchButton">
+                    <div role="button" className="Knapp Knapp--mini Knapp--disabled SaveSearchButton" onClick={() =>{
+                        track('send', 'event', 'ux-test-juni-2021', 'Trykket Lagre søk-knapp uten å ha søkekriterier');
+                    }}>
                         Lagre søk
                     </div>
                 )}

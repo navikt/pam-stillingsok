@@ -30,6 +30,7 @@ import Sorting from './sorting/Sorting';
 import {useDocumentTitle, useTrackPageview} from '../common/hooks';
 import AdStatisticsLink from "../common/components/AdStatisticsLink";
 import SearchErrorBox from "../common/components/SearchErrorBox";
+import { track } from '../analytics';
 
 const Search = ({
                     initialSearch,
@@ -99,7 +100,10 @@ const Search = ({
                                             <Flatknapp
                                                 className="Search__nullstill"
                                                 mini
-                                                onClick={() => resetSearch()}
+                                                onClick={() => {
+                                                    track('send', 'event', 'ux-test-juni-2021', 'Trykket  Nullstill kriterier-knapp');
+                                                    return resetSearch();
+                                                }}
                                             >
                                                 Nullstill kriterier
                                             </Flatknapp>
@@ -129,7 +133,9 @@ const Search = ({
                             </Column>
                         </Row>
                         <div className="Search__main__tiltoppen">
-                            <a href="#top" className="Knapp--link">Til toppen</a>
+                            <a href="#top" className="Knapp--link" onClick={() => {
+                                track('send', 'event', 'ux-test-juni-2021', 'Klikket Til toppen-lenke');
+                            }}>Til toppen</a>
                         </div>
                     </RestoreScroll>
                 )}
