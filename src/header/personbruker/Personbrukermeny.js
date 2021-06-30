@@ -29,7 +29,7 @@ const tabs = [
         app: 'CV'
     },
     {
-        tittel: 'Arrangement',
+        tittel: 'Jobbtreff',
         href: '/moteplass/arrangement',
         app: 'MOTEPLASS'
     }
