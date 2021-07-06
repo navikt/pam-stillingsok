@@ -25,8 +25,8 @@ AMPLITUDE_TOKEN=(Dev Token)
 Applikasjonen vil da forsøke å koble seg til pam-search-api gjennom `localhost:9000`.
 Dersom du vil få inn teststillinger kan du koble deg direkte til et kjørende instans av pam-search-api i kubernetes. Dette gjør du med følgende kommando:
 ```
-$ kubectl config use-context dev-sbs
-$ kubectl port-forward deployment/pam-search-api 9000:9000
+$ kubectl config use-context dev-gcp
+$ kubectl -n teampam port-forward deployment/pam-search-api 9000:9000
 ```
 
 Om du får følgende output betyr det at port-forwarden funket og pam-search-api er tilgjengelig på port 9000. 
