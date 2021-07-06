@@ -39,6 +39,7 @@ class Extent extends React.Component {
                         name="extent"
                         key={item.key}
                         label={this.labelForExtent(item)}
+                        aria-label={`"Antall stillinger ${this.labelForExtent(item)}"`}
                         value={item.key}
                         onChange={this.onExtentClick}
                         checked={checkedExtent.includes(item.key)}

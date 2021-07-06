@@ -33,6 +33,7 @@ class Sector extends React.Component {
                         name="sector"
                         key={item.key}
                         label={`${item.key} (${item.count})`}
+                        aria-label={`"${item.key}. Antall stillinger (${item.count})"`}
                         value={item.key}
                         onChange={this.onSectorClick}
                         checked={checkedSector.includes(item.key)}
