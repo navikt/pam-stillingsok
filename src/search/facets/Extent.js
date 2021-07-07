@@ -22,8 +22,8 @@ class Extent extends React.Component {
 
     labelForExtent = (item) => (
         item.key === 'Heltid'
-            ? `${item.key} eller ikke oppgitt (${item.count})`
-            : `${item.key} (${item.count})`
+            ? `${item.key} eller ikke oppgitt`
+            : `${item.key}`
     );
 
     render() {
@@ -38,7 +38,8 @@ class Extent extends React.Component {
                     <Checkbox
                         name="extent"
                         key={item.key}
-                        label={this.labelForExtent(item)}
+                        label={`${this.labelForExtent(item)} (${item.count})`}
+                        aria-label={`${this.labelForExtent(item)}. Antall stillinger (${item.count})`}
                         value={item.key}
                         onChange={this.onExtentClick}
                         checked={checkedExtent.includes(item.key)}
