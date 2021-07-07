@@ -75,7 +75,7 @@ class Occupations extends React.Component {
                             value={firstLevel.key}
                             onChange={this.onFirstLevelClick}
                             checked={checkedFirstLevels.includes(firstLevel.key)}
-                            aria-label={`"${firstLevel.key}. Antall stillinger (${firstLevel.count})"`}
+                            aria-label={`${firstLevel.key}. Antall stillinger (${firstLevel.count})`}
                         />
                         {checkedFirstLevels && checkedFirstLevels.includes(firstLevel.key)
                         && firstLevel.key !== OCCUPATION_LEVEL_OTHER && (
@@ -90,7 +90,7 @@ class Occupations extends React.Component {
                                         name="occupation"
                                         key={this.editedSecondLevelItemKey(secondLevel.key)}
                                         label={`${this.editedSecondLevelItemKey(secondLevel.label)} (${secondLevel.count})`}
-                                        aria-label={`"${this.editedSecondLevelItemKey(secondLevel.label)}. Antall stillinger (${secondLevel.count})"`}
+                                        aria-label={`${this.editedSecondLevelItemKey(secondLevel.label)}. Antall stillinger (${secondLevel.count})`}
                                         value={secondLevel.key}
                                         onChange={this.onSecondLevelClick}
                                         checked={checkedSecondLevels.includes(secondLevel.key)}

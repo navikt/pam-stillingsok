@@ -84,7 +84,7 @@ class Locations extends React.Component {
                             className={location.count === 0 ? 'Facet__zero__count' : ''}
                             name="location"
                             label={`${fixLocationName(location.key)} (${location.count})`}
-                            aria-label={`"${location.key}. Antall stillinger (${location.count})"`}
+                            aria-label={`${location.key}. Antall stillinger (${location.count})`}
                             value={location.key}
                             onChange={this.onCheckboxClick(location.key, location.type)}
                             checked={checkedCounties.includes(location.key) || (location.key === 'UTLAND' && international === true)}
@@ -101,7 +101,7 @@ class Locations extends React.Component {
                                         name="location"
                                         key={subLocation.key}
                                         label={`${fixLocationName(subLocation.key, true)} (${subLocation.count})`}
-                                        aria-label={`"${subLocation.key}. Antall stillinger (${subLocation.count})"`}
+                                        aria-label={`${subLocation.key}. Antall stillinger (${subLocation.count})`}
                                         value={subLocation.key}
                                         onChange={this.onCheckboxClick(subLocation.key, subLocation.type)}
                                         checked={checkedMunicipals.includes(subLocation.key) || checkedCountries.includes(subLocation.key)}
