@@ -54,7 +54,7 @@
     "@navikt/arbeidsplassen-core": "2.0.0",
     "@navikt/arbeidsplassen-footer": "2.0.0",
     "@navikt/arbeidsplassen-header": "4.7.0",
-    "@navikt/arbeidsplassen-knapper": "2.0.1",
+    "@navikt/arbeidsplassen-knapper": "2.0.2",
     "@navikt/fnrvalidator": "^1.1.3",
     "@sentry/browser": "^5.20.1",
     "@types/react-router-dom": "^4.3.5",
