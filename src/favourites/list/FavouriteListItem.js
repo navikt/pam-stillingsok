@@ -3,7 +3,7 @@ import AlertStripe from 'nav-frontend-alertstriper';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {connect} from 'react-redux';
-import {Lenkeknapp} from '@navikt/arbeidsplassen-knapper';
+import {Flatknapp} from '@navikt/arbeidsplassen-knapper';
 import '../../common/components/Icons.less';
 import SearchResultsItemDetails from '../../search/searchResults/SearchResultsItemDetails';
 import {SHOW_MODAL_REMOVE_FROM_FAVOURITES} from '../favouritesReducer';
@@ -34,11 +34,11 @@ class FavouriteListItem extends React.Component {
             <div className="FavouriteListItem__wrapper">
                 <div className={classNames('FavouriteListItem', {'FavouriteListItem--expired': expired})}>
                     <SearchResultsItemDetails stilling={this.toAd(favourite.favouriteAd)}/>
-                    <Lenkeknapp onClick={this.onRemoveClick} className="FavouriteListItem__delete Delete"
+                    <Flatknapp onClick={this.onRemoveClick} className="FavouriteListItem__delete Delete"
                                 aria-label="Slett">
                         <span className="Delete__icon"/>
                         Slett
-                    </Lenkeknapp>
+                    </Flatknapp>
                     {expired && (
                         <AlertStripe type="advarsel" className="FavouriteListItem__alertstripe alertstripe--solid">
                             Denne annonsen er utløpt

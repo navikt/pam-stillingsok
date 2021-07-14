@@ -5,7 +5,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
-import { Flatknapp, Lenkeknapp } from '@navikt/arbeidsplassen-knapper';
+import { Flatknapp } from '@navikt/arbeidsplassen-knapper';
 import '../../common/components/Icons.less';
 import { CONTEXT_PATH } from '../../fasitProperties';
 import { formatISOString, isValidISOString } from '../../utils';
@@ -79,14 +79,14 @@ class SavedSearchListItem extends React.Component {
                         )}
                     </div>
                     <div className="SavedSearchListItem__bottom">
-                        <Lenkeknapp onClick={this.onChangeClick} className="Edit">
+                        <Flatknapp onClick={this.onChangeClick} className="Edit">
                             <span className="Edit__icon" />
                             Endre
-                        </Lenkeknapp>
-                        <Lenkeknapp onClick={this.onRemoveClick} className="Delete">
+                        </Flatknapp>
+                        <Flatknapp onClick={this.onRemoveClick} className="Delete">
                             <span className="Delete__icon" />
                             Slett
-                        </Lenkeknapp>
+                        </Flatknapp>
                     </div>
                 </div>
                 {expired && (
