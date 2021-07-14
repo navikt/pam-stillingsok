@@ -4,7 +4,6 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Flatknapp } from '@navikt/arbeidsplassen-knapper';
 import { Column, Container, Row } from 'nav-frontend-grid';
-import BackLink from '../backLink/BackLink';
 import getEmployer from '../../server/common/getEmployer';
 import getWorkLocation from '../../server/common/getWorkLocation';
 import { CONTEXT_PATH } from '../fasitProperties';
@@ -90,7 +89,6 @@ const InternalStilling = ({ error, getInternalStilling, isFetchingStilling, matc
                     <Row>
                         <Column xs="12">
                             <div className="Stilling__header">
-                                <BackLink/>
                                 <div className="Stilling__buttons">
                                     <Flatknapp
                                         mini

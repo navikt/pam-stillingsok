@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import React, {useEffect} from 'react';
 import {Flatknapp} from '@navikt/arbeidsplassen-knapper';
 import {Column, Container, Row} from 'nav-frontend-grid';
-import BackLink from '../backLink/BackLink';
 import getEmployer from '../../server/common/getEmployer';
 import getWorkLocation from '../../server/common/getWorkLocation';
 import {CONTEXT_PATH} from '../fasitProperties';
@@ -133,7 +132,6 @@ const Stilling = ({cachedStilling, error, getStilling, isFetchingStilling, match
                     <Row>
                         <Column xs="12">
                             <div className="Stilling__header">
-                                <BackLink/>
                                 <div className="Stilling__buttons">
                                     {isFetchingStilling && cachedStilling && (
                                         <ToggleFavouriteButton uuid={cachedStilling.uuid}/>
