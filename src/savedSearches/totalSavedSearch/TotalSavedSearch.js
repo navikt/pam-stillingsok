@@ -6,7 +6,7 @@ import './TotalSavedSearch.less';
 export default function TotalSavedSearch({ total }) {
     return (
         <div className="TotalSavedSearch">
-            <h2 className="TotalSavedSearch__label">Antall lagrede søk: {total}</h2>
+            <h2 className="TotalSavedSearch__label">{`Antall lagrede søk: ${total}`}</h2>
         </div>
     );
 }
