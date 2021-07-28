@@ -26,6 +26,10 @@ export default function EmploymentDetails({ stilling }) {
                         <dt key="dt">Ansettelsesform:</dt>,
                         <dd key="dd">{properties.engagementtype }</dd>
                     ]}
+                    {properties.jobpercentage && [
+                        <dt key="dt">Prosent:</dt>,
+                        <dd key="dd">{properties.jobpercentage} %</dd>
+                    ]}
                     {properties.extent && [
                         <dt key="dt">Heltid/deltid:</dt>,
                         <dd key="dd">{properties.extent}</dd>
@@ -70,6 +74,7 @@ EmploymentDetails.propTypes = {
             jobtitle: PropTypes.string,
             location: PropTypes.string,
             engagementtype: PropTypes.string,
+            jobpercentage: PropTypes.string,
             extent: PropTypes.string,
             positioncount: PropTypes.string,
             sector: PropTypes.string,
