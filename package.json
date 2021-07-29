@@ -22,7 +22,7 @@
   "dependencies": {
     "amplitude-js": "^8.3.1",
     "body-parser": "^1.19.0",
-    "classnames": "^2.3.0",
+    "classnames": "^2.3.1",
     "compression": "^1.7.3",
     "express": "^4.17.1",
     "helmet": "^4.6.0",
