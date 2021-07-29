@@ -31,7 +31,7 @@ class ToggleFavouriteStar extends React.Component {
             return (
                 <button
                     disabled={isPending}
-                    aria-label="Favoritt"
+                    aria-label="Slett favoritten"
                     aria-pressed="true"
                     onClick={this.onRemoveFromFavouritesClick}
                     className={className ? `ToggleFavouriteStar ${className}` : 'ToggleFavouriteStar'}
@@ -46,7 +46,7 @@ class ToggleFavouriteStar extends React.Component {
             <button
                 disabled={isPending}
                 onClick={this.onAddToFavouritesClick}
-                aria-label="Favoritt"
+                aria-label="Lagre i favoritter"
                 aria-pressed="false"
                 className={className ? `ToggleFavouriteStar ${className}` : 'ToggleFavouriteStar'}
             >
