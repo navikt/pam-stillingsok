@@ -5,6 +5,10 @@
   margin-bottom: 4rem;
 }
 
+.Stilling__row {
+  padding-top: 2rem;
+}
+
 .Stilling__header {
   padding-top: 1rem;
   margin-bottom: 2rem;
@@ -15,19 +19,14 @@
 
 .Stilling__buttons {
   display: flex;
-  justify-content: flex-end;
-  padding-top: 4px;
+  justify-content: left;
+  padding-bottom: 1rem;
 
-  @media (min-width: @screen-sm-min) {
+  @media (min-width: @screen-md-min) {
+    justify-content: center;
     .Knapp:not(:last-child) {
       margin-right: @button-marginRight;
     }
-  }
-}
-
-.Stilling__print {
-  @media (max-width: @screen-xs-max) {
-    display: none !important;
   }
 }
 

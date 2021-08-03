@@ -129,7 +129,7 @@ const Stilling = ({cachedStilling, error, getStilling, isFetchingStilling, match
             {!error && (
                 <Container>
 
-                    <Row>
+                    {/*<Row>
                         <Column xs="12">
                             <div className="Stilling__header">
                                 <div className="Stilling__buttons">
@@ -149,8 +149,8 @@ const Stilling = ({cachedStilling, error, getStilling, isFetchingStilling, match
                                 </div>
                             </div>
                         </Column>
-                    </Row>
-                    <Row>
+                    </Row>*/}
+                    <Row className="Stilling__row">
                         <Column xs="12" md="7" lg="8">
                             <div className="Stilling__left">
                                 {!isFetchingStilling && stilling && stilling._source.status !== 'ACTIVE' && (
@@ -208,6 +208,23 @@ const Stilling = ({cachedStilling, error, getStilling, isFetchingStilling, match
                                     </Link>
                                 </div>
                                 }
+                            </div>
+                        </Column>
+                        <Column xs="12" md="5" lg="4">
+                            <div className="Stilling__buttons">
+                                {isFetchingStilling && cachedStilling && (
+                                    <ToggleFavouriteButton uuid={cachedStilling.uuid}/>
+                                )}
+                                {!isFetchingStilling && stilling && (
+                                    <ToggleFavouriteButton uuid={stilling._id}/>
+                                )}
+                                <Flatknapp
+                                    mini
+                                    className="Stilling__print"
+                                    onClick={onPrintClick}
+                                >
+                                    Skriv ut
+                                </Flatknapp>
                             </div>
                         </Column>
                         <Column xs="12" md="5" lg="4">
