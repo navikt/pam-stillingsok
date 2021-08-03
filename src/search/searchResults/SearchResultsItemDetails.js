@@ -10,7 +10,7 @@ import {formatISOString, isValidISOString} from '../../utils';
 import './SearchResultsItemDetails.less';
 import {sendUrlEndring} from "../../common/hooks/useTrackPageview";
 
-function LinkToAd({children, stilling, isFinn}) {
+function LinkToAd({children, stilling, isFinn, employer}) {
 
     const logMetrics = () => {
         sendUrlEndring({
@@ -21,13 +21,19 @@ function LinkToAd({children, stilling, isFinn}) {
 
     if (isFinn) {
         return (
-            <a onClick={logMetrics} href={`https://www.finn.no/${stilling.reference}`} className="SearchResultItem__link">
+            <a onClick={logMetrics} href={`https://www.finn.no/${stilling.reference}`}
+               className="SearchResultItem__link"
+               aria-label={stilling.title}
+            >
                 {children}
             </a>
         )
     }
     return (
-        <Link to={`${CONTEXT_PATH}/stilling/${stilling.uuid}`} className="SearchResultItem__link">
+        <Link to={`${CONTEXT_PATH}/stilling/${stilling.uuid}`}
+              className="SearchResultItem__link"
+              aria-label={stilling.title}
+        >
             {children}
         </Link>
     )
@@ -46,7 +52,11 @@ export default function SearchResultsItemDetails({stilling}) {
     const isFinn = stilling.source && stilling.source.toLowerCase() === "finn";
 
     return (
-        <LinkToAd stilling={stilling} isFinn={isFinn}>
+        <LinkToAd
+            stilling={stilling}
+            isFinn={isFinn}
+            employer={employer}
+        >
             <Row className="SearchResultsItemDetails">
                 <Column xs="12" md="4">
                     {employer && (
