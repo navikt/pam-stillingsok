@@ -40,7 +40,7 @@ function commaSeparate(...strings) {
     return onlyStrings.join(', ');
 }
 
-const Stilling = ({cachedStilling, error, getStilling, isFetchingStilling, match, stilling, resetStilling, isAuthenticated}) => {
+const Stilling = ({cachedStilling, error, getStilling, isFetchingStilling, match, stilling, resetStilling }) => {
 
     useScrollToTop();
 
@@ -73,7 +73,7 @@ const Stilling = ({cachedStilling, error, getStilling, isFetchingStilling, match
                 ga('set', 'page', `${CONTEXT_PATH}/stilling/${stilling._id}`);
                 ga('set', 'title', stilling._source.title);
                 ga('send', 'pageview');
-                logAmplitudePageview({isAuthenticated: isAuthenticated === 'IS_AUTHENTICATED'});
+                logAmplitudePageview();
             } catch (e) {
                 // ignore
             }
@@ -88,8 +88,7 @@ const Stilling = ({cachedStilling, error, getStilling, isFetchingStilling, match
                     city: stilling._source.employer.location.city || "N/A",
                     employer: stilling._source.employer.name || "N/A",
                     expires: stilling._source.expires || "N/A",
-                    published: stilling._source.published || "N/A",
-                    isAuthenticated: isAuthenticated === 'IS_AUTHENTICATED',
+                    published: stilling._source.published || "N/A"
                 })
             } catch (e) {
                 // ignore
@@ -290,8 +289,7 @@ const mapStateToProps = (state) => ({
     isFetchingStilling: state.stilling.isFetchingStilling,
     stilling: state.stilling.stilling,
     cachedStilling: state.stilling.cachedStilling,
-    error: state.stilling.error,
-    isAuthenticated: state.authentication.isAuthenticated
+    error: state.stilling.error
 });
 
 const mapDispatchToProps = (dispatch) => ({

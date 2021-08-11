@@ -1,4 +1,5 @@
 import amplitude from 'amplitude-js';
+import { store } from './app';
 
 const getCookie = (name) => {
     const re = new RegExp(`${name}=([^;]+)`);
@@ -41,7 +42,9 @@ export const logAmplitudePageview = (additionalData) => {
 };
 
 const enrichData = (data) => {
-    let enrichedData = {...data}
+    const isAuthenticated = store.getState().authentication.isAuthenticated === 'IS_AUTHENTICATED';
+
+    let enrichedData = {...data, isAuthenticated }
 
     const erMellom25og30 = sessionStorage.getItem('erMellom25og30');
 
