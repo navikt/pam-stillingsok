@@ -73,7 +73,7 @@ const Stilling = ({cachedStilling, error, getStilling, isFetchingStilling, match
                 ga('set', 'page', `${CONTEXT_PATH}/stilling/${stilling._id}`);
                 ga('set', 'title', stilling._source.title);
                 ga('send', 'pageview');
-                logAmplitudePageview({isAuthenticated: isAuthenticated || false});
+                logAmplitudePageview({isAuthenticated: isAuthenticated === 'IS_AUTHENTICATED'});
             } catch (e) {
                 // ignore
             }
@@ -89,7 +89,7 @@ const Stilling = ({cachedStilling, error, getStilling, isFetchingStilling, match
                     employer: stilling._source.employer.name || "N/A",
                     expires: stilling._source.expires || "N/A",
                     published: stilling._source.published || "N/A",
-                    isAuthenticated: isAuthenticated || false,
+                    isAuthenticated: isAuthenticated === 'IS_AUTHENTICATED',
                 })
             } catch (e) {
                 // ignore
