@@ -1,5 +1,6 @@
 import amplitude from 'amplitude-js';
 import { store } from './app';
+import {authenticationEnum} from "./authentication/authenticationReducer";
 
 const getCookie = (name) => {
     const re = new RegExp(`${name}=([^;]+)`);
@@ -42,7 +43,8 @@ export const logAmplitudePageview = (additionalData) => {
 };
 
 const enrichData = (data) => {
-    const isAuthenticated = store.getState().authentication.isAuthenticated === 'IS_AUTHENTICATED';
+    const state = store.getState().authentication;
+    const isAuthenticated = state.isAuthenticated === authenticationEnum.IS_AUTHENTICATED;
 
     let enrichedData = {...data, isAuthenticated }
 
