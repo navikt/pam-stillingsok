@@ -5,6 +5,10 @@
   margin-bottom: 4rem;
 }
 
+.Stilling__row {
+  padding-top: 2rem;
+}
+
 .Stilling__header {
   padding-top: 1rem;
   margin-bottom: 2rem;
@@ -15,19 +19,14 @@
 
 .Stilling__buttons {
   display: flex;
-  justify-content: flex-end;
-  padding-top: 4px;
+  justify-content: left;
+  padding-bottom: 1rem;
 
-  @media (min-width: @screen-sm-min) {
+  @media (min-width: @screen-md-min) {
+    justify-content: center;
     .Knapp:not(:last-child) {
       margin-right: @button-marginRight;
     }
-  }
-}
-
-.Stilling__print {
-  @media (max-width: @screen-xs-max) {
-    display: none !important;
   }
 }
 
@@ -48,7 +47,7 @@
 }
 
 .Stilling__h1 {
-  margin: 0 0 1rem 0;
+  margin: 0 0 .5rem 0;
   font-size: 1.75rem;
   line-height: 1.33;
   word-wrap: break-word;
@@ -57,15 +56,20 @@
   @media (min-width: @screen-md-min) {
     font-size: 2rem;
     line-height: 1.16;
-    margin: 0 0 2rem 0;
   }
 }
 
 .Stilling__employer-and-location {
+  font-size: 18px;
+  font-weight: normal;
+  margin: 0 0 1rem 0;
   line-height: 1.33;
-  margin: 0 0 0.5rem;
   word-wrap: break-word;
   overflow-wrap: break-word;
+
+  @media (min-width: @screen-md-min) {
+    margin: 0 0 2rem 0;
+  }
 }
 
 .Rapport__link {

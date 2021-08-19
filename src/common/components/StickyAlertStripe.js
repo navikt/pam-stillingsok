@@ -5,7 +5,12 @@ import './StickyAlertStripe.less';
 
 export default function StickyAlertStripe({ children, type }) {
     return (
-        <AlertStripe type={type} className="StickyAlertStripe alertstripe--solid">
+        <AlertStripe
+            type={type}
+            className="StickyAlertStripe alertstripe--solid"
+            role="alert"
+            aria-live="polite"
+        >
             {children}
         </AlertStripe>
     );

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import React, {useEffect} from 'react';
 import {Flatknapp} from '@navikt/arbeidsplassen-knapper';
 import {Column, Container, Row} from 'nav-frontend-grid';
-import BackLink from '../backLink/BackLink';
 import getEmployer from '../../server/common/getEmployer';
 import getWorkLocation from '../../server/common/getWorkLocation';
 import {CONTEXT_PATH} from '../fasitProperties';
@@ -41,7 +40,7 @@ function commaSeparate(...strings) {
     return onlyStrings.join(', ');
 }
 
-const Stilling = ({cachedStilling, error, getStilling, isFetchingStilling, match, stilling, resetStilling}) => {
+const Stilling = ({cachedStilling, error, getStilling, isFetchingStilling, match, stilling, resetStilling }) => {
 
     useScrollToTop();
 
@@ -130,10 +129,9 @@ const Stilling = ({cachedStilling, error, getStilling, isFetchingStilling, match
             {!error && (
                 <Container>
 
-                    <Row>
+                    {/*<Row>
                         <Column xs="12">
                             <div className="Stilling__header">
-                                <BackLink/>
                                 <div className="Stilling__buttons">
                                     {isFetchingStilling && cachedStilling && (
                                         <ToggleFavouriteButton uuid={cachedStilling.uuid}/>
@@ -151,8 +149,8 @@ const Stilling = ({cachedStilling, error, getStilling, isFetchingStilling, match
                                 </div>
                             </div>
                         </Column>
-                    </Row>
-                    <Row>
+                    </Row>*/}
+                    <Row className="Stilling__row">
                         <Column xs="12" md="7" lg="8">
                             <div className="Stilling__left">
                                 {!isFetchingStilling && stilling && stilling._source.status !== 'ACTIVE' && (
@@ -160,28 +158,28 @@ const Stilling = ({cachedStilling, error, getStilling, isFetchingStilling, match
                                 )}
                                 {isFetchingStilling && cachedStilling && (
                                     <React.Fragment>
-                                        <div className="Stilling__employer-and-location">
+                                        <h1 className="Stilling__h1">
+                                            {cachedStilling.title}
+                                        </h1>
+                                        <h2 className="Stilling__employer-and-location">
                                             {commaSeparate(getEmployer(cachedStilling), getWorkLocation(
                                                 cachedStilling.properties.location,
                                                 cachedStilling.locationList
                                             ))}
-                                        </div>
-                                        <h1 className="Stilling__h1">
-                                            {cachedStilling.title}
-                                        </h1>
+                                        </h2>
                                     </React.Fragment>
                                 )}
                                 {!isFetchingStilling && stilling && (
                                     <React.Fragment>
-                                        <div className="Stilling__employer-and-location">
+                                        <h1 className="Stilling__h1">
+                                            {stilling._source.title}
+                                        </h1>
+                                        <h2 className="Stilling__employer-and-location">
                                             {commaSeparate(getEmployer(stilling._source), getWorkLocation(
                                                 stilling._source.properties.location,
                                                 stilling._source.locationList
                                             ))}
-                                        </div>
-                                        <h1 className="Stilling__h1">
-                                            {stilling._source.title}
-                                        </h1>
+                                        </h2>
                                     </React.Fragment>
                                 )}
                                 {(stilling === undefined || isFetchingStilling) && (
@@ -210,6 +208,23 @@ const Stilling = ({cachedStilling, error, getStilling, isFetchingStilling, match
                                     </Link>
                                 </div>
                                 }
+                            </div>
+                        </Column>
+                        <Column xs="12" md="5" lg="4">
+                            <div className="Stilling__buttons">
+                                {isFetchingStilling && cachedStilling && (
+                                    <ToggleFavouriteButton uuid={cachedStilling.uuid}/>
+                                )}
+                                {!isFetchingStilling && stilling && (
+                                    <ToggleFavouriteButton uuid={stilling._id}/>
+                                )}
+                                <Flatknapp
+                                    mini
+                                    className="Stilling__print"
+                                    onClick={onPrintClick}
+                                >
+                                    Skriv ut
+                                </Flatknapp>
                             </div>
                         </Column>
                         <Column xs="12" md="5" lg="4">

@@ -4,7 +4,7 @@
   ],
   "loginservice_url": "https://loginservice.dev.nav.no/login",
   "logoutservice_url": "https://loginservice.dev.nav.no/slo",
-  "pamaduser_url": "https://pam-aduser.dev.nav.no",
+  "pamaduser_url": "https://arbeidsplassen.dev.nav.no",
   "pam_stillingsok_url": "https://arbeidsplassen.dev.nav.no/stillinger",
   "pam_var_side_url": "https://arbeidsplassen.dev.nav.no/stillingsregistrering",
   "pamsearchapi_url": "http://pam-search-api",

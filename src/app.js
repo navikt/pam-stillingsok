@@ -29,7 +29,7 @@ import * as Sentry from '@sentry/browser';
 
 const sagaMiddleware = createSagaMiddleware();
 
-const store = createStore(combineReducers({
+export const store = createStore(combineReducers({
     authentication: authenticationReducer,
     backLink: backLinkReducer,
     error: errorReducer,

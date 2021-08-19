@@ -31,7 +31,6 @@ class ToggleFavouriteButton extends React.Component {
                 <Flatknapp
                     mini
                     disabled={isPending}
-                    aria-label="Fjern favoritt"
                     onClick={this.onRemoveFromFavouritesClick}
                     className="ToggleFavouriteButton"
                 >
@@ -48,7 +47,6 @@ class ToggleFavouriteButton extends React.Component {
             <Flatknapp
                 mini
                 disabled={isPending}
-                aria-label="Lagre favoritt"
                 onClick={this.onAddToFavouritesClick}
                 className="ToggleFavouriteButton"
             >

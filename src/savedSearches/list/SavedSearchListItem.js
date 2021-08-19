@@ -5,7 +5,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
-import { Flatknapp, Lenkeknapp } from '@navikt/arbeidsplassen-knapper';
+import { Flatknapp } from '@navikt/arbeidsplassen-knapper';
 import '../../common/components/Icons.less';
 import { CONTEXT_PATH } from '../../fasitProperties';
 import { formatISOString, isValidISOString } from '../../utils';
@@ -50,7 +50,7 @@ class SavedSearchListItem extends React.Component {
                 <div className={classNames('SavedSearchListItem', { 'SavedSearchListItem--expired': expired })}>
                     <div className="SavedSearchListItem__top">
                         <div className="SavedSearchListItem__top_flex">
-                            <div className="SavedSearchListItem__title">
+                            <h2 className="SavedSearchListItem__title">
                                 <Link
                                     className="link"
                                     to={`${CONTEXT_PATH}${savedSearch.searchQuery}&saved=${savedSearch.uuid}`}
@@ -58,7 +58,7 @@ class SavedSearchListItem extends React.Component {
                                 >
                                     {savedSearch.title}
                                 </Link>
-                            </div>
+                            </h2>
                             {isValidISOString(savedSearch.updated) && (
                                 <Normaltekst className="SavedSearchListItem__created">
                                     Sist endret: {formatISOString(savedSearch.updated, 'DD.MM.YYYY')}
@@ -79,14 +79,14 @@ class SavedSearchListItem extends React.Component {
                         )}
                     </div>
                     <div className="SavedSearchListItem__bottom">
-                        <Lenkeknapp onClick={this.onChangeClick} className="Edit">
+                        <Flatknapp onClick={this.onChangeClick} className="Edit">
                             <span className="Edit__icon" />
                             Endre
-                        </Lenkeknapp>
-                        <Lenkeknapp onClick={this.onRemoveClick} className="Delete">
+                        </Flatknapp>
+                        <Flatknapp onClick={this.onRemoveClick} className="Delete">
                             <span className="Delete__icon" />
                             Slett
-                        </Lenkeknapp>
+                        </Flatknapp>
                     </div>
                 </div>
                 {expired && (
