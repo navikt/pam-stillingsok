@@ -1,5 +1,5 @@
 import {Column, Row} from 'nav-frontend-grid';
-import {Normaltekst, Undertekst, Undertittel} from 'nav-frontend-typografi';
+import {Normaltekst, Undertittel} from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {Link} from 'react-router-dom';
@@ -66,12 +66,6 @@ export default function SearchResultsItemDetails({stilling}) {
                     )}
                 </Column>
                 <Column xs="12" md="8">
-                    {stilling.published && (
-                        <Undertekst className="SearchResultsItemDetails__published">
-                            {formatISOString(stilling.published, 'DD.MM.YYYY')}
-                        </Undertekst>
-                    )}
-
                     <Undertittel tag="h3" className="SearchResultsItemDetails__title">
                         {stilling.title}
                     </Undertittel>
@@ -86,6 +80,11 @@ export default function SearchResultsItemDetails({stilling}) {
                     {location && (
                         <Normaltekst className="SearchResultsItemDetails__location">
                             {location}
+                        </Normaltekst>
+                    )}
+                    {stilling.published && (
+                        <Normaltekst className="SearchResultsItemDetails__published">
+                           Publisert: {formatISOString(stilling.published, 'DD.MM.YYYY')}
                         </Normaltekst>
                     )}
                     <div className="SearchResultsItemDetails__applicationdue-wrapper">
