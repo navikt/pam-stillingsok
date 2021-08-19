@@ -23,8 +23,7 @@ function getDefaultExpandedPanels() {
     return [
         SearchCriteriaPanels.COUNTIES_PANEL,
         SearchCriteriaPanels.COUNTRIES_PANEL,
-        SearchCriteriaPanels.OCCUPATIONS_PANEL,
-        SearchCriteriaPanels.PUBLISHED_PANEL
+        SearchCriteriaPanels.OCCUPATIONS_PANEL
     ];
 }
 
