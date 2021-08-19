@@ -161,12 +161,12 @@ const Stilling = ({cachedStilling, error, getStilling, isFetchingStilling, match
                                         <h1 className="Stilling__h1">
                                             {cachedStilling.title}
                                         </h1>
-                                        <h2 className="Stilling__employer-and-location">
+                                        <p className="Stilling__employer-and-location">
                                             {commaSeparate(getEmployer(cachedStilling), getWorkLocation(
                                                 cachedStilling.properties.location,
                                                 cachedStilling.locationList
                                             ))}
-                                        </h2>
+                                        </p>
                                     </React.Fragment>
                                 )}
                                 {!isFetchingStilling && stilling && (
@@ -174,12 +174,12 @@ const Stilling = ({cachedStilling, error, getStilling, isFetchingStilling, match
                                         <h1 className="Stilling__h1">
                                             {stilling._source.title}
                                         </h1>
-                                        <h2 className="Stilling__employer-and-location">
+                                        <p className="Stilling__employer-and-location">
                                             {commaSeparate(getEmployer(stilling._source), getWorkLocation(
                                                 stilling._source.properties.location,
                                                 stilling._source.locationList
                                             ))}
-                                        </h2>
+                                        </p>
                                     </React.Fragment>
                                 )}
                                 {(stilling === undefined || isFetchingStilling) && (
