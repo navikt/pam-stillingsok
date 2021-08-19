@@ -114,7 +114,7 @@ const Search = ({
                                                     return resetSearch();
                                                 }}
                                             >
-                                                Nullstill kriterier
+                                                Nullstill søk
                                             </Knapp>
                                         </div>
                                         <AdStatisticsLink/>
