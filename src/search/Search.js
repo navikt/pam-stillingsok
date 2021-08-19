@@ -68,6 +68,15 @@ const Search = ({
             <a id="main-content" tabIndex="-1" />
             <FavouriteAlertStripe/>
             <SavedSearchAlertStripe/>
+            <div className="PageHeader PageHeader--no-mb">
+                <div className="PageHeader__container">
+                    <Row className="PageHeader__row">
+                        <Column xs="12">
+                            <h1 className="PageHeader__title">Ledige stillinger</h1>
+                        </Column>
+                    </Row>
+                </div>
+            </div>
             <ShowResultsButton/>
 
             <Container className="Search__main">
@@ -82,13 +91,6 @@ const Search = ({
                         <Row>
                             <Column xs="12" md="4">
                                 <div className="Search__main__left">
-
-                                    <div className="Search__main__left__save-search">
-                                        <SaveSearchButton/>
-                                        {(isAuthenticated === authenticationEnum.IS_AUTHENTICATED && user) && (
-                                            <SavedSearchesExpandButton/>
-                                        )}
-                                    </div>
                                     <div id="sok">
                                         <form
                                             action={CONTEXT_PATH}
@@ -96,7 +98,15 @@ const Search = ({
                                             className="no-print"
                                         >
                                             <SearchBox/>
-                                            <AdStatisticsLink/>
+                                            <Counties/>
+                                            <Occupations/>
+                                            <Published/>
+                                            <Extent/>
+                                            <EngagementType/>
+                                            <Sector/>
+                                        </form>
+                                        <div className="Search__main__left__save-search">
+                                            <SaveSearchButton/>
                                             <Knapp
                                                 className="Search__nullstill"
                                                 onClick={() => {
@@ -106,13 +116,8 @@ const Search = ({
                                             >
                                                 Nullstill kriterier
                                             </Knapp>
-                                            <Published/>
-                                            <Occupations/>
-                                            <Counties/>
-                                            <Extent/>
-                                            <EngagementType/>
-                                            <Sector/>
-                                        </form>
+                                        </div>
+                                        <AdStatisticsLink/>
                                     </div>
                                 </div>
                             </Column>
@@ -121,7 +126,6 @@ const Search = ({
                                     <div className="Search__main__center__header">
                                         <div className="Search__main__center__header__left">
                                             <SearchResultCount/>
-                                            <CurrentSavedSearch/>
                                         </div>
                                         <div className="Search__main__center__header__right">
                                             <Sorting/>

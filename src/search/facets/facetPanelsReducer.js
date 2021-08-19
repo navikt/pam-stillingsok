@@ -21,13 +21,10 @@ function getDefaultExpandedPanels() {
         return [];
     }
     return [
-        SearchCriteriaPanels.ENGAGEMENT_TYPE_PANEL,
-        SearchCriteriaPanels.EXTENT_PANEL,
         SearchCriteriaPanels.COUNTIES_PANEL,
         SearchCriteriaPanels.COUNTRIES_PANEL,
         SearchCriteriaPanels.OCCUPATIONS_PANEL,
-        SearchCriteriaPanels.PUBLISHED_PANEL,
-        SearchCriteriaPanels.SECTOR_PANEL
+        SearchCriteriaPanels.PUBLISHED_PANEL
     ];
 }
 

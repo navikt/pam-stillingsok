@@ -119,6 +119,7 @@ const Header = ({
         if (validerNavigasjon && !validerNavigasjon.redirectTillates()) {
             validerNavigasjon.redirectForhindretCallback(url);
         }
+        setShowMobileMenu(false);
     };
 
     return (

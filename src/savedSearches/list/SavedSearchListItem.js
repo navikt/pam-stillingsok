@@ -60,9 +60,9 @@ class SavedSearchListItem extends React.Component {
                                 </Link>
                             </div>
                             {isValidISOString(savedSearch.updated) && (
-                                <Undertekst className="SavedSearchListItem__created">
-                                Sist endret: {formatISOString(savedSearch.updated, 'DD.MM.YYYY')}
-                                </Undertekst>
+                                <Normaltekst className="SavedSearchListItem__created">
+                                    Sist endret: {formatISOString(savedSearch.updated, 'DD.MM.YYYY')}
+                                </Normaltekst>
                             )}
                         </div>
                         {savedSearch.notifyType === NotifyTypeEnum.EMAIL ? (

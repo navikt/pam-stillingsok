@@ -1,25 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Element } from 'nav-frontend-typografi';
 import './SearchResultCount.less';
 
 function SearchResultCount({ searchResult }) {
     if (searchResult) {
-        const annonserWord = searchResult.total.value > 1 ? 'annonser' : 'annonse';
+        const annonserWord = searchResult.total.value === 1 ? 'annonse' : 'annonser';
+        const stillingerWord = searchResult.positioncount === 1 ? 'stilling' : 'stillinger';
+
         return (
-            <div className="SearchResultCount">
-                <Element className="SearchResultCount__label">Antall stillinger:</Element>
-                <span
-                    className="SearchResultCount__h3"
-                    aria-live="polite"
-                >
-                    <span className="SearchResultCount__h3__numberOfPositions">{searchResult.positioncount}</span>
-                    {searchResult.total.value > 0 && (
-                        <span className="SearchResultCount__h3__count">({searchResult.total.value} {annonserWord})</span>
-                    )}
-                </span>
-            </div>
+            <h2
+                className="SearchResultCount__h3"
+                aria-live="polite"
+            >
+                {searchResult.total.value === 0 ? (
+                    "Ingen treff"
+                ) : (
+                    `Viser ${searchResult.positioncount} ${stillingerWord} i ${searchResult.total.value} ${annonserWord}`
+                )}
+
+            </h2>
         );
     }
 

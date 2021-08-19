@@ -31,13 +31,16 @@ class SearchBox extends React.Component {
     render() {
         return (
             <div>
+                <h2 className="SearchBox__h2">
+                    Søk blant ledige stillinger
+                </h2>
                 <div className="SearchBox">
                     <Typeahead
                         id="search-form-fritekst-input"
                         name="q"
                         autoComplete="off"
                         ariaLabel="Søk"
-                        placeholder={`Søk etter ledige stillinger`}
+                        placeholder="Søk"
                         onSelect={this.onTypeAheadSuggestionSelected}
                         onChange={this.onTypeAheadValueChange}
                         suggestions={this.props.suggestions}

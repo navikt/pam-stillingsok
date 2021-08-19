@@ -34,6 +34,7 @@ class Facet extends React.Component {
                 tittel={toFacetTitleWithCount(title, count.length)}
                 className="Facet ekspanderbartPanel--green"
                 onClick={this.onPanelClick}
+                tag="h2"
                 apen={expandedFacetPanels.includes(panelId)}
             >
                 <div
