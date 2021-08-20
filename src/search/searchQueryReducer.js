@@ -10,9 +10,6 @@ import { decodeUrl, parseQueryString, stringifyQueryObject } from '../utils';
 import { PublishedLabelsEnum } from './facets/Published';
 import { LOAD_MORE, PAGE_SIZE, RESET_SEARCH, SEARCH } from './searchReducer';
 
-
-const LATEST_QUERY_STRING_KEY = 'latestQueryString';
-
 export const RESTORE_STATE_FROM_URL_BEGIN = 'RESTORE_STATE_FROM_URL_BEGIN';
 export const RESTORE_STATE_FROM_URL = 'RESTORE_STATE_FROM_URL';
 export const RESET_PAGINATION = 'RESET_PAGINATION';
@@ -358,31 +355,12 @@ export function isSearchQueryEmpty(searchQuery) {
 }
 
 /**
- * Vi lagrer queryString til sessionStorage, slik at brukeren
- * skal kunne navigere vekk fra stillingssøket uten å miste det siste foretatte søket.
- * For ekspempel kan en bruker klikke seg videre til en annonse, og deretter åpne en lenke til f.eks. Finn.no.
- * Når bruker kommer tilbake til annonsesiden, kan han eller hun velge å trykke på "Til ledige stillinger" i stedet for
- * tilbakeknappen i browseren, det er da man trenger queryString fra sessionStorage.
- */
-export function getLastSearchQueryFromSessionStorage() {
-    const queryString = sessionStorage.getItem(LATEST_QUERY_STRING_KEY);
-
-    if(queryString && queryString.startsWith('?')) {
-        return queryString
-    }
-    return '';
-}
-
-/**
  * Når bruker gjør endinger i søket, så må vi oppdatere url'en i nettleserens adressefelt.
- * Vi lagrer også search query i sessionStorage
- * @see getLastSearchQueryFromSessionStorage
  */
 function* synchronizeBrowserUrl() {
     const state = yield select();
     const browserSearchQuery = stringifyQueryObject(toBrowserSearchQuery(state.searchQuery));
     window.history.replaceState({}, '', CONTEXT_PATH + browserSearchQuery);
-    sessionStorage.setItem(LATEST_QUERY_STRING_KEY, browserSearchQuery);
 }
 
 /**
@@ -390,14 +368,7 @@ function* synchronizeBrowserUrl() {
  */
 function* restoreStateFromBrowserUrl() {
     const decodedUrl = decodeUrl(document.location.search);
-
     yield put({ type: RESTORE_STATE_FROM_URL, query: parseQueryString(decodedUrl) });
-
-    // Lagre det gjennopprettede søket i session storage
-    const state = yield select();
-    const browserSearchQuery = stringifyQueryObject(toBrowserSearchQuery(state.searchQuery));
-
-    sessionStorage.setItem(LATEST_QUERY_STRING_KEY, browserSearchQuery);
 }
 
 export const searchQuerySaga = function* saga() {

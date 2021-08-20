@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { FETCH_IS_AUTHENTICATED, HANDLE_CALLBACK_AFTER_LOGIN } from './authentication/authenticationReducer';
 import NotAuthenticatedModal from './authentication/NotAuthenticatedModal';
-import BackLinkManager from './backLink/BackLinkManager';
 import TopMenu from './topMenu/TopMenu';
 import Error from './error/Error';
 import { CONTEXT_PATH } from './fasitProperties';
@@ -29,33 +28,31 @@ class Application extends React.Component {
     render() {
         return (
             <BrowserRouter>
-                <BackLinkManager>
-                    <BrowserSupportInfo tillatLukking={true} />
-                    <Error />
-                    <Switch>
-                        <Route component={TopMenu}/>
-                    </Switch>
-                    <Switch>
-                        <Route exact path={CONTEXT_PATH} component={SearchPage}/>
-                        <Route path={`${CONTEXT_PATH}/stilling/:uuid`} component={StillingPage} />
-                        <Route path={`${CONTEXT_PATH}/stilling`} component={StillingPage} />
-                        <Route path={`${CONTEXT_PATH}/intern/:uuid`} component={InternalStilling} />
-                        <Route path={`${CONTEXT_PATH}/intern`} component={InternalStilling} />
-                        <Route path={`${CONTEXT_PATH}/favoritter`} component={Favourites} />
-                        <Route path={`${CONTEXT_PATH}/lagrede-sok`} component={SavedSearches} />
-                        <Route path={`${CONTEXT_PATH}/rapporter-annonse`} component={RapporterAnnonse} />
-                        <Route path="*" component={SearchPage}/>
-                    </Switch>
+                <BrowserSupportInfo tillatLukking={true} />
+                <Error />
+                <Switch>
+                    <Route component={TopMenu}/>
+                </Switch>
+                <Switch>
+                    <Route exact path={CONTEXT_PATH} component={SearchPage}/>
+                    <Route path={`${CONTEXT_PATH}/stilling/:uuid`} component={StillingPage} />
+                    <Route path={`${CONTEXT_PATH}/stilling`} component={StillingPage} />
+                    <Route path={`${CONTEXT_PATH}/intern/:uuid`} component={InternalStilling} />
+                    <Route path={`${CONTEXT_PATH}/intern`} component={InternalStilling} />
+                    <Route path={`${CONTEXT_PATH}/favoritter`} component={Favourites} />
+                    <Route path={`${CONTEXT_PATH}/lagrede-sok`} component={SavedSearches} />
+                    <Route path={`${CONTEXT_PATH}/rapporter-annonse`} component={RapporterAnnonse} />
+                    <Route path="*" component={SearchPage}/>
+                </Switch>
 
-                    {this.props.termsOfUseModalIsVisible && (
-                        <TermsOfUse />
-                    )}
+                {this.props.termsOfUseModalIsVisible && (
+                    <TermsOfUse />
+                )}
 
-                    {this.props.authenticationRequiredModalIsVisible && (
-                        <NotAuthenticatedModal />
-                    )}
-                    <UserAlertStripe/>
-                </BackLinkManager>
+                {this.props.authenticationRequiredModalIsVisible && (
+                    <NotAuthenticatedModal />
+                )}
+                <UserAlertStripe/>
             </BrowserRouter>
         );
     }
