@@ -40,7 +40,7 @@ function commaSeparate(...strings) {
     return onlyStrings.join(', ');
 }
 
-const Stilling = ({cachedStilling, error, getStilling, isFetchingStilling, match, stilling, resetStilling }) => {
+const Stilling = ({error, getStilling, isFetchingStilling, match, stilling, resetStilling }) => {
 
     useScrollToTop();
 
@@ -134,19 +134,6 @@ const Stilling = ({cachedStilling, error, getStilling, isFetchingStilling, match
                                 {!isFetchingStilling && stilling && stilling._source.status !== 'ACTIVE' && (
                                     <Expired/>
                                 )}
-                                {isFetchingStilling && cachedStilling && (
-                                    <React.Fragment>
-                                        <h1 className="Stilling__h1">
-                                            {cachedStilling.title}
-                                        </h1>
-                                        <p className="Stilling__employer-and-location">
-                                            {commaSeparate(getEmployer(cachedStilling), getWorkLocation(
-                                                cachedStilling.properties.location,
-                                                cachedStilling.locationList
-                                            ))}
-                                        </p>
-                                    </React.Fragment>
-                                )}
                                 {!isFetchingStilling && stilling && (
                                     <React.Fragment>
                                         <h1 className="Stilling__h1">
@@ -190,9 +177,6 @@ const Stilling = ({cachedStilling, error, getStilling, isFetchingStilling, match
                         </Column>
                         <Column xs="12" md="5" lg="4">
                             <div className="Stilling__buttons">
-                                {isFetchingStilling && cachedStilling && (
-                                    <ToggleFavouriteButton uuid={cachedStilling.uuid}/>
-                                )}
                                 {!isFetchingStilling && stilling && (
                                     <ToggleFavouriteButton uuid={stilling._id}/>
                                 )}
@@ -231,7 +215,6 @@ const Stilling = ({cachedStilling, error, getStilling, isFetchingStilling, match
 
 Stilling.defaultProps = {
     stilling: undefined,
-    cachedStilling: undefined,
     isFetchingStilling: false,
     error: undefined,
     match: {params: {}}
@@ -246,9 +229,6 @@ Stilling.propTypes = {
                 adtext: PropTypes.string
             })
         })
-    }),
-    cachedStilling: PropTypes.shape({
-        title: PropTypes.string
     }),
     resetStilling: PropTypes.func.isRequired,
     getStilling: PropTypes.func.isRequired,
@@ -266,7 +246,6 @@ Stilling.propTypes = {
 const mapStateToProps = (state) => ({
     isFetchingStilling: state.stilling.isFetchingStilling,
     stilling: state.stilling.stilling,
-    cachedStilling: state.stilling.cachedStilling,
     error: state.stilling.error
 });
 
