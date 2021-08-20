@@ -14,7 +14,6 @@ import { unknownFacetsSaga } from './search/facets/unknownFacetsReducer';
 import userReducer, { userSaga } from './user/userReducer';
 import favouritesReducer, { favouritesSaga } from './favourites/favouritesReducer';
 import savedSearchAlertStripeReducer, { savedSearchAlertStripeSaga } from './savedSearches/alertstripe/savedSearchAlertStripeReducer';
-import savedSearchExpandReducer from './savedSearches/expand/savedSearchExpandReducer';
 import savedSearchFormReducer, { savedSearchFormSaga } from './savedSearches/form/savedSearchFormReducer';
 import savedSearchesReducer, { savedSearchesSaga } from './savedSearches/savedSearchesReducer';
 import facetPanelsReducer, {facetPanelsSaga} from './search/facets/facetPanelsReducer';
@@ -36,7 +35,6 @@ export const store = createStore(combineReducers({
     savedSearches: savedSearchesReducer,
     savedSearchForm: savedSearchFormReducer,
     savedSearchAlertStripe: savedSearchAlertStripeReducer,
-    savedSearchExpand: savedSearchExpandReducer,
     search: searchReducer,
     searchBox: searchBoxReducer,
     searchQuery: searchQueryReducer,

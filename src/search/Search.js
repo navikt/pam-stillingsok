@@ -3,12 +3,9 @@ import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import { Knapp } from '@navikt/arbeidsplassen-knapper';
-import {authenticationEnum} from '../authentication/authenticationReducer';
 import {CONTEXT_PATH, STILLINGSOK_URL} from '../fasitProperties';
 import FavouriteAlertStripe from '../favourites/alertstripe/FavouriteAlertStripe';
 import SavedSearchAlertStripe from '../savedSearches/alertstripe/SavedSearchAlertStripe';
-import CurrentSavedSearch from '../savedSearches/CurrentSavedSearch';
-import SavedSearchesExpandButton from '../savedSearches/expand/SavedSearchesExpandButton';
 import SavedSearchForm from '../savedSearches/form/SavedSearchForm';
 import SaveSearchButton from '../savedSearches/SaveSearchButton';
 import {RESTORE_STATE_FROM_URL_BEGIN} from './searchQueryReducer';
@@ -169,7 +166,6 @@ const mapStateToProps = (state) => ({
     isSearching: state.search.isSearching,
     isFetchingFavourites: state.favourites.isFetchingFavourites,
     savedSearches: state.savedSearches.savedSearches,
-    isSavedSearchesExpanded: state.savedSearchExpand.isSavedSearchesExpanded,
     isAuthenticated: state.authentication.isAuthenticated,
     user: state.user.user,
     searchFailed: state.error.searchFailed
