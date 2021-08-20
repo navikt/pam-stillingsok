@@ -128,28 +128,6 @@ const Stilling = ({cachedStilling, error, getStilling, isFetchingStilling, match
 
             {!error && (
                 <Container>
-
-                    {/*<Row>
-                        <Column xs="12">
-                            <div className="Stilling__header">
-                                <div className="Stilling__buttons">
-                                    {isFetchingStilling && cachedStilling && (
-                                        <ToggleFavouriteButton uuid={cachedStilling.uuid}/>
-                                    )}
-                                    {!isFetchingStilling && stilling && (
-                                        <ToggleFavouriteButton uuid={stilling._id}/>
-                                    )}
-                                    <Flatknapp
-                                        mini
-                                        className="Stilling__print"
-                                        onClick={onPrintClick}
-                                    >
-                                        Skriv ut
-                                    </Flatknapp>
-                                </div>
-                            </div>
-                        </Column>
-                    </Row>*/}
                     <Row className="Stilling__row">
                         <Column xs="12" md="7" lg="8">
                             <div className="Stilling__left">
