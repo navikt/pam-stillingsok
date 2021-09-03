@@ -47,7 +47,7 @@
     "request-promise": "^4.2.6",
     "ua-parser-js": "^0.7.28",
     "universal-cookie": "^4.0.4",
-    "unleash-client": "^3.9.1",
+    "unleash-client": "^3.10.0",
     "whatwg-fetch": "^2.0.4"
   },
   "devDependencies": {
