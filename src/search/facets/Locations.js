@@ -111,7 +111,28 @@ class Locations extends React.Component {
                         )}
                     </div>
                 ))}
-
+                <Checkbox
+                    className={subLocation.count === 0 ? 'Facet__zero__count' : ''}
+                    name="remote"
+                    key={subLocation.key}
+                    label="Hybridkontor"
+                    aria-label={`Hybridkontor. Antall stillinger (${subLocation.count})`}
+                    value={subLocation.key}
+                    onChange={this.onCheckboxClick(subLocation.key, subLocation.type)}
+                    checked={checkedMunicipals.includes(subLocation.key) || checkedCountries.includes(subLocation.key)}
+                >
+                </Checkbox>
+                <Checkbox
+                    className={subLocation.count === 0 ? 'Facet__zero__count' : ''}
+                    name="remote"
+                    key={subLocation.key}
+                    label="Kun hjemmekontor"
+                    aria-label={`Kun hjemmekontor. Antall stillinger (${subLocation.count})`}
+                    value={subLocation.key}
+                    onChange={this.onCheckboxClick(subLocation.key, subLocation.type)}
+                    checked={checkedMunicipals.includes(subLocation.key) || checkedCountries.includes(subLocation.key)}
+                >
+                </Checkbox>
                 <UnknownFacetValues
                     splitLocationNameOnDot={true}
                     namePrefix="counties"
