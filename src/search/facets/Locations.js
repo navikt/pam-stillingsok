@@ -7,15 +7,17 @@ import {SearchCriteriaPanels} from './facetPanelsReducer';
 import {
     ADD_COUNTRY,
     ADD_COUNTY,
-    ADD_MUNICIPAL,
+    ADD_MUNICIPAL, ADD_REMOTE,
     REMOVE_COUNTRY,
     REMOVE_COUNTY,
-    REMOVE_MUNICIPAL, SET_INTERNATIONAL
+    REMOVE_MUNICIPAL, REMOVE_REMOTE, SET_INTERNATIONAL
 } from '../searchQueryReducer';
 import {SEARCH} from '../searchReducer';
 import './Facet.less';
 import Facet from './Facet';
 import UnknownFacetValues from './UnknownFacetValues';
+
+const remote = [{ key: "Hjemmekontor", count: 2000}, { key: "Hybridkontor", count: 2000 }];
 
 class Locations extends React.Component {
 
@@ -29,6 +31,15 @@ class Locations extends React.Component {
 
     onCheckboxClick = (key, type) => (e) => {
         this.checkUncheckLocation(key, type, e.target.checked);
+    };
+
+    onRemoteClick = (e) => {
+        if (e.target.checked) {
+            this.props.checkRemote(e.target.value);
+        } else {
+            this.props.unCheckRemote(e.target.value);
+        }
+        this.props.search();
     };
 
     checkUncheckLocation(key, type, checked) {
@@ -56,7 +67,7 @@ class Locations extends React.Component {
 
     render() {
         const {
-            locations, checkedCounties, checkedMunicipals, checkedCountries, deprecatedCounties,
+            locations, checkedCounties, checkedMunicipals, checkedCountries, checkedRemote, deprecatedCounties,
             international, deprecatedMunicipals, deprecatedCountries
         } = this.props;
 
@@ -112,25 +123,23 @@ class Locations extends React.Component {
                     </div>
                 ))}
                 <Checkbox
-                    className={subLocation.count === 0 ? 'Facet__zero__count' : ''}
+                    className={remote[1].count === 0 ? 'Facet__zero__count' : ''}
                     name="remote"
-                    key={subLocation.key}
                     label="Hybridkontor"
-                    aria-label={`Hybridkontor. Antall stillinger (${subLocation.count})`}
-                    value={subLocation.key}
-                    onChange={this.onCheckboxClick(subLocation.key, subLocation.type)}
-                    checked={checkedMunicipals.includes(subLocation.key) || checkedCountries.includes(subLocation.key)}
+                    aria-label={`Hybridkontor. Antall stillinger (${remote[1].count})`}
+                    value={remote[1].key}
+                    onChange={this.onRemoteClick}
+                    checked={checkedRemote.includes(remote[1].key)}
                 >
                 </Checkbox>
                 <Checkbox
-                    className={subLocation.count === 0 ? 'Facet__zero__count' : ''}
+                    className={remote[0].count === 0 ? 'Facet__zero__count' : ''}
                     name="remote"
-                    key={subLocation.key}
                     label="Kun hjemmekontor"
-                    aria-label={`Kun hjemmekontor. Antall stillinger (${subLocation.count})`}
-                    value={subLocation.key}
-                    onChange={this.onCheckboxClick(subLocation.key, subLocation.type)}
-                    checked={checkedMunicipals.includes(subLocation.key) || checkedCountries.includes(subLocation.key)}
+                    aria-label={`Kun hjemmekontor. Antall stillinger (${remote[0].count})`}
+                    value={remote[0].key}
+                    onChange={this.onRemoteClick}
+                    checked={checkedRemote.includes(remote[0].key)}
                 >
                 </Checkbox>
                 <UnknownFacetValues
@@ -159,6 +168,7 @@ Locations.propTypes = {
     checkedCountries: PropTypes.arrayOf(PropTypes.string).isRequired,
     checkedCounties: PropTypes.arrayOf(PropTypes.string).isRequired,
     checkedMunicipals: PropTypes.arrayOf(PropTypes.string).isRequired,
+    checkedRemote: PropTypes.arrayOf(PropTypes.string).isRequired,
     deprecatedCounties: PropTypes.arrayOf(PropTypes.string).isRequired,
     deprecatedMunicipals: PropTypes.arrayOf(PropTypes.string).isRequired,
     deprecatedCountries: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -177,6 +187,7 @@ const mapStateToProps = (state) => ({
     checkedCountries: state.searchQuery.countries,
     checkedCounties: state.searchQuery.counties,
     checkedMunicipals: state.searchQuery.municipals,
+    checkedRemote: state.searchQuery.remote,
     deprecatedCounties: state.unknownFacets.unknownCounties,
     deprecatedMunicipals: state.unknownFacets.unknownMunicipals,
     deprecatedCountries: state.unknownFacets.unknownCountries,
@@ -191,6 +202,8 @@ const mapDispatchToProps = (dispatch) => ({
     checkCountries: (value) => dispatch({type: ADD_COUNTRY, value}),
     uncheckCountries: (value) => dispatch({type: REMOVE_COUNTRY, value}),
     setInternational: (value) => dispatch({type: SET_INTERNATIONAL, value}),
+    checkRemote: (value) => dispatch({type: ADD_REMOTE, value}),
+    unCheckRemote: (value) => dispatch({type: REMOVE_REMOTE, value}),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Locations);

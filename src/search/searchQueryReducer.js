@@ -27,6 +27,8 @@ export const ADD_ENGAGEMENT_TYPE = 'ADD_ENGAGEMENT_TYPE';
 export const REMOVE_ENGAGEMENT_TYPE = 'REMOVE_ENGAGEMENT_TYPE';
 export const ADD_EXTENT = 'ADD_EXTENT';
 export const REMOVE_EXTENT = 'REMOVE_EXTENT';
+export const ADD_REMOTE = 'ADD_REMOTE';
+export const REMOVE_REMOTE = 'REMOVE_REMOTE';
 export const ADD_SECTOR = 'ADD_SECTOR';
 export const REMOVE_SECTOR = 'REMOVE_SECTOR';
 export const SET_PUBLISHED = 'SET_PUBLISHED';
@@ -43,6 +45,7 @@ const initialState = {
     countries: [],
     engagementType: [],
     extent: [],
+    remote: [],
     municipals: [],
     occupationFirstLevels: [],
     occupationSecondLevels: [],
@@ -70,6 +73,7 @@ export default function searchQueryReducer(state = initialState, action) {
                 countries: action.query.countries || [],
                 engagementType: action.query.engagementType || [],
                 extent: action.query.extent || [],
+                remote: action.query.remote || [],
                 municipals: action.query.municipals || [],
                 occupationFirstLevels: action.query.occupationFirstLevels || [],
                 occupationSecondLevels: action.query.occupationSecondLevels || [],
@@ -89,6 +93,7 @@ export default function searchQueryReducer(state = initialState, action) {
                 countries: action.query.countries || [],
                 engagementType: action.query.engagementType || [],
                 extent: action.query.extent || [],
+                remote: action.query.remote || [],
                 municipals: action.query.municipals || [],
                 occupationFirstLevels: action.query.occupationFirstLevels || [],
                 occupationSecondLevels: action.query.occupationSecondLevels || [],
@@ -179,6 +184,16 @@ export default function searchQueryReducer(state = initialState, action) {
             return {
                 ...state,
                 extent: state.extent.filter((obj) => (obj !== action.value))
+            };
+        case ADD_REMOTE:
+            return {
+                ...state,
+                remote: [...state.remote, action.value]
+            };
+        case REMOVE_REMOTE:
+            return {
+                ...state,
+                remote: state.remote.filter((obj) => (obj !== action.value))
             };
         case ADD_SECTOR:
             return {
@@ -335,6 +350,7 @@ export function toReadableSearchQuery(searchQuery) {
     if (counties.length > 0) title.push(counties.map((c) => (fixLocationName(c))).join(', '));
     if (searchQuery.municipals.length > 0) title.push(searchQuery.municipals.map((m) => (fixLocationName(m.split('.')[1]))).join(', '));
     if (searchQuery.extent.length > 0) title.push(searchQuery.extent.join(', '));
+    if (searchQuery.remote.length > 0) title.push(searchQuery.remote.join(', '));
     if (searchQuery.engagementType.length > 0) title.push(searchQuery.engagementType.join(', '));
     if (searchQuery.sector.length > 0) title.push(searchQuery.sector.join(', '));
     if (searchQuery.countries.length > 0) title.push(searchQuery.countries.map((c) => (fixLocationName(c))).join(', '));
