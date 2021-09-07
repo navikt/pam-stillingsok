@@ -17,8 +17,6 @@ import './Facet.less';
 import Facet from './Facet';
 import UnknownFacetValues from './UnknownFacetValues';
 
-const remote = [{ key: "Hjemmekontor", count: 2000}, { key: "Hybridkontor", count: 2000 }];
-
 class Locations extends React.Component {
 
     onZeroCountFacetClick = (countries, counties, municipals) => (e) => {
@@ -67,7 +65,7 @@ class Locations extends React.Component {
 
     render() {
         const {
-            locations, checkedCounties, checkedMunicipals, checkedCountries, checkedRemote, deprecatedCounties,
+            locations, remoteFacets, checkedCounties, checkedMunicipals, checkedCountries, checkedRemote, deprecatedCounties,
             international, deprecatedMunicipals, deprecatedCountries
         } = this.props;
 
@@ -122,26 +120,22 @@ class Locations extends React.Component {
                         )}
                     </div>
                 ))}
-                <Checkbox
-                    className={remote[1].count === 0 ? 'Facet__zero__count' : ''}
-                    name="remote"
-                    label="Hybridkontor"
-                    aria-label={`Hybridkontor. Antall stillinger (${remote[1].count})`}
-                    value={remote[1].key}
-                    onChange={this.onRemoteClick}
-                    checked={checkedRemote.includes(remote[1].key)}
-                >
-                </Checkbox>
-                <Checkbox
-                    className={remote[0].count === 0 ? 'Facet__zero__count' : ''}
-                    name="remote"
-                    label="Kun hjemmekontor"
-                    aria-label={`Kun hjemmekontor. Antall stillinger (${remote[0].count})`}
-                    value={remote[0].key}
-                    onChange={this.onRemoteClick}
-                    checked={checkedRemote.includes(remote[0].key)}
-                >
-                </Checkbox>
+
+                <div className="RemoteFacet">
+                    {remoteFacets && remoteFacets.map((remote) => (
+                        <Checkbox
+                            className={remote.count === 0 ? 'Facet__zero__count' : ''}
+                            name="remote"
+                            key={remote.key}
+                            label={`${remote.key === "Hjemmekontor" ? "Kun hjemmekontor": remote.key} (${remote.count})`}
+                            aria-label={`${remote.key === "Hjemmekontor" ? "Kun hjemmekontor": remote.key}. Antall stillinger (${remote.count})`}
+                            value={remote.key}
+                            onChange={this.onRemoteClick}
+                            checked={checkedRemote.includes(remote.key)}
+                        />
+                    ))}
+                </div>
+
                 <UnknownFacetValues
                     splitLocationNameOnDot={true}
                     namePrefix="counties"
@@ -165,6 +159,10 @@ Locations.propTypes = {
             count: PropTypes.number
         }))
     })).isRequired,
+    remoteFacets: PropTypes.arrayOf(PropTypes.shape({
+        key: PropTypes.string,
+        count: PropTypes.number
+    })).isRequired,
     checkedCountries: PropTypes.arrayOf(PropTypes.string).isRequired,
     checkedCounties: PropTypes.arrayOf(PropTypes.string).isRequired,
     checkedMunicipals: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -183,6 +181,7 @@ Locations.propTypes = {
 
 const mapStateToProps = (state) => ({
     locations: state.facets.locationFacets,
+    remoteFacets: state.facets.remoteFacets,
     international: state.searchQuery.international,
     checkedCountries: state.searchQuery.countries,
     checkedCounties: state.searchQuery.counties,

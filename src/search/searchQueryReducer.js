@@ -350,7 +350,7 @@ export function toReadableSearchQuery(searchQuery) {
     if (counties.length > 0) title.push(counties.map((c) => (fixLocationName(c))).join(', '));
     if (searchQuery.municipals.length > 0) title.push(searchQuery.municipals.map((m) => (fixLocationName(m.split('.')[1]))).join(', '));
     if (searchQuery.extent.length > 0) title.push(searchQuery.extent.join(', '));
-    if (searchQuery.remote.length > 0) title.push(searchQuery.remote.join(', '));
+    if (searchQuery.remote.length > 0) title.push(searchQuery.remote.map((it) => it === 'Hjemmekontor' ? 'Kun hjemmekontor' : it).join(', '));
     if (searchQuery.engagementType.length > 0) title.push(searchQuery.engagementType.join(', '));
     if (searchQuery.sector.length > 0) title.push(searchQuery.sector.join(', '));
     if (searchQuery.countries.length > 0) title.push(searchQuery.countries.map((c) => (fixLocationName(c))).join(', '));
