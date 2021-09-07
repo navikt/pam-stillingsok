@@ -78,7 +78,7 @@ function filterRemote(remote) {
         remote.forEach((item) => {
             filter.bool.should.push({
                 term: {
-                    remote_facet: item
+                    "properties.remote": item
                 }
             });
         });
@@ -581,6 +581,7 @@ exports.searchTemplate = (query) => {
                 filter: {
                     bool: {
                         filter: [
+                            ...filterRemote(remote),
                             filterLocation(counties, municipals, countries, international),
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
                             ...filterEngagementType(engagementType),
@@ -592,6 +593,25 @@ exports.searchTemplate = (query) => {
                 aggs: {
                     values: {
                         terms: {field: 'extent_facet'}
+                    }
+                }
+            },
+            remote: {
+                filter: {
+                    bool: {
+                        filter: [
+                            ...filterExtent(extent),
+                            filterLocation(counties, municipals, countries, international),
+                            filterOccupation(occupationFirstLevels, occupationSecondLevels),
+                            ...filterEngagementType(engagementType),
+                            ...filterSector(sector),
+                            ...filterPublished(published)
+                        ]
+                    }
+                },
+                aggs: {
+                    values: {
+                        terms: {field: 'properties.remote'}
                     }
                 }
             },
