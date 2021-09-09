@@ -7,10 +7,10 @@ import {SearchCriteriaPanels} from './facetPanelsReducer';
 import {
     ADD_COUNTRY,
     ADD_COUNTY,
-    ADD_MUNICIPAL,
+    ADD_MUNICIPAL, ADD_REMOTE,
     REMOVE_COUNTRY,
     REMOVE_COUNTY,
-    REMOVE_MUNICIPAL, SET_INTERNATIONAL
+    REMOVE_MUNICIPAL, REMOVE_REMOTE, SET_INTERNATIONAL
 } from '../searchQueryReducer';
 import {SEARCH} from '../searchReducer';
 import './Facet.less';
@@ -29,6 +29,15 @@ class Locations extends React.Component {
 
     onCheckboxClick = (key, type) => (e) => {
         this.checkUncheckLocation(key, type, e.target.checked);
+    };
+
+    onRemoteClick = (e) => {
+        if (e.target.checked) {
+            this.props.checkRemote(e.target.value);
+        } else {
+            this.props.unCheckRemote(e.target.value);
+        }
+        this.props.search();
     };
 
     checkUncheckLocation(key, type, checked) {
@@ -56,7 +65,7 @@ class Locations extends React.Component {
 
     render() {
         const {
-            locations, checkedCounties, checkedMunicipals, checkedCountries, deprecatedCounties,
+            locations, remoteFacets, checkedCounties, checkedMunicipals, checkedCountries, checkedRemote, deprecatedCounties,
             international, deprecatedMunicipals, deprecatedCountries
         } = this.props;
 
@@ -112,6 +121,21 @@ class Locations extends React.Component {
                     </div>
                 ))}
 
+                <div className="RemoteFacet">
+                    {remoteFacets && remoteFacets.map((remote) => (
+                        <Checkbox
+                            className={remote.count === 0 ? 'Facet__zero__count' : ''}
+                            name="remote"
+                            key={remote.key}
+                            label={`${remote.key === "Hjemmekontor" ? "Kun hjemmekontor": remote.key} (${remote.count})`}
+                            aria-label={`${remote.key === "Hjemmekontor" ? "Kun hjemmekontor": remote.key}. Antall stillinger (${remote.count})`}
+                            value={remote.key}
+                            onChange={this.onRemoteClick}
+                            checked={checkedRemote.includes(remote.key)}
+                        />
+                    ))}
+                </div>
+
                 <UnknownFacetValues
                     splitLocationNameOnDot={true}
                     namePrefix="counties"
@@ -135,9 +159,14 @@ Locations.propTypes = {
             count: PropTypes.number
         }))
     })).isRequired,
+    remoteFacets: PropTypes.arrayOf(PropTypes.shape({
+        key: PropTypes.string,
+        count: PropTypes.number
+    })).isRequired,
     checkedCountries: PropTypes.arrayOf(PropTypes.string).isRequired,
     checkedCounties: PropTypes.arrayOf(PropTypes.string).isRequired,
     checkedMunicipals: PropTypes.arrayOf(PropTypes.string).isRequired,
+    checkedRemote: PropTypes.arrayOf(PropTypes.string).isRequired,
     deprecatedCounties: PropTypes.arrayOf(PropTypes.string).isRequired,
     deprecatedMunicipals: PropTypes.arrayOf(PropTypes.string).isRequired,
     deprecatedCountries: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -152,10 +181,12 @@ Locations.propTypes = {
 
 const mapStateToProps = (state) => ({
     locations: state.facets.locationFacets,
+    remoteFacets: state.facets.remoteFacets,
     international: state.searchQuery.international,
     checkedCountries: state.searchQuery.countries,
     checkedCounties: state.searchQuery.counties,
     checkedMunicipals: state.searchQuery.municipals,
+    checkedRemote: state.searchQuery.remote,
     deprecatedCounties: state.unknownFacets.unknownCounties,
     deprecatedMunicipals: state.unknownFacets.unknownMunicipals,
     deprecatedCountries: state.unknownFacets.unknownCountries,
@@ -170,6 +201,8 @@ const mapDispatchToProps = (dispatch) => ({
     checkCountries: (value) => dispatch({type: ADD_COUNTRY, value}),
     uncheckCountries: (value) => dispatch({type: REMOVE_COUNTRY, value}),
     setInternational: (value) => dispatch({type: SET_INTERNATIONAL, value}),
+    checkRemote: (value) => dispatch({type: ADD_REMOTE, value}),
+    unCheckRemote: (value) => dispatch({type: REMOVE_REMOTE, value}),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Locations);

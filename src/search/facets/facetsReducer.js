@@ -7,6 +7,7 @@ const initialState = {
     locationFacets: [],
     engagementTypeFacets: [],
     extentFacets: [],
+    remoteFacets: [],
     occupationFirstLevelFacets: [],
     occupationSecondLevelFacets: [],
     sectorFacets: [],
@@ -24,6 +25,7 @@ export default function facetsReducer(state = initialState, action) {
                 ...state,
                 locations: action.response.locations,
                 extentFacets: action.response.extent,
+                remoteFacets: buildRemoteFacets(action.response.remote),
                 sectorFacets: moveFacetToBottom(action.response.sector, 'Ikke oppgitt'),
                 engagementTypeFacets: action.response.engagementTypes,
                 publishedFacets: action.response.published,
@@ -35,6 +37,7 @@ export default function facetsReducer(state = initialState, action) {
                 ...state,
                 sectorFacets: updateCount(state.sectorFacets, action.response.sector),
                 extentFacets: updateCount(state.extentFacets, action.response.extent),
+                remoteFacets: buildRemoteFacets(action.response.remote),
                 engagementTypeFacets: updateCount(state.engagementTypeFacets, action.response.engagementTypes),
                 publishedFacets: updateCount(state.publishedFacets, action.response.published),
                 occupationFirstLevelFacets: updateCount(state.occupationFirstLevelFacets, action.response.occupationFirstLevels, 'occupationSecondLevels'),
@@ -61,6 +64,20 @@ function moveFacetToBottom(facets, facetKey) {
     });
 
     return clone;
+}
+
+function buildRemoteFacets(remote) {
+    const hybridkontor = remote && remote.find((it) => (it.key === 'Hybridkontor'));
+    const hjemmekontor = remote && remote.find((it) => (it.key === 'Hjemmekontor'));
+    const facets = [{
+        key: 'Hybridkontor',
+        count: hybridkontor ? hybridkontor.count : 0
+    }, {
+        key: 'Hjemmekontor',
+        count: hjemmekontor ? hjemmekontor.count : 0
+    }];
+
+    return facets;
 }
 
 /**

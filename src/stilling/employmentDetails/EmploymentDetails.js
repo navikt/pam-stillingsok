@@ -22,6 +22,10 @@ export default function EmploymentDetails({ stilling }) {
                         <dt key="dt">Sted:</dt>,
                         <dd key="dd">{location}</dd>
                     ]}
+                    {(properties.remote === 'Hjemmekontor' || properties.remote === 'Hybridkontor') && [
+                        <dt key="dt">Hybrid- eller hjemmekontor:</dt>,
+                        <dd key="dd">{properties.remote === 'Hjemmekontor' ? 'Kun hjemmekontor' : 'Hybrid (noe hjemme, noe på arbeidsplassen)'}</dd>
+                    ]}
                     {properties.engagementtype && [
                         <dt key="dt">Ansettelsesform:</dt>,
                         <dd key="dd">{properties.engagementtype }</dd>

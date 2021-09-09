@@ -67,6 +67,26 @@ function filterExtent(extent) {
     return filters;
 }
 
+function filterRemote(remote) {
+    const filters = [];
+    if (remote && remote.length > 0) {
+        const filter = {
+            bool: {
+                should: []
+            }
+        };
+        remote.forEach((item) => {
+            filter.bool.should.push({
+                term: {
+                    "properties.remote": item
+                }
+            });
+        });
+        filters.push(filter);
+    }
+    return filters;
+}
+
 function filterEngagementType(engagementTypes) {
     const filters = [];
     if (engagementTypes && engagementTypes.length > 0) {
@@ -431,7 +451,7 @@ function mainQueryDisjunctionTuning(q) {
 
 exports.searchTemplate = (query) => {
     const {
-        from, size, counties, countries, municipals, extent, engagementType, sector, published,
+        from, size, counties, countries, municipals, extent, remote, engagementType, sector, published,
         occupationFirstLevels, occupationSecondLevels, international
     } = query;
     let {sort, q, operator} = query;
@@ -459,6 +479,7 @@ exports.searchTemplate = (query) => {
             bool: {
                 filter: [
                     ...filterExtent(extent),
+                    ...filterRemote(remote),
                     filterLocation(counties, municipals, countries, international),
                     filterOccupation(occupationFirstLevels, occupationSecondLevels),
                     ...filterEngagementType(engagementType),
@@ -491,6 +512,7 @@ exports.searchTemplate = (query) => {
                     bool: {
                         filter: [
                             ...filterExtent(extent),
+                            ...filterRemote(remote),
                             filterLocation(counties, municipals, countries, international),
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
                             ...filterEngagementType(engagementType),
@@ -513,6 +535,7 @@ exports.searchTemplate = (query) => {
                     bool: {
                         filter: [
                             ...filterExtent(extent),
+                            ...filterRemote(remote),
                             filterLocation(counties, municipals, countries, international),
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
                             ...filterEngagementType(engagementType),
@@ -540,6 +563,7 @@ exports.searchTemplate = (query) => {
                     bool: {
                         filter: [
                             ...filterExtent(extent),
+                            ...filterRemote(remote),
                             filterLocation(counties, municipals, countries, international),
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
                             ...filterEngagementType(engagementType),
@@ -557,6 +581,7 @@ exports.searchTemplate = (query) => {
                 filter: {
                     bool: {
                         filter: [
+                            ...filterRemote(remote),
                             filterLocation(counties, municipals, countries, international),
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
                             ...filterEngagementType(engagementType),
@@ -571,11 +596,31 @@ exports.searchTemplate = (query) => {
                     }
                 }
             },
+            remote: {
+                filter: {
+                    bool: {
+                        filter: [
+                            ...filterExtent(extent),
+                            filterLocation(counties, municipals, countries, international),
+                            filterOccupation(occupationFirstLevels, occupationSecondLevels),
+                            ...filterEngagementType(engagementType),
+                            ...filterSector(sector),
+                            ...filterPublished(published)
+                        ]
+                    }
+                },
+                aggs: {
+                    values: {
+                        terms: {field: 'properties.remote'}
+                    }
+                }
+            },
             engagementType: {
                 filter: {
                     bool: {
                         filter: [
                             ...filterExtent(extent),
+                            ...filterRemote(remote),
                             filterLocation(counties, municipals, countries, international),
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
                             ...filterSector(sector),
@@ -594,6 +639,7 @@ exports.searchTemplate = (query) => {
                     bool: {
                         filter: [
                             ...filterExtent(extent),
+                            ...filterRemote(remote),
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
                             ...filterEngagementType(engagementType),
                             ...filterSector(sector),
@@ -639,6 +685,7 @@ exports.searchTemplate = (query) => {
                     bool: {
                         filter: [
                             ...filterExtent(extent),
+                            ...filterRemote(remote),
                             filterLocation(counties, municipals, countries, international),
                             ...filterEngagementType(engagementType),
                             ...filterSector(sector),
@@ -678,6 +725,7 @@ exports.searchTemplate = (query) => {
                     bool: {
                         filter: [
                             ...filterExtent(extent),
+                            ...filterRemote(remote),
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
                             ...filterEngagementType(engagementType),
                             ...filterSector(sector),
