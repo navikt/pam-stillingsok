@@ -33,9 +33,11 @@ class Locations extends React.Component {
 
     onRemoteClick = (e) => {
         if (e.target.checked) {
-            this.props.checkRemote(e.target.value);
+            this.props.checkRemote("Hjemmekontor");
+            this.props.checkRemote("Hybridkontor");
         } else {
-            this.props.unCheckRemote(e.target.value);
+            this.props.unCheckRemote("Hjemmekontor");
+            this.props.unCheckRemote("Hybridkontor");
         }
         this.props.search();
     };
