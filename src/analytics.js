@@ -11,6 +11,7 @@ import {
     ADD_MUNICIPAL,
     ADD_OCCUPATION_FIRST_LEVEL,
     ADD_OCCUPATION_SECOND_LEVEL,
+    ADD_REMOTE,
     ADD_SECTOR,
     REMOVE_COUNTRY,
     REMOVE_COUNTY,
@@ -18,6 +19,7 @@ import {
     REMOVE_EXTENT,
     REMOVE_MUNICIPAL, REMOVE_OCCUPATION_FIRST_LEVEL,
     REMOVE_OCCUPATION_SECOND_LEVEL,
+    REMOVE_REMOTE,
     REMOVE_SECTOR,
     SET_PUBLISHED,
     SET_SEARCH_STRING,
@@ -126,6 +128,10 @@ export const analyticsSaga = function* saga() {
             label = action.municipal;
         }
         trackOnce(EVENT_CATEGORY_SEARCH, 'Valgte kommune', label);
+    });
+
+    yield takeEvery([ADD_REMOTE, REMOVE_REMOTE], (action) => {
+        trackOnce(EVENT_CATEGORY_SEARCH, 'Endret søkekriterie', 'Hjemmekontor');
     });
 
     yield takeEvery(SET_PUBLISHED, (action) => {
