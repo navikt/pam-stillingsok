@@ -127,8 +127,8 @@ class Locations extends React.Component {
                             className={remote.count === 0 ? 'Facet__zero__count' : ''}
                             name="remote"
                             key={remote.key}
-                            label={`${remote.key === "Hjemmekontor" ? "Kun hjemmekontor": remote.key} (${remote.count})`}
-                            aria-label={`${remote.key === "Hjemmekontor" ? "Kun hjemmekontor": remote.key}. Antall stillinger (${remote.count})`}
+                            label={`${remote.key} (${remote.count})`}
+                            aria-label={`${remote.key}. Antall stillinger (${remote.count})`}
                             value={remote.key}
                             onChange={this.onRemoteClick}
                             checked={checkedRemote.includes(remote.key)}
