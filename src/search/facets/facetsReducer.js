@@ -69,12 +69,12 @@ function moveFacetToBottom(facets, facetKey) {
 function buildRemoteFacets(remote) {
     const hybridkontor = remote && remote.find((it) => (it.key === 'Hybridkontor'));
     const hjemmekontor = remote && remote.find((it) => (it.key === 'Hjemmekontor'));
+    const hybridkontorCount = hybridkontor ? hybridkontor.count : 0
+    const hjemmekontorCount = hjemmekontor ? hjemmekontor.count : 0
+
     const facets = [{
-        key: 'Hybridkontor',
-        count: hybridkontor ? hybridkontor.count : 0
-    }, {
         key: 'Hjemmekontor',
-        count: hjemmekontor ? hjemmekontor.count : 0
+        count: hybridkontorCount + hjemmekontorCount
     }];
 
     return facets;
