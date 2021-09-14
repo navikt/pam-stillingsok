@@ -1,8 +1,16 @@
 @import "../variables";
 
 .Stilling {
-  font-family: "Source Sans Pro", Arial, sans-serif;
-  margin-bottom: 4rem;
+  max-width: 1156px;
+  margin: 0 auto 4rem;
+  padding: 2rem 1rem;
+}
+
+.Stilling__spinner {
+  margin: 4rem auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .Stilling__row {
@@ -30,21 +38,29 @@
   }
 }
 
-.Stilling__left {
-  margin: 0 0 2rem 0;
-
-  @media (min-width: @screen-sm-min) {
-    margin: 0 4rem 2rem 0;
-  }
-
+.Stilling__flex {
   @media (min-width: @screen-md-min) {
-    margin: 0 6rem 0 0;
-  }
-
-  @media (min-width: @screen-lg-min) {
-    margin: 0 12rem 0 0;
+    display: flex;
+    flex-direction: row;
   }
 }
+
+.Stilling__left {
+  margin-bottom: 4rem;
+
+  @media (min-width: @screen-md-min) {
+    flex: 1;
+    margin-right: 6rem;
+  }
+}
+
+.Stilling__right {
+  @media (min-width: @screen-md-min) {
+    max-width: 380px;
+    width: 100%;
+  }
+}
+
 
 .Stilling__h1 {
   margin: 0 0 1rem;
@@ -94,23 +110,16 @@
 }
 
 .dl-flex {
-  @media (min-width: @screen-md-min) {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: flex-start;
-  }
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
 
   dt {
-    font-weight: 600;
     line-height: 1.5;
-    margin: 0;
-
-    @media (min-width: @screen-md-min) {
-      margin: 0 0 0.5rem 0;
-      color: @gray5;
-      font-weight: 400;
-      flex: 0 42%;
-    }
+    margin: 0 0 0.5rem 0;
+    color: @gray5;
+    font-weight: 400;
+    flex: 0 42%;
   }
 
   dd, dt {
@@ -126,12 +135,8 @@
     word-wrap: break-word;
     overflow-wrap: break-word;
     margin: 0 0 0.5rem 0;
-
-    @media (min-width: @screen-md-min) {
-      margin: 0 0 0.5rem 0;
-      flex: 0 58%;
-      max-width: 58%;
-    }
+    flex: 0 58%;
+    max-width: 58%;
   }
 }
 
