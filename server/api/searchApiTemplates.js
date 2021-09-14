@@ -1,3 +1,6 @@
+const useRemoteFilter = true;
+
+
 function mapSortByValue(value) {
     switch (value) {
         case 'expires':
@@ -69,20 +72,29 @@ function filterExtent(extent) {
 
 function filterRemote(remote) {
     const filters = [];
-    if (remote && remote.length > 0) {
-        const filter = {
-            bool: {
-                should: []
-            }
-        };
-        remote.forEach((item) => {
+
+    if (useRemoteFilter) {
+        if (remote && remote.length > 0) {
+            const filter = {
+                bool: {
+                    should: []
+                }
+            };
+            remote.forEach((item) => {
+                filter.bool.should.push({
+                    term: {
+                        "properties.remote": item
+                    }
+                });
+            });
             filter.bool.should.push({
-                term: {
-                    "properties.remote": item
+                "match": {
+                    "adtext_no": "hjemmekontor"
                 }
             });
-        });
-        filters.push(filter);
+
+            filters.push(filter);
+        }
     }
     return filters;
 }
@@ -596,25 +608,6 @@ exports.searchTemplate = (query) => {
                     }
                 }
             },
-            remote: {
-                filter: {
-                    bool: {
-                        filter: [
-                            ...filterExtent(extent),
-                            filterLocation(counties, municipals, countries, international),
-                            filterOccupation(occupationFirstLevels, occupationSecondLevels),
-                            ...filterEngagementType(engagementType),
-                            ...filterSector(sector),
-                            ...filterPublished(published)
-                        ]
-                    }
-                },
-                aggs: {
-                    values: {
-                        terms: {field: 'properties.remote'}
-                    }
-                }
-            },
             engagementType: {
                 filter: {
                     bool: {
@@ -760,6 +753,56 @@ exports.searchTemplate = (query) => {
             },
         }
     };
+
+    if (useRemoteFilter) {
+       template.aggs = {
+           ...template.aggs,
+           remote: {
+               filter: {
+                   bool: {
+                       filter: [
+                           ...filterExtent(extent),
+                           filterLocation(counties, municipals, countries, international),
+                           filterOccupation(occupationFirstLevels, occupationSecondLevels),
+                           ...filterEngagementType(engagementType),
+                           ...filterSector(sector),
+                           ...filterPublished(published)
+                       ]
+                   }
+               },
+               aggs: {
+                   "values": {
+                       "filters": {
+                           "other_bucket_key": "ikke-hjemmekontor",
+                           "filters": {
+                               "hjemmekontor": {
+                                   "bool": {
+                                       "should": [
+                                           {
+                                               "term": {
+                                                   "properties.remote": "Hjemmekontor"
+                                               }
+                                           },
+                                           {
+                                               "term": {
+                                                   "properties.remote": "Hybridkontor"
+                                               }
+                                           },
+                                           {
+                                               "match": {
+                                                   "adtext_no": "hjemmekontor"
+                                               }
+                                           }
+                                       ]
+                                   }
+                               }
+                           }
+                       }
+                   }
+               }
+           }
+       }
+    }
 
     if (sort && sort !== 'relevant') {
         template = {
