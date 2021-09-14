@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle,prefer-destructuring */
 import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
+import React, {useEffect} from 'react';
 import {Flatknapp} from '@navikt/arbeidsplassen-knapper';
 import {Column, Container, Row} from 'nav-frontend-grid';
 import getEmployer from '../../server/common/getEmployer';
@@ -8,6 +8,7 @@ import getWorkLocation from '../../server/common/getWorkLocation';
 import {CONTEXT_PATH} from '../fasitProperties';
 import FavouriteAlertStripe from '../favourites/alertstripe/FavouriteAlertStripe';
 import ToggleFavouriteButton from '../favourites/toggleFavoriteButton/ToggleFavouriteButton';
+import {parseQueryString, stringifyQueryObject} from '../utils';
 import AdDetails from './adDetails/AdDetails';
 import AdText from './adText/AdText';
 import ContactPerson from './contactPerson/ContactPerson';
@@ -16,20 +17,21 @@ import EmploymentDetails from './employmentDetails/EmploymentDetails';
 import Expired from './expired/Expired';
 import FinnAd from './finnAd/FinnAd';
 import HowToApply from './howToApply/HowToApply';
+import Loading from './loading/Loading';
 import NotFound from './notFound/NotFound';
 import HardRequirements from './requirements/HardRequirements';
 import PersonalAttributes from './requirements/PersonalAttributes';
 import SoftRequirements from './requirements/SoftRequirements';
 import SocialShare from './socialShare/SocialShare';
 import './Stilling.less';
+import {FETCH_STILLING_BEGIN, RESET_STILLING} from './stillingReducer';
 import {useScrollToTop} from '../common/hooks';
 import {sendUrlEndring} from '../common/hooks/useTrackPageview';
 import {addRobotsNoIndexMetaTag, removeRobotsMetaTag} from '../common/utils/metaRobots';
 import logAmplitudeEvent, {logAmplitudePageview} from '../amplitudeTracker';
+import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import { track } from '../analytics';
-import { fetchStilling } from '../api/api';
-import DelayedSpinner from '../common/components/DelayedSpinner';
 
 function commaSeparate(...strings) {
     const onlyStrings = strings.filter((string) => (
@@ -38,59 +40,25 @@ function commaSeparate(...strings) {
     return onlyStrings.join(', ');
 }
 
-const Stilling = ({ match }) => {
+const Stilling = ({error, getStilling, isFetchingStilling, match, stilling, resetStilling }) => {
     const uuid = match.params.uuid;
-    const [response, setResponse] = useState({data: undefined, isPending: true, error: undefined });
 
     useScrollToTop();
 
-    /**
-     * Fetch stillingen
-     */
     useEffect(() => {
-        let canceled = false;
-
-        setResponse({
-            isPending: true,
-            data: undefined,
-            error: undefined
-        });
-
-        fetchStilling(uuid).then(
-            (data) => {
-                if (!canceled) {
-                    setResponse({
-                        isPending: false,
-                        data,
-                        error: undefined
-                    });
-                }
-            },  (error) => {
-                if (!canceled) {
-                    setResponse({
-                        isPending: false,
-                        data: undefined,
-                        error
-                    });
-                }
-            }
-        );
-
+        getStilling(uuid);
         return () => {
-           canceled = true;
+            resetStilling();
         }
     }, [uuid]);
 
-     /**
-     * Track analytic events
-     */
     useEffect(() => {
-        if (response.data && response.data._source && response.data._id && response.data._source.title) {
-            document.title = response.data._source.title;
+        if (stilling && stilling._source && stilling._id && stilling._source.title) {
+            document.title = stilling._source.title;
 
             try {
-                ga('set', 'page', `${CONTEXT_PATH}/stilling/${response.data._id}`);
-                ga('set', 'title', response.data._source.title);
+                ga('set', 'page', `${CONTEXT_PATH}/stilling/${stilling._id}`);
+                ga('set', 'title', stilling._source.title);
                 ga('send', 'pageview');
                 logAmplitudePageview();
             } catch (e) {
@@ -99,37 +67,34 @@ const Stilling = ({ match }) => {
 
             try {
                 logAmplitudeEvent('Stilling visning', {
-                    title: response.data._source.title || "N/A",
-                    id: response.data._id,
-                    businessName: response.data._source.businessName || "N/A",
-                    country: response.data._source.employer.location.country || "N/A",
-                    county: response.data._source.employer.location.county || "N/A",
-                    city: response.data._source.employer.location.city || "N/A",
-                    employer: response.data._source.employer.name || "N/A",
-                    expires: response.data._source.expires || "N/A",
-                    published: response.data._source.published || "N/A"
+                    title: stilling._source.title || "N/A",
+                    id: stilling._id,
+                    businessName: stilling._source.businessName || "N/A",
+                    country: stilling._source.employer.location.country || "N/A",
+                    county: stilling._source.employer.location.county || "N/A",
+                    city: stilling._source.employer.location.city || "N/A",
+                    employer: stilling._source.employer.name || "N/A",
+                    expires: stilling._source.expires || "N/A",
+                    published: stilling._source.published || "N/A"
                 })
             } catch (e) {
                 // ignore
             }
 
-            sendUrlEndring({page: `${CONTEXT_PATH}/stilling`, source: response.data._source.source});
+            sendUrlEndring({page: `${CONTEXT_PATH}/stilling`, source: stilling._source.source});
         }
-    }, [response.data]);
+    }, [stilling]);
 
-    /**
-     * Unngå at inaktive stillinger indexeres av søkeroboter, f.eks google.
-     */
     useEffect(() => {
-        const pageNotFound = response.error && response.error.statusCode === 404;
-        const adIsNotActive = !response.isPending && response.data && response.data._source.status !== 'ACTIVE';
+        const pageNotFound = error && error.statusCode === 404;
+        const adIsNotActive = !isFetchingStilling && stilling && stilling._source.status !== 'ACTIVE';
         if (pageNotFound || adIsNotActive) {
             addRobotsNoIndexMetaTag()
         }
         return () => {
             removeRobotsMetaTag();
         }
-    }, [response.error, response.isPending, response.data]);
+    }, [error, isFetchingStilling, stilling]);
 
 
     const onPrintClick = () => {
@@ -137,110 +102,143 @@ const Stilling = ({ match }) => {
         window.print();
     };
 
-    const isFinn = response.data && response.data._source && response.data._source.source && response.data._source.source.toLowerCase() === 'finn';
+    const isFinn = stilling && stilling._source && stilling._source.source && stilling._source.source.toLowerCase() === 'finn';
 
     return (
         <div className="Stilling">
             <a id="main-content" tabIndex="-1" />
             <FavouriteAlertStripe/>
 
-            {response.isPending ? (
-                <div className="Stilling__spinner">
-                    <DelayedSpinner />
-                </div>
-            ) : (
-              <React.Fragment>
-                  {response.error ? (
-                      <React.Fragment>
-                          {response.error.statusCode === 404 ? (
-                              <React.Fragment>
-                                  <h1 className="Stilling__h1">Ikke funnet</h1>
-                                  <p>Stillingsannonsen kan være utløpt eller blitt fjernet av arbeidsgiver.</p>
-                              </React.Fragment>
-                          ) : (
-                              <React.Fragment>
-                                  <h1 className="Stilling__h1">Feil</h1>
-                                  <p>Det har oppstått en feil. Forsøk å laste siden på nytt</p>
-                              </React.Fragment>
-                          )}
-                      </React.Fragment>
-                  ) : (
-                      <div className="Stilling__flex">
-                          <div className="Stilling__left">
-                              {response.data._source.status !== 'ACTIVE' && (
-                                  <Expired />
-                              )}
-                              <h1 className="Stilling__h1">
-                                  {response.data._source.title}
-                              </h1>
-                              <p className="Stilling__employer-and-location">
-                                  {commaSeparate(getEmployer(response.data._source), getWorkLocation(
-                                      response.data._source.properties.location,
-                                      response.data._source.locationList
-                                  ))}
-                              </p>
-
-                              {isFinn ? (
-                                  <FinnAd stilling={response.data}/>
-                              ) : (
-                                  <React.Fragment>
-                                      <AdText adText={response.data._source.properties.adtext}/>
-                                      <HardRequirements stilling={response.data}/>
-                                      <SoftRequirements stilling={response.data}/>
-                                      <PersonalAttributes stilling={response.data}/>
-                                      <SocialShare title={response.data._source.title}/>
-                                  </React.Fragment>
-                              )}
-
-                              <div className="Rapport__link">
-                                  <Link
-                                      className={"link"}
-                                      to={`${CONTEXT_PATH}/rapporter-annonse?uuid=${response.data._id}`}
-                                      aria-label="Rapporter annonse"
-                                  >
-                                      Rapporter annonse
-                                  </Link>
-                              </div>
-                          </div>
-                          <div className="Stilling__right">
-                              <div className="Stilling__buttons">
-                                  <ToggleFavouriteButton uuid={response.data._id}/>
-                                  <Flatknapp
-                                      mini
-                                      className="Stilling__print"
-                                      onClick={onPrintClick}
-                                  >
-                                      Skriv ut
-                                  </Flatknapp>
-                              </div>
-                              {!isFinn && (
-                                  <React.Fragment>
-                                      <HowToApply
-                                          source={response.data._source.source}
-                                          properties={response.data._source.properties}
-                                      />
-                                      <EmploymentDetails stilling={response.data._source}/>
-                                      <ContactPerson contactList={response.data._source.contactList}/>
-                                      <EmployerDetails stilling={response.data._source}/>
-                                      <AdDetails source={response.data._source}/>
-                                  </React.Fragment>
-                              )}
-                          </div>
-                      </div>
-                  )}
-              </React.Fragment>
+            {error && error.statusCode === 404 && (
+                <NotFound/>
             )}
 
+            {!error && (
+                <Container>
+                    <Row className="Stilling__row">
+                        <Column xs="12" md="7" lg="8">
+                            <div className="Stilling__left">
+                                {!isFetchingStilling && stilling && stilling._source.status !== 'ACTIVE' && (
+                                    <Expired/>
+                                )}
+                                {!isFetchingStilling && stilling && (
+                                    <React.Fragment>
+                                        <h1 className="Stilling__h1">
+                                            {stilling._source.title}
+                                        </h1>
+                                        <p className="Stilling__employer-and-location">
+                                            {commaSeparate(getEmployer(stilling._source), getWorkLocation(
+                                                stilling._source.properties.location,
+                                                stilling._source.locationList
+                                            ))}
+                                        </p>
+                                    </React.Fragment>
+                                )}
+                                {(stilling === undefined || isFetchingStilling) && (
+                                    <Loading/>
+                                )}
+                                {!isFetchingStilling && stilling && isFinn && (
+                                    <FinnAd stilling={stilling}/>
+                                )}
+                                {!isFetchingStilling && stilling && !isFinn && (
+                                    <React.Fragment>
+                                        <AdText adText={stilling._source.properties.adtext}/>
+                                        <HardRequirements stilling={stilling}/>
+                                        <SoftRequirements stilling={stilling}/>
+                                        <PersonalAttributes stilling={stilling}/>
+                                        <SocialShare title={stilling._source.title}/>
+                                    </React.Fragment>
+                                )}
+                                {stilling !== undefined &&
+                                <div className="Rapport__link">
+                                    <Link
+                                        className={"link"}
+                                        to={`${CONTEXT_PATH}/rapporter-annonse?uuid=${stilling._id}`}
+                                        aria-label="Rapporter annonse"
+                                    >
+                                        Rapporter annonse
+                                    </Link>
+                                </div>
+                                }
+                            </div>
+                        </Column>
+                        <Column xs="12" md="5" lg="4">
+                            <div className="Stilling__buttons">
+                                {!isFetchingStilling && stilling && (
+                                    <ToggleFavouriteButton uuid={stilling._id}/>
+                                )}
+                                <Flatknapp
+                                    mini
+                                    className="Stilling__print"
+                                    onClick={onPrintClick}
+                                >
+                                    Skriv ut
+                                </Flatknapp>
+                            </div>
+                        </Column>
+                        <Column xs="12" md="5" lg="4">
+                            {(stilling === undefined || isFetchingStilling) && (
+                                <Loading spinner={false}/>
+                            )}
+                            {!isFetchingStilling && stilling && !isFinn && (
+                                <React.Fragment>
+                                    <HowToApply
+                                        source={stilling._source.source}
+                                        properties={stilling._source.properties}
+                                    />
+                                    <EmploymentDetails stilling={stilling._source}/>
+                                    <ContactPerson contactList={stilling._source.contactList}/>
+                                    <EmployerDetails stilling={stilling._source}/>
+                                    <AdDetails source={stilling._source}/>
+                                </React.Fragment>
+                            )}
+                        </Column>
+                    </Row>
+                </Container>
+            )}
         </div>
     );
 };
 
+Stilling.defaultProps = {
+    stilling: undefined,
+    isFetchingStilling: false,
+    error: undefined,
+    match: {params: {}}
+};
+
 Stilling.propTypes = {
+    stilling: PropTypes.shape({
+        _source: PropTypes.shape({
+            status: PropTypes.string,
+            title: PropTypes.string,
+            properties: PropTypes.shape({
+                adtext: PropTypes.string
+            })
+        })
+    }),
+    resetStilling: PropTypes.func.isRequired,
+    getStilling: PropTypes.func.isRequired,
+    isFetchingStilling: PropTypes.bool,
+    error: PropTypes.shape({
+        statusCode: PropTypes.number
+    }),
     match: PropTypes.shape({
         params: PropTypes.shape({
             uuid: PropTypes.string
         })
-    }).isRequired
+    })
 };
 
-export default Stilling;
+const mapStateToProps = (state) => ({
+    isFetchingStilling: state.stilling.isFetchingStilling,
+    stilling: state.stilling.stilling,
+    error: state.stilling.error
+});
+
+const mapDispatchToProps = (dispatch) => ({
+    getStilling: (uuid) => dispatch({type: FETCH_STILLING_BEGIN, uuid}),
+    resetStilling: () => dispatch({type: RESET_STILLING})
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Stilling);
