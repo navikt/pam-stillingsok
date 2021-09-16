@@ -16,6 +16,12 @@ const FixUrlAfterLogin = ({ children }) => {
         if (uuid && typeof uuid === "string") {
             window.history.replaceState({}, '', `${CONTEXT_PATH}/stilling/${uuid}${stringifyQueryObject(otherQueryParams)}`);
         }
+    } else if (path === `${CONTEXT_PATH}/intern`) {
+        const {uuid, ...otherQueryParams} = parseQueryString(document.location.search);
+
+        if (uuid && typeof uuid === "string") {
+            window.history.replaceState({}, '', `${CONTEXT_PATH}/intern/${uuid}${stringifyQueryObject(otherQueryParams)}`);
+        }
     }
 
     return (

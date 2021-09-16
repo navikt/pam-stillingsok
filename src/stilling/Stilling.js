@@ -68,7 +68,7 @@ const Stilling = ({ match }) => {
                         data: response
                     }));
                 }
-            },  (error) => {
+            }, (error) => {
                 if (!canceled) {
                     setState((prev) => ({
                         ...prev,
@@ -80,7 +80,7 @@ const Stilling = ({ match }) => {
         );
 
         return () => {
-           canceled = true;
+            canceled = true;
         }
     }, [uuid]);
 
@@ -89,13 +89,13 @@ const Stilling = ({ match }) => {
      * Oppdater title i nettleseren
      */
     useEffect(() => {
-        if (state.data && state.data._source && state.data._id && state.data._source.title) {
+        if (state.data && state.data._source && state.data._source.title) {
             document.title = state.data._source.title;
         }
     }, [state.data]);
 
 
-     /**
+    /**
      * Track analytic events
      */
     useEffect(() => {
@@ -125,7 +125,7 @@ const Stilling = ({ match }) => {
                 // ignore
             }
 
-            sendUrlEndring({page: `${CONTEXT_PATH}/stilling`, source: state.data._source.source});
+            sendUrlEndring({ page: `${CONTEXT_PATH}/stilling`, source: state.data._source.source });
         }
     }, [state.data]);
 
@@ -170,78 +170,77 @@ const Stilling = ({ match }) => {
                     )}
                 </React.Fragment>
             ) : (
-              <React.Fragment>
-                  {state.data === undefined || state.isPending ? (
-                      <div className="Stilling__spinner">
-                          <DelayedSpinner />
-                      </div>
-                  ) : (
-                      <div className="Stilling__flex">
-                          <div className="Stilling__left">
-                              {state.data._source.status !== 'ACTIVE' && (
-                                  <Expired />
-                              )}
-                              <h1 className="Stilling__h1">
-                                  {state.data._source.title}
-                              </h1>
-                              <p className="Stilling__employer-and-location">
-                                  {commaSeparate(getEmployer(state.data._source), getWorkLocation(
-                                      state.data._source.properties.location,
-                                      state.data._source.locationList
-                                  ))}
-                              </p>
+                <React.Fragment>
+                    {state.data === undefined || state.isPending ? (
+                        <div className="Stilling__spinner">
+                            <DelayedSpinner />
+                        </div>
+                    ) : (
+                        <div className="Stilling__flex">
+                            <div className="Stilling__left">
+                                {state.data._source.status !== 'ACTIVE' && (
+                                    <Expired />
+                                )}
+                                <h1 className="Stilling__h1">
+                                    {state.data._source.title}
+                                </h1>
+                                <p className="Stilling__employer-and-location">
+                                    {commaSeparate(getEmployer(state.data._source), getWorkLocation(
+                                        state.data._source.properties.location,
+                                        state.data._source.locationList
+                                    ))}
+                                </p>
 
-                              {isFinn ? (
-                                  <FinnAd stilling={state.data}/>
-                              ) : (
-                                  <React.Fragment>
-                                      <AdText adText={state.data._source.properties.adtext}/>
-                                      <HardRequirements stilling={state.data}/>
-                                      <SoftRequirements stilling={state.data}/>
-                                      <PersonalAttributes stilling={state.data}/>
-                                      <SocialShare title={state.data._source.title}/>
-                                  </React.Fragment>
-                              )}
+                                {isFinn ? (
+                                    <FinnAd stilling={state.data}/>
+                                ) : (
+                                    <React.Fragment>
+                                        <AdText adText={state.data._source.properties.adtext}/>
+                                        <HardRequirements stilling={state.data}/>
+                                        <SoftRequirements stilling={state.data}/>
+                                        <PersonalAttributes stilling={state.data}/>
+                                        <SocialShare title={state.data._source.title}/>
+                                    </React.Fragment>
+                                )}
 
-                              <div className="Rapport__link">
-                                  <Link
-                                      className={"link"}
-                                      to={`${CONTEXT_PATH}/rapporter-annonse?uuid=${state.data._id}`}
-                                      aria-label="Rapporter annonse"
-                                  >
-                                      Rapporter annonse
-                                  </Link>
-                              </div>
-                          </div>
-                          <div className="Stilling__right">
-                              <div className="Stilling__buttons">
-                                <FavouriteButton ad={state.data._source} />
-                                  <Flatknapp
-                                      mini
-                                      className="Stilling__print"
-                                      onClick={onPrintClick}
-                                  >
-                                      Skriv ut
-                                  </Flatknapp>
-                              </div>
-                              {!isFinn && (
-                                  <React.Fragment>
-                                      <HowToApply
-                                          source={state.data._source.source}
-                                          properties={state.data._source.properties}
-                                      />
-                                      <EmploymentDetails stilling={state.data._source}/>
-                                      <ContactPerson contactList={state.data._source.contactList}/>
-                                      <EmployerDetails stilling={state.data._source}/>
-                                      <AdDetails source={state.data._source}/>
-                                  </React.Fragment>
-                              )}
-                          </div>
-                      </div>
-                  )}
-              </React.Fragment>
+                                <div className="Rapport__link">
+                                    <Link
+                                        className={"link"}
+                                        to={`${CONTEXT_PATH}/rapporter-annonse?uuid=${state.data._id}`}
+                                        aria-label="Rapporter annonse"
+                                    >
+                                        Rapporter annonse
+                                    </Link>
+                                </div>
+                            </div>
+                            <div className="Stilling__right">
+                                <div className="Stilling__buttons">
+                                    <FavouriteButton ad={state.data._source}/>
+                                    <Flatknapp
+                                        mini
+                                        className="Stilling__print"
+                                        onClick={onPrintClick}
+                                    >
+                                        Skriv ut
+                                    </Flatknapp>
+                                </div>
+                                {!isFinn && (
+                                    <React.Fragment>
+                                        <HowToApply
+                                            source={state.data._source.source}
+                                            properties={state.data._source.properties}
+                                        />
+                                        <EmploymentDetails stilling={state.data._source}/>
+                                        <ContactPerson contactList={state.data._source.contactList}/>
+                                        <EmployerDetails stilling={state.data._source}/>
+                                        <AdDetails source={state.data._source}/>
+                                    </React.Fragment>
+                                )}
+                            </div>
+                        </div>
+                    )}
+                </React.Fragment>
             )}
-
         </div>
     );
 };

@@ -18,7 +18,6 @@ import savedSearchesReducer, { savedSearchesSaga } from './savedSearches/savedSe
 import facetPanelsReducer, {facetPanelsSaga} from './search/facets/facetPanelsReducer';
 import searchBoxReducer, { searchBoxSaga } from './search/searchBox/searchBoxReducer';
 import searchReducer, { saga } from './search/searchReducer';
-import internalStillingReducer, { internalStillingSaga } from './stilling/internalStillingReducer';
 import './styles.less';
 import './variables.less';
 import * as Sentry from '@sentry/browser';
@@ -35,7 +34,6 @@ export const store = createStore(combineReducers({
     search: searchReducer,
     searchBox: searchBoxReducer,
     searchQuery: searchQueryReducer,
-    internalStilling: internalStillingReducer,
     facets: facetsReducer,
     unknownFacets: unknownFacetsReducer,
     facetPanels: facetPanelsReducer
@@ -43,7 +41,6 @@ export const store = createStore(combineReducers({
 
 sagaMiddleware.run(saga);
 sagaMiddleware.run(searchBoxSaga);
-sagaMiddleware.run(internalStillingSaga);
 sagaMiddleware.run(savedSearchesSaga);
 sagaMiddleware.run(savedSearchFormSaga);
 sagaMiddleware.run(savedSearchAlertStripeSaga);

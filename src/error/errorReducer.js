@@ -12,7 +12,6 @@ import {
     UPDATE_USER_EMAIL_FAILURE
 } from '../user/userReducer';
 import { FETCH_IS_AUTHENTICATED_FAILURE } from '../authentication/authenticationReducer';
-import { FETCH_INTERAL_STILLING_FAILURE } from '../stilling/internalStillingReducer';
 
 export const HIDE_ERROR = 'HIDE_ERROR';
 
@@ -46,11 +45,6 @@ export default function errorReducer(state = initialState, action) {
                 searchFailed: true
                 // TODO - Is this message necessary
                 // messages: prependMessage(state.messages, 'Klarte ikke å utføre søket')
-            };
-        case FETCH_INTERAL_STILLING_FAILURE:
-            return {
-                ...state,
-                messages: prependMessage(state.messages, 'Klarte ikke å laste annonsen')
             };
         case FETCH_SAVED_SEARCHES_FAILURE:
             return {

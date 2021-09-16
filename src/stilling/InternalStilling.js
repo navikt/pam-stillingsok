@@ -1,13 +1,9 @@
 /* eslint-disable no-underscore-dangle,prefer-destructuring */
 import PropTypes from 'prop-types';
-import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
+import React, { useEffect, useState } from 'react';
 import { Flatknapp } from '@navikt/arbeidsplassen-knapper';
-import { Column, Container, Row } from 'nav-frontend-grid';
 import getEmployer from '../../server/common/getEmployer';
 import getWorkLocation from '../../server/common/getWorkLocation';
-import { CONTEXT_PATH } from '../fasitProperties';
-import { parseQueryString, stringifyQueryObject } from '../utils';
 import AdDetails from './adDetails/AdDetails';
 import AdText from './adText/AdText';
 import ContactPerson from './contactPerson/ContactPerson';
@@ -16,15 +12,14 @@ import EmploymentDetails from './employmentDetails/EmploymentDetails';
 import Expired from './expired/Expired';
 import FinnAd from './finnAd/FinnAd';
 import HowToApply from './howToApply/HowToApply';
-import Loading from './loading/Loading';
-import NotFound from './notFound/NotFound';
 import HardRequirements from './requirements/HardRequirements';
 import PersonalAttributes from './requirements/PersonalAttributes';
 import SoftRequirements from './requirements/SoftRequirements';
 import './Stilling.less';
 import { useScrollToTop } from '../common/hooks';
-import { FETCH_INTERAL_STILLING_BEGIN, RESET_INTERAL_STILLING } from './internalStillingReducer';
 import { addRobotsNoIndexMetaTag, removeRobotsMetaTag } from '../common/utils/metaRobots';
+import { fetchInternStilling } from '../api/api';
+import DelayedSpinner from '../common/components/DelayedSpinner';
 
 function commaSeparate(...strings) {
     const onlyStrings = strings.filter((string) => (
@@ -33,31 +28,69 @@ function commaSeparate(...strings) {
     return onlyStrings.join(', ');
 }
 
-const InternalStilling = ({ error, getInternalStilling, isFetchingStilling, match, stilling, resetStilling }) => {
+const InternalStilling = ({ match }) => {
+    const uuid = match.params.uuid;
+
+    const [state, setState] = useState({
+        data: undefined,
+        isPending: false,
+        error: undefined
+    });
 
     useScrollToTop();
 
+    /**
+     * Fetch stillingen
+     */
     useEffect(() => {
-        let uuidParam = match.params.uuid;
-        if (!uuidParam) {
-            // Om man logget inn mens man var inne på en stillingsannonse, så vil loginservice
-            // redirecte til en url med dette url-formatet: '/stillinger/intern?uuid=12345'.
-            // Redirecter derfor til riktig url-format: '/stillinger/intern/:uuid'
-            // @see src/authentication/authenticationReducer.js
-            const {uuid, ...otherQueryParams } = parseQueryString(document.location.search);
+        let canceled = false;
 
-            if (uuid && typeof uuid === "string") {
-                window.history.replaceState({}, '', `${CONTEXT_PATH}/intern/${uuid}${stringifyQueryObject(otherQueryParams)}`);
-                getInternalStilling(uuid);
+        setState((prev) => ({
+            ...prev,
+            isPending: true,
+            data: undefined,
+            error: undefined
+        }));
+
+        fetchInternStilling(uuid).then(
+            (response) => {
+                if (!canceled) {
+                    setState((prev) => ({
+                        ...prev,
+                        isPending: false,
+                        data: response
+                    }));
+                }
+            },  (error) => {
+                if (!canceled) {
+                    setState((prev) => ({
+                        ...prev,
+                        isPending: false,
+                        error: error
+                    }));
+                }
             }
-        } else {
-            getInternalStilling(uuidParam);
-        }
-        return () => {
-            resetStilling();
-        }
-    }, []);
+        );
 
+        return () => {
+           canceled = true;
+        }
+    }, [uuid]);
+
+
+    /**
+     * Oppdater title i nettleseren
+     */
+    useEffect(() => {
+        if (state.data && state.data._source && state.data._source.title) {
+            document.title = state.data._source.title;
+        }
+    }, [state.data]);
+
+
+    /**
+     * Unngå at interne stillinger indexeres av søkeroboter, f.eks google.
+     */
     useEffect(() => {
         addRobotsNoIndexMetaTag();
         return () => {
@@ -65,30 +98,65 @@ const InternalStilling = ({ error, getInternalStilling, isFetchingStilling, matc
         }
     }, []);
 
-    useEffect(() => {
-        if (stilling && stilling._source && stilling._source.title) {
-            document.title = stilling._source.title;
-        }
-    }, [stilling]);
 
     const onPrintClick = () => {
         window.print();
     };
 
-    const isFinn = stilling && stilling._source && stilling._source.source && stilling._source.source.toLowerCase() === 'finn';
+    const isFinn = state.data && state.data._source && state.data._source.source && state.data._source.source.toLowerCase() === 'finn';
 
     return (
         <div className="Stilling">
+            <a id="main-content" tabIndex="-1" />
 
-            {error && error.statusCode === 404 && (
-                <NotFound />
-            )}
+            {state.error ? (
+                <React.Fragment>
+                    {state.error.statusCode === 404 ? (
+                        <React.Fragment>
+                            <h1 className="Stilling__h1">Ikke funnet</h1>
+                            <p>Stillingsannonsen kan være utløpt eller blitt fjernet av arbeidsgiver.</p>
+                        </React.Fragment>
+                    ) : (
+                        <React.Fragment>
+                            <h1 className="Stilling__h1">Feil</h1>
+                            <p>Det har oppstått en feil. Forsøk å laste siden på nytt</p>
+                        </React.Fragment>
+                    )}
+                </React.Fragment>
+            ) : (
+                <React.Fragment>
+                    {state.data === undefined || state.isPending ? (
+                        <div className="Stilling__spinner">
+                            <DelayedSpinner />
+                        </div>
+                    ) : (
+                        <div className="Stilling__flex">
+                            <div className="Stilling__left">
+                                {state.data._source.status !== 'ACTIVE' && (
+                                    <Expired />
+                                )}
+                                <h1 className="Stilling__h1">
+                                    {state.data._source.title}
+                                </h1>
+                                <p className="Stilling__employer-and-location">
+                                    {commaSeparate(getEmployer(state.data._source), getWorkLocation(
+                                        state.data._source.properties.location,
+                                        state.data._source.locationList
+                                    ))}
+                                </p>
 
-            {!error && (
-                <Container>
-                    <Row>
-                        <Column xs="12">
-                            <div className="Stilling__header">
+                                {isFinn ? (
+                                    <FinnAd stilling={state.data}/>
+                                ) : (
+                                    <React.Fragment>
+                                        <AdText adText={state.data._source.properties.adtext}/>
+                                        <HardRequirements stilling={state.data}/>
+                                        <SoftRequirements stilling={state.data}/>
+                                        <PersonalAttributes stilling={state.data}/>
+                                    </React.Fragment>
+                                )}
+                            </div>
+                            <div className="Stilling__right">
                                 <div className="Stilling__buttons">
                                     <Flatknapp
                                         mini
@@ -98,107 +166,34 @@ const InternalStilling = ({ error, getInternalStilling, isFetchingStilling, matc
                                         Skriv ut
                                     </Flatknapp>
                                 </div>
-                            </div>
-                        </Column>
-                    </Row>
-                    <Row>
-                        <Column xs="12" md="7" lg="8">
-                            <div className="Stilling__left">
-                                {!isFetchingStilling && stilling && stilling._source.status !== 'ACTIVE' && (
-                                    <Expired />
-                                )}
-                                {!isFetchingStilling && stilling && (
+                                {!isFinn && (
                                     <React.Fragment>
-                                        <div className="Stilling__employer-and-location">
-                                            {commaSeparate(getEmployer(stilling._source), getWorkLocation(
-                                                stilling._source.properties.location,
-                                                stilling._source.locationList
-                                            ))}
-                                        </div>
-                                        <h1 className="Stilling__h1">
-                                            {stilling._source.title}
-                                        </h1>
-                                    </React.Fragment>
-                                )}
-                                {(stilling === undefined || isFetchingStilling) && (
-                                    <Loading />
-                                )}
-                                {!isFetchingStilling && stilling && isFinn && (
-                                    <FinnAd stilling={stilling} />
-                                )}
-                                {!isFetchingStilling && stilling && !isFinn && (
-                                    <React.Fragment>
-                                        <AdText adText={stilling._source.properties.adtext} />
-                                        <HardRequirements stilling={stilling} />
-                                        <SoftRequirements stilling={stilling} />
-                                        <PersonalAttributes stilling={stilling} />
+                                        <HowToApply
+                                            source={state.data._source.source}
+                                            properties={state.data._source.properties}
+                                        />
+                                        <EmploymentDetails stilling={state.data._source}/>
+                                        <ContactPerson contactList={state.data._source.contactList}/>
+                                        <EmployerDetails stilling={state.data._source}/>
+                                        <AdDetails source={state.data._source}/>
                                     </React.Fragment>
                                 )}
                             </div>
-                        </Column>
-                        <Column xs="12" md="5" lg="4">
-                            {(stilling === undefined || isFetchingStilling) && (
-                                <Loading spinner={false} />
-                            )}
-                            {!isFetchingStilling && stilling && !isFinn && (
-                                <React.Fragment>
-                                    <HowToApply
-                                        source={stilling._source.source}
-                                        properties={stilling._source.properties}
-                                    />
-                                    <EmploymentDetails stilling={stilling._source} />
-                                    <ContactPerson contactList={stilling._source.contactList} />
-                                    <EmployerDetails stilling={stilling._source} />
-                                    <AdDetails source={stilling._source} />
-                                </React.Fragment>
-                            )}
-                        </Column>
-                    </Row>
-                </Container>
+                        </div>
+                    )}
+                </React.Fragment>
             )}
         </div>
     );
 };
 
-InternalStilling.defaultProps = {
-    stilling: undefined,
-    isFetchingStilling: false,
-    error: undefined,
-    match: { params: {} }
-};
-
 InternalStilling.propTypes = {
-    stilling: PropTypes.shape({
-        _source: PropTypes.shape({
-            status: PropTypes.string,
-            title: PropTypes.string,
-            properties: PropTypes.shape({
-                adtext: PropTypes.string
-            })
-        })
-    }),
-    resetStilling: PropTypes.func.isRequired,
-    getInternalStilling: PropTypes.func.isRequired,
-    isFetchingStilling: PropTypes.bool,
-    error: PropTypes.shape({
-        statusCode: PropTypes.number
-    }),
     match: PropTypes.shape({
         params: PropTypes.shape({
             uuid: PropTypes.string
         })
-    })
+    }).isRequired
 };
 
-const mapStateToProps = (state) => ({
-    isFetchingStilling: state.internalStilling.isFetchingStilling,
-    stilling: state.internalStilling.stilling,
-    error: state.internalStilling.error
-});
+export default InternalStilling;
 
-const mapDispatchToProps = (dispatch) => ({
-    getInternalStilling: (uuid) => dispatch({ type: FETCH_INTERAL_STILLING_BEGIN, uuid }),
-    resetStilling: () => dispatch({ type: RESET_INTERAL_STILLING })
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(InternalStilling);
