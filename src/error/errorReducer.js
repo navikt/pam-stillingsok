@@ -1,16 +1,10 @@
 import {
-    ADD_TO_FAVOURITES_FAILURE,
-    FETCH_FAVOURITES_FAILURE,
-    REMOVE_FROM_FAVOURITES_FAILURE
-} from '../favourites/favouritesReducer';
-import {
     ADD_SAVED_SEARCH_FAILURE,
     FETCH_SAVED_SEARCHES_FAILURE,
     REMOVE_SAVED_SEARCH_FAILURE,
     UPDATE_SAVED_SEARCH_FAILURE
 } from '../savedSearches/savedSearchesReducer';
 import { SEARCH_FAILURE } from '../search/searchReducer';
-import { FETCH_STILLING_FAILURE } from '../stilling/stillingReducer';
 import {
     CREATE_USER_FAILURE,
     DELETE_USER_FAILURE,
@@ -53,7 +47,6 @@ export default function errorReducer(state = initialState, action) {
                 // TODO - Is this message necessary
                 // messages: prependMessage(state.messages, 'Klarte ikke å utføre søket')
             };
-        case FETCH_STILLING_FAILURE:
         case FETCH_INTERAL_STILLING_FAILURE:
             return {
                 ...state,
@@ -78,21 +71,6 @@ export default function errorReducer(state = initialState, action) {
             return {
                 ...state,
                 messages: prependMessage(state.messages, 'Klarte ikke å lagre søk')
-            };
-        case FETCH_FAVOURITES_FAILURE:
-            return {
-                ...state,
-                messages: prependMessage(state.messages, 'Klarte ikke å ikke hente favoritter')
-            };
-        case ADD_TO_FAVOURITES_FAILURE:
-            return {
-                ...state,
-                messages: prependMessage(state.messages, 'Klarte ikke å lagre favoritt')
-            };
-        case REMOVE_FROM_FAVOURITES_FAILURE:
-            return {
-                ...state,
-                messages: prependMessage(state.messages, 'Klarte ikke å slette favoritt')
             };
         case UPDATE_USER_EMAIL_FAILURE:
             return {
