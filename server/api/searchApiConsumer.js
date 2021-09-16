@@ -39,8 +39,7 @@ const excludes = [
     'properties.occupation',
     'properties.searchtags',
     'properties.sourceupdated',
-    'updatedBy',
-    'uuid'
+    'updatedBy'
 ].join(',');
 
 /* eslint no-console: 0 */
