@@ -1,6 +1,5 @@
 import {put, select, takeEvery} from 'redux-saga/effects';
 import {AD_USER_API, CONTEXT_PATH, LOGIN_URL, PAM_VAR_SIDE_URL, STILLINGSOK_URL} from '../fasitProperties';
-import {RESTORE_ADD_FAVOURITE_WORKFLOW_AFTER_LOGIN} from '../favourites/favouritesReducer';
 import {RESTORE_SAVED_SEARCH_WORKFLOW_AFTER_LOGIN} from '../savedSearches/savedSearchesReducer';
 import {toBrowserSearchQuery} from '../search/searchQueryReducer';
 import {decodeUrl, parseQueryString, stringifyQueryObject} from '../utils';
@@ -208,12 +207,6 @@ function* handleCallbackAfterLogin() {
         const found = sessionStorage.getItem(SESSION_STORAGE_KEY_CALLBACK);
         if (found === 'save-search' && callback === 'save-search') {
             yield put({type: RESTORE_SAVED_SEARCH_WORKFLOW_AFTER_LOGIN});
-        } else if (found === 'add-to-favourite-search' && callback === 'add-to-favourite-search') {
-            const data = sessionStorage.getItem(SESSION_STORAGE_KEY_CALLBACK_DATA);
-            yield put({type: RESTORE_ADD_FAVOURITE_WORKFLOW_AFTER_LOGIN, data, source: 'search'});
-        } else if (found === 'add-to-favourite-ad' && callback === 'add-to-favourite-ad') {
-            const data = sessionStorage.getItem(SESSION_STORAGE_KEY_CALLBACK_DATA);
-            yield put({type: RESTORE_ADD_FAVOURITE_WORKFLOW_AFTER_LOGIN, data, source: 'ad'});
         }
     }
 
