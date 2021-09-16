@@ -10,6 +10,11 @@
   margin-bottom: 2.5rem;
 }
 
+.Favourites__count {
+  font-size: 1.25rem;
+  margin: 0;
+}
+
 .Favourites__section {
   background: #fff;
   padding: 2rem;
@@ -24,7 +29,7 @@
 }
 
 .Favourites__main__total-and-sorting {
-  border-bottom: 2px solid @gray3;
+  padding-bottom: 1rem;
   margin-bottom: 1rem;
 
   @media (max-width: @screen-xs-max) {
@@ -33,6 +38,7 @@
   @media (min-width: @screen-sm-min) {
     display: flex;
     align-items: center;
+    justify-content: space-between;
   }
 }
 
@@ -43,3 +49,22 @@
     padding-right: 16px !important;
   }
 }
+
+.Favourites__ingen-favoritter {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  font-size: 1.125rem;
+}
+
+.Favourites__ingen-favoritter-title {
+  font-size: 1.5rem;
+  line-height: 1;
+  margin: 0 0 1rem;
+}
+
+.Favourites__ingen-favoritter-text {
+  margin: 0 0 1rem;
+}
+
+

@@ -18,6 +18,8 @@ import BrowserSupportInfo from './BrowserSupportInfo/BrowserSupportInfo';
 import RapporterAnnonse from "./rapporterAnnonse/RapporterAnnonse";
 import enableHotjar from "./hotjarTracking";
 import FixUrlAfterLogin from './common/components/FixUrlAfterLogin';
+import FavouritesProvider from './favourites/FavouritesProvider';
+import NotificationsProvider from './common/notifications/NotificationsProvider';
 
 class Application extends React.Component {
     componentDidMount() {
@@ -29,33 +31,37 @@ class Application extends React.Component {
     render() {
         return (
             <FixUrlAfterLogin>
-                <BrowserRouter>
-                    <BrowserSupportInfo tillatLukking={true} />
-                    <Error />
-                    <Switch>
-                        <Route component={TopMenu}/>
-                    </Switch>
-                    <Switch>
-                        <Route exact path={CONTEXT_PATH} component={SearchPage}/>
-                        <Route path={`${CONTEXT_PATH}/stilling/:uuid`} component={StillingPage} />
-                        <Route path={`${CONTEXT_PATH}/stilling`} component={StillingPage} />
-                        <Route path={`${CONTEXT_PATH}/intern/:uuid`} component={InternalStilling} />
-                        <Route path={`${CONTEXT_PATH}/intern`} component={InternalStilling} />
-                        <Route path={`${CONTEXT_PATH}/favoritter`} component={Favourites} />
-                        <Route path={`${CONTEXT_PATH}/lagrede-sok`} component={SavedSearches} />
-                        <Route path={`${CONTEXT_PATH}/rapporter-annonse`} component={RapporterAnnonse} />
-                        <Route path="*" component={SearchPage}/>
-                    </Switch>
+                <NotificationsProvider>
+                    <FavouritesProvider>
+                        <BrowserRouter>
+                            <BrowserSupportInfo tillatLukking={true} />
+                            <Error />
+                            <Switch>
+                                <Route component={TopMenu}/>
+                            </Switch>
+                            <Switch>
+                                <Route exact path={CONTEXT_PATH} component={SearchPage}/>
+                                <Route path={`${CONTEXT_PATH}/stilling/:uuid`} component={StillingPage} />
+                                <Route path={`${CONTEXT_PATH}/stilling`} component={StillingPage} />
+                                <Route path={`${CONTEXT_PATH}/intern/:uuid`} component={InternalStilling} />
+                                <Route path={`${CONTEXT_PATH}/intern`} component={InternalStilling} />
+                                <Route path={`${CONTEXT_PATH}/favoritter`} component={Favourites} />
+                                <Route path={`${CONTEXT_PATH}/lagrede-sok`} component={SavedSearches} />
+                                <Route path={`${CONTEXT_PATH}/rapporter-annonse`} component={RapporterAnnonse} />
+                                <Route path="*" component={SearchPage}/>
+                            </Switch>
 
-                    {this.props.termsOfUseModalIsVisible && (
-                        <TermsOfUse />
-                    )}
+                            {this.props.termsOfUseModalIsVisible && (
+                                <TermsOfUse />
+                            )}
 
-                    {this.props.authenticationRequiredModalIsVisible && (
-                        <NotAuthenticatedModal />
-                    )}
-                    <UserAlertStripe/>
-                </BrowserRouter>
+                            {this.props.authenticationRequiredModalIsVisible && (
+                                <NotAuthenticatedModal />
+                            )}
+                            <UserAlertStripe/>
+                        </BrowserRouter>
+                    </FavouritesProvider>
+                </NotificationsProvider>
             </FixUrlAfterLogin>
         );
     }

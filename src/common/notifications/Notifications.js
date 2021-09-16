@@ -5,7 +5,7 @@ import './Notifications.less';
 
 const Notifications = ({ notifications }) => {
     return (
-        <div className="Notifications" aria-live="polite">
+        <div className="Notifications">
             {notifications.map((it) => (
                 <div key={it.id}>
                     <StickyAlertStripe type={it.type}>

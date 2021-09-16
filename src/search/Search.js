@@ -4,7 +4,6 @@ import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import { Knapp } from '@navikt/arbeidsplassen-knapper';
 import {CONTEXT_PATH, STILLINGSOK_URL} from '../fasitProperties';
-import FavouriteAlertStripe from '../favourites/alertstripe/FavouriteAlertStripe';
 import SavedSearchAlertStripe from '../savedSearches/alertstripe/SavedSearchAlertStripe';
 import SavedSearchForm from '../savedSearches/form/SavedSearchForm';
 import SaveSearchButton from '../savedSearches/SaveSearchButton';
@@ -63,7 +62,6 @@ const Search = ({
     return (
         <div className="Search">
             <a id="main-content" tabIndex="-1" />
-            <FavouriteAlertStripe/>
             <SavedSearchAlertStripe/>
             <div className="PageHeader PageHeader--no-mb">
                 <div className="PageHeader__container">
@@ -164,7 +162,6 @@ Search.propTypes = {
 const mapStateToProps = (state) => ({
     initialSearchDone: state.search.initialSearchDone,
     isSearching: state.search.isSearching,
-    isFetchingFavourites: state.favourites.isFetchingFavourites,
     savedSearches: state.savedSearches.savedSearches,
     isAuthenticated: state.authentication.isAuthenticated,
     user: state.user.user,

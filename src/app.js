@@ -12,14 +12,12 @@ import searchQueryReducer, { searchQuerySaga } from './search/searchQueryReducer
 import unknownFacetsReducer from './search/facets/unknownFacetsReducer';
 import { unknownFacetsSaga } from './search/facets/unknownFacetsReducer';
 import userReducer, { userSaga } from './user/userReducer';
-import favouritesReducer, { favouritesSaga } from './favourites/favouritesReducer';
 import savedSearchAlertStripeReducer, { savedSearchAlertStripeSaga } from './savedSearches/alertstripe/savedSearchAlertStripeReducer';
 import savedSearchFormReducer, { savedSearchFormSaga } from './savedSearches/form/savedSearchFormReducer';
 import savedSearchesReducer, { savedSearchesSaga } from './savedSearches/savedSearchesReducer';
 import facetPanelsReducer, {facetPanelsSaga} from './search/facets/facetPanelsReducer';
 import searchBoxReducer, { searchBoxSaga } from './search/searchBox/searchBoxReducer';
 import searchReducer, { saga } from './search/searchReducer';
-import stillingReducer, { stillingSaga } from './stilling/stillingReducer';
 import internalStillingReducer, { internalStillingSaga } from './stilling/internalStillingReducer';
 import './styles.less';
 import './variables.less';
@@ -31,14 +29,12 @@ export const store = createStore(combineReducers({
     authentication: authenticationReducer,
     error: errorReducer,
     user: userReducer,
-    favourites: favouritesReducer,
     savedSearches: savedSearchesReducer,
     savedSearchForm: savedSearchFormReducer,
     savedSearchAlertStripe: savedSearchAlertStripeReducer,
     search: searchReducer,
     searchBox: searchBoxReducer,
     searchQuery: searchQueryReducer,
-    stilling: stillingReducer,
     internalStilling: internalStillingReducer,
     facets: facetsReducer,
     unknownFacets: unknownFacetsReducer,
@@ -47,9 +43,7 @@ export const store = createStore(combineReducers({
 
 sagaMiddleware.run(saga);
 sagaMiddleware.run(searchBoxSaga);
-sagaMiddleware.run(stillingSaga);
 sagaMiddleware.run(internalStillingSaga);
-sagaMiddleware.run(favouritesSaga);
 sagaMiddleware.run(savedSearchesSaga);
 sagaMiddleware.run(savedSearchFormSaga);
 sagaMiddleware.run(savedSearchAlertStripeSaga);

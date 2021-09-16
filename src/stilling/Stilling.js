@@ -1,14 +1,10 @@
 /* eslint-disable no-underscore-dangle,prefer-destructuring */
 import PropTypes from 'prop-types';
-import React, {useEffect} from 'react';
-import {Flatknapp} from '@navikt/arbeidsplassen-knapper';
-import {Column, Container, Row} from 'nav-frontend-grid';
+import React, { useEffect, useState } from 'react';
+import { Flatknapp } from '@navikt/arbeidsplassen-knapper';
 import getEmployer from '../../server/common/getEmployer';
 import getWorkLocation from '../../server/common/getWorkLocation';
-import {CONTEXT_PATH} from '../fasitProperties';
-import FavouriteAlertStripe from '../favourites/alertstripe/FavouriteAlertStripe';
-import ToggleFavouriteButton from '../favourites/toggleFavoriteButton/ToggleFavouriteButton';
-import {parseQueryString, stringifyQueryObject} from '../utils';
+import { CONTEXT_PATH } from '../fasitProperties';
 import AdDetails from './adDetails/AdDetails';
 import AdText from './adText/AdText';
 import ContactPerson from './contactPerson/ContactPerson';
@@ -17,22 +13,20 @@ import EmploymentDetails from './employmentDetails/EmploymentDetails';
 import Expired from './expired/Expired';
 import FinnAd from './finnAd/FinnAd';
 import HowToApply from './howToApply/HowToApply';
-import Loading from './loading/Loading';
-import NotFound from './notFound/NotFound';
 import HardRequirements from './requirements/HardRequirements';
 import PersonalAttributes from './requirements/PersonalAttributes';
 import SoftRequirements from './requirements/SoftRequirements';
 import SocialShare from './socialShare/SocialShare';
-import './Stilling.less';
-import {FETCH_STILLING_BEGIN, RESET_STILLING} from './stillingReducer';
-import {useScrollToTop} from '../common/hooks';
-import {sendUrlEndring} from '../common/hooks/useTrackPageview';
-import {addRobotsNoIndexMetaTag, removeRobotsMetaTag} from '../common/utils/metaRobots';
-import logAmplitudeEvent, {logAmplitudePageview} from '../amplitudeTracker';
-import {connect} from 'react-redux';
-import {Link} from 'react-router-dom';
+import { useScrollToTop } from '../common/hooks';
+import { sendUrlEndring } from '../common/hooks/useTrackPageview';
+import { addRobotsNoIndexMetaTag, removeRobotsMetaTag } from '../common/utils/metaRobots';
+import logAmplitudeEvent, { logAmplitudePageview } from '../amplitudeTracker';
+import { Link } from 'react-router-dom';
 import { track } from '../analytics';
+import { fetchStilling } from '../api/api';
 import DelayedSpinner from '../common/components/DelayedSpinner';
+import FavouriteButton from '../favourites/favouritebutton/FavouriteButton';
+import './Stilling.less';
 
 function commaSeparate(...strings) {
     const onlyStrings = strings.filter((string) => (
@@ -41,25 +35,74 @@ function commaSeparate(...strings) {
     return onlyStrings.join(', ');
 }
 
-const Stilling = ({error, getStilling, isFetchingStilling, match, stilling, resetStilling }) => {
+const Stilling = ({ match }) => {
     const uuid = match.params.uuid;
+
+    const [state, setState] = useState({
+        data: undefined,
+        isPending: false,
+        error: undefined
+    });
 
     useScrollToTop();
 
+    /**
+     * Fetch stillingen
+     */
     useEffect(() => {
-        getStilling(uuid);
+        let canceled = false;
+
+        setState((prev) => ({
+            ...prev,
+            isPending: true,
+            data: undefined,
+            error: undefined
+        }));
+
+        fetchStilling(uuid).then(
+            (response) => {
+                if (!canceled) {
+                    setState((prev) => ({
+                        ...prev,
+                        isPending: false,
+                        data: response
+                    }));
+                }
+            },  (error) => {
+                if (!canceled) {
+                    setState((prev) => ({
+                        ...prev,
+                        isPending: false,
+                        error: error
+                    }));
+                }
+            }
+        );
+
         return () => {
-            resetStilling();
+           canceled = true;
         }
     }, [uuid]);
 
-    useEffect(() => {
-        if (stilling && stilling._source && stilling._id && stilling._source.title) {
-            document.title = stilling._source.title;
 
+    /**
+     * Oppdater title i nettleseren
+     */
+    useEffect(() => {
+        if (state.data && state.data._source && state.data._id && state.data._source.title) {
+            document.title = state.data._source.title;
+        }
+    }, [state.data]);
+
+
+     /**
+     * Track analytic events
+     */
+    useEffect(() => {
+        if (state.data && state.data._source && state.data._id && state.data._source.title) {
             try {
-                ga('set', 'page', `${CONTEXT_PATH}/stilling/${stilling._id}`);
-                ga('set', 'title', stilling._source.title);
+                ga('set', 'page', `${CONTEXT_PATH}/stilling/${state.data._id}`);
+                ga('set', 'title', state.data._source.title);
                 ga('send', 'pageview');
                 logAmplitudePageview();
             } catch (e) {
@@ -68,34 +111,37 @@ const Stilling = ({error, getStilling, isFetchingStilling, match, stilling, rese
 
             try {
                 logAmplitudeEvent('Stilling visning', {
-                    title: stilling._source.title || "N/A",
-                    id: stilling._id,
-                    businessName: stilling._source.businessName || "N/A",
-                    country: stilling._source.employer.location.country || "N/A",
-                    county: stilling._source.employer.location.county || "N/A",
-                    city: stilling._source.employer.location.city || "N/A",
-                    employer: stilling._source.employer.name || "N/A",
-                    expires: stilling._source.expires || "N/A",
-                    published: stilling._source.published || "N/A"
+                    title: state.data._source.title || "N/A",
+                    id: state.data._id,
+                    businessName: state.data._source.businessName || "N/A",
+                    country: state.data._source.employer.location.country || "N/A",
+                    county: state.data._source.employer.location.county || "N/A",
+                    city: state.data._source.employer.location.city || "N/A",
+                    employer: state.data._source.employer.name || "N/A",
+                    expires: state.data._source.expires || "N/A",
+                    published: state.data._source.published || "N/A"
                 })
             } catch (e) {
                 // ignore
             }
 
-            sendUrlEndring({page: `${CONTEXT_PATH}/stilling`, source: stilling._source.source});
+            sendUrlEndring({page: `${CONTEXT_PATH}/stilling`, source: state.data._source.source});
         }
-    }, [stilling]);
+    }, [state.data]);
 
+    /**
+     * Unngå at inaktive stillinger indexeres av søkeroboter, f.eks google.
+     */
     useEffect(() => {
-        const pageNotFound = error && error.statusCode === 404;
-        const adIsNotActive = !isFetchingStilling && stilling && stilling._source.status !== 'ACTIVE';
+        const pageNotFound = state.error && state.error.statusCode === 404;
+        const adIsNotActive = !state.isPending && state.data && state.data._source.status !== 'ACTIVE';
         if (pageNotFound || adIsNotActive) {
             addRobotsNoIndexMetaTag()
         }
         return () => {
             removeRobotsMetaTag();
         }
-    }, [error, isFetchingStilling, stilling]);
+    }, [state.error, state.isPending, state.data]);
 
 
     const onPrintClick = () => {
@@ -103,65 +149,64 @@ const Stilling = ({error, getStilling, isFetchingStilling, match, stilling, rese
         window.print();
     };
 
-    const isFinn = stilling && stilling._source && stilling._source.source && stilling._source.source.toLowerCase() === 'finn';
+    const isFinn = state.data && state.data._source && state.data._source.source && state.data._source.source.toLowerCase() === 'finn';
 
     return (
         <div className="Stilling">
             <a id="main-content" tabIndex="-1" />
-            <FavouriteAlertStripe/>
 
-            {stilling === undefined || isFetchingStilling ? (
-                <div className="Stilling__spinner">
-                    <DelayedSpinner />
-                </div>
+            {state.error ? (
+                <React.Fragment>
+                    {state.error.statusCode === 404 ? (
+                        <React.Fragment>
+                            <h1 className="Stilling__h1">Ikke funnet</h1>
+                            <p>Stillingsannonsen kan være utløpt eller blitt fjernet av arbeidsgiver.</p>
+                        </React.Fragment>
+                    ) : (
+                        <React.Fragment>
+                            <h1 className="Stilling__h1">Feil</h1>
+                            <p>Det har oppstått en feil. Forsøk å laste siden på nytt</p>
+                        </React.Fragment>
+                    )}
+                </React.Fragment>
             ) : (
               <React.Fragment>
-                  {error ? (
-                      <React.Fragment>
-                          {error.statusCode === 404 ? (
-                              <React.Fragment>
-                                  <h1 className="Stilling__h1">Ikke funnet</h1>
-                                  <p>Stillingsannonsen kan være utløpt eller blitt fjernet av arbeidsgiver.</p>
-                              </React.Fragment>
-                          ) : (
-                              <React.Fragment>
-                                  <h1 className="Stilling__h1">Feil</h1>
-                                  <p>Det har oppstått en feil. Forsøk å laste siden på nytt</p>
-                              </React.Fragment>
-                          )}
-                      </React.Fragment>
+                  {state.data === undefined || state.isPending ? (
+                      <div className="Stilling__spinner">
+                          <DelayedSpinner />
+                      </div>
                   ) : (
                       <div className="Stilling__flex">
                           <div className="Stilling__left">
-                              {stilling._source.status !== 'ACTIVE' && (
+                              {state.data._source.status !== 'ACTIVE' && (
                                   <Expired />
                               )}
                               <h1 className="Stilling__h1">
-                                  {stilling._source.title}
+                                  {state.data._source.title}
                               </h1>
                               <p className="Stilling__employer-and-location">
-                                  {commaSeparate(getEmployer(stilling._source), getWorkLocation(
-                                      stilling._source.properties.location,
-                                      stilling._source.locationList
+                                  {commaSeparate(getEmployer(state.data._source), getWorkLocation(
+                                      state.data._source.properties.location,
+                                      state.data._source.locationList
                                   ))}
                               </p>
 
                               {isFinn ? (
-                                  <FinnAd stilling={stilling}/>
+                                  <FinnAd stilling={state.data}/>
                               ) : (
                                   <React.Fragment>
-                                      <AdText adText={stilling._source.properties.adtext}/>
-                                      <HardRequirements stilling={stilling}/>
-                                      <SoftRequirements stilling={stilling}/>
-                                      <PersonalAttributes stilling={stilling}/>
-                                      <SocialShare title={stilling._source.title}/>
+                                      <AdText adText={state.data._source.properties.adtext}/>
+                                      <HardRequirements stilling={state.data}/>
+                                      <SoftRequirements stilling={state.data}/>
+                                      <PersonalAttributes stilling={state.data}/>
+                                      <SocialShare title={state.data._source.title}/>
                                   </React.Fragment>
                               )}
 
                               <div className="Rapport__link">
                                   <Link
                                       className={"link"}
-                                      to={`${CONTEXT_PATH}/rapporter-annonse?uuid=${stilling._id}`}
+                                      to={`${CONTEXT_PATH}/rapporter-annonse?uuid=${state.data._id}`}
                                       aria-label="Rapporter annonse"
                                   >
                                       Rapporter annonse
@@ -170,7 +215,7 @@ const Stilling = ({error, getStilling, isFetchingStilling, match, stilling, rese
                           </div>
                           <div className="Stilling__right">
                               <div className="Stilling__buttons">
-                                  <ToggleFavouriteButton uuid={stilling._id}/>
+                                <FavouriteButton ad={state.data._source} />
                                   <Flatknapp
                                       mini
                                       className="Stilling__print"
@@ -182,13 +227,13 @@ const Stilling = ({error, getStilling, isFetchingStilling, match, stilling, rese
                               {!isFinn && (
                                   <React.Fragment>
                                       <HowToApply
-                                          source={stilling._source.source}
-                                          properties={stilling._source.properties}
+                                          source={state.data._source.source}
+                                          properties={state.data._source.properties}
                                       />
-                                      <EmploymentDetails stilling={stilling._source}/>
-                                      <ContactPerson contactList={stilling._source.contactList}/>
-                                      <EmployerDetails stilling={stilling._source}/>
-                                      <AdDetails source={stilling._source}/>
+                                      <EmploymentDetails stilling={state.data._source}/>
+                                      <ContactPerson contactList={state.data._source.contactList}/>
+                                      <EmployerDetails stilling={state.data._source}/>
+                                      <AdDetails source={state.data._source}/>
                                   </React.Fragment>
                               )}
                           </div>
@@ -201,45 +246,13 @@ const Stilling = ({error, getStilling, isFetchingStilling, match, stilling, rese
     );
 };
 
-Stilling.defaultProps = {
-    stilling: undefined,
-    isFetchingStilling: false,
-    error: undefined,
-    match: {params: {}}
-};
-
 Stilling.propTypes = {
-    stilling: PropTypes.shape({
-        _source: PropTypes.shape({
-            status: PropTypes.string,
-            title: PropTypes.string,
-            properties: PropTypes.shape({
-                adtext: PropTypes.string
-            })
-        })
-    }),
-    resetStilling: PropTypes.func.isRequired,
-    getStilling: PropTypes.func.isRequired,
-    isFetchingStilling: PropTypes.bool,
-    error: PropTypes.shape({
-        statusCode: PropTypes.number
-    }),
     match: PropTypes.shape({
         params: PropTypes.shape({
             uuid: PropTypes.string
         })
-    })
+    }).isRequired
 };
 
-const mapStateToProps = (state) => ({
-    isFetchingStilling: state.stilling.isFetchingStilling,
-    stilling: state.stilling.stilling,
-    error: state.stilling.error
-});
+export default Stilling;
 
-const mapDispatchToProps = (dispatch) => ({
-    getStilling: (uuid) => dispatch({type: FETCH_STILLING_BEGIN, uuid}),
-    resetStilling: () => dispatch({type: RESET_STILLING})
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Stilling);

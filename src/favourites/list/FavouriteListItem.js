@@ -1,19 +1,32 @@
 import classNames from 'classnames';
 import AlertStripe from 'nav-frontend-alertstriper';
 import PropTypes from 'prop-types';
-import React from 'react';
-import {connect} from 'react-redux';
-import {Flatknapp} from '@navikt/arbeidsplassen-knapper';
+import React, { useContext, useState } from 'react';
+import { Flatknapp } from '@navikt/arbeidsplassen-knapper';
 import '../../common/components/Icons.less';
 import SearchResultsItemDetails from '../../search/searchResults/SearchResultsItemDetails';
-import {SHOW_MODAL_REMOVE_FROM_FAVOURITES} from '../favouritesReducer';
+import ConfirmationModal from '../../common/components/ConfirmationModal';
+import { FavouritesContext } from '../FavouritesProvider';
 
-class FavouriteListItem extends React.Component {
-    onRemoveClick = () => {
-        this.props.showModal(this.props.favourite.uuid);
+export default function FavouriteListItem ({ favourite }) {
+    const { removeFavourite, isPending } = useContext(FavouritesContext);
+
+    const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] = useState(false);
+    const expired = favourite.favouriteAd.status !== 'ACTIVE';
+
+    const onRemoveClick = () => {
+        setShowDeleteConfirmationModal(true);
     };
 
-    toAd = (favourite) => ({
+    const onDeleteCanceled = () => {
+        setShowDeleteConfirmationModal(false);
+    };
+
+    const onDeleteConfirmed = () => {
+        removeFavourite(favourite.favouriteAd.uuid);
+    };
+
+    const toAd = (favourite) => ({
         uuid: favourite.uuid,
         title: favourite.title,
         published: favourite.published,
@@ -27,31 +40,44 @@ class FavouriteListItem extends React.Component {
         }
     });
 
-    render() {
-        const {favourite} = this.props;
-        const expired = favourite.favouriteAd.status !== 'ACTIVE';
-        return (
-            <div className="FavouriteListItem__wrapper">
-                <div className={classNames('FavouriteListItem', {'FavouriteListItem--expired': expired})}>
-                    <SearchResultsItemDetails stilling={this.toAd(favourite.favouriteAd)}/>
-                    <Flatknapp onClick={this.onRemoveClick} className="FavouriteListItem__delete Delete"
-                                aria-label="Slett">
-                        <span className="Delete__icon"/>
-                        Slett
-                    </Flatknapp>
-                    {expired && (
-                        <AlertStripe type="advarsel" className="FavouriteListItem__alertstripe alertstripe--solid">
-                            Denne annonsen er utløpt
-                        </AlertStripe>
-                    )}
-                </div>
+
+    return (
+        <div className="FavouriteListItem__wrapper">
+            <div className={classNames('FavouriteListItem', {'FavouriteListItem--expired': expired})}>
+                <SearchResultsItemDetails stilling={toAd(favourite.favouriteAd)}/>
+                <Flatknapp
+                    onClick={onRemoveClick}
+                    className="FavouriteListItem__delete Delete"
+                    aria-label="Slett"
+                    disabled={isPending}
+                >
+                    <span className="Delete__icon"/>
+                    Slett
+                </Flatknapp>
+
+                {expired && (
+                    <AlertStripe type="advarsel" className="FavouriteListItem__alertstripe alertstripe--solid">
+                        Denne annonsen er utløpt
+                    </AlertStripe>
+                )}
             </div>
-        );
-    }
+
+            {showDeleteConfirmationModal && (
+                <ConfirmationModal
+                    title="Slett favoritt"
+                    onConfirm={onDeleteConfirmed}
+                    onCancel={onDeleteCanceled}
+                    confirmLabel="Slett"
+                    spinner={isPending}
+                >
+                    Er du sikker på at du vil slette &#34;{favourite.favouriteAd.title}&#34;?
+                </ConfirmationModal>
+            )}
+        </div>
+    );
 }
 
 FavouriteListItem.propTypes = {
-    showModal: PropTypes.func.isRequired,
     favourite: PropTypes.shape({
         uuid: PropTypes.string,
         favouriteAd: PropTypes.shape({
@@ -59,11 +85,3 @@ FavouriteListItem.propTypes = {
         })
     }).isRequired
 };
-
-const mapStateToProps = (state) => ({});
-
-const mapDispatchToProps = (dispatch) => ({
-    showModal: (uuid) => dispatch({type: SHOW_MODAL_REMOVE_FROM_FAVOURITES, uuid})
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(FavouriteListItem);

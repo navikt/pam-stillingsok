@@ -6,7 +6,7 @@ import { Flatknapp, Hovedknapp } from '@navikt/arbeidsplassen-knapper';
 import './ConfirmationModal.less';
 
 export default function ConfirmationModal({
-    title, children, confirmLabel, cancelLabel, onConfirm, onCancel, spinner
+    title, children, confirmLabel, cancelLabel, onConfirm, onCancel, spinner, useCancelButton
 }) {
     return (
         <Modal
@@ -30,12 +30,14 @@ export default function ConfirmationModal({
                     >
                         {confirmLabel}
                     </Hovedknapp>
-                    <Flatknapp
-                        disabled={spinner}
-                        onClick={onCancel}
-                    >
-                        {cancelLabel}
-                    </Flatknapp>
+                    {useCancelButton && (
+                        <Flatknapp
+                            disabled={spinner}
+                            onClick={onCancel}
+                        >
+                            {cancelLabel}
+                        </Flatknapp>
+                    )}
                 </div>
             </div>
         </Modal>
@@ -45,7 +47,8 @@ export default function ConfirmationModal({
 ConfirmationModal.defaultProps = {
     confirmLabel: 'Forsett',
     cancelLabel: 'Avbryt',
-    spinner: false
+    spinner: false,
+    useCancelButton: true
 };
 
 ConfirmationModal.propTypes = {
@@ -55,5 +58,6 @@ ConfirmationModal.propTypes = {
     cancelLabel: PropTypes.string,
     onConfirm: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
-    spinner: PropTypes.bool
+    spinner: PropTypes.bool,
+    useCancelButton: PropTypes.bool
 };

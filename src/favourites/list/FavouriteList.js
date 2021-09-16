@@ -1,11 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { connect } from 'react-redux';
-import { withoutPendingFavorites } from '../favouritesReducer';
 import FavouriteListItem from './FavouriteListItem';
 import './FavouriteList.less';
 
-function FavouriteList({ favourites }) {
+export default function FavouriteList({ favourites }) {
     return (
         <div>
             {favourites.map((favourite) => (
@@ -21,9 +19,3 @@ FavouriteList.propTypes = {
         title: PropTypes.string
     })).isRequired
 };
-
-const mapStateToProps = (state) => ({
-    favourites: withoutPendingFavorites(state.favourites)
-});
-
-export default connect(mapStateToProps)(FavouriteList);

@@ -5,7 +5,7 @@ export const NotificationsContext = React.createContext({});
 
 /**
  * Viser grønn/rød alert-stripe på toppen av siden, når
- * andre komponenter bruker notify('Kandidaten ble lagret');
+ * andre komponenter bruker notify('din melding');
  */
 export default function NotificationsProvider({ children }) {
     const [notifications, setNotifications] = useState([]);

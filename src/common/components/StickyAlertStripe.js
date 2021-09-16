@@ -9,7 +9,6 @@ export default function StickyAlertStripe({ children, type }) {
             type={type}
             className="StickyAlertStripe alertstripe--solid"
             role="alert"
-            aria-live="polite"
         >
             {children}
         </AlertStripe>
