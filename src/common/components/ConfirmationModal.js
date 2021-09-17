@@ -15,7 +15,7 @@ export default function ConfirmationModal({
             contentLabel="Bekreft valg"
             appElement={document.getElementById('app')}
         >
-            <div className="ConfirmationModal" role="alertdialog">
+            <div className="ConfirmationModal">
                 <Undertittel className="ConfirmationModal__title">
                     {title}
                 </Undertittel>

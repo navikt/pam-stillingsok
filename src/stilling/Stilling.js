@@ -220,13 +220,6 @@ Stilling.defaultProps = {
     match: {params: {}}
 };
 
-Stilling.defaultProps = {
-    stilling: undefined,
-    isFetchingStilling: false,
-    error: undefined,
-    match: {params: {}}
-};
-
 Stilling.propTypes = {
     stilling: PropTypes.shape({
         _source: PropTypes.shape({
