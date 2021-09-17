@@ -1,5 +1,6 @@
 import { takeEvery } from 'redux-saga/effects';
 import fixLocationName from '../server/common/fixLocationName';
+import { ADD_TO_FAVOURITES_SUCCESS, REMOVE_FROM_FAVOURITES_SUCCESS } from './favourites/favouritesReducer';
 import { ADD_SAVED_SEARCH_SUCCESS } from './savedSearches/savedSearchesReducer';
 import { PublishedLabelsEnum } from './search/facets/Published';
 import {
@@ -28,6 +29,7 @@ import { LOAD_MORE, SEARCH } from './search/searchReducer';
 import { sortingValueToLabel } from './search/sorting/Sorting';
 
 const EVENT_CATEGORY_SEARCH = 'Ledige stillinger > Søk';
+const EVENT_CATEGORY_FAVOURITES = 'Ledige stillinger > Favoritter';
 export const EVENT_CATEGORY_SAVED_SEARCHES = 'Ledige stillinger > Lagrede søk';
 const ignoreFurther = [];
 
@@ -50,6 +52,14 @@ export function trackOnce(...props) {
 }
 
 export const analyticsSaga = function* saga() {
+    yield takeEvery(ADD_TO_FAVOURITES_SUCCESS, () => {
+        track('send', 'event', EVENT_CATEGORY_FAVOURITES, 'La til favoritt');
+    });
+
+    yield takeEvery(REMOVE_FROM_FAVOURITES_SUCCESS, () => {
+        track('send', 'event', EVENT_CATEGORY_FAVOURITES, 'Slettet favoritt');
+    });
+
     yield takeEvery(ADD_SAVED_SEARCH_SUCCESS, () => {
         track('send', 'event', EVENT_CATEGORY_SAVED_SEARCHES, 'La til lagret søk');
     });
