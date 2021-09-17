@@ -1,4 +1,5 @@
-# PAM Stillingsøk
+## Hva er pam-stillingsok?
+`pam-stillingsok` er en frontend applikasjon for visning av stillinger på [arbeidsplassen.nav.no](https://arbeidsplassen.nav.no). Den har ansvar for filtrering av stillinger, lagring av favoritt stillinger og lagring av søk slik at brukere kan få daglige oppdateringer pr. e-post. Applikasjonen henter stillinger fra et dokumentdatabase (Elastic Search) gjennom [pam-search-api](https://github.com/navikt/pam-search-api). Lagrede søk og stillingsfavoritter, samt utsending av e-poster skjer gjennom applisjonen [pam-aduser](https://github.com/navikt/pam-aduser).
 
 ## Før kjøring av applikasjonen
 Før du starter må du installere alle npm pakkene, dette kan du gjøre ved å kjøre kommandoen: 
