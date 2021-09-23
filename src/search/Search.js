@@ -93,7 +93,12 @@ const Search = ({
                                             action={CONTEXT_PATH}
                                             onSubmit={onSearchFormSubmit}
                                             className="no-print"
+                                            role="search"
+                                            aria-labelledby="search-form-title"
                                         >
+                                            <h2 className="Search__form-title" id="search-form-title">
+                                                Søk blant ledige stillinger
+                                            </h2>
                                             <SearchBox/>
                                             <Counties/>
                                             <Occupations/>
