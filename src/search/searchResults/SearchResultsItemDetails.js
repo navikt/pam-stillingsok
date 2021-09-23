@@ -23,7 +23,6 @@ function LinkToAd({children, stilling, isFinn, employer}) {
         return (
             <a onClick={logMetrics} href={`https://www.finn.no/${stilling.reference}`}
                className="SearchResultItem__link"
-               aria-label={stilling.title}
             >
                 {children}
             </a>
@@ -32,7 +31,6 @@ function LinkToAd({children, stilling, isFinn, employer}) {
     return (
         <Link to={`${CONTEXT_PATH}/stilling/${stilling.uuid}`}
               className="SearchResultItem__link"
-              aria-label={stilling.title}
         >
             {children}
         </Link>
@@ -60,39 +58,59 @@ export default function SearchResultsItemDetails({stilling}) {
             <Row className="SearchResultsItemDetails">
                 <Column xs="12" md="4">
                     {employer && (
-                        <Normaltekst className="SearchResultsItemDetails__employer">
+                        <Normaltekst
+                            className="SearchResultsItemDetails__employer"
+                            aria-label={`${employer}.`}
+                        >
                             {employer}
                         </Normaltekst>
                     )}
                 </Column>
                 <Column xs="12" md="8">
-                    <Undertittel tag="h3" className="SearchResultsItemDetails__title">
+                    <Undertittel
+                        tag="h3"
+                        className="SearchResultsItemDetails__title"
+                        aria-label={`${stilling.title}.`}
+                    >
                         {stilling.title}
                     </Undertittel>
                     {stilling.properties.jobtitle && stilling.title !== stilling.properties.jobtitle && (
                         <Normaltekst
                             className="SearchResultsItemDetails__jobtitle"
+                            aria-label={`${stilling.properties.jobtitle}.`}
                         >
                             {stilling.properties.jobtitle}
                         </Normaltekst>
                     )}
 
                     {location && (
-                        <Normaltekst className="SearchResultsItemDetails__location">
+                        <Normaltekst
+                            className="SearchResultsItemDetails__location"
+                            aria-label={`${location}.`}
+                        >
                             {location}
                         </Normaltekst>
                     )}
                     {stilling.published && (
-                        <Normaltekst className="SearchResultsItemDetails__published">
+                        <Normaltekst
+                            className="SearchResultsItemDetails__published"
+                            aria-label={`Publisert ${formatISOString(stilling.published, 'DD.MM.YYYY')}.`}
+                        >
                            Publisert: {formatISOString(stilling.published, 'DD.MM.YYYY')}
                         </Normaltekst>
                     )}
                     <div className="SearchResultsItemDetails__applicationdue-wrapper">
-                        <Normaltekst className="SearchResultsItemDetails__applicationdue">
+                        <Normaltekst
+                            className="SearchResultsItemDetails__applicationdue"
+                            aria-label={`Søknadsfrist: ${frist}.`}
+                        >
                             Søknadsfrist: {frist}
                         </Normaltekst>
                         {isFinn && (
-                            <Normaltekst className="SearchResultsItemDetails__external-link">
+                            <Normaltekst
+                                className="SearchResultsItemDetails__external-link"
+                                aria-label={"Annonsen åpnes på finn."}
+                            >
                                 Annonsen åpnes på FINN <span className="SearchResultsItemDetails__external-link-icon"
                                                              aria-label="Ekstern lenke"/>
                             </Normaltekst>
