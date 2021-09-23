@@ -95,7 +95,7 @@ class Locations extends React.Component {
                             className={location.count === 0 ? 'Facet__zero__count' : ''}
                             name="location"
                             label={`${fixLocationName(location.key)} (${location.count})`}
-                            aria-label={`${location.key}. Antall stillinger (${location.count})`}
+                            aria-label={`${location.key}, ${location.count !== 1 ? `${location.count} annonser` : '1 annonse'}`}
                             value={location.key}
                             onChange={this.onCheckboxClick(location.key, location.type)}
                             checked={checkedCounties.includes(location.key) || (location.key === 'UTLAND' && international === true)}
@@ -112,7 +112,7 @@ class Locations extends React.Component {
                                         name="location"
                                         key={subLocation.key}
                                         label={`${fixLocationName(subLocation.key, true)} (${subLocation.count})`}
-                                        aria-label={`${subLocation.key}. Antall stillinger (${subLocation.count})`}
+                                        aria-label={`${fixLocationName(subLocation.key, true)}, ${subLocation.count !== 1 ? `${subLocation.count} annonser` : '1 annonse'}`}
                                         value={subLocation.key}
                                         onChange={this.onCheckboxClick(subLocation.key, subLocation.type)}
                                         checked={checkedMunicipals.includes(subLocation.key) || checkedCountries.includes(subLocation.key)}
@@ -130,7 +130,7 @@ class Locations extends React.Component {
                             name="remote"
                             key={remote.key}
                             label={`${remote.key} (${remote.count})`}
-                            aria-label={`${remote.key}. Antall stillinger (${remote.count})`}
+                            aria-label={`${remote.key}, ${remote.count !== 1 ? `${remote.count} annonser` : '1 annonse'}`}
                             value={remote.key}
                             onChange={this.onRemoteClick}
                             checked={checkedRemote.includes(remote.key)}

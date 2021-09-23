@@ -35,7 +35,7 @@ class Published extends React.Component {
                         name="published"
                         key={item.key}
                         label={`${PublishedLabelsEnum[item.key]} (${item.count})`}
-                        aria-label={`${PublishedLabelsEnum[item.key]}. Antall stillinger (${item.count})`}
+                        aria-label={`${PublishedLabelsEnum[item.key]}, ${item.count !== 1 ? `${item.count} annonser` : '1 annonse'}`}
                         value={item.key}
                         onChange={this.onPublishedClick}
                         checked={checkedPublished === item.key}

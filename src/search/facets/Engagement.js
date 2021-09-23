@@ -46,7 +46,7 @@ class Engagement extends React.Component {
                         name="engagementType"
                         key={this.editedItemKey(item.key)}
                         label={`${this.editedItemKey(item.key)} (${item.count})`}
-                        aria-label={`${this.editedItemKey(item.key)}. Antall stillinger ${item.count}`}
+                        aria-label={`${this.editedItemKey(item.key)}, ${item.count !== 1 ? `${item.count} annonser` : '1 annonse'}`}
                         value={item.key}
                         onChange={this.onEngagementClick}
                         checked={checkedEngagement.includes(item.key)}
