@@ -50,7 +50,7 @@ class SavedSearchListItem extends React.Component {
                 <div className={classNames('SavedSearchListItem', { 'SavedSearchListItem--expired': expired })}>
                     <div className="SavedSearchListItem__top">
                         <div className="SavedSearchListItem__top_flex">
-                            <h2 className="SavedSearchListItem__title">
+                            <h3 className="SavedSearchListItem__title">
                                 <Link
                                     className="link"
                                     to={`${CONTEXT_PATH}${savedSearch.searchQuery}&saved=${savedSearch.uuid}`}
@@ -58,7 +58,7 @@ class SavedSearchListItem extends React.Component {
                                 >
                                     {savedSearch.title}
                                 </Link>
-                            </h2>
+                            </h3>
                             {isValidISOString(savedSearch.updated) && (
                                 <Normaltekst className="SavedSearchListItem__created">
                                     Sist endret: {formatISOString(savedSearch.updated, 'DD.MM.YYYY')}

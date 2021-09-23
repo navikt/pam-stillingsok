@@ -5,7 +5,7 @@ import './TotalFavourites.less';
 export default function TotalFavourites({ total }) {
     return (
         <div className="TotalFavourites">
-            <h2 className="TotalFavourites__label">{`Antall annonser: ${total}`}</h2>
+            <h2 className="TotalFavourites__label">{total !== 1 ? `${total} annonser` : '1 annonse'}</h2>
         </div>
     );
 }
