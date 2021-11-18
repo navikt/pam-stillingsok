@@ -17,7 +17,8 @@ jobs:
           fetch-depth: 0
       - uses: actions/setup-node@v2
         with:
-          cache: 'node'
+          node-version: '14'
+            cache: 'npm'
       - name: build and test
         run: |
           npm install
