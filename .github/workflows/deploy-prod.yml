@@ -21,7 +21,7 @@ jobs:
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: prod-gcp
-          RESOURCE: naiserator.yml,topic.yaml
+          RESOURCE: naiserator.yml
           VARS: naiserator-prod.json
       - name: post-production
         uses: navikt/pam-deploy/actions/post-production@v2
