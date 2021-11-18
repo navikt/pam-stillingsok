@@ -20,7 +20,8 @@ if (amplitudeIsEnabled()) {
             batchEvents: false,
             includeReferrer: true,
             includeUtm: true,
-            saveEvents: false
+            saveEvents: false,
+            transport: 'beacon',
         }
     );
 }
