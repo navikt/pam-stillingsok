@@ -1,4 +1,4 @@
-name: build-deploy-dev
+name: build-deploy-feature
 on:
   push:
     paths-ignore:
@@ -7,9 +7,9 @@ on:
       - "LICENCE"
       - "CODEOWNERS"
     branches:
-      - master
+      - feature/*
 jobs:
-  build-and-deploy:
+  build-and-deploy-feature:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -23,10 +23,18 @@ jobs:
         run: |
           npm install
           npm run build
-      - name: pre-deploy
-        uses: navikt/pam-deploy/actions/pre-deploy@v2
+      - name: build and push docker image
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          APPLICATION=$(echo $GITHUB_REPOSITORY | cut -d "/" -f 2)
+          SHORT_SHA=$(echo $GITHUB_SHA | cut -c1-8)
+          VERSION_TAG=${GITHUB_REF##*/}-$SHORT_SHA
+          IMAGE=ghcr.io/$GITHUB_REPOSITORY:$VERSION_TAG
+          echo "IMAGE=$IMAGE" >> $GITHUB_ENV
+          docker build . --pull -t $IMAGE
+          echo "$GITHUB_TOKEN" | docker login --username "$GITHUB_REPOSITORY" --password-stdin ghcr.io
+          docker push $IMAGE
       - name: deploy to dev-gcp
         uses: nais/deploy/actions/deploy@v1
         env:
@@ -34,17 +42,3 @@ jobs:
           CLUSTER: dev-gcp
           RESOURCE: naiserator.yml
           VARS: naiserator-dev.json
-      - name: post-deploy
-        uses: navikt/pam-deploy/actions/post-deploy@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: draft release
-        uses: actions/create-release@latest
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ env.VERSION_TAG }}
-          release_name: ${{ env.APPLICATION }} ${{ env.VERSION_TAG }}
-          body: ${{ env.CHANGE_LOG }}
-          draft: true
-          prerelease: false
