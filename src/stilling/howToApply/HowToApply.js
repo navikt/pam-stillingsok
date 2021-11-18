@@ -5,6 +5,7 @@ import {formatISOString, isValidEmail, isValidISOString, isValidUrl} from '../..
 import './HowToApply.less';
 import sendGAEvent from "../../googleanalytics";
 import {Hovedknapp} from "@navikt/arbeidsplassen-knapper";
+import logAmplitudeEvent from "../../amplitudeTracker";
 
 export function getApplicationUrl(source, properties) {
     if (source === 'FINN') {
@@ -15,15 +16,24 @@ export function getApplicationUrl(source, properties) {
     return properties.sourceurl;
 }
 
-const applyForPosition  = (finn, sokUrl) => {
+const applyForPosition  = (finn, sokUrl, stilling) => {
     const eventLabel = `sok-pa-stillingen-${finn ? "finn" : "annen-kilde"}`;
     sendGAEvent(eventLabel);
+    try {
+        logAmplitudeEvent('Stilling sok-via-url', {
+            title: stilling._source.title,
+            id: stilling._id,
+        })
+    } catch (e) {
+        // ignore
+    }
     window.location.href = sokUrl;
 }
 
-export default function HowToApply({ source, properties }) {
-    const sokUrl = getApplicationUrl(source, properties);
-    const finn = source === 'FINN';
+export default function HowToApply({ stilling }) {
+    const properties = stilling._source.properties
+    const sokUrl = getApplicationUrl(stilling._source.source, properties);
+    const finn = stilling._source.source === 'FINN';
     if (properties.applicationdue || properties.applicationemail || sokUrl) {
         return (
             <div className="HowToApply detail-section">
@@ -57,7 +67,7 @@ export default function HowToApply({ source, properties }) {
                     {sokUrl && isValidUrl(sokUrl) && (
                         <div className="HowToApply__send-button-wrapper">
                             <Hovedknapp
-                                onClick={() => applyForPosition(finn, sokUrl)}
+                                onClick={() => applyForPosition(finn, sokUrl, stilling)}
                                 className="HowToApply__send-button Knapp Knapp--hoved blokk-xxs"
                             >
                                 <div className="HowToApply__send-button-content">
@@ -85,12 +95,18 @@ export default function HowToApply({ source, properties }) {
 }
 
 HowToApply.propTypes = {
-    source: PropTypes.string.isRequired,
-    properties: PropTypes.shape({
-        applicationdue: PropTypes.string,
-        applicationemail: PropTypes.string,
-        applicationurl: PropTypes.string,
-        sourceurl: PropTypes.string
+    stilling: PropTypes.shape({
+        _id: PropTypes.string,
+        _source: PropTypes.shape({
+            title: PropTypes.string,
+            source: PropTypes.string,
+            properties: PropTypes.shape({
+                applicationdue: PropTypes.string,
+                applicationemail: PropTypes.string,
+                applicationurl: PropTypes.string,
+                sourceurl: PropTypes.string
+            })
+        })
     }).isRequired
 };
 

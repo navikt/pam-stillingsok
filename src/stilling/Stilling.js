@@ -196,8 +196,7 @@ const Stilling = ({error, getStilling, isFetchingStilling, match, stilling, rese
                             {!isFetchingStilling && stilling && !isFinn && (
                                 <React.Fragment>
                                     <HowToApply
-                                        source={stilling._source.source}
-                                        properties={stilling._source.properties}
+                                        stilling={stilling}
                                     />
                                     <EmploymentDetails stilling={stilling._source}/>
                                     <ContactPerson contactList={stilling._source.contactList}/>
