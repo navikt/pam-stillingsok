@@ -193,7 +193,7 @@ const RapporterAnnonse = () => {
                                     tellerTekst={() => {return "Legg ikke igjen personopplysinger i dette feltet"}}
                                 />
 
-                                <Lenkeknapp onClick={() => window.location.href="https://www.nav.no/no/bedrift/rekruttering/relatert-informasjon/stillingsregistrering"}>
+                                <Lenkeknapp onClick={() => window.location.href="https://arbeidsplassen.nav.no/retningslinjer"}>
                                     Les om gjeldende regler
                                 </Lenkeknapp>
                             </div>
