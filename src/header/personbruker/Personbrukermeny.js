@@ -30,8 +30,8 @@ const tabs = [
     },
     {
         tittel: 'Jobbtreff',
-        href: '/moteplass/arrangement',
-        app: 'MOTEPLASS'
+        href: '/jobbtreff',
+        app: 'JOBBTREFF'
     }
 ];
 
