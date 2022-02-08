@@ -25,7 +25,6 @@ import SearchResults from './searchResults/SearchResults';
 import ShowResultsButton from './showResultsButton/ShowResultsButton';
 import Sorting from './sorting/Sorting';
 import {useDocumentTitle, useTrackPageview} from '../common/hooks';
-import AdStatisticsLink from "../common/components/AdStatisticsLink";
 import SearchErrorBox from "../common/components/SearchErrorBox";
 import { track } from '../analytics';
 
@@ -119,7 +118,6 @@ const Search = ({
                                                 Nullstill søk
                                             </Knapp>
                                         </div>
-                                        <AdStatisticsLink/>
                                     </div>
                                 </div>
                             </Column>
