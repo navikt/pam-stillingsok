@@ -167,9 +167,8 @@ const Stilling = ({error, getStilling, isFetchingStilling, match, stilling, rese
                                     <Link
                                         className={"link"}
                                         to={`${CONTEXT_PATH}/rapporter-annonse?uuid=${stilling._id}`}
-                                        aria-label="Rapporter annonse"
                                     >
-                                        Rapporter annonse
+                                        Rapportér annonse
                                     </Link>
                                 </div>
                                 }

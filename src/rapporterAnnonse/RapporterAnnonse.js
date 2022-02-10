@@ -142,7 +142,7 @@ const RapporterAnnonse = () => {
                     )}
                     {!finished && (
                         <div>
-                            <Sidetittel>Rapporter annonse</Sidetittel>
+                            <Sidetittel>Rapportér annonse</Sidetittel>
 
                             <div className="report-form">
                                 <Undertittel>Henveldensen gjelder</Undertittel>
