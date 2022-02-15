@@ -1,81 +1,106 @@
-import { AuthStatus, PersonbrukerApplikasjon } from 'pam-frontend-header';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import ReactDOM from 'react-dom';
-import { connect } from 'react-redux';
-import { authenticationEnum, REDIRECT_TO_LOGIN } from '../authentication/authenticationReducer';
-import { LOGOUT_URL } from '../fasitProperties';
-import { COLLAPSE_ALL_FACET_PANELS, EXPAND_ALL_FACET_PANELS } from '../search/facets/facetPanelsReducer';
-import { isMobile } from '../utils';
-import LoginButton from './LoginButton';
-import './TopMenu.less';
-import Header from "../header/Header";
+import {connect} from 'react-redux';
+import {authenticationEnum, REDIRECT_TO_LOGIN} from '../authentication/authenticationReducer';
+import {LOGOUT_URL} from '../fasitProperties';
 import {USER_IS_UNDER_FIFTEEN} from "../user/userReducer";
+import './TopMenu.less';
 
-const uinnloggetHeader = document.getElementById('ArbeidsplassenHeader');
+const TopMenu = ({isAuthenticated, redirectToLogin, setErUnderFemten}) => {
 
-const TopMenu = ({ isAuthenticated, collapseAllFacetPanels, expandAllFacetPanels, redirectToLogin, setErUnderFemten }) => {
-    const login = (role) => {
-        redirectToLogin(role);
-    };
+    const [userInfo, setUserInfo] = useState(undefined);
+    const [showMobileMenu, setShowMobileMenu] = useState(false);
 
-    const logout = () => {
-        window.location.href = LOGOUT_URL;
-    };
-
-    const authenticationStatus = (status) => {
-        if (status === authenticationEnum.IS_AUTHENTICATED) {
-            return AuthStatus.IS_AUTHENTICATED;
+    useEffect(() => {
+        if (!userInfo) {
+            if (process.env.NODE_ENV === 'production') {
+                fetch('/api/cv/rest/person/headerinfo', {
+                    method: 'GET',
+                    credentials: 'include'
+                })
+                    .then((response) => response.json())
+                    .then((result) => {
+                        setUserInfo(result);
+                        setErUnderFemten(userInfo.erUnderFemten)
+                    });
+            } else {
+                const testData = {
+                    underOppfolging: false,
+                    fornavn: 'Navn',
+                    etternavn: 'Navnesen',
+                    erUnderFemten: false
+                }
+                setUserInfo(testData);
+                setErUnderFemten(testData.erUnderFemten);
+            }
         }
-        if (status === authenticationEnum.NOT_AUTHENTICATED) {
-            return AuthStatus.NOT_AUTHENTICATED;
-        }
-        return AuthStatus.UNKNOWN;
-    };
+    }, []);
 
-    if (authenticationStatus(isAuthenticated) === AuthStatus.IS_AUTHENTICATED) {
-        uinnloggetHeader.className = 'ArbeidsplassenHeader--hidden';
+    useEffect(() => {
+        const header = document.getElementById('arbeidsplassen-header-menu');
+        header.className = showMobileMenu ? '' : 'arbeidsplassen-header-menu-hidden';
+    }, [showMobileMenu])
 
-        return (
-            <div className="no-print">
-                <Header
-                    validerNavigasjon={{
-                        redirectTillates: () => {
-                            // Reset state of facet panel (closed if on mobile) and return true to complete the redirect
-                            if (isMobile()) {
-                                collapseAllFacetPanels();
-                            } else {
-                                expandAllFacetPanels();
-                            }
-                            return true;
-                        }
+    return (
+        <React.Fragment>
+            {isAuthenticated === authenticationEnum.IS_AUTHENTICATED && (
+                <React.Fragment>
+                    {ReactDOM.createPortal(
+                        <button onClick={() => {
+                            window.location.href = LOGOUT_URL;
+                        }}>
+                            Logg ut
+                        </button>,
+                        document.getElementById('arbeidsplassen-header-login-container')
+                    )}
+                    {ReactDOM.createPortal(
+                        <React.Fragment>
+                            {userInfo && userInfo.fornavn && userInfo.etternavn ? userInfo.fornavn + " " + userInfo.etternavn : ""}
+                        </React.Fragment>,
+                        document.getElementById('arbeidsplassen-header-current-user-container')
+                    )}
+                    {ReactDOM.createPortal(
+                        <React.Fragment>
+                            <a href="/minside">
+                                Min side
+                            </a>
+                        </React.Fragment>,
+                        document.getElementById('arbeidsplassen-header-mypage-container')
+                    )}
+                </React.Fragment>
+            )}
+            {isAuthenticated === authenticationEnum.NOT_AUTHENTICATED && (
+                <React.Fragment>
+                    {ReactDOM.createPortal(
+                        <button onClick={(role) => {
+                            redirectToLogin(role);
+                        }}>
+                            Logg inn
+                        </button>,
+                        document.getElementById('arbeidsplassen-header-login-container')
+                    )}
+                </React.Fragment>
+            )}
+            {ReactDOM.createPortal(
+                <button
+                    aria-expanded={showMobileMenu}
+                    aria-controls="arbeidsplassen-header-menu"
+                    onClick={() => {
+                        setShowMobileMenu(!showMobileMenu);
                     }}
-                    onLoginClick={login}
-                    onLogoutClick={logout}
-                    onErUnderFemten={setErUnderFemten}
-                    useMenu="personbruker"
-                    authenticationStatus={authenticationStatus(isAuthenticated)}
-                    applikasjon={PersonbrukerApplikasjon.STILLINGSSOK}
-                    visInnstillinger
-                    showName
-                />
-            </div>
-        );
-    } else if (authenticationStatus(isAuthenticated) === AuthStatus.NOT_AUTHENTICATED) {
-        return (
-            ReactDOM.createPortal(
-                <LoginButton redirectToLogin={login}/>,
-                document.getElementById('ArbeidsplassenHeader__login')
-            )
-        );
-    }
-    return null;
+                >
+                    Meny
+                </button>,
+                document.getElementById('arbeidsplassen-header-menu-button-container')
+            )}
+        </React.Fragment>
+    )
 };
 
 TopMenu.propTypes = {
     isAuthenticated: PropTypes.string.isRequired,
-    collapseAllFacetPanels: PropTypes.func.isRequired,
-    expandAllFacetPanels: PropTypes.func.isRequired,
+    setErUnderFemten: PropTypes.func.isRequired,
     redirectToLogin: PropTypes.func.isRequired
 };
 
@@ -84,9 +109,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    redirectToLogin: (role) => dispatch({ type: REDIRECT_TO_LOGIN, role }),
-    collapseAllFacetPanels: () => dispatch({ type: COLLAPSE_ALL_FACET_PANELS }),
-    expandAllFacetPanels: () => dispatch({ type: EXPAND_ALL_FACET_PANELS }),
+    redirectToLogin: (role) => dispatch({type: REDIRECT_TO_LOGIN, role}),
     setErUnderFemten: (erUnderFemten) => dispatch({ type: USER_IS_UNDER_FIFTEEN, erUnderFemten})
 });
 

@@ -27,6 +27,8 @@ import Sorting from './sorting/Sorting';
 import {useDocumentTitle, useTrackPageview} from '../common/hooks';
 import SearchErrorBox from "../common/components/SearchErrorBox";
 import { track } from '../analytics';
+import {Link} from "react-router-dom";
+import {authenticationEnum} from "../authentication/authenticationReducer";
 
 const Search = ({
                     initialSearch,
@@ -84,6 +86,20 @@ const Search = ({
                 )}
                 {!searchFailed && initialSearchDone && (
                     <RestoreScroll id="Search">
+                        {isAuthenticated === authenticationEnum.IS_AUTHENTICATED && (
+                            <Row>
+                                <Column xs="12">
+                                    <div className="Search__links-to-favourites-and-saved-search">
+                                        <Link to={`${CONTEXT_PATH}/favoritter`} className="link Search__favourites-link">
+                                            Favoritter
+                                        </Link>
+                                        <Link to={`${CONTEXT_PATH}/lagrede-sok`} className="link Search__saved-search-link">
+                                            Lagrede søk
+                                        </Link>
+                                    </div>
+                                </Column>
+                            </Row>
+                        )}
                         <Row>
                             <Column xs="12" md="4">
                                 <div className="Search__main__left">
