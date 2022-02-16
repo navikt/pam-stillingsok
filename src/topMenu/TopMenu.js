@@ -26,7 +26,7 @@ const TopMenu = ({isAuthenticated, redirectToLogin, setErUnderFemten}) => {
                     });
             } else {
                 const testData = {
-                    underOppfolging: false,
+                    underOppfolging: true,
                     fornavn: 'Navn',
                     etternavn: 'Navnesen',
                     erUnderFemten: false
@@ -67,6 +67,16 @@ const TopMenu = ({isAuthenticated, redirectToLogin, setErUnderFemten}) => {
                             </a>
                         </React.Fragment>,
                         document.getElementById('arbeidsplassen-header-mypage-container')
+                    )}
+                    {userInfo && userInfo.underOppfolging && (
+                        ReactDOM.createPortal(
+                            <React.Fragment>
+                                <a href="/minside">
+                                    Ditt NAV
+                                </a>
+                            </React.Fragment>,
+                            document.getElementById('arbeidsplassen-header-dittnavn-container')
+                        )
                     )}
                 </React.Fragment>
             )}
