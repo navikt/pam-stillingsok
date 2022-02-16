@@ -71,7 +71,7 @@ const TopMenu = ({isAuthenticated, redirectToLogin, setErUnderFemten}) => {
                     {userInfo && userInfo.underOppfolging && (
                         ReactDOM.createPortal(
                             <React.Fragment>
-                                <a href="/minside">
+                                <a href="https://www.nav.no/person/dittnav">
                                     Ditt NAV
                                 </a>
                             </React.Fragment>,
