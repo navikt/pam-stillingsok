@@ -27,8 +27,8 @@ const TopMenu = ({isAuthenticated, redirectToLogin, setErUnderFemten}) => {
             } else {
                 const testData = {
                     underOppfolging: true,
-                    fornavn: 'Navn',
-                    etternavn: 'Navnesen',
+                    fornavn: 'Kristin',
+                    etternavn: 'Lavransdatter',
                     erUnderFemten: false
                 }
                 setUserInfo(testData);
@@ -60,24 +60,6 @@ const TopMenu = ({isAuthenticated, redirectToLogin, setErUnderFemten}) => {
                         </React.Fragment>,
                         document.getElementById('arbeidsplassen-header-current-user-container')
                     )}
-                    {ReactDOM.createPortal(
-                        <React.Fragment>
-                            <a href="/minside">
-                                Min side
-                            </a>
-                        </React.Fragment>,
-                        document.getElementById('arbeidsplassen-header-mypage-container')
-                    )}
-                    {userInfo && userInfo.underOppfolging && (
-                        ReactDOM.createPortal(
-                            <React.Fragment>
-                                <a href="https://www.nav.no/person/dittnav">
-                                    Ditt NAV
-                                </a>
-                            </React.Fragment>,
-                            document.getElementById('arbeidsplassen-header-dittnavn-container')
-                        )
-                    )}
                 </React.Fragment>
             )}
             {isAuthenticated === authenticationEnum.NOT_AUTHENTICATED && (
@@ -95,7 +77,7 @@ const TopMenu = ({isAuthenticated, redirectToLogin, setErUnderFemten}) => {
             {ReactDOM.createPortal(
                 <button
                     aria-expanded={showMobileMenu}
-                    aria-controls="arbeidsplassen-header-menu"
+                    aria-controls="arbeidsplassen-header-menu-wrapper"
                     onClick={() => {
                         setShowMobileMenu(!showMobileMenu);
                     }}
