@@ -63,7 +63,6 @@ const Search = ({
 
     return (
         <div className="Search">
-            <a id="main-content" tabIndex="-1" />
             <FavouriteAlertStripe/>
             <SavedSearchAlertStripe/>
             <div className="PageHeader PageHeader--no-mb">
