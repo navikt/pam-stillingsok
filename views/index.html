@@ -18,21 +18,17 @@
     <link rel="icon" href="/images/favicon.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-180.png" />
 </head>
-<body>
+<body class="body-flex" id="app">
+    <a class="arbeidsplassen-skiplink" href="#main-content">Hopp til hovedinnhold</a>
+    {{> components/header}}
 
-{{> components/header}}
+    <main class="main-flex" id="main-content">
+        <div id="reactApp"></div>
+    </main>
 
-<main id="app">
-    <div class="Application">
-        <div class="Application__main">
-            <div id="reactApp"></div>
-        </div>
-        <div class="Application__footer">
-            {{> components/footer}}
-        </div>
+    <div class="footer-flex">
+        {{> components/footer}}
     </div>
-</main>
-
-<script type="application/javascript" src="/stillinger/js/sok.js"></script>
+    <script type="application/javascript" src="/stillinger/js/sok.js"></script>
 </body>
 </html>

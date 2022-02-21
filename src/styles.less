@@ -9,45 +9,10 @@
 @import "../node_modules/@navikt/arbeidsplassen-core/less/panel/panel";
 @import "../node_modules/@navikt/arbeidsplassen-core/less/alertstripe/alertstripe";
 @import "variables";
-@import "footer";
-@import "header";
-
-/*
-Source Sans Pro som vi får fra nav-frontend-typografi ser ikke bra ut i noen browsere, feks Chrome i Windows 7 og 10.
-Det finnes allerede et issue på dette: https://github.com/navikt/nav-frontend-moduler/issues/46.
-Som en midlertidig løsning overstyrer vi fonten, ved å laste dem inn fra google fonts
-*/
-@font-face {
-  font-family: 'Source Sans Pro';
-  font-style: normal;
-  font-weight: 300;
-  src: local('Source Sans Pro Light'), local('SourceSansPro-Light'), url(https://fonts.gstatic.com/s/sourcesanspro/v11/6xKydSBYKcSV-LCoeQqfX1RYOo3ik4zwlxdu.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
-@font-face {
-  font-family: 'Source Sans Pro';
-  font-style: italic;
-  font-weight: 400;
-  src: local('Source Sans Pro Italic'), local('SourceSansPro-Italic'), url(https://fonts.gstatic.com/s/sourcesanspro/v10/M2Jd71oPJhLKp0zdtTvoMxgy2Fsj5sj3EzlXpqVXRKo.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;
-}
-
-@font-face {
-  font-family: 'Source Sans Pro';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Source Sans Pro Regular'), local('SourceSansPro-Regular'), url(https://fonts.gstatic.com/s/sourcesanspro/v10/ODelI1aHBYDBqgeIAH2zlNV_2ngZ8dMf8fLgjYEouxg.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;
-}
-
-@font-face {
-  font-family: 'Source Sans Pro';
-  font-style: normal;
-  font-weight: 600;
-  src: local('Source Sans Pro SemiBold'), local('SourceSansPro-SemiBold'), url(https://fonts.gstatic.com/s/sourcesanspro/v10/toadOcfmlt9b38dHJxOBGCOFnW3Jk0f09zW_Yln67Ac.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;
-}
+@import "./styles/fonts";
+@import "./styles/footer";
+@import "./styles/header";
+@import "./styles/skiplink";
 
 html, body {
   height: 100%;
@@ -63,12 +28,17 @@ body {
   .skjemaelement--pink();
 }
 
-#app, .Application {
-  height: 100%;
+.body-flex {
+  display: flex;
+  flex-direction: column;
 }
 
-.Application__main {
-  min-height: 100%;
+.main-flex {
+  flex: 1 0 auto;
+}
+
+.footer-flex {
+  flex-shrink: 0;
 }
 
 body.screen-xs-no-scroll {
@@ -98,22 +68,6 @@ input::-ms-clear {
   .container {
     padding-left: 16px;
     padding-right: 16px;
-  }
-}
-
-.BedriftLinkHack-wrapper--shown {
-  max-width: 1156px;
-  margin: 0 auto;
-  position: relative;
-}
-
-#BedriftLinkHack-nav {
-  position: absolute;
-  left: 247px;
-  top: 29px;
-
-  @media (max-width: @screen-xs-max) {
-    display: none;
   }
 }
 
