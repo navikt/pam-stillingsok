@@ -16,7 +16,7 @@ export function getApplicationUrl(source, properties) {
     return properties.sourceurl;
 }
 
-const applyForPosition  = (finn, sokUrl, stilling) => {
+const applyForPosition  = (finn, stilling) => {
     const eventLabel = `sok-pa-stillingen-${finn ? "finn" : "annen-kilde"}`;
     sendGAEvent(eventLabel);
     try {
@@ -27,7 +27,6 @@ const applyForPosition  = (finn, sokUrl, stilling) => {
     } catch (e) {
         // ignore
     }
-    window.location.href = sokUrl;
 }
 
 export default function HowToApply({ stilling }) {
@@ -66,14 +65,15 @@ export default function HowToApply({ stilling }) {
 
                     {sokUrl && isValidUrl(sokUrl) && (
                         <div className="HowToApply__send-button-wrapper">
-                            <Hovedknapp
-                                onClick={() => applyForPosition(finn, sokUrl, stilling)}
+                            <a
+                                href={sokUrl}
+                                onClick={() => applyForPosition(finn, stilling)}
                                 className="HowToApply__send-button Knapp Knapp--hoved blokk-xxs"
                             >
                                 <div className="HowToApply__send-button-content">
                                     <span className="HowToApply__send-button-icon" />Søk på stillingen
                                 </div>
-                            </Hovedknapp>
+                            </a>
 
                             {finn &&
                             <Undertekst className="blokk-xs"> Denne annonsen er hentet fra{' '}
