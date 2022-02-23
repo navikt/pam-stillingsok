@@ -28,13 +28,17 @@ body {
   .skjemaelement--pink();
 }
 
-.body-flex {
-  display: flex;
-  flex-direction: column;
+.push-footer-down {
+  min-height: 100%;
+  margin-bottom: -420px; /* height of footer */
+  padding-bottom: 420px;
 }
 
-.main-flex {
-  flex: 1;
+@media (min-width: 1300px) {
+  .push-footer-down {
+    margin-bottom: -240px; /* height of footer */
+    padding-bottom: 240px;
+  }
 }
 
 body.screen-xs-no-scroll {
