@@ -67,7 +67,7 @@ const Stilling = ({error, getStilling, isFetchingStilling, match, stilling, rese
 
     useEffect(() => {
         if (stilling && stilling._source && stilling._id && stilling._source.title) {
-            document.title = stilling._source.title;
+            document.title = `${stilling._source.title} - Arbeidsplasssen`;
 
             try {
                 ga('set', 'page', `${CONTEXT_PATH}/stilling/${stilling._id}`);
