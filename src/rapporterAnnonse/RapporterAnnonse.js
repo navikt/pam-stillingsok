@@ -16,6 +16,7 @@ import {authenticationEnum} from "../authentication/authenticationReducer";
 import NotAuthenticated from "../authentication/NotAuthenticated";
 import logAmplitudeEvent from "../amplitudeTracker";
 import {Textarea} from "nav-frontend-skjema";
+import {useDocumentTitle} from "../common/hooks";
 
 const violationCategories = [
     {label: "Diskriminerende innhold", key: "discrimination"},
@@ -41,6 +42,8 @@ const RapporterAnnonse = () => {
     const [scamCategory, setScamCategory] = useState(null);
     const [description, setDescription] = useState('');
     const [descriptionLabel, setDescriptionLabel] = useState("Beskrivelse - må fylles ut");
+
+    useDocumentTitle('Rapportér annonse - Arbeidsplassen');
 
     useEffect(() => {
         if (document.location.search.includes('uuid')) {

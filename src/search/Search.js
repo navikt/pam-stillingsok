@@ -46,7 +46,7 @@ const Search = ({
     });
 
     useTrackPageview(CONTEXT_PATH, 'Ledige stillinger');
-    useDocumentTitle('Ledige stillinger - Arbeidsplassen - Norges nye jobbsøk');
+    useDocumentTitle('Ledige stillinger - Arbeidsplassen');
 
     useEffect(() => {
         initialSearch();
