@@ -2,11 +2,7 @@
 
 .Stilling {
   font-family: "Source Sans Pro", Arial, sans-serif;
-  margin-bottom: 4rem;
-}
-
-.Stilling__row {
-  padding-top: 2rem;
+  margin: 2rem 0 4rem 0;
 }
 
 .Stilling__header {
@@ -20,10 +16,10 @@
 .Stilling__buttons {
   display: flex;
   justify-content: left;
-  padding-bottom: 1rem;
+  padding: 1rem 0;
 
   @media (min-width: @screen-md-min) {
-    justify-content: center;
+    justify-content: flex-end;
     .Knapp:not(:last-child) {
       margin-right: @button-marginRight;
     }
@@ -52,10 +48,11 @@
   line-height: 1.33;
   word-wrap: break-word;
   overflow-wrap: break-word;
+  font-weight: 600;
 
   @media (min-width: @screen-md-min) {
     margin: 2rem 0 1rem;
-    font-size: 2rem;
+    font-size: 2.5rem;
     line-height: 1.16;
   }
 }
@@ -75,21 +72,21 @@
 
 .Rapport__link {
   margin-top: 20px;
+  font-size: 1.125rem;
 }
 
 .detail-section {
   width: 100%;
   margin-bottom: 2rem;
-  border-top: 2px solid @gray3;
 
   .detail-section__head {
     padding: 0.75rem 1rem;
+    background: @gray2;
   }
 
   .detail-section__body {
-    word-break: break-word;
     padding: 1rem;
-    background-color: @gray2;
+    background: #fafafa;
   }
 }
 
@@ -107,19 +104,14 @@
 
     @media (min-width: @screen-md-min) {
       margin: 0 0 0.5rem 0;
-      color: @gray5;
       font-weight: 400;
       flex: 0 42%;
     }
   }
 
   dd, dt {
-    line-height: 1.2;
-  }
-
-  dd:not(:last-of-type),
-  dt:not(:last-of-type) {
-    margin-bottom: 0.75rem;
+    line-height: 1.5;
+    font-size: 1.125rem;
   }
 
   dd {

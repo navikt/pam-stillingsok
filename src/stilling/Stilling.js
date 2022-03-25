@@ -1,10 +1,7 @@
 /* eslint-disable no-underscore-dangle,prefer-destructuring */
 import PropTypes from 'prop-types';
 import React, {useEffect} from 'react';
-import {Flatknapp} from '@navikt/arbeidsplassen-knapper';
 import {Column, Container, Row} from 'nav-frontend-grid';
-import getEmployer from '../../server/common/getEmployer';
-import getWorkLocation from '../../server/common/getWorkLocation';
 import {CONTEXT_PATH} from '../fasitProperties';
 import FavouriteAlertStripe from '../favourites/alertstripe/FavouriteAlertStripe';
 import ToggleFavouriteButton from '../favourites/toggleFavoriteButton/ToggleFavouriteButton';
@@ -22,7 +19,6 @@ import NotFound from './notFound/NotFound';
 import HardRequirements from './requirements/HardRequirements';
 import PersonalAttributes from './requirements/PersonalAttributes';
 import SoftRequirements from './requirements/SoftRequirements';
-import SocialShare from './socialShare/SocialShare';
 import './Stilling.less';
 import {FETCH_STILLING_BEGIN, RESET_STILLING} from './stillingReducer';
 import {useScrollToTop} from '../common/hooks';
@@ -30,15 +26,9 @@ import {sendUrlEndring} from '../common/hooks/useTrackPageview';
 import {addRobotsNoIndexMetaTag, removeRobotsMetaTag} from '../common/utils/metaRobots';
 import logAmplitudeEvent, {logAmplitudePageview} from '../amplitudeTracker';
 import {connect} from 'react-redux';
-import {Link} from 'react-router-dom';
-import { track } from '../analytics';
-
-function commaSeparate(...strings) {
-    const onlyStrings = strings.filter((string) => (
-        typeof string === 'string'
-    ));
-    return onlyStrings.join(', ');
-}
+import ShareAd from "./shareAd/ShareAd";
+import Summary from "./summary/Summary";
+import PrintButton from "../common/components/PrintButton";
 
 const Stilling = ({error, getStilling, isFetchingStilling, match, stilling, resetStilling }) => {
 
@@ -111,7 +101,6 @@ const Stilling = ({error, getStilling, isFetchingStilling, match, stilling, rese
 
 
     const onPrintClick = () => {
-        track('send', 'event', 'ux-test-juni-2021', 'Klikket Print-knappen inne i en annonse');
         window.print();
     };
 
@@ -122,7 +111,7 @@ const Stilling = ({error, getStilling, isFetchingStilling, match, stilling, rese
             <FavouriteAlertStripe/>
 
             {error && error.statusCode === 404 && (
-                <NotFound/>
+                <NotFound />
             )}
 
             {!error && (
@@ -131,46 +120,29 @@ const Stilling = ({error, getStilling, isFetchingStilling, match, stilling, rese
                         <Column xs="12" md="7" lg="8">
                             <div className="Stilling__left">
                                 {!isFetchingStilling && stilling && stilling._source.status !== 'ACTIVE' && (
-                                    <Expired/>
+                                    <Expired />
                                 )}
                                 {!isFetchingStilling && stilling && (
-                                    <React.Fragment>
-                                        <h1 className="Stilling__h1">
-                                            {stilling._source.title}
-                                        </h1>
-                                        <p className="Stilling__employer-and-location">
-                                            {commaSeparate(getEmployer(stilling._source), getWorkLocation(
-                                                stilling._source.properties.location,
-                                                stilling._source.locationList
-                                            ))}
-                                        </p>
-                                    </React.Fragment>
+                                    <h1 className="Stilling__h1">
+                                        {stilling._source.title}
+                                    </h1>
                                 )}
                                 {(stilling === undefined || isFetchingStilling) && (
-                                    <Loading/>
+                                    <Loading />
                                 )}
                                 {!isFetchingStilling && stilling && isFinn && (
-                                    <FinnAd stilling={stilling}/>
+                                    <FinnAd stilling={stilling} />
                                 )}
                                 {!isFetchingStilling && stilling && !isFinn && (
                                     <React.Fragment>
-                                        <AdText adText={stilling._source.properties.adtext}/>
-                                        <HardRequirements stilling={stilling}/>
-                                        <SoftRequirements stilling={stilling}/>
-                                        <PersonalAttributes stilling={stilling}/>
-                                        <SocialShare title={stilling._source.title}/>
+                                        <Summary stilling={stilling._source} />
+                                        <AdText adText={stilling._source.properties.adtext} />
+                                        <HardRequirements stilling={stilling} />
+                                        <SoftRequirements stilling={stilling} />
+                                        <PersonalAttributes stilling={stilling} />
+                                        <EmployerDetails stilling={stilling._source} />
                                     </React.Fragment>
                                 )}
-                                {stilling !== undefined &&
-                                <div className="Rapport__link">
-                                    <Link
-                                        className={"link"}
-                                        to={`${CONTEXT_PATH}/rapporter-annonse?uuid=${stilling._id}`}
-                                    >
-                                        Rapportér annonse
-                                    </Link>
-                                </div>
-                                }
                             </div>
                         </Column>
                         <Column xs="12" md="5" lg="4">
@@ -178,29 +150,25 @@ const Stilling = ({error, getStilling, isFetchingStilling, match, stilling, rese
                                 {!isFetchingStilling && stilling && (
                                     <ToggleFavouriteButton uuid={stilling._id}/>
                                 )}
-                                <Flatknapp
-                                    mini
-                                    className="Stilling__print"
-                                    onClick={onPrintClick}
-                                >
-                                    Skriv ut
-                                </Flatknapp>
+                                <PrintButton onClick={onPrintClick} />
                             </div>
                         </Column>
                         <Column xs="12" md="5" lg="4">
                             {(stilling === undefined || isFetchingStilling) && (
-                                <Loading spinner={false}/>
+                                <Loading spinner={false} />
                             )}
                             {!isFetchingStilling && stilling && !isFinn && (
                                 <React.Fragment>
                                     <HowToApply
                                         stilling={stilling}
                                     />
-                                    <EmploymentDetails stilling={stilling._source}/>
-                                    <ContactPerson contactList={stilling._source.contactList}/>
-                                    <EmployerDetails stilling={stilling._source}/>
-                                    <AdDetails source={stilling._source}/>
+                                    <EmploymentDetails stilling={stilling._source} />
+                                    <ContactPerson contactList={stilling._source.contactList} />
+                                    <ShareAd source={stilling._source} />
                                 </React.Fragment>
+                            )}
+                            {!isFetchingStilling && stilling && (
+                                <AdDetails id={stilling._id} source={stilling._source} />
                             )}
                         </Column>
                     </Row>

@@ -14,10 +14,6 @@ export default function EmploymentDetails({ stilling }) {
             <Undertittel className="EmploymentDetails__head detail-section__head">Om stillingen</Undertittel>
             <div className="detail-section__body">
                 <dl className="dl-flex typo-normal">
-                    {properties.jobtitle && [
-                        <dt key="dt">Stillingstittel:</dt>,
-                        <dd key="dd">{properties.jobtitle}</dd>]
-                    }
                     {location && [
                         <dt key="dt">Sted:</dt>,
                         <dd key="dd">{location}</dd>

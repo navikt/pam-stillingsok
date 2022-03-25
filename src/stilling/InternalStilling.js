@@ -2,10 +2,7 @@
 import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Flatknapp } from '@navikt/arbeidsplassen-knapper';
 import { Column, Container, Row } from 'nav-frontend-grid';
-import getEmployer from '../../server/common/getEmployer';
-import getWorkLocation from '../../server/common/getWorkLocation';
 import { CONTEXT_PATH } from '../fasitProperties';
 import { parseQueryString, stringifyQueryObject } from '../utils';
 import AdDetails from './adDetails/AdDetails';
@@ -25,13 +22,8 @@ import './Stilling.less';
 import { useScrollToTop } from '../common/hooks';
 import { FETCH_INTERAL_STILLING_BEGIN, RESET_INTERAL_STILLING } from './internalStillingReducer';
 import { addRobotsNoIndexMetaTag, removeRobotsMetaTag } from '../common/utils/metaRobots';
-
-function commaSeparate(...strings) {
-    const onlyStrings = strings.filter((string) => (
-        typeof string === 'string'
-    ));
-    return onlyStrings.join(', ');
-}
+import Summary from "./summary/Summary";
+import PrintButton from "../common/components/PrintButton";
 
 const InternalStilling = ({ error, getInternalStilling, isFetchingStilling, match, stilling, resetStilling }) => {
 
@@ -86,39 +78,16 @@ const InternalStilling = ({ error, getInternalStilling, isFetchingStilling, matc
 
             {!error && (
                 <Container>
-                    <Row>
-                        <Column xs="12">
-                            <div className="Stilling__header">
-                                <div className="Stilling__buttons">
-                                    <Flatknapp
-                                        mini
-                                        className="Stilling__print"
-                                        onClick={onPrintClick}
-                                    >
-                                        Skriv ut
-                                    </Flatknapp>
-                                </div>
-                            </div>
-                        </Column>
-                    </Row>
-                    <Row>
+                    <Row className="Stilling__row">
                         <Column xs="12" md="7" lg="8">
                             <div className="Stilling__left">
                                 {!isFetchingStilling && stilling && stilling._source.status !== 'ACTIVE' && (
                                     <Expired />
                                 )}
                                 {!isFetchingStilling && stilling && (
-                                    <React.Fragment>
-                                        <div className="Stilling__employer-and-location">
-                                            {commaSeparate(getEmployer(stilling._source), getWorkLocation(
-                                                stilling._source.properties.location,
-                                                stilling._source.locationList
-                                            ))}
-                                        </div>
-                                        <h1 className="Stilling__h1">
-                                            {stilling._source.title}
-                                        </h1>
-                                    </React.Fragment>
+                                    <h1 className="Stilling__h1">
+                                        {stilling._source.title}
+                                    </h1>
                                 )}
                                 {(stilling === undefined || isFetchingStilling) && (
                                     <Loading />
@@ -128,12 +97,19 @@ const InternalStilling = ({ error, getInternalStilling, isFetchingStilling, matc
                                 )}
                                 {!isFetchingStilling && stilling && !isFinn && (
                                     <React.Fragment>
+                                        <Summary stilling={stilling._source} />
                                         <AdText adText={stilling._source.properties.adtext} />
                                         <HardRequirements stilling={stilling} />
                                         <SoftRequirements stilling={stilling} />
                                         <PersonalAttributes stilling={stilling} />
+                                        <EmployerDetails stilling={stilling._source} />
                                     </React.Fragment>
                                 )}
+                            </div>
+                        </Column>
+                        <Column xs="12" md="5" lg="4">
+                            <div className="Stilling__buttons">
+                                <PrintButton onClick={onPrintClick} />
                             </div>
                         </Column>
                         <Column xs="12" md="5" lg="4">
@@ -147,9 +123,10 @@ const InternalStilling = ({ error, getInternalStilling, isFetchingStilling, matc
                                     />
                                     <EmploymentDetails stilling={stilling._source} />
                                     <ContactPerson contactList={stilling._source.contactList} />
-                                    <EmployerDetails stilling={stilling._source} />
-                                    <AdDetails source={stilling._source} />
                                 </React.Fragment>
+                            )}
+                            {!isFetchingStilling && stilling && (
+                                <AdDetails id={stilling._id} source={stilling._source} />
                             )}
                         </Column>
                     </Row>

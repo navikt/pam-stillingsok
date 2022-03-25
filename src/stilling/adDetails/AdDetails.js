@@ -2,8 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Undertittel } from 'nav-frontend-typografi';
 import { formatISOString } from '../../utils';
+import {Link} from "react-router-dom";
+import {CONTEXT_PATH} from "../../fasitProperties";
 
-export default function AdDetails({ source }) {
+export default function AdDetails({ id, source }) {
     return (
         <div className="AdDetails detail-section">
             <Undertittel className="AdDetails__head detail-section__head">Om annonsen</Undertittel>
@@ -26,6 +28,14 @@ export default function AdDetails({ source }) {
                         <dd key="dd">{source.id}</dd>
                     ]}
                 </dl>
+                <div className="Rapport__link">
+                    <Link
+                        className={"link"}
+                        to={`${CONTEXT_PATH}/rapporter-annonse?uuid=${id}`}
+                    >
+                        Rapportér annonse
+                    </Link>
+                </div>
             </div>
         </div>
     );
@@ -37,6 +47,7 @@ AdDetails.propTypes = {
         medium: PropTypes.string,
         reference: PropTypes.string,
         id: PropTypes.number
-    }).isRequired
+    }).isRequired,
+    id: PropTypes.string.isRequired
 };
 
