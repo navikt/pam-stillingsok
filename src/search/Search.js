@@ -65,16 +65,9 @@ const Search = ({
         <div className="Search">
             <FavouriteAlertStripe/>
             <SavedSearchAlertStripe/>
-            <div className="PageHeader PageHeader--no-mb">
-                <div className="PageHeader__container">
-                    <Row className="PageHeader__row">
-                        <Column xs="12">
-                            <h1 className="PageHeader__title">Ledige stillinger</h1>
-                        </Column>
-                    </Row>
-                </div>
-            </div>
             <ShowResultsButton/>
+
+            <h1 className="Search__h1">Ledige stillinger</h1>
 
             <Container className="Search__main">
                 {searchFailed && <SearchErrorBox />}
