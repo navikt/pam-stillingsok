@@ -107,7 +107,7 @@ class ShowResultsButton extends React.Component {
         return (!this.props.searchFailed &&
             <SnapToTop className="ShowResultsButton">
                 <div className={`ShowResultsButton__inner ${this.state.fadeClassName}`}>
-                    <div className="ShowResultsButton__inner__container container">
+                    <div className="ShowResultsButton__inner__container">
                         <div className="ShowResultsButton__flex__count">
                             {this.props.searchResults && (
                                 this.props.searchResults.total.value > 0 ?
@@ -125,14 +125,14 @@ class ShowResultsButton extends React.Component {
                         </div>
                         <div>
                             {this.state.showGoToResults && (
-                                <a href="#treff" className="Knapp Knapp--mini" onClick={() => {
+                                <a href="#treff" className="ShowResultsButton__knapp" onClick={() => {
                                     track('send', 'event', 'ux-test-juni-2021', 'Klikket Vis treff-knapp på mobil');
                                 }}>
                                     Vis treff
                                 </a>
                             )}
                             {this.state.showGoToSearch && (
-                                <a href="#top" className="Knapp Knapp--mini"onClick={() => {
+                                <a href="#top" className="ShowResultsButton__knapp" onClick={() => {
                                     track('send', 'event', 'ux-test-juni-2021', 'Klikket Endre søk-knapp på mobil');
                                 }}>
                                     Endre søk
