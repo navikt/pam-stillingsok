@@ -10,7 +10,7 @@ function SearchResultCount({ searchResult }) {
 
         return (
             <h2
-                className="SearchResultCount__h3"
+                className="SearchResultCount__h2"
                 aria-live="polite"
             >
                 {searchResult.total.value === 0 ? (

@@ -2,6 +2,9 @@
 
 .SearchResultsItemDetails {
   margin-right: 2.25rem;
+  font-size: 1.125rem;
+  line-height: 1.33;
+  color: @blueDarken;
 
   @media (min-width: @screen-md-min) {
     display: flex;
@@ -9,72 +12,47 @@
   }
 }
 
-.SearchResultsItemDetails__employer {
-  color: @blueDarken;
-  padding-right: 3rem;
-  line-height: 1.33;
-
-  @media (max-width: @screen-sm-max) {
-    margin-bottom: 1rem;
-    font-weight: 600;
-  }
-  @media (min-width: @screen-md-min) {
-    padding-right: 1rem;
-    text-align: center;
-  }
-  @media (max-width: @screen-xs-max) {
-    margin-bottom: 0.5rem;
-  }
-}
-
-.SearchResultsItemDetails__published {
-  color: @blueDarken;
-
-  @media (max-width: @screen-sm-max) {
-    margin-bottom: 0;
-  }
-}
-
 .SearchResultsItemDetails__title {
-  margin-bottom: 0.2rem;
-  font-size: 1.125rem;
+  margin: 0 0 0.75rem 0;
+  font-size: 1.25rem;
   color: @pinkDarken;
   font-weight: 600;
-  padding: 0.5rem 0;
+  padding: 0.5rem 4rem 0 0;
   line-height: 1.33;
 
   @media (min-width: @screen-sm-min) {
-    padding-right: 3rem;
-    font-size: 1.25rem;
+    padding-right: 6rem;
+    max-width: 600px;
   }
 }
 
-.SearchResultsItemDetails__title__lenke {
-  border-bottom: 0 !important;
+.SearchResultItem__link:hover .SearchResultsItemDetails__title {
+  text-decoration: underline;
 }
+
 
 .SearchResultsItemDetails__jobtitle {
-  color: @blueDarken;
+  margin: 0 0 1rem 0;
+  font-weight: 600;
+}
 
-  @media (max-width: @screen-xs-max) {
-    margin-bottom: 0.5rem;
-  }
+.SearchResultsItemDetails__employer {
+  margin: 0;
 }
 
 .SearchResultsItemDetails__location {
-  margin: 0.5rem 0;
-  line-height: 1.33;
-  color: @blueDarken;
+  margin: 0 0 1rem 0;
+}
+
+.SearchResultsItemDetails__published {
+  margin: 0;
+  font-size: 1rem;
 }
 
 .SearchResultsItemDetails__external-link,
 .SearchResultsItemDetails__applicationdue {
-  color: @blueDarken;
-  line-height: 1.43;
-}
-
-.SearchResultsItemDetails__applicationdue {
-  margin-right: 1rem;
+  margin: 0;
+  font-size: 1rem;
 }
 
 .SearchResultsItemDetails__external-link {
@@ -92,11 +70,12 @@
   background-position: 0 0;
   margin-left: 4px;
 }
-
-.SearchResultsItemDetails__applicationdue-wrapper {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
+@media (min-width: @screen-sm-min) {
+  .SearchResultsItemDetails__applicationdue-wrapper {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
 }
 
 .SearchResultsItemDetails__title,

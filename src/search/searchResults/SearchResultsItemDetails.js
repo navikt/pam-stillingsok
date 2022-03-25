@@ -1,5 +1,5 @@
 import {Column, Row} from 'nav-frontend-grid';
-import {Normaltekst, Undertittel} from 'nav-frontend-typografi';
+import {Undertittel} from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {Link} from 'react-router-dom';
@@ -56,17 +56,7 @@ export default function SearchResultsItemDetails({stilling}) {
             employer={employer}
         >
             <Row className="SearchResultsItemDetails">
-                <Column xs="12" md="4">
-                    {employer && (
-                        <Normaltekst
-                            className="SearchResultsItemDetails__employer"
-                            aria-label={`${employer}.`}
-                        >
-                            {employer}
-                        </Normaltekst>
-                    )}
-                </Column>
-                <Column xs="12" md="8">
+                <Column xs="12">
                     <Undertittel
                         tag="h3"
                         className="SearchResultsItemDetails__title"
@@ -74,46 +64,55 @@ export default function SearchResultsItemDetails({stilling}) {
                     >
                         {stilling.title}
                     </Undertittel>
+
                     {stilling.properties.jobtitle && stilling.title !== stilling.properties.jobtitle && (
-                        <Normaltekst
+                        <p
                             className="SearchResultsItemDetails__jobtitle"
                             aria-label={`${stilling.properties.jobtitle}.`}
                         >
                             {stilling.properties.jobtitle}
-                        </Normaltekst>
+                        </p>
+                    )}
+
+                    {employer && (
+                        <p
+                            className="SearchResultsItemDetails__employer"
+                            aria-label={`${employer}.`}
+                        >
+                            {employer}
+                        </p>
                     )}
 
                     {location && (
-                        <Normaltekst
+                        <p
                             className="SearchResultsItemDetails__location"
                             aria-label={`${location}.`}
                         >
                             {location}
-                        </Normaltekst>
-                    )}
-                    {stilling.published && (
-                        <Normaltekst
-                            className="SearchResultsItemDetails__published"
-                            aria-label={`Publisert ${formatISOString(stilling.published, 'DD.MM.YYYY')}.`}
-                        >
-                           Publisert: {formatISOString(stilling.published, 'DD.MM.YYYY')}
-                        </Normaltekst>
+                        </p>
                     )}
                     <div className="SearchResultsItemDetails__applicationdue-wrapper">
-                        <Normaltekst
+                        <p
                             className="SearchResultsItemDetails__applicationdue"
                             aria-label={`Søknadsfrist: ${frist}.`}
                         >
-                            Søknadsfrist: {frist}
-                        </Normaltekst>
+                            Frist: {frist}
+                            {stilling.published && (
+                                <span
+                                    className="SearchResultsItemDetails__published"
+                                    aria-label={`Publisert ${formatISOString(stilling.published, 'DD.MM.YYYY')}.`}
+                                >
+                                    {' - '} Publisert {formatISOString(stilling.published, 'DD.MM.YYYY')}
+                                </span>
+                            )}
+                        </p>
                         {isFinn && (
-                            <Normaltekst
+                            <p
                                 className="SearchResultsItemDetails__external-link"
-                                aria-label={"Annonsen åpnes på finn."}
+                                aria-label={"Annonsen åpnes på finn.no."}
                             >
-                                Annonsen åpnes på FINN <span className="SearchResultsItemDetails__external-link-icon"
-                                                             aria-label="Ekstern lenke"/>
-                            </Normaltekst>
+                                Annonsen åpnes på FINN.no
+                            </p>
                         )}
                     </div>
                 </Column>
