@@ -8,14 +8,15 @@ import './Summary.less';
 export default function Summary({stilling}) {
     const {properties} = stilling;
     const location = getWorkLocation(stilling.properties.location, stilling.locationList);
+    const employer = getEmployer(stilling);
 
     return (
         <div className="Summary__dl">
             <dl className="Summary__dl">
-                {properties.jobtitle && 
+                {employer &&
                     <React.Fragment>
                         <dt>Arbeidsgiver:</dt>
-                        <dd>{getEmployer(stilling)}</dd>
+                        <dd>{employer}</dd>
                     </React.Fragment>
                 }
                 {properties.jobtitle && 
