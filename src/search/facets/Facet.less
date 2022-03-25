@@ -1,7 +1,6 @@
 @import '../../variables';
 
 .Facet {
-  margin-bottom: @facet-marginBottom;
   color: @primaryDarkBlue;
 
   .skjemaelement {
@@ -10,11 +9,11 @@
 
   .ekspanderbartPanel__innhold {
     background: transparent !important;
-    padding: 0.5rem!important;
+    padding: 0.5rem 0.5rem 2rem 0.5rem!important;
   }
 
   .ekspanderbartPanel__hode {
-    padding: 0.5rem 0.5rem!important;
+    padding: 1rem 0.5rem!important;
   }
 
   .ekspanderbartPanel__hode:focus,
@@ -37,9 +36,6 @@
       }
     }
   }
-
-
-
 }
 
 .Facet__inner__items {
@@ -70,7 +66,7 @@
       .ekspanderbartPanel__indikator {
         &:before,
         &:after {
-          background-color: @primaryPurple;
+          background-color: @primaryDarkBlue;
         }
       }
 
@@ -82,7 +78,7 @@
     &:hover,
     &--hover {
       .ekspanderbartPanel__heading {
-        text-decoration: none;
+        text-decoration: underline;
       }
     }
 
