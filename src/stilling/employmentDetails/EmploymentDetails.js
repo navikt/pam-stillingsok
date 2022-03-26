@@ -21,6 +21,10 @@ export default function EmploymentDetails({ stilling }) {
                         <dt key="dt">Sted:</dt>,
                         <dd key="dd">{location}</dd>
                     ]}
+                    {properties.positioncount && [
+                        <dt key="dt">Antall stillinger:</dt>,
+                        <dd key="dd">{properties.positioncount}</dd>
+                    ]}
                     {(properties.remote === 'Hjemmekontor' || properties.remote === 'Hybridkontor') && [
                         <dt key="dt">Hjemmekontor:</dt>,
                         <dd key="dd">{properties.remote === 'Hjemmekontor' ? 'Kun hjemmekontor' : 'Hybrid (noe hjemme, noe på arbeidsplassen)'}</dd>
@@ -36,10 +40,6 @@ export default function EmploymentDetails({ stilling }) {
                     {properties.extent && [
                         <dt key="dt">Heltid/deltid:</dt>,
                         <dd key="dd">{properties.extent}</dd>
-                    ]}
-                    {properties.positioncount && [
-                        <dt key="dt">Antall stillinger:</dt>,
-                        <dd key="dd">{properties.positioncount}</dd>
                     ]}
                     {properties.sector && [
                         <dt key="dt">Sektor:</dt>,
