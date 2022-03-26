@@ -22,7 +22,6 @@ const TopMenu = ({isAuthenticated, redirectToLogin, setErUnderFemten}) => {
                     .then((response) => response.json())
                     .then((result) => {
                         setUserInfo(result);
-                        setErUnderFemten(userInfo.erUnderFemten)
                     });
             } else {
                 const testData = {
@@ -32,10 +31,15 @@ const TopMenu = ({isAuthenticated, redirectToLogin, setErUnderFemten}) => {
                     erUnderFemten: false
                 }
                 setUserInfo(testData);
-                setErUnderFemten(testData.erUnderFemten);
             }
         }
     }, []);
+
+    useEffect(() => {
+        if (userInfo) {
+            setErUnderFemten(userInfo.erUnderFemten)
+        }
+    }, [userInfo])
 
     useEffect(() => {
         const header = document.getElementById('arbeidsplassen-header-menu');
