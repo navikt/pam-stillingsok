@@ -6,23 +6,33 @@
   &:nth-child(even) {
     background-color: @even-bgColor;
   }
+
+  @media (max-width: @screen-sm-max) {
+    margin-left: -16px;
+    margin-right: -16px;
+  }
 }
 
 .SearchResultItem__link {
   display: block;
-  padding: 1rem 1.25rem 1.25rem 1.25rem;
+  padding: 1rem 0.75rem;
   position: relative;
   text-decoration: none;
   border: 3px solid transparent;
 
+  @media (min-width: @screen-sm-min) {
+    padding: 1rem 1.25rem 1.25rem 1.25rem;
+
+  }
+
   &:hover {
-    outline: none;
-    border-color: #98f1d7;
+    border-color: @secondaryTurquoise;
   }
 
   &:focus {
     outline: none;
-    border-color: #062140;
+    z-index: 1;
+    border-color: @primaryDarkBlue;
   }
 }
 
