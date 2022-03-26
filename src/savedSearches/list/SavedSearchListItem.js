@@ -17,7 +17,6 @@ import {
     SHOW_CONFIRM_REMOVE_SAVED_SEARCH_MODAL,
     UPDATE_SAVED_SEARCH
 } from '../savedSearchesReducer';
-import { track } from '../../analytics';
 
 class SavedSearchListItem extends React.Component {
     onChangeClick = () => {
@@ -29,7 +28,6 @@ class SavedSearchListItem extends React.Component {
     };
 
     onTitleClick = () => {
-        track('send', 'event', 'ux-test-juni-2021', 'Åpnet et lagret søk fra Lagrede søk-siden')
         this.props.setCurrentSavedSearch(this.props.savedSearch);
     };
 

@@ -18,8 +18,7 @@ module.exports = {
     entry: {
         sok: ['babel-polyfill', 'whatwg-fetch', './src/app.js'],
         print: ['babel-polyfill', 'whatwg-fetch', './src/print.js'],
-        test: ['babel-polyfill', 'whatwg-fetch', './src/externalStyleSheets.js'],
-        googleanalytics: ['./src/googleanalytics.js']
+        test: ['babel-polyfill', 'whatwg-fetch', './src/externalStyleSheets.js']
     },
     output: {
         path: `${__dirname}/dist`,

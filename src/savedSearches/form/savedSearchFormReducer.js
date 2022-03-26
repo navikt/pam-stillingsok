@@ -13,7 +13,6 @@ import {
 } from '../savedSearchesReducer';
 import { SHOW_TERMS_OF_USE_MODAL, HIDE_TERMS_OF_USE_MODAL, CREATE_USER_SUCCESS } from '../../user/userReducer';
 import { isValidEmail } from '../../utils';
-import { track } from '../../analytics';
 
 export const SHOW_SAVED_SEARCH_FORM = 'SHOW_SAVED_SEARCH_FORM';
 export const SHOW_SAVED_SEARCH_FORM_SUCCESS = 'SHOW_SAVED_SEARCH_FORM_SUCCESS';
@@ -236,13 +235,6 @@ function* setDefaultFormData(action) {
 function* showSavedSearchForm(action) {
     if (yield requiresAuthentication(AuthenticationCaller.SAVE_SEARCH, { callbackId: 'save-search' })) {
         let state = yield select();
-
-        if (state.user.user) {
-            track('send', 'event', 'ux-test-juni-2021', 'Trykket Lagre søk-knapp (innlogget)');
-        } else {
-            track('send', 'event', 'ux-test-juni-2021', 'Trykket Lagre søk-knapp (uinnlogget)');
-        }
-
 
         if (!state.user.user) {
             yield put({ type: SHOW_TERMS_OF_USE_MODAL });

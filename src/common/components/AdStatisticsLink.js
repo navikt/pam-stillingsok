@@ -1,7 +1,6 @@
 import * as React from "react";
 import './AdStatisticsLink.less';
 import logAmplitudeEvent from "../../amplitudeTracker";
-import { track } from '../../analytics';
 
 const AD_STATISTICS_URL = 'https://data.nav.no/datapakke/703bc2e74c271ee895609ebd93c52460';
 
@@ -9,7 +8,6 @@ const AdStatisticsLink = () => {
 
     const logAmplitudeEventAndRedirect = (event) => {
         event.preventDefault();
-        track('send', 'event', 'ux-test-juni-2021', 'Klikket Se vår oversikt over arbeidsmarkedet');
         logAmplitudeEvent("Clicked Link", {
             label: "Viewed competition statistics"
         });

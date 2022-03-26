@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Undertittel, Undertekst } from 'nav-frontend-typografi';
 import {formatISOString, isValidEmail, isValidISOString, isValidUrl} from '../../utils';
 import './HowToApply.less';
-import sendGAEvent from "../../googleanalytics";
 import {Hovedknapp} from "@navikt/arbeidsplassen-knapper";
 import logAmplitudeEvent from "../../amplitudeTracker";
 
@@ -17,8 +16,6 @@ export function getApplicationUrl(source, properties) {
 }
 
 const applyForPosition  = (finn, stilling) => {
-    const eventLabel = `sok-pa-stillingen-${finn ? "finn" : "annen-kilde"}`;
-    sendGAEvent(eventLabel);
     try {
         logAmplitudeEvent('Stilling sok-via-url', {
             title: stilling._source.title,
@@ -80,11 +77,7 @@ export default function HowToApply({ stilling }) {
 
                             {finn &&
                             <Undertekst className="blokk-xs"> Denne annonsen er hentet fra{' '}
-                                <a
-                                    onClick={() => {
-                                        sendGAEvent("denne-annonsen-er-hentet-fra-finn" );
-                                    }}
-                                   href="https://www.finn.no" className="link">FINN.no</a>. Du kan sende søknad via
+                                <a href="https://www.finn.no" className="link">FINN.no</a>. Du kan sende søknad via
                                 den opprinnelige annonsen.
                             </Undertekst>
                             }

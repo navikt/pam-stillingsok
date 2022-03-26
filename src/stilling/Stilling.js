@@ -60,9 +60,6 @@ const Stilling = ({error, getStilling, isFetchingStilling, match, stilling, rese
             document.title = `${stilling._source.title} - Arbeidsplasssen`;
 
             try {
-                ga('set', 'page', `${CONTEXT_PATH}/stilling/${stilling._id}`);
-                ga('set', 'title', stilling._source.title);
-                ga('send', 'pageview');
                 logAmplitudePageview();
             } catch (e) {
                 // ignore

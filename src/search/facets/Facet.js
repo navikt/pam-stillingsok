@@ -4,7 +4,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { COLLAPSE_FACET_PANEL, EXPAND_FACET_PANEL } from './facetPanelsReducer';
 import './Facet.less';
-import { track } from '../../analytics';
 
 export function toFacetTitleWithCount(facetName, facetCount) {
     if (facetCount === 1) {
@@ -19,10 +18,8 @@ class Facet extends React.Component {
 
     onPanelClick = () => {
         if(this.props.expandedFacetPanels.includes(this.props.panelId)) {
-            track('send', 'event', 'ux-test-juni-2021', 'Lukke filter-panel', this.props.panelId);
             this.props.collapsePanel(this.props.panelId);
         } else {
-            track('send', 'event', 'ux-test-juni-2021', 'Åpne filter-panel', this.props.panelId);
             this.props.expandPanel(this.props.panelId);
         }
     };

@@ -26,7 +26,6 @@ import ShowResultsButton from './showResultsButton/ShowResultsButton';
 import Sorting from './sorting/Sorting';
 import {useDocumentTitle, useTrackPageview} from '../common/hooks';
 import SearchErrorBox from "../common/components/SearchErrorBox";
-import { track } from '../analytics';
 import {Link} from "react-router-dom";
 import {authenticationEnum} from "../authentication/authenticationReducer";
 
@@ -126,7 +125,6 @@ const Search = ({
                                             <Knapp
                                                 className="Search__nullstill"
                                                 onClick={() => {
-                                                    track('send', 'event', 'ux-test-juni-2021', 'Trykket  Nullstill kriterier-knapp');
                                                     return resetSearch();
                                                 }}
                                             >
@@ -151,9 +149,7 @@ const Search = ({
                             </Column>
                         </Row>
                         <div className="Search__main__tiltoppen">
-                            <a href="#top" className="Knapp--link" onClick={() => {
-                                track('send', 'event', 'ux-test-juni-2021', 'Klikket Til toppen-lenke');
-                            }}>Til toppen</a>
+                            <a href="#top" className="Knapp--link">Til toppen</a>
                         </div>
                     </RestoreScroll>
                 )}

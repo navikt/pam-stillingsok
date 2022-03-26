@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Flatknapp, Hovedknapp } from '@navikt/arbeidsplassen-knapper';
-import { EVENT_CATEGORY_SAVED_SEARCHES, trackOnce } from '../../analytics';
 import { SET_EMAIL_FROM_SAVED_SEARCH } from '../../user/userReducer';
 import { ADD_SAVED_SEARCH, UPDATE_SAVED_SEARCH } from '../savedSearchesReducer';
 import AddOrReplaceForm from './AddOrReplaceForm';
@@ -41,7 +40,6 @@ class SavedSearchForm extends React.Component {
         if (this.props.formMode === SavedSearchFormMode.ADD) {
             this.props.addSavedSearch();
         } else {
-            trackOnce(EVENT_CATEGORY_SAVED_SEARCHES, 'Endret et lagret søk');
             this.props.updateSavedSearch();
         }
     }

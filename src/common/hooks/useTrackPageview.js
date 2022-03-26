@@ -3,15 +3,12 @@ import { useEffect } from 'react';
 import { CONTEXT_PATH } from '../../fasitProperties';
 import {logAmplitudePageview} from "../../amplitudeTracker";
 
-export default (page, title) => {
+export default (page) => {
     useEffect(() => {
         try {
-            ga('set', 'page', page);
-            ga('set', 'title', title);
-            ga('send', 'pageview');
             logAmplitudePageview();
         } catch (e) {
-            // Google Analytics er ikke definert (dette skjer f.eks. om en bruker blokkerer tracking).
+            // ignore
         }
         sendUrlEndring({page});
     }, []);
