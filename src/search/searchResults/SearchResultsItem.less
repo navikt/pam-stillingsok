@@ -2,17 +2,27 @@
 
 .SearchResultItem {
   position: relative;
-  border-bottom: 1px solid @gray3;
+
+  &:nth-child(even) {
+    background-color: @even-bgColor;
+  }
 }
 
 .SearchResultItem__link {
   display: block;
-  padding: 1.5rem 0.25rem 1.75rem 0.25rem;
+  padding: 1rem 1.25rem 1.25rem 1.25rem;
   position: relative;
   text-decoration: none;
+  border: 3px solid transparent;
 
-  &:focus-visible {
-    outline: solid 3px @primaryDarkBlue;
+  &:hover {
+    outline: none;
+    border-color: #98f1d7;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: #062140;
   }
 }
 
@@ -22,7 +32,7 @@
 
 .SearchResultItem__favourite {
   position: absolute;
-  right: 0;
-  top: 1.25rem;
+  right: 1rem;
+  top: 1rem;
   z-index: 10;
 }
