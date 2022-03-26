@@ -78,7 +78,14 @@ const InternalStilling = ({ error, getInternalStilling, isFetchingStilling, matc
 
             {!error && (
                 <Container>
-                    <Row className="Stilling__row">
+                    <Row>
+                        <Column xs="12">
+                            <div className="Stilling__buttons">
+                                <PrintButton onClick={onPrintClick} />
+                            </div>
+                        </Column>
+                    </Row>
+                    <Row>
                         <Column xs="12" md="7" lg="8">
                             <div className="Stilling__left">
                                 {!isFetchingStilling && stilling && stilling._source.status !== 'ACTIVE' && (
@@ -105,11 +112,6 @@ const InternalStilling = ({ error, getInternalStilling, isFetchingStilling, matc
                                         <EmployerDetails stilling={stilling._source} />
                                     </React.Fragment>
                                 )}
-                            </div>
-                        </Column>
-                        <Column xs="12" md="5" lg="4">
-                            <div className="Stilling__buttons">
-                                <PrintButton onClick={onPrintClick} />
                             </div>
                         </Column>
                         <Column xs="12" md="5" lg="4">
