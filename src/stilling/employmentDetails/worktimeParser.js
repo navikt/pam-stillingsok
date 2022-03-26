@@ -1,16 +1,16 @@
 const worktimeParser = (worktime) => {
     // We need this check in case of old workhour/-day property values, formatted like 'Opt1 Opt2'
-    let arrayString = '';
+    let items = [];
     try {
         const jsonArray = JSON.parse(worktime);
 
         for (let i = 0; i < jsonArray.length; i++) {
-            arrayString += `${jsonArray[i]} `;
+            items.push(jsonArray[i]);
         }
     } catch (e) {
-        arrayString = worktime;
+        items.push(worktime);
     }
-    return arrayString;
+    return items.join(', ');
 };
 
 export default worktimeParser;
