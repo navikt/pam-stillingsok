@@ -2,7 +2,7 @@
 
 .Stilling {
   font-family: "Source Sans Pro", Arial, sans-serif;
-  margin: 2rem 0 4rem 0;
+  margin: 0 0 4rem 0;
 }
 
 .Stilling__header {
@@ -15,15 +15,8 @@
 
 .Stilling__buttons {
   display: flex;
-  justify-content: left;
+  justify-content: flex-end;
   padding: 1rem 0;
-
-  @media (min-width: @screen-md-min) {
-    justify-content: flex-end;
-    .Knapp:not(:last-child) {
-      margin-right: @button-marginRight;
-    }
-  }
 }
 
 .Stilling__left {
@@ -51,7 +44,7 @@
   font-weight: 600;
 
   @media (min-width: @screen-md-min) {
-    margin: 2rem 0 1rem;
+    margin: 0 0 1rem;
     font-size: 2.5rem;
   }
 }
