@@ -1,11 +1,12 @@
 @import "../../variables";
 
 .SocialShare {
-  display: flex;
-  flex-wrap: wrap;
   justify-content: left;
   align-items: center;
   word-break: break-word;
+  display: block;
+  vertical-align: auto;
+  margin-top: 0.3rem;
 }
 
 .SocialShare__link {
@@ -18,9 +19,16 @@
   }
 }
 
+.SocialShare__text {
+  margin-left: 1rem;
+}
+
 .SocialShare__label {
-  margin-right: 1rem;
   font-size: 18px;
+}
+
+.SocialShare-inner {
+  margin-top: 0.3rem;
 }
 
 .SocialShare__facebook {
