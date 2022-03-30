@@ -23,8 +23,7 @@ export default function SocialShare({ title }) {
                         <FacebookIcon/>
                         <div
                             className="SocialShare__link SocialShare__text"
-                            aria-label="Del på Facebook"
-                        >
+                            aria-label="Del på Facebook">
                             Facebook
                         </div>
                     </a>
