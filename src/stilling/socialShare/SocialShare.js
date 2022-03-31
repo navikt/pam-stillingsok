@@ -22,7 +22,7 @@ export default function SocialShare({ title }) {
                     >
                         <FacebookIcon/>
                         <div
-                            className="SocialShare__link SocialShare__text"
+                            className="SocialShare__text"
                             aria-label="Del på Facebook">
                             Facebook
                         </div>
@@ -39,7 +39,7 @@ export default function SocialShare({ title }) {
                     >
                         <LinkedinIcon />
                         <div
-                            className="SocialShare__link SocialShare__text"
+                            className="SocialShare__text"
                             aria-label="Del på Linkedin">
                             Linkedin
                         </div>
@@ -57,7 +57,7 @@ export default function SocialShare({ title }) {
                     >
                         <TwitterIcon />
                         <div
-                            className="SocialShare__link SocialShare__text"
+                            className="SocialShare__text"
                             aria-label="Del på Twitter">
                             Twitter
                         </div>
