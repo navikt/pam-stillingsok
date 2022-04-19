@@ -19,10 +19,6 @@ const server = express();
 const port = process.env.PORT || 8080;
 server.set('port', port);
 
-const instrumentation = require('./instrumentation').setup(server);
-
-const pageHitCounter = instrumentation.pageHitCounter();
-
 // Cache locations from adusers and reuse them
 let locationsFromAduser = null;
 let locationsFromFile = [];
@@ -179,17 +175,6 @@ const startServer = (htmlPages) => {
                 res.status(err.statusCode ? err.statusCode : 502); // For TCP level errors, no http status code will be available
             })
             .then((val) => res.send(val));
-    });
-
-    server.post(`${fasitProperties.PAM_CONTEXT_PATH}/instrumentation`, (req, res) => {
-        if (req.body && req.body.page
-            && (req.body.page === '/stillinger/favoritter'
-                || req.body.page === '/stillinger/lagrede-sok'
-                || req.body.page === '/stillinger/stilling'
-                || req.body.page === '/stillinger')) {
-            pageHitCounter.inc(req.body.page, req.body.source);
-        }
-        res.status(200).send({});
     });
 
     server.post(`${fasitProperties.PAM_CONTEXT_PATH}/api/search`, async (req, res) => {
