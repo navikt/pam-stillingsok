@@ -14,7 +14,7 @@
     "docker-kill": "npm run docker-stop && npm run docker-rm",
     "docker-rm": "docker rm pam-stillingsok",
     "docker-stop": "docker stop pam-stillingsok",
-    "snyk-protect": "snyk protect",
+    "snyk-protect": "snyk-protect",
     "prepare": "npm run snyk-protect"
   },
   "author": "",
