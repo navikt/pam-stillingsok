@@ -4,7 +4,7 @@ import { isStringEmpty } from "../../../utils/utils";
 import { UserContext } from "../../../context/UserProvider";
 import { Hovedknapp, Knapp } from "@navikt/arbeidsplassen-knapper";
 import CustomModal from "../../../components/modals/CustomModal";
-import { adUserApiGet, adUserApiPost, adUserApiPut } from "../../../api/adUserApi";
+import { adUserApiGet, adUserApiPost, adUserApiPut } from "../../../api/aduser/adUserApi";
 import { NotificationsContext } from "../../../context/NotificationsProvider";
 import DelayedSpinner from "../../../components/spinner/DelayedSpinner";
 import useToggle from "../../../hooks/useToggle";

@@ -10,11 +10,11 @@ import { CONTEXT_PATH } from "../../environment";
 import Chevron from "nav-frontend-chevron";
 import { Link } from "react-router-dom";
 import AlertStripeFeil from "nav-frontend-alertstriper/lib/feil-alertstripe";
-import logAmplitudeEvent from "../../utils/amplitudeTracker";
+import logAmplitudeEvent from "../../api/amplitude/amplitude";
 import { Textarea } from "nav-frontend-skjema";
 import { useDocumentTitle } from "../../hooks";
 import { AuthenticationContext, AuthenticationStatus } from "../../context/AuthenticationProvider";
-import { adUserApiPost } from "../../api/adUserApi";
+import { adUserApiPost } from "../../api/aduser/adUserApi";
 
 const violationCategories = [
     { label: "Diskriminerende innhold", key: "discrimination" },

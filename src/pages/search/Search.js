@@ -18,7 +18,7 @@ import queryReducer, {
 } from "./query";
 import { stringifyQueryObject } from "../../utils/utils";
 import { FetchAction, FetchStatus, useFetchReducer } from "../../hooks/useFetchReducer";
-import { apiFetchLocations, apiSearch } from "../../api/api";
+import { apiFetchLocations, apiSearch } from "../../api/search/api";
 import ErrorMessage from "../../components/messages/ErrorMessage";
 import PageHeader from "../../components/pageHeader/PageHeader";
 import SearchCriteria from "./searchCriteria/SearchCriteria";

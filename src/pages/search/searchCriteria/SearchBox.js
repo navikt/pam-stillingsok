@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { SET_SEARCH_STRING } from "../query";
 import Typeahead from "../../../components/typeahead/Typeahead";
 import {FetchAction, useFetchReducer} from "../../../hooks/useFetchReducer";
-import { fetchCategoryAndSearchTagsSuggestions } from "../../../api/api";
+import { fetchCategoryAndSearchTagsSuggestions } from "../../../api/search/api";
 import useDebounce from "../../../hooks/useDebounce";
 
 function SearchBox({ dispatch, query }) {

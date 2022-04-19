@@ -5,7 +5,7 @@ import { AuthenticationContext, AuthenticationStatus } from "../../context/Authe
 import { FavouritesContext } from "../../context/FavouritesProvider";
 import { NotificationsContext } from "../../context/NotificationsProvider";
 import StarIcon from "../../components/icons/StarIcon";
-import { adUserApiPost, adUserApiRemove } from "../../api/adUserApi";
+import { adUserApiPost, adUserApiRemove } from "../../api/aduser/adUserApi";
 import getWorkLocation from "../../../server/common/getWorkLocation";
 import getEmployer from "../../../server/common/getEmployer";
 import TermsOfUse from "../../components/modals/TermsOfUse";

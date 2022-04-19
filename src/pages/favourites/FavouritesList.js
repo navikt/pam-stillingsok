@@ -4,7 +4,7 @@ import { Select } from "nav-frontend-skjema";
 import DelayedSpinner from "../../components/spinner/DelayedSpinner";
 import ErrorMessage from "../../components/messages/ErrorMessage";
 import EmptyMessage from "../../components/messages/EmptyMessage";
-import { adUserApiGet } from "../../api/adUserApi";
+import { adUserApiGet } from "../../api/aduser/adUserApi";
 import FavouritesButton from "./FavouritesButton";
 import {FetchAction, FetchStatus, useFetchReducer} from "../../hooks/useFetchReducer";
 

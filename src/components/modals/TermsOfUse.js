@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { BekreftCheckboksPanel } from "nav-frontend-skjema";
 import { Flatknapp, Hovedknapp } from "@navikt/arbeidsplassen-knapper";
 import CustomModal from "./CustomModal";
-import { adUserApiPost } from "../../api/adUserApi";
+import { adUserApiPost } from "../../api/aduser/adUserApi";
 import "./TermsOfUse.less";
 import { UserContext } from "../../context/UserProvider";
 import { AuthenticationContext } from "../../context/AuthenticationProvider";

@@ -1,7 +1,7 @@
-import { parseQueryString, stringifyQueryObject } from "../utils/utils";
+import { parseQueryString, stringifyQueryObject } from "./utils";
 import { CONTEXT_PATH } from "../environment";
 
-export default () => {
+export default function fixUrlAfterLogin() {
     // Om man logget inn mens man var inne på en stillingsannonse, så vil loginservice
     // redirecte til en url med dette url-formatet: '/stillinger/stilling?uuid=12345'.
     // Redirecter derfor til riktig url-format: '/stillinger/stilling/:uuid'
@@ -16,4 +16,4 @@ export default () => {
         const { uuid, ...otherQueryParams } = parseQueryString(document.location.search);
         window.history.replaceState({}, "", `${CONTEXT_PATH}/intern/${uuid}${stringifyQueryObject(otherQueryParams)}`);
     }
-};
+}

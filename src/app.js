@@ -1,8 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
-import * as Sentry from "@sentry/browser";
-import useUrlFix from "./hooks/useUrlFix";
-import useHotjar from "./hooks/useHotjar";
+import useUrlFix from "./utils/fixUrlAfterLogin";
 import NotificationsProvider from "./context/NotificationsProvider";
 import AuthenticationProvider from "./context/AuthenticationProvider";
 import UserProvider from "./context/UserProvider";
@@ -17,15 +15,18 @@ import Favourites from "./pages/favourites/Favourites";
 import SavedSearches from "./pages/savedSearches/SavedSearches";
 import RapporterAnnonse from "./pages/rapporterAnnonse/RapporterAnnonse";
 import "./styles/styles.less";
+import enableHotjar from "./api/hotjar/hotjar";
+import initSentry from "./api/sentry/sentry";
+import fixUrlAfterLogin from "./utils/fixUrlAfterLogin";
 
-Sentry.init({
-    dsn: "https://76170ea4b79246638c1d9eb1c0e4fca9@sentry.gc.nav.no/37",
-    blacklistUrls: [new RegExp("localhost"), new RegExp("arbeidsplassen-q.nav.no")]
-});
+initSentry();
+fixUrlAfterLogin();
 
 function Application() {
-    useUrlFix();
-    useHotjar();
+
+    useEffect(() => {
+        enableHotjar();
+    }, []);
 
     return (
         <NotificationsProvider>
@@ -54,7 +55,4 @@ function Application() {
     );
 }
 
-ReactDOM.render(
-    <Application />,
-    document.getElementById("main-content")
-);
+ReactDOM.render(<Application />, document.getElementById("main-content"));

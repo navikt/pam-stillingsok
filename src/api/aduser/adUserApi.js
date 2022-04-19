@@ -1,5 +1,5 @@
-import SearchApiError from "./SearchApiError";
-import { AD_USER_API, CONTEXT_PATH } from "../environment";
+import SearchApiError from "../search/SearchApiError";
+import { AD_USER_API, CONTEXT_PATH } from "../../environment";
 
 const getCookie = (name) => {
     const re = new RegExp(`${name}=([^;]+)`);

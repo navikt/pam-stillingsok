@@ -1,7 +1,5 @@
-/* eslint-disable no-undef */
 import {useEffect} from "react";
-import {CONTEXT_PATH} from "../environment";
-import {logAmplitudePageview} from "../utils/amplitudeTracker";
+import {logAmplitudePageview} from "../api/amplitude/amplitude";
 
 export default (page) => {
     useEffect(() => {

@@ -17,11 +17,11 @@ import SoftRequirements from "./requirements/SoftRequirements";
 import "./Stilling.less";
 import { useScrollToTop } from "../../hooks";
 import { addRobotsNoIndexMetaTag, removeRobotsMetaTag } from "../../utils/metaRobots";
-import logAmplitudeEvent, { logAmplitudePageview } from "../../utils/amplitudeTracker";
+import logAmplitudeEvent, { logAmplitudePageview } from "../../api/amplitude/amplitude";
 import ShareAd from "./shareAd/ShareAd";
 import Summary from "./summary/Summary";
 import DelayedSpinner from "../../components/spinner/DelayedSpinner";
-import { get } from "../../api/api";
+import { get } from "../../api/search/api";
 import {FetchAction, FetchStatus, useFetchReducer} from "../../hooks/useFetchReducer";
 import ErrorMessage from "../../components/messages/ErrorMessage";
 

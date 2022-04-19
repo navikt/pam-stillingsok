@@ -5,7 +5,7 @@ import { CONTEXT_PATH } from "../../environment";
 import { formatISOString, isValidISOString } from "../../utils/utils";
 import ConfirmationModal from "../../components/modals/ConfirmationModal";
 import SaveSearchModal from "./modals/SaveSearchModal";
-import { adUserApiPut, adUserApiRemove } from "../../api/adUserApi";
+import { adUserApiPut, adUserApiRemove } from "../../api/aduser/adUserApi";
 import { NotificationsContext } from "../../context/NotificationsProvider";
 import useToggle from "../../hooks/useToggle";
 import { FetchStatus } from "../../hooks/useFetchReducer";

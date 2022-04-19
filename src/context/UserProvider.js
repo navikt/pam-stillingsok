@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { AuthenticationContext, AuthenticationStatus } from "./AuthenticationProvider";
-import { adUserApiGet } from "../api/adUserApi";
+import { adUserApiGet } from "../api/aduser/adUserApi";
 import {FetchAction, useFetchReducer} from "../hooks/useFetchReducer";
 import { NotificationsContext } from "./NotificationsProvider";
 

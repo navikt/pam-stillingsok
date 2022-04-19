@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { adUserApiGet } from "../api/adUserApi";
+import { adUserApiGet } from "../api/aduser/adUserApi";
 import { HasAcceptedTermsStatus, UserContext } from "./UserProvider";
 import { NotificationsContext } from "./NotificationsProvider";
 

@@ -4,7 +4,7 @@ import { isValidEmail } from "../../../utils/utils";
 import { UserContext } from "../../../context/UserProvider";
 import { Hovedknapp, Knapp } from "@navikt/arbeidsplassen-knapper";
 import CustomModal from "../../../components/modals/CustomModal";
-import { adUserApiPut } from "../../../api/adUserApi";
+import { adUserApiPut } from "../../../api/aduser/adUserApi";
 import { FetchStatus } from "../../../hooks/useFetchReducer";
 import Alert from "../../../components/alert/Alert";
 
