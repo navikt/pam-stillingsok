@@ -55,7 +55,6 @@ function SearchBox({ dispatch, query }) {
     return (
         <div>
             <div className="SearchBox">
-                {value}
                 <Typeahead
                     id="search-form-fritekst-input"
                     name="q"
