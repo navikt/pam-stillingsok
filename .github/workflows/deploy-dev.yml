@@ -16,7 +16,6 @@ jobs:
       BUILD_CACHE: npm
       LANGUAGE: node
       NAIS_RESOURCE: naiserator.yml
-      SNYK_ENABLED: false
     secrets:
       NAIS_DEPLOY_APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
       SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
