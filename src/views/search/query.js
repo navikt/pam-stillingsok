@@ -51,7 +51,7 @@ export const initialQuery = {
  * eller bare refresher browseren, så skal dette søket gjenskapes.
  */
 export function initQueryWithValuesFromBrowserUrl(initialState) {
-    const decodedUrl = decodeUrl(document.location.search);
+    const decodedUrl = document.location.search;
     const fromBrowserUrl = parseQueryString(decodedUrl);
     return {
         from: 0,
