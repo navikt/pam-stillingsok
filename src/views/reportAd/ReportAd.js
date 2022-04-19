@@ -5,7 +5,7 @@ import Sidetittel from "nav-frontend-typografi/lib/sidetittel";
 import Undertittel from "nav-frontend-typografi/lib/undertittel";
 import "./ReportAd.less";
 import Checkbox from "nav-frontend-skjema/lib/checkbox";
-import { Hovedknapp, Lenkeknapp } from "@navikt/arbeidsplassen-knapper";
+import { Hovedknapp } from "@navikt/arbeidsplassen-knapper";
 import { CONTEXT_PATH } from "../../environment";
 import Chevron from "nav-frontend-chevron";
 import { Link } from "react-router-dom";
@@ -220,9 +220,11 @@ const ReportAd = () => {
                                     }}
                                 />
 
-                                <Lenkeknapp onClick={() => (window.location.href = "/retningslinjer")}>
-                                    Les om gjeldende regler
-                                </Lenkeknapp>
+                                <p>
+                                    <a href="/retningslinjer" className="link">
+                                        Les om gjeldende regler
+                                    </a>
+                                </p>
                             </div>
 
                             {authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED && (
