@@ -16,7 +16,7 @@ import queryReducer, {
     toApiQuery,
     toBrowserQuery
 } from "./query";
-import { stringifyQueryObject } from "../../utils/utils";
+import { stringifyQueryObject } from "../../components/utils";
 import { FetchAction, FetchStatus, useFetchReducer } from "../../hooks/useFetchReducer";
 import { apiFetchLocations, apiSearch } from "../../api/search/api";
 import ErrorMessage from "../../components/messages/ErrorMessage";

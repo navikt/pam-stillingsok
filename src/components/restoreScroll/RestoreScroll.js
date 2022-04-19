@@ -1,6 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
-import debounce from "../../utils/debounce";
+
+function debounce(func, delay) {
+    let timeout;
+    return (...args) => {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => {
+            timeout = null;
+            func(...args);
+        }, delay);
+    };
+}
 
 export default class RestoreScroll extends React.Component {
     constructor(props) {

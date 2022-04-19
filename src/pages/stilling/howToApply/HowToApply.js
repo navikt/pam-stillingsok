@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Undertittel } from "nav-frontend-typografi";
-import { formatISOString, isValidEmail, isValidISOString, isValidUrl } from "../../../utils/utils";
+import { formatISOString, isValidEmail, isValidISOString, isValidUrl } from "../../../components/utils";
 import "./HowToApply.less";
 import logAmplitudeEvent from "../../../api/amplitude/amplitude";
 import FavouritesButton from "../../favourites/FavouritesButton";

@@ -9,7 +9,7 @@ import {
 } from "../query";
 import CriteriaPanel from "../../../components/criteriaPanel/CriteriaPanel";
 import UnknownSearchCriteriaValues from "./UnknownSearchCriteriaValues";
-import { isMobile } from "../../../utils/utils";
+import { isMobile } from "../../../components/utils";
 import moveCriteriaToBottom from "./utils/moveFacetToBottom";
 import mergeCount from "./utils/mergeCount";
 import { findUnknownSearchCriteriaValues } from "./utils/findUnknownSearchCriteriaValues";

@@ -2,7 +2,7 @@ import AlertStripe from "nav-frontend-alertstriper";
 import PropTypes from "prop-types";
 import React, { useContext, useState } from "react";
 import { CONTEXT_PATH } from "../../environment";
-import { formatISOString, isValidISOString } from "../../utils/utils";
+import { formatISOString, isValidISOString } from "../../components/utils";
 import ConfirmationModal from "../../components/modals/ConfirmationModal";
 import SaveSearchModal from "./modals/SaveSearchModal";
 import { adUserApiPut, adUserApiRemove } from "../../api/aduser/adUserApi";

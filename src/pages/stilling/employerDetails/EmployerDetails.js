@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import ReactHtmlParser from "react-html-parser";
 import fixLocationName from "../../../../server/common/fixLocationName";
-import { isValidUrl } from "../../../utils/utils";
+import { isValidUrl } from "../../../components/utils";
 import getEmployer from "../../../../server/common/getEmployer";
 import "./EmployerDetails.less";
 

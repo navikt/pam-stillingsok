@@ -1,4 +1,4 @@
-import { decodeUrl, parseQueryString } from "../../utils/utils";
+import { decodeUrl, parseQueryString } from "../../components/utils";
 import fixLocationName from "../../../server/common/fixLocationName";
 import { PublishedLabelsEnum } from "./searchCriteria/Published";
 

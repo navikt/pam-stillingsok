@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import SearchApiError from "./SearchApiError";
-import {stringifyQueryObject} from "../../utils/utils";
+import {stringifyQueryObject} from "../../components/utils";
 import {CONTEXT_PATH} from "../../environment";
 
 let cache = [];

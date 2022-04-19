@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Input } from "nav-frontend-skjema";
-import { isValidEmail } from "../../../utils/utils";
+import { isValidEmail } from "../../../components/utils";
 import { UserContext } from "../../../context/UserProvider";
 import { Hovedknapp, Knapp } from "@navikt/arbeidsplassen-knapper";
 import CustomModal from "../../../components/modals/CustomModal";

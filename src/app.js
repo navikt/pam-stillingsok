@@ -1,8 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import ReactDOM from "react-dom";
-import useUrlFix from "./utils/fixUrlAfterLogin";
 import NotificationsProvider from "./context/NotificationsProvider";
-import AuthenticationProvider from "./context/AuthenticationProvider";
+import AuthenticationProvider, { fixUrlAfterLogin } from "./context/AuthenticationProvider";
 import UserProvider from "./context/UserProvider";
 import FavouritesProvider from "./context/FavouritesProvider";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
@@ -14,20 +13,15 @@ import StillingPage from "./pages/stilling/Stilling";
 import Favourites from "./pages/favourites/Favourites";
 import SavedSearches from "./pages/savedSearches/SavedSearches";
 import RapporterAnnonse from "./pages/rapporterAnnonse/RapporterAnnonse";
-import "./styles/styles.less";
-import enableHotjar from "./api/hotjar/hotjar";
+import initHotjar from "./api/hotjar/hotjar";
 import initSentry from "./api/sentry/sentry";
-import fixUrlAfterLogin from "./utils/fixUrlAfterLogin";
+import "./styles/styles.less";
 
 initSentry();
 fixUrlAfterLogin();
+initHotjar();
 
 function Application() {
-
-    useEffect(() => {
-        enableHotjar();
-    }, []);
-
     return (
         <NotificationsProvider>
             <AuthenticationProvider>

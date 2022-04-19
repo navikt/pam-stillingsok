@@ -5,10 +5,9 @@ import SaveSearchModal from "./modals/SaveSearchModal";
 import { isSearchQueryEmpty, toReadableQuery, toSavedSearchQuery } from "../search/query";
 import { AuthenticationContext, AuthenticationStatus } from "../../context/AuthenticationProvider";
 import { HasAcceptedTermsStatus, UserContext } from "../../context/UserProvider";
-import { isStringEmpty, stringifyQueryObject } from "../../utils/utils";
+import {extractParam, isStringEmpty, stringifyQueryObject} from "../../components/utils";
 import TermsOfUse from "../../components/modals/TermsOfUse";
 import LoginModal from "../../components/modals/LoginModal";
-import LocationSearchParser from "../../utils/LocationSearchParser";
 import useToggle from "../../hooks/useToggle";
 import RegisterEmailModal from "./modals/RegisterEmailModal";
 
@@ -20,7 +19,7 @@ function SaveSearchButton({ query }) {
     const [shouldShowSaveSearchModal, openSaveSearchModal, closeSaveSearchModal] = useToggle();
     const [shouldShowQueryIsEmptyModal, openQueryIsEmptyModal, closeQueryIsEmptyModal] = useToggle();
     const [shouldShowRegisterEmailModal, openRegisterEmailModal, closeRegisterEmailModal] = useToggle();
-    const savedSearchIdFromBrowserUrl = LocationSearchParser.extractParam("saved");
+    const savedSearchIdFromBrowserUrl = extractParam("saved");
 
     function onClick() {
         if (authenticationStatus === AuthenticationStatus.NOT_AUTHENTICATED) {

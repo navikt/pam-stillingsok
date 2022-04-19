@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Undertittel } from "nav-frontend-typografi";
-import { formatISOString } from "../../../utils/utils";
+import { formatISOString } from "../../../components/utils";
 import { Link } from "react-router-dom";
 import { CONTEXT_PATH } from "../../../environment";
 

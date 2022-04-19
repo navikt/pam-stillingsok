@@ -1,4 +1,4 @@
-export default function enableHotjar() {
+export default function initHotjar() {
     document.querySelector("body").setAttribute("data-hj-masked", "");
     document.querySelector("html").setAttribute("data-hj-suppress", "");
     /* eslint-disable */

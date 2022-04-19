@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Undertittel } from "nav-frontend-typografi";
-import { formatISOString, isValidISOString } from "../../../utils/utils";
+import { formatISOString, isValidISOString } from "../../../components/utils";
 import worktimeParser from "./worktimeParser";
 
 export default function EmploymentDetails({ stilling }) {

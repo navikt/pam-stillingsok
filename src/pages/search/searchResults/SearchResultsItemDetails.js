@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import getEmployer from "../../../../server/common/getEmployer";
 import getWorkLocation from "../../../../server/common/getWorkLocation";
 import { CONTEXT_PATH } from "../../../environment";
-import { formatISOString, isValidISOString } from "../../../utils/utils";
+import { formatISOString, isValidISOString } from "../../../components/utils";
 import "./SearchResultsItemDetails.less";
 
 function LinkToAd({ children, stilling, isFinn }) {

@@ -4,12 +4,12 @@ import DelayedSpinner from "../../components/spinner/DelayedSpinner";
 import ErrorMessage from "../../components/messages/ErrorMessage";
 import EmptyMessage from "../../components/messages/EmptyMessage";
 import { adUserApiGet } from "../../api/aduser/adUserApi";
-import LocationSearchParser from "../../utils/LocationSearchParser";
 import {FetchAction, FetchStatus, useFetchReducer} from "../../hooks/useFetchReducer";
+import {extractParam} from "../../components/utils";
 
 function SavedSearchesList() {
     const [response, dispatch] = useFetchReducer();
-    const idFromBrowserUrl = LocationSearchParser.extractParam("uuid");
+    const idFromBrowserUrl = extractParam("uuid");
 
     /**
      * Load saved searches when view is shown

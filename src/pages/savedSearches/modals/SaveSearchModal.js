@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Checkbox, Fieldset, Input, Radio, SkjemaGruppe } from "nav-frontend-skjema";
-import { isStringEmpty } from "../../../utils/utils";
+import { isStringEmpty } from "../../../components/utils";
 import { UserContext } from "../../../context/UserProvider";
 import { Hovedknapp, Knapp } from "@navikt/arbeidsplassen-knapper";
 import CustomModal from "../../../components/modals/CustomModal";

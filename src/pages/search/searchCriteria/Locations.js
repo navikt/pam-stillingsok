@@ -14,7 +14,7 @@ import {
 } from "../query";
 import CriteriaPanel from "../../../components/criteriaPanel/CriteriaPanel";
 import UnknownSearchCriteriaValues from "./UnknownSearchCriteriaValues";
-import { isMobile } from "../../../utils/utils";
+import { isMobile } from "../../../components/utils";
 import buildLocations from "./utils/buildLocations";
 import buildHomeOfficeValues from "./utils/buildHomeOfficeValues";
 import mergeCount from "./utils/mergeCount";
