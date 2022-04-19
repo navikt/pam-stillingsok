@@ -1,0 +1,15 @@
+@import (reference) "../../styles/variables";
+
+.ConfirmationModal__message {
+  margin-bottom: @modal-body-margin-bottom;
+}
+
+.ConfirmationModal__buttons .Knapp:not(:last-child) {
+  margin-right: @button-marginRight;
+}
+
+@media (max-width: @screen-xs-max) {
+  .ConfirmationModal {
+    padding: @modal-padding-mobile;
+  }
+}

@@ -1,0 +1,76 @@
+@import (reference)  "../../styles/variables";
+
+.Favourites__content {
+  max-width: 800px;
+  margin: 2rem auto 4rem;
+  padding: 0 1rem;
+}
+
+.FavouritesList__total-and-sorting {
+
+  @media (min-width: @screen-md-min) {
+    padding: 0 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  h2 {
+    font-weight: 600;
+    margin: 0 0 1rem 0;
+  }
+}
+
+.FavouritesList_Sorting {
+  display: flex;
+  align-items: center;
+
+  label {
+    margin-right: 0.5rem;
+    white-space: nowrap;
+    margin-bottom: 0;
+  }
+}
+
+.FavouritesListItem {
+  margin: 0;
+  border-top: 1px solid @gray3;
+  display: block;
+  position: relative;
+
+  &:nth-child(even) {
+    background-color: @gray1;
+  }
+
+  @media (max-width: @screen-xs-max) {
+    margin-right: -16px;
+    margin-left: -16px;
+
+    .SearchResultItem__link {
+      padding-bottom: 4rem;
+    }
+  }
+}
+
+
+.FavouritesListItem__expired {
+  margin: 1rem 0 0 0;
+  padding: 0.5rem 0.75rem;
+  background: #FFECAF;
+  display: inline-block;
+  line-height: 1;
+}
+
+.FavouritesListItem__delete {
+  position: absolute;
+
+  @media (max-width: @screen-xs-max) {
+    bottom: 0.75rem;
+    right: 0.5rem;
+  }
+
+  @media (min-width: @screen-sm-min) {
+    right: 1rem;
+    top: 0.75rem;
+  }
+}

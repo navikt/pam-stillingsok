@@ -1,1 +1,0 @@
-export const arrayHasData = (array) => array && array[0].hasOwnProperty('punkt');
