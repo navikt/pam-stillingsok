@@ -7,7 +7,7 @@ import { fetchCategoryAndSearchTagsSuggestions } from "../../../api/search/api";
 import useDebounce from "../../../hooks/useDebounce";
 
 function SearchBox({ dispatch, query }) {
-    const [value, setValue] = useState(query.q);
+    const [value, setValue] = useState('');
     const debouncedValue = useDebounce(value);
     const initialRender = useRef(true);
     const [suggestionsResponse, suggestionsDispatch] = useFetchReducer([]);
@@ -22,6 +22,10 @@ function SearchBox({ dispatch, query }) {
                 suggestionsDispatch({ type: FetchAction.RESOLVE, data: [] });
             });
     }
+
+    useEffect(() => {
+        setValue(query.q)
+    }, [query.q]);
 
     useEffect(() => {
         if (initialRender.current) {
@@ -51,6 +55,7 @@ function SearchBox({ dispatch, query }) {
     return (
         <div>
             <div className="SearchBox">
+                {value}
                 <Typeahead
                     id="search-form-fritekst-input"
                     name="q"
