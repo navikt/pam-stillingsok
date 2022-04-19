@@ -6,20 +6,20 @@ import UserProvider from "./context/UserProvider";
 import FavouritesProvider from "./context/FavouritesProvider";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import BrowserSupportInfo from "./components/browserSupportInfo/BrowserSupportInfo";
-import TopMenu from "./components/header/TopMenu";
+import Header from "./components/header/Header";
 import { CONTEXT_PATH } from "./environment";
-import SearchPage from "./pages/search/Search";
-import StillingPage from "./pages/stilling/Stilling";
+import Search from "./pages/search/Search";
+import Ad from "./pages/ad/Ad";
 import Favourites from "./pages/favourites/Favourites";
 import SavedSearches from "./pages/savedSearches/SavedSearches";
-import RapporterAnnonse from "./pages/rapporterAnnonse/RapporterAnnonse";
-import initHotjar from "./api/hotjar/hotjar";
+import ReportAd from "./pages/reportAd/ReportAd";
+import initHotJar from "./api/hotjar/hotjar";
 import initSentry from "./api/sentry/sentry";
 import "./styles/styles.less";
 
 initSentry();
 fixUrlAfterLogin();
-initHotjar();
+initHotJar();
 
 function Application() {
     return (
@@ -30,16 +30,16 @@ function Application() {
                         <BrowserRouter>
                             <BrowserSupportInfo tillatLukking={true} />
                             <Switch>
-                                <Route component={TopMenu} />
+                                <Route component={Header} />
                             </Switch>
                             <Switch>
-                                <Route exact path={CONTEXT_PATH} component={SearchPage} />
-                                <Route path={`${CONTEXT_PATH}/stilling/:uuid`} component={StillingPage} />
-                                <Route path={`${CONTEXT_PATH}/intern/:uuid`} component={StillingPage} />
+                                <Route exact path={CONTEXT_PATH} component={Search} />
+                                <Route path={`${CONTEXT_PATH}/stilling/:uuid`} component={Ad} />
+                                <Route path={`${CONTEXT_PATH}/intern/:uuid`} component={Ad} />
+                                <Route path={`${CONTEXT_PATH}/rapporter-annonse`} component={ReportAd} />
                                 <Route path={`${CONTEXT_PATH}/favoritter`} component={Favourites} />
                                 <Route path={`${CONTEXT_PATH}/lagrede-sok`} component={SavedSearches} />
-                                <Route path={`${CONTEXT_PATH}/rapporter-annonse`} component={RapporterAnnonse} />
-                                <Route path="*" component={SearchPage} />
+                                <Route path="*" component={Search} />
                             </Switch>
                         </BrowserRouter>
                     </FavouritesProvider>

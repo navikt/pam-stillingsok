@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { AuthenticationContext, AuthenticationStatus } from "../../context/AuthenticationProvider";
-import "./TopMenu.less";
+import "./Header.less";
 
-const TopMenu = () => {
+const Header = () => {
     const { authenticationStatus, login, logout, userNameAndInfo } = useContext(AuthenticationContext);
     const [showMobileMenu, setShowMobileMenu] = useState(false);
 
@@ -60,4 +60,4 @@ const TopMenu = () => {
     );
 };
 
-export default TopMenu;
+export default Header;

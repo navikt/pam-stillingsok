@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import Container from "nav-frontend-grid/lib/container";
 import Sidetittel from "nav-frontend-typografi/lib/sidetittel";
 import Undertittel from "nav-frontend-typografi/lib/undertittel";
-import "./RapporterAnnonse.less";
+import "./ReportAd.less";
 import Checkbox from "nav-frontend-skjema/lib/checkbox";
 import { Hovedknapp, Lenkeknapp } from "@navikt/arbeidsplassen-knapper";
 import { CONTEXT_PATH } from "../../environment";
@@ -29,7 +29,7 @@ const scamCategories = [
     { label: "Annet", key: "other" }
 ];
 
-const RapporterAnnonse = () => {
+const ReportAd = () => {
     const { authenticationStatus, login } = useContext(AuthenticationContext);
     const [error, setError] = useState(false);
     const [finished, setFinished] = useState(false);
@@ -247,4 +247,4 @@ const RapporterAnnonse = () => {
     );
 };
 
-export default RapporterAnnonse;
+export default ReportAd;

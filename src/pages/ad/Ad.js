@@ -14,7 +14,7 @@ import NotFound from "./notFound/NotFound";
 import HardRequirements from "./requirements/HardRequirements";
 import PersonalAttributes from "./requirements/PersonalAttributes";
 import SoftRequirements from "./requirements/SoftRequirements";
-import "./Stilling.less";
+import "./Ad.less";
 import { useScrollToTop } from "../../hooks";
 import logAmplitudeEvent, { logAmplitudePageview } from "../../api/amplitude/amplitude";
 import ShareAd from "./shareAd/ShareAd";
@@ -25,7 +25,7 @@ import { FetchAction, FetchStatus, useFetchReducer } from "../../hooks/useFetchR
 import ErrorMessage from "../../components/messages/ErrorMessage";
 import useRobotsNoIndexMetaTag from "../../hooks/useRobotsNoIndexMetaTag";
 
-const Stilling = ({ match }) => {
+const Ad = ({ match }) => {
     const [{ data: ad, error, status }, dispatch] = useFetchReducer();
     const isInternal = match.path.startsWith("/stillinger/intern/");
     const avoidIndexing = (error && error.statusCode === 404) || (ad && ad._source.status !== "ACTIVE") || isInternal;
@@ -134,11 +134,11 @@ const Stilling = ({ match }) => {
     );
 };
 
-Stilling.defaultProps = {
+Ad.defaultProps = {
     match: { params: {} }
 };
 
-Stilling.propTypes = {
+Ad.propTypes = {
     match: PropTypes.shape({
         params: PropTypes.shape({
             uuid: PropTypes.string
@@ -146,4 +146,4 @@ Stilling.propTypes = {
     })
 };
 
-export default Stilling;
+export default Ad;
