@@ -111,6 +111,7 @@ function Occupations({ initialValues, updatedValues, query, dispatch }) {
                 checkedNestedValues={query.occupationSecondLevels}
                 onClick={handleFirstLevelClick}
                 onNestedLevelClick={handleSecondLevelClick}
+                shouldFixLocationName={true}
             />
         </CriteriaPanel>
     );

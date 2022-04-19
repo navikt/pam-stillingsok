@@ -39,7 +39,7 @@ export default function UnknownSearchCriteriaValues(
                     <div key={second}>
                         <Checkbox
                             name={`${namePrefix}-unknownFacetNestedValue`}
-                            label={`${shouldFixLocationName ? fixLocationName(second.split(".")[1]) : sec} (0)`}
+                            label={`${shouldFixLocationName ? fixLocationName(second.split(".")[1]) : second} (0)`}
                             value={second}
                             onChange={onNestedLevelClick}
                             checked={checkedNestedValues.includes(second)}
