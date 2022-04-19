@@ -85,6 +85,7 @@
     "whatwg-fetch": "^2.0.4"
   },
   "devDependencies": {
+    "@snyk/protect": "^1.908.0",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
     "babel-polyfill": "^6.26.0",
@@ -97,7 +98,6 @@
     "less-loader": "^4.1.0",
     "mini-css-extract-plugin": "^0.11.0",
     "rimraf": "^2.7.1",
-    "snyk": "^1.522.0",
     "webpack": "^4.44.1",
     "webpack-cli": "^3.2.1",
     "webpack-merge": "^4.2.1"
