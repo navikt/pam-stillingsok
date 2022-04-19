@@ -1,0 +1,49 @@
+@import (reference) "../../../styles/variables";
+
+.SearchResultItem {
+  position: relative;
+  border-top: 1px solid @gray3;
+
+  &:nth-child(even) {
+    background-color: @gray1;
+  }
+
+  @media (max-width: @screen-sm-max) {
+    margin-left: -16px;
+    margin-right: -16px;
+  }
+}
+
+.SearchResultItem__link {
+  display: block;
+  padding: 1rem 0.75rem;
+  position: relative;
+  text-decoration: none;
+  border: 3px solid transparent;
+
+  @media (min-width: @screen-sm-min) {
+    padding: 1rem 1.25rem 1.25rem 1.25rem;
+
+  }
+
+  &:hover {
+    border-color: @secondaryTurquoise;
+  }
+
+  &:focus {
+    outline: none;
+    z-index: 1;
+    border-color: @primaryDarkBlue;
+  }
+}
+
+.SearchResultItem__link:visited * {
+  color: @gray5 !important;
+}
+
+.SearchResultItem__favourite {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  z-index: 10;
+}

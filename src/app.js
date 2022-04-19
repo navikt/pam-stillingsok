@@ -1,74 +1,60 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import { applyMiddleware, combineReducers, createStore } from 'redux';
-import createSagaMiddleware from 'redux-saga';
-import authenticationReducer, { authenticationSaga } from './authentication/authenticationReducer';
-import errorReducer from './error/errorReducer';
-import Application from './Application';
-import facetsReducer from './search/facets/facetsReducer';
-import searchQueryReducer, { searchQuerySaga } from './search/searchQueryReducer';
-import unknownFacetsReducer from './search/facets/unknownFacetsReducer';
-import { unknownFacetsSaga } from './search/facets/unknownFacetsReducer';
-import userReducer, { userSaga } from './user/userReducer';
-import favouritesReducer, { favouritesSaga } from './favourites/favouritesReducer';
-import savedSearchAlertStripeReducer, { savedSearchAlertStripeSaga } from './savedSearches/alertstripe/savedSearchAlertStripeReducer';
-import savedSearchFormReducer, { savedSearchFormSaga } from './savedSearches/form/savedSearchFormReducer';
-import savedSearchesReducer, { savedSearchesSaga } from './savedSearches/savedSearchesReducer';
-import facetPanelsReducer, {facetPanelsSaga} from './search/facets/facetPanelsReducer';
-import searchBoxReducer, { searchBoxSaga } from './search/searchBox/searchBoxReducer';
-import searchReducer, { saga } from './search/searchReducer';
-import stillingReducer, { stillingSaga } from './stilling/stillingReducer';
-import internalStillingReducer, { internalStillingSaga } from './stilling/internalStillingReducer';
-import './styles.less';
-import './variables.less';
-import * as Sentry from '@sentry/browser';
-
-const sagaMiddleware = createSagaMiddleware();
-
-export const store = createStore(combineReducers({
-    authentication: authenticationReducer,
-    error: errorReducer,
-    user: userReducer,
-    favourites: favouritesReducer,
-    savedSearches: savedSearchesReducer,
-    savedSearchForm: savedSearchFormReducer,
-    savedSearchAlertStripe: savedSearchAlertStripeReducer,
-    search: searchReducer,
-    searchBox: searchBoxReducer,
-    searchQuery: searchQueryReducer,
-    stilling: stillingReducer,
-    internalStilling: internalStillingReducer,
-    facets: facetsReducer,
-    unknownFacets: unknownFacetsReducer,
-    facetPanels: facetPanelsReducer
-}), applyMiddleware(sagaMiddleware));
-
-sagaMiddleware.run(saga);
-sagaMiddleware.run(searchBoxSaga);
-sagaMiddleware.run(stillingSaga);
-sagaMiddleware.run(internalStillingSaga);
-sagaMiddleware.run(favouritesSaga);
-sagaMiddleware.run(savedSearchesSaga);
-sagaMiddleware.run(savedSearchFormSaga);
-sagaMiddleware.run(savedSearchAlertStripeSaga);
-sagaMiddleware.run(userSaga);
-sagaMiddleware.run(authenticationSaga);
-sagaMiddleware.run(unknownFacetsSaga);
-sagaMiddleware.run(searchQuerySaga);
-sagaMiddleware.run(facetPanelsSaga);
+import React from "react";
+import ReactDOM from "react-dom";
+import * as Sentry from "@sentry/browser";
+import useUrlFix from "./hooks/useUrlFix";
+import useHotjar from "./hooks/useHotjar";
+import NotificationsProvider from "./context/NotificationsProvider";
+import AuthenticationProvider from "./context/AuthenticationProvider";
+import UserProvider from "./context/UserProvider";
+import FavouritesProvider from "./context/FavouritesProvider";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import BrowserSupportInfo from "./components/browserSupportInfo/BrowserSupportInfo";
+import TopMenu from "./components/header/TopMenu";
+import { CONTEXT_PATH } from "./environment";
+import SearchPage from "./pages/search/Search";
+import StillingPage from "./pages/stilling/Stilling";
+import Favourites from "./pages/favourites/Favourites";
+import SavedSearches from "./pages/savedSearches/SavedSearches";
+import RapporterAnnonse from "./pages/rapporterAnnonse/RapporterAnnonse";
+import "./styles/styles.less";
 
 Sentry.init({
     dsn: "https://76170ea4b79246638c1d9eb1c0e4fca9@sentry.gc.nav.no/37",
-    blacklistUrls: [
-        new RegExp('localhost'),
-        new RegExp('arbeidsplassen-q.nav.no')
-    ]
+    blacklistUrls: [new RegExp("localhost"), new RegExp("arbeidsplassen-q.nav.no")]
 });
 
+function Application() {
+    useUrlFix();
+    useHotjar();
+
+    return (
+        <NotificationsProvider>
+            <AuthenticationProvider>
+                <UserProvider>
+                    <FavouritesProvider>
+                        <BrowserRouter>
+                            <BrowserSupportInfo tillatLukking={true} />
+                            <Switch>
+                                <Route component={TopMenu} />
+                            </Switch>
+                            <Switch>
+                                <Route exact path={CONTEXT_PATH} component={SearchPage} />
+                                <Route path={`${CONTEXT_PATH}/stilling/:uuid`} component={StillingPage} />
+                                <Route path={`${CONTEXT_PATH}/intern/:uuid`} component={StillingPage} />
+                                <Route path={`${CONTEXT_PATH}/favoritter`} component={Favourites} />
+                                <Route path={`${CONTEXT_PATH}/lagrede-sok`} component={SavedSearches} />
+                                <Route path={`${CONTEXT_PATH}/rapporter-annonse`} component={RapporterAnnonse} />
+                                <Route path="*" component={SearchPage} />
+                            </Switch>
+                        </BrowserRouter>
+                    </FavouritesProvider>
+                </UserProvider>
+            </AuthenticationProvider>
+        </NotificationsProvider>
+    );
+}
+
 ReactDOM.render(
-    <Provider store={store}>
-        <Application />
-    </Provider>,
-    document.getElementById('reactApp')
+    <Application />,
+    document.getElementById("main-content")
 );

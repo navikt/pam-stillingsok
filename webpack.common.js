@@ -16,9 +16,7 @@ module.exports = {
         }
     },
     entry: {
-        sok: ['babel-polyfill', 'whatwg-fetch', './src/app.js'],
-        print: ['babel-polyfill', 'whatwg-fetch', './src/print.js'],
-        test: ['babel-polyfill', 'whatwg-fetch', './src/externalStyleSheets.js']
+        sok: ['babel-polyfill', 'whatwg-fetch', './src/app.js']
     },
     output: {
         path: `${__dirname}/dist`,

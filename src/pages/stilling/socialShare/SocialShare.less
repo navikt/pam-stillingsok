@@ -1,0 +1,98 @@
+@import (reference) "../../../styles/variables";
+
+.SocialShare {
+  @media (min-width: @screen-md-min) {
+    justify-content: left;
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
+
+.SocialShare__link {
+  display: flex;
+  align-items: center;
+  color: #8c368e;
+
+  &:focus, &:active {
+    box-shadow: 0 0 0 3px @primaryDarkBlue;
+    outline: none;
+  }
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.SocialShare__text {
+  margin-left: 0.5rem;
+}
+
+.SocialShare__label {
+  font-size: 18px;
+}
+
+.SocialShare-inner {
+  margin-bottom: 0.5rem;
+
+  a {
+    width: fit-content;
+  }
+}
+
+.SocialShare__facebook {
+  margin-right: 1rem;
+
+  svg {
+    .cls-1 {
+      fill: #1877f2;
+    }
+
+    .cls-2 {
+      fill: #fff;
+    }
+  }
+}
+
+.SocialShare__linkedin {
+  margin-right: 1rem;
+
+  svg {
+    .cls-1 {
+      fill: #2867b2;
+    }
+
+    .cls-2 {
+      fill: #fff;
+    }
+  }
+}
+
+.SocialShare__twitter {
+  margin-right: 1rem;
+
+  svg {
+    .cls-1 {
+      fill: #1da1f2;
+    }
+
+    .cls-2 {
+      fill: #fff;
+    }
+  }
+}
+
+.SocialShare__messenger {
+  margin-right: 1rem;
+
+  svg {
+    .cls-1 {
+      fill: url(#linear-gradient);
+    }
+
+    .cls-2 {
+      fill: #fff;
+      fill-rule: evenodd;
+    }
+  }
+}
