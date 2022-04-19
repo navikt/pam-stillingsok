@@ -11,12 +11,12 @@ import SearchErrorBox from "../../components/searchErrorBox/SearchErrorBox";
 import { AuthenticationContext, AuthenticationStatus } from "../../context/AuthenticationProvider";
 import queryReducer, {
     initialQuery,
-    initQueryWithValuesFromBrowserUrl,
+    initQueryWithValuesFromBrowserUrl, isSearchQueryEmpty,
     SET_FROM,
     toApiQuery,
     toBrowserQuery
 } from "./query";
-import { stringifyQueryObject } from "../../components/utils";
+import {extractParam, stringifyQueryObject} from "../../components/utils";
 import { FetchAction, FetchStatus, useFetchReducer } from "../../hooks/useFetchReducer";
 import { apiFetchLocations, apiSearch } from "../../api/search/api";
 import ErrorMessage from "../../components/messages/ErrorMessage";
@@ -52,17 +52,24 @@ const Search = () => {
     }, [query]);
 
     /**
-     * Update the browser url when user
-     * changes search criteria
+     * Update the browser url when user changes search criteria
      */
     useEffect(() => {
-        const browserQuery = stringifyQueryObject(toBrowserQuery(query));
-        window.history.replaceState({}, "", CONTEXT_PATH + browserQuery);
+        const browserQuery = toBrowserQuery(query);
+
+        // Keep saved search uuid in browser url, as long as there are some search criteria.
+        // This uuid is used when user update an existing saved search
+        const savedSearchUuid = extractParam('saved');
+        if(!isSearchQueryEmpty(browserQuery) && savedSearchUuid) {
+            browserQuery.saved = savedSearchUuid;
+        }
+
+        window.history.replaceState({}, "", CONTEXT_PATH + stringifyQueryObject(browserQuery));
     }, [query]);
 
     /**
-     * Fetches available search criteria,
-     * locations and an initial search result
+     * Fetches available search criteria, locations
+     * and an initial search result
      */
     function fetchInitialSearch() {
         initialSearchDispatch({ type: FetchAction.BEGIN });
