@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import PageHeader from "../../components/pageHeader/PageHeader";
 import { CONTEXT_PATH } from "../../environment";
-import { useScrollToTop, useTrackPageview } from "../../hooks";
 import { AuthenticationContext } from "../../context/AuthenticationProvider";
 import { UserContext } from "../../context/UserProvider";
 import FavouritesList from "./FavouritesList";
@@ -9,6 +8,8 @@ import RequiresAuthentication from "../../components/wrappers/RequiresAuthentica
 import RequiresUser from "../../components/wrappers/RequiresUser";
 import "./Favourites.less";
 import useDocumentTitle from "../../hooks/useDocumentTitle";
+import useTrackPageview from "../../hooks/useTrackPageview";
+import useScrollToTop from "../../hooks/useScrollToTop";
 
 function Favourites() {
     const title = "Favoritter";

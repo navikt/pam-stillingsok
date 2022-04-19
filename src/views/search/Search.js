@@ -6,7 +6,6 @@ import RestoreScroll from "../../components/restoreScroll/RestoreScroll";
 import SearchResultCount from "./searchResultCount/SearchResultCount";
 import ShowResultsButton from "./showResultsButton/ShowResultsButton";
 import Sorting from "./sorting/Sorting";
-import { useTrackPageview } from "../../hooks";
 import SearchErrorBox from "../../components/searchErrorBox/SearchErrorBox";
 import { AuthenticationContext, AuthenticationStatus } from "../../context/AuthenticationProvider";
 import queryReducer, {
@@ -29,11 +28,12 @@ import NoResults from "./noResults/NoResults";
 import SearchResultItem from "./searchResults/SearchResultsItem";
 import Pagination from "./pagination/Pagination";
 import useDocumentTitle from "../../hooks/useDocumentTitle";
+import useTrackPageview from "../../hooks/useTrackPageview";
 import "./Search.less";
 
 const Search = () => {
     const { authenticationStatus } = useContext(AuthenticationContext);
-    const [query, dispatchQuery] = useReducer(queryReducer, initialQuery, initQueryWithValuesFromBrowserUrl);
+    const [query, queryDispatch] = useReducer(queryReducer, initialQuery, initQueryWithValuesFromBrowserUrl);
     const [initialSearchResponse, initialSearchDispatch] = useFetchReducer();
     const [searchResponse, searchDispatch] = useFetchReducer();
     const latestSearch = useRef();
@@ -127,7 +127,7 @@ const Search = () => {
     }
 
     function loadMoreResults() {
-        dispatchQuery({ type: SET_FROM, value: query.from + query.size });
+        queryDispatch({ type: SET_FROM, value: query.from + query.size });
     }
 
     /**
@@ -177,7 +177,7 @@ const Search = () => {
                             <section id="sok" className="Search__criteria" aria-labelledby="search-form-title">
                                 <SearchCriteria
                                     query={query}
-                                    dispatchQuery={dispatchQuery}
+                                    dispatchQuery={queryDispatch}
                                     initialSearchResult={initialSearchResponse.data}
                                     searchResult={searchResponse.data}
                                     fetchSearch={fetchSearch}
@@ -187,7 +187,7 @@ const Search = () => {
                                     <Knapp
                                         className="Search__nullstill"
                                         onClick={() => {
-                                            dispatchQuery({ type: "RESET" });
+                                            queryDispatch({ type: "RESET" });
                                         }}
                                     >
                                         Nullstill søk
@@ -197,7 +197,7 @@ const Search = () => {
                             <section id="resultat" aria-label="Søkeresultat" className="Search__result">
                                 <header className="Search__count-and-sorting">
                                     <SearchResultCount searchResult={data} />
-                                    <Sorting dispatch={dispatchQuery} query={query} />
+                                    <Sorting dispatch={queryDispatch} query={query} />
                                 </header>
 
                                 {status === FetchStatus.FAILURE && <ErrorMessage />}

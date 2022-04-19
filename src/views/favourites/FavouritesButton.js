@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import PropTypes, {func} from "prop-types";
+import PropTypes from "prop-types";
 import { HasAcceptedTermsStatus, UserContext } from "../../context/UserProvider";
 import { AuthenticationContext, AuthenticationStatus } from "../../context/AuthenticationProvider";
 import { FavouritesContext } from "../../context/FavouritesProvider";
@@ -24,10 +24,8 @@ function FavouritesButton({ id, stilling, showText, className, onRemoved, type }
     const { authenticationStatus, login } = useContext(AuthenticationContext);
     const { hasAcceptedTermsStatus } = useContext(UserContext);
     const { notifyError } = useContext(NotificationsContext);
-
     const [shouldShowTermsModal, openTermsModal, closeTermsModal] = useToggle();
     const [shouldShowLoginModal, openLoginModal, closeLoginModal] = useToggle();
-
     const isPending = favouritesProvider.pendingFavourites.includes(id);
     const isFavourite =
         favouritesProvider.favourites &&

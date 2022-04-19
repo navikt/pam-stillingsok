@@ -2,13 +2,14 @@ import React, { useContext } from "react";
 import { CONTEXT_PATH } from "../../environment";
 import { AuthenticationContext } from "../../context/AuthenticationProvider";
 import { UserContext } from "../../context/UserProvider";
-import { useScrollToTop, useTrackPageview } from "../../hooks";
 import PageHeader from "../../components/pageHeader/PageHeader";
 import SavedSearchesList from "./SavedSearchesList";
 import RequiresAuthentication from "../../components/wrappers/RequiresAuthentication";
 import RequiresUser from "../../components/wrappers/RequiresUser";
 import "./SavedSearches.less";
 import useDocumentTitle from "../../hooks/useDocumentTitle";
+import useTrackPageview from "../../hooks/useTrackPageview";
+import useScrollToTop from "../../hooks/useScrollToTop";
 
 function SavedSearches() {
     const title = "Lagrede søk";

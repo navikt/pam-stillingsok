@@ -15,7 +15,6 @@ import HardRequirements from "./requirements/HardRequirements";
 import PersonalAttributes from "./requirements/PersonalAttributes";
 import SoftRequirements from "./requirements/SoftRequirements";
 import "./Ad.less";
-import { useScrollToTop } from "../../hooks";
 import logAmplitudeEvent, { logAmplitudePageview } from "../../api/amplitude/amplitude";
 import ShareAd from "./shareAd/ShareAd";
 import Summary from "./summary/Summary";
@@ -24,6 +23,7 @@ import { get } from "../../api/search/api";
 import { FetchAction, FetchStatus, useFetchReducer } from "../../hooks/useFetchReducer";
 import ErrorMessage from "../../components/messages/ErrorMessage";
 import useRobotsNoIndexMetaTag from "../../hooks/useRobotsNoIndexMetaTag";
+import useScrollToTop from "../../hooks/useScrollToTop";
 
 const Ad = ({ match }) => {
     const [{ data: ad, error, status }, dispatch] = useFetchReducer();
