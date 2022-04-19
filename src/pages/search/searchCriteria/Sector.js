@@ -18,7 +18,7 @@ function Sector({ initialValues, updatedValues, query, dispatch }) {
         }
     }, [updatedValues]);
 
-    function onSectorClick(e) {
+    function handleClick(e) {
         const { value } = e.target;
         if (e.target.checked) {
             dispatch({ type: ADD_SECTOR, value });
@@ -35,7 +35,7 @@ function Sector({ initialValues, updatedValues, query, dispatch }) {
                     key={item.key}
                     label={`${item.key} (${item.count})`}
                     value={item.key}
-                    onChange={onSectorClick}
+                    onChange={handleClick}
                     checked={query.sector.includes(item.key)}
                 />
             ))}
@@ -44,7 +44,7 @@ function Sector({ initialValues, updatedValues, query, dispatch }) {
                 namePrefix="sector"
                 unknownValues={findUnknownSearchCriteriaValues(query.sector, initialValues)}
                 checkedValues={query.sector}
-                onClick={onSectorClick}
+                onClick={handleClick}
             />
         </CriteriaPanel>
     );

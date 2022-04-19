@@ -15,7 +15,7 @@ function RegisterEmailModal({ onClose }) {
     const [emailValidationError, setEmailValidationError] = useState(undefined);
     let emailRef;
 
-    function onFormSubmit(e) {
+    function handleFormSubmit(e) {
         e.preventDefault();
 
         if (validateForm()) {
@@ -55,7 +55,7 @@ function RegisterEmailModal({ onClose }) {
         return isValid;
     }
 
-    function onEmailChange(e) {
+    function handleEmailChange(e) {
         setEmail(e.target.value);
         setEmailValidationError(undefined);
     }
@@ -68,12 +68,12 @@ function RegisterEmailModal({ onClose }) {
                         <b>Du har ikke registrert e-postadresse.</b>
                         <br /> For å motta varsler på e-post må du registrere e-postadressen din.
                     </p>
-                    <form onSubmit={onFormSubmit}>
+                    <form onSubmit={handleFormSubmit}>
                         <Input
                             type="email"
                             label="Skriv inn e-postadressen din"
                             value={email || ""}
-                            onChange={onEmailChange}
+                            onChange={handleEmailChange}
                             inputRef={(el) => {
                                 emailRef = el;
                             }}

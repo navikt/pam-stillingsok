@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 import AlertStripeFeil from "nav-frontend-alertstriper/lib/feil-alertstripe";
 import logAmplitudeEvent from "../../api/amplitude/amplitude";
 import { Textarea } from "nav-frontend-skjema";
-import { useDocumentTitle } from "../../hooks";
+import useDocumentTitle from "../../hooks/useDocumentTitle";
 import { AuthenticationContext, AuthenticationStatus } from "../../context/AuthenticationProvider";
 import { adUserApiPost } from "../../api/aduser/adUserApi";
 
@@ -41,7 +41,7 @@ const ReportAd = () => {
     const [description, setDescription] = useState("");
     const [descriptionLabel, setDescriptionLabel] = useState("Beskrivelse - må fylles ut");
 
-    useDocumentTitle("Rapportér annonse - Arbeidsplassen");
+    useDocumentTitle("Rapportér annonse");
 
     useEffect(() => {
         if (document.location.search.includes("uuid")) {
@@ -49,35 +49,35 @@ const ReportAd = () => {
         }
     }, []);
 
-    const onDescriptionChange = (e) => {
+    function handleDescriptionChange(e) {
         setDescription(e.target.value);
-    };
+    }
 
-    const onViolationCheck = () => {
+    function handleViolationCheck() {
         setViolation(!violation);
         setScam(false);
         setViolationCategory(null);
         setScamCategory(null);
         setDescriptionLabel("Beskriv regelbruddet - må fylles ut");
-    };
+    }
 
-    const onViolationCategoryCheck = (e) => {
+    function handleViolationCategoryCheck(e) {
         setViolationCategory(e.target.value);
-    };
+    }
 
-    const onScamCheck = () => {
+    function handleScamCheck() {
         setScam(!scam);
         setViolation(false);
         setViolationCategory(null);
         setScamCategory(null);
         setDescriptionLabel("Beskriv svindelen - må fylles ut");
-    };
+    }
 
-    const onScamCategoryCheck = (e) => {
+    function handleScamCategoryCheck(e) {
         setScamCategory(e.target.value);
-    };
+    }
 
-    const onSendTip = async () => {
+    async function handleSendTip() {
         const category = violation ? "Regelbrudd" : "Mistanke om svindel";
         const subCategory = violation
             ? violationCategories.filter((c) => c.key === violationCategory)[0].label
@@ -109,7 +109,7 @@ const ReportAd = () => {
         } catch (e) {
             setError(true);
         }
-    };
+    }
 
     return (
         <Container className="RapporterAnnonse">
@@ -169,7 +169,7 @@ const ReportAd = () => {
                                 <Checkbox
                                     name="regelbrudd"
                                     label="Regelbrudd"
-                                    onChange={onViolationCheck}
+                                    onChange={handleViolationCheck}
                                     checked={violation === true}
                                 />
 
@@ -181,7 +181,7 @@ const ReportAd = () => {
                                                 key={c.key}
                                                 label={c.label}
                                                 value={c.key}
-                                                onChange={onViolationCategoryCheck}
+                                                onChange={handleViolationCategoryCheck}
                                                 checked={violationCategory === c.key}
                                             />
                                         );
@@ -190,7 +190,7 @@ const ReportAd = () => {
                                 <Checkbox
                                     label="Mistanke om svindel"
                                     name="svindel"
-                                    onChange={onScamCheck}
+                                    onChange={handleScamCheck}
                                     checked={scam === true}
                                 />
 
@@ -202,7 +202,7 @@ const ReportAd = () => {
                                                 key={c.key}
                                                 label={c.label}
                                                 value={c.key}
-                                                onChange={onScamCategoryCheck}
+                                                onChange={handleScamCategoryCheck}
                                                 checked={scamCategory === c.key}
                                             />
                                         );
@@ -214,7 +214,7 @@ const ReportAd = () => {
                                     label={descriptionLabel}
                                     maxLength={255}
                                     value={description}
-                                    onChange={onDescriptionChange}
+                                    onChange={handleDescriptionChange}
                                     tellerTekst={() => {
                                         return "Legg ikke igjen personopplysinger i dette feltet";
                                     }}
@@ -228,7 +228,7 @@ const ReportAd = () => {
                             {authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED && (
                                 <Hovedknapp
                                     disabled={(violationCategory === null && scamCategory === null) || !description}
-                                    onClick={onSendTip}
+                                    onClick={handleSendTip}
                                 >
                                     Send tips
                                 </Hovedknapp>

@@ -35,16 +35,16 @@ function SearchBox({ dispatch, query }) {
         }
     }, [debouncedValue]);
 
-    function onTypeAheadValueChange(value) {
+    function handleTypeAheadValueChange(value) {
         setValue(value);
     }
 
-    function onTypeAheadSuggestionSelected(value) {
+    function handleTypeAheadSuggestionSelected(value) {
         setValue(value);
         dispatch({ type: SET_SEARCH_STRING, value });
     }
 
-    function onSearchButtonClick() {
+    function handleSearchButtonClick() {
         dispatch({ type: SET_SEARCH_STRING, value });
     }
 
@@ -57,12 +57,12 @@ function SearchBox({ dispatch, query }) {
                     autoComplete="off"
                     ariaLabel="Søk"
                     placeholder="Søk"
-                    onSelect={onTypeAheadSuggestionSelected}
-                    onChange={onTypeAheadValueChange}
+                    onSelect={handleTypeAheadSuggestionSelected}
+                    onChange={handleTypeAheadValueChange}
                     suggestions={suggestionsResponse.data}
                     value={value ? value : ""}
                 />
-                <button type="submit" className="SearchBox__button" onClick={onSearchButtonClick}>
+                <button type="submit" className="SearchBox__button" onClick={handleSearchButtonClick}>
                     <span className="SearchBox__button__icon">
                         <span className="sr-only">Søk</span>
                     </span>

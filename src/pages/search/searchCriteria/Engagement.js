@@ -18,7 +18,7 @@ function Engagement({initialValues, updatedValues, query, dispatch}) {
         }
     }, [updatedValues]);
 
-    function onEngagementClick(e) {
+    function handleClick(e) {
         const {value} = e.target;
         if (e.target.checked) {
             dispatch({type: ADD_ENGAGEMENT_TYPE, value});
@@ -48,7 +48,7 @@ function Engagement({initialValues, updatedValues, query, dispatch}) {
                     key={editedItemKey(item.key)}
                     label={`${editedItemKey(item.key)} (${item.count})`}
                     value={item.key}
-                    onChange={onEngagementClick}
+                    onChange={handleClick}
                     checked={query.engagementType.includes(item.key)}
                 />
             ))}
@@ -57,7 +57,7 @@ function Engagement({initialValues, updatedValues, query, dispatch}) {
                 namePrefix="engagementType"
                 unknownValues={findUnknownSearchCriteriaValues(query.engagementType, initialValues)}
                 checkedValues={query.engagementType}
-                onClick={onEngagementClick}
+                onClick={handleClick}
             />
         </CriteriaPanel>
     );

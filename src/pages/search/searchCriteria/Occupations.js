@@ -34,7 +34,7 @@ function Occupations({ initialValues, updatedValues, query, dispatch }) {
         }
     }, [updatedValues]);
 
-    function onFirstLevelClick(e) {
+    function handleFirstLevelClick(e) {
         const { value } = e.target;
         if (e.target.checked) {
             dispatch({ type: ADD_OCCUPATION_FIRST_LEVEL, value });
@@ -43,7 +43,7 @@ function Occupations({ initialValues, updatedValues, query, dispatch }) {
         }
     }
 
-    function onSecondLevelClick(e) {
+    function handleSecondLevelClick(e) {
         const { value } = e.target;
         if (e.target.checked) {
             dispatch({ type: ADD_OCCUPATION_SECOND_LEVEL, value });
@@ -78,7 +78,7 @@ function Occupations({ initialValues, updatedValues, query, dispatch }) {
                             name="occupation"
                             label={`${firstLevel.key} (${firstLevel.count})`}
                             value={firstLevel.key}
-                            onChange={onFirstLevelClick}
+                            onChange={handleFirstLevelClick}
                             checked={query.occupationFirstLevels.includes(firstLevel.key)}
                         />
                         {query.occupationFirstLevels &&
@@ -94,7 +94,7 @@ function Occupations({ initialValues, updatedValues, query, dispatch }) {
                                                     secondLevel.count
                                                 })`}
                                                 value={secondLevel.key}
-                                                onChange={onSecondLevelClick}
+                                                onChange={handleSecondLevelClick}
                                                 checked={query.occupationSecondLevels.includes(secondLevel.key)}
                                             />
                                         ))}
@@ -109,8 +109,8 @@ function Occupations({ initialValues, updatedValues, query, dispatch }) {
                 unknownNestedValues={unknownSecondValues}
                 checkedValues={query.occupationFirstLevels}
                 checkedNestedValues={query.occupationSecondLevels}
-                onClick={onFirstLevelClick}
-                onNestedLevelClick={onSecondLevelClick}
+                onClick={handleFirstLevelClick}
+                onNestedLevelClick={handleSecondLevelClick}
             />
         </CriteriaPanel>
     );

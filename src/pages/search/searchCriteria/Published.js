@@ -19,7 +19,7 @@ function Published({ dispatch, query, initialValues, updatedValues }) {
         }
     }, [updatedValues]);
 
-    function onPublishedClick(e) {
+    function handleClick(e) {
         const { value } = e.target;
         if (e.target.checked) {
             dispatch({ type: SET_PUBLISHED, value });
@@ -36,7 +36,7 @@ function Published({ dispatch, query, initialValues, updatedValues }) {
                     key={item.key}
                     label={`${PublishedLabelsEnum[item.key]} (${item.count})`}
                     value={item.key}
-                    onChange={onPublishedClick}
+                    onChange={handleClick}
                     checked={query.published === item.key}
                 />
             ))}

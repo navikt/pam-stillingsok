@@ -21,7 +21,7 @@ function SaveSearchButton({ query }) {
     const [shouldShowRegisterEmailModal, openRegisterEmailModal, closeRegisterEmailModal] = useToggle();
     const savedSearchIdFromBrowserUrl = extractParam("saved");
 
-    function onClick() {
+    function handleClick() {
         if (authenticationStatus === AuthenticationStatus.NOT_AUTHENTICATED) {
             openLoginModal();
         } else if (isSearchQueryEmpty(toSavedSearchQuery(query))) {
@@ -40,7 +40,7 @@ function SaveSearchButton({ query }) {
         }
     }
 
-    function onTermsAccepted() {
+    function handleTermsAccepted() {
         closeTermsModal();
         openSaveSearchModal();
     }
@@ -54,13 +54,13 @@ function SaveSearchButton({ query }) {
 
     return (
         <React.Fragment>
-            <Knapp onClick={onClick}>Lagre søk</Knapp>
+            <Knapp onClick={handleClick}>Lagre søk</Knapp>
 
             {shouldShowQueryIsEmptyModal && <SearchIsEmptyModal onClose={closeQueryIsEmptyModal} />}
 
             {shouldShowLoginModal && <LoginModal onLoginClick={login} onCloseClick={closeLoginModal} />}
 
-            {shouldShowTermsModal && <TermsOfUse onClose={closeTermsModal} onTermsAccepted={onTermsAccepted} />}
+            {shouldShowTermsModal && <TermsOfUse onClose={closeTermsModal} onTermsAccepted={handleTermsAccepted} />}
 
             {shouldShowRegisterEmailModal && <RegisterEmailModal onClose={closeRegisterEmailModal} />}
 

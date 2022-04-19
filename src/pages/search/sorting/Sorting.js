@@ -7,7 +7,7 @@ import "./Sorting.less";
 function Sorting({ query, dispatch }) {
     const [sort, setSort] = useState(query.sort);
 
-    function onSortingChange(e) {
+    function handleChange(e) {
         const { value } = e.target;
         setSort(value);
         dispatch({ type: SET_SORTING, value });
@@ -16,7 +16,7 @@ function Sorting({ query, dispatch }) {
     return (
         <div className="Sorting">
             <Select
-                onChange={onSortingChange}
+                onChange={handleChange}
                 value={sort}
                 label="Sortér etter"
                 className="Sorting__Select"

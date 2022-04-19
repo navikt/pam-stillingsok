@@ -85,10 +85,6 @@ const Ad = ({ match }) => {
         }
     }, [ad]);
 
-    const onPrintClick = () => {
-        window.print();
-    };
-
     const isFinn = ad && ad._source && ad._source.source && ad._source.source.toLowerCase() === "finn";
 
     return (

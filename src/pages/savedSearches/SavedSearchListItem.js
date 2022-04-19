@@ -51,12 +51,12 @@ function SavedSearchListItem({ savedSearch, removeSavedSearchFromList, replaceSa
             });
     }
 
-    function onConfirmModalClose() {
+    function handleDeleteModalClose() {
         hideDeleteModal();
         setDeleteStatus(FetchStatus.NOT_FETCHED);
     }
 
-    function onSaveSearchModalSuccess(response) {
+    function handleSaveSearchSuccess(response) {
         hideFormModal();
         replaceSavedSearchInList(response);
     }
@@ -103,7 +103,7 @@ function SavedSearchListItem({ savedSearch, removeSavedSearchFromList, replaceSa
 
             {shouldShowDeleteModal && (
                 <ConfirmationModal
-                    onCancel={onConfirmModalClose}
+                    onCancel={handleDeleteModalClose}
                     onConfirm={deleteSavedSearch}
                     confirmLabel="Slett"
                     title="Slette lagret søk"
@@ -116,7 +116,7 @@ function SavedSearchListItem({ savedSearch, removeSavedSearchFromList, replaceSa
 
             {shouldShowFormModal && (
                 <SaveSearchModal
-                    onSuccess={onSaveSearchModalSuccess}
+                    onSuccess={handleSaveSearchSuccess}
                     onClose={hideFormModal}
                     savedSearchAsId={savedSearch.uuid}
                     formData={savedSearch}

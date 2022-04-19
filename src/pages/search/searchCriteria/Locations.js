@@ -49,7 +49,7 @@ function Locations({ initialValues, updatedValues, query, dispatch }) {
         }
     }, [updatedValues]);
 
-    function onLocationClick(value, type, checked) {
+    function handleLocationClick(value, type, checked) {
         if (type === "county") {
             if (checked) {
                 dispatch({ type: ADD_COUNTY, value });
@@ -78,19 +78,19 @@ function Locations({ initialValues, updatedValues, query, dispatch }) {
         }
     }
 
-    const onZeroCountFacetClick = (countries, counties, municipals, homeOffice) => (e) => {
+    const handleZeroCountFacetClick = (countries, counties, municipals, homeOffice) => (e) => {
         const { value } = e.target;
 
-        if (countries.includes(value)) onLocationClick(value, "country", e.target.checked);
-        else if (counties.includes(value)) onLocationClick(value, "county", e.target.checked);
-        else if (municipals.includes(value)) onLocationClick(value, "municipal", e.target.checked);
+        if (countries.includes(value)) handleLocationClick(value, "country", e.target.checked);
+        else if (counties.includes(value)) handleLocationClick(value, "county", e.target.checked);
+        else if (municipals.includes(value)) handleLocationClick(value, "municipal", e.target.checked);
     };
 
-    const onCheckboxClick = (key, type) => (e) => {
-        onLocationClick(key, type, e.target.checked);
+    const handleCheckboxClick = (key, type) => (e) => {
+        handleLocationClick(key, type, e.target.checked);
     };
 
-    const onHomeOfficeClick = (e) => {
+    const handleHomeOfficeClick = (e) => {
         if (e.target.checked) {
             dispatch({ type: ADD_REMOTE, value: "Hjemmekontor" });
             dispatch({ type: ADD_REMOTE, value: "Hybridkontor" });
@@ -114,7 +114,7 @@ function Locations({ initialValues, updatedValues, query, dispatch }) {
                             name="location"
                             label={`${fixLocationName(location.key)} (${location.count})`}
                             value={location.key}
-                            onChange={onCheckboxClick(location.key, location.type)}
+                            onChange={handleCheckboxClick(location.key, location.type)}
                             checked={
                                 query.counties.includes(location.key) ||
                                 (location.key === "UTLAND" && query.international === true)
@@ -139,7 +139,7 @@ function Locations({ initialValues, updatedValues, query, dispatch }) {
                                                     subLocation.count
                                                 })`}
                                                 value={subLocation.key}
-                                                onChange={onCheckboxClick(subLocation.key, subLocation.type)}
+                                                onChange={handleCheckboxClick(subLocation.key, subLocation.type)}
                                                 checked={
                                                     query.municipals.includes(subLocation.key) ||
                                                     query.countries.includes(subLocation.key)
@@ -159,7 +159,7 @@ function Locations({ initialValues, updatedValues, query, dispatch }) {
                             key={remote.key}
                             label={`${remote.key} (${remote.count})`}
                             value={remote.key}
-                            onChange={onHomeOfficeClick}
+                            onChange={handleHomeOfficeClick}
                             checked={query.remote.includes(remote.key)}
                         />
                     ))}
@@ -170,7 +170,7 @@ function Locations({ initialValues, updatedValues, query, dispatch }) {
                 namePrefix="counties"
                 unknownValues={unknownLocations}
                 checkedValues={checkedLocations}
-                onClick={onZeroCountFacetClick(unknownCountries, unknownCounties, unknownMunicipals)}
+                onClick={handleZeroCountFacetClick(unknownCountries, unknownCounties, unknownMunicipals)}
             />
         </CriteriaPanel>
     );

@@ -51,7 +51,7 @@ function SaveSearchModal({ onClose, onSuccess, formData, defaultMode, savedSearc
             });
     }
 
-    async function onFormSubmit(e) {
+    async function handleFormSubmit(e) {
         e.preventDefault();
 
         if (validateForm()) {
@@ -112,7 +112,7 @@ function SaveSearchModal({ onClose, onSuccess, formData, defaultMode, savedSearc
         return isValid;
     }
 
-    function onFormModeChange(e) {
+    function handleFormModeChange(e) {
         const value = e.target.value;
         if (value === "add") {
             showForm();
@@ -122,12 +122,12 @@ function SaveSearchModal({ onClose, onSuccess, formData, defaultMode, savedSearc
         setFormMode(value);
     }
 
-    function onTitleChange(e) {
+    function handleTitleChange(e) {
         setTitle(e.target.value);
         setTitleValidationError(false);
     }
 
-    function onSubscribeChange(e) {
+    function handleSubscribeChange(e) {
         if (e.target.checked) {
             setNotifyType("EMAIL");
         } else {
@@ -135,7 +135,7 @@ function SaveSearchModal({ onClose, onSuccess, formData, defaultMode, savedSearc
         }
     }
 
-    function onDurationChange(e) {
+    function handleDurationChange(e) {
         setDuration(parseInt(e.target.value, 10));
     }
 
@@ -154,7 +154,7 @@ function SaveSearchModal({ onClose, onSuccess, formData, defaultMode, savedSearc
                     )}
                 </React.Fragment>
             ) : (
-                <form onSubmit={onFormSubmit}>
+                <form onSubmit={handleFormSubmit}>
                     {askIfReplaceOrUpdate && savedSearchResponse.data && (
                         <Fieldset
                             legend={`Ønsker du å lagre endringene for ${savedSearchResponse.data.title} eller lagre et nytt søk?`}
@@ -163,14 +163,14 @@ function SaveSearchModal({ onClose, onSuccess, formData, defaultMode, savedSearc
                                 label="Lagre endringene"
                                 name="add_or_replace"
                                 value="update-search-query-only"
-                                onChange={onFormModeChange}
+                                onChange={handleFormModeChange}
                                 checked={formMode === "update-search-query-only"}
                             />
                             <Radio
                                 label="Lagre nytt søk"
                                 name="add_or_replace"
                                 value="add"
-                                onChange={onFormModeChange}
+                                onChange={handleFormModeChange}
                                 checked={formMode === "add"}
                             />
                         </Fieldset>
@@ -182,7 +182,7 @@ function SaveSearchModal({ onClose, onSuccess, formData, defaultMode, savedSearc
                                 id="SavedSearchModal__name"
                                 className="SavedSearchModal__body__name"
                                 label="Navn*"
-                                onChange={onTitleChange}
+                                onChange={handleTitleChange}
                                 value={title}
                                 feil={titleValidationError ? { feilmelding: titleValidationError } : undefined}
                                 inputRef={(el) => {
@@ -192,7 +192,7 @@ function SaveSearchModal({ onClose, onSuccess, formData, defaultMode, savedSearc
                             <Checkbox
                                 className="SavedSearchModal__body__notify"
                                 label="Ja, jeg ønsker å motta e-post med varsel om nye treff"
-                                onChange={onSubscribeChange}
+                                onChange={handleSubscribeChange}
                                 checked={notifyType === "EMAIL"}
                             />
                             {notifyType === "EMAIL" && (
@@ -204,7 +204,7 @@ function SaveSearchModal({ onClose, onSuccess, formData, defaultMode, savedSearc
                                                 className="SavedSearchModal__body__duration"
                                                 name="duration"
                                                 value="30"
-                                                onChange={onDurationChange}
+                                                onChange={handleDurationChange}
                                                 checked={duration === 30}
                                             />
                                             <Radio
@@ -212,7 +212,7 @@ function SaveSearchModal({ onClose, onSuccess, formData, defaultMode, savedSearc
                                                 className="SavedSearchModal__body__duration"
                                                 name="duration"
                                                 value="60"
-                                                onChange={onDurationChange}
+                                                onChange={handleDurationChange}
                                                 checked={duration === 60}
                                             />
                                             <Radio
@@ -220,7 +220,7 @@ function SaveSearchModal({ onClose, onSuccess, formData, defaultMode, savedSearc
                                                 className="SavedSearchModal__body__duration"
                                                 name="duration"
                                                 value="90"
-                                                onChange={onDurationChange}
+                                                onChange={handleDurationChange}
                                                 checked={duration === 90}
                                             />
                                         </Fieldset>

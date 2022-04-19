@@ -80,7 +80,7 @@ function FavouritesButton({ id, stilling, showText, className, onRemoved, type }
             });
     }
 
-    function onAddFavouriteClick() {
+    function handleSaveFavouriteClick() {
         if (authenticationStatus === AuthenticationStatus.NOT_AUTHENTICATED) {
             openLoginModal();
         } else if (hasAcceptedTermsStatus === HasAcceptedTermsStatus.NOT_ACCEPTED) {
@@ -98,12 +98,12 @@ function FavouritesButton({ id, stilling, showText, className, onRemoved, type }
         }
     }
 
-    function onTermsAccepted() {
+    function handleTermsAccepted() {
         closeTermsModal();
         saveFavourite(id, stilling);
     }
 
-    function onRemoveFavouriteClick() {
+    function handleDeleteFavouriteClick() {
         if (favouritesProvider.favourites) {
             deleteFavourite(id);
         }
@@ -113,7 +113,7 @@ function FavouritesButton({ id, stilling, showText, className, onRemoved, type }
         <React.Fragment>
             <IconButton
                 disabled={isPending}
-                onClick={isFavourite ? onRemoveFavouriteClick : onAddFavouriteClick}
+                onClick={isFavourite ? handleDeleteFavouriteClick : handleSaveFavouriteClick}
                 className={className ? `FavouriteButton ${className}` : "FavouritesButton"}
                 text={isFavourite ? "Slett favoritt" : "Lagre som favoritt"}
                 icon={<StarIcon filled={isFavourite} />}
@@ -122,7 +122,7 @@ function FavouritesButton({ id, stilling, showText, className, onRemoved, type }
             />
 
             {shouldShowLoginModal && <LoginModal onLoginClick={login} onCloseClick={closeLoginModal} />}
-            {shouldShowTermsModal && <TermsOfUse onClose={closeTermsModal} onTermsAccepted={onTermsAccepted} />}
+            {shouldShowTermsModal && <TermsOfUse onClose={closeTermsModal} onTermsAccepted={handleTermsAccepted} />}
         </React.Fragment>
     );
 }

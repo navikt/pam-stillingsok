@@ -17,7 +17,7 @@ function Extent({initialValues, updatedValues, query, dispatch}) {
         }
     }, [updatedValues]);
 
-    function onExtentClick(e) {
+    function handleClick(e) {
         const {value} = e.target;
         if (e.target.checked) {
             dispatch({type: ADD_EXTENT, value});
@@ -38,7 +38,7 @@ function Extent({initialValues, updatedValues, query, dispatch}) {
                     key={item.key}
                     label={`${labelForExtent(item)} (${item.count})`}
                     value={item.key}
-                    onChange={onExtentClick}
+                    onChange={handleClick}
                     checked={query.extent.includes(item.key)}
                 />
             ))}
@@ -47,7 +47,7 @@ function Extent({initialValues, updatedValues, query, dispatch}) {
                 namePrefix="extent"
                 unknownValues={findUnknownSearchCriteriaValues(query.extent, initialValues)}
                 checkedValues={query.extent}
-                onClick={onExtentClick}
+                onClick={handleClick}
             />
         </CriteriaPanel>
     );

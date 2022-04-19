@@ -6,17 +6,18 @@ import RestoreScroll from "../../components/restoreScroll/RestoreScroll";
 import SearchResultCount from "./searchResultCount/SearchResultCount";
 import ShowResultsButton from "./showResultsButton/ShowResultsButton";
 import Sorting from "./sorting/Sorting";
-import { useDocumentTitle, useTrackPageview } from "../../hooks";
+import { useTrackPageview } from "../../hooks";
 import SearchErrorBox from "../../components/searchErrorBox/SearchErrorBox";
 import { AuthenticationContext, AuthenticationStatus } from "../../context/AuthenticationProvider";
 import queryReducer, {
     initialQuery,
-    initQueryWithValuesFromBrowserUrl, isSearchQueryEmpty,
+    initQueryWithValuesFromBrowserUrl,
+    isSearchQueryEmpty,
     SET_FROM,
     toApiQuery,
     toBrowserQuery
 } from "./query";
-import {extractParam, stringifyQueryObject} from "../../components/utils";
+import { extractParam, stringifyQueryObject } from "../../components/utils";
 import { FetchAction, FetchStatus, useFetchReducer } from "../../hooks/useFetchReducer";
 import { apiFetchLocations, apiSearch } from "../../api/search/api";
 import ErrorMessage from "../../components/messages/ErrorMessage";
@@ -27,6 +28,7 @@ import { Knapp } from "@navikt/arbeidsplassen-knapper";
 import NoResults from "./noResults/NoResults";
 import SearchResultItem from "./searchResults/SearchResultsItem";
 import Pagination from "./pagination/Pagination";
+import useDocumentTitle from "../../hooks/useDocumentTitle";
 import "./Search.less";
 
 const Search = () => {
@@ -36,7 +38,7 @@ const Search = () => {
     const [searchResponse, searchDispatch] = useFetchReducer();
     const latestSearch = useRef();
 
-    useDocumentTitle("Ledige stillinger - Arbeidsplassen");
+    useDocumentTitle("Ledige stillinger");
     useTrackPageview(CONTEXT_PATH, "Ledige stillinger");
 
     /**
@@ -59,8 +61,8 @@ const Search = () => {
 
         // Keep saved search uuid in browser url, as long as there are some search criteria.
         // This uuid is used when user update an existing saved search
-        const savedSearchUuid = extractParam('saved');
-        if(!isSearchQueryEmpty(browserQuery) && savedSearchUuid) {
+        const savedSearchUuid = extractParam("saved");
+        if (!isSearchQueryEmpty(browserQuery) && savedSearchUuid) {
             browserQuery.saved = savedSearchUuid;
         }
 
