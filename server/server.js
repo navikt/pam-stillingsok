@@ -73,7 +73,8 @@ server.use(helmet.contentSecurityPolicy({
         styleSrc: ["'self'", hotJarSources.UNSAFE[1]],
         fontSrc: ["'self'", 'data:', 'https://fonts.gstatic.com', ...hotJarSources.font],
         imgSrc: ["'self'", 'data:', 'https://www.google-analytics.com', ...hotJarSources.img],
-        connectSrc: ["'self'", process.env.PAMADUSER_URL, 'https://www.google-analytics.com', 'https://amplitude.nav.no', ...hotJarSources.connect],
+        connectSrc: ["'self'", process.env.PAMADUSER_URL, 'https://www.google-analytics.com',
+            'https://amplitude.nav.no', 'https://sentry.gc.nav.no', ...hotJarSources.connect],
         frameSrc: ["'self'", ...hotJarSources.frame]
     }
 }));
