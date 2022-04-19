@@ -185,7 +185,7 @@
     flex: 1;
     list-style: none;
     padding: 0;
-    margin: 1rem 0;
+    margin: 1rem 0 0.75rem 0;
     flex-direction: column;
 }
 
@@ -241,6 +241,42 @@
     .arbeidsplassen-header-ul > li > a:hover {
         text-decoration: underline;
     }
+}
+
+.arbeidsplassen-header-settings-link {
+    margin: 0 0 1.5rem 0;
+    line-height: 1;
+    color: #062140;
+    font-size: 1.125rem;
+    font-weight: 600;
+    display: inline-block;
+}
+
+@media (min-width: 1025px) {
+    .arbeidsplassen-header-settings-link {
+        color: #8c368e;
+        font-weight: 400;
+        margin: 0 1rem 0 0;
+    }
+}
+
+.arbeidsplassen-header-dark .arbeidsplassen-header-settings-link {
+    color: #fff;
+}
+
+.arbeidsplassen-header-settings-link:focus-visible {
+    outline: none;
+    background: #062140;
+    color: #fff;
+}
+
+.arbeidsplassen-header-dark .arbeidsplassen-header-settings-link:focus-visible {
+    background: #fff;
+    color: #062140;
+}
+
+.arbeidsplassen-header-settings-link:hover {
+    text-decoration-line: none;
 }
 
 #arbeidsplassen-header-current-user-container {

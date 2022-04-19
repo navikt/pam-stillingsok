@@ -59,6 +59,12 @@ const TopMenu = ({isAuthenticated, redirectToLogin, setErUnderFemten}) => {
                         document.getElementById('arbeidsplassen-header-login-container')
                     )}
                     {ReactDOM.createPortal(
+                        <a href="/personinnstillinger" className="arbeidsplassen-header-settings-link">
+                            Innstillinger
+                        </a>,
+                        document.getElementById('arbeidsplassen-header-settings-container')
+                    )}
+                    {ReactDOM.createPortal(
                         <React.Fragment>
                             {userInfo && userInfo.fornavn && userInfo.etternavn ? userInfo.fornavn + " " + userInfo.etternavn : ""}
                         </React.Fragment>,
