@@ -137,14 +137,14 @@ const Search = () => {
      */
     function mergeAndRemoveDuplicates(searchResponse, response) {
         return {
-            ...searchResponse.data,
-            stillinger: {
+            ...response,
+            stillinger: [
                 ...searchResponse.data.stillinger,
-                ...response.data.stillinger.filter((a) => {
+                ...response.stillinger.filter((a) => {
                     const duplicate = searchResponse.data.stillinger.find((b) => a.uuid === b.uuid);
                     return !duplicate;
                 })
-            }
+            ]
         };
     }
 
