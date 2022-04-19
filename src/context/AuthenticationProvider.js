@@ -46,8 +46,13 @@ const AuthenticationProvider = ({ children }) => {
 
     useEffect(() => {
         fetchIsAuthenticated();
-        fetchUserNameAndInfo();
     }, []);
+
+    useEffect(() => {
+        if(authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED) {
+            fetchUserNameAndInfo();
+        }
+    }, [authenticationStatus]);
 
     const fetchIsAuthenticated = () => {
         setAuthenticationStatus(AuthenticationStatus.IS_FETCHING);
