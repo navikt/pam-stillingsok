@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Undertittel } from "nav-frontend-typografi";
 import { formatISOString, isValidISOString } from "../../../components/utils";
 import worktimeParser from "./worktimeParser";
 
@@ -9,7 +8,7 @@ export default function EmploymentDetails({ stilling }) {
 
     return (
         <div className="EmploymentDetails detail-section">
-            <Undertittel className="EmploymentDetails__head detail-section__head">
+            <h2 className="EmploymentDetails__head detail-section__head">
                 <svg
                     aria-hidden="true"
                     width="1em"
@@ -28,7 +27,7 @@ export default function EmploymentDetails({ stilling }) {
                     ></path>
                 </svg>
                 Om stillingen
-            </Undertittel>
+            </h2>
             <div className="detail-section__body">
                 <dl className="dl-flex typo-normal">
                     {properties.positioncount && [

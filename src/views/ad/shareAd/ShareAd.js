@@ -1,12 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Undertittel } from "nav-frontend-typografi";
 import SocialShare from "../socialShare/SocialShare";
 
 export default function ShareAd({ source }) {
     return (
         <div className="ShareAd detail-section">
-            <Undertittel className="detail-section__head">
+            <h2 className="detail-section__head">
                 <svg
                     aria-hidden="true"
                     width="1em"
@@ -25,7 +24,7 @@ export default function ShareAd({ source }) {
                     ></path>
                 </svg>
                 Del annonsen
-            </Undertittel>
+            </h2>
             <div className="detail-section__body">
                 <SocialShare title={source.title} />
             </div>

@@ -1,5 +1,4 @@
 /* eslint-disable react/no-did-update-set-state */
-import {Element} from "nav-frontend-typografi";
 import PropTypes from "prop-types";
 import React from "react";
 import SnapToTop from "../../../components/snapToTop/SnapToTop";
@@ -117,9 +116,9 @@ class ShowResultsButton extends React.Component {
                                             numberOfAds={this.props.searchResults.total.value}
                                         />
                                     ) : (
-                                        <Element>
+                                        <div>
                                             <span className="ShowResultsButton__text">Ingen treff</span>
-                                        </Element>
+                                        </div>
                                     ))}
                             </div>
                             <div>

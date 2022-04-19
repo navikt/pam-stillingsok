@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Undertittel } from "nav-frontend-typografi";
 import { formatISOString } from "../../../components/utils";
 import { Link } from "react-router-dom";
 import { CONTEXT_PATH } from "../../../environment";
@@ -8,7 +7,7 @@ import { CONTEXT_PATH } from "../../../environment";
 export default function AdDetails({ id, source }) {
     return (
         <div className="AdDetails detail-section">
-            <Undertittel className="AdDetails__head detail-section__head">
+            <h2 className="AdDetails__head detail-section__head">
                 <svg
                     aria-hidden="true"
                     width="1em"
@@ -27,7 +26,7 @@ export default function AdDetails({ id, source }) {
                     ></path>
                 </svg>
                 Om annonsen
-            </Undertittel>
+            </h2>
             <div className="detail-section__body">
                 <dl className="dl-flex typo-normal">
                     {source.updated && [

@@ -1,4 +1,3 @@
-import { Element } from "nav-frontend-typografi";
 import React from "react";
 import PropTypes from "prop-types";
 
@@ -52,14 +51,14 @@ class CountDown extends React.Component {
 
     render() {
         return (
-            <Element>
+            <div className="ShowResultsButton__text">
                 {this.state.count}{" "}
-                <span className="ShowResultsButton__text">
+                <span>
                     {this.props.numberOfPositions > 1 ? "stillinger" : "stilling"} i{" "}
                 </span>
                 {this.props.numberOfAds}{" "}
-                <span className="ShowResultsButton__text">{this.props.numberOfAds > 1 ? "annonser" : "annonse"}</span>
-            </Element>
+                <span>{this.props.numberOfAds > 1 ? "annonser" : "annonse"}</span>
+            </div>
         );
     }
 }

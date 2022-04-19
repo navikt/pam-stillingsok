@@ -1,4 +1,3 @@
-import { Undertittel } from "nav-frontend-typografi";
 import PropTypes from "prop-types";
 import React from "react";
 import { Link } from "react-router-dom";
@@ -38,9 +37,9 @@ export default function SearchResultsItemDetails({ stilling, showExpired }) {
     return (
         <LinkToAd stilling={stilling} isFinn={isFinn} employer={employer}>
             <div className="SearchResultsItemDetails">
-                <Undertittel tag="h3" className="SearchResultsItemDetails__title" aria-label={`${stilling.title}.`}>
+                <h3 className="SearchResultsItemDetails__title" aria-label={`${stilling.title}.`}>
                     {stilling.title}
-                </Undertittel>
+                </h3>
 
                 {stilling.properties.jobtitle && stilling.title !== stilling.properties.jobtitle && (
                     <p className="SearchResultsItemDetails__jobtitle" aria-label={`${stilling.properties.jobtitle}.`}>

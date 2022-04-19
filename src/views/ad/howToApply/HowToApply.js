@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Undertittel } from "nav-frontend-typografi";
 import { formatISOString, isValidEmail, isValidISOString, isValidUrl } from "../../../components/utils";
 import "./HowToApply.less";
 import logAmplitudeEvent from "../../../api/amplitude/amplitude";
@@ -33,7 +32,7 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
     if (properties.applicationdue || properties.applicationemail || sokUrl) {
         return (
             <div className="HowToApply detail-section">
-                <Undertittel className="HowToApply__head detail-section__head">
+                <h2 className="HowToApply__head detail-section__head">
                     <svg
                         aria-hidden="true"
                         width="1em"
@@ -52,7 +51,7 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                         ></path>
                     </svg>
                     <span>Søknad</span>
-                </Undertittel>
+                </h2>
                 <div className="detail-section__body">
                     <dl className="dl-flex typo-normal">
                         {properties.applicationdue && [

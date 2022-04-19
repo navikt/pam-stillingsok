@@ -1,8 +1,6 @@
 import * as React from "react";
 import { useContext, useEffect, useState } from "react";
 import Container from "nav-frontend-grid/lib/container";
-import Sidetittel from "nav-frontend-typografi/lib/sidetittel";
-import Undertittel from "nav-frontend-typografi/lib/undertittel";
 import "./ReportAd.less";
 import Checkbox from "nav-frontend-skjema/lib/checkbox";
 import { Hovedknapp } from "@navikt/arbeidsplassen-knapper";
@@ -137,7 +135,7 @@ const ReportAd = () => {
                 <div>
                     {finished && (
                         <div>
-                            <Sidetittel>Takk for din tilbakemelding</Sidetittel>
+                            <h1>Takk for din tilbakemelding</h1>
 
                             <div className="report-form">
                                 <p>Takk for at du tok deg tid til å rapportere denne annonsen.</p>
@@ -161,10 +159,10 @@ const ReportAd = () => {
                     )}
                     {!finished && (
                         <div>
-                            <Sidetittel>Rapportér annonse</Sidetittel>
+                            <h1>Rapportér annonse</h1>
 
                             <div className="report-form">
-                                <Undertittel>Henveldensen gjelder</Undertittel>
+                                <h2>Henveldensen gjelder</h2>
 
                                 <Checkbox
                                     name="regelbrudd"
