@@ -1,11 +1,13 @@
-export function removeRobotsMetaTag() {
+import {useEffect} from "react";
+
+function removeRobotsMetaTag() {
     let metaRobots = document.querySelector("meta[name=robots]");
     if (metaRobots) {
         document.querySelector("head").removeChild(metaRobots);
     }
 }
 
-export function addRobotsNoIndexMetaTag() {
+function addRobotsNoIndexMetaTag() {
     const content = "noindex";
     let metaRobots = document.querySelector("meta[name=robots]");
 
@@ -18,3 +20,14 @@ export function addRobotsNoIndexMetaTag() {
         metaRobots.setAttribute("content", content);
     }
 }
+
+export default (shouldAddNoIndexMetaTag) => {
+    useEffect(() => {
+        if (shouldAddNoIndexMetaTag) {
+            addRobotsNoIndexMetaTag();
+        }
+        return () => {
+            removeRobotsMetaTag();
+        };
+    }, [shouldAddNoIndexMetaTag]);
+};

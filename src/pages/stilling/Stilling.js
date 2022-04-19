@@ -16,20 +16,22 @@ import PersonalAttributes from "./requirements/PersonalAttributes";
 import SoftRequirements from "./requirements/SoftRequirements";
 import "./Stilling.less";
 import { useScrollToTop } from "../../hooks";
-import { addRobotsNoIndexMetaTag, removeRobotsMetaTag } from "../../utils/metaRobots";
 import logAmplitudeEvent, { logAmplitudePageview } from "../../api/amplitude/amplitude";
 import ShareAd from "./shareAd/ShareAd";
 import Summary from "./summary/Summary";
 import DelayedSpinner from "../../components/spinner/DelayedSpinner";
 import { get } from "../../api/search/api";
-import {FetchAction, FetchStatus, useFetchReducer} from "../../hooks/useFetchReducer";
+import { FetchAction, FetchStatus, useFetchReducer } from "../../hooks/useFetchReducer";
 import ErrorMessage from "../../components/messages/ErrorMessage";
+import useRobotsNoIndexMetaTag from "../../hooks/useRobotsNoIndexMetaTag";
 
 const Stilling = ({ match }) => {
     const [{ data: ad, error, status }, dispatch] = useFetchReducer();
     const isInternal = match.path.startsWith("/stillinger/intern/");
+    const avoidIndexing = (error && error.statusCode === 404) || (ad && ad._source.status !== "ACTIVE") || isInternal;
 
     useScrollToTop();
+    useRobotsNoIndexMetaTag(avoidIndexing);
 
     function fetchStilling(id) {
         dispatch({ type: FetchAction.BEGIN });
@@ -82,17 +84,6 @@ const Stilling = ({ match }) => {
             }
         }
     }, [ad]);
-
-    useEffect(() => {
-        const pageNotFound = error && error.statusCode === 404;
-        const adIsNotActive = ad && ad._source.status !== "ACTIVE";
-        if (isInternal || pageNotFound || adIsNotActive) {
-            addRobotsNoIndexMetaTag();
-        }
-        return () => {
-            removeRobotsMetaTag();
-        };
-    }, [error, ad]);
 
     const onPrintClick = () => {
         window.print();
