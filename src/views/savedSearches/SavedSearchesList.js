@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import {captureException} from "@sentry/browser";
 import SavedSearchListItem from "./SavedSearchListItem";
 import DelayedSpinner from "../../components/spinner/DelayedSpinner";
 import ErrorMessage from "../../components/messages/ErrorMessage";
@@ -22,13 +23,14 @@ function SavedSearchesList() {
         dispatch({ type: FetchAction.BEGIN });
 
         adUserApiGet("api/v1/savedsearches?size=999&sort=updated,desc")
-            .then((response) => {
+            .then(response => {
                 dispatch({ type: FetchAction.RESOLVE, data: response.content ? response.content : [] });
             })
-            .catch((error) => {
+            .catch(error => {
                 if (error.statusCode === 404) {
                     dispatch({ type: FetchAction.RESOLVE, data: [] });
                 } else {
+                    captureException(error);
                     dispatch({ type: FetchAction.REJECT, error });
                 }
             });

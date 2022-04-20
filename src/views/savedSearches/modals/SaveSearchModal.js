@@ -1,4 +1,5 @@
 import React, {useContext, useEffect, useState} from "react";
+import {captureException} from "@sentry/browser";
 import {Checkbox, Fieldset, Input, Radio, SkjemaGruppe} from "nav-frontend-skjema";
 import {isStringEmpty} from "../../../components/utils";
 import {UserContext} from "../../../context/UserProvider";
@@ -43,10 +44,11 @@ function SaveSearchModal({onClose, onSuccess, formData, defaultMode, savedSearch
     function fetchSavedSearch(id) {
         dispatch({type: FetchAction.BEGIN});
         adUserApiGet(`api/v1/savedsearches/${id}`)
-            .then((data) => {
+            .then(data => {
                 dispatch({type: FetchAction.RESOLVE, data});
             })
-            .catch((error) => {
+            .catch(error => {
+                captureException(error);
                 dispatch({type: FetchAction.REJECT, error});
             });
     }
@@ -72,7 +74,8 @@ function SaveSearchModal({onClose, onSuccess, formData, defaultMode, savedSearch
                             onSuccess(response);
                         }
                     })
-                    .catch(() => {
+                    .catch(err => {
+                        captureException(err);
                         setSaveStatus(FetchStatus.FAILURE);
                     });
             } else {
@@ -88,14 +91,15 @@ function SaveSearchModal({onClose, onSuccess, formData, defaultMode, savedSearch
                     };
                 }
                 adUserApiPut(`api/v1/savedsearches/${savedSearchResponse.data.uuid}`, data)
-                    .then((response) => {
+                    .then(response => {
                         setSaveStatus(FetchStatus.SUCCESS);
                         if (onSuccess) {
                             onSuccess(response);
                         }
                         notifySuccess("Søket er oppdatert.");
                     })
-                    .catch(() => {
+                    .catch(err => {
+                        captureException(err);
                         setSaveStatus(FetchStatus.FAILURE);
                     });
             }

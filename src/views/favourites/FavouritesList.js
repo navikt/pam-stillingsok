@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import SearchResultsItemDetails from "../search/searchResults/SearchResultsItemDetails";
 import { Select } from "nav-frontend-skjema";
+import {captureException} from "@sentry/browser";
 import DelayedSpinner from "../../components/spinner/DelayedSpinner";
 import ErrorMessage from "../../components/messages/ErrorMessage";
 import EmptyMessage from "../../components/messages/EmptyMessage";
@@ -25,10 +26,11 @@ function FavouritesList() {
         adUserApiGet(
             `api/v1/userfavouriteads?size=999&sort=favouriteAd.${sortBy},${sortBy === "expires" ? "asc" : "desc"}`
         )
-            .then((response) => {
+            .then(response => {
                 dispatch({ type: FetchAction.RESOLVE, data: response.content ? response.content : [] });
             })
-            .catch((error) => {
+            .catch(error => {
+                captureException(error);
                 dispatch({ type: FetchAction.REJECT, error });
             });
     }

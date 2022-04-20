@@ -1,13 +1,14 @@
-import React, { useContext, useEffect, useReducer, useRef } from "react";
-import { Link } from "react-router-dom";
-import { CONTEXT_PATH } from "../../environment";
+import React, {useContext, useEffect, useReducer, useRef} from "react";
+import {captureException} from "@sentry/browser";
+import {Link} from "react-router-dom";
+import {CONTEXT_PATH} from "../../environment";
 import DelayedSpinner from "../../components/spinner/DelayedSpinner";
 import RestoreScroll from "../../components/restoreScroll/RestoreScroll";
 import SearchResultCount from "./searchResultCount/SearchResultCount";
 import ShowResultsButton from "./showResultsButton/ShowResultsButton";
 import Sorting from "./sorting/Sorting";
 import SearchErrorBox from "../../components/searchErrorBox/SearchErrorBox";
-import { AuthenticationContext, AuthenticationStatus } from "../../context/AuthenticationProvider";
+import {AuthenticationContext, AuthenticationStatus} from "../../context/AuthenticationProvider";
 import queryReducer, {
     initialQuery,
     initQueryWithValuesFromBrowserUrl,
@@ -16,14 +17,14 @@ import queryReducer, {
     toApiQuery,
     toBrowserQuery
 } from "./query";
-import { extractParam, stringifyQueryObject } from "../../components/utils";
-import { FetchAction, FetchStatus, useFetchReducer } from "../../hooks/useFetchReducer";
-import { apiFetchLocations, apiSearch } from "../../api/search/api";
+import {extractParam, stringifyQueryObject} from "../../components/utils";
+import {FetchAction, FetchStatus, useFetchReducer} from "../../hooks/useFetchReducer";
+import {apiFetchLocations, apiSearch} from "../../api/search/api";
 import ErrorMessage from "../../components/messages/ErrorMessage";
 import PageHeader from "../../components/pageHeader/PageHeader";
 import SearchCriteria from "./searchCriteria/SearchCriteria";
 import SaveSearchButton from "../savedSearches/SaveSearchButton";
-import { Knapp } from "@navikt/arbeidsplassen-knapper";
+import {Knapp} from "@navikt/arbeidsplassen-knapper";
 import NoResults from "./noResults/NoResults";
 import SearchResultItem from "./searchResults/SearchResultsItem";
 import Pagination from "./pagination/Pagination";
@@ -32,7 +33,7 @@ import useTrackPageview from "../../hooks/useTrackPageview";
 import "./Search.less";
 
 const Search = () => {
-    const { authenticationStatus } = useContext(AuthenticationContext);
+    const {authenticationStatus} = useContext(AuthenticationContext);
     const [query, queryDispatch] = useReducer(queryReducer, initialQuery, initQueryWithValuesFromBrowserUrl);
     const [initialSearchResponse, initialSearchDispatch] = useFetchReducer();
     const [searchResponse, searchDispatch] = useFetchReducer();
@@ -74,7 +75,7 @@ const Search = () => {
      * and an initial search result
      */
     function fetchInitialSearch() {
-        initialSearchDispatch({ type: FetchAction.BEGIN });
+        initialSearchDispatch({type: FetchAction.BEGIN});
 
         const promises = [
             apiSearch(), // An empty search aggregates search criteria across all ads
@@ -89,13 +90,14 @@ const Search = () => {
         }
 
         Promise.all(promises)
-            .then((responses) => {
+            .then(responses => {
                 const [initialSearchResult, locations, searchResult] = responses;
-                initialSearchDispatch({ type: FetchAction.RESOLVE, data: { ...initialSearchResult, locations } });
-                searchDispatch({ type: FetchAction.RESOLVE, data: searchResult ? searchResult : initialSearchResult });
+                initialSearchDispatch({type: FetchAction.RESOLVE, data: {...initialSearchResult, locations}});
+                searchDispatch({type: FetchAction.RESOLVE, data: searchResult ? searchResult : initialSearchResult});
             })
-            .catch((error) => {
-                initialSearchDispatch({ type: FetchAction.REJECT, error });
+            .catch(error => {
+                captureException(error);
+                initialSearchDispatch({type: FetchAction.REJECT, error});
             });
     }
 
@@ -103,7 +105,7 @@ const Search = () => {
      * Fetches search result.
      */
     function fetchSearch() {
-        searchDispatch({ type: FetchAction.BEGIN });
+        searchDispatch({type: FetchAction.BEGIN});
         const search = apiSearch(toApiQuery(query));
 
         // To avoid race conditions, when multiple search are done simultaneously,
@@ -111,23 +113,24 @@ const Search = () => {
         latestSearch.current = search;
 
         search
-            .then((response) => {
+            .then(response => {
                 if (latestSearch.current === search) {
                     // If user clicked the load more button, search result
                     // will be merged into already loaded data.
                     const mergedResult = query.from > 0 ? mergeAndRemoveDuplicates(searchResponse, response) : response;
-                    searchDispatch({ type: FetchAction.RESOLVE, data: mergedResult });
+                    searchDispatch({type: FetchAction.RESOLVE, data: mergedResult});
                 }
             })
-            .catch((error) => {
+            .catch(error => {
                 if (search === latestSearch.current) {
-                    searchDispatch({ type: FetchAction.REJECT, error });
+                    captureException(error);
+                    searchDispatch({type: FetchAction.REJECT, error});
                 }
             });
     }
 
     function loadMoreResults() {
-        queryDispatch({ type: SET_FROM, value: query.from + query.size });
+        queryDispatch({type: SET_FROM, value: query.from + query.size});
     }
 
     /**
@@ -148,14 +151,14 @@ const Search = () => {
         };
     }
 
-    const { status, data } = searchResponse;
+    const {status, data} = searchResponse;
 
     return (
         <div className="Search">
-            <PageHeader title="Ledige stillinger" />
+            <PageHeader title="Ledige stillinger"/>
 
             {initialSearchResponse.status === FetchStatus.SUCCESS && (
-                <ShowResultsButton searchResults={data} searchFailed={status === FetchStatus.FAILURE} />
+                <ShowResultsButton searchResults={data} searchFailed={status === FetchStatus.FAILURE}/>
             )}
 
             <div className="Search__inner">
@@ -170,8 +173,8 @@ const Search = () => {
                     </div>
                 )}
                 <div className="Search__main">
-                    {initialSearchResponse.status === FetchStatus.FAILURE && <SearchErrorBox />}
-                    {initialSearchResponse.status === FetchStatus.IS_FETCHING && <DelayedSpinner />}
+                    {initialSearchResponse.status === FetchStatus.FAILURE && <SearchErrorBox/>}
+                    {initialSearchResponse.status === FetchStatus.IS_FETCHING && <DelayedSpinner/>}
                     {initialSearchResponse.status === FetchStatus.SUCCESS && (
                         <RestoreScroll id="search-scroll">
                             <section id="sok" className="Search__criteria" aria-labelledby="search-form-title">
@@ -183,11 +186,11 @@ const Search = () => {
                                     fetchSearch={fetchSearch}
                                 />
                                 <div className="Search__reset-and-save-search">
-                                    <SaveSearchButton query={query} />
+                                    <SaveSearchButton query={query}/>
                                     <Knapp
                                         className="Search__nullstill"
                                         onClick={() => {
-                                            queryDispatch({ type: "RESET" });
+                                            queryDispatch({type: "RESET"});
                                         }}
                                     >
                                         Nullstill søk
@@ -196,21 +199,21 @@ const Search = () => {
                             </section>
                             <section id="resultat" aria-label="Søkeresultat" className="Search__result">
                                 <header className="Search__count-and-sorting">
-                                    <SearchResultCount searchResult={data} />
-                                    <Sorting dispatch={queryDispatch} query={query} />
+                                    <SearchResultCount searchResult={data}/>
+                                    <Sorting dispatch={queryDispatch} query={query}/>
                                 </header>
 
-                                {status === FetchStatus.FAILURE && <ErrorMessage />}
-                                {status === FetchStatus.IS_FETCHING && query.from === 0 && <DelayedSpinner />}
+                                {status === FetchStatus.FAILURE && <ErrorMessage/>}
+                                {status === FetchStatus.IS_FETCHING && query.from === 0 && <DelayedSpinner/>}
                                 {status === FetchStatus.SUCCESS && data.total.value === 0 && (
-                                    <NoResults query={query} />
+                                    <NoResults query={query}/>
                                 )}
                                 {(status === FetchStatus.SUCCESS ||
                                     (status === FetchStatus.IS_FETCHING && query.from > 0)) && (
                                     <React.Fragment>
                                         {data.stillinger &&
                                             data.stillinger.map((stilling) => (
-                                                <SearchResultItem key={stilling.uuid} stilling={stilling} />
+                                                <SearchResultItem key={stilling.uuid} stilling={stilling}/>
                                             ))}
 
                                         <Pagination

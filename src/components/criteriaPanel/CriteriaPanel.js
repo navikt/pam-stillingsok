@@ -1,6 +1,7 @@
 import Ekspanderbartpanel from "nav-frontend-ekspanderbartpanel";
 import PropTypes from "prop-types";
 import React, { useState } from "react";
+import {captureException} from "@sentry/browser";
 import "./CriteriaPanel.less";
 
 function CriteriaPanel({ isOpenByDefault, title, children, panelId }) {
@@ -15,6 +16,7 @@ function CriteriaPanel({ isOpenByDefault, title, children, panelId }) {
                 return isOpenByDefault;
             }
         } catch (e) {
+            captureException(e);
             return isOpenByDefault;
         }
     });
@@ -25,14 +27,14 @@ function CriteriaPanel({ isOpenByDefault, title, children, panelId }) {
             try {
                 sessionStorage.setItem(`${panelId}-open`, "false");
             } catch (e) {
-                // ignore session storage error
+                captureException(e);
             }
         } else {
             setIsOpen(true);
             try {
                 sessionStorage.setItem(`${panelId}-open`, "true");
             } catch (e) {
-                // ignore session storage error
+                captureException(e);
             }
         }
     }

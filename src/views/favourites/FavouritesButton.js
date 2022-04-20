@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
+import {captureException} from "@sentry/browser";
 import { HasAcceptedTermsStatus, UserContext } from "../../context/UserProvider";
 import { AuthenticationContext, AuthenticationStatus } from "../../context/AuthenticationProvider";
 import { FavouritesContext } from "../../context/FavouritesProvider";
@@ -48,10 +49,11 @@ function FavouritesButton({ id, stilling, showText, className, onRemoved, type }
                 expires: ad.expires
             }
         })
-            .then((response) => {
+            .then(response => {
                 favouritesProvider.addFavouriteToLocalList(response);
             })
-            .catch(() => {
+            .catch(err => {
+                captureException(err);
                 notifyError(`Det oppsto en feil ved lagring av favoritter. Prøv å last siden på nytt`);
             })
             .finally(() => {
@@ -70,7 +72,8 @@ function FavouritesButton({ id, stilling, showText, className, onRemoved, type }
                     onRemoved(found);
                 }
             })
-            .catch(() => {
+            .catch(err => {
+                captureException(err);
                 notifyError(`Det oppsto en feil ved sletting av favoritter. Prøv å last siden på nytt`);
             })
             .finally(() => {

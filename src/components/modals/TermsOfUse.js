@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import { BekreftCheckboksPanel } from "nav-frontend-skjema";
 import { Flatknapp, Hovedknapp } from "@navikt/arbeidsplassen-knapper";
+import {captureException} from "@sentry/browser";
 import CustomModal from "./CustomModal";
 import { adUserApiPost } from "../../api/aduser/adUserApi";
 import "./TermsOfUse.less";
@@ -31,7 +32,8 @@ function TermsOfUse({ onClose, onTermsAccepted }) {
                 }
                 updateUser(response);
             })
-            .catch(() => {
+            .catch(e => {
+                captureException(e);
                 setFetchStatus(FetchStatus.FAILURE);
             });
     }

@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import {captureException} from "@sentry/browser";
 
 function debounce(func, delay) {
     let timeout;
@@ -34,7 +35,7 @@ export default class RestoreScroll extends React.Component {
         try {
             sessionStorage.setItem(this.sessionStorageId, `${scrollTop}`);
         } catch (error) {
-            // Ignore any session storage error
+            captureException(error);
         }
     };
 
@@ -50,7 +51,7 @@ export default class RestoreScroll extends React.Component {
                 window.scrollTo(0, 0);
             }
         } catch (error) {
-            // Ignore any session storage error
+            captureException(error);
         }
     };
 
