@@ -75,9 +75,7 @@ function SaveSearchModal({ onClose, onSuccess, formData, defaultMode, savedSearc
                         }
                     })
                     .catch((err) => {
-                        if (err.statusCode !== 401) {
-                            captureException(err);
-                        }
+                        captureException(err);
                         setSaveStatus(FetchStatus.FAILURE);
                     });
             } else {
@@ -101,9 +99,7 @@ function SaveSearchModal({ onClose, onSuccess, formData, defaultMode, savedSearc
                         notifySuccess("Søket er oppdatert.");
                     })
                     .catch((err) => {
-                        if (err.statusCode !== 401) {
-                            captureException(err);
-                        }
+                        captureException(err);
                         setSaveStatus(FetchStatus.FAILURE);
                     });
             }

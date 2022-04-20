@@ -51,9 +51,7 @@ function FavouritesButton({ id, stilling, showText, className, onRemoved, type }
                 favouritesProvider.addFavouriteToLocalList(response);
             })
             .catch((err) => {
-                if (err.statusCode !== 401) {
-                    captureException(err);
-                }
+                captureException(err);
                 notifyError(`Det oppsto en feil ved lagring av favoritter. Prøv å last siden på nytt`);
             })
             .finally(() => {
@@ -73,9 +71,7 @@ function FavouritesButton({ id, stilling, showText, className, onRemoved, type }
                 }
             })
             .catch((err) => {
-                if (err.statusCode !== 401) {
-                    captureException(err);
-                }
+                captureException(err);
                 notifyError(`Det oppsto en feil ved sletting av favoritter. Prøv å last siden på nytt`);
             })
             .finally(() => {

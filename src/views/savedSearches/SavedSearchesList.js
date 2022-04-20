@@ -30,9 +30,7 @@ function SavedSearchesList() {
                 if (error.statusCode === 404) {
                     dispatch({ type: FetchAction.RESOLVE, data: [] });
                 } else {
-                    if (error.statusCode !== 401) {
-                        captureException(error);
-                    }
+                    captureException(error);
                     dispatch({ type: FetchAction.REJECT, error });
                 }
             });

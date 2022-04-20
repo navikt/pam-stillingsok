@@ -31,9 +31,7 @@ function RegisterEmailModal({ onClose }) {
                     updateUser(response);
                 })
                 .catch((err) => {
-                    if (err.statusCode !== 401) {
-                        captureException(err);
-                    }
+                    captureException(err);
                     setSaveStatus(FetchStatus.FAILURE);
                 });
         }
