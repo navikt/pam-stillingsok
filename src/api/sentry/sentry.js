@@ -9,6 +9,7 @@ export default function initSentry() {
         beforeSend(event, hint) {
             const error = hint.originalException;
             if (error && error.statusCode && blockedStatusCodes.includes(error.statusCode)) {
+                console.log(error)
                 return null; // event will be discarded
             } else {
                 return event;
