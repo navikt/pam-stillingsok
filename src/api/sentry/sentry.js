@@ -8,8 +8,8 @@ export default function initSentry() {
         blacklistUrls: [new RegExp("localhost"), new RegExp("arbeidsplassen-q.nav.no")],
         beforeSend(event, hint) {
             const error = hint.originalException;
+            console.log(error)
             if (error && error.statusCode && blockedStatusCodes.includes(error.statusCode)) {
-                console.log(error)
                 return null; // event will be discarded
             } else {
                 return event;
