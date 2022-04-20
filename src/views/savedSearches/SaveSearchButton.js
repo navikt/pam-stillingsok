@@ -67,7 +67,10 @@ function SaveSearchButton({ query }) {
             {shouldShowSaveSearchModal && (
                 <SaveSearchModal
                     formData={{
-                        title: toReadableQuery(query),
+                        title: () => {
+                            const title = toReadableQuery(query);
+                            return title.length > 80 ? `${title.substring(0, 77)}...`: title
+                        },
                         duration: 30,
                         notifyType: "NONE",
                         status: "INACTIVE",
