@@ -1,6 +1,6 @@
 import * as Sentry from "@sentry/browser";
 
-const blockedStatusCodes = [401, 404]
+const blockedStatusCodes = [0, 401, 404]
 
 export default function initSentry() {
     Sentry.init({
