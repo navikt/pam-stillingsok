@@ -49,11 +49,7 @@ spec:
       value: {{ pamsearchapi_url }}
     - name: AMPLITUDE_TOKEN
       value: {{ amplitude_token }}
-    - name: UNLEASH_URL
-      value: {{ unleash_url }}
   accessPolicy:
     outbound:
-      external:
-        - host: unleash.nais.io
       rules:
         - application: pam-search-api
