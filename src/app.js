@@ -16,9 +16,11 @@ import ReportAd from "./views/reportAd/ReportAd";
 import initHotJar from "./api/hotjar/hotjar";
 import initSentry from "./api/sentry/sentry";
 import "./styles/styles.less";
+import {initAmplitude} from "./api/amplitude/amplitude";
 
 initSentry();
 fixUrlAfterLogin();
+initAmplitude();
 initHotJar();
 
 function Application() {

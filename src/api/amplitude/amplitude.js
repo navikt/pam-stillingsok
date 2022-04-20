@@ -1,31 +1,33 @@
-import amplitude from "amplitude-js";
+import amplitude from 'amplitude-js';
 
 const getCookie = (name) => {
     const re = new RegExp(`${name}=([^;]+)`);
     const match = re.exec(document.cookie);
-    return match !== null ? match[1] : "";
+    return match !== null ? match[1] : '';
 };
 
 const amplitudeIsEnabled = () => {
-    return getCookie("amplitudeIsEnabled") === "true";
+    return getCookie('amplitudeIsEnabled') === 'true';
 };
 
-if (amplitudeIsEnabled()) {
-    amplitude.getInstance();
-    amplitude.init(window.__AMPLITUDE_TOKEN__, null, {
-        apiEndpoint: "amplitude.nav.no/collect",
-        batchEvents: false,
-        includeReferrer: true,
-        includeUtm: true,
-        saveEvents: false,
-        transport: "beacon"
-    });
+export function initAmplitude() {
+    if (amplitudeIsEnabled()) {
+        amplitude.getInstance();
+        amplitude.init(
+            window.__AMPLITUDE_TOKEN__, null, {
+                apiEndpoint: 'amplitude.nav.no/collect',
+                batchEvents: false,
+                includeReferrer: true,
+                includeUtm: true,
+                saveEvents: false,
+                transport: 'beacon',
+            }
+        );
+    }
 }
 
 export const logAmplitudePageview = (additionalData) => {
-    if (!amplitudeIsEnabled()) {
-        return;
-    }
+    if (!amplitudeIsEnabled()) {return;}
     let data = {
         page: `${window.location.pathname}${window.location.search}`,
         title: document.title
@@ -35,28 +37,28 @@ export const logAmplitudePageview = (additionalData) => {
         data = {
             ...data,
             ...additionalData
-        };
+        }
     }
 
-    logAmplitudeEvent("Sidevisning", data);
+    logAmplitudeEvent('Sidevisning', data);
 };
 
 const enrichData = (data) => {
-    let enrichedData = { ...data };
+    const isAuthenticated = false;
 
-    const erMellom25og30 = sessionStorage.getItem("erMellom25og30");
+    let enrichedData = {...data, isAuthenticated }
 
-    if (erMellom25og30 !== "undefined" && erMellom25og30 === "true") {
-        enrichedData = { ...enrichedData, ageGroup: "25-30" };
+    const erMellom25og30 = sessionStorage.getItem('erMellom25og30');
+
+    if (erMellom25og30 !== 'undefined' && erMellom25og30 === 'true') {
+        enrichedData = {...enrichedData, ageGroup: '25-30' }
     }
 
     return enrichedData;
-};
+}
 
 const logAmplitudeEvent = (event, data) => {
-    if (!amplitudeIsEnabled()) {
-        return;
-    }
+    if (!amplitudeIsEnabled()) {return;}
     amplitude.logEvent(event, enrichData(data));
 };
 
