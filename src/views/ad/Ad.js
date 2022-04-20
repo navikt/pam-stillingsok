@@ -43,7 +43,9 @@ const Ad = ({ match }) => {
                 dispatch({ type: FetchAction.RESOLVE, data });
             })
             .catch((error) => {
-                captureException(error);
+                if(error.statusCode !== 404) {
+                    captureException(error);
+                }
                 dispatch({ type: FetchAction.REJECT, error });
             });
     }
