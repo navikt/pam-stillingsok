@@ -88,8 +88,7 @@ const fasitProperties = {
     LOGOUT_URL: process.env.LOGOUTSERVICE_URL,
     PAM_STILLINGSOK_URL: process.env.PAM_STILLINGSOK_URL,
     PAM_VAR_SIDE_URL: process.env.PAM_VAR_SIDE_URL,
-    AMPLITUDE_TOKEN: process.env.AMPLITUDE_TOKEN,
-    UNLEASH_URL: process.env.UNLEASH_URL
+    AMPLITUDE_TOKEN: process.env.AMPLITUDE_TOKEN
 };
 
 const writeEnvironmentVariablesToFile = () => {
