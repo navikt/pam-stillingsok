@@ -288,7 +288,6 @@ export function toReadableQuery(query) {
         return !found;
     });
 
-
     // Ikke vis yrke på nivå 1 hvis bruker har valgt et relatert yrke på nivå 2
     const occupationFirstLevels = query.occupationFirstLevels.filter((firstLevel) => {
         const found = query.occupationSecondLevels.find((obj) => obj.startsWith(`${firstLevel}.`));

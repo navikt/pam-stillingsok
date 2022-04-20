@@ -1,14 +1,14 @@
-import React, {useEffect, useRef, useState} from "react";
-import {captureException} from "@sentry/browser";
+import React, { useEffect, useRef, useState } from "react";
+import { captureException } from "@sentry/browser";
 import PropTypes from "prop-types";
-import {SET_SEARCH_STRING} from "../query";
+import { SET_SEARCH_STRING } from "../query";
 import Typeahead from "../../../components/typeahead/Typeahead";
-import {FetchAction, useFetchReducer} from "../../../hooks/useFetchReducer";
-import {fetchCategoryAndSearchTagsSuggestions} from "../../../api/search/api";
+import { FetchAction, useFetchReducer } from "../../../hooks/useFetchReducer";
+import { fetchCategoryAndSearchTagsSuggestions } from "../../../api/search/api";
 import useDebounce from "../../../hooks/useDebounce";
 
-function SearchBox({dispatch, query}) {
-    const [value, setValue] = useState('');
+function SearchBox({ dispatch, query }) {
+    const [value, setValue] = useState("");
     const debouncedValue = useDebounce(value);
     const initialRender = useRef(true);
     const [suggestionsResponse, suggestionsDispatch] = useFetchReducer([]);
@@ -16,17 +16,17 @@ function SearchBox({dispatch, query}) {
 
     function fetchSuggestions() {
         fetchCategoryAndSearchTagsSuggestions(value, MINIMUM_LENGTH)
-            .then(response => {
-                suggestionsDispatch({type: FetchAction.RESOLVE, data: response.result});
+            .then((response) => {
+                suggestionsDispatch({ type: FetchAction.RESOLVE, data: response.result });
             })
-            .catch(err => {
+            .catch((err) => {
                 captureException(err);
-                suggestionsDispatch({type: FetchAction.RESOLVE, data: []});
+                suggestionsDispatch({ type: FetchAction.RESOLVE, data: [] });
             });
     }
 
     useEffect(() => {
-        setValue(query.q)
+        setValue(query.q);
     }, [query.q]);
 
     useEffect(() => {
@@ -36,7 +36,7 @@ function SearchBox({dispatch, query}) {
             if (debouncedValue && debouncedValue.length >= MINIMUM_LENGTH) {
                 fetchSuggestions(debouncedValue);
             } else {
-                suggestionsDispatch({type: FetchAction.SET_DATA, data: []});
+                suggestionsDispatch({ type: FetchAction.SET_DATA, data: [] });
             }
         }
     }, [debouncedValue]);
@@ -47,11 +47,11 @@ function SearchBox({dispatch, query}) {
 
     function handleTypeAheadSuggestionSelected(value) {
         setValue(value);
-        dispatch({type: SET_SEARCH_STRING, value});
+        dispatch({ type: SET_SEARCH_STRING, value });
     }
 
     function handleSearchButtonClick() {
-        dispatch({type: SET_SEARCH_STRING, value});
+        dispatch({ type: SET_SEARCH_STRING, value });
     }
 
     return (

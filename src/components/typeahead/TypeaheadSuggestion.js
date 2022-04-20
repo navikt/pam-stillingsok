@@ -38,9 +38,7 @@ export default class TypeaheadSuggestion extends React.Component {
                         <span className="TypeaheadSuggestion__substring">
                             {this.value.substring(0, this.props.match.length)}
                         </span>
-                        <span>
-                            {this.value.substring(this.props.match.length)}
-                        </span>
+                        <span>{this.value.substring(this.props.match.length)}</span>
                     </span>
                 ) : (
                     <span

@@ -5,7 +5,7 @@ import SaveSearchModal from "./modals/SaveSearchModal";
 import { isSearchQueryEmpty, toReadableQuery, toSavedSearchQuery } from "../search/query";
 import { AuthenticationContext, AuthenticationStatus } from "../../context/AuthenticationProvider";
 import { HasAcceptedTermsStatus, UserContext } from "../../context/UserProvider";
-import {extractParam, isStringEmpty, stringifyQueryObject} from "../../components/utils";
+import { extractParam, isStringEmpty, stringifyQueryObject } from "../../components/utils";
 import TermsOfUse from "../../components/modals/TermsOfUse";
 import LoginModal from "../../components/modals/LoginModal";
 import useToggle from "../../hooks/useToggle";
@@ -69,7 +69,7 @@ function SaveSearchButton({ query }) {
                     formData={{
                         title: () => {
                             const title = toReadableQuery(query);
-                            return title.length > 80 ? `${title.substring(0, 77)}...`: title
+                            return title.length > 80 ? `${title.substring(0, 77)}...` : title;
                         },
                         duration: 30,
                         notifyType: "NONE",

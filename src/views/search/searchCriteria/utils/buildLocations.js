@@ -9,7 +9,7 @@
  */
 export default function buildLocations(values) {
     const facets = [];
-    const {nationalCountMap, internationalCountMap, locations} = values;
+    const { nationalCountMap, internationalCountMap, locations } = values;
 
     locations.forEach((l) => {
         const facet = {

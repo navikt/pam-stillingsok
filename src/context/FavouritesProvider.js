@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import {captureException} from "@sentry/browser";
+import { captureException } from "@sentry/browser";
 import { adUserApiGet } from "../api/aduser/adUserApi";
 import { HasAcceptedTermsStatus, UserContext } from "./UserProvider";
 import { NotificationsContext } from "./NotificationsProvider";
@@ -25,10 +25,10 @@ const FavouritesProvider = ({ children }) => {
 
     function getFavourites() {
         adUserApiGet("api/v1/userfavouriteads?size=9999")
-            .then(response => {
+            .then((response) => {
                 setFavourites(response.content ? response.content : []);
             })
-            .catch(err => {
+            .catch((err) => {
                 captureException(err);
                 notifyError("Det oppsto en feil med favoritter. Prøv å laste siden på nytt");
             });

@@ -1,5 +1,5 @@
-import {useEffect} from "react";
-import {logAmplitudePageview} from "../api/amplitude/amplitude";
+import { useEffect } from "react";
+import { logAmplitudePageview } from "../api/amplitude/amplitude";
 
 export default (page) => {
     useEffect(() => {

@@ -1,7 +1,7 @@
 import Ekspanderbartpanel from "nav-frontend-ekspanderbartpanel";
 import PropTypes from "prop-types";
 import React, { useState } from "react";
-import {captureException} from "@sentry/browser";
+import { captureException } from "@sentry/browser";
 import "./CriteriaPanel.less";
 
 function CriteriaPanel({ isOpenByDefault, title, children, panelId }) {

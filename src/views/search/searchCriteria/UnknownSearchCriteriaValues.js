@@ -1,22 +1,20 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {Checkbox} from "nav-frontend-skjema";
+import { Checkbox } from "nav-frontend-skjema";
 import fixLocationName from "../../../../server/common/fixLocationName";
 
-export default function UnknownSearchCriteriaValues(
-    {
-        namePrefix,
-        unknownValues,
-        checkedValues,
-        onClick,
-        unknownNestedValues,
-        checkedNestedValues,
-        onNestedLevelClick,
-        shouldFixLocationName
-    }
-) {
+export default function UnknownSearchCriteriaValues({
+    namePrefix,
+    unknownValues,
+    checkedValues,
+    onClick,
+    unknownNestedValues,
+    checkedNestedValues,
+    onNestedLevelClick,
+    shouldFixLocationName
+}) {
     if (unknownValues.length + unknownNestedValues.length === 0) {
-        return <div/>;
+        return <div />;
     }
 
     return (

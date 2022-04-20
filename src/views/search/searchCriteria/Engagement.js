@@ -1,14 +1,14 @@
-import {Checkbox} from "nav-frontend-skjema";
+import { Checkbox } from "nav-frontend-skjema";
 import PropTypes from "prop-types";
-import React, {useEffect, useState} from "react";
-import {ADD_ENGAGEMENT_TYPE, REMOVE_ENGAGEMENT_TYPE} from "../query";
+import React, { useEffect, useState } from "react";
+import { ADD_ENGAGEMENT_TYPE, REMOVE_ENGAGEMENT_TYPE } from "../query";
 import CriteriaPanel from "../../../components/criteriaPanel/CriteriaPanel";
 import UnknownSearchCriteriaValues from "./UnknownSearchCriteriaValues";
 import mergeCount from "./utils/mergeCount";
 import moveCriteriaToBottom from "./utils/moveFacetToBottom";
-import {findUnknownSearchCriteriaValues} from "./utils/findUnknownSearchCriteriaValues";
+import { findUnknownSearchCriteriaValues } from "./utils/findUnknownSearchCriteriaValues";
 
-function Engagement({initialValues, updatedValues, query, dispatch}) {
+function Engagement({ initialValues, updatedValues, query, dispatch }) {
     const [values, setValues] = useState(moveCriteriaToBottom(initialValues, "Annet"));
 
     useEffect(() => {
@@ -19,11 +19,11 @@ function Engagement({initialValues, updatedValues, query, dispatch}) {
     }, [updatedValues]);
 
     function handleClick(e) {
-        const {value} = e.target;
+        const { value } = e.target;
         if (e.target.checked) {
-            dispatch({type: ADD_ENGAGEMENT_TYPE, value});
+            dispatch({ type: ADD_ENGAGEMENT_TYPE, value });
         } else {
-            dispatch({type: REMOVE_ENGAGEMENT_TYPE, value});
+            dispatch({ type: REMOVE_ENGAGEMENT_TYPE, value });
         }
     }
 

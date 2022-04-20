@@ -52,12 +52,8 @@ class CountDown extends React.Component {
     render() {
         return (
             <div className="ShowResultsButton__text">
-                {this.state.count}{" "}
-                <span>
-                    {this.props.numberOfPositions > 1 ? "stillinger" : "stilling"} i{" "}
-                </span>
-                {this.props.numberOfAds}{" "}
-                <span>{this.props.numberOfAds > 1 ? "annonser" : "annonse"}</span>
+                {this.state.count} <span>{this.props.numberOfPositions > 1 ? "stillinger" : "stilling"} i </span>
+                {this.props.numberOfAds} <span>{this.props.numberOfAds > 1 ? "annonser" : "annonse"}</span>
             </div>
         );
     }

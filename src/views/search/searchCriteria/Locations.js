@@ -25,9 +25,13 @@ function Locations({ initialValues, updatedValues, query, dispatch }) {
     const isOpenByDefault = !isMobile();
     const [locationValues, setLocationValues] = useState(buildLocations(initialValues));
     const [homeOfficeValues, setHomeOfficeValues] = useState(buildHomeOfficeValues(initialValues.remote));
-    const unknownCounties = findUnknownSearchCriteriaValues(query.counties, initialValues.locations)
-    const unknownMunicipals = findUnknownSearchCriteriaValues(query.municipals, initialValues.locations, 'municipals')
-    const unknownCountries = findZeroCountLocationFacets(query.countries, initialValues.nationalCountMap, initialValues.internationalCountMap)
+    const unknownCounties = findUnknownSearchCriteriaValues(query.counties, initialValues.locations);
+    const unknownMunicipals = findUnknownSearchCriteriaValues(query.municipals, initialValues.locations, "municipals");
+    const unknownCountries = findZeroCountLocationFacets(
+        query.countries,
+        initialValues.nationalCountMap,
+        initialValues.internationalCountMap
+    );
 
     /**
      * Update count in all locations after a search is done
@@ -100,9 +104,7 @@ function Locations({ initialValues, updatedValues, query, dispatch }) {
         }
     };
 
-    const unknownLocations = [
-        ...new Set([...unknownCountries, ...unknownCounties, ...unknownMunicipals])
-    ];
+    const unknownLocations = [...new Set([...unknownCountries, ...unknownCounties, ...unknownMunicipals])];
     const checkedLocations = [...query.countries, ...query.counties, ...query.municipals];
 
     return (

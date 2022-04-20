@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Input } from "nav-frontend-skjema";
-import {captureException} from "@sentry/browser";
+import { captureException } from "@sentry/browser";
 import { isValidEmail } from "../../../components/utils";
 import { UserContext } from "../../../context/UserProvider";
 import { Hovedknapp, Knapp } from "@navikt/arbeidsplassen-knapper";
@@ -26,11 +26,11 @@ function RegisterEmailModal({ onClose }) {
                 ...user.data,
                 email: email
             })
-                .then(response => {
+                .then((response) => {
                     setSaveStatus(FetchStatus.SUCCESS);
                     updateUser(response);
                 })
-                .catch(err => {
+                .catch((err) => {
                     captureException(err);
                     setSaveStatus(FetchStatus.FAILURE);
                 });

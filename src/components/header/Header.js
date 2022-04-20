@@ -24,7 +24,7 @@ const Header = () => {
                         <a href="/personinnstillinger" className="arbeidsplassen-header-settings-link">
                             Innstillinger
                         </a>,
-                        document.getElementById('arbeidsplassen-header-settings-container')
+                        document.getElementById("arbeidsplassen-header-settings-container")
                     )}
                     {ReactDOM.createPortal(
                         <React.Fragment>

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
-import {captureException} from "@sentry/browser";
+import { captureException } from "@sentry/browser";
 import { Column, Container, Row } from "nav-frontend-grid";
 import { CONTEXT_PATH } from "../../environment";
 import AdDetails from "./adDetails/AdDetails";
@@ -39,10 +39,10 @@ const Ad = ({ match }) => {
 
         const path = isInternal ? "intern" : "stilling";
         get(`${CONTEXT_PATH}/api/${path}/${id}`)
-            .then(data => {
+            .then((data) => {
                 dispatch({ type: FetchAction.RESOLVE, data });
             })
-            .catch(error => {
+            .catch((error) => {
                 captureException(error);
                 dispatch({ type: FetchAction.REJECT, error });
             });

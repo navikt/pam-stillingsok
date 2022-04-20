@@ -1,7 +1,7 @@
 import AlertStripe from "nav-frontend-alertstriper";
 import PropTypes from "prop-types";
 import React, { useContext, useState } from "react";
-import {captureException} from "@sentry/browser";
+import { captureException } from "@sentry/browser";
 import { CONTEXT_PATH } from "../../environment";
 import { formatISOString, isValidISOString } from "../../components/utils";
 import ConfirmationModal from "../../components/modals/ConfirmationModal";
@@ -23,13 +23,13 @@ function SavedSearchListItem({ savedSearch, removeSavedSearchFromList, replaceSa
 
     function deleteSavedSearch() {
         setDeleteStatus(FetchStatus.IS_FETCHING);
-        adUserApiRemove(`/api/v1/savedsearches/${savedSearch.uuid}`)
+        adUserApiRemove(`api/v1/savedsearches/${savedSearch.uuid}`)
             .then(() => {
                 hideDeleteModal();
                 setDeleteStatus(FetchStatus.SUCCESS);
                 removeSavedSearchFromList(savedSearch);
             })
-            .catch(err => {
+            .catch((err) => {
                 captureException(err);
                 setDeleteStatus(FetchStatus.FAILURE);
             });
@@ -42,12 +42,12 @@ function SavedSearchListItem({ savedSearch, removeSavedSearchFromList, replaceSa
             ...savedSearch,
             status: "ACTIVE"
         })
-            .then(response => {
+            .then((response) => {
                 setExtendDurationStatus(FetchStatus.SUCCESS);
                 replaceSavedSearchInList(response);
                 notifySuccess(`Ny varsling startet for "${savedSearch.title}"`);
             })
-            .catch(err => {
+            .catch((err) => {
                 captureException(err);
                 notifyError("Det oppsto en feil. Forsøk å laste siden på nytt");
                 setExtendDurationStatus(FetchStatus.FAILURE);

@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
-import {captureException} from "@sentry/browser";
+import { captureException } from "@sentry/browser";
 import SavedSearchListItem from "./SavedSearchListItem";
 import DelayedSpinner from "../../components/spinner/DelayedSpinner";
 import ErrorMessage from "../../components/messages/ErrorMessage";
 import EmptyMessage from "../../components/messages/EmptyMessage";
 import { adUserApiGet } from "../../api/aduser/adUserApi";
-import {FetchAction, FetchStatus, useFetchReducer} from "../../hooks/useFetchReducer";
-import {extractParam} from "../../components/utils";
+import { FetchAction, FetchStatus, useFetchReducer } from "../../hooks/useFetchReducer";
+import { extractParam } from "../../components/utils";
 
 function SavedSearchesList() {
     const [response, dispatch] = useFetchReducer();
@@ -23,10 +23,10 @@ function SavedSearchesList() {
         dispatch({ type: FetchAction.BEGIN });
 
         adUserApiGet("api/v1/savedsearches?size=999&sort=updated,desc")
-            .then(response => {
+            .then((response) => {
                 dispatch({ type: FetchAction.RESOLVE, data: response.content ? response.content : [] });
             })
-            .catch(error => {
+            .catch((error) => {
                 if (error.statusCode === 404) {
                     dispatch({ type: FetchAction.RESOLVE, data: [] });
                 } else {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import {captureException} from "@sentry/browser";
+import { captureException } from "@sentry/browser";
 import { AD_USER_API, CONTEXT_PATH, LOGIN_URL, LOGOUT_URL, STILLINGSOK_URL } from "../environment";
 import { extractParam, parseQueryString, stringifyQueryObject } from "../components/utils";
 
@@ -50,7 +50,7 @@ const AuthenticationProvider = ({ children }) => {
     }, []);
 
     useEffect(() => {
-        if(authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED) {
+        if (authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED) {
             fetchUserNameAndInfo();
         }
     }, [authenticationStatus]);
@@ -71,7 +71,7 @@ const AuthenticationProvider = ({ children }) => {
                     setAuthenticationStatus(AuthenticationStatus.FAILURE);
                 }
             })
-            .catch(err => {
+            .catch((err) => {
                 captureException(err);
                 setAuthenticationStatus(AuthenticationStatus.FAILURE);
             });

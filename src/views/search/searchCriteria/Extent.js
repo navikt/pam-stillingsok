@@ -1,13 +1,13 @@
-import {Checkbox} from "nav-frontend-skjema";
+import { Checkbox } from "nav-frontend-skjema";
 import PropTypes from "prop-types";
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import CriteriaPanel from "../../../components/criteriaPanel/CriteriaPanel";
 import UnknownSearchCriteriaValues from "./UnknownSearchCriteriaValues";
-import {ADD_EXTENT, REMOVE_EXTENT} from "../query";
+import { ADD_EXTENT, REMOVE_EXTENT } from "../query";
 import mergeCount from "./utils/mergeCount";
-import {findUnknownSearchCriteriaValues} from "./utils/findUnknownSearchCriteriaValues";
+import { findUnknownSearchCriteriaValues } from "./utils/findUnknownSearchCriteriaValues";
 
-function Extent({initialValues, updatedValues, query, dispatch}) {
+function Extent({ initialValues, updatedValues, query, dispatch }) {
     const [values, setValues] = useState(initialValues);
 
     useEffect(() => {
@@ -18,11 +18,11 @@ function Extent({initialValues, updatedValues, query, dispatch}) {
     }, [updatedValues]);
 
     function handleClick(e) {
-        const {value} = e.target;
+        const { value } = e.target;
         if (e.target.checked) {
-            dispatch({type: ADD_EXTENT, value});
+            dispatch({ type: ADD_EXTENT, value });
         } else {
-            dispatch({type: REMOVE_EXTENT, value});
+            dispatch({ type: REMOVE_EXTENT, value });
         }
     }
 

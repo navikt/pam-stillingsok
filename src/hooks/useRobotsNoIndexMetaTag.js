@@ -1,4 +1,4 @@
-import {useEffect} from "react";
+import { useEffect } from "react";
 
 function removeRobotsMetaTag() {
     let metaRobots = document.querySelector("meta[name=robots]");

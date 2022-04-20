@@ -1,5 +1,5 @@
 import React from "react";
-import {CONTEXT_PATH} from "../../../environment";
+import { CONTEXT_PATH } from "../../../environment";
 import Counties from "./Locations";
 import EngagementType from "./Engagement";
 import Extent from "./Extent";
@@ -8,7 +8,7 @@ import Published from "./Published";
 import Sector from "./Sector";
 import SearchBox from "./SearchBox";
 
-const SearchCriteria = ({fetchSearch, query, dispatchQuery, initialSearchResult, searchResult}) => {
+const SearchCriteria = ({ fetchSearch, query, dispatchQuery, initialSearchResult, searchResult }) => {
     /**
      * Handles form submit. This is typically triggered if
      * user presses enter-key in the search box.
@@ -23,7 +23,7 @@ const SearchCriteria = ({fetchSearch, query, dispatchQuery, initialSearchResult,
             <h2 className="Search__form-title" id="search-form-title">
                 Søk blant ledige stillinger
             </h2>
-            <SearchBox query={query} dispatch={dispatchQuery}/>
+            <SearchBox query={query} dispatch={dispatchQuery} />
             <Counties
                 query={query}
                 dispatch={dispatchQuery}

@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import {captureException} from "@sentry/browser";
+import { captureException } from "@sentry/browser";
 import { AuthenticationContext, AuthenticationStatus } from "./AuthenticationProvider";
 import { adUserApiGet } from "../api/aduser/adUserApi";
-import {FetchAction, useFetchReducer} from "../hooks/useFetchReducer";
+import { FetchAction, useFetchReducer } from "../hooks/useFetchReducer";
 import { NotificationsContext } from "./NotificationsProvider";
 
 export const UserContext = React.createContext({});
@@ -38,10 +38,10 @@ const UserProvider = ({ children }) => {
     function fetchUser() {
         dispatch({ type: FetchAction.BEGIN });
         adUserApiGet("api/v1/user")
-            .then(data => {
+            .then((data) => {
                 dispatch({ type: FetchAction.RESOLVE, data });
             })
-            .catch(error => {
+            .catch((error) => {
                 captureException(error);
                 dispatch({ type: FetchAction.REJECT, error });
                 if (error.statusCode !== 404) {

@@ -7,7 +7,7 @@ import { Hovedknapp } from "@navikt/arbeidsplassen-knapper";
 import { CONTEXT_PATH } from "../../environment";
 import Chevron from "nav-frontend-chevron";
 import { Link } from "react-router-dom";
-import {captureException} from "@sentry/browser";
+import { captureException } from "@sentry/browser";
 import AlertStripeFeil from "nav-frontend-alertstriper/lib/feil-alertstripe";
 import logAmplitudeEvent from "../../api/amplitude/amplitude";
 import { Textarea } from "nav-frontend-skjema";

@@ -102,10 +102,14 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                         </div>
                     )}
 
-                    {showFavouriteButton &&
-                        <FavouritesButton className="HowToApply__favourite-button" type="knapp" id={stilling._id} stilling={stilling._source} />
-                    }
-
+                    {showFavouriteButton && (
+                        <FavouritesButton
+                            className="HowToApply__favourite-button"
+                            type="knapp"
+                            id={stilling._id}
+                            stilling={stilling._source}
+                        />
+                    )}
                 </div>
             </div>
         );

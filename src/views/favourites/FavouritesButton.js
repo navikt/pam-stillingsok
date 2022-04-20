@@ -1,12 +1,12 @@
-import React, { useContext } from "react";
+import React, {useContext} from "react";
 import PropTypes from "prop-types";
 import {captureException} from "@sentry/browser";
-import { HasAcceptedTermsStatus, UserContext } from "../../context/UserProvider";
-import { AuthenticationContext, AuthenticationStatus } from "../../context/AuthenticationProvider";
-import { FavouritesContext } from "../../context/FavouritesProvider";
-import { NotificationsContext } from "../../context/NotificationsProvider";
+import {HasAcceptedTermsStatus, UserContext} from "../../context/UserProvider";
+import {AuthenticationContext, AuthenticationStatus} from "../../context/AuthenticationProvider";
+import {FavouritesContext} from "../../context/FavouritesProvider";
+import {NotificationsContext} from "../../context/NotificationsProvider";
 import StarIcon from "../../components/icons/StarIcon";
-import { adUserApiPost, adUserApiRemove } from "../../api/aduser/adUserApi";
+import {adUserApiPost, adUserApiRemove} from "../../api/aduser/adUserApi";
 import getWorkLocation from "../../../server/common/getWorkLocation";
 import getEmployer from "../../../server/common/getEmployer";
 import TermsOfUse from "../../components/modals/TermsOfUse";
@@ -34,7 +34,7 @@ function FavouritesButton({ id, stilling, showText, className, onRemoved, type }
 
     function saveFavourite(id, ad) {
         favouritesProvider.addToPending(id);
-        adUserApiPost("/api/v1/userfavouriteads", {
+        adUserApiPost("api/v1/userfavouriteads", {
             favouriteAd: {
                 uuid: id,
                 source: ad.source,
@@ -49,10 +49,10 @@ function FavouritesButton({ id, stilling, showText, className, onRemoved, type }
                 expires: ad.expires
             }
         })
-            .then(response => {
+            .then((response) => {
                 favouritesProvider.addFavouriteToLocalList(response);
             })
-            .catch(err => {
+            .catch((err) => {
                 captureException(err);
                 notifyError(`Det oppsto en feil ved lagring av favoritter. Prøv å last siden på nytt`);
             })
@@ -65,14 +65,14 @@ function FavouritesButton({ id, stilling, showText, className, onRemoved, type }
         const found = favouritesProvider.favourites.find((fav) => fav.favouriteAd.uuid === id);
 
         favouritesProvider.addToPending(id);
-        adUserApiRemove(`/api/v1/userfavouriteads/${found.uuid}`)
+        adUserApiRemove(`api/v1/userfavouriteads/${found.uuid}`)
             .then(() => {
                 favouritesProvider.removeFavouriteFromLocalList(found);
                 if (onRemoved) {
                     onRemoved(found);
                 }
             })
-            .catch(err => {
+            .catch((err) => {
                 captureException(err);
                 notifyError(`Det oppsto en feil ved sletting av favoritter. Prøv å last siden på nytt`);
             })

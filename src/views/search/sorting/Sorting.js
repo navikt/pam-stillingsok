@@ -15,12 +15,7 @@ function Sorting({ query, dispatch }) {
 
     return (
         <div className="Sorting">
-            <Select
-                onChange={handleChange}
-                value={sort}
-                label="Sortér etter"
-                className="Sorting__Select"
-            >
+            <Select onChange={handleChange} value={sort} label="Sortér etter" className="Sorting__Select">
                 <option key="relevant" value="relevant">
                     Mest relevant
                 </option>
