@@ -48,11 +48,16 @@ const enrichData = (data) => {
 
     let enrichedData = {...data, isAuthenticated }
 
-    const erMellom25og30 = sessionStorage.getItem('erMellom25og30');
+    try {
+        const erMellom25og30 = sessionStorage.getItem('erMellom25og30');
 
-    if (erMellom25og30 !== 'undefined' && erMellom25og30 === 'true') {
-        enrichedData = {...enrichedData, ageGroup: '25-30' }
+        if (erMellom25og30 !== 'undefined' && erMellom25og30 === 'true') {
+            enrichedData = {...enrichedData, ageGroup: '25-30' }
+        }
+    } catch (e) {
+        // ignore session storage error
     }
+
 
     return enrichedData;
 }
