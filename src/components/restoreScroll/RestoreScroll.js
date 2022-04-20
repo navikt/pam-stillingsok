@@ -35,7 +35,7 @@ export default class RestoreScroll extends React.Component {
         try {
             sessionStorage.setItem(this.sessionStorageId, `${scrollTop}`);
         } catch (error) {
-            captureException(error);
+            // ignore error
         }
     };
 
@@ -51,7 +51,7 @@ export default class RestoreScroll extends React.Component {
                 window.scrollTo(0, 0);
             }
         } catch (error) {
-            captureException(error);
+            // ignore error
         }
     };
 

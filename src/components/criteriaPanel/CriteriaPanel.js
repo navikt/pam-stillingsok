@@ -16,7 +16,6 @@ function CriteriaPanel({ isOpenByDefault, title, children, panelId }) {
                 return isOpenByDefault;
             }
         } catch (e) {
-            captureException(e);
             return isOpenByDefault;
         }
     });
@@ -27,14 +26,14 @@ function CriteriaPanel({ isOpenByDefault, title, children, panelId }) {
             try {
                 sessionStorage.setItem(`${panelId}-open`, "false");
             } catch (e) {
-                captureException(e);
+                // ignore error
             }
         } else {
             setIsOpen(true);
             try {
                 sessionStorage.setItem(`${panelId}-open`, "true");
             } catch (e) {
-                captureException(e);
+                // ignore error
             }
         }
     }

@@ -1,6 +1,6 @@
 import * as Sentry from "@sentry/browser";
 
-const blockedAprErrorStatusCodes = [401, 404]
+const blockedStatusCodes = [401, 404]
 
 export default function initSentry() {
     Sentry.init({
@@ -8,8 +8,8 @@ export default function initSentry() {
         blacklistUrls: [new RegExp("localhost"), new RegExp("arbeidsplassen-q.nav.no")],
         beforeSend(event, hint) {
             const error = hint.originalException;
-            if (error && error.statusCode && blockedAprErrorStatusCodes.includes(error.statusCode)) {
-                return null;
+            if (error && error.statusCode && blockedStatusCodes.includes(error.statusCode)) {
+                return null; // event will be discarded
             } else {
                 return event;
             }
