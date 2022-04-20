@@ -26,14 +26,14 @@ function CriteriaPanel({ isOpenByDefault, title, children, panelId }) {
             try {
                 sessionStorage.setItem(`${panelId}-open`, "false");
             } catch (e) {
-                // ignore error
+                // ignore sessionStorage error
             }
         } else {
             setIsOpen(true);
             try {
                 sessionStorage.setItem(`${panelId}-open`, "true");
             } catch (e) {
-                // ignore error
+                // ignore sessionStorage error
             }
         }
     }

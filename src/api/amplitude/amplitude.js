@@ -55,7 +55,7 @@ const enrichData = (data) => {
             enrichedData = {...enrichedData, ageGroup: '25-30' }
         }
     } catch (e) {
-        // ignore session storage error
+        // ignore sessionStorage error
     }
 
 
