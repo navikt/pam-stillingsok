@@ -28,9 +28,7 @@ function FavouritesButton({ id, stilling, showText, className, onRemoved, type }
     const [shouldShowTermsModal, openTermsModal, closeTermsModal] = useToggle();
     const [shouldShowLoginModal, openLoginModal, closeLoginModal] = useToggle();
     const isPending = favouritesProvider.pendingFavourites.includes(id);
-    const isFavourite =
-        favouritesProvider.favourites &&
-        favouritesProvider.favourites.find((f) => f.favouriteAd.uuid === id) !== undefined;
+    const isFavourite = favouritesProvider.favourites.find((f) => f.favouriteAd.uuid === id) !== undefined;
 
     function saveFavourite(id, ad) {
         favouritesProvider.addToPending(id);
@@ -88,13 +86,12 @@ function FavouritesButton({ id, stilling, showText, className, onRemoved, type }
             openTermsModal();
         } else if (
             authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED &&
-            hasAcceptedTermsStatus === HasAcceptedTermsStatus.HAS_ACCEPTED &&
-            favouritesProvider.favourites
+            hasAcceptedTermsStatus === HasAcceptedTermsStatus.HAS_ACCEPTED
         ) {
             saveFavourite(id, stilling);
         } else {
-            // Ignore click if authentication, hasAcceptedTermsStatus or
-            // favourites are not yet loaded or failed
+            // Ignore click if authentication or hasAcceptedTermsStatus
+            // are not yet loaded or failed
             return false;
         }
     }
@@ -105,9 +102,7 @@ function FavouritesButton({ id, stilling, showText, className, onRemoved, type }
     }
 
     function handleDeleteFavouriteClick() {
-        if (favouritesProvider.favourites) {
-            deleteFavourite(id);
-        }
+        deleteFavourite(id);
     }
 
     return (

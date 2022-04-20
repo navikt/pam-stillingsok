@@ -12,7 +12,7 @@ const FavouritesProvider = ({ children }) => {
     const { notifyError } = useContext(NotificationsContext);
 
     // List of all favourites
-    const [favourites, setFavourites] = useState(undefined);
+    const [favourites, setFavourites] = useState([]);
 
     // List of all favourites that is about to be saved or deleted
     const [pendingFavourites, setPendingFavourites] = useState([]);
