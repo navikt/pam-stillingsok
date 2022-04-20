@@ -43,7 +43,10 @@ const FavouritesProvider = ({ children }) => {
     }
 
     function addFavouriteToLocalList(favourite) {
-        setFavourites((prevState) => [favourite, ...prevState]);
+        const found = favourites.find((it) => it.uuid === favourite.uuid);
+        if (!found) {
+            setFavourites((prevState) => [favourite, ...prevState]);
+        }
     }
 
     function removeFavouriteFromLocalList(favourite) {
