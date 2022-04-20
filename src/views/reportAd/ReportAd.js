@@ -220,6 +220,12 @@ const ReportAd = () => {
                                 </p>
                             </div>
 
+                            {error && (
+                                <Alert>
+                                    Rapportering feilet - prøv igjen
+                                </Alert>
+                            )}
+
                             {authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED && (
                                 <Hovedknapp
                                     disabled={(violationCategory === null && scamCategory === null) || !description}
@@ -229,12 +235,6 @@ const ReportAd = () => {
                                 </Hovedknapp>
                             )}
                         </div>
-                    )}
-
-                    {error && (
-                        <Alert>
-                            Rapportering feilet - prøv igjen
-                        </Alert>
                     )}
 
                     <p className="disclaimer">
