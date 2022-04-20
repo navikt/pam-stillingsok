@@ -42,9 +42,9 @@ const UserProvider = ({ children }) => {
                 dispatch({ type: FetchAction.RESOLVE, data });
             })
             .catch((error) => {
-                captureException(error);
                 dispatch({ type: FetchAction.REJECT, error });
                 if (error.statusCode !== 404) {
+                    captureException(error);
                     notifyError("Klarte ikke laste inn bruker. Forsøk å laste siden på nytt");
                 }
             });
