@@ -1,4 +1,3 @@
-import { Column, Container, Row } from "nav-frontend-grid";
 import PropTypes from "prop-types";
 import React from "react";
 import "./PageHeader.less";
@@ -6,17 +5,9 @@ import "./PageHeader.less";
 export default function PageHeader({ title }) {
     return (
         <header className="PageHeader">
-            <Container className="PageHeader__container">
-                <Row className="PageHeader__row">
-                    <Column xs="12" sm="3" />
-                    <Column xs="12" sm="6">
-                        <h1 tabIndex={0} className="PageHeader__title">
-                            {title}
-                        </h1>
-                    </Column>
-                    <Column xs="12" sm="3" />
-                </Row>
-            </Container>
+            <h1 tabIndex={-1} className="PageHeader__title">
+                {title}
+            </h1>
         </header>
     );
 }
