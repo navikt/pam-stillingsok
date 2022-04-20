@@ -29,7 +29,9 @@ const FavouritesProvider = ({ children }) => {
                 setFavourites(response.content ? response.content : []);
             })
             .catch((err) => {
-                captureException(err);
+                if (err.statusCode !== 401) {
+                    captureException(err);
+                }
                 notifyError("Det oppsto en feil med favoritter. Prøv å laste siden på nytt");
             });
     }

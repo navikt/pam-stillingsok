@@ -30,7 +30,9 @@ function FavouritesList() {
                 dispatch({ type: FetchAction.RESOLVE, data: response.content ? response.content : [] });
             })
             .catch((error) => {
-                captureException(error);
+                if (error.statusCode !== 401) {
+                    captureException(error);
+                }
                 dispatch({ type: FetchAction.REJECT, error });
             });
     }
