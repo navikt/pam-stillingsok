@@ -1,19 +1,19 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Checkbox, Fieldset, Input, Radio, SkjemaGruppe } from "nav-frontend-skjema";
-import { isStringEmpty } from "../../../components/utils";
-import { UserContext } from "../../../context/UserProvider";
-import { Hovedknapp, Knapp } from "@navikt/arbeidsplassen-knapper";
+import React, {useContext, useEffect, useState} from "react";
+import {Checkbox, Fieldset, Input, Radio, SkjemaGruppe} from "nav-frontend-skjema";
+import {isStringEmpty} from "../../../components/utils";
+import {UserContext} from "../../../context/UserProvider";
+import {Hovedknapp, Knapp} from "@navikt/arbeidsplassen-knapper";
 import CustomModal from "../../../components/modals/CustomModal";
-import { adUserApiGet, adUserApiPost, adUserApiPut } from "../../../api/aduser/adUserApi";
-import { NotificationsContext } from "../../../context/NotificationsProvider";
+import {adUserApiGet, adUserApiPost, adUserApiPut} from "../../../api/aduser/adUserApi";
+import {NotificationsContext} from "../../../context/NotificationsProvider";
 import DelayedSpinner from "../../../components/spinner/DelayedSpinner";
 import useToggle from "../../../hooks/useToggle";
 import {FetchAction, FetchStatus, useFetchReducer} from "../../../hooks/useFetchReducer";
 import Alert from "../../../components/alert/Alert";
 
-function SaveSearchModal({ onClose, onSuccess, formData, defaultMode, savedSearchAsId, askIfReplaceOrUpdate }) {
-    const { user } = useContext(UserContext);
-    const { notifySuccess } = useContext(NotificationsContext);
+function SaveSearchModal({onClose, onSuccess, formData, defaultMode, savedSearchAsId, askIfReplaceOrUpdate}) {
+    const {user} = useContext(UserContext);
+    const {notifySuccess} = useContext(NotificationsContext);
 
     // Fetch
     const shouldFetch = savedSearchAsId !== undefined;
@@ -41,13 +41,13 @@ function SaveSearchModal({ onClose, onSuccess, formData, defaultMode, savedSearc
     }, [shouldFetch]);
 
     function fetchSavedSearch(id) {
-        dispatch({ type: FetchAction.BEGIN });
+        dispatch({type: FetchAction.BEGIN});
         adUserApiGet(`api/v1/savedsearches/${id}`)
             .then((data) => {
-                dispatch({ type: FetchAction.RESOLVE, data });
+                dispatch({type: FetchAction.RESOLVE, data});
             })
             .catch((error) => {
-                dispatch({ type: FetchAction.REJECT, error });
+                dispatch({type: FetchAction.REJECT, error});
             });
     }
 
@@ -66,11 +66,15 @@ function SaveSearchModal({ onClose, onSuccess, formData, defaultMode, savedSearc
             };
 
             if (formMode === "add") {
-                adUserApiPost("api/v1/savedsearches/", data).then((response) => {
-                    if (onSuccess) {
-                        onSuccess(response);
-                    }
-                });
+                adUserApiPost("api/v1/savedsearches/", data)
+                    .then((response) => {
+                        if (onSuccess) {
+                            onSuccess(response);
+                        }
+                    })
+                    .catch(() => {
+                        setSaveStatus(FetchStatus.FAILURE);
+                    });
             } else {
                 if (formMode === "replace") {
                     data = {
@@ -145,7 +149,7 @@ function SaveSearchModal({ onClose, onSuccess, formData, defaultMode, savedSearc
                 <React.Fragment>
                     {savedSearchResponse.status === FetchStatus.NOT_FETCHED ||
                     savedSearchResponse.status === FetchStatus.IS_FETCHING ? (
-                        <DelayedSpinner />
+                        <DelayedSpinner/>
                     ) : (
                         <React.Fragment>
                             <p>Det oppsto en feil. Forsøk å laste siden på nytt</p>
@@ -184,7 +188,7 @@ function SaveSearchModal({ onClose, onSuccess, formData, defaultMode, savedSearc
                                 label="Navn*"
                                 onChange={handleTitleChange}
                                 value={title}
-                                feil={titleValidationError ? { feilmelding: titleValidationError } : undefined}
+                                feil={titleValidationError ? {feilmelding: titleValidationError} : undefined}
                                 inputRef={(el) => {
                                     titleRef = el;
                                 }}
