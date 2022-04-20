@@ -7,7 +7,6 @@ import RestoreScroll from "../../components/restoreScroll/RestoreScroll";
 import SearchResultCount from "./searchResultCount/SearchResultCount";
 import ShowResultsButton from "./showResultsButton/ShowResultsButton";
 import Sorting from "./sorting/Sorting";
-import SearchErrorBox from "../../components/searchErrorBox/SearchErrorBox";
 import { AuthenticationContext, AuthenticationStatus } from "../../context/AuthenticationProvider";
 import queryReducer, {
     initialQuery,
@@ -173,7 +172,7 @@ const Search = () => {
                     </div>
                 )}
                 <div className="Search__main">
-                    {initialSearchResponse.status === FetchStatus.FAILURE && <SearchErrorBox />}
+                    {initialSearchResponse.status === FetchStatus.FAILURE && <ErrorMessage />}
                     {initialSearchResponse.status === FetchStatus.IS_FETCHING && <DelayedSpinner />}
                     {initialSearchResponse.status === FetchStatus.SUCCESS && (
                         <RestoreScroll id="search-scroll">

@@ -8,12 +8,12 @@ import { CONTEXT_PATH } from "../../environment";
 import Chevron from "nav-frontend-chevron";
 import { Link } from "react-router-dom";
 import { captureException } from "@sentry/browser";
-import AlertStripeFeil from "nav-frontend-alertstriper/lib/feil-alertstripe";
 import logAmplitudeEvent from "../../api/amplitude/amplitude";
 import { Textarea } from "nav-frontend-skjema";
 import useDocumentTitle from "../../hooks/useDocumentTitle";
 import { AuthenticationContext, AuthenticationStatus } from "../../context/AuthenticationProvider";
 import { adUserApiPost } from "../../api/aduser/adUserApi";
+import Alert from "../../components/alert/Alert";
 
 const violationCategories = [
     { label: "Diskriminerende innhold", key: "discrimination" },
@@ -113,13 +113,6 @@ const ReportAd = () => {
 
     return (
         <Container className="RapporterAnnonse">
-            {error && (
-                <AlertStripeFeil className="alertstripe--solid infoboks">
-                    Rapportering feilet - prøv igjen
-                </AlertStripeFeil>
-            )}
-
-            <br />
             <Link to={CONTEXT_PATH + "/stilling/" + stillingId} className="BackLink no-print">
                 <Chevron type="venstre" className="BackLink__chevron" />
                 <span className="BackLink__label">Tilbake til annonsen</span>
@@ -236,6 +229,12 @@ const ReportAd = () => {
                                 </Hovedknapp>
                             )}
                         </div>
+                    )}
+
+                    {error && (
+                        <Alert>
+                            Rapportering feilet - prøv igjen
+                        </Alert>
                     )}
 
                     <p className="disclaimer">

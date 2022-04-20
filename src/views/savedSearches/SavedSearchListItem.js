@@ -1,4 +1,3 @@
-import AlertStripe from "nav-frontend-alertstriper";
 import PropTypes from "prop-types";
 import React, { useContext, useState } from "react";
 import { captureException } from "@sentry/browser";
@@ -13,6 +12,7 @@ import { FetchStatus } from "../../hooks/useFetchReducer";
 import DeleteButton from "../../components/buttons/DeleteButton";
 import EditButton from "../../components/buttons/EditButton";
 import RefreshButton from "../../components/buttons/RefreshButton";
+import Tag from "../../components/tag/Tag";
 
 function SavedSearchListItem({ savedSearch, removeSavedSearchFromList, replaceSavedSearchInList, autoOpenModal }) {
     const { notifySuccess, notifyError } = useContext(NotificationsContext);
@@ -93,7 +93,7 @@ function SavedSearchListItem({ savedSearch, removeSavedSearchFromList, replaceSa
             </div>
 
             {savedSearch.status === "INACTIVE" && savedSearch.notifyType === "EMAIL" && (
-                <AlertStripe type="advarsel" className="SavedSearchListItem__alertstripe alertstripe--solid">
+                <Tag className="SavedSearchListItem__expired">
                     Ditt varsel for dette søket har gått ut
                     <RefreshButton
                         onClick={extendDuration}
@@ -101,7 +101,7 @@ function SavedSearchListItem({ savedSearch, removeSavedSearchFromList, replaceSa
                         spinner={extendDurationStatus === FetchStatus.IS_FETCHING}
                         text="Start ny varsling"
                     />
-                </AlertStripe>
+                </Tag>
             )}
 
             {shouldShowDeleteModal && (

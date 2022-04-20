@@ -6,6 +6,7 @@ import getWorkLocation from "../../../../server/common/getWorkLocation";
 import { CONTEXT_PATH } from "../../../environment";
 import { formatISOString, isValidISOString } from "../../../components/utils";
 import "./SearchResultsItemDetails.less";
+import Tag from "../../../components/tag/Tag";
 
 function LinkToAd({ children, stilling, isFinn }) {
     if (isFinn) {
@@ -79,7 +80,7 @@ export default function SearchResultsItemDetails({ stilling, showExpired }) {
                         </p>
                     )}
                 </div>
-                {showExpired && <p className="FavouritesListItem__expired">Annonsen er utløpt</p>}
+                {showExpired && <Tag className="FavouritesListItem__expired">Annonsen er utløpt</Tag>}
             </div>
         </LinkToAd>
     );
