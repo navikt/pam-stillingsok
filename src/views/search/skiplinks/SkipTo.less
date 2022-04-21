@@ -1,0 +1,16 @@
+@import (reference) "../../../styles/variables";
+
+.SkipTo {
+  padding: 1rem;
+  background: #f9f9f9;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  margin: 0 -1rem;
+  display: flex;
+  justify-content: flex-end;
+
+  @media (min-width: @screen-md-min) {
+    display: none;
+  }
+}

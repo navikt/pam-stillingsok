@@ -5,7 +5,6 @@ import { CONTEXT_PATH } from "../../environment";
 import DelayedSpinner from "../../components/spinner/DelayedSpinner";
 import RestoreScroll from "../../components/restoreScroll/RestoreScroll";
 import SearchResultCount from "./searchResultCount/SearchResultCount";
-import ShowResultsButton from "./showResultsButton/ShowResultsButton";
 import Sorting from "./sorting/Sorting";
 import { AuthenticationContext, AuthenticationStatus } from "../../context/AuthenticationProvider";
 import queryReducer, {
@@ -23,12 +22,14 @@ import ErrorMessage from "../../components/messages/ErrorMessage";
 import PageHeader from "../../components/pageHeader/PageHeader";
 import SearchCriteria from "./searchCriteria/SearchCriteria";
 import SaveSearchButton from "../savedSearches/SaveSearchButton";
-import { Knapp } from "@navikt/arbeidsplassen-knapper";
 import NoResults from "./noResults/NoResults";
 import SearchResultItem from "./searchResults/SearchResultsItem";
 import Pagination from "./pagination/Pagination";
 import useDocumentTitle from "../../hooks/useDocumentTitle";
 import useTrackPageview from "../../hooks/useTrackPageview";
+import ResetButton from "./resetButton/ResetButton";
+import SkipToResult from "./skiplinks/SkipToResult";
+import SkipToCriteria from "./skiplinks/SkipToCriteria";
 import "./Search.less";
 
 const Search = () => {
@@ -91,8 +92,8 @@ const Search = () => {
         Promise.all(promises)
             .then((responses) => {
                 const [initialSearchResult, locations, searchResult] = responses;
-                initialSearchDispatch({ type: FetchAction.RESOLVE, data: { ...initialSearchResult, locations } });
                 searchDispatch({ type: FetchAction.RESOLVE, data: searchResult ? searchResult : initialSearchResult });
+                initialSearchDispatch({ type: FetchAction.RESOLVE, data: { ...initialSearchResult, locations } });
             })
             .catch((error) => {
                 captureException(error);
@@ -156,10 +157,6 @@ const Search = () => {
         <div className="Search">
             <PageHeader title="Ledige stillinger" />
 
-            {initialSearchResponse.status === FetchStatus.SUCCESS && (
-                <ShowResultsButton searchResults={data} searchFailed={status === FetchStatus.FAILURE} />
-            )}
-
             <div className="Search__inner">
                 {authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED && (
                     <div className="Search__links-to-favourites-and-saved-search">
@@ -177,6 +174,7 @@ const Search = () => {
                     {initialSearchResponse.status === FetchStatus.SUCCESS && (
                         <RestoreScroll id="search-scroll">
                             <section id="sok" className="Search__criteria" aria-labelledby="search-form-title">
+                                <SkipToResult total={searchResponse.data.total.value} />
                                 <SearchCriteria
                                     query={query}
                                     dispatchQuery={queryDispatch}
@@ -186,17 +184,12 @@ const Search = () => {
                                 />
                                 <div className="Search__reset-and-save-search">
                                     <SaveSearchButton query={query} />
-                                    <Knapp
-                                        className="Search__nullstill"
-                                        onClick={() => {
-                                            queryDispatch({ type: "RESET" });
-                                        }}
-                                    >
-                                        Nullstill søk
-                                    </Knapp>
+                                    <ResetButton dispatch={queryDispatch} />
                                 </div>
                             </section>
+
                             <section id="resultat" aria-label="Søkeresultat" className="Search__result">
+                                <SkipToCriteria />
                                 <header className="Search__count-and-sorting">
                                     <SearchResultCount searchResult={data} />
                                     <Sorting dispatch={queryDispatch} query={query} />

@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { captureException } from "@sentry/browser";
 
 function debounce(func, delay) {
     let timeout;

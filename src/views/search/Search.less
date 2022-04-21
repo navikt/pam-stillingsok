@@ -5,10 +5,14 @@
 }
 
 .Search__inner {
-  margin: 2rem auto;
+  margin: 0 auto 2rem;
   max-width: 1156px;
   width: 100%;
   padding: 0 1rem;
+
+  @media (min-width: @screen-md-min) {
+    margin: 2rem auto;
+  }
 }
 
 .Search__main {
@@ -17,23 +21,21 @@
   }
 }
 
-.Search__criteria {
-  margin-bottom: 2rem;
-}
-
 .Search__result {
-  padding-top: 5rem;
   @media (min-width: @screen-md-min) {
-    padding-top: 0;
     flex: 1;
     margin-left: 6rem;
   }
 }
 
 .Search__form-title {
-  margin: 0.5rem 0 1rem 0;
+  margin: 1rem 0;
   font-size: 1.25rem;
   font-weight: 600;
+
+  @media (min-width: @screen-md-min) {
+    margin: 0.5rem 0 1rem 0;
+  }
 }
 
 .Search__reset-and-save-search {
