@@ -25,9 +25,10 @@ export default (shouldAddNoIndexMetaTag) => {
     useEffect(() => {
         if (shouldAddNoIndexMetaTag) {
             addRobotsNoIndexMetaTag();
+
+            return () => {
+                removeRobotsMetaTag();
+            };
         }
-        return () => {
-            removeRobotsMetaTag();
-        };
     }, [shouldAddNoIndexMetaTag]);
 };
