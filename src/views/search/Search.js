@@ -31,6 +31,7 @@ import ResetButton from "./resetButton/ResetButton";
 import SkipToResult from "./skiplinks/SkipToResult";
 import SkipToCriteria from "./skiplinks/SkipToCriteria";
 import "./Search.less";
+import LinkMenu from "./linkMenu/LinkMenu";
 
 const Search = () => {
     const { authenticationStatus } = useContext(AuthenticationContext);
@@ -158,16 +159,7 @@ const Search = () => {
             <PageHeader title="Ledige stillinger" />
 
             <div className="Search__inner">
-                {authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED && (
-                    <div className="Search__links-to-favourites-and-saved-search">
-                        <Link to={`${CONTEXT_PATH}/favoritter`} className="link Search__favourites-link">
-                            Favoritter
-                        </Link>
-                        <Link to={`${CONTEXT_PATH}/lagrede-sok`} className="link Search__saved-search-link">
-                            Lagrede søk
-                        </Link>
-                    </div>
-                )}
+
                 <div className="Search__main">
                     {initialSearchResponse.status === FetchStatus.FAILURE && <ErrorMessage />}
                     {initialSearchResponse.status === FetchStatus.IS_FETCHING && <DelayedSpinner />}
@@ -175,6 +167,9 @@ const Search = () => {
                         <RestoreScroll id="search-scroll">
                             <section id="sok" className="Search__criteria" aria-labelledby="search-form-title">
                                 <SkipToResult total={searchResponse.data.total.value} />
+                                {authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED && (
+                                    <LinkMenu />
+                                )}
                                 <SearchCriteria
                                     query={query}
                                     dispatchQuery={queryDispatch}

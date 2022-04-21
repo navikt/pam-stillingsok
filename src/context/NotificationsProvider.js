@@ -4,7 +4,9 @@ import Notifications from "../components/notifications/Notifications";
 export const NotificationsContext = React.createContext({});
 
 /**
- * Displays a green or red feedback message on page top
+ * Notifies user with a green or red feedback message on page top.
+ * Example usage:
+ * notifySuccess('Saved your data') or notifyError('Something went wrong')
  */
 const NotificationsProvider = ({ children }) => {
     const [notifications, setNotifications] = useState([]);
