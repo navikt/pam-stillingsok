@@ -2,18 +2,28 @@ import React from "react";
 import PropTypes from "prop-types";
 import "./SkipTo.less";
 
-function SkipToResult({ total }) {
+function SkipToResult({ data }) {
     return (
         <div className="SkipTo SkipTo--vis-treff">
-            <a href="#resultat" className="link">
-                Vis {total} treff
-            </a>
+            {data && data.total && data.total.value ? (
+                <a href="#resultat" className="link">
+                    Vis {data.total.value} treff
+                </a>
+            ) : (
+                <a href="#resultat" className="link">
+                    Vis treff
+                </a>
+            )}
         </div>
     );
 }
 
 SkipToResult.propTypes = {
-    total: PropTypes.number.isRequired
+    data: PropTypes.shape({
+        total: PropTypes.shape({
+            value: PropTypes.number
+        })
+    })
 };
 
 export default SkipToResult;

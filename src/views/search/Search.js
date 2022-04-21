@@ -166,7 +166,7 @@ const Search = () => {
                     {initialSearchResponse.status === FetchStatus.SUCCESS && (
                         <RestoreScroll id="search-scroll">
                             <section id="sok" className="Search__criteria" aria-labelledby="search-form-title">
-                                <SkipToResult total={searchResponse.data.total.value} />
+                                <SkipToResult data={searchResponse.data} />
                                 {authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED && (
                                     <LinkMenu />
                                 )}
