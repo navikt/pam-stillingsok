@@ -1,6 +1,6 @@
 import * as Sentry from "@sentry/browser";
 
-const ignoreStatusCodes = [0, 401, 404];
+const ignoreStatusCodes = [0, 401, 404, 502, 504];
 
 // TypeErrors can for example occur when user
 // navigates away from app while a fetch call is still running
