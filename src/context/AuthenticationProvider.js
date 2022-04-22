@@ -86,6 +86,9 @@ const AuthenticationProvider = ({ children }) => {
                 .then((response) => response.json())
                 .then((result) => {
                     setUserNameAndInfo(result);
+                })
+                .catch((err) => {
+                    captureException(err);
                 });
         } else {
             const testData = {
