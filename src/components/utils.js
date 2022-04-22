@@ -98,8 +98,8 @@ export function parseQueryString(queryString = "?") {
     parameters.forEach((parameter) => {
         const pair = parameter.split("=");
         if (pair[0] !== undefined && pair[0] !== "") {
-            let key = decodeURIComponent(pair[0]);
-            const val = pair[1] !== undefined ? decodeURIComponent(pair[1]) : "";
+            let key = pair[0];
+            const val = pair[1] !== undefined ? pair[1] : "";
 
             if (key === "international") {
                 object[key] = val === "true" ? true : "false";
@@ -148,15 +148,25 @@ export function stringifyQueryObject(object = {}) {
 }
 
 /**
- * Dekoder en url til den ikke lenger er kodet.
- * En kodet url er i dette tilfellet en url som inneholder '%'.
+ * After login, the redirect url back to this page may have been encoded several times.
+ * This function decodes url until it is no longer encoded.
+ * We assume that an encoded url contains '%', for example %20 (space)
  */
 export function decodeUrl(url) {
-    let decodedUrl = url;
-    while (decodedUrl.includes("%")) {
-        decodedUrl = decodeURIComponent(decodedUrl);
+    let successfullyDecodedUrl = url;
+    try {
+        while (successfullyDecodedUrl.includes("%")) {
+            const decodeAttempt = decodeURIComponent(successfullyDecodedUrl);
+            successfullyDecodedUrl = decodeAttempt;
+        }
+    } catch (e) {
+        // When url is fully decoded, it may try to decode again if the url
+        // contains the percentage sign itself, and this will throw an error.
+        // This can happen for example when searching for part-time job '?=50%'.
+        return successfullyDecodedUrl
     }
-    return decodedUrl;
+
+    return successfullyDecodedUrl;
 }
 
 export function extractParam(param, nullValue) {
