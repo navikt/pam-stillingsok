@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { captureException } from "@sentry/browser";
 import { AD_USER_API, CONTEXT_PATH, LOGIN_URL, LOGOUT_URL, STILLINGSOK_URL } from "../environment";
-import { extractParam, parseQueryString, stringifyQueryObject } from "../components/utils";
+import { extractParam, stringifyQueryObject } from "../components/utils";
 
 export const AuthenticationContext = React.createContext({});
 
@@ -29,15 +29,15 @@ const allowedRedirectUrls = [
  */
 export function fixUrlAfterLogin() {
     if (window.location.pathname === `${CONTEXT_PATH}/stilling`) {
-        const { uuid, ...otherQueryParams } = parseQueryString(document.location.search);
+        const uuid = extractParam('uuid');
         window.history.replaceState(
             {},
             "",
-            `${CONTEXT_PATH}/stilling/${uuid}${stringifyQueryObject(otherQueryParams)}`
+            `${CONTEXT_PATH}/stilling/${uuid}`
         );
     } else if (window.location.pathname === `${CONTEXT_PATH}/intern`) {
-        const { uuid, ...otherQueryParams } = parseQueryString(document.location.search);
-        window.history.replaceState({}, "", `${CONTEXT_PATH}/intern/${uuid}${stringifyQueryObject(otherQueryParams)}`);
+        const uuid = extractParam('uuid');
+        window.history.replaceState({}, "", `${CONTEXT_PATH}/intern/${uuid}`);
     }
 }
 
