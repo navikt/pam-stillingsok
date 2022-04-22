@@ -3,7 +3,6 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const devMode = process.env.NODE_ENV !== 'production';
 
 module.exports = {
-    devtool: 'source-map',
     optimization: {
         splitChunks: {
             cacheGroups: {
@@ -43,15 +42,11 @@ module.exports = {
                         loader: MiniCssExtractPlugin.loader
                     },
                     {
-                        loader: 'css-loader',
-                        options: {
-                            sourceMap: true
-                        }
+                        loader: 'css-loader'
                     },
                     {
                         loader: 'less-loader',
                         options: {
-                            sourceMap: true,
                             includePaths: ['styles/']
                         }
                     }
