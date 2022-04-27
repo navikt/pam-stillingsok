@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useReducer, useRef } from "react";
 import { captureException } from "@sentry/browser";
-import { Link } from "react-router-dom";
 import { CONTEXT_PATH } from "../../environment";
 import DelayedSpinner from "../../components/spinner/DelayedSpinner";
 import RestoreScroll from "../../components/restoreScroll/RestoreScroll";
@@ -21,17 +20,15 @@ import { apiFetchLocations, apiSearch } from "../../api/search/api";
 import ErrorMessage from "../../components/messages/ErrorMessage";
 import PageHeader from "../../components/pageHeader/PageHeader";
 import SearchCriteria from "./searchCriteria/SearchCriteria";
-import SaveSearchButton from "../savedSearches/SaveSearchButton";
 import NoResults from "./noResults/NoResults";
 import SearchResultItem from "./searchResults/SearchResultsItem";
 import Pagination from "./pagination/Pagination";
 import useDocumentTitle from "../../hooks/useDocumentTitle";
 import useTrackPageview from "../../hooks/useTrackPageview";
-import ResetButton from "./resetButton/ResetButton";
-import SkipToResult from "./skiplinks/SkipToResult";
 import SkipToCriteria from "./skiplinks/SkipToCriteria";
-import "./Search.less";
 import LinkMenu from "./linkMenu/LinkMenu";
+import LoadingScreen from "./loadingScreen/LoadingScreen";
+import "./Search.less";
 
 const Search = () => {
     const { authenticationStatus } = useContext(AuthenticationContext);
@@ -71,10 +68,6 @@ const Search = () => {
         window.history.replaceState({}, "", CONTEXT_PATH + stringifyQueryObject(browserQuery));
     }, [query]);
 
-    /**
-     * Fetches available search criteria, locations
-     * and an initial search result
-     */
     function fetchInitialSearch() {
         initialSearchDispatch({ type: FetchAction.BEGIN });
 
@@ -102,9 +95,6 @@ const Search = () => {
             });
     }
 
-    /**
-     * Fetches search result.
-     */
     function fetchSearch() {
         searchDispatch({ type: FetchAction.BEGIN });
         const search = apiSearch(toApiQuery(query));
@@ -155,14 +145,12 @@ const Search = () => {
     const { status, data } = searchResponse;
 
     return (
-        <div className="Search">
+        <React.Fragment>
             <PageHeader title="Ledige stillinger" />
-            {authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED && (
-                <LinkMenu />
-            )}
+            {authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED && <LinkMenu />}
             <div className="Search__wrapper">
                 {initialSearchResponse.status === FetchStatus.FAILURE && <ErrorMessage />}
-                {initialSearchResponse.status === FetchStatus.IS_FETCHING && <DelayedSpinner />}
+                {initialSearchResponse.status === FetchStatus.IS_FETCHING && <LoadingScreen />}
                 {initialSearchResponse.status === FetchStatus.SUCCESS && (
                     <RestoreScroll id="search-scroll">
                         <SearchCriteria
@@ -182,9 +170,7 @@ const Search = () => {
 
                             {status === FetchStatus.FAILURE && <ErrorMessage />}
                             {status === FetchStatus.IS_FETCHING && query.from === 0 && <DelayedSpinner />}
-                            {status === FetchStatus.SUCCESS && data.total.value === 0 && (
-                                <NoResults query={query} />
-                            )}
+                            {status === FetchStatus.SUCCESS && data.total.value === 0 && <NoResults query={query} />}
                             {(status === FetchStatus.SUCCESS ||
                                 (status === FetchStatus.IS_FETCHING && query.from > 0)) && (
                                 <React.Fragment>
@@ -213,7 +199,7 @@ const Search = () => {
                     </a>
                 </nav>
             )}
-        </div>
+        </React.Fragment>
     );
 };
 
