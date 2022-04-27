@@ -1,0 +1,20 @@
+@import './variables';
+
+.link {
+  .link();
+}
+
+.link() {
+  color: @primaryPurple;
+  font-family: 'Source Sans Pro', Arial, sans-serif;
+
+  &:focus {
+    outline: none;
+    color: #fff;
+    background: @blueDarken;
+  }
+
+  &:hover {
+    text-decoration-line: none;
+  }
+}
