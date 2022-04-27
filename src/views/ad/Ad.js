@@ -14,7 +14,7 @@ import HardRequirements from "./requirements/HardRequirements";
 import PersonalAttributes from "./requirements/PersonalAttributes";
 import SoftRequirements from "./requirements/SoftRequirements";
 import "./Ad.less";
-import logAmplitudeEvent, {logAmplitudePageview} from "../../api/amplitude/amplitude";
+import logAmplitudeEvent, {logAmplitudePageview, logStillingVisning} from "../../api/amplitude/amplitude";
 import ShareAd from "./shareAd/ShareAd";
 import Summary from "./summary/Summary";
 import DelayedSpinner from "../../components/spinner/DelayedSpinner";
@@ -33,6 +33,36 @@ const Ad = ({match}) => {
     useScrollToTop();
     useRobotsNoIndexMetaTag(avoidIndexing);
 
+    /**
+     * Fetch ad
+     */
+    useEffect(() => {
+        fetchStilling(match.params.uuid);
+    }, []);
+
+    /**
+     * Set page title
+     */
+    useEffect(() => {
+        if (ad && ad._source && ad._source.title) {
+            document.title = `${ad._source.title} - Arbeidsplasssen`;
+        }
+    }, [ad]);
+
+    /**
+     * Track page view for all external ads
+     */
+    useEffect(() => {
+        if (!isInternal && ad && ad._source && ad._id && ad._source.title) {
+            try {
+                logAmplitudePageview();
+                logStillingVisning(ad);
+            } catch (e) {
+                // ignore
+            }
+        }
+    }, [ad]);
+
     function fetchStilling(id) {
         dispatch({type: FetchAction.BEGIN});
 
@@ -47,45 +77,6 @@ const Ad = ({match}) => {
             });
     }
 
-    useEffect(() => {
-        fetchStilling(match.params.uuid);
-    }, []);
-
-    useEffect(() => {
-        if (ad && ad._source && ad._source.title) {
-            document.title = `${ad._source.title} - Arbeidsplasssen`;
-        }
-    }, [ad]);
-
-    useEffect(() => {
-        if (isInternal) {
-            return;
-        }
-        if (ad && ad._source && ad._id && ad._source.title) {
-            try {
-                logAmplitudePageview();
-            } catch (e) {
-                // ignore
-            }
-
-            try {
-                logAmplitudeEvent("Stilling visning", {
-                    title: ad._source.title || "N/A",
-                    id: ad._id,
-                    businessName: ad._source.businessName || "N/A",
-                    country: ad._source.employer.location.country || "N/A",
-                    county: ad._source.employer.location.county || "N/A",
-                    city: ad._source.employer.location.city || "N/A",
-                    employer: ad._source.employer.name || "N/A",
-                    expires: ad._source.expires || "N/A",
-                    published: ad._source.published || "N/A"
-                });
-            } catch (e) {
-                // ignore
-            }
-        }
-    }, [ad]);
-
     const isFinn = ad && ad._source && ad._source.source && ad._source.source.toLowerCase() === "finn";
 
     return (
@@ -96,24 +87,22 @@ const Ad = ({match}) => {
             {status === FetchStatus.SUCCESS && (
                 <React.Fragment>
                     <div className="Ad__left">
-                        <div className="Ad__max-line-length">
-                            <h1 className="Ad__h1">{ad._source.title}</h1>
+                        <h1 className="Ad__h1">{ad._source.title}</h1>
 
-                            {ad._source.status !== "ACTIVE" && <Tag>Stillingsannonsen er inaktiv.</Tag>}
+                        {ad._source.status !== "ACTIVE" && <Tag>Stillingsannonsen er inaktiv.</Tag>}
 
-                            {isFinn && <FinnAd stilling={ad}/>}
+                        {isFinn && <FinnAd stilling={ad}/>}
 
-                            {!isFinn && (
-                                <React.Fragment>
-                                    <Summary stilling={ad._source}/>
-                                    <AdText adText={ad._source.properties.adtext}/>
-                                    <HardRequirements stilling={ad}/>
-                                    <SoftRequirements stilling={ad}/>
-                                    <PersonalAttributes stilling={ad}/>
-                                    <EmployerDetails stilling={ad._source}/>
-                                </React.Fragment>
-                            )}
-                        </div>
+                        {!isFinn && (
+                            <React.Fragment>
+                                <Summary stilling={ad._source}/>
+                                <AdText adText={ad._source.properties.adtext}/>
+                                <HardRequirements stilling={ad}/>
+                                <SoftRequirements stilling={ad}/>
+                                <PersonalAttributes stilling={ad}/>
+                                <EmployerDetails stilling={ad._source}/>
+                            </React.Fragment>
+                        )}
                     </div>
 
                     <div className="Ad__right">

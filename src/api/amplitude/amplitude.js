@@ -43,6 +43,20 @@ export const logAmplitudePageview = (additionalData) => {
     logAmplitudeEvent('Sidevisning', data);
 };
 
+export function logStillingVisning(ad) {
+    logAmplitudeEvent("Stilling visning", {
+        title: ad._source.title || "N/A",
+        id: ad._id,
+        businessName: ad._source.businessName || "N/A",
+        country: ad._source.employer.location.country || "N/A",
+        county: ad._source.employer.location.county || "N/A",
+        city: ad._source.employer.location.city || "N/A",
+        employer: ad._source.employer.name || "N/A",
+        expires: ad._source.expires || "N/A",
+        published: ad._source.published || "N/A"
+    });
+}
+
 const enrichData = (data) => {
     const isAuthenticated = false;
 

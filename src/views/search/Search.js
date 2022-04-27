@@ -148,6 +148,7 @@ const Search = () => {
         <React.Fragment>
             <PageHeader title="Ledige stillinger" />
             {authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED && <LinkMenu />}
+
             <div className="Search__wrapper">
                 {initialSearchResponse.status === FetchStatus.FAILURE && <ErrorMessage />}
                 {initialSearchResponse.status === FetchStatus.IS_FETCHING && <LoadingScreen />}
