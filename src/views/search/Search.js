@@ -159,29 +159,21 @@ const Search = () => {
             <PageHeader title="Ledige stillinger" />
 
             <div className="Search__inner">
-
+                {authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED && (
+                    <LinkMenu />
+                )}
                 <div className="Search__main">
                     {initialSearchResponse.status === FetchStatus.FAILURE && <ErrorMessage />}
                     {initialSearchResponse.status === FetchStatus.IS_FETCHING && <DelayedSpinner />}
                     {initialSearchResponse.status === FetchStatus.SUCCESS && (
                         <RestoreScroll id="search-scroll">
-                            <section id="sok" className="Search__criteria" aria-labelledby="search-form-title">
-                                <SkipToResult data={searchResponse.data} />
-                                {authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED && (
-                                    <LinkMenu />
-                                )}
-                                <SearchCriteria
-                                    query={query}
-                                    dispatchQuery={queryDispatch}
-                                    initialSearchResult={initialSearchResponse.data}
-                                    searchResult={searchResponse.data}
-                                    fetchSearch={fetchSearch}
-                                />
-                                <div className="Search__reset-and-save-search">
-                                    <SaveSearchButton query={query} />
-                                    <ResetButton dispatch={queryDispatch} />
-                                </div>
-                            </section>
+                            <SearchCriteria
+                                query={query}
+                                dispatchQuery={queryDispatch}
+                                initialSearchResult={initialSearchResponse.data}
+                                searchResult={searchResponse.data}
+                                fetchSearch={fetchSearch}
+                            />
 
                             <section id="resultat" aria-label="Søkeresultat" className="Search__result">
                                 <SkipToCriteria />
