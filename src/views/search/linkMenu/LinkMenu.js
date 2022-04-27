@@ -5,14 +5,14 @@ import './LinkMenu.less';
 
 function LinkMenu() {
     return (
-        <div className="LinkMenu">
+        <nav className="LinkMenu">
             <Link to={`${CONTEXT_PATH}/favoritter`} className="link LinkMenu__favourites-link">
                 Favoritter
             </Link>
             <Link to={`${CONTEXT_PATH}/lagrede-sok`} className="link LinkMenu__saved-search-link">
                 Lagrede søk
             </Link>
-        </div>
+        </nav>
     );
 }
 
