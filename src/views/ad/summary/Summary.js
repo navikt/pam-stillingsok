@@ -11,7 +11,7 @@ export default function Summary({ stilling }) {
     const employer = getEmployer(stilling);
 
     return (
-        <div className="Summary__dl">
+        <section className="Summary__dl">
             <dl className="Summary__dl">
                 {employer && (
                     <React.Fragment>
@@ -40,7 +40,7 @@ export default function Summary({ stilling }) {
                     </dd>
                 ]}
             </dl>
-        </div>
+        </section>
     );
 }
 

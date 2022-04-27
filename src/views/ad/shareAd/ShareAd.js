@@ -1,34 +1,73 @@
 import React from "react";
 import PropTypes from "prop-types";
-import SocialShare from "../socialShare/SocialShare";
+import { UAParser } from "ua-parser-js";
+import ShareIcon from "../../../components/icons/ShareIcon";
+import FacebookIcon from "../../../components/icons/FacebookIcon";
+import LinkedinIcon from "../../../components/icons/LinkedinIcon";
+import TwitterIcon from "../../../components/icons/TwitterIcon";
+import MessengerIcon from "../../../components/icons/MessengerIcon";
+import "./ShareAd.less";
 
 export default function ShareAd({ source }) {
+    const title = source.title;
+    const deviceType = new UAParser().getResult().device.type;
+
     return (
-        <div className="ShareAd detail-section">
+        <section className="detail-section">
             <h2 className="detail-section__head">
-                <svg
-                    aria-hidden="true"
-                    width="1em"
-                    height="1em"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    focusable="false"
-                    role="img"
-                >
-                    <path
-                        fillRule="evenodd"
-                        clipRule="evenodd"
-                        d="M14 6.937l-1.733.233c-3.571.482-6.082 2.478-7.756 5.253-.91 1.508-1.563 3.24-1.976 5.05a22.965 22.965 0 011.578-1.811c1.911-1.968 4.401-3.75 7.482-4.386L14 10.779v3.38l7.261-5.115L14 3.93v3.008zM2.005 21.832a23.59 23.59 0 00-.262.46c-.066.118-.13.235-.191.35-.345.637-1.552.375-1.552-.35a23.95 23.95 0 01.022-1.02C.326 14.113 3.852 6.288 12 5.189V2.002a1 1 0 011.576-.818l9.998 7.043a1 1 0 010 1.635l-9.998 7.042A1 1 0 0112 16.086v-2.851a10.33 10.33 0 00-2 .633c-3.679 1.585-6.346 5.12-7.995 7.964z"
-                        fill="currentColor"
-                    ></path>
-                </svg>
+                <ShareIcon />
                 Del annonsen
             </h2>
-            <div className="detail-section__body">
-                <SocialShare title={source.title} />
+            <div className="SocialShare">
+                <a
+                    className="SocialShare__facebook SocialShare__link"
+                    href={"https://www.facebook.com/sharer/sharer.php?u=" + location.href}
+                    title="Del på Facebook"
+                    aria-label="Del på Facebook"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <FacebookIcon />
+                    <div className="SocialShare__text">Facebook</div>
+                </a>
+                <a
+                    className="SocialShare__linkedin SocialShare__link"
+                    href={"https://www.linkedin.com/shareArticle?mini=true&url=" + location.href}
+                    title="Del på Linkedin"
+                    aria-label="Del på Linkedin"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <LinkedinIcon />
+                    <div className="SocialShare__text">Linkedin</div>
+                </a>
+                <a
+                    className="SocialShare__twitter SocialShare__link"
+                    href={"https://twitter.com/intent/tweet?url=" + location.href + "&text=" + encodeURI(title)}
+                    title="Del på Twitter"
+                    aria-label="Del på Twitter"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <TwitterIcon />
+                    <div className="SocialShare__text">Twitter</div>
+                </a>
+
+                {(deviceType === "mobile" || deviceType === "tablet") && (
+                    <a
+                        className="SocialShare__messenger SocialShare__link"
+                        href={"fb-messenger://share/?link=" + encodeURIComponent(location.href)}
+                        title="Del i Messenger"
+                        aria-label="Del i Messenger"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        <MessengerIcon />
+                        <div className="SocialShare__text">Messenger</div>
+                    </a>
+                )}
             </div>
-        </div>
+        </section>
     );
 }
 
