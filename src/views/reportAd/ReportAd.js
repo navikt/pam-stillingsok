@@ -1,6 +1,5 @@
 import * as React from "react";
 import { useContext, useEffect, useState } from "react";
-import Container from "nav-frontend-grid/lib/container";
 import "./ReportAd.less";
 import Checkbox from "nav-frontend-skjema/lib/checkbox";
 import { Hovedknapp } from "@navikt/arbeidsplassen-knapper";
@@ -112,7 +111,7 @@ const ReportAd = () => {
     }
 
     return (
-        <Container className="RapporterAnnonse">
+        <div className="RapporterAnnonse">
             <Link to={CONTEXT_PATH + "/stilling/" + stillingId} className="BackLink no-print">
                 <Chevron type="venstre" className="BackLink__chevron" />
                 <span className="BackLink__label">Tilbake til annonsen</span>
@@ -244,7 +243,7 @@ const ReportAd = () => {
                     </p>
                 </div>
             )}
-        </Container>
+        </div>
     );
 };
 

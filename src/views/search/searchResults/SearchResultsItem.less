@@ -3,6 +3,7 @@
 .SearchResultItem {
   position: relative;
   border-top: 1px solid @gray3;
+  padding: 1rem;
 
   &:nth-child(even) {
     background-color: @gray1;
@@ -15,30 +16,28 @@
 }
 
 .SearchResultItem__link {
-  display: block;
-  padding: 1rem 0.75rem;
-  position: relative;
-  text-decoration: none;
-  border: 3px solid transparent;
+  color: @primaryPurple;
+  display: inline-block;
+  margin: 0 2rem 1rem 0;
 
   @media (min-width: @screen-sm-min) {
-    padding: 1rem 1.25rem 1.25rem 1.25rem;
-
+    max-width: 600px;
+    margin: 0 6rem 1rem 0;
   }
 
   &:hover {
-    border-color: @secondaryTurquoise;
+    text-decoration: none;
+  }
+
+  &:visited {
+    color: @gray5;
   }
 
   &:focus {
+    color: #ffffff;
+    background: @blueDarken;
     outline: none;
-    z-index: 1;
-    border-color: @primaryDarkBlue;
   }
-}
-
-.SearchResultItem__link:visited * {
-  color: @gray5 !important;
 }
 
 .SearchResultItem__favourite {

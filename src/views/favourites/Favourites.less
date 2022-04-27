@@ -37,6 +37,11 @@
   border-top: 1px solid @gray3;
   display: block;
   position: relative;
+  padding: 1rem;
+
+  @media (max-width: @screen-xs-max) {
+    padding: 1rem 1rem  4rem 1rem;
+  }
 
   &:nth-child(even) {
     background-color: @gray1;
@@ -45,10 +50,6 @@
   @media (max-width: @screen-xs-max) {
     margin-right: -16px;
     margin-left: -16px;
-
-    .SearchResultItem__link {
-      padding-bottom: 4rem;
-    }
   }
 }
 

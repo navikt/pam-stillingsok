@@ -7,6 +7,9 @@ import Occupations from "./Occupations";
 import Published from "./Published";
 import Sector from "./Sector";
 import SearchBox from "./SearchBox";
+import SkipToResult from "../skiplinks/SkipToResult";
+import SaveSearchButton from "../../savedSearches/SaveSearchButton";
+import ResetButton from "../resetButton/ResetButton";
 
 const SearchCriteria = ({ fetchSearch, query, dispatchQuery, initialSearchResult, searchResult }) => {
     /**
@@ -19,7 +22,9 @@ const SearchCriteria = ({ fetchSearch, query, dispatchQuery, initialSearchResult
     }
 
     return (
-        <form action={CONTEXT_PATH} onSubmit={submitForm} role="search">
+        <form id="sok" onSubmit={submitForm} role="search" aria-labelledby="search-form-title">
+            <SkipToResult data={searchResult} />
+
             <h2 className="Search__form-title" id="search-form-title">
                 Søk blant ledige stillinger
             </h2>
@@ -60,6 +65,11 @@ const SearchCriteria = ({ fetchSearch, query, dispatchQuery, initialSearchResult
                 initialValues={initialSearchResult.sector}
                 updatedValues={searchResult && searchResult.sector}
             />
+
+            <div className="Search__reset-and-save-search">
+                <SaveSearchButton query={query} />
+                <ResetButton dispatch={dispatchQuery} />
+            </div>
         </form>
     );
 };

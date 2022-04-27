@@ -4,7 +4,7 @@ import "./SkipTo.less";
 
 function SkipToResult({ data }) {
     return (
-        <div className="SkipTo SkipTo--vis-treff">
+        <nav className="SkipTo SkipTo--vis-treff">
             {data && data.total && data.total.value ? (
                 <a href="#resultat" className="link">
                     Vis {data.total.value} treff
@@ -14,7 +14,7 @@ function SkipToResult({ data }) {
                     Vis treff
                 </a>
             )}
-        </div>
+        </nav>
     );
 }
 
