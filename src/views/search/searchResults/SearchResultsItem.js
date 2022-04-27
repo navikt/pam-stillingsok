@@ -22,7 +22,7 @@ function toLabel(stilling) {
     if(location) {
         fragments.push(location);
     }
-    return fragments.join(". ");
+    return fragments.join(", ");
 }
 
 export default function SearchResultItem({ stilling }) {
