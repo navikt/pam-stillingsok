@@ -38,7 +38,7 @@ export default function AdDetails({ id, source }) {
                     </React.Fragment>
                 )}
             </dl>
-            <Link className={"link"} to={`${CONTEXT_PATH}/rapporter-annonse?uuid=${id}`}>
+            <Link className="link" to={`${CONTEXT_PATH}/rapporter-annonse?uuid=${id}`}>
                 Rapportér annonse
             </Link>
         </section>
