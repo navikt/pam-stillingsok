@@ -3,11 +3,11 @@ import './SkipTo.less';
 
 function SkipToCriteria() {
     return (
-        <div className="SkipTo SkipTo--endre-sok">
+        <nav className="SkipTo SkipTo--endre-sok">
             <a href="#sok" className="link">
                 Endre søk
             </a>
-        </div>
+        </nav>
     );
 }
 

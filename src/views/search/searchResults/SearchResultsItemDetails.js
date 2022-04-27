@@ -36,53 +36,33 @@ export default function SearchResultsItemDetails({ stilling, showExpired }) {
     const isFinn = stilling.source && stilling.source.toLowerCase() === "finn";
 
     return (
-        <LinkToAd stilling={stilling} isFinn={isFinn} employer={employer}>
-            <div className="SearchResultsItemDetails">
+        <React.Fragment>
+            <LinkToAd stilling={stilling} isFinn={isFinn} employer={employer}>
                 <h3 className="SearchResultsItemDetails__title" aria-label={`${stilling.title}.`}>
                     {stilling.title}
                 </h3>
+            </LinkToAd>
 
-                {stilling.properties.jobtitle && stilling.title !== stilling.properties.jobtitle && (
-                    <p className="SearchResultsItemDetails__jobtitle" aria-label={`${stilling.properties.jobtitle}.`}>
-                        {stilling.properties.jobtitle}
-                    </p>
-                )}
+            {stilling.properties.jobtitle && stilling.title !== stilling.properties.jobtitle && (
+                <p className="SearchResultsItemDetails__jobtitle">{stilling.properties.jobtitle}</p>
+            )}
 
-                {employer && (
-                    <p className="SearchResultsItemDetails__employer" aria-label={`${employer}.`}>
-                        {employer}
-                    </p>
-                )}
+            {employer && <p className="SearchResultsItemDetails__employer">{employer}</p>}
 
-                {location && (
-                    <p className="SearchResultsItemDetails__location" aria-label={`${location}.`}>
-                        {location}
-                    </p>
-                )}
-                <div className="SearchResultsItemDetails__applicationdue-wrapper">
-                    <p className="SearchResultsItemDetails__applicationdue" aria-label={`Søknadsfrist: ${frist}.`}>
-                        Frist: {frist}
-                        {stilling.published && (
-                            <span
-                                className="SearchResultsItemDetails__published"
-                                aria-label={`Publisert ${formatISOString(stilling.published, "DD.MM.YYYY")}.`}
-                            >
-                                {" - "} Publisert {formatISOString(stilling.published, "DD.MM.YYYY")}
-                            </span>
-                        )}
-                    </p>
-                    {isFinn && (
-                        <p
-                            className="SearchResultsItemDetails__external-link"
-                            aria-label={"Annonsen åpnes på finn.no."}
-                        >
-                            Annonsen åpnes på FINN.no
-                        </p>
+            {location && <p className="SearchResultsItemDetails__location">{location}</p>}
+            <div className="SearchResultsItemDetails__applicationdue-wrapper">
+                <p className="SearchResultsItemDetails__applicationdue">
+                    Frist: {frist}
+                    {stilling.published && (
+                        <React.Fragment>
+                            {" - "} Publisert {formatISOString(stilling.published, "DD.MM.YYYY")}
+                        </React.Fragment>
                     )}
-                </div>
-                {showExpired && <Tag className="FavouritesListItem__expired">Annonsen er utløpt</Tag>}
+                </p>
+                {isFinn && <p className="SearchResultsItemDetails__external-link">Annonsen åpnes på FINN.no</p>}
             </div>
-        </LinkToAd>
+            {showExpired && <Tag className="FavouritesListItem__expired">Annonsen er utløpt</Tag>}
+        </React.Fragment>
     );
 }
 

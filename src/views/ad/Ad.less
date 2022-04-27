@@ -1,47 +1,35 @@
 @import (reference) "../../styles/variables";
 
-.Stilling {
-  font-family: "Source Sans Pro", Arial, sans-serif;
-  margin: 3rem 0 4rem 0;
-}
-
-.Stilling__header {
-  padding-top: 1rem;
-  margin-bottom: 2rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.Stilling__buttons {
-  display: flex;
-  justify-content: flex-end;
-  padding: 1rem 0;
-}
-
-.Stilling__print {
-  @media (max-width: @screen-sm-max) {
-    display: none !important;
-  }
-}
-
-.Stilling__left {
-  margin: 0 0 2rem 0;
-
-  @media (min-width: @screen-sm-min) {
-    margin: 0 4rem 2rem 0;
-  }
+.Ad {
+  margin: 4rem auto 4rem;
+  max-width: 1156px;
+  padding: 0 1rem;
 
   @media (min-width: @screen-md-min) {
-    margin: 0 6rem 0 0;
+    display: flex;
+    padding: 0 2.5rem;
+  }
+}
+
+.Ad__left {
+  margin: 0 0 2rem 0;
+  @media (min-width: @screen-md-min) {
+    flex: 2;
+    padding-right: 6rem;
   }
 
   @media (min-width: @screen-lg-min) {
-    margin: 0 12rem 0 0;
+    padding-right: 12rem;
   }
 }
 
-.Stilling__h1 {
+.Ad__right {
+  @media (min-width: @screen-md-min) {
+    width: 340px;
+  }
+}
+
+.Ad__h1 {
   margin: 0 0 1rem;
   font-size: 2rem;
   line-height: 1.2;
@@ -55,19 +43,6 @@
   }
 }
 
-.Stilling__employer-and-location {
-  font-size: 18px;
-  font-weight: normal;
-  margin: 0 0 1rem 0;
-  line-height: 1.33;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-
-  @media (min-width: @screen-md-min) {
-    margin: 0 0 2rem 0;
-  }
-}
-
 .Rapport__link {
   margin-top: 20px;
   font-size: 1.125rem;
@@ -76,8 +51,7 @@
 .detail-section {
   width: 100%;
   margin-bottom: 2rem;
-  padding-top: 1.5rem;
-  border-top: 2px solid #f1f1f1;
+  padding-bottom: 1.5rem;
 
   .detail-section__head {
     margin: 0 0 1rem 0;
@@ -90,19 +64,10 @@
     svg {
       margin-right: 0.75rem;
     }
-
-    @media (min-width: @screen-md-min) {
-      font-size: 1.25rem;
-    }
   }
 }
 
 .dl-flex {
-  @media (min-width: @screen-md-min) {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: flex-start;
-  }
 
   dd, dt {
     line-height: 1.33;
@@ -113,24 +78,13 @@
     margin: 0;
     font-weight: 600;
 
-    @media (min-width: @screen-md-min) {
-      font-weight: 400;
-      margin: 0 0 0.5rem 0;
-      flex: 0 42%;
-      padding-right: 0.5rem;
-    }
   }
 
   dd {
     word-wrap: break-word;
     overflow-wrap: break-word;
-    margin: 0 0 0.5rem 0;
+    margin: 0 0 0.75rem 0;
 
-    @media (min-width: @screen-md-min) {
-      margin: 0 0 0.5rem 0;
-      flex: 0 58%;
-      max-width: 58%;
-    }
   }
 }
 

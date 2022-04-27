@@ -1,7 +1,6 @@
 import React, {useEffect} from "react";
 import PropTypes from "prop-types";
 import {captureException} from "@sentry/browser";
-import {Column, Container, Row} from "nav-frontend-grid";
 import {CONTEXT_PATH} from "../../environment";
 import AdDetails from "./adDetails/AdDetails";
 import AdText from "./adText/AdText";
@@ -90,45 +89,47 @@ const Ad = ({match}) => {
     const isFinn = ad && ad._source && ad._source.source && ad._source.source.toLowerCase() === "finn";
 
     return (
-        <div className="Stilling">
+        <article className="Ad">
             {status === FetchStatus.FAILURE && error.statusCode === 404 && <NotFound/>}
             {status === FetchStatus.FAILURE && error.statusCode !== 404 && <ErrorMessage/>}
             {status === FetchStatus.IS_FETCHING && <DelayedSpinner/>}
             {status === FetchStatus.SUCCESS && (
-                <Container>
-                    <Row>
-                        <Column xs="12" md="7" lg="8">
-                            <div className="Stilling__left">
-                                <h1 className="Stilling__h1">{ad._source.title}</h1>
-                                {ad._source.status !== "ACTIVE" && <Tag>Stillingsannonsen er inaktiv.</Tag>}
-                                {isFinn && <FinnAd stilling={ad}/>}
-                                {!isFinn && (
-                                    <React.Fragment>
-                                        <Summary stilling={ad._source}/>
-                                        <AdText adText={ad._source.properties.adtext}/>
-                                        <HardRequirements stilling={ad}/>
-                                        <SoftRequirements stilling={ad}/>
-                                        <PersonalAttributes stilling={ad}/>
-                                        <EmployerDetails stilling={ad._source}/>
-                                    </React.Fragment>
-                                )}
-                            </div>
-                        </Column>
-                        <Column xs="12" md="5" lg="4">
-                            <HowToApply stilling={ad} showFavouriteButton={!isInternal}/>
+                <React.Fragment>
+                    <div className="Ad__left">
+                        <div className="Ad__max-line-length">
+                            <h1 className="Ad__h1">{ad._source.title}</h1>
+
+                            {ad._source.status !== "ACTIVE" && <Tag>Stillingsannonsen er inaktiv.</Tag>}
+
+                            {isFinn && <FinnAd stilling={ad}/>}
+
                             {!isFinn && (
                                 <React.Fragment>
-                                    <EmploymentDetails stilling={ad._source}/>
-                                    <ContactPerson contactList={ad._source.contactList}/>
-                                    {!isInternal && <ShareAd source={ad._source}/>}
+                                    <Summary stilling={ad._source}/>
+                                    <AdText adText={ad._source.properties.adtext}/>
+                                    <HardRequirements stilling={ad}/>
+                                    <SoftRequirements stilling={ad}/>
+                                    <PersonalAttributes stilling={ad}/>
+                                    <EmployerDetails stilling={ad._source}/>
                                 </React.Fragment>
                             )}
-                            <AdDetails id={ad._id} source={ad._source}/>
-                        </Column>
-                    </Row>
-                </Container>
+                        </div>
+                    </div>
+
+                    <div className="Ad__right">
+                        <HowToApply stilling={ad} showFavouriteButton={!isInternal}/>
+                        {!isFinn && (
+                            <React.Fragment>
+                                <EmploymentDetails stilling={ad._source}/>
+                                <ContactPerson contactList={ad._source.contactList}/>
+                                {!isInternal && <ShareAd source={ad._source}/>}
+                            </React.Fragment>
+                        )}
+                        <AdDetails id={ad._id} source={ad._source}/>
+                    </div>
+                </React.Fragment>
             )}
-        </div>
+        </article>
     );
 };
 

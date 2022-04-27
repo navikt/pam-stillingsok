@@ -157,73 +157,62 @@ const Search = () => {
     return (
         <div className="Search">
             <PageHeader title="Ledige stillinger" />
-
-            <div className="Search__inner">
-
-                <div className="Search__main">
-                    {initialSearchResponse.status === FetchStatus.FAILURE && <ErrorMessage />}
-                    {initialSearchResponse.status === FetchStatus.IS_FETCHING && <DelayedSpinner />}
-                    {initialSearchResponse.status === FetchStatus.SUCCESS && (
-                        <RestoreScroll id="search-scroll">
-                            <section id="sok" className="Search__criteria" aria-labelledby="search-form-title">
-                                <SkipToResult data={searchResponse.data} />
-                                {authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED && (
-                                    <LinkMenu />
-                                )}
-                                <SearchCriteria
-                                    query={query}
-                                    dispatchQuery={queryDispatch}
-                                    initialSearchResult={initialSearchResponse.data}
-                                    searchResult={searchResponse.data}
-                                    fetchSearch={fetchSearch}
-                                />
-                                <div className="Search__reset-and-save-search">
-                                    <SaveSearchButton query={query} />
-                                    <ResetButton dispatch={queryDispatch} />
-                                </div>
-                            </section>
-
-                            <section id="resultat" aria-label="Søkeresultat" className="Search__result">
-                                <SkipToCriteria />
-                                <header className="Search__count-and-sorting">
-                                    <SearchResultCount searchResult={data} />
-                                    <Sorting dispatch={queryDispatch} query={query} />
-                                </header>
-
-                                {status === FetchStatus.FAILURE && <ErrorMessage />}
-                                {status === FetchStatus.IS_FETCHING && query.from === 0 && <DelayedSpinner />}
-                                {status === FetchStatus.SUCCESS && data.total.value === 0 && (
-                                    <NoResults query={query} />
-                                )}
-                                {(status === FetchStatus.SUCCESS ||
-                                    (status === FetchStatus.IS_FETCHING && query.from > 0)) && (
-                                    <React.Fragment>
-                                        {data.stillinger &&
-                                            data.stillinger.map((stilling) => (
-                                                <SearchResultItem key={stilling.uuid} stilling={stilling} />
-                                            ))}
-
-                                        <Pagination
-                                            query={query}
-                                            isSearching={status === FetchStatus.IS_FETCHING}
-                                            searchResult={data}
-                                            onLoadMoreClick={loadMoreResults}
-                                        />
-                                    </React.Fragment>
-                                )}
-                            </section>
-                        </RestoreScroll>
-                    )}
-                </div>
-
+            {authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED && (
+                <LinkMenu />
+            )}
+            <div className="Search__wrapper">
+                {initialSearchResponse.status === FetchStatus.FAILURE && <ErrorMessage />}
+                {initialSearchResponse.status === FetchStatus.IS_FETCHING && <DelayedSpinner />}
                 {initialSearchResponse.status === FetchStatus.SUCCESS && (
-                    <div className="Search__til-toppen">
-                        <a href="#top" className="link">
-                            Til toppen
-                        </a>
-                    </div>
+                    <RestoreScroll id="search-scroll">
+                        <SearchCriteria
+                            query={query}
+                            dispatchQuery={queryDispatch}
+                            initialSearchResult={initialSearchResponse.data}
+                            searchResult={searchResponse.data}
+                            fetchSearch={fetchSearch}
+                        />
+
+                        <section id="resultat" aria-label="Søkeresultat" className="Search__result">
+                            <SkipToCriteria />
+                            <header className="Search__count-and-sorting">
+                                <SearchResultCount searchResult={data} />
+                                <Sorting dispatch={queryDispatch} query={query} />
+                            </header>
+
+                            {status === FetchStatus.FAILURE && <ErrorMessage />}
+                            {status === FetchStatus.IS_FETCHING && query.from === 0 && <DelayedSpinner />}
+                            {status === FetchStatus.SUCCESS && data.total.value === 0 && (
+                                <NoResults query={query} />
+                            )}
+                            {(status === FetchStatus.SUCCESS ||
+                                (status === FetchStatus.IS_FETCHING && query.from > 0)) && (
+                                <React.Fragment>
+                                    {data.stillinger &&
+                                        data.stillinger.map((stilling) => (
+                                            <SearchResultItem key={stilling.uuid} stilling={stilling} />
+                                        ))}
+
+                                    <Pagination
+                                        query={query}
+                                        isSearching={status === FetchStatus.IS_FETCHING}
+                                        searchResult={data}
+                                        onLoadMoreClick={loadMoreResults}
+                                    />
+                                </React.Fragment>
+                            )}
+                        </section>
+                    </RestoreScroll>
                 )}
             </div>
+
+            {initialSearchResponse.status === FetchStatus.SUCCESS && (
+                <nav className="Search__til-toppen">
+                    <a href="#top" className="link">
+                        Til toppen
+                    </a>
+                </nav>
+            )}
         </div>
     );
 };
