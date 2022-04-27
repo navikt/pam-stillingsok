@@ -17,13 +17,6 @@
 
 .SearchResultItem__link {
   color: @primaryPurple;
-  margin: 0 2rem 1rem 0;
-  display: inline-block;
-
-  @media (min-width: @screen-sm-min) {
-    max-width: 600px;
-    margin: 0 6rem 1rem 0;
-  }
 
   &:hover {
     text-decoration: none;
@@ -33,7 +26,7 @@
     color: @gray5;
   }
 
-  &:focus-visible {
+  &:focus {
     color: #ffffff;
     background: @blueDarken;
     outline: none;

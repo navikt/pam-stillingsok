@@ -37,11 +37,11 @@ export default function SearchResultsItemDetails({ stilling, showExpired }) {
 
     return (
         <React.Fragment>
-            <LinkToAd stilling={stilling} isFinn={isFinn} employer={employer}>
-                <h3 className="SearchResultsItemDetails__title" aria-label={`${stilling.title}.`}>
+            <h3 className="SearchResultsItemDetails__title">
+                <LinkToAd stilling={stilling} isFinn={isFinn} employer={employer}>
                     {stilling.title}
-                </h3>
-            </LinkToAd>
+                </LinkToAd>
+            </h3>
 
             {stilling.properties.jobtitle && stilling.title !== stilling.properties.jobtitle && (
                 <p className="SearchResultsItemDetails__jobtitle">{stilling.properties.jobtitle}</p>
