@@ -66,9 +66,11 @@ function SavedSearchListItem({ savedSearch, removeSavedSearchFromList, replaceSa
 
     return (
         <article className="SavedSearchListItem">
-            <a className="link" href={`${CONTEXT_PATH}${savedSearch.searchQuery}&saved=${savedSearch.uuid}`}>
-                <h3 className="SavedSearchListItem__title">{savedSearch.title}</h3>
-            </a>
+            <h3 className="SavedSearchListItem__title">
+                <a className="link" href={`${CONTEXT_PATH}${savedSearch.searchQuery}&saved=${savedSearch.uuid}`}>
+                    {savedSearch.title}
+                </a>
+            </h3>
 
             {isValidISOString(savedSearch.updated) && (
                 <p className="SavedSearchListItem__created">
