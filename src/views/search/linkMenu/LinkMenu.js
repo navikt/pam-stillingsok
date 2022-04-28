@@ -5,7 +5,7 @@ import './LinkMenu.less';
 
 function LinkMenu() {
     return (
-        <nav className="LinkMenu">
+        <nav className="LinkMenu" aria-label="Ditt innhold">
             <Link to={`${CONTEXT_PATH}/favoritter`} className="link LinkMenu__favourites-link">
                 Favoritter
             </Link>

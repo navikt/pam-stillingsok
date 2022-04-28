@@ -194,11 +194,11 @@ const Search = () => {
             </div>
 
             {initialSearchResponse.status === FetchStatus.SUCCESS && (
-                <nav className="Search__til-toppen">
+                <div className="Search__til-toppen">
                     <a href="#top" className="link">
                         Til toppen
                     </a>
-                </nav>
+                </div>
             )}
         </React.Fragment>
     );
