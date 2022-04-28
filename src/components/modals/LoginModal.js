@@ -6,7 +6,7 @@ import "./LoginModal.less";
 
 function LoginModal({ onLoginClick, onCloseClick }) {
     return (
-        <CustomModal onCloseClick={onCloseClick} title="Du må logge inn">
+        <CustomModal role="alertdialog" onCloseClick={onCloseClick} title="Du må logge inn">
             <p className="LoginModal__message">Logg inn med MinID, BankID, BankID på mobil, Buypass eller Commfides.</p>
             <div className="LoginModal__buttons">
                 <Hovedknapp onClick={onLoginClick}>Logg inn</Hovedknapp>
