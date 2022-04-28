@@ -73,6 +73,7 @@ function SaveSearchModal({ onClose, onSuccess, formData, defaultMode, savedSearc
                         if (onSuccess) {
                             onSuccess(response);
                         }
+                        notifySuccess("Søket er lagret.");
                     })
                     .catch((err) => {
                         captureException(err);

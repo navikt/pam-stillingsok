@@ -28,6 +28,7 @@ function SavedSearchListItem({ savedSearch, removeSavedSearchFromList, replaceSa
                 hideDeleteModal();
                 setDeleteStatus(FetchStatus.SUCCESS);
                 removeSavedSearchFromList(savedSearch);
+                notifySuccess("Søket er slettet.");
             })
             .catch((err) => {
                 captureException(err);
