@@ -99,6 +99,7 @@ function FavouritesList() {
                             showExpired={favourite.favouriteAd.status !== "ACTIVE"}
                         />
                         <FavouritesButton
+                            shouldConfirmBeforeDelete={true}
                             onRemoved={removeFavouriteFromList}
                             stilling={favourite.favouriteAd}
                             id={favourite.favouriteAd.uuid}
