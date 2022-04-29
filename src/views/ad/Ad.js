@@ -10,9 +10,6 @@ import EmploymentDetails from "./employmentDetails/EmploymentDetails";
 import FinnAd from "./finnAd/FinnAd";
 import HowToApply from "./howToApply/HowToApply";
 import NotFound from "./notFound/NotFound";
-import HardRequirements from "./requirements/HardRequirements";
-import PersonalAttributes from "./requirements/PersonalAttributes";
-import SoftRequirements from "./requirements/SoftRequirements";
 import "./Ad.less";
 import logAmplitudeEvent, {logAmplitudePageview, logStillingVisning} from "../../api/amplitude/amplitude";
 import ShareAd from "./shareAd/ShareAd";
@@ -97,9 +94,6 @@ const Ad = ({match}) => {
                             <React.Fragment>
                                 <Summary stilling={ad._source}/>
                                 <AdText adText={ad._source.properties.adtext}/>
-                                <HardRequirements stilling={ad}/>
-                                <SoftRequirements stilling={ad}/>
-                                <PersonalAttributes stilling={ad}/>
                                 <EmployerDetails stilling={ad._source}/>
                             </React.Fragment>
                         )}
