@@ -19,7 +19,7 @@ import { FetchAction, FetchStatus, useFetchReducer } from "../../hooks/useFetchR
 import { apiFetchLocations, apiSearch } from "../../api/search/api";
 import ErrorMessage from "../../components/messages/ErrorMessage";
 import PageHeader from "../../components/pageHeader/PageHeader";
-import SearchCriteria from "./searchCriteria/SearchCriteria";
+import SearchForm from "./searchForm/SearchForm";
 import NoResults from "./noResults/NoResults";
 import SearchResultItem from "./searchResults/SearchResultsItem";
 import Pagination from "./pagination/Pagination";
@@ -29,6 +29,7 @@ import SkipToCriteria from "./skiplinks/SkipToCriteria";
 import LinkMenu from "./linkMenu/LinkMenu";
 import LoadingScreen from "./loadingScreen/LoadingScreen";
 import "./Search.less";
+import SkipToResult from "./skiplinks/SkipToResult";
 
 const Search = () => {
     const { authenticationStatus } = useContext(AuthenticationContext);
@@ -154,14 +155,19 @@ const Search = () => {
                 {initialSearchResponse.status === FetchStatus.IS_FETCHING && <LoadingScreen />}
                 {initialSearchResponse.status === FetchStatus.SUCCESS && (
                     <RestoreScroll id="search-scroll">
-                        <SearchCriteria
-                            query={query}
-                            dispatchQuery={queryDispatch}
-                            initialSearchResult={initialSearchResponse.data}
-                            searchResult={searchResponse.data}
-                            fetchSearch={fetchSearch}
-                        />
-
+                        <section id="sok" className="Search__criteria" aria-labelledby="search-form-title">
+                            <SkipToResult data={searchResponse.data} />
+                            <h2 className="Search__form-title" id="search-form-title">
+                                Søk blant ledige stillinger
+                            </h2>
+                            <SearchForm
+                                query={query}
+                                dispatchQuery={queryDispatch}
+                                initialSearchResult={initialSearchResponse.data}
+                                searchResult={searchResponse.data}
+                                fetchSearch={fetchSearch}
+                            />
+                        </section>
                         <section id="resultat" aria-label="Søkeresultat" className="Search__result">
                             <SkipToCriteria />
                             <header className="Search__count-and-sorting">

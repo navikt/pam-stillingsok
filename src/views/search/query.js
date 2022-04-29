@@ -1,6 +1,6 @@
 import { decodeUrl, parseQueryString } from "../../components/utils";
 import fixLocationName from "../../../server/common/fixLocationName";
-import { PublishedLabelsEnum } from "./searchCriteria/Published";
+import { PublishedLabelsEnum } from "./searchForm/Published";
 
 export const SEARCH_CHUNK_SIZE = 25;
 export const ADD_MUNICIPAL = "ADD_MUNICIPAL";

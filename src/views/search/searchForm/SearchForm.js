@@ -11,7 +11,7 @@ import SkipToResult from "../skiplinks/SkipToResult";
 import SaveSearchButton from "../../savedSearches/SaveSearchButton";
 import ResetButton from "../resetButton/ResetButton";
 
-const SearchCriteria = ({ fetchSearch, query, dispatchQuery, initialSearchResult, searchResult }) => {
+const SearchForm = ({ fetchSearch, query, dispatchQuery, initialSearchResult, searchResult }) => {
     /**
      * Handles form submit. This is typically triggered if
      * user presses enter-key in the search box.
@@ -22,12 +22,7 @@ const SearchCriteria = ({ fetchSearch, query, dispatchQuery, initialSearchResult
     }
 
     return (
-        <form id="sok" onSubmit={submitForm} role="search" aria-labelledby="search-form-title">
-            <SkipToResult data={searchResult} />
-
-            <h2 className="Search__form-title" id="search-form-title">
-                Søk blant ledige stillinger
-            </h2>
+        <form id="sok" onSubmit={submitForm} role="search">
             <SearchBox query={query} dispatch={dispatchQuery} />
             <Counties
                 query={query}
@@ -74,4 +69,4 @@ const SearchCriteria = ({ fetchSearch, query, dispatchQuery, initialSearchResult
     );
 };
 
-export default SearchCriteria;
+export default SearchForm;
