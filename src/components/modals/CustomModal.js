@@ -3,14 +3,14 @@ import PropTypes from "prop-types";
 import Modal from "nav-frontend-modal";
 import "./CustomModal.less";
 
-function CustomModal({ title, children, onCloseClick }) {
+function CustomModal({ title, children, onCloseClick, ...props }) {
     return (
         <Modal
             className="CustomModal"
             isOpen
             onRequestClose={onCloseClick}
-            contentLabel={title}
             appElement={document.getElementById("app")}
+            {...props}
         >
             <h1 className="CustomModal__title">{title}</h1>
             {children}

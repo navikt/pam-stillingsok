@@ -5,10 +5,10 @@ import CustomModal from "../../../components/modals/CustomModal";
 
 function SearchIsEmptyModal({ onClose }) {
     return (
-        <CustomModal onCloseClick={onClose} title="Velg søkekriterier først">
+        <CustomModal role="alertdialog" onCloseClick={onClose} title="Velg søkekriterier først">
             <p>Du må fylle inn søkeord eller kriterier for å kunne lagre.</p>
             <div>
-                <Hovedknapp onClick={onClose}>Lukk</Hovedknapp>
+                <Hovedknapp onClick={onClose}>Ok, gå tilbake</Hovedknapp>
             </div>
         </CustomModal>
     );
