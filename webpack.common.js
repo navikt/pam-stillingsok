@@ -21,7 +21,7 @@ module.exports = {
     },
     output: {
         path: `${__dirname}/dist`,
-        filename: 'js/[name]-010522.js',
+        filename: 'js/[name].js',
         publicPath: '/sok/'
     },
     module: {
