@@ -4,8 +4,6 @@ import "./ReportAd.less";
 import Checkbox from "nav-frontend-skjema/lib/checkbox";
 import { Hovedknapp } from "@navikt/arbeidsplassen-knapper";
 import { CONTEXT_PATH } from "../../environment";
-import Chevron from "nav-frontend-chevron";
-import { Link } from "react-router-dom";
 import { captureException } from "@sentry/browser";
 import logAmplitudeEvent from "../../tracking/amplitude";
 import { Textarea } from "nav-frontend-skjema";
@@ -13,6 +11,9 @@ import useDocumentTitle from "../../hooks/useDocumentTitle";
 import { AuthenticationContext, AuthenticationStatus } from "../../context/AuthenticationProvider";
 import UserAPI from "../../api/UserAPI";
 import Alert from "../../components/alert/Alert";
+import BackLink from "../../components/backlink/BackLink";
+import useScrollToTop from "../../hooks/useScrollToTop";
+import H1WithAutoFocus from "../../components/h1WithAutoFocus/H1WithAutoFocus";
 
 const violationCategories = [
     { label: "Diskriminerende innhold", key: "discrimination" },
@@ -40,6 +41,7 @@ const ReportAd = () => {
     const [descriptionLabel, setDescriptionLabel] = useState("Beskrivelse - må fylles ut");
 
     useDocumentTitle("Rapportér annonse");
+    useScrollToTop();
 
     useEffect(() => {
         if (document.location.search.includes("uuid")) {
@@ -112,10 +114,7 @@ const ReportAd = () => {
 
     return (
         <div className="RapporterAnnonse">
-            <Link to={CONTEXT_PATH + "/stilling/" + stillingId} className="BackLink no-print">
-                <Chevron type="venstre" className="BackLink__chevron" />
-                <span className="BackLink__label">Tilbake til annonsen</span>
-            </Link>
+            <BackLink to={`${CONTEXT_PATH}/stilling/${stillingId}`} text="Tilbake til annonsen" />
 
             {authenticationStatus !== AuthenticationStatus.IS_AUTHENTICATED && (
                 <div>
@@ -129,7 +128,7 @@ const ReportAd = () => {
                 <div>
                     {finished && (
                         <div>
-                            <h1>Takk for din tilbakemelding</h1>
+                            <H1WithAutoFocus>Takk for din tilbakemelding</H1WithAutoFocus>
 
                             <div className="report-form">
                                 <p>Takk for at du tok deg tid til å rapportere denne annonsen.</p>
@@ -153,7 +152,7 @@ const ReportAd = () => {
                     )}
                     {!finished && (
                         <div>
-                            <h1>Rapportér annonse</h1>
+                            <H1WithAutoFocus>Rapportér annonse</H1WithAutoFocus>
 
                             <div className="report-form">
                                 <h2>Henveldensen gjelder</h2>

@@ -16,7 +16,7 @@ import initHotJar from "./tracking/hotjar";
 import initSentry from "./tracking/sentry";
 import { initAmplitude } from "./tracking/amplitude";
 import "./styles/styles.less";
-import HasHistoryProvider from "./context/HasHistoryProvider";
+import HistoryProvider from "./context/HistoryProvider";
 
 initSentry();
 fixUrlAfterLogin();
@@ -29,7 +29,7 @@ function Application() {
             <UserProvider>
                 <FavouritesProvider>
                     <BrowserRouter>
-                        <HasHistoryProvider>
+                        <HistoryProvider>
                             <BrowserSupportInfo tillatLukking={true} />
                             <Switch>
                                 <Route component={Header} />
@@ -43,7 +43,7 @@ function Application() {
                                 <Route path={`${CONTEXT_PATH}/lagrede-sok`} component={SavedSearches} />
                                 <Route path="*" component={Search} />
                             </Switch>
-                        </HasHistoryProvider>
+                        </HistoryProvider>
                     </BrowserRouter>
                 </FavouritesProvider>
             </UserProvider>
