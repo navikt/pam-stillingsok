@@ -33,6 +33,7 @@ import useRestoreScroll from "../../hooks/useRestoreScroll";
 import "./Search.less";
 import ArrowUpIcon from "../../components/icons/ArrowUpIcon";
 import {useHistory} from "react-router";
+import errorMessage from "../../components/messages/ErrorMessage";
 
 const Search = () => {
     const { authenticationStatus } = useContext(AuthenticationContext);
@@ -101,6 +102,9 @@ const Search = () => {
     }
 
     function fetchSearch() {
+        if(query.q === "123321123"){
+            throw "dd"
+        }
         searchDispatch({ type: FetchAction.BEGIN });
         const search = SearchAPI.search(toApiQuery(query));
 
