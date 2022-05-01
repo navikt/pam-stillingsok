@@ -102,9 +102,6 @@ const Search = () => {
     }
 
     function fetchSearch() {
-        if(query.q === "123321123"){
-            throw "dd"
-        }
         searchDispatch({ type: FetchAction.BEGIN });
         const search = SearchAPI.search(toApiQuery(query));
 
