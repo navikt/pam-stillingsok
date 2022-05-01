@@ -1,24 +1,29 @@
 @import (reference)  "../../styles/variables";
 
-.Favourites__content {
+.Favourites {
   max-width: 800px;
   margin: 2rem auto 4rem;
   padding: 0 1rem;
 }
 
-.FavouritesList__total-and-sorting {
+.Favourites__h1 {
+  margin: 0 0 2rem 0;
+  font-weight: 600;
+  font-size: 2.5rem;
+}
 
+.FavouritesList__total-and-sorting {
   @media (min-width: @screen-md-min) {
-    padding: 0 1rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
+}
 
-  h2 {
-    font-weight: 600;
-    margin: 0 0 1rem 0;
-  }
+.Favourites__h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0 0 1rem 0;
 }
 
 .FavouritesList_Sorting {

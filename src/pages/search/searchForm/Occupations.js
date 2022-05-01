@@ -9,7 +9,6 @@ import {
 } from "../query";
 import CriteriaPanel from "./CriteriaPanel";
 import UnknownSearchCriteriaValues from "./UnknownSearchCriteriaValues";
-import { isMobile } from "../../../components/utils";
 import moveCriteriaToBottom from "./utils/moveFacetToBottom";
 import mergeCount from "./utils/mergeCount";
 import { findUnknownSearchCriteriaValues } from "./utils/findUnknownSearchCriteriaValues";
@@ -17,8 +16,6 @@ import { findUnknownSearchCriteriaValues } from "./utils/findUnknownSearchCriter
 const OCCUPATION_LEVEL_OTHER = "Uoppgitt/ ikke identifiserbare";
 
 function Occupations({ initialValues, updatedValues, query, dispatch }) {
-    const isOpenByDefault = !isMobile();
-
     const [values, setValues] = useState(moveCriteriaToBottom(initialValues, OCCUPATION_LEVEL_OTHER));
     const unknownFirstValues = findUnknownSearchCriteriaValues(query.occupationFirstLevels, initialValues);
     const unknownSecondValues = findUnknownSearchCriteriaValues(
@@ -70,7 +67,7 @@ function Occupations({ initialValues, updatedValues, query, dispatch }) {
     }
 
     return (
-        <CriteriaPanel panelId="occupations-panel" title="Yrke" isOpenByDefault={isOpenByDefault}>
+        <CriteriaPanel panelId="occupations-panel" title="Yrke">
             {values &&
                 values.map((firstLevel) => (
                     <div key={firstLevel.key}>

@@ -1,14 +1,15 @@
-import React, { useContext } from "react";
-import { CONTEXT_PATH } from "../../environment";
-import { AuthenticationContext } from "../../context/AuthenticationProvider";
-import { UserContext } from "../../context/UserProvider";
-import PageHeader from "../../components/pageHeader/PageHeader";
+import React, {useContext} from "react";
+import {CONTEXT_PATH} from "../../environment";
+import {AuthenticationContext} from "../../context/AuthenticationProvider";
+import {UserContext} from "../../context/UserProvider";
 import SavedSearchesList from "./SavedSearchesList";
 import RequiresAuthentication from "../../components/wrappers/RequiresAuthentication";
 import RequiresHasAcceptedTerms from "../../components/wrappers/RequiresHasAcceptedTerms";
 import useDocumentTitle from "../../hooks/useDocumentTitle";
 import useTrackPageview from "../../hooks/useTrackPageview";
 import useScrollToTop from "../../hooks/useScrollToTop";
+import H1WithAutoFocus from "../../components/h1WithAutoFocus/H1WithAutoFocus";
+import BackLink from "../../components/backlink/BackLink";
 import "./SavedSearches.less";
 
 /**
@@ -26,14 +27,15 @@ function SavedSearches() {
     useScrollToTop();
 
     return (
-        <React.Fragment>
-            <PageHeader title={title} shouldAutofocus={true} />
+        <div className="SavedSearches">
+            <BackLink to={CONTEXT_PATH} text="Ledige stillinger" />
+            <H1WithAutoFocus className="SavedSearches__h1">{title}</H1WithAutoFocus>
             <RequiresAuthentication authenticationStatus={authenticationStatus} login={login}>
                 <RequiresHasAcceptedTerms hasAcceptedTermsStatus={hasAcceptedTermsStatus}>
                     <SavedSearchesList />
                 </RequiresHasAcceptedTerms>
             </RequiresAuthentication>
-        </React.Fragment>
+        </div>
     );
 }
 

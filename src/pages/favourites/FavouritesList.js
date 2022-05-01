@@ -8,8 +8,6 @@ import EmptyMessage from "../../components/messages/EmptyMessage";
 import UserAPI from "../../api/UserAPI";
 import FavouritesButton from "./FavouritesButton";
 import { FetchAction, FetchStatus, useFetchReducer } from "../../hooks/useFetchReducer";
-import BackLink from "../../components/backlink/BackLink";
-import {CONTEXT_PATH} from "../../environment";
 
 function FavouritesList() {
     const [response, dispatch] = useFetchReducer();
@@ -61,12 +59,9 @@ function FavouritesList() {
         );
     } else {
         return (
-            <section className="Favourites__content">
-                <BackLink to={CONTEXT_PATH} text="Ledige stillinger" />
-
+            <section>
                 <header className="FavouritesList__total-and-sorting">
-                    <h2>{response.data.length !== 1 ? `${response.data.length} annonser` : "1 annonse"}</h2>
-
+                    <h2 className="Favourites__h2">{response.data.length !== 1 ? `${response.data.length} annonser` : "1 annonse"}</h2>
                     <Select
                         onChange={(e) => {
                             setSortBy(e.target.value);

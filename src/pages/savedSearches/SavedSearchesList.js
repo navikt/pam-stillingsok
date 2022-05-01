@@ -1,14 +1,12 @@
-import React, {useEffect} from "react";
-import {captureException} from "@sentry/browser";
+import React, { useEffect } from "react";
+import { captureException } from "@sentry/browser";
 import SavedSearchListItem from "./SavedSearchListItem";
 import DelayedSpinner from "../../components/spinner/DelayedSpinner";
 import ErrorMessage from "../../components/messages/ErrorMessage";
 import UserAPI from "../../api/UserAPI";
-import {FetchAction, FetchStatus, useFetchReducer} from "../../hooks/useFetchReducer";
-import {extractParam} from "../../components/utils";
+import { FetchAction, FetchStatus, useFetchReducer } from "../../hooks/useFetchReducer";
+import { extractParam } from "../../components/utils";
 import SavedSearchesIsEmpty from "./SavedSearchesIsEmpty";
-import BackLink from "../../components/backlink/BackLink";
-import {CONTEXT_PATH} from "../../environment";
 
 /**
  * Displays a list of all saved searches.
@@ -68,12 +66,8 @@ function SavedSearchesList() {
             {status === FetchStatus.FAILURE && <ErrorMessage />}
             {status === FetchStatus.SUCCESS && data.length === 0 && <SavedSearchesIsEmpty />}
             {status === FetchStatus.SUCCESS && data.length > 0 && (
-                <section className="SavedSearches__content">
-                    <BackLink to={CONTEXT_PATH} text="Ledige stillinger" />
-
-                    <h2 className="SavedSearches__h2">
-                        {data.length} {data.length === 1 ? "lagret" : "lagrede"} søk
-                    </h2>
+                <React.Fragment>
+                    <h2 className="SavedSearches__h2">{data.length} søk</h2>
                     {data.map((savedSearch) => (
                         <SavedSearchListItem
                             key={savedSearch.uuid}
@@ -83,7 +77,7 @@ function SavedSearchesList() {
                             autoOpenModal={savedSearch.uuid === uuidFromBrowserUrl}
                         />
                     ))}
-                </section>
+                </React.Fragment>
             )}
         </React.Fragment>
     );
