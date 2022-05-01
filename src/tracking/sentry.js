@@ -19,7 +19,7 @@ const ignoreTypeErrors = [
 export default function initSentry() {
     Sentry.init({
         dsn: "https://76170ea4b79246638c1d9eb1c0e4fca9@sentry.gc.nav.no/37",
-        blacklistUrls: [new RegExp("localhost"), new RegExp("arbeidsplassen-q.nav.no")],
+        allowUrls: [new RegExp("arbeidsplassen.nav.no")],
         ignoreErrors: [...ignoreTypeErrors],
         beforeSend(event, hint) {
             const error = hint.originalException;
