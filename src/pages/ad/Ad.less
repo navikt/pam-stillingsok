@@ -1,15 +1,19 @@
 @import (reference) "../../styles/variables";
 
 .Ad {
-  margin: 2rem auto 4rem;
+  margin: 2rem auto;
   max-width: 1156px;
   padding: 0 1rem;
   min-height: 100vh;
 
   @media (min-width: @screen-md-min) {
-    display: flex;
     padding: 0 2.5rem;
-    margin: 4rem auto 4rem;
+  }
+}
+
+.Ad__flex {
+  @media (min-width: @screen-md-min) {
+    display: flex;
   }
 }
 

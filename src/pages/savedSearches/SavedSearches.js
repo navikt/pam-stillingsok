@@ -10,7 +10,6 @@ import useDocumentTitle from "../../hooks/useDocumentTitle";
 import useTrackPageview from "../../hooks/useTrackPageview";
 import useScrollToTop from "../../hooks/useScrollToTop";
 import "./SavedSearches.less";
-import useAutoFocusOnPageChange from "../../hooks/useAutoFocusOnPageChange";
 
 /**
  * Page showing saved searches.
@@ -21,7 +20,6 @@ function SavedSearches() {
     const title = "Lagrede søk";
     const { authenticationStatus, login } = useContext(AuthenticationContext);
     const { hasAcceptedTermsStatus } = useContext(UserContext);
-    const autoFocusOnPageChangeRef = useAutoFocusOnPageChange();
 
     useDocumentTitle(title);
     useTrackPageview(`${CONTEXT_PATH}/lagrede-sok`, title);
@@ -29,7 +27,7 @@ function SavedSearches() {
 
     return (
         <React.Fragment>
-            <PageHeader title={title} h1Ref={autoFocusOnPageChangeRef} />
+            <PageHeader title={title} shouldAutofocus={true} />
             <RequiresAuthentication authenticationStatus={authenticationStatus} login={login}>
                 <RequiresHasAcceptedTerms hasAcceptedTermsStatus={hasAcceptedTermsStatus}>
                     <SavedSearchesList />

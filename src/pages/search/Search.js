@@ -32,6 +32,7 @@ import SkipToResult from "./skiplinks/SkipToResult";
 import useRestoreScroll from "../../hooks/useRestoreScroll";
 import "./Search.less";
 import ArrowUpIcon from "../../components/icons/ArrowUpIcon";
+import {useHistory} from "react-router";
 
 const Search = () => {
     const { authenticationStatus } = useContext(AuthenticationContext);
@@ -39,6 +40,7 @@ const Search = () => {
     const [initialSearchResponse, initialSearchDispatch] = useFetchReducer();
     const [searchResponse, searchDispatch] = useFetchReducer();
     const latestSearch = useRef();
+    let history = useHistory();
 
     useDocumentTitle("Ledige stillinger");
     useTrackPageview(CONTEXT_PATH, "Ledige stillinger");
@@ -69,7 +71,7 @@ const Search = () => {
             browserQuery.saved = savedSearchUuid;
         }
 
-        window.history.replaceState({}, "", CONTEXT_PATH + stringifyQuery(browserQuery));
+        history.replace(CONTEXT_PATH + stringifyQuery(browserQuery));
     }, [query]);
 
     function fetchInitialSearch() {

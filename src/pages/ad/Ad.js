@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { captureException } from "@sentry/browser";
 import AdDetails from "./adDetails/AdDetails";
@@ -20,13 +20,13 @@ import ErrorMessage from "../../components/messages/ErrorMessage";
 import useRobotsNoIndexMetaTag from "../../hooks/useRobotsNoIndexMetaTag";
 import useScrollToTop from "../../hooks/useScrollToTop";
 import Tag from "../../components/tag/Tag";
-import useAutoFocusOnPageChange from "../../hooks/useAutoFocusOnPageChange";
+import AdBackLink from "./adBacklink/AdBackLink";
+import H1WithAutoFocus from "../../components/h1WithAutoFocus/H1WithAutoFocus";
 
 const Ad = ({ match }) => {
     const [{ data: ad, error, status }, dispatch] = useFetchReducer();
     const isInternal = match.path.startsWith("/stillinger/intern/");
     const avoidIndexing = (error && error.statusCode === 404) || (ad && ad._source.status !== "ACTIVE") || isInternal;
-    const autoFocusOnPageChangeRef = useAutoFocusOnPageChange(ad !== undefined);
 
     useScrollToTop();
     useRobotsNoIndexMetaTag(avoidIndexing);
@@ -78,16 +78,16 @@ const Ad = ({ match }) => {
     const isFinn = ad && ad._source && ad._source.source && ad._source.source.toLowerCase() === "finn";
 
     return (
-        <article className="Ad">
+        <div className="Ad">
+            <AdBackLink />
+
             {status === FetchStatus.FAILURE && error.statusCode === 404 && <NotFound />}
             {status === FetchStatus.FAILURE && error.statusCode !== 404 && <ErrorMessage />}
             {status === FetchStatus.IS_FETCHING && <DelayedSpinner />}
             {status === FetchStatus.SUCCESS && (
-                <React.Fragment>
+                <article className="Ad__flex">
                     <div className="Ad__left">
-                        <h1 ref={autoFocusOnPageChangeRef} tabIndex={-1} className="Ad__h1">
-                            {ad._source.title}
-                        </h1>
+                        <H1WithAutoFocus className="Ad__h1">{ad._source.title}</H1WithAutoFocus>
 
                         {ad._source.status !== "ACTIVE" && <Tag>Stillingsannonsen er inaktiv.</Tag>}
 
@@ -113,9 +113,9 @@ const Ad = ({ match }) => {
                         )}
                         <AdDetails id={ad._id} source={ad._source} />
                     </div>
-                </React.Fragment>
+                </article>
             )}
-        </article>
+        </div>
     );
 };
 

@@ -206,11 +206,11 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
                             </SkjemaGruppe>
                             {!isStringEmpty(user.data.email) && (
                                 <p className="SavedSearches__p">
-                                    Varsel sendes til {user.data.email}. Gå til{" "}
+                                    Varsel sendes på e-post. Gå til{" "}
                                     <a href="/personinnstillinger" className="link">
                                         Innstillinger
                                     </a>{" "}
-                                    for å endre.
+                                    for å endre e-postadresse.
                                 </p>
                             )}
                         </React.Fragment>
