@@ -1,6 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import NotificationsProvider from "./context/NotificationsProvider";
 import AuthenticationProvider, { fixUrlAfterLogin } from "./context/AuthenticationProvider";
 import UserProvider from "./context/UserProvider";
 import FavouritesProvider from "./context/FavouritesProvider";
@@ -8,15 +7,16 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import BrowserSupportInfo from "./components/browserSupportInfo/BrowserSupportInfo";
 import Header from "./components/header/Header";
 import { CONTEXT_PATH } from "./environment";
-import Search from "./views/search/Search";
-import Ad from "./views/ad/Ad";
-import Favourites from "./views/favourites/Favourites";
-import SavedSearches from "./views/savedSearches/SavedSearches";
-import ReportAd from "./views/reportAd/ReportAd";
-import initHotJar from "./api/hotjar/hotjar";
-import initSentry from "./api/sentry/sentry";
+import Search from "./pages/search/Search";
+import Ad from "./pages/ad/Ad";
+import Favourites from "./pages/favourites/Favourites";
+import SavedSearches from "./pages/savedSearches/SavedSearches";
+import ReportAd from "./pages/reportAd/ReportAd";
+import initHotJar from "./tracking/hotjar";
+import initSentry from "./tracking/sentry";
+import { initAmplitude } from "./tracking/amplitude";
 import "./styles/styles.less";
-import {initAmplitude} from "./api/amplitude/amplitude";
+import HasHistoryProvider from "./context/HasHistoryProvider";
 
 initSentry();
 fixUrlAfterLogin();
@@ -25,11 +25,11 @@ initHotJar();
 
 function Application() {
     return (
-        <NotificationsProvider>
-            <AuthenticationProvider>
-                <UserProvider>
-                    <FavouritesProvider>
-                        <BrowserRouter>
+        <AuthenticationProvider>
+            <UserProvider>
+                <FavouritesProvider>
+                    <BrowserRouter>
+                        <HasHistoryProvider>
                             <BrowserSupportInfo tillatLukking={true} />
                             <Switch>
                                 <Route component={Header} />
@@ -43,11 +43,11 @@ function Application() {
                                 <Route path={`${CONTEXT_PATH}/lagrede-sok`} component={SavedSearches} />
                                 <Route path="*" component={Search} />
                             </Switch>
-                        </BrowserRouter>
-                    </FavouritesProvider>
-                </UserProvider>
-            </AuthenticationProvider>
-        </NotificationsProvider>
+                        </HasHistoryProvider>
+                    </BrowserRouter>
+                </FavouritesProvider>
+            </UserProvider>
+        </AuthenticationProvider>
     );
 }
 

@@ -16,7 +16,12 @@ export default function ConfirmationModal({
     errorMessage
 }) {
     return (
-        <CustomModal role="alertdialog" onCloseClick={onCancel} title={title} appElement={document.getElementById("app")}>
+        <CustomModal
+            role="alertdialog"
+            onCloseClick={onCancel}
+            title={title}
+            appElement={document.getElementById("app")}
+        >
             <div className="ConfirmationModal">
                 <div className="ConfirmationModal__message">
                     {children}

@@ -2,10 +2,10 @@ import PropTypes from "prop-types";
 import React from "react";
 import "./PageHeader.less";
 
-export default function PageHeader({ title }) {
+export default function PageHeader({ title, h1Ref }) {
     return (
         <header className="PageHeader">
-            <h1 tabIndex={-1} className="PageHeader__title">
+            <h1 ref={h1Ref} tabIndex={-1} className="PageHeader__title">
                 {title}
             </h1>
         </header>

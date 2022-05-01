@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { captureException } from "@sentry/browser";
 import { AD_USER_API, CONTEXT_PATH, LOGIN_URL, LOGOUT_URL, STILLINGSOK_URL } from "../environment";
-import { extractParam, stringifyQueryObject } from "../components/utils";
+import { extractParam} from "../components/utils";
+import {stringifyQuery} from "../pages/search/query";
 
 export const AuthenticationContext = React.createContext({});
 
@@ -87,24 +88,24 @@ const AuthenticationProvider = ({ children }) => {
         const path = window.location.pathname;
         if (path.includes("/rapporter-annonse")) {
             // Send bruker tilbake til stillingen de vil rapportere etter logg inn
-            redirectUrlAfterSuccessfulLogin = `${STILLINGSOK_URL}/stilling${stringifyQueryObject({
+            redirectUrlAfterSuccessfulLogin = `${STILLINGSOK_URL}/stilling${stringifyQuery({
                 uuid: window.location.search.split("=")[1]
             })}`;
         } else if (path.startsWith(`${CONTEXT_PATH}/stilling/`)) {
             // 'stilling/:uuid' er ikke en allowedRedirectUrls url, så vi må mappe om til /stilling?uuid=<uuid>
-            redirectUrlAfterSuccessfulLogin = `${STILLINGSOK_URL}/stilling${stringifyQueryObject({
+            redirectUrlAfterSuccessfulLogin = `${STILLINGSOK_URL}/stilling${stringifyQuery({
                 uuid: path.split(`${CONTEXT_PATH}/stilling/`)[1]
             })}`;
         } else if (path.startsWith(`${CONTEXT_PATH}/intern/`)) {
             // 'intern/:uuid' er ikke en allowedRedirectUrls url, så vi må mappe om til /intern?uuid=<uuid>
-            redirectUrlAfterSuccessfulLogin = `${STILLINGSOK_URL}/intern${stringifyQueryObject({
+            redirectUrlAfterSuccessfulLogin = `${STILLINGSOK_URL}/intern${stringifyQuery({
                 uuid: path.split(`${CONTEXT_PATH}/intern/`)[1]
             })}`;
         } else if (path.startsWith(`${CONTEXT_PATH}/lagrede-sok`)) {
             const query = {};
             const uuid = extractParam("uuid");
             if (uuid !== null) query["uuid"] = uuid;
-            redirectUrlAfterSuccessfulLogin = `${STILLINGSOK_URL}/lagrede-sok${stringifyQueryObject(query)}`;
+            redirectUrlAfterSuccessfulLogin = `${STILLINGSOK_URL}/lagrede-sok${stringifyQuery(query)}`;
         } else if (path === CONTEXT_PATH) {
             redirectUrlAfterSuccessfulLogin = `${STILLINGSOK_URL}${window.location.search}`;
         } else if (allowedRedirectUrls.includes(path)) {
