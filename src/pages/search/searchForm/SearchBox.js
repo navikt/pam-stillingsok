@@ -17,7 +17,7 @@ function SearchBox({ dispatch, query }) {
     function fetchSuggestions() {
         SearchAPI.get("api/suggestions", { match: value, minLength: MINIMUM_LENGTH })
             .then((response) => {
-                suggestionsDispatch({ type: FetchAction.RESOLVE, data: removeDuplicateSuggestions(response.result) });
+               suggestionsDispatch({ type: FetchAction.RESOLVE, data: removeDuplicateSuggestions(response) });
             })
             .catch((err) => {
                 captureException(err);
