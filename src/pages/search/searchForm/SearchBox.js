@@ -15,7 +15,7 @@ function SearchBox({ dispatch, query }) {
     const MINIMUM_LENGTH = 3;
 
     function fetchSuggestions() {
-        SearchAPI.get("/api/suggestions", { match: value, minLength: MINIMUM_LENGTH })
+        SearchAPI.get("api/suggestions", { match: value, minLength: MINIMUM_LENGTH })
             .then((response) => {
                 suggestionsDispatch({ type: FetchAction.RESOLVE, data: removeDuplicateSuggestions(response.result) });
             })
