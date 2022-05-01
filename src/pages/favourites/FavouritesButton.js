@@ -1,0 +1,166 @@
+import React, {useContext} from "react";
+import PropTypes from "prop-types";
+import {captureException} from "@sentry/browser";
+import {HasAcceptedTermsStatus, UserContext} from "../../context/UserProvider";
+import {AuthenticationContext, AuthenticationStatus} from "../../context/AuthenticationProvider";
+import {FavouritesContext} from "../../context/FavouritesProvider";
+import StarIcon from "../../components/icons/StarIcon";
+import UserAPI from "../../api/UserAPI";
+import getWorkLocation from "../../../server/common/getWorkLocation";
+import getEmployer from "../../../server/common/getEmployer";
+import TermsOfUse from "../../components/modals/TermsOfUse";
+import LoginModal from "../../components/modals/LoginModal";
+import useToggle from "../../hooks/useToggle";
+import IconButton from "../../components/buttons/IconButton";
+import ConfirmationModal from "../../components/modals/ConfirmationModal";
+import ErrorWithReloadPageModal from "../../components/modals/ErrorWithReloadPageModal";
+
+/**
+ * Displays a button "Lagre favoritt" or "Slett favoritt".
+ *
+ * If user click button, this view will ensure that user is logged in
+ * and has accepted usage terms before it save a favourite
+ */
+function FavouritesButton({ id, stilling, showText, className, onRemoved, type, shouldConfirmBeforeDelete }) {
+    const favouritesProvider = useContext(FavouritesContext);
+    const { authenticationStatus, login } = useContext(AuthenticationContext);
+    const { hasAcceptedTermsStatus } = useContext(UserContext);
+    const [shouldShowTermsModal, openTermsModal, closeTermsModal] = useToggle();
+    const [shouldShowLoginModal, openLoginModal, closeLoginModal] = useToggle();
+    const [shouldShowConfirmDeleteModal, openConfirmDeleteModal, closeConfirmDeleteModal] = useToggle();
+    const [shouldShowErrorDialog, openErrorDialog, closeErrorDialog] = useToggle(false);
+    const isPending = favouritesProvider.pendingFavourites.includes(id);
+    const isFavourite = favouritesProvider.favourites.find((f) => f.favouriteAd.uuid === id) !== undefined;
+
+    function saveFavourite(id, ad) {
+        favouritesProvider.addToPending(id);
+        UserAPI.post("api/v1/userfavouriteads", {
+            favouriteAd: {
+                uuid: id,
+                source: ad.source,
+                reference: ad.reference,
+                title: ad.title,
+                jobTitle: ad.properties.jobtitle ? ad.properties.jobtitle : null,
+                status: ad.status,
+                applicationdue: ad.properties.applicationdue ? ad.properties.applicationdue : null,
+                location: getWorkLocation(ad.properties.location, ad.locationList),
+                employer: getEmployer(ad),
+                published: ad.published,
+                expires: ad.expires
+            }
+        })
+            .then((response) => {
+                favouritesProvider.addFavouriteToLocalList(response);
+            })
+            .catch((err) => {
+                captureException(err);
+                openErrorDialog();
+            })
+            .finally(() => {
+                favouritesProvider.removeFormPending(id);
+            });
+    }
+
+    function deleteFavourite(id) {
+        const found = favouritesProvider.favourites.find((fav) => fav.favouriteAd.uuid === id);
+
+        favouritesProvider.addToPending(id);
+        UserAPI.remove(`api/v1/userfavouriteads/${found.uuid}`)
+            .then(() => {
+                favouritesProvider.removeFavouriteFromLocalList(found);
+                if (onRemoved) {
+                    onRemoved(found);
+                }
+            })
+            .catch((err) => {
+                captureException(err);
+                openErrorDialog();
+            })
+            .finally(() => {
+                favouritesProvider.removeFormPending(id);
+            });
+    }
+
+    function handleSaveFavouriteClick() {
+        if (authenticationStatus === AuthenticationStatus.NOT_AUTHENTICATED) {
+            openLoginModal();
+        } else if (hasAcceptedTermsStatus === HasAcceptedTermsStatus.NOT_ACCEPTED) {
+            openTermsModal();
+        } else if (
+            authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED &&
+            hasAcceptedTermsStatus === HasAcceptedTermsStatus.HAS_ACCEPTED
+        ) {
+            saveFavourite(id, stilling);
+        } else {
+            // Ignore click if authentication or hasAcceptedTermsStatus
+            // are not yet loaded or failed
+            return false;
+        }
+    }
+
+    function handleTermsAccepted() {
+        closeTermsModal();
+        saveFavourite(id, stilling);
+    }
+
+    function handleDeleteFavouriteClick() {
+        if (shouldConfirmBeforeDelete) {
+            openConfirmDeleteModal();
+        } else {
+            deleteFavourite(id);
+        }
+    }
+
+    function handleDeleteConfirmed() {
+        closeConfirmDeleteModal();
+        deleteFavourite(id);
+    }
+
+    return (
+        <React.Fragment>
+            <IconButton
+                disabled={isPending}
+                onClick={isFavourite ? handleDeleteFavouriteClick : handleSaveFavouriteClick}
+                className={className ? `FavouriteButton ${className}` : "FavouritesButton"}
+                text={isFavourite ? "Slett favoritt" : "Lagre som favoritt"}
+                icon={<StarIcon filled={isFavourite} />}
+                hideText={!showText}
+                type={type}
+            />
+
+            {shouldShowLoginModal && <LoginModal onLoginClick={login} onCloseClick={closeLoginModal} />}
+
+            {shouldShowTermsModal && <TermsOfUse onClose={closeTermsModal} onTermsAccepted={handleTermsAccepted} />}
+
+            {shouldShowConfirmDeleteModal && (
+                <ConfirmationModal title="Slette favoritt?" onCancel={closeConfirmDeleteModal} onConfirm={handleDeleteConfirmed}>
+                    Sikker på at du vil fjerne &laquo;{stilling.title}&raquo; fra favoritter?
+                </ConfirmationModal>
+            )}
+
+            {shouldShowErrorDialog && (
+                <ErrorWithReloadPageModal onClose={closeErrorDialog} title="Feil">
+                    Det oppsto en feil ved dine favoritter. Prøv å last siden på nytt
+                </ErrorWithReloadPageModal>
+            )}
+        </React.Fragment>
+    );
+}
+
+FavouritesButton.defaultProps = {
+    className: undefined,
+    showText: true,
+    type: undefined,
+    shouldConfirmBeforeDelete: false
+};
+
+FavouritesButton.propTypes = {
+    id: PropTypes.string.isRequired,
+    stilling: PropTypes.shape({}).isRequired,
+    className: PropTypes.string,
+    showText: PropTypes.bool,
+    type: PropTypes.string,
+    shouldConfirmBeforeDelete: PropTypes.bool
+};
+
+export default FavouritesButton;

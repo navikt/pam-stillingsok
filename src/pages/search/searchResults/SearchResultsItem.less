@@ -1,0 +1,40 @@
+@import (reference) "../../../styles/variables";
+
+.SearchResultItem {
+  position: relative;
+  padding: 2rem 1rem;
+
+  &:nth-child(even) {
+    background-color: @gray1;
+  }
+
+  @media (max-width: @screen-sm-max) {
+    margin-left: -16px;
+    margin-right: -16px;
+  }
+}
+
+.SearchResultItem__link {
+  color: @primaryPurple;
+
+  &:hover {
+    text-decoration: none;
+  }
+
+  &:visited {
+    color: @gray5;
+  }
+
+  &:focus {
+    color: #ffffff;
+    background: @blueDarken;
+    outline: none;
+  }
+}
+
+.SearchResultItem__favourite {
+  position: absolute;
+  right: 1rem;
+  top: 1.75rem;
+  z-index: 10;
+}

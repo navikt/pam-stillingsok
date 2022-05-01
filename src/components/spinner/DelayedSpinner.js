@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import Spinner from "nav-frontend-spinner";
 import "./DelayedSpinner.less";
 
@@ -20,5 +20,11 @@ export default function DelayedSpinner() {
         };
     }, []);
 
-    return <div className="DelayedSpinner">{showSpinner && <Spinner type="XL"/>}</div>;
+    return (
+        <div className="DelayedSpinner" role="status">
+            {showSpinner && (
+                <Spinner type="XL" aria-label="Laster innhold"/>
+            )}
+        </div>
+    );
 }

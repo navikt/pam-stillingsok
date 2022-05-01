@@ -4,7 +4,7 @@ import { BekreftCheckboksPanel } from "nav-frontend-skjema";
 import { Flatknapp, Hovedknapp } from "@navikt/arbeidsplassen-knapper";
 import { captureException } from "@sentry/browser";
 import CustomModal from "./CustomModal";
-import { adUserApiPost } from "../../api/aduser/adUserApi";
+import UserAPI from "../../api/UserAPI";
 import "./TermsOfUse.less";
 import { UserContext } from "../../context/UserProvider";
 import { AuthenticationContext } from "../../context/AuthenticationProvider";
@@ -22,7 +22,7 @@ function TermsOfUse({ onClose, onTermsAccepted }) {
     function createUser() {
         setFetchStatus(FetchStatus.IS_FETCHING);
 
-        adUserApiPost("api/v1/user", {
+        UserAPI.post("api/v1/user", {
             acceptedTerms: "sok_v1"
         })
             .then((response) => {
