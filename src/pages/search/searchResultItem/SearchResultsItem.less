@@ -36,38 +36,29 @@
   font-size: 1.125rem;
 }
 
-.SearchResultsItem__applicationdue {
-  margin: 0;
-  line-height: 1.5;
-  font-size: 1rem;
-}
-
-.SearchResultsItem__published {
-  margin: 0;
-  line-height: 1.5;
-  font-size: 1rem;
-}
-
 .SearchResultsItem__bottom {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
 }
 
-.SearchResultsItem__external-link {
-  margin: 0.5rem 0 0 0;
-
-  @media (min-width: @screen-sm-min) {
-    margin: 0;
-  }
+.SearchResultsItem__published,
+.SearchResultsItem__applicationdue {
+  margin: 0;
+  line-height: 1.5;
+  font-size: 1rem;
 }
 
 .SearchResultsItem__external-link {
+  margin: 0.5rem 0 0 0;
   white-space: nowrap;
   display: flex;
   align-items: center;
   font-size: 1rem;
-  margin-top: 0.5rem;
+
+  @media (min-width: @screen-sm-min) {
+    margin: 0;
+  }
 }
 
 .SearchResultsItem__jobtitle,
@@ -77,13 +68,6 @@
 .SearchResultsItem__published,
 .SearchResultsItem__external-link {
   line-height: 1.33;
-  color: #062140;
-}
-
-.SearchResultsItem__title,
-.SearchResultsItem__jobtitle,
-.SearchResultsItem__employer,
-.SearchResultsItem__location {
   word-wrap: break-word;
   overflow-wrap: break-word;
 }
