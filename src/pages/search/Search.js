@@ -84,9 +84,8 @@ const Search = () => {
         ];
 
         // If user has some search criteria in browser url, make an extra search to get that result
-        const apiQuery = toApiQuery(query);
-        if (Object.keys(apiQuery).length > 0) {
-            promises.push(SearchAPI.search(apiQuery));
+        if (Object.keys(toBrowserQuery(query)).length > 0) {
+            promises.push(SearchAPI.search(toApiQuery(query)));
         }
 
         Promise.all(promises)

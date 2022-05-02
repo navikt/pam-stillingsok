@@ -38,7 +38,7 @@ async function getAndCache(url, query = {}) {
 }
 
 async function search(query = {}) {
-    const response = await getAndCache('api/search', query);
+    const response = await get('api/search', query);
     return simplifySearchResponse(response);
 }
 
