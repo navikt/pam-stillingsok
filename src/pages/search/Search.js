@@ -21,7 +21,6 @@ import ErrorMessage from "../../components/messages/ErrorMessage";
 import PageHeader from "../../components/pageHeader/PageHeader";
 import SearchForm from "./searchForm/SearchForm";
 import NoResults from "./noResults/NoResults";
-import SearchResultItem from "./searchResults/SearchResultsItem";
 import Pagination from "./pagination/Pagination";
 import useDocumentTitle from "../../hooks/useDocumentTitle";
 import useTrackPageview from "../../hooks/useTrackPageview";
@@ -32,8 +31,8 @@ import SkipToResult from "./skiplinks/SkipToResult";
 import useRestoreScroll from "../../hooks/useRestoreScroll";
 import "./Search.less";
 import ArrowUpIcon from "../../components/icons/ArrowUpIcon";
-import {useHistory} from "react-router";
-import errorMessage from "../../components/messages/ErrorMessage";
+import { useHistory } from "react-router";
+import SearchResultItem from "./searchResultItem/SearchResultItem";
 
 const Search = () => {
     const { authenticationStatus } = useContext(AuthenticationContext);
@@ -159,7 +158,7 @@ const Search = () => {
                     <section id="sok" className="Search__criteria" aria-labelledby="search-form-title">
                         <SkipToResult data={searchResponse.data} />
                         <h2 className="Search__form-title" id="search-form-title">
-                            Søk blant ledige stillinger
+                            Søk
                         </h2>
                         <SearchForm
                             query={query}
@@ -169,10 +168,15 @@ const Search = () => {
                             fetchSearch={fetchSearch}
                         />
                     </section>
-                    <section id="resultat" aria-label="Søkeresultat" className="Search__result">
-                        <SkipToCriteria />
+                    <section id="resultat" aria-labelledby="search-result-h2" className="Search__result">
                         <header className="Search__count-and-sorting">
-                            <SearchResultCount searchResult={data} />
+                            <SkipToCriteria />
+                            <div>
+                                <h2 className="Search__h2" id="search-result-h2">
+                                    Søkeresultat
+                                </h2>
+                                <SearchResultCount searchResult={data} />
+                            </div>
                             <Sorting dispatch={queryDispatch} query={query} />
                         </header>
 
@@ -181,7 +185,10 @@ const Search = () => {
                         {status === FetchStatus.SUCCESS && data.totalAds === 0 && <NoResults query={query} />}
                         {(status === FetchStatus.SUCCESS || (status === FetchStatus.IS_FETCHING && query.from > 0)) && (
                             <React.Fragment>
-                                {data.ads && data.ads.map((ad) => <SearchResultItem key={ad.uuid} stilling={ad} />)}
+                                {data.ads &&
+                                    data.ads.map((ad) => (
+                                        <SearchResultItem key={ad.uuid} ad={ad} useSmallFavouriteButton={true} />
+                                    ))}
 
                                 <Pagination
                                     query={query}

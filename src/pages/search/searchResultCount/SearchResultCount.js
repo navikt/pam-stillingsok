@@ -8,11 +8,11 @@ function SearchResultCount({ searchResult }) {
         const stillingerWord = searchResult.totalPositions === 1 ? "stilling" : "stillinger";
 
         return (
-            <h2 className="SearchResultCount__h2" aria-live="polite">
+            <p className="SearchResultCount" aria-live="polite">
                 {searchResult.totalAds === 0
                     ? "Ingen treff"
-                    : `Viser ${searchResult.totalPositions} ${stillingerWord} i ${searchResult.totalAds} ${annonserWord}`}
-            </h2>
+                    : `${searchResult.totalPositions} ${stillingerWord} i ${searchResult.totalAds} ${annonserWord}`}
+            </p>
         );
     }
 

@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import React, { useState } from "react";
 import { captureException } from "@sentry/browser";
 import { CONTEXT_PATH } from "../../environment";
-import { formatISOString, isValidISOString } from "../../components/utils";
+import { formatDate, isValidISOString } from "../../components/utils";
 import ConfirmationModal from "../../components/modals/ConfirmationModal";
 import SaveSearchModal from "./modal/SaveSearchModal";
 import UserAPI from "../../api/UserAPI";
@@ -72,7 +72,7 @@ function SavedSearchListItem({ savedSearch, removeSavedSearchFromList, replaceSa
 
             {isValidISOString(savedSearch.updated) && (
                 <p className="SavedSearchListItem__created">
-                    Sist endret: {formatISOString(savedSearch.updated, "DD.MM.YYYY")}
+                    Sist endret: {formatDate(savedSearch.updated, "DD.MM.YYYY")}
                 </p>
             )}
 
@@ -80,7 +80,7 @@ function SavedSearchListItem({ savedSearch, removeSavedSearchFromList, replaceSa
                 <React.Fragment>
                     <p>Varighet på varsel: {savedSearch.duration} dager</p>
                     {isValidISOString(savedSearch.expires) && (
-                        <p>Utløper: {formatISOString(savedSearch.expires, "DD.MM.YYYY")}</p>
+                        <p>Utløper: {formatDate(savedSearch.expires, "DD.MM.YYYY")}</p>
                     )}
                 </React.Fragment>
             ) : (

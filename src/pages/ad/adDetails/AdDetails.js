@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { formatISOString } from "../../../components/utils";
+import { formatDate } from "../../../components/utils";
 import { Link } from "react-router-dom";
 import { CONTEXT_PATH } from "../../../environment";
 import HistoryIcon from "../../../components/icons/HistoryIcon";
@@ -16,7 +16,7 @@ export default function AdDetails({ id, source }) {
                 {source.updated && (
                     <React.Fragment>
                         <dt>Sist endret:</dt>
-                        <dd>{formatISOString(source.updated, "DD.MM.YYYY")}</dd>
+                        <dd>{formatDate(source.updated, "DD.MM.YYYY")}</dd>
                     </React.Fragment>
                 )}
                 {source.medium && (

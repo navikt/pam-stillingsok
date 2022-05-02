@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { formatISOString, isValidEmail, isValidISOString, isValidUrl } from "../../../components/utils";
+import { formatDate, isValidEmail, isValidISOString, isValidUrl } from "../../../components/utils";
 import "./HowToApply.less";
 import logAmplitudeEvent from "../../../tracking/amplitude";
 import FavouritesButton from "../../favourites/FavouritesButton";
@@ -43,7 +43,7 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                             <dt>Søknadsfrist:</dt>
                             <dd>
                                 {isValidISOString(properties.applicationdue)
-                                    ? formatISOString(properties.applicationdue, "DD.MM.YYYY")
+                                    ? formatDate(properties.applicationdue, "DD.MM.YYYY")
                                     : properties.applicationdue}
                             </dd>
                         </React.Fragment>

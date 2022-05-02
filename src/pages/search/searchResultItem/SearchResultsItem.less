@@ -1,0 +1,116 @@
+@import (reference) "../../../styles/variables";
+
+.SearchResultItem {
+  padding: 2rem 1rem;
+
+  &:nth-child(even) {
+    background-color: @gray1;
+  }
+
+  @media (max-width: @screen-sm-max) {
+    margin-left: -16px;
+    margin-right: -16px;
+  }
+}
+
+.SearchResultsItem__title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.33;
+  margin: 0 0 0.75rem 0;
+}
+
+.SearchResultItem__link {
+  color: @primaryPurple;
+
+  &:hover {
+    text-decoration: none;
+  }
+
+  &:visited {
+    color: @gray5;
+  }
+
+  &:focus {
+    color: #ffffff;
+    background: @blueDarken;
+    outline: none;
+  }
+}
+
+.SearchResultsItem__jobtitle {
+  margin: 0 0 0.75rem 0;
+  font-weight: 600;
+  font-size: 1.125rem;
+}
+
+.SearchResultsItem__employer {
+  margin: 0 0 0.25rem 0;
+  font-size: 1.125rem;
+}
+
+.SearchResultsItem__location {
+  margin: 0 0 1rem 0;
+  font-size: 1.125rem;
+}
+
+.SearchResultsItem__applicationdue {
+  margin: 0;
+  line-height: 1.5;
+  font-size: 1rem;
+}
+
+.SearchResultsItem__published {
+  margin: 0;
+  line-height: 1.5;
+  font-size: 1rem;
+}
+
+.SearchResultsItem__bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.SearchResultsItem__external-link {
+  margin: 0.5rem 0 0 0;
+
+  @media (min-width: @screen-sm-min) {
+    margin: 0;
+  }
+}
+
+.SearchResultsItem__external-link {
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  margin-top: 0.5rem;
+}
+
+.SearchResultsItem__jobtitle,
+.SearchResultsItem__employer,
+.SearchResultsItem__location,
+.SearchResultsItem__applicationdue,
+.SearchResultsItem__published,
+.SearchResultsItem__external-link {
+  line-height: 1.33;
+  color: #062140;
+}
+
+.SearchResultsItem__title,
+.SearchResultsItem__jobtitle,
+.SearchResultsItem__employer,
+.SearchResultsItem__location {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.SearchResultsItem__favourite-button {
+  margin-right: -8px;
+  margin-bottom: -8px;
+}
+
+.SearchResultsItem__expired {
+  margin: 0 0 1rem 0;
+}

@@ -52,7 +52,6 @@ export default function ShareAd({ source }) {
                         className="SocialShare__messenger SocialShare__link"
                         href={"fb-messenger://share/?link=" + encodeURIComponent(location.href)}
                         title="Del i Messenger"
-                        aria-label="Del i Messenger"
                         rel="noopener noreferrer"
                     >
                         <MessengerIcon />

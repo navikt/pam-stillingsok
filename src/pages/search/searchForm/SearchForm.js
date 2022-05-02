@@ -7,7 +7,7 @@ import Published from "./Published";
 import Sector from "./Sector";
 import SearchBox from "./SearchBox";
 import SaveSearchButton from "../../savedSearches/SaveSearchButton";
-import ResetButton from "../resetButton/ResetButton";
+import ResetButton from "./ResetButton";
 
 const SearchForm = ({ fetchSearch, query, dispatchQuery, initialSearchResult, searchResult }) => {
     /**

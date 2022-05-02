@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { formatISOString, isValidISOString } from "../../../components/utils";
+import { formatDate, isValidISOString } from "../../../components/utils";
 import getWorkLocation from "../../../../server/common/getWorkLocation";
 import getEmployer from "../../../../server/common/getEmployer";
 import "./Summary.less";
@@ -35,7 +35,7 @@ export default function Summary({ stilling }) {
                     <dt key="dt">Søknadsfrist:</dt>,
                     <dd key="dd">
                         {isValidISOString(properties.applicationdue)
-                            ? formatISOString(properties.applicationdue, "DD.MM.YYYY")
+                            ? formatDate(properties.applicationdue, "DD.MM.YYYY")
                             : properties.applicationdue}
                     </dd>
                 ]}

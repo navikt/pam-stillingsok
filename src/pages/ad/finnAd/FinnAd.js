@@ -12,7 +12,6 @@ export default function FinnAd({ stilling }) {
                     <a className="link" href={`https://www.finn.no/${stilling._source.reference}`}>
                         Åpne annonsen på FINN
                     </a>
-                    <span className="FinnAd__link__icon" aria-label="Ekstern lenke" />
                 </p>
             )}
         </section>

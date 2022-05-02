@@ -70,13 +70,12 @@ function SearchBox({ dispatch, query }) {
 
     return (
         <div>
+            <label className="SearchBox__label" htmlFor="search-form-fritekst-input">Skriv et eller flere søkeord</label>
             <div className="SearchBox">
                 <Typeahead
                     id="search-form-fritekst-input"
                     name="q"
                     autoComplete="off"
-                    ariaLabel="Søk"
-                    placeholder="Søk"
                     onSelect={handleTypeAheadSuggestionSelected}
                     onChange={handleTypeAheadValueChange}
                     suggestions={suggestionsResponse.data}

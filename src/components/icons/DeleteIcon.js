@@ -3,6 +3,7 @@ import React from "react";
 function DeleteIcon() {
     return (
         <svg
+            aria-hidden="true"
             width="1em"
             height="1em"
             viewBox="0 0 24 24"

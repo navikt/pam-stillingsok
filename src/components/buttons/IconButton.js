@@ -11,7 +11,6 @@ function IconButton({ text, icon, hideText, onClick, className, disabled, spinne
             spinner={spinner}
             onClick={onClick}
             className={className}
-            aria-label={text}
         >
             <span className="IconButton__inner">
                 {icon}

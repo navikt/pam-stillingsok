@@ -21,7 +21,7 @@ import ErrorWithReloadPageModal from "../../components/modals/ErrorWithReloadPag
  * If user click button, this view will ensure that user is logged in
  * and has accepted usage terms before it save a favourite
  */
-function FavouritesButton({ id, stilling, showText, className, onRemoved, type, shouldConfirmBeforeDelete }) {
+function FavouritesButton({ id, stilling, useShortText, className, onRemoved, type, shouldConfirmBeforeDelete }) {
     const favouritesProvider = useContext(FavouritesContext);
     const { authenticationStatus, login } = useContext(AuthenticationContext);
     const { hasAcceptedTermsStatus } = useContext(UserContext);
@@ -116,15 +116,17 @@ function FavouritesButton({ id, stilling, showText, className, onRemoved, type, 
         deleteFavourite(id);
     }
 
+    const saveText = useShortText ? "Lagre": "Lagre som favoritt";
+    const deleteText = useShortText ? "Lagret": "Slett favoritt";
+
     return (
         <React.Fragment>
             <IconButton
                 disabled={isPending}
                 onClick={isFavourite ? handleDeleteFavouriteClick : handleSaveFavouriteClick}
                 className={className ? `FavouriteButton ${className}` : "FavouritesButton"}
-                text={isFavourite ? "Slett favoritt" : "Lagre som favoritt"}
-                icon={<StarIcon filled={isFavourite} />}
-                hideText={!showText}
+                text={isFavourite ? deleteText : saveText}
+                icon={<StarIcon ariaHidden={!useShortText} filled={isFavourite} />}
                 type={type}
             />
 
@@ -149,7 +151,7 @@ function FavouritesButton({ id, stilling, showText, className, onRemoved, type, 
 
 FavouritesButton.defaultProps = {
     className: undefined,
-    showText: true,
+    useShortText: false,
     type: undefined,
     shouldConfirmBeforeDelete: false
 };
@@ -158,7 +160,7 @@ FavouritesButton.propTypes = {
     id: PropTypes.string.isRequired,
     stilling: PropTypes.shape({}).isRequired,
     className: PropTypes.string,
-    showText: PropTypes.bool,
+    useShortText: PropTypes.bool,
     type: PropTypes.string,
     shouldConfirmBeforeDelete: PropTypes.bool
 };

@@ -1,9 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-function Star({ size }) {
+function Star({ size, ariaHidden }) {
     return (
         <svg
+            aria-hidden={ariaHidden}
             width={size ? size : "1em"}
             height={size ? size : "1em"}
             viewBox="0 0 24 24"
@@ -12,6 +13,7 @@ function Star({ size }) {
             focusable="false"
             role="img"
         >
+            <title>Favoritt</title>
             <path
                 fillRule="evenodd"
                 clipRule="evenodd"
@@ -22,9 +24,10 @@ function Star({ size }) {
     );
 }
 
-function StarFilled({ size }) {
+function StarFilled({ size, ariaHidden }) {
     return (
         <svg
+            aria-hidden={ariaHidden}
             width={size ? size : "1em"}
             height={size ? size : "1em"}
             viewBox="0 0 24 24"
@@ -33,6 +36,7 @@ function StarFilled({ size }) {
             focusable="false"
             role="img"
         >
+            <title>Favoritt</title>
             <path
                 fillRule="evenodd"
                 clipRule="evenodd"
@@ -43,20 +47,22 @@ function StarFilled({ size }) {
     );
 }
 
-function StarIcon({ filled, size }) {
+function StarIcon({ filled, size, ariaHidden }) {
     if (filled) {
-        return <StarFilled size={size} />;
+        return <StarFilled size={size} ariaHidden={ariaHidden}/>;
     } else {
-        return <Star size={size} />;
+        return <Star size={size} ariaHidden={ariaHidden} />;
     }
 }
 
 StarIcon.defaultProps = {
-    filled: false
+    filled: false,
+    ariaHidden: true
 };
 
 StarIcon.propTypes = {
-    filled: PropTypes.bool
+    filled: PropTypes.bool,
+    ariaHidden: PropTypes.bool
 };
 
 export default StarIcon;

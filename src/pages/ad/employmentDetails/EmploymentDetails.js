@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { formatISOString, isValidISOString } from "../../../components/utils";
+import { formatDate, isValidISOString } from "../../../components/utils";
 import worktimeParser from "./worktimeParser";
 import SuitcaseIcon from "../../../components/icons/SuitcaseIcon";
 
@@ -77,7 +77,7 @@ export default function EmploymentDetails({ stilling }) {
                         <dt>Oppstart:</dt>
                         <dd>
                             {isValidISOString(properties.starttime)
-                                ? formatISOString(properties.starttime, "DD.MM.YYYY")
+                                ? formatDate(properties.starttime, "DD.MM.YYYY")
                                 : properties.starttime}
                         </dd>
                     </React.Fragment>
