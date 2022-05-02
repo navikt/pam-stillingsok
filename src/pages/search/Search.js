@@ -169,8 +169,8 @@ const Search = () => {
                         />
                     </section>
                     <section id="resultat" aria-labelledby="search-result-h2" className="Search__result">
+                        <SkipToCriteria />
                         <header className="Search__count-and-sorting">
-                            <SkipToCriteria />
                             <div>
                                 <h2 className="Search__h2" id="search-result-h2">
                                     Søkeresultat
