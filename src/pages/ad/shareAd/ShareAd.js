@@ -22,40 +22,36 @@ export default function ShareAd({ source }) {
                 <a
                     className="SocialShare__facebook SocialShare__link"
                     href={"https://www.facebook.com/sharer/sharer.php?u=" + location.href}
-                    title="Del på Facebook"
                     rel="noopener noreferrer"
                 >
                     <FacebookIcon />
-                    <div className="SocialShare__text">Facebook</div>
+                    <div className="SocialShare__text">Del på Facebook</div>
                 </a>
                 <a
                     className="SocialShare__linkedin SocialShare__link"
                     href={"https://www.linkedin.com/shareArticle?mini=true&url=" + location.href}
-                    title="Del på Linkedin"
                     rel="noopener noreferrer"
                 >
                     <LinkedinIcon />
-                    <div className="SocialShare__text">Linkedin</div>
+                    <div className="SocialShare__text">Del på Linkedin</div>
                 </a>
                 <a
                     className="SocialShare__twitter SocialShare__link"
                     href={"https://twitter.com/intent/tweet?url=" + location.href + "&text=" + encodeURI(title)}
-                    title="Del på Twitter"
                     rel="noopener noreferrer"
                 >
                     <TwitterIcon />
-                    <div className="SocialShare__text">Twitter</div>
+                    <div className="SocialShare__text">Del på Twitter</div>
                 </a>
 
                 {(deviceType === "mobile" || deviceType === "tablet") && (
                     <a
                         className="SocialShare__messenger SocialShare__link"
                         href={"fb-messenger://share/?link=" + encodeURIComponent(location.href)}
-                        title="Del i Messenger"
                         rel="noopener noreferrer"
                     >
                         <MessengerIcon />
-                        <div className="SocialShare__text">Messenger</div>
+                        <div className="SocialShare__text">Del på Messenger</div>
                     </a>
                 )}
             </div>
