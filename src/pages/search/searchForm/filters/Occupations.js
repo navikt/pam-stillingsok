@@ -6,12 +6,12 @@ import {
     ADD_OCCUPATION_SECOND_LEVEL,
     REMOVE_OCCUPATION_FIRST_LEVEL,
     REMOVE_OCCUPATION_SECOND_LEVEL
-} from "../query";
+} from "../../query";
 import CriteriaPanel from "./CriteriaPanel";
 import UnknownSearchCriteriaValues from "./UnknownSearchCriteriaValues";
-import moveCriteriaToBottom from "./utils/moveFacetToBottom";
-import mergeCount from "./utils/mergeCount";
-import { findUnknownSearchCriteriaValues } from "./utils/findUnknownSearchCriteriaValues";
+import moveCriteriaToBottom from "../utils/moveFacetToBottom";
+import mergeCount from "../utils/mergeCount";
+import { findUnknownSearchCriteriaValues } from "../utils/findUnknownSearchCriteriaValues";
 
 const OCCUPATION_LEVEL_OTHER = "Uoppgitt/ ikke identifiserbare";
 
@@ -68,48 +68,54 @@ function Occupations({ initialValues, updatedValues, query, dispatch }) {
 
     return (
         <CriteriaPanel panelId="occupations-panel" title="Yrke">
-            {values &&
-                values.map((firstLevel) => (
-                    <div key={firstLevel.key}>
-                        <Checkbox
-                            name="occupation"
-                            label={`${firstLevel.key} (${firstLevel.count})`}
-                            value={firstLevel.key}
-                            onChange={handleFirstLevelClick}
-                            checked={query.occupationFirstLevels.includes(firstLevel.key)}
-                        />
-                        {query.occupationFirstLevels &&
-                            query.occupationFirstLevels.includes(firstLevel.key) &&
-                            firstLevel.key !== OCCUPATION_LEVEL_OTHER && (
-                                <div className="Facet__inner__items" role="group" aria-label={`Yrker innen ${firstLevel.key}`}>
-                                    {firstLevel.occupationSecondLevels &&
-                                        firstLevel.occupationSecondLevels.map((secondLevel) => (
-                                            <Checkbox
-                                                name="occupation"
-                                                key={editedSecondLevelItemKey(secondLevel.key)}
-                                                label={`${editedSecondLevelItemKey(secondLevel.label)} (${
-                                                    secondLevel.count
-                                                })`}
-                                                value={secondLevel.key}
-                                                onChange={handleSecondLevelClick}
-                                                checked={query.occupationSecondLevels.includes(secondLevel.key)}
-                                            />
-                                        ))}
-                                </div>
-                            )}
-                    </div>
-                ))}
+            <div role="group" aria-label="Velg yrke" className="CriteriaPanel__fieldset">
+                {values &&
+                    values.map((firstLevel) => (
+                        <div key={firstLevel.key}>
+                            <Checkbox
+                                name="occupation"
+                                label={`${firstLevel.key} (${firstLevel.count})`}
+                                value={firstLevel.key}
+                                onChange={handleFirstLevelClick}
+                                checked={query.occupationFirstLevels.includes(firstLevel.key)}
+                            />
+                            {query.occupationFirstLevels &&
+                                query.occupationFirstLevels.includes(firstLevel.key) &&
+                                firstLevel.key !== OCCUPATION_LEVEL_OTHER && (
+                                    <div
+                                        className="Facet__inner__items"
+                                        role="group"
+                                        aria-label={`Yrker innen ${firstLevel.key}`}
+                                    >
+                                        {firstLevel.occupationSecondLevels &&
+                                            firstLevel.occupationSecondLevels.map((secondLevel) => (
+                                                <Checkbox
+                                                    name="occupation"
+                                                    key={editedSecondLevelItemKey(secondLevel.key)}
+                                                    label={`${editedSecondLevelItemKey(secondLevel.label)} (${
+                                                        secondLevel.count
+                                                    })`}
+                                                    value={secondLevel.key}
+                                                    onChange={handleSecondLevelClick}
+                                                    checked={query.occupationSecondLevels.includes(secondLevel.key)}
+                                                />
+                                            ))}
+                                    </div>
+                                )}
+                        </div>
+                    ))}
 
-            <UnknownSearchCriteriaValues
-                namePrefix="occupation"
-                unknownValues={unknownFirstValues}
-                unknownNestedValues={unknownSecondValues}
-                checkedValues={query.occupationFirstLevels}
-                checkedNestedValues={query.occupationSecondLevels}
-                onClick={handleFirstLevelClick}
-                onNestedLevelClick={handleSecondLevelClick}
-                shouldFixLocationName={true}
-            />
+                <UnknownSearchCriteriaValues
+                    namePrefix="occupation"
+                    unknownValues={unknownFirstValues}
+                    unknownNestedValues={unknownSecondValues}
+                    checkedValues={query.occupationFirstLevels}
+                    checkedNestedValues={query.occupationSecondLevels}
+                    onClick={handleFirstLevelClick}
+                    onNestedLevelClick={handleSecondLevelClick}
+                    shouldFixLocationName={true}
+                />
+            </div>
         </CriteriaPanel>
     );
 }

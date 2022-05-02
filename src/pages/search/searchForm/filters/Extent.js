@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 import CriteriaPanel from "./CriteriaPanel";
 import UnknownSearchCriteriaValues from "./UnknownSearchCriteriaValues";
-import { ADD_EXTENT, REMOVE_EXTENT } from "../query";
-import mergeCount from "./utils/mergeCount";
-import { findUnknownSearchCriteriaValues } from "./utils/findUnknownSearchCriteriaValues";
+import { ADD_EXTENT, REMOVE_EXTENT } from "../../query";
+import mergeCount from "../utils/mergeCount";
+import { findUnknownSearchCriteriaValues } from "../utils/findUnknownSearchCriteriaValues";
 
 function Extent({ initialValues, updatedValues, query, dispatch }) {
     const [values, setValues] = useState(initialValues);
@@ -32,23 +32,25 @@ function Extent({ initialValues, updatedValues, query, dispatch }) {
 
     return (
         <CriteriaPanel panelId="extent-panel" title="Heltid/deltid">
-            {values.map((item) => (
-                <Checkbox
-                    name="extent"
-                    key={item.key}
-                    label={`${labelForExtent(item)} (${item.count})`}
-                    value={item.key}
-                    onChange={handleClick}
-                    checked={query.extent.includes(item.key)}
-                />
-            ))}
+            <div role="group" aria-label="Velg heltid eller deltid" className="CriteriaPanel__fieldset">
+                {values.map((item) => (
+                    <Checkbox
+                        name="extent"
+                        key={item.key}
+                        label={`${labelForExtent(item)} (${item.count})`}
+                        value={item.key}
+                        onChange={handleClick}
+                        checked={query.extent.includes(item.key)}
+                    />
+                ))}
 
-            <UnknownSearchCriteriaValues
-                namePrefix="extent"
-                unknownValues={findUnknownSearchCriteriaValues(query.extent, initialValues)}
-                checkedValues={query.extent}
-                onClick={handleClick}
-            />
+                <UnknownSearchCriteriaValues
+                    namePrefix="extent"
+                    unknownValues={findUnknownSearchCriteriaValues(query.extent, initialValues)}
+                    checkedValues={query.extent}
+                    onClick={handleClick}
+                />
+            </div>
         </CriteriaPanel>
     );
 }

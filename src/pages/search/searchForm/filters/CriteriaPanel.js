@@ -1,7 +1,8 @@
-import Ekspanderbartpanel from "nav-frontend-ekspanderbartpanel";
 import PropTypes from "prop-types";
 import React, { useState } from "react";
 import "./CriteriaPanel.less";
+import ChevronCollapseIcon from "../../../../components/icons/ChevronCollapseIcon";
+import ChevronExpandIcon from "../../../../components/icons/ChevronExpandIcon";
 
 function CriteriaPanel({ isOpenByDefault, title, children, panelId }) {
     const [isOpen, setIsOpen] = useState(() => {
@@ -38,15 +39,15 @@ function CriteriaPanel({ isOpenByDefault, title, children, panelId }) {
     }
 
     return (
-        <Ekspanderbartpanel
-            tittel={title}
-            className="Facet ekspanderbartPanel--green"
-            onClick={onPanelClick}
-            tag="h3"
-            apen={isOpen}
-        >
-            {children}
-        </Ekspanderbartpanel>
+        <section className="CriteriaPanel">
+            <h3 className="CriteriaPanel__h3">
+                <button className="CriteriaPanel__button" type="button" aria-expanded={isOpen} onClick={onPanelClick}>
+                    {title}
+                    {isOpen ? <ChevronCollapseIcon ariaHidden={true} /> : <ChevronExpandIcon ariaHidden={true} />}
+                </button>
+            </h3>
+            {isOpen && children}
+        </section>
     );
 }
 

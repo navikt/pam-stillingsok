@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Checkbox } from "nav-frontend-skjema";
-import fixLocationName from "../../../../server/common/fixLocationName";
+import fixLocationName from "../../../../../server/common/fixLocationName";
 
 export default function UnknownSearchCriteriaValues({
     namePrefix,

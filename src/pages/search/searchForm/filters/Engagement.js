@@ -1,12 +1,12 @@
 import { Checkbox } from "nav-frontend-skjema";
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
-import { ADD_ENGAGEMENT_TYPE, REMOVE_ENGAGEMENT_TYPE } from "../query";
+import { ADD_ENGAGEMENT_TYPE, REMOVE_ENGAGEMENT_TYPE } from "../../query";
 import CriteriaPanel from "./CriteriaPanel";
 import UnknownSearchCriteriaValues from "./UnknownSearchCriteriaValues";
-import mergeCount from "./utils/mergeCount";
-import moveCriteriaToBottom from "./utils/moveFacetToBottom";
-import { findUnknownSearchCriteriaValues } from "./utils/findUnknownSearchCriteriaValues";
+import mergeCount from "../utils/mergeCount";
+import moveCriteriaToBottom from "../utils/moveFacetToBottom";
+import { findUnknownSearchCriteriaValues } from "../utils/findUnknownSearchCriteriaValues";
 
 function Engagement({ initialValues, updatedValues, query, dispatch }) {
     const [values, setValues] = useState(moveCriteriaToBottom(initialValues, "Annet"));
@@ -42,23 +42,24 @@ function Engagement({ initialValues, updatedValues, query, dispatch }) {
 
     return (
         <CriteriaPanel panelId="engagement-type-panel" title="Ansettelsesform">
-            {values.map((item) => (
-                <Checkbox
-                    name="engagementType"
-                    key={editedItemKey(item.key)}
-                    label={`${editedItemKey(item.key)} (${item.count})`}
-                    value={item.key}
-                    onChange={handleClick}
-                    checked={query.engagementType.includes(item.key)}
+            <div role="group" aria-label="Velg ansettelsesform" className="CriteriaPanel__fieldset">
+                {values.map((item) => (
+                    <Checkbox
+                        name="engagementType"
+                        key={editedItemKey(item.key)}
+                        label={`${editedItemKey(item.key)} (${item.count})`}
+                        value={item.key}
+                        onChange={handleClick}
+                        checked={query.engagementType.includes(item.key)}
+                    />
+                ))}
+                <UnknownSearchCriteriaValues
+                    namePrefix="engagementType"
+                    unknownValues={findUnknownSearchCriteriaValues(query.engagementType, initialValues)}
+                    checkedValues={query.engagementType}
+                    onClick={handleClick}
                 />
-            ))}
-
-            <UnknownSearchCriteriaValues
-                namePrefix="engagementType"
-                unknownValues={findUnknownSearchCriteriaValues(query.engagementType, initialValues)}
-                checkedValues={query.engagementType}
-                onClick={handleClick}
-            />
+            </div>
         </CriteriaPanel>
     );
 }

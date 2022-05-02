@@ -1,9 +1,9 @@
 import { Checkbox } from "nav-frontend-skjema";
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
-import { SET_PUBLISHED } from "../query";
+import { SET_PUBLISHED } from "../../query";
 import CriteriaPanel from "./CriteriaPanel";
-import mergeCount from "./utils/mergeCount";
+import mergeCount from "../utils/mergeCount";
 
 export const PublishedLabelsEnum = {
     "now/d": "Nye i dag"
@@ -30,16 +30,18 @@ function Published({ dispatch, query, initialValues, updatedValues }) {
 
     return (
         <CriteriaPanel panelId="published-panel" title="Publisert">
-            {values.map((item) => (
-                <Checkbox
-                    name="published"
-                    key={item.key}
-                    label={`${PublishedLabelsEnum[item.key]} (${item.count})`}
-                    value={item.key}
-                    onChange={handleClick}
-                    checked={query.published === item.key}
-                />
-            ))}
+            <div className="CriteriaPanel__fieldset">
+                {values.map((item) => (
+                    <Checkbox
+                        name="published"
+                        key={item.key}
+                        label={`${PublishedLabelsEnum[item.key]} (${item.count})`}
+                        value={item.key}
+                        onChange={handleClick}
+                        checked={query.published === item.key}
+                    />
+                ))}
+            </div>
         </CriteriaPanel>
     );
 }
