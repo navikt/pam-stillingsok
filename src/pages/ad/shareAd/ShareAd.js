@@ -23,7 +23,6 @@ export default function ShareAd({ source }) {
                     className="SocialShare__facebook SocialShare__link"
                     href={"https://www.facebook.com/sharer/sharer.php?u=" + location.href}
                     title="Del på Facebook"
-                    aria-label="Del på Facebook"
                     rel="noopener noreferrer"
                 >
                     <FacebookIcon />
@@ -33,7 +32,6 @@ export default function ShareAd({ source }) {
                     className="SocialShare__linkedin SocialShare__link"
                     href={"https://www.linkedin.com/shareArticle?mini=true&url=" + location.href}
                     title="Del på Linkedin"
-                    aria-label="Del på Linkedin"
                     rel="noopener noreferrer"
                 >
                     <LinkedinIcon />
@@ -43,7 +41,6 @@ export default function ShareAd({ source }) {
                     className="SocialShare__twitter SocialShare__link"
                     href={"https://twitter.com/intent/tweet?url=" + location.href + "&text=" + encodeURI(title)}
                     title="Del på Twitter"
-                    aria-label="Del på Twitter"
                     rel="noopener noreferrer"
                 >
                     <TwitterIcon />
