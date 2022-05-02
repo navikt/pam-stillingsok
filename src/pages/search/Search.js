@@ -184,7 +184,7 @@ const Search = () => {
                         {status === FetchStatus.IS_FETCHING && query.from === 0 && <DelayedSpinner />}
                         {status === FetchStatus.SUCCESS && data.totalAds === 0 && <NoResults query={query} />}
                         {(status === FetchStatus.SUCCESS || (status === FetchStatus.IS_FETCHING && query.from > 0)) && (
-                            <React.Fragment>
+                            <section>
                                 {data.ads &&
                                     data.ads.map((ad) => (
                                         <SearchResultItem key={ad.uuid} ad={ad} useSmallFavouriteButton={true} />
@@ -203,7 +203,7 @@ const Search = () => {
                                         Til toppen
                                     </a>
                                 </div>
-                            </React.Fragment>
+                            </section>
                         )}
                     </section>
                 </div>

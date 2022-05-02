@@ -3,7 +3,7 @@
 .SearchResultItem {
   padding: 2rem 1rem;
 
-  &:nth-child(even) {
+  &:nth-child(odd) {
     background-color: @gray1;
   }
 
@@ -55,10 +55,6 @@
   display: flex;
   align-items: center;
   font-size: 1rem;
-
-  @media (min-width: @screen-sm-min) {
-    margin: 0;
-  }
 }
 
 .SearchResultsItem__jobtitle,

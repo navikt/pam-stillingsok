@@ -79,27 +79,29 @@ function FavouritesList() {
                         </option>
                     </Select>
                 </header>
-                {response.data.map((favourite) => (
-                    <SearchResultItem
-                        key={favourite.uuid}
-                        ad={{
-                            uuid: favourite.favouriteAd.uuid,
-                            title: favourite.favouriteAd.title,
-                            published: favourite.favouriteAd.published,
-                            source: favourite.favouriteAd.source,
-                            reference: favourite.favouriteAd.reference,
-                            properties: {
-                                employer: favourite.favouriteAd.employer,
-                                jobtitle: favourite.favouriteAd.jobTitle,
-                                location: favourite.favouriteAd.location,
-                                applicationdue: favourite.favouriteAd.applicationdue
-                            }
-                        }}
-                        showExpired={favourite.favouriteAd.status !== "ACTIVE"}
-                        onFavouriteRemoved={removeFavouriteFromList}
-                        shouldConfirmFavouriteDelete={true}
-                    />
-                ))}
+                <div>
+                    {response.data.map((favourite) => (
+                        <SearchResultItem
+                            key={favourite.uuid}
+                            ad={{
+                                uuid: favourite.favouriteAd.uuid,
+                                title: favourite.favouriteAd.title,
+                                published: favourite.favouriteAd.published,
+                                source: favourite.favouriteAd.source,
+                                reference: favourite.favouriteAd.reference,
+                                properties: {
+                                    employer: favourite.favouriteAd.employer,
+                                    jobtitle: favourite.favouriteAd.jobTitle,
+                                    location: favourite.favouriteAd.location,
+                                    applicationdue: favourite.favouriteAd.applicationdue
+                                }
+                            }}
+                            showExpired={favourite.favouriteAd.status !== "ACTIVE"}
+                            onFavouriteRemoved={removeFavouriteFromList}
+                            shouldConfirmFavouriteDelete={true}
+                        />
+                    ))}
+                </div>
             </section>
         );
     }
