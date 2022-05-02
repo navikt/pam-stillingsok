@@ -41,7 +41,7 @@ export default function ConfirmationModal({
 }
 
 ConfirmationModal.defaultProps = {
-    confirmLabel: "Forsett",
+    confirmLabel: "Fortsett",
     cancelLabel: "Avbryt",
     spinner: false
 };
