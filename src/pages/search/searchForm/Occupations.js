@@ -81,7 +81,7 @@ function Occupations({ initialValues, updatedValues, query, dispatch }) {
                         {query.occupationFirstLevels &&
                             query.occupationFirstLevels.includes(firstLevel.key) &&
                             firstLevel.key !== OCCUPATION_LEVEL_OTHER && (
-                                <div className="Facet__inner__items" role="group" aria-label="Velg underkategori">
+                                <div className="Facet__inner__items" role="group" aria-label={`Yrker innen ${firstLevel.key}`}>
                                     {firstLevel.occupationSecondLevels &&
                                         firstLevel.occupationSecondLevels.map((secondLevel) => (
                                             <Checkbox
