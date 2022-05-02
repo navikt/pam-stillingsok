@@ -244,7 +244,6 @@ Typeahead.defaultProps = {
 Typeahead.propTypes = {
     onSelect: PropTypes.func.isRequired,
     onChange: PropTypes.func.isRequired,
-    placeholder: PropTypes.string.isRequired,
     suggestions: PropTypes.arrayOf(PropTypes.string).isRequired,
     value: PropTypes.string.isRequired,
     ariaLabel: PropTypes.string,
