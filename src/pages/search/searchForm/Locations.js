@@ -129,7 +129,7 @@ function Locations({ initialValues, updatedValues, query, dispatch }) {
                                 <div
                                     className="Facet__inner__items"
                                     role="group"
-                                    aria-label={`Underområder ${fixLocationName(location.key)}`}
+                                    aria-label={`Områder i ${fixLocationName(location.key)}`}
                                 >
                                     {location.subLocations &&
                                         location.subLocations.map((subLocation) => (

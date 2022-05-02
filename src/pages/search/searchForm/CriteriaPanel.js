@@ -45,9 +45,7 @@ function CriteriaPanel({ isOpenByDefault, title, children, panelId }) {
             tag="h3"
             apen={isOpen}
         >
-            <div role="group" aria-label={title} className="Facet__inner">
-                {children}
-            </div>
+            {children}
         </Ekspanderbartpanel>
     );
 }
