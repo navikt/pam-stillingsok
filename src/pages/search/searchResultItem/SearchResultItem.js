@@ -98,13 +98,13 @@ SearchResultItem.propTypes = {
 function LinkToAd({children, stilling, isFinn}) {
     if (isFinn) {
         return (
-            <a href={`https://www.finn.no/${stilling.reference}`} className="SearchResultItem__link">
+            <a href={`https://www.finn.no/${stilling.reference}`} className="link">
                 {children}
             </a>
         );
     }
     return (
-        <Link to={`${CONTEXT_PATH}/stilling/${stilling.uuid}`} className="SearchResultItem__link">
+        <Link to={`${CONTEXT_PATH}/stilling/${stilling.uuid}`} className="link">
             {children}
         </Link>
     );
