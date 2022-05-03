@@ -35,15 +35,32 @@
 }
 
 .CriteriaPanel__fieldset {
-  padding: 0 0.5rem;
-  margin: 1rem 0 2rem 0;
+  padding: 1rem 0.5rem;
+  margin: 0;
+  border: 0;
 
-  /* Override styles */
+  legend {
+    font-size: 1rem;
+    font-weight: 600;
+
+    // Only display legend to screen readers
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+    white-space: nowrap;
+  }
+
+  // Override styles
   .skjemaelement {
     margin: 0 0 0.75rem 0;
   }
 
-  /* Override styles */
+  // Override styles
   .checkboks {
     &:focus + .skjemaelement__label:before {
       box-shadow: 0 0 0 3px @primaryDarkBlue;
@@ -60,8 +77,8 @@
   }
 }
 
-.Facet__inner__items {
-  margin-left: 1.5rem;
+.CriteriaPanel__fieldset--sub {
+  padding: 0 0 0 1.25rem;
 }
 
 .Facet__zero__count label {

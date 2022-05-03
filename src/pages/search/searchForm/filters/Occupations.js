@@ -68,10 +68,11 @@ function Occupations({ initialValues, updatedValues, query, dispatch }) {
 
     return (
         <CriteriaPanel panelId="occupations-panel" title="Yrke">
-            <div role="group" aria-label="Velg yrke" className="CriteriaPanel__fieldset">
+            <fieldset className="CriteriaPanel__fieldset">
+                <legend>Velg yrke</legend>
                 {values &&
                     values.map((firstLevel) => (
-                        <div key={firstLevel.key}>
+                        <React.Fragment key={firstLevel.key}>
                             <Checkbox
                                 name="occupation"
                                 label={`${firstLevel.key} (${firstLevel.count})`}
@@ -82,11 +83,8 @@ function Occupations({ initialValues, updatedValues, query, dispatch }) {
                             {query.occupationFirstLevels &&
                                 query.occupationFirstLevels.includes(firstLevel.key) &&
                                 firstLevel.key !== OCCUPATION_LEVEL_OTHER && (
-                                    <div
-                                        className="Facet__inner__items"
-                                        role="group"
-                                        aria-label={`Yrker innen ${firstLevel.key}`}
-                                    >
+                                    <fieldset className="CriteriaPanel__fieldset CriteriaPanel__fieldset--sub">
+                                        <legend>Yrker innen {firstLevel.key}</legend>
                                         {firstLevel.occupationSecondLevels &&
                                             firstLevel.occupationSecondLevels.map((secondLevel) => (
                                                 <Checkbox
@@ -100,9 +98,9 @@ function Occupations({ initialValues, updatedValues, query, dispatch }) {
                                                     checked={query.occupationSecondLevels.includes(secondLevel.key)}
                                                 />
                                             ))}
-                                    </div>
+                                    </fieldset>
                                 )}
-                        </div>
+                        </React.Fragment>
                     ))}
 
                 <UnknownSearchCriteriaValues
@@ -115,7 +113,7 @@ function Occupations({ initialValues, updatedValues, query, dispatch }) {
                     onNestedLevelClick={handleSecondLevelClick}
                     shouldFixLocationName={true}
                 />
-            </div>
+            </fieldset>
         </CriteriaPanel>
     );
 }

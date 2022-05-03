@@ -32,7 +32,8 @@ function Extent({ initialValues, updatedValues, query, dispatch }) {
 
     return (
         <CriteriaPanel panelId="extent-panel" title="Heltid/deltid">
-            <div role="group" aria-label="Velg heltid eller deltid" className="CriteriaPanel__fieldset">
+            <fieldset className="CriteriaPanel__fieldset">
+                <legend>Velg heltid eller deltid</legend>
                 {values.map((item) => (
                     <Checkbox
                         name="extent"
@@ -50,7 +51,7 @@ function Extent({ initialValues, updatedValues, query, dispatch }) {
                     checkedValues={query.extent}
                     onClick={handleClick}
                 />
-            </div>
+            </fieldset>
         </CriteriaPanel>
     );
 }

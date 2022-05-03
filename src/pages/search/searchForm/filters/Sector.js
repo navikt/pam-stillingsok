@@ -29,7 +29,8 @@ function Sector({ initialValues, updatedValues, query, dispatch }) {
 
     return (
         <CriteriaPanel panelId="sector-panel" title="Sektor">
-            <div role="group" aria-label="Velg sektor" className="CriteriaPanel__fieldset">
+            <fieldset className="CriteriaPanel__fieldset">
+                <legend>Velg sektor</legend>
                 {values.map((item) => (
                     <Checkbox
                         name="sector"
@@ -47,7 +48,7 @@ function Sector({ initialValues, updatedValues, query, dispatch }) {
                     checkedValues={query.sector}
                     onClick={handleClick}
                 />
-            </div>
+            </fieldset>
         </CriteriaPanel>
     );
 }

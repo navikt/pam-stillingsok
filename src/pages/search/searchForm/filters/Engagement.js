@@ -42,7 +42,8 @@ function Engagement({ initialValues, updatedValues, query, dispatch }) {
 
     return (
         <CriteriaPanel panelId="engagement-type-panel" title="Ansettelsesform">
-            <div role="group" aria-label="Velg ansettelsesform" className="CriteriaPanel__fieldset">
+            <fieldset className="CriteriaPanel__fieldset">
+                <legend>Velg ansettelsesform</legend>
                 {values.map((item) => (
                     <Checkbox
                         name="engagementType"
@@ -59,7 +60,7 @@ function Engagement({ initialValues, updatedValues, query, dispatch }) {
                     checkedValues={query.engagementType}
                     onClick={handleClick}
                 />
-            </div>
+            </fieldset>
         </CriteriaPanel>
     );
 }

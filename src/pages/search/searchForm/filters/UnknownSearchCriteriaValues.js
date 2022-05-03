@@ -14,41 +14,39 @@ export default function UnknownSearchCriteriaValues({
     shouldFixLocationName
 }) {
     if (unknownValues.length + unknownNestedValues.length === 0) {
-        return <div />;
+        return null;
     }
 
     return (
-        <div className="UnknownFacetValues">
-            <h4 className="UnknownFacetValues__label">Følgende kriterier gir 0 treff:</h4>
-            {unknownValues &&
-                unknownValues.map((sec) => (
-                    <div key={sec}>
-                        <Checkbox
-                            name={`${namePrefix}-unknownFacetValue`}
-                            label={`${shouldFixLocationName ? fixLocationName(sec, true) : sec} (0)`}
-                            value={sec}
-                            onChange={onClick}
-                            checked={checkedValues.includes(sec)}
-                        />
-                    </div>
-                ))}
-            {unknownNestedValues &&
-                unknownNestedValues.map((second) => (
-                    <div key={second}>
-                        <Checkbox
-                            name={`${namePrefix}-unknownFacetNestedValue`}
-                            label={`${shouldFixLocationName ? fixLocationName(second.split(".")[1]) : second} (0)`}
-                            value={second}
-                            onChange={onNestedLevelClick}
-                            checked={checkedNestedValues.includes(second)}
-                        />
-                    </div>
-                ))}
-        </div>
+        <React.Fragment>
+            <h4>Følgende kriterier gir 0 treff:</h4>
+            {unknownValues.map((sec) => (
+                <Checkbox
+                    key={sec}
+                    name={`${namePrefix}-unknownFacetValue`}
+                    label={`${shouldFixLocationName ? fixLocationName(sec, true) : sec} (0)`}
+                    value={sec}
+                    onChange={onClick}
+                    checked={checkedValues.includes(sec)}
+                />
+            ))}
+            {unknownNestedValues.map((second) => (
+                <Checkbox
+                    key={second}
+                    name={`${namePrefix}-unknownFacetNestedValue`}
+                    label={`${shouldFixLocationName ? fixLocationName(second.split(".")[1]) : second} (0)`}
+                    value={second}
+                    onChange={onNestedLevelClick}
+                    checked={checkedNestedValues.includes(second)}
+                />
+            ))}
+        </React.Fragment>
     );
 }
 
 UnknownSearchCriteriaValues.defaultProps = {
+    unknownValues: [],
+    checkedValues: [],
     unknownNestedValues: [],
     checkedNestedValues: [],
     onNestedLevelClick: undefined,

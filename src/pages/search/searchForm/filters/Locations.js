@@ -109,10 +109,11 @@ function Locations({ initialValues, updatedValues, query, dispatch }) {
 
     return (
         <CriteriaPanel panelId="locations-panel" title="Område" isOpenByDefault={isOpenByDefault}>
-            <div role="group" aria-label="Velg fylke, kommune, land eller hjemmekontor" className="CriteriaPanel__fieldset">
+            <fieldset className="CriteriaPanel__fieldset">
+                <legend>Velg fylke, kommune, land eller hjemmekontor</legend>
                 {locationValues &&
                     locationValues.map((location) => (
-                        <div key={location.key}>
+                        <React.Fragment key={location.key}>
                             <Checkbox
                                 name="location"
                                 label={`${fixLocationName(location.key)} (${location.count})`}
@@ -127,11 +128,8 @@ function Locations({ initialValues, updatedValues, query, dispatch }) {
                                 (location.key === "UTLAND" && query.international === true)) &&
                                 location.key !== "OSLO" &&
                                 location.key !== "SVALBARD" && (
-                                    <div
-                                        className="Facet__inner__items"
-                                        role="group"
-                                        aria-label={`Områder i ${fixLocationName(location.key)}`}
-                                    >
+                                    <fieldset className="CriteriaPanel__fieldset CriteriaPanel__fieldset--sub">
+                                        <legend>Områder i {fixLocationName(location.key)}</legend>
                                         {location.subLocations &&
                                             location.subLocations.map((subLocation) => (
                                                 <Checkbox
@@ -149,9 +147,9 @@ function Locations({ initialValues, updatedValues, query, dispatch }) {
                                                     }
                                                 />
                                             ))}
-                                    </div>
+                                    </fieldset>
                                 )}
-                        </div>
+                        </React.Fragment>
                     ))}
 
                 <div className="RemoteFacet">
@@ -175,7 +173,7 @@ function Locations({ initialValues, updatedValues, query, dispatch }) {
                     checkedValues={checkedLocations}
                     onClick={handleZeroCountFacetClick(unknownCountries, unknownCounties, unknownMunicipals)}
                 />
-            </div>
+            </fieldset>
         </CriteriaPanel>
     );
 }
