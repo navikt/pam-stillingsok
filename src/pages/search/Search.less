@@ -1,6 +1,6 @@
 @import (reference) "../../styles/variables";
 
-.Search__wrapper {
+.Search__flex-wrapper {
   margin: 0 auto 2rem;
   max-width: 1156px;
   width: 100%;
@@ -30,14 +30,6 @@
   }
 }
 
-.Search__result {
-  @media (min-width: @screen-md-min) {
-    position: relative;
-    flex: 1;
-    margin-left: 4rem;
-  }
-}
-
 .Search__reset-and-save-search {
   margin-top: 2rem;
   padding: 0 0 1rem 0;
@@ -52,34 +44,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-  }
-}
-
-.Search__count-and-sorting {
-  padding-bottom: 0.75rem;
-  line-height: 1;
-
-  @media (min-width: @screen-sm-min) {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-  }
-}
-
-.Search__til-toppen {
-  text-align: right;
-
-  a {
-    display: inline-flex;
-    align-items: center;
-  }
-
-  a > svg {
-    margin-right: 0.5rem;
-  }
-
-  @media (max-width: @screen-sm-max) {
-    display: none;
   }
 }
 

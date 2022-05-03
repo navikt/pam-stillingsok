@@ -1,0 +1,38 @@
+@import (reference) "../../../styles/variables";
+
+.SearchResult {
+  @media (min-width: @screen-md-min) {
+    position: relative;
+    flex: 1;
+    margin-left: 4rem;
+  }
+}
+
+.SearchResult__header {
+  padding-bottom: 0.75rem;
+  line-height: 1;
+
+  @media (min-width: @screen-sm-min) {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+}
+
+.SearchResult__footer {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.SearchResult__skip-to-top {
+  display: inline-flex;
+  align-items: center;
+
+  svg {
+    margin-right: 0.5rem;
+  }
+
+  @media (max-width: @screen-sm-max) {
+    display: none;
+  }
+}

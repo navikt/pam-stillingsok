@@ -10,7 +10,7 @@ const Pagination = ({ searchResult, isSearching, query, onLoadMoreClick }) => {
     const count = hasMore ? to : total;
 
     return (
-        <div className="Pagination">
+        <React.Fragment>
             {hasMore && (
                 <Knapp
                     disabled={isSearching}
@@ -23,11 +23,11 @@ const Pagination = ({ searchResult, isSearching, query, onLoadMoreClick }) => {
             )}
 
             {total > 0 && (
-                <div className="Pagination__numberOfTotal">
+                <p className="Pagination__numberOfTotal">
                     Viser {count} av {total} treff
-                </div>
+                </p>
             )}
-        </div>
+        </React.Fragment>
     );
 };
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import SearchResultItem from "../search/searchResultItem/SearchResultItem";
+import SearchResultItem from "../search/searchResult/SearchResultItem";
 import { Select } from "nav-frontend-skjema";
 import { captureException } from "@sentry/browser";
 import DelayedSpinner from "../../components/spinner/DelayedSpinner";

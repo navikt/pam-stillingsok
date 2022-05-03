@@ -1,9 +1,6 @@
 import React, { useContext, useEffect, useReducer, useRef } from "react";
 import { captureException } from "@sentry/browser";
 import { CONTEXT_PATH } from "../../environment";
-import DelayedSpinner from "../../components/spinner/DelayedSpinner";
-import SearchResultCount from "./searchResultCount/SearchResultCount";
-import Sorting from "./sorting/Sorting";
 import { AuthenticationContext, AuthenticationStatus } from "../../context/AuthenticationProvider";
 import queryReducer, {
     initialQuery,
@@ -20,19 +17,14 @@ import SearchAPI from "../../api/SearchAPI";
 import ErrorMessage from "../../components/messages/ErrorMessage";
 import PageHeader from "../../components/pageHeader/PageHeader";
 import SearchForm from "./searchForm/SearchForm";
-import NoResults from "./noResults/NoResults";
-import Pagination from "./pagination/Pagination";
 import useDocumentTitle from "../../hooks/useDocumentTitle";
 import useTrackPageview from "../../hooks/useTrackPageview";
-import SkipToCriteria from "./skiplinks/SkipToCriteria";
 import LinkMenu from "./linkMenu/LinkMenu";
 import LoadingScreen from "./loadingScreen/LoadingScreen";
-import SkipToResult from "./skiplinks/SkipToResult";
 import useRestoreScroll from "../../hooks/useRestoreScroll";
 import "./Search.less";
-import ArrowUpIcon from "../../components/icons/ArrowUpIcon";
 import { useHistory } from "react-router";
-import SearchResultItem from "./searchResultItem/SearchResultItem";
+import SearchResult from "./searchResult/SearchResult";
 
 const Search = () => {
     const { authenticationStatus } = useContext(AuthenticationContext);
@@ -144,8 +136,6 @@ const Search = () => {
         };
     }
 
-    const { status, data } = searchResponse;
-
     return (
         <React.Fragment>
             <PageHeader title="Ledige stillinger" />
@@ -154,7 +144,7 @@ const Search = () => {
             {initialSearchResponse.status === FetchStatus.FAILURE && <ErrorMessage />}
             {initialSearchResponse.status === FetchStatus.IS_FETCHING && <LoadingScreen />}
             {initialSearchResponse.status === FetchStatus.SUCCESS && (
-                <div className="Search__wrapper">
+                <div className="Search__flex-wrapper">
                     <SearchForm
                         query={query}
                         dispatchQuery={queryDispatch}
@@ -162,44 +152,12 @@ const Search = () => {
                         searchResult={searchResponse.data}
                         fetchSearch={fetchSearch}
                     />
-                    <section id="resultat" aria-label="Søkeresultat" className="Search__result">
-                        <SkipToCriteria />
-                        <header className="Search__count-and-sorting">
-                            <div>
-                                <h2 className="Search__h2">
-                                    Søkeresultat
-                                </h2>
-                                <SearchResultCount searchResult={data} />
-                            </div>
-                            <Sorting dispatch={queryDispatch} query={query} />
-                        </header>
-
-                        {status === FetchStatus.FAILURE && <ErrorMessage />}
-                        {status === FetchStatus.IS_FETCHING && query.from === 0 && <DelayedSpinner />}
-                        {status === FetchStatus.SUCCESS && data.totalAds === 0 && <NoResults query={query} />}
-                        {(status === FetchStatus.SUCCESS || (status === FetchStatus.IS_FETCHING && query.from > 0)) && (
-                            <section>
-                                {data.ads &&
-                                    data.ads.map((ad) => (
-                                        <SearchResultItem key={ad.uuid} ad={ad} useSmallFavouriteButton={true} />
-                                    ))}
-
-                                <Pagination
-                                    query={query}
-                                    isSearching={status === FetchStatus.IS_FETCHING}
-                                    searchResult={data}
-                                    onLoadMoreClick={loadMoreResults}
-                                />
-
-                                <div className="Search__til-toppen">
-                                    <a href="#top" className="link">
-                                        <ArrowUpIcon ariaHidden={true} />
-                                        Til toppen
-                                    </a>
-                                </div>
-                            </section>
-                        )}
-                    </section>
+                    <SearchResult
+                        searchResponse={searchResponse}
+                        query={query}
+                        queryDispatch={queryDispatch}
+                        loadMoreResults={loadMoreResults}
+                    />
                 </div>
             )}
         </React.Fragment>
