@@ -53,7 +53,7 @@ function FavouritesList() {
         return (
             <EmptyMessage
                 title="Ingen favoritter"
-                text="Klikk på favorittstjernen eller Lagre favoritt-knappen når du ser en stilling du ønsker å ta vare på."
+                text="Klikk på Lagre favoritt-knappen når du ser en stilling du ønsker å ta vare på."
             />
         );
     } else {

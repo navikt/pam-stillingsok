@@ -138,7 +138,7 @@ const Search = () => {
 
     return (
         <React.Fragment>
-            <PageHeader title="Ledige stillinger" />
+            <PageHeader title="Ledige stillinger" shouldAutofocus={true} />
             {authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED && <LinkMenu />}
 
             {initialSearchResponse.status === FetchStatus.FAILURE && <ErrorMessage />}

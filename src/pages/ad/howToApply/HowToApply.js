@@ -62,11 +62,18 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                             </dd>
                         </React.Fragment>
                     )}
-                    {sokUrl && !isValidUrl(sokUrl) && (
+                    {sokUrl && (
                         <React.Fragment>
                             <dt>Søknadslenke:</dt>
-                            <dd>{sokUrl}</dd>
-                            <dd>{sokUrl}</dd>
+                            <dd>
+                                {isValidUrl(sokUrl) ? (
+                                    <a href={sokUrl} onClick={() => applyForPosition(finn, stilling)} className="link">
+                                        Søk på stillingen
+                                    </a>
+                                ) : (
+                                    sokUrl
+                                )}
+                            </dd>
                         </React.Fragment>
                     )}
                 </dl>
@@ -80,21 +87,6 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                         . Du kan sende søknad via den opprinnelige annonsen.
                     </p>
                 )}
-                {sokUrl && isValidUrl(sokUrl) && (
-                    <div className="HowToApply__send-button-wrapper">
-                        <a
-                            href={sokUrl}
-                            onClick={() => applyForPosition(finn, stilling)}
-                            className="HowToApply__send-button Knapp Knapp--hoved"
-                        >
-                            <div className="HowToApply__send-button-content">
-                                <span className="HowToApply__send-button-icon" />
-                                Søk på stillingen
-                            </div>
-                        </a>
-                    </div>
-                )}
-
                 {showFavouriteButton && (
                     <FavouritesButton
                         className="HowToApply__favourite-button"

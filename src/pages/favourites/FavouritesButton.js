@@ -14,6 +14,8 @@ import useToggle from "../../hooks/useToggle";
 import IconButton from "../../components/buttons/IconButton";
 import ConfirmationModal from "../../components/modals/ConfirmationModal";
 import ErrorWithReloadPageModal from "../../components/modals/ErrorWithReloadPageModal";
+import HeartIcon from "../../components/icons/HeartIcon";
+import HeartIconFilled from "../../components/icons/HeartIconFilled";
 
 /**
  * Displays a button "Lagre favoritt" or "Slett favoritt".
@@ -126,7 +128,7 @@ function FavouritesButton({ id, stilling, useShortText, className, onRemoved, ty
                 onClick={isFavourite ? handleDeleteFavouriteClick : handleSaveFavouriteClick}
                 className={className ? `FavouriteButton ${className}` : "FavouritesButton"}
                 text={isFavourite ? deleteText : saveText}
-                icon={<StarIcon ariaHidden={!useShortText} filled={isFavourite} />}
+                icon={isFavourite ? <HeartIconFilled ariaHidden={!useShortText} /> : <HeartIcon ariaHidden={!useShortText}/>}
                 type={type}
             />
 
