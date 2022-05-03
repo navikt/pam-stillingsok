@@ -92,7 +92,7 @@ function TermsOfUse({ onClose, onTermsAccepted }) {
                         du gjøre under innstillinger.
                     </p>
                     {shouldShowError && (
-                        <div role="alert" aria-live="assertive">
+                        <div role="alert">
                             <div className="skjemaelement__feilmelding blokk-s">
                                 Du må huke av i avkryssingsboksen for å samtykke
                             </div>

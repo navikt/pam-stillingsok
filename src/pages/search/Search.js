@@ -155,24 +155,18 @@ const Search = () => {
             {initialSearchResponse.status === FetchStatus.IS_FETCHING && <LoadingScreen />}
             {initialSearchResponse.status === FetchStatus.SUCCESS && (
                 <div className="Search__wrapper">
-                    <section id="sok" className="Search__criteria" aria-labelledby="search-form-title">
-                        <SkipToResult data={searchResponse.data} />
-                        <h2 className="Search__form-title" id="search-form-title">
-                            Søk
-                        </h2>
-                        <SearchForm
-                            query={query}
-                            dispatchQuery={queryDispatch}
-                            initialSearchResult={initialSearchResponse.data}
-                            searchResult={searchResponse.data}
-                            fetchSearch={fetchSearch}
-                        />
-                    </section>
-                    <section id="resultat" aria-labelledby="search-result-h2" className="Search__result">
+                    <SearchForm
+                        query={query}
+                        dispatchQuery={queryDispatch}
+                        initialSearchResult={initialSearchResponse.data}
+                        searchResult={searchResponse.data}
+                        fetchSearch={fetchSearch}
+                    />
+                    <section id="resultat" aria-label="Søkeresultat" className="Search__result">
                         <SkipToCriteria />
                         <header className="Search__count-and-sorting">
                             <div>
-                                <h2 className="Search__h2" id="search-result-h2">
+                                <h2 className="Search__h2">
                                     Søkeresultat
                                 </h2>
                                 <SearchResultCount searchResult={data} />

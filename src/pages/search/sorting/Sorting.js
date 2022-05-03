@@ -14,19 +14,17 @@ function Sorting({ query, dispatch }) {
     }
 
     return (
-        <div className="Sorting">
-            <Select onChange={handleChange} value={sort} label="Sortér etter" className="Sorting__Select">
-                <option key="relevant" value="relevant">
-                    Mest relevant
-                </option>
-                <option key="published" value="published">
-                    Vis nyeste øverst
-                </option>
-                <option key="expires" value="expires">
-                    Søknadsfrist
-                </option>
-            </Select>
-        </div>
+        <Select onChange={handleChange} value={sort} label="Sortér etter" className="Sorting__Select">
+            <option key="relevant" value="relevant">
+                Mest relevant
+            </option>
+            <option key="published" value="published">
+                Vis nyeste øverst
+            </option>
+            <option key="expires" value="expires">
+                Søknadsfrist
+            </option>
+        </Select>
     );
 }
 

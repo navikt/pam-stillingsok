@@ -8,7 +8,7 @@ function SearchResultCount({ searchResult }) {
         const stillingerWord = searchResult.totalPositions === 1 ? "stilling" : "stillinger";
 
         return (
-            <p className="SearchResultCount" role="status" aria-live="polite">
+            <p className="SearchResultCount" role="status">
                 {searchResult.totalAds === 0
                     ? "Ingen treff"
                     : `${searchResult.totalPositions} ${stillingerWord} i ${searchResult.totalAds} ${annonserWord}`}

@@ -69,7 +69,7 @@ function SearchBox({ dispatch, query }) {
     }
 
     return (
-        <div>
+        <React.Fragment>
             <label className="SearchBox__label" htmlFor="search-form-fritekst-input">Skriv et eller flere søkeord</label>
             <div className="SearchBox">
                 <Typeahead
@@ -87,7 +87,7 @@ function SearchBox({ dispatch, query }) {
                     </span>
                 </button>
             </div>
-        </div>
+        </React.Fragment>
     );
 }
 

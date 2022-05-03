@@ -8,6 +8,7 @@ import Sector from "./filters/Sector";
 import SearchBox from "./SearchBox";
 import SaveSearchButton from "../../savedSearches/SaveSearchButton";
 import ResetButton from "./ResetButton";
+import SkipToResult from "../skiplinks/SkipToResult";
 
 const SearchForm = ({ fetchSearch, query, dispatchQuery, initialSearchResult, searchResult }) => {
     /**
@@ -20,7 +21,17 @@ const SearchForm = ({ fetchSearch, query, dispatchQuery, initialSearchResult, se
     }
 
     return (
-        <form id="sok" onSubmit={submitForm} role="search">
+        <form
+            id="sok"
+            className="Search__form"
+            onSubmit={submitForm}
+            aria-label="Søk"
+            role="search"
+        >
+            <SkipToResult data={searchResult} />
+            <h2 className="Search__form-title">
+                Søk
+            </h2>
             <SearchBox query={query} dispatch={dispatchQuery} />
             <Counties
                 query={query}
