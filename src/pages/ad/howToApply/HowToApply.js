@@ -28,14 +28,15 @@ const applyForPosition = (finn, stilling) => {
 
 export default function HowToApply({ stilling, showFavouriteButton }) {
     const properties = stilling._source.properties;
-    const sokUrl = getApplicationUrl(stilling._source.source, properties);
-    const finn = stilling._source.source === "FINN";
-    if (properties.applicationdue || properties.applicationemail || sokUrl) {
+    const applicationUrl = getApplicationUrl(stilling._source.source, properties);
+    const isFinn = stilling._source.source === "FINN";
+
+    if (properties.applicationdue || properties.applicationemail || applicationUrl) {
         return (
             <section className="detail-section">
                 <h2 className="detail-section__head">
                     <CalendarIcon />
-                    <span>Søknad</span>
+                    Søknad
                 </h2>
                 <dl className="dl-flex">
                     {properties.applicationdue && (
@@ -48,7 +49,7 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                             </dd>
                         </React.Fragment>
                     )}
-                    {!finn && properties.applicationemail && (
+                    {!isFinn && properties.applicationemail && (
                         <React.Fragment>
                             <dt>Send søknad til:</dt>
                             <dd>
@@ -62,30 +63,27 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                             </dd>
                         </React.Fragment>
                     )}
-                    {sokUrl && (
+                    {applicationUrl && (
                         <React.Fragment>
                             <dt>Søknadslenke:</dt>
                             <dd>
-                                {isValidUrl(sokUrl) ? (
-                                    <a href={sokUrl} onClick={() => applyForPosition(finn, stilling)} className="link">
+                                {isValidUrl(applicationUrl) ? (
+                                    <a
+                                        href={applicationUrl}
+                                        onClick={() => applyForPosition(isFinn, stilling)}
+                                        className="link"
+                                    >
                                         Søk på stillingen
                                     </a>
                                 ) : (
-                                    sokUrl
+                                    applicationUrl
                                 )}
                             </dd>
                         </React.Fragment>
                     )}
                 </dl>
-                {finn && (
-                    <p className="blokk-xs">
-                        {" "}
-                        Denne annonsen er hentet fra{" "}
-                        <a href="https://www.finn.no" className="link">
-                            FINN.no
-                        </a>
-                        . Du kan sende søknad via den opprinnelige annonsen.
-                    </p>
+                {isFinn && (
+                    <p>Denne annonsen er hentet fra FINN.no. Du kan sende søknad via den opprinnelige annonsen.</p>
                 )}
                 {showFavouriteButton && (
                     <FavouritesButton
