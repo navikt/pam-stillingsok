@@ -14,9 +14,13 @@
 }
 
 .Search__h2 {
-  margin: 0 0 1rem 0;
+  margin: 1rem 0;
   font-size: 1.5rem;
   font-weight: 600;
+
+  @media (min-width: @screen-md-min) {
+    margin: 0 0 1rem 0;
+  }
 }
 
 .Search__form {
@@ -31,16 +35,6 @@
     position: relative;
     flex: 1;
     margin-left: 4rem;
-  }
-}
-
-.Search__form-title {
-  margin: 1rem 0;
-  font-size: 1.5rem;
-  font-weight: 600;
-
-  @media (min-width: @screen-md-min) {
-    margin: 0 0 1rem 0;
   }
 }
 

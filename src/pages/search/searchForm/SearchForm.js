@@ -29,7 +29,7 @@ const SearchForm = ({ fetchSearch, query, dispatchQuery, initialSearchResult, se
             role="search"
         >
             <SkipToResult data={searchResult} />
-            <h2 className="Search__form-title">
+            <h2 className="Search__h2">
                 Søk
             </h2>
             <SearchBox query={query} dispatch={dispatchQuery} />
