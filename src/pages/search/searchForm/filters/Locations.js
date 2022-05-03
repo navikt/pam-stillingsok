@@ -14,7 +14,6 @@ import {
 } from "../../query";
 import CriteriaPanel from "./CriteriaPanel";
 import UnknownSearchCriteriaValues from "./UnknownSearchCriteriaValues";
-import { isMobile } from "../../../../components/utils";
 import buildLocations from "../utils/buildLocations";
 import buildHomeOfficeValues from "../utils/buildHomeOfficeValues";
 import mergeCount from "../utils/mergeCount";
@@ -22,7 +21,6 @@ import { findUnknownSearchCriteriaValues } from "../utils/findUnknownSearchCrite
 import findZeroCountLocationFacets from "../utils/findZeroCountLocationFacets";
 
 function Locations({ initialValues, updatedValues, query, dispatch }) {
-    const isOpenByDefault = !isMobile();
     const [locationValues, setLocationValues] = useState(buildLocations(initialValues));
     const [homeOfficeValues, setHomeOfficeValues] = useState(buildHomeOfficeValues(initialValues.aggregations.remote));
     const unknownCounties = findUnknownSearchCriteriaValues(query.counties, initialValues.locations);
@@ -108,7 +106,7 @@ function Locations({ initialValues, updatedValues, query, dispatch }) {
     const checkedLocations = [...query.countries, ...query.counties, ...query.municipals];
 
     return (
-        <CriteriaPanel panelId="locations-panel" title="Område" isOpenByDefault={isOpenByDefault}>
+        <CriteriaPanel panelId="locations-panel" title="Område">
             <fieldset className="CriteriaPanel__fieldset">
                 <legend>Velg fylke, kommune, land eller hjemmekontor</legend>
                 {locationValues &&
