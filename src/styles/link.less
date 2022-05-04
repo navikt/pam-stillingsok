@@ -6,15 +6,15 @@
 
 .link() {
   color: @primaryPurple;
-  font-family: 'Source Sans Pro', Arial, sans-serif;
+
+  &:hover {
+    text-decoration-line: none;
+    color: #9C4F9C;
+  }
 
   &:focus {
     outline: none;
     color: #fff;
     background: @blueDarken;
-  }
-
-  &:hover {
-    text-decoration-line: none;
   }
 }
