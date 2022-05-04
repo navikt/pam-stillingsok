@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import SearchResultItem from "../search/searchResult/SearchResultItem";
 import { Select } from "nav-frontend-skjema";
 import { captureException } from "@sentry/browser";
 import DelayedSpinner from "../../components/spinner/DelayedSpinner";
@@ -7,6 +6,7 @@ import ErrorMessage from "../../components/messages/ErrorMessage";
 import EmptyMessage from "../../components/messages/EmptyMessage";
 import UserAPI from "../../api/UserAPI";
 import { FetchAction, FetchStatus, useFetchReducer } from "../../hooks/useFetchReducer";
+import FavouritesListItem from "./FavouritesListItem";
 
 function FavouritesList() {
     const [response, dispatch] = useFetchReducer();
@@ -81,24 +81,11 @@ function FavouritesList() {
                 </header>
                 <div>
                     {response.data.map((favourite) => (
-                        <SearchResultItem
+                        <FavouritesListItem
                             key={favourite.uuid}
-                            ad={{
-                                uuid: favourite.favouriteAd.uuid,
-                                title: favourite.favouriteAd.title,
-                                published: favourite.favouriteAd.published,
-                                source: favourite.favouriteAd.source,
-                                reference: favourite.favouriteAd.reference,
-                                properties: {
-                                    employer: favourite.favouriteAd.employer,
-                                    jobtitle: favourite.favouriteAd.jobTitle,
-                                    location: favourite.favouriteAd.location,
-                                    applicationdue: favourite.favouriteAd.applicationdue
-                                }
-                            }}
-                            showExpired={favourite.favouriteAd.status !== "ACTIVE"}
-                            onFavouriteRemoved={removeFavouriteFromList}
-                            shouldConfirmFavouriteDelete={true}
+                            favourite={favourite}
+                            removeFavouriteFromList={removeFavouriteFromList}
+                            onRemoved={removeFavouriteFromList}
                         />
                     ))}
                 </div>

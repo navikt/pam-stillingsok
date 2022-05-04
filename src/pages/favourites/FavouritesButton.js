@@ -23,13 +23,12 @@ import HeartIconFilled from "../../components/icons/HeartIconFilled";
  * If user click button, this view will ensure that user is logged in
  * and has accepted usage terms before it save a favourite
  */
-function FavouritesButton({ id, stilling, useShortText, className, onRemoved, type, shouldConfirmBeforeDelete }) {
+function FavouritesButton({ id, stilling, useShortText, className, type }) {
     const favouritesProvider = useContext(FavouritesContext);
     const { authenticationStatus, login } = useContext(AuthenticationContext);
     const { hasAcceptedTermsStatus } = useContext(UserContext);
     const [shouldShowTermsModal, openTermsModal, closeTermsModal] = useToggle();
     const [shouldShowLoginModal, openLoginModal, closeLoginModal] = useToggle();
-    const [shouldShowConfirmDeleteModal, openConfirmDeleteModal, closeConfirmDeleteModal] = useToggle();
     const [shouldShowErrorDialog, openErrorDialog, closeErrorDialog] = useToggle(false);
     const isPending = favouritesProvider.pendingFavourites.includes(id);
     const isFavourite = favouritesProvider.favourites.find((f) => f.favouriteAd.uuid === id) !== undefined;
@@ -70,9 +69,6 @@ function FavouritesButton({ id, stilling, useShortText, className, onRemoved, ty
         UserAPI.remove(`api/v1/userfavouriteads/${found.uuid}`)
             .then(() => {
                 favouritesProvider.removeFavouriteFromLocalList(found);
-                if (onRemoved) {
-                    onRemoved(found);
-                }
             })
             .catch((err) => {
                 captureException(err);
@@ -106,15 +102,6 @@ function FavouritesButton({ id, stilling, useShortText, className, onRemoved, ty
     }
 
     function handleDeleteFavouriteClick() {
-        if (shouldConfirmBeforeDelete) {
-            openConfirmDeleteModal();
-        } else {
-            deleteFavourite(id);
-        }
-    }
-
-    function handleDeleteConfirmed() {
-        closeConfirmDeleteModal();
         deleteFavourite(id);
     }
 
@@ -136,12 +123,6 @@ function FavouritesButton({ id, stilling, useShortText, className, onRemoved, ty
 
             {shouldShowTermsModal && <TermsOfUse onClose={closeTermsModal} onTermsAccepted={handleTermsAccepted} />}
 
-            {shouldShowConfirmDeleteModal && (
-                <ConfirmationModal title="Slette favoritt?" onCancel={closeConfirmDeleteModal} onConfirm={handleDeleteConfirmed}>
-                    Sikker på at du vil fjerne &laquo;{stilling.title}&raquo; fra favoritter?
-                </ConfirmationModal>
-            )}
-
             {shouldShowErrorDialog && (
                 <ErrorWithReloadPageModal onClose={closeErrorDialog} title="Feil">
                     Det oppsto en feil ved dine favoritter. Prøv å last siden på nytt
@@ -154,8 +135,7 @@ function FavouritesButton({ id, stilling, useShortText, className, onRemoved, ty
 FavouritesButton.defaultProps = {
     className: undefined,
     useShortText: false,
-    type: undefined,
-    shouldConfirmBeforeDelete: false
+    type: undefined
 };
 
 FavouritesButton.propTypes = {
@@ -163,8 +143,7 @@ FavouritesButton.propTypes = {
     stilling: PropTypes.shape({}).isRequired,
     className: PropTypes.string,
     useShortText: PropTypes.bool,
-    type: PropTypes.string,
-    shouldConfirmBeforeDelete: PropTypes.bool
+    type: PropTypes.string
 };
 
 export default FavouritesButton;

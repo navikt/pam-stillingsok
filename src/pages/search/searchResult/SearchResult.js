@@ -10,6 +10,7 @@ import SkipToCriteria from "../skiplinks/SkipToCriteria";
 import ArrowUpIcon from "../../../components/icons/ArrowUpIcon";
 import SearchResultItem from "./SearchResultItem";
 import "./SearchResult.less";
+import FavouritesButton from "../../favourites/FavouritesButton";
 
 const SearchResult = ({ searchResponse, queryDispatch, query, loadMoreResults }) => {
     const { status, data } = searchResponse;
@@ -31,7 +32,20 @@ const SearchResult = ({ searchResponse, queryDispatch, query, loadMoreResults })
             {(status === FetchStatus.SUCCESS || (status === FetchStatus.IS_FETCHING && query.from > 0)) && (
                 <React.Fragment>
                     {data.ads &&
-                        data.ads.map((ad) => <SearchResultItem key={ad.uuid} ad={ad} useSmallFavouriteButton={true} />)}
+                        data.ads.map((ad) => (
+                            <SearchResultItem
+                                key={ad.uuid}
+                                ad={ad}
+                                favouriteButton={
+                                    <FavouritesButton
+                                        useShortText={true}
+                                        className="SearchResultsItem__favourite-button"
+                                        stilling={ad}
+                                        id={ad.uuid}
+                                    />
+                                }
+                            />
+                        ))}
                     <footer className="SearchResult__footer">
                         <Pagination
                             query={query}

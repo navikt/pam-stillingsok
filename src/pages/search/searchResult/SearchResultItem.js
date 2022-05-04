@@ -7,14 +7,11 @@ import {CONTEXT_PATH} from "../../../environment";
 import {formatDate} from "../../../components/utils";
 import "./SearchResultsItem.less";
 import Tag from "../../../components/tag/Tag";
-import FavouritesButton from "../../favourites/FavouritesButton";
 
 export default function SearchResultItem({
      ad,
      showExpired,
-     useSmallFavouriteButton,
-     onFavouriteRemoved,
-     shouldConfirmFavouriteDelete
+     favouriteButton
  }) {
     const location = getWorkLocation(ad.properties.location, ad.locationList);
     const employer = getEmployer(ad);
@@ -58,24 +55,11 @@ export default function SearchResultItem({
                     {published && <p className="SearchResultsItem__published">Publisert: {published}</p>}
                     {isFinn && <p className="SearchResultsItem__external-link">Åpnes på FINN.no</p>}
                 </div>
-                <FavouritesButton
-                    useShortText={useSmallFavouriteButton}
-                    className="SearchResultsItem__favourite-button"
-                    shouldConfirmBeforeDelete={shouldConfirmFavouriteDelete}
-                    onRemoved={onFavouriteRemoved}
-                    stilling={ad}
-                    id={ad.uuid}
-                />
+                {favouriteButton}
             </div>
         </article>
     );
 }
-
-SearchResultItem.defaultProps = {
-    shouldConfirmFavouriteDelete: false,
-    onFavouriteRemoved: undefined,
-    useSmallFavouriteButton: false
-};
 
 SearchResultItem.propTypes = {
     ad: PropTypes.shape({
@@ -89,10 +73,7 @@ SearchResultItem.propTypes = {
             applicationdue: PropTypes.string
         }),
         locationList: PropTypes.arrayOf(PropTypes.object)
-    }).isRequired,
-    shouldConfirmFavouriteDelete: PropTypes.bool,
-    useSmallFavouriteButton: PropTypes.bool,
-    onFavouriteRemoved: PropTypes.func
+    }).isRequired
 };
 
 function LinkToAd({children, stilling, isFinn}) {
