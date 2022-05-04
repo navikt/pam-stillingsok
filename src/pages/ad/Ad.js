@@ -43,7 +43,7 @@ const Ad = ({ match }) => {
      */
     useEffect(() => {
         if (ad && ad._source && ad._source.title) {
-            document.title = `${ad._source.title} - Arbeidsplasssen`;
+            document.title = `${ad._source.title} - Arbeidsplassen`;
         }
     }, [ad]);
 

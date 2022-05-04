@@ -33,7 +33,7 @@ export default function ShareAd({ source }) {
                     rel="noopener noreferrer"
                 >
                     <LinkedinIcon />
-                    <div className="SocialShare__text">Del på Linkedin</div>
+                    <div className="SocialShare__text">Del på LinkedIn</div>
                 </a>
                 <a
                     className="SocialShare__twitter SocialShare__link"

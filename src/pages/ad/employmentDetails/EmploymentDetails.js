@@ -68,7 +68,7 @@ export default function EmploymentDetails({ stilling }) {
                 )}
                 {properties.jobarrangement && (
                     <React.Fragment>
-                        <dt>Arb.tidsordning:</dt>
+                        <dt>Arbeidstidsordning:</dt>
                         <dd>{properties.jobarrangement}</dd>
                     </React.Fragment>
                 )}

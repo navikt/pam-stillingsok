@@ -75,6 +75,8 @@ export function mailtoInString(input, email) {
     return pattern.test(input);
 }
 
+export const isMobile = () => window.matchMedia("(max-width: 991px)").matches;
+
 export function extractParam(param, nullValue) {
     let value = nullValue;
 
