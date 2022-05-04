@@ -43,7 +43,7 @@ function CriteriaPanel({ isOpenByDefault, title, children, panelId }) {
             <h3 className="CriteriaPanel__h3">
                 <button className="CriteriaPanel__button" type="button" aria-expanded={isOpen} onClick={onPanelClick}>
                     {isOpen ? <ChevronCollapseIcon ariaHidden={true} /> : <ChevronExpandIcon ariaHidden={true} />}
-                    {title}
+                    <span>{title}</span>
                 </button>
             </h3>
             {isOpen && children}

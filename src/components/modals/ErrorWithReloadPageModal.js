@@ -30,5 +30,5 @@ export default function ErrorWithReloadPageModal({ title, children, onClose }) {
 ErrorWithReloadPageModal.propTypes = {
     title: PropTypes.string.isRequired,
     children: PropTypes.oneOfType([PropTypes.string, PropTypes.node, PropTypes.arrayOf(PropTypes.node)]).isRequired,
-    onCancel: PropTypes.func.isRequired
+    onClose: PropTypes.func.isRequired
 };
