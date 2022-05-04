@@ -19,7 +19,7 @@ import buildHomeOfficeValues from "../utils/buildHomeOfficeValues";
 import mergeCount from "../utils/mergeCount";
 import { findUnknownSearchCriteriaValues } from "../utils/findUnknownSearchCriteriaValues";
 import findZeroCountLocationFacets from "../utils/findZeroCountLocationFacets";
-import { isMobile } from "../../../components/utils";
+import { isMobile } from "../../../../components/utils";
 
 function Locations({ initialValues, updatedValues, query, dispatch }) {
     const isOpenByDefault = !isMobile();
