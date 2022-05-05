@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import React from "react";
+import React, {useLayoutEffect, useRef} from "react";
 import {Link} from "react-router-dom";
 import getEmployer from "../../../../server/common/getEmployer";
 import getWorkLocation from "../../../../server/common/getWorkLocation";
@@ -11,7 +11,8 @@ import Tag from "../../../components/tag/Tag";
 export default function SearchResultItem({
      ad,
      showExpired,
-     favouriteButton
+     favouriteButton,
+     shouldAutoFocus
  }) {
     const location = getWorkLocation(ad.properties.location, ad.locationList);
     const employer = getEmployer(ad);
@@ -19,9 +20,18 @@ export default function SearchResultItem({
     const published = formatDate(ad.published, "DD.MM.YYYY");
     const jobTitle = ad.properties.jobtitle && ad.title !== ad.properties.jobtitle ? ad.properties.jobtitle : undefined;
     const frist = ad.properties.applicationdue ? formatDate(ad.properties.applicationdue, "DD.MM.YYYY") : undefined;
+    const ref = useRef();
+
+    useLayoutEffect(() => {
+        if(shouldAutoFocus && ref.current) {
+            ref.current.focus();
+        }
+    }, [shouldAutoFocus])
 
     return (
         <article
+            ref={ref}
+            tabIndex={shouldAutoFocus ? -1 : undefined}
             className="SearchResultItem"
             aria-labelledby={`${ad.uuid}-h3 ${ad.uuid}-jobTitle ${ad.uuid}-employer ${ad.uuid}-location`}
         >
@@ -61,6 +71,10 @@ export default function SearchResultItem({
     );
 }
 
+SearchResultItem.defaultProps = {
+    shouldAutofocus: false
+};
+
 SearchResultItem.propTypes = {
     ad: PropTypes.shape({
         uuid: PropTypes.string,
@@ -73,7 +87,8 @@ SearchResultItem.propTypes = {
             applicationdue: PropTypes.string
         }),
         locationList: PropTypes.arrayOf(PropTypes.object)
-    }).isRequired
+    }).isRequired,
+    shouldAutofocus: PropTypes.bool
 };
 
 function LinkToAd({children, stilling, isFinn}) {

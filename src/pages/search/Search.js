@@ -70,7 +70,7 @@ const Search = () => {
         initialSearchDispatch({ type: FetchAction.BEGIN });
 
         const promises = [
-            SearchAPI.search(), // An empty search aggregates search criteria across all ads
+            SearchAPI.search(toApiQuery(initialQuery)), // An empty search aggregates search criteria across all ads
             SearchAPI.getAndCache("api/locations") // Search criteria for locations are not aggregated, but based on a predefined list
         ];
 
