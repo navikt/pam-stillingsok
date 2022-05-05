@@ -15,6 +15,10 @@ import FavouritesButton from "../../favourites/FavouritesButton";
 const SearchResult = ({ searchResponse, queryDispatch, query, loadMoreResults }) => {
     const { status, data } = searchResponse;
 
+    // If user clicked "Load more" in the search result, move focus from
+    // "Load more" button to the next item in the result list
+    const adToBeFocused = query.from > 0 ? data.ads[query.from] : undefined;
+
     return (
         <section id="resultat" aria-label="Søkeresultat" className="SearchResult">
             <SkipToCriteria />
@@ -34,6 +38,7 @@ const SearchResult = ({ searchResponse, queryDispatch, query, loadMoreResults })
                     {data.ads &&
                         data.ads.map((ad) => (
                             <SearchResultItem
+                                shouldAutoFocus={adToBeFocused && ad.uuid === adToBeFocused.uuid}
                                 key={ad.uuid}
                                 ad={ad}
                                 favouriteButton={
@@ -54,7 +59,7 @@ const SearchResult = ({ searchResponse, queryDispatch, query, loadMoreResults })
                             onLoadMoreClick={loadMoreResults}
                         />
 
-                        <a href="#top" className="SearchResult__skip-to-top link">
+                        <a href="#main-content" className="SearchResult__skip-to-top link">
                             <ArrowUpIcon ariaHidden={true} />
                             Til toppen
                         </a>
