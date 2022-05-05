@@ -25,7 +25,6 @@ const SearchForm = ({ fetchSearch, query, dispatchQuery, initialSearchResult, se
             id="sok"
             className="Search__form"
             onSubmit={submitForm}
-            aria-label="Søk"
             role="search"
         >
             <SkipToResult data={searchResult} />

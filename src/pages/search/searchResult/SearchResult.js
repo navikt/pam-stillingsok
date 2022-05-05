@@ -20,7 +20,7 @@ const SearchResult = ({ searchResponse, queryDispatch, query, loadMoreResults })
     const adToBeFocused = query.from > 0 ? data.ads[query.from] : undefined;
 
     return (
-        <section id="resultat" aria-label="Søkeresultat" className="SearchResult">
+        <section id="resultat" className="SearchResult">
             <SkipToCriteria />
             <header className="SearchResult__header">
                 <div>
