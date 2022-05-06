@@ -33,12 +33,12 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
 
     if (properties.applicationdue || properties.applicationemail || applicationUrl) {
         return (
-            <section className="detail-section">
-                <h2 className="detail-section__head">
+            <section className="JobPosting__section">
+                <h2 className="JobPosting__h2">
                     <CalendarIcon />
                     Søknad
                 </h2>
-                <dl className="dl-flex">
+                <dl className="JobPosting__dl">
                     {properties.applicationdue && (
                         <React.Fragment>
                             <dt>Søknadsfrist:</dt>
