@@ -7,12 +7,12 @@ import HistoryIcon from "../../../components/icons/HistoryIcon";
 
 export default function AdDetails({ id, source }) {
     return (
-        <section className="detail-section">
-            <h2 className="detail-section__head">
+        <section className="JobPosting__section">
+            <h2 className="JobPosting__h2">
                 <HistoryIcon />
                 Om annonsen
             </h2>
-            <dl className="dl-flex">
+            <dl className="JobPosting__dl">
                 {source.updated && (
                     <React.Fragment>
                         <dt>Sist endret:</dt>
