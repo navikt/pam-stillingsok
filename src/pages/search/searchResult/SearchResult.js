@@ -17,7 +17,7 @@ const SearchResult = ({ searchResponse, queryDispatch, query, loadMoreResults })
 
     // If user clicked "Load more" in the search result, move focus from
     // "Load more" button to the next item in the result list
-    const adToBeFocused = query.from > 0 ? data.ads[query.from] : undefined;
+    const adToBeFocused = query.from > 0 && data ? data.ads[query.from] : undefined;
 
     return (
         <section id="resultat" className="SearchResult">
