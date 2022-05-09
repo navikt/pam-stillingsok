@@ -5,12 +5,12 @@ import PersonIcon from "../../../components/icons/PersonIcon";
 export default function ContactPerson({ contactList }) {
     if (contactList && contactList.length > 0) {
         return (
-            <section className="detail-section">
-                <h2 className="detail-section__head">
+            <section className="JobPosting__section">
+                <h2 className="JobPosting__h2">
                     <PersonIcon />
                     Kontaktperson for stillingen
                 </h2>
-                <dl className="dl-flex">
+                <dl className="JobPosting__dl">
                     {contactList[0].name && (
                         <React.Fragment>
                             <dt>Kontaktperson:</dt>

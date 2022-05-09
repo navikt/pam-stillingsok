@@ -1,6 +1,6 @@
 @import (reference) "../../styles/variables";
 
-.Ad {
+.JobPosting {
   margin: 2rem auto;
   max-width: 1156px;
   padding: 0 1rem;
@@ -11,31 +11,7 @@
   }
 }
 
-.Ad__flex {
-  @media (min-width: @screen-md-min) {
-    display: flex;
-  }
-}
-
-.Ad__left {
-  margin: 0 0 2rem 0;
-  @media (min-width: @screen-md-min) {
-    flex: 2;
-    padding-right: 6rem;
-  }
-
-  @media (min-width: @screen-lg-min) {
-    padding-right: 12rem;
-  }
-}
-
-.Ad__right {
-  @media (min-width: @screen-md-min) {
-    width: 340px;
-  }
-}
-
-.Ad__h1 {
+.JobPosting__h1 {
   margin: 0 0 1rem;
   font-size: 2rem;
   line-height: 1.2;
@@ -49,27 +25,50 @@
   }
 }
 
-.detail-section {
-  width: 100%;
-  margin-bottom: 2rem;
-  padding-bottom: 1.5rem;
+.JobPosting__h2 {
+  margin: 0 0 1rem 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  line-height: 1.33;
 
-  .detail-section__head {
-    margin: 0 0 1rem 0;
-    font-size: 1.5rem;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    line-height: 1.33;
-
-    svg {
-      margin-right: 0.75rem;
-    }
+  svg {
+    margin-right: 0.75rem;
   }
 }
 
-.dl-flex {
+.JobPosting__flex {
+  @media (min-width: @screen-md-min) {
+    display: flex;
+  }
+}
 
+.JobPosting__left {
+  margin: 0 0 2rem 0;
+  @media (min-width: @screen-md-min) {
+    flex: 2;
+    padding-right: 6rem;
+  }
+
+  @media (min-width: @screen-lg-min) {
+    padding-right: 12rem;
+  }
+}
+
+.JobPosting__right {
+  @media (min-width: @screen-md-min) {
+    width: 340px;
+  }
+}
+
+.JobPosting__section {
+  width: 100%;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+}
+
+.JobPosting__dl {
   dd, dt {
     line-height: 1.33;
     font-size: 1.125rem;
@@ -85,8 +84,5 @@
     word-wrap: break-word;
     overflow-wrap: break-word;
     margin: 0 0 0.75rem 0;
-
   }
 }
-
-

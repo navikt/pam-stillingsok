@@ -78,16 +78,16 @@ const Ad = ({ match }) => {
     const isFinn = ad && ad._source && ad._source.source && ad._source.source.toLowerCase() === "finn";
 
     return (
-        <div className="Ad">
+        <div className="JobPosting">
             <AdBackLink />
 
             {status === FetchStatus.FAILURE && error.statusCode === 404 && <NotFound />}
             {status === FetchStatus.FAILURE && error.statusCode !== 404 && <ErrorMessage />}
             {status === FetchStatus.IS_FETCHING && <DelayedSpinner />}
             {status === FetchStatus.SUCCESS && (
-                <article className="Ad__flex">
-                    <div className="Ad__left">
-                        <H1WithAutoFocus className="Ad__h1">{ad._source.title}</H1WithAutoFocus>
+                <article className="JobPosting__flex">
+                    <div className="JobPosting__left">
+                        <H1WithAutoFocus className="JobPosting__h1">{ad._source.title}</H1WithAutoFocus>
 
                         {ad._source.status !== "ACTIVE" && <Tag>Stillingsannonsen er inaktiv.</Tag>}
 
@@ -102,7 +102,7 @@ const Ad = ({ match }) => {
                         )}
                     </div>
 
-                    <div className="Ad__right">
+                    <div className="JobPosting__right">
                         <HowToApply stilling={ad} showFavouriteButton={!isInternal} />
                         {!isFinn && (
                             <React.Fragment>

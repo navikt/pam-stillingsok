@@ -13,8 +13,8 @@ export default function ShareAd({ source }) {
     const deviceType = new UAParser().getResult().device.type;
 
     return (
-        <section className="detail-section">
-            <h2 className="detail-section__head">
+        <section className="JobPosting__section">
+            <h2 className="JobPosting__h2">
                 <ShareIcon />
                 Del annonsen
             </h2>

@@ -8,12 +8,12 @@ export default function EmploymentDetails({ stilling }) {
     const { properties } = stilling;
 
     return (
-        <section className="detail-section">
-            <h2 className="detail-section__head">
+        <section className="JobPosting__section">
+            <h2 className="JobPosting__h2">
                 <SuitcaseIcon />
                 Om stillingen
             </h2>
-            <dl className="dl-flex">
+            <dl className="JobPosting__dl">
                 {properties.positioncount && (
                     <React.Fragment>
                         <dt>Antall stillinger:</dt>
