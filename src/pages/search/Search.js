@@ -15,7 +15,6 @@ import { extractParam } from "../../components/utils";
 import { FetchAction, FetchStatus, useFetchReducer } from "../../hooks/useFetchReducer";
 import SearchAPI from "../../api/SearchAPI";
 import ErrorMessage from "../../components/messages/ErrorMessage";
-import PageHeader from "../../components/pageHeader/PageHeader";
 import SearchForm from "./searchForm/SearchForm";
 import useDocumentTitle from "../../hooks/useDocumentTitle";
 import useTrackPageview from "../../hooks/useTrackPageview";
@@ -25,6 +24,7 @@ import useRestoreScroll from "../../hooks/useRestoreScroll";
 import "./Search.less";
 import { useHistory } from "react-router";
 import SearchResult from "./searchResult/SearchResult";
+import H1WithAutoFocus from "../../components/h1WithAutoFocus/H1WithAutoFocus";
 
 const Search = () => {
     const { authenticationStatus } = useContext(AuthenticationContext);
@@ -138,7 +138,8 @@ const Search = () => {
 
     return (
         <React.Fragment>
-            <PageHeader title="Ledige stillinger" shouldAutofocus={true} />
+            <H1WithAutoFocus className="Search__h1">Ledige stillinger</H1WithAutoFocus>
+
             {authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED && <LinkMenu />}
 
             {initialSearchResponse.status === FetchStatus.FAILURE && <ErrorMessage />}
