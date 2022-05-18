@@ -7,7 +7,7 @@ function ResetButton({ dispatch }) {
         dispatch({ type: "RESET" });
     }
 
-    return <Knapp onClick={handleClick}>Nullstill søk</Knapp>;
+    return <Knapp htmlType="button" onClick={handleClick}>Nullstill søk</Knapp>;
 }
 
 ResetButton.propTypes = {
