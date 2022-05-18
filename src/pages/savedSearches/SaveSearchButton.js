@@ -54,7 +54,7 @@ function SaveSearchButton({ query }) {
 
     return (
         <React.Fragment>
-            <Knapp onClick={handleClick}>Lagre søk</Knapp>
+            <Knapp htmlType="button" onClick={handleClick}>Lagre søk</Knapp>
 
             {shouldShowQueryIsEmptyModal && <SearchIsEmptyModal onClose={closeQueryIsEmptyModal} />}
 
