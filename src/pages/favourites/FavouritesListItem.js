@@ -5,7 +5,7 @@ import AlertModal from "../../components/modals/AlertModal";
 import UserAPI from "../../api/UserAPI";
 import { captureException } from "@sentry/browser";
 import { FavouritesContext } from "../../context/FavouritesProvider";
-import ErrorWithReloadPageModal from "../../components/modals/ErrorWithReloadPageModal";
+import AlertModalWithPageReload from "../../components/modals/AlertModalWithPageReload";
 import DeleteButton from "../../components/buttons/DeleteButton";
 
 function FavouritesListItem({ favourite, removeFavouriteFromList }) {
@@ -66,9 +66,9 @@ function FavouritesListItem({ favourite, removeFavouriteFromList }) {
             )}
 
             {shouldShowErrorDialog && (
-                <ErrorWithReloadPageModal id="favourites-list-item-error" onClose={closeErrorDialog} title="Feil">
+                <AlertModalWithPageReload id="favourites-list-item-error" onClose={closeErrorDialog} title="Feil">
                     Det oppsto en feil ved dine favoritter. Prøv å last siden på nytt
-                </ErrorWithReloadPageModal>
+                </AlertModalWithPageReload>
             )}
         </React.Fragment>
     );

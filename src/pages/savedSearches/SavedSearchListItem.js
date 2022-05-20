@@ -14,7 +14,7 @@ import RefreshButton from "../../components/buttons/RefreshButton";
 import Tag from "../../components/tag/Tag";
 import Alert from "../../components/alert/Alert";
 import { FormModes } from "./modal/SaveSearchForm";
-import ErrorWithReloadPageModal from "../../components/modals/ErrorWithReloadPageModal";
+import AlertModalWithPageReload from "../../components/modals/AlertModalWithPageReload";
 
 function SavedSearchListItem({ savedSearch, removeSavedSearchFromList, replaceSavedSearchInList, autoOpenModal }) {
     const [deleteStatus, setDeleteStatus] = useState(FetchStatus.NOT_FETCHED);
@@ -134,9 +134,9 @@ function SavedSearchListItem({ savedSearch, removeSavedSearchFromList, replaceSa
             )}
 
             {shouldShowErrorModal && (
-                <ErrorWithReloadPageModal id="delete-saved-search-error" onClose={closeErrorModal} title="Feil ved sletting">
+                <AlertModalWithPageReload id="delete-saved-search-error" onClose={closeErrorModal} title="Feil ved sletting">
                     Forsøk å laste siden på nytt eller prøv igjen om en liten stund.
-                </ErrorWithReloadPageModal>
+                </AlertModalWithPageReload>
             )}
 
             {shouldShowSavedSearchModal && (

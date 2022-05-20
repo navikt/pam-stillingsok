@@ -5,7 +5,7 @@ import { AuthenticationContext, AuthenticationStatus } from "./AuthenticationPro
 import UserAPI from "../api/UserAPI";
 import { FetchAction, useFetchReducer } from "../hooks/useFetchReducer";
 import useToggle from "../hooks/useToggle";
-import ErrorWithReloadPageModal from "../components/modals/ErrorWithReloadPageModal";
+import AlertModalWithPageReload from "../components/modals/AlertModalWithPageReload";
 
 export const UserContext = React.createContext({});
 
@@ -66,9 +66,9 @@ const UserProvider = ({ children }) => {
             {children}
 
             {shouldShowErrorDialog && (
-                <ErrorWithReloadPageModal id="user-provider-error" onClose={closeErrorDialog} title="Feil">
+                <AlertModalWithPageReload id="user-provider-error" onClose={closeErrorDialog} title="Feil">
                     Klarte ikke hente innlogget bruker. Forsøk å laste siden på nytt.
-                </ErrorWithReloadPageModal>
+                </AlertModalWithPageReload>
             )}
         </UserContext.Provider>
     );
