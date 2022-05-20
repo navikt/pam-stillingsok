@@ -58,6 +58,7 @@ function FavouritesListItem({ favourite, removeFavouriteFromList }) {
                 <AlertModal
                     id="confirm-delete-favourite-modal"
                     title="Slette favoritt?"
+                    confirmLabel="Slett"
                     onCancel={closeConfirmDeleteModal}
                     onConfirm={handleDeleteConfirmed}
                 >
