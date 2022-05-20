@@ -77,7 +77,7 @@ const FavouritesProvider = ({ children }) => {
             {children}
 
             {shouldShowErrorDialog && (
-                <ErrorWithReloadPageModal onClose={closeErrorDialog} title="Feil">
+                <ErrorWithReloadPageModal id="favourites-provider-error" onClose={closeErrorDialog} title="Feil">
                     Klarte ikke å hente dine favoritter. Prøv å laste siden på nytt
                 </ErrorWithReloadPageModal>
             )}

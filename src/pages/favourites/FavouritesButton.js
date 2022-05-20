@@ -12,7 +12,6 @@ import TermsOfUse from "../../components/modals/TermsOfUse";
 import LoginModal from "../../components/modals/LoginModal";
 import useToggle from "../../hooks/useToggle";
 import IconButton from "../../components/buttons/IconButton";
-import ConfirmationModal from "../../components/modals/ConfirmationModal";
 import ErrorWithReloadPageModal from "../../components/modals/ErrorWithReloadPageModal";
 import HeartIcon from "../../components/icons/HeartIcon";
 import HeartIconFilled from "../../components/icons/HeartIconFilled";
@@ -124,7 +123,7 @@ function FavouritesButton({ id, stilling, useShortText, className, type }) {
             {shouldShowTermsModal && <TermsOfUse onClose={closeTermsModal} onTermsAccepted={handleTermsAccepted} />}
 
             {shouldShowErrorDialog && (
-                <ErrorWithReloadPageModal onClose={closeErrorDialog} title="Feil">
+                <ErrorWithReloadPageModal id="favourites-page-error" onClose={closeErrorDialog} title="Feil">
                     Det oppsto en feil ved dine favoritter. Prøv å last siden på nytt
                 </ErrorWithReloadPageModal>
             )}

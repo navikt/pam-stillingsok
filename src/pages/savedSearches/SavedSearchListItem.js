@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { captureException } from "@sentry/browser";
 import { CONTEXT_PATH } from "../../environment";
 import { formatDate, isValidISOString } from "../../components/utils";
-import ConfirmationModal from "../../components/modals/ConfirmationModal";
+import AlertModal from "../../components/modals/AlertModal";
 import SaveSearchModal from "./modal/SaveSearchModal";
 import UserAPI from "../../api/UserAPI";
 import useToggle from "../../hooks/useToggle";
@@ -14,11 +14,13 @@ import RefreshButton from "../../components/buttons/RefreshButton";
 import Tag from "../../components/tag/Tag";
 import Alert from "../../components/alert/Alert";
 import { FormModes } from "./modal/SaveSearchForm";
+import ErrorWithReloadPageModal from "../../components/modals/ErrorWithReloadPageModal";
 
 function SavedSearchListItem({ savedSearch, removeSavedSearchFromList, replaceSavedSearchInList, autoOpenModal }) {
     const [deleteStatus, setDeleteStatus] = useState(FetchStatus.NOT_FETCHED);
     const [shouldShowSavedSearchModal, openSavedSearchModal, closeSavedSearchModal] = useToggle(autoOpenModal);
     const [shouldShowConfirmationModal, openConfirmationModal, closeConfirmationModal] = useToggle();
+    const [shouldShowErrorModal, openErrorModal, closeErrorModal] = useToggle();
     const [restartEmailNotificationStatus, setRestartEmailNotificationStatus] = useState(FetchStatus.NOT_FETCHED);
     const isEmailNotificationExpired = savedSearch.status === "INACTIVE" && savedSearch.notifyType === "EMAIL";
 
@@ -33,6 +35,8 @@ function SavedSearchListItem({ savedSearch, removeSavedSearchFromList, replaceSa
             .catch((err) => {
                 captureException(err);
                 setDeleteStatus(FetchStatus.FAILURE);
+                closeConfirmationModal();
+                openErrorModal();
             });
     }
 
@@ -117,16 +121,22 @@ function SavedSearchListItem({ savedSearch, removeSavedSearchFromList, replaceSa
             )}
 
             {shouldShowConfirmationModal && (
-                <ConfirmationModal
+                <AlertModal
+                    id="confirm-delete-saved-search"
                     onCancel={handleConfirmationModalClose}
                     onConfirm={deleteSavedSearch}
                     confirmLabel="Slett"
                     title="Slette lagret søk"
                     spinner={deleteStatus === FetchStatus.IS_FETCHING}
-                    errorMessage={deleteStatus === FetchStatus.FAILURE ? "Noe gikk galt, forsøk igjen" : undefined}
                 >
-                    Sikker på at du vil slette søket &laquo;{savedSearch.title}&raquo;?
-                </ConfirmationModal>
+                    {`Sikker på at du vil slette søket "${savedSearch.title}"?`}
+                </AlertModal>
+            )}
+
+            {shouldShowErrorModal && (
+                <ErrorWithReloadPageModal id="delete-saved-search-error" onClose={closeErrorModal} title="Feil ved sletting">
+                    Forsøk å laste siden på nytt eller prøv igjen om en liten stund.
+                </ErrorWithReloadPageModal>
             )}
 
             {shouldShowSavedSearchModal && (

@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import SearchResultItem from "../search/searchResult/SearchResultItem";
 import useToggle from "../../hooks/useToggle";
-import ConfirmationModal from "../../components/modals/ConfirmationModal";
+import AlertModal from "../../components/modals/AlertModal";
 import UserAPI from "../../api/UserAPI";
 import { captureException } from "@sentry/browser";
 import { FavouritesContext } from "../../context/FavouritesProvider";
@@ -55,17 +55,18 @@ function FavouritesListItem({ favourite, removeFavouriteFromList }) {
             />
 
             {shouldShowConfirmDeleteModal && (
-                <ConfirmationModal
+                <AlertModal
+                    id="confirm-delete-favourite-modal"
                     title="Slette favoritt?"
                     onCancel={closeConfirmDeleteModal}
                     onConfirm={handleDeleteConfirmed}
                 >
-                    Sikker på at du vil fjerne &laquo;{favourite.favouriteAd.title}&raquo; fra favoritter?
-                </ConfirmationModal>
+                    {`Sikker på at du vil slette "${favourite.favouriteAd.title}" fra favoritter?`}
+                </AlertModal>
             )}
 
             {shouldShowErrorDialog && (
-                <ErrorWithReloadPageModal onClose={closeErrorDialog} title="Feil">
+                <ErrorWithReloadPageModal id="favourites-list-item-error" onClose={closeErrorDialog} title="Feil">
                     Det oppsto en feil ved dine favoritter. Prøv å last siden på nytt
                 </ErrorWithReloadPageModal>
             )}

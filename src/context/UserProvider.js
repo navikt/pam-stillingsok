@@ -66,7 +66,7 @@ const UserProvider = ({ children }) => {
             {children}
 
             {shouldShowErrorDialog && (
-                <ErrorWithReloadPageModal onClose={closeErrorDialog} title="Feil">
+                <ErrorWithReloadPageModal id="user-provider-error" onClose={closeErrorDialog} title="Feil">
                     Klarte ikke hente innlogget bruker. Forsøk å laste siden på nytt.
                 </ErrorWithReloadPageModal>
             )}

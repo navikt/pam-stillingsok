@@ -1,16 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Hovedknapp } from "@navikt/arbeidsplassen-knapper";
-import CustomModal from "../../../components/modals/CustomModal";
+import AlertModal from "../../../components/modals/AlertModal";
 
 function SearchIsEmptyModal({ onClose }) {
     return (
-        <CustomModal role="alertdialog" onCloseClick={onClose} title="Velg søkekriterier først">
-            <p>Du må fylle inn søkeord eller kriterier for å kunne lagre.</p>
-            <div>
-                <Hovedknapp onClick={onClose}>Ok, gå tilbake</Hovedknapp>
-            </div>
-        </CustomModal>
+        <AlertModal id="search-is-empty-modal" onCancel={onClose} title="Velg søkekriterier først" cancelLabel="Lukk" useOnlyCancelButton>
+            Du må fylle inn søkeord eller kriterier for å kunne lagre.
+        </AlertModal>
     );
 }
 
