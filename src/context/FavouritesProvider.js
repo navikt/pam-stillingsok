@@ -4,7 +4,7 @@ import { captureException } from "@sentry/browser";
 import UserAPI from "../api/UserAPI";
 import { HasAcceptedTermsStatus, UserContext } from "./UserProvider";
 import useToggle from "../hooks/useToggle";
-import ErrorWithReloadPageModal from "../components/modals/ErrorWithReloadPageModal";
+import AlertModalWithPageReload from "../components/modals/AlertModalWithPageReload";
 
 export const FavouritesContext = React.createContext({});
 
@@ -77,9 +77,9 @@ const FavouritesProvider = ({ children }) => {
             {children}
 
             {shouldShowErrorDialog && (
-                <ErrorWithReloadPageModal onClose={closeErrorDialog} title="Feil">
+                <AlertModalWithPageReload id="favourites-provider-error" onClose={closeErrorDialog} title="Feil">
                     Klarte ikke å hente dine favoritter. Prøv å laste siden på nytt
-                </ErrorWithReloadPageModal>
+                </AlertModalWithPageReload>
             )}
         </FavouritesContext.Provider>
     );
