@@ -48,8 +48,9 @@ REST.
 favorittstillinger, lagrede søk og utsending av epost med lagrede søk. Appen har et REST API som pam-stillingsok sin frontend bruker for å 
 hente og editere favoritter og lagrede søk.
 
-Favorittstillinger lagres i en Postgres-database i pam-aduser. Denne databasen er *ikke* stillingsdatabasen med 
-masterdata, men synces mot stillingsdatabasen via REST.
+Favorittstillinger lagres i en Postgres-database i pam-aduser. Favorittene synces mot 
+stillingsdatabasen med masterdata for stillinger via REST for å fange opp endringer i stillingannonsers status, tittel 
+osv.
 
 Lagrede søk fungerer ved at pam-stillingsok genererer en predefinert spørring som kan eksekveres mot pam-search-api. 
 Denne spørringen lagres i pam-aduser. Hver natt kjøres alle lagrede spørringer mot pam-stillingsok. Nye 
