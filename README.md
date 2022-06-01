@@ -3,8 +3,8 @@ pam-stillingsok
 
 Frontend-applikasjon for visning av stillinger på [arbeidsplassen.nav.no](https://arbeidsplassen.nav.no).
 
-Applikasjonen har ansvar for filtrering av stillinger, lagring av favorittstillinger og lagring av søk slik at brukere 
-kan få daglige oppdateringer pr. e-post.
+Applikasjonen har ansvar for søk og filtrering av stillinger, lagring av favorittstillinger og lagring av søk slik at 
+brukere kan få daglige oppdateringer pr. e-post.
 
 Applikasjonen henter stillinger fra en dokumentdatabase (ElasticSearch) gjennom 
 [pam-search-api](https://github.com/navikt/pam-search-api). Lagrede søk og stillingsfavoritter, samt utsending av 
@@ -37,26 +37,30 @@ konvertering av søkekriterier i frontend til ElasticSearch for å kunne utføre
 ### Stillingsdatabase (ElasticSearch) og pam-search-api
 
 [navikt/pam-search-api](http://github.com/navikt/pam-search-api) har en dokumentdatabase med stillinger 
-(ElasticSearch) som pam-stillingsok henter stillinger via REST.
+(ElasticSearch) som pam-stillingsok henter stillinger fra via REST.
 
-En index-tjeneste indekserer stillingene fra stillingsdatabasen til ElasticSearch over REST.
+En index-tjeneste henter stillinger fra stillingsdatabasen og indekserer dem til ElasticSearch via  
+REST.
 
 ### Lagrede favoritter, lagrede søk og pam-aduser
 
-[navikt/pam-aduser](http://github.com/navikt/pam-aduser) er en applikasjon for lagring av favorittstillinger, 
-lagrede søk og utsending av epost med lagrede søk. Appen har et REST API som pam-stillingsok sin frontend bruker for å 
+[navikt/pam-aduser](http://github.com/navikt/pam-aduser) har funksjonalitet for lagring av 
+favorittstillinger, lagrede søk og utsending av epost med lagrede søk. Appen har et REST API som pam-stillingsok sin frontend bruker for å 
 hente og editere favoritter og lagrede søk.
 
 Favorittstillinger lagres i en Postgres-database i pam-aduser. Denne databasen er *ikke* stillingsdatabasen med 
-masterdata. Favorittstillingene synces mot stillingsdatabasen via REST.
+masterdata, men synces mot stillingsdatabasen via REST.
 
 Lagrede søk fungerer ved at pam-stillingsok genererer en predefinert spørring som kan eksekveres mot pam-search-api. 
 Denne spørringen lagres i pam-aduser. Hver natt kjøres alle lagrede spørringer mot pam-stillingsok. Nye 
 stillinger sendes til brukere over epost med Microsoft Graph API.
 
+pam-aduser autentiserer også brukere (med loginservice) så de får tilgang til favoritter og lagrede søk.
+
 # Komme i gang
 
 ## Før kjøring av applikasjonen
+
 Før du starter må du installere alle npm pakkene, dette kan du gjøre ved å kjøre kommandoen: 
 
 ```
@@ -69,7 +73,8 @@ $ npm install
 
 Du kan enkelt kjøre applikasjonen ved hjelp av dev scripten `runDev.sh`
 
-Denne setter følgende verdier som miljøvariabler: 
+Denne setter følgende verdier som miljøvariabler:
+
 ```
 PAMSEARCHAPI_URL=http://localhost:9000
 PAMADUSER_URL=http://localhost:9017
