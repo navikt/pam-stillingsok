@@ -43,7 +43,15 @@ function EventBanner() {
     return (
         <div className="EventBanner">
             <div className="EventBanner--illustration">
-                <svg width="49" height="41" viewBox="0 0 49 41" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg
+                    width="49"
+                    height="41"
+                    role="img"
+                    aria-hidden="true"
+                    viewBox="0 0 49 41"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
                     <rect x="8.59558" y="6.45667" width="30.3121" height="25.2471" rx="2" fill="#40C1AC" />
                     <path d="M44.5468 25.3921V13.4698L31.858 19.1925L44.5468 25.3921Z" fill="#40C1AC" />
                     <path
