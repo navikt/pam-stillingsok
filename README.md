@@ -84,6 +84,7 @@ LOGOUTSERVICE_URL=http://localhost:9017/aduser
 PAM_STILLINGSOK_URL=http://localhost:8080/stillinger
 PAM_VAR_SIDE_URL=http://localhost:8080/stillingsregistrering
 PAM_INTERNAL_SEARCH_API_URL=http://localhost:9027
+PAM_JOBBTREFF_API_URL=http://localhost:8088/jobbtreff-promo
 AMPLITUDE_TOKEN=(Dev Token)
 ```
 

@@ -88,6 +88,7 @@ const fasitProperties = {
     LOGOUT_URL: process.env.LOGOUTSERVICE_URL,
     PAM_STILLINGSOK_URL: process.env.PAM_STILLINGSOK_URL,
     PAM_VAR_SIDE_URL: process.env.PAM_VAR_SIDE_URL,
+    PAM_JOBBTREFF_API_URL: process.env.PAM_JOBBTREFF_API_URL,
     AMPLITUDE_TOKEN: process.env.AMPLITUDE_TOKEN
 };
 
@@ -98,6 +99,7 @@ const writeEnvironmentVariablesToFile = () => {
         + `window.__LOGIN_URL__="${fasitProperties.LOGIN_URL}";\n`
         + `window.__LOGOUT_URL__="${fasitProperties.LOGOUT_URL}";\n`
         + `window.__PAM_VAR_SIDE_URL__="${fasitProperties.PAM_VAR_SIDE_URL}";\n`
+        + `window.__PAM_JOBBTREFF_API_URL__="${fasitProperties.PAM_JOBBTREFF_API_URL}";\n`
         + `window.__AMPLITUDE_TOKEN__="${fasitProperties.AMPLITUDE_TOKEN}";\n`
 
     fs.writeFile(path.resolve(rootDirectory, 'dist/js/env.js'), fileContent, (err) => {
