@@ -61,7 +61,7 @@ function EventBanner() {
                     />
                 </svg>
             </div>
-            <h5 className="EventBanner__title">Neste jobbtreff er {daysUntilNextEventText}</h5>
+            <h5 className="EventBanner__title">Neste jobbtreff er {daysUntilNextEventText}:</h5>
             <a className="EventBanner--event-title-link link" href={`/jobbtreff/${nextEvent.id}`}>
                 {nextEvent.title}
             </a>
