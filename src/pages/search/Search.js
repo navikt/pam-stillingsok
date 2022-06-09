@@ -25,6 +25,7 @@ import "./Search.less";
 import { useHistory } from "react-router";
 import SearchResult from "./searchResult/SearchResult";
 import H1WithAutoFocus from "../../components/h1WithAutoFocus/H1WithAutoFocus";
+import EventBanner from "./event/EventBanner";
 
 const Search = () => {
     const { authenticationStatus } = useContext(AuthenticationContext);
@@ -146,13 +147,16 @@ const Search = () => {
             {initialSearchResponse.status === FetchStatus.IS_FETCHING && <LoadingScreen />}
             {initialSearchResponse.status === FetchStatus.SUCCESS && (
                 <div className="Search__flex-wrapper">
-                    <SearchForm
-                        query={query}
-                        dispatchQuery={queryDispatch}
-                        initialSearchResult={initialSearchResponse.data}
-                        searchResult={searchResponse.data}
-                        fetchSearch={fetchSearch}
-                    />
+                    <div>
+                        <SearchForm
+                            query={query}
+                            dispatchQuery={queryDispatch}
+                            initialSearchResult={initialSearchResponse.data}
+                            searchResult={searchResponse.data}
+                            fetchSearch={fetchSearch}
+                        />
+                        <EventBanner />
+                    </div>
                     <SearchResult
                         searchResponse={searchResponse}
                         query={query}
