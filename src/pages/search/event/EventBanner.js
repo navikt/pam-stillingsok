@@ -70,12 +70,16 @@ function EventBanner() {
                 </svg>
             </div>
             <h3 className="EventBanner__title">Neste jobbtreff er {daysUntilNextEventText}:</h3>
-            <a className="EventBanner--event-title-link link" href={`/jobbtreff/${nextEvent.id}`}>
-                {nextEvent.title}
-            </a>
-            <a className="EventBanner--events-info-link link" href="/jobbtreff/hvordan-delta">
-                Les om hvordan jobbtreff fungerer
-            </a>
+            <p className="EventBanner--event-title-link">
+                <a className="link" href={`/jobbtreff/${nextEvent.id}`}>
+                    {nextEvent.title}
+                </a>
+            </p>
+            <p className="EventBanner--events-info-link">
+                <a className="link" href="/jobbtreff/hvordan-delta">
+                    Les om hvordan jobbtreff fungerer
+                </a>
+            </p>
         </div>
     );
 }
