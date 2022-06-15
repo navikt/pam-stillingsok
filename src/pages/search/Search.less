@@ -8,8 +8,12 @@
 
   @media (min-width: @screen-md-min) {
     margin: 2rem auto;
-    padding: 0 4rem;
+    padding: 0 2rem;
     display: flex;
+  }
+
+  @media (min-width: @screen-lg-min) {
+    padding: 0 4rem;
   }
 }
 
@@ -42,6 +46,10 @@
 .Search__form {
   @media (min-width: @screen-md-min) {
     position: relative;
+    width: 320px;
+  }
+
+  @media (min-width: @screen-lg-min) {
     width: 400px;
   }
 }
