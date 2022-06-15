@@ -8,8 +8,8 @@ const Header = () => {
     const [showMobileMenu, setShowMobileMenu] = useState(false);
 
     useEffect(() => {
-        const header = document.getElementById("arbeidsplassen-header-menu");
-        header.className = showMobileMenu ? "" : "arbeidsplassen-header-menu-hidden";
+        const header = document.getElementById("dsa-header-menu");
+        header.className = showMobileMenu ? "" : "dsa-header-menu-hidden";
     }, [showMobileMenu]);
 
     return (
@@ -18,13 +18,13 @@ const Header = () => {
                 <React.Fragment>
                     {ReactDOM.createPortal(
                         <button onClick={logout}>Logg ut</button>,
-                        document.getElementById("arbeidsplassen-header-login-container")
+                        document.getElementById("dsa-header-login-container")
                     )}
                     {ReactDOM.createPortal(
-                        <a href="/personinnstillinger" className="arbeidsplassen-header-settings-link">
+                        <a href="/personinnstillinger" className="dsa-header-settings-link">
                             Innstillinger
                         </a>,
-                        document.getElementById("arbeidsplassen-header-settings-container")
+                        document.getElementById("dsa-header-settings-container")
                     )}
                     {ReactDOM.createPortal(
                         <React.Fragment>
@@ -32,7 +32,7 @@ const Header = () => {
                                 ? userNameAndInfo.fornavn + " " + userNameAndInfo.etternavn
                                 : ""}
                         </React.Fragment>,
-                        document.getElementById("arbeidsplassen-header-current-user-container")
+                        document.getElementById("dsa-header-current-user-container")
                     )}
                 </React.Fragment>
             )}
@@ -40,21 +40,21 @@ const Header = () => {
                 <React.Fragment>
                     {ReactDOM.createPortal(
                         <button onClick={login}>Logg inn</button>,
-                        document.getElementById("arbeidsplassen-header-login-container")
+                        document.getElementById("dsa-header-login-container")
                     )}
                 </React.Fragment>
             )}
             {ReactDOM.createPortal(
                 <button
                     aria-expanded={showMobileMenu}
-                    aria-controls="arbeidsplassen-header-menu-wrapper"
+                    aria-controls="dsa-header-menu-wrapper"
                     onClick={() => {
                         setShowMobileMenu(!showMobileMenu);
                     }}
                 >
                     Meny
                 </button>,
-                document.getElementById("arbeidsplassen-header-menu-button-container")
+                document.getElementById("dsa-header-menu-button-container")
             )}
         </React.Fragment>
     );
