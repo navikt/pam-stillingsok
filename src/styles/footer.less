@@ -7,15 +7,15 @@
 .dsa-footer {
   font-family: "Source Sans Pro", Arial, sans-serif;
   background-color: #f3eaf3;
-  display: flex;
-  justify-content: center;
   line-height: 1.5;
   min-height: 639px;
 }
 
 @media (min-width: 860px) {
   .dsa-footer {
-    min-height: 291px;
+    min-height: 303px;
+    display: flex;
+    justify-content: center;
   }
 }
 
@@ -25,23 +25,20 @@
 }
 
 .dsa-footer-inner {
-  max-width: 1440px;
   padding: 2rem 1rem;
-  width: 100%;
 }
 
 @media (min-width: 860px) {
   .dsa-footer-inner {
     display: flex;
-    width: auto;
-    padding: 4rem 1rem 2.5rem 1rem;
+    padding: 4rem 1rem 3.25rem 1rem;
   }
 }
 
 @media (min-width: 860px) {
   .dsa-footer-columns {
     display: flex;
-    flex-wrap: wrap;
+    justify-content: space-evenly;
   }
 }
 
@@ -61,8 +58,7 @@
 
 @media (min-width: 860px) {
   .dsa-footer-section {
-    max-width: 280px;
-    flex: 1;
+    max-width: 200px;
   }
 
   .dsa-footer-section:not(:last-child) {
