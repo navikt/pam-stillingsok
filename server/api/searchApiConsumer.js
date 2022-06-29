@@ -45,45 +45,41 @@ const excludes = [
 
 /* eslint no-console: 0 */
 
-const bodyUsingTemplate = (template, ...args) => {
-    let body;
+exports.search = async (query = {}) => {
     try {
-        body = template(...args);
+        const body = searchTemplate(query);
+
+        const options = {
+            method: 'POST',
+            json: true,
+            url,
+            body
+        };
+
+        return rp(options);
     } catch (error) {
         console.error('Failed to parse query using template', error);
-        return Promise.reject(error);
+        return Promise.reject("Failed to parse query");
     }
-
-    return Promise.resolve(body);
-};
-
-exports.search = async (query = {}) => {
-    const body = await bodyUsingTemplate(searchTemplate, query)
-        .catch((error) => error);
-
-    const options = {
-        method: 'POST',
-        json: true,
-        url,
-        body
-    };
-
-    return rp(options);
 };
 
 exports.suggestions = async (query = {}) => {
-    const body = await bodyUsingTemplate(suggestionsTemplate, query.match, query.minLength)
-        .catch((error) => error);
+    try {
+        const body = suggestionsTemplate(query.match, query.minLength);
 
-    const options = {
-        method: 'POST',
-        json: true,
-        timeout: 8000,
-        url,
-        body
-    };
+        const options = {
+            method: 'POST',
+            json: true,
+            timeout: 8000,
+            url,
+            body
+        };
 
-    return rp(options);
+        return rp(options);
+    } catch (error) {
+        console.error('Failed to parse query using template', error);
+        return Promise.reject("Failed to parse query");
+    }
 };
 
 exports.fetchStilling = async (uuid) => {
