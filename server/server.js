@@ -65,7 +65,7 @@ server.use(helmet.contentSecurityPolicy({
         frameAncestors: ["'none'"],
         formAction: ["'self'"],
         styleSrc: ["'self'", hotJarSources.UNSAFE[1]],
-        fontSrc: ["'self'", 'data:', 'https://fonts.gstatic.com', ...hotJarSources.font],
+        fontSrc: ["'self'", 'data:', ...hotJarSources.font],
         imgSrc: ["'self'", 'data:', ...hotJarSources.img],
         connectSrc: ["'self'", process.env.PAMADUSER_URL,
             'https://amplitude.nav.no', 'https://sentry.gc.nav.no', ...hotJarSources.connect],
