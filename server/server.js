@@ -171,56 +171,56 @@ const startServer = (htmlPages) => {
 
     server.get(`${fasitProperties.PAM_CONTEXT_PATH}/api/search`, async (req, res) => {
         searchApiConsumer.search(req.query)
+            .then((val) => res.send(val))
             .catch((err) => {
                 console.warn('Failed to query search api', err);
-                res.status(err.statusCode ? err.statusCode : 502); // For TCP level errors, no http status code will be available
-            })
-            .then((val) => res.send(val));
+                res.sendStatus(err.statusCode ? err.statusCode : 500);
+            });
     });
 
     server.post(`${fasitProperties.PAM_CONTEXT_PATH}/api/search`, async (req, res) => {
         searchApiConsumer.search(req.body)
+            .then((val) => res.send(val))
             .catch((err) => {
                 console.warn('Failed to query search api', err);
-                res.status(err.statusCode ? err.statusCode : 502);
-            })
-            .then((val) => res.send(val));
+                res.sendStatus(err.statusCode ? err.statusCode : 500);
+            });
     });
 
     server.get(`${fasitProperties.PAM_CONTEXT_PATH}/api/suggestions`, async (req, res) => {
         searchApiConsumer.suggestions(req.query)
+            .then((result) => res.send(result))
             .catch((err) => {
                 console.warn('Failed to fetch suggestions,', err);
-                res.status(err.statusCode ? err.statusCode : 502);
-            })
-            .then((result) => res.send(result));
+                res.sendStatus(err.statusCode ? err.statusCode : 500);
+            });
     });
 
     server.post(`${fasitProperties.PAM_CONTEXT_PATH}/api/suggestions`, async (req, res) => {
         searchApiConsumer.suggestions(req.body)
+            .then((result) => res.send(result))
             .catch((err) => {
                 console.warn('Failed to fetch suggestions,', err);
-                res.status(err.statusCode ? err.statusCode : 502);
-            })
-            .then((result) => res.send(result));
+                res.sendStatus(err.statusCode ? err.statusCode : 500);
+            });
     });
 
     server.get(`${fasitProperties.PAM_CONTEXT_PATH}/api/stilling/:uuid`, async (req, res) => {
         searchApiConsumer.fetchStilling(req.params.uuid)
+            .then((val) => res.send(val))
             .catch((err) => {
                 console.warn('Failed to fetch stilling with uuid', req.params.uuid);
-                res.status(err.statusCode ? err.statusCode : 502);
-            })
-            .then((val) => res.send(val));
+                res.sendStatus(err.statusCode ? err.statusCode : 500);
+            });
     });
 
     server.get(`${fasitProperties.PAM_CONTEXT_PATH}/api/intern/:uuid`, async (req, res) => {
         searchApiConsumer.fetchInternStilling(req.params.uuid)
+            .then((val) => res.send(val))
             .catch((err) => {
                 console.warn('Failed to fetch stilling with uuid', req.params.uuid);
-                res.status(err.statusCode ? err.statusCode : 502);
-            })
-            .then((val) => res.send(val));
+                res.sendStatus(err.statusCode ? err.statusCode : 500);
+            });
     });
 
     server.get('/', (req, res) => {
