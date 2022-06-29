@@ -53,7 +53,7 @@ const hotJarSources = {
 
 
 // En del sikkerhets headere er allerede lagt i bigip, dropper de derfor her for å unngå duplkiate headere
-server.use(helmet({xssFilter: false, hsts: false, noSniff: false, frameguard: false}));
+server.use(helmet({xssFilter: false, hsts: false}));
 
 server.use(helmet.referrerPolicy({policy: 'no-referrer'}));
 
