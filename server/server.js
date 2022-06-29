@@ -60,16 +60,16 @@ server.use(helmet.contentSecurityPolicy({
         defaultSrc: ["'none'"],
         baseUri: ["'none'"],
         mediaSrc: ["'none'"],
-        scriptSrc: ["'self'", ...hotJarSources.script, ...hotJarSources.UNSAFE],
+        scriptSrc: ["'self'"],
         objectSrc: ["'none'"],
         frameAncestors: ["'none'"],
         formAction: ["'self'"],
-        styleSrc: ["'self'", hotJarSources.UNSAFE[1]],
-        fontSrc: ["'self'", 'data:', ...hotJarSources.font],
-        imgSrc: ["'self'", 'data:', ...hotJarSources.img],
+        styleSrc: ["'self'"],
+        fontSrc: ["'self'", 'data:'],
+        imgSrc: ["'self'", 'data:'],
         connectSrc: ["'self'", process.env.PAMADUSER_URL,
-            'https://amplitude.nav.no', 'https://sentry.gc.nav.no', ...hotJarSources.connect],
-        frameSrc: ["'self'", ...hotJarSources.frame]
+            'https://amplitude.nav.no', 'https://sentry.gc.nav.no'],
+        frameSrc: ["'self'"]
     }
 }));
 

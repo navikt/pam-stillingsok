@@ -12,7 +12,6 @@ import Ad from "./pages/ad/Ad";
 import Favourites from "./pages/favourites/Favourites";
 import SavedSearches from "./pages/savedSearches/SavedSearches";
 import ReportAd from "./pages/reportAd/ReportAd";
-import initHotJar from "./tracking/hotjar";
 import initSentry from "./tracking/sentry";
 import { initAmplitude } from "./tracking/amplitude";
 import "./styles/styles.less";
@@ -21,7 +20,6 @@ import HistoryProvider from "./context/HistoryProvider";
 initSentry();
 fixUrlAfterLogin();
 initAmplitude();
-initHotJar();
 
 function Application() {
     return (
