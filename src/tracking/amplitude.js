@@ -1,33 +1,20 @@
 import amplitude from "amplitude-js";
 
-const getCookie = (name) => {
-    const re = new RegExp(`${name}=([^;]+)`);
-    const match = re.exec(document.cookie);
-    return match !== null ? match[1] : "";
-};
-
-const amplitudeIsEnabled = () => {
-    return getCookie('amplitudeIsEnabled') === 'true';
-};
-
 export function initAmplitude() {
-    if (amplitudeIsEnabled()) {
-        amplitude.getInstance();
-        amplitude.init(
-            window.__AMPLITUDE_TOKEN__, null, {
-                apiEndpoint: 'amplitude.nav.no/collect',
-                batchEvents: false,
-                includeReferrer: true,
-                includeUtm: true,
-                saveEvents: false,
-                transport: 'beacon',
-            }
-        );
-    }
+    amplitude.getInstance();
+    amplitude.init(
+        window.__AMPLITUDE_TOKEN__, null, {
+            apiEndpoint: 'amplitude.nav.no/collect',
+            batchEvents: false,
+            includeReferrer: true,
+            includeUtm: true,
+            saveEvents: false,
+            transport: 'beacon',
+        }
+    );
 }
 
 export const logAmplitudePageview = (additionalData) => {
-    if (!amplitudeIsEnabled()) {return;}
     let data = {
         page: `${window.location.pathname}${window.location.search}`,
         title: document.title
@@ -77,7 +64,6 @@ const enrichData = (data) => {
 }
 
 const logAmplitudeEvent = (event, data) => {
-    if (!amplitudeIsEnabled()) {return;}
     amplitude.logEvent(event, enrichData(data));
 };
 

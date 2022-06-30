@@ -125,18 +125,6 @@ const renderSok = (htmlPages) => (
 
 const startServer = (htmlPages) => {
     writeEnvironmentVariablesToFile();
-    server.use((req, res, next) => {
-        const oneWeek = 604800;
-
-        if (req.path.includes('internal')) {
-            return next();
-        }
-
-        if ((req && req.headers.cookie && !req.headers.cookie.includes('amplitudeIsEnabled')) || !req.headers.cookie){
-            res.cookie('amplitudeIsEnabled', true, { maxAge: oneWeek * 2, domain: '.nav.no' });
-        }
-        next();
-    });
 
     server.use(`${fasitProperties.PAM_CONTEXT_PATH}/js`,
         express.static(path.resolve(rootDirectory, 'dist/js'))
