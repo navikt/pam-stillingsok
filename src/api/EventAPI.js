@@ -12,13 +12,17 @@ async function get(url) {
         throw new APIError(e.message, 0);
     }
 
-    if (!(response.status >= 200 || response.status <= 299)) {
+    if (response.status < 200 || response.status > 299) {
         throw new APIError(response.statusText, response.status);
-    } else if (response.status == 204){ // No content
+    } 
+
+    
+    if (response.status === 204){ // No content
         return undefined
+    } else {
+        return response.json();
     } 
     
-    return response.json();
 
 
 }
