@@ -16,8 +16,8 @@ async function get(url) {
         throw new APIError(response.statusText, response.status);
     } 
 
-    
-    if (response.status === 204){ // No content
+    const text = await response.text()
+    if (response.status === 204 || text.length == 0){ // No content
         return undefined
     } else {
         return response.json();
