@@ -14,9 +14,13 @@ async function get(url) {
 
     if (!(response.status >= 200 || response.status <= 299)) {
         throw new APIError(response.statusText, response.status);
-    }
-
+    } else if (response.status == 204){ // No content
+        return undefined
+    } 
+    
     return response.json();
+
+
 }
 
 async function getNextEvent() {
