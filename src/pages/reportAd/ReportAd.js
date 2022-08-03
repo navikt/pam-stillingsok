@@ -212,7 +212,7 @@ const ReportAd = () => {
                                 />
 
                                 <p>
-                                    <a href="/retningslinjer" className="link">
+                                    <a href="/retningslinjer-stillingsannonser" className="link">
                                         Les om gjeldende regler
                                     </a>
                                 </p>
