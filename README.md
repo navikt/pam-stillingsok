@@ -1,5 +1,4 @@
-pam-stillingsok
-===
+## Beskrivelse
 
 Frontend-applikasjon for visning av stillinger på [arbeidsplassen.nav.no](https://arbeidsplassen.nav.no).
 
@@ -9,6 +8,9 @@ brukere kan få daglige oppdateringer pr. e-post.
 Applikasjonen henter stillinger fra en dokumentdatabase (ElasticSearch) gjennom 
 [pam-search-api](https://github.com/navikt/pam-search-api). Lagrede søk og stillingsfavoritter, samt utsending av 
 e-poster skjer gjennom applikasjonen [pam-aduser](https://github.com/navikt/pam-aduser).
+
+## Avhengigheter
+ - [pam-search-api]()
 
 # Teknisk dokumentasjon
 
