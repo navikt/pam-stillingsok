@@ -19,6 +19,7 @@ import getEmployer from "../../../server/common/getEmployer";
 import { CONTEXT_PATH } from "../../environment";
 import Spinner from "nav-frontend-spinner";
 import TextField from "../../components/textField/TextField";
+import BackLink from "../../components/backlink/BackLink";
 
 const RegisterInterest = ({ match }) => {
     // Ad data
@@ -130,23 +131,6 @@ const RegisterInterest = ({ match }) => {
         }
     }
 
-    // Enable this feature just for some predefined test ads
-    if(!["5bbed2b3-4401-454a-9d22-8e599490c7fa", "88209a94-bf03-44df-ae51-3fdd941d17f7"].includes(match.params.uuid)) {
-        return (
-            <div className="RegisterInterest">
-                <div className="RegisterInterest__inner">
-                    <H1WithAutoFocus>Siden ble ikke funnet</H1WithAutoFocus>
-                    <Link
-                        to={`${CONTEXT_PATH}}`}
-                        className="link"
-                    >
-                        Tilbake til Ledige stillinger
-                    </Link>
-                </div>
-            </div>
-        )
-    }
-
     return (
         <div className="RegisterInterest">
             {status === FetchStatus.IS_FETCHING && <DelayedSpinner />}
@@ -157,13 +141,17 @@ const RegisterInterest = ({ match }) => {
             )}
             {status === FetchStatus.SUCCESS && (
                 <React.Fragment>
-                    <div className="RegisterInterest__job-posting-wrapper">
+                    <div className="RegisterInterest__green-box">
                         <div className="RegisterInterest__inner">
                             <p className="RegisterInterest__employer">{getEmployer(data.ad._source)}</p>
                             <p className="RegisterInterest__job-title">{data.ad._source.title}</p>
                         </div>
                     </div>
                     <div className="RegisterInterest__inner">
+                        <BackLink
+                            to={`${CONTEXT_PATH}/${isInternal ? "intern" : "stilling"}/${data.ad._id}`}
+                            text="Tilbake til annonsen"
+                        />
                         {postInterestResponse.status === FetchStatus.SUCCESS ? (
                             <div className="RegisterInterest__success-message">
                                 <h1 className="RegisterInterest__h1">
@@ -182,7 +170,7 @@ const RegisterInterest = ({ match }) => {
                         ) : (
                             <form onSubmit={handleFormSubmit}>
                                 <H1WithAutoFocus className="RegisterInterest__h1">
-                                    Send en interessemelding
+                                    Meld din interesse
                                 </H1WithAutoFocus>
                                 <p className="RegisterInterest__lead">
                                     Gi beskjed til bedriften at du ønsker å bli kontaktet angående denne stillingen.
@@ -318,7 +306,7 @@ const RegisterInterest = ({ match }) => {
                                             Avbryt
                                         </Link>
                                         <Hovedknapp htmlType="submit">
-                                            Send melding om interesse
+                                            Send melding
                                         </Hovedknapp>
                                     </div>
                                 )}

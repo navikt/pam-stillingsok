@@ -1,27 +1,35 @@
-async function getRequirements(id) {
+async function getRequirements(adUuid) {
+    if(!shouldEnableInterestFeature(adUuid)) {
+        return Promise.reject("Requirements not supported for this ad")
+    }
     return Promise.resolve({
         hardRequirements: [
             { label: "B-førerkort" },
             { label: "Truckførerkort" }
         ],
         softRequirements: [
-            { label: "Kompetanse A" },
+            { label: "Komp A" },
             { label: "Kompetanse B" },
             { label: "Kompetanse C" },
-            { label: "Kompetanse D" },
-            { label: "Kompetanse E" }
+            { label: "Komp D" },
+            { label: "Lang kompetanse E" },
+            { label: "Lang kompetanse F" }
         ]
     })
-    //return await get(`url`);
 }
 
 async function postInterest(interest) {
     return new Promise(resolve => setTimeout(resolve, 1000))
 }
 
+function shouldEnableInterestFeature(uuid) {
+    return ["5bbed2b3-4401-454a-9d22-8e599490c7fa", "88209a94-bf03-44df-ae51-3fdd941d17f7"].includes(uuid)
+}
+
 const InterestAPI = {
     getRequirements: getRequirements,
-    postInterest: postInterest
+    postInterest: postInterest,
+    shouldEnableInterestFeature: shouldEnableInterestFeature
 };
 
 export default InterestAPI;
