@@ -7,7 +7,7 @@ import FavouritesButton from "../../favourites/FavouritesButton";
 import CalendarIcon from "../../../components/icons/CalendarIcon";
 import { Link } from "react-router-dom";
 import { CONTEXT_PATH } from "../../../environment";
-import "../../../components/buttons/LinkMainButton.less"
+import "../../../styles/button.less"
 
 export function getApplicationUrl(source, properties) {
     if (source === "FINN") {
@@ -88,7 +88,7 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                 {isFinn && (
                     <p>Denne annonsen er hentet fra FINN.no. Du kan sende søknad via den opprinnelige annonsen.</p>
                 )}
-                <Link className="LinkMainButton" to={`${CONTEXT_PATH}/stilling/${stilling._id}/meld-interesse`}>Meld interesse</Link>
+                <Link className="Knapp Knapp--hoved" to={`${CONTEXT_PATH}/stilling/${stilling._id}/meld-interesse`}>Meld interesse</Link>
                 {showFavouriteButton && (
                     <FavouritesButton
                         className="HowToApply__favourite-button"

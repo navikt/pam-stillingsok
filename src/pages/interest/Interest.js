@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import useDocumentTitle from "../../hooks/useDocumentTitle";
 import useTrackPageview from "../../hooks/useTrackPageview";
 import { CONTEXT_PATH } from "../../environment";
@@ -6,13 +6,9 @@ import useScrollToTop from "../../hooks/useScrollToTop";
 import BackLink from "../../components/backlink/BackLink";
 import H1WithAutoFocus from "../../components/h1WithAutoFocus/H1WithAutoFocus";
 import "./Interest.less";
-import "../../components/buttons/LinkMainButton.less";
+import "../../styles/button.less";
 
-function Interest() {
-    const [stillingId, setStillingId] = useState(null);
-    useEffect(() => {
-        setStillingId(document.location.pathname.split("/")[3]);
-    }, []);
+const Interest = ({ match }) => {
 
     const title = "Meld interesse";
 
@@ -22,7 +18,7 @@ function Interest() {
 
     return (
         <div className="Interest">
-            <BackLink to={`${CONTEXT_PATH}/stilling/${stillingId}`} text="Tilbake til annonsen" />
+            <BackLink to={`${CONTEXT_PATH}/stilling/${match.params.uuid}`} text="Tilbake til annonsen" />
             <H1WithAutoFocus className="Interest__h1">👏<br /> Du har funnet en ny funksjon som vi holder på å
                 utvikle!</H1WithAutoFocus>
             <p>
@@ -37,10 +33,10 @@ function Interest() {
                 Hvis du kunne tenkt deg å se vårt konsept og gi dine tilbakemeldinger, trykk på knappen nedenfor og send
                 oss en e-post.
             </p>
-            <a className="LinkMainButton" href="mailto:nav.team.arbeidsplassen@nav.no">Jeg vil delta på
+            <a className="Knapp Knapp--hoved" href="mailto:nav.team.arbeidsplassen@nav.no">Jeg vil delta på
                 brukertest</a>
         </div>
     );
-}
+};
 
 export default Interest;
