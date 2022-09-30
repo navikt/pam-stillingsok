@@ -41,10 +41,10 @@ services:
     ports:
     - "9017:9017"
     volumes:
-    - ../pam-devtools/tmp/nav_truststore.jts:/nav_truststore.jts
+    - ../pam-devtools/tmp/nav_truststore.jts:/nav_truststore.jts #Dette repoet ble arkivert 30.09.2022. Om du trenger dette gjør det på en annen måte.
     depends_on:
     - oidc-test
   oidc-test:
-    build: ../pam-devtools/oidc-test/.
+    build: ../pam-devtools/oidc-test/. #Dette repoet ble arkivert 30.09.2022. Om du trenger dette gjør det på en annen måte.
     ports:
     - "9018:9018"
