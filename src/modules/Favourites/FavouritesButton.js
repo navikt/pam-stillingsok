@@ -4,17 +4,16 @@ import { captureException } from "@sentry/browser";
 import { HasAcceptedTermsStatus, UserContext } from "../User/UserProvider";
 import { AuthenticationContext, AuthenticationStatus } from "../Authentication/AuthenticationProvider";
 import { FavouritesContext } from "./FavouritesProvider";
-import StarIcon from "../../components/Icon/StarIcon";
 import UserAPI from "../../api/UserAPI";
 import getWorkLocation from "../../../server/common/getWorkLocation";
 import getEmployer from "../../../server/common/getEmployer";
 import UserConsentModal from "../User/UserConsentModal";
 import AuthenticationModal from "../Authentication/AuthenticationModal";
 import useToggle from "../../hooks/useToggle";
-import IconButton from "../../components/Button/IconButton";
 import AlertModalWithPageReload from "../../components/AlertModal/AlertModalWithPageReload";
 import HeartIcon from "../../components/Icon/HeartIcon";
 import HeartIconFilled from "../../components/Icon/HeartIconFilled";
+import Button from "../../components/Button/Button";
 
 /**
  * Displays a button "Lagre favoritt" or "Slett favoritt".
@@ -109,20 +108,19 @@ function FavouritesButton({ id, stilling, useShortText, className, variant }) {
 
     return (
         <React.Fragment>
-            <IconButton
+            <Button
+                variant={variant}
                 disabled={isPending}
                 onClick={isFavourite ? handleDeleteFavouriteClick : handleSaveFavouriteClick}
                 className={className ? `FavouriteButton ${className}` : "FavouritesButton"}
-                text={isFavourite ? deleteText : saveText}
-                icon={
-                    isFavourite ? (
-                        <HeartIconFilled ariaHidden={!useShortText} />
-                    ) : (
-                        <HeartIcon ariaHidden={!useShortText} />
-                    )
-                }
-                variant={variant}
-            />
+            >
+                {isFavourite ? (
+                    <HeartIconFilled ariaHidden={!useShortText} />
+                ) : (
+                    <HeartIcon ariaHidden={!useShortText} />
+                )}
+                {isFavourite ? deleteText : saveText}
+            </Button>
 
             {shouldShowLoginModal && <AuthenticationModal onLoginClick={login} onCloseClick={closeLoginModal} />}
 
@@ -142,7 +140,7 @@ function FavouritesButton({ id, stilling, useShortText, className, variant }) {
 FavouritesButton.defaultProps = {
     className: undefined,
     useShortText: false,
-    variant: undefined
+    variant: "flat"
 };
 
 FavouritesButton.propTypes = {
