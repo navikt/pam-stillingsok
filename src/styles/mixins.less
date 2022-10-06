@@ -1,44 +1,44 @@
-@import './variables';
+@import "./variables";
 
 .skjemaelement--pink() {
-  .checkboks:hover,
-  .radioknapp:hover {
-    + .skjemaelement__label {
-      color: @primaryPurple;
+    .checkboks:hover,
+    .radioknapp:hover {
+        + .skjemaelement__label {
+            color: @primaryPurple;
+        }
     }
-  }
 
-  .checkboks:hover,
-  .radioknapp:hover {
-    + .skjemaelement__label:before {
-      background-color: #ffe7fb;
-      border-color: @primaryPurple;
+    .checkboks:hover,
+    .radioknapp:hover {
+        + .skjemaelement__label:before {
+            background-color: #ffe7fb;
+            border-color: @primaryPurple;
+        }
     }
-  }
 
-  .checkboks:checked + .skjemaelement__label:before {
-    background-color: @primaryPurple;
-    border-color: @primaryPurple;
-  }
+    .checkboks:checked + .skjemaelement__label:before {
+        background-color: @primaryPurple;
+        border-color: @primaryPurple;
+    }
 
-  .radioknapp:checked + .skjemaelement__label:before {
-    border: 2px solid @primaryPurple;
-    box-shadow: inset 0 0 0 3px #fff, inset 0 0 0 12px @primaryPurple;
-  }
+    .radioknapp:checked + .skjemaelement__label:before {
+        border: 2px solid @primaryPurple;
+        box-shadow: inset 0 0 0 3px #fff, inset 0 0 0 12px @primaryPurple;
+    }
 
-  .radioknapp:checked:focus + .skjemaelement__label:before {
-    box-shadow: 0 0 0 2px #FFBD66, 0 0 0 3px #FFF inset, 0 0 0 12px @primaryPurple inset;
-  }
+    .radioknapp:checked:focus + .skjemaelement__label:before {
+        box-shadow: 0 0 0 2px #ffbd66, 0 0 0 3px #fff inset, 0 0 0 12px @primaryPurple inset;
+    }
 
-  .skjemaelement__input:hover {
-    border-color: @primaryPurple;
-  }
+    .skjemaelement__input:hover {
+        border-color: @primaryPurple;
+    }
 
-  select option[selected="true"] {
-    background-color: @primaryPurple;
-  }
+    select option[selected="true"] {
+        background-color: @primaryPurple;
+    }
 
-  &:hover {
-    border-color: @primaryPurple;
-  }
+    &:hover {
+        border-color: @primaryPurple;
+    }
 }
