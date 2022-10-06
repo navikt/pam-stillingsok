@@ -1,5 +1,4 @@
 @import (reference) "../../../styles/variables";
-@import (reference) "../../../styles/link";
 
 .AdText {
     background: #fff;
@@ -12,7 +11,17 @@
     word-wrap: break-word;
 
     a {
-        .link();
+        color: @primaryPurple;
+    }
+
+    a:hover {
+        text-decoration-line: none;
+    }
+
+    a:focus {
+        outline: none;
+        color: #fff;
+        background: @primaryDarkBlue;
     }
 
     h1 {

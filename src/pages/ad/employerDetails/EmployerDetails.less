@@ -1,5 +1,4 @@
 @import (reference) "../../../styles/variables";
-@import (reference) "../../../styles/link";
 
 .EmployerDetails__h2 {
     margin: 4rem 0 1rem;
@@ -27,7 +26,17 @@
     word-wrap: break-word;
 
     a {
-        .link();
+        color: @primaryPurple;
+    }
+
+    a:hover {
+        text-decoration-line: none;
+    }
+
+    a:focus {
+        outline: none;
+        color: #fff;
+        background: @primaryDarkBlue;
     }
 }
 

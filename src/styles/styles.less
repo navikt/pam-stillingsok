@@ -7,7 +7,6 @@
 @import "./footer";
 @import "./header";
 @import "./skiplink";
-@import "./link";
 
 html,
 body {
@@ -45,6 +44,20 @@ body.screen-xs-no-scroll {
     @media (max-width: @screen-xs-max) {
         overflow-y: hidden;
     }
+}
+
+.link {
+    color: @primaryPurple;
+}
+
+.link:hover {
+    text-decoration-line: none;
+}
+
+.link:focus {
+    outline: none;
+    color: #fff;
+    background: @primaryDarkBlue;
 }
 
 input[type="search"] {
