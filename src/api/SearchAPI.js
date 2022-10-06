@@ -1,7 +1,7 @@
 import APIError from "./APIError";
 import { CONTEXT_PATH } from "../environment";
 import { simplifySearchResponse } from "./SearchAPIUtils";
-import { stringifyQuery } from "../pages/search/query";
+import { stringifyQuery } from "../modules/Search/query";
 
 let cache = [];
 const CACHE_MAX_SIZE = 100;
