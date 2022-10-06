@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { captureException } from "@sentry/browser";
 import PropTypes from "prop-types";
 import { SET_SEARCH_STRING } from "../query";
-import Typeahead from "../../../components/typeahead/Typeahead";
+import Typeahead from "../../../components/Typeahead/Typeahead";
 import { FetchAction, useFetchReducer } from "../../../hooks/useFetchReducer";
 import useDebounce from "../../../hooks/useDebounce";
 import SearchAPI from "../../../api/SearchAPI";
