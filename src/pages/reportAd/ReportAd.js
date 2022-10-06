@@ -2,7 +2,7 @@ import * as React from "react";
 import { useContext, useEffect, useState } from "react";
 import "./ReportAd.less";
 import Checkbox from "nav-frontend-skjema/lib/checkbox";
-import { Hovedknapp } from "@navikt/arbeidsplassen-knapper";
+import Button from "../../components/Button/Button";
 import { CONTEXT_PATH } from "../../environment";
 import { captureException } from "@sentry/browser";
 import logAmplitudeEvent from "../../tracking/amplitude";
@@ -120,7 +120,7 @@ const ReportAd = () => {
                 <div>
                     <h2>Du må logge inn</h2>
                     <p>Logg inn med MinID, BankID, BankID på mobil, Buypass eller Commfides.</p>
-                    <Hovedknapp onClick={login}>Logg inn</Hovedknapp>
+                    <Button variant="primary" onClick={login}>Logg inn</Button>
                 </div>
             )}
 
@@ -225,12 +225,13 @@ const ReportAd = () => {
                             )}
 
                             {authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED && (
-                                <Hovedknapp
+                                <Button
+                                    variant="primary"
                                     disabled={(violationCategory === null && scamCategory === null) || !description}
                                     onClick={handleSendTip}
                                 >
                                     Send tips
-                                </Hovedknapp>
+                                </Button>
                             )}
                         </div>
                     )}

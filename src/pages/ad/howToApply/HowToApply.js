@@ -43,13 +43,13 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                 <p className="JobPosting__p">
                     Gi beskjed til bedriften at du ønsker å bli kontaktet for denne stillingen.
                 </p>
-                <Link className="Knapp Knapp--hoved" to={`${CONTEXT_PATH}/stilling/${stilling._id}/meld-interesse`}>
+                <Link className="Button Button--primary" to={`${CONTEXT_PATH}/stilling/${stilling._id}/meld-interesse`}>
                     Meld din interesse
                 </Link>
                 {showFavouriteButton && (
                     <FavouritesButton
                         className="HowToApply__favourite-button"
-                        type="knapp"
+                        variant="secondary"
                         id={stilling._id}
                         stilling={stilling._source}
                     />
@@ -115,7 +115,7 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                 {showFavouriteButton && (
                     <FavouritesButton
                         className="HowToApply__favourite-button"
-                        type="knapp"
+                        variant="secondary"
                         id={stilling._id}
                         stilling={stilling._source}
                     />

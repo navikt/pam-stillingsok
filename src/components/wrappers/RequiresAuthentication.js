@@ -1,5 +1,5 @@
 import React from "react";
-import { Hovedknapp } from "@navikt/arbeidsplassen-knapper";
+import Button from "../Button/Button";
 import { AuthenticationStatus } from "../../context/AuthenticationProvider";
 import DelayedSpinner from "../spinner/DelayedSpinner";
 import ErrorMessage from "../messages/ErrorMessage";
@@ -22,7 +22,7 @@ function RequiresAuthentication({ children, authenticationStatus, login }) {
                 <p className="LoginRequiredMessage__text">
                     Logg inn med MinID, BankID, BankID på mobil, Buypass eller Commfides.
                 </p>
-                <Hovedknapp onClick={login}>Logg inn</Hovedknapp>
+                <Button variant="primary" onClick={login}>Logg inn</Button>
             </section>
         );
     }

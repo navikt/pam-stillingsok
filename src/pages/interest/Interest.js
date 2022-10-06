@@ -6,7 +6,6 @@ import useScrollToTop from "../../hooks/useScrollToTop";
 import BackLink from "../../components/backlink/BackLink";
 import H1WithAutoFocus from "../../components/h1WithAutoFocus/H1WithAutoFocus";
 import "./Interest.less";
-import "../../styles/button.less";
 
 const Interest = ({ match }) => {
 
@@ -34,7 +33,7 @@ const Interest = ({ match }) => {
                 <b>NB! Dette har ikke noe å gjøre med den spesifikke stillingen du var inne på. Denne henvendelsen
                     gjelder bare en frivillig brukertest for arbeidsplassen.no</b>
             </p>
-            <a className="Knapp Knapp--hoved" href="mailto:nav.team.arbeidsplassen@nav.no?subject=Deltagelse av brukertest på arbeidsplassen.no">
+            <a className="Button Button--primary" href="mailto:nav.team.arbeidsplassen@nav.no?subject=Deltagelse av brukertest på arbeidsplassen.no">
                 Jeg vil delta på brukertest
             </a>
         </div>
