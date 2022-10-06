@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { captureException } from "@sentry/browser";
 import { Checkbox, Fieldset, Input, Radio, SkjemaGruppe } from "nav-frontend-skjema";
 import { UserContext } from "../../../context/UserProvider";
-import { Hovedknapp, Knapp } from "@navikt/arbeidsplassen-knapper";
+import Button from "../../../components/Button/Button";
 import useToggle from "../../../hooks/useToggle";
 import { FetchStatus } from "../../../hooks/useFetchReducer";
 import Alert from "../../../components/alert/Alert";
@@ -221,16 +221,17 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
                 <Alert>Noe gikk galt ved lagring, forsøk igjen eller last siden på nytt</Alert>
             )}
             <div className="SaveSearchForm__buttons">
-                <Hovedknapp
+                <Button
+                    variant="primary"
                     htmlType="submit"
                     spinner={saveStatus === FetchStatus.IS_FETCHING}
                     disabled={saveStatus === FetchStatus.IS_FETCHING}
                 >
                     Lagre søk
-                </Hovedknapp>
-                <Knapp htmlType="button" onClick={onClose}>
+                </Button>
+                <Button htmlType="button" onClick={onClose}>
                     Avbryt
-                </Knapp>
+                </Button>
             </div>
         </form>
     );

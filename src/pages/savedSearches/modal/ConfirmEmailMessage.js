@@ -16,7 +16,7 @@ function ConfirmEmailMessage({ onClose }) {
             </p>
 
             <div className="SaveSearchForm__buttons">
-                <button className="Knapp Knapp--hoved" ref={buttonRef} onClick={onClose}>
+                <button className="Button Button--primary" ref={buttonRef} onClick={onClose}>
                     Lukk
                 </button>
             </div>
