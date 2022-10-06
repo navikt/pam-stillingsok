@@ -72,7 +72,7 @@ const RegisterInterest = ({ match }) => {
             InterestAPI.postInterest()
                 .then((data) => {
                     postInterestDispatch({ type: FetchAction.RESOLVE, data });
-                 })
+                })
                 .catch((error) => {
                     captureException(error);
                     postInterestDispatch({ type: FetchAction.REJECT, error });
@@ -96,7 +96,7 @@ const RegisterInterest = ({ match }) => {
             setTelephoneNumberValidationError("Telefonnummer mangler");
         }
 
-        if(!isValid) {
+        if (!isValid) {
             errorSummary.current.focus();
         }
 
@@ -154,9 +154,7 @@ const RegisterInterest = ({ match }) => {
                         />
                         {postInterestResponse.status === FetchStatus.SUCCESS ? (
                             <div className="RegisterInterest__success-message">
-                                <h1 className="RegisterInterest__h1">
-                                    Din interessemelding er registrert
-                                </h1>
+                                <h1 className="RegisterInterest__h1">Din interessemelding er registrert</h1>
                                 <p className="RegisterInterest__p RegisterInterest__mb-2">
                                     Du vil få tilsendt en bekreftelse på e-post.
                                 </p>
@@ -169,9 +167,7 @@ const RegisterInterest = ({ match }) => {
                             </div>
                         ) : (
                             <form onSubmit={handleFormSubmit}>
-                                <H1WithAutoFocus className="RegisterInterest__h1">
-                                    Meld din interesse
-                                </H1WithAutoFocus>
+                                <H1WithAutoFocus className="RegisterInterest__h1">Meld din interesse</H1WithAutoFocus>
                                 <p className="RegisterInterest__lead">
                                     Gi beskjed til bedriften at du ønsker å bli kontaktet angående denne stillingen.
                                 </p>
@@ -211,11 +207,10 @@ const RegisterInterest = ({ match }) => {
                                 </div>
 
                                 <section className="RegisterInterest__section">
-                                    <h2 className="RegisterInterest__h2">
-                                        Fyll inn din kontaktinformasjon
-                                    </h2>
+                                    <h2 className="RegisterInterest__h2">Fyll inn din kontaktinformasjon</h2>
                                     <p className="RegisterInterest__p RegisterInterest__mb-2">
-                                        Kontaktinformasjonen blir tilgjengelig for arbeidsgiver hvis de ønsker å ta kontakt.
+                                        Kontaktinformasjonen blir tilgjengelig for arbeidsgiver hvis de ønsker å ta
+                                        kontakt.
                                     </p>
 
                                     <TextField
@@ -240,9 +235,7 @@ const RegisterInterest = ({ match }) => {
                                 </section>
 
                                 <section className="RegisterInterest__section">
-                                    <h2 className="RegisterInterest__h2">
-                                        Vis frem din erfaring for bedriften
-                                    </h2>
+                                    <h2 className="RegisterInterest__h2">Vis frem din erfaring for bedriften</h2>
                                     <p className="RegisterInterest__p RegisterInterest__mb-2">
                                         Her ser du hvilke kompetanser bedriften legger vekt på i stillingen.
                                     </p>
@@ -280,17 +273,15 @@ const RegisterInterest = ({ match }) => {
                                     </fieldset>
                                 </section>
                                 <p className="RegisterInterest__p">
-                                    Bedriften vil få tilgang til de kompetanser du har oppgitt. Hvis de ønsker å ta kontakt
-                                    får de tilgang til kontaktinformasjonen du har oppgitt.
+                                    Bedriften vil få tilgang til de kompetanser du har oppgitt. Hvis de ønsker å ta
+                                    kontakt får de tilgang til kontaktinformasjonen du har oppgitt.
                                 </p>
                                 <p className="RegisterInterest__p RegisterInterest__mb-2">
                                     Du kan når som helst trekke tilbake denne tilgangen.
                                 </p>
 
                                 {postInterestResponse.status === FetchStatus.FAILURE && (
-                                    <Alert>
-                                        Det oppsto en feil ved sending. Forsøk igjen
-                                    </Alert>
+                                    <Alert>Det oppsto en feil ved sending. Forsøk igjen</Alert>
                                 )}
 
                                 {postInterestResponse.status === FetchStatus.IS_FETCHING ? (
@@ -320,7 +311,7 @@ const RegisterInterest = ({ match }) => {
 };
 
 RegisterInterest.defaultProps = {
-    match: {params: {}}
+    match: { params: {} }
 };
 
 RegisterInterest.propTypes = {

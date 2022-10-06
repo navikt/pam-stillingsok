@@ -1,15 +1,15 @@
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 import Button from "../../components/Button/Button";
 import SearchIsEmptyModal from "./modal/SearchIsEmptyModal";
 import SaveSearchModal from "./modal/SaveSearchModal";
-import {isSearchQueryEmpty, stringifyQuery, toReadableQuery, toSavedSearchQuery} from "../search/query";
-import {AuthenticationContext, AuthenticationStatus} from "../../context/AuthenticationProvider";
-import {HasAcceptedTermsStatus, UserContext} from "../../context/UserProvider";
-import {extractParam} from "../../components/utils";
+import { isSearchQueryEmpty, stringifyQuery, toReadableQuery, toSavedSearchQuery } from "../search/query";
+import { AuthenticationContext, AuthenticationStatus } from "../../context/AuthenticationProvider";
+import { HasAcceptedTermsStatus, UserContext } from "../../context/UserProvider";
+import { extractParam } from "../../components/utils";
 import TermsOfUse from "../../components/modals/TermsOfUse";
 import LoginModal from "../../components/modals/LoginModal";
 import useToggle from "../../hooks/useToggle";
-import {FormModes} from "./modal/SaveSearchForm";
+import { FormModes } from "./modal/SaveSearchForm";
 
 /**
  * Displays the "Save search" button.
@@ -54,7 +54,9 @@ function SaveSearchButton({ query }) {
 
     return (
         <React.Fragment>
-            <Button htmlType="button" onClick={handleClick}>Lagre søk</Button>
+            <Button htmlType="button" onClick={handleClick}>
+                Lagre søk
+            </Button>
 
             {shouldShowQueryIsEmptyModal && <SearchIsEmptyModal onClose={closeQueryIsEmptyModal} />}
 

@@ -14,16 +14,13 @@ async function get(url) {
 
     if (response.status < 200 || response.status > 299) {
         throw new APIError(response.statusText, response.status);
-    } 
+    }
 
     try {
-        return response.json()
+        return response.json();
     } catch (e) {
         throw new APIError(e.message, response.status);
     }
-    
-
-
 }
 
 async function getNextEvent() {

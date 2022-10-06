@@ -56,4 +56,4 @@ export default function useRestoreScroll(id, shouldRestore) {
             captureException(error);
         }
     }, [debouncedScrollTop]);
-};
+}

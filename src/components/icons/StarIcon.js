@@ -49,7 +49,7 @@ function StarFilled({ size, ariaHidden }) {
 
 function StarIcon({ filled, size, ariaHidden }) {
     if (filled) {
-        return <StarFilled size={size} ariaHidden={ariaHidden}/>;
+        return <StarFilled size={size} ariaHidden={ariaHidden} />;
     } else {
         return <Star size={size} ariaHidden={ariaHidden} />;
     }

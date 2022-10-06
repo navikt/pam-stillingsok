@@ -1,13 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import { formatDate, isValidEmail, isValidISOString, isValidUrl } from "../../../components/utils";
 import "./HowToApply.less";
 import logAmplitudeEvent from "../../../tracking/amplitude";
 import FavouritesButton from "../../favourites/FavouritesButton";
 import CalendarIcon from "../../../components/icons/CalendarIcon";
 import InterestAPI from "../../../api/InterestAPI";
-import {CONTEXT_PATH} from "../../../environment";
+import { CONTEXT_PATH } from "../../../environment";
 
 export function getApplicationUrl(source, properties) {
     if (source === "FINN") {
@@ -34,12 +34,10 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
     const applicationUrl = getApplicationUrl(stilling._source.source, properties);
     const isFinn = stilling._source.source === "FINN";
 
-    if(InterestAPI.shouldEnableInterestFeature(stilling._id)) {
+    if (InterestAPI.shouldEnableInterestFeature(stilling._id)) {
         return (
             <section className="JobPosting__section">
-                <h2 className="JobPosting__h2">
-                    Meld din interesse
-                </h2>
+                <h2 className="JobPosting__h2">Meld din interesse</h2>
                 <p className="JobPosting__p">
                     Gi beskjed til bedriften at du ønsker å bli kontaktet for denne stillingen.
                 </p>
@@ -55,7 +53,7 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                     />
                 )}
             </section>
-        )
+        );
     }
 
     if (properties.applicationdue || properties.applicationemail || applicationUrl) {

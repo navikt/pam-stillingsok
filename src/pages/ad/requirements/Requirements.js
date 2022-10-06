@@ -4,7 +4,7 @@ import InterestAPI from "../../../api/InterestAPI";
 import { captureException } from "@sentry/browser";
 import "./Requirements.less";
 
-function Requirements({uuid}) {
+function Requirements({ uuid }) {
     const [{ data, status }, dispatch] = useFetchReducer();
 
     useEffect(() => {
@@ -43,6 +43,6 @@ function Requirements({uuid}) {
     );
 }
 
-Requirements.propTypes = {}
+Requirements.propTypes = {};
 
 export default Requirements;

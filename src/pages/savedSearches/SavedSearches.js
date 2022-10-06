@@ -1,7 +1,7 @@
-import React, {useContext} from "react";
-import {CONTEXT_PATH} from "../../environment";
-import {AuthenticationContext} from "../../context/AuthenticationProvider";
-import {UserContext} from "../../context/UserProvider";
+import React, { useContext } from "react";
+import { CONTEXT_PATH } from "../../environment";
+import { AuthenticationContext } from "../../context/AuthenticationProvider";
+import { UserContext } from "../../context/UserProvider";
 import SavedSearchesList from "./SavedSearchesList";
 import RequiresAuthentication from "../../components/wrappers/RequiresAuthentication";
 import RequiresHasAcceptedTerms from "../../components/wrappers/RequiresHasAcceptedTerms";

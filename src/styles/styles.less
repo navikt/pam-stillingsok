@@ -1,5 +1,5 @@
-@nodeModulesPath: './../../';
-@coreModulePath: './../../';
+@nodeModulesPath: "./../../";
+@coreModulePath: "./../../";
 @import "../../node_modules/nav-frontend-core/less/core";
 @import "../../node_modules/nav-frontend-skjema-style/src/index";
 @import "../../node_modules/@navikt/arbeidsplassen-core/less/skjema/mixins";
@@ -10,54 +10,55 @@
 @import "./skiplink";
 @import "./link";
 
-html, body {
-  height: 100%;
-  margin: 0;
+html,
+body {
+    height: 100%;
+    margin: 0;
 }
 
 body {
-  overflow-y: scroll;
-  background: #fff;
-  color: @primaryDarkBlue;
-  font-family: "Source Sans Pro", Arial, sans-serif;
-  font-size: 1.125rem;
-  .skjemaelement--pink();
+    overflow-y: scroll;
+    background: #fff;
+    color: @primaryDarkBlue;
+    font-family: "Source Sans Pro", Arial, sans-serif;
+    font-size: 1.125rem;
+    .skjemaelement--pink();
 }
 
 #app {
-  height: 100%;
+    height: 100%;
 }
 
 .push-footer-down {
-  min-height: 100%;
-  margin-bottom: -691px;
-  padding-bottom: 691px;
+    min-height: 100%;
+    margin-bottom: -691px;
+    padding-bottom: 691px;
 }
 
 @media (min-width: 940px) {
-  .push-footer-down {
-    margin-bottom: -327px;
-    padding-bottom: 327px;
-  }
+    .push-footer-down {
+        margin-bottom: -327px;
+        padding-bottom: 327px;
+    }
 }
 
 body.screen-xs-no-scroll {
-  @media (max-width: @screen-xs-max) {
-    overflow-y: hidden;
-  }
+    @media (max-width: @screen-xs-max) {
+        overflow-y: hidden;
+    }
 }
 
-input[type=search] {
-  -webkit-appearance: none;
+input[type="search"] {
+    -webkit-appearance: none;
 }
 
 input::-ms-clear {
-  display: none;
+    display: none;
 }
 
 .ReactModal__Content {
-  width: 100%;
-  max-width: 40rem;
+    width: 100%;
+    max-width: 40rem;
 }
 
 /**
@@ -65,17 +66,18 @@ input::-ms-clear {
 */
 
 @media (max-width: @screen-xs-max) {
-  .container {
-    padding-left: 16px;
-    padding-right: 16px;
-  }
+    .container {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
 }
 
-.selectContainer:before, .selectContainer:after {
-  background: @primaryPurple;
+.selectContainer:before,
+.selectContainer:after {
+    background: @primaryPurple;
 }
 
-.skjemaelement__input:focus, .skjemaelement__input:active {
-  border: none;
+.skjemaelement__input:focus,
+.skjemaelement__input:active {
+    border: none;
 }
-

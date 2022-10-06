@@ -10,6 +10,6 @@ function LoadingScreen() {
     );
 }
 
-LoadingScreen.propTypes = {}
+LoadingScreen.propTypes = {};
 
 export default LoadingScreen;

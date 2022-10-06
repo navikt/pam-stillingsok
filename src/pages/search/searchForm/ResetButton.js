@@ -8,12 +8,14 @@ function ResetButton({ dispatch }) {
     }
 
     return (
-        <Button htmlType="button" onClick={handleClick}>Nullstill søk</Button>
+        <Button htmlType="button" onClick={handleClick}>
+            Nullstill søk
+        </Button>
     );
 }
 
 ResetButton.propTypes = {
     dispatch: PropTypes.func.isRequired
-}
+};
 
 export default ResetButton;
