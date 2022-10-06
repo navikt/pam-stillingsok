@@ -1,7 +1,5 @@
-@import (reference) "../../styles/variables";
-
-.Modal {
-    @media (min-width: @screen-sm-min) {
+@media (min-width: 768px) {
+    .Modal {
         padding: 1rem 2rem 2rem 2rem;
     }
 }

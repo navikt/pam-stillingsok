@@ -1,6 +1,6 @@
 import React, { useContext, useLayoutEffect, useRef } from "react";
 import { HistoryContext } from "../../context/HistoryProvider";
-import "./H1WithAutoFocus.less";
+import "./H1WithAutoFocus.css";
 
 /**
  * This view sets focus to h1 title when navigating to a new page.

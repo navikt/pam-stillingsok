@@ -2,7 +2,6 @@
 @coreModulePath: "./../../";
 @import "../../node_modules/nav-frontend-core/less/core";
 @import "./mixins";
-@import "./variables";
 @import "./footer";
 @import "./header";
 @import "./skiplink";
@@ -40,7 +39,7 @@ body {
 body {
     overflow-y: scroll;
     background: #fff;
-    color: @primaryDarkBlue;
+    color: #062140;
     font-family: "Source Sans Pro", Arial, sans-serif;
     font-size: 1.125rem;
     .skjemaelement--pink();
@@ -64,13 +63,13 @@ body {
 }
 
 body.screen-xs-no-scroll {
-    @media (max-width: @screen-xs-max) {
+    @media (max-width: 767px) {
         overflow-y: hidden;
     }
 }
 
 .link {
-    color: @primaryPurple;
+    color: #8c368e;
 }
 
 .link:hover {
@@ -80,7 +79,7 @@ body.screen-xs-no-scroll {
 .link:focus {
     outline: none;
     color: #fff;
-    background: @primaryDarkBlue;
+    background: #062140;
 }
 
 input[type="search"] {
@@ -100,7 +99,7 @@ input::-ms-clear {
 * Overrides
 */
 
-@media (max-width: @screen-xs-max) {
+@media (max-width: 767px) {
     .container {
         padding-left: 16px;
         padding-right: 16px;
@@ -109,7 +108,7 @@ input::-ms-clear {
 
 .selectContainer:before,
 .selectContainer:after {
-    background: @primaryPurple;
+    background: #8c368e;
 }
 
 .skjemaelement__input:focus,

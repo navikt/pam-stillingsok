@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./Spinner.less";
+import "./Spinner.css";
 
 /**
  * While doing fetch calls on a fast network, a spinner will normally be

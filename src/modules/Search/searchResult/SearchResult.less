@@ -1,7 +1,5 @@
-@import (reference) "../../../styles/variables";
-
 .SearchResult {
-    @media (min-width: @screen-md-min) {
+    @media (min-width: 992px) {
         position: relative;
         flex: 1;
         margin-left: 6rem;
@@ -12,7 +10,7 @@
     padding-bottom: 0.75rem;
     line-height: 1;
 
-    @media (min-width: @screen-sm-min) {
+    @media (min-width: 768px) {
         display: flex;
         justify-content: space-between;
         align-items: flex-end;
@@ -34,7 +32,7 @@
         margin-right: 0.5rem;
     }
 
-    @media (max-width: @screen-sm-max) {
+    @media (max-width: 991px) {
         display: none;
     }
 }

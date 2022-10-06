@@ -1,10 +1,8 @@
-@import "./variables";
-
 .skjemaelement--pink() {
     .checkboks:hover,
     .radioknapp:hover {
         + .skjemaelement__label {
-            color: @primaryPurple;
+            color: #8c368e;
         }
     }
 
@@ -12,33 +10,33 @@
     .radioknapp:hover {
         + .skjemaelement__label:before {
             background-color: #ffe7fb;
-            border-color: @primaryPurple;
+            border-color: #8c368e;
         }
     }
 
     .checkboks:checked + .skjemaelement__label:before {
-        background-color: @primaryPurple;
-        border-color: @primaryPurple;
+        background-color: #8c368e;
+        border-color: #8c368e;
     }
 
     .radioknapp:checked + .skjemaelement__label:before {
-        border: 2px solid @primaryPurple;
-        box-shadow: inset 0 0 0 3px #fff, inset 0 0 0 12px @primaryPurple;
+        border: 2px solid #8c368e;
+        box-shadow: inset 0 0 0 3px #fff, inset 0 0 0 12px #8c368e;
     }
 
     .radioknapp:checked:focus + .skjemaelement__label:before {
-        box-shadow: 0 0 0 2px #ffbd66, 0 0 0 3px #fff inset, 0 0 0 12px @primaryPurple inset;
+        box-shadow: 0 0 0 2px #ffbd66, 0 0 0 3px #fff inset, 0 0 0 12px #8c368e inset;
     }
 
     .skjemaelement__input:hover {
-        border-color: @primaryPurple;
+        border-color: #8c368e;
     }
 
     select option[selected="true"] {
-        background-color: @primaryPurple;
+        background-color: #8c368e;
     }
 
     &:hover {
-        border-color: @primaryPurple;
+        border-color: #8c368e;
     }
 }

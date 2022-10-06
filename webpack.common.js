@@ -1,28 +1,16 @@
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
-const devMode = process.env.NODE_ENV !== 'production';
+const devMode = process.env.NODE_ENV !== "production";
 
 module.exports = {
-    devtool: 'source-map',
-    optimization: {
-        splitChunks: {
-            cacheGroups: {
-                styles: {
-                    name: 'styles',
-                    test: /\.css$/,
-                    chunks: 'all',
-                    enforce: true
-                }
-            }
-        }
-    },
+    devtool: "source-map",
     entry: {
-        sok: ['babel-polyfill', 'whatwg-fetch', './src/app.js']
+        sok: ["babel-polyfill", "whatwg-fetch", "./src/app.js"]
     },
     output: {
         path: `${__dirname}/dist`,
-        filename: 'js/[name].js',
-        publicPath: '/sok/'
+        filename: "js/[name].js",
+        publicPath: "/sok/"
     },
     module: {
         rules: [
@@ -30,9 +18,9 @@ module.exports = {
                 test: /\.js$/,
                 exclude: /node_modules/,
                 use: {
-                    loader: 'babel-loader',
+                    loader: "babel-loader",
                     options: {
-                        presets: ['es2015', 'react', 'stage-2']
+                        presets: ["es2015", "react", "stage-2"]
                     }
                 }
             },
@@ -43,24 +31,21 @@ module.exports = {
                         loader: MiniCssExtractPlugin.loader
                     },
                     {
-                        loader: 'css-loader'
+                        loader: "css-loader"
                     },
                     {
-                        loader: 'less-loader',
-                        options: {
-                            includePaths: ['styles/']
-                        }
+                        loader: "less-loader"
                     }
                 ]
             }
         ]
     },
     resolve: {
-        extensions: ['.js', '.jsx']
+        extensions: [".js", ".jsx"]
     },
     plugins: [
         new MiniCssExtractPlugin({
-            filename: 'css/[name].css'
+            filename: "css/[name].css"
         })
     ]
 };
