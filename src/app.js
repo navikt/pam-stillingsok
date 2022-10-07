@@ -4,7 +4,7 @@ import AuthenticationProvider, { fixUrlAfterLogin } from "./modules/Authenticati
 import UserProvider from "./modules/User/UserProvider";
 import FavouritesProvider from "./modules/Favourites/FavouritesProvider";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import BrowserSupportInfo from "./components/BrowserSupportInfo/BrowserSupportInfo";
+import BrowserSupportInfo from "./components/browserSupportInfo/BrowserSupportInfo";
 import Header from "./components/Header/Header";
 import { CONTEXT_PATH } from "./environment";
 import initSentry from "./tracking/sentry";
@@ -30,7 +30,9 @@ function Application() {
                     <BrowserRouter>
                         <HistoryProvider>
                             <BrowserSupportInfo tillatLukking={true} />
-                            <Header />
+                            <Switch>
+                                <Route component={Header} />
+                            </Switch>
                             <Switch>
                                 <Route exact path={CONTEXT_PATH} component={SearchPage} />
                                 <Route
