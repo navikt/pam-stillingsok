@@ -37,7 +37,7 @@
 }
 
 .SavedSearchListItem {
-  padding: 1.25rem;
+  padding: @list-box-padding;
   display: block;
   margin: 0;
 
@@ -89,8 +89,8 @@
   justify-content: flex-end;
 }
 
-.SavedSearchListItem__bottom .Button:not(:last-child) {
-  margin-right: 1rem;
+.SavedSearchListItem__bottom .Knapp:not(:last-child) {
+  margin-right: @button-marginRight;
 }
 
 .SavedSearchListItem__created {
@@ -109,17 +109,17 @@
 }
 
 .SavedSearchModal {
-  padding: 1rem;
+  padding: @modal-padding;
 }
 
 @media (max-width: @screen-xs-max) {
   .SavedSearchModal {
-    padding: 0;
+    padding: @modal-padding-mobile;
   }
 }
 
 .SavedSearchModal__title {
-  margin-bottom: 1.25rem;
+  margin-bottom: @modal-title-margin-bottom;
 }
 
 .SavedSearchModal__form-mode {
@@ -131,12 +131,12 @@
 }
 
 .SavedSearchModal__body {
-  margin-bottom: 2.5rem;
+  margin-bottom: @modal-body-margin-bottom;
 }
 
 
-.SavedSearchModal__buttons .Button:not(:last-child) {
-  margin-right: 1rem;
+.SavedSearchModal__buttons .Knapp:not(:last-child) {
+  margin-right: @button-marginRight;
 }
 
 @media (max-width: @screen-xs-max) {
