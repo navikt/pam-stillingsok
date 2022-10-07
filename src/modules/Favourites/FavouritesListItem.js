@@ -6,8 +6,7 @@ import UserAPI from "../../api/UserAPI";
 import { captureException } from "@sentry/browser";
 import { FavouritesContext } from "./FavouritesProvider";
 import AlertModalWithPageReload from "../../components/AlertModal/AlertModalWithPageReload";
-import Button from "../../components/Button/Button";
-import DeleteIcon from "../../components/Icon/DeleteIcon";
+import DeleteButton from "../../components/Button/DeleteButton";
 
 function FavouritesListItem({ favourite, removeFavouriteFromList }) {
     const favouritesProvider = useContext(FavouritesContext);
@@ -52,12 +51,7 @@ function FavouritesListItem({ favourite, removeFavouriteFromList }) {
                     }
                 }}
                 showExpired={favourite.favouriteAd.status !== "ACTIVE"}
-                favouriteButton={
-                    <Button variant="flat" onClick={openConfirmDeleteModal}>
-                        <DeleteIcon />
-                        Slett
-                    </Button>
-                }
+                favouriteButton={<DeleteButton onClick={openConfirmDeleteModal}>Slett</DeleteButton>}
             />
 
             {shouldShowConfirmDeleteModal && (
