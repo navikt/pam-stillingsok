@@ -1,24 +1,14 @@
 import PropTypes from "prop-types";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { SET_PUBLISHED } from "../../query";
 import CriteriaPanel from "./CriteriaPanel";
-import mergeCount from "../utils/mergeCount";
 import { Checkbox } from "@navikt/ds-react";
 
 export const PublishedLabelsEnum = {
     "now/d": "Nye i dag"
 };
 
-function Published({ dispatch, query, initialValues, updatedValues }) {
-    const [values, setValues] = useState(initialValues);
-
-    useEffect(() => {
-        if (updatedValues) {
-            const merged = mergeCount(values, updatedValues);
-            setValues(merged);
-        }
-    }, [updatedValues]);
-
+function Published({ dispatch, query, values }) {
     function handleClick(e) {
         const { value } = e.target;
         if (e.target.checked) {
@@ -48,7 +38,7 @@ function Published({ dispatch, query, initialValues, updatedValues }) {
 }
 
 Published.propTypes = {
-    initialValues: PropTypes.arrayOf(
+    values: PropTypes.arrayOf(
         PropTypes.shape({
             key: PropTypes.string,
             count: PropTypes.number

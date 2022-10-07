@@ -1,21 +1,12 @@
 import PropTypes from "prop-types";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import CriteriaPanel from "./CriteriaPanel";
 import UnknownSearchCriteriaValues from "./UnknownSearchCriteriaValues";
 import { ADD_EXTENT, REMOVE_EXTENT } from "../../query";
-import mergeCount from "../utils/mergeCount";
-import { findUnknownSearchCriteriaValues } from "../utils/findUnknownSearchCriteriaValues";
 import { Checkbox } from "@navikt/ds-react";
 
-function Extent({ initialValues, updatedValues, query, dispatch }) {
-    const [values, setValues] = useState(initialValues);
-
-    useEffect(() => {
-        if (updatedValues) {
-            const merged = mergeCount(values, updatedValues);
-            setValues(merged);
-        }
-    }, [updatedValues]);
+function Extent({ data, query, dispatch }) {
+    const values = data.aggregations.extent;
 
     function handleClick(e) {
         const { value } = e.target;
@@ -48,7 +39,7 @@ function Extent({ initialValues, updatedValues, query, dispatch }) {
 
                 <UnknownSearchCriteriaValues
                     namePrefix="extent"
-                    unknownValues={findUnknownSearchCriteriaValues(query.extent, initialValues)}
+                    unknownValues={data.unknown.extent}
                     checkedValues={query.extent}
                     onClick={handleClick}
                 />
@@ -58,12 +49,6 @@ function Extent({ initialValues, updatedValues, query, dispatch }) {
 }
 
 Extent.propTypes = {
-    initialValues: PropTypes.arrayOf(
-        PropTypes.shape({
-            key: PropTypes.string,
-            count: PropTypes.number
-        })
-    ).isRequired,
     query: PropTypes.shape({
         extent: PropTypes.arrayOf(PropTypes.string)
     }).isRequired,

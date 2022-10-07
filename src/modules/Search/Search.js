@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useReducer, useRef } from "react";
+import React, { useContext, useEffect, useReducer, useRef, useState } from "react";
 import { captureException } from "@sentry/browser";
 import { CONTEXT_PATH } from "../../environment";
 import { AuthenticationContext, AuthenticationStatus } from "../Authentication/AuthenticationProvider";
@@ -13,7 +13,7 @@ import queryReducer, {
 } from "./query";
 import { extractParam } from "../../components/utils";
 import { FetchAction, FetchStatus, useFetchReducer } from "../../hooks/useFetchReducer";
-import SearchAPI from "../../api/SearchAPI";
+import SearchAPI from "../../api/SearchAPI/SearchAPI";
 import ErrorMessage from "../../components/messages/ErrorMessage";
 import SearchForm from "./searchForm/SearchForm";
 import useDocumentTitle from "../../hooks/useDocumentTitle";
@@ -30,25 +30,21 @@ import EventBanner from "./event/EventBanner";
 const Search = () => {
     const { authenticationStatus } = useContext(AuthenticationContext);
     const [query, queryDispatch] = useReducer(queryReducer, initialQuery, initQueryWithValuesFromBrowserUrl);
-    const [initialSearchResponse, initialSearchDispatch] = useFetchReducer();
+    const [initialSearchDone, setInitialSearchDone] = useState(false);
     const [searchResponse, searchDispatch] = useFetchReducer();
     const latestSearch = useRef();
     let history = useHistory();
 
     useDocumentTitle("Ledige stillinger");
     useTrackPageview(CONTEXT_PATH, "Ledige stillinger");
-    useRestoreScroll("search-page", initialSearchResponse.status === FetchStatus.SUCCESS);
+    useRestoreScroll("search-page", initialSearchDone);
 
     /**
      * Make an initial search when view is shown.
      * Search again when user changes a search criteria.
      */
     useEffect(() => {
-        if (initialSearchResponse.status === FetchStatus.NOT_FETCHED) {
-            fetchInitialSearch();
-        } else {
-            fetchSearch();
-        }
+        fetchSearch();
     }, [query]);
 
     /**
@@ -67,31 +63,6 @@ const Search = () => {
         history.replace(CONTEXT_PATH + stringifyQuery(browserQuery));
     }, [query]);
 
-    function fetchInitialSearch() {
-        initialSearchDispatch({ type: FetchAction.BEGIN });
-
-        const promises = [
-            SearchAPI.search(toApiQuery(initialQuery)), // An empty search aggregates search criteria across all ads
-            SearchAPI.getAndCache("api/locations") // Search criteria for locations are not aggregated, but based on a predefined list
-        ];
-
-        // If user has some search criteria in browser url, make an extra search to get that result
-        if (Object.keys(toBrowserQuery(query)).length > 0) {
-            promises.push(SearchAPI.search(toApiQuery(query)));
-        }
-
-        Promise.all(promises)
-            .then((responses) => {
-                const [initialSearchResult, locations, searchResult] = responses;
-                searchDispatch({ type: FetchAction.RESOLVE, data: searchResult ? searchResult : initialSearchResult });
-                initialSearchDispatch({ type: FetchAction.RESOLVE, data: { ...initialSearchResult, locations } });
-            })
-            .catch((error) => {
-                captureException(error);
-                initialSearchDispatch({ type: FetchAction.REJECT, error });
-            });
-    }
-
     function fetchSearch() {
         searchDispatch({ type: FetchAction.BEGIN });
         const search = SearchAPI.search(toApiQuery(query));
@@ -105,6 +76,7 @@ const Search = () => {
                 if (latestSearch.current === search) {
                     const mergedResult = query.from > 0 ? mergeAndRemoveDuplicates(searchResponse, response) : response;
                     searchDispatch({ type: FetchAction.RESOLVE, data: mergedResult });
+                    setInitialSearchDone(true);
                 }
             })
             .catch((error) => {
@@ -140,18 +112,16 @@ const Search = () => {
     return (
         <React.Fragment>
             <H1WithAutoFocus className="Search__h1">Ledige stillinger</H1WithAutoFocus>
-
             {authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED && <LinkMenu />}
 
-            {initialSearchResponse.status === FetchStatus.FAILURE && <ErrorMessage />}
-            {initialSearchResponse.status === FetchStatus.IS_FETCHING && <LoadingScreen />}
-            {initialSearchResponse.status === FetchStatus.SUCCESS && (
+            {!initialSearchDone && searchResponse.status === FetchStatus.FAILURE && <ErrorMessage />}
+            {!initialSearchDone && searchResponse.status === FetchStatus.IS_FETCHING && <LoadingScreen />}
+            {initialSearchDone && (
                 <div className="Search__flex-wrapper">
                     <div>
                         <SearchForm
                             query={query}
                             dispatchQuery={queryDispatch}
-                            initialSearchResult={initialSearchResponse.data}
                             searchResult={searchResponse.data}
                             fetchSearch={fetchSearch}
                         />

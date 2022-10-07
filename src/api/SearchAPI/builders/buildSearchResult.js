@@ -2,7 +2,7 @@
  * This function extract and return only the search result information
  * we need, and make response less nested.
  */
-export async function simplifySearchResponse(response) {
+export function buildSearchResult(response) {
     const nationalCountMap = {};
     const internationalCountMap = {};
 

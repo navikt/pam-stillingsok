@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { captureException } from "@sentry/browser";
 import { Link } from "react-router-dom";
-import SearchAPI from "../../api/SearchAPI";
+import SearchAPI from "../../api/SearchAPI/SearchAPI";
 import InterestAPI from "../../api/InterestAPI";
 import { FetchAction, FetchStatus, useFetchReducer } from "../../hooks/useFetchReducer";
 import useScrollToTop from "../../hooks/useScrollToTop";

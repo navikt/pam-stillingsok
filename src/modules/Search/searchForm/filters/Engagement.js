@@ -1,22 +1,13 @@
 import PropTypes from "prop-types";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { ADD_ENGAGEMENT_TYPE, REMOVE_ENGAGEMENT_TYPE } from "../../query";
 import CriteriaPanel from "./CriteriaPanel";
 import UnknownSearchCriteriaValues from "./UnknownSearchCriteriaValues";
-import mergeCount from "../utils/mergeCount";
 import moveCriteriaToBottom from "../utils/moveFacetToBottom";
-import { findUnknownSearchCriteriaValues } from "../utils/findUnknownSearchCriteriaValues";
 import { Checkbox } from "@navikt/ds-react";
 
-function Engagement({ initialValues, updatedValues, query, dispatch }) {
-    const [values, setValues] = useState(moveCriteriaToBottom(initialValues, "Annet"));
-
-    useEffect(() => {
-        if (updatedValues) {
-            const merged = mergeCount(values, updatedValues);
-            setValues(merged);
-        }
-    }, [updatedValues]);
+function Engagement({ data, query, dispatch }) {
+    const values = moveCriteriaToBottom(data.aggregations.engagementTypes, "Annet");
 
     function handleClick(e) {
         const { value } = e.target;
@@ -57,7 +48,7 @@ function Engagement({ initialValues, updatedValues, query, dispatch }) {
                 ))}
                 <UnknownSearchCriteriaValues
                     namePrefix="engagementType"
-                    unknownValues={findUnknownSearchCriteriaValues(query.engagementType, initialValues)}
+                    unknownValues={data.unknown.engagementType}
                     checkedValues={query.engagementType}
                     onClick={handleClick}
                 />
@@ -67,12 +58,6 @@ function Engagement({ initialValues, updatedValues, query, dispatch }) {
 }
 
 Engagement.propTypes = {
-    initialValues: PropTypes.arrayOf(
-        PropTypes.shape({
-            key: PropTypes.string,
-            count: PropTypes.number
-        })
-    ).isRequired,
     query: PropTypes.shape({
         engagementType: PropTypes.arrayOf(PropTypes.string)
     }).isRequired,

@@ -5,7 +5,7 @@ import { SET_SEARCH_STRING } from "../query";
 import Typeahead from "../../../components/Typeahead/Typeahead";
 import { FetchAction, useFetchReducer } from "../../../hooks/useFetchReducer";
 import useDebounce from "../../../hooks/useDebounce";
-import SearchAPI from "../../../api/SearchAPI";
+import SearchAPI from "../../../api/SearchAPI/SearchAPI";
 
 function SearchBox({ dispatch, query }) {
     const [value, setValue] = useState("");
