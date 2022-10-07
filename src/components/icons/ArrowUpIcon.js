@@ -1,6 +1,6 @@
 import React from "react";
 
-function ArrowUpIcon({ ariaHidden }) {
+function ArrowUpIcon({ariaHidden}) {
     return (
         <svg
             width="1em"

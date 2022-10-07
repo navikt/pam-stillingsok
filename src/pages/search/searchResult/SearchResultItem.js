@@ -1,14 +1,19 @@
 import PropTypes from "prop-types";
-import React, { useLayoutEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import React, {useLayoutEffect, useRef} from "react";
+import {Link} from "react-router-dom";
 import getEmployer from "../../../../server/common/getEmployer";
 import getWorkLocation from "../../../../server/common/getWorkLocation";
-import { CONTEXT_PATH } from "../../../environment";
-import { formatDate } from "../../../components/utils";
+import {CONTEXT_PATH} from "../../../environment";
+import {formatDate} from "../../../components/utils";
 import "./SearchResultsItem.less";
 import Tag from "../../../components/tag/Tag";
 
-export default function SearchResultItem({ ad, showExpired, favouriteButton, shouldAutoFocus }) {
+export default function SearchResultItem({
+     ad,
+     showExpired,
+     favouriteButton,
+     shouldAutoFocus
+ }) {
     const location = getWorkLocation(ad.properties.location, ad.locationList);
     const employer = getEmployer(ad);
     const isFinn = ad.source && ad.source.toLowerCase() === "finn";
@@ -18,10 +23,10 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, sho
     const ref = useRef();
 
     useLayoutEffect(() => {
-        if (shouldAutoFocus && ref.current) {
+        if(shouldAutoFocus && ref.current) {
             ref.current.focus();
         }
-    }, [shouldAutoFocus]);
+    }, [shouldAutoFocus])
 
     return (
         <article
@@ -86,7 +91,7 @@ SearchResultItem.propTypes = {
     shouldAutofocus: PropTypes.bool
 };
 
-function LinkToAd({ children, stilling, isFinn }) {
+function LinkToAd({children, stilling, isFinn}) {
     if (isFinn) {
         return (
             <a href={`https://www.finn.no/${stilling.reference}`} className="link">

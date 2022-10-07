@@ -2,14 +2,16 @@ import amplitude from "amplitude-js";
 
 export function initAmplitude() {
     amplitude.getInstance();
-    amplitude.init(window.__AMPLITUDE_TOKEN__, null, {
-        apiEndpoint: "amplitude.nav.no/collect",
-        batchEvents: false,
-        includeReferrer: true,
-        includeUtm: true,
-        saveEvents: false,
-        transport: "beacon"
-    });
+    amplitude.init(
+        window.__AMPLITUDE_TOKEN__, null, {
+            apiEndpoint: 'amplitude.nav.no/collect',
+            batchEvents: false,
+            includeReferrer: true,
+            includeUtm: true,
+            saveEvents: false,
+            transport: 'beacon',
+        }
+    );
 }
 
 export const logAmplitudePageview = (additionalData) => {
@@ -22,10 +24,10 @@ export const logAmplitudePageview = (additionalData) => {
         data = {
             ...data,
             ...additionalData
-        };
+        }
     }
 
-    logAmplitudeEvent("Sidevisning", data);
+    logAmplitudeEvent('Sidevisning', data);
 };
 
 export function logStillingVisning(ad) {
@@ -45,20 +47,21 @@ export function logStillingVisning(ad) {
 const enrichData = (data) => {
     const isAuthenticated = false;
 
-    let enrichedData = { ...data, isAuthenticated };
+    let enrichedData = {...data, isAuthenticated }
 
     try {
-        const erMellom25og30 = sessionStorage.getItem("erMellom25og30");
+        const erMellom25og30 = sessionStorage.getItem('erMellom25og30');
 
-        if (erMellom25og30 !== "undefined" && erMellom25og30 === "true") {
-            enrichedData = { ...enrichedData, ageGroup: "25-30" };
+        if (erMellom25og30 !== 'undefined' && erMellom25og30 === 'true') {
+            enrichedData = {...enrichedData, ageGroup: '25-30' }
         }
     } catch (e) {
         // ignore sessionStorage error
     }
 
+
     return enrichedData;
-};
+}
 
 const logAmplitudeEvent = (event, data) => {
     amplitude.logEvent(event, enrichData(data));

@@ -21,9 +21,16 @@ const SearchForm = ({ fetchSearch, query, dispatchQuery, initialSearchResult, se
     }
 
     return (
-        <form id="sok" className="Search__form" onSubmit={submitForm} role="search">
+        <form
+            id="sok"
+            className="Search__form"
+            onSubmit={submitForm}
+            role="search"
+        >
             <SkipToResult data={searchResult} />
-            <h2 className="Search__h2">Søk</h2>
+            <h2 className="Search__h2">
+                Søk
+            </h2>
             <SearchBox query={query} dispatch={dispatchQuery} />
             <Counties
                 query={query}

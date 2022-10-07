@@ -1,8 +1,8 @@
-import React from "react";
-import PropTypes from "prop-types";
-import "./TextField.less";
+import React from 'react';
+import PropTypes from 'prop-types';
+import './TextField.less';
 
-function TextField({ id, label, value, type, onChange, error, autoComplete }) {
+function TextField({id, label, value, type, onChange, error, autoComplete}) {
     return (
         <div className="TextField">
             <label className="TextField__label" htmlFor={id}>
@@ -31,7 +31,7 @@ TextField.defaultProps = {
     error: undefined,
     type: "text",
     autoComplete: undefined
-};
+}
 
 TextField.propTypes = {
     id: PropTypes.string.isRequired,
@@ -40,6 +40,6 @@ TextField.propTypes = {
     autoComplete: PropTypes.string,
     onChange: PropTypes.func.isRequired,
     error: PropTypes.string
-};
+}
 
 export default TextField;

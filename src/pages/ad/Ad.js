@@ -98,7 +98,9 @@ const Ad = ({ match }) => {
                         {!isFinn && (
                             <React.Fragment>
                                 <Summary stilling={ad._source} />
-                                {InterestAPI.shouldEnableInterestFeature(ad._id) && <Requirements uuid={ad._id} />}
+                                {InterestAPI.shouldEnableInterestFeature(ad._id) && (
+                                    <Requirements uuid={ad._id}/>
+                                )}
                                 <AdText adText={ad._source.properties.adtext} />
                                 <EmployerDetails stilling={ad._source} />
                             </React.Fragment>
@@ -123,7 +125,7 @@ const Ad = ({ match }) => {
 };
 
 Ad.defaultProps = {
-    match: { params: {} }
+    match: {params: {}}
 };
 
 Ad.propTypes = {

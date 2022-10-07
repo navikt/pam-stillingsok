@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-function ChevronLeftIcon({ ariaHidden }) {
+function ChevronLeftIcon({ariaHidden}) {
     return (
         <svg
             width="1em"
@@ -25,7 +25,7 @@ function ChevronLeftIcon({ ariaHidden }) {
 
 ChevronLeftIcon.defaultProps = {
     ariaHidden: undefined
-};
+}
 
 ChevronLeftIcon.propTypes = {
     ariaHidden: PropTypes.bool

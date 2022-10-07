@@ -1,26 +1,26 @@
 @import (reference) "../../styles/variables";
 
 .TypeaheadSuggestion__substring {
-    font-weight: 600;
+  font-weight: 600;
 }
 
 .TypeaheadSuggestion__inner {
-    display: block;
-    width: 100%;
-    padding: 0px 1rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  display: block;
+  width: 100%;
+  padding: 0px 1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .TypeaheadSuggestion--active {
-    color: @primaryDarkBlue;
-    background-color: @secondaryTurquoise;
+  color: @primaryDarkBlue;
+  background-color: @secondaryTurquoise;
 }
 
 @media (max-width: @screen-sm-max) {
-    .TypeaheadSuggestion__inner {
-        padding: 0.5rem 1rem;
-        border-top: 1px solid #e9e7e7;
-    }
+  .TypeaheadSuggestion__inner {
+    padding: 0.5rem 1rem;
+    border-top: 1px solid #E9E7E7;
+  }
 }

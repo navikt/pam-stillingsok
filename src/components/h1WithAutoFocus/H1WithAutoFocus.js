@@ -1,6 +1,6 @@
-import React, { useContext, useLayoutEffect, useRef } from "react";
-import { HistoryContext } from "../../context/HistoryProvider";
-import "./H1WithAutoFocus.less";
+import React, {useContext, useLayoutEffect, useRef} from "react";
+import {HistoryContext} from "../../context/HistoryProvider";
+import './H1WithAutoFocus.less';
 
 /**
  * This view sets focus to h1 title when navigating to a new page.
@@ -9,9 +9,9 @@ import "./H1WithAutoFocus.less";
  * announce that a new page is loaded, as it would do when loading a page from server.
  * Focus is also lost somewhere in the DOM. Setting focus to h1 may improve this.
  */
-function H1WithAutoFocus({ children, className }) {
+function H1WithAutoFocus({children, className}) {
     const ref = useRef(null);
-    const { hasHistory } = useContext(HistoryContext);
+    const {hasHistory} = useContext(HistoryContext);
 
     useLayoutEffect(() => {
         if (hasHistory) {

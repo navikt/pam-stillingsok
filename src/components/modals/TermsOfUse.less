@@ -1,71 +1,73 @@
 @import (reference) "../../styles/variables";
 
 .TermsOfUse {
-    > .bekreftCheckboksPanel {
-        display: flex;
-        flex-direction: column-reverse;
-        margin: 1rem 0 2rem 0;
 
-        .skjemaelement {
-            display: flex;
-            flex-direction: column;
+  > .bekreftCheckboksPanel {
+    display: flex;
+    flex-direction: column-reverse;
+    margin: 1rem 0 2rem 0;
 
-            label {
-                font-weight: 600;
-                font-size: 1.125rem;
-                padding-left: 2.5rem;
-            }
-        }
+    .skjemaelement {
+      display: flex;
+      flex-direction: column;
 
-        .bekreftCheckboksPanel__innhold {
-            margin-left: 2.5rem;
-            margin-bottom: 0;
-        }
+      label {
+        font-weight: 600;
+        font-size: 1.125rem;
+        padding-left: 2.5rem;
+      }
     }
+
+    .bekreftCheckboksPanel__innhold {
+      margin-left: 2.5rem;
+      margin-bottom: 0;
+    }
+  }
 }
 
 .TermsOfUse__error {
-    margin-bottom: 2rem;
+  margin-bottom: 2rem;
 }
 
 .TermsOfUse__title {
-    margin-bottom: 1.25rem;
+  margin-bottom: 1.25rem;
 }
 
 .TermsOfUse__section {
-    font-size: 1.125rem;
-    line-height: 1.5;
-    margin-bottom: 2rem;
+  font-size: 1.125rem;
+  line-height: 1.5;
+  margin-bottom: 2rem;
 }
 
 .TermsOfUse__section--last {
-    margin-bottom: 2.5rem;
+  margin-bottom: 2.5rem;
 }
 
 .TermsOfUse__section--email {
-    margin-bottom: 1rem;
+  margin-bottom: 1rem;
 }
 
 .TermsOfUse__input {
-    margin-top: 1.25rem;
+  margin-top: 1.25rem;
 }
 
 .TermsOfUse__buttons .Button:not(:last-child) {
-    margin-right: 1rem;
+  margin-right: 1rem;
 }
 
 @media (max-width: @screen-xs-max) {
-    .TermsOfUse {
-        padding: 0;
-    }
+  .TermsOfUse {
+    padding: 0;
+  }
 
-    .TermsOfUse__buttons .Button:not(:last-child) {
-        margin-bottom: 1rem;
-    }
+  .TermsOfUse__buttons .Button:not(:last-child) {
+    margin-bottom: 1rem;
+  }
 }
 
 @media (min-width: @screen-md-min) {
-    .TermsOfUse__buttons .Button:not(:last-child) {
-        margin-right: 1rem;
-    }
+  .TermsOfUse__buttons .Button:not(:last-child) {
+    margin-right: 1rem;
+  }
 }
+

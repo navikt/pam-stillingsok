@@ -25,7 +25,7 @@ function ChevronExpandIcon({ ariaHidden }) {
 
 ChevronExpandIcon.defaultProps = {
     ariaHidden: undefined
-};
+}
 
 ChevronExpandIcon.propTypes = {
     ariaHidden: PropTypes.bool

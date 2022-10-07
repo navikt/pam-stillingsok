@@ -35,10 +35,7 @@ function Application() {
                             </Switch>
                             <Switch>
                                 <Route exact path={CONTEXT_PATH} component={Search} />
-                                <Route
-                                    path={`${CONTEXT_PATH}/stilling/:uuid/meld-interesse`}
-                                    component={RegisterInterest}
-                                />
+                                <Route path={`${CONTEXT_PATH}/stilling/:uuid/meld-interesse`} component={RegisterInterest} />
                                 <Route path={`${CONTEXT_PATH}/stilling/:uuid`} component={Ad} />
                                 <Route path={`${CONTEXT_PATH}/intern/:uuid`} component={Ad} />
                                 <Route path={`${CONTEXT_PATH}/rapporter-annonse`} component={ReportAd} />

@@ -25,7 +25,7 @@ function ChevronCollapseIcon({ ariaHidden }) {
 
 ChevronCollapseIcon.defaultProps = {
     ariaHidden: undefined
-};
+}
 
 ChevronCollapseIcon.propTypes = {
     ariaHidden: PropTypes.bool

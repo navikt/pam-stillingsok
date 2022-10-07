@@ -15,9 +15,7 @@
     "docker-rm": "docker rm pam-stillingsok",
     "docker-stop": "docker stop pam-stillingsok",
     "snyk-protect": "snyk-protect",
-    "prepare": "npm run snyk-protect",
-    "prettier:check": "npx prettier -c src",
-    "prettier:format": "npx prettier -w src"
+    "prepare": "npm run snyk-protect"
   },
   "author": "",
   "license": "ISC",

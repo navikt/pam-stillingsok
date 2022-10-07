@@ -1,6 +1,6 @@
 import React from "react";
 
-function HeartIcon({ ariaHidden }) {
+function HeartIcon({ariaHidden}) {
     return (
         <svg
             width="1em"
@@ -24,6 +24,6 @@ function HeartIcon({ ariaHidden }) {
     );
 }
 
-HeartIcon.propTypes = {};
+HeartIcon.propTypes = {}
 
 export default HeartIcon;

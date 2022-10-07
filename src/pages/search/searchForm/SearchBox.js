@@ -17,7 +17,7 @@ function SearchBox({ dispatch, query }) {
     function fetchSuggestions() {
         SearchAPI.get("api/suggestions", { match: value, minLength: MINIMUM_LENGTH })
             .then((response) => {
-                suggestionsDispatch({ type: FetchAction.RESOLVE, data: removeDuplicateSuggestions(response) });
+               suggestionsDispatch({ type: FetchAction.RESOLVE, data: removeDuplicateSuggestions(response) });
             })
             .catch((err) => {
                 captureException(err);
@@ -70,9 +70,7 @@ function SearchBox({ dispatch, query }) {
 
     return (
         <React.Fragment>
-            <label className="SearchBox__label" htmlFor="search-form-fritekst-input">
-                Skriv et eller flere søkeord
-            </label>
+            <label className="SearchBox__label" htmlFor="search-form-fritekst-input">Skriv et eller flere søkeord</label>
             <div className="SearchBox">
                 <Typeahead
                     id="search-form-fritekst-input"
