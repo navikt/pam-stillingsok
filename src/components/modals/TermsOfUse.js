@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import { BekreftCheckboksPanel } from "nav-frontend-skjema";
-import Button from "../Button/Button";
+import { Flatknapp, Hovedknapp } from "@navikt/arbeidsplassen-knapper";
 import { captureException } from "@sentry/browser";
 import CustomModal from "./CustomModal";
 import UserAPI from "../../api/UserAPI";
@@ -69,7 +69,7 @@ function TermsOfUse({ onClose, onTermsAccepted }) {
                         gjerne tilbake igjen ved en senere anledning.
                     </p>
                     <div className="TermsOfUse__buttons">
-                        <Button variant="primary" onClick={onClose}>Lukk</Button>
+                        <Hovedknapp onClick={onClose}>Lukk</Hovedknapp>
                     </div>
                 </div>
             ) : (
@@ -102,16 +102,15 @@ function TermsOfUse({ onClose, onTermsAccepted }) {
                         <Alert>Det oppsto en feil ved lagring av samtykke. Forsøk igjen.</Alert>
                     )}
                     <div className="TermsOfUse__buttons">
-                        <Button
-                            variant="primary"
+                        <Hovedknapp
                             id="TermsOfUse__acceptButton"
                             onClick={onAcceptTermsClick}
                             spinner={fetchStatus === FetchStatus.IS_FETCHING}
                             disabled={fetchStatus === FetchStatus.IS_FETCHING}
                         >
                             Jeg samtykker
-                        </Button>
-                        <Button variant="flat" onClick={onClose}>Avbryt</Button>
+                        </Hovedknapp>
+                        <Flatknapp onClick={onClose}>Avbryt</Flatknapp>
                     </div>
                 </div>
             )}

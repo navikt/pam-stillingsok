@@ -12,7 +12,7 @@ import DelayedSpinner from "../../components/spinner/DelayedSpinner";
 import Alert from "../../components/alert/Alert";
 import H1WithAutoFocus from "../../components/h1WithAutoFocus/H1WithAutoFocus";
 import { Checkbox } from "nav-frontend-skjema";
-import Button from "../../components/Button/Button";
+import { Hovedknapp } from "@navikt/arbeidsplassen-knapper";
 import { isValidEmail } from "../../components/utils";
 import "./RegisterInterest.less";
 import getEmployer from "../../../server/common/getEmployer";
@@ -162,7 +162,7 @@ const RegisterInterest = ({ match }) => {
                                 </p>
                                 <Link
                                     to={`${CONTEXT_PATH}/${isInternal ? "intern" : "stilling"}/${data.ad._id}`}
-                                    className="Button Button--primary"
+                                    className="Knapp Knapp--hoved"
                                 >
                                     Tilbake til stillingsannonsen
                                 </Link>
@@ -301,13 +301,13 @@ const RegisterInterest = ({ match }) => {
                                     <div className="RegisterInterest__buttons">
                                         <Link
                                             to={`${CONTEXT_PATH}/${isInternal ? "intern" : "stilling"}/${data.ad._id}`}
-                                            className="Button Button--secondary"
+                                            className="Knapp"
                                         >
                                             Avbryt
                                         </Link>
-                                        <Button variant="primary" htmlType="submit">
+                                        <Hovedknapp htmlType="submit">
                                             Send melding
-                                        </Button>
+                                        </Hovedknapp>
                                     </div>
                                 )}
                             </form>

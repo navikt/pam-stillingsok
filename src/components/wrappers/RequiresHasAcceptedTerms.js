@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import DelayedSpinner from "../spinner/DelayedSpinner";
-import Button from "../Button/Button";
+import { Hovedknapp } from "@navikt/arbeidsplassen-knapper";
 import { Link } from "react-router-dom";
 import { CONTEXT_PATH } from "../../environment";
 import TermsOfUse from "../modals/TermsOfUse";
@@ -20,14 +20,13 @@ function RequiresHasAcceptedTerms({ children, hasAcceptedTermsStatus }) {
                 <h2 className="NoUserMessage__h2">Du har ikke samtykket</h2>
                 <p className="NoUserMessage__text">Du må samtykke for å kunne lagre søk og favoritter.</p>
                 <div className="NoUserMessage__buttons">
-                    <Button
-                        variant="primary"
+                    <Hovedknapp
                         onClick={() => {
                             setShowTermModal(true);
                         }}
                     >
                         Se samtykke
-                    </Button>
+                    </Hovedknapp>
                 </div>
                 <div className="NoUserMessage__buttons">
                     <Link to={CONTEXT_PATH} className="link">

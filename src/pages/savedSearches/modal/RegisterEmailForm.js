@@ -3,7 +3,7 @@ import { Input } from "nav-frontend-skjema";
 import { captureException } from "@sentry/browser";
 import { isValidEmail } from "../../../components/utils";
 import { UserContext } from "../../../context/UserProvider";
-import Button from "../../../components/Button/Button";
+import { Hovedknapp, Knapp } from "@navikt/arbeidsplassen-knapper";
 import { FetchStatus } from "../../../hooks/useFetchReducer";
 import Alert from "../../../components/alert/Alert";
 import UserAPI from "../../../api/UserAPI";
@@ -98,17 +98,16 @@ function RegisterEmailForm({ onClose, onSuccess }) {
                 )}
 
                 <div className="SaveSearchForm__buttons">
-                    <Button
-                        variant="primary"
+                    <Hovedknapp
                         htmlType="submit"
                         spinner={saveStatus === FetchStatus.IS_FETCHING}
                         disabled={saveStatus === FetchStatus.IS_FETCHING}
                     >
                         Lagre e-post
-                    </Button>
-                    <Button htmlType="button" onClick={onClose}>
+                    </Hovedknapp>
+                    <Knapp htmlType="button" onClick={onClose}>
                         Avbryt
-                    </Button>
+                    </Knapp>
                 </div>
             </form>
         </React.Fragment>

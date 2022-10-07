@@ -22,7 +22,7 @@ import HeartIconFilled from "../../components/icons/HeartIconFilled";
  * If user click button, this view will ensure that user is logged in
  * and has accepted usage terms before it save a favourite
  */
-function FavouritesButton({ id, stilling, useShortText, className, variant }) {
+function FavouritesButton({ id, stilling, useShortText, className, type }) {
     const favouritesProvider = useContext(FavouritesContext);
     const { authenticationStatus, login } = useContext(AuthenticationContext);
     const { hasAcceptedTermsStatus } = useContext(UserContext);
@@ -115,7 +115,7 @@ function FavouritesButton({ id, stilling, useShortText, className, variant }) {
                 className={className ? `FavouriteButton ${className}` : "FavouritesButton"}
                 text={isFavourite ? deleteText : saveText}
                 icon={isFavourite ? <HeartIconFilled ariaHidden={!useShortText} /> : <HeartIcon ariaHidden={!useShortText}/>}
-                variant={variant}
+                type={type}
             />
 
             {shouldShowLoginModal && <LoginModal onLoginClick={login} onCloseClick={closeLoginModal} />}
@@ -134,7 +134,7 @@ function FavouritesButton({ id, stilling, useShortText, className, variant }) {
 FavouritesButton.defaultProps = {
     className: undefined,
     useShortText: false,
-    variant: undefined
+    type: undefined
 };
 
 FavouritesButton.propTypes = {
@@ -142,7 +142,7 @@ FavouritesButton.propTypes = {
     stilling: PropTypes.shape({}).isRequired,
     className: PropTypes.string,
     useShortText: PropTypes.bool,
-    variant: PropTypes.string
+    type: PropTypes.string
 };
 
 export default FavouritesButton;

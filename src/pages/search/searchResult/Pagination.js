@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Button from "../../../components/Button/Button";
+import { Knapp } from "@navikt/arbeidsplassen-knapper";
 import "./Pagination.less";
 
 const Pagination = ({ searchResult, isSearching, query, onLoadMoreClick }) => {
@@ -17,14 +17,14 @@ const Pagination = ({ searchResult, isSearching, query, onLoadMoreClick }) => {
                 </p>
             )}
             {hasMore && (
-                <Button
+                <Knapp
                     disabled={isSearching}
                     spinner={isSearching}
                     className="Pagination__button"
                     onClick={onLoadMoreClick}
                 >
                     Se flere
-                </Button>
+                </Knapp>
             )}
 
 

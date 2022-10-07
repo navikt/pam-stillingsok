@@ -1,5 +1,5 @@
 import React, {useContext} from "react";
-import Button from "../../components/Button/Button";
+import {Knapp} from "@navikt/arbeidsplassen-knapper";
 import SearchIsEmptyModal from "./modal/SearchIsEmptyModal";
 import SaveSearchModal from "./modal/SaveSearchModal";
 import {isSearchQueryEmpty, stringifyQuery, toReadableQuery, toSavedSearchQuery} from "../search/query";
@@ -54,7 +54,7 @@ function SaveSearchButton({ query }) {
 
     return (
         <React.Fragment>
-            <Button htmlType="button" onClick={handleClick}>Lagre søk</Button>
+            <Knapp htmlType="button" onClick={handleClick}>Lagre søk</Knapp>
 
             {shouldShowQueryIsEmptyModal && <SearchIsEmptyModal onClose={closeQueryIsEmptyModal} />}
 

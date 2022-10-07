@@ -1,12 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Button from "../Button/Button";
+import { Knapp } from "@navikt/arbeidsplassen-knapper";
 import "./IconButton.less";
 
-function IconButton({ text, icon, hideText, onClick, className, disabled, spinner, variant }) {
+function IconButton({ text, icon, hideText, onClick, className, disabled, spinner, type }) {
     return (
-        <Button
-            variant={variant}
+        <Knapp
+            type={type}
             disabled={disabled}
             spinner={spinner}
             onClick={onClick}
@@ -16,7 +16,7 @@ function IconButton({ text, icon, hideText, onClick, className, disabled, spinne
                 {icon}
                 {!hideText && <span>{text}</span>}
             </span>
-        </Button>
+        </Knapp>
     );
 }
 
@@ -24,7 +24,7 @@ IconButton.defaultProps = {
     disabled: false,
     spinner: false,
     className: undefined,
-    variant: "flat"
+    type: "flat"
 };
 
 IconButton.propTypes = {
@@ -32,7 +32,7 @@ IconButton.propTypes = {
     spinner: PropTypes.bool,
     className: PropTypes.string,
     onClick: PropTypes.func.isRequired,
-    variant: PropTypes.string
+    type: PropTypes.string
 };
 
 export default IconButton;

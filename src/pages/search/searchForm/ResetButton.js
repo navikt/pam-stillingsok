@@ -1,15 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Button from "../../../components/Button/Button";
+import { Knapp } from "@navikt/arbeidsplassen-knapper";
 
 function ResetButton({ dispatch }) {
     function handleClick() {
         dispatch({ type: "RESET" });
     }
 
-    return (
-        <Button htmlType="button" onClick={handleClick}>Nullstill søk</Button>
-    );
+    return <Knapp htmlType="button" onClick={handleClick}>Nullstill søk</Knapp>;
 }
 
 ResetButton.propTypes = {

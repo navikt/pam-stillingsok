@@ -20,7 +20,7 @@ function SuccessMessage({ onClose }) {
                 </Link>
             </p>
             <div className="SaveSearchForm__buttons">
-                <button className="Button Button--primary" ref={buttonRef} onClick={onClose}>
+                <button className="Knapp Knapp--hoved" ref={buttonRef} onClick={onClose}>
                     Lukk
                 </button>
             </div>

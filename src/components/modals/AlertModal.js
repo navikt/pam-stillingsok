@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React, { useRef } from "react";
 import Modal from "nav-frontend-modal";
-import Button from "../Button/Button";
+import { Hovedknapp } from "@navikt/arbeidsplassen-knapper";
 import "./AlertModal.less";
 
 export default function AlertModal({ id, title, children, confirmLabel, cancelLabel, onConfirm, onCancel, spinner, useOnlyCancelButton }) {
@@ -31,16 +31,16 @@ export default function AlertModal({ id, title, children, confirmLabel, cancelLa
             <div className="AlertModal__buttons">
                 <button
                     ref={cancelButtonRef}
-                    className={useOnlyCancelButton ? "Button Button--primary" : "Button Button--secondary"}
+                    className={useOnlyCancelButton ? "Knapp Knapp--hoved" : "Knapp"}
                     disabled={spinner}
                     onClick={onCancel}
                 >
                     {cancelLabel}
                 </button>
                 {!useOnlyCancelButton && (
-                    <Button variant="primary" spinner={spinner} disabled={spinner} onClick={onConfirm}>
+                    <Hovedknapp spinner={spinner} disabled={spinner} onClick={onConfirm}>
                         {confirmLabel}
-                    </Button>
+                    </Hovedknapp>
                 )}
             </div>
         </Modal>
