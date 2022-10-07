@@ -1,5 +1,5 @@
 import fixLocationName from "../../../server/common/fixLocationName";
-import { PublishedLabelsEnum } from "./SearchForm/filters/Published";
+import { PublishedLabelsEnum } from "./searchForm/filters/Published";
 
 export const SEARCH_CHUNK_SIZE = 25;
 export const ADD_MUNICIPAL = "ADD_MUNICIPAL";

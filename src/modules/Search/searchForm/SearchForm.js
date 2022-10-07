@@ -8,7 +8,7 @@ import Sector from "./filters/Sector";
 import SearchBox from "./SearchBox";
 import SaveSearchButton from "../../SavedSearces/SaveSearchButton";
 import ResetButton from "./ResetButton";
-import SkipToResult from "../SkipLink/SkipToResult";
+import SkipToResult from "../skiplinks/SkipToResult";
 import { Accordion } from "@navikt/ds-react";
 
 const SearchForm = ({ fetchSearch, query, dispatchQuery, searchResult }) => {
