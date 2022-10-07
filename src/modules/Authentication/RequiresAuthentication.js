@@ -1,16 +1,16 @@
 import React from "react";
+import Button from "../../components/Button/Button";
 import { AuthenticationStatus } from "./AuthenticationProvider";
-import DelayedSpinner from "../../components/DelayedSpinner/DelayedSpinner";
+import Spinner from "../../components/Spinner/Spinner";
 import ErrorMessage from "../../components/messages/ErrorMessage";
-import "./RequiresAuthentication.css";
-import { Button } from "@navikt/ds-react";
+import "./RequiresAuthentication.less";
 
 function RequiresAuthentication({ children, authenticationStatus, login }) {
     if (
         authenticationStatus === AuthenticationStatus.NOT_FETCHED ||
         authenticationStatus === AuthenticationStatus.IS_FETCHING
     ) {
-        return <DelayedSpinner />;
+        return <Spinner />;
     } else if (authenticationStatus === AuthenticationStatus.FAILURE) {
         return <ErrorMessage />;
     } else if (authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED) {

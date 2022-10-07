@@ -1,0 +1,7 @@
+.Tag {
+    padding: 0.25rem 0.75rem;
+    background: #ffecaf;
+    display: inline-block;
+    line-height: 1.5;
+    font-size: 1.125rem;
+}

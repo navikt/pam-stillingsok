@@ -1,5 +1,5 @@
 import React from "react";
-import "./NoResults.css";
+import "./NoResults.less";
 import SaveSearchButton from "../../SavedSearces/SaveSearchButton";
 import { toReadableQuery } from "../query";
 

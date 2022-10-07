@@ -4,7 +4,7 @@ import ReactHtmlParser from "react-html-parser";
 import fixLocationName from "../../../../server/common/fixLocationName";
 import { isValidUrl } from "../../../components/utils";
 import getEmployer from "../../../../server/common/getEmployer";
-import "./EmployerDetails.css";
+import "./EmployerDetails.less";
 import EmployerIcon from "../../../components/Icon/EmployerIcon";
 
 function getEmployerLocation(employer) {

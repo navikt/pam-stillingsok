@@ -1,3 +1,4 @@
+import { Checkbox } from "nav-frontend-skjema";
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 import CriteriaPanel from "./CriteriaPanel";
@@ -5,7 +6,6 @@ import UnknownSearchCriteriaValues from "./UnknownSearchCriteriaValues";
 import { ADD_EXTENT, REMOVE_EXTENT } from "../../query";
 import mergeCount from "../utils/mergeCount";
 import { findUnknownSearchCriteriaValues } from "../utils/findUnknownSearchCriteriaValues";
-import { Checkbox } from "@navikt/ds-react";
 
 function Extent({ initialValues, updatedValues, query, dispatch }) {
     const [values, setValues] = useState(initialValues);
@@ -38,12 +38,11 @@ function Extent({ initialValues, updatedValues, query, dispatch }) {
                     <Checkbox
                         name="extent"
                         key={item.key}
+                        label={`${labelForExtent(item)} (${item.count})`}
                         value={item.key}
                         onChange={handleClick}
                         checked={query.extent.includes(item.key)}
-                    >
-                        {`${labelForExtent(item)} (${item.count})`}
-                    </Checkbox>
+                    />
                 ))}
 
                 <UnknownSearchCriteriaValues

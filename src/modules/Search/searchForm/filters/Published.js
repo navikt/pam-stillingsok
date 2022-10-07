@@ -1,9 +1,9 @@
+import { Checkbox } from "nav-frontend-skjema";
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 import { SET_PUBLISHED } from "../../query";
 import CriteriaPanel from "./CriteriaPanel";
 import mergeCount from "../utils/mergeCount";
-import { Checkbox } from "@navikt/ds-react";
 
 export const PublishedLabelsEnum = {
     "now/d": "Nye i dag"
@@ -35,12 +35,11 @@ function Published({ dispatch, query, initialValues, updatedValues }) {
                     <Checkbox
                         name="published"
                         key={item.key}
+                        label={`${PublishedLabelsEnum[item.key]} (${item.count})`}
                         value={item.key}
                         onChange={handleClick}
                         checked={query.published === item.key}
-                    >
-                        {`${PublishedLabelsEnum[item.key]} (${item.count})`}
-                    </Checkbox>
+                    />
                 ))}
             </div>
         </CriteriaPanel>

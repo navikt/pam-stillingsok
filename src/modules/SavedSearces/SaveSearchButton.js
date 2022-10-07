@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import Button from "../../components/Button/Button";
 import SearchIsEmptyModal from "./modal/SearchIsEmptyModal";
 import SaveSearchModal from "./modal/SaveSearchModal";
 import { isSearchQueryEmpty, stringifyQuery, toReadableQuery, toSavedSearchQuery } from "../Search/query";
@@ -9,7 +10,6 @@ import UserConsentModal from "../User/UserConsentModal";
 import AuthenticationModal from "../Authentication/AuthenticationModal";
 import useToggle from "../../hooks/useToggle";
 import { FormModes } from "./modal/SaveSearchForm";
-import Button from "../../components/Button/Button";
 
 /**
  * Displays the "Save search" button.
@@ -54,7 +54,7 @@ function SaveSearchButton({ query }) {
 
     return (
         <React.Fragment>
-            <Button variant="secondary" type="button" onClick={handleClick}>
+            <Button htmlType="button" onClick={handleClick}>
                 Lagre søk
             </Button>
 

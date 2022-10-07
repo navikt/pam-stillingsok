@@ -2,7 +2,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import TypeaheadSuggestion from "./TypeaheadSuggestion";
-import "./Typeahead.css";
+import "./Typeahead.less";
 
 export default class Typeahead extends React.Component {
     constructor(props) {

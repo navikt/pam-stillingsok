@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import "./SkipTo.css";
+import "./SkipTo.less";
 
 function SkipToResult({ data }) {
     return (

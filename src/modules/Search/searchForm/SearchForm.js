@@ -9,7 +9,6 @@ import SearchBox from "./SearchBox";
 import SaveSearchButton from "../../SavedSearces/SaveSearchButton";
 import ResetButton from "./ResetButton";
 import SkipToResult from "../skiplinks/SkipToResult";
-import { Accordion } from "@navikt/ds-react";
 
 const SearchForm = ({ fetchSearch, query, dispatchQuery, initialSearchResult, searchResult }) => {
     /**
@@ -26,44 +25,43 @@ const SearchForm = ({ fetchSearch, query, dispatchQuery, initialSearchResult, se
             <SkipToResult data={searchResult} />
             <h2 className="Search__h2">Søk</h2>
             <SearchBox query={query} dispatch={dispatchQuery} />
-            <Accordion style={{ width: "100%", maxWidth: "65ch" }}>
-                <Counties
-                    query={query}
-                    dispatch={dispatchQuery}
-                    initialValues={initialSearchResult}
-                    updatedValues={searchResult}
-                />
-                <Occupations
-                    query={query}
-                    dispatch={dispatchQuery}
-                    initialValues={initialSearchResult.aggregations.occupationFirstLevels}
-                    updatedValues={searchResult && searchResult.aggregations.occupationFirstLevels}
-                />
-                <Published
-                    query={query}
-                    dispatch={dispatchQuery}
-                    initialValues={initialSearchResult.aggregations.published}
-                    updatedValues={searchResult && searchResult.aggregations.published}
-                />
-                <Extent
-                    query={query}
-                    dispatch={dispatchQuery}
-                    initialValues={initialSearchResult.aggregations.extent}
-                    updatedValues={searchResult && searchResult.aggregations.extent}
-                />
-                <EngagementType
-                    query={query}
-                    dispatch={dispatchQuery}
-                    initialValues={initialSearchResult.aggregations.engagementTypes}
-                    updatedValues={searchResult && searchResult.aggregations.engagementTypes}
-                />
-                <Sector
-                    query={query}
-                    dispatch={dispatchQuery}
-                    initialValues={initialSearchResult.aggregations.sector}
-                    updatedValues={searchResult && searchResult.aggregations.sector}
-                />
-            </Accordion>
+            <Counties
+                query={query}
+                dispatch={dispatchQuery}
+                initialValues={initialSearchResult}
+                updatedValues={searchResult}
+            />
+            <Occupations
+                query={query}
+                dispatch={dispatchQuery}
+                initialValues={initialSearchResult.aggregations.occupationFirstLevels}
+                updatedValues={searchResult && searchResult.aggregations.occupationFirstLevels}
+            />
+            <Published
+                query={query}
+                dispatch={dispatchQuery}
+                initialValues={initialSearchResult.aggregations.published}
+                updatedValues={searchResult && searchResult.aggregations.published}
+            />
+            <Extent
+                query={query}
+                dispatch={dispatchQuery}
+                initialValues={initialSearchResult.aggregations.extent}
+                updatedValues={searchResult && searchResult.aggregations.extent}
+            />
+            <EngagementType
+                query={query}
+                dispatch={dispatchQuery}
+                initialValues={initialSearchResult.aggregations.engagementTypes}
+                updatedValues={searchResult && searchResult.aggregations.engagementTypes}
+            />
+            <Sector
+                query={query}
+                dispatch={dispatchQuery}
+                initialValues={initialSearchResult.aggregations.sector}
+                updatedValues={searchResult && searchResult.aggregations.sector}
+            />
+
             <div className="Search__reset-and-save-search">
                 <SaveSearchButton query={query} />
                 <ResetButton dispatch={dispatchQuery} />

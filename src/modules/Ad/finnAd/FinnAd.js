@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import "./FinnAd.css";
+import "./FinnAd.less";
 
 export default function FinnAd({ stilling }) {
     return (

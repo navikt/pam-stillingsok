@@ -111,16 +111,14 @@ function FavouritesButton({ id, stilling, useShortText, className, variant }) {
             <Button
                 variant={variant}
                 disabled={isPending}
-                icon={
-                    isFavourite ? (
-                        <HeartIconFilled ariaHidden={!useShortText} />
-                    ) : (
-                        <HeartIcon ariaHidden={!useShortText} />
-                    )
-                }
                 onClick={isFavourite ? handleDeleteFavouriteClick : handleSaveFavouriteClick}
                 className={className ? `FavouriteButton ${className}` : "FavouritesButton"}
             >
+                {isFavourite ? (
+                    <HeartIconFilled ariaHidden={!useShortText} />
+                ) : (
+                    <HeartIcon ariaHidden={!useShortText} />
+                )}
                 {isFavourite ? deleteText : saveText}
             </Button>
 
@@ -142,7 +140,7 @@ function FavouritesButton({ id, stilling, useShortText, className, variant }) {
 FavouritesButton.defaultProps = {
     className: undefined,
     useShortText: false,
-    variant: "tertiary"
+    variant: "flat"
 };
 
 FavouritesButton.propTypes = {

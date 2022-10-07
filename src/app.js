@@ -19,9 +19,7 @@ import SearchPage from "./pages";
 import "./styles/normalize.css";
 import "./styles/footer.css";
 import "./styles/skiplink.css";
-import "@navikt/ds-css";
-import "./styles/ds-css-overrides.css";
-import "./styles/styles.css";
+import "./styles/styles.less";
 
 initSentry();
 fixUrlAfterLogin();

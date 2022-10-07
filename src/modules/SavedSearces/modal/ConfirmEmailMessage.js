@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from "react";
-import Button from "../../../components/Button/Button";
 
 function ConfirmEmailMessage({ onClose }) {
     const buttonRef = useRef(null);
@@ -17,9 +16,9 @@ function ConfirmEmailMessage({ onClose }) {
             </p>
 
             <div className="SaveSearchForm__buttons">
-                <Button variant="primary" ref={buttonRef} onClick={onClose}>
+                <button className="Button Button--primary" ref={buttonRef} onClick={onClose}>
                     Lukk
-                </Button>
+                </button>
             </div>
         </section>
     );

@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
+import { Input } from "nav-frontend-skjema";
 import { captureException } from "@sentry/browser";
 import { isValidEmail } from "../../../components/utils";
 import { UserContext } from "../../User/UserProvider";
-import { FetchStatus } from "../../../hooks/useFetchReducer";
-import UserAPI from "../../../api/UserAPI";
-import { Alert, TextField } from "@navikt/ds-react";
 import Button from "../../../components/Button/Button";
+import { FetchStatus } from "../../../hooks/useFetchReducer";
+import Alert from "../../../components/Alert/Alert";
+import UserAPI from "../../../api/UserAPI";
 
 function RegisterEmailForm({ onClose, onSuccess }) {
     const { user, updateUser } = useContext(UserContext);
@@ -75,33 +76,37 @@ function RegisterEmailForm({ onClose, onSuccess }) {
                 For å motta varsler på e-post må du registrere e-postadressen din.
             </p>
             <form onSubmit={handleFormSubmit}>
-                <TextField
+                <Input
                     type="email"
                     label="Skriv inn e-postadressen din"
                     value={email || ""}
                     onChange={handleEmailChange}
-                    ref={(el) => {
+                    inputRef={(el) => {
                         emailRef = el;
                     }}
-                    error={emailValidationError ? emailValidationError : undefined}
+                    feil={
+                        emailValidationError
+                            ? {
+                                  feilmelding: emailValidationError
+                              }
+                            : undefined
+                    }
                 />
 
                 {saveStatus === FetchStatus.FAILURE && (
-                    <Alert role="alert" variant="error" className="mt-1">
-                        Noe gikk galt ved lagring, forsøk igjen eller last siden på nytt
-                    </Alert>
+                    <Alert>Noe gikk galt ved lagring, forsøk igjen eller last siden på nytt</Alert>
                 )}
 
                 <div className="SaveSearchForm__buttons">
                     <Button
                         variant="primary"
-                        type="submit"
-                        loading={saveStatus === FetchStatus.IS_FETCHING}
+                        htmlType="submit"
+                        spinner={saveStatus === FetchStatus.IS_FETCHING}
                         disabled={saveStatus === FetchStatus.IS_FETCHING}
                     >
                         Lagre e-post
                     </Button>
-                    <Button variant="secondary" type="button" onClick={onClose}>
+                    <Button htmlType="button" onClick={onClose}>
                         Avbryt
                     </Button>
                 </div>

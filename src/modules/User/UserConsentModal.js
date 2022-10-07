@@ -1,15 +1,16 @@
 import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
+import { BekreftCheckboksPanel } from "nav-frontend-skjema";
+import Button from "../../components/Button/Button";
 import { captureException } from "@sentry/browser";
-import CustomModal from "../../components/CustomModal/CustomModal";
+import Modal from "../../components/Modal/Modal";
 import UserAPI from "../../api/UserAPI";
-import "./UserConsentModal.css";
+import "./UserConsentModal.less";
 import { UserContext } from "./UserProvider";
 import { AuthenticationContext } from "../Authentication/AuthenticationProvider";
 import { FetchStatus } from "../../hooks/useFetchReducer";
 import useToggle from "../../hooks/useToggle";
-import { Alert, ConfirmationPanel } from "@navikt/ds-react";
-import Button from "../../components/Button/Button";
+import Alert from "../../components/Alert/Alert";
 
 function UserConsentModal({ onClose, onTermsAccepted }) {
     const { userNameAndInfo } = useContext(AuthenticationContext);
@@ -60,7 +61,7 @@ function UserConsentModal({ onClose, onTermsAccepted }) {
             : "Ta i bruk innloggede tjenester";
 
     return (
-        <CustomModal onCloseClick={onClose} title={title} appElement={document.getElementById("app")}>
+        <Modal onCloseClick={onClose} title={title} appElement={document.getElementById("app")}>
             {userNameAndInfo && userNameAndInfo.erUnderFemten ? (
                 <div className="TermsOfUse">
                     <p className="TermsOfUse__section">
@@ -78,42 +79,47 @@ function UserConsentModal({ onClose, onTermsAccepted }) {
                     <p className="TermsOfUse__section">
                         Du må samtykke for å bruke innloggede tjenester i stillingssøk.
                     </p>
-                    <ConfirmationPanel
+                    <BekreftCheckboksPanel
                         className="TermsOfUse__section"
                         label="Dine favoritter, søk og søkekriterier"
                         checked={checked}
                         onChange={onCheckboxClick}
-                        error={shouldShowError ? "Du må huke av i avkryssingsboksen for å samtykke" : undefined}
+                        inputProps={{ id: "TermsOfUse__checkbox" }}
                     >
                         Vi lagrer dine favoritter, søk med søkekriterier og e-postadresse (valgfri). Det er kun du som
                         kan se hva du har lagret.
-                    </ConfirmationPanel>
+                    </BekreftCheckboksPanel>
                     <p className="TermsOfUse__section TermsOfUse__section--last">
                         Du kan trekke samtykket hvis du ikke lenger ønsker å bruke de innloggede tjenestene. Dette kan
                         du gjøre under innstillinger.
                     </p>
+                    {shouldShowError && (
+                        <div role="alert">
+                            <div className="skjemaelement__feilmelding blokk-s">
+                                Du må huke av i avkryssingsboksen for å samtykke
+                            </div>
+                        </div>
+                    )}
                     {fetchStatus === FetchStatus.FAILURE && (
-                        <Alert role="alert" variant="error" className="mb-1">
-                            Det oppsto en feil ved lagring av samtykke. Forsøk igjen.
-                        </Alert>
+                        <Alert>Det oppsto en feil ved lagring av samtykke. Forsøk igjen.</Alert>
                     )}
                     <div className="TermsOfUse__buttons">
                         <Button
                             variant="primary"
                             id="TermsOfUse__acceptButton"
                             onClick={onAcceptTermsClick}
-                            loading={fetchStatus === FetchStatus.IS_FETCHING}
+                            spinner={fetchStatus === FetchStatus.IS_FETCHING}
                             disabled={fetchStatus === FetchStatus.IS_FETCHING}
                         >
                             Jeg samtykker
                         </Button>
-                        <Button variant="tertiary" onClick={onClose}>
+                        <Button variant="flat" onClick={onClose}>
                             Avbryt
                         </Button>
                     </div>
                 </div>
             )}
-        </CustomModal>
+        </Modal>
     );
 }
 

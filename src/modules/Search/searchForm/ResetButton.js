@@ -8,7 +8,7 @@ function ResetButton({ dispatch }) {
     }
 
     return (
-        <Button variant="secondary" type="button" onClick={handleClick} className="arb-button">
+        <Button htmlType="button" onClick={handleClick}>
             Nullstill søk
         </Button>
     );

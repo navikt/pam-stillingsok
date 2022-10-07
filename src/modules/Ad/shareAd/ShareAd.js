@@ -6,7 +6,7 @@ import FacebookIcon from "../../../components/Icon/FacebookIcon";
 import LinkedinIcon from "../../../components/Icon/LinkedinIcon";
 import TwitterIcon from "../../../components/Icon/TwitterIcon";
 import MessengerIcon from "../../../components/Icon/MessengerIcon";
-import "./ShareAd.css";
+import "./ShareAd.less";
 
 export default function ShareAd({ source }) {
     const title = source.title;

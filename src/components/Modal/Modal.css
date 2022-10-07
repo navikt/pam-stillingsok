@@ -1,0 +1,10 @@
+@media (min-width: 768px) {
+    .Modal {
+        padding: 1rem 2rem 2rem 2rem;
+    }
+}
+
+.Modal__title {
+    font-weight: 600;
+    font-size: 1.5rem;
+}

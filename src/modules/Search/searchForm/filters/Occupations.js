@@ -1,3 +1,4 @@
+import { Checkbox } from "nav-frontend-skjema";
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 import {
@@ -11,7 +12,6 @@ import UnknownSearchCriteriaValues from "./UnknownSearchCriteriaValues";
 import moveCriteriaToBottom from "../utils/moveFacetToBottom";
 import mergeCount from "../utils/mergeCount";
 import { findUnknownSearchCriteriaValues } from "../utils/findUnknownSearchCriteriaValues";
-import { Checkbox } from "@navikt/ds-react";
 
 const OCCUPATION_LEVEL_OTHER = "Uoppgitt/ ikke identifiserbare";
 
@@ -75,12 +75,11 @@ function Occupations({ initialValues, updatedValues, query, dispatch }) {
                         <React.Fragment key={firstLevel.key}>
                             <Checkbox
                                 name="occupation"
+                                label={`${firstLevel.key} (${firstLevel.count})`}
                                 value={firstLevel.key}
                                 onChange={handleFirstLevelClick}
                                 checked={query.occupationFirstLevels.includes(firstLevel.key)}
-                            >
-                                {`${firstLevel.key} (${firstLevel.count})`}
-                            </Checkbox>
+                            />
                             {query.occupationFirstLevels &&
                                 query.occupationFirstLevels.includes(firstLevel.key) &&
                                 firstLevel.key !== OCCUPATION_LEVEL_OTHER && (
@@ -91,14 +90,13 @@ function Occupations({ initialValues, updatedValues, query, dispatch }) {
                                                 <Checkbox
                                                     name="occupation"
                                                     key={editedSecondLevelItemKey(secondLevel.key)}
+                                                    label={`${editedSecondLevelItemKey(secondLevel.label)} (${
+                                                        secondLevel.count
+                                                    })`}
                                                     value={secondLevel.key}
                                                     onChange={handleSecondLevelClick}
                                                     checked={query.occupationSecondLevels.includes(secondLevel.key)}
-                                                >
-                                                    {`${editedSecondLevelItemKey(secondLevel.label)} (${
-                                                        secondLevel.count
-                                                    })`}
-                                                </Checkbox>
+                                                />
                                             ))}
                                     </fieldset>
                                 )}

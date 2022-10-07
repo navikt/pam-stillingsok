@@ -1,5 +1,5 @@
 import React from "react";
-import DelayedSpinner from "../../../components/DelayedSpinner/DelayedSpinner";
+import Spinner from "../../../components/Spinner/Spinner";
 import SearchResultCount from "./SearchResultCount";
 import Sorting from "./Sorting";
 import { FetchStatus } from "../../../hooks/useFetchReducer";
@@ -9,7 +9,7 @@ import Pagination from "./Pagination";
 import SkipToCriteria from "../skiplinks/SkipToCriteria";
 import ArrowUpIcon from "../../../components/Icon/ArrowUpIcon";
 import SearchResultItem from "./SearchResultItem";
-import "./SearchResult.css";
+import "./SearchResult.less";
 import FavouritesButton from "../../Favourites/FavouritesButton";
 
 const SearchResult = ({ searchResponse, queryDispatch, query, loadMoreResults }) => {
@@ -31,7 +31,7 @@ const SearchResult = ({ searchResponse, queryDispatch, query, loadMoreResults })
             </header>
 
             {status === FetchStatus.FAILURE && <ErrorMessage />}
-            {status === FetchStatus.IS_FETCHING && query.from === 0 && <DelayedSpinner />}
+            {status === FetchStatus.IS_FETCHING && query.from === 0 && <Spinner />}
             {status === FetchStatus.SUCCESS && data.totalAds === 0 && <NoResults query={query} />}
             {(status === FetchStatus.SUCCESS || (status === FetchStatus.IS_FETCHING && query.from > 0)) && (
                 <React.Fragment>

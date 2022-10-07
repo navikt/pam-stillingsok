@@ -1,16 +1,19 @@
 import * as React from "react";
 import { useContext, useEffect, useState } from "react";
-import "./ReportAd.css";
+import "./ReportAd.less";
+import Checkbox from "nav-frontend-skjema/lib/checkbox";
+import Button from "../../components/Button/Button";
 import { CONTEXT_PATH } from "../../environment";
 import { captureException } from "@sentry/browser";
 import logAmplitudeEvent from "../../tracking/amplitude";
+import { Textarea } from "nav-frontend-skjema";
 import useDocumentTitle from "../../hooks/useDocumentTitle";
 import { AuthenticationContext, AuthenticationStatus } from "../Authentication/AuthenticationProvider";
 import UserAPI from "../../api/UserAPI";
+import Alert from "../../components/Alert/Alert";
 import BackLink from "../../components/BackLink/BackLink";
 import useScrollToTop from "../../hooks/useScrollToTop";
 import H1WithAutoFocus from "../../components/H1WithAutoFocus/H1WithAutoFocus";
-import { Alert, Button, Checkbox, Textarea } from "@navikt/ds-react";
 
 const violationCategories = [
     { label: "Diskriminerende innhold", key: "discrimination" },
@@ -158,11 +161,10 @@ const ReportAd = () => {
 
                                 <Checkbox
                                     name="regelbrudd"
+                                    label="Regelbrudd"
                                     onChange={handleViolationCheck}
                                     checked={violation === true}
-                                >
-                                    Regelbrudd
-                                </Checkbox>
+                                />
 
                                 {violation &&
                                     violationCategories.map((c) => {
@@ -170,18 +172,20 @@ const ReportAd = () => {
                                             <Checkbox
                                                 className="sub-checkbox"
                                                 key={c.key}
+                                                label={c.label}
                                                 value={c.key}
                                                 onChange={handleViolationCategoryCheck}
                                                 checked={violationCategory === c.key}
-                                            >
-                                                {c.label}
-                                            </Checkbox>
+                                            />
                                         );
                                     })}
 
-                                <Checkbox name="svindel" onChange={handleScamCheck} checked={scam === true}>
-                                    Mistanke om svindel
-                                </Checkbox>
+                                <Checkbox
+                                    label="Mistanke om svindel"
+                                    name="svindel"
+                                    onChange={handleScamCheck}
+                                    checked={scam === true}
+                                />
 
                                 {scam &&
                                     scamCategories.map((c) => {
@@ -189,12 +193,11 @@ const ReportAd = () => {
                                             <Checkbox
                                                 className="sub-checkbox"
                                                 key={c.key}
+                                                label={c.label}
                                                 value={c.key}
                                                 onChange={handleScamCategoryCheck}
                                                 checked={scamCategory === c.key}
-                                            >
-                                                {c.label}
-                                            </Checkbox>
+                                            />
                                         );
                                     })}
 
@@ -205,7 +208,9 @@ const ReportAd = () => {
                                     maxLength={255}
                                     value={description}
                                     onChange={handleDescriptionChange}
-                                    description="Legg ikke igjen personopplysinger i dette feltet"
+                                    tellerTekst={() => {
+                                        return "Legg ikke igjen personopplysinger i dette feltet";
+                                    }}
                                 />
 
                                 <p>
@@ -215,11 +220,7 @@ const ReportAd = () => {
                                 </p>
                             </div>
 
-                            {error && (
-                                <Alert role="alert" variant="error" className="mb-1">
-                                    Rapportering feilet - prøv igjen
-                                </Alert>
-                            )}
+                            {error && <Alert>Rapportering feilet - prøv igjen</Alert>}
 
                             {authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED && (
                                 <Button

@@ -1,17 +1,17 @@
 import React, { useState } from "react";
-import DelayedSpinner from "../../components/DelayedSpinner/DelayedSpinner";
+import Spinner from "../../components/Spinner/Spinner";
+import Button from "../../components/Button/Button";
 import { Link } from "react-router-dom";
 import { CONTEXT_PATH } from "../../environment";
 import UserConsentModal from "./UserConsentModal";
-import "./RequiresUserConsent.css";
+import "./RequiresUserConsent.less";
 import { HasAcceptedTermsStatus } from "./UserProvider";
-import Button from "../../components/Button/Button";
 
 function RequiresUserConsent({ children, hasAcceptedTermsStatus }) {
     const [showTermsModal, setShowTermModal] = useState(false);
 
     if (hasAcceptedTermsStatus === HasAcceptedTermsStatus.NOT_FETCHED) {
-        return <DelayedSpinner />;
+        return <Spinner />;
     } else if (hasAcceptedTermsStatus === HasAcceptedTermsStatus.HAS_ACCEPTED) {
         return children;
     } else {

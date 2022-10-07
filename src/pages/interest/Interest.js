@@ -5,7 +5,7 @@ import { CONTEXT_PATH } from "../../environment";
 import useScrollToTop from "../../hooks/useScrollToTop";
 import BackLink from "../../components/BackLink/BackLink";
 import H1WithAutoFocus from "../../components/H1WithAutoFocus/H1WithAutoFocus";
-import "./Interest.css";
+import "./Interest.less";
 
 const Interest = ({ match }) => {
     const title = "Meld interesse";
@@ -36,7 +36,7 @@ const Interest = ({ match }) => {
                 </b>
             </p>
             <a
-                className="link"
+                className="Button Button--primary"
                 href="mailto:nav.team.arbeidsplassen@nav.no?subject=Deltagelse av brukertest på arbeidsplassen.no"
             >
                 Jeg vil delta på brukertest

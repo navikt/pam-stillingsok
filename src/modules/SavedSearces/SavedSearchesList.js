@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { captureException } from "@sentry/browser";
 import SavedSearchListItem from "./SavedSearchListItem";
-import DelayedSpinner from "../../components/DelayedSpinner/DelayedSpinner";
+import Spinner from "../../components/Spinner/Spinner";
 import ErrorMessage from "../../components/messages/ErrorMessage";
 import UserAPI from "../../api/UserAPI";
 import { FetchAction, FetchStatus, useFetchReducer } from "../../hooks/useFetchReducer";
@@ -62,7 +62,7 @@ function SavedSearchesList() {
 
     return (
         <React.Fragment>
-            {(status === FetchStatus.NOT_FETCHED || status === FetchStatus.IS_FETCHING) && <DelayedSpinner />}
+            {(status === FetchStatus.NOT_FETCHED || status === FetchStatus.IS_FETCHING) && <Spinner />}
             {status === FetchStatus.FAILURE && <ErrorMessage />}
             {status === FetchStatus.SUCCESS && data.length === 0 && <SavedSearchesIsEmpty />}
             {status === FetchStatus.SUCCESS && data.length > 0 && (

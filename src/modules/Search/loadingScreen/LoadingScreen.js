@@ -1,11 +1,11 @@
 import React from "react";
-import DelayedSpinner from "../../../components/DelayedSpinner/DelayedSpinner";
-import "./LoadingScreen.css";
+import Spinner from "../../../components/Spinner/Spinner";
+import "./LoadingScreen.less";
 
 function LoadingScreen() {
     return (
         <div className="LoadingScreen">
-            <DelayedSpinner />
+            <Spinner />
         </div>
     );
 }

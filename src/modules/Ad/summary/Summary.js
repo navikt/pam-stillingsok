@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { formatDate, isValidISOString } from "../../../components/utils";
 import getWorkLocation from "../../../../server/common/getWorkLocation";
 import getEmployer from "../../../../server/common/getEmployer";
-import "./Summary.css";
+import "./Summary.less";
 
 export default function Summary({ stilling }) {
     const { properties } = stilling;

@@ -1,4 +1,4 @@
-import "./EventBanner.css";
+import "./EventBanner.less";
 import React, { useEffect } from "react";
 import { FetchAction, FetchStatus, useFetchReducer } from "../../../hooks/useFetchReducer";
 import EventAPI from "../../../api/EventAPI";

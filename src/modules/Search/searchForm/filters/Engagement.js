@@ -1,3 +1,4 @@
+import { Checkbox } from "nav-frontend-skjema";
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 import { ADD_ENGAGEMENT_TYPE, REMOVE_ENGAGEMENT_TYPE } from "../../query";
@@ -6,7 +7,6 @@ import UnknownSearchCriteriaValues from "./UnknownSearchCriteriaValues";
 import mergeCount from "../utils/mergeCount";
 import moveCriteriaToBottom from "../utils/moveFacetToBottom";
 import { findUnknownSearchCriteriaValues } from "../utils/findUnknownSearchCriteriaValues";
-import { Checkbox } from "@navikt/ds-react";
 
 function Engagement({ initialValues, updatedValues, query, dispatch }) {
     const [values, setValues] = useState(moveCriteriaToBottom(initialValues, "Annet"));
@@ -48,12 +48,11 @@ function Engagement({ initialValues, updatedValues, query, dispatch }) {
                     <Checkbox
                         name="engagementType"
                         key={editedItemKey(item.key)}
+                        label={`${editedItemKey(item.key)} (${item.count})`}
                         value={item.key}
                         onChange={handleClick}
                         checked={query.engagementType.includes(item.key)}
-                    >
-                        {`${editedItemKey(item.key)} (${item.count})`}
-                    </Checkbox>
+                    />
                 ))}
                 <UnknownSearchCriteriaValues
                     namePrefix="engagementType"

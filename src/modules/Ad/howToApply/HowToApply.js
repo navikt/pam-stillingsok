@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { formatDate, isValidEmail, isValidISOString, isValidUrl } from "../../../components/utils";
-import "./HowToApply.css";
+import "./HowToApply.less";
 import logAmplitudeEvent from "../../../tracking/amplitude";
 import FavouritesButton from "../../Favourites/FavouritesButton";
 import CalendarIcon from "../../../components/Icon/CalendarIcon";
@@ -41,7 +41,7 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                 <p className="JobPosting__p">
                     Gi beskjed til bedriften at du ønsker å bli kontaktet for denne stillingen.
                 </p>
-                <Link className="link" to={`${CONTEXT_PATH}/stilling/${stilling._id}/meld-interesse`}>
+                <Link className="Button Button--primary" to={`${CONTEXT_PATH}/stilling/${stilling._id}/meld-interesse`}>
                     Meld din interesse
                 </Link>
                 {showFavouriteButton && (

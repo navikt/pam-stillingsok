@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { FetchAction, FetchStatus, useFetchReducer } from "../../../hooks/useFetchReducer";
 import InterestAPI from "../../../api/InterestAPI";
 import { captureException } from "@sentry/browser";
-import "./Requirements.css";
+import "./Requirements.less";
 
 function Requirements({ uuid }) {
     const [{ data, status }, dispatch] = useFetchReducer();
