@@ -1,22 +1,22 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import AuthenticationProvider, { fixUrlAfterLogin } from "./modules/Authentication/AuthenticationProvider";
-import UserProvider from "./modules/User/UserProvider";
-import FavouritesProvider from "./modules/Favourites/FavouritesProvider";
+import AuthenticationProvider, { fixUrlAfterLogin } from "./context/AuthenticationProvider";
+import UserProvider from "./context/UserProvider";
+import FavouritesProvider from "./context/FavouritesProvider";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import BrowserSupportInfo from "./components/browserSupportInfo/BrowserSupportInfo";
-import Header from "./components/Header/Header";
+import Header from "./components/header/Header";
 import { CONTEXT_PATH } from "./environment";
+import Search from "./pages/search/Search";
+import Ad from "./pages/ad/Ad";
+import Favourites from "./pages/favourites/Favourites";
+import SavedSearches from "./pages/savedSearches/SavedSearches";
+import ReportAd from "./pages/reportAd/ReportAd";
 import initSentry from "./tracking/sentry";
 import { initAmplitude } from "./tracking/amplitude";
 import "./styles/styles.less";
 import HistoryProvider from "./context/HistoryProvider";
-import FavouritesPage from "./pages/favoritter";
-import RegisterInterestPage from "./pages/stilling/meld-interesse";
-import AdPage from "./pages/stilling";
-import ReportAdPage from "./pages/rapporter-annonse";
-import SavedSearchesPage from "./pages/lagrede-sok";
-import SearchPage from "./pages";
+import RegisterInterest from "./pages/registerInterest/RegisterInterest";
 
 initSentry();
 fixUrlAfterLogin();
@@ -34,17 +34,17 @@ function Application() {
                                 <Route component={Header} />
                             </Switch>
                             <Switch>
-                                <Route exact path={CONTEXT_PATH} component={SearchPage} />
+                                <Route exact path={CONTEXT_PATH} component={Search} />
                                 <Route
                                     path={`${CONTEXT_PATH}/stilling/:uuid/meld-interesse`}
-                                    component={RegisterInterestPage}
+                                    component={RegisterInterest}
                                 />
-                                <Route path={`${CONTEXT_PATH}/stilling/:uuid`} component={AdPage} />
-                                <Route path={`${CONTEXT_PATH}/intern/:uuid`} component={AdPage} />
-                                <Route path={`${CONTEXT_PATH}/rapporter-annonse`} component={ReportAdPage} />
-                                <Route path={`${CONTEXT_PATH}/favoritter`} component={FavouritesPage} />
-                                <Route path={`${CONTEXT_PATH}/lagrede-sok`} component={SavedSearchesPage} />
-                                <Route path="*" component={SearchPage} />
+                                <Route path={`${CONTEXT_PATH}/stilling/:uuid`} component={Ad} />
+                                <Route path={`${CONTEXT_PATH}/intern/:uuid`} component={Ad} />
+                                <Route path={`${CONTEXT_PATH}/rapporter-annonse`} component={ReportAd} />
+                                <Route path={`${CONTEXT_PATH}/favoritter`} component={Favourites} />
+                                <Route path={`${CONTEXT_PATH}/lagrede-sok`} component={SavedSearches} />
+                                <Route path="*" component={Search} />
                             </Switch>
                         </HistoryProvider>
                     </BrowserRouter>

@@ -23,13 +23,12 @@ Button.defaultProps = {
     spinner: false,
     disabled: false,
     className: undefined,
-    id: undefined,
-    onClick: undefined
+    id: undefined
 };
 
 Button.propTypes = {
     variant: PropTypes.oneOf(["primary", "secondary", "flat"]),
-    onClick: PropTypes.func,
+    onClick: PropTypes.func.isRequired,
     htmlType: PropTypes.oneOf(["submit", "button"]),
     disabled: PropTypes.bool,
     spinner: PropTypes.bool,

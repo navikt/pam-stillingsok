@@ -3,8 +3,8 @@ import useDocumentTitle from "../../hooks/useDocumentTitle";
 import useTrackPageview from "../../hooks/useTrackPageview";
 import { CONTEXT_PATH } from "../../environment";
 import useScrollToTop from "../../hooks/useScrollToTop";
-import BackLink from "../../components/BackLink/BackLink";
-import H1WithAutoFocus from "../../components/H1WithAutoFocus/H1WithAutoFocus";
+import BackLink from "../../components/backlink/BackLink";
+import H1WithAutoFocus from "../../components/h1WithAutoFocus/H1WithAutoFocus";
 import "./Interest.less";
 
 const Interest = ({ match }) => {
