@@ -22,6 +22,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@navikt/arbeidsplassen-core": "2.0.0",
     "@sentry/browser": "^6.19.6",
     "@types/react-router-dom": "^4.3.5",
     "amplitude-js": "^8.5.0",
