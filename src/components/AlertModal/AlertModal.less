@@ -1,0 +1,21 @@
+@import (reference) "../../styles/variables";
+
+.AlertModal {
+    @media (min-width: @screen-sm-min) {
+        padding: 1rem 2rem 2rem 2rem;
+    }
+}
+
+.AlertModal__h1 {
+    font-weight: 600;
+    font-size: 1.5rem;
+}
+
+.AlertModal__message {
+    margin-bottom: 2.5rem;
+    line-height: 1.5;
+}
+
+.AlertModal__buttons .Button:not(:last-child) {
+    margin-right: 1rem;
+}

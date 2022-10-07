@@ -4,7 +4,7 @@ import { UAParser } from "ua-parser-js";
 import NavFrontendModal from "nav-frontend-modal";
 import Button from "../Button/Button";
 import { Element, Normaltekst, Systemtittel } from "nav-frontend-typografi";
-import "./BrowserSupportInfo.css";
+import "./BrowserSupportInfo.less";
 
 const BrowserSupportInfo = ({ tillatLukking = false }) => {
     const browserInfo = new UAParser(navigator.userAgent).getBrowser();

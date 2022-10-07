@@ -1,3 +1,5 @@
+@import (reference) "../../styles/variables";
+
 .TypeaheadSuggestion__substring {
     font-weight: 600;
 }
@@ -12,11 +14,11 @@
 }
 
 .TypeaheadSuggestion--active {
-    color: #062140;
-    background-color: #98f1d7;
+    color: @primaryDarkBlue;
+    background-color: @secondaryTurquoise;
 }
 
-@media (max-width: 991px) {
+@media (max-width: @screen-sm-max) {
     .TypeaheadSuggestion__inner {
         padding: 0.5rem 1rem;
         border-top: 1px solid #e9e7e7;

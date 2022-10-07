@@ -1,3 +1,5 @@
+@import (reference) "../../../styles/variables";
+
 .Summary__dl {
     display: flex;
     flex-wrap: wrap;
@@ -7,7 +9,7 @@
     dt {
         width: 100%;
 
-        @media (min-width: 992px) {
+        @media (min-width: @screen-md-min) {
             width: 33%;
         }
     }
@@ -15,7 +17,7 @@
     dd {
         margin-left: auto;
         width: 100%;
-        @media (min-width: 992px) {
+        @media (min-width: @screen-md-min) {
             width: 66%;
         }
     }
@@ -28,7 +30,7 @@
     dt {
         margin: 0;
 
-        @media (min-width: 992px) {
+        @media (min-width: @screen-md-min) {
             margin: 0 0 0.5rem 0;
         }
     }
@@ -36,7 +38,7 @@
     dd {
         margin: 0 0 0.5rem 0;
 
-        @media (min-width: 992px) {
+        @media (min-width: @screen-md-min) {
             margin: 0 0 0.5rem 0;
         }
     }

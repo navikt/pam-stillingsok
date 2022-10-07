@@ -1,3 +1,5 @@
+@import (reference) "../../styles/variables";
+
 .TermsOfUse {
     > .bekreftCheckboksPanel {
         display: flex;
@@ -52,7 +54,7 @@
     margin-right: 1rem;
 }
 
-@media (max-width: 767px) {
+@media (max-width: @screen-xs-max) {
     .TermsOfUse {
         padding: 0;
     }
@@ -62,7 +64,7 @@
     }
 }
 
-@media (min-width: 992px) {
+@media (min-width: @screen-md-min) {
     .TermsOfUse__buttons .Button:not(:last-child) {
         margin-right: 1rem;
     }

@@ -1,3 +1,5 @@
+@import (reference) "../../../../styles/variables";
+
 .CriteriaPanel {
     margin-bottom: 1rem;
 }
@@ -27,7 +29,7 @@
 
 .CriteriaPanel__button:focus-visible {
     outline: 3px solid transparent;
-    box-shadow: 0 0 0 3px #062140;
+    box-shadow: 0 0 0 3px @primaryDarkBlue;
 }
 
 .CriteriaPanel__button:hover {
@@ -63,13 +65,13 @@
     // Override styles
     .checkboks {
         &:focus + .skjemaelement__label:before {
-            box-shadow: 0 0 0 3px #062140;
+            box-shadow: 0 0 0 3px @primaryDarkBlue;
         }
 
         &:checked {
             &:focus {
                 + .skjemaelement__label:before {
-                    background-color: #8c368e;
+                    background-color: @primaryPurple;
                     background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMyAxMCI+ICAgIDxnPiAgICA8cGF0aCBmaWxsPSIjRkZGRkZGIiBkPSJNNCwxMGMtMC40LDAtMC44LTAuMS0xLjEtMC40TDAuNCw3LjFDMC4xLDYuOCwwLDYuNCwwLDZzMC4yLTAuOCwwLjUtMS4xQzEsNC40LDIsNC40LDIuNSw0LjlMNCw2LjRsNi40LTYgICAgQzEwLjgsMC4xLDExLjEsMCwxMS41LDBjMC40LDAsMC44LDAuMiwxLDAuNWMwLjYsMC42LDAuNSwxLjYtMC4xLDIuMXYwTDUsOS42QzQuNyw5LjksNC40LDEwLDQsMTB6IE0xMS44LDEuOUwxMS44LDEuOSAgICBDMTEuOCwxLjksMTEuOCwxLjksMTEuOCwxLjl6IE0xMS4yLDEuMUMxMS4yLDEuMSwxMS4yLDEuMSwxMS4yLDEuMUwxMS4yLDEuMXoiLz4gICAgPC9nPjwvc3ZnPg==);
                 }
             }

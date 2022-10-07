@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import "./Tag.css";
+import "./Tag.less";
 
 function Tag({ children, className }) {
     return <div className={className ? `Tag ${className}` : "Tag"}>{children}</div>;

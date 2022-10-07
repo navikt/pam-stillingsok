@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { CONTEXT_PATH } from "../../environment";
-import "./EmptyMessage.css";
+import "./EmptyMessage.less";
 
 function EmptyMessage({ title, text }) {
     return (

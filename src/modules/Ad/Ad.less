@@ -1,3 +1,5 @@
+@import (reference) "../../styles/variables";
+
 .JobPosting {
     margin: 2rem auto;
     max-width: 1200px;
@@ -17,7 +19,7 @@
     overflow-wrap: break-word;
     font-weight: 600;
 
-    @media (min-width: 992px) {
+    @media (min-width: @screen-md-min) {
         margin: 0 0 1rem;
         font-size: 2.5rem;
     }
@@ -37,25 +39,25 @@
 }
 
 .JobPosting__flex {
-    @media (min-width: 992px) {
+    @media (min-width: @screen-md-min) {
         display: flex;
     }
 }
 
 .JobPosting__left {
     margin: 0 0 2rem 0;
-    @media (min-width: 992px) {
+    @media (min-width: @screen-md-min) {
         flex: 2;
         padding-right: 6rem;
     }
 
-    @media (min-width: 1200px) {
+    @media (min-width: @screen-lg-min) {
         padding-right: 8rem;
     }
 }
 
 .JobPosting__right {
-    @media (min-width: 992px) {
+    @media (min-width: @screen-md-min) {
         width: 340px;
     }
 }

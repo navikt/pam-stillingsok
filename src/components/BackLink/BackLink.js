@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import "./BackLink.css";
+import "./BackLink.less";
 
 function BackLink({ to, text }) {
     return (

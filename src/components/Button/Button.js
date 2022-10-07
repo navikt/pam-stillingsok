@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import "./Button.css";
+import "./Button.less";
 
 function Button({ variant, onClick, id, children, disabled, spinner, htmlType, className }) {
     return (
