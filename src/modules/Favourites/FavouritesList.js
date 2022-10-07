@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { captureException } from "@sentry/browser";
 import DelayedSpinner from "../../components/DelayedSpinner/DelayedSpinner";
-import ErrorMessage from "../../components/messages/ErrorMessage";
-import EmptyMessage from "../../components/messages/EmptyMessage";
+import ErrorMessage from "../../components/Messages/ErrorMessage";
+import EmptyMessage from "../../components/Messages/EmptyMessage";
 import UserAPI from "../../api/UserAPI";
 import { FetchAction, FetchStatus, useFetchReducer } from "../../hooks/useFetchReducer";
 import FavouritesListItem from "./FavouritesListItem";

@@ -14,18 +14,18 @@ import queryReducer, {
 import { extractParam } from "../../components/utils";
 import { FetchAction, FetchStatus, useFetchReducer } from "../../hooks/useFetchReducer";
 import SearchAPI from "../../api/SearchAPI/SearchAPI";
-import ErrorMessage from "../../components/messages/ErrorMessage";
-import SearchForm from "./searchForm/SearchForm";
+import ErrorMessage from "../../components/Messages/ErrorMessage";
+import SearchForm from "./SearchForm/SearchForm";
 import useDocumentTitle from "../../hooks/useDocumentTitle";
 import useTrackPageview from "../../hooks/useTrackPageview";
-import LinkMenu from "./linkMenu/LinkMenu";
-import LoadingScreen from "./loadingScreen/LoadingScreen";
+import LinkMenu from "./LinkMenu/LinkMenu";
+import LoadingScreen from "./LoadingScreen/LoadingScreen";
 import useRestoreScroll from "../../hooks/useRestoreScroll";
 import "./Search.css";
 import { useHistory } from "react-router";
-import SearchResult from "./searchResult/SearchResult";
+import SearchResult from "./SearchResult/SearchResult";
 import H1WithAutoFocus from "../../components/H1WithAutoFocus/H1WithAutoFocus";
-import EventBanner from "./event/EventBanner";
+import EventBanner from "./EventBanner/EventBanner";
 
 const Search = () => {
     const { authenticationStatus } = useContext(AuthenticationContext);

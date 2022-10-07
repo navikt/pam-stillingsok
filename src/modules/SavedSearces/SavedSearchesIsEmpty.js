@@ -1,5 +1,5 @@
 import React from "react";
-import EmptyMessage from "../../components/messages/EmptyMessage";
+import EmptyMessage from "../../components/Messages/EmptyMessage";
 
 function SavedSearchesIsEmpty() {
     return (

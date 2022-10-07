@@ -1,7 +1,7 @@
 import React from "react";
 import { AuthenticationStatus } from "./AuthenticationProvider";
 import DelayedSpinner from "../../components/DelayedSpinner/DelayedSpinner";
-import ErrorMessage from "../../components/messages/ErrorMessage";
+import ErrorMessage from "../../components/Messages/ErrorMessage";
 import "./RequiresAuthentication.css";
 import { Button } from "@navikt/ds-react";
 
