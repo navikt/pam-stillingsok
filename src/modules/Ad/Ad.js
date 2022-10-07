@@ -14,7 +14,7 @@ import { logAmplitudePageview, logStillingVisning } from "../../tracking/amplitu
 import ShareAd from "./shareAd/ShareAd";
 import Summary from "./summary/Summary";
 import DelayedSpinner from "../../components/DelayedSpinner/DelayedSpinner";
-import SearchAPI from "../../api/SearchAPI/SearchAPI";
+import SearchAPI from "../../api/SearchAPI";
 import { FetchAction, FetchStatus, useFetchReducer } from "../../hooks/useFetchReducer";
 import ErrorMessage from "../../components/messages/ErrorMessage";
 import useRobotsNoIndexMetaTag from "../../hooks/useRobotsNoIndexMetaTag";

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import fixLocationName from "../../../../../server/common/fixLocationName";
 import {
     ADD_COUNTRY,
@@ -13,9 +13,44 @@ import {
 } from "../../query";
 import CriteriaPanel from "./CriteriaPanel";
 import UnknownSearchCriteriaValues from "./UnknownSearchCriteriaValues";
+import buildLocations from "../utils/buildLocations";
+import buildHomeOfficeValues from "../utils/buildHomeOfficeValues";
+import mergeCount from "../utils/mergeCount";
+import { findUnknownSearchCriteriaValues } from "../utils/findUnknownSearchCriteriaValues";
+import findZeroCountLocationFacets from "../utils/findZeroCountLocationFacets";
 import { Checkbox } from "@navikt/ds-react";
 
-function Locations({ data, query, dispatch }) {
+function Locations({ initialValues, updatedValues, query, dispatch }) {
+    const [locationValues, setLocationValues] = useState(buildLocations(initialValues));
+    const [homeOfficeValues, setHomeOfficeValues] = useState(buildHomeOfficeValues(initialValues.aggregations.remote));
+    const unknownCounties = findUnknownSearchCriteriaValues(query.counties, initialValues.locations);
+    const unknownMunicipals = findUnknownSearchCriteriaValues(query.municipals, initialValues.locations, "municipals");
+    const unknownCountries = findZeroCountLocationFacets(
+        query.countries,
+        initialValues.aggregations.nationalCountMap,
+        initialValues.aggregations.internationalCountMap
+    );
+
+    /**
+     * Update count in all locations after a search is done
+     */
+    useEffect(() => {
+        if (updatedValues) {
+            setHomeOfficeValues(mergeCount(homeOfficeValues, buildHomeOfficeValues(updatedValues.aggregations.remote)));
+
+            setLocationValues(
+                mergeCount(
+                    locationValues,
+                    buildLocations({
+                        ...updatedValues,
+                        locations: initialValues.locations
+                    }),
+                    "subLocations"
+                )
+            );
+        }
+    }, [updatedValues]);
+
     function handleLocationClick(value, type, checked) {
         if (type === "county") {
             if (checked) {
@@ -67,17 +102,15 @@ function Locations({ data, query, dispatch }) {
         }
     };
 
-    const unknownLocations = [
-        ...new Set([...data.unknown.countries, ...data.unknown.counties, ...data.unknown.municipals])
-    ];
+    const unknownLocations = [...new Set([...unknownCountries, ...unknownCounties, ...unknownMunicipals])];
     const checkedLocations = [...query.countries, ...query.counties, ...query.municipals];
 
     return (
         <CriteriaPanel panelId="locations-panel" title="Område">
             <fieldset className="CriteriaPanel__fieldset">
                 <legend>Velg fylke, kommune, land eller hjemmekontor</legend>
-                {data.aggregations.locations &&
-                    data.aggregations.locations.map((location) => (
+                {locationValues &&
+                    locationValues.map((location) => (
                         <React.Fragment key={location.key}>
                             <Checkbox
                                 name="location"
@@ -118,8 +151,8 @@ function Locations({ data, query, dispatch }) {
                     ))}
 
                 <div className="RemoteFacet">
-                    {data.aggregations.remote &&
-                        data.aggregations.remote.map((remote) => (
+                    {homeOfficeValues &&
+                        homeOfficeValues.map((remote) => (
                             <Checkbox
                                 name="remote"
                                 key={remote.key}
@@ -137,11 +170,7 @@ function Locations({ data, query, dispatch }) {
                     namePrefix="counties"
                     unknownValues={unknownLocations}
                     checkedValues={checkedLocations}
-                    onClick={handleZeroCountFacetClick(
-                        data.unknown.countries,
-                        data.unknown.counties,
-                        data.unknown.municipals
-                    )}
+                    onClick={handleZeroCountFacetClick(unknownCountries, unknownCounties, unknownMunicipals)}
                 />
             </fieldset>
         </CriteriaPanel>

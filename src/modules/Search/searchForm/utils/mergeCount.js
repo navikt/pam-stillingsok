@@ -6,7 +6,7 @@
  * @param nestedKey (Optional): Navn på evt. underkategori som også skal oppdateres, f. eks municipal
  * @returns Returnerer en ny liste, hvor antall treff per fasett er oppdatert
  */
-export default function buildCount(initialValues, newValues, nestedKey) {
+export default function mergeCount(initialValues, newValues, nestedKey) {
     if (nestedKey === undefined) {
         return initialValues.map((item) => {
             const found = newValues.find((e) => e.key === item.key);

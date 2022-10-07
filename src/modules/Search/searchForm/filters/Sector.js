@@ -1,13 +1,22 @@
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import CriteriaPanel from "./CriteriaPanel";
 import UnknownSearchCriteriaValues from "./UnknownSearchCriteriaValues";
 import { ADD_SECTOR, REMOVE_SECTOR } from "../../query";
 import moveCriteriaToBottom from "../utils/moveFacetToBottom";
+import mergeCount from "../utils/mergeCount";
+import { findUnknownSearchCriteriaValues } from "../utils/findUnknownSearchCriteriaValues";
 import { Checkbox } from "@navikt/ds-react";
 
-function Sector({ data, query, dispatch }) {
-    const values = moveCriteriaToBottom(data.aggregations.sector, "Ikke oppgitt");
+function Sector({ initialValues, updatedValues, query, dispatch }) {
+    const [values, setValues] = useState(moveCriteriaToBottom(initialValues, "Ikke oppgitt"));
+
+    useEffect(() => {
+        if (updatedValues) {
+            const merged = mergeCount(values, updatedValues);
+            setValues(merged);
+        }
+    }, [updatedValues]);
 
     function handleClick(e) {
         const { value } = e.target;
@@ -36,7 +45,7 @@ function Sector({ data, query, dispatch }) {
 
                 <UnknownSearchCriteriaValues
                     namePrefix="sector"
-                    unknownValues={data.unknown.sector}
+                    unknownValues={findUnknownSearchCriteriaValues(query.sector, initialValues)}
                     checkedValues={query.sector}
                     onClick={handleClick}
                 />
@@ -46,6 +55,12 @@ function Sector({ data, query, dispatch }) {
 }
 
 Sector.propTypes = {
+    sector: PropTypes.arrayOf(
+        PropTypes.shape({
+            key: PropTypes.string,
+            count: PropTypes.number
+        })
+    ),
     query: PropTypes.shape({
         sector: PropTypes.arrayOf(PropTypes.string)
     }).isRequired,

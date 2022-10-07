@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
     ADD_OCCUPATION_FIRST_LEVEL,
     ADD_OCCUPATION_SECOND_LEVEL,
@@ -9,12 +9,27 @@ import {
 import CriteriaPanel from "./CriteriaPanel";
 import UnknownSearchCriteriaValues from "./UnknownSearchCriteriaValues";
 import moveCriteriaToBottom from "../utils/moveFacetToBottom";
+import mergeCount from "../utils/mergeCount";
+import { findUnknownSearchCriteriaValues } from "../utils/findUnknownSearchCriteriaValues";
 import { Checkbox } from "@navikt/ds-react";
 
 const OCCUPATION_LEVEL_OTHER = "Uoppgitt/ ikke identifiserbare";
 
-function Occupations({ data, query, dispatch }) {
-    const values = moveCriteriaToBottom(data.aggregations.occupationFirstLevels, OCCUPATION_LEVEL_OTHER);
+function Occupations({ initialValues, updatedValues, query, dispatch }) {
+    const [values, setValues] = useState(moveCriteriaToBottom(initialValues, OCCUPATION_LEVEL_OTHER));
+    const unknownFirstValues = findUnknownSearchCriteriaValues(query.occupationFirstLevels, initialValues);
+    const unknownSecondValues = findUnknownSearchCriteriaValues(
+        query.occupationSecondLevels,
+        initialValues,
+        "occupationSecondLevels"
+    );
+
+    useEffect(() => {
+        if (updatedValues) {
+            const merged = mergeCount(values, updatedValues, "occupationSecondLevels");
+            setValues(merged);
+        }
+    }, [updatedValues]);
 
     function handleFirstLevelClick(e) {
         const { value } = e.target;
@@ -92,8 +107,8 @@ function Occupations({ data, query, dispatch }) {
 
                 <UnknownSearchCriteriaValues
                     namePrefix="occupation"
-                    unknownValues={data.unknown.occupationFirstLevels}
-                    unknownNestedValues={data.unknown.occupationSecondLevels}
+                    unknownValues={unknownFirstValues}
+                    unknownNestedValues={unknownSecondValues}
                     checkedValues={query.occupationFirstLevels}
                     checkedNestedValues={query.occupationSecondLevels}
                     onClick={handleFirstLevelClick}
@@ -106,6 +121,18 @@ function Occupations({ data, query, dispatch }) {
 }
 
 Occupations.propTypes = {
+    initialValues: PropTypes.arrayOf(
+        PropTypes.shape({
+            key: PropTypes.string,
+            count: PropTypes.number,
+            occupationSecondLevels: PropTypes.arrayOf(
+                PropTypes.shape({
+                    key: PropTypes.string,
+                    count: PropTypes.number
+                })
+            )
+        })
+    ).isRequired,
     query: PropTypes.shape({
         occupationFirstLevels: PropTypes.arrayOf(PropTypes.string),
         occupationSecondLevels: PropTypes.arrayOf(PropTypes.string)
