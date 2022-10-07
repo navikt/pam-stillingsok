@@ -13,6 +13,7 @@
 .FavouritesList__total-and-sorting {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     margin: 0 0 1rem 0;
 }
 

@@ -10,7 +10,8 @@ import UserAPI from "../../api/UserAPI";
 import BackLink from "../../components/BackLink/BackLink";
 import useScrollToTop from "../../hooks/useScrollToTop";
 import H1WithAutoFocus from "../../components/H1WithAutoFocus/H1WithAutoFocus";
-import { Alert, Button, Checkbox, Textarea } from "@navikt/ds-react";
+import { Alert, Checkbox, Textarea } from "@navikt/ds-react";
+import Button from "../../components/Button/Button";
 
 const violationCategories = [
     { label: "Diskriminerende innhold", key: "discrimination" },
