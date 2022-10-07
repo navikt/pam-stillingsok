@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { CONTEXT_PATH } from "../../../environment";
+import Button from "../../../components/Button/Button";
 
 function SuccessMessage({ onClose }) {
     let buttonRef = useRef(null);
@@ -20,9 +21,9 @@ function SuccessMessage({ onClose }) {
                 </Link>
             </p>
             <div className="SaveSearchForm__buttons">
-                <button className="Button Button--primary" ref={buttonRef} onClick={onClose}>
+                <Button variant="primary" ref={buttonRef} onClick={onClose}>
                     Lukk
-                </button>
+                </Button>
             </div>
         </section>
     );

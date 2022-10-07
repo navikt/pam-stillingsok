@@ -1,4 +1,3 @@
-import { Checkbox } from "nav-frontend-skjema";
 import React, { useEffect, useState } from "react";
 import fixLocationName from "../../../../../server/common/fixLocationName";
 import {
@@ -19,6 +18,7 @@ import buildHomeOfficeValues from "../utils/buildHomeOfficeValues";
 import mergeCount from "../utils/mergeCount";
 import { findUnknownSearchCriteriaValues } from "../utils/findUnknownSearchCriteriaValues";
 import findZeroCountLocationFacets from "../utils/findZeroCountLocationFacets";
+import { Checkbox } from "@navikt/ds-react";
 
 function Locations({ initialValues, updatedValues, query, dispatch }) {
     const [locationValues, setLocationValues] = useState(buildLocations(initialValues));
@@ -114,14 +114,15 @@ function Locations({ initialValues, updatedValues, query, dispatch }) {
                         <React.Fragment key={location.key}>
                             <Checkbox
                                 name="location"
-                                label={`${fixLocationName(location.key)} (${location.count})`}
                                 value={location.key}
                                 onChange={handleCheckboxClick(location.key, location.type)}
                                 checked={
                                     query.counties.includes(location.key) ||
                                     (location.key === "UTLAND" && query.international === true)
                                 }
-                            />
+                            >
+                                {`${fixLocationName(location.key)} (${location.count})`}
+                            </Checkbox>
                             {(query.counties.includes(location.key) ||
                                 (location.key === "UTLAND" && query.international === true)) &&
                                 location.key !== "OSLO" &&
@@ -134,16 +135,15 @@ function Locations({ initialValues, updatedValues, query, dispatch }) {
                                                     className={subLocation.count === 0 ? "Facet__zero__count" : ""}
                                                     name="location"
                                                     key={subLocation.key}
-                                                    label={`${fixLocationName(subLocation.key, true)} (${
-                                                        subLocation.count
-                                                    })`}
                                                     value={subLocation.key}
                                                     onChange={handleCheckboxClick(subLocation.key, subLocation.type)}
                                                     checked={
                                                         query.municipals.includes(subLocation.key) ||
                                                         query.countries.includes(subLocation.key)
                                                     }
-                                                />
+                                                >
+                                                    {`${fixLocationName(subLocation.key, true)} (${subLocation.count})`}
+                                                </Checkbox>
                                             ))}
                                     </fieldset>
                                 )}
@@ -156,11 +156,12 @@ function Locations({ initialValues, updatedValues, query, dispatch }) {
                             <Checkbox
                                 name="remote"
                                 key={remote.key}
-                                label={`${remote.key} (${remote.count})`}
                                 value={remote.key}
                                 onChange={handleHomeOfficeClick}
                                 checked={query.remote.includes(remote.key)}
-                            />
+                            >
+                                {`${remote.key} (${remote.count})`}
+                            </Checkbox>
                         ))}
                 </div>
 

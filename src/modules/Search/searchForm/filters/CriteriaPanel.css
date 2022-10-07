@@ -1,0 +1,36 @@
+.CriteriaPanel  .navds-checkbox__label {
+    padding: 8px 0;
+}
+
+.CriteriaPanel__fieldset {
+    padding: 0 0 1rem 0rem;
+    margin: 0;
+    border: 0;
+}
+
+.CriteriaPanel__fieldset legend {
+    font-size: 1rem;
+    font-weight: 600;
+
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+    white-space: nowrap;
+}
+
+.CriteriaPanel__fieldset--sub {
+    padding: 0 0 0 1.25rem;
+}
+
+.Facet__zero__count label {
+    color: #78706a !important;
+}
+
+.RemoteFacet {
+    margin-top: 1.5rem;
+}

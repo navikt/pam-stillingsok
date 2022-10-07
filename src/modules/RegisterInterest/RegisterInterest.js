@@ -8,17 +8,14 @@ import { FetchAction, FetchStatus, useFetchReducer } from "../../hooks/useFetchR
 import useScrollToTop from "../../hooks/useScrollToTop";
 import useDocumentTitle from "../../hooks/useDocumentTitle";
 import useTrackPageview from "../../hooks/useTrackPageview";
-import Spinner from "../../components/Spinner/Spinner";
-import Alert from "../../components/Alert/Alert";
+import DelayedSpinner from "../../components/DelayedSpinner/DelayedSpinner";
 import H1WithAutoFocus from "../../components/H1WithAutoFocus/H1WithAutoFocus";
-import { Checkbox } from "nav-frontend-skjema";
-import Button from "../../components/Button/Button";
 import { isValidEmail } from "../../components/utils";
-import "./RegisterInterest.less";
+import "./RegisterInterest.css";
 import getEmployer from "../../../server/common/getEmployer";
 import { CONTEXT_PATH } from "../../environment";
-import TextField from "../../components/TextField/TextField";
 import BackLink from "../../components/BackLink/BackLink";
+import { Alert, Button, Checkbox, TextField } from "@navikt/ds-react";
 
 const RegisterInterest = ({ match }) => {
     // Ad data
@@ -132,10 +129,12 @@ const RegisterInterest = ({ match }) => {
 
     return (
         <div className="RegisterInterest">
-            {status === FetchStatus.IS_FETCHING && <Spinner />}
+            {status === FetchStatus.IS_FETCHING && <DelayedSpinner />}
             {status === FetchStatus.FAILURE && (
                 <div className="RegisterInterest__inner">
-                    <Alert>Det oppsto en feil. Forsøk å laste inn siden på nytt</Alert>
+                    <Alert role="alert" variant="error">
+                        Det oppsto en feil. Forsøk å laste inn siden på nytt
+                    </Alert>
                 </div>
             )}
             {status === FetchStatus.SUCCESS && (
@@ -159,7 +158,7 @@ const RegisterInterest = ({ match }) => {
                                 </p>
                                 <Link
                                     to={`${CONTEXT_PATH}/${isInternal ? "intern" : "stilling"}/${data.ad._id}`}
-                                    className="Button Button--primary"
+                                    className="link"
                                 >
                                     Tilbake til stillingsannonsen
                                 </Link>
@@ -247,11 +246,12 @@ const RegisterInterest = ({ match }) => {
                                             <Checkbox
                                                 key={it.label}
                                                 name={it.label}
-                                                label={it.label}
                                                 value={it.label}
                                                 onChange={handleHardRequirementCheck}
                                                 checked={checkedHardRequirements.includes(it.label)}
-                                            />
+                                            >
+                                                {it.label}
+                                            </Checkbox>
                                         ))}
                                     </fieldset>
 
@@ -263,11 +263,12 @@ const RegisterInterest = ({ match }) => {
                                             <Checkbox
                                                 key={it.label}
                                                 name={it.label}
-                                                label={it.label}
                                                 value={it.label}
                                                 onChange={handleSoftRequirementCheck}
                                                 checked={checkedSoftRequirements.includes(it.label)}
-                                            />
+                                            >
+                                                {it.label}
+                                            </Checkbox>
                                         ))}
                                     </fieldset>
                                 </section>
@@ -280,22 +281,24 @@ const RegisterInterest = ({ match }) => {
                                 </p>
 
                                 {postInterestResponse.status === FetchStatus.FAILURE && (
-                                    <Alert>Det oppsto en feil ved sending. Forsøk igjen</Alert>
+                                    <Alert role="alert" variant="error">
+                                        Det oppsto en feil ved sending. Forsøk igjen
+                                    </Alert>
                                 )}
 
                                 {postInterestResponse.status === FetchStatus.IS_FETCHING ? (
                                     <div aria-live="polite" className="RegisterInterest__progress">
-                                        <Spinner /> Sender interessemelding
+                                        <DelayedSpinner /> Sender interessemelding
                                     </div>
                                 ) : (
                                     <div className="RegisterInterest__buttons">
                                         <Link
                                             to={`${CONTEXT_PATH}/${isInternal ? "intern" : "stilling"}/${data.ad._id}`}
-                                            className="Button Button--secondary"
+                                            className="link"
                                         >
                                             Avbryt
                                         </Link>
-                                        <Button variant="primary" htmlType="submit">
+                                        <Button variant="primary" type="submit">
                                             Send melding
                                         </Button>
                                     </div>

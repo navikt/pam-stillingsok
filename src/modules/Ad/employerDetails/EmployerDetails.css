@@ -1,0 +1,98 @@
+.EmployerDetails__h2 {
+  margin: 4rem 0 1rem;
+  font-weight: 600;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  padding-top: 1.5rem;
+}
+
+@media (min-width: 992px) {
+  .EmployerDetails__h2 {
+    font-size: 1.75rem;
+  }
+}
+
+.EmployerDetails__h2 svg {
+  margin-right: 1rem;
+}
+
+.EmployerDetails__description {
+  margin-top: 1rem;
+  font-family: "Source Sans Pro", Arial, sans-serif;
+  font-size: 1.125rem;
+  line-height: 1.5;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+.EmployerDetails__description a {
+  color: #8c368e;
+}
+
+.EmployerDetails__description a:hover {
+  text-decoration-line: none;
+}
+
+.EmployerDetails__description a:focus {
+  outline: none;
+  color: #fff;
+  background: #062140;
+}
+
+.EmployerDetails__dl {
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 1.125rem;
+  width: 100%;
+}
+
+.EmployerDetails__dl dt {
+  width: 100%;
+}
+
+@media (min-width: 992px) {
+  .EmployerDetails__dl dt {
+    width: 33%;
+  }
+}
+
+.EmployerDetails__dl dd {
+  margin-left: auto;
+  width: 100%;
+}
+
+@media (min-width: 992px) {
+  .EmployerDetails__dl dd {
+    width: 66%;
+  }
+}
+
+.EmployerDetails__dl dd,
+.EmployerDetails__dl dt {
+  line-height: 1.33;
+}
+
+.EmployerDetails__dl dt {
+  margin: 0;
+}
+
+@media (min-width: 992px) {
+  .EmployerDetails__dl dt {
+    margin: 0 0 0.5rem 0;
+  }
+}
+
+.EmployerDetails__dl dd {
+  margin: 0 0 0.5rem 0;
+}
+
+@media (min-width: 992px) {
+  .EmployerDetails__dl dd {
+    margin: 0 0 0.5rem 0;
+  }
+}
+
+.EmployerDetails__dl dt {
+  font-weight: 600;
+}

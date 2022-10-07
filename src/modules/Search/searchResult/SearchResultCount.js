@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import "./SearchResultCount.less";
+import "./SearchResultCount.css";
 
 function SearchResultCount({ searchResult }) {
     if (searchResult) {

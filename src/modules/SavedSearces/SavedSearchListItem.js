@@ -8,14 +8,13 @@ import SaveSearchModal from "./modal/SaveSearchModal";
 import UserAPI from "../../api/UserAPI";
 import useToggle from "../../hooks/useToggle";
 import { FetchStatus } from "../../hooks/useFetchReducer";
-import Tag from "../../components/Tag/Tag";
-import Alert from "../../components/Alert/Alert";
 import { FormModes } from "./modal/SaveSearchForm";
 import AlertModalWithPageReload from "../../components/AlertModal/AlertModalWithPageReload";
-import Button from "../../components/Button/Button";
 import EditIcon from "../../components/Icon/EditIcon";
 import DeleteIcon from "../../components/Icon/DeleteIcon";
 import RefreshIcon from "../../components/Icon/RefreshIcon";
+import { Alert, Tag } from "@navikt/ds-react";
+import Button from "../../components/Button/Button";
 
 function SavedSearchListItem({ savedSearch, removeSavedSearchFromList, replaceSavedSearchInList, autoOpenModal }) {
     const [deleteStatus, setDeleteStatus] = useState(FetchStatus.NOT_FETCHED);
@@ -93,39 +92,37 @@ function SavedSearchListItem({ savedSearch, removeSavedSearchFromList, replaceSa
             )}
 
             <div className="SavedSearchListItem__bottom">
-                <Button variant="flat" onClick={openSavedSearchModal}>
-                    <EditIcon />
+                <Button variant="tertiary" icon={<EditIcon />} onClick={openSavedSearchModal}>
                     Endre
                 </Button>
-                <Button variant="flat" onClick={openConfirmationModal}>
-                    <DeleteIcon />
+                <Button variant="tertiary" icon={<DeleteIcon />} onClick={openConfirmationModal}>
                     Slett
                 </Button>
             </div>
 
             {isEmailNotificationExpired && (
-                <Tag className="SavedSearchListItem__expired">
-                    Ditt varsel for dette søket har gått ut
+                <div className="SavedSearchListItem__expired">
+                    <Tag variant="warning">Ditt varsel for dette søket har gått ut</Tag>
                     <Button
-                        variant="flat"
+                        variant="tertiary"
                         onClick={reactivateEmailNotification}
                         disabled={restartEmailNotificationStatus === FetchStatus.IS_FETCHING}
-                        spinner={restartEmailNotificationStatus === FetchStatus.IS_FETCHING}
+                        loading={restartEmailNotificationStatus === FetchStatus.IS_FETCHING}
+                        icon={<RefreshIcon />}
                     >
-                        <RefreshIcon />
                         Start ny varsling
                     </Button>
-                </Tag>
+                </div>
             )}
 
             {restartEmailNotificationStatus === FetchStatus.SUCCESS && (
-                <Tag>
+                <Tag variant="success">
                     <div role="status">Ny varsling startet</div>
                 </Tag>
             )}
 
             {restartEmailNotificationStatus === FetchStatus.FAILURE && (
-                <Alert>
+                <Alert role="alert" variant="error" className="mt-1">
                     Det oppsto en feil. Klarte ikke starte ny varsling. Forsøk igjen eller last siden på nytt.
                 </Alert>
             )}

@@ -1,10 +1,9 @@
 import * as React from "react";
 import { useState } from "react";
 import { UAParser } from "ua-parser-js";
-import NavFrontendModal from "nav-frontend-modal";
-import Button from "../Button/Button";
-import { Element, Normaltekst, Systemtittel } from "nav-frontend-typografi";
 import "./BrowserSupportInfo.css";
+import CustomModal from "../CustomModal/CustomModal";
+import { Button } from "@navikt/ds-react";
 
 const BrowserSupportInfo = ({ tillatLukking = false }) => {
     const browserInfo = new UAParser(navigator.userAgent).getBrowser();
@@ -23,30 +22,21 @@ const BrowserSupportInfo = ({ tillatLukking = false }) => {
 
 const BrowserSupportInfoModal = ({ tillatLukking = false }) => {
     const [open, setOpen] = useState(true);
+
     const closeModal = () => {
         if (tillatLukking) {
             setOpen(false);
         }
     };
     return (
-        <NavFrontendModal
-            isOpen={open}
-            contentLabel="Informasjon om støttede nettlesere"
-            onRequestClose={closeModal}
-            className="BrowserInfo"
-            closeButton={tillatLukking}
-        >
+        <CustomModal open={open} aria-label="Informasjon om støttede nettlesere" onCloseClick={closeModal}>
             <section>
-                <Systemtittel className="BrowserInfo-header">
-                    Du må bruke en annen nettleser enn Internet&nbsp;Explorer
-                </Systemtittel>
-                <Normaltekst className="BrowserInfo-paragraph">
+                <h2 className="BrowserInfo-header">Du må bruke en annen nettleser enn Internet&nbsp;Explorer</h2>
+                <p className="BrowserInfo-paragraph">
                     Microsoft faser ut Internet Explorer. Du må laste ned en annen nettleser for å bruke
                     arbeidsplassen.no
-                </Normaltekst>
-                <Element tag="h3" className="BrowserInfo-subheader">
-                    Last ned:
-                </Element>
+                </p>
+                <h3 className="BrowserInfo-subheader">Last ned:</h3>
                 <div className="BrowserInfo-lenkeliste">
                     <ul>
                         <li className="ForlateSiden">
@@ -75,12 +65,12 @@ const BrowserSupportInfoModal = ({ tillatLukking = false }) => {
                 </div>
 
                 {tillatLukking && (
-                    <Normaltekst className="BrowserInfo-knapp-wrapper">
+                    <p className="BrowserInfo-knapp-wrapper">
                         <Button onClick={closeModal}>Lukk</Button>
-                    </Normaltekst>
+                    </p>
                 )}
             </section>
-        </NavFrontendModal>
+        </CustomModal>
     );
 };
 

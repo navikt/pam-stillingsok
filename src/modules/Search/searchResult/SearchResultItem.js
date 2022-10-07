@@ -5,8 +5,8 @@ import getEmployer from "../../../../server/common/getEmployer";
 import getWorkLocation from "../../../../server/common/getWorkLocation";
 import { CONTEXT_PATH } from "../../../environment";
 import { formatDate } from "../../../components/utils";
-import "./SearchResultsItem.less";
-import Tag from "../../../components/Tag/Tag";
+import "./SearchResultsItem.css";
+import { Tag } from "@navikt/ds-react";
 
 export default function SearchResultItem({ ad, showExpired, favouriteButton, shouldAutoFocus }) {
     const location = getWorkLocation(ad.properties.location, ad.locationList);
@@ -36,7 +36,13 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, sho
                 </LinkToAd>
             </h3>
 
-            {showExpired && <Tag className="SearchResultsItem__expired">Annonsen er utløpt</Tag>}
+            {showExpired && (
+                <p>
+                    <Tag variant="warning" className="SearchResultsItem__expired">
+                        Annonsen er utløpt
+                    </Tag>
+                </p>
+            )}
 
             {jobTitle && (
                 <p id={`${ad.uuid}-jobTitle`} className="SearchResultsItem__jobtitle">

@@ -1,9 +1,9 @@
 import React, { useContext, useEffect } from "react";
 import { captureException } from "@sentry/browser";
 import { UserContext } from "../../User/UserProvider";
-import Modal from "../../../components/Modal/Modal";
+import CustomModal from "../../../components/CustomModal/CustomModal";
 import UserAPI from "../../../api/UserAPI";
-import Spinner from "../../../components/Spinner/Spinner";
+import DelayedSpinner from "../../../components/DelayedSpinner/DelayedSpinner";
 import useToggle from "../../../hooks/useToggle";
 import { FetchAction, FetchStatus, useFetchReducer } from "../../../hooks/useFetchReducer";
 import SaveSearchForm from "./SaveSearchForm";
@@ -81,8 +81,8 @@ function SaveSearchModal({ onClose, onSaveSearchSuccess, formData, defaultFormMo
     const { status, data, error } = existingSearchResponse;
 
     return (
-        <Modal onCloseClick={onClose} title="Lagre søk">
-            {status === FetchStatus.IS_FETCHING && <Spinner />}
+        <CustomModal onCloseClick={onClose} title="Lagre søk">
+            {status === FetchStatus.IS_FETCHING && <DelayedSpinner />}
             {status === FetchStatus.FAILURE && error.statusCode === 404 && <NotFoundMessage />}
             {status === FetchStatus.FAILURE && error.statusCode !== 404 && <p>Feil. Forsøk å laste siden på nytt.</p>}
 
@@ -103,7 +103,7 @@ function SaveSearchModal({ onClose, onSaveSearchSuccess, formData, defaultFormMo
             {shouldShowSuccessMessage && <SuccessMessage onClose={onClose} />}
 
             {shouldShowConfirmEmailMessage && <ConfirmEmailMessage onClose={onClose} />}
-        </Modal>
+        </CustomModal>
     );
 }
 

@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
 import React, { useRef } from "react";
-import NavFrontendModal from "nav-frontend-modal";
-import Button from "../Button/Button";
 import "./AlertModal.css";
+import { Modal } from "@navikt/ds-react";
+import Button from "../Button/Button";
 
 export default function AlertModal({
     id,
@@ -18,19 +18,12 @@ export default function AlertModal({
     const cancelButtonRef = useRef();
 
     return (
-        <NavFrontendModal
+        <Modal
             appElement={document.getElementById("app")}
             className="AlertModal"
             role="alertdialog"
-            isOpen
-            onRequestClose={onCancel}
-            onAfterOpen={() => {
-                cancelButtonRef.current.focus();
-            }}
-            aria={{
-                labelledby: `${id}-h1`,
-                describedby: `${id}-message`
-            }}
+            open={true}
+            onClose={onCancel}
         >
             <h1 id={`${id}-h1`} className="AlertModal__h1">
                 {title}
@@ -39,21 +32,21 @@ export default function AlertModal({
                 {children}
             </p>
             <div className="AlertModal__buttons">
-                <button
+                <Button
+                    variant={useOnlyCancelButton ? "primary" : "secondary"}
                     ref={cancelButtonRef}
-                    className={useOnlyCancelButton ? "Button Button--primary" : "Button Button--secondary"}
                     disabled={spinner}
                     onClick={onCancel}
                 >
                     {cancelLabel}
-                </button>
+                </Button>
                 {!useOnlyCancelButton && (
-                    <Button variant="primary" spinner={spinner} disabled={spinner} onClick={onConfirm}>
+                    <Button variant="primary" loading={spinner} disabled={spinner} onClick={onConfirm}>
                         {confirmLabel}
                     </Button>
                 )}
             </div>
-        </NavFrontendModal>
+        </Modal>
     );
 }
 

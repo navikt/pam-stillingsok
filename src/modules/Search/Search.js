@@ -21,12 +21,11 @@ import useTrackPageview from "../../hooks/useTrackPageview";
 import LinkMenu from "./linkMenu/LinkMenu";
 import LoadingScreen from "./loadingScreen/LoadingScreen";
 import useRestoreScroll from "../../hooks/useRestoreScroll";
-import "./Search.less";
+import "./Search.css";
 import { useHistory } from "react-router";
 import SearchResult from "./searchResult/SearchResult";
 import H1WithAutoFocus from "../../components/H1WithAutoFocus/H1WithAutoFocus";
 import EventBanner from "./event/EventBanner";
-import Spinner from "../../components/Spinner/Spinner";
 
 const Search = () => {
     const { authenticationStatus } = useContext(AuthenticationContext);

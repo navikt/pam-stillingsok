@@ -1,0 +1,73 @@
+.SocialShare__link {
+  display: flex;
+  align-items: center;
+  color: #8c368e;
+  margin-bottom: 1rem;
+}
+
+.SocialShare__link :focus,
+.SocialShare__link :active {
+  box-shadow: 0 0 0 3px #062140;
+  outline: none;
+}
+
+.SocialShare__link :hover {
+  text-decoration: none;
+}
+
+.SocialShare__text {
+  margin-left: 0.5rem;
+}
+
+.SocialShare__label {
+  font-size: 18px;
+}
+
+.SocialShare__facebook {
+  margin-right: 1rem;
+}
+
+.SocialShare__facebook svg .cls-1 {
+  fill: #1877f2;
+}
+
+.SocialShare__facebook svg .cls-2 {
+  fill: #fff;
+}
+
+.SocialShare__linkedin {
+  margin-right: 1rem;
+}
+
+.SocialShare__linkedin svg .cls-1 {
+  fill: #2867b2;
+}
+
+.SocialShare__linkedin svg .cls-2 {
+  fill: #fff;
+}
+
+.SocialShare__twitter {
+  margin-right: 1rem;
+}
+
+.SocialShare__twitter svg .cls-1 {
+  fill: #1da1f2;
+}
+
+.SocialShare__twitter svg .cls-2 {
+  fill: #fff;
+}
+
+.SocialShare__messenger {
+  margin-right: 1rem;
+}
+
+.SocialShare__messenger svg .cls-1 {
+  fill: url(#linear-gradient);
+}
+
+.SocialShare__messenger svg .cls-2 {
+  fill: #fff;
+  fill-rule: evenodd;
+}

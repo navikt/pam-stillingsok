@@ -1,0 +1,64 @@
+*,
+:after,
+:before {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    overflow-y: scroll;
+    background: #fff;
+    color: #062140;
+}
+
+#app {
+    height: 100%;
+}
+
+.push-footer-down {
+    min-height: 100%;
+    margin-bottom: -691px;
+    padding-bottom: 691px;
+}
+
+@media (min-width: 940px) {
+    .push-footer-down {
+        margin-bottom: -327px;
+        padding-bottom: 327px;
+    }
+}
+
+.link:hover {
+    text-decoration-line: none;
+}
+
+.link:focus {
+    outline: none;
+    color: #fff;
+    background: #062140;
+}
+
+/* clears the ‘X’ from Internet Explorer */
+input[type=search]::-ms-clear { display: none; width : 0; height: 0; }
+input[type=search]::-ms-reveal { display: none; width : 0; height: 0; }
+
+/* clears the ‘X’ from Chrome */
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration { display: none; }
+
+.mb-1 {
+    margin-bottom: 1rem;
+}
+
+.mt-1{
+ margin-top: 1rem;
+}

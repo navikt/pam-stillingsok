@@ -1,0 +1,19 @@
+:root {
+    --navds-semantic-color-link: #8c368e;
+    --navds-semantic-color-focus: #062140;
+    --navds-semantic-color-interaction-primary: #8c368e;
+    --navds-semantic-color-interaction-primary-hover: #622663;
+    --navds-semantic-color-interaction-primary-hover-subtle: #fbd8e7;
+    --navds-semantic-color-interaction-primary-selected: #8c368e;
+    --navds-modal-color-overlay: rgba(61, 56, 49, 0.7);
+    --navds-accordion-color-background-open: #f1f1f1;
+    --navds-search-color-clear-hover: #8c368e;
+}
+
+.navds-search__wrapper {
+    align-items: stretch;
+}
+
+.navds-search__input {
+    padding: 1rem 2.5rem 1rem 1rem;
+}

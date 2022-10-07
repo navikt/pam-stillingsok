@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { Select } from "nav-frontend-skjema";
 import { SET_SORTING } from "../query";
-import "./Sorting.less";
+import { Select } from "@navikt/ds-react";
 
 function Sorting({ query, dispatch }) {
     const [sort, setSort] = useState(query.sort);
@@ -14,7 +13,7 @@ function Sorting({ query, dispatch }) {
     }
 
     return (
-        <Select onChange={handleChange} value={sort} label="Sortér etter" className="Sorting__Select">
+        <Select size="small" onChange={handleChange} value={sort} label="Sortér etter">
             <option key="relevant" value="relevant">
                 Mest relevant
             </option>

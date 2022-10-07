@@ -9,21 +9,21 @@ import EmploymentDetails from "./employmentDetails/EmploymentDetails";
 import FinnAd from "./finnAd/FinnAd";
 import HowToApply from "./howToApply/HowToApply";
 import NotFound from "./notFound/NotFound";
-import "./Ad.less";
+import "./Ad.css";
 import { logAmplitudePageview, logStillingVisning } from "../../tracking/amplitude";
 import ShareAd from "./shareAd/ShareAd";
 import Summary from "./summary/Summary";
-import Spinner from "../../components/Spinner/Spinner";
+import DelayedSpinner from "../../components/DelayedSpinner/DelayedSpinner";
 import SearchAPI from "../../api/SearchAPI";
 import { FetchAction, FetchStatus, useFetchReducer } from "../../hooks/useFetchReducer";
 import ErrorMessage from "../../components/messages/ErrorMessage";
 import useRobotsNoIndexMetaTag from "../../hooks/useRobotsNoIndexMetaTag";
 import useScrollToTop from "../../hooks/useScrollToTop";
-import Tag from "../../components/Tag/Tag";
 import AdBackLink from "./adBacklink/AdBackLink";
 import H1WithAutoFocus from "../../components/H1WithAutoFocus/H1WithAutoFocus";
 import Requirements from "./requirements/Requirements";
 import InterestAPI from "../../api/InterestAPI";
+import { Tag } from "@navikt/ds-react";
 
 const Ad = ({ uuid, isInternal }) => {
     const [{ data: ad, error, status }, dispatch] = useFetchReducer();
@@ -84,13 +84,13 @@ const Ad = ({ uuid, isInternal }) => {
 
             {status === FetchStatus.FAILURE && error.statusCode === 404 && <NotFound />}
             {status === FetchStatus.FAILURE && error.statusCode !== 404 && <ErrorMessage />}
-            {status === FetchStatus.IS_FETCHING && <Spinner />}
+            {status === FetchStatus.IS_FETCHING && <DelayedSpinner />}
             {status === FetchStatus.SUCCESS && (
                 <article className="JobPosting__flex">
                     <div className="JobPosting__left">
                         <H1WithAutoFocus className="JobPosting__h1">{ad._source.title}</H1WithAutoFocus>
 
-                        {ad._source.status !== "ACTIVE" && <Tag>Stillingsannonsen er inaktiv.</Tag>}
+                        {ad._source.status !== "ACTIVE" && <Tag variant="warning">Stillingsannonsen er inaktiv.</Tag>}
 
                         {isFinn && <FinnAd stilling={ad} />}
 

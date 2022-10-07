@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./NotFound.less";
+import "./NotFound.css";
 import { CONTEXT_PATH } from "../../../environment";
 
 export default function NotFound() {

@@ -10,7 +10,7 @@ import useTrackPageview from "../../hooks/useTrackPageview";
 import useScrollToTop from "../../hooks/useScrollToTop";
 import BackLink from "../../components/BackLink/BackLink";
 import H1WithAutoFocus from "../../components/H1WithAutoFocus/H1WithAutoFocus";
-import "./Favourites.less";
+import "./Favourites.css";
 
 function Favourites() {
     const title = "Favoritter";

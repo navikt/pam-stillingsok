@@ -1,5 +1,5 @@
 import React from "react";
-import "./SkipTo.less";
+import "./SkipTo.css";
 
 function SkipToCriteria() {
     return (

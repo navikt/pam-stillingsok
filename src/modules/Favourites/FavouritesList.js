@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Select } from "nav-frontend-skjema";
 import { captureException } from "@sentry/browser";
-import Spinner from "../../components/Spinner/Spinner";
+import DelayedSpinner from "../../components/DelayedSpinner/DelayedSpinner";
 import ErrorMessage from "../../components/messages/ErrorMessage";
 import EmptyMessage from "../../components/messages/EmptyMessage";
 import UserAPI from "../../api/UserAPI";
 import { FetchAction, FetchStatus, useFetchReducer } from "../../hooks/useFetchReducer";
 import FavouritesListItem from "./FavouritesListItem";
+import { Select } from "@navikt/ds-react";
 
 function FavouritesList() {
     const [response, dispatch] = useFetchReducer();
@@ -46,7 +46,7 @@ function FavouritesList() {
     }
 
     if (response.status === FetchStatus.NOT_FETCHED || response.status === FetchStatus.IS_FETCHING) {
-        return <Spinner />;
+        return <DelayedSpinner />;
     } else if (response.status === FetchStatus.FAILURE && response.error.statusCode !== 404) {
         return <ErrorMessage />;
     } else if (response.status === FetchStatus.SUCCESS && response.data.length === 0) {
@@ -69,7 +69,7 @@ function FavouritesList() {
                         }}
                         value={sortBy}
                         label="Sortér etter"
-                        className="FavouritesList_Sorting"
+                        hideLabel={true}
                     >
                         <option key="published" value="published">
                             Vis nyeste øverst

@@ -10,7 +10,7 @@ import useTrackPageview from "../../hooks/useTrackPageview";
 import useScrollToTop from "../../hooks/useScrollToTop";
 import H1WithAutoFocus from "../../components/H1WithAutoFocus/H1WithAutoFocus";
 import BackLink from "../../components/BackLink/BackLink";
-import "./SavedSearches.less";
+import "./SavedSearches.css";
 
 /**
  * Page showing saved searches.

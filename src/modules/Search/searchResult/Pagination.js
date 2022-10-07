@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
+import "./Pagination.css";
 import Button from "../../../components/Button/Button";
-import "./Pagination.less";
 
 const Pagination = ({ searchResult, isSearching, query, onLoadMoreClick }) => {
     const total = searchResult.totalAds;
@@ -15,7 +15,7 @@ const Pagination = ({ searchResult, isSearching, query, onLoadMoreClick }) => {
             {hasMore && (
                 <Button
                     disabled={isSearching}
-                    spinner={isSearching}
+                    loading={isSearching}
                     className="Pagination__button"
                     onClick={onLoadMoreClick}
                 >
