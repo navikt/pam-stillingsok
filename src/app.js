@@ -9,6 +9,7 @@ import Header from "./components/Header/Header";
 import { CONTEXT_PATH } from "./environment";
 import initSentry from "./tracking/sentry";
 import { initAmplitude } from "./tracking/amplitude";
+import "./styles/styles.less";
 import HistoryProvider from "./context/HistoryProvider";
 import FavouritesPage from "./pages/favoritter";
 import RegisterInterestPage from "./pages/stilling/meld-interesse";
@@ -16,10 +17,6 @@ import AdPage from "./pages/stilling";
 import ReportAdPage from "./pages/rapporter-annonse";
 import SavedSearchesPage from "./pages/lagrede-sok";
 import SearchPage from "./pages";
-import "./styles/normalize.css";
-import "./styles/footer.css";
-import "./styles/skiplink.css";
-import "./styles/styles.less";
 
 initSentry();
 fixUrlAfterLogin();

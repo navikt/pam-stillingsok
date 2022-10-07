@@ -84,7 +84,9 @@ function SearchBox({ dispatch, query }) {
                     value={value ? value : ""}
                 />
                 <button type="submit" className="SearchBox__button" onClick={handleSearchButtonClick}>
-                    <span className="SearchBox__button__icon" aria-label="Søk" />
+                    <span className="SearchBox__button__icon">
+                        <span className="sr-only">Søk</span>
+                    </span>
                 </button>
             </div>
         </React.Fragment>
