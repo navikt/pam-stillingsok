@@ -10,7 +10,7 @@
 
 .RegisterInterest__inner {
   margin: 0 auto;
-  max-width: 680px;
+  max-width: 600px;
   padding: 0 1rem;
 }
 
@@ -31,10 +31,12 @@
   margin: 0 0 1rem 0;
   font-weight: 600;
   font-size: 2rem;
-  line-height: 1.4;
+  line-height: 2.5rem;
 
   @media (min-width: 680px) {
     text-align: center;
+    font-size: 2.25rem;
+    line-height: 2.875rem;
   }
 }
 
@@ -42,16 +44,24 @@
   margin: 0 0 0.5rem 0;
   font-weight: 600;
   font-size: 1.5rem;
-  line-height: 1.6875;
+  line-height: 2rem;
+
+  @media (min-width: 680px) {
+    font-size: 1.75rem;
+    line-height: 2.375rem;
+  }
 }
 
 .RegisterInterest__lead {
-  margin: 0 0 3rem 0;
+  margin: 0 0 2rem 0;
   font-size: 1.125rem;
   line-height: 1.5;
 
   @media (min-width: 680px) {
+    margin: 0 0 3rem 0;
     text-align: center;
+    font-size: 1.5rem;
+    line-height: 2.125rem;
   }
 }
 
@@ -147,7 +157,9 @@
 
 .RegisterInterest__legend {
   font-weight: 600;
-  margin: 0 0 1rem 0;
+  margin: 0;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
 }
 
 .RegisterInterest__progress {
@@ -160,7 +172,20 @@
 }
 
 .RegisterInterest__success-message {
-  @media (min-width: 680px) {
+  @media (min-width: 600px) {
+    text-align: center;
+  }
+}
+
+.RegisterInterest .textarea__container label {
+  font-weight: 600;
+  font-size: 1.125rem;
+  line-height: 1.375;
+}
+
+.RegisterInterest__deleted-message {
+  margin-top: 2rem;
+  @media (min-width: 600px) {
     text-align: center;
   }
 }

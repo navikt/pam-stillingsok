@@ -17,6 +17,7 @@ import { initAmplitude } from "./tracking/amplitude";
 import "./styles/styles.less";
 import HistoryProvider from "./context/HistoryProvider";
 import RegisterInterest from "./pages/registerInterest/RegisterInterest";
+import RegisterInterestDeleted from "./pages/registerInterest/RegisterInterestDeleted";
 
 initSentry();
 fixUrlAfterLogin();
@@ -36,6 +37,7 @@ function Application() {
                             <Switch>
                                 <Route exact path={CONTEXT_PATH} component={Search} />
                                 <Route path={`${CONTEXT_PATH}/stilling/:uuid/meld-interesse`} component={RegisterInterest} />
+                                <Route path={`${CONTEXT_PATH}/interessemelding-slettet`} component={RegisterInterestDeleted} />
                                 <Route path={`${CONTEXT_PATH}/stilling/:uuid`} component={Ad} />
                                 <Route path={`${CONTEXT_PATH}/intern/:uuid`} component={Ad} />
                                 <Route path={`${CONTEXT_PATH}/rapporter-annonse`} component={ReportAd} />
