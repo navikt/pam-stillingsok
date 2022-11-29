@@ -22,8 +22,6 @@ import useScrollToTop from "../../hooks/useScrollToTop";
 import Tag from "../../components/tag/Tag";
 import AdBackLink from "./adBacklink/AdBackLink";
 import H1WithAutoFocus from "../../components/h1WithAutoFocus/H1WithAutoFocus";
-import Requirements from "./requirements/Requirements";
-import InterestAPI from "../../api/InterestAPI";
 
 const Ad = ({ match }) => {
     const [{ data: ad, error, status }, dispatch] = useFetchReducer();
@@ -98,9 +96,6 @@ const Ad = ({ match }) => {
                         {!isFinn && (
                             <React.Fragment>
                                 <Summary stilling={ad._source} />
-                                {InterestAPI.shouldEnableInterestFeature(ad._id) && (
-                                    <Requirements uuid={ad._id}/>
-                                )}
                                 <AdText adText={ad._source.properties.adtext} />
                                 <EmployerDetails stilling={ad._source} />
                             </React.Fragment>
@@ -108,7 +103,7 @@ const Ad = ({ match }) => {
                     </div>
 
                     <div className="JobPosting__right">
-                        <HowToApply stilling={ad} showFavouriteButton={!isInternal} />
+                        <HowToApply stilling={ad} showFavouriteButton={!isInternal} isInternal={isInternal} />
                         {!isFinn && (
                             <React.Fragment>
                                 <EmploymentDetails stilling={ad._source} />
