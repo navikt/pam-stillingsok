@@ -195,20 +195,25 @@ const InterestForm = ({ match }) => {
                             to={`${CONTEXT_PATH}/${isInternal ? "intern" : "stilling"}/${data.ad._id}`}
                             text="Tilbake til annonsen"
                         />
-                        {postInterestResponse.status === FetchStatus.SUCCESS ? (
-                            <div className="InterestForm__success-message">
-                                <h1 className="InterestForm__h1">Din interessemelding er registrert</h1>
-                                <p className="InterestForm__p InterestForm__mb-2">
-                                    Du vil få tilsendt en bekreftelse på e-post.
-                                </p>
-                                <Link
-                                    to={`${CONTEXT_PATH}/${isInternal ? "intern" : "stilling"}/${data.ad._id}`}
-                                    className="Knapp Knapp--hoved"
-                                >
-                                    Tilbake til stillingsannonsen
-                                </Link>
-                            </div>
-                        ) : (
+
+                        <div className="InterestForm__success-message" aria-live="polite">
+                            {postInterestResponse.status === FetchStatus.SUCCESS && (
+                                <div className="InterestForm__success-message" aria-live="polite">
+                                    <h1 className="InterestForm__h1">Din interessemelding er registrert</h1>
+                                    <p className="InterestForm__p InterestForm__mb-2">
+                                        Du vil få tilsendt en bekreftelse på e-post.
+                                    </p>
+                                    <Link
+                                        to={`${CONTEXT_PATH}/${isInternal ? "intern" : "stilling"}/${data.ad._id}`}
+                                        className="Knapp Knapp--hoved"
+                                    >
+                                        Tilbake til stillingsannonsen
+                                    </Link>
+                                </div>
+                            )}
+                        </div>
+
+                        {postInterestResponse.status !== FetchStatus.SUCCESS && (
                             <form onSubmit={handleFormSubmit}>
                                 <H1WithAutoFocus className="InterestForm__h1">Meld din interesse</H1WithAutoFocus>
                                 <p className="InterestForm__lead">
