@@ -1,15 +1,16 @@
 # Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
-version: v1.19.0
+version: v1.25.0
+# ignores vulnerabilities until expiry date; change duration by modifying expiry date
 ignore:
   SNYK-JS-JSONSCHEMA-1920922:
     - request > http-signature > jsprim > json-schema:
         reason: request is deprecated and needs to rewrite to something else
         expires: 2025-07-08T06:14:39.494Z
   SNYK-JS-DECODEURICOMPONENT-3149970:
-        - '*':
-            reason: Avventer for å se om fiks kommer
-            expires: 2022-12-05T00:00:00.000Z
-            created: 2022-11-29T15:45:00.000Z
+    - '*':
+        reason: Avventer for å se om fiks kommer
+        expires: 2022-12-05T00:00:00.000Z
+        created: 2022-11-29T14:57:26.989Z
 # patches apply the minimum changes required to fix a vulnerability
 patch:
   SNYK-JS-LODASH-450202:
