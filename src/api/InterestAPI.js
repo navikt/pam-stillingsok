@@ -1,35 +1,54 @@
-async function getRequirements(adUuid) {
-    if(!shouldEnableInterestFeature(adUuid)) {
-        return Promise.reject("Requirements not supported for this ad")
+import {INTEREST_API_URL} from "../environment";
+import APIError from "./APIError";
+
+async function get(url) {
+    let response;
+    try {
+        response = await fetch(`${INTEREST_API_URL}/${url}`, {
+            method: "GET"
+        });
+    } catch (e) {
+        throw new APIError(e.message, 0);
     }
-    return Promise.resolve({
-        hardRequirements: [
-            { label: "B-førerkort" },
-            { label: "Truckførerkort" }
-        ],
-        softRequirements: [
-            { label: "Komp A" },
-            { label: "Kompetanse B" },
-            { label: "Kompetanse C" },
-            { label: "Komp D" },
-            { label: "Lang kompetanse E" },
-            { label: "Lang kompetanse F" }
-        ]
-    })
+
+    if (response.status !== 200) {
+        throw new APIError(response.statusText, response.status);
+    }
+    return response.json();
 }
 
-async function postInterest(interest) {
-    return new Promise(resolve => setTimeout(resolve, 1000))
+async function post(url, query, toJson = true) {
+    let response;
+    try {
+        response = await fetch(`${INTEREST_API_URL}/${url}`, {
+            body: JSON.stringify(query),
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+    } catch (e) {
+        throw new APIError(e.message, 0);
+    }
+
+    if (response.status !== 200) {
+        throw new APIError(response.statusText, response.status);
+    }
+
+    return toJson ? response.json() : response;
 }
 
-function shouldEnableInterestFeature(uuid) {
-    return ["5bbed2b3-4401-454a-9d22-8e599490c7fa", "88209a94-bf03-44df-ae51-3fdd941d17f7"].includes(uuid)
+async function getInterestForm(adUuid) {
+    return get(`stilling/${adUuid}/interest-form`);
+}
+
+async function postInterest(adUuid, interest) {
+    return post(`stilling/${adUuid}/interest-form`, interest);
 }
 
 const InterestAPI = {
-    getRequirements: getRequirements,
+    getInterestForm: getInterestForm,
     postInterest: postInterest,
-    shouldEnableInterestFeature: shouldEnableInterestFeature
 };
 
 export default InterestAPI;
