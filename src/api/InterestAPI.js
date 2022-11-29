@@ -39,11 +39,11 @@ async function post(url, query, toJson = true) {
 }
 
 async function getInterestForm(adUuid) {
-    return get(`stilling/${adUuid}/interest-form`);
+    return get(`interest-form/${adUuid}`);
 }
 
 async function postInterest(adUuid, interest) {
-    return post(`stilling/${adUuid}/interest-form`, interest);
+    return post(`interest-form/${adUuid}/candidates`, interest);
 }
 
 const InterestAPI = {

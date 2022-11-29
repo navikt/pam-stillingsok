@@ -86,11 +86,11 @@ const InterestForm = ({ match }) => {
                 about,
                 must: data.interestForm.must.map((it) => ({
                     ...it,
-                    value: checkedMustRequirements.includes(it.label)
+                    checked: checkedMustRequirements.includes(it.label)
                 })),
                 should: data.interestForm.should.map((it) => ({
                     ...it,
-                    value: checkedShouldRequirements.includes(it.label)
+                    checked: checkedShouldRequirements.includes(it.label)
                 })),
             })
                 .then((data) => {
@@ -315,8 +315,7 @@ const InterestForm = ({ match }) => {
                                         <p className="InterestForm__p">Kryss av for de du oppfyller.</p>
                                         {data.interestForm.must.map((it) => (
                                             <Checkbox
-                                                key={it.label}
-                                                name={it.label}
+                                                key={it.id}
                                                 label={it.label}
                                                 value={it.label}
                                                 onChange={handleMustRequirementCheck}
@@ -332,8 +331,7 @@ const InterestForm = ({ match }) => {
                                         <p className="InterestForm__p">Kryss av for de du oppfyller.</p>
                                         {data.interestForm.should.map((it) => (
                                             <Checkbox
-                                                key={it.label}
-                                                name={it.label}
+                                                key={it.id}
                                                 label={it.label}
                                                 value={it.label}
                                                 onChange={handleShouldRequirementCheck}
