@@ -9,5 +9,6 @@
   "pam_var_side_url": "https://arbeidsplassen.dev.nav.no/stillingsregistrering",
   "pamsearchapi_url": "http://pam-search-api",
   "pam_jobbtreff_api_url": "https://arbeidsplassen.dev.nav.no/jobbtreff-promo",
-  "amplitude_token": "3acd3a52e065d2d99856a12e7e9e1432"
+  "amplitude_token": "3acd3a52e065d2d99856a12e7e9e1432",
+  "interest_api_url": "https://arbeidsplassen.dev.nav.no/interesse-api"
 }
