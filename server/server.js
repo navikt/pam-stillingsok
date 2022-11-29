@@ -67,7 +67,7 @@ server.use(helmet.contentSecurityPolicy({
         styleSrc: ["'self'"],
         fontSrc: ["'self'", 'data:'],
         imgSrc: ["'self'", 'data:'],
-        connectSrc: ["'self'", process.env.PAMADUSER_URL,
+        connectSrc: ["'self'", process.env.PAMADUSER_URL, process.env.INTEREST_API_URL,
             'https://amplitude.nav.no', 'https://sentry.gc.nav.no'],
         frameSrc: ["'self'"]
     }
@@ -82,6 +82,7 @@ server.use(bodyParser.json());
 const fasitProperties = {
     PAM_CONTEXT_PATH: '/stillinger',
     PAM_AD_USER_API: `${process.env.PAMADUSER_URL}/aduser`,
+    INTEREST_API_URL: process.env.INTEREST_API_URL,
     LOGIN_URL: process.env.LOGINSERVICE_URL,
     LOGOUT_URL: process.env.LOGOUTSERVICE_URL,
     PAM_STILLINGSOK_URL: process.env.PAM_STILLINGSOK_URL,
@@ -94,6 +95,7 @@ const writeEnvironmentVariablesToFile = () => {
     const fileContent = `window.__PAM_STILLINGSOK_URL__="${fasitProperties.PAM_STILLINGSOK_URL}";\n`
         + `window.__PAM_CONTEXT_PATH__="${fasitProperties.PAM_CONTEXT_PATH}";\n`
         + `window.__PAM_AD_USER_API__="${fasitProperties.PAM_AD_USER_API}";\n`
+        + `window.__INTEREST_API_URL__="${fasitProperties.INTEREST_API_URL}";\n`
         + `window.__LOGIN_URL__="${fasitProperties.LOGIN_URL}";\n`
         + `window.__LOGOUT_URL__="${fasitProperties.LOGOUT_URL}";\n`
         + `window.__PAM_VAR_SIDE_URL__="${fasitProperties.PAM_VAR_SIDE_URL}";\n`

@@ -14,29 +14,29 @@ import H1WithAutoFocus from "../../components/h1WithAutoFocus/H1WithAutoFocus";
 import { Checkbox, Textarea } from "nav-frontend-skjema";
 import { Hovedknapp } from "@navikt/arbeidsplassen-knapper";
 import { isValidEmail } from "../../components/utils";
-import "./RegisterInterest.less";
+import "./InterestForm.less";
 import getEmployer from "../../../server/common/getEmployer";
 import { CONTEXT_PATH } from "../../environment";
 import Spinner from "nav-frontend-spinner";
 import TextField from "../../components/textField/TextField";
 import BackLink from "../../components/backlink/BackLink";
 
-const RegisterInterest = ({ match }) => {
+const InterestForm = ({ match }) => {
     // Ad data
     const [{ data, status }, dispatch] = useFetchReducer();
     const [postInterestResponse, postInterestDispatch] = useFetchReducer();
 
     // Form data
     const [name, setName] = useState("");
-    const [telephoneNumber, setTelephoneNumber] = useState("");
+    const [telephone, setTelephone] = useState("");
     const [email, setEmail] = useState("");
     const [about, setAbout] = useState("");
-    const [checkedHardRequirements, setCheckedHardRequirements] = useState([]);
-    const [checkedSoftRequirements, setCheckedSoftRequirements] = useState([]);
+    const [checkedMustRequirements, setCheckedMustRequirements] = useState([]);
+    const [checkedShouldRequirements, setCheckedShouldRequirements] = useState([]);
 
     // Validation
     const [nameValidationError, setNameValidationError] = useState(undefined);
-    const [telephoneNumberValidationError, setTelephoneNumberValidationError] = useState(undefined);
+    const [telephoneValidationError, setTelephoneValidationError] = useState(undefined);
     const [emailValidationError, setEmailValidationError] = useState(undefined);
     const [aboutValidationError, setAboutValidationError] = useState(undefined);
     const errorSummary = useRef();
@@ -50,7 +50,7 @@ const RegisterInterest = ({ match }) => {
     const isInternal = match.path.startsWith("/stillinger/intern/");
 
     /**
-     * Fetch ad and requirements
+     * Fetch ad and interest form
      */
     useEffect(() => {
         const id = match.params.uuid;
@@ -58,12 +58,12 @@ const RegisterInterest = ({ match }) => {
 
         dispatch({ type: FetchAction.BEGIN });
 
-        const promises = [SearchAPI.get(`api/${path}/${id}`), InterestAPI.getRequirements(id)];
+        const promises = [SearchAPI.get(`api/${path}/${id}`), InterestAPI.getInterestForm(id)];
 
         Promise.all(promises)
             .then((responses) => {
-                const [ad, requirements] = responses;
-                dispatch({ type: FetchAction.RESOLVE, data: { ad, requirements } });
+                const [ad, interestForm] = responses;
+                dispatch({ type: FetchAction.RESOLVE, data: { ad, interestForm } });
             })
             .catch((error) => {
                 captureException(error);
@@ -79,7 +79,20 @@ const RegisterInterest = ({ match }) => {
     function handleSendMessageClick() {
         if (validateForm()) {
             postInterestDispatch({ type: FetchAction.BEGIN });
-            InterestAPI.postInterest()
+            InterestAPI.postInterest(match.params.uuid, {
+                name,
+                telephone: telephone,
+                email,
+                about,
+                must: data.interestForm.must.map((it) => ({
+                    ...it,
+                    value: checkedMustRequirements.includes(it.label)
+                })),
+                should: data.interestForm.should.map((it) => ({
+                    ...it,
+                    value: checkedShouldRequirements.includes(it.label)
+                })),
+            })
                 .then((data) => {
                     postInterestDispatch({ type: FetchAction.RESOLVE, data });
                 })
@@ -106,9 +119,9 @@ const RegisterInterest = ({ match }) => {
             setEmailValidationError("E-post mangler");
         }
 
-        if (telephoneNumber.trim().length === 0) {
+        if (telephone.trim().length === 0) {
             isValid = false;
-            setTelephoneNumberValidationError("Telefonnummer mangler");
+            setTelephoneValidationError("Telefonnummer mangler");
         }
 
         if (about.length > ABOUT_MAX_LENGTH) {
@@ -128,9 +141,9 @@ const RegisterInterest = ({ match }) => {
         setNameValidationError(undefined);
     }
 
-    function handleTelephoneNumberChange(e) {
-        setTelephoneNumber(e.target.value);
-        setTelephoneNumberValidationError(undefined);
+    function handleTelephoneChange(e) {
+        setTelephone(e.target.value);
+        setTelephoneValidationError(undefined);
     }
 
     function handleEmailChange(e) {
@@ -143,62 +156,67 @@ const RegisterInterest = ({ match }) => {
         setAboutValidationError(undefined);
     }
 
-    function handleHardRequirementCheck(e) {
+    function handleMustRequirementCheck(e) {
         const { checked, value } = e.target;
         if (checked) {
-            setCheckedHardRequirements((prevState) => (prevState.includes(value) ? prevState : [...prevState, value]));
+            setCheckedMustRequirements((prevState) => (prevState.includes(value) ? prevState : [...prevState, value]));
         } else {
-            setCheckedHardRequirements((prevState) => prevState.filter((it) => it !== value));
+            setCheckedMustRequirements((prevState) => prevState.filter((it) => it !== value));
         }
     }
 
-    function handleSoftRequirementCheck(e) {
+    function handleShouldRequirementCheck(e) {
         const { checked, value } = e.target;
         if (checked) {
-            setCheckedSoftRequirements((prevState) => (prevState.includes(value) ? prevState : [...prevState, value]));
+            setCheckedShouldRequirements((prevState) => (prevState.includes(value) ? prevState : [...prevState, value]));
         } else {
-            setCheckedSoftRequirements((prevState) => prevState.filter((it) => it !== value));
+            setCheckedShouldRequirements((prevState) => prevState.filter((it) => it !== value));
         }
     }
 
     return (
-        <div className="RegisterInterest">
+        <div className="InterestForm">
             {status === FetchStatus.IS_FETCHING && <DelayedSpinner />}
             {status === FetchStatus.FAILURE && (
-                <div className="RegisterInterest__inner">
+                <div className="InterestForm__inner">
                     <Alert>Det oppsto en feil. Forsøk å laste inn siden på nytt</Alert>
                 </div>
             )}
             {status === FetchStatus.SUCCESS && (
                 <React.Fragment>
-                    <div className="RegisterInterest__green-box">
-                        <div className="RegisterInterest__inner">
-                            <p className="RegisterInterest__employer">{getEmployer(data.ad._source)}</p>
-                            <p className="RegisterInterest__job-title">{data.ad._source.title}</p>
+                    <div className="InterestForm__green-box">
+                        <div className="InterestForm__inner">
+                            <p className="InterestForm__employer">{getEmployer(data.ad._source)}</p>
+                            <p className="InterestForm__job-title">{data.ad._source.title}</p>
                         </div>
                     </div>
-                    <div className="RegisterInterest__inner">
+                    <div className="InterestForm__inner">
                         <BackLink
                             to={`${CONTEXT_PATH}/${isInternal ? "intern" : "stilling"}/${data.ad._id}`}
                             text="Tilbake til annonsen"
                         />
-                        {postInterestResponse.status === FetchStatus.SUCCESS ? (
-                            <div className="RegisterInterest__success-message">
-                                <h1 className="RegisterInterest__h1">Din interessemelding er registrert</h1>
-                                <p className="RegisterInterest__p RegisterInterest__mb-2">
-                                    Du vil få tilsendt en bekreftelse på e-post.
-                                </p>
-                                <Link
-                                    to={`${CONTEXT_PATH}/${isInternal ? "intern" : "stilling"}/${data.ad._id}`}
-                                    className="Knapp Knapp--hoved"
-                                >
-                                    Tilbake til stillingsannonsen
-                                </Link>
-                            </div>
-                        ) : (
+
+                        <div className="InterestForm__success-message" aria-live="polite">
+                            {postInterestResponse.status === FetchStatus.SUCCESS && (
+                                <div className="InterestForm__success-message" aria-live="polite">
+                                    <h1 className="InterestForm__h1">Din interessemelding er registrert</h1>
+                                    <p className="InterestForm__p InterestForm__mb-2">
+                                        Du vil få tilsendt en bekreftelse på e-post.
+                                    </p>
+                                    <Link
+                                        to={`${CONTEXT_PATH}/${isInternal ? "intern" : "stilling"}/${data.ad._id}`}
+                                        className="Knapp Knapp--hoved"
+                                    >
+                                        Tilbake til stillingsannonsen
+                                    </Link>
+                                </div>
+                            )}
+                        </div>
+
+                        {postInterestResponse.status !== FetchStatus.SUCCESS && (
                             <form onSubmit={handleFormSubmit}>
-                                <H1WithAutoFocus className="RegisterInterest__h1">Meld din interesse</H1WithAutoFocus>
-                                <p className="RegisterInterest__lead">
+                                <H1WithAutoFocus className="InterestForm__h1">Meld din interesse</H1WithAutoFocus>
+                                <p className="InterestForm__lead">
                                     Gi beskjed til bedriften at du ønsker å bli kontaktet for denne stillingen.{" "}
                                 </p>
                                 <div
@@ -207,15 +225,15 @@ const RegisterInterest = ({ match }) => {
                                     aria-live="polite"
                                     aria-labelledby="register-interest-error-title"
                                 >
-                                    {(telephoneNumberValidationError || emailValidationError) && (
-                                        <div className="RegisterInterest__error-summary">
+                                    {(telephoneValidationError || emailValidationError) && (
+                                        <div className="InterestForm__error-summary">
                                             <h2
                                                 id="register-interest-error-title"
-                                                className="RegisterInterest__error-title"
+                                                className="InterestForm__error-title"
                                             >
                                                 Skjemaet inneholder feil:
                                             </h2>
-                                            <ul className="RegisterInterest__error-list">
+                                            <ul className="InterestForm__error-list">
                                                 {nameValidationError && (
                                                     <li>
                                                         <a href="#register-interest-name" className="link">
@@ -223,10 +241,10 @@ const RegisterInterest = ({ match }) => {
                                                         </a>
                                                     </li>
                                                 )}
-                                                {telephoneNumberValidationError && (
+                                                {telephoneValidationError && (
                                                     <li>
                                                         <a href="#register-interest-telephone" className="link">
-                                                            {telephoneNumberValidationError}
+                                                            {telephoneValidationError}
                                                         </a>
                                                     </li>
                                                 )}
@@ -249,9 +267,9 @@ const RegisterInterest = ({ match }) => {
                                     )}
                                 </div>
 
-                                <section className="RegisterInterest__section">
-                                    <h2 className="RegisterInterest__h2">Fyll inn din kontaktinformasjon</h2>
-                                    <p className="RegisterInterest__p RegisterInterest__mb-2">
+                                <section className="InterestForm__section">
+                                    <h2 className="InterestForm__h2">Fyll inn din kontaktinformasjon</h2>
+                                    <p className="InterestForm__p InterestForm__mb-2">
                                         Kontaktinformasjonen blir tilgjengelig for arbeidsgiver hvis de ønsker å ta
                                         kontakt.
                                     </p>
@@ -270,9 +288,9 @@ const RegisterInterest = ({ match }) => {
                                         id="register-interest-telephone"
                                         type="tel"
                                         autoComplete="tel"
-                                        onChange={handleTelephoneNumberChange}
-                                        value={telephoneNumber}
-                                        error={telephoneNumberValidationError}
+                                        onChange={handleTelephoneChange}
+                                        value={telephone}
+                                        error={telephoneValidationError}
                                     />
 
                                     <TextField
@@ -286,48 +304,48 @@ const RegisterInterest = ({ match }) => {
                                     />
                                 </section>
 
-                                <section className="RegisterInterest__section">
-                                    <h2 className="RegisterInterest__h2">Vis frem din erfaring</h2>
-                                    <p className="RegisterInterest__p RegisterInterest__mb-2">
+                                <section className="InterestForm__section">
+                                    <h2 className="InterestForm__h2">Vis frem din erfaring</h2>
+                                    <p className="InterestForm__p InterestForm__mb-2">
                                         Her ser du hva bedriften legger vekt på i stillingen.
                                     </p>
 
-                                    <fieldset className="RegisterInterest__fieldset">
-                                        <legend className="RegisterInterest__legend">Må-krav for stillingen.</legend>
-                                        <p className="RegisterInterest__p">Kryss av for de du oppfyller.</p>
-                                        {data.requirements.hardRequirements.map((it) => (
+                                    <fieldset className="InterestForm__fieldset">
+                                        <legend className="InterestForm__legend">Må-krav for stillingen.</legend>
+                                        <p className="InterestForm__p">Kryss av for de du oppfyller.</p>
+                                        {data.interestForm.must.map((it) => (
                                             <Checkbox
                                                 key={it.label}
                                                 name={it.label}
                                                 label={it.label}
                                                 value={it.label}
-                                                onChange={handleHardRequirementCheck}
-                                                checked={checkedHardRequirements.includes(it.label)}
+                                                onChange={handleMustRequirementCheck}
+                                                checked={checkedMustRequirements.includes(it.label)}
                                             />
                                         ))}
                                     </fieldset>
 
-                                    <fieldset className="RegisterInterest__fieldset">
-                                        <legend className="RegisterInterest__legend">
+                                    <fieldset className="InterestForm__fieldset">
+                                        <legend className="InterestForm__legend">
                                             Relevant og ønsket erfaring for stillingen.
                                         </legend>
-                                        <p className="RegisterInterest__p">Kryss av for de du oppfyller.</p>
-                                        {data.requirements.softRequirements.map((it) => (
+                                        <p className="InterestForm__p">Kryss av for de du oppfyller.</p>
+                                        {data.interestForm.should.map((it) => (
                                             <Checkbox
                                                 key={it.label}
                                                 name={it.label}
                                                 label={it.label}
                                                 value={it.label}
-                                                onChange={handleSoftRequirementCheck}
-                                                checked={checkedSoftRequirements.includes(it.label)}
+                                                onChange={handleShouldRequirementCheck}
+                                                checked={checkedShouldRequirements.includes(it.label)}
                                             />
                                         ))}
                                     </fieldset>
                                 </section>
 
-                                <section className="RegisterInterest__section">
-                                    <h2 className="RegisterInterest__h2">Skriv en melding til bedriften</h2>
-                                    <p className="RegisterInterest__p">
+                                <section className="InterestForm__section">
+                                    <h2 className="InterestForm__h2">Skriv en melding til bedriften</h2>
+                                    <p className="InterestForm__p">
                                         Forklar kort hvorfor du er rett person for jobben eller utdyb noen av svarene
                                         dine til bedriften.
                                     </p>
@@ -340,11 +358,11 @@ const RegisterInterest = ({ match }) => {
                                         feil={aboutValidationError ? { feilmelding: aboutValidationError } : undefined}
                                     />
                                 </section>
-                                <p className="RegisterInterest__p">
+                                <p className="InterestForm__p">
                                     Bedriften vil få tilgang til informasjonen du har oppgitt. Hvis de ønsker å ta
                                     kontakt vil de få tilgang til din kontaktinformasjon.
                                 </p>
-                                <p className="RegisterInterest__p RegisterInterest__mb-2">
+                                <p className="InterestForm__p InterestForm__mb-2">
                                     Du kan når som helst trekke tilbake denne tilgangen.
                                 </p>
 
@@ -353,11 +371,11 @@ const RegisterInterest = ({ match }) => {
                                 )}
 
                                 {postInterestResponse.status === FetchStatus.IS_FETCHING ? (
-                                    <div aria-live="polite" className="RegisterInterest__progress">
+                                    <div aria-live="polite" className="InterestForm__progress">
                                         <Spinner type="S" /> Sender interessemelding
                                     </div>
                                 ) : (
-                                    <div className="RegisterInterest__buttons">
+                                    <div className="InterestForm__buttons">
                                         <Link
                                             to={`${CONTEXT_PATH}/${isInternal ? "intern" : "stilling"}/${data.ad._id}`}
                                             className="Knapp"
@@ -376,11 +394,11 @@ const RegisterInterest = ({ match }) => {
     );
 };
 
-RegisterInterest.defaultProps = {
+InterestForm.defaultProps = {
     match: { params: {} }
 };
 
-RegisterInterest.propTypes = {
+InterestForm.propTypes = {
     match: PropTypes.shape({
         params: PropTypes.shape({
             uuid: PropTypes.string
@@ -388,4 +406,4 @@ RegisterInterest.propTypes = {
     })
 };
 
-export default RegisterInterest;
+export default InterestForm;

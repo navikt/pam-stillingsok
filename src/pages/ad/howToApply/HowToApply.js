@@ -6,7 +6,6 @@ import "./HowToApply.less";
 import logAmplitudeEvent from "../../../tracking/amplitude";
 import FavouritesButton from "../../favourites/FavouritesButton";
 import CalendarIcon from "../../../components/icons/CalendarIcon";
-import InterestAPI from "../../../api/InterestAPI";
 import {CONTEXT_PATH} from "../../../environment";
 
 export function getApplicationUrl(source, properties) {
@@ -29,12 +28,13 @@ const applyForPosition = (finn, stilling) => {
     }
 };
 
-export default function HowToApply({ stilling, showFavouriteButton }) {
+export default function HowToApply({ stilling, showFavouriteButton, isInternal}) {
     const properties = stilling._source.properties;
     const applicationUrl = getApplicationUrl(stilling._source.source, properties);
     const isFinn = stilling._source.source === "FINN";
+    const path = isInternal ? "intern" : "stilling";
 
-    if(InterestAPI.shouldEnableInterestFeature(stilling._id)) {
+    if(properties.hasInterestForm === true) {
         return (
             <section className="JobPosting__section">
                 <h2 className="JobPosting__h2">
@@ -43,9 +43,55 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                 <p className="JobPosting__p">
                     Gi beskjed til bedriften at du ønsker å bli kontaktet for denne stillingen.
                 </p>
-                <Link className="Knapp Knapp--hoved" to={`${CONTEXT_PATH}/stilling/${stilling._id}/meld-interesse`}>
+                <Link className="Knapp Knapp--hoved" to={`${CONTEXT_PATH}/${path}/${stilling._id}/meld-interesse`}>
                     Meld din interesse
                 </Link>
+
+                {!isFinn && properties.applicationemail && (
+                    <p className="JobPosting__p">
+                        Alternativt kan du sende søknad via e-post til{" "}
+                        {isValidEmail(properties.applicationemail) ? (
+                            <a className="link" href={`mailto:${properties.applicationemail}`}>
+                                {properties.applicationemail}
+                            </a>
+                        ) : (
+                            properties.applicationemail
+                        )}
+                    </p>
+                )}
+
+                {applicationUrl && (
+                    <React.Fragment>
+                        {isValidUrl(applicationUrl) ? (
+                            <p className="JobPosting__p">
+                                Alternativt kan du{" "}
+                                <a
+                                    href={applicationUrl}
+                                    onClick={() => applyForPosition(isFinn, stilling)}
+                                    className="link"
+                                >
+                                    sende søknad her.
+                                </a>
+                            </p>
+                        ) : (
+                            <p className="JobPosting__p">
+                                Alternativt kan du sende søknad på {applicationUrl}.
+                            </p>
+                        )}
+                    </React.Fragment>
+                )}
+
+                {properties.applicationdue && (
+                    <dl className="JobPosting__dl">
+                        <dt>Søknadsfrist:</dt>
+                        <dd>
+                            {isValidISOString(properties.applicationdue)
+                                ? formatDate(properties.applicationdue, "DD.MM.YYYY")
+                                : properties.applicationdue}
+                        </dd>
+                    </dl>
+                )}
+
                 {showFavouriteButton && (
                     <FavouritesButton
                         className="HowToApply__favourite-button"
@@ -140,5 +186,6 @@ HowToApply.propTypes = {
             })
         })
     }).isRequired,
-    showFavouriteButton: PropTypes.bool.isRequired
+    showFavouriteButton: PropTypes.bool.isRequired,
+    isInternal: PropTypes.bool.isRequired
 };

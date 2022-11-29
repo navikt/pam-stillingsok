@@ -16,8 +16,8 @@ import initSentry from "./tracking/sentry";
 import { initAmplitude } from "./tracking/amplitude";
 import "./styles/styles.less";
 import HistoryProvider from "./context/HistoryProvider";
-import RegisterInterest from "./pages/registerInterest/RegisterInterest";
-import RegisterInterestDeleted from "./pages/registerInterest/RegisterInterestDeleted";
+import InterestForm from "./pages/interestForm/InterestForm";
+import InterestMessageDeleted from "./pages/interestForm/InterestMessageDeleted";
 
 initSentry();
 fixUrlAfterLogin();
@@ -36,13 +36,14 @@ function Application() {
                             </Switch>
                             <Switch>
                                 <Route exact path={CONTEXT_PATH} component={Search} />
-                                <Route path={`${CONTEXT_PATH}/stilling/:uuid/meld-interesse`} component={RegisterInterest} />
-                                <Route path={`${CONTEXT_PATH}/interessemelding-slettet`} component={RegisterInterestDeleted} />
+                                <Route path={`${CONTEXT_PATH}/stilling/:uuid/meld-interesse`} component={InterestForm} />
+                                <Route path={`${CONTEXT_PATH}/intern/:uuid/meld-interesse`} component={InterestForm} />
                                 <Route path={`${CONTEXT_PATH}/stilling/:uuid`} component={Ad} />
                                 <Route path={`${CONTEXT_PATH}/intern/:uuid`} component={Ad} />
                                 <Route path={`${CONTEXT_PATH}/rapporter-annonse`} component={ReportAd} />
                                 <Route path={`${CONTEXT_PATH}/favoritter`} component={Favourites} />
                                 <Route path={`${CONTEXT_PATH}/lagrede-sok`} component={SavedSearches} />
+                                <Route path={`${CONTEXT_PATH}/interessemelding-slettet`} component={InterestMessageDeleted} />
                                 <Route path="*" component={Search} />
                             </Switch>
                         </HistoryProvider>
