@@ -5,6 +5,11 @@ ignore:
     - request > http-signature > jsprim > json-schema:
         reason: request is deprecated and needs to rewrite to something else
         expires: 2025-07-08T06:14:39.494Z
+  SNYK-JS-DECODEURICOMPONENT-3149970:
+        - '*':
+            reason: Avventer for å se om fiks kommer
+            expires: 2022-12-05T00:00:00.000Z
+            created: 2022-11-29T15:45:00.000Z
 # patches apply the minimum changes required to fix a vulnerability
 patch:
   SNYK-JS-LODASH-450202:
