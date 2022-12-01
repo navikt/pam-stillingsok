@@ -20,6 +20,7 @@ import { CONTEXT_PATH } from "../../environment";
 import Spinner from "nav-frontend-spinner";
 import TextField from "../../components/textField/TextField";
 import BackLink from "../../components/backlink/BackLink";
+import logAmplitudeEvent from "../../tracking/amplitude";
 
 const InterestForm = ({ match }) => {
     // Ad data
@@ -100,6 +101,8 @@ const InterestForm = ({ match }) => {
                     captureException(error);
                     postInterestDispatch({ type: FetchAction.REJECT, error });
                 });
+
+            trackSendForm(data.ad);
         }
     }
 
@@ -173,6 +176,17 @@ const InterestForm = ({ match }) => {
             setCheckedShouldRequirements((prevState) => prevState.filter((it) => it !== value));
         }
     }
+
+    const trackSendForm = (ad) => {
+        try {
+            logAmplitudeEvent("Stilling sok-via-interesseskjema", {
+                title: ad._source.title,
+                id: ad._id
+            });
+        } catch (e) {
+            // ignore
+        }
+    };
 
     return (
         <div className="InterestForm">
