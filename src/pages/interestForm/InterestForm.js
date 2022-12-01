@@ -180,7 +180,6 @@ const InterestForm = ({ match }) => {
     const trackSendForm = (ad) => {
         try {
             logAmplitudeEvent("Stilling sok-via-interesseskjema", {
-                title: ad._source.title,
                 id: ad._id
             });
         } catch (e) {
