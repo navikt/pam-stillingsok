@@ -67,6 +67,7 @@ const InterestForm = ({ match }) => {
                 dispatch({ type: FetchAction.RESOLVE, data: { ad, interestForm } });
             })
             .catch((error) => {
+                console.log(error)
                 captureException(error);
                 dispatch({ type: FetchAction.REJECT, error });
             });
