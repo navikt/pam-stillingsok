@@ -24,7 +24,7 @@ import logAmplitudeEvent from "../../tracking/amplitude";
 
 const InterestForm = ({ match }) => {
     // Ad data
-    const [{ data, status }, dispatch] = useFetchReducer();
+    const [{ data, status, error }, dispatch] = useFetchReducer();
     const [postInterestResponse, postInterestDispatch] = useFetchReducer();
 
     // Form data
@@ -190,9 +190,17 @@ const InterestForm = ({ match }) => {
     return (
         <div className="InterestForm">
             {status === FetchStatus.IS_FETCHING && <DelayedSpinner />}
-            {status === FetchStatus.FAILURE && (
+            {status === FetchStatus.FAILURE && error.status !== "404" && (
                 <div className="InterestForm__inner">
                     <Alert>Det oppsto en feil. Forsøk å laste inn siden på nytt</Alert>
+                </div>
+            )}
+            {status === FetchStatus.FAILURE && error.status === "404" && (
+                <div className="InterestForm__inner">
+                    <Alert>
+                        Fant ikke innholdet du ser etter. Det kan være en feil i lenken du brukte,
+                        eller det kan være at arbeidsgiver har avsluttet søknadsprosessen.
+                    </Alert>
                 </div>
             )}
             {status === FetchStatus.SUCCESS && (
