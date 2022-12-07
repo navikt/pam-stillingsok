@@ -325,42 +325,49 @@ const InterestForm = ({ match }) => {
                                     />
                                 </section>
 
-                                <section className="InterestForm__section">
-                                    <h2 className="InterestForm__h2">Vis frem din erfaring</h2>
-                                    <p className="InterestForm__p InterestForm__mb-2">
-                                        Her ser du hva bedriften legger vekt på i stillingen.
-                                    </p>
+                                {((data.interestForm.must && data.interestForm.must.length > 0)
+                                    || (data.interestForm.should && data.interestForm.should.length > 0)) && (
+                                    <section className="InterestForm__section">
+                                        <h2 className="InterestForm__h2">Vis frem din erfaring</h2>
+                                        <p className="InterestForm__p InterestForm__mb-2">
+                                            Her ser du hva bedriften legger vekt på i stillingen.
+                                        </p>
 
-                                    <fieldset className="InterestForm__fieldset">
-                                        <legend className="InterestForm__legend">Må-krav for stillingen.</legend>
-                                        <p className="InterestForm__p">Kryss av for de du oppfyller.</p>
-                                        {data.interestForm.must.map((it) => (
-                                            <Checkbox
-                                                key={it.id}
-                                                label={it.label}
-                                                value={it.label}
-                                                onChange={handleMustRequirementCheck}
-                                                checked={checkedMustRequirements.includes(it.label)}
-                                            />
-                                        ))}
-                                    </fieldset>
+                                        {data.interestForm.must && data.interestForm.must.length > 0 && (
+                                            <fieldset className="InterestForm__fieldset">
+                                                <legend className="InterestForm__legend">Må-krav for stillingen.</legend>
+                                                <p className="InterestForm__p">Kryss av for de du oppfyller.</p>
+                                                {data.interestForm.must.map((it) => (
+                                                    <Checkbox
+                                                        key={it.id}
+                                                        label={it.label}
+                                                        value={it.label}
+                                                        onChange={handleMustRequirementCheck}
+                                                        checked={checkedMustRequirements.includes(it.label)}
+                                                    />
+                                                ))}
+                                            </fieldset>
+                                        )}
 
-                                    <fieldset className="InterestForm__fieldset">
-                                        <legend className="InterestForm__legend">
-                                            Relevant og ønsket erfaring for stillingen.
-                                        </legend>
-                                        <p className="InterestForm__p">Kryss av for de du oppfyller.</p>
-                                        {data.interestForm.should.map((it) => (
-                                            <Checkbox
-                                                key={it.id}
-                                                label={it.label}
-                                                value={it.label}
-                                                onChange={handleShouldRequirementCheck}
-                                                checked={checkedShouldRequirements.includes(it.label)}
-                                            />
-                                        ))}
-                                    </fieldset>
-                                </section>
+                                        {data.interestForm.should && data.interestForm.should.length > 0 && (
+                                            <fieldset className="InterestForm__fieldset">
+                                                <legend className="InterestForm__legend">
+                                                    Relevant og ønsket erfaring for stillingen.
+                                                </legend>
+                                                <p className="InterestForm__p">Kryss av for de du oppfyller.</p>
+                                                {data.interestForm.should.map((it) => (
+                                                    <Checkbox
+                                                        key={it.id}
+                                                        label={it.label}
+                                                        value={it.label}
+                                                        onChange={handleShouldRequirementCheck}
+                                                        checked={checkedShouldRequirements.includes(it.label)}
+                                                    />
+                                                ))}
+                                            </fieldset>
+                                        )}
+                                    </section>
+                                )}
 
                                 <section className="InterestForm__section">
                                     <h2 className="InterestForm__h2">Skriv en melding til bedriften</h2>
