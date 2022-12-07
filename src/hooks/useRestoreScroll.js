@@ -19,7 +19,7 @@ export default function useRestoreScroll(id, shouldRestore) {
                 }
             }
         } catch (error) {
-            captureException(error);
+            // ignore sessionStorage error
         }
     }, [shouldRestore]);
 
@@ -40,7 +40,7 @@ export default function useRestoreScroll(id, shouldRestore) {
                 };
             }
         } catch (error) {
-            captureException(error);
+            // ignore sessionStorage error
         }
     }, [shouldRestore]);
 
@@ -53,7 +53,7 @@ export default function useRestoreScroll(id, shouldRestore) {
                 sessionStorage.setItem(SESSION_STORAGE_ID, `${debouncedScrollTop}`);
             }
         } catch (error) {
-            captureException(error);
+            // ignore sessionStorage error
         }
     }, [debouncedScrollTop]);
 };
