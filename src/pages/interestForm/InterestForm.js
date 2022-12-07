@@ -67,7 +67,6 @@ const InterestForm = ({ match }) => {
                 dispatch({ type: FetchAction.RESOLVE, data: { ad, interestForm } });
             })
             .catch((error) => {
-                console.log(error)
                 captureException(error);
                 dispatch({ type: FetchAction.REJECT, error });
             });
@@ -191,12 +190,12 @@ const InterestForm = ({ match }) => {
     return (
         <div className="InterestForm">
             {status === FetchStatus.IS_FETCHING && <DelayedSpinner />}
-            {status === FetchStatus.FAILURE && error.status !== "404" && (
+            {status === FetchStatus.FAILURE && error.statusCode !== "404" && (
                 <div className="InterestForm__inner">
                     <Alert>Det oppsto en feil. Forsøk å laste inn siden på nytt</Alert>
                 </div>
             )}
-            {status === FetchStatus.FAILURE && error.status === "404" && (
+            {status === FetchStatus.FAILURE && error.statusCode === "404" && (
                 <div className="InterestForm__inner">
                     <Alert>
                         Fant ikke innholdet du ser etter. Det kan være en feil i lenken du brukte,
