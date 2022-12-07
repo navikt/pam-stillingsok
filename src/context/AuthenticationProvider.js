@@ -66,9 +66,12 @@ const AuthenticationProvider = ({ children }) => {
                 method: "GET",
                 credentials: "include"
             })
-                .then((response) => response.json())
-                .then((result) => {
-                    setUserNameAndInfo(result);
+                .then((response) => {
+                    if (response.status === 200) {
+                        response.json().then((result) => {
+                            setUserNameAndInfo(result);
+                        })
+                    }
                 })
                 .catch((err) => {
                     captureException(err);
