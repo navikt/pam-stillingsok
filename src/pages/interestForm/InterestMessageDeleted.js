@@ -11,7 +11,7 @@ const InterestMessageDeleted = () => {
 
     return (
         <div className="InterestMessageDeleted">
-            <h1 className="InterestForm__h1">Din interessemelding er slettet</h1>
+            <h1 className="InterestForm__h1">Din søknad er slettet</h1>
         </div>
     );
 };
