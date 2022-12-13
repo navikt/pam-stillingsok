@@ -34,17 +34,29 @@ export default function HowToApply({ stilling, showFavouriteButton, isInternal})
     const isFinn = stilling._source.source === "FINN";
     const path = isInternal ? "intern" : "stilling";
 
-    if(properties.hasInterestForm === true) {
+    if(true) {
         return (
             <section className="JobPosting__section">
                 <h2 className="JobPosting__h2">
-                    Meld din interesse
+                    Søk på denne stillingen
                 </h2>
                 <p className="JobPosting__p">
-                    Gi beskjed til bedriften at du ønsker å bli kontaktet for denne stillingen.
+                    Vis frem deg selv og din erfaring med en superrask søknad.
                 </p>
+
+                {properties.applicationdue && (
+                    <dl className="JobPosting__dl">
+                        <dt>Søknadsfrist:</dt>
+                        <dd>
+                            {isValidISOString(properties.applicationdue)
+                                ? formatDate(properties.applicationdue, "DD.MM.YYYY")
+                                : properties.applicationdue}
+                        </dd>
+                    </dl>
+                )}
+
                 <Link className="Knapp Knapp--hoved" to={`${CONTEXT_PATH}/${path}/${stilling._id}/meld-interesse`}>
-                    Meld din interesse
+                    Gå til superrask søknad
                 </Link>
 
                 {!isFinn && properties.applicationemail && (
@@ -79,17 +91,6 @@ export default function HowToApply({ stilling, showFavouriteButton, isInternal})
                             </p>
                         )}
                     </React.Fragment>
-                )}
-
-                {properties.applicationdue && (
-                    <dl className="JobPosting__dl">
-                        <dt>Søknadsfrist:</dt>
-                        <dd>
-                            {isValidISOString(properties.applicationdue)
-                                ? formatDate(properties.applicationdue, "DD.MM.YYYY")
-                                : properties.applicationdue}
-                        </dd>
-                    </dl>
                 )}
 
                 {showFavouriteButton && (
