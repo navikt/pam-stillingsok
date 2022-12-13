@@ -34,7 +34,7 @@ export default function HowToApply({ stilling, showFavouriteButton, isInternal})
     const isFinn = stilling._source.source === "FINN";
     const path = isInternal ? "intern" : "stilling";
 
-    if(true) {
+    if(properties.hasInterestForm === true) {
         return (
             <section className="JobPosting__section">
                 <h2 className="JobPosting__h2">
