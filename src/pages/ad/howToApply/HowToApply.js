@@ -34,7 +34,7 @@ export default function HowToApply({ stilling, showFavouriteButton, isInternal})
     const isFinn = stilling._source.source === "FINN";
     const path = isInternal ? "intern" : "stilling";
 
-    if(properties.hasInterestForm === true) {
+    if(properties.hasInterestform === "true") {
         return (
             <section className="JobPosting__section">
                 <h2 className="JobPosting__h2">
@@ -183,7 +183,8 @@ HowToApply.propTypes = {
                 applicationdue: PropTypes.string,
                 applicationemail: PropTypes.string,
                 applicationurl: PropTypes.string,
-                sourceurl: PropTypes.string
+                sourceurl: PropTypes.string,
+                hasInterestform: PropTypes.string
             })
         })
     }).isRequired,
