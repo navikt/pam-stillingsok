@@ -43,7 +43,7 @@ async function getInterestForm(adUuid) {
 }
 
 async function postInterest(adUuid, interest) {
-    return post(`interest-form/${adUuid}/candidates`, interest);
+    return post(`interest-form/${adUuid}/candidates`, interest, false);
 }
 
 const InterestAPI = {
