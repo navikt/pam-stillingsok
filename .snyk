@@ -9,12 +9,12 @@ ignore:
   SNYK-JS-DECODEURICOMPONENT-3149970:
     - '*':
         reason: Avventer for å se om fiks kommer
-        expires: 2022-12-15T00:00:00.000Z
+        expires: 2022-12-20T00:00:00.000Z
         created: 2022-11-29T14:57:26.989Z
   SNYK-JS-QS-3153490:
     - '*':
         reason: Avventer for å se om fiks kommer
-        expires: 2022-12-15T00:00:00.000Z
+        expires: 2022-12-20T00:00:00.000Z
         created: 2022-11-29T14:57:26.989Z
 # patches apply the minimum changes required to fix a vulnerability
 patch:
