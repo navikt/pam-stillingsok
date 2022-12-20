@@ -18,6 +18,7 @@ export default function SearchResultItem({
     const employer = getEmployer(ad);
     const isFinn = ad.source && ad.source.toLowerCase() === "finn";
     const published = formatDate(ad.published, "DD.MM.YYYY");
+    const hasInterestform = ad.properties.hasInterestform && ad.properties.hasInterestform === "true";
     const jobTitle = ad.properties.jobtitle && ad.title !== ad.properties.jobtitle ? ad.properties.jobtitle : undefined;
     const frist = ad.properties.applicationdue ? formatDate(ad.properties.applicationdue, "DD.MM.YYYY") : undefined;
     const ref = useRef();
@@ -64,6 +65,7 @@ export default function SearchResultItem({
                     {frist && <p className="SearchResultsItem__applicationdue">Frist: {frist}</p>}
                     {published && <p className="SearchResultsItem__published">Publisert: {published}</p>}
                     {isFinn && <p className="SearchResultsItem__external-link">Åpnes på FINN.no</p>}
+                    {hasInterestform && <p className="SearchResultsItem__hasInterestform">Superrask søknad</p>}
                 </div>
                 {favouriteButton}
             </div>

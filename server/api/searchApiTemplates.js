@@ -508,6 +508,7 @@ exports.searchTemplate = (query) => {
                 'properties.jobtitle',
                 'properties.location',
                 'properties.applicationdue',
+                'properties.hasInterestform',
                 'locationList',
                 'title',
                 'published',
