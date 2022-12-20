@@ -129,7 +129,7 @@ const InterestForm = ({ match }) => {
 
         if (about.length > ABOUT_MAX_LENGTH) {
             isValid = false;
-            setAboutValidationError(`Melding til bedrift kan ikke være lengre enn ${ABOUT_MAX_LENGTH} tegn`);
+            setAboutValidationError(`Begrunnelse kan ikke være lengre enn ${ABOUT_MAX_LENGTH} tegn`);
         }
 
         if (!isValid) {
@@ -257,7 +257,7 @@ const InterestForm = ({ match }) => {
                                         aria-live="polite"
                                         aria-labelledby="register-interest-error-title"
                                     >
-                                        {(telephoneValidationError || emailValidationError) && (
+                                        {(nameValidationError || telephoneValidationError || emailValidationError || aboutValidationError) && (
                                             <div className="InterestForm__error-summary">
                                                 <h2
                                                     id="register-interest-error-title"
