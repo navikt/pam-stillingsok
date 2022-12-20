@@ -32,7 +32,14 @@ async function post(url, query, toJson = true) {
     }
 
     if (response.status !== 200) {
-        throw new APIError(response.statusText, response.status);
+        let errorMsg;
+        try {
+            const errorJson = response.json();
+            errorMsg = errorJson.error_code || response.statusText;
+        } catch (parseError) {
+            errorMsg = response.statusText;
+        }
+        throw new APIError(errorMsg, response.status);
     }
 
     return toJson ? response.json() : response;

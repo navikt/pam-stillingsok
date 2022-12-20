@@ -187,6 +187,21 @@ const InterestForm = ({ match }) => {
         }
     };
 
+    const getErrorMessage = (error) => {
+        switch (error.message) {
+            case "invalid_name":
+                return "Feil, kunne ikke sende søknaden. Sjekk at navnet er skrevet riktig og forsøk igjen."
+            case "invalid_email":
+                return "Feil, kunne ikke sende søknaden. Sjekk at e-posten er skrevet riktig og forsøk igjen."
+            case "invalid_telephone":
+                return "Feil, kunne ikke sende søknaden. Sjekk at telefonnummeret er skrevet riktig og forsøk igjen."
+            case "invalid_about":
+                return "Feil, kunne ikke sende søknaden. Sjekk at teksten om deg selv ikke innholder ugyldige tegn eller er for lang og forsøk igjen."
+            default:
+                return "Feil, kunne ikke sende søknaden. Forsøk igjen"
+        }
+    }
+
     return (
         <div className="InterestForm">
             {status === FetchStatus.IS_FETCHING && <DelayedSpinner />}
@@ -406,7 +421,9 @@ const InterestForm = ({ match }) => {
                                 </p>
 
                                 {postInterestResponse.status === FetchStatus.FAILURE && (
-                                    <Alert>Det oppsto en feil ved sending. Forsøk igjen</Alert>
+                                    <Alert>
+                                        {getErrorMessage(postInterestResponse.error)}
+                                    </Alert>
                                 )}
 
                                 {postInterestResponse.status === FetchStatus.IS_FETCHING ? (
