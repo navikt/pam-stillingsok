@@ -206,17 +206,18 @@ const InterestForm = ({ match }) => {
             {status === FetchStatus.SUCCESS && (
                 <React.Fragment>
                     <div className="InterestForm__green-box">
-                        <div className="InterestForm__inner">
+                        <div className="InterestForm__green-box-inner">
                             <p className="InterestForm__employer">{getEmployer(data.ad._source)}</p>
                             <p className="InterestForm__job-title">{data.ad._source.title}</p>
                         </div>
                     </div>
-                    <div className="InterestForm__inner">
+                    <div className="InterestForm__backlink">
                         <BackLink
                             to={`${CONTEXT_PATH}/${isInternal ? "intern" : "stilling"}/${data.ad._id}`}
-                            text="Tilbake til annonsen"
+                            text="Tilbake"
                         />
-
+                    </div>
+                    <div className="InterestForm__inner">
                         <div className="InterestForm__success-message" aria-live="polite">
                             {postInterestResponse.status === FetchStatus.SUCCESS && (
                                 <div className="InterestForm__success-message" aria-live="polite">
@@ -351,7 +352,7 @@ const InterestForm = ({ match }) => {
                                     </p>
                                     <Textarea
                                         id="register-interest-about"
-                                        label="Skriv en begrunnelse. Frivillig."
+                                        label="Skriv en begrunnelse. Valgfritt"
                                         onChange={handleAboutChange}
                                         value={about}
                                         maxLength={ABOUT_MAX_LENGTH}
