@@ -239,17 +239,18 @@ const InterestForm = ({ match }) => {
                                     <h1 className="InterestForm__h1">Din søknad er sendt til bedriften</h1>
                                     <p className="InterestForm__p InterestForm__mb-2">
                                         Du vil straks få en bekreftelse på e-post. Ønsker du å trekke din
-                                        søknad finner du informasjon om det i e-posten.
+                                        søknad finner du informasjon om dette i e-posten.
                                     </p>
                                     <h2 className="InterestForm__h2">Hva skjer nå?</h2>
                                     <p className="InterestForm__p InterestForm__mb-2">
-                                        Bedriften vil vurdere din søknad og ta kontakt dersom de syns det er en god match.
-                                        Vi gir deg beskjed på e-post så fort bedriften har gjort en vurdering.                                    </p>
+                                        Bedriften vil vurdere din søknad og ta kontakt dersom de syns du passer for jobben.
+                                        Vi gir deg beskjed på e-post så fort bedriften har gjort en vurdering.
+                                    </p>
                                     <Link
                                         to={CONTEXT_PATH}
                                         className="Knapp"
                                     >
-                                        Gå til stillingsøket
+                                        Tilbake til stillingssøket
                                     </Link>
                                 </div>
                             )}
@@ -326,7 +327,7 @@ const InterestForm = ({ match }) => {
                                         {data.interestForm.must && data.interestForm.must.length > 0 && (
                                             <fieldset className="InterestForm__fieldset">
                                                 <legend className="InterestForm__legend">Må-krav for stillingen.</legend>
-                                                <p className="InterestForm__p">Kryss av for de du oppfyller.</p>
+                                                <p className="InterestForm__p">Kryss av for dem du oppfyller.</p>
                                                 {data.interestForm.must.map((it) => (
                                                     <Checkbox
                                                         key={it.id}
@@ -344,7 +345,7 @@ const InterestForm = ({ match }) => {
                                                 <legend className="InterestForm__legend">
                                                     Bedriftens ønskede kvalifikasjoner
                                                 </legend>
-                                                <p className="InterestForm__p">Kryss av for de du oppfyller.</p>
+                                                <p className="InterestForm__p">Kryss av for dem du oppfyller.</p>
                                                 {data.interestForm.should.map((it) => (
                                                     <Checkbox
                                                         key={it.id}
@@ -361,7 +362,7 @@ const InterestForm = ({ match }) => {
 
 
                                 <section className="InterestForm__section">
-                                    <h2 className="InterestForm__h2">Skriv litt om hvorfor du er rett person</h2>
+                                    <h2 className="InterestForm__h2">Skriv litt om hvorfor du er rett person for jobben</h2>
                                     <p className="InterestForm__p">
                                         Skriv en begrunnelse hvorfor akkurat du passer for denne jobben.
                                     </p>
@@ -378,7 +379,7 @@ const InterestForm = ({ match }) => {
                                 <section className="InterestForm__section">
                                     <h2 className="InterestForm__h2">Fyll inn din kontaktinformasjon</h2>
                                     <p className="InterestForm__p InterestForm__mb-2">
-                                        Husk å dobbelsjekk at informasjonen er riktig.
+                                        Husk å dobbelsjekke at informasjonen er riktig.
                                     </p>
 
                                     <TextField
@@ -432,13 +433,13 @@ const InterestForm = ({ match }) => {
                                     </div>
                                 ) : (
                                     <div className="InterestForm__buttons">
+                                        <Hovedknapp htmlType="button" onClick={handleSendMessageClick}>Send søknad</Hovedknapp>
                                         <Link
                                             to={`${CONTEXT_PATH}/${isInternal ? "intern" : "stilling"}/${data.ad._id}`}
                                             className="Knapp"
                                         >
                                             Avbryt
                                         </Link>
-                                        <Hovedknapp htmlType="button" onClick={handleSendMessageClick}>Send søknad</Hovedknapp>
                                     </div>
                                 )}
                             </form>
