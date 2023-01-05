@@ -17,8 +17,7 @@ import { initAmplitude } from "./tracking/amplitude";
 import "./styles/styles.less";
 import HistoryProvider from "./context/HistoryProvider";
 import InterestForm from "./pages/interestForm/InterestForm";
-import InterestMessageDeleted from "./pages/interestForm/InterestMessageDeleted";
-import InterestMessageDeleteFailed from "./pages/interestForm/InterestMessageDeleteFailed";
+import InterestMessageDelete from "./pages/interestForm/InterestMessageDelete";
 
 initSentry();
 fixUrlAfterLogin();
@@ -44,8 +43,7 @@ function Application() {
                                 <Route path={`${CONTEXT_PATH}/rapporter-annonse`} component={ReportAd} />
                                 <Route path={`${CONTEXT_PATH}/favoritter`} component={Favourites} />
                                 <Route path={`${CONTEXT_PATH}/lagrede-sok`} component={SavedSearches} />
-                                <Route path={`${CONTEXT_PATH}/interessemelding-slettet`} component={InterestMessageDeleted} />
-                                <Route path={`${CONTEXT_PATH}/interessemelding-sletting-feilet`} component={InterestMessageDeleteFailed} />
+                                <Route path={`${CONTEXT_PATH}/trekk-soknad/:uuid/:adUuid`} component={InterestMessageDelete} />
                                 <Route path="*" component={Search} />
                             </Switch>
                         </HistoryProvider>
