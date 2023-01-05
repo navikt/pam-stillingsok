@@ -17,6 +17,22 @@ async function get(url) {
     return response.json();
 }
 
+
+async function remove(url) {
+    let response;
+    try {
+        response = await fetch(`${INTEREST_API_URL}/${url}`, {
+            method: "DELETE"
+        });
+    } catch (e) {
+        throw new APIError(e.message, 0);
+    }
+    if (response.status !== 200 && response.status !== 204) {
+        throw new APIError(response.statusText, response.status);
+    }
+    return response;
+}
+
 async function post(url, query, toJson = true) {
     let response;
     try {
@@ -53,9 +69,14 @@ async function postInterest(adUuid, interest) {
     return post(`interest-form/${adUuid}/candidates`, interest, false);
 }
 
+async function deleteInterest(adUuid, uuid) {
+    return remove(`interest-form/${adUuid}/candidates/${uuid}`);
+}
+
 const InterestAPI = {
     getInterestForm: getInterestForm,
     postInterest: postInterest,
+    deleteInterest: deleteInterest,
 };
 
 export default InterestAPI;
