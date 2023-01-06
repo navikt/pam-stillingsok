@@ -188,6 +188,7 @@ const InterestForm = ({ match }) => {
     };
 
     const getErrorMessage = (error) => {
+        console.log(error)
         switch (error.message) {
             case "invalid_name":
                 return "Feil, kunne ikke sende søknaden. Sjekk at navnet er skrevet riktig og forsøk igjen."

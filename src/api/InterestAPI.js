@@ -51,6 +51,7 @@ async function post(url, query, toJson = true) {
         let errorMsg;
         try {
             const errorJson = response.json();
+            console.log(errorJson)
             errorMsg = errorJson.error_code || response.statusText;
         } catch (parseError) {
             errorMsg = response.statusText;
