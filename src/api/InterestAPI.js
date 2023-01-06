@@ -50,12 +50,9 @@ async function post(url, query, toJson = true) {
     if (response.status !== 200) {
         let errorMsg;
         try {
-            console.log("a")
             const errorJson = await response.json();
-            console.log("b", errorJson)
             errorMsg = errorJson.error_code || response.statusText;
         } catch (parseError) {
-            console.log("c")
             errorMsg = response.statusText;
         }
         throw new APIError(errorMsg, response.status);
