@@ -363,9 +363,21 @@ const InterestForm = ({ match }) => {
 
                                 <section className="InterestForm__section">
                                     <h2 className="InterestForm__h2">Skriv litt om hvorfor du er rett person for jobben</h2>
-                                    <p className="InterestForm__p">
-                                        Skriv en begrunnelse hvorfor akkurat du passer for denne jobben.
-                                    </p>
+                                    <details className="InterestForm__details">
+                                        <summary>
+                                            Hvordan skriver du en god begrunnelse?
+                                        </summary>
+                                        <div className="InterestForm__details-content">
+                                            <p className="InterestForm__p">
+                                                Få frem ditt unike potensiale ved å vise til arbeidserfaring, praksisplasser,
+                                                utdanning, frivillig arbeid, verv eller annen relevant erfaring.
+                                            </p>
+                                            <p className="InterestForm__p">
+                                                Vi oppfordrer deg til å tenke utenfor boksen og vise hvorfor akkurat du og dine
+                                                personlige egenskaper passer for denne jobben.
+                                            </p>
+                                        </div>
+                                    </details>
                                     <Textarea
                                         id="register-interest-about"
                                         label="Skriv en begrunnelse. Valgfritt"

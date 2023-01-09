@@ -55,7 +55,7 @@ export default function HowToApply({ stilling, showFavouriteButton, isInternal})
                     </dl>
                 )}
 
-                <Link className="Knapp Knapp--hoved" to={`${CONTEXT_PATH}/${path}/${stilling._id}/meld-interesse`}>
+                <Link className="Knapp Knapp--hoved" to={`${CONTEXT_PATH}/${path}/${stilling._id}/superrask-soknad`}>
                     Gå til superrask søknad
                 </Link>
 
