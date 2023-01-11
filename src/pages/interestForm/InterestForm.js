@@ -179,7 +179,7 @@ const InterestForm = ({ match }) => {
 
     const trackSendForm = (ad) => {
         try {
-            logAmplitudeEvent("Stilling sok-via-interesseskjema", {
+            logAmplitudeEvent("submit superrask søknad", {
                 id: ad._id
             });
         } catch (e) {
