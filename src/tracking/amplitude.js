@@ -64,7 +64,6 @@ const enrichData = (data) => {
 }
 
 const logAmplitudeEvent = (event, data) => {
-    console.log(event, data)
     amplitude.logEvent(event, enrichData(data));
 };
 
