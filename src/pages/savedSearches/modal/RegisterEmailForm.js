@@ -71,7 +71,7 @@ function RegisterEmailForm({ onClose, onSuccess }) {
     return (
         <React.Fragment>
             <p className="SavedSearchModal__p" role="status">
-                <b>Søket ditt er lagret, men du har ikke registrert e-postadresse.</b>
+                <span className="bold">Søket ditt er lagret, men du har ikke registrert e-postadresse.</span>
                 <br />
                 For å motta varsler på e-post må du registrere e-postadressen din.
             </p>

@@ -8,7 +8,7 @@ function NoResults({ query }) {
         <section className="NoResults">
             <h3 className="NoResults__title">Ingen stillinger akkurat nå</h3>
             <p className="NoResults__text">
-                Søket ditt på <b>&laquo;{toReadableQuery(query)}&raquo;</b> ga ingen treff.
+                Søket ditt på <span className="bold">&laquo;{toReadableQuery(query)}&raquo;</span> ga ingen treff.
             </p>
             <p className="NoResults__text">
                 Vil du lagre dette søket? Da kan du få varsel når det kommer nye stillinger.
