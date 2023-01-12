@@ -1,7 +1,7 @@
 import * as React from "react";
 
 const TwitterIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24">
+    <svg role="img" xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24">
         <g id="Dark_Blue" data-name="Dark Blue">
             <circle className="cls-1" cx="12" cy="12" r="12" />
         </g>
