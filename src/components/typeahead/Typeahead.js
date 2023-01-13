@@ -201,7 +201,7 @@ export default class Typeahead extends React.Component {
                     aria-autocomplete="list"
                     aria-controls={`${this.props.id}-suggestions`}
                     aria-activedescendant={activeDescendant}
-                    aria-label="Søk på stilling"
+                    aria-label="Søkeord"
                     value={this.props.value}
                     autoComplete="off"
                     onChange={this.onChange}
