@@ -10,7 +10,7 @@ import FinnAd from "./finnAd/FinnAd";
 import HowToApply from "./howToApply/HowToApply";
 import NotFound from "./notFound/NotFound";
 import "./Ad.less";
-import { logAmplitudePageview, logStillingVisning } from "../../tracking/amplitude";
+import logAmplitudeEvent, { logAmplitudePageview, logStillingVisning } from "../../tracking/amplitude";
 import ShareAd from "./shareAd/ShareAd";
 import Summary from "./summary/Summary";
 import DelayedSpinner from "../../components/spinner/DelayedSpinner";
@@ -39,11 +39,19 @@ const Ad = ({ match }) => {
     }, []);
 
     /**
-     * Set page title
+     * Set page title and track superrask søknad
      */
     useEffect(() => {
-        if (ad && ad._source && ad._source.title) {
-            document.title = `${ad._source.title} - Arbeidsplassen`;
+        if (ad && ad._source) {
+            if (ad._source.title) {
+                document.title = `${ad._source.title} - Arbeidsplassen`;
+            }
+
+            if (ad._source.properties && ad._source.properties.hasInterestform === "true") {
+                logAmplitudeEvent("land on ad with superrask søknad", {
+                    id: ad._id
+                })
+            }
         }
     }, [ad]);
 
