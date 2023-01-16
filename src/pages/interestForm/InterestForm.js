@@ -36,7 +36,6 @@ const InterestForm = ({ match }) => {
     const [checkedShouldRequirements, setCheckedShouldRequirements] = useState([]);
 
     // Validation
-    const [nameValidationError, setNameValidationError] = useState(undefined);
     const [telephoneValidationError, setTelephoneValidationError] = useState(undefined);
     const [emailValidationError, setEmailValidationError] = useState(undefined);
     const [aboutValidationError, setAboutValidationError] = useState(undefined);
@@ -109,11 +108,6 @@ const InterestForm = ({ match }) => {
     function validateForm() {
         let isValid = true;
 
-        if (name.trim().length === 0) {
-            isValid = false;
-            setNameValidationError("Navn mangler");
-        }
-
         if (email && email.length > 0 && !isValidEmail(email)) {
             isValid = false;
             setEmailValidationError("E-postadressen er ugyldig");
@@ -141,7 +135,6 @@ const InterestForm = ({ match }) => {
 
     function handleNameChange(e) {
         setName(e.target.value);
-        setNameValidationError(undefined);
     }
 
     function handleTelephoneChange(e) {
@@ -273,7 +266,7 @@ const InterestForm = ({ match }) => {
                                         aria-live="polite"
                                         aria-labelledby="register-interest-error-title"
                                     >
-                                        {(nameValidationError || telephoneValidationError || emailValidationError || aboutValidationError) && (
+                                        {(telephoneValidationError || emailValidationError || aboutValidationError) && (
                                             <div className="InterestForm__error-summary">
                                                 <h2
                                                     id="register-interest-error-title"
@@ -282,13 +275,6 @@ const InterestForm = ({ match }) => {
                                                     Skjemaet inneholder feil:
                                                 </h2>
                                                 <ul className="InterestForm__error-list">
-                                                    {nameValidationError && (
-                                                        <li>
-                                                            <a href="#register-interest-name" className="link">
-                                                                {nameValidationError}
-                                                            </a>
-                                                        </li>
-                                                    )}
                                                     {telephoneValidationError && (
                                                         <li>
                                                             <a href="#register-interest-telephone" className="link">
@@ -395,12 +381,11 @@ const InterestForm = ({ match }) => {
                                     </p>
 
                                     <TextField
-                                        label="Navn *"
+                                        label="Navn"
                                         id="register-interest-name"
                                         autoComplete="name"
                                         onChange={handleNameChange}
                                         value={name}
-                                        error={nameValidationError}
                                     />
 
                                     <TextField
