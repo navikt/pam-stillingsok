@@ -40,9 +40,12 @@ export default function HowToApply({ stilling, showFavouriteButton, isInternal})
                 <h2 className="JobPosting__h2">
                     Søk på denne stillingen
                 </h2>
-                <p className="JobPosting__p">
-                    Vis frem deg selv og din erfaring med en superrask søknad.
-                </p>
+
+                {stilling._source.status === "ACTIVE" && (
+                    <p className="JobPosting__p">
+                        Vis frem deg selv og din erfaring med en superrask søknad.
+                    </p>
+                )}
 
                 {properties.applicationdue && (
                     <dl className="JobPosting__dl">
@@ -55,17 +58,19 @@ export default function HowToApply({ stilling, showFavouriteButton, isInternal})
                     </dl>
                 )}
 
-                <Link
-                    onClick={() => {
-                        logAmplitudeEvent("click superrask søknad link", {
-                            id: stilling._id
-                        })
-                    }}
-                    className="Knapp Knapp--hoved"
-                    to={`${CONTEXT_PATH}/${path}/${stilling._id}/superrask-soknad`}
-                >
-                    Gå til superrask søknad
-                </Link>
+                {stilling._source.status === "ACTIVE" && (
+                    <Link
+                        onClick={() => {
+                            logAmplitudeEvent("click superrask søknad link", {
+                                id: stilling._id
+                            })
+                        }}
+                        className="Knapp Knapp--hoved"
+                        to={`${CONTEXT_PATH}/${path}/${stilling._id}/superrask-soknad`}
+                    >
+                        Gå til superrask søknad
+                    </Link>
+                )}
 
                 {!isFinn && properties.applicationemail && (
                     <p className="JobPosting__p">
