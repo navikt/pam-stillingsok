@@ -21,6 +21,7 @@ import Spinner from "nav-frontend-spinner";
 import TextField from "../../components/textField/TextField";
 import BackLink from "../../components/backlink/BackLink";
 import logAmplitudeEvent from "../../tracking/amplitude";
+import ScrollToTop from "../../components/ScrollToTop";
 
 const InterestForm = ({ match }) => {
     // Ad data
@@ -228,24 +229,26 @@ const InterestForm = ({ match }) => {
                     <div className="InterestForm__inner">
                         <div className="InterestForm__success-message" aria-live="polite">
                             {postInterestResponse.status === FetchStatus.SUCCESS && (
-                                <div className="InterestForm__success-message" aria-live="polite">
-                                    <h1 className="InterestForm__h1">Din søknad er sendt til bedriften</h1>
-                                    <p className="InterestForm__p InterestForm__mb-2">
-                                        Du vil straks få en bekreftelse på e-post. Ønsker du å trekke din
-                                        søknad finner du informasjon om dette i e-posten.
-                                    </p>
-                                    <h2 className="InterestForm__h2">Hva skjer nå?</h2>
-                                    <p className="InterestForm__p InterestForm__mb-2">
-                                        Bedriften vil vurdere din søknad og ta kontakt dersom de syns du passer for jobben.
-                                        Vi gir deg beskjed på e-post så fort bedriften har gjort en vurdering.
-                                    </p>
-                                    <Link
-                                        to={CONTEXT_PATH}
-                                        className="Knapp"
-                                    >
-                                        Tilbake til stillingssøket
-                                    </Link>
-                                </div>
+                                <ScrollToTop>
+                                    <div className="InterestForm__success-message" aria-live="polite">
+                                        <h1 className="InterestForm__h1">Din søknad er sendt til bedriften</h1>
+                                        <p className="InterestForm__p InterestForm__mb-2">
+                                            Du vil straks få en bekreftelse på e-post. Ønsker du å trekke din
+                                            søknad finner du informasjon om dette i e-posten.
+                                        </p>
+                                        <h2 className="InterestForm__h2">Hva skjer nå?</h2>
+                                        <p className="InterestForm__p InterestForm__mb-2">
+                                            Bedriften vil vurdere din søknad og ta kontakt dersom de syns du passer for jobben.
+                                            Vi gir deg beskjed på e-post så fort bedriften har gjort en vurdering.
+                                        </p>
+                                        <Link
+                                            to={CONTEXT_PATH}
+                                            className="Knapp"
+                                        >
+                                            Tilbake til stillingssøket
+                                        </Link>
+                                    </div>
+                                </ScrollToTop>
                             )}
                         </div>
 
