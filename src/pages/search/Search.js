@@ -156,7 +156,7 @@ const Search = () => {
                             searchResult={searchResponse.data}
                             fetchSearch={fetchSearch}
                         />
-                        <EventBanner />
+                        <SuperraskSoknadBanner />
                     </div>
                     <SearchResult
                         searchResponse={searchResponse}

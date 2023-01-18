@@ -8,7 +8,9 @@ function SuperraskSoknadBanner() {
             <p>
                 Vis frem deg selv og din erfaring enkelt og raskt når du søker på stillinger med superrask søknad.
             </p>
-            <a href="/slik-fungerer-superrask-soknad" className="link">Hvordan fungerer superrask søknad?</a>
+            <p>
+                <a href="/slik-fungerer-superrask-soknad" className="link">Hvordan fungerer superrask søknad?</a>
+            </p>
         </section>
     );
 }

@@ -233,13 +233,13 @@ const InterestForm = ({ match }) => {
                                     <div className="InterestForm__success-message" aria-live="polite">
                                         <h1 className="InterestForm__h1">Din søknad er sendt til bedriften</h1>
                                         <p className="InterestForm__p InterestForm__mb-2">
-                                            Du vil straks få en bekreftelse på e-post. Ønsker du å trekke din
-                                            søknad finner du informasjon om dette i e-posten.
+                                            Du vil straks få en bekreftelse på din e-post {email}. Ønsker du å trekke
+                                            din søknad finner du informasjon om dette i e-posten.
                                         </p>
                                         <h2 className="InterestForm__h2">Hva skjer nå?</h2>
                                         <p className="InterestForm__p InterestForm__mb-2">
-                                            Bedriften vil vurdere din søknad og ta kontakt dersom de syns du passer for jobben.
-                                            Vi gir deg beskjed på e-post så fort bedriften har gjort en vurdering.
+                                            Bedriften vil vurdere din søknad og ta kontakt dersom de syns du passer for
+                                            jobben. Du får beskjed på e-post så fort bedriften har gjort en vurdering.
                                         </p>
                                         <Link
                                             to={CONTEXT_PATH}
@@ -257,8 +257,8 @@ const InterestForm = ({ match }) => {
                                 <section className="InterestForm__section">
                                     <H1WithAutoFocus className="InterestForm__h1">Superrask søknad</H1WithAutoFocus>
                                     <p className="InterestForm__p">
-                                        Ingen CV eller langt søknadsbrev, kun hvorfor du er rett person for denne jobben.
-                                        Vi gir beskjed på e-post med en gang bedriften har gjort en vurdering.
+                                        Ingen CV eller langt søknadsbrev, kun tre raske steg.
+                                        Du får beskjed på e-post med en gang bedriften har vurdert søknaden din.
                                     </p>
                                     <p className="InterestForm__p">
                                         * felter du må fylle ut
@@ -308,7 +308,7 @@ const InterestForm = ({ match }) => {
                                 {((data.interestForm.must && data.interestForm.must.length > 0)
                                     || (data.interestForm.should && data.interestForm.should.length > 0)) && (
                                     <section className="InterestForm__section">
-                                        <h2 className="InterestForm__h2">Vis frem din erfaring</h2>
+                                        <h2 className="InterestForm__h2">Bedriftens ønskede kvalifikasjoner</h2>
                                         <p className="InterestForm__p InterestForm__mb-2">
                                             Husk at du kan være rett person for jobben selv om du ikke treffer på alle kvalifikasjoner.
                                         </p>
@@ -332,9 +332,8 @@ const InterestForm = ({ match }) => {
                                         {data.interestForm.should && data.interestForm.should.length > 0 && (
                                             <fieldset className="InterestForm__fieldset">
                                                 <legend className="InterestForm__legend">
-                                                    Bedriftens ønskede kvalifikasjoner
+                                                    Huk av for kvalifikasjonene du oppfyller
                                                 </legend>
-                                                <p className="InterestForm__p">Kryss av for dem du oppfyller.</p>
                                                 {data.interestForm.should.map((it) => (
                                                     <Checkbox
                                                         key={it.id}
@@ -351,25 +350,26 @@ const InterestForm = ({ match }) => {
 
 
                                 <section className="InterestForm__section">
-                                    <h2 className="InterestForm__h2">Skriv litt om hvorfor du er rett person for jobben</h2>
+                                    <h2 className="InterestForm__h2">Hvorfor du er den rette for jobben</h2>
                                     <details className="InterestForm__details">
                                         <summary>
-                                            Hvordan skriver du en god begrunnelse?
+                                            Hvordan skrive en god begrunnelse?
                                         </summary>
                                         <div className="InterestForm__details-content">
                                             <p className="InterestForm__p">
-                                                Få frem ditt unike potensiale ved å vise til arbeidserfaring, praksisplasser,
-                                                utdanning, frivillig arbeid, verv eller annen relevant erfaring.
+                                                Vis hvorfor du er et trygt valg for denne jobben. Fortell om
+                                                arbeidserfaring, praksisplasser, utdanning, frivillig arbeid,
+                                                verv eller annen relevant erfaring.
                                             </p>
                                             <p className="InterestForm__p">
-                                                Vi oppfordrer deg til å tenke utenfor boksen og vise hvorfor akkurat du og dine
-                                                personlige egenskaper passer for denne jobben.
+                                                Tenk gjerne litt utradisjonelt og husk at personlige
+                                                egenskaper kan være avgjørende.
                                             </p>
                                         </div>
                                     </details>
                                     <Textarea
                                         id="register-interest-about"
-                                        label="Skriv en begrunnelse. Valgfritt"
+                                        label="Skriv en begrunnelse"
                                         onChange={handleAboutChange}
                                         value={about}
                                         maxLength={ABOUT_MAX_LENGTH}
@@ -378,9 +378,9 @@ const InterestForm = ({ match }) => {
                                 </section>
 
                                 <section className="InterestForm__section">
-                                    <h2 className="InterestForm__h2">Fyll inn din kontaktinformasjon</h2>
+                                    <h2 className="InterestForm__h2">Din kontaktinformasjon</h2>
                                     <p className="InterestForm__p InterestForm__mb-2">
-                                        Husk å dobbelsjekke at informasjonen er riktig.
+                                        Vær nøye med å oppgi riktig informasjon.
                                     </p>
 
                                     <TextField
@@ -413,12 +413,12 @@ const InterestForm = ({ match }) => {
                                 </section>
 
                                 <p className="InterestForm__p">
-                                    Når du har sendt din søknad vil bedriften kunne se dine kvalifikasjoner,
-                                    begrunnelse og navn. Dersom de ønsker kontakte deg vil de få tilgang til
-                                    telefonnummer og e-post.
+                                    Når du har sendt søknaden, kan bedriften se begrunnelsen din og hvilke
+                                    kvalifikasjoner du har huket av, samt navnet ditt dersom du har oppgitt det.
+                                    Hvis bedriften ønsker å kontakte deg, får de også se kontaktinformasjonen din.
                                 </p>
                                 <p className="InterestForm__p InterestForm__mb-2">
-                                    Du kan når som helst trekke tilbake din søknad.
+                                    Du kan når som helst trekke tilbake søknaden din.
                                 </p>
 
                                 {postInterestResponse.status === FetchStatus.FAILURE && (
