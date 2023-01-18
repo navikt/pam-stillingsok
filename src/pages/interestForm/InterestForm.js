@@ -420,6 +420,14 @@ const InterestForm = ({ match }) => {
                                 <p className="InterestForm__p InterestForm__mb-2">
                                     Du kan når som helst trekke tilbake søknaden din.
                                 </p>
+                                <a
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    href="/personvern-superrask-soknad"
+                                    className="link"
+                                >
+                                    Les om hvordan vi behandler dine data (åpner i ny fane)
+                                </a>
 
                                 {postInterestResponse.status === FetchStatus.FAILURE && (
                                     <Alert>
