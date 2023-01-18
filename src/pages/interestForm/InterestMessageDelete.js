@@ -78,7 +78,10 @@ const InterestMessageDelete = ({ match }) => {
 
                             {deleteInterestResponse.status === FetchStatus.FAILURE && (
                                 <div className="InterestForm__mb-2">
-                                    <Alert>Feil! Klarte ikke å trekke søknaden. Forsøk igjen</Alert>
+                                    <Alert>
+                                        Det oppsto dessverre en feil og vi kunne ikke trekke søknaden din.
+                                        Prøv å trekk søknaden på nytt.
+                                    </Alert>
                                 </div>
                             )}
                             {deleteInterestResponse.status === FetchStatus.IS_FETCHING ? (

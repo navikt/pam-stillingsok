@@ -114,17 +114,17 @@ const InterestForm = ({ match }) => {
             setEmailValidationError("E-postadressen er ugyldig");
         } else if (email === undefined || email.trim().length === 0) {
             isValid = false;
-            setEmailValidationError("E-post mangler");
+            setEmailValidationError("Du må oppgi din e-post for å kunne sende inn søknaden");
         }
 
         if (telephone.trim().length === 0) {
             isValid = false;
-            setTelephoneValidationError("Telefonnummer mangler");
+            setTelephoneValidationError("Du må oppgi ditt telefonnummer for å kunne sende inn søknaden");
         }
 
         if (about.length > ABOUT_MAX_LENGTH) {
             isValid = false;
-            setAboutValidationError(`Begrunnelse kan ikke være lengre enn ${ABOUT_MAX_LENGTH} tegn`);
+            setAboutValidationError(`Du har brukt ${about.length - ABOUT_MAX_LENGTH} tegn for mye i din begrunnelse. Begrunnelsen kan ikke være lengre enn ${ABOUT_MAX_LENGTH} tegn`);
         }
 
         if (!isValid) {
@@ -184,15 +184,15 @@ const InterestForm = ({ match }) => {
     const getErrorMessage = (error) => {
         switch (error.message) {
             case "invalid_name":
-                return "Feil, kunne ikke sende søknaden. Sjekk at navnet er skrevet riktig og forsøk igjen."
+                return "Vi kunne ikke sende inn søknaden din. Sjekk at navnet ditt er skrevet riktig og prøv på nytt."
             case "invalid_email":
-                return "Feil, kunne ikke sende søknaden. Sjekk at e-posten er skrevet riktig og forsøk igjen."
+                return "Vi kunne ikke sende inn søknaden din. Sjekk at e-posten din er skrevet riktig og prøv på nytt. Eksempel: epost@mail.no"
             case "invalid_telephone":
-                return "Feil, kunne ikke sende søknaden. Sjekk at telefonnummeret er skrevet riktig og forsøk igjen."
+                return "Vi kunne ikke sende inn søknaden din. Sjekk at telefonnummeret ditt er skrevet riktig og prøv på nytt. Eksempel: +47 99 99 99 99"
             case "invalid_about":
-                return "Feil, kunne ikke sende søknaden. Sjekk at teksten om deg selv ikke innholder ugyldige tegn eller er for lang og forsøk igjen."
+                return "Vi kunne ikke sende inn søknaden din. Sjekk at begrunnelsen din ikke inneholder noen lenker eller er lenger enn 400 tegn."
             default:
-                return "Feil, kunne ikke sende søknaden. Forsøk igjen"
+                return "Det oppsto dessverre en feil og vi kunne ikke sende inn søknaden din. Prøv å send søknaden på nytt."
         }
     }
 
@@ -201,14 +201,14 @@ const InterestForm = ({ match }) => {
             {status === FetchStatus.IS_FETCHING && <DelayedSpinner />}
             {status === FetchStatus.FAILURE && error.statusCode !== "404" && (
                 <div className="InterestForm__inner">
-                    <Alert>Det oppsto en feil. Forsøk å laste inn siden på nytt</Alert>
+                    <Alert>Det oppsto dessverre en feil. Prøv å last inn siden på nytt.</Alert>
                 </div>
             )}
             {status === FetchStatus.FAILURE && error.statusCode === "404" && (
                 <div className="InterestForm__inner">
                     <Alert>
-                        Fant ikke innholdet du ser etter. Det kan være en feil i lenken du brukte,
-                        eller det kan være at arbeidsgiver har avsluttet søknadsprosessen.
+                        Vi fant dessverre ikke innholdet du ser etter. Det kan være en feil i lenken du brukte,
+                        eller så kan bedriften ha avsluttet søknadsprosessen for denne stillingen.
                     </Alert>
                 </div>
             )}
