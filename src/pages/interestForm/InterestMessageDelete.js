@@ -19,7 +19,6 @@ const InterestMessageDelete = ({ match }) => {
     const [deleteInterestResponse, deleteInterestDispatch] = useFetchReducer();
 
     useDocumentTitle("Trekk søknad");
-    useTrackPageview();
     useScrollToTop();
 
     /**
