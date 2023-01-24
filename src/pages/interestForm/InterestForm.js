@@ -22,6 +22,7 @@ import TextField from "../../components/textField/TextField";
 import BackLink from "../../components/backlink/BackLink";
 import logAmplitudeEvent from "../../tracking/amplitude";
 import ScrollToTop from "../../components/ScrollToTop";
+import Feedback from "./Feedback";
 
 const InterestForm = ({ match }) => {
     // Ad data
@@ -249,6 +250,7 @@ const InterestForm = ({ match }) => {
                                         >
                                             Tilbake til stillingssøket
                                         </Link>
+                                        <Feedback />
                                     </div>
                                 </ScrollToTop>
                             )}
