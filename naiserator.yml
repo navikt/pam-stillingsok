@@ -54,6 +54,9 @@ spec:
     - name: AMPLITUDE_TOKEN
       value: {{ amplitude_token }}
   accessPolicy:
+    inbound:
+      rules:
+        - application: pam-aduser
     outbound:
       rules:
         - application: pam-search-api
