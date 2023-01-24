@@ -1,7 +1,8 @@
 {
   "ingress": [
     "https://arbeidsplassen.nav.no/stillinger",
-    "https://pam-stillingsok.prod-gcp.nais.io"
+    "https://pam-stillingsok.prod-gcp.nais.io",
+    "https://pam-stillingsok.intern.nav.no"    
   ],
   "loginservice_url": "https://loginservice.nav.no/login",
   "logoutservice_url": "https://loginservice.nav.no/slo",
