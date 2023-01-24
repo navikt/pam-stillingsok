@@ -220,12 +220,14 @@ const InterestForm = ({ match }) => {
                             <p className="InterestForm__job-title">{data.ad._source.title}</p>
                         </div>
                     </div>
-                    <div className="InterestForm__backlink">
-                        <BackLink
-                            to={`${CONTEXT_PATH}/${isInternal ? "intern" : "stilling"}/${data.ad._id}`}
-                            text="Tilbake"
-                        />
-                    </div>
+                    {postInterestResponse.status !== FetchStatus.SUCCESS && (
+                        <div className="InterestForm__backlink">
+                            <BackLink
+                                to={`${CONTEXT_PATH}/${isInternal ? "intern" : "stilling"}/${data.ad._id}`}
+                                text="Tilbake"
+                            />
+                        </div>
+                    )}
                     <div className="InterestForm__inner">
                         <div className="InterestForm__success-message" aria-live="polite">
                             {postInterestResponse.status === FetchStatus.SUCCESS && (
