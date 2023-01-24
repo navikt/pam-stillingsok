@@ -229,10 +229,10 @@ const InterestForm = ({ match }) => {
                         </div>
                     )}
                     <div className="InterestForm__inner">
-                        <div className="InterestForm__success-message" aria-live="polite">
+                        <div aria-live="polite">
                             {postInterestResponse.status === FetchStatus.SUCCESS && (
                                 <ScrollToTop>
-                                    <div className="InterestForm__success-message" aria-live="polite">
+                                    <div className="InterestForm__success-message">
                                         <h1 className="InterestForm__h1">Din søknad er sendt til bedriften</h1>
                                         <p className="InterestForm__p InterestForm__mb-2">
                                             Du vil straks få en bekreftelse på din e-post {email}. Ønsker du å trekke
