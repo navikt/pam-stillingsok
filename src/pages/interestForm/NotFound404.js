@@ -11,7 +11,7 @@ function NotFound404() {
             </svg>
 
 
-            <h1 className="InterestForm__h1">Vi fant dessverre ikke innholdet du ser etter. </h1>
+            <h1 className="InterestForm__h1">Vi fant dessverre ikke innholdet du ser etter</h1>
             <p className="InterestForm__p">
                 Det kan være en feil i lenken du brukte, eller så kan bedriften ha avsluttet søknadsprosessen for denne
                 stillingen.
