@@ -59,7 +59,7 @@ function FavouritesList() {
     } else {
         return (
             <section>
-                <header className="FavouritesList__total-and-sorting">
+                <div className="FavouritesList__total-and-sorting">
                     <h2 className="Favourites__h2">
                         {response.data.length !== 1 ? `${response.data.length} annonser` : "1 annonse"}
                     </h2>
@@ -78,7 +78,7 @@ function FavouritesList() {
                             Søknadsfrist
                         </option>
                     </Select>
-                </header>
+                </div>
                 <div>
                     {response.data.map((favourite) => (
                         <FavouritesListItem

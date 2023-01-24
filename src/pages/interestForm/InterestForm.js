@@ -23,6 +23,7 @@ import BackLink from "../../components/backlink/BackLink";
 import logAmplitudeEvent from "../../tracking/amplitude";
 import ScrollToTop from "../../components/ScrollToTop";
 import Feedback from "./Feedback";
+import NotFound404 from "./NotFound404";
 
 const InterestForm = ({ match }) => {
     // Ad data
@@ -200,18 +201,13 @@ const InterestForm = ({ match }) => {
     return (
         <div className="InterestForm">
             {status === FetchStatus.IS_FETCHING && <DelayedSpinner />}
-            {status === FetchStatus.FAILURE && error.statusCode !== "404" && (
+            {status === FetchStatus.FAILURE && error.statusCode !== 404 && (
                 <div className="InterestForm__inner">
                     <Alert>Det oppsto dessverre en feil. Prøv å last inn siden på nytt.</Alert>
                 </div>
             )}
-            {status === FetchStatus.FAILURE && error.statusCode === "404" && (
-                <div className="InterestForm__inner">
-                    <Alert>
-                        Vi fant dessverre ikke innholdet du ser etter. Det kan være en feil i lenken du brukte,
-                        eller så kan bedriften ha avsluttet søknadsprosessen for denne stillingen.
-                    </Alert>
-                </div>
+            {status === FetchStatus.FAILURE && error.statusCode === 404 && (
+               <NotFound404 />
             )}
             {status === FetchStatus.SUCCESS && (
                 <React.Fragment>

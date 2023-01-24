@@ -22,13 +22,13 @@ const SearchResult = ({ searchResponse, queryDispatch, query, loadMoreResults })
     return (
         <section id="resultat" className="SearchResult">
             <SkipToCriteria />
-            <header className="SearchResult__header">
+            <div className="SearchResult__header">
                 <div>
                     <h2 className="Search__h2">Søkeresultat</h2>
                     <SearchResultCount searchResult={data} />
                 </div>
                 <Sorting dispatch={queryDispatch} query={query} />
-            </header>
+            </div>
 
             {status === FetchStatus.FAILURE && <ErrorMessage />}
             {status === FetchStatus.IS_FETCHING && query.from === 0 && <DelayedSpinner />}
