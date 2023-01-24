@@ -51,7 +51,7 @@ const SearchResult = ({ searchResponse, queryDispatch, query, loadMoreResults })
                                 }
                             />
                         ))}
-                    <footer className="SearchResult__footer">
+                    <div className="SearchResult__footer">
                         <Pagination
                             query={query}
                             isSearching={status === FetchStatus.IS_FETCHING}
@@ -63,7 +63,7 @@ const SearchResult = ({ searchResponse, queryDispatch, query, loadMoreResults })
                             <ArrowUpIcon ariaHidden={true} />
                             Til toppen
                         </a>
-                    </footer>
+                    </div>
                 </React.Fragment>
             )}
         </section>
