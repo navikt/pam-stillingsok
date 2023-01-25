@@ -1,7 +1,7 @@
 import * as React from "react";
 
 const MessengerIcon = () => (
-    <svg role="img" xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24">
+    <svg role="img" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24">
         <defs>
             <linearGradient id="linear-gradient" x1="12" y1="-0.13" x2="12" y2="22.77" gradientUnits="userSpaceOnUse">
                 <stop offset="0" stopColor="#00b2ff" />
