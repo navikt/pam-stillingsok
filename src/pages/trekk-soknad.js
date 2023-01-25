@@ -1,6 +1,6 @@
 import React from "react";
 import useScrollToTop from "../common/hooks/useScrollToTop";
-import TrekkSoknad from "../modules/superrask-soknad/TrekkSoknad";
+import TrekkSoknad from "../modules/superrask-soknad/components/TrekkSoknad";
 import useDocumentTitle from "../common/hooks/useDocumentTitle";
 
 function TrekkSoknadPage({ match }) {
