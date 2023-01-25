@@ -3,7 +3,6 @@ import SearchResultItem from "../../search/components/searchResult/SearchResultI
 import useToggle from "../../../common/hooks/useToggle";
 import AlertModal from "../../../common/components/modals/AlertModal";
 import UserAPI from "../../../common/api/UserAPI";
-import { captureException } from "@sentry/browser";
 import { FavouritesContext } from "../context/FavouritesProvider";
 import AlertModalWithPageReload from "../../../common/components/modals/AlertModalWithPageReload";
 import DeleteButton from "../../../common/components/buttons/DeleteButton";
@@ -20,8 +19,7 @@ function FavouritesListItem({ favourite, removeFavouriteFromList }) {
                 favouritesProvider.removeFavouriteFromLocalList(favourite);
                 removeFavouriteFromList(favourite);
             })
-            .catch((err) => {
-                captureException(err);
+            .catch(() => {
                 openErrorDialog();
             })
             .finally(() => {

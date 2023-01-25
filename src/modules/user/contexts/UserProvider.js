@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { captureException } from "@sentry/browser";
 import { AuthenticationContext, AuthenticationStatus } from "../../auth/contexts/AuthenticationProvider";
 import UserAPI from "../../../common/api/UserAPI";
 import { FetchAction, useFetchReducer } from "../../../common/hooks/useFetchReducer";
@@ -45,7 +44,6 @@ const UserProvider = ({ children }) => {
             .catch((error) => {
                 dispatch({ type: FetchAction.REJECT, error });
                 if (error.statusCode !== 404) {
-                    captureException(error);
                     openErrorDialog();
                 }
             });

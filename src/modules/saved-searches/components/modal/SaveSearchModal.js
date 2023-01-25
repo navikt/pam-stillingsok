@@ -1,5 +1,4 @@
 import React, { useContext, useEffect } from "react";
-import { captureException } from "@sentry/browser";
 import { UserContext } from "../../../user/contexts/UserProvider";
 import CustomModal from "../../../../common/components/modals/CustomModal";
 import UserAPI from "../../../../common/api/UserAPI";
@@ -54,7 +53,6 @@ function SaveSearchModal({ onClose, onSaveSearchSuccess, formData, defaultFormMo
                 dispatch({ type: FetchAction.RESOLVE, data });
             })
             .catch((error) => {
-                captureException(error);
                 dispatch({ type: FetchAction.REJECT, error });
             });
     }

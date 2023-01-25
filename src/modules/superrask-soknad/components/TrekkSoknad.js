@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { FetchAction, FetchStatus, useFetchReducer } from "../../../common/hooks/useFetchReducer";
 import SearchAPI from "../../../common/api/SearchAPI";
-import { captureException } from "@sentry/browser";
 import DelayedSpinner from "../../../common/components/spinner/DelayedSpinner";
 import InterestAPI from "../api/InterestAPI";
 import TrekkSoknadSuccess from "./TrekkSoknadSuccess";
@@ -24,7 +23,6 @@ const TrekkSoknad = ({ match }) => {
                 dispatch({ type: FetchAction.RESOLVE, data });
             })
             .catch((error) => {
-                captureException(error);
                 dispatch({ type: FetchAction.REJECT, error });
             });
     }, []);
@@ -36,7 +34,6 @@ const TrekkSoknad = ({ match }) => {
                 deleteSoknadDispatch({ type: FetchAction.RESOLVE, data });
             })
             .catch((error) => {
-                captureException(error);
                 deleteSoknadDispatch({ type: FetchAction.REJECT, error });
             });
     };
