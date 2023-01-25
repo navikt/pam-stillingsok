@@ -1,20 +1,20 @@
 import React, {useContext} from "react";
 import PropTypes from "prop-types";
 import {captureException} from "@sentry/browser";
-import {HasAcceptedTermsStatus, UserContext} from "../../context/UserProvider";
-import {AuthenticationContext, AuthenticationStatus} from "../../context/AuthenticationProvider";
-import {FavouritesContext} from "../../context/FavouritesProvider";
-import StarIcon from "../../components/icons/StarIcon";
-import UserAPI from "../../api/UserAPI";
+import {HasAcceptedTermsStatus, UserContext} from "../../common/context/UserProvider";
+import {AuthenticationContext, AuthenticationStatus} from "../../common/context/AuthenticationProvider";
+import {FavouritesContext} from "../../common/context/FavouritesProvider";
+import StarIcon from "../../common/components/icons/StarIcon";
+import UserAPI from "../../common/api/UserAPI";
 import getWorkLocation from "../../../server/common/getWorkLocation";
 import getEmployer from "../../../server/common/getEmployer";
-import TermsOfUse from "../../components/modals/TermsOfUse";
-import LoginModal from "../../components/modals/LoginModal";
-import useToggle from "../../hooks/useToggle";
-import IconButton from "../../components/buttons/IconButton";
-import AlertModalWithPageReload from "../../components/modals/AlertModalWithPageReload";
-import HeartIcon from "../../components/icons/HeartIcon";
-import HeartIconFilled from "../../components/icons/HeartIconFilled";
+import TermsOfUse from "../../common/components/modals/TermsOfUse";
+import LoginModal from "../../common/components/modals/LoginModal";
+import useToggle from "../../common/hooks/useToggle";
+import IconButton from "../../common/components/buttons/IconButton";
+import AlertModalWithPageReload from "../../common/components/modals/AlertModalWithPageReload";
+import HeartIcon from "../../common/components/icons/HeartIcon";
+import HeartIconFilled from "../../common/components/icons/HeartIconFilled";
 
 /**
  * Displays a button "Lagre favoritt" or "Slett favoritt".

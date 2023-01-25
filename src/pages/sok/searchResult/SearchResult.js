@@ -1,13 +1,13 @@
 import React from "react";
-import DelayedSpinner from "../../../components/spinner/DelayedSpinner";
+import DelayedSpinner from "../../../common/components/spinner/DelayedSpinner";
 import SearchResultCount from "./SearchResultCount";
 import Sorting from "./Sorting";
-import { FetchStatus } from "../../../hooks/useFetchReducer";
-import ErrorMessage from "../../../components/messages/ErrorMessage";
+import { FetchStatus } from "../../../common/hooks/useFetchReducer";
+import ErrorMessage from "../../../common/components/messages/ErrorMessage";
 import NoResults from "./NoResults";
 import Pagination from "./Pagination";
 import SkipToCriteria from "../skiplinks/SkipToCriteria";
-import ArrowUpIcon from "../../../components/icons/ArrowUpIcon";
+import ArrowUpIcon from "../../../common/components/icons/ArrowUpIcon";
 import SearchResultItem from "./SearchResultItem";
 import "./SearchResult.less";
 import FavouritesButton from "../../favoritter/FavouritesButton";

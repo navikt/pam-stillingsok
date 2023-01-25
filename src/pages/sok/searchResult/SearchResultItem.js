@@ -4,9 +4,9 @@ import {Link} from "react-router-dom";
 import getEmployer from "../../../../server/common/getEmployer";
 import getWorkLocation from "../../../../server/common/getWorkLocation";
 import {CONTEXT_PATH} from "../../../environment";
-import {formatDate} from "../../../components/utils";
+import {formatDate} from "../../../common/components/utils";
 import "./SearchResultsItem.less";
-import Tag from "../../../components/tag/Tag";
+import Tag from "../../../common/components/tag/Tag";
 
 export default function SearchResultItem({
      ad,

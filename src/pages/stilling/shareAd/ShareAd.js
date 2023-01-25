@@ -1,11 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { UAParser } from "ua-parser-js";
-import ShareIcon from "../../../components/icons/ShareIcon";
-import FacebookIcon from "../../../components/icons/FacebookIcon";
-import LinkedinIcon from "../../../components/icons/LinkedinIcon";
-import TwitterIcon from "../../../components/icons/TwitterIcon";
-import MessengerIcon from "../../../components/icons/MessengerIcon";
+import ShareIcon from "../../../common/components/icons/ShareIcon";
+import FacebookIcon from "../../../common/components/icons/FacebookIcon";
+import LinkedinIcon from "../../../common/components/icons/LinkedinIcon";
+import TwitterIcon from "../../../common/components/icons/TwitterIcon";
+import MessengerIcon from "../../../common/components/icons/MessengerIcon";
 import "./ShareAd.less";
 
 export default function ShareAd({ source }) {

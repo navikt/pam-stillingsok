@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Select } from "nav-frontend-skjema";
 import { captureException } from "@sentry/browser";
-import DelayedSpinner from "../../components/spinner/DelayedSpinner";
-import ErrorMessage from "../../components/messages/ErrorMessage";
-import EmptyMessage from "../../components/messages/EmptyMessage";
-import UserAPI from "../../api/UserAPI";
-import { FetchAction, FetchStatus, useFetchReducer } from "../../hooks/useFetchReducer";
+import DelayedSpinner from "../../common/components/spinner/DelayedSpinner";
+import ErrorMessage from "../../common/components/messages/ErrorMessage";
+import EmptyMessage from "../../common/components/messages/EmptyMessage";
+import UserAPI from "../../common/api/UserAPI";
+import { FetchAction, FetchStatus, useFetchReducer } from "../../common/hooks/useFetchReducer";
 import FavouritesListItem from "./FavouritesListItem";
 
 function FavouritesList() {

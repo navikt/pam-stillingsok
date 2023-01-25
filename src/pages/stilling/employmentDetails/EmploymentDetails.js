@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { formatDate, isValidISOString } from "../../../components/utils";
+import { formatDate, isValidISOString } from "../../../common/components/utils";
 import worktimeParser from "./worktimeParser";
-import SuitcaseIcon from "../../../components/icons/SuitcaseIcon";
+import SuitcaseIcon from "../../../common/components/icons/SuitcaseIcon";
 
 export default function EmploymentDetails({ stilling }) {
     const { properties } = stilling;

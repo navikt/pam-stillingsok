@@ -1,12 +1,12 @@
 import React, { useContext } from "react";
 import SearchResultItem from "../sok/searchResult/SearchResultItem";
-import useToggle from "../../hooks/useToggle";
-import AlertModal from "../../components/modals/AlertModal";
-import UserAPI from "../../api/UserAPI";
+import useToggle from "../../common/hooks/useToggle";
+import AlertModal from "../../common/components/modals/AlertModal";
+import UserAPI from "../../common/api/UserAPI";
 import { captureException } from "@sentry/browser";
-import { FavouritesContext } from "../../context/FavouritesProvider";
-import AlertModalWithPageReload from "../../components/modals/AlertModalWithPageReload";
-import DeleteButton from "../../components/buttons/DeleteButton";
+import { FavouritesContext } from "../../common/context/FavouritesProvider";
+import AlertModalWithPageReload from "../../common/components/modals/AlertModalWithPageReload";
+import DeleteButton from "../../common/components/buttons/DeleteButton";
 
 function FavouritesListItem({ favourite, removeFavouriteFromList }) {
     const favouritesProvider = useContext(FavouritesContext);

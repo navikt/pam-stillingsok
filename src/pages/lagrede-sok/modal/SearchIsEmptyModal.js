@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import AlertModal from "../../../components/modals/AlertModal";
+import AlertModal from "../../../common/components/modals/AlertModal";
 
 function SearchIsEmptyModal({ onClose }) {
     return (

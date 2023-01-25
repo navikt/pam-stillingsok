@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { captureException } from "@sentry/browser";
-import { AD_USER_API, CONTEXT_PATH, LOGIN_URL, LOGOUT_URL, STILLINGSOK_URL } from "../environment";
+import { AD_USER_API, CONTEXT_PATH, LOGIN_URL, LOGOUT_URL, STILLINGSOK_URL } from "../../environment";
 import { extractParam} from "../components/utils";
-import {stringifyQuery} from "../pages/sok/query";
+import {stringifyQuery} from "../../pages/sok/query";
 
 export const AuthenticationContext = React.createContext({});
 

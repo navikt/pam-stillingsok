@@ -1,4 +1,4 @@
-import {INTEREST_API_URL} from "../environment";
+import {INTEREST_API_URL} from "../../environment";
 import APIError from "./APIError";
 
 async function get(url) {

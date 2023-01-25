@@ -1,13 +1,13 @@
 import React, { useContext, useState } from "react";
 import { captureException } from "@sentry/browser";
 import { Checkbox, Fieldset, Input, Radio, SkjemaGruppe } from "nav-frontend-skjema";
-import { UserContext } from "../../../context/UserProvider";
+import { UserContext } from "../../../common/context/UserProvider";
 import { Hovedknapp, Knapp } from "@navikt/arbeidsplassen-knapper";
-import useToggle from "../../../hooks/useToggle";
-import { FetchStatus } from "../../../hooks/useFetchReducer";
-import Alert from "../../../components/alert/Alert";
-import { isStringEmpty } from "../../../components/utils";
-import UserAPI from "../../../api/UserAPI";
+import useToggle from "../../../common/hooks/useToggle";
+import { FetchStatus } from "../../../common/hooks/useFetchReducer";
+import Alert from "../../../common/components/alert/Alert";
+import { isStringEmpty } from "../../../common/components/utils";
+import UserAPI from "../../../common/api/UserAPI";
 
 export const FormModes = {
     ADD: "ADD",

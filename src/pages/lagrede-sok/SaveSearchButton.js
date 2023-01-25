@@ -3,12 +3,12 @@ import {Knapp} from "@navikt/arbeidsplassen-knapper";
 import SearchIsEmptyModal from "./modal/SearchIsEmptyModal";
 import SaveSearchModal from "./modal/SaveSearchModal";
 import {isSearchQueryEmpty, stringifyQuery, toReadableQuery, toSavedSearchQuery} from "../sok/query";
-import {AuthenticationContext, AuthenticationStatus} from "../../context/AuthenticationProvider";
-import {HasAcceptedTermsStatus, UserContext} from "../../context/UserProvider";
-import {extractParam} from "../../components/utils";
-import TermsOfUse from "../../components/modals/TermsOfUse";
-import LoginModal from "../../components/modals/LoginModal";
-import useToggle from "../../hooks/useToggle";
+import {AuthenticationContext, AuthenticationStatus} from "../../common/context/AuthenticationProvider";
+import {HasAcceptedTermsStatus, UserContext} from "../../common/context/UserProvider";
+import {extractParam} from "../../common/components/utils";
+import TermsOfUse from "../../common/components/modals/TermsOfUse";
+import LoginModal from "../../common/components/modals/LoginModal";
+import useToggle from "../../common/hooks/useToggle";
 import {FormModes} from "./modal/SaveSearchForm";
 
 /**

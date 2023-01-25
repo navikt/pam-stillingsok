@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import { captureException } from "@sentry/browser";
 import SavedSearchListItem from "./SavedSearchListItem";
-import DelayedSpinner from "../../components/spinner/DelayedSpinner";
-import ErrorMessage from "../../components/messages/ErrorMessage";
-import UserAPI from "../../api/UserAPI";
-import { FetchAction, FetchStatus, useFetchReducer } from "../../hooks/useFetchReducer";
-import { extractParam } from "../../components/utils";
+import DelayedSpinner from "../../common/components/spinner/DelayedSpinner";
+import ErrorMessage from "../../common/components/messages/ErrorMessage";
+import UserAPI from "../../common/api/UserAPI";
+import { FetchAction, FetchStatus, useFetchReducer } from "../../common/hooks/useFetchReducer";
+import { extractParam } from "../../common/components/utils";
 import SavedSearchesIsEmpty from "./SavedSearchesIsEmpty";
 
 /**

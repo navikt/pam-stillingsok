@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useReducer, useRef } from "react";
 import { captureException } from "@sentry/browser";
 import { CONTEXT_PATH } from "../../environment";
-import { AuthenticationContext, AuthenticationStatus } from "../../context/AuthenticationProvider";
+import { AuthenticationContext, AuthenticationStatus } from "../../common/context/AuthenticationProvider";
 import queryReducer, {
     initialQuery,
     initQueryWithValuesFromBrowserUrl,
@@ -11,20 +11,20 @@ import queryReducer, {
     toApiQuery,
     toBrowserQuery
 } from "./query";
-import { extractParam } from "../../components/utils";
-import { FetchAction, FetchStatus, useFetchReducer } from "../../hooks/useFetchReducer";
-import SearchAPI from "../../api/SearchAPI";
-import ErrorMessage from "../../components/messages/ErrorMessage";
+import { extractParam } from "../../common/components/utils";
+import { FetchAction, FetchStatus, useFetchReducer } from "../../common/hooks/useFetchReducer";
+import SearchAPI from "../../common/api/SearchAPI";
+import ErrorMessage from "../../common/components/messages/ErrorMessage";
 import SearchForm from "./searchForm/SearchForm";
-import useDocumentTitle from "../../hooks/useDocumentTitle";
-import useTrackPageview from "../../hooks/useTrackPageview";
+import useDocumentTitle from "../../common/hooks/useDocumentTitle";
+import useTrackPageview from "../../common/hooks/useTrackPageview";
 import LinkMenu from "./linkMenu/LinkMenu";
 import LoadingScreen from "./loadingScreen/LoadingScreen";
-import useRestoreScroll from "../../hooks/useRestoreScroll";
+import useRestoreScroll from "../../common/hooks/useRestoreScroll";
 import "./Search.less";
 import { useHistory } from "react-router";
 import SearchResult from "./searchResult/SearchResult";
-import H1WithAutoFocus from "../../components/h1WithAutoFocus/H1WithAutoFocus";
+import H1WithAutoFocus from "../../common/components/h1WithAutoFocus/H1WithAutoFocus";
 import EventBanner from "./event/EventBanner";
 import SuperraskSoknadBanner from "../superrask-soknad/SuperraskSoknadBanner";
 

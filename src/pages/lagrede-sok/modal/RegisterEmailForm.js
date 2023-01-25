@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Input } from "nav-frontend-skjema";
 import { captureException } from "@sentry/browser";
-import { isValidEmail } from "../../../components/utils";
-import { UserContext } from "../../../context/UserProvider";
+import { isValidEmail } from "../../../common/components/utils";
+import { UserContext } from "../../../common/context/UserProvider";
 import { Hovedknapp, Knapp } from "@navikt/arbeidsplassen-knapper";
-import { FetchStatus } from "../../../hooks/useFetchReducer";
-import Alert from "../../../components/alert/Alert";
-import UserAPI from "../../../api/UserAPI";
+import { FetchStatus } from "../../../common/hooks/useFetchReducer";
+import Alert from "../../../common/components/alert/Alert";
+import UserAPI from "../../../common/api/UserAPI";
 
 function RegisterEmailForm({ onClose, onSuccess }) {
     const { user, updateUser } = useContext(UserContext);

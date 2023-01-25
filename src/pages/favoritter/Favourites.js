@@ -1,15 +1,15 @@
 import React, { useContext } from "react";
 import { CONTEXT_PATH } from "../../environment";
-import { AuthenticationContext } from "../../context/AuthenticationProvider";
-import { UserContext } from "../../context/UserProvider";
+import { AuthenticationContext } from "../../common/context/AuthenticationProvider";
+import { UserContext } from "../../common/context/UserProvider";
 import FavouritesList from "./FavouritesList";
-import RequiresAuthentication from "../../components/wrappers/RequiresAuthentication";
-import RequiresHasAcceptedTerms from "../../components/wrappers/RequiresHasAcceptedTerms";
-import useDocumentTitle from "../../hooks/useDocumentTitle";
-import useTrackPageview from "../../hooks/useTrackPageview";
-import useScrollToTop from "../../hooks/useScrollToTop";
-import BackLink from "../../components/backlink/BackLink";
-import H1WithAutoFocus from "../../components/h1WithAutoFocus/H1WithAutoFocus";
+import RequiresAuthentication from "../../common/components/wrappers/RequiresAuthentication";
+import RequiresHasAcceptedTerms from "../../common/components/wrappers/RequiresHasAcceptedTerms";
+import useDocumentTitle from "../../common/hooks/useDocumentTitle";
+import useTrackPageview from "../../common/hooks/useTrackPageview";
+import useScrollToTop from "../../common/hooks/useScrollToTop";
+import BackLink from "../../common/components/backlink/BackLink";
+import H1WithAutoFocus from "../../common/components/h1WithAutoFocus/H1WithAutoFocus";
 import "./Favourites.less";
 
 function Favourites() {

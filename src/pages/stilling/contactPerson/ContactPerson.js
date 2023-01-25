@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import PersonIcon from "../../../components/icons/PersonIcon";
+import PersonIcon from "../../../common/components/icons/PersonIcon";
 
 export default function ContactPerson({ contactList }) {
     if (contactList && contactList.length > 0) {
