@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import SearchResultItem from "../search/searchResult/SearchResultItem";
+import SearchResultItem from "../sok/searchResult/SearchResultItem";
 import useToggle from "../../hooks/useToggle";
 import AlertModal from "../../components/modals/AlertModal";
 import UserAPI from "../../api/UserAPI";

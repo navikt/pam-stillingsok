@@ -6,7 +6,7 @@ import Occupations from "./filters/Occupations";
 import Published from "./filters/Published";
 import Sector from "./filters/Sector";
 import SearchBox from "./SearchBox";
-import SaveSearchButton from "../../savedSearches/SaveSearchButton";
+import SaveSearchButton from "../../lagrede-sok/SaveSearchButton";
 import ResetButton from "./ResetButton";
 import SkipToResult from "../skiplinks/SkipToResult";
 

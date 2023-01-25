@@ -10,7 +10,7 @@ import SkipToCriteria from "../skiplinks/SkipToCriteria";
 import ArrowUpIcon from "../../../components/icons/ArrowUpIcon";
 import SearchResultItem from "./SearchResultItem";
 import "./SearchResult.less";
-import FavouritesButton from "../../favourites/FavouritesButton";
+import FavouritesButton from "../../favoritter/FavouritesButton";
 
 const SearchResult = ({ searchResponse, queryDispatch, query, loadMoreResults }) => {
     const { status, data } = searchResponse;

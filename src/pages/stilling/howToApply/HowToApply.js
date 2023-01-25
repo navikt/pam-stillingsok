@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 import { formatDate, isValidEmail, isValidISOString, isValidUrl } from "../../../components/utils";
 import "./HowToApply.less";
 import logAmplitudeEvent from "../../../tracking/amplitude";
-import FavouritesButton from "../../favourites/FavouritesButton";
+import FavouritesButton from "../../favoritter/FavouritesButton";
 import CalendarIcon from "../../../components/icons/CalendarIcon";
 import {CONTEXT_PATH} from "../../../environment";
 

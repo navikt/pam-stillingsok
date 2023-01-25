@@ -2,7 +2,7 @@ import React, {useContext} from "react";
 import {Knapp} from "@navikt/arbeidsplassen-knapper";
 import SearchIsEmptyModal from "./modal/SearchIsEmptyModal";
 import SaveSearchModal from "./modal/SaveSearchModal";
-import {isSearchQueryEmpty, stringifyQuery, toReadableQuery, toSavedSearchQuery} from "../search/query";
+import {isSearchQueryEmpty, stringifyQuery, toReadableQuery, toSavedSearchQuery} from "../sok/query";
 import {AuthenticationContext, AuthenticationStatus} from "../../context/AuthenticationProvider";
 import {HasAcceptedTermsStatus, UserContext} from "../../context/UserProvider";
 import {extractParam} from "../../components/utils";
