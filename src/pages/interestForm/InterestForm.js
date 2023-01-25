@@ -268,6 +268,7 @@ const InterestForm = ({ match }) => {
                                         tabIndex={-1}
                                         aria-live="polite"
                                         aria-labelledby="register-interest-error-title"
+                                        role="alert"
                                     >
                                         {(telephoneValidationError || emailValidationError || aboutValidationError) && (
                                             <div className="InterestForm__error-summary">
