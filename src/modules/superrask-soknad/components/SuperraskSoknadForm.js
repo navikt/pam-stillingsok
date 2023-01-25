@@ -162,7 +162,7 @@ const SuperraskSoknadForm = ({ data, isInternal, submitForm, postInterestRespons
                                 {telephoneValidationError && (
                                     <li>
                                         <a
-                                            href="src/modules/superrask-soknad/InterestForm#register-interest-telephone"
+                                            href="#register-interest-telephone"
                                             className="link"
                                         >
                                             {telephoneValidationError}
@@ -172,7 +172,7 @@ const SuperraskSoknadForm = ({ data, isInternal, submitForm, postInterestRespons
                                 {emailValidationError && (
                                     <li>
                                         <a
-                                            href="src/modules/superrask-soknad/InterestForm#register-interest-email"
+                                            href="#register-interest-email"
                                             className="link"
                                         >
                                             {emailValidationError}
@@ -182,7 +182,7 @@ const SuperraskSoknadForm = ({ data, isInternal, submitForm, postInterestRespons
                                 {aboutValidationError && (
                                     <li>
                                         <a
-                                            href="src/modules/superrask-soknad/InterestForm#register-interest-about"
+                                            href="#register-interest-about"
                                             className="link"
                                         >
                                             {aboutValidationError}
