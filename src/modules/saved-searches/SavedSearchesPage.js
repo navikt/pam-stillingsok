@@ -4,7 +4,6 @@ import SavedSearchesList from "./components/SavedSearchesList";
 import RequiresAuthentication from "../auth/components/RequiresAuthentication";
 import RequiresHasAcceptedTerms from "../user/components/RequiresHasAcceptedTerms";
 import useDocumentTitle from "../../common/hooks/useDocumentTitle";
-import useTrackPageview from "../../common/hooks/useTrackPageview";
 import useScrollToTop from "../../common/hooks/useScrollToTop";
 import H1WithAutoFocus from "../../common/components/h1WithAutoFocus/H1WithAutoFocus";
 import BackLink from "../../common/components/backlink/BackLink";
@@ -19,7 +18,6 @@ function SavedSearchesPage() {
     const title = "Lagrede søk";
 
     useDocumentTitle(title);
-    useTrackPageview(`${CONTEXT_PATH}/lagrede-sok`, title);
     useScrollToTop();
 
     return (

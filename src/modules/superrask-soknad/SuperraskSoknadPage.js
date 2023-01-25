@@ -7,7 +7,6 @@ import InterestAPI from "../../common/api/InterestAPI";
 import { FetchAction, FetchStatus, useFetchReducer } from "../../common/hooks/useFetchReducer";
 import useScrollToTop from "../../common/hooks/useScrollToTop";
 import useDocumentTitle from "../../common/hooks/useDocumentTitle";
-import useTrackPageview from "../../common/hooks/useTrackPageview";
 import DelayedSpinner from "../../common/components/spinner/DelayedSpinner";
 import Alert from "../../common/components/alert/Alert";
 import H1WithAutoFocus from "../../common/components/h1WithAutoFocus/H1WithAutoFocus";
@@ -47,7 +46,6 @@ const SuperraskSoknadPage = ({ match }) => {
     const ABOUT_MAX_LENGTH = 400;
 
     useDocumentTitle("Meld interesse");
-    useTrackPageview();
     useScrollToTop();
 
     const isInternal = match.path.startsWith("/stillinger/intern/");

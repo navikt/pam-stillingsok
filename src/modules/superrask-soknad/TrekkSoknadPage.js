@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import useScrollToTop from "../../common/hooks/useScrollToTop";
 import useDocumentTitle from "../../common/hooks/useDocumentTitle";
-import useTrackPageview from "../../common/hooks/useTrackPageview";
 import { Hovedknapp } from "@navikt/arbeidsplassen-knapper";
 import { FetchAction, FetchStatus, useFetchReducer } from "../../common/hooks/useFetchReducer";
 import SearchAPI from "../../common/api/SearchAPI";
