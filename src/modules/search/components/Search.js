@@ -23,7 +23,6 @@ import "./Search.less";
 import { useHistory } from "react-router";
 import SearchResult from "./searchResult/SearchResult";
 import H1WithAutoFocus from "../../../common/components/h1WithAutoFocus/H1WithAutoFocus";
-import SuperraskSoknadBanner from "../../superrask-soknad/components/SuperraskSoknadBanner";
 
 const Search = () => {
     const { authenticationStatus } = useContext(AuthenticationContext);

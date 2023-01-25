@@ -4,7 +4,6 @@ import { captureException } from "@sentry/browser";
 import { HasAcceptedTermsStatus, UserContext } from "../../user/contexts/UserProvider";
 import { AuthenticationContext, AuthenticationStatus } from "../../auth/contexts/AuthenticationProvider";
 import { FavouritesContext } from "../context/FavouritesProvider";
-import StarIcon from "../../../common/components/icons/StarIcon";
 import UserAPI from "../../../common/api/UserAPI";
 import getWorkLocation from "../../../../server/common/getWorkLocation";
 import getEmployer from "../../../../server/common/getEmployer";
