@@ -114,7 +114,7 @@ function FavouritesButton({ id, stilling, useShortText, className, type }) {
                 onClick={isFavourite ? handleDeleteFavouriteClick : handleSaveFavouriteClick}
                 className={className ? `FavouriteButton ${className}` : "FavouritesButton"}
                 text={isFavourite ? deleteText : saveText}
-                icon={isFavourite ? <HeartIconFilled ariaHidden={!useShortText} /> : <HeartIcon ariaHidden={!useShortText}/>}
+                icon={isFavourite ? <HeartIconFilled ariaHidden="true" /> : <HeartIcon ariaHidden="true"/>}
                 type={type}
             />
 
