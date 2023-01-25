@@ -47,7 +47,7 @@ const SuperraskSoknad = ({ match }) => {
             postSoknadDispatch({ type: FetchAction.BEGIN });
             InterestAPI.postInterest(match.params.uuid, soknad)
                 .then((data) => {
-                    postSoknadDispatch({ type: FetchAction.RESOLVE, data });
+                    postSoknadDispatch({ type: FetchAction.RESOLVE, data: soknad });
                 })
                 .catch((error) => {
                     captureException(error);
