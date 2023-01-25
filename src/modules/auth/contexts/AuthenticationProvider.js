@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { captureException } from "@sentry/browser";
 import { AD_USER_API, CONTEXT_PATH, LOGIN_URL, LOGOUT_URL, STILLINGSOK_URL } from "../../../common/environment";
 import { extractParam } from "../../../common/components/utils";
 import { stringifyQuery } from "../../search/query";
@@ -53,8 +52,7 @@ const AuthenticationProvider = ({ children }) => {
                     setAuthenticationStatus(AuthenticationStatus.FAILURE);
                 }
             })
-            .catch((err) => {
-                captureException(err);
+            .catch(() => {
                 setAuthenticationStatus(AuthenticationStatus.FAILURE);
             });
     };
@@ -64,17 +62,13 @@ const AuthenticationProvider = ({ children }) => {
             fetch("/api/cv/rest/person/headerinfo", {
                 method: "GET",
                 credentials: "include"
-            })
-                .then((response) => {
-                    if (response.status === 200) {
-                        response.json().then((result) => {
-                            setUserNameAndInfo(result);
-                        });
-                    }
-                })
-                .catch((err) => {
-                    captureException(err);
-                });
+            }).then((response) => {
+                if (response.status === 200) {
+                    response.json().then((result) => {
+                        setUserNameAndInfo(result);
+                    });
+                }
+            });
         } else {
             const testData = {
                 fornavn: "Kristin",

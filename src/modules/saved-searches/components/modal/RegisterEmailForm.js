@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Input } from "nav-frontend-skjema";
-import { captureException } from "@sentry/browser";
 import { isValidEmail } from "../../../../common/components/utils";
 import { UserContext } from "../../../user/contexts/UserProvider";
 import { Hovedknapp, Knapp } from "@navikt/arbeidsplassen-knapper";
@@ -36,8 +35,7 @@ function RegisterEmailForm({ onClose, onSuccess }) {
                     updateUser(response);
                     onSuccess();
                 })
-                .catch((err) => {
-                    captureException(err);
+                .catch(() => {
                     setSaveStatus(FetchStatus.FAILURE);
                 });
         }

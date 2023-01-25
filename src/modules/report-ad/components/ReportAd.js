@@ -4,7 +4,6 @@ import "./ReportAd.less";
 import Checkbox from "nav-frontend-skjema/lib/checkbox";
 import { Hovedknapp } from "@navikt/arbeidsplassen-knapper";
 import { CONTEXT_PATH } from "../../../common/environment";
-import { captureException } from "@sentry/browser";
 import logAmplitudeEvent from "../../../common/tracking/amplitude";
 import { Textarea } from "nav-frontend-skjema";
 import { AuthenticationContext, AuthenticationStatus } from "../../auth/contexts/AuthenticationProvider";
@@ -102,7 +101,6 @@ const ReportAd = () => {
                 description
             });
         } catch (e) {
-            captureException(e);
             setError(true);
         }
     }

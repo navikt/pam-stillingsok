@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
 import React, { useState } from "react";
-import { captureException } from "@sentry/browser";
 import { CONTEXT_PATH } from "../../../common/environment";
 import { formatDate, isValidISOString } from "../../../common/components/utils";
 import AlertModal from "../../../common/components/modals/AlertModal";
@@ -32,8 +31,7 @@ function SavedSearchListItem({ savedSearch, removeSavedSearchFromList, replaceSa
                 setDeleteStatus(FetchStatus.SUCCESS);
                 removeSavedSearchFromList(savedSearch);
             })
-            .catch((err) => {
-                captureException(err);
+            .catch(() => {
                 setDeleteStatus(FetchStatus.FAILURE);
                 closeConfirmationModal();
                 openErrorModal();
@@ -51,8 +49,7 @@ function SavedSearchListItem({ savedSearch, removeSavedSearchFromList, replaceSa
                 setRestartEmailNotificationStatus(FetchStatus.SUCCESS);
                 replaceSavedSearchInList(response);
             })
-            .catch((err) => {
-                captureException(err);
+            .catch(() => {
                 setRestartEmailNotificationStatus(FetchStatus.FAILURE);
             });
     }

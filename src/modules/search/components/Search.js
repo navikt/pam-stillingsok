@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useReducer, useRef } from "react";
-import { captureException } from "@sentry/browser";
 import { CONTEXT_PATH } from "../../../common/environment";
 import { AuthenticationContext, AuthenticationStatus } from "../../auth/contexts/AuthenticationProvider";
 import queryReducer, {
@@ -104,7 +103,6 @@ const Search = () => {
             })
             .catch((error) => {
                 if (search === latestSearch.current) {
-                    captureException(error);
                     searchDispatch({ type: FetchAction.REJECT, error });
                 }
             });

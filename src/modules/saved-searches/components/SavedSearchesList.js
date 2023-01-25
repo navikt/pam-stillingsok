@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { captureException } from "@sentry/browser";
 import SavedSearchListItem from "./SavedSearchListItem";
 import DelayedSpinner from "../../../common/components/spinner/DelayedSpinner";
 import ErrorMessage from "../../../common/components/messages/ErrorMessage";
@@ -33,7 +32,6 @@ function SavedSearchesList() {
                 dispatch({ type: FetchAction.RESOLVE, data: response.content ? response.content : [] });
             })
             .catch((error) => {
-                captureException(error);
                 dispatch({ type: FetchAction.REJECT, error });
             });
     }

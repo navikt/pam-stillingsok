@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Select } from "nav-frontend-skjema";
-import { captureException } from "@sentry/browser";
 import DelayedSpinner from "../../../common/components/spinner/DelayedSpinner";
 import ErrorMessage from "../../../common/components/messages/ErrorMessage";
 import EmptyMessage from "../../../common/components/messages/EmptyMessage";
@@ -30,7 +29,6 @@ function FavouritesList() {
                 dispatch({ type: FetchAction.RESOLVE, data: response.content ? response.content : [] });
             })
             .catch((error) => {
-                captureException(error);
                 dispatch({ type: FetchAction.REJECT, error });
             });
     }

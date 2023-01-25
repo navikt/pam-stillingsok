@@ -1,5 +1,4 @@
 import React, { useContext, useState } from "react";
-import { captureException } from "@sentry/browser";
 import { Checkbox, Fieldset, Input, Radio, SkjemaGruppe } from "nav-frontend-skjema";
 import { UserContext } from "../../../user/contexts/UserProvider";
 import { Hovedknapp, Knapp } from "@navikt/arbeidsplassen-knapper";
@@ -59,8 +58,7 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
                             onSuccess(response);
                         }
                     })
-                    .catch((err) => {
-                        captureException(err);
+                    .catch(() => {
                         setSaveStatus(FetchStatus.FAILURE);
                     });
             } else {
@@ -83,8 +81,7 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
                             onSuccess(response);
                         }
                     })
-                    .catch((err) => {
-                        captureException(err);
+                    .catch(() => {
                         setSaveStatus(FetchStatus.FAILURE);
                     });
             }

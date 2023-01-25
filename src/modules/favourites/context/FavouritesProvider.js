@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { captureException } from "@sentry/browser";
 import UserAPI from "../../../common/api/UserAPI";
 import { HasAcceptedTermsStatus, UserContext } from "../../user/contexts/UserProvider";
 import useToggle from "../../../common/hooks/useToggle";
@@ -38,8 +37,7 @@ const FavouritesProvider = ({ children }) => {
             .then((response) => {
                 setFavourites(response.content ? response.content : []);
             })
-            .catch((err) => {
-                captureException(err);
+            .catch(() => {
                 openErrorDialog();
             });
     }

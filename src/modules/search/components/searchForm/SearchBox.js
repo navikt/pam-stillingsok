@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import { captureException } from "@sentry/browser";
 import PropTypes from "prop-types";
 import { SET_SEARCH_STRING } from "../../query";
 import Typeahead from "../../../../common/components/typeahead/Typeahead";
@@ -19,8 +18,7 @@ function SearchBox({ dispatch, query }) {
             .then((response) => {
                 suggestionsDispatch({ type: FetchAction.RESOLVE, data: removeDuplicateSuggestions(response) });
             })
-            .catch((err) => {
-                captureException(err);
+            .catch(() => {
                 suggestionsDispatch({ type: FetchAction.RESOLVE, data: [] });
             });
     }

@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
-import { captureException } from "@sentry/browser";
 import { HasAcceptedTermsStatus, UserContext } from "../../user/contexts/UserProvider";
 import { AuthenticationContext, AuthenticationStatus } from "../../auth/contexts/AuthenticationProvider";
 import { FavouritesContext } from "../context/FavouritesProvider";
@@ -51,8 +50,7 @@ function FavouritesButton({ id, stilling, useShortText, className, type }) {
             .then((response) => {
                 favouritesProvider.addFavouriteToLocalList(response);
             })
-            .catch((err) => {
-                captureException(err);
+            .catch(() => {
                 openErrorDialog();
             })
             .finally(() => {
@@ -68,8 +66,7 @@ function FavouritesButton({ id, stilling, useShortText, className, type }) {
             .then(() => {
                 favouritesProvider.removeFavouriteFromLocalList(found);
             })
-            .catch((err) => {
-                captureException(err);
+            .catch(() => {
                 openErrorDialog();
             })
             .finally(() => {
