@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { formatDate, isValidISOString } from "../../../components/utils";
+import { formatDate, isValidISOString } from "../../../common/components/utils";
 import getWorkLocation from "../../../../server/common/getWorkLocation";
 import getEmployer from "../../../../server/common/getEmployer";
 import "./Summary.less";

@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
-import { HistoryContext } from "../../../context/HistoryProvider";
+import { HistoryContext } from "../../../common/context/HistoryProvider";
 import { CONTEXT_PATH } from "../../../environment";
-import BackLink from "../../../components/backlink/BackLink";
+import BackLink from "../../../common/components/backlink/BackLink";
 
 function AdBackLink() {
     const { previousLocation, hasHistory } = useContext(HistoryContext);

@@ -2,10 +2,10 @@ import React, { useEffect, useRef, useState } from "react";
 import { captureException } from "@sentry/browser";
 import PropTypes from "prop-types";
 import { SET_SEARCH_STRING } from "../query";
-import Typeahead from "../../../components/typeahead/Typeahead";
-import { FetchAction, useFetchReducer } from "../../../hooks/useFetchReducer";
-import useDebounce from "../../../hooks/useDebounce";
-import SearchAPI from "../../../api/SearchAPI";
+import Typeahead from "../../../common/components/typeahead/Typeahead";
+import { FetchAction, useFetchReducer } from "../../../common/hooks/useFetchReducer";
+import useDebounce from "../../../common/hooks/useDebounce";
+import SearchAPI from "../../../common/api/SearchAPI";
 
 function SearchBox({ dispatch, query }) {
     const [value, setValue] = useState("");

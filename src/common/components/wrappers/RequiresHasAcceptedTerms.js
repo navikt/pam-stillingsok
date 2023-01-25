@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import DelayedSpinner from "../spinner/DelayedSpinner";
 import { Hovedknapp } from "@navikt/arbeidsplassen-knapper";
 import { Link } from "react-router-dom";
-import { CONTEXT_PATH } from "../../environment";
+import { CONTEXT_PATH } from "../../../environment";
 import TermsOfUse from "../modals/TermsOfUse";
 import "./RequiresUser.less";
 import { HasAcceptedTermsStatus } from "../../context/UserProvider";

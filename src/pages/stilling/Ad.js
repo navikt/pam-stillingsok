@@ -10,18 +10,18 @@ import FinnAd from "./finnAd/FinnAd";
 import HowToApply from "./howToApply/HowToApply";
 import NotFound from "./notFound/NotFound";
 import "./Ad.less";
-import logAmplitudeEvent, { logAmplitudePageview, logStillingVisning } from "../../tracking/amplitude";
+import logAmplitudeEvent, { logAmplitudePageview, logStillingVisning } from "../../common/tracking/amplitude";
 import ShareAd from "./shareAd/ShareAd";
 import Summary from "./summary/Summary";
-import DelayedSpinner from "../../components/spinner/DelayedSpinner";
-import SearchAPI from "../../api/SearchAPI";
-import { FetchAction, FetchStatus, useFetchReducer } from "../../hooks/useFetchReducer";
-import ErrorMessage from "../../components/messages/ErrorMessage";
-import useRobotsNoIndexMetaTag from "../../hooks/useRobotsNoIndexMetaTag";
-import useScrollToTop from "../../hooks/useScrollToTop";
-import Tag from "../../components/tag/Tag";
+import DelayedSpinner from "../../common/components/spinner/DelayedSpinner";
+import SearchAPI from "../../common/api/SearchAPI";
+import { FetchAction, FetchStatus, useFetchReducer } from "../../common/hooks/useFetchReducer";
+import ErrorMessage from "../../common/components/messages/ErrorMessage";
+import useRobotsNoIndexMetaTag from "../../common/hooks/useRobotsNoIndexMetaTag";
+import useScrollToTop from "../../common/hooks/useScrollToTop";
+import Tag from "../../common/components/tag/Tag";
 import AdBackLink from "./adBacklink/AdBackLink";
-import H1WithAutoFocus from "../../components/h1WithAutoFocus/H1WithAutoFocus";
+import H1WithAutoFocus from "../../common/components/h1WithAutoFocus/H1WithAutoFocus";
 
 const Ad = ({ match }) => {
     const [{ data: ad, error, status }, dispatch] = useFetchReducer();

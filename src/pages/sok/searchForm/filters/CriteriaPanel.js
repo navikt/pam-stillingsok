@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
 import React, { useState } from "react";
 import "./CriteriaPanel.less";
-import ChevronCollapseIcon from "../../../../components/icons/ChevronCollapseIcon";
-import ChevronExpandIcon from "../../../../components/icons/ChevronExpandIcon";
+import ChevronCollapseIcon from "../../../../common/components/icons/ChevronCollapseIcon";
+import ChevronExpandIcon from "../../../../common/components/icons/ChevronExpandIcon";
 
 function CriteriaPanel({ isOpenByDefault, title, children, panelId }) {
     const [isOpen, setIsOpen] = useState(() => {

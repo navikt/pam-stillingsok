@@ -2,10 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import ReactHtmlParser from "react-html-parser";
 import fixLocationName from "../../../../server/common/fixLocationName";
-import { isValidUrl } from "../../../components/utils";
+import { isValidUrl } from "../../../common/components/utils";
 import getEmployer from "../../../../server/common/getEmployer";
 import "./EmployerDetails.less";
-import EmployerIcon from "../../../components/icons/EmployerIcon";
+import EmployerIcon from "../../../common/components/icons/EmployerIcon";
 
 function getEmployerLocation(employer) {
     let employerLocation = null;

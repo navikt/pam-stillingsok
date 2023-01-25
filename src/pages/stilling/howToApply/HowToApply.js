@@ -1,11 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
-import { formatDate, isValidEmail, isValidISOString, isValidUrl } from "../../../components/utils";
+import { formatDate, isValidEmail, isValidISOString, isValidUrl } from "../../../common/components/utils";
 import "./HowToApply.less";
-import logAmplitudeEvent from "../../../tracking/amplitude";
+import logAmplitudeEvent from "../../../common/tracking/amplitude";
 import FavouritesButton from "../../favoritter/FavouritesButton";
-import CalendarIcon from "../../../components/icons/CalendarIcon";
+import CalendarIcon from "../../../common/components/icons/CalendarIcon";
 import {CONTEXT_PATH} from "../../../environment";
 
 export function getApplicationUrl(source, properties) {

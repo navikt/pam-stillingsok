@@ -1,17 +1,17 @@
 import React, { useEffect } from "react";
-import useScrollToTop from "../../hooks/useScrollToTop";
-import useDocumentTitle from "../../hooks/useDocumentTitle";
-import useTrackPageview from "../../hooks/useTrackPageview";
+import useScrollToTop from "../../common/hooks/useScrollToTop";
+import useDocumentTitle from "../../common/hooks/useDocumentTitle";
+import useTrackPageview from "../../common/hooks/useTrackPageview";
 import { Hovedknapp } from "@navikt/arbeidsplassen-knapper";
-import { FetchAction, FetchStatus, useFetchReducer } from "../../hooks/useFetchReducer";
-import SearchAPI from "../../api/SearchAPI";
+import { FetchAction, FetchStatus, useFetchReducer } from "../../common/hooks/useFetchReducer";
+import SearchAPI from "../../common/api/SearchAPI";
 import { captureException } from "@sentry/browser";
-import DelayedSpinner from "../../components/spinner/DelayedSpinner";
-import Alert from "../../components/alert/Alert";
+import DelayedSpinner from "../../common/components/spinner/DelayedSpinner";
+import Alert from "../../common/components/alert/Alert";
 import getEmployer from "../../../server/common/getEmployer";
 import { CONTEXT_PATH } from "../../environment";
 import { Link } from "react-router-dom";
-import InterestAPI from "../../api/InterestAPI";
+import InterestAPI from "../../common/api/InterestAPI";
 import Spinner from "nav-frontend-spinner";
 
 const InterestMessageDelete = ({ match }) => {

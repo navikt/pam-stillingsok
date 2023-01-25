@@ -5,15 +5,15 @@ import Checkbox from "nav-frontend-skjema/lib/checkbox";
 import { Hovedknapp } from "@navikt/arbeidsplassen-knapper";
 import { CONTEXT_PATH } from "../../environment";
 import { captureException } from "@sentry/browser";
-import logAmplitudeEvent from "../../tracking/amplitude";
+import logAmplitudeEvent from "../../common/tracking/amplitude";
 import { Textarea } from "nav-frontend-skjema";
-import useDocumentTitle from "../../hooks/useDocumentTitle";
-import { AuthenticationContext, AuthenticationStatus } from "../../context/AuthenticationProvider";
-import UserAPI from "../../api/UserAPI";
-import Alert from "../../components/alert/Alert";
-import BackLink from "../../components/backlink/BackLink";
-import useScrollToTop from "../../hooks/useScrollToTop";
-import H1WithAutoFocus from "../../components/h1WithAutoFocus/H1WithAutoFocus";
+import useDocumentTitle from "../../common/hooks/useDocumentTitle";
+import { AuthenticationContext, AuthenticationStatus } from "../../common/context/AuthenticationProvider";
+import UserAPI from "../../common/api/UserAPI";
+import Alert from "../../common/components/alert/Alert";
+import BackLink from "../../common/components/backlink/BackLink";
+import useScrollToTop from "../../common/hooks/useScrollToTop";
+import H1WithAutoFocus from "../../common/components/h1WithAutoFocus/H1WithAutoFocus";
 
 const violationCategories = [
     { label: "Diskriminerende innhold", key: "discrimination" },

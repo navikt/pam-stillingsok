@@ -1,5 +1,5 @@
 import APIError from "./APIError";
-import { AD_USER_API, CONTEXT_PATH } from "../environment";
+import { AD_USER_API, CONTEXT_PATH } from "../../environment";
 
 function getCookie(name) {
     const re = new RegExp(`${name}=([^;]+)`);
