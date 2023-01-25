@@ -99,10 +99,13 @@ const SuperraskSoknad = ({ match }) => {
                     <div className="InterestForm__inner">
                         {postSoknadResponse.status !== FetchStatus.SUCCESS && (
                             <SuperraskSoknadForm
-                                data={data}
+                                ad={data.ad}
+                                interestForm={data.interestForm}
                                 isInternal={isInternal}
                                 submitForm={submitSoknad}
-                                postInterestResponse={postSoknadResponse}
+                                isSending={postSoknadResponse.status === FetchStatus.IS_FETCHING}
+                                hasError={postSoknadResponse.status === FetchStatus.FAILURE}
+                                error={postSoknadResponse.error}
                             />
                         )}
 

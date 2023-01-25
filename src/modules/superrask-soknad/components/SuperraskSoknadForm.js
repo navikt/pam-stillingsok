@@ -1,6 +1,5 @@
 import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { FetchStatus } from "../../../common/hooks/useFetchReducer";
 import Alert from "../../../common/components/alert/Alert";
 import H1WithAutoFocus from "../../../common/components/h1WithAutoFocus/H1WithAutoFocus";
 import { Checkbox, Textarea } from "nav-frontend-skjema";
@@ -11,7 +10,7 @@ import { CONTEXT_PATH } from "../../../common/environment";
 import Spinner from "nav-frontend-spinner";
 import TextField from "../../../common/components/textField/TextField";
 
-const SuperraskSoknadForm = ({ data, isInternal, submitForm, postInterestResponse }) => {
+const SuperraskSoknadForm = ({ ad, interestForm, isInternal, submitForm, isSending, hasError, error }) => {
     // Form data
     const [name, setName] = useState("");
     const [telephone, setTelephone] = useState("");
@@ -40,11 +39,11 @@ const SuperraskSoknadForm = ({ data, isInternal, submitForm, postInterestRespons
                 telephone: telephone,
                 email,
                 about,
-                must: data.interestForm.must.map((it) => ({
+                must: interestForm.must.map((it) => ({
                     ...it,
                     checked: checkedMustRequirements.includes(it.label)
                 })),
-                should: data.interestForm.should.map((it) => ({
+                should: interestForm.should.map((it) => ({
                     ...it,
                     checked: checkedShouldRequirements.includes(it.label)
                 }))
@@ -161,30 +160,21 @@ const SuperraskSoknadForm = ({ data, isInternal, submitForm, postInterestRespons
                             <ul className="InterestForm__error-list">
                                 {telephoneValidationError && (
                                     <li>
-                                        <a
-                                            href="#register-interest-telephone"
-                                            className="link"
-                                        >
+                                        <a href="#register-interest-telephone" className="link">
                                             {telephoneValidationError}
                                         </a>
                                     </li>
                                 )}
                                 {emailValidationError && (
                                     <li>
-                                        <a
-                                            href="#register-interest-email"
-                                            className="link"
-                                        >
+                                        <a href="#register-interest-email" className="link">
                                             {emailValidationError}
                                         </a>
                                     </li>
                                 )}
                                 {aboutValidationError && (
                                     <li>
-                                        <a
-                                            href="#register-interest-about"
-                                            className="link"
-                                        >
+                                        <a href="#register-interest-about" className="link">
                                             {aboutValidationError}
                                         </a>
                                     </li>
@@ -195,19 +185,19 @@ const SuperraskSoknadForm = ({ data, isInternal, submitForm, postInterestRespons
                 </div>
             </section>
 
-            {((data.interestForm.must && data.interestForm.must.length > 0) ||
-                (data.interestForm.should && data.interestForm.should.length > 0)) && (
+            {((interestForm.must && interestForm.must.length > 0) ||
+                (interestForm.should && interestForm.should.length > 0)) && (
                 <section className="InterestForm__section">
                     <h2 className="InterestForm__h2">Bedriftens ønskede kvalifikasjoner</h2>
                     <p className="InterestForm__p InterestForm__mb-2">
                         Husk at du kan være rett person for jobben selv om du ikke treffer på alle kvalifikasjoner.
                     </p>
 
-                    {data.interestForm.must && data.interestForm.must.length > 0 && (
+                    {interestForm.must && interestForm.must.length > 0 && (
                         <fieldset className="InterestForm__fieldset">
                             <legend className="InterestForm__legend">Må-krav for stillingen.</legend>
                             <p className="InterestForm__p">Kryss av for dem du oppfyller.</p>
-                            {data.interestForm.must.map((it) => (
+                            {interestForm.must.map((it) => (
                                 <Checkbox
                                     key={it.id}
                                     label={it.label}
@@ -219,10 +209,10 @@ const SuperraskSoknadForm = ({ data, isInternal, submitForm, postInterestRespons
                         </fieldset>
                     )}
 
-                    {data.interestForm.should && data.interestForm.should.length > 0 && (
+                    {interestForm.should && interestForm.should.length > 0 && (
                         <fieldset className="InterestForm__fieldset">
                             <legend className="InterestForm__legend">Huk av for kvalifikasjonene du oppfyller</legend>
-                            {data.interestForm.should.map((it) => (
+                            {interestForm.should.map((it) => (
                                 <Checkbox
                                     key={it.id}
                                     label={it.label}
@@ -303,11 +293,9 @@ const SuperraskSoknadForm = ({ data, isInternal, submitForm, postInterestRespons
                 Les om hvordan vi behandler dine data (åpner i ny fane)
             </a>
 
-            {postInterestResponse.status === FetchStatus.FAILURE && (
-                <Alert>{getErrorMessage(postInterestResponse.error)}</Alert>
-            )}
+            {hasError && <Alert>{getErrorMessage(error)}</Alert>}
 
-            {postInterestResponse.status === FetchStatus.IS_FETCHING ? (
+            {isSending ? (
                 <div aria-live="polite" className="InterestForm__progress">
                     <Spinner type="S" /> Sender søknad
                 </div>
@@ -316,7 +304,7 @@ const SuperraskSoknadForm = ({ data, isInternal, submitForm, postInterestRespons
                     <Hovedknapp htmlType="button" onClick={handleSendMessageClick}>
                         Send søknad
                     </Hovedknapp>
-                    <Link to={`${CONTEXT_PATH}/${isInternal ? "intern" : "stilling"}/${data.ad._id}`} className="Knapp">
+                    <Link to={`${CONTEXT_PATH}/${isInternal ? "intern" : "stilling"}/${ad._id}`} className="Knapp">
                         Avbryt
                     </Link>
                 </div>
