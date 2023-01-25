@@ -1,7 +1,8 @@
 import React from "react";
 import "./NotFound404.less";
+import PropTypes from "prop-types";
 
-function NotFound404() {
+function NotFound404({title, text}) {
     return (
         <div className="NotFound404">
 
@@ -11,13 +12,20 @@ function NotFound404() {
             </svg>
 
 
-            <h1 className="InterestForm__h1">Vi fant dessverre ikke innholdet du ser etter</h1>
-            <p className="InterestForm__p">
-                Det kan være en feil i lenken du brukte, eller så kan bedriften ha avsluttet søknadsprosessen for denne
-                stillingen.
-            </p>
+            <h1 className="InterestForm__h1">{title}</h1>
+            <p className="InterestForm__p">{text}</p>
         </div>
     );
 }
+
+NotFound404.defaultProps = {
+    title: "Vi fant dessverre ikke innholdet du ser etter",
+    text: "Det kan være en feil i lenken du brukte."
+};
+
+NotFound404.propTypes = {
+    title: PropTypes.string,
+    text: PropTypes.string
+};
 
 export default NotFound404;
