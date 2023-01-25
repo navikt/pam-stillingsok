@@ -1,5 +1,4 @@
 import { useEffect, useLayoutEffect, useState } from "react";
-import { captureException } from "@sentry/browser";
 import useDebounce from "./useDebounce";
 
 export default function useRestoreScroll(id, shouldRestore) {
