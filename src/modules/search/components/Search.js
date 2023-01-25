@@ -75,16 +75,16 @@ const Search = () => {
             promises.push(SearchAPI.search(toApiQuery(query)));
         }
 
-        Promise.all(promises)
-            .then((responses) => {
+        Promise.all(promises).then(
+            (responses) => {
                 const [initialSearchResult, locations, searchResult] = responses;
                 searchDispatch({ type: FetchAction.RESOLVE, data: searchResult ? searchResult : initialSearchResult });
                 initialSearchDispatch({ type: FetchAction.RESOLVE, data: { ...initialSearchResult, locations } });
-            })
-            .catch((error) => {
-                captureException(error);
+            },
+            (error) => {
                 initialSearchDispatch({ type: FetchAction.REJECT, error });
-            });
+            }
+        );
     }
 
     function fetchSearch() {
