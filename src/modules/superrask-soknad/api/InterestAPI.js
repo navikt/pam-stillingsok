@@ -1,5 +1,5 @@
-import {INTEREST_API_URL} from "../environment";
-import APIError from "./APIError";
+import {INTEREST_API_URL} from "../../../common/environment";
+import APIError from "../../../common/api/APIError";
 
 async function get(url) {
     let response;
