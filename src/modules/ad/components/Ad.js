@@ -1,34 +1,32 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { captureException } from "@sentry/browser";
-import AdDetails from "./components/AdDetails";
-import AdText from "./components/AdText";
-import ContactPerson from "./components/ContactPerson";
-import EmployerDetails from "./components/EmployerDetails";
-import EmploymentDetails from "./components/EmploymentDetails";
-import FinnAd from "./components/FinnAd";
-import HowToApply from "./components/HowToApply";
-import NotFound from "./components/NotFound";
-import "./components/Ad.less";
-import logAmplitudeEvent, { logAmplitudePageview, logStillingVisning } from "../../common/tracking/amplitude";
-import ShareAd from "./components/ShareAd";
-import Summary from "./components/Summary";
-import DelayedSpinner from "../../common/components/spinner/DelayedSpinner";
-import SearchAPI from "../../common/api/SearchAPI";
-import { FetchAction, FetchStatus, useFetchReducer } from "../../common/hooks/useFetchReducer";
-import ErrorMessage from "../../common/components/messages/ErrorMessage";
-import useRobotsNoIndexMetaTag from "../../common/hooks/useRobotsNoIndexMetaTag";
-import useScrollToTop from "../../common/hooks/useScrollToTop";
-import Tag from "../../common/components/tag/Tag";
-import AdBackLink from "./components/AdBackLink";
-import H1WithAutoFocus from "../../common/components/h1WithAutoFocus/H1WithAutoFocus";
+import AdDetails from "./AdDetails";
+import AdText from "./AdText";
+import ContactPerson from "./ContactPerson";
+import EmployerDetails from "./EmployerDetails";
+import EmploymentDetails from "./EmploymentDetails";
+import FinnAd from "./FinnAd";
+import HowToApply from "./HowToApply";
+import NotFound from "./NotFound";
+import "./Ad.less";
+import logAmplitudeEvent, { logAmplitudePageview, logStillingVisning } from "../../../common/tracking/amplitude";
+import ShareAd from "./ShareAd";
+import Summary from "./Summary";
+import DelayedSpinner from "../../../common/components/spinner/DelayedSpinner";
+import SearchAPI from "../../../common/api/SearchAPI";
+import { FetchAction, FetchStatus, useFetchReducer } from "../../../common/hooks/useFetchReducer";
+import ErrorMessage from "../../../common/components/messages/ErrorMessage";
+import useRobotsNoIndexMetaTag from "../../../common/hooks/useRobotsNoIndexMetaTag";
+import Tag from "../../../common/components/tag/Tag";
+import AdBackLink from "./AdBackLink";
+import H1WithAutoFocus from "../../../common/components/h1WithAutoFocus/H1WithAutoFocus";
 
-const AdPage = ({ match }) => {
+const Ad = ({ match }) => {
     const [{ data: ad, error, status }, dispatch] = useFetchReducer();
     const isInternal = match.path.startsWith("/stillinger/intern/");
     const avoidIndexing = (error && error.statusCode === 404) || (ad && ad._source.status !== "ACTIVE") || isInternal;
 
-    useScrollToTop();
     useRobotsNoIndexMetaTag(avoidIndexing);
 
     /**
@@ -127,11 +125,11 @@ const AdPage = ({ match }) => {
     );
 };
 
-AdPage.defaultProps = {
+Ad.defaultProps = {
     match: {params: {}}
 };
 
-AdPage.propTypes = {
+Ad.propTypes = {
     match: PropTypes.shape({
         params: PropTypes.shape({
             uuid: PropTypes.string
@@ -139,4 +137,4 @@ AdPage.propTypes = {
     })
 };
 
-export default AdPage;
+export default Ad;

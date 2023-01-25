@@ -1,6 +1,4 @@
 import React, { useEffect } from "react";
-import useScrollToTop from "../../common/hooks/useScrollToTop";
-import useDocumentTitle from "../../common/hooks/useDocumentTitle";
 import { Hovedknapp } from "@navikt/arbeidsplassen-knapper";
 import { FetchAction, FetchStatus, useFetchReducer } from "../../common/hooks/useFetchReducer";
 import SearchAPI from "../../common/api/SearchAPI";
@@ -13,12 +11,9 @@ import { Link } from "react-router-dom";
 import InterestAPI from "../../common/api/InterestAPI";
 import Spinner from "nav-frontend-spinner";
 
-const TrekkSoknadPage = ({ match }) => {
+const TrekkSoknad = ({ match }) => {
     const [{ data: ad, status: adFetchStatus }, dispatch] = useFetchReducer();
     const [deleteInterestResponse, deleteInterestDispatch] = useFetchReducer();
-
-    useDocumentTitle("Trekk søknad");
-    useScrollToTop();
 
     /**
      * Fetch ad
@@ -77,8 +72,8 @@ const TrekkSoknadPage = ({ match }) => {
                             {deleteInterestResponse.status === FetchStatus.FAILURE && (
                                 <div className="InterestForm__mb-2">
                                     <Alert>
-                                        Det oppsto dessverre en feil og vi kunne ikke trekke søknaden din.
-                                        Prøv å trekk søknaden på nytt.
+                                        Det oppsto dessverre en feil og vi kunne ikke trekke søknaden din. Prøv å trekk
+                                        søknaden på nytt.
                                     </Alert>
                                 </div>
                             )}
@@ -116,4 +111,4 @@ const TrekkSoknadPage = ({ match }) => {
     );
 };
 
-export default TrekkSoknadPage;
+export default TrekkSoknad;

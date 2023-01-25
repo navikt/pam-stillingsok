@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useReducer, useRef } from "react";
 import { captureException } from "@sentry/browser";
-import { CONTEXT_PATH } from "../../common/environment";
-import { AuthenticationContext, AuthenticationStatus } from "../auth/contexts/AuthenticationProvider";
+import { CONTEXT_PATH } from "../../../common/environment";
+import { AuthenticationContext, AuthenticationStatus } from "../../auth/contexts/AuthenticationProvider";
 import queryReducer, {
     initialQuery,
     initQueryWithValuesFromBrowserUrl,
@@ -10,24 +10,22 @@ import queryReducer, {
     stringifyQuery,
     toApiQuery,
     toBrowserQuery
-} from "./query";
-import { extractParam } from "../../common/components/utils";
-import { FetchAction, FetchStatus, useFetchReducer } from "../../common/hooks/useFetchReducer";
-import SearchAPI from "../../common/api/SearchAPI";
-import ErrorMessage from "../../common/components/messages/ErrorMessage";
-import SearchForm from "./components/searchForm/SearchForm";
-import useDocumentTitle from "../../common/hooks/useDocumentTitle";
-import useTrackPageview from "../../common/hooks/useTrackPageview";
-import LinkMenu from "./components/linkMenu/LinkMenu";
-import LoadingScreen from "./components/loadingScreen/LoadingScreen";
-import useRestoreScroll from "../../common/hooks/useRestoreScroll";
-import "./components/Search.less";
+} from "../query";
+import { extractParam } from "../../../common/components/utils";
+import { FetchAction, FetchStatus, useFetchReducer } from "../../../common/hooks/useFetchReducer";
+import SearchAPI from "../../../common/api/SearchAPI";
+import ErrorMessage from "../../../common/components/messages/ErrorMessage";
+import SearchForm from "./searchForm/SearchForm";
+import LinkMenu from "./linkMenu/LinkMenu";
+import LoadingScreen from "./loadingScreen/LoadingScreen";
+import useRestoreScroll from "../../../common/hooks/useRestoreScroll";
+import "./Search.less";
 import { useHistory } from "react-router";
-import SearchResult from "./components/searchResult/SearchResult";
-import H1WithAutoFocus from "../../common/components/h1WithAutoFocus/H1WithAutoFocus";
-import SuperraskSoknadBanner from "../superrask-soknad/components/SuperraskSoknadBanner";
+import SearchResult from "./searchResult/SearchResult";
+import H1WithAutoFocus from "../../../common/components/h1WithAutoFocus/H1WithAutoFocus";
+import SuperraskSoknadBanner from "../../superrask-soknad/components/SuperraskSoknadBanner";
 
-const SearchPage = () => {
+const Search = () => {
     const { authenticationStatus } = useContext(AuthenticationContext);
     const [query, queryDispatch] = useReducer(queryReducer, initialQuery, initQueryWithValuesFromBrowserUrl);
     const [initialSearchResponse, initialSearchDispatch] = useFetchReducer();
@@ -35,8 +33,6 @@ const SearchPage = () => {
     const latestSearch = useRef();
     let history = useHistory();
 
-    useDocumentTitle("Ledige stillinger");
-    useTrackPageview(CONTEXT_PATH, "Ledige stillinger");
     useRestoreScroll("search-page", initialSearchResponse.status === FetchStatus.SUCCESS);
 
     /**
@@ -168,4 +164,4 @@ const SearchPage = () => {
     );
 };
 
-export default SearchPage;
+export default Search;

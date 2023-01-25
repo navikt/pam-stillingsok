@@ -1,19 +1,17 @@
 import * as React from "react";
 import { useContext, useEffect, useState } from "react";
-import "./components/ReportAd.less";
+import "./ReportAd.less";
 import Checkbox from "nav-frontend-skjema/lib/checkbox";
 import { Hovedknapp } from "@navikt/arbeidsplassen-knapper";
-import { CONTEXT_PATH } from "../../common/environment";
+import { CONTEXT_PATH } from "../../../common/environment";
 import { captureException } from "@sentry/browser";
-import logAmplitudeEvent from "../../common/tracking/amplitude";
+import logAmplitudeEvent from "../../../common/tracking/amplitude";
 import { Textarea } from "nav-frontend-skjema";
-import useDocumentTitle from "../../common/hooks/useDocumentTitle";
-import { AuthenticationContext, AuthenticationStatus } from "../auth/contexts/AuthenticationProvider";
-import UserAPI from "../../common/api/UserAPI";
-import Alert from "../../common/components/alert/Alert";
-import BackLink from "../../common/components/backlink/BackLink";
-import useScrollToTop from "../../common/hooks/useScrollToTop";
-import H1WithAutoFocus from "../../common/components/h1WithAutoFocus/H1WithAutoFocus";
+import { AuthenticationContext, AuthenticationStatus } from "../../auth/contexts/AuthenticationProvider";
+import UserAPI from "../../../common/api/UserAPI";
+import Alert from "../../../common/components/alert/Alert";
+import BackLink from "../../../common/components/backlink/BackLink";
+import H1WithAutoFocus from "../../../common/components/h1WithAutoFocus/H1WithAutoFocus";
 
 const violationCategories = [
     { label: "Diskriminerende innhold", key: "discrimination" },
@@ -28,7 +26,7 @@ const scamCategories = [
     { label: "Annet", key: "other" }
 ];
 
-const ReportAdPage = () => {
+const ReportAd = () => {
     const { authenticationStatus, login } = useContext(AuthenticationContext);
     const [error, setError] = useState(false);
     const [finished, setFinished] = useState(false);
@@ -39,9 +37,6 @@ const ReportAdPage = () => {
     const [scamCategory, setScamCategory] = useState(null);
     const [description, setDescription] = useState("");
     const [descriptionLabel, setDescriptionLabel] = useState("Beskrivelse - må fylles ut");
-
-    useDocumentTitle("Rapportér annonse");
-    useScrollToTop();
 
     useEffect(() => {
         if (document.location.search.includes("uuid")) {
@@ -241,4 +236,4 @@ const ReportAdPage = () => {
     );
 };
 
-export default ReportAdPage;
+export default ReportAd;
