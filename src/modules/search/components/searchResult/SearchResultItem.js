@@ -3,7 +3,7 @@ import React, {useLayoutEffect, useRef} from "react";
 import {Link} from "react-router-dom";
 import getEmployer from "../../../../../server/common/getEmployer";
 import getWorkLocation from "../../../../../server/common/getWorkLocation";
-import {CONTEXT_PATH} from "../../../../environment";
+import {CONTEXT_PATH} from "../../../../common/environment";
 import {formatDate} from "../../../../common/components/utils";
 import "./SearchResultsItem.less";
 import Tag from "../../../../common/components/tag/Tag";

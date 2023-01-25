@@ -1,5 +1,5 @@
 import React from "react";
-import {CONTEXT_PATH} from "../../environment";
+import {CONTEXT_PATH} from "../../common/environment";
 import SavedSearchesList from "./components/SavedSearchesList";
 import RequiresAuthentication from "../auth/components/RequiresAuthentication";
 import RequiresHasAcceptedTerms from "../user/components/RequiresHasAcceptedTerms";

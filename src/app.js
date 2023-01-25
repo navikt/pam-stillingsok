@@ -6,7 +6,7 @@ import FavouritesProvider from "./modules/favourites/context/FavouritesProvider"
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import BrowserSupportInfo from "./common/components/browserSupportInfo/BrowserSupportInfo";
 import Header from "./common/components/header/Header";
-import { CONTEXT_PATH } from "./environment";
+import { CONTEXT_PATH } from "./common/environment";
 import SearchPage from "./modules/search/SearchPage";
 import AdPage from "./modules/ad/AdPage";
 import FavouritesPage from "./modules/favourites/FavouritesPage";

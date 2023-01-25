@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { CONTEXT_PATH } from "../../../../environment";
+import { CONTEXT_PATH } from "../../../../common/environment";
 import "./LinkMenu.less";
 
 function LinkMenu() {

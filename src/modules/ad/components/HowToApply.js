@@ -6,7 +6,7 @@ import "./HowToApply.less";
 import logAmplitudeEvent from "../../../common/tracking/amplitude";
 import FavouritesButton from "../../favourites/components/FavouritesButton";
 import CalendarIcon from "../../../common/components/icons/CalendarIcon";
-import {CONTEXT_PATH} from "../../../environment";
+import {CONTEXT_PATH} from "../../../common/environment";
 
 export function getApplicationUrl(source, properties) {
     if (source === "FINN") {

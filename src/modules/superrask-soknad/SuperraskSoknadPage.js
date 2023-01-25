@@ -16,7 +16,7 @@ import { Hovedknapp } from "@navikt/arbeidsplassen-knapper";
 import { isValidEmail } from "../../common/components/utils";
 import "./components/InterestForm.less";
 import getEmployer from "../../../server/common/getEmployer";
-import { CONTEXT_PATH } from "../../environment";
+import { CONTEXT_PATH } from "../../common/environment";
 import Spinner from "nav-frontend-spinner";
 import TextField from "../../common/components/textField/TextField";
 import BackLink from "../../common/components/backlink/BackLink";

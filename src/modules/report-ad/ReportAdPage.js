@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import "./components/ReportAd.less";
 import Checkbox from "nav-frontend-skjema/lib/checkbox";
 import { Hovedknapp } from "@navikt/arbeidsplassen-knapper";
-import { CONTEXT_PATH } from "../../environment";
+import { CONTEXT_PATH } from "../../common/environment";
 import { captureException } from "@sentry/browser";
 import logAmplitudeEvent from "../../common/tracking/amplitude";
 import { Textarea } from "nav-frontend-skjema";
@@ -142,11 +142,6 @@ const ReportAdPage = () => {
                                     <br />
                                     Arbeidsplassen
                                 </p>
-                            </div>
-
-                            <div className="shape-container">
-                                <div className="diamond" />
-                                <div className="circle" />
                             </div>
                         </div>
                     )}

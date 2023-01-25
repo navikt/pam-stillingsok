@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { CONTEXT_PATH } from "../../../../environment";
+import { CONTEXT_PATH } from "../../../../common/environment";
 
 function SuccessMessage({ onClose }) {
     let buttonRef = useRef(null);
