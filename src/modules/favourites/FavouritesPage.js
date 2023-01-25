@@ -4,7 +4,6 @@ import FavouritesList from "./components/FavouritesList";
 import RequiresAuthentication from "../auth/components/RequiresAuthentication";
 import RequiresHasAcceptedTerms from "../user/components/RequiresHasAcceptedTerms";
 import useDocumentTitle from "../../common/hooks/useDocumentTitle";
-import useTrackPageview from "../../common/hooks/useTrackPageview";
 import useScrollToTop from "../../common/hooks/useScrollToTop";
 import BackLink from "../../common/components/backlink/BackLink";
 import H1WithAutoFocus from "../../common/components/h1WithAutoFocus/H1WithAutoFocus";
@@ -14,7 +13,6 @@ function FavouritesPage() {
     const title = "Favoritter";
 
     useDocumentTitle(title);
-    useTrackPageview(`${CONTEXT_PATH}/favoritter`, title);
     useScrollToTop();
 
     return (
