@@ -1,6 +1,6 @@
 import React from "react";
 import "./NoResults.less";
-import SaveSearchButton from "../../savedSearches/SaveSearchButton";
+import SaveSearchButton from "../../lagrede-sok/SaveSearchButton";
 import { toReadableQuery } from "../query";
 
 function NoResults({ query }) {

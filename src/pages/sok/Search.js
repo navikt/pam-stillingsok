@@ -26,7 +26,7 @@ import { useHistory } from "react-router";
 import SearchResult from "./searchResult/SearchResult";
 import H1WithAutoFocus from "../../components/h1WithAutoFocus/H1WithAutoFocus";
 import EventBanner from "./event/EventBanner";
-import SuperraskSoknadBanner from "../interestForm/SuperraskSoknadBanner";
+import SuperraskSoknadBanner from "../superrask-soknad/SuperraskSoknadBanner";
 
 const Search = () => {
     const { authenticationStatus } = useContext(AuthenticationContext);
