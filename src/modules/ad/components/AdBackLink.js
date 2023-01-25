@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { HistoryContext } from "../../../common/context/HistoryProvider";
-import { CONTEXT_PATH } from "../../../environment";
+import { CONTEXT_PATH } from "../../../common/environment";
 import BackLink from "../../../common/components/backlink/BackLink";
 
 function AdBackLink() {

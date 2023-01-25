@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useReducer, useRef } from "react";
 import { captureException } from "@sentry/browser";
-import { CONTEXT_PATH } from "../../environment";
+import { CONTEXT_PATH } from "../../common/environment";
 import { AuthenticationContext, AuthenticationStatus } from "../auth/contexts/AuthenticationProvider";
 import queryReducer, {
     initialQuery,

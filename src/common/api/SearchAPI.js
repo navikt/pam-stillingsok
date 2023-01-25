@@ -1,5 +1,5 @@
 import APIError from "./APIError";
-import { CONTEXT_PATH } from "../../environment";
+import { CONTEXT_PATH } from "../environment";
 import { simplifySearchResponse } from "./SearchAPIUtils";
 import {stringifyQuery} from "../../modules/search/query";
 

@@ -9,7 +9,7 @@ import { captureException } from "@sentry/browser";
 import DelayedSpinner from "../../common/components/spinner/DelayedSpinner";
 import Alert from "../../common/components/alert/Alert";
 import getEmployer from "../../../server/common/getEmployer";
-import { CONTEXT_PATH } from "../../environment";
+import { CONTEXT_PATH } from "../../common/environment";
 import { Link } from "react-router-dom";
 import InterestAPI from "../../common/api/InterestAPI";
 import Spinner from "nav-frontend-spinner";

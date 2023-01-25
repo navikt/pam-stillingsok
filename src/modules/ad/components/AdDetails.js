@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { formatDate } from "../../../common/components/utils";
 import { Link } from "react-router-dom";
-import { CONTEXT_PATH } from "../../../environment";
+import { CONTEXT_PATH } from "../../../common/environment";
 import HistoryIcon from "../../../common/components/icons/HistoryIcon";
 
 export default function AdDetails({ id, source }) {
