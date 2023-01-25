@@ -1,7 +1,7 @@
 import * as React from "react";
 
 const LinkedinIcon = () => (
-    <svg role="img" xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24">
+    <svg role="img" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24">
         <circle className="cls-1" cx="12" cy="12" r="12" />
         <path
             className="cls-2"
