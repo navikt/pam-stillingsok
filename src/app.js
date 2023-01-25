@@ -36,14 +36,23 @@ function Application() {
                             </Switch>
                             <Switch>
                                 <Route exact path={CONTEXT_PATH} component={SearchPage} />
-                                <Route path={`${CONTEXT_PATH}/stilling/:uuid/superrask-soknad`} component={SuperraskSoknadPage} />
-                                <Route path={`${CONTEXT_PATH}/intern/:uuid/superrask-soknad`} component={SuperraskSoknadPage} />
+                                <Route
+                                    path={`${CONTEXT_PATH}/stilling/:uuid/superrask-soknad`}
+                                    component={SuperraskSoknadPage}
+                                />
+                                <Route
+                                    path={`${CONTEXT_PATH}/intern/:uuid/superrask-soknad`}
+                                    component={SuperraskSoknadPage}
+                                />
                                 <Route path={`${CONTEXT_PATH}/stilling/:uuid`} component={AdPage} />
                                 <Route path={`${CONTEXT_PATH}/intern/:uuid`} component={AdPage} />
                                 <Route path={`${CONTEXT_PATH}/rapporter-annonse`} component={ReportAdPage} />
                                 <Route path={`${CONTEXT_PATH}/favoritter`} component={FavouritesPage} />
                                 <Route path={`${CONTEXT_PATH}/lagrede-sok`} component={SavedSearchesPage} />
-                                <Route path={`${CONTEXT_PATH}/trekk-soknad/:uuid/:adUuid`} component={TrekkSoknadPage} />
+                                <Route
+                                    path={`${CONTEXT_PATH}/trekk-soknad/:uuid/:adUuid`}
+                                    component={TrekkSoknadPage}
+                                />
                                 <Route path="*" component={SearchPage} />
                             </Switch>
                         </HistoryProvider>

@@ -134,7 +134,11 @@ function SavedSearchListItem({ savedSearch, removeSavedSearchFromList, replaceSa
             )}
 
             {shouldShowErrorModal && (
-                <AlertModalWithPageReload id="delete-saved-search-error" onClose={closeErrorModal} title="Feil ved sletting">
+                <AlertModalWithPageReload
+                    id="delete-saved-search-error"
+                    onClose={closeErrorModal}
+                    title="Feil ved sletting"
+                >
                     Forsøk å laste siden på nytt eller prøv igjen om en liten stund.
                 </AlertModalWithPageReload>
             )}

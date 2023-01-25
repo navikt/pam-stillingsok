@@ -56,4 +56,4 @@ export default function useRestoreScroll(id, shouldRestore) {
             // ignore sessionStorage error
         }
     }, [debouncedScrollTop]);
-};
+}

@@ -1,9 +1,9 @@
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
-import {captureException} from "@sentry/browser";
-import {HasAcceptedTermsStatus, UserContext} from "../../user/contexts/UserProvider";
-import {AuthenticationContext, AuthenticationStatus} from "../../auth/contexts/AuthenticationProvider";
-import {FavouritesContext} from "../context/FavouritesProvider";
+import { captureException } from "@sentry/browser";
+import { HasAcceptedTermsStatus, UserContext } from "../../user/contexts/UserProvider";
+import { AuthenticationContext, AuthenticationStatus } from "../../auth/contexts/AuthenticationProvider";
+import { FavouritesContext } from "../context/FavouritesProvider";
 import StarIcon from "../../../common/components/icons/StarIcon";
 import UserAPI from "../../../common/api/UserAPI";
 import getWorkLocation from "../../../../server/common/getWorkLocation";
@@ -104,8 +104,8 @@ function FavouritesButton({ id, stilling, useShortText, className, type }) {
         deleteFavourite(id);
     }
 
-    const saveText = useShortText ? "Lagre": "Lagre som favoritt";
-    const deleteText = useShortText ? "Lagret": "Slett favoritt";
+    const saveText = useShortText ? "Lagre" : "Lagre som favoritt";
+    const deleteText = useShortText ? "Lagret" : "Slett favoritt";
 
     return (
         <React.Fragment>
@@ -114,7 +114,7 @@ function FavouritesButton({ id, stilling, useShortText, className, type }) {
                 onClick={isFavourite ? handleDeleteFavouriteClick : handleSaveFavouriteClick}
                 className={className ? `FavouriteButton ${className}` : "FavouritesButton"}
                 text={isFavourite ? deleteText : saveText}
-                icon={isFavourite ? <HeartIconFilled ariaHidden="true" /> : <HeartIcon ariaHidden="true"/>}
+                icon={isFavourite ? <HeartIconFilled ariaHidden="true" /> : <HeartIcon ariaHidden="true" />}
                 type={type}
             />
 

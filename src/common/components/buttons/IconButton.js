@@ -5,13 +5,7 @@ import "./IconButton.less";
 
 function IconButton({ text, icon, hideText, onClick, className, disabled, spinner, type }) {
     return (
-        <Knapp
-            type={type}
-            disabled={disabled}
-            spinner={spinner}
-            onClick={onClick}
-            className={className}
-        >
+        <Knapp type={type} disabled={disabled} spinner={spinner} onClick={onClick} className={className}>
             <span className="IconButton__inner">
                 {icon}
                 {!hideText && <span>{text}</span>}

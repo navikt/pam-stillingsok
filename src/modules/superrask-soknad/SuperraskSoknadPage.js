@@ -7,7 +7,7 @@ function SuperraskSoknadPage({ match }) {
     useDocumentTitle("Superrask søknad");
     useScrollToTop();
 
-    return <SuperraskSoknad match={match}/>;
+    return <SuperraskSoknad match={match} />;
 }
 
 export default SuperraskSoknadPage;

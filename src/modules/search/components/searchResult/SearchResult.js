@@ -59,7 +59,10 @@ const SearchResult = ({ searchResponse, queryDispatch, query, loadMoreResults })
                             onLoadMoreClick={loadMoreResults}
                         />
 
-                        <a href="src/modules/search/components/searchResult/SearchResult#main-content" className="SearchResult__skip-to-top link">
+                        <a
+                            href="src/modules/search/components/searchResult/SearchResult#main-content"
+                            className="SearchResult__skip-to-top link"
+                        >
                             <ArrowUpIcon ariaHidden={true} />
                             Til toppen
                         </a>

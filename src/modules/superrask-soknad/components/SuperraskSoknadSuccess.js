@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { CONTEXT_PATH } from "../../../common/environment";
 import Feedback from "./Feedback";
 
-function SuperraskSoknadSuccess({data}) {
+function SuperraskSoknadSuccess({ data }) {
     return (
         <ScrollToTop>
             <div className="InterestForm__success-message">

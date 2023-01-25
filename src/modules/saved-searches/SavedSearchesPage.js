@@ -1,5 +1,5 @@
 import React from "react";
-import {CONTEXT_PATH} from "../../common/environment";
+import { CONTEXT_PATH } from "../../common/environment";
 import SavedSearchesList from "./components/SavedSearchesList";
 import RequiresAuthentication from "../auth/components/RequiresAuthentication";
 import RequiresHasAcceptedTerms from "../user/components/RequiresHasAcceptedTerms";
@@ -21,9 +21,7 @@ function SavedSearchesPage() {
     return (
         <div className="SavedSearches">
             <BackLink to={CONTEXT_PATH} text="Ledige stillinger" />
-            <H1WithAutoFocus className="SavedSearches__h1">
-                Lagrede søk
-            </H1WithAutoFocus>
+            <H1WithAutoFocus className="SavedSearches__h1">Lagrede søk</H1WithAutoFocus>
             <RequiresAuthentication>
                 <RequiresHasAcceptedTerms>
                     <SavedSearchesList />

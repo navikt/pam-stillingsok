@@ -1,11 +1,11 @@
-import React, {useContext, useState} from "react";
+import React, { useContext, useState } from "react";
 import DelayedSpinner from "../../../common/components/spinner/DelayedSpinner";
 import { Hovedknapp } from "@navikt/arbeidsplassen-knapper";
 import { Link } from "react-router-dom";
 import { CONTEXT_PATH } from "../../../common/environment";
 import TermsOfUse from "../contexts/TermsOfUse";
 import "./RequiresUser.less";
-import {HasAcceptedTermsStatus, UserContext} from "../contexts/UserProvider";
+import { HasAcceptedTermsStatus, UserContext } from "../contexts/UserProvider";
 
 function RequiresHasAcceptedTerms({ children }) {
     const { hasAcceptedTermsStatus } = useContext(UserContext);
