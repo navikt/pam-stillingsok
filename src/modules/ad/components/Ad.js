@@ -48,7 +48,7 @@ const Ad = ({ match }) => {
             if (ad._source.properties && ad._source.properties.hasInterestform === "true") {
                 logAmplitudeEvent("land on ad with superrask søknad", {
                     id: ad._id
-                })
+                });
             }
         }
     }, [ad]);
@@ -131,7 +131,7 @@ const Ad = ({ match }) => {
 };
 
 Ad.defaultProps = {
-    match: {params: {}}
+    match: { params: {} }
 };
 
 Ad.propTypes = {

@@ -208,11 +208,7 @@ const ReportAd = () => {
                                 </p>
                             </div>
 
-                            {error && (
-                                <Alert>
-                                    Rapportering feilet - prøv igjen
-                                </Alert>
-                            )}
+                            {error && <Alert>Rapportering feilet - prøv igjen</Alert>}
 
                             {authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED && (
                                 <Hovedknapp

@@ -44,23 +44,23 @@ const SuperraskSoknad = ({ match }) => {
     }, []);
 
     function submitSoknad(soknad) {
-            postSoknadDispatch({ type: FetchAction.BEGIN });
-            InterestAPI.postInterest(match.params.uuid, soknad)
-                .then(() => {
-                    postSoknadDispatch({ type: FetchAction.RESOLVE, data: soknad });
-                })
-                .catch((error) => {
-                    captureException(error);
-                    postSoknadDispatch({ type: FetchAction.REJECT, error });
-                });
+        postSoknadDispatch({ type: FetchAction.BEGIN });
+        InterestAPI.postInterest(match.params.uuid, soknad)
+            .then(() => {
+                postSoknadDispatch({ type: FetchAction.RESOLVE, data: soknad });
+            })
+            .catch((error) => {
+                captureException(error);
+                postSoknadDispatch({ type: FetchAction.REJECT, error });
+            });
 
-            try {
-                logAmplitudeEvent("submit superrask søknad", {
-                    id: data.ad._id
-                });
-            } catch (e) {
-                // ignore
-            }
+        try {
+            logAmplitudeEvent("submit superrask søknad", {
+                id: data.ad._id
+            });
+        } catch (e) {
+            // ignore
+        }
     }
 
     return (
@@ -111,9 +111,7 @@ const SuperraskSoknad = ({ match }) => {
 
                         <div aria-live="polite">
                             {postSoknadResponse.status === FetchStatus.SUCCESS && (
-                                <SuperraskSoknadSuccess
-                                    data={postSoknadResponse.data}
-                                />
+                                <SuperraskSoknadSuccess data={postSoknadResponse.data} />
                             )}
                         </div>
                     </div>

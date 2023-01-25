@@ -4,7 +4,17 @@ import Modal from "nav-frontend-modal";
 import { Hovedknapp } from "@navikt/arbeidsplassen-knapper";
 import "./AlertModal.less";
 
-export default function AlertModal({ id, title, children, confirmLabel, cancelLabel, onConfirm, onCancel, spinner, useOnlyCancelButton }) {
+export default function AlertModal({
+    id,
+    title,
+    children,
+    confirmLabel,
+    cancelLabel,
+    onConfirm,
+    onCancel,
+    spinner,
+    useOnlyCancelButton
+}) {
     const cancelButtonRef = useRef();
 
     return (

@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { captureException } from "@sentry/browser";
 import { AD_USER_API, CONTEXT_PATH, LOGIN_URL, LOGOUT_URL, STILLINGSOK_URL } from "../../../common/environment";
-import { extractParam} from "../../../common/components/utils";
-import {stringifyQuery} from "../../search/query";
+import { extractParam } from "../../../common/components/utils";
+import { stringifyQuery } from "../../search/query";
 
 export const AuthenticationContext = React.createContext({});
 
@@ -22,7 +22,6 @@ const allowedRedirectUrls = [
     `${CONTEXT_PATH}/lagrede-sok`,
     CONTEXT_PATH
 ];
-
 
 const AuthenticationProvider = ({ children }) => {
     const [authenticationStatus, setAuthenticationStatus] = useState(AuthenticationStatus.NOT_FETCHED);
@@ -70,7 +69,7 @@ const AuthenticationProvider = ({ children }) => {
                     if (response.status === 200) {
                         response.json().then((result) => {
                             setUserNameAndInfo(result);
-                        })
+                        });
                     }
                 })
                 .catch((err) => {
@@ -138,7 +137,6 @@ AuthenticationProvider.propTypes = {
 
 export default AuthenticationProvider;
 
-
 /**
  * Om man logget inn mens man var inne på en stillingsannonse, så vil loginservice
  * redirecte til en url med dette url-formatet: '/stillinger/stilling?uuid=12345'.
@@ -146,14 +144,10 @@ export default AuthenticationProvider;
  */
 export function fixUrlAfterLogin() {
     if (window.location.pathname === `${CONTEXT_PATH}/stilling`) {
-        const uuid = extractParam('uuid');
-        window.history.replaceState(
-            {},
-            "",
-            `${CONTEXT_PATH}/stilling/${uuid}`
-        );
+        const uuid = extractParam("uuid");
+        window.history.replaceState({}, "", `${CONTEXT_PATH}/stilling/${uuid}`);
     } else if (window.location.pathname === `${CONTEXT_PATH}/intern`) {
-        const uuid = extractParam('uuid');
+        const uuid = extractParam("uuid");
         window.history.replaceState({}, "", `${CONTEXT_PATH}/intern/${uuid}`);
     }
 }

@@ -1,15 +1,15 @@
-import React, {useContext} from "react";
-import {Knapp} from "@navikt/arbeidsplassen-knapper";
+import React, { useContext } from "react";
+import { Knapp } from "@navikt/arbeidsplassen-knapper";
 import SearchIsEmptyModal from "./modal/SearchIsEmptyModal";
 import SaveSearchModal from "./modal/SaveSearchModal";
-import {isSearchQueryEmpty, stringifyQuery, toReadableQuery, toSavedSearchQuery} from "../../search/query";
-import {AuthenticationContext, AuthenticationStatus} from "../../auth/contexts/AuthenticationProvider";
-import {HasAcceptedTermsStatus, UserContext} from "../../user/contexts/UserProvider";
-import {extractParam} from "../../../common/components/utils";
+import { isSearchQueryEmpty, stringifyQuery, toReadableQuery, toSavedSearchQuery } from "../../search/query";
+import { AuthenticationContext, AuthenticationStatus } from "../../auth/contexts/AuthenticationProvider";
+import { HasAcceptedTermsStatus, UserContext } from "../../user/contexts/UserProvider";
+import { extractParam } from "../../../common/components/utils";
 import TermsOfUse from "../../user/contexts/TermsOfUse";
 import LoginModal from "../../auth/components/LoginModal";
 import useToggle from "../../../common/hooks/useToggle";
-import {FormModes} from "./modal/SaveSearchForm";
+import { FormModes } from "./modal/SaveSearchForm";
 
 /**
  * Displays the "Save search" button.
@@ -54,7 +54,9 @@ function SaveSearchButton({ query }) {
 
     return (
         <React.Fragment>
-            <Knapp htmlType="button" onClick={handleClick}>Lagre søk</Knapp>
+            <Knapp htmlType="button" onClick={handleClick}>
+                Lagre søk
+            </Knapp>
 
             {shouldShowQueryIsEmptyModal && <SearchIsEmptyModal onClose={closeQueryIsEmptyModal} />}
 

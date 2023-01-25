@@ -1,6 +1,6 @@
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 import { Hovedknapp } from "@navikt/arbeidsplassen-knapper";
-import {AuthenticationContext, AuthenticationStatus} from "../contexts/AuthenticationProvider";
+import { AuthenticationContext, AuthenticationStatus } from "../contexts/AuthenticationProvider";
 import DelayedSpinner from "../../../common/components/spinner/DelayedSpinner";
 import ErrorMessage from "../../../common/components/messages/ErrorMessage";
 import "./RequiresAuthentication.less";

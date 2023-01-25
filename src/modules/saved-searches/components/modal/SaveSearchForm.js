@@ -30,7 +30,7 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
 
     // Form data
     const [title, setTitle] = useState(formData.title);
-    const [notifyType, setNotifyType] = useState(formData.notifyType ? formData.notifyType : 'NONE');
+    const [notifyType, setNotifyType] = useState(formData.notifyType ? formData.notifyType : "NONE");
     const [duration, setDuration] = useState(formData.duration ? formData.duration : 30);
 
     // Validation

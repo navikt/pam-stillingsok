@@ -7,7 +7,7 @@ function TrekkSoknadPage({ match }) {
     useDocumentTitle("Trekk søknad");
     useScrollToTop();
 
-    return <TrekkSoknad match={match}/>;
+    return <TrekkSoknad match={match} />;
 }
 
 export default TrekkSoknadPage;

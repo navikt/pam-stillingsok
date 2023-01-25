@@ -1,4 +1,4 @@
-import {INTEREST_API_URL} from "../../../common/environment";
+import { INTEREST_API_URL } from "../../../common/environment";
 import APIError from "../../../common/api/APIError";
 
 async function get(url) {
@@ -16,7 +16,6 @@ async function get(url) {
     }
     return response.json();
 }
-
 
 async function remove(url) {
     let response;
@@ -76,7 +75,7 @@ async function deleteInterest(adUuid, uuid) {
 const InterestAPI = {
     getInterestForm: getInterestForm,
     postInterest: postInterest,
-    deleteInterest: deleteInterest,
+    deleteInterest: deleteInterest
 };
 
 export default InterestAPI;

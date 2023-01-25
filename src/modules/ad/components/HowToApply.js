@@ -1,12 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import { formatDate, isValidEmail, isValidISOString, isValidUrl } from "../../../common/components/utils";
 import "./HowToApply.less";
 import logAmplitudeEvent from "../../../common/tracking/amplitude";
 import FavouritesButton from "../../favourites/components/FavouritesButton";
 import CalendarIcon from "../../../common/components/icons/CalendarIcon";
-import {CONTEXT_PATH} from "../../../common/environment";
+import { CONTEXT_PATH } from "../../../common/environment";
 
 export function getApplicationUrl(source, properties) {
     if (source === "FINN") {
@@ -28,23 +28,19 @@ const applyForPosition = (finn, stilling) => {
     }
 };
 
-export default function HowToApply({ stilling, showFavouriteButton, isInternal}) {
+export default function HowToApply({ stilling, showFavouriteButton, isInternal }) {
     const properties = stilling._source.properties;
     const applicationUrl = getApplicationUrl(stilling._source.source, properties);
     const isFinn = stilling._source.source === "FINN";
     const path = isInternal ? "intern" : "stilling";
 
-    if(properties.hasInterestform === "true") {
+    if (properties.hasInterestform === "true") {
         return (
             <section className="JobPosting__section">
-                <h2 className="JobPosting__h2">
-                    Søk på denne stillingen
-                </h2>
+                <h2 className="JobPosting__h2">Søk på denne stillingen</h2>
 
                 {stilling._source.status === "ACTIVE" && (
-                    <p className="JobPosting__p">
-                        Vis frem deg selv og din erfaring med en superrask søknad.
-                    </p>
+                    <p className="JobPosting__p">Vis frem deg selv og din erfaring med en superrask søknad.</p>
                 )}
 
                 {properties.applicationdue && (
@@ -63,7 +59,7 @@ export default function HowToApply({ stilling, showFavouriteButton, isInternal})
                         onClick={() => {
                             logAmplitudeEvent("click superrask søknad link", {
                                 id: stilling._id
-                            })
+                            });
                         }}
                         className="Knapp Knapp--hoved"
                         to={`${CONTEXT_PATH}/${path}/${stilling._id}/superrask-soknad`}
@@ -99,9 +95,7 @@ export default function HowToApply({ stilling, showFavouriteButton, isInternal})
                                 </a>
                             </p>
                         ) : (
-                            <p className="JobPosting__p">
-                                Alternativt kan du sende søknad på {applicationUrl}.
-                            </p>
+                            <p className="JobPosting__p">Alternativt kan du sende søknad på {applicationUrl}.</p>
                         )}
                     </React.Fragment>
                 )}
@@ -115,7 +109,7 @@ export default function HowToApply({ stilling, showFavouriteButton, isInternal})
                     />
                 )}
             </section>
-        )
+        );
     }
 
     if (properties.applicationdue || properties.applicationemail || applicationUrl) {

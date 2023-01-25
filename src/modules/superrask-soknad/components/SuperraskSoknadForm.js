@@ -313,10 +313,8 @@ const SuperraskSoknadForm = ({ ad, interestForm, isInternal, submitForm, isSendi
     );
 };
 
-SuperraskSoknadForm.defaultProps = {
-};
+SuperraskSoknadForm.defaultProps = {};
 
-SuperraskSoknadForm.propTypes = {
-};
+SuperraskSoknadForm.propTypes = {};
 
 export default SuperraskSoknadForm;

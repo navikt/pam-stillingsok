@@ -1,140 +1,140 @@
 .Knapp {
-  background: white;
-  border: 3px solid #8C368E;
-  border-radius: 28px;
-  color: #8C368E;
-  cursor: pointer;
-  display: inline-block;
-  font-weight: 700;
-  font-family: 'Source Sans Pro', Arial, sans-serif;
-  font-size: 18px;
-  font-style: normal;
-  letter-spacing: 1px;
-  line-height: 20px;
-  text-decoration: none;
-  text-transform: none;
-  user-select: none;
-  white-space: nowrap;
-  padding: 10px 20px;
+    background: white;
+    border: 3px solid #8c368e;
+    border-radius: 28px;
+    color: #8c368e;
+    cursor: pointer;
+    display: inline-block;
+    font-weight: 700;
+    font-family: "Source Sans Pro", Arial, sans-serif;
+    font-size: 18px;
+    font-style: normal;
+    letter-spacing: 1px;
+    line-height: 20px;
+    text-decoration: none;
+    text-transform: none;
+    user-select: none;
+    white-space: nowrap;
+    padding: 10px 20px;
 }
 
 .Knapp:hover {
-  background-color: #8C368E;
-  border-color: #8C368E;
-  color: white;
+    background-color: #8c368e;
+    border-color: #8c368e;
+    color: white;
 }
 
 .Knapp:focus,
 .Knapp:active {
-  outline: none;
-  box-shadow: 0 0 0 3px #062140;
-  background-color: #FBD8E7;
-  border-color: #8C368E;
-  color: #8C368E;
-  transform: none;
+    outline: none;
+    box-shadow: 0 0 0 3px #062140;
+    background-color: #fbd8e7;
+    border-color: #8c368e;
+    color: #8c368e;
+    transform: none;
 }
 
 .Knapp--hoved {
-  background-color: #8C368E;
-  border-color: #8C368E;
-  color: white;
+    background-color: #8c368e;
+    border-color: #8c368e;
+    color: white;
 }
 
 .Knapp--hoved:hover {
-  background-color: #FBD8E7;
-  border-color: #8C368E;
-  color: #8C368E;
+    background-color: #fbd8e7;
+    border-color: #8c368e;
+    color: #8c368e;
 }
 
 .Knapp--flat {
-  background-color: transparent;
-  border-color: transparent;
-  color: #8C368E;
+    background-color: transparent;
+    border-color: transparent;
+    color: #8c368e;
 }
 
 .Knapp--flat:hover {
-  background-color: white;
-  border-color: #8C368E;
-  color: #8C368E;
+    background-color: white;
+    border-color: #8c368e;
+    color: #8c368e;
 }
 
 .Knapp--flat .Knapp--disabled {
-  border-color: transparent;
+    border-color: transparent;
 }
 
 .Knapp--link {
-  border: 0;
-  margin: 4px 0;
-  padding: 0;
-  border-radius: 0;
-  background: transparent;
-  color: #8C368E;
-  cursor: pointer;
-  line-height: 24px;
-  font-weight: normal;
-  font-style: normal;
-  font-size: 18px;
-  text-decoration-line: underline;
+    border: 0;
+    margin: 4px 0;
+    padding: 0;
+    border-radius: 0;
+    background: transparent;
+    color: #8c368e;
+    cursor: pointer;
+    line-height: 24px;
+    font-weight: normal;
+    font-style: normal;
+    font-size: 18px;
+    text-decoration-line: underline;
 }
 
 .Knapp--link:hover {
-  background: transparent;
-  color: #8C368E;
-  text-decoration-line: none;
+    background: transparent;
+    color: #8c368e;
+    text-decoration-line: none;
 }
 
 .Knapp--link:focus,
 .Knapp--link:active {
-  box-shadow: none;
-  background: #FFA733;
+    box-shadow: none;
+    background: #ffa733;
 }
 
 .Knapp--link--dark {
-  color: #424448;
+    color: #424448;
 }
 
 .Knapp--link--dark:hover,
 .Knapp--link--dark:active {
-  color: #424448;
+    color: #424448;
 }
 
 .Knapp--disabled {
-  background-color: white;
-  border-color: #5E5955;
-  color: #5E5955;
-  cursor: unset;
+    background-color: white;
+    border-color: #5e5955;
+    color: #5e5955;
+    cursor: unset;
 }
 
 .Knapp--disabled:hover {
-  background-color: white;
-  border-color: #5E5955;
-  color: #5E5955;
+    background-color: white;
+    border-color: #5e5955;
+    color: #5e5955;
 }
 
 .Knapp--mini {
-  padding-left: 1rem;
-  padding-right: 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
 }
 
 .Knapp__spinner {
-  border: 2px solid #F1F1F1;
-  border-left-color: rgba(219, 219, 219, 0.5);
-  border-bottom-color: rgba(219, 219, 219, 0.5);
-  width: 0.8em;
-  height: 0.8em;
-  display: inline-block;
-  border-radius: 100%;
-  animation: Knapp__spinnerAnimation 1s infinite linear;
-  position: relative;
-  margin-left: 0.5em;
-  top: 0.1em;
+    border: 2px solid #f1f1f1;
+    border-left-color: rgba(219, 219, 219, 0.5);
+    border-bottom-color: rgba(219, 219, 219, 0.5);
+    width: 0.8em;
+    height: 0.8em;
+    display: inline-block;
+    border-radius: 100%;
+    animation: Knapp__spinnerAnimation 1s infinite linear;
+    position: relative;
+    margin-left: 0.5em;
+    top: 0.1em;
 }
 
 @keyframes Knapp__spinnerAnimation {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
