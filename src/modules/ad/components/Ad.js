@@ -8,7 +8,6 @@ import EmployerDetails from "./EmployerDetails";
 import EmploymentDetails from "./EmploymentDetails";
 import FinnAd from "./FinnAd";
 import HowToApply from "./HowToApply";
-import NotFound from "./NotFound";
 import "./Ad.less";
 import logAmplitudeEvent, { logAmplitudePageview, logStillingVisning } from "../../../common/tracking/amplitude";
 import ShareAd from "./ShareAd";
@@ -21,6 +20,7 @@ import useRobotsNoIndexMetaTag from "../../../common/hooks/useRobotsNoIndexMetaT
 import Tag from "../../../common/components/tag/Tag";
 import AdBackLink from "./AdBackLink";
 import H1WithAutoFocus from "../../../common/components/h1WithAutoFocus/H1WithAutoFocus";
+import NotFound404 from "../../../common/components/NotFound/NotFound404";
 
 const Ad = ({ match }) => {
     const [{ data: ad, error, status }, dispatch] = useFetchReducer();
@@ -87,7 +87,12 @@ const Ad = ({ match }) => {
         <div className="JobPosting">
             <AdBackLink />
 
-            {status === FetchStatus.FAILURE && error.statusCode === 404 && <NotFound />}
+            {status === FetchStatus.FAILURE && error.statusCode === 404 && (
+                <NotFound404
+                    title="Vi fant dessverre ikke stillingsannonsen"
+                    text="Annonsen kan være utløpt eller blitt fjernet av arbeidsgiver."
+                />
+            )}
             {status === FetchStatus.FAILURE && error.statusCode !== 404 && <ErrorMessage />}
             {status === FetchStatus.IS_FETCHING && <DelayedSpinner />}
             {status === FetchStatus.SUCCESS && (

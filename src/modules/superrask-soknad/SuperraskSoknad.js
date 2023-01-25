@@ -20,7 +20,7 @@ import BackLink from "../../common/components/backlink/BackLink";
 import logAmplitudeEvent from "../../common/tracking/amplitude";
 import ScrollToTop from "../../common/components/ScrollToTop";
 import Feedback from "./components/Feedback";
-import NotFound404 from "./components/NotFound404";
+import NotFound404 from "../../common/components/NotFound/NotFound404";
 
 const SuperraskSoknad = ({ match }) => {
     // Ad data
@@ -205,7 +205,12 @@ const SuperraskSoknad = ({ match }) => {
                     <Alert>Det oppsto dessverre en feil. Prøv å last inn siden på nytt.</Alert>
                 </div>
             )}
-            {status === FetchStatus.FAILURE && error.statusCode === 404 && <NotFound404 />}
+            {status === FetchStatus.FAILURE && error.statusCode === 404 && (
+                <NotFound404
+                    title="Vi fant dessverre ikke innholdet du ser etter"
+                    text="Det kan være en feil i lenken du brukte, eller så kan bedriften ha avsluttet søknadsprosessen for denne stillingen."
+                />
+            )}
             {status === FetchStatus.SUCCESS && (
                 <React.Fragment>
                     <div className="InterestForm__green-box">
