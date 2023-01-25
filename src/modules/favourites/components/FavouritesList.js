@@ -7,6 +7,7 @@ import EmptyMessage from "../../../common/components/messages/EmptyMessage";
 import UserAPI from "../../../common/api/UserAPI";
 import { FetchAction, FetchStatus, useFetchReducer } from "../../../common/hooks/useFetchReducer";
 import FavouritesListItem from "./FavouritesListItem";
+import "./Favourites.less";
 
 function FavouritesList() {
     const [response, dispatch] = useFetchReducer();

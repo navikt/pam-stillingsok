@@ -5,8 +5,6 @@ import { Link } from "react-router-dom";
 import SearchAPI from "../../common/api/SearchAPI";
 import InterestAPI from "../../common/api/InterestAPI";
 import { FetchAction, FetchStatus, useFetchReducer } from "../../common/hooks/useFetchReducer";
-import useScrollToTop from "../../common/hooks/useScrollToTop";
-import useDocumentTitle from "../../common/hooks/useDocumentTitle";
 import DelayedSpinner from "../../common/components/spinner/DelayedSpinner";
 import Alert from "../../common/components/alert/Alert";
 import H1WithAutoFocus from "../../common/components/h1WithAutoFocus/H1WithAutoFocus";
@@ -24,7 +22,7 @@ import ScrollToTop from "../../common/components/ScrollToTop";
 import Feedback from "./components/Feedback";
 import NotFound404 from "./components/NotFound404";
 
-const SuperraskSoknadPage = ({ match }) => {
+const SuperraskSoknad = ({ match }) => {
     // Ad data
     const [{ data, status, error }, dispatch] = useFetchReducer();
     const [postInterestResponse, postInterestDispatch] = useFetchReducer();
@@ -44,9 +42,6 @@ const SuperraskSoknadPage = ({ match }) => {
     const errorSummary = useRef();
 
     const ABOUT_MAX_LENGTH = 400;
-
-    useDocumentTitle("Meld interesse");
-    useScrollToTop();
 
     const isInternal = match.path.startsWith("/stillinger/intern/");
 
@@ -74,7 +69,7 @@ const SuperraskSoknadPage = ({ match }) => {
 
     function handleFormSubmit(e) {
         e.preventDefault();
-        return false
+        return false;
     }
 
     function handleSendMessageClick() {
@@ -92,7 +87,7 @@ const SuperraskSoknadPage = ({ match }) => {
                 should: data.interestForm.should.map((it) => ({
                     ...it,
                     checked: checkedShouldRequirements.includes(it.label)
-                })),
+                }))
             })
                 .then((data) => {
                     postInterestDispatch({ type: FetchAction.RESOLVE, data });
@@ -124,7 +119,11 @@ const SuperraskSoknadPage = ({ match }) => {
 
         if (about.length > ABOUT_MAX_LENGTH) {
             isValid = false;
-            setAboutValidationError(`Du har brukt ${about.length - ABOUT_MAX_LENGTH} tegn for mye i din begrunnelse. Begrunnelsen kan ikke være lengre enn ${ABOUT_MAX_LENGTH} tegn`);
+            setAboutValidationError(
+                `Du har brukt ${
+                    about.length - ABOUT_MAX_LENGTH
+                } tegn for mye i din begrunnelse. Begrunnelsen kan ikke være lengre enn ${ABOUT_MAX_LENGTH} tegn`
+            );
         }
 
         if (!isValid) {
@@ -165,7 +164,9 @@ const SuperraskSoknadPage = ({ match }) => {
     function handleShouldRequirementCheck(e) {
         const { checked, value } = e.target;
         if (checked) {
-            setCheckedShouldRequirements((prevState) => (prevState.includes(value) ? prevState : [...prevState, value]));
+            setCheckedShouldRequirements((prevState) =>
+                prevState.includes(value) ? prevState : [...prevState, value]
+            );
         } else {
             setCheckedShouldRequirements((prevState) => prevState.filter((it) => it !== value));
         }
@@ -184,17 +185,17 @@ const SuperraskSoknadPage = ({ match }) => {
     const getErrorMessage = (error) => {
         switch (error.message) {
             case "invalid_name":
-                return "Vi kunne ikke sende inn søknaden din. Sjekk at navnet ditt er skrevet riktig og prøv på nytt."
+                return "Vi kunne ikke sende inn søknaden din. Sjekk at navnet ditt er skrevet riktig og prøv på nytt.";
             case "invalid_email":
-                return "Vi kunne ikke sende inn søknaden din. Sjekk at e-posten din er skrevet riktig og prøv på nytt. Eksempel: epost@mail.no"
+                return "Vi kunne ikke sende inn søknaden din. Sjekk at e-posten din er skrevet riktig og prøv på nytt. Eksempel: epost@mail.no";
             case "invalid_telephone":
-                return "Vi kunne ikke sende inn søknaden din. Sjekk at telefonnummeret ditt er skrevet riktig og prøv på nytt. Eksempel: +47 99 99 99 99"
+                return "Vi kunne ikke sende inn søknaden din. Sjekk at telefonnummeret ditt er skrevet riktig og prøv på nytt. Eksempel: +47 99 99 99 99";
             case "invalid_about":
-                return "Vi kunne ikke sende inn søknaden din. Sjekk at begrunnelsen din ikke inneholder noen lenker eller er lenger enn 400 tegn."
+                return "Vi kunne ikke sende inn søknaden din. Sjekk at begrunnelsen din ikke inneholder noen lenker eller er lenger enn 400 tegn.";
             default:
-                return "Det oppsto dessverre en feil og vi kunne ikke sende inn søknaden din. Prøv å send søknaden på nytt."
+                return "Det oppsto dessverre en feil og vi kunne ikke sende inn søknaden din. Prøv å send søknaden på nytt.";
         }
-    }
+    };
 
     return (
         <div className="InterestForm">
@@ -204,9 +205,7 @@ const SuperraskSoknadPage = ({ match }) => {
                     <Alert>Det oppsto dessverre en feil. Prøv å last inn siden på nytt.</Alert>
                 </div>
             )}
-            {status === FetchStatus.FAILURE && error.statusCode === 404 && (
-               <NotFound404 />
-            )}
+            {status === FetchStatus.FAILURE && error.statusCode === 404 && <NotFound404 />}
             {status === FetchStatus.SUCCESS && (
                 <React.Fragment>
                     <div className="InterestForm__green-box">
@@ -238,10 +237,7 @@ const SuperraskSoknadPage = ({ match }) => {
                                             Bedriften vil vurdere din søknad og ta kontakt dersom de syns du passer for
                                             jobben. Du får beskjed på e-post så fort bedriften har gjort en vurdering.
                                         </p>
-                                        <Link
-                                            to={CONTEXT_PATH}
-                                            className="Knapp"
-                                        >
+                                        <Link to={CONTEXT_PATH} className="Knapp">
                                             Tilbake til stillingssøket
                                         </Link>
                                         <Feedback />
@@ -255,12 +251,10 @@ const SuperraskSoknadPage = ({ match }) => {
                                 <section className="InterestForm__section">
                                     <H1WithAutoFocus className="InterestForm__h1">Superrask søknad</H1WithAutoFocus>
                                     <p className="InterestForm__p">
-                                        Ingen CV eller langt søknadsbrev, kun tre raske steg.
-                                        Du får beskjed på e-post med en gang bedriften har vurdert søknaden din.
+                                        Ingen CV eller langt søknadsbrev, kun tre raske steg. Du får beskjed på e-post
+                                        med en gang bedriften har vurdert søknaden din.
                                     </p>
-                                    <p className="InterestForm__p">
-                                        * felter du må fylle ut
-                                    </p>
+                                    <p className="InterestForm__p">* felter du må fylle ut</p>
                                     <div
                                         ref={errorSummary}
                                         tabIndex={-1}
@@ -278,21 +272,30 @@ const SuperraskSoknadPage = ({ match }) => {
                                                 <ul className="InterestForm__error-list">
                                                     {telephoneValidationError && (
                                                         <li>
-                                                            <a href="src/modules/superrask-soknad/InterestForm#register-interest-telephone" className="link">
+                                                            <a
+                                                                href="src/modules/superrask-soknad/InterestForm#register-interest-telephone"
+                                                                className="link"
+                                                            >
                                                                 {telephoneValidationError}
                                                             </a>
                                                         </li>
                                                     )}
                                                     {emailValidationError && (
                                                         <li>
-                                                            <a href="src/modules/superrask-soknad/InterestForm#register-interest-email" className="link">
+                                                            <a
+                                                                href="src/modules/superrask-soknad/InterestForm#register-interest-email"
+                                                                className="link"
+                                                            >
                                                                 {emailValidationError}
                                                             </a>
                                                         </li>
                                                     )}
                                                     {aboutValidationError && (
                                                         <li>
-                                                            <a href="src/modules/superrask-soknad/InterestForm#register-interest-about" className="link">
+                                                            <a
+                                                                href="src/modules/superrask-soknad/InterestForm#register-interest-about"
+                                                                className="link"
+                                                            >
                                                                 {aboutValidationError}
                                                             </a>
                                                         </li>
@@ -303,17 +306,20 @@ const SuperraskSoknadPage = ({ match }) => {
                                     </div>
                                 </section>
 
-                                {((data.interestForm.must && data.interestForm.must.length > 0)
-                                    || (data.interestForm.should && data.interestForm.should.length > 0)) && (
+                                {((data.interestForm.must && data.interestForm.must.length > 0) ||
+                                    (data.interestForm.should && data.interestForm.should.length > 0)) && (
                                     <section className="InterestForm__section">
                                         <h2 className="InterestForm__h2">Bedriftens ønskede kvalifikasjoner</h2>
                                         <p className="InterestForm__p InterestForm__mb-2">
-                                            Husk at du kan være rett person for jobben selv om du ikke treffer på alle kvalifikasjoner.
+                                            Husk at du kan være rett person for jobben selv om du ikke treffer på alle
+                                            kvalifikasjoner.
                                         </p>
 
                                         {data.interestForm.must && data.interestForm.must.length > 0 && (
                                             <fieldset className="InterestForm__fieldset">
-                                                <legend className="InterestForm__legend">Må-krav for stillingen.</legend>
+                                                <legend className="InterestForm__legend">
+                                                    Må-krav for stillingen.
+                                                </legend>
                                                 <p className="InterestForm__p">Kryss av for dem du oppfyller.</p>
                                                 {data.interestForm.must.map((it) => (
                                                     <Checkbox
@@ -346,22 +352,19 @@ const SuperraskSoknadPage = ({ match }) => {
                                     </section>
                                 )}
 
-
                                 <section className="InterestForm__section">
                                     <h2 className="InterestForm__h2">Hvorfor du er den rette for jobben</h2>
                                     <details className="InterestForm__details">
-                                        <summary>
-                                            Hvordan skrive en god begrunnelse?
-                                        </summary>
+                                        <summary>Hvordan skrive en god begrunnelse?</summary>
                                         <div className="InterestForm__details-content">
                                             <p className="InterestForm__p">
                                                 Vis hvorfor du er et trygt valg for denne jobben. Fortell om
-                                                arbeidserfaring, praksisplasser, utdanning, frivillig arbeid,
-                                                verv eller annen relevant erfaring.
+                                                arbeidserfaring, praksisplasser, utdanning, frivillig arbeid, verv eller
+                                                annen relevant erfaring.
                                             </p>
                                             <p className="InterestForm__p">
-                                                Tenk gjerne litt utradisjonelt og husk at personlige
-                                                egenskaper kan være avgjørende.
+                                                Tenk gjerne litt utradisjonelt og husk at personlige egenskaper kan være
+                                                avgjørende.
                                             </p>
                                         </div>
                                     </details>
@@ -412,8 +415,8 @@ const SuperraskSoknadPage = ({ match }) => {
 
                                 <p className="InterestForm__p">
                                     Når du har sendt søknaden, kan bedriften se begrunnelsen din og hvilke
-                                    kvalifikasjoner du har huket av, samt navnet ditt dersom du har oppgitt det.
-                                    Hvis bedriften ønsker å kontakte deg, får de også se kontaktinformasjonen din.
+                                    kvalifikasjoner du har huket av, samt navnet ditt dersom du har oppgitt det. Hvis
+                                    bedriften ønsker å kontakte deg, får de også se kontaktinformasjonen din.
                                 </p>
                                 <p className="InterestForm__p InterestForm__mb-2">
                                     Du kan når som helst trekke tilbake søknaden din.
@@ -428,9 +431,7 @@ const SuperraskSoknadPage = ({ match }) => {
                                 </a>
 
                                 {postInterestResponse.status === FetchStatus.FAILURE && (
-                                    <Alert>
-                                        {getErrorMessage(postInterestResponse.error)}
-                                    </Alert>
+                                    <Alert>{getErrorMessage(postInterestResponse.error)}</Alert>
                                 )}
 
                                 {postInterestResponse.status === FetchStatus.IS_FETCHING ? (
@@ -439,7 +440,9 @@ const SuperraskSoknadPage = ({ match }) => {
                                     </div>
                                 ) : (
                                     <div className="InterestForm__buttons">
-                                        <Hovedknapp htmlType="button" onClick={handleSendMessageClick}>Send søknad</Hovedknapp>
+                                        <Hovedknapp htmlType="button" onClick={handleSendMessageClick}>
+                                            Send søknad
+                                        </Hovedknapp>
                                         <Link
                                             to={`${CONTEXT_PATH}/${isInternal ? "intern" : "stilling"}/${data.ad._id}`}
                                             className="Knapp"
@@ -457,11 +460,11 @@ const SuperraskSoknadPage = ({ match }) => {
     );
 };
 
-SuperraskSoknadPage.defaultProps = {
+SuperraskSoknad.defaultProps = {
     match: { params: {} }
 };
 
-SuperraskSoknadPage.propTypes = {
+SuperraskSoknad.propTypes = {
     match: PropTypes.shape({
         params: PropTypes.shape({
             uuid: PropTypes.string
@@ -469,4 +472,4 @@ SuperraskSoknadPage.propTypes = {
     })
 };
 
-export default SuperraskSoknadPage;
+export default SuperraskSoknad;
