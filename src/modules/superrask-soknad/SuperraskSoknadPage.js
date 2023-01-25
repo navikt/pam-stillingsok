@@ -1,7 +1,7 @@
 import React from "react";
-import useScrollToTop from "../common/hooks/useScrollToTop";
-import SuperraskSoknad from "../modules/superrask-soknad/components/SuperraskSoknad";
-import useDocumentTitle from "../common/hooks/useDocumentTitle";
+import useScrollToTop from "../../common/hooks/useScrollToTop";
+import SuperraskSoknad from "./components/SuperraskSoknad";
+import useDocumentTitle from "../../common/hooks/useDocumentTitle";
 
 function SuperraskSoknadPage({ match }) {
     useDocumentTitle("Superrask søknad");

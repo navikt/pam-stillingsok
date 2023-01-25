@@ -7,17 +7,17 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import BrowserSupportInfo from "./common/components/browserSupportInfo/BrowserSupportInfo";
 import Header from "./modules/header/Header";
 import { CONTEXT_PATH } from "./common/environment";
-import FavouritesPage from "./pages/favoritter";
-import SavedSearchesPage from "./pages/lagrede-sok";
-import RapporterAnnonse from "./pages/rapporter-annonse";
 import initSentry from "./common/tracking/sentry";
 import { initAmplitude } from "./common/tracking/amplitude";
 import HistoryProvider from "./common/context/HistoryProvider";
 import "./common/styles/styles.less";
-import AdPage from "./pages/stilling";
-import TrekkSoknadPage from "./pages/trekk-soknad";
-import SuperraskSoknadPage from "./pages/superrask-soknad";
-import SearchPage from "./pages/sok";
+import SearchPage from "./modules/search/SearchPage";
+import SuperraskSoknadPage from "./modules/superrask-soknad/SuperraskSoknadPage";
+import AdPage from "./modules/ad/AdPage";
+import ReportAdPage from "./modules/report-ad/ReportAdPage";
+import FavouritesPage from "./modules/favourites/FavouritesPage";
+import SavedSearchesPage from "./modules/saved-searches/SavedSearchesPage";
+import TrekkSoknadPage from "./modules/superrask-soknad/TrekkSoknadPage";
 
 initSentry();
 fixUrlAfterLogin();
@@ -40,7 +40,7 @@ function Application() {
                                 <Route path={`${CONTEXT_PATH}/intern/:uuid/superrask-soknad`} component={SuperraskSoknadPage} />
                                 <Route path={`${CONTEXT_PATH}/stilling/:uuid`} component={AdPage} />
                                 <Route path={`${CONTEXT_PATH}/intern/:uuid`} component={AdPage} />
-                                <Route path={`${CONTEXT_PATH}/rapporter-annonse`} component={RapporterAnnonse} />
+                                <Route path={`${CONTEXT_PATH}/rapporter-annonse`} component={ReportAdPage} />
                                 <Route path={`${CONTEXT_PATH}/favoritter`} component={FavouritesPage} />
                                 <Route path={`${CONTEXT_PATH}/lagrede-sok`} component={SavedSearchesPage} />
                                 <Route path={`${CONTEXT_PATH}/trekk-soknad/:uuid/:adUuid`} component={TrekkSoknadPage} />
