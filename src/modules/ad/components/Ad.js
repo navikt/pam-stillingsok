@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
-import { captureException } from "@sentry/browser";
 import AdDetails from "./AdDetails";
 import AdText from "./AdText";
 import ContactPerson from "./ContactPerson";
@@ -71,14 +70,14 @@ const Ad = ({ match }) => {
         dispatch({ type: FetchAction.BEGIN });
 
         const path = isInternal ? "intern" : "stilling";
-        SearchAPI.get(`api/${path}/${id}`)
-            .then((data) => {
+        SearchAPI.get(`api/${path}/${id}`).then(
+            (data) => {
                 dispatch({ type: FetchAction.RESOLVE, data });
-            })
-            .catch((error) => {
-                captureException(error);
+            },
+            (error) => {
                 dispatch({ type: FetchAction.REJECT, error });
-            });
+            }
+        );
     }
 
     const isFinn = ad && ad._source && ad._source.source && ad._source.source.toLowerCase() === "finn";
