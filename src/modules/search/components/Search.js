@@ -58,7 +58,11 @@ const Search = () => {
             browserQuery.saved = savedSearchUuid;
         }
 
-        history.replace(CONTEXT_PATH + stringifyQuery(browserQuery));
+        try {
+            history.replace(CONTEXT_PATH + stringifyQuery(browserQuery));
+        } catch (error) {
+            // ignore any errors
+        }
     }, [query]);
 
     function fetchInitialSearch() {
