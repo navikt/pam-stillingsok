@@ -4,7 +4,7 @@ import { UAParser } from "ua-parser-js";
 import NavFrontendModal from "nav-frontend-modal";
 import { Knapp } from "@navikt/arbeidsplassen-knapper";
 import { Element, Normaltekst, Systemtittel } from "nav-frontend-typografi";
-import "./BrowserSupportInfo.less";
+import "./BrowserSupportInfo.css";
 
 const BrowserSupportInfo = ({ tillatLukking = false }) => {
     const browserInfo = new UAParser(navigator.userAgent).getBrowser();

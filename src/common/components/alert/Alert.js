@@ -1,5 +1,5 @@
 import React from "react";
-import "./Alert.less";
+import "./Alert.css";
 
 function Alert({ children }) {
     return (

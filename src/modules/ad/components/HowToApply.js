@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { formatDate, isValidEmail, isValidISOString, isValidUrl } from "../../../common/components/utils";
-import "./HowToApply.less";
+import "./HowToApply.css";
 import logAmplitudeEvent from "../../../common/tracking/amplitude";
 import FavouritesButton from "../../favourites/components/FavouritesButton";
 import CalendarIcon from "../../../common/components/icons/CalendarIcon";

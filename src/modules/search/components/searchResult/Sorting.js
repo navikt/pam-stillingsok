@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Select } from "nav-frontend-skjema";
 import { SET_SORTING } from "../../query";
-import "./Sorting.less";
+import "./Sorting.css";
 
 function Sorting({ query, dispatch }) {
     const [sort, setSort] = useState(query.sort);

@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Modal from "nav-frontend-modal";
-import "./CustomModal.less";
+import "./CustomModal.css";
 
 function CustomModal({ title, children, onCloseClick, ...props }) {
     return (

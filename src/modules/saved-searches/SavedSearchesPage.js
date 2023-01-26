@@ -7,7 +7,7 @@ import useDocumentTitle from "../../common/hooks/useDocumentTitle";
 import useScrollToTop from "../../common/hooks/useScrollToTop";
 import H1WithAutoFocus from "../../common/components/h1WithAutoFocus/H1WithAutoFocus";
 import BackLink from "../../common/components/backlink/BackLink";
-import "./components/SavedSearches.less";
+import "./components/SavedSearches.css";
 
 /**
  * Page showing saved searches.

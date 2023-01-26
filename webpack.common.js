@@ -4,18 +4,6 @@ const devMode = process.env.NODE_ENV !== 'production';
 
 module.exports = {
     devtool: 'source-map',
-    optimization: {
-        splitChunks: {
-            cacheGroups: {
-                styles: {
-                    name: 'styles',
-                    test: /\.css$/,
-                    chunks: 'all',
-                    enforce: true
-                }
-            }
-        }
-    },
     entry: {
         sok: ['babel-polyfill', 'whatwg-fetch', './src/app.js']
     },

@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React, { useState } from "react";
-import "./CriteriaPanel.less";
+import "./CriteriaPanel.css";
 import ChevronCollapseIcon from "../../../../../common/components/icons/ChevronCollapseIcon";
 import ChevronExpandIcon from "../../../../../common/components/icons/ChevronExpandIcon";
 

@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import React, { useRef } from "react";
 import Modal from "nav-frontend-modal";
 import { Hovedknapp } from "@navikt/arbeidsplassen-knapper";
-import "./AlertModal.less";
+import "./AlertModal.css";
 
 export default function AlertModal({
     id,

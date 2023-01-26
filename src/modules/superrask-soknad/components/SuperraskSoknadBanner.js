@@ -1,5 +1,5 @@
 import React from "react";
-import "./SuperraskSoknadBanner.less";
+import "./SuperraskSoknadBanner.css";
 
 function SuperraskSoknadBanner() {
     return (

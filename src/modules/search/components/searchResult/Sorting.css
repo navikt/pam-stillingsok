@@ -1,0 +1,17 @@
+.Sorting__Select {
+  display: flex;
+  align-items: baseline;
+  white-space: nowrap;
+  margin-bottom: 0 !important;
+}
+
+@media (max-width: 767px) {
+  .Sorting__Select .selectContainer select {
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+  }
+}
+
+.Sorting__Select label {
+  margin-right: 0.5rem;
+}

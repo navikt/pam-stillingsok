@@ -1,5 +1,5 @@
 import React from "react";
-import "./NotFound404.less";
+import "./NotFound404.css";
 import PropTypes from "prop-types";
 
 function NotFound404({ title, text }) {

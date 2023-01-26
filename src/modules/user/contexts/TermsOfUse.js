@@ -4,7 +4,7 @@ import { BekreftCheckboksPanel } from "nav-frontend-skjema";
 import { Flatknapp, Hovedknapp } from "@navikt/arbeidsplassen-knapper";
 import CustomModal from "../../../common/components/modals/CustomModal";
 import UserAPI from "../../../common/api/UserAPI";
-import "./TermsOfUse.less";
+import "./TermsOfUse.css";
 import { UserContext } from "./UserProvider";
 import { AuthenticationContext } from "../../auth/contexts/AuthenticationProvider";
 import { FetchStatus } from "../../../common/hooks/useFetchReducer";
