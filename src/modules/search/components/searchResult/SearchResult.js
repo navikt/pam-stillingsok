@@ -60,7 +60,7 @@ const SearchResult = ({ searchResponse, queryDispatch, query, loadMoreResults })
                         />
 
                         <a
-                            href="src/modules/search/components/searchResult/SearchResult#main-content"
+                            href="#main-content"
                             className="SearchResult__skip-to-top link"
                         >
                             <ArrowUpIcon ariaHidden={true} />

@@ -53,7 +53,7 @@ const BrowserSupportInfoModal = ({ tillatLukking = false }) => {
                             <a
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                href="src/common/components/browserSupportInfo/BrowserSupportInfo"
+                                href="https://www.google.com/intl/no/chrome/"
                                 className="link"
                             >
                                 <span className="lenke">Google Chrome</span>
@@ -64,7 +64,7 @@ const BrowserSupportInfoModal = ({ tillatLukking = false }) => {
                             <a
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                href="src/common/components/browserSupportInfo/BrowserSupportInfo"
+                                href="https://www.mozilla.org/en-US/firefox/new/"
                                 className="link"
                             >
                                 <span className="lenke">Mozilla Firefox</span>
