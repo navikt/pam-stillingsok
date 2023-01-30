@@ -41,7 +41,7 @@ const Ad = ({ match }) => {
     useEffect(() => {
         if (ad && ad._source) {
             if (ad._source.title) {
-                document.title = `${ad._source.title} - Arbeidsplassen`;
+                document.title = `${ad._source.title} - arbeidsplassen.no`;
             }
 
             if (ad._source.properties && ad._source.properties.hasInterestform === "true") {
