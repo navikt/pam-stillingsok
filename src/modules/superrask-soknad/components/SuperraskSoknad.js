@@ -52,8 +52,13 @@ const SuperraskSoknad = ({ match }) => {
             });
 
         try {
+            let interestForm = data.interestForm;
             logAmplitudeEvent("submit superrask søknad", {
-                id: data.ad._id
+                id: data.ad._id,
+                antallKrav: (interestForm.must.length + interestForm.should.length),
+                antallKravHuket: (interestForm.must.filter(it => it.checked).length + interestForm.should.filter(it => it.checked).length),
+                antallTegnIFritekst: interestForm.about.length,
+                harNavn: (interestForm.name.length > 0)
             });
         } catch (e) {
             // ignore
