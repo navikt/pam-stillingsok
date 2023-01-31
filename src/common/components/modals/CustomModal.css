@@ -1,3 +1,8 @@
+.CustomModal {
+  width: 100%;
+  max-width: 40rem;
+}
+
 @media (min-width: 768px) {
   .CustomModal {
     padding: 1rem 2rem 2rem 2rem;
