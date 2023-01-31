@@ -45,20 +45,9 @@
 }
 
 .AdText p,
-.AdText  ul,
+.AdText ul,
 .AdText ol {
     margin: 1rem 0;
-}
-
-.AdText .SokPaaStilling--knapp {
-    display: table;
-    margin: 20px 0;
-    color: white;
-    font-size: 18px;
-}
-
-.AdText .SokPaaStilling--knapp:focus {
-    background-color: var(--secondaryPurple);
 }
 
 @media (max-width: 991px) {
