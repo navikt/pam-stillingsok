@@ -4,7 +4,6 @@ import AuthenticationProvider, { fixUrlAfterLogin } from "./modules/auth/context
 import UserProvider from "./modules/user/contexts/UserProvider";
 import FavouritesProvider from "./modules/favourites/context/FavouritesProvider";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import BrowserSupportInfo from "./common/components/browserSupportInfo/BrowserSupportInfo";
 import Header from "./modules/header/Header";
 import { CONTEXT_PATH } from "./common/environment";
 import initSentry from "./common/tracking/sentry";
@@ -31,7 +30,6 @@ function Application() {
                 <FavouritesProvider>
                     <BrowserRouter>
                         <HistoryProvider>
-                            <BrowserSupportInfo tillatLukking={true} />
                             <Switch>
                                 <Route component={Header} />
                             </Switch>
