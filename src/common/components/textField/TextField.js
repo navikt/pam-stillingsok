@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import "./TextField.less";
+import "./TextField.css";
 
 function TextField({ id, label, value, type, onChange, error, autoComplete }) {
     return (

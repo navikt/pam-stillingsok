@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { AuthenticationContext, AuthenticationStatus } from "../auth/contexts/AuthenticationProvider";
-import "./Header.less";
 
 const Header = () => {
     const { authenticationStatus, login, logout, userNameAndInfo } = useContext(AuthenticationContext);

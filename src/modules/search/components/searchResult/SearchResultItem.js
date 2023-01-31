@@ -5,7 +5,7 @@ import getEmployer from "../../../../../server/common/getEmployer";
 import getWorkLocation from "../../../../../server/common/getWorkLocation";
 import { CONTEXT_PATH } from "../../../../common/environment";
 import { formatDate } from "../../../../common/components/utils";
-import "./SearchResultsItem.less";
+import "./SearchResultsItem.css";
 import Tag from "../../../../common/components/tag/Tag";
 
 export default function SearchResultItem({ ad, showExpired, favouriteButton, shouldAutoFocus }) {

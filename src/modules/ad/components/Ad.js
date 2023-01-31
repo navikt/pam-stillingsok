@@ -7,7 +7,7 @@ import EmployerDetails from "./EmployerDetails";
 import EmploymentDetails from "./EmploymentDetails";
 import FinnAd from "./FinnAd";
 import HowToApply from "./HowToApply";
-import "./Ad.less";
+import "./Ad.css";
 import logAmplitudeEvent, { logAmplitudePageview, logStillingVisning } from "../../../common/tracking/amplitude";
 import ShareAd from "./ShareAd";
 import Summary from "./Summary";

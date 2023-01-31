@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import ChevronLeftIcon from "../icons/ChevronLeftIcon";
-import "./BackLink.less";
+import "./BackLink.css";
 
 function BackLink({ to, text }) {
     return (

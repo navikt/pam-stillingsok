@@ -5,7 +5,7 @@ import H1WithAutoFocus from "../../../common/components/h1WithAutoFocus/H1WithAu
 import { Checkbox, Textarea } from "nav-frontend-skjema";
 import { Hovedknapp } from "@navikt/arbeidsplassen-knapper";
 import { isValidEmail } from "../../../common/components/utils";
-import "./SuperraskSoknad.less";
+import "./SuperraskSoknad.css";
 import { CONTEXT_PATH } from "../../../common/environment";
 import Spinner from "nav-frontend-spinner";
 import TextField from "../../../common/components/textField/TextField";

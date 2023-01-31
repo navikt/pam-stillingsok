@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import ReactHtmlParser from "react-html-parser";
-import "./AdText.less";
+import "./AdText.css";
 import { containsEmail, extractEmail, isValidEmail, mailtoInString } from "../../../common/components/utils";
 
 const preprocessAd = (adText) => {

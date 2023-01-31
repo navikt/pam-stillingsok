@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Knapp } from "@navikt/arbeidsplassen-knapper";
-import "./Pagination.less";
+import "./Pagination.css";
 
 const Pagination = ({ searchResult, isSearching, query, onLoadMoreClick }) => {
     const total = searchResult.totalAds;

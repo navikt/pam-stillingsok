@@ -1,5 +1,5 @@
 import React from "react";
-import "./ErrorMessage.less";
+import "./ErrorMessage.css";
 
 function ErrorMessage() {
     return (

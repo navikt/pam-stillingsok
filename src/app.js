@@ -10,7 +10,6 @@ import { CONTEXT_PATH } from "./common/environment";
 import initSentry from "./common/tracking/sentry";
 import { initAmplitude } from "./common/tracking/amplitude";
 import HistoryProvider from "./common/context/HistoryProvider";
-import "./common/styles/styles.less";
 import SearchPage from "./modules/search/SearchPage";
 import SuperraskSoknadPage from "./modules/superrask-soknad/SuperraskSoknadPage";
 import AdPage from "./modules/ad/AdPage";
@@ -18,6 +17,8 @@ import ReportAdPage from "./modules/report-ad/ReportAdPage";
 import FavouritesPage from "./modules/favourites/FavouritesPage";
 import SavedSearchesPage from "./modules/saved-searches/SavedSearchesPage";
 import TrekkSoknadPage from "./modules/superrask-soknad/TrekkSoknadPage";
+import "nav-frontend-core/less/core.less";
+import "./common/styles/styles.css";
 
 initSentry();
 fixUrlAfterLogin();

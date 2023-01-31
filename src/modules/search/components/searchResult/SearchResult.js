@@ -9,7 +9,7 @@ import Pagination from "./Pagination";
 import SkipToCriteria from "../skiplinks/SkipToCriteria";
 import ArrowUpIcon from "../../../../common/components/icons/ArrowUpIcon";
 import SearchResultItem from "./SearchResultItem";
-import "./SearchResult.less";
+import "./SearchResult.css";
 import FavouritesButton from "../../../favourites/components/FavouritesButton";
 
 const SearchResult = ({ searchResponse, queryDispatch, query, loadMoreResults }) => {

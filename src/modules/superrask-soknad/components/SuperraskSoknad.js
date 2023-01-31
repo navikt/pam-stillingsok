@@ -5,7 +5,7 @@ import InterestAPI from "../api/InterestAPI";
 import { FetchAction, FetchStatus, useFetchReducer } from "../../../common/hooks/useFetchReducer";
 import DelayedSpinner from "../../../common/components/spinner/DelayedSpinner";
 import Alert from "../../../common/components/alert/Alert";
-import "./SuperraskSoknad.less";
+import "./SuperraskSoknad.css";
 import getEmployer from "../../../../server/common/getEmployer";
 import { CONTEXT_PATH } from "../../../common/environment";
 import BackLink from "../../../common/components/backlink/BackLink";

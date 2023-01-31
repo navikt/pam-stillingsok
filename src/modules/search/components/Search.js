@@ -18,7 +18,7 @@ import SearchForm from "./searchForm/SearchForm";
 import LinkMenu from "./linkMenu/LinkMenu";
 import LoadingScreen from "./loadingScreen/LoadingScreen";
 import useRestoreScroll from "../../../common/hooks/useRestoreScroll";
-import "./Search.less";
+import "./Search.css";
 import { useHistory } from "react-router";
 import SearchResult from "./searchResult/SearchResult";
 import H1WithAutoFocus from "../../../common/components/h1WithAutoFocus/H1WithAutoFocus";

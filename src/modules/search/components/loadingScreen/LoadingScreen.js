@@ -1,6 +1,6 @@
 import React from "react";
 import DelayedSpinner from "../../../../common/components/spinner/DelayedSpinner";
-import "./LoadingScreen.less";
+import "./LoadingScreen.css";
 
 function LoadingScreen() {
     return (

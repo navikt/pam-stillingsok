@@ -3,7 +3,7 @@ import { Hovedknapp } from "@navikt/arbeidsplassen-knapper";
 import { AuthenticationContext, AuthenticationStatus } from "../contexts/AuthenticationProvider";
 import DelayedSpinner from "../../../common/components/spinner/DelayedSpinner";
 import ErrorMessage from "../../../common/components/messages/ErrorMessage";
-import "./RequiresAuthentication.less";
+import "./RequiresAuthentication.css";
 
 function RequiresAuthentication({ children }) {
     const { authenticationStatus, login } = useContext(AuthenticationContext);

@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Knapp } from "@navikt/arbeidsplassen-knapper";
-import "./IconButton.less";
+import "./IconButton.css";
 
 function IconButton({ text, icon, hideText, onClick, className, disabled, spinner, type }) {
     return (
