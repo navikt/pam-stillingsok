@@ -8,6 +8,9 @@ const LinkedinIcon = () => (
         width="24px"
         height="24px"
         viewBox="0 0 24 24"
+        aria-label="LinkedIn"
+        aria-hidden="true"
+        role="img"
     >
         <circle className="cls-1" cx="12" cy="12" r="12" />
         <path
