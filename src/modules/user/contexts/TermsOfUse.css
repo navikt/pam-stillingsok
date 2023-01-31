@@ -46,22 +46,14 @@
     margin-top: 1.25rem;
 }
 
-.TermsOfUse__buttons .Knapp:not(:last-child) {
-    margin-right: 1rem;
+.TermsOfUse__buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
 }
 
 @media (max-width: 767px) {
     .TermsOfUse {
         padding: 0;
-    }
-
-    .TermsOfUse__buttons .Knapp:not(:last-child) {
-        margin-bottom: 1rem;
-    }
-}
-
-@media (min-width: 992px) {
-    .TermsOfUse__buttons .Knapp:not(:last-child) {
-        margin-right: 1rem;
     }
 }

@@ -8,16 +8,8 @@
     font-size: 2rem;
 }
 
-.RapporterAnnonse .skjemaelement {
-    margin: 12px 0 6px 0;
-}
-
 .RapporterAnnonse .sub-checkbox {
     margin-left: 24px;
-}
-
-.RapporterAnnonse .Knapp {
-    margin: 24px 6px 0 6px;
 }
 
 .RapporterAnnonse .disclaimer {
@@ -28,6 +20,7 @@
 .RapporterAnnonse .report-form {
     background-color: #f1f1f1;
     padding: 24px;
+    margin-bottom: 1.5rem;
 }
 
 .RapporterAnnonse .alertstripe {

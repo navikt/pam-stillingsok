@@ -4,6 +4,7 @@
 @import "./skiplink.css";
 @import "./button.css";
 @import "./link.css";
+@import "./overrides.css";
 
 :root {
   --primaryPurple: #8C368E;
@@ -48,80 +49,12 @@ body {
   }
 }
 
-@media (max-width: 767px) {
-  body.screen-xs-no-scroll {
-    overflow-y: hidden;
-  }
-}
-
 input[type="search"] {
   -webkit-appearance: none;
 }
 
 input::-ms-clear {
   display: none;
-}
-
-/**
-* Overrides
-*/
-
-@media (max-width: 767px) {
-  .container {
-    padding-left: 16px;
-    padding-right: 16px;
-  }
-}
-
-.selectContainer:before,
-.selectContainer:after {
-  background: var(--primaryPurple);
-}
-
-.skjemaelement__input {
-  color: var(--blueDarken);
-}
-
-.skjemaelement__input:focus,
-.skjemaelement__input:active {
-  border: none;
-}
-
-.checkboks:hover + .skjemaelement__label,
-.radioknapp:hover + .skjemaelement__label {
-    color: var(--primaryPurple);
-}
-
-.checkboks:hover + .skjemaelement__label:before,
-.radioknapp:hover + .skjemaelement__label:before{
-    background-color: #ffe7fb;
-    border-color: var(--primaryPurple);
-}
-
-.checkboks:checked + .skjemaelement__label:before {
-  background-color: var(--primaryPurple);
-  border-color: var(--primaryPurple);
-}
-
-.radioknapp:checked + .skjemaelement__label:before {
-  border: 2px solid var(--primaryPurple);
-  box-shadow: inset 0 0 0 3px #fff, inset 0 0 0 12px var(--primaryPurple);
-}
-
-.radioknapp:checked:focus + .skjemaelement__label:before {
-  box-shadow: 0 0 0 2px var(--blueDarken), 0 0 0 3px #FFF inset, 0 0 0 12px var(--primaryPurple) inset;
-}
-
-.skjemaelement__input:hover {
-  border-color: var(--primaryPurple);
-}
-
-select option[selected="true"] {
-  background-color: var(--primaryPurple);
-}
-
-select option[selected="true"]:hover {
-  border-color: var(--primaryPurple);
 }
 
 .bold {

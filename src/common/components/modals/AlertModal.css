@@ -19,6 +19,7 @@
   line-height: 1.5;
 }
 
-.AlertModal__buttons .Knapp:not(:last-child) {
-  margin-right: 1rem;
+.AlertModal__buttons {
+  display: flex;
+  gap: 1rem;
 }

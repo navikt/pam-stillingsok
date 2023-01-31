@@ -28,10 +28,7 @@
 .SaveSearchForm__buttons {
     display: flex;
     margin-top: 2rem;
-}
-
-.SaveSearchForm__buttons > * {
-    margin: 0 1rem 0 0;
+    gap: 1rem;
 }
 
 .SavedSearchListItem {
@@ -87,10 +84,7 @@
 .SavedSearchListItem__bottom {
     display: flex;
     justify-content: flex-end;
-}
-
-.SavedSearchListItem__bottom .Knapp:not(:last-child) {
-    margin-right: 1rem;
+    gap: 1rem;
 }
 
 .SavedSearchListItem__created {
@@ -132,10 +126,6 @@
 
 .SavedSearchModal__body {
     margin-bottom: 2.5rem;
-}
-
-.SavedSearchModal__buttons .Knapp:not(:last-child) {
-    margin-right: 1rem;
 }
 
 @media (max-width: 767px) {
