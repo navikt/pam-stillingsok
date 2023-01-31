@@ -8,6 +8,9 @@ const TwitterIcon = () => (
         width="24px"
         height="24px"
         viewBox="0 0 24 24"
+        aria-label="Twitter"
+        aria-hidden="true"
+        role="img"
     >
         <g id="Dark_Blue" data-name="Dark Blue">
             <circle className="cls-1" cx="12" cy="12" r="12" />

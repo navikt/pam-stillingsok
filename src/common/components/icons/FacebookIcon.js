@@ -8,6 +8,9 @@ const FacebookIcon = () => (
         width="24px"
         height="24px"
         viewBox="0 0 24 24"
+        aria-label="Facebook"
+        aria-hidden="true"
+        role="img"
     >
         <path
             className="cls-1"
