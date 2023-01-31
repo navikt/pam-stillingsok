@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { CONTEXT_PATH } from "../../../common/environment";
+import Feedback from "./Feedback";
 
 function TrekkSoknadSuccess() {
     return (
@@ -15,6 +16,8 @@ function TrekkSoknadSuccess() {
             <Link to={CONTEXT_PATH} className="Knapp">
                 Se ledige stillinger
             </Link>
+
+            <Feedback />
         </React.Fragment>
     );
 }
