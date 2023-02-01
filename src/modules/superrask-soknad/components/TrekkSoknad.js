@@ -30,23 +30,24 @@ const TrekkSoknad = ({ match }) => {
 
     const handleWithDrawClick = () => {
         deleteSoknadDispatch({ type: FetchAction.BEGIN });
+        let success = false;
         InterestAPI.deleteInterest(match.params.adUuid, match.params.uuid)
             .then((data) => {
                 deleteSoknadDispatch({ type: FetchAction.RESOLVE, data });
-                logAmplitudeEvent('delete superrask søknad', {
-                    stillingsId: match.params.adUuid,
-                    candidateId: match.params.uuid,
-                    success: true
-                });
+                success = true;
             })
             .catch((error) => {
                 deleteSoknadDispatch({ type: FetchAction.REJECT, error });
-                logAmplitudeEvent('delete superrask søknad', {
-                    stillingsId: match.params.adUuid,
-                    candidateId: match.params.uuid,
-                    success: false
-                });
             });
+        try {
+            logAmplitudeEvent('delete superrask søknad', {
+                stillingsId: match.params.adUuid,
+                candidateId: match.params.uuid,
+                success
+            });
+        } catch (e) {
+            // ignore
+        }
     };
 
     return (
