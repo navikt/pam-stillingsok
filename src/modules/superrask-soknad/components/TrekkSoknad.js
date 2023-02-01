@@ -5,6 +5,7 @@ import DelayedSpinner from "../../../common/components/spinner/DelayedSpinner";
 import InterestAPI from "../api/InterestAPI";
 import TrekkSoknadSuccess from "./TrekkSoknadSuccess";
 import TrekkSoknadConfirmationRequired from "./TrekkSoknadConfirmationRequired";
+import logAmplitudeEvent from "../../../common/tracking/amplitude";
 
 const TrekkSoknad = ({ match }) => {
     const [{ data: ad, status: adFetchStatus }, dispatch] = useFetchReducer();
@@ -32,9 +33,19 @@ const TrekkSoknad = ({ match }) => {
         InterestAPI.deleteInterest(match.params.adUuid, match.params.uuid)
             .then((data) => {
                 deleteSoknadDispatch({ type: FetchAction.RESOLVE, data });
+                logAmplitudeEvent('delete superrask søknad', {
+                    stillingsId: match.params.adUuid,
+                    candidateId: match.params.uuid,
+                    success: true
+                });
             })
             .catch((error) => {
                 deleteSoknadDispatch({ type: FetchAction.REJECT, error });
+                logAmplitudeEvent('delete superrask søknad', {
+                    stillingsId: match.params.adUuid,
+                    candidateId: match.params.uuid,
+                    success: false
+                });
             });
     };
 
