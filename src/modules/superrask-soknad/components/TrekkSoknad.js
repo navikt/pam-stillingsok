@@ -28,10 +28,10 @@ const TrekkSoknad = ({ match }) => {
             });
     }, []);
 
-    const handleWithDrawClick = () => {
+    const handleWithDrawClick = async () => {
         deleteSoknadDispatch({ type: FetchAction.BEGIN });
         let success = false;
-        InterestAPI.deleteInterest(match.params.adUuid, match.params.uuid)
+        await InterestAPI.deleteInterest(match.params.adUuid, match.params.uuid)
             .then((data) => {
                 deleteSoknadDispatch({ type: FetchAction.RESOLVE, data });
                 success = true;
