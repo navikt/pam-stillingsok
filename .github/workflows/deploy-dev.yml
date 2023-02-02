@@ -8,7 +8,6 @@ on:
       - 'CODEOWNERS'
     branches:
       - 'master'
-      - 'amplitude-trekksoknad'
 jobs:
   call-workflow:
     uses: navikt/pam-deploy/.github/workflows/deploy-dev.yml@v2
