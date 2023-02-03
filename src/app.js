@@ -19,10 +19,12 @@ import SavedSearchesPage from "./modules/saved-searches/SavedSearchesPage";
 import TrekkSoknadPage from "./modules/superrask-soknad/TrekkSoknadPage";
 import "nav-frontend-core/less/core.less";
 import "./common/styles/styles.css";
+import googleTranslateWorkaround from "./common/utils/googleTranslateWorkaround";
 
 initSentry();
 fixUrlAfterLogin();
 initAmplitude();
+googleTranslateWorkaround();
 
 function Application() {
     return (
