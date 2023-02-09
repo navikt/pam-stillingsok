@@ -1,11 +1,14 @@
 import { INTEREST_API_URL } from "../../../common/environment";
 import APIError from "../../../common/api/APIError";
 
+const NAV_CALLID_FIELD = "Nav-CallId";
+
 async function get(url) {
     let response;
     try {
         response = await fetch(`${INTEREST_API_URL}/${url}`, {
-            method: "GET"
+            method: "GET",
+            headers: { NAV_CALLID_FIELD: crypto.randomUUID() }
         });
     } catch (e) {
         throw new APIError(e.message, 0);
@@ -21,7 +24,10 @@ async function remove(url) {
     let response;
     try {
         response = await fetch(`${INTEREST_API_URL}/${url}`, {
-            method: "DELETE"
+            method: "DELETE",
+            headers: {
+                NAV_CALLID_FIELD: crypto.randomUUID()
+            }
         });
     } catch (e) {
         throw new APIError(e.message, 0);
@@ -39,7 +45,8 @@ async function post(url, query, toJson = true) {
             body: JSON.stringify(query),
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                NAV_CALLID_FIELD: crypto.randomUUID()
             }
         });
     } catch (e) {
