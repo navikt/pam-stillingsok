@@ -8,9 +8,8 @@ export default function getSessionId() {
             sessionStorage.setItem(FIELD_SESSION_ID, sessionId);
         }
     } catch (e) {
-        // It's possible user has disabled persistent data and we won't be able to track sessions
-        // Use prefix 'undefined' to separate these instances out from the rest.
-        sessionId = `undefined-${crypto.randomUUID()}`
+        // It's possible user has disabled persistent data or user is unable to use crypto
+        sessionId = 'undefined';
     }
     return sessionId;
 }
