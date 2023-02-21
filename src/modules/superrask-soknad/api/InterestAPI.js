@@ -7,8 +7,7 @@ async function get(url) {
     let response;
     try {
         response = await fetch(`${INTEREST_API_URL}/${url}`, {
-            method: "GET",
-            headers: { NAV_CALLID_FIELD: crypto.randomUUID() }
+            method: "GET"
         });
     } catch (e) {
         throw new APIError(e.message, 0);
@@ -24,10 +23,7 @@ async function remove(url) {
     let response;
     try {
         response = await fetch(`${INTEREST_API_URL}/${url}`, {
-            method: "DELETE",
-            headers: {
-                NAV_CALLID_FIELD: crypto.randomUUID()
-            }
+            method: "DELETE"
         });
     } catch (e) {
         throw new APIError(e.message, 0);
@@ -45,8 +41,7 @@ async function post(url, query, toJson = true) {
             body: JSON.stringify(query),
             method: "POST",
             headers: {
-                "Content-Type": "application/json",
-                NAV_CALLID_FIELD: crypto.randomUUID()
+                "Content-Type": "application/json"
             }
         });
     } catch (e) {
