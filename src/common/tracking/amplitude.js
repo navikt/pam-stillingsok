@@ -1,4 +1,5 @@
 import amplitude from "amplitude-js";
+import getSessionId from "../../session";
 
 export function initAmplitude() {
     amplitude.getInstance();
@@ -45,7 +46,7 @@ export function logStillingVisning(ad) {
 const enrichData = (data) => {
     const isAuthenticated = false;
 
-    let enrichedData = { ...data, isAuthenticated };
+    let enrichedData = { ...data, isAuthenticated, navSessionId: getSessionId() };
 
     try {
         const erMellom25og30 = sessionStorage.getItem("erMellom25og30");
