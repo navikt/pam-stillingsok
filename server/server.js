@@ -193,6 +193,7 @@ const startServer = (htmlPages) => {
     });
 
     server.get(`${properties.PAM_CONTEXT_PATH}/api/intern/:uuid`, async (req, res) => {
+        console.log(`Henter stilling ${req.params.uuid} for /api/intern/`)
         searchApiConsumer.fetchInternStilling(req.params.uuid)
             .then((val) => res.send(val))
             .catch((err) => {
@@ -229,7 +230,7 @@ const startServer = (htmlPages) => {
     );
 
     server.get('/stillinger/intern/:uuid', (req, res) => {
-        console.log(`Henter intern stilling: ${req.params.uuid}`);
+        console.log(`Henter intern stilling: ${req.params.uuid} fra /stillinger/intern`);
             searchApiConsumer.fetchInternStilling(req.params.uuid)
                 .then((data) => {
                     if(data) {
