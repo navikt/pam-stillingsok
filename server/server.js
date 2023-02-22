@@ -229,8 +229,12 @@ const startServer = (htmlPages) => {
     );
 
     server.get('/stillinger/intern/:uuid', (req, res) => {
+        console.log(`Henter intern stilling: ${req.params.uuid}`);
             searchApiConsumer.fetchInternStilling(req.params.uuid)
                 .then((data) => {
+                    if(data) {
+                        console.log("har gjort et kall");
+                    }
                     try {
                         res.render('index', {
                             title: htmlMeta.getStillingTitle(data._source),
