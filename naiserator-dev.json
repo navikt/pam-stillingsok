@@ -1,7 +1,6 @@
 {
   "ingress": [
-    "https://arbeidsplassen.dev.nav.no/stillinger",
-    "https://pam-stillingsok.dev.intern.nav.no"
+    "https://arbeidsplassen.dev.nav.no/stillinger"
   ],
   "loginservice_url": "https://loginservice.dev.nav.no/login",
   "logoutservice_url": "https://loginservice.dev.nav.no/slo",
