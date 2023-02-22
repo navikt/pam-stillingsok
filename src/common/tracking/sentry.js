@@ -22,6 +22,11 @@ export default function initSentry() {
         dsn: "https://76170ea4b79246638c1d9eb1c0e4fca9@sentry.gc.nav.no/37",
         allowUrls: ["arbeidsplassen.nav.no"],
         ignoreErrors: [...ignoreTypeErrors],
+        autoSessionTracking: true,
+        initialScope: {
+            tags: { sessionId: getSessionId() },
+            user: { id: getSessionId() }
+        },
         beforeSend(event, hint) {
             const error = hint.originalException;
             if (error && error.statusCode !== undefined && ignoreStatusCodes.includes(error.statusCode)) {
@@ -31,5 +36,4 @@ export default function initSentry() {
             }
         }
     });
-    Sentry.setTag(FIELD_SESSION_ID, getSessionId());
 }
