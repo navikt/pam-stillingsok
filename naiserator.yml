@@ -30,6 +30,11 @@ spec:
       memory: 256Mi
   vault:
     enabled: false
+  idporten:
+    enabled: true
+    sidecar:
+      enabled: true
+      level: Level3
   ingresses:
   {{#each ingress as |url|}}
      - {{url}}

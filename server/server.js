@@ -37,20 +37,6 @@ fs.readFile(__dirname + '/api/resources/locations.json', 'utf-8',
 server.disable('x-powered-by');
 server.use(compression());
 
-/**
- Hotjar requires a bunch of CSP exceptions.
- Not super happy about 'unsafe-eval' 'unsafe-inline', remove them if they are not needed in the future.
- From here https://help.hotjar.com/hc/en-us/articles/115011640307-Content-Security-Policies
- */
-const hotJarSources = {
-    img: ['https://script.hotjar.com', 'http://script.hotjar.com'],
-    script: ['http://static.hotjar.com', 'https://static.hotjar.com', 'https://script.hotjar.com'],
-    connect: ['http://*.hotjar.com:*', 'https://*.hotjar.com:*', 'https://vc.hotjar.io:*', 'wss://*.hotjar.com'],
-    frame: ['https://vars.hotjar.com'],
-    font: ['http://script.hotjar.com', 'https://script.hotjar.com'],
-    UNSAFE: ["'unsafe-eval'", "'unsafe-inline'"]
-};
-
 server.use(helmet({xssFilter: false, hsts: false}));
 
 server.use(helmet.referrerPolicy({policy: 'no-referrer'}));
@@ -67,7 +53,7 @@ server.use(helmet.contentSecurityPolicy({
         styleSrc: ["'self'"],
         fontSrc: ["'self'", 'data:'],
         imgSrc: ["'self'", 'data:'],
-        connectSrc: ["'self'", process.env.PAMADUSER_URL, process.env.INTEREST_API_URL,
+        connectSrc: ["'self'", process.env.ARBEIDSPLASSEN_URL, process.env.INTEREST_API_URL,
             'https://amplitude.nav.no', 'https://sentry.gc.nav.no'],
         frameSrc: ["'self'"]
     }
@@ -79,12 +65,12 @@ server.engine('html', mustacheExpress());
 
 server.use(bodyParser.json());
 
-const fasitProperties = {
+const properties = {
     PAM_CONTEXT_PATH: '/stillinger',
-    PAM_AD_USER_API: `${process.env.PAMADUSER_URL}/aduser`,
+    PAM_AD_USER_API: `${process.env.PAMADUSER_URL}`,
     INTEREST_API_URL: process.env.INTEREST_API_URL,
-    LOGIN_URL: process.env.LOGINSERVICE_URL,
-    LOGOUT_URL: process.env.LOGOUTSERVICE_URL,
+    LOGIN_URL: '/oauth2/login',
+    LOGOUT_URL: '/oauth2/logout',
     PAM_STILLINGSOK_URL: process.env.PAM_STILLINGSOK_URL,
     PAM_VAR_SIDE_URL: process.env.PAM_VAR_SIDE_URL,
     PAM_JOBBTREFF_API_URL: process.env.PAM_JOBBTREFF_API_URL,
@@ -92,15 +78,15 @@ const fasitProperties = {
 };
 
 const writeEnvironmentVariablesToFile = () => {
-    const fileContent = `window.__PAM_STILLINGSOK_URL__="${fasitProperties.PAM_STILLINGSOK_URL}";\n`
-        + `window.__PAM_CONTEXT_PATH__="${fasitProperties.PAM_CONTEXT_PATH}";\n`
-        + `window.__PAM_AD_USER_API__="${fasitProperties.PAM_AD_USER_API}";\n`
-        + `window.__INTEREST_API_URL__="${fasitProperties.INTEREST_API_URL}";\n`
-        + `window.__LOGIN_URL__="${fasitProperties.LOGIN_URL}";\n`
-        + `window.__LOGOUT_URL__="${fasitProperties.LOGOUT_URL}";\n`
-        + `window.__PAM_VAR_SIDE_URL__="${fasitProperties.PAM_VAR_SIDE_URL}";\n`
-        + `window.__PAM_JOBBTREFF_API_URL__="${fasitProperties.PAM_JOBBTREFF_API_URL}";\n`
-        + `window.__AMPLITUDE_TOKEN__="${fasitProperties.AMPLITUDE_TOKEN}";\n`
+    const fileContent = `window.__PAM_STILLINGSOK_URL__="${properties.PAM_STILLINGSOK_URL}";\n`
+        + `window.__PAM_CONTEXT_PATH__="${properties.PAM_CONTEXT_PATH}";\n`
+        + `window.__PAM_AD_USER_API__="${properties.PAM_AD_USER_API}";\n`
+        + `window.__INTEREST_API_URL__="${properties.INTEREST_API_URL}";\n`
+        + `window.__LOGIN_URL__="${properties.LOGIN_URL}";\n`
+        + `window.__LOGOUT_URL__="${properties.LOGOUT_URL}";\n`
+        + `window.__PAM_VAR_SIDE_URL__="${properties.PAM_VAR_SIDE_URL}";\n`
+        + `window.__PAM_JOBBTREFF_API_URL__="${properties.PAM_JOBBTREFF_API_URL}";\n`
+        + `window.__AMPLITUDE_TOKEN__="${properties.AMPLITUDE_TOKEN}";\n`
 
     fs.writeFile(path.resolve(rootDirectory, 'dist/js/env.js'), fileContent, (err) => {
         if (err) throw err;
@@ -128,21 +114,21 @@ const renderSok = (htmlPages) => (
 const startServer = (htmlPages) => {
     writeEnvironmentVariablesToFile();
 
-    server.use(`${fasitProperties.PAM_CONTEXT_PATH}/js`,
+    server.use(`${properties.PAM_CONTEXT_PATH}/js`,
         express.static(path.resolve(rootDirectory, 'dist/js'))
     );
 
-    server.use(`${fasitProperties.PAM_CONTEXT_PATH}/css`,
+    server.use(`${properties.PAM_CONTEXT_PATH}/css`,
         express.static(path.resolve(rootDirectory, 'dist/css'))
     );
 
     server.use(
-        `${fasitProperties.PAM_CONTEXT_PATH}/images`,
+        `${properties.PAM_CONTEXT_PATH}/images`,
         express.static(path.resolve(rootDirectory, 'images'))
     );
 
     // Give users fallback locations from local file if aduser is unresponsive
-    server.get(`${fasitProperties.PAM_CONTEXT_PATH}/api/locations`, (req, res) => {
+    server.get(`${properties.PAM_CONTEXT_PATH}/api/locations`, (req, res) => {
         if (locationsFromAduser === null) {
             locationApiConsumer.fetchAndProcessLocations().then(locationRes => {
                 if (locationRes === null) {
@@ -157,7 +143,8 @@ const startServer = (htmlPages) => {
         }
     });
 
-    server.get(`${fasitProperties.PAM_CONTEXT_PATH}/api/search`, async (req, res) => {
+    server.get(`${properties.PAM_CONTEXT_PATH}/api/search`,
+        async (req, res) => {
         searchApiConsumer.search(req.query)
             .then((val) => res.send(val))
             .catch((err) => {
@@ -166,16 +153,19 @@ const startServer = (htmlPages) => {
             });
     });
 
-    server.post(`${fasitProperties.PAM_CONTEXT_PATH}/api/search`, async (req, res) => {
-        searchApiConsumer.search(req.body)
-            .then((val) => res.send(val))
-            .catch((err) => {
-                console.warn('Failed to query search api', err);
-                res.sendStatus(err.statusCode ? err.statusCode : 500);
-            });
-    });
+    server.post(`${properties.PAM_CONTEXT_PATH}/api/search`,
+        async (req, res) => {
 
-    server.get(`${fasitProperties.PAM_CONTEXT_PATH}/api/suggestions`, async (req, res) => {
+            searchApiConsumer.search(req.body)
+                .then((val) => res.send(val))
+                .catch((err) => {
+                    console.warn('Failed to query search api', err);
+                    res.sendStatus(err.statusCode ? err.statusCode : 500);
+                });
+        }
+    );
+
+    server.get(`${properties.PAM_CONTEXT_PATH}/api/suggestions`, async (req, res) => {
         searchApiConsumer.suggestions(req.query)
             .then((result) => res.send(result))
             .catch((err) => {
@@ -184,7 +174,7 @@ const startServer = (htmlPages) => {
             });
     });
 
-    server.post(`${fasitProperties.PAM_CONTEXT_PATH}/api/suggestions`, async (req, res) => {
+    server.post(`${properties.PAM_CONTEXT_PATH}/api/suggestions`, async (req, res) => {
         searchApiConsumer.suggestions(req.body)
             .then((result) => res.send(result))
             .catch((err) => {
@@ -193,7 +183,7 @@ const startServer = (htmlPages) => {
             });
     });
 
-    server.get(`${fasitProperties.PAM_CONTEXT_PATH}/api/stilling/:uuid`, async (req, res) => {
+    server.get(`${properties.PAM_CONTEXT_PATH}/api/stilling/:uuid`, async (req, res) => {
         searchApiConsumer.fetchStilling(req.params.uuid)
             .then((val) => res.send(val))
             .catch((err) => {
@@ -202,7 +192,7 @@ const startServer = (htmlPages) => {
             });
     });
 
-    server.get(`${fasitProperties.PAM_CONTEXT_PATH}/api/intern/:uuid`, async (req, res) => {
+    server.get(`${properties.PAM_CONTEXT_PATH}/api/intern/:uuid`, async (req, res) => {
         searchApiConsumer.fetchInternStilling(req.params.uuid)
             .then((val) => res.send(val))
             .catch((err) => {
@@ -212,11 +202,11 @@ const startServer = (htmlPages) => {
     });
 
     server.get('/', (req, res) => {
-        res.redirect(`${fasitProperties.PAM_CONTEXT_PATH}`)
+        res.redirect(`${properties.PAM_CONTEXT_PATH}`)
     });
 
     server.get(/^\/pam-stillingsok.*$/, (req, res) => {
-        var url = req.url.replace("/pam-stillingsok", `${fasitProperties.PAM_CONTEXT_PATH}`);
+        var url = req.url.replace("/pam-stillingsok", `${properties.PAM_CONTEXT_PATH}`);
         res.redirect(`${url}`)
     });
 
@@ -263,10 +253,10 @@ const startServer = (htmlPages) => {
         }
     );
 
-    server.get(`${fasitProperties.PAM_CONTEXT_PATH}/internal/isAlive`, (req, res) => res.sendStatus(200));
-    server.get(`${fasitProperties.PAM_CONTEXT_PATH}/internal/isReady`, (req, res) => res.sendStatus(200));
+    server.get(`${properties.PAM_CONTEXT_PATH}/internal/isAlive`, (req, res) => res.sendStatus(200));
+    server.get(`${properties.PAM_CONTEXT_PATH}/internal/isReady`, (req, res) => res.sendStatus(200));
 
-    server.get(`${fasitProperties.PAM_CONTEXT_PATH}/internal/metrics`, (req, res) => {
+    server.get(`${properties.PAM_CONTEXT_PATH}/internal/metrics`, (req, res) => {
         res.set('Content-Type', prometheus.register.contentType);
         res.end(prometheus.register.metrics());
     });
