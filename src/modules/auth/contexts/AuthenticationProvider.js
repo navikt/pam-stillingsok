@@ -38,6 +38,7 @@ const AuthenticationProvider = ({ children }) => {
 
     const fetchIsAuthenticated = () => {
         setAuthenticationStatus(AuthenticationStatus.IS_FETCHING);
+        console.log("Sjekker om bruker er authenticated");
 
         fetch(`${AD_USER_API}/isAuthenticated`, {
             credentials: "include",
