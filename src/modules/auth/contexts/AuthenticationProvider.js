@@ -110,7 +110,7 @@ const AuthenticationProvider = ({ children }) => {
         } else {
             redirectUrlAfterSuccessfulLogin = STILLINGSOK_URL;
         }
-        window.location.href = `/stillinger/${LOGIN_URL}?redirect=${encodeURIComponent(
+        window.location.href = `/stillinger${LOGIN_URL}?redirect=${encodeURIComponent(
             redirectUrlAfterSuccessfulLogin
         )}`;
 
@@ -120,7 +120,7 @@ const AuthenticationProvider = ({ children }) => {
     }
 
     function logout() {
-        window.location.href = `/stillinger/${LOGOUT_URL}`;
+        window.location.href = `/stillinger${LOGOUT_URL}`;
     }
 
     return (
