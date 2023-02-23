@@ -109,9 +109,13 @@ const AuthenticationProvider = ({ children }) => {
         } else {
             redirectUrlAfterSuccessfulLogin = STILLINGSOK_URL;
         }
-        window.location.href = `${LOGIN_URL}?level=Level3&redirect=${encodeURIComponent(
+        window.location.href = `${LOGIN_URL}?redirect=${encodeURIComponent(
             redirectUrlAfterSuccessfulLogin
         )}`;
+
+        // window.location.href = `/oauth2/login?redirect=${encodeURIComponent(
+        //     redirectUrlAfterSuccessfulLogin
+        // )}`;
     }
 
     function logout() {
