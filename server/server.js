@@ -127,6 +127,18 @@ const startServer = (htmlPages) => {
         express.static(path.resolve(rootDirectory, 'images'))
     );
 
+    server.get(`${properties.PAM_CONTEXT_PATH}/isAuthenticated`, (req, res) => {
+        if(req.headers.authorization) {
+            console.log("accessToken finnes")
+            res.sendStatus(200);
+        } else {
+            console.log("Mangler authorization-header")
+            res.sendStatus(401);
+        }
+    });
+
+    //endepunkt for cv-api for å hente navn og info, eller skal man bare prøve å hente det fra token
+
     // Give users fallback locations from local file if aduser is unresponsive
     server.get(`${properties.PAM_CONTEXT_PATH}/api/locations`, (req, res) => {
         if (locationsFromAduser === null) {
