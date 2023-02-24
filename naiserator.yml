@@ -58,6 +58,10 @@ spec:
       value: {{ pam_jobbtreff_api_url }}
     - name: AMPLITUDE_TOKEN
       value: {{ amplitude_token }}
+    - name: ARBEIDSPLASSEN_URL
+      value: {{ arbeidsplassen_url }}
+    - name: CV_API_URL
+      value: {{ cv-api-url }}
   accessPolicy:
     inbound:
       rules:
@@ -65,3 +69,6 @@ spec:
     outbound:
       rules:
         - application: pam-search-api
+      external:
+        - host: {{ cv-api-url }}
+

@@ -9,6 +9,7 @@ const compression = require('compression');
 const searchApiConsumer = require('./api/searchApiConsumer');
 const htmlMeta = require('./common/htmlMeta');
 const locationApiConsumer = require('./api/locationApiConsumer');
+const setUpProxyCvApi = require("./api/cvApiProxy");
 
 /* eslint no-console: 0 */
 
@@ -132,24 +133,15 @@ const startServer = (htmlPages) => {
             const accessToken =  req.headers.authorization.split(' ')[1];
 
             //TODO valider at token er gyldig
-            console.log(`accessToken finnes: ${accessToken}`)
+            console.log(`accessToken finnes`)
             res.sendStatus(200);
         } else {
             console.log("Mangler authorization-header")
             res.sendStatus(401);
         }
     });
+    setUpProxyCvApi(server);
 
-    server.get(`${properties.PAM_CONTEXT_PATH}/personInfo`, (req, res) => {
-        if(req.headers.authorization) {
-            res.sendStatus(200);
-        } else {
-            console.log("Mangler authorization-header")
-            res.sendStatus(401);
-        }
-    });
-
-    //endepunkt for cv-api for å hente navn og info, eller skal man bare prøve å hente det fra token
 
     // Give users fallback locations from local file if aduser is unresponsive
     server.get(`${properties.PAM_CONTEXT_PATH}/api/locations`, (req, res) => {
