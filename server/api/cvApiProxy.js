@@ -13,9 +13,9 @@ const setUpProxyCvApi = (server) => {
         changeOrigin: true,
         secure: !isLocal,
         logLevel: 'debug',
-        onProxyReq: async (proxyReq, req) => {
+        onProxyReq: (proxyReq, req) => {
             const accessToken = req.headers.authorization.split(' ')[1];
-            const tokenX = await getTokenX(accessToken);
+            const tokenX = getTokenX(accessToken);
             let callId = req.headers['nav-callid'];
             if (callId === undefined || callId === null) {
                 callId = uuidv4();
