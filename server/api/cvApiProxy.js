@@ -1,4 +1,5 @@
 const {createProxyMiddleware} = require("http-proxy-middleware");
+import { v4 as uuidv4 } from 'uuid';
 const CV_API_URL = process.env.CV_API_URL ||'http://localhost:1337';
 const isLocal = process.env.BASE_URL && process.env.BASE_URL.includes('localhost') || process.env.IS_LOCAL === 'true';
 
@@ -14,8 +15,10 @@ const setUpProxyCvApi = (server) => {
         onProxyReq: (proxyReq, req) => {
             let callId = req.headers['nav-callid'];
             if(callId === undefined || callId === null) {
-                console.log("Det er ikke en callid fra før, lager en ny callid")
+                callId = uuidv4();
+                console.log(`Det er ikke en callid fra før, lager en ny callid: ${callId}`);
             }
+            proxyReq.setHeader('nav-callid', callId);
             //console.log(`Legger til header på requesten ${req.headers.authorization}`)
             proxyReq.setHeader('Authorization', `Bearer ${req.headers.authorization}`)
         }
