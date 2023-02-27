@@ -12,7 +12,11 @@ const setUpProxyCvApi = (server) => {
         secure: !isLocal,
         logLevel: 'debug',
         onProxyReq: (proxyReq, req) => {
-            console.log(`Legger til header på requesten ${req.headers.authorization}`)
+            let callId = req.headers['nav-callid'];
+            if(callId === undefined || callId === null) {
+                console.log("Det er ikke en callid fra før, lager en ny callid")
+            }
+            //console.log(`Legger til header på requesten ${req.headers.authorization}`)
             proxyReq.setHeader('Authorization', `Bearer ${req.headers.authorization}`)
         }
     });
