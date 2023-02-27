@@ -13,5 +13,6 @@
   "amplitude_token": "3acd3a52e065d2d99856a12e7e9e1432",
   "interest_api_url": "https://arbeidsplassen.dev.nav.no/interesse-api",
   "cv-api-url": "https://pam-cv-api.dev-fss-pub.nais.io",
-  "cv-api-host": "pam-cv-api.dev-fss-pub.nais.io"
+  "cv-api-host": "pam-cv-api.dev-fss-pub.nais.io",
+  "token_x_audience": "dev-fss:teampam:pam-cv-api"
 }
