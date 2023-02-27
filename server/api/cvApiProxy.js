@@ -28,7 +28,7 @@ const setUpProxyCvApi = (server) => {
 }
 
 const getToken = async (accessToken) => {
-    return await getTokenX(accessToken.access_token);
+    return (await getTokenX(accessToken)).access_token;
 }
 
 module.exports = setUpProxyCvApi;

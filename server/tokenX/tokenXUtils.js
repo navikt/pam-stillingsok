@@ -52,7 +52,7 @@ async function getTokenX(token) {
             additionalClaims
         );
     } catch (e) {
-        console.error(`Kunne ikke veksle inn til tokenX: ${e.message} Cause: ${e.cause}`);
+        console.error(`Kunne ikke veksle inn til tokenX: ${e.message}`);
     }
     return tokenX;
 
