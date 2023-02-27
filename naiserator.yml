@@ -70,5 +70,5 @@ spec:
       rules:
         - application: pam-search-api
       external:
-        - host: {{ cv-api-url }}
+        - host: {{ cv-api-host }}
 
