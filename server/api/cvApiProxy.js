@@ -20,7 +20,7 @@ const setUpProxyCvApi = (server) => {
             }
             proxyReq.setHeader('nav-callid', callId);
             //console.log(`Legger til header på requesten ${req.headers.authorization}`)
-            proxyReq.setHeader('Authorization', `Bearer ${req.headers.authorization}`)
+            proxyReq.setHeader('Authorization', `${req.headers.authorization}`)
         }
     });
     server.use(proxySetting);
