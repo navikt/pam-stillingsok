@@ -13,15 +13,16 @@ const setUpProxyCvApi = (server) => {
         changeOrigin: true,
         secure: !isLocal,
         logLevel: 'debug',
-        onProxyReq: (proxyReq, req) => {
-            const accessToken =  req.headers.authorization.split(' ')[1];
+        onProxyReq: async (proxyReq, req) => {
+            const accessToken = req.headers.authorization.split(' ')[1];
+            const tokenX = await getTokenX(accessToken);
             let callId = req.headers['nav-callid'];
-            if(callId === undefined || callId === null) {
+            if (callId === undefined || callId === null) {
                 callId = uuidv4();
                 console.log(`Det er ikke en callid fra før, lager en ny callid: ${callId}`);
             }
             proxyReq.setHeader('nav-callid', callId);
-            proxyReq.setHeader('Authorization', `Bearer ${getTokenX(accessToken)}`)
+            proxyReq.setHeader('Authorization', `Bearer ${tokenX.access_token}`)
         }
     });
     server.use(proxySetting);
