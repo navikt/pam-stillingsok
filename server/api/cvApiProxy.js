@@ -12,23 +12,31 @@ const setUpProxyCvApi = (server) => {
         changeOrigin: true,
         secure: !isLocal,
         logLevel: 'debug',
+        router: async (req) => setConfig(req),
         onProxyReq: (proxyReq, req) => {
-            const accessToken = req.headers.authorization.split(' ')[1];
-            const tokenX = getToken(accessToken);
+            console.log(`Auth: ${req.headers.authorization}`)
             let callId = req.headers['nav-callid'];
             if (callId === undefined || callId === null) {
                 callId = uuidv4();
                 console.log(`Det er ikke en callid fra før, lager en ny callid: ${callId}`);
             }
             proxyReq.setHeader('nav-callid', callId);
-            proxyReq.setHeader('Authorization', `Bearer ${tokenX}`)
+            //proxyReq.setHeader('Authorization', `Bearer ${tokenX}`)
         }
     });
     server.use(proxySetting);
 }
 
+const setConfig = async (req) => {
+    console.log(`Token før: ${req.headers.authorization}`);
+    const accessToken = req.headers.authorization.split(' ')[1];
+    const tokenX = await getToken(accessToken);
+    req.headers['authorization'] = `Bearer ${tokenX.access_token}`;
+    console.log(`Token etter: ${req.headers.authorization}`);
+};
+
 const getToken = async (accessToken) => {
-    return (await getTokenX(accessToken)).access_token;
+    return await getTokenX(accessToken);
 }
 
 module.exports = setUpProxyCvApi;
