@@ -10,6 +10,7 @@ const searchApiConsumer = require('./api/searchApiConsumer');
 const htmlMeta = require('./common/htmlMeta');
 const locationApiConsumer = require('./api/locationApiConsumer');
 const setUpProxyCvApi = require("./api/cvApiProxy");
+const {initializeTokenX} = require("./tokenX/tokenXUtils");
 
 /* eslint no-console: 0 */
 
@@ -140,6 +141,7 @@ const startServer = (htmlPages) => {
             res.sendStatus(401);
         }
     });
+    initializeTokenX();
     setUpProxyCvApi(server);
 
 
