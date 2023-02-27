@@ -1,5 +1,5 @@
 const {createProxyMiddleware} = require("http-proxy-middleware");
-import { v4 as uuidv4 } from 'uuid';
+const { v4: uuidv4 } = require('uuid');
 const CV_API_URL = process.env.CV_API_URL ||'http://localhost:1337';
 const isLocal = process.env.BASE_URL && process.env.BASE_URL.includes('localhost') || process.env.IS_LOCAL === 'true';
 
