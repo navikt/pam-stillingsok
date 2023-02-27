@@ -7,7 +7,7 @@ const setUpProxyCvApi = (server) => {
     console.log("Setter opp proxy til cv-api")
     const proxySetting = createProxyMiddleware(`/stillinger/personInfo`, {
         target: `${CV_API_URL}/pam-cv-api/api/cv/rest/person/headerinfo`,
-        //pathRewrite: {[`^/stillinger/personInfo`]: ''},
+        pathRewrite: {[`^/stillinger/personInfo`]: ''},
         changeOrigin: true,
         secure: !isLocal,
         logLevel: 'debug',
