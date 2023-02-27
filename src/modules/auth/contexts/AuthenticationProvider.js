@@ -64,6 +64,7 @@ const AuthenticationProvider = ({ children }) => {
                 method: "GET",
                 credentials: "include"
             }).then((response) => {
+                console.log(`Response fra cv-api: ${response.status}`)
                 if (response.status === 200) {
                     response.json().then((result) => {
                         setUserNameAndInfo(result);
