@@ -60,7 +60,7 @@ const AuthenticationProvider = ({ children }) => {
 
     function fetchUserNameAndInfo() {
         if (process.env.NODE_ENV === "production") {
-            fetch("/stillinger/personInfo", {
+            fetch("/stillinger/headerinfo", {
                 method: "GET",
                 credentials: "include"
             }).then((response) => {

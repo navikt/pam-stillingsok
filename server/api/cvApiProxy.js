@@ -5,9 +5,9 @@ const isLocal = process.env.BASE_URL && process.env.BASE_URL.includes('localhost
 
 const setUpProxyCvApi = (server) => {
     console.log("Setter opp proxy til cv-api")
-    const proxySetting = createProxyMiddleware(`/stillinger/personInfo`, {
-        target: `${CV_API_URL}/pam-cv-api/api/cv/rest/person/headerinfo`,
-        pathRewrite: {[`^/stillinger/personInfo`]: ''},
+    const proxySetting = createProxyMiddleware(`/stillinger/headerinfo`, {
+        target: `${CV_API_URL}/pam-cv-api/api/cv/rest/person`,
+        pathRewrite: {[`^/stillinger/personInfo`]: '/headerinfo'},
         changeOrigin: true,
         secure: !isLocal,
         logLevel: 'debug',
