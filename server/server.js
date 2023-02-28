@@ -132,9 +132,7 @@ const startServer = (htmlPages) => {
     server.get(`${properties.PAM_CONTEXT_PATH}/isAuthenticated`, (req, res) => {
         if(req.headers.authorization) {
             const accessToken =  req.headers.authorization.split(' ')[1];
-
             //TODO valider at token er gyldig
-            console.log(`accessToken finnes`)
             res.sendStatus(200);
         } else {
             console.log("Mangler authorization-header")
