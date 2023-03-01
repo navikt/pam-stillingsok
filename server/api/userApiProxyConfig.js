@@ -3,7 +3,7 @@ const {createProxyMiddleware} = require('http-proxy-middleware');
 const setUpAduserApiProxy = (server) => {
     const url = 'stillinger/api/v1/';
 
-    server.get(`/^\/${url}.*$/`,
+    server.get(`^\/stillinger\/api\/v1\/.*`,
         async (req, res) => {
             console.log("henter stillinger/api/v1");
         },
