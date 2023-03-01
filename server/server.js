@@ -11,6 +11,7 @@ const htmlMeta = require('./common/htmlMeta');
 const locationApiConsumer = require('./api/locationApiConsumer');
 const setUpProxyCvApi = require("./api/cvApiProxy");
 const {initializeTokenX} = require("./tokenX/tokenXUtils");
+const setUpAduserApiProxy = require("./api/userApiProxyConfig");
 
 /* eslint no-console: 0 */
 
@@ -158,6 +159,8 @@ const startServer = (htmlPages) => {
             res.send(locationsFromAduser);
         }
     });
+
+    setUpAduserApiProxy(server);
 
     server.get(`${properties.PAM_CONTEXT_PATH}/api/search`,
         async (req, res) => {

@@ -10,7 +10,8 @@ function getCookie(name) {
 async function get(url) {
     let response;
     try {
-        response = await fetch(`${AD_USER_API}/${url}`, {
+        console.log(`UserApi.get fra ${url}`)
+        response = await fetch(`/stillinger/${url}`, {
             credentials: "include",
             method: "GET",
             referrer: CONTEXT_PATH
@@ -75,7 +76,7 @@ async function put(url, query) {
 async function remove(url) {
     let response;
     try {
-        response = await fetch(`${AD_USER_API}/${url}`, {
+        response = await fetch(`/stillinger/${url}`, {
             credentials: "include",
             method: "DELETE",
             referrer: CONTEXT_PATH,
