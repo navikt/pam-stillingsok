@@ -11,9 +11,10 @@ const setUpAduserApiProxy = (server) => {
     let origin = 'stillinger/api/v1/';
 
     server.get(/^\/stillinger\/api\/v1\/.*/,
-        async (req, res) => {
+        async (req, res, next) => {
             console.log(`henter stillinger/api/v1, kommer fra: ${req.url}`);
             origin = req.url;
+            next();
         },
         //handleAuth?
         setCallId,
@@ -48,7 +49,6 @@ const setTokenX = async (req, res, next) => {
     next();
 }
 
-
 const setupProxy = (originUrl) =>
    //console.log(`Oppsett proxy origin: ${originUrl}`);
     createProxyMiddleware(originUrl, {
@@ -60,6 +60,7 @@ const setupProxy = (originUrl) =>
 
 const setCallId = async (req, res, next) => {
     let callId = req.headers['nav-callid'];
+    console.log("")
     //sjekker om headeren finnes
     if (callId === undefined || callId === null) {
         callId = uuidv4();
