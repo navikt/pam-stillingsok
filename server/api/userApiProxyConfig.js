@@ -49,7 +49,7 @@ const setTokenX = async (req, res, next) => {
 
 
 const setupProxy = (originUrl) =>
-    console.log(`Oppsett proxy origin: ${originUrl}`);
+   //console.log(`Oppsett proxy origin: ${originUrl}`);
     createProxyMiddleware(originUrl, {
         target: process.env.PAMADUSER_URL,
         pathRewrite: {'^/stillinger/': '/'},
