@@ -43,7 +43,9 @@ const getToken = async (accessToken) => {
 
 const setTokenX = async (req, res, next) => {
     const accessToken = req.headers.authorization.split(' ')[1];
+    console.log("henter tokenX");
     const tokenX = await getToken(accessToken);
+    console.log(`Hentet token ${tokenX}`)
     req.headers['authorization'] = `Bearer ${tokenX.access_token}`;
 
     next();
