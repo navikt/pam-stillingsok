@@ -5,22 +5,33 @@ const isLocal = process.env.ARBEIDSPLASSEN_URL && process.env.ARBEIDSPLASSEN_URL
 
 let audience = process.env.ADUSER_AUDIENCE;
 
+const origins = ["stillinger/api/v1/user"]
+
+
 const setUpAduserApiProxy = (server) => {
     const url = 'stillinger/api/v1/';
     console.log("Setter opp proxy til aduser");
     let origin = 'stillinger/api/v1/';
 
-    server.get(/^\/stillinger\/api\/v1\/.*/,
-        async (req, res, next) => {
-            console.log(`henter stillinger/api/v1, kommer fra: ${req.url}`);
-            origin = req.url;
-            next();
-        },
-        //handleAuth?
-        setCallId,
-        setTokenX,
-        setupProxy(/^\/stillinger\/api\/v1\/.*/)
-    );
+    origins.forEach(origin => {
+        server.get(origin,
+            setCallId,
+            setTokenX,
+            setupProxy(origin)
+        );
+    });
+
+    // server.get(/^\/stillinger\/api\/v1\/.*/,
+    //     async (req, res, next) => {
+    //         console.log(`henter stillinger/api/v1, kommer fra: ${req.url}`);
+    //         origin = req.url;
+    //         next();
+    //     },
+    //     //handleAuth?
+    //     setCallId,
+    //     setTokenX,
+    //     setupProxy(/^\/stillinger\/api\/v1\/.*/)
+    // );
 
     server.post(`/^\/${url}.*$/`,
         async (req, res) => {
