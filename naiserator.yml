@@ -67,7 +67,7 @@ spec:
     - name: ADUSER_AUDIENCE
       value: {{ aduser_audience }}
     - name: CV_API_AUDIENCE
-      value: { { cv_api_audience } }
+      value: {{ cv_api_audience }}
   accessPolicy:
     inbound:
       rules:
@@ -75,6 +75,7 @@ spec:
     outbound:
       rules:
         - application: pam-search-api
+        - application: pam-aduser
       external:
         - host: {{ cv-api-host }}
 
