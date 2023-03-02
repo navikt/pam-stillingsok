@@ -22,6 +22,8 @@
   "dependencies": {
     "@navikt/arbeidsplassen-core": "2.0.0",
     "@navikt/arbeidsplassen-knapper": "2.0.2",
+    "@navikt/ds-css": "^2.5.0",
+    "@navikt/ds-react": "^2.5.0",
     "@sentry/browser": "^6.19.6",
     "@types/react-router-dom": "^4.3.5",
     "amplitude-js": "8.21.3",
@@ -62,7 +64,7 @@
     "react-router-dom": "^5.2.0",
     "request": "^2.88.2",
     "request-promise": "^4.2.6",
-    "ua-parser-js": "^0.7.30",
+    "ua-parser-js": "^0.7.33",
     "universal-cookie": "^4.0.4",
     "uuid": "^9.0.0",
     "whatwg-fetch": "^2.0.4"
