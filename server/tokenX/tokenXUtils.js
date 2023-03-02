@@ -6,7 +6,6 @@ let tokenXClient;
 let clientId = process.env.TOKEN_X_CLIENT_ID;
 let tokenXIssuer;
 let remoteJWKSet;
-let tokenXAud = process.env.TOKEN_X_AUDIENCE;
 
 async function initializeTokenX() {
     try {
@@ -31,7 +30,7 @@ async function tokenIsValid(token) {
     }
 }
 
-async function getTokenX(token) {
+async function getTokenX(token, audience) {
     let tokenX;
     const additionalClaims = {
         clientAssertionPayload: {
@@ -46,7 +45,7 @@ async function getTokenX(token) {
                 grant_type: "urn:ietf:params:oauth:grant-type:token-exchange",
                 client_assertion_type: "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
                 subject_token_type: "urn:ietf:params:oauth:token-type:jwt",
-                audience: tokenXAud,
+                audience: audience,
                 subject_token: token
             },
             additionalClaims

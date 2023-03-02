@@ -14,5 +14,6 @@
   "interest_api_url": "https://arbeidsplassen.nav.no/interesse-api",
   "cv-api-url": "https://pam-cv-api.prod-fss-pub.nais.io",
   "cv-api-host": "pam-cv-api.prod-fss-pub.nais.io",
-  "token_x_audience": "prod-fss:teampam:pam-cv-api"
+  "cv_api_audience": "prod-fss:teampam:pam-cv-api",
+  "aduser_audience": "prod-gcp:teampam:pam-aduser"
 }
