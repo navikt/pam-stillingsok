@@ -19,7 +19,7 @@ const setUpAduserApiProxy = (server) => {
         //handleAuth?
         setCallId,
         setTokenX,
-        setupProxy(origin)
+        setupProxy(/^\/stillinger\/api\/v1\/.*/)
     );
 
     server.post(`/^\/${url}.*$/`,
@@ -45,7 +45,7 @@ const setTokenX = async (req, res, next) => {
     const accessToken = req.headers.authorization.split(' ')[1];
     console.log("henter tokenX");
     const tokenX = await getToken(accessToken);
-    console.log(`Hentet token ${tokenX}`)
+    console.log(`Hentet token ${tokenX.access_token}`)
     req.headers['authorization'] = `Bearer ${tokenX.access_token}`;
 
     next();
