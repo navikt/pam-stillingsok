@@ -7,17 +7,18 @@ let audience = process.env.ADUSER_AUDIENCE;
 
 const setUpAduserApiProxy = (server) => {
     const url = 'stillinger/api/v1/';
-    console.log("Setter opp proxy til aduser")
+    console.log("Setter opp proxy til aduser");
+    let origin = 'stillinger/api/v1/';
 
     server.get(/^\/stillinger\/api\/v1\/.*/,
         async (req, res) => {
             console.log(`henter stillinger/api/v1, kommer fra: ${req.url}`);
+            origin = req.url;
         },
-
         //handleAuth?
         setCallId,
         setTokenX,
-        setupProxy(/^\/stillinger\/api\/v1\/.*/)
+        setupProxy(origin)
     );
 
     server.post(`/^\/${url}.*$/`,
