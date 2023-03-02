@@ -14,6 +14,7 @@ const setUpAduserApiProxy = (server) => {
     let origin = 'stillinger/api/v1/';
 
     origins.forEach(origin => {
+        console.log(`Origin: ${origin}`);
         server.get(origin,
             setCallId,
             setTokenX,
