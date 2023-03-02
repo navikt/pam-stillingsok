@@ -9,7 +9,7 @@ const setUpAduserApiProxy = (server) => {
     const url = 'stillinger/api/v1/';
     console.log("Setter opp proxy til aduser")
 
-    server.get(`/^\/stillinger\/api\/v1\/.*`,
+    server.get(/^\/stillinger\/api\/v1\/.*/,
         async (req, res) => {
             console.log("henter stillinger/api/v1");
         },
