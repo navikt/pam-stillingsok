@@ -21,7 +21,9 @@
   "license": "ISC",
   "dependencies": {
     "@navikt/arbeidsplassen-core": "2.0.0",
+    "@navikt/arbeidsplassen-css": "^1.0.20",
     "@navikt/arbeidsplassen-knapper": "2.0.2",
+    "@navikt/arbeidsplassen-react": "^1.0.21",
     "@navikt/ds-css": "^2.5.0",
     "@navikt/ds-react": "^2.5.0",
     "@sentry/browser": "^6.19.6",
