@@ -11,7 +11,7 @@ const setUpAduserApiProxy = (server) => {
 
     server.get(/^\/stillinger\/api\/v1\/.*/,
         async (req, res) => {
-            console.log("henter stillinger/api/v1");
+            console.log(`henter stillinger/api/v1, kommer fra: ${req.url}`);
         },
 
         //handleAuth?
@@ -49,6 +49,7 @@ const setTokenX = async (req, res, next) => {
 
 
 const setupProxy = (originUrl) =>
+    console.log(`Oppsett proxy origin: ${originUrl}`);
     createProxyMiddleware(originUrl, {
         target: process.env.PAMADUSER_URL,
         pathRewrite: {'^/stillinger/': '/'},
