@@ -17,7 +17,7 @@ const setUpAduserApiProxy = (server) => {
         //handleAuth?
         setCallId,
         setTokenX,
-        setupProxy(`/^\/${url}.*$/`)
+        setupProxy(/^\/stillinger\/api\/v1\/.*/)
     );
 
     server.post(`/^\/${url}.*$/`,
