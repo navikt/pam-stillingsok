@@ -5,13 +5,14 @@ const isLocal = process.env.ARBEIDSPLASSEN_URL && process.env.ARBEIDSPLASSEN_URL
 
 let audience = process.env.ADUSER_AUDIENCE;
 
-const origins = ["stillinger/api/v1/user"]
+const origins = ["/stillinger/api/v1/user", "/stillinger/api/v1/userfavouriteads",
+"/stillinger/api/v1/userfavouriteads/:uuid", "/stillinger/api/v1/reportposting",
+"/stillinger/api/v1/savedsearches/:uuid", "/stillinger/api/v1/savedsearches"]
 
 
 const setUpAduserApiProxy = (server) => {
     const url = 'stillinger/api/v1/';
     console.log("Setter opp proxy til aduser");
-    let origin = 'stillinger/api/v1/';
 
     origins.forEach(origin => {
         console.log(`Origin: ${origin}`);
