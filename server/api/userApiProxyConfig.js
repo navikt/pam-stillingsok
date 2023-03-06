@@ -9,9 +9,9 @@ const origins = ["/stillinger/api/v1/user", "/stillinger/api/v1/userfavouriteads
 "/stillinger/api/v1/userfavouriteads/:uuid", "/stillinger/api/v1/reportposting",
 "/stillinger/api/v1/savedsearches/:uuid", "/stillinger/api/v1/savedsearches"]
 
+//TODO legg til CSRF-token, hvis det ikke allerede er med?
 
 const setUpAduserApiProxy = (server) => {
-    const url = 'stillinger/api/v1/';
     console.log("Setter opp proxy til aduser");
 
     origins.forEach(origin => {
@@ -22,21 +22,27 @@ const setUpAduserApiProxy = (server) => {
             setupProxy(origin)
         );
     });
-
-    server.post(`/^\/${url}.*$/`,
-        async (req, res) => {
-            console.log("henter stillinger/api/v1");
-        });
-
-    server.put(`/^\/${url}.*$/`,
-        async (req, res) => {
-
-        });
-
-    server.delete(`/^\/${url}.*$/`,
-        async (req, res) => {
-
-        });
+    origins.forEach(origin => {
+        server.post(origin,
+            setCallId,
+            setTokenX,
+            setupProxy(origin)
+        );
+    });
+    origins.forEach(origin => {
+        server.put(origin,
+            setCallId,
+            setTokenX,
+            setupProxy(origin)
+        );
+    });
+    origins.forEach(origin => {
+        server.delete(origin,
+            setCallId,
+            setTokenX,
+            setupProxy(origin)
+        );
+    });
 }
 const getToken = async (accessToken) => {
     return await getTokenX(accessToken, audience);
@@ -53,7 +59,6 @@ const setTokenX = async (req, res, next) => {
 }
 
 const setupProxy = (originUrl) =>
-   //console.log(`Oppsett proxy origin: ${originUrl}`);
     createProxyMiddleware(originUrl, {
         target: process.env.PAMADUSER_URL,
         pathRewrite: {'^/stillinger/': '/'},
