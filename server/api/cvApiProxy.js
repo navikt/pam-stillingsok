@@ -17,7 +17,7 @@ const setUpProxyCvApi = (server) => {
             let callId = req.headers['nav-callid'];
             if (callId === undefined || callId === null) {
                 callId = uuidv4();
-                console.log(`Det er ikke en callid fra før, lager en ny callid: ${callId}`);
+                console.log(`Det er ikke en callid fra før, lager en ny callid til pam-cv-api: ${callId}`);
             }
             proxyReq.setHeader('nav-callid', callId);
             proxyReq.setHeader('Authorization', `${req.headers.authorization}`)

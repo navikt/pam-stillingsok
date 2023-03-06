@@ -23,18 +23,6 @@ const setUpAduserApiProxy = (server) => {
         );
     });
 
-    // server.get(/^\/stillinger\/api\/v1\/.*/,
-    //     async (req, res, next) => {
-    //         console.log(`henter stillinger/api/v1, kommer fra: ${req.url}`);
-    //         origin = req.url;
-    //         next();
-    //     },
-    //     //handleAuth?
-    //     setCallId,
-    //     setTokenX,
-    //     setupProxy(/^\/stillinger\/api\/v1\/.*/)
-    // );
-
     server.post(`/^\/${url}.*$/`,
         async (req, res) => {
             console.log("henter stillinger/api/v1");
@@ -58,7 +46,7 @@ const setTokenX = async (req, res, next) => {
     const accessToken = req.headers.authorization.split(' ')[1];
     console.log("henter tokenX");
     const tokenX = await getToken(accessToken);
-    console.log(`Hentet token ${tokenX.access_token}`)
+    console.log(`Hentet token`)
     req.headers['authorization'] = `Bearer ${tokenX.access_token}`;
 
     next();
@@ -78,7 +66,7 @@ const setCallId = async ( req, res, next) => {
     //sjekker om headeren finnes
     if (callId === undefined || callId === null) {
         callId = uuidv4();
-        console.log(`Det er ikke en callid fra før, lager en ny callid for kall til aduser: ${callId}`);
+        console.log(`Det er ikke en callid fra før, lager en ny callid for kall til pam-aduser: ${callId}`);
     }
     req.headers['nav-callid'] = callId;
     next();
