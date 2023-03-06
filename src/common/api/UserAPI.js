@@ -28,8 +28,9 @@ async function get(url) {
 
 async function post(url, query, toJson = true) {
     let response;
+    console.log(`UserApi.post fra ${url}`)
     try {
-        response = await fetch(`${AD_USER_API}/${url}`, {
+        response = await fetch(`/stillinger/${url}`, {
             credentials: "include",
             body: JSON.stringify(query),
             method: "POST",
@@ -52,8 +53,9 @@ async function post(url, query, toJson = true) {
 
 async function put(url, query) {
     let response;
+    console.log(`UserApi.put fra ${url}`)
     try {
-        response = await fetch(`${AD_USER_API}/${url}`, {
+        response = await fetch(`/stillinger/${url}`, {
             credentials: "include",
             body: JSON.stringify(query),
             method: "PUT",
@@ -75,6 +77,7 @@ async function put(url, query) {
 
 async function remove(url) {
     let response;
+    console.log(`UserApi.delete fra ${url}`)
     try {
         response = await fetch(`/stillinger/${url}`, {
             credentials: "include",
