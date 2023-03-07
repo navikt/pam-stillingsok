@@ -15,7 +15,7 @@ const setUpAduserApiProxy = (server) => {
     console.log("Setter opp proxy til aduser");
 
     origins.forEach(origin => {
-        console.log(`Origin: ${origin}`);
+        //console.log(`${origin}`);
         server.get(origin,
             setCallId,
             setTokenX,
@@ -66,12 +66,13 @@ const setupProxy = (originUrl) =>
         secure: !isLocal,
     });
 
-const setCallId = async ( req, res, next) => {
+const setCallId = async (req, res, next) => {
     let callId = req.headers['nav-callid'];
     //sjekker om headeren finnes
     if (callId === undefined || callId === null) {
         callId = uuidv4();
-        console.log(`Det er ikke en callid fra før, lager en ny callid for kall til pam-aduser: ${callId}`);
+        console.log(`Lager en callId ${callId} for ${req.url} med ${req.method}`)
+        //console.log(`Det er ikke en callid fra før, lager en ny callid for kall til pam-aduser: ${callId}`);
     }
     req.headers['nav-callid'] = callId;
     next();
