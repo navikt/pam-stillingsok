@@ -6,8 +6,8 @@ const isLocal = process.env.ARBEIDSPLASSEN_URL && process.env.ARBEIDSPLASSEN_URL
 
 let audience = process.env.ADUSER_AUDIENCE;
 
-const origins = ["/stillinger/api/v1/user", "/stillinger/api/v1/userfavouriteads",
-"/stillinger/api/v1/userfavouriteads/:uuid", "/stillinger/api/v1/reportposting",
+const origins = ["/stillinger/api/v1/user", "/stillinger/api/v1/userfavouriteads/:uuid",
+    "/stillinger/api/v1/userfavouriteads", "/stillinger/api/v1/reportposting",
 "/stillinger/api/v1/savedsearches/:uuid", "/stillinger/api/v1/savedsearches"]
 
 //TODO legg til CSRF-token, hvis det ikke allerede er med?
@@ -49,7 +49,7 @@ const getToken = async (accessToken) => {
     return await getTokenX(accessToken, audience);
 }
 
-const restream = async (proxyReq, req, res, options) => {
+const restream = (proxyReq, req, res, options) => {
     if (req.body) {
         let bodyData = JSON.stringify(req.body);
         // incase if content-type is application/x-www-form-urlencoded -> we need to change to application/json
