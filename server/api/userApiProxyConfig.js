@@ -49,6 +49,17 @@ const getToken = async (accessToken) => {
     return await getTokenX(accessToken, audience);
 }
 
+const restream = async (proxyReq, req, res, options) => {
+    if (req.body) {
+        let bodyData = JSON.stringify(req.body);
+        // incase if content-type is application/x-www-form-urlencoded -> we need to change to application/json
+        proxyReq.setHeader('Content-Type','application/json');
+        proxyReq.setHeader('Content-Length', Buffer.byteLength(bodyData));
+        // stream the content
+        proxyReq.write(bodyData);
+    }
+};
+
 const setTokenX = async (req, res, next) => {
     const accessToken = req.headers.authorization.split(' ')[1];
     console.log("henter tokenX");
@@ -65,6 +76,7 @@ const setupProxy = (originUrl) =>
         pathRewrite: {'^/stillinger/': '/'},
         changeOrigin: true,
         secure: !isLocal,
+        onProxyReq: restream
     });
 
 const setCallId = async (req, res, next) => {
