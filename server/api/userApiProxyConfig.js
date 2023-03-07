@@ -1,4 +1,5 @@
 const {createProxyMiddleware} = require('http-proxy-middleware');
+const bodyParser = require('body-parser')
 const {v4: uuidv4} = require("uuid");
 const {getTokenX} = require("../tokenX/tokenXUtils");
 const isLocal = process.env.ARBEIDSPLASSEN_URL && process.env.ARBEIDSPLASSEN_URL.includes('localhost') || process.env.IS_LOCAL === 'true';
@@ -68,10 +69,12 @@ const setupProxy = (originUrl) =>
 
 const setCallId = async (req, res, next) => {
     let callId = req.headers['nav-callid'];
+
     //sjekker om headeren finnes
     if (callId === undefined || callId === null) {
         callId = uuidv4();
         console.log(`Lager en callId ${callId} for ${req.url} med ${req.method}`)
+        console.log(`Det er en body: ${req.body}`)
         //console.log(`Det er ikke en callid fra før, lager en ny callid for kall til pam-aduser: ${callId}`);
     }
     req.headers['nav-callid'] = callId;
