@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Knapp } from "@navikt/arbeidsplassen-knapper";
+import { Button } from "@navikt/ds-react";
 import "./Pagination.css";
 
 const Pagination = ({ searchResult, isSearching, query, onLoadMoreClick }) => {
@@ -13,14 +13,15 @@ const Pagination = ({ searchResult, isSearching, query, onLoadMoreClick }) => {
         <React.Fragment>
             {total > 0 && <p className="Pagination__numberOfTotal">{`Viser ${count} av ${total} treff`}</p>}
             {hasMore && (
-                <Knapp
+                <Button
+                    variant="secondary"
                     disabled={isSearching}
                     spinner={isSearching}
                     className="Pagination__button"
                     onClick={onLoadMoreClick}
                 >
                     Se flere
-                </Knapp>
+                </Button>
             )}
         </React.Fragment>
     );

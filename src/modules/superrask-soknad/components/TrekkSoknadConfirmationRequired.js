@@ -4,7 +4,7 @@ import { CONTEXT_PATH } from "../../../common/environment";
 import getEmployer from "../../../../server/common/getEmployer";
 import Alert from "../../../common/components/alert/Alert";
 import Spinner from "nav-frontend-spinner";
-import { Hovedknapp } from "@navikt/arbeidsplassen-knapper";
+import { Button } from "@navikt/ds-react";
 
 function TrekkSoknadConfirmationRequired({ ad, handleWithDrawClick, isDeleting, hasError }) {
     return (
@@ -38,9 +38,9 @@ function TrekkSoknadConfirmationRequired({ ad, handleWithDrawClick, isDeleting, 
                     <Spinner type="S" /> Trekker søknad
                 </div>
             ) : (
-                <Hovedknapp onClick={handleWithDrawClick} spinner={isDeleting} disabled={isDeleting}>
+                <Button variant="primary" onClick={handleWithDrawClick} spinner={isDeleting} disabled={isDeleting}>
                     Trekk søknad
-                </Hovedknapp>
+                </Button>
             )}
         </React.Fragment>
     );

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Alert from "../../../common/components/alert/Alert";
 import H1WithAutoFocus from "../../../common/components/h1WithAutoFocus/H1WithAutoFocus";
 import { Checkbox, Textarea } from "nav-frontend-skjema";
-import { Hovedknapp } from "@navikt/arbeidsplassen-knapper";
+import { Button } from "@navikt/ds-react";
 import { isValidEmail } from "../../../common/components/utils";
 import "./SuperraskSoknad.css";
 import { CONTEXT_PATH } from "../../../common/environment";
@@ -301,9 +301,9 @@ const SuperraskSoknadForm = ({ ad, interestForm, isInternal, submitForm, isSendi
                 </div>
             ) : (
                 <div className="InterestForm__buttons">
-                    <Hovedknapp htmlType="button" onClick={handleSendMessageClick}>
+                    <Button variant="primary" htmlType="button" onClick={handleSendMessageClick}>
                         Send søknad
-                    </Hovedknapp>
+                    </Button>
                     <Link to={`${CONTEXT_PATH}/${isInternal ? "intern" : "stilling"}/${ad._id}`} className="Knapp">
                         Avbryt
                     </Link>
