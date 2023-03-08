@@ -2,7 +2,7 @@ import * as React from "react";
 import { useState } from "react";
 import { UAParser } from "ua-parser-js";
 import NavFrontendModal from "nav-frontend-modal";
-import { Knapp } from "@navikt/arbeidsplassen-knapper";
+import { Button } from "@navikt/ds-react";
 import { Element, Normaltekst, Systemtittel } from "nav-frontend-typografi";
 import "./BrowserSupportInfo.css";
 
@@ -76,7 +76,7 @@ const BrowserSupportInfoModal = ({ tillatLukking = false }) => {
 
                 {tillatLukking && (
                     <Normaltekst className="BrowserInfo-knapp-wrapper">
-                        <Knapp onClick={closeModal}>Lukk</Knapp>
+                        <Button variant="secondary" onClick={closeModal}>Lukk</Button>
                     </Normaltekst>
                 )}
             </section>

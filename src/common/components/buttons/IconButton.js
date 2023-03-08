@@ -1,16 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Knapp } from "@navikt/arbeidsplassen-knapper";
+import { Button } from "@navikt/ds-react";
 import "./IconButton.css";
 
 function IconButton({ text, icon, hideText, onClick, className, disabled, spinner, type }) {
     return (
-        <Knapp type={type} disabled={disabled} spinner={spinner} onClick={onClick} className={className}>
+        <Button variant="secondary" type={type} disabled={disabled} spinner={spinner} onClick={onClick} className={className}>
             <span className="IconButton__inner">
                 {icon}
                 {!hideText && <span>{text}</span>}
             </span>
-        </Knapp>
+        </Button>
     );
 }
 
