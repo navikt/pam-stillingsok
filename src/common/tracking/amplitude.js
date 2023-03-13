@@ -30,14 +30,16 @@ export const logAmplitudePageview = (additionalData) => {
 };
 
 export function logStillingVisning(ad) {
+    const employerLocation = ad._source.employer ? ad._source.employer.location : null
+
     logAmplitudeEvent("Stilling visning", {
         title: ad._source.title || "N/A",
         id: ad._id,
         businessName: ad._source.businessName || "N/A",
-        country: ad._source.employer.location.country || "N/A",
-        county: ad._source.employer.location.county || "N/A",
-        city: ad._source.employer.location.city || "N/A",
-        employer: ad._source.employer.name || "N/A",
+        country: employerLocation ? employerLocation.country : "N/A",
+        county: employerLocation ? employerLocation.county : "N/A",
+        city: employerLocation ? employerLocation.city : "N/A",
+        employer: ad._source.employer ? ad._source.employer.name : "N/A",
         expires: ad._source.expires || "N/A",
         published: ad._source.published || "N/A"
     });
