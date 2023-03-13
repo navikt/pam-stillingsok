@@ -86,7 +86,7 @@ const setCallId = async (req, res, next) => {
     if (callId === undefined || callId === null) {
         callId = uuidv4();
         console.log(`Lager en callId ${callId} for ${req.url} med ${req.method}`)
-        console.log(`Det er en body: ${req.body}`)
+        //console.log(`Det er en body: ${req.body}`)
         //console.log(`Det er ikke en callid fra før, lager en ny callid for kall til pam-aduser: ${callId}`);
     }
     req.headers['nav-callid'] = callId;
