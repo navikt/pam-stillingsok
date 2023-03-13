@@ -203,6 +203,7 @@ const startServer = (htmlPages) => {
     });
 
     server.get(`${properties.PAM_CONTEXT_PATH}/api/stilling/:uuid`, async (req, res) => {
+        console.log("henter stilling /api/stilling/:uuid");
         searchApiConsumer.fetchStilling(req.params.uuid)
             .then((val) => res.send(val))
             .catch((err) => {
@@ -231,6 +232,7 @@ const startServer = (htmlPages) => {
     });
 
     server.get(['/stillinger/stilling/:uuid'], (req, res) => {
+        console.log("henter stilling [/stillinger/stilling/:uuid]");
         searchApiConsumer.fetchStilling(req.params.uuid)
             .then((data) => {
                 try {
