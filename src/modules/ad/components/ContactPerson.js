@@ -1,9 +1,22 @@
 import React from "react";
 import PropTypes from "prop-types";
 import PersonIcon from "../../../common/components/icons/PersonIcon";
+import ContactAccordion from "../../favourites/components/ContactAccordion";
 
-export default function ContactPerson({ contactList }) {
-    if (contactList && contactList.length > 0) {
+export default function ContactPerson({contactList}) {
+    if (contactList && contactList.length > 1) {
+        return (
+            <section className="JobPosting__section">
+                <h2 className="JobPosting__h2">
+                    <PersonIcon/>
+                    Kontaktpersoner for stillingen
+                </h2>
+                {contactList.map(contact =>
+                    <ContactAccordion contact={contact} title={contact.name}></ContactAccordion>
+                )}
+            </section>
+        );
+    } else if (contactList && contactList.length == 1) {
         return (
             <section className="JobPosting__section">
                 <h2 className="JobPosting__h2">

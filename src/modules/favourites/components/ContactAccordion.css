@@ -1,0 +1,33 @@
+.accordion-button {
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    color: var(--blueDarken);
+    margin: 0.5rem 0 0.5rem 0;
+
+}
+
+.accordion-button svg {
+    margin-right: 0.5rem;
+}
+
+.accordion-title {
+    padding: 0 1rem 0 0;
+    margin: 0;
+    display: inline-block;
+    text-align: left;
+    align-items: center;
+    line-height: 1;
+    font-size: 1.25rem;
+    font-weight: 600;
+    display: inline-flex;
+
+}
+
+.accordion-button:hover {
+    text-decoration: underline;
+}
+
+.accordion-dl {
+    padding-left: 2rem;
+}
