@@ -6,7 +6,7 @@ const isLocal = process.env.ARBEIDSPLASSEN_URL && process.env.ARBEIDSPLASSEN_URL
 
 let audience = process.env.ADUSER_AUDIENCE;
 
-const origins = ["/stillinger/api/v1/user", "/stillinger/api/v1/userfavouriteads/:uuid",
+const origins = ["/stillinger/api/v1/user", '/stillinger/api/v1/userfavouriteads/:uuid',
     "/stillinger/api/v1/userfavouriteads", "/stillinger/api/v1/reportposting",
 "/stillinger/api/v1/savedsearches/:uuid", "/stillinger/api/v1/savedsearches"]
 
@@ -50,7 +50,7 @@ const getToken = async (accessToken) => {
 }
 
 const restream = (proxyReq, req, res, options) => {
-    if (req.body) {
+    if (req.body && (req.method === 'PUT' || req.method === 'POST')){
         let bodyData = JSON.stringify(req.body);
         // incase if content-type is application/x-www-form-urlencoded -> we need to change to application/json
         proxyReq.setHeader('Content-Type','application/json');
