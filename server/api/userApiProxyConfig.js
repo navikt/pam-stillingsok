@@ -1,5 +1,4 @@
 const {createProxyMiddleware} = require('http-proxy-middleware');
-const bodyParser = require('body-parser')
 const {v4: uuidv4} = require("uuid");
 const {getTokenX} = require("../tokenX/tokenXUtils");
 const isLocal = process.env.ARBEIDSPLASSEN_URL && process.env.ARBEIDSPLASSEN_URL.includes('localhost') || process.env.IS_LOCAL === 'true';
@@ -13,37 +12,26 @@ const origins = ['/stillinger/api/v1/user', '/stillinger/api/v1/userfavouriteads
 //TODO legg til CSRF-token, hvis det ikke allerede er med?
 
 const setUpAduserApiProxy = (server) => {
-    console.log("Setter opp proxy til aduser");
-
     origins.forEach(origin => {
-        //console.log(`${origin}`);
         server.get(origin,
             setCallId,
             setTokenX,
-            setupProxy(origin)
+            setupProxy
         );
-    });
-
-    origins.forEach(origin => {
         server.delete(origin,
             setCallId,
             setTokenX,
-            setupProxy(origin)
+            setupProxy
         );
-    });
-
-    origins.forEach(origin => {
         server.post(origin,
             setCallId,
             setTokenX,
-            setupProxy(origin)
+            setupProxy
         );
-    });
-    origins.forEach(origin => {
         server.put(origin,
             setCallId,
             setTokenX,
-            setupProxy(origin)
+            setupProxy
         );
     });
 }
@@ -64,15 +52,13 @@ const restream = (proxyReq, req, res, options) => {
 
 const setTokenX = async (req, res, next) => {
     const accessToken = req.headers.authorization.split(' ')[1];
-    console.log("henter tokenX");
     const tokenX = await getToken(accessToken);
-    console.log(`Hentet token`)
     req.headers['authorization'] = `Bearer ${tokenX.access_token}`;
 
     next();
 }
 
-const setupProxy = (originUrl) =>
+const setupProxy =
     createProxyMiddleware({
         target: process.env.PAMADUSER_URL,
         pathRewrite: {'^/stillinger/': '/'},
@@ -87,9 +73,7 @@ const setCallId = async (req, res, next) => {
     //sjekker om headeren finnes
     if (callId === undefined || callId === null) {
         callId = uuidv4();
-        console.log(`Lager en callId ${callId} for ${req.url} med ${req.method} og baseurl: ${req.baseUrl}`)
-        //console.log(`Det er en body: ${req.body}`)
-        //console.log(`Det er ikke en callid fra før, lager en ny callid for kall til pam-aduser: ${callId}`);
+        console.log(`Lager en callId ${callId} for ${req.url} med ${req.method}`)
     }
     req.headers['nav-callid'] = callId;
     next();
