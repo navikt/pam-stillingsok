@@ -301,7 +301,7 @@ const SuperraskSoknadForm = ({ ad, interestForm, isInternal, submitForm, isSendi
                 </div>
             ) : (
                 <div className="InterestForm__buttons">
-                    <Button variant="primary" htmlType="button" onClick={handleSendMessageClick}>
+                    <Button variant="primary" type="button" onClick={handleSendMessageClick}>
                         Send søknad
                     </Button>
                     <Link to={`${CONTEXT_PATH}/${isInternal ? "intern" : "stilling"}/${ad._id}`} className="Knapp">

@@ -8,7 +8,7 @@ function ResetButton({ dispatch }) {
     }
 
     return (
-        <Button variant="secondary" htmlType="button" onClick={handleClick}>
+        <Button variant="secondary" type="button" onClick={handleClick}>
             Nullstill søk
         </Button>
     );

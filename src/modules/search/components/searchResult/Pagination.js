@@ -15,8 +15,7 @@ const Pagination = ({ searchResult, isSearching, query, onLoadMoreClick }) => {
             {hasMore && (
                 <Button
                     variant="secondary"
-                    disabled={isSearching}
-                    spinner={isSearching}
+                    loading={isSearching}
                     className="Pagination__button"
                     onClick={onLoadMoreClick}
                 >

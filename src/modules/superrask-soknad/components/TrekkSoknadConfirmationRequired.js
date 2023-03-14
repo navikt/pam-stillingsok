@@ -38,7 +38,7 @@ function TrekkSoknadConfirmationRequired({ ad, handleWithDrawClick, isDeleting, 
                     <Spinner type="S" /> Trekker søknad
                 </div>
             ) : (
-                <Button variant="primary" onClick={handleWithDrawClick} spinner={isDeleting} disabled={isDeleting}>
+                <Button variant="primary" onClick={handleWithDrawClick} loading={isDeleting}>
                     Trekk søknad
                 </Button>
             )}

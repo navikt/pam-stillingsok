@@ -54,7 +54,7 @@ function SaveSearchButton({ query }) {
 
     return (
         <React.Fragment>
-            <Button variant="secondary" htmlType="button" onClick={handleClick}>
+            <Button variant="secondary" type="button" onClick={handleClick}>
                 Lagre søk
             </Button>
 

@@ -99,7 +99,7 @@ function SavedSearchListItem({ savedSearch, removeSavedSearchFromList, replaceSa
                     <RefreshButton
                         onClick={reactivateEmailNotification}
                         disabled={restartEmailNotificationStatus === FetchStatus.IS_FETCHING}
-                        spinner={restartEmailNotificationStatus === FetchStatus.IS_FETCHING}
+                        loading={restartEmailNotificationStatus === FetchStatus.IS_FETCHING}
                         text="Start ny varsling"
                     />
                 </Tag>

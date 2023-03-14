@@ -104,8 +104,7 @@ function TermsOfUse({ onClose, onTermsAccepted }) {
                             id="TermsOfUse__acceptButton"
                             variant="primary"
                             onClick={onAcceptTermsClick}
-                            spinner={fetchStatus === FetchStatus.IS_FETCHING}
-                            disabled={fetchStatus === FetchStatus.IS_FETCHING}
+                            loading={fetchStatus === FetchStatus.IS_FETCHING}
                         >
                             Jeg samtykker
                         </Button>

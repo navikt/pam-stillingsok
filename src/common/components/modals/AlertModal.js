@@ -48,7 +48,7 @@ export default function AlertModal({
                     {cancelLabel}
                 </button>
                 {!useOnlyCancelButton && (
-                    <Button variant="primary" spinner={spinner} disabled={spinner} onClick={onConfirm}>
+                    <Button variant="primary" loading={spinner} disabled={spinner} onClick={onConfirm}>
                         {confirmLabel}
                     </Button>
                 )}

@@ -220,13 +220,13 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
             <div className="SaveSearchForm__buttons">
                 <Button
                     variant="primary"
-                    htmlType="submit"
-                    spinner={saveStatus === FetchStatus.IS_FETCHING}
+                    type="submit"
+                    loading={saveStatus === FetchStatus.IS_FETCHING}
                     disabled={saveStatus === FetchStatus.IS_FETCHING}
                 >
                     Lagre søk
                 </Button>
-                <Button variant="secondary" htmlType="button" onClick={onClose}>
+                <Button variant="secondary" type="button" onClick={onClose}>
                     Avbryt
                 </Button>
             </div>

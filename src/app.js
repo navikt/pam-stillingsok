@@ -1,5 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import "@navikt/ds-css"
+import "@navikt/arbeidsplassen-css"
 import AuthenticationProvider, { fixUrlAfterLogin } from "./modules/auth/contexts/AuthenticationProvider";
 import UserProvider from "./modules/user/contexts/UserProvider";
 import FavouritesProvider from "./modules/favourites/context/FavouritesProvider";

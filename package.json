@@ -20,6 +20,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@navikt/arbeidsplassen-css": "^1.0.22",
+    "@navikt/arbeidsplassen-react": "^1.0.23",
     "@navikt/ds-css": "^2.6.0",
     "@navikt/ds-react": "^2.6.0",
     "@sentry/browser": "^6.19.6",
