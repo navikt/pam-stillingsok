@@ -6,9 +6,9 @@ const isLocal = process.env.ARBEIDSPLASSEN_URL && process.env.ARBEIDSPLASSEN_URL
 
 let audience = process.env.ADUSER_AUDIENCE;
 
-const origins = ["/stillinger/api/v1/user", '/stillinger/api/v1/userfavouriteads/:uuid',
-    "/stillinger/api/v1/userfavouriteads", "/stillinger/api/v1/reportposting",
-"/stillinger/api/v1/savedsearches/:uuid", "/stillinger/api/v1/savedsearches"]
+const origins = ["/stillinger/api/v1/user", "/stillinger/api/v1/userfavouriteads/:uuid",
+                "/stillinger/api/v1/userfavouriteads", "/stillinger/api/v1/reportposting",
+                "/stillinger/api/v1/savedsearches/:uuid", "/stillinger/api/v1/savedsearches"]
 
 //TODO legg til CSRF-token, hvis det ikke allerede er med?
 
@@ -85,7 +85,7 @@ const setCallId = async (req, res, next) => {
     //sjekker om headeren finnes
     if (callId === undefined || callId === null) {
         callId = uuidv4();
-        console.log(`Lager en callId ${callId} for ${req.url} med ${req.method}`)
+        console.log(`Lager en callId ${callId} for ${req.url} med ${req.method} og baseurl: ${req.baseUrl}`)
         //console.log(`Det er en body: ${req.body}`)
         //console.log(`Det er ikke en callid fra før, lager en ny callid for kall til pam-aduser: ${callId}`);
     }
