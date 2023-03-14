@@ -6,9 +6,9 @@ const isLocal = process.env.ARBEIDSPLASSEN_URL && process.env.ARBEIDSPLASSEN_URL
 
 let audience = process.env.ADUSER_AUDIENCE;
 
-const origins = ["/stillinger/api/v1/user", "/stillinger/api/v1/userfavouriteads/:uuid",
-                "/stillinger/api/v1/userfavouriteads", "/stillinger/api/v1/reportposting",
-                "/stillinger/api/v1/savedsearches/:uuid", "/stillinger/api/v1/savedsearches"]
+const origins = ['/stillinger/api/v1/user', '/stillinger/api/v1/userfavouriteads/:uuid',
+                '/stillinger/api/v1/userfavouriteads', '/stillinger/api/v1/reportposting',
+                '/stillinger/api/v1/savedsearches/:uuid', '/stillinger/api/v1/savedsearches']
 
 //TODO legg til CSRF-token, hvis det ikke allerede er med?
 
@@ -23,6 +23,15 @@ const setUpAduserApiProxy = (server) => {
             setupProxy(origin)
         );
     });
+
+    origins.forEach(origin => {
+        server.delete(origin,
+            setCallId,
+            setTokenX,
+            setupProxy(origin)
+        );
+    });
+
     origins.forEach(origin => {
         server.post(origin,
             setCallId,
@@ -32,13 +41,6 @@ const setUpAduserApiProxy = (server) => {
     });
     origins.forEach(origin => {
         server.put(origin,
-            setCallId,
-            setTokenX,
-            setupProxy(origin)
-        );
-    });
-    origins.forEach(origin => {
-        server.delete(origin,
             setCallId,
             setTokenX,
             setupProxy(origin)
@@ -71,7 +73,7 @@ const setTokenX = async (req, res, next) => {
 }
 
 const setupProxy = (originUrl) =>
-    createProxyMiddleware(originUrl, {
+    createProxyMiddleware({
         target: process.env.PAMADUSER_URL,
         pathRewrite: {'^/stillinger/': '/'},
         changeOrigin: true,
