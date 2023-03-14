@@ -73,7 +73,7 @@ const setCallId = async (req, res, next) => {
     //sjekker om headeren finnes
     if (callId === undefined || callId === null) {
         callId = uuidv4();
-        console.log(`Lager en callId ${callId} for ${req.url} med ${req.method}, cookies: ${req.headers}`)
+        console.log(`Lager en callId ${callId} for ${req.url} med ${req.method}, cookies: ${req.headers['xsrf-token-arbeidsplassen']}`)
     }
     req.headers['nav-callid'] = callId;
     next();
