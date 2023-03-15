@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Input } from "nav-frontend-skjema";
 import { isValidEmail } from "../../../../common/components/utils";
 import { UserContext } from "../../../user/contexts/UserProvider";
-import { Hovedknapp, Knapp } from "@navikt/arbeidsplassen-knapper";
+import { Button } from "@navikt/ds-react";
 import { FetchStatus } from "../../../../common/hooks/useFetchReducer";
 import Alert from "../../../../common/components/alert/Alert";
 import UserAPI from "../../../../common/api/UserAPI";
@@ -96,16 +96,17 @@ function RegisterEmailForm({ onClose, onSuccess }) {
                 )}
 
                 <div className="SaveSearchForm__buttons">
-                    <Hovedknapp
-                        htmlType="submit"
-                        spinner={saveStatus === FetchStatus.IS_FETCHING}
+                    <Button
+                        variant="primary"
+                        type="submit"
+                        loading={saveStatus === FetchStatus.IS_FETCHING}
                         disabled={saveStatus === FetchStatus.IS_FETCHING}
                     >
                         Lagre e-post
-                    </Hovedknapp>
-                    <Knapp htmlType="button" onClick={onClose}>
+                    </Button>
+                    <Button variant="secondary" type="button" onClick={onClose}>
                         Avbryt
-                    </Knapp>
+                    </Button>
                 </div>
             </form>
         </React.Fragment>
