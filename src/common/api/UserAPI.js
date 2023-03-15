@@ -1,5 +1,5 @@
 import APIError from "./APIError";
-import { AD_USER_API, CONTEXT_PATH } from "../environment";
+import { CONTEXT_PATH } from "../environment";
 
 function getCookie(name) {
     const re = new RegExp(`${name}=([^;]+)`);
@@ -80,7 +80,7 @@ async function remove(url) {
     console.log(`UserApi.delete fra ${url}`)
     try {
         response = await fetch(`/stillinger/${url}`, {
-            credentials: "include",
+            //credentials: "include",
             method: "DELETE",
             referrer: CONTEXT_PATH,
             headers: {

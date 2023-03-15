@@ -9,8 +9,6 @@ const origins = ['/stillinger/api/v1/user', '/stillinger/api/v1/userfavouriteads
                 '/stillinger/api/v1/userfavouriteads', '/stillinger/api/v1/reportposting',
                 '/stillinger/api/v1/savedsearches/:uuid', '/stillinger/api/v1/savedsearches']
 
-//TODO legg til CSRF-token, hvis det ikke allerede er med?
-
 const setUpAduserApiProxy = (server) => {
     origins.forEach(origin => {
         server.get(origin,

@@ -38,7 +38,6 @@ const AuthenticationProvider = ({ children }) => {
 
     const fetchIsAuthenticated = () => {
         setAuthenticationStatus(AuthenticationStatus.IS_FETCHING);
-        console.log("Sjekker om bruker er authenticated");
 
         fetch(`/stillinger/isAuthenticated`, {
             credentials: "include",
@@ -64,7 +63,6 @@ const AuthenticationProvider = ({ children }) => {
                 method: "GET",
                 credentials: "include"
             }).then((response) => {
-                console.log(`Response fra cv-api: ${response.status}`)
                 if (response.status === 200) {
                     response.json().then((result) => {
                         setUserNameAndInfo(result);
@@ -114,10 +112,6 @@ const AuthenticationProvider = ({ children }) => {
         window.location.href = `/stillinger${LOGIN_URL}?redirect=${encodeURIComponent(
             redirectUrlAfterSuccessfulLogin
         )}`;
-
-        // window.location.href = `/oauth2/login?redirect=${encodeURIComponent(
-        //     redirectUrlAfterSuccessfulLogin
-        // )}`;
     }
 
     function logout() {

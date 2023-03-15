@@ -10,7 +10,7 @@ const searchApiConsumer = require('./api/searchApiConsumer');
 const htmlMeta = require('./common/htmlMeta');
 const locationApiConsumer = require('./api/locationApiConsumer');
 const setUpProxyCvApi = require("./api/cvApiProxy");
-const {initializeTokenX} = require("./tokenX/tokenXUtils");
+const {initializeTokenX, tokenIsValid} = require("./tokenX/tokenXUtils");
 const setUpAduserApiProxy = require("./api/userApiProxyConfig");
 
 /* eslint no-console: 0 */
@@ -70,7 +70,6 @@ server.use(bodyParser.json());
 
 const properties = {
     PAM_CONTEXT_PATH: '/stillinger',
-    PAM_AD_USER_API: `${process.env.PAMADUSER_URL}`,
     INTEREST_API_URL: process.env.INTEREST_API_URL,
     LOGIN_URL: '/oauth2/login',
     LOGOUT_URL: '/oauth2/logout',
@@ -83,7 +82,6 @@ const properties = {
 const writeEnvironmentVariablesToFile = () => {
     const fileContent = `window.__PAM_STILLINGSOK_URL__="${properties.PAM_STILLINGSOK_URL}";\n`
         + `window.__PAM_CONTEXT_PATH__="${properties.PAM_CONTEXT_PATH}";\n`
-        + `window.__PAM_AD_USER_API__="${properties.PAM_AD_USER_API}";\n`
         + `window.__INTEREST_API_URL__="${properties.INTEREST_API_URL}";\n`
         + `window.__LOGIN_URL__="${properties.LOGIN_URL}";\n`
         + `window.__LOGOUT_URL__="${properties.LOGOUT_URL}";\n`
@@ -133,10 +131,13 @@ const startServer = (htmlPages) => {
     server.get(`${properties.PAM_CONTEXT_PATH}/isAuthenticated`, (req, res) => {
         if(req.headers.authorization) {
             const accessToken =  req.headers.authorization.split(' ')[1];
-            //TODO valider at token er gyldig
-            res.sendStatus(200);
+            const validToken = tokenIsValid(accessToken);
+            if(validToken) {
+                res.sendStatus(200);
+            } else {
+                res.sendStatus(401);
+            }
         } else {
-            console.log("Mangler authorization-header")
             res.sendStatus(401);
         }
     });
@@ -203,7 +204,6 @@ const startServer = (htmlPages) => {
     });
 
     server.get(`${properties.PAM_CONTEXT_PATH}/api/stilling/:uuid`, async (req, res) => {
-        console.log("henter stilling /api/stilling/:uuid");
         searchApiConsumer.fetchStilling(req.params.uuid)
             .then((val) => res.send(val))
             .catch((err) => {
@@ -213,7 +213,6 @@ const startServer = (htmlPages) => {
     });
 
     server.get(`${properties.PAM_CONTEXT_PATH}/api/intern/:uuid`, async (req, res) => {
-        console.log(`Henter stilling ${req.params.uuid} for /api/intern/`)
         searchApiConsumer.fetchInternStilling(req.params.uuid)
             .then((val) => res.send(val))
             .catch((err) => {
@@ -232,7 +231,6 @@ const startServer = (htmlPages) => {
     });
 
     server.get(['/stillinger/stilling/:uuid'], (req, res) => {
-        console.log("henter stilling [/stillinger/stilling/:uuid]");
         searchApiConsumer.fetchStilling(req.params.uuid)
             .then((data) => {
                 try {
@@ -251,11 +249,9 @@ const startServer = (htmlPages) => {
     );
 
     server.get('/stillinger/intern/:uuid', (req, res) => {
-        console.log(`Henter intern stilling: ${req.params.uuid} fra /stillinger/intern`);
             searchApiConsumer.fetchInternStilling(req.params.uuid)
                 .then((data) => {
                     if(data) {
-                        console.log("har gjort et kall");
                     }
                     try {
                         res.render('index', {
