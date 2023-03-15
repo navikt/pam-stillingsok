@@ -49,10 +49,11 @@ const restream = (proxyReq, req, res, options) => {
 };
 
 const setTokenX = async (req, res, next) => {
-    const accessToken = req.headers.authorization.split(' ')[1];
-    const tokenX = await getToken(accessToken);
-    req.headers['authorization'] = `Bearer ${tokenX.access_token}`;
-
+    if(req.headers.authorization) {
+        const accessToken = req.headers.authorization.split(' ')[1];
+        const tokenX = await getToken(accessToken);
+        req.headers['authorization'] = `Bearer ${tokenX.access_token}`;
+    }
     next();
 }
 

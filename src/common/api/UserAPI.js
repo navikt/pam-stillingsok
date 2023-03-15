@@ -10,7 +10,6 @@ function getCookie(name) {
 async function get(url) {
     let response;
     try {
-        console.log(`UserApi.get fra ${url}`)
         response = await fetch(`/stillinger/${url}`, {
             credentials: "include",
             method: "GET",
@@ -28,7 +27,6 @@ async function get(url) {
 
 async function post(url, query, toJson = true) {
     let response;
-    console.log(`UserApi.post fra ${url}`)
     try {
         response = await fetch(`/stillinger/${url}`, {
             credentials: "include",
@@ -53,7 +51,6 @@ async function post(url, query, toJson = true) {
 
 async function put(url, query) {
     let response;
-    console.log(`UserApi.put fra ${url}`)
     try {
         response = await fetch(`/stillinger/${url}`, {
             credentials: "include",
@@ -77,7 +74,6 @@ async function put(url, query) {
 
 async function remove(url) {
     let response;
-    console.log(`UserApi.delete fra ${url}`)
     try {
         response = await fetch(`/stillinger/${url}`, {
             //credentials: "include",
