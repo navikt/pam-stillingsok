@@ -133,8 +133,7 @@ export default AuthenticationProvider;
 
 
 /**
- * TODO - sjekk om dette fortsatt stemmer med wonderwall
- * Om man logget inn mens man var inne på en stillingsannonse, så vil loginservice
+ * Om man logget inn mens man var inne på en stillingsannonse, så vil wonderwall
  * redirecte til en url med dette url-formatet: '/stillinger/stilling?uuid=12345'.
  * Redirecter derfor til riktig url-format: '/stillinger/stilling/:uuid'
  */
