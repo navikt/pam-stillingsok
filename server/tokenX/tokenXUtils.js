@@ -20,7 +20,7 @@ async function tokenIsValid(token) {
     console.log(`Token from wonderwall: ${token}`)
     try {
         const verification = await jwtVerify(token, remoteJWKSet, {
-            audience: process.env.IDPORTEN_CLIENT_ID,
+            audience: process.env.IDPORTEN_AUDIENCE,
             issuer: idPortenIssuer.metadata.issuer,
         });
 

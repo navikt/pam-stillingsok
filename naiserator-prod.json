@@ -13,5 +13,6 @@
   "cv-api-url": "https://pam-cv-api.prod-fss-pub.nais.io",
   "cv-api-host": "pam-cv-api.prod-fss-pub.nais.io",
   "cv_api_audience": "prod-fss:teampam:pam-cv-api",
-  "aduser_audience": "prod-gcp:teampam:pam-aduser"
+  "aduser_audience": "prod-gcp:teampam:pam-aduser",
+  "idporten_audience": "https://nav.no"
 }

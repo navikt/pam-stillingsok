@@ -64,6 +64,8 @@ spec:
       value: {{ aduser_audience }}
     - name: CV_API_AUDIENCE
       value: {{ cv_api_audience }}
+    - name: IDPORTEN_AUDIENCE
+      value: {{ idporten_audience }}
   accessPolicy:
     inbound:
       rules:
