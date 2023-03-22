@@ -10,10 +10,6 @@ const origins = ['/stillinger/api/v1/user', '/stillinger/api/v1/userfavouriteads
                 '/stillinger/api/v1/savedsearches/:uuid', '/stillinger/api/v1/savedsearches']
 
 const setUpAduserApiProxy = (server) => {
-
-    // redirect til login hvis ikke auth-header?
-    //legge på middleware siden endepunktene er beskyttet, skal ikke nås uten token
-    //middleware for å sjekke at session er good /oauth2/session 401 - not good 200 - good
     origins.forEach(origin => {
         server.get(origin,
             setCallId,
@@ -58,9 +54,9 @@ const setTokenX = async (req, res, next) => {
         const tokenX = await getToken(accessToken);
         req.headers['authorization'] = `Bearer ${tokenX.access_token}`;
     }
-    // else {
-    //     res.redirect('0auth2/login')
-    // }
+    else {
+        res.redirect('oauth2/login')
+    }
     next();
 }
 
