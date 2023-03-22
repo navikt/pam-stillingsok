@@ -132,7 +132,6 @@ const startServer = (htmlPages) => {
         if(req.headers.authorization) {
             const accessToken =  req.headers.authorization.split(' ')[1];
            const validToken = await tokenIsValid(accessToken);
-           console.log(`tokenIsValid: ${validToken}`)
             if(validToken) {
                 res.sendStatus(200);
             } else {

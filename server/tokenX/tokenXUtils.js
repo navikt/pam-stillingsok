@@ -3,8 +3,8 @@ const { createRemoteJWKSet, jwtVerify } =  require('jose');
 
 let tokenXClient;
 
-let clientId = process.env.TOKEN_X_CLIENT_ID;
 let tokenXIssuer;
+let idPortenIssuer;
 let remoteJWKSet;
 
 async function initializeTokenX() {
@@ -19,8 +19,8 @@ async function initializeTokenX() {
 async function tokenIsValid(token) {
     try {
         const verification = await jwtVerify(token, remoteJWKSet, {
-            audience: clientId,
-            issuer: tokenXIssuer.metadata.issuer,
+            audience: process.env.IDPORTEN_CLIENT_ID,
+            issuer: idPortenIssuer.metadata.issuer,
         });
 
         return !!verification.payload;
@@ -58,7 +58,8 @@ async function getTokenX(token, audience) {
 }
 
 async function initIssuerAndClient() {
-    tokenXIssuer = await Issuer.discover(process.env.TOKEN_X_WELL_KNOWN_URL)
+    tokenXIssuer = await Issuer.discover(process.env.TOKEN_X_WELL_KNOWN_URL);
+    idPortenIssuer = await Issuer.discover(process.env.IDPORTEN_WELL_KNOWN_URL);
     tokenXClient = new tokenXIssuer.Client(
         {
             client_id: process.env.TOKEN_X_CLIENT_ID,
@@ -72,7 +73,7 @@ async function initIssuerAndClient() {
 }
 
 const opprettRemoteJWKSet = () => {
-    const jwksUrl = new URL(process.env.TOKEN_X_JWKS_URI);
+    const jwksUrl = new URL(process.env.IDPORTEN_JWKS_URI);
     remoteJWKSet = createRemoteJWKSet(jwksUrl);
 };
 
