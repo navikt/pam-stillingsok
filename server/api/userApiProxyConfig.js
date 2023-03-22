@@ -55,7 +55,7 @@ const setTokenX = async (req, res, next) => {
         req.headers['authorization'] = `Bearer ${tokenX.access_token}`;
     }
     else {
-        res.redirect('oauth2/login')
+        res.redirect('/oauth2/login')
     }
     next();
 }
