@@ -42,10 +42,6 @@ spec:
      - {{url}}
   {{/each}}
   env:
-    - name: LOGINSERVICE_URL
-      value: {{ loginservice_url }}
-    - name: LOGOUTSERVICE_URL
-      value: {{ logoutservice_url }}
     - name: PAMADUSER_URL
       value: {{ pamaduser_url }}
     - name: INTEREST_API_URL

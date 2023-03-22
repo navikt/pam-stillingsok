@@ -131,13 +131,16 @@ AuthenticationProvider.propTypes = {
 
 export default AuthenticationProvider;
 
+
 /**
+ * TODO - sjekk om dette fortsatt stemmer med wonderwall
  * Om man logget inn mens man var inne på en stillingsannonse, så vil loginservice
  * redirecte til en url med dette url-formatet: '/stillinger/stilling?uuid=12345'.
  * Redirecter derfor til riktig url-format: '/stillinger/stilling/:uuid'
  */
 export function fixUrlAfterLogin() {
     if (window.location.pathname === `${CONTEXT_PATH}/stilling`) {
+        console.log(`Url fikses etter login ${window.location.href}`)
         const uuid = extractParam("uuid");
         window.history.replaceState({}, "", `${CONTEXT_PATH}/stilling/${uuid}`);
     } else if (window.location.pathname === `${CONTEXT_PATH}/intern`) {

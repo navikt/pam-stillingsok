@@ -11,6 +11,7 @@ e-poster skjer gjennom applikasjonen [pam-aduser](https://github.com/navikt/pam-
 
 ## Avhengigheter
  - [pam-search-api]()
+ - 
 
 # Teknisk dokumentasjon
 
@@ -18,7 +19,6 @@ e-poster skjer gjennom applikasjonen [pam-aduser](https://github.com/navikt/pam-
 
 * React
 * Node
-* Microsoft Graph API
 
 ## Systemlandskap
 
@@ -58,8 +58,6 @@ Lagrede søk fungerer ved at pam-stillingsok genererer en predefinert spørring 
 Denne spørringen lagres i pam-aduser. Hver natt kjøres alle lagrede spørringer mot pam-stillingsok. Nye 
 stillinger sendes til brukere over epost med Microsoft Graph API.
 
-pam-aduser autentiserer også brukere (med loginservice) så de får tilgang til favoritter og lagrede søk.
-
 # Komme i gang
 
 ## Før kjøring av applikasjonen
@@ -70,19 +68,39 @@ Før du starter må du installere alle npm pakkene, dette kan du gjøre ved å k
 $ npm install
 ```
 
+For å starte docker-containere for redis og mock-oauth2-server. 
+```
+$ npm run start:dependencies
+```
+
+#### Go
+Go er nødvendig for å bygge wonderwall binaries. Wonderwall brukes for lokal OIDC-flyt.
+```
+brew install go
+```
+
 ## Kjøre applikasjonen lokalt
+
+### Wonderwall
+[Wonderwall](https://github.com/nais/wonderwall) brukes for å håndtere login med ID-porten. 
+Lokalt brukes også wonderwall, men her kjører vi mot en OIDC-provider i Docker.
+
+Installer Wonderwall:
+```
+make install
+```
+
+Når applikasjonen er oppe, så kan du gå inn på [http://localhost:3000/stillinger](http://localhost:3000/stillinger)
+Gå igjennom login-flyten ved å trykke login. Bruk testbruker `04010100653`
 
 ### Med dev script
 
-Du kan enkelt kjøre applikasjonen ved hjelp av dev scripten `runDev.sh`
-
-Denne setter følgende verdier som miljøvariabler:
+Du kan enkelt kjøre applikasjonen ved hjelp av dev scriptet `./runDev.sh`
+Scriptet starter opp wonderwall og setter følgende verdier som miljøvariabler:
 
 ```
 PAMSEARCHAPI_URL=http://localhost:9000
 PAMADUSER_URL=http://localhost:9017
-LOGINSERVICE_URL=http://localhost:9017/aduser/local/cookie?subject=12345
-LOGOUTSERVICE_URL=http://localhost:9017/aduser
 PAM_STILLINGSOK_URL=http://localhost:8080/stillinger
 PAM_VAR_SIDE_URL=http://localhost:8080/stillingsregistrering
 PAM_INTERNAL_SEARCH_API_URL=http://localhost:9027
@@ -102,24 +120,6 @@ Om du får følgende output betyr det at port-forwarden funket og pam-search-api
 Forwarding from 127.0.0.1:9000 -> 9000
 Forwarding from [::1]:9000 -> 9000
 ```
-
-### Manuell kjøring 
-Før man starter applikasjonen trenger man å sette følgende miljøvariabler:
-
-```
-PAMADUSER_URL
-LOGINSERVICE_URL
-LOGOUTSERVICE_URL
-PAM_STILLINGSOK_URL
-PAMSEARCHAPI_URL
-PAM_VAR_SIDE_URL
-```
-
-Etter variablene er satt kan man kjøre applikasjonen ved å kjøre kommandoen: 
-``npm start``
-
-Applikasjonen vil da forsøke å hente inn stillinger fra addressen spesifisert på ``PAMADUSER_URL`` miljøvariabelen
-
 
 ## Bruk av innloggede tjenester
 For å kunne bruke innloggede tjenester (dvs. favoritter og lagrede søk), må du først kjøre `pam-aduser`.

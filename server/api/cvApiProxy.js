@@ -23,15 +23,19 @@ const setUpProxyCvApi = (server) => {
             proxyReq.setHeader('Authorization', `${req.headers.authorization}`)
         }
     });
+    // redirect til login hvis ikke auth-header?
+    //legge på middleware siden endepunktet er beskyttet
     server.use('/stillinger/headerinfo',
         setTokenX,
         proxySetting);
 }
 
 const setTokenX = async (req, res, next) => {
-    const accessToken = req.headers.authorization.split(' ')[1];
-    const tokenX = await getToken(accessToken);
-    req.headers['authorization'] = `Bearer ${tokenX.access_token}`;
+    if(req.headers.authorization) {
+        const accessToken = req.headers.authorization.split(' ')[1];
+        const tokenX = await getToken(accessToken);
+        req.headers['authorization'] = `Bearer ${tokenX.access_token}`;
+    }
 
     next();
 }

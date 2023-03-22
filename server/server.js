@@ -131,7 +131,7 @@ const startServer = (htmlPages) => {
     server.get(`${properties.PAM_CONTEXT_PATH}/isAuthenticated`, (req, res) => {
         if(req.headers.authorization) {
             const accessToken =  req.headers.authorization.split(' ')[1];
-            const validToken = tokenIsValid(accessToken);
+           const validToken = tokenIsValid(accessToken);
             if(validToken) {
                 res.sendStatus(200);
             } else {

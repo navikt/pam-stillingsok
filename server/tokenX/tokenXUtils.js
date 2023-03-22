@@ -25,7 +25,7 @@ async function tokenIsValid(token) {
 
         return !!verification.payload;
     } catch (e) {
-        console.error("Det skjedde en feil under validering av token");
+        console.error(`Det skjedde en feil under validering av token, ${e.message}`);
         return false;
     }
 }
@@ -63,6 +63,7 @@ async function initIssuerAndClient() {
         {
             client_id: process.env.TOKEN_X_CLIENT_ID,
             token_endpoint_auth_method: 'private_key_jwt',
+            token_endpoint_auth_signing_alg: "RS256"
         },
         {
             keys: [JSON.parse(process.env.TOKEN_X_PRIVATE_JWK)],

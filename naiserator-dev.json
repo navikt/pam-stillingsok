@@ -1,7 +1,6 @@
 {
   "ingress": [
-    "https://arbeidsplassen.dev.nav.no/stillinger",
-    "https://pam-stillingsok.dev.intern.nav.no"
+    "https://arbeidsplassen.dev.nav.no/stillinger"
   ],
   "pamaduser_url": "http://pam-aduser/aduser",
   "arbeidsplassen_url": "https://arbeidsplassen.dev.nav.no",

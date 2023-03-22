@@ -1,11 +1,23 @@
 version: '3'
 services:
+  mock-oauth2-server:
+    image: ghcr.io/navikt/mock-oauth2-server:0.5.5
+    hostname: host.docker.internal
+    ports:
+      - "1337:1337"
+    environment:
+      SERVER_PORT: 1337
+      JSON_CONFIG: "{\"interactiveLogin\":true,\"tokenCallbacks\":[{\"issuerId\":\"idporten\",\"tokenExpiry\":3600,\"requestMappings\":[{\"requestParam\":\"grant_type\",\"claims\":{\"sub\":\"04010100653\",\"pid\":\"04010100653\"}}]}]}"
+
+  redis:
+    image: redis:7
+    ports:
+      - "6379:6379"
+
   pam-stillingsok:
     image: pam-stillingsok
     environment:
     - PAMADUSER_URL=http://localhost:9017
-    - LOGINSERVICE_URL=http://localhost:9018/local/cookie-selvbetjening
-    - LOGOUTSERVICE_URL=http://localhost:9018/local/logout
     - PAM_STILLINGSOK_URL=http://localhost:8080/stillinger
     - PAMSEARCHAPI_URL=https://pam-search-api.nais.oera-q.local
     # OK/Only for development
@@ -18,6 +30,7 @@ services:
     - "8080:8080"
     depends_on:
     - pam-aduser
+
   pam-stillingsok-webpack:
     image: pam-stillingsok
     command: [sh, -c, "npm run start-webpack"]
@@ -25,6 +38,7 @@ services:
     - .:/usr/src/app
     depends_on:
     - pam-stillingsok
+
   pam-aduser:
     environment:
     - NO_NAV_SECURITY_OIDC_ISSUER_SELVBETJENING_ACCEPTEDAUDIENCE=aud-localhost
@@ -40,11 +54,3 @@ services:
     build: ../pam-aduser/.
     ports:
     - "9017:9017"
-    volumes:
-    - ../pam-devtools/tmp/nav_truststore.jts:/nav_truststore.jts #Dette repoet ble arkivert 30.09.2022. Om du trenger dette gjør det på en annen måte.
-    depends_on:
-    - oidc-test
-  oidc-test:
-    build: ../pam-devtools/oidc-test/. #Dette repoet ble arkivert 30.09.2022. Om du trenger dette gjør det på en annen måte.
-    ports:
-    - "9018:9018"
