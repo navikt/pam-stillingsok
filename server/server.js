@@ -128,10 +128,10 @@ const startServer = (htmlPages) => {
         express.static(path.resolve(rootDirectory, 'images'))
     );
 
-    server.get(`${properties.PAM_CONTEXT_PATH}/isAuthenticated`, (req, res) => {
+    server.get(`${properties.PAM_CONTEXT_PATH}/isAuthenticated`, async (req, res) => {
         if(req.headers.authorization) {
             const accessToken =  req.headers.authorization.split(' ')[1];
-           const validToken = tokenIsValid(accessToken);
+           const validToken = await tokenIsValid(accessToken);
            console.log(`tokenIsValid: ${validToken}`)
             if(validToken) {
                 res.sendStatus(200);

@@ -139,7 +139,6 @@ export default AuthenticationProvider;
  */
 export function fixUrlAfterLogin() {
     if (window.location.pathname === `${CONTEXT_PATH}/stilling`) {
-        console.log(`Url fikses etter login ${window.location.href}`)
         const uuid = extractParam("uuid");
         window.history.replaceState({}, "", `${CONTEXT_PATH}/stilling/${uuid}`);
     } else if (window.location.pathname === `${CONTEXT_PATH}/intern`) {
