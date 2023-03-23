@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Knapp } from "@navikt/arbeidsplassen-knapper";
+import { Button } from "@navikt/ds-react";
 
 function ResetButton({ dispatch }) {
     function handleClick() {
@@ -8,9 +8,9 @@ function ResetButton({ dispatch }) {
     }
 
     return (
-        <Knapp htmlType="button" onClick={handleClick}>
+        <Button variant="secondary" type="button" onClick={handleClick}>
             Nullstill søk
-        </Knapp>
+        </Button>
     );
 }
 
