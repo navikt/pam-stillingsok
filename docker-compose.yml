@@ -7,7 +7,27 @@ services:
       - "1337:1337"
     environment:
       SERVER_PORT: 1337
-      JSON_CONFIG: "{\"interactiveLogin\":true,\"tokenCallbacks\":[{\"issuerId\":\"idporten\",\"tokenExpiry\":3600,\"requestMappings\":[{\"requestParam\":\"grant_type\",\"claims\":{\"sub\":\"04010100653\",\"pid\":\"04010100653\"}}]}]}"
+      JSON_CONFIG: '{
+        "interactiveLogin": true,
+        "tokenCallbacks": [
+          {
+            "issuerId": "idporten",
+            "tokenExpiry": 12000,
+            "requestMappings": [
+              {
+                "requestParam": "grant_type",
+                "claims": {
+                  "sub": "04010100653",
+                  "pid": "04010100653",
+                  "aud": [
+                            "local-token-x-client-id"
+                        ]
+                }
+              }
+            ]
+          }
+        ]
+      }'
 
   redis:
     image: redis:7
