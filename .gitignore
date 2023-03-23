@@ -23,4 +23,7 @@ repo_test_dir
 war/src/main/client/build/
 dist/
 
+# local scripts
+.wonderwall
+
 screenshots
