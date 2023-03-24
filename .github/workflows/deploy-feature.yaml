@@ -15,8 +15,8 @@ jobs:
       LANGUAGE: "node"
       NODE_VERSION: "14"
       BUILD_CACHE: "npm"
-      NAIS_RESOURCE: .nais/naiserator.yml
-      NAIS_VARS: .nais/naiserator-dev.yml
+      NAIS_RESOURCE: naiserator.yml
+      NAIS_VARS: naiserator-dev.yml
     secrets:
       NAIS_DEPLOY_APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
       SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
