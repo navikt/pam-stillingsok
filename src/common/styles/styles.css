@@ -38,14 +38,14 @@ body {
 
 .push-footer-down {
     min-height: 100%;
-    margin-bottom: -691px;
-    padding-bottom: 691px;
+    margin-bottom: -794px;
+    padding-bottom: 794px;
 }
 
 @media (min-width: 940px) {
     .push-footer-down {
-        margin-bottom: -327px;
-        padding-bottom: 327px;
+        margin-bottom: -476px;
+        padding-bottom: 476px;
     }
 }
 

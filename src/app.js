@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "@navikt/ds-css";
 import "@navikt/arbeidsplassen-css";
+import { Footer } from "@navikt/arbeidsplassen-react";
 import AuthenticationProvider, { fixUrlAfterLogin } from "./modules/auth/contexts/AuthenticationProvider";
 import UserProvider from "./modules/user/contexts/UserProvider";
 import FavouritesProvider from "./modules/favourites/context/FavouritesProvider";
@@ -33,39 +34,47 @@ function Application() {
         <AuthenticationProvider>
             <UserProvider>
                 <FavouritesProvider>
-                    <BrowserRouter>
-                        <HistoryProvider>
-                            <BrowserSupportInfo tillatLukking={true} />
-                            <Switch>
-                                <Route component={Header} />
-                            </Switch>
-                            <Switch>
-                                <Route exact path={CONTEXT_PATH} component={SearchPage} />
-                                <Route
-                                    path={`${CONTEXT_PATH}/stilling/:uuid/superrask-soknad`}
-                                    component={SuperraskSoknadPage}
-                                />
-                                <Route
-                                    path={`${CONTEXT_PATH}/intern/:uuid/superrask-soknad`}
-                                    component={SuperraskSoknadPage}
-                                />
-                                <Route path={`${CONTEXT_PATH}/stilling/:uuid`} component={AdPage} />
-                                <Route path={`${CONTEXT_PATH}/intern/:uuid`} component={AdPage} />
-                                <Route path={`${CONTEXT_PATH}/rapporter-annonse`} component={ReportAdPage} />
-                                <Route path={`${CONTEXT_PATH}/favoritter`} component={FavouritesPage} />
-                                <Route path={`${CONTEXT_PATH}/lagrede-sok`} component={SavedSearchesPage} />
-                                <Route
-                                    path={`${CONTEXT_PATH}/trekk-soknad/:uuid/:adUuid`}
-                                    component={TrekkSoknadPage}
-                                />
-                                <Route path="*" component={SearchPage} />
-                            </Switch>
-                        </HistoryProvider>
-                    </BrowserRouter>
+                    <a className="dsa-skiplink" href="#main-content">
+                        Gå til hovedinnhold
+                    </a>
+                    <div className="push-footer-down">
+                        <BrowserRouter>
+                            <HistoryProvider>
+                                <BrowserSupportInfo tillatLukking={true} />
+                                <Switch>
+                                    <Route component={Header} />
+                                </Switch>
+                                <main id="main-content">
+                                    <Switch>
+                                        <Route exact path={CONTEXT_PATH} component={SearchPage} />
+                                        <Route
+                                            path={`${CONTEXT_PATH}/stilling/:uuid/superrask-soknad`}
+                                            component={SuperraskSoknadPage}
+                                        />
+                                        <Route
+                                            path={`${CONTEXT_PATH}/intern/:uuid/superrask-soknad`}
+                                            component={SuperraskSoknadPage}
+                                        />
+                                        <Route path={`${CONTEXT_PATH}/stilling/:uuid`} component={AdPage} />
+                                        <Route path={`${CONTEXT_PATH}/intern/:uuid`} component={AdPage} />
+                                        <Route path={`${CONTEXT_PATH}/rapporter-annonse`} component={ReportAdPage} />
+                                        <Route path={`${CONTEXT_PATH}/favoritter`} component={FavouritesPage} />
+                                        <Route path={`${CONTEXT_PATH}/lagrede-sok`} component={SavedSearchesPage} />
+                                        <Route
+                                            path={`${CONTEXT_PATH}/trekk-soknad/:uuid/:adUuid`}
+                                            component={TrekkSoknadPage}
+                                        />
+                                        <Route path="*" component={SearchPage} />
+                                    </Switch>
+                                </main>
+                            </HistoryProvider>
+                        </BrowserRouter>
+                    </div>
+                    <Footer />
                 </FavouritesProvider>
             </UserProvider>
         </AuthenticationProvider>
     );
 }
 
-ReactDOM.render(<Application />, document.getElementById("main-content"));
+ReactDOM.render(<Application />, document.getElementById("app"));
