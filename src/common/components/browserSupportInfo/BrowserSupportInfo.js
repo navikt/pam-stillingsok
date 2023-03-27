@@ -50,12 +50,7 @@ const BrowserSupportInfoModal = ({ tillatLukking = false }) => {
                 <div className="BrowserInfo-lenkeliste">
                     <ul>
                         <li className="ForlateSiden">
-                            <a
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                href="https://www.google.com/intl/no/chrome/"
-                                className="link"
-                            >
+                            <a target="_blank" rel="noopener noreferrer" href="https://www.google.com/intl/no/chrome/">
                                 <span className="lenke">Google Chrome</span>
                                 <i className="ForlateSiden__icon" />
                             </a>
@@ -65,7 +60,6 @@ const BrowserSupportInfoModal = ({ tillatLukking = false }) => {
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 href="https://www.mozilla.org/en-US/firefox/new/"
-                                className="link"
                             >
                                 <span className="lenke">Mozilla Firefox</span>
                                 <i className="ForlateSiden__icon" />

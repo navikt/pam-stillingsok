@@ -10,7 +10,7 @@ function Feedback() {
                 bedre med denne tjenesten.
             </p>
             <p className="InterestForm__p InterestForm__mb-0">
-                <a href="https://surveys.hotjar.com/096eea6f-8509-467b-b627-20b40340d1f8" className="link">
+                <a href="https://surveys.hotjar.com/096eea6f-8509-467b-b627-20b40340d1f8">
                     Skriv en kort tilbakemelding
                 </a>
             </p>

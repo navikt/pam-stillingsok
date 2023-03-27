@@ -15,9 +15,7 @@ function SuccessMessage({ onClose }) {
         <section role="status">
             <p className="SavedSearches__p">
                 Søket ble lagret! Du finner alle dine søk på{" "}
-                <Link className="link" to={`${CONTEXT_PATH}/lagrede-sok`}>
-                    Lagrede søk.
-                </Link>
+                <Link to={`${CONTEXT_PATH}/lagrede-sok`}>Lagrede søk.</Link>
             </p>
             <div className="SaveSearchForm__buttons">
                 <button className="Knapp Knapp--hoved" ref={buttonRef} onClick={onClose}>

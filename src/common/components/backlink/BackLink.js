@@ -6,7 +6,7 @@ import "./BackLink.css";
 
 function BackLink({ to, text }) {
     return (
-        <Link to={to} className="BackLink link">
+        <Link to={to} className="BackLink">
             <ChevronLeftIcon ariaHidden={true} />
             {text}
         </Link>

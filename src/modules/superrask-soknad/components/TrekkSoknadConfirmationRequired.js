@@ -16,9 +16,7 @@ function TrekkSoknadConfirmationRequired({ ad, handleWithDrawClick, isDeleting, 
             {ad && (
                 <div className="InterestMessageDelete__ad">
                     <p className="InterestMessageDelete__ad-title">
-                        <Link to={`${CONTEXT_PATH}/stilling/${ad._id}`} className="link">
-                            {ad._source.title}
-                        </Link>
+                        <Link to={`${CONTEXT_PATH}/stilling/${ad._id}`}>{ad._source.title}</Link>
                     </p>
                     <p className="InterestForm__employer">{getEmployer(ad._source)}</p>
                 </div>

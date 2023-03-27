@@ -46,7 +46,7 @@ export default function ContactPerson({ contactList }) {
                         <React.Fragment>
                             <dt>Epost:</dt>
                             <dd>
-                                <a className="link" rel="nofollow" href={`mailto:${contactList[0].email}`}>
+                                <a rel="nofollow" href={`mailto:${contactList[0].email}`}>
                                     {contactList[0].email}
                                 </a>
                             </dd>

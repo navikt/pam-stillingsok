@@ -4,9 +4,7 @@ import "./SkipTo.css";
 function SkipToCriteria() {
     return (
         <div className="SkipTo SkipTo--endre-sok">
-            <a href="#sok" className="link">
-                Endre søk
-            </a>
+            <a href="#sok">Endre søk</a>
         </div>
     );
 }

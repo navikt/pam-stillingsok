@@ -159,23 +159,17 @@ const SuperraskSoknadForm = ({ ad, interestForm, isInternal, submitForm, isSendi
                             <ul className="InterestForm__error-list">
                                 {telephoneValidationError && (
                                     <li>
-                                        <a href="#register-interest-telephone" className="link">
-                                            {telephoneValidationError}
-                                        </a>
+                                        <a href="#register-interest-telephone">{telephoneValidationError}</a>
                                     </li>
                                 )}
                                 {emailValidationError && (
                                     <li>
-                                        <a href="#register-interest-email" className="link">
-                                            {emailValidationError}
-                                        </a>
+                                        <a href="#register-interest-email">{emailValidationError}</a>
                                     </li>
                                 )}
                                 {aboutValidationError && (
                                     <li>
-                                        <a href="#register-interest-about" className="link">
-                                            {aboutValidationError}
-                                        </a>
+                                        <a href="#register-interest-about">{aboutValidationError}</a>
                                     </li>
                                 )}
                             </ul>
@@ -288,7 +282,7 @@ const SuperraskSoknadForm = ({ ad, interestForm, isInternal, submitForm, isSendi
                 kontaktinformasjonen din.
             </p>
             <p className="InterestForm__p InterestForm__mb-2">Du kan når som helst trekke tilbake søknaden din.</p>
-            <a target="_blank" rel="noopener noreferrer" href="/personvern-superrask-soknad" className="link">
+            <a target="_blank" rel="noopener noreferrer" href="/personvern-superrask-soknad">
                 Les om hvordan vi behandler dine data (åpner i ny fane)
             </a>
 

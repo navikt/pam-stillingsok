@@ -31,9 +31,7 @@ function RequiresHasAcceptedTerms({ children }) {
                     </Button>
                 </div>
                 <div className="NoUserMessage__buttons">
-                    <Link to={CONTEXT_PATH} className="link">
-                        Fortsett uten å samtykke
-                    </Link>
+                    <Link to={CONTEXT_PATH}>Fortsett uten å samtykke</Link>
                 </div>
 
                 {showTermsModal && (

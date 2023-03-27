@@ -32,7 +32,7 @@ const ContactAccordion = ({ title, contact }) => {
                                 <React.Fragment>
                                     <dt>Epost:</dt>
                                     <dd>
-                                        <a className="link" rel="nofollow" href={`mailto:${contact.email}`}>
+                                        <a rel="nofollow" href={`mailto:${contact.email}`}>
                                             {contact.email}
                                         </a>
                                     </dd>

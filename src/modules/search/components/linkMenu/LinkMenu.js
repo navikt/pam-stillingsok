@@ -6,10 +6,10 @@ import "./LinkMenu.css";
 function LinkMenu() {
     return (
         <nav className="LinkMenu">
-            <Link to={`${CONTEXT_PATH}/favoritter`} className="link LinkMenu__favourites-link">
+            <Link to={`${CONTEXT_PATH}/favoritter`} className="LinkMenu__favourites-link">
                 Favoritter
             </Link>
-            <Link to={`${CONTEXT_PATH}/lagrede-sok`} className="link LinkMenu__saved-search-link">
+            <Link to={`${CONTEXT_PATH}/lagrede-sok`} className="LinkMenu__saved-search-link">
                 Lagrede søk
             </Link>
         </nav>
