@@ -2,10 +2,9 @@ import * as React from "react";
 import { useContext, useEffect, useState } from "react";
 import "./ReportAd.css";
 import Checkbox from "nav-frontend-skjema/lib/checkbox";
-import { Button } from "@navikt/ds-react";
+import { Button, Textarea } from "@navikt/ds-react";
 import { CONTEXT_PATH } from "../../../common/environment";
 import logAmplitudeEvent from "../../../common/tracking/amplitude";
-import { Textarea } from "nav-frontend-skjema";
 import { AuthenticationContext, AuthenticationStatus } from "../../auth/contexts/AuthenticationProvider";
 import UserAPI from "../../../common/api/UserAPI";
 import Alert from "../../../common/components/alert/Alert";
@@ -196,9 +195,7 @@ const ReportAd = () => {
                                     maxLength={255}
                                     value={description}
                                     onChange={handleDescriptionChange}
-                                    tellerTekst={() => {
-                                        return "Legg ikke igjen personopplysinger i dette feltet";
-                                    }}
+                                    description="Legg ikke igjen personopplysinger i dette feltet"
                                 />
 
                                 <p>
