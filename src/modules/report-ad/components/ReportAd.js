@@ -1,8 +1,7 @@
 import * as React from "react";
 import { useContext, useEffect, useState } from "react";
 import "./ReportAd.css";
-import Checkbox from "nav-frontend-skjema/lib/checkbox";
-import { Button, Textarea } from "@navikt/ds-react";
+import { Button, Checkbox, Textarea } from "@navikt/ds-react";
 import { CONTEXT_PATH } from "../../../common/environment";
 import logAmplitudeEvent from "../../../common/tracking/amplitude";
 import { AuthenticationContext, AuthenticationStatus } from "../../auth/contexts/AuthenticationProvider";
@@ -148,10 +147,11 @@ const ReportAd = () => {
 
                                 <Checkbox
                                     name="regelbrudd"
-                                    label="Regelbrudd"
                                     onChange={handleViolationCheck}
                                     checked={violation === true}
-                                />
+                                >
+                                    Regelbrudd
+                                </Checkbox>
 
                                 {violation &&
                                     violationCategories.map((c) => {
@@ -159,20 +159,18 @@ const ReportAd = () => {
                                             <Checkbox
                                                 className="sub-checkbox"
                                                 key={c.key}
-                                                label={c.label}
                                                 value={c.key}
                                                 onChange={handleViolationCategoryCheck}
                                                 checked={violationCategory === c.key}
-                                            />
+                                            >
+                                                {c.label}
+                                            </Checkbox>
                                         );
                                     })}
 
-                                <Checkbox
-                                    label="Mistanke om svindel"
-                                    name="svindel"
-                                    onChange={handleScamCheck}
-                                    checked={scam === true}
-                                />
+                                <Checkbox name="svindel" onChange={handleScamCheck} checked={scam === true}>
+                                    Mistanke om svindel
+                                </Checkbox>
 
                                 {scam &&
                                     scamCategories.map((c) => {
@@ -180,11 +178,12 @@ const ReportAd = () => {
                                             <Checkbox
                                                 className="sub-checkbox"
                                                 key={c.key}
-                                                label={c.label}
                                                 value={c.key}
                                                 onChange={handleScamCategoryCheck}
                                                 checked={scamCategory === c.key}
-                                            />
+                                            >
+                                                {c.label}
+                                            </Checkbox>
                                         );
                                     })}
 

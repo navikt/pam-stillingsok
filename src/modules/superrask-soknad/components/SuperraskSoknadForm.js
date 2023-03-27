@@ -2,8 +2,7 @@ import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import Alert from "../../../common/components/alert/Alert";
 import H1WithAutoFocus from "../../../common/components/h1WithAutoFocus/H1WithAutoFocus";
-import { Checkbox } from "nav-frontend-skjema";
-import { Button, Loader, Textarea, TextField } from "@navikt/ds-react";
+import { Button, Checkbox, Loader, Textarea, TextField } from "@navikt/ds-react";
 import { isValidEmail } from "../../../common/components/utils";
 import "./SuperraskSoknad.css";
 import { CONTEXT_PATH } from "../../../common/environment";
@@ -192,11 +191,12 @@ const SuperraskSoknadForm = ({ ad, interestForm, isInternal, submitForm, isSendi
                             {interestForm.must.map((it) => (
                                 <Checkbox
                                     key={it.id}
-                                    label={it.label}
                                     value={it.label}
                                     onChange={handleMustRequirementCheck}
                                     checked={checkedMustRequirements.includes(it.label)}
-                                />
+                                >
+                                    {it.label}
+                                </Checkbox>
                             ))}
                         </fieldset>
                     )}
@@ -207,11 +207,12 @@ const SuperraskSoknadForm = ({ ad, interestForm, isInternal, submitForm, isSendi
                             {interestForm.should.map((it) => (
                                 <Checkbox
                                     key={it.id}
-                                    label={it.label}
                                     value={it.label}
                                     onChange={handleShouldRequirementCheck}
                                     checked={checkedShouldRequirements.includes(it.label)}
-                                />
+                                >
+                                    {it.label}
+                                </Checkbox>
                             ))}
                         </fieldset>
                     )}
