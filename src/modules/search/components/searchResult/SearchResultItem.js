@@ -1,12 +1,12 @@
 import PropTypes from "prop-types";
 import React, { useLayoutEffect, useRef } from "react";
 import { Link } from "react-router-dom";
+import { Tag } from "@navikt/ds-react";
 import getEmployer from "../../../../../server/common/getEmployer";
 import getWorkLocation from "../../../../../server/common/getWorkLocation";
 import { CONTEXT_PATH } from "../../../../common/environment";
 import { formatDate } from "../../../../common/components/utils";
 import "./SearchResultsItem.css";
-import Tag from "../../../../common/components/tag/Tag";
 
 export default function SearchResultItem({ ad, showExpired, favouriteButton, shouldAutoFocus }) {
     const location = getWorkLocation(ad.properties.location, ad.locationList);
@@ -37,7 +37,11 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, sho
                 </LinkToAd>
             </h3>
 
-            {showExpired && <Tag className="SearchResultsItem__expired">Annonsen er utløpt</Tag>}
+            {showExpired && (
+                <Tag variant="warning-filled" className="mb-1">
+                    Annonsen er utløpt
+                </Tag>
+            )}
 
             {jobTitle && (
                 <p id={`${ad.uuid}-jobTitle`} className="SearchResultsItem__jobtitle">
@@ -60,7 +64,11 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, sho
                     {frist && <p className="SearchResultsItem__applicationdue">Frist: {frist}</p>}
                     {published && <p className="SearchResultsItem__published">Publisert: {published}</p>}
                     {isFinn && <p className="SearchResultsItem__external-link">Åpnes på FINN.no</p>}
-                    {hasInterestform && <p className="SearchResultsItem__hasInterestform">Superrask søknad</p>}
+                    {hasInterestform && (
+                        <Tag variant="info-filled" className="mt-1">
+                            Superrask søknad
+                        </Tag>
+                    )}
                 </div>
                 {favouriteButton}
             </div>

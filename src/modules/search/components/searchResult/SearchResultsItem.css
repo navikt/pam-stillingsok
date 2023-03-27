@@ -76,18 +76,3 @@
     margin-right: -8px;
     margin-bottom: -8px;
 }
-
-.SearchResultsItem__expired {
-    margin: 0 0 1rem 0;
-}
-
-.SearchResultsItem__hasInterestform {
-    font-weight: 600;
-    background-color: #a7e9ff;
-    padding: 0.125rem 0.5rem;
-    border-radius: 0.25rem;
-    font-size: 14px;
-    line-height: 1.25;
-    display: inline-block;
-    margin: 1rem 0 0 0;
-}
