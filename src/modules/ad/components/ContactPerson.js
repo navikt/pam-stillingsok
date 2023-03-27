@@ -1,12 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
 import ContactAccordion from "../../favourites/components/ContactAccordion";
+import { Heading } from "@navikt/ds-react";
 
 export default function ContactPerson({ contactList }) {
     if (contactList && contactList.length > 1) {
         return (
             <section className="JobPosting__section">
-                <h2 className="JobPosting__h2">Kontaktpersoner for stillingen</h2>
+                <Heading level="2" size="medium">
+                    Kontaktpersoner for stillingen
+                </Heading>
                 {contactList.map((contact) => (
                     <ContactAccordion contact={contact} title={contact.name}></ContactAccordion>
                 ))}
@@ -15,7 +18,9 @@ export default function ContactPerson({ contactList }) {
     } else if (contactList && contactList.length == 1) {
         return (
             <section className="JobPosting__section">
-                <h2 className="JobPosting__h2">Kontaktperson for stillingen</h2>
+                <Heading level="2" size="medium">
+                    Kontaktperson for stillingen
+                </Heading>
                 <dl className="JobPosting__dl">
                     {contactList[0].name && (
                         <React.Fragment>

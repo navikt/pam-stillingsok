@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { Button } from "@navikt/ds-react";
+import { BodyLong, Button } from "@navikt/ds-react";
 
 function ConfirmEmailMessage({ onClose }) {
     const buttonRef = useRef(null);
@@ -12,9 +12,7 @@ function ConfirmEmailMessage({ onClose }) {
 
     return (
         <section role="status">
-            <p className="SavedSearches__p">
-                Du må bekrefte e-postadressen din. Klikk på lenken i e-posten du har mottatt.
-            </p>
+            <BodyLong>Du må bekrefte e-postadressen din. Klikk på lenken i e-posten du har mottatt.</BodyLong>
 
             <div className="SaveSearchForm__buttons">
                 <Button variant="primary" ref={buttonRef} onClick={onClose}>

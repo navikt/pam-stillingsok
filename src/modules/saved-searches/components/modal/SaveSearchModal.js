@@ -11,6 +11,7 @@ import { isStringEmpty } from "../../../../common/components/utils";
 import SuccessMessage from "./SuccessMessage";
 import ConfirmEmailMessage from "./ConfirmEmailMessage";
 import NotFoundMessage from "./NotFoundMessage";
+import { BodyLong } from "@navikt/ds-react";
 
 /**
  * This modal let user create a new or edit an existing saved search.
@@ -82,7 +83,9 @@ function SaveSearchModal({ onClose, onSaveSearchSuccess, formData, defaultFormMo
         <CustomModal onCloseClick={onClose} title="Lagre søk">
             {status === FetchStatus.IS_FETCHING && <DelayedSpinner />}
             {status === FetchStatus.FAILURE && error.statusCode === 404 && <NotFoundMessage />}
-            {status === FetchStatus.FAILURE && error.statusCode !== 404 && <p>Feil. Forsøk å laste siden på nytt.</p>}
+            {status === FetchStatus.FAILURE && error.statusCode !== 404 && (
+                <BodyLong>Feil. Forsøk å laste siden på nytt.</BodyLong>
+            )}
 
             {shouldShowSavedSearchForm && (
                 <SaveSearchForm

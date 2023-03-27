@@ -18,12 +18,6 @@
     }
 }
 
-.Favourites__h2 {
-    font-size: 1.25rem;
-    font-weight: 600;
-    margin: 0 0 1rem 0;
-}
-
 .FavouritesList_Sorting {
     display: flex;
     align-items: center;

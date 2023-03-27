@@ -5,6 +5,7 @@ import fixLocationName from "../../../../server/common/fixLocationName";
 import { isValidUrl } from "../../../common/components/utils";
 import getEmployer from "../../../../server/common/getEmployer";
 import "./EmployerDetails.css";
+import { Heading } from "@navikt/ds-react";
 
 function getEmployerLocation(employer) {
     let employerLocation = null;
@@ -30,7 +31,9 @@ export default function EmployerDetails({ stilling }) {
     const employerLocation = getEmployerLocation(stilling.employer);
     return (
         <section>
-            <h2 className="EmployerDetails__h2">Om arbeidsgiveren</h2>
+            <Heading level="2" size="large" className="mt-4" spacing>
+                Om arbeidsgiveren
+            </Heading>
             <dl className="EmployerDetails__dl">
                 {employer && (
                     <React.Fragment>

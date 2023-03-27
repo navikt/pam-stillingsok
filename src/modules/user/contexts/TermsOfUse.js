@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
-import { Button, ConfirmationPanel } from "@navikt/ds-react";
+import { BodyLong, Button, ConfirmationPanel } from "@navikt/ds-react";
 import CustomModal from "../../../common/components/modals/CustomModal";
 import UserAPI from "../../../common/api/UserAPI";
 import "./TermsOfUse.css";
@@ -61,10 +61,10 @@ function TermsOfUse({ onClose, onTermsAccepted }) {
         <CustomModal onCloseClick={onClose} title={title}>
             {userNameAndInfo && userNameAndInfo.erUnderFemten ? (
                 <div className="TermsOfUse">
-                    <p className="TermsOfUse__section">
+                    <BodyLong className="TermsOfUse__section">
                         Du er under 15 år og er dessverre ikke gammel nok til å ha en profil på arbeidsplassen.no. Kom
                         gjerne tilbake igjen ved en senere anledning.
-                    </p>
+                    </BodyLong>
                     <div className="TermsOfUse__buttons">
                         <Button variant="primary" onClick={onClose}>
                             Lukk
@@ -73,9 +73,9 @@ function TermsOfUse({ onClose, onTermsAccepted }) {
                 </div>
             ) : (
                 <div className="TermsOfUse">
-                    <p className="TermsOfUse__section">
+                    <BodyLong className="TermsOfUse__section">
                         Du må samtykke for å bruke innloggede tjenester i stillingssøk.
-                    </p>
+                    </BodyLong>
                     <ConfirmationPanel
                         className="TermsOfUse__section"
                         label="Dine favoritter, søk og søkekriterier"
@@ -86,10 +86,10 @@ function TermsOfUse({ onClose, onTermsAccepted }) {
                         Vi lagrer dine favoritter, søk med søkekriterier og e-postadresse (valgfri). Det er kun du som
                         kan se hva du har lagret.
                     </ConfirmationPanel>
-                    <p className="TermsOfUse__section TermsOfUse__section--last">
+                    <BodyLong className="TermsOfUse__section TermsOfUse__section--last">
                         Du kan trekke samtykket hvis du ikke lenger ønsker å bruke de innloggede tjenestene. Dette kan
                         du gjøre under innstillinger.
-                    </p>
+                    </BodyLong>
                     {fetchStatus === FetchStatus.FAILURE && (
                         <Alert>Det oppsto en feil ved lagring av samtykke. Forsøk igjen.</Alert>
                     )}

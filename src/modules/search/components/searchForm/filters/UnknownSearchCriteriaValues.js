@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import fixLocationName from "../../../../../../server/common/fixLocationName";
-import { Checkbox } from "@navikt/ds-react";
+import { Checkbox, Heading } from "@navikt/ds-react";
 
 export default function UnknownSearchCriteriaValues({
     namePrefix,
@@ -19,7 +19,9 @@ export default function UnknownSearchCriteriaValues({
 
     return (
         <React.Fragment>
-            <h4>Følgende kriterier gir 0 treff:</h4>
+            <Heading level="4" size="small" spacing>
+                Følgende kriterier gir 0 treff:
+            </Heading>
             {unknownValues.map((sec) => (
                 <Checkbox
                     key={sec}

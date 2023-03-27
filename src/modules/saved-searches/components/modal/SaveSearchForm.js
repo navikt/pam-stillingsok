@@ -1,6 +1,6 @@
 import React, { useContext, useRef, useState } from "react";
 import { UserContext } from "../../../user/contexts/UserProvider";
-import { Button, Checkbox, Radio, RadioGroup, TextField } from "@navikt/ds-react";
+import { BodyLong, Button, Checkbox, Radio, RadioGroup, TextField } from "@navikt/ds-react";
 import useToggle from "../../../../common/hooks/useToggle";
 import { FetchStatus } from "../../../../common/hooks/useFetchReducer";
 import Alert from "../../../../common/components/alert/Alert";
@@ -174,10 +174,10 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
                                 <Radio value={90}>90 dager</Radio>
                             </RadioGroup>
                             {!isStringEmpty(user.data.email) && (
-                                <p className="SavedSearches__p">
+                                <BodyLong>
                                     Varsel sendes på e-post. Gå til <a href="/personinnstillinger">Innstillinger</a> for
                                     å endre e-postadresse.
-                                </p>
+                                </BodyLong>
                             )}
                         </React.Fragment>
                     )}

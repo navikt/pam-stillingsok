@@ -13,7 +13,7 @@ import RefreshButton from "../../../common/components/buttons/RefreshButton";
 import Alert from "../../../common/components/alert/Alert";
 import { FormModes } from "./modal/SaveSearchForm";
 import AlertModalWithPageReload from "../../../common/components/modals/AlertModalWithPageReload";
-import { Tag } from "@navikt/ds-react";
+import { BodyLong, BodyShort, Heading, Tag } from "@navikt/ds-react";
 
 function SavedSearchListItem({ savedSearch, removeSavedSearchFromList, replaceSavedSearchInList, autoOpenModal }) {
     const [deleteStatus, setDeleteStatus] = useState(FetchStatus.NOT_FETCHED);
@@ -65,25 +65,25 @@ function SavedSearchListItem({ savedSearch, removeSavedSearchFromList, replaceSa
 
     return (
         <article className="SavedSearchListItem">
-            <h3 className="SavedSearchListItem__title">
+            <Heading level="3" size="small" className="SavedSearchListItem__title">
                 <a href={`${CONTEXT_PATH}${savedSearch.searchQuery}&saved=${savedSearch.uuid}`}>{savedSearch.title}</a>
-            </h3>
+            </Heading>
 
             {isValidISOString(savedSearch.updated) && (
-                <p className="SavedSearchListItem__created">
+                <BodyLong className="SavedSearchListItem__created">
                     Sist endret: {formatDate(savedSearch.updated, "DD.MM.YYYY")}
-                </p>
+                </BodyLong>
             )}
 
             {savedSearch.notifyType === "EMAIL" ? (
                 <React.Fragment>
-                    <p>Varighet på varsel: {savedSearch.duration} dager</p>
+                    <BodyShort>Varighet på varsel: {savedSearch.duration} dager</BodyShort>
                     {isValidISOString(savedSearch.expires) && (
-                        <p>Utløper: {formatDate(savedSearch.expires, "DD.MM.YYYY")}</p>
+                        <BodyShort>Utløper: {formatDate(savedSearch.expires, "DD.MM.YYYY")}</BodyShort>
                     )}
                 </React.Fragment>
             ) : (
-                <p>Ingen varsling</p>
+                <BodyShort>Ingen varsling</BodyShort>
             )}
 
             <div className="SavedSearchListItem__bottom">

@@ -2,13 +2,16 @@ import React from "react";
 import PropTypes from "prop-types";
 import { formatDate, isValidISOString } from "../../../common/components/utils";
 import worktimeParser from "./worktimeParser";
+import { Heading } from "@navikt/ds-react";
 
 export default function EmploymentDetails({ stilling }) {
     const { properties } = stilling;
 
     return (
         <section className="JobPosting__section">
-            <h2 className="JobPosting__h2">Om stillingen</h2>
+            <Heading level="2" size="medium" spacing>
+                Om stillingen
+            </Heading>
             <dl className="JobPosting__dl">
                 {properties.positioncount && (
                     <React.Fragment>

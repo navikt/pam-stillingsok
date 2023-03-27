@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import "./SearchResultCount.css";
+import { BodyShort } from "@navikt/ds-react";
 
 function SearchResultCount({ searchResult }) {
     if (searchResult) {
@@ -8,11 +9,11 @@ function SearchResultCount({ searchResult }) {
         const stillingerWord = searchResult.totalPositions === 1 ? "stilling" : "stillinger";
 
         return (
-            <p className="SearchResultCount" role="status">
+            <BodyShort className="SearchResultCount" role="status">
                 {searchResult.totalAds === 0
                     ? "Ingen treff"
                     : `${searchResult.totalPositions} ${stillingerWord} i ${searchResult.totalAds} ${annonserWord}`}
-            </p>
+            </BodyShort>
         );
     }
 

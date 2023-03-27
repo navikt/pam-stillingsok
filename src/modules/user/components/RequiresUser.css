@@ -7,7 +7,6 @@
 }
 
 .NoUserMessage__h2 {
-    font-size: 1.5rem;
     margin: 2rem 0 1rem;
     text-align: center;
 }
@@ -15,7 +14,6 @@
 .NoUserMessage__text {
     margin: 0 0 2rem 0;
     max-width: 500px;
-    line-height: 1.5;
     text-align: center;
 }
 

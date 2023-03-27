@@ -6,7 +6,7 @@ import "./HowToApply.css";
 import logAmplitudeEvent from "../../../common/tracking/amplitude";
 import FavouritesButton from "../../favourites/components/FavouritesButton";
 import { CONTEXT_PATH } from "../../../common/environment";
-import { Button } from "@navikt/ds-react";
+import { BodyLong, BodyShort, Button, Heading } from "@navikt/ds-react";
 
 export function getApplicationUrl(source, properties) {
     if (source === "FINN") {
@@ -37,10 +37,12 @@ export default function HowToApply({ stilling, showFavouriteButton, isInternal }
     if (properties.hasInterestform === "true") {
         return (
             <section className="JobPosting__section">
-                <h2 className="JobPosting__h2">Søk på denne stillingen</h2>
+                <Heading level="2" size="medium" spacing>
+                    Søk på denne stillingen
+                </Heading>
 
                 {stilling._source.status === "ACTIVE" && (
-                    <p className="JobPosting__p">Vis frem deg selv og din erfaring med en superrask søknad.</p>
+                    <BodyShort spacing>Vis frem deg selv og din erfaring med en superrask søknad.</BodyShort>
                 )}
 
                 {properties.applicationdue && (
@@ -69,27 +71,27 @@ export default function HowToApply({ stilling, showFavouriteButton, isInternal }
                 )}
 
                 {!isFinn && properties.applicationemail && (
-                    <p className="JobPosting__p">
+                    <BodyLong spacing>
                         Alternativt kan du sende søknad via e-post til{" "}
                         {isValidEmail(properties.applicationemail) ? (
                             <a href={`mailto:${properties.applicationemail}`}>{properties.applicationemail}</a>
                         ) : (
                             properties.applicationemail
                         )}
-                    </p>
+                    </BodyLong>
                 )}
 
                 {applicationUrl && (
                     <React.Fragment>
                         {isValidUrl(applicationUrl) ? (
-                            <p className="JobPosting__p">
+                            <BodyShort spacing>
                                 Alternativt kan du{" "}
                                 <a href={applicationUrl} onClick={() => applyForPosition(isFinn, stilling)}>
                                     sende søknad her.
                                 </a>
-                            </p>
+                            </BodyShort>
                         ) : (
-                            <p className="JobPosting__p">Alternativt kan du sende søknad på {applicationUrl}.</p>
+                            <BodyLong spacing>Alternativt kan du sende søknad på {applicationUrl}.</BodyLong>
                         )}
                     </React.Fragment>
                 )}
@@ -109,7 +111,9 @@ export default function HowToApply({ stilling, showFavouriteButton, isInternal }
     if (properties.applicationdue || properties.applicationemail || applicationUrl) {
         return (
             <section className="JobPosting__section">
-                <h2 className="JobPosting__h2">Søknad</h2>
+                <Heading level="2" size="medium" spacing>
+                    Søknad
+                </Heading>
                 <dl className="JobPosting__dl">
                     {properties.applicationdue && (
                         <React.Fragment>
@@ -149,7 +153,9 @@ export default function HowToApply({ stilling, showFavouriteButton, isInternal }
                     )}
                 </dl>
                 {isFinn && (
-                    <p>Denne annonsen er hentet fra FINN.no. Du kan sende søknad via den opprinnelige annonsen.</p>
+                    <BodyLong>
+                        Denne annonsen er hentet fra FINN.no. Du kan sende søknad via den opprinnelige annonsen.
+                    </BodyLong>
                 )}
                 {showFavouriteButton && (
                     <FavouritesButton

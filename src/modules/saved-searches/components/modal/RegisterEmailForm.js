@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { isValidEmail } from "../../../../common/components/utils";
 import { UserContext } from "../../../user/contexts/UserProvider";
-import { Button, TextField } from "@navikt/ds-react";
+import { BodyLong, Button, TextField } from "@navikt/ds-react";
 import { FetchStatus } from "../../../../common/hooks/useFetchReducer";
 import Alert from "../../../../common/components/alert/Alert";
 import UserAPI from "../../../../common/api/UserAPI";
@@ -67,11 +67,11 @@ function RegisterEmailForm({ onClose, onSuccess }) {
 
     return (
         <React.Fragment>
-            <p className="SavedSearchModal__p" role="status">
+            <BodyLong role="status">
                 <span className="bold">Søket ditt er lagret, men du har ikke registrert e-postadresse.</span>
                 <br />
                 For å motta varsler på e-post må du registrere e-postadressen din.
-            </p>
+            </BodyLong>
             <form onSubmit={handleFormSubmit}>
                 <TextField
                     type="email"

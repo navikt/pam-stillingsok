@@ -6,7 +6,7 @@ import UserAPI from "../../../common/api/UserAPI";
 import { FetchAction, FetchStatus, useFetchReducer } from "../../../common/hooks/useFetchReducer";
 import FavouritesListItem from "./FavouritesListItem";
 import "./Favourites.css";
-import { Select } from "@navikt/ds-react";
+import { Heading, Select } from "@navikt/ds-react";
 
 function FavouritesList() {
     const [response, dispatch] = useFetchReducer();
@@ -59,9 +59,9 @@ function FavouritesList() {
         return (
             <section>
                 <div className="FavouritesList__total-and-sorting mb-1">
-                    <h2 className="Favourites__h2">
+                    <Heading level="2" size="large" className="mb-2">
                         {response.data.length !== 1 ? `${response.data.length} annonser` : "1 annonse"}
-                    </h2>
+                    </Heading>
                     <Select
                         onChange={(e) => {
                             setSortBy(e.target.value);

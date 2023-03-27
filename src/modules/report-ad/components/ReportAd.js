@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useContext, useEffect, useState } from "react";
 import "./ReportAd.css";
-import { Button, Checkbox, Textarea } from "@navikt/ds-react";
+import { BodyLong, Button, Checkbox, Heading, Textarea } from "@navikt/ds-react";
 import { CONTEXT_PATH } from "../../../common/environment";
 import logAmplitudeEvent from "../../../common/tracking/amplitude";
 import { AuthenticationContext, AuthenticationStatus } from "../../auth/contexts/AuthenticationProvider";
@@ -109,8 +109,12 @@ const ReportAd = () => {
 
             {authenticationStatus !== AuthenticationStatus.IS_AUTHENTICATED && (
                 <div>
-                    <h2>Du må logge inn</h2>
-                    <p>Logg inn med MinID, BankID, BankID på mobil, Buypass eller Commfides.</p>
+                    <Heading level="2" size="large" spacing>
+                        Du må logge inn
+                    </Heading>
+                    <BodyLong className="mb-2">
+                        Logg inn med MinID, BankID, BankID på mobil, Buypass eller Commfides.
+                    </BodyLong>
                     <Button variant="primary" onClick={login}>
                         Logg inn
                     </Button>
@@ -124,17 +128,11 @@ const ReportAd = () => {
                             <H1WithAutoFocus>Takk for din tilbakemelding</H1WithAutoFocus>
 
                             <div className="report-form">
-                                <p>Takk for at du tok deg tid til å rapportere denne annonsen.</p>
-                                <br />
-                                <p>
+                                <BodyLong spacing>Takk for at du tok deg tid til å rapportere denne annonsen.</BodyLong>
+                                <BodyLong spacing>
                                     Har du spørsmål kan du <a href="/kontakt">kontakte oss her.</a>
-                                </p>
-                                <br />
-                                <p>
-                                    Med vennlig hilsen,
-                                    <br />
-                                    arbeidsplassen.no
-                                </p>
+                                </BodyLong>
+                                <BodyLong>Med vennlig hilsen arbeidsplassen.no</BodyLong>
                             </div>
                         </div>
                     )}
@@ -143,7 +141,9 @@ const ReportAd = () => {
                             <H1WithAutoFocus>Rapportér annonse</H1WithAutoFocus>
 
                             <div className="report-form">
-                                <h2>Henveldensen gjelder</h2>
+                                <Heading level="2" size="medium" spacing>
+                                    Henveldensen gjelder
+                                </Heading>
 
                                 <Checkbox
                                     name="regelbrudd"
@@ -197,9 +197,9 @@ const ReportAd = () => {
                                     description="Legg ikke igjen personopplysinger i dette feltet"
                                 />
 
-                                <p>
+                                <BodyLong>
                                     <a href="/retningslinjer-stillingsannonser">Les om gjeldende regler</a>
-                                </p>
+                                </BodyLong>
                             </div>
 
                             {error && <Alert>Rapportering feilet - prøv igjen</Alert>}
@@ -216,11 +216,11 @@ const ReportAd = () => {
                         </div>
                     )}
 
-                    <p className="disclaimer">
+                    <BodyLong>
                         Stillingsannonser blir som regel umiddelbart publisert på arbeidsplassen.no. Etter publisering
                         vil alle annonser bli kontrollert etter NAVs retningslinjer. I tilfeller der det er brudd på
                         retningslinjene vil stillingsannonsene bli fjernet.
-                    </p>
+                    </BodyLong>
                 </div>
             )}
         </div>

@@ -6,6 +6,7 @@ import LinkedinIcon from "../../../common/components/icons/LinkedinIcon";
 import TwitterIcon from "../../../common/components/icons/TwitterIcon";
 import MessengerIcon from "../../../common/components/icons/MessengerIcon";
 import "./ShareAd.css";
+import { Heading } from "@navikt/ds-react";
 
 export default function ShareAd({ source }) {
     const title = source.title;
@@ -13,7 +14,9 @@ export default function ShareAd({ source }) {
 
     return (
         <section className="JobPosting__section">
-            <h2 className="JobPosting__h2">Del annonsen</h2>
+            <Heading level="2" size="medium" spacing>
+                Del annonsen
+            </Heading>
             <div className="SocialShare">
                 <a
                     className="SocialShare__facebook SocialShare__link"

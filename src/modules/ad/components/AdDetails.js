@@ -3,11 +3,14 @@ import PropTypes from "prop-types";
 import { formatDate } from "../../../common/components/utils";
 import { Link } from "react-router-dom";
 import { CONTEXT_PATH } from "../../../common/environment";
+import { Heading } from "@navikt/ds-react";
 
 export default function AdDetails({ id, source }) {
     return (
         <section className="JobPosting__section">
-            <h2 className="JobPosting__h2">Om annonsen</h2>
+            <Heading level="2" size="medium" spacing>
+                Om annonsen
+            </Heading>
             <dl className="JobPosting__dl">
                 {source.updated && (
                     <React.Fragment>

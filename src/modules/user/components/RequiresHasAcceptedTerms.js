@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import DelayedSpinner from "../../../common/components/spinner/DelayedSpinner";
-import { Button } from "@navikt/ds-react";
+import { BodyLong, Button, Heading } from "@navikt/ds-react";
 import { Link } from "react-router-dom";
 import { CONTEXT_PATH } from "../../../common/environment";
 import TermsOfUse from "../contexts/TermsOfUse";
@@ -18,8 +18,10 @@ function RequiresHasAcceptedTerms({ children }) {
     } else {
         return (
             <section className="NoUserMessage">
-                <h2 className="NoUserMessage__h2">Du har ikke samtykket</h2>
-                <p className="NoUserMessage__text">Du må samtykke for å kunne lagre søk og favoritter.</p>
+                <Heading level="2" size="medium" className="NoUserMessage__h2">
+                    Du har ikke samtykket
+                </Heading>
+                <BodyLong className="NoUserMessage__text">Du må samtykke for å kunne lagre søk og favoritter.</BodyLong>
                 <div className="NoUserMessage__buttons">
                     <Button
                         variant="primary"
