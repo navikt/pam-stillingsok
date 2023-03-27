@@ -5,7 +5,6 @@ import fixLocationName from "../../../../server/common/fixLocationName";
 import { isValidUrl } from "../../../common/components/utils";
 import getEmployer from "../../../../server/common/getEmployer";
 import "./EmployerDetails.css";
-import EmployerIcon from "../../../common/components/icons/EmployerIcon";
 
 function getEmployerLocation(employer) {
     let employerLocation = null;
@@ -31,10 +30,7 @@ export default function EmployerDetails({ stilling }) {
     const employerLocation = getEmployerLocation(stilling.employer);
     return (
         <section>
-            <h2 className="EmployerDetails__h2">
-                <EmployerIcon />
-                Om arbeidsgiveren
-            </h2>
+            <h2 className="EmployerDetails__h2">Om arbeidsgiveren</h2>
             <dl className="EmployerDetails__dl">
                 {employer && (
                     <React.Fragment>
