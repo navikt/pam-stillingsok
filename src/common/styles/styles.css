@@ -23,7 +23,7 @@ body {
 body {
     overflow-y: scroll;
     background: #fff;
-    color: var(--blueDarken);
+    color: var(--a-text-default);
     font-family: "Source Sans Pro", Arial, sans-serif;
     font-size: 1.125rem;
 }

@@ -39,14 +39,14 @@ export default function AlertModal({
                 {children}
             </p>
             <div className="AlertModal__buttons">
-                <button
+                <Button
                     ref={cancelButtonRef}
-                    className={useOnlyCancelButton ? "Knapp Knapp--hoved" : "Knapp"}
-                    disabled={spinner}
+                    variant={useOnlyCancelButton ? "primary" : "secondary"}
+                    loading={spinner}
                     onClick={onCancel}
                 >
                     {cancelLabel}
-                </button>
+                </Button>
                 {!useOnlyCancelButton && (
                     <Button variant="primary" loading={spinner} disabled={spinner} onClick={onConfirm}>
                         {confirmLabel}
