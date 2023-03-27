@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { CONTEXT_PATH } from "../../../common/environment";
 import Feedback from "./Feedback";
+import { Button } from "@navikt/ds-react";
 
 function TrekkSoknadSuccess() {
     return (
@@ -13,9 +14,9 @@ function TrekkSoknadSuccess() {
                 Informasjonen du oppgav i din søknad er slettet. Dersom du angrer på at du trakk søknaden, kan du søke
                 på nytt.
             </p>
-            <Link to={CONTEXT_PATH} className="Knapp">
+            <Button variant="secondary" as={Link} to={CONTEXT_PATH}>
                 Se ledige stillinger
-            </Link>
+            </Button>
 
             <Feedback />
         </React.Fragment>

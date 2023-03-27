@@ -297,9 +297,13 @@ const SuperraskSoknadForm = ({ ad, interestForm, isInternal, submitForm, isSendi
                     <Button variant="primary" type="button" onClick={handleSendMessageClick}>
                         Send søknad
                     </Button>
-                    <Link to={`${CONTEXT_PATH}/${isInternal ? "intern" : "stilling"}/${ad._id}`} className="Knapp">
+                    <Button
+                        variant="secondary"
+                        as={Link}
+                        to={`${CONTEXT_PATH}/${isInternal ? "intern" : "stilling"}/${ad._id}`}
+                    >
                         Avbryt
-                    </Link>
+                    </Button>
                 </div>
             )}
         </form>

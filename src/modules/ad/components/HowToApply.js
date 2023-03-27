@@ -6,6 +6,7 @@ import "./HowToApply.css";
 import logAmplitudeEvent from "../../../common/tracking/amplitude";
 import FavouritesButton from "../../favourites/components/FavouritesButton";
 import { CONTEXT_PATH } from "../../../common/environment";
+import { Button } from "@navikt/ds-react";
 
 export function getApplicationUrl(source, properties) {
     if (source === "FINN") {
@@ -54,17 +55,17 @@ export default function HowToApply({ stilling, showFavouriteButton, isInternal }
                 )}
 
                 {stilling._source.status === "ACTIVE" && (
-                    <Link
+                    <Button
+                        as={Link}
                         onClick={() => {
                             logAmplitudeEvent("click superrask søknad link", {
                                 id: stilling._id
                             });
                         }}
-                        className="Knapp Knapp--hoved"
                         to={`${CONTEXT_PATH}/${path}/${stilling._id}/superrask-soknad`}
                     >
                         Gå til superrask søknad
-                    </Link>
+                    </Button>
                 )}
 
                 {!isFinn && properties.applicationemail && (

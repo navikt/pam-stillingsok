@@ -3,6 +3,7 @@ import ScrollToTop from "../../../common/components/ScrollToTop";
 import { Link } from "react-router-dom";
 import { CONTEXT_PATH } from "../../../common/environment";
 import Feedback from "./Feedback";
+import { Button } from "@navikt/ds-react";
 
 function SuperraskSoknadSuccess({ data }) {
     return (
@@ -18,9 +19,9 @@ function SuperraskSoknadSuccess({ data }) {
                     Bedriften vil vurdere din søknad og ta kontakt dersom de syns du passer for jobben. Du får beskjed
                     på e-post så fort bedriften har gjort en vurdering.
                 </p>
-                <Link to={CONTEXT_PATH} className="Knapp">
+                <Button variant="secondary" as={Link} to={CONTEXT_PATH}>
                     Tilbake til stillingssøket
-                </Link>
+                </Button>
                 <Feedback />
             </div>
         </ScrollToTop>
