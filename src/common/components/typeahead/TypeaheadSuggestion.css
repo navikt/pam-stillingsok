@@ -12,13 +12,13 @@
 }
 
 .TypeaheadSuggestion--active {
-    color: var(--blueDarken);
-    background-color: var(--greenLighten);
+    color: #fff;
+    background-color: var(--arb-blue-600);
 }
 
 @media (max-width: 991px) {
     .TypeaheadSuggestion__inner {
         padding: 0.5rem 1rem;
-        border-top: 1px solid var(--gray2);
+        border-top: 1px solid var(--arb-gray-200);
     }
 }

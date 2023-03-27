@@ -2,7 +2,7 @@
     background: transparent;
     border: 0;
     cursor: pointer;
-    color: var(--blueDarken);
+    color: var(--a-text-default);
     margin: 0.5rem 0 0.5rem 0;
 }
 

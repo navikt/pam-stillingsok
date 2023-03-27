@@ -27,7 +27,7 @@
 }
 
 .SavedSearchListItem:nth-child(even) {
-    background-color: var(--gray1);
+    background-color: var(--arb-gray-100);
 }
 
 @media (max-width: 767px) {
@@ -76,8 +76,6 @@
 
 .SavedSearchListItem__created {
     white-space: nowrap;
-    color: var(--blueDarken);
-    font-size: 1.125rem;
 }
 
 .SavedSearchListItem__expired {

@@ -23,16 +23,15 @@
 
 @media (max-width: 767px) {
     .Typeahead ul {
-        box-shadow: 0px 6px 6px -3px var(--gray4);
+        box-shadow: 0px 6px 6px -3px var(--arb-gray-500);
     }
 }
 
 @media (min-width: 768px) {
     .Typeahead ul {
         margin: 0;
-        border-bottom: 2px solid var(--blueDarken);
-        border-left: 2px solid var(--blueDarken);
-        border-right: 2px solid var(--blueDarken);
+        border: 1px solid var(--a-border-default);
+        border-radius: 6px;
     }
 }
 

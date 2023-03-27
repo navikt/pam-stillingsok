@@ -6,7 +6,7 @@
 
 .SocialShare__link:focus,
 .SocialShare__link:active {
-    box-shadow: 0 0 0 3px var(--blueDarken);
+    box-shadow: 0 0 0 3px var(--a-border-focus);
     outline: none;
 }
 

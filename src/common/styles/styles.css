@@ -1,17 +1,5 @@
 @import "./fonts.css";
-@import "./overrides.css";
 @import "./spacing.css";
-
-:root {
-    --primaryPurple: #8c368e;
-    --blueDarken: #062140;
-    --greenLighten: #98f1d7;
-    --gray1: #f9f9f9;
-    --gray2: #f1f1f1;
-    --gray3: #dbdbdb;
-    --gray4: #8e9095;
-    --gray5: #424448;
-}
 
 html,
 body {
@@ -42,14 +30,6 @@ body {
         margin-bottom: -476px;
         padding-bottom: 476px;
     }
-}
-
-input[type="search"] {
-    -webkit-appearance: none;
-}
-
-input::-ms-clear {
-    display: none;
 }
 
 .bold {
