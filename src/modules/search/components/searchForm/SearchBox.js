@@ -68,9 +68,6 @@ function SearchBox({ dispatch, query }) {
 
     return (
         <React.Fragment>
-            <label className="SearchBox__label" htmlFor="search-form-fritekst-input">
-                Skriv et eller flere søkeord
-            </label>
             <div className="SearchBox">
                 <Typeahead
                     id="search-form-fritekst-input"
@@ -80,12 +77,8 @@ function SearchBox({ dispatch, query }) {
                     onChange={handleTypeAheadValueChange}
                     suggestions={suggestionsResponse.data}
                     value={value ? value : ""}
+                    onSearchButtonClick={handleSearchButtonClick}
                 />
-                <button type="submit" className="SearchBox__button" onClick={handleSearchButtonClick}>
-                    <span className="SearchBox__button__icon">
-                        <span className="sr-only">Søk</span>
-                    </span>
-                </button>
             </div>
         </React.Fragment>
     );

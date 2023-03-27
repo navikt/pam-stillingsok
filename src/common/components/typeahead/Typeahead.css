@@ -50,18 +50,6 @@
     cursor: pointer;
 }
 
-.Typeahead__input {
-    width: 100%;
-    padding: 1rem;
-    font-size: 110%;
-    border: 1px solid var(--gray4);
-    border-radius: 0;
-}
-
-.Typeahead__input:focus {
-    outline: 0;
-}
-
 .Typeahead__suggestions {
     width: calc(100% - 4rem);
     overflow-x: hidden;

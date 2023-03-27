@@ -25,9 +25,6 @@ const SearchForm = ({ fetchSearch, query, dispatchQuery, initialSearchResult, se
         <React.Fragment>
             <form id="sok" className="Search__form" onSubmit={submitForm} role="search">
                 <SkipToResult data={searchResult} />
-                <Heading level="2" size="large" className="Search__h2">
-                    Søk
-                </Heading>
                 <SearchBox query={query} dispatch={dispatchQuery} />
                 <Accordion>
                     <Counties

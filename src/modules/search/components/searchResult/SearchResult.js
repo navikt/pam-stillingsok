@@ -24,12 +24,7 @@ const SearchResult = ({ searchResponse, queryDispatch, query, loadMoreResults })
         <section id="resultat" className="SearchResult">
             <SkipToCriteria />
             <div className="SearchResult__header">
-                <div>
-                    <Heading level="2" size="large" className="Search__h2">
-                        Søkeresultat
-                    </Heading>
-                    <SearchResultCount searchResult={data} />
-                </div>
+                <SearchResultCount searchResult={data} />
                 <Sorting dispatch={queryDispatch} query={query} />
             </div>
 
