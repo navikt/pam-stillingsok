@@ -1,20 +1,10 @@
 .SearchResultItem {
-    padding: 2rem 1rem;
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--a-border-divider);
 }
 
 .SearchResultItem:focus {
     outline: none;
-}
-
-.SearchResultItem:nth-child(odd) {
-    background-color: var(--arb-gray-50);
-}
-
-@media (max-width: 991px) {
-    .SearchResultItem {
-        margin-left: -16px;
-        margin-right: -16px;
-    }
 }
 
 .SearchResultsItem__title {
