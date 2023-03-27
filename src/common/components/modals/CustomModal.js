@@ -1,17 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
-import Modal from "nav-frontend-modal";
+import { Modal } from "@navikt/ds-react";
 import "./CustomModal.css";
 
-function CustomModal({ title, children, onCloseClick, ...props }) {
+function CustomModal({ title, children, onCloseClick }) {
+    useEffect(() => {
+        Modal.setAppElement("#app");
+    }, []);
+
     return (
-        <Modal
-            className="CustomModal"
-            isOpen
-            onRequestClose={onCloseClick}
-            appElement={document.getElementById("app")}
-            {...props}
-        >
+        <Modal className="CustomModal" open={true} onClose={onCloseClick}>
             <h1 className="CustomModal__title">{title}</h1>
             {children}
         </Modal>

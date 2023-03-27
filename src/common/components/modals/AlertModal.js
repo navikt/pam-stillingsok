@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
-import React, { useRef } from "react";
-import Modal from "nav-frontend-modal";
+import React, { useEffect, useRef } from "react";
+import { Modal } from "@navikt/ds-react";
 import { Button } from "@navikt/ds-react";
 import "./AlertModal.css";
 
@@ -17,20 +17,18 @@ export default function AlertModal({
 }) {
     const cancelButtonRef = useRef();
 
+    useEffect(() => {
+        Modal.setAppElement("#app");
+    }, []);
+
     return (
         <Modal
-            appElement={document.getElementById("app")}
             className="AlertModal"
             role="alertdialog"
-            isOpen
-            onRequestClose={onCancel}
-            onAfterOpen={() => {
-                cancelButtonRef.current.focus();
-            }}
-            aria={{
-                labelledby: `${id}-h1`,
-                describedby: `${id}-message`
-            }}
+            open={true}
+            onClose={onCancel}
+            aria-labelledby={`${id}-h1`}
+            aria-describedby={`${id}-message`}
         >
             <h1 id={`${id}-h1`} className="AlertModal__h1">
                 {title}

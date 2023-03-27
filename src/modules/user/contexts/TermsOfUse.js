@@ -59,7 +59,7 @@ function TermsOfUse({ onClose, onTermsAccepted }) {
             : "Ta i bruk innloggede tjenester";
 
     return (
-        <CustomModal onCloseClick={onClose} title={title} appElement={document.getElementById("app")}>
+        <CustomModal onCloseClick={onClose} title={title}>
             {userNameAndInfo && userNameAndInfo.erUnderFemten ? (
                 <div className="TermsOfUse">
                     <p className="TermsOfUse__section">
