@@ -4,9 +4,9 @@ services:
     image: ghcr.io/navikt/mock-oauth2-server:0.5.5
     hostname: host.docker.internal
     ports:
-      - "1337:1337"
+      - "8233:8233"
     environment:
-      SERVER_PORT: 1337
+      SERVER_PORT: 8233
       JSON_CONFIG: '{
         "interactiveLogin": true,
         "tokenCallbacks": [
