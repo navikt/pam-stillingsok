@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import Alert from "../../../common/components/alert/Alert";
 import H1WithAutoFocus from "../../../common/components/h1WithAutoFocus/H1WithAutoFocus";
@@ -23,6 +23,7 @@ const SuperraskSoknadForm = ({ ad, interestForm, isInternal, submitForm, isSendi
     const [telephone, setTelephone] = useState("");
     const [email, setEmail] = useState("");
     const [about, setAbout] = useState("");
+    const [shouldFocusErrorSummary, setShouldFocusErrorSummary] = useState(false);
     const [checkedMustRequirements, setCheckedMustRequirements] = useState([]);
     const [checkedShouldRequirements, setCheckedShouldRequirements] = useState([]);
 
@@ -33,6 +34,12 @@ const SuperraskSoknadForm = ({ ad, interestForm, isInternal, submitForm, isSendi
     const errorSummary = useRef();
 
     const ABOUT_MAX_LENGTH = 400;
+
+    useEffect(() => {
+        if (shouldFocusErrorSummary) {
+            errorSummary.current.focus();
+        }
+    }, [shouldFocusErrorSummary]);
 
     function handleFormSubmit(e) {
         e.preventDefault();
@@ -60,6 +67,7 @@ const SuperraskSoknadForm = ({ ad, interestForm, isInternal, submitForm, isSendi
 
     function validateForm() {
         let isValid = true;
+        setShouldFocusErrorSummary(false);
 
         if (email && email.length > 0 && !isValidEmail(email)) {
             isValid = false;
@@ -82,11 +90,9 @@ const SuperraskSoknadForm = ({ ad, interestForm, isInternal, submitForm, isSendi
                 } tegn for mye i din begrunnelse. Begrunnelsen kan ikke være lengre enn ${ABOUT_MAX_LENGTH} tegn`
             );
         }
-
         if (!isValid) {
-            errorSummary.current.focus();
+            setShouldFocusErrorSummary(true);
         }
-
         return isValid;
     }
 
@@ -95,16 +101,19 @@ const SuperraskSoknadForm = ({ ad, interestForm, isInternal, submitForm, isSendi
     }
 
     function handleTelephoneChange(e) {
+        setShouldFocusErrorSummary(false);
         setTelephoneValidationError(undefined);
         setTelephone(e.target.value);
     }
 
     function handleEmailChange(e) {
+        setShouldFocusErrorSummary(false);
         setEmailValidationError(undefined);
         setEmail(e.target.value);
     }
 
     function handleAboutChange(e) {
+        setShouldFocusErrorSummary(false);
         setAboutValidationError(undefined);
         setAbout(e.target.value);
     }
@@ -173,14 +182,11 @@ const SuperraskSoknadForm = ({ ad, interestForm, isInternal, submitForm, isSendi
                     har vurdert søknaden din.
                 </BodyLong>
                 <BodyLong spacing>* felter du må fylle ut</BodyLong>
-                <div
-                    ref={errorSummary}
-                    tabIndex={-1}
-                    aria-live="polite"
-                    aria-labelledby="register-interest-error-title"
-                >
-                    {errors.length > 0 && <ErrorSummary heading="Skjemaet inneholder feil">{errors}</ErrorSummary>}
-                </div>
+                {errors.length > 0 && (
+                    <ErrorSummary ref={errorSummary} heading="Skjemaet inneholder feil">
+                        {errors}
+                    </ErrorSummary>
+                )}
             </section>
 
             {((interestForm.must && interestForm.must.length > 0) ||

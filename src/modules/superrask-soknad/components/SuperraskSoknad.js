@@ -4,7 +4,6 @@ import SearchAPI from "../../../common/api/SearchAPI";
 import InterestAPI from "../api/InterestAPI";
 import { FetchAction, FetchStatus, useFetchReducer } from "../../../common/hooks/useFetchReducer";
 import DelayedSpinner from "../../../common/components/spinner/DelayedSpinner";
-import Alert from "../../../common/components/alert/Alert";
 import "./SuperraskSoknad.css";
 import getEmployer from "../../../../server/common/getEmployer";
 import { CONTEXT_PATH } from "../../../common/environment";
@@ -13,7 +12,7 @@ import NotFound404 from "../../../common/components/NotFound/NotFound404";
 import SuperraskSoknadForm from "./SuperraskSoknadForm";
 import SuperraskSoknadSuccess from "./SuperraskSoknadSuccess";
 import logAmplitudeEvent from "../../../common/tracking/amplitude";
-import { BodyShort, Label } from "@navikt/ds-react";
+import { Alert, BodyShort, Label } from "@navikt/ds-react";
 
 const SuperraskSoknad = ({ match }) => {
     const [{ data, status, error }, dispatch] = useFetchReducer();
@@ -72,8 +71,8 @@ const SuperraskSoknad = ({ match }) => {
             {status === FetchStatus.IS_FETCHING && <DelayedSpinner />}
 
             {status === FetchStatus.FAILURE && error.statusCode !== 404 && (
-                <div className="InterestForm__inner">
-                    <Alert>Det oppsto dessverre en feil. Prøv å last inn siden på nytt.</Alert>
+                <div className="InterestForm__inner mt-1 mb-1">
+                    <Alert variant="error">Det oppsto dessverre en feil. Prøv å last inn siden på nytt.</Alert>
                 </div>
             )}
 
