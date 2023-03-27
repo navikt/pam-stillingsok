@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React, { useLayoutEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { Tag } from "@navikt/ds-react";
+import { BodyShort, Heading, Tag } from "@navikt/ds-react";
 import getEmployer from "../../../../../server/common/getEmployer";
 import getWorkLocation from "../../../../../server/common/getWorkLocation";
 import { CONTEXT_PATH } from "../../../../common/environment";
@@ -31,11 +31,11 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, sho
             className="SearchResultItem"
             aria-labelledby={`${ad.uuid}-h3 ${ad.uuid}-jobTitle ${ad.uuid}-employer ${ad.uuid}-location`}
         >
-            <h3 className="SearchResultsItem__title" id={`${ad.uuid}-h3`}>
+            <Heading level="3" size="small" className="SearchResultsItem__title" id={`${ad.uuid}-h3`}>
                 <LinkToAd stilling={ad} isFinn={isFinn} employer={employer}>
                     {ad.title}
                 </LinkToAd>
-            </h3>
+            </Heading>
 
             {showExpired && (
                 <Tag variant="warning-filled" className="mb-1">
@@ -44,28 +44,30 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, sho
             )}
 
             {jobTitle && (
-                <p id={`${ad.uuid}-jobTitle`} className="SearchResultsItem__jobtitle">
+                <BodyShort id={`${ad.uuid}-jobTitle`} className="SearchResultsItem__jobtitle">
                     {jobTitle}
-                </p>
+                </BodyShort>
             )}
             {employer && (
-                <p id={`${ad.uuid}-employer`} className="SearchResultsItem__employer">
+                <BodyShort id={`${ad.uuid}-employer`} className="SearchResultsItem__employer">
                     {employer}
-                </p>
+                </BodyShort>
             )}
             {location && (
-                <p id={`${ad.uuid}-location`} className="SearchResultsItem__location">
+                <BodyShort id={`${ad.uuid}-location`} className="SearchResultsItem__location">
                     {location}
-                </p>
+                </BodyShort>
             )}
 
             <div className="SearchResultsItem__bottom">
                 <div>
-                    {frist && <p className="SearchResultsItem__applicationdue">Frist: {frist}</p>}
-                    {published && <p className="SearchResultsItem__published">Publisert: {published}</p>}
-                    {isFinn && <p className="SearchResultsItem__external-link">Åpnes på FINN.no</p>}
+                    {frist && <BodyShort className="SearchResultsItem__applicationdue">Frist: {frist}</BodyShort>}
+                    {published && (
+                        <BodyShort className="SearchResultsItem__published">Publisert: {published}</BodyShort>
+                    )}
+                    {isFinn && <BodyShort className="SearchResultsItem__external-link">Åpnes på FINN.no</BodyShort>}
                     {hasInterestform && (
-                        <Tag variant="info-filled" className="mt-1">
+                        <Tag size="small" variant="info-filled" className="mt-1">
                             Superrask søknad
                         </Tag>
                     )}

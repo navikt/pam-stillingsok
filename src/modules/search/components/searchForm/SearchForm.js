@@ -1,5 +1,5 @@
 import React from "react";
-import { Accordion } from "@navikt/ds-react";
+import { Accordion, Heading } from "@navikt/ds-react";
 import Counties from "./filters/Locations";
 import EngagementType from "./filters/Engagement";
 import Extent from "./filters/Extent";
@@ -25,7 +25,9 @@ const SearchForm = ({ fetchSearch, query, dispatchQuery, initialSearchResult, se
         <React.Fragment>
             <form id="sok" className="Search__form" onSubmit={submitForm} role="search">
                 <SkipToResult data={searchResult} />
-                <h2 className="Search__h2">Søk</h2>
+                <Heading level="2" size="large" className="Search__h2">
+                    Søk
+                </Heading>
                 <SearchBox query={query} dispatch={dispatchQuery} />
                 <Accordion>
                     <Counties

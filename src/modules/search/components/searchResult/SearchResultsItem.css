@@ -18,26 +18,19 @@
 }
 
 .SearchResultsItem__title {
-    font-size: 1.25rem;
-    font-weight: 600;
-    line-height: 1.33;
     margin: 0 0 0.75rem 0;
 }
 
 .SearchResultsItem__jobtitle {
     margin: 0 0 0.75rem 0;
-    font-weight: 600;
-    font-size: 1.125rem;
 }
 
 .SearchResultsItem__employer {
     margin: 0 0 0.25rem 0;
-    font-size: 1.125rem;
 }
 
 .SearchResultsItem__location {
     margin: 0 0 1rem 0;
-    font-size: 1.125rem;
 }
 
 .SearchResultsItem__bottom {
@@ -49,8 +42,6 @@
 .SearchResultsItem__published,
 .SearchResultsItem__applicationdue {
     margin: 0;
-    line-height: 1.5;
-    font-size: 1rem;
 }
 
 .SearchResultsItem__external-link {
@@ -67,7 +58,6 @@
 .SearchResultsItem__applicationdue,
 .SearchResultsItem__published,
 .SearchResultsItem__external-link {
-    line-height: 1.33;
     word-wrap: break-word;
     overflow-wrap: break-word;
 }

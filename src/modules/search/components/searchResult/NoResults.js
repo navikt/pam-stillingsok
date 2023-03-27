@@ -1,20 +1,20 @@
 import React from "react";
-import "./NoResults.css";
 import SaveSearchButton from "../../../saved-searches/components/SaveSearchButton";
 import { toReadableQuery } from "../../query";
+import { BodyLong, Heading, Panel } from "@navikt/ds-react";
 
 function NoResults({ query }) {
     return (
-        <section className="NoResults">
-            <h3 className="NoResults__title">Ingen stillinger akkurat nå</h3>
-            <p className="NoResults__text">
+        <Panel className="arb-panel arb-panel-lofty arb-secondary-bg-text mt-2">
+            <Heading level="3" size="medium" spacing>
+                Ingen stillinger akkurat nå
+            </Heading>
+            <BodyLong className="mb-1">
                 Søket ditt på <span className="bold">&laquo;{toReadableQuery(query)}&raquo;</span> ga ingen treff.
-            </p>
-            <p className="NoResults__text">
-                Vil du lagre dette søket? Da kan du få varsel når det kommer nye stillinger.
-            </p>
+            </BodyLong>
+            <BodyLong spacing>Vil du lagre dette søket? Da kan du få varsel når det kommer nye stillinger.</BodyLong>
             <SaveSearchButton query={query} />
-        </section>
+        </Panel>
     );
 }
 

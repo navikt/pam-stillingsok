@@ -11,6 +11,7 @@ import SkipToCriteria from "../skiplinks/SkipToCriteria";
 import SearchResultItem from "./SearchResultItem";
 import "./SearchResult.css";
 import FavouritesButton from "../../../favourites/components/FavouritesButton";
+import { Heading } from "@navikt/ds-react";
 
 const SearchResult = ({ searchResponse, queryDispatch, query, loadMoreResults }) => {
     const { status, data } = searchResponse;
@@ -24,7 +25,9 @@ const SearchResult = ({ searchResponse, queryDispatch, query, loadMoreResults })
             <SkipToCriteria />
             <div className="SearchResult__header">
                 <div>
-                    <h2 className="Search__h2">Søkeresultat</h2>
+                    <Heading level="2" size="large" className="Search__h2">
+                        Søkeresultat
+                    </Heading>
                     <SearchResultCount searchResult={data} />
                 </div>
                 <Sorting dispatch={queryDispatch} query={query} />

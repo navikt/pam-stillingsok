@@ -22,7 +22,6 @@ import "./Search.css";
 import { useHistory } from "react-router";
 import SearchResult from "./searchResult/SearchResult";
 import H1WithAutoFocus from "../../../common/components/h1WithAutoFocus/H1WithAutoFocus";
-import SuperraskSoknadBanner from "../../superrask-soknad/components/SuperraskSoknadBanner";
 
 const Search = () => {
     const { authenticationStatus } = useContext(AuthenticationContext);
@@ -153,7 +152,6 @@ const Search = () => {
                             searchResult={searchResponse.data}
                             fetchSearch={fetchSearch}
                         />
-                        <SuperraskSoknadBanner />
                     </div>
                     <SearchResult
                         searchResponse={searchResponse}
