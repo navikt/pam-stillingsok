@@ -26,40 +26,6 @@
     padding: 0 1rem;
 }
 
-.InterestForm__job-title {
-    margin: 0;
-    font-size: 1.125rem;
-    line-height: 1.5;
-}
-
-.InterestForm__employer {
-    margin: 0 0 0.25rem 0;
-    font-weight: 600;
-    font-size: 1.125rem;
-    line-height: 1.5;
-}
-
-.InterestForm__h1 {
-    margin: 0 0 1rem 0;
-    font-weight: 600;
-    font-size: 2rem;
-    line-height: 2.5rem;
-}
-
-@media (min-width: 680px) {
-    .InterestForm__h1 {
-        font-size: 2.25rem;
-        line-height: 2.875rem;
-    }
-}
-
-.InterestForm__h2 {
-    margin: 0 0 0.5rem 0;
-    font-weight: 600;
-    font-size: 1.5rem;
-    line-height: 1.75rem;
-}
-
 .InterestForm__lead {
     margin: 0 0 2rem 0;
     font-size: 1.125rem;
@@ -74,47 +40,8 @@
     }
 }
 
-.InterestForm__p {
-    margin: 0 0 1rem 0;
-    font-size: 1.125rem;
-    line-height: 1.5;
-}
-
 .InterestForm__section {
     margin: 0 0 2.5rem 0;
-}
-
-.InterestForm__mb-0 {
-    margin: 0;
-}
-
-.InterestForm__mb-2 {
-    margin: 0 0 2rem 0;
-}
-
-.InterestForm__details {
-    margin: 0 0 1.5rem 0;
-}
-
-.InterestForm__details summary {
-    color: #8c368e;
-    font-size: 1.125rem;
-    margin: 0;
-}
-
-.InterestForm__details summary:hover {
-    cursor: pointer;
-}
-
-.InterestForm__details summary:focus {
-    outline: 0;
-    box-shadow: 0 0 0 3px #062140;
-}
-
-.InterestForm__details-content {
-    margin: 0.5rem 0 1rem 0.25rem;
-    padding-left: 1rem;
-    border-left: 4px solid #98f1d7;
 }
 
 .InterestForm__textfield {
@@ -162,28 +89,6 @@
     margin-top: 3rem;
 }
 
-.InterestForm__error-summary {
-    border: 3px solid #aa1e37;
-    padding: 2rem;
-    margin: 0 0 2rem 0;
-}
-
-.InterestForm__error-title {
-    margin: 0 0 1rem 0;
-    font-size: 1.5rem;
-    font-weight: 600;
-}
-
-.InterestForm__error-list {
-    margin: 0;
-}
-
-.InterestForm__error-list li {
-    line-height: 1.5rem;
-    margin: 0 0 0.25rem 0;
-    font-size: 1.125rem;
-}
-
 .InterestForm__fieldset {
     padding: 0;
     margin: 0 0 1.5rem 0;
@@ -218,20 +123,6 @@
     padding: 0 1rem;
 }
 
-.InterestMessageDelete__ad {
-    margin-bottom: 2rem;
-}
-
-.InterestMessageDelete__ad-title,
-.InterestMessageDelete__employer {
-    margin: 0 0 0.25rem 0;
-    font-size: 1.125rem;
-    line-height: 1.5;
-}
-
-.InterestMessageDelete__employer {
-    font-weight: 600;
-}
 
 .InterestForm__success-message {
     margin-top: 4rem;
