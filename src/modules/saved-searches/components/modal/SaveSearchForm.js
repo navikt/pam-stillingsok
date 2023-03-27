@@ -1,7 +1,7 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { Checkbox, Fieldset, Input, Radio, SkjemaGruppe } from "nav-frontend-skjema";
 import { UserContext } from "../../../user/contexts/UserProvider";
-import { Button } from "@navikt/ds-react";
+import { Button, TextField } from "@navikt/ds-react";
 import useToggle from "../../../../common/hooks/useToggle";
 import { FetchStatus } from "../../../../common/hooks/useFetchReducer";
 import Alert from "../../../../common/components/alert/Alert";
@@ -35,7 +35,7 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
     // Validation
     const [titleValidationError, setTitleValidationError] = useState(undefined);
 
-    let titleRef;
+    const titleRef = useRef();
 
     function handleFormSubmit(e) {
         e.preventDefault();
@@ -94,7 +94,9 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
         if (title.trim().length === 0) {
             isValid = false;
             setTitleValidationError("Tittel mangler");
-            titleRef.focus();
+            if (titleRef.current) {
+                titleRef.current.focus();
+            }
         } else {
             setTitleValidationError(undefined);
         }
@@ -154,16 +156,14 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
 
             {shouldShowForm && (
                 <React.Fragment>
-                    <Input
+                    <TextField
                         id="SavedSearchModal__name"
                         className="SavedSearchModal__body__name"
                         label="Navn*"
                         onChange={handleTitleChange}
                         value={title}
-                        feil={titleValidationError ? { feilmelding: titleValidationError } : undefined}
-                        inputRef={(el) => {
-                            titleRef = el;
-                        }}
+                        error={titleValidationError}
+                        ref={titleRef}
                     />
                     <Checkbox
                         className="SavedSearchModal__body__notify"

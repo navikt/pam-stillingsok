@@ -1,8 +1,7 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Input } from "nav-frontend-skjema";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { isValidEmail } from "../../../../common/components/utils";
 import { UserContext } from "../../../user/contexts/UserProvider";
-import { Button } from "@navikt/ds-react";
+import { Button, TextField } from "@navikt/ds-react";
 import { FetchStatus } from "../../../../common/hooks/useFetchReducer";
 import Alert from "../../../../common/components/alert/Alert";
 import UserAPI from "../../../../common/api/UserAPI";
@@ -12,11 +11,11 @@ function RegisterEmailForm({ onClose, onSuccess }) {
     const [email, setEmail] = useState("");
     const [saveStatus, setSaveStatus] = useState(FetchStatus.NOT_FETCHED);
     const [emailValidationError, setEmailValidationError] = useState(undefined);
-    let emailRef;
+    const emailRef = useRef();
 
     useEffect(() => {
-        if (emailRef) {
-            emailRef.focus();
+        if (emailRef.current) {
+            emailRef.current.focus();
         }
     }, []);
 
@@ -56,7 +55,7 @@ function RegisterEmailForm({ onClose, onSuccess }) {
             setEmailValidationError(undefined);
         }
         if (!isValid) {
-            emailRef.focus();
+            emailRef.current.focus();
         }
         return isValid;
     }
@@ -74,21 +73,13 @@ function RegisterEmailForm({ onClose, onSuccess }) {
                 For å motta varsler på e-post må du registrere e-postadressen din.
             </p>
             <form onSubmit={handleFormSubmit}>
-                <Input
+                <TextField
                     type="email"
                     label="Skriv inn e-postadressen din"
                     value={email || ""}
                     onChange={handleEmailChange}
-                    inputRef={(el) => {
-                        emailRef = el;
-                    }}
-                    feil={
-                        emailValidationError
-                            ? {
-                                  feilmelding: emailValidationError
-                              }
-                            : undefined
-                    }
+                    ref={emailRef}
+                    error={emailValidationError}
                 />
 
                 {saveStatus === FetchStatus.FAILURE && (

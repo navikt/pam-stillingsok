@@ -3,11 +3,10 @@ import { Link } from "react-router-dom";
 import Alert from "../../../common/components/alert/Alert";
 import H1WithAutoFocus from "../../../common/components/h1WithAutoFocus/H1WithAutoFocus";
 import { Checkbox } from "nav-frontend-skjema";
-import { Button, Loader, Textarea } from "@navikt/ds-react";
+import { Button, Loader, Textarea, TextField } from "@navikt/ds-react";
 import { isValidEmail } from "../../../common/components/utils";
 import "./SuperraskSoknad.css";
 import { CONTEXT_PATH } from "../../../common/environment";
-import TextField from "../../../common/components/textField/TextField";
 
 const SuperraskSoknadForm = ({ ad, interestForm, isInternal, submitForm, isSending, hasError, error }) => {
     // Form data
@@ -250,7 +249,7 @@ const SuperraskSoknadForm = ({ ad, interestForm, isInternal, submitForm, isSendi
                 <TextField
                     label="Navn"
                     id="register-interest-name"
-                    autoComplete="name"
+                    auto-complete="name"
                     onChange={handleNameChange}
                     value={name}
                 />
@@ -258,7 +257,8 @@ const SuperraskSoknadForm = ({ ad, interestForm, isInternal, submitForm, isSendi
                 <TextField
                     label="E-post *"
                     type="email"
-                    autoComplete="email"
+                    auto-complete="email"
+                    aria-required="true"
                     id="register-interest-email"
                     onChange={handleEmailChange}
                     value={email}
@@ -269,7 +269,8 @@ const SuperraskSoknadForm = ({ ad, interestForm, isInternal, submitForm, isSendi
                     label="Telefonnummer *"
                     id="register-interest-telephone"
                     type="tel"
-                    autoComplete="tel"
+                    auto-complete="tel"
+                    aria-required="true"
                     onChange={handleTelephoneChange}
                     value={telephone}
                     error={telephoneValidationError}
