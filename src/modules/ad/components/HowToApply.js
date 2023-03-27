@@ -65,6 +65,7 @@ export default function HowToApply({ stilling, showFavouriteButton, isInternal }
                             });
                         }}
                         to={`${CONTEXT_PATH}/${path}/${stilling._id}/superrask-soknad`}
+                        className="mb-1"
                     >
                         Gå til superrask søknad
                     </Button>

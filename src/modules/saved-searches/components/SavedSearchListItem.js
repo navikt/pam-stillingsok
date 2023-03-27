@@ -65,14 +65,14 @@ function SavedSearchListItem({ savedSearch, removeSavedSearchFromList, replaceSa
 
     return (
         <article className="SavedSearchListItem">
-            <Heading level="3" size="small" className="SavedSearchListItem__title">
+            <Heading level="3" size="small" className="SavedSearchListItem__title" spacing>
                 <a href={`${CONTEXT_PATH}${savedSearch.searchQuery}&saved=${savedSearch.uuid}`}>{savedSearch.title}</a>
             </Heading>
 
             {isValidISOString(savedSearch.updated) && (
-                <BodyLong className="SavedSearchListItem__created">
+                <BodyShort className="SavedSearchListItem__created" spacing>
                     Sist endret: {formatDate(savedSearch.updated, "DD.MM.YYYY")}
-                </BodyLong>
+                </BodyShort>
             )}
 
             {savedSearch.notifyType === "EMAIL" ? (

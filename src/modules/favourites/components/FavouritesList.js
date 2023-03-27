@@ -59,7 +59,7 @@ function FavouritesList() {
         return (
             <section>
                 <div className="FavouritesList__total-and-sorting mb-1">
-                    <Heading level="2" size="large" className="mb-2">
+                    <Heading level="2" size="large">
                         {response.data.length !== 1 ? `${response.data.length} annonser` : "1 annonse"}
                     </Heading>
                     <Select
