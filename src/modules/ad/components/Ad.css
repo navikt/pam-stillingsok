@@ -1,99 +1,98 @@
 .JobPosting {
-  margin: 2rem auto;
-  max-width: 1200px;
-  padding: 0 1rem;
-  min-height: 100vh;
+    margin: 2rem auto;
+    max-width: 1200px;
+    padding: 0 1rem;
+    min-height: 100vh;
 }
 
 @media (min-width: 900px) {
-  .JobPosting {
-    padding: 0 2.5rem;
-  }
+    .JobPosting {
+        padding: 0 2.5rem;
+    }
 }
 
 .JobPosting__h1 {
-  margin: 0 0 1rem;
-  font-size: 2rem;
-  line-height: 1.2;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-  font-weight: 600;
+    margin: 0 0 1rem;
+    font-size: 2rem;
+    line-height: 1.2;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    font-weight: 600;
 }
 
 @media (min-width: 992px) {
-  .JobPosting__h1 {
-    margin: 0 0 1rem;
-    font-size: 2.5rem;
-  }
+    .JobPosting__h1 {
+        margin: 0 0 1rem;
+        font-size: 2.5rem;
+    }
 }
 
 .JobPosting__h2 {
-  margin: 0 0 1rem 0;
-  font-size: 1.5rem;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  line-height: 1.33;
+    margin: 0 0 1rem 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    line-height: 1.33;
 }
 
 .JobPosting__h2 svg {
-  margin-right: 0.75rem;
+    margin-right: 0.75rem;
 }
 
-
 @media (min-width: 992px) {
-  .JobPosting__flex {
-    display: flex;
-  }
+    .JobPosting__flex {
+        display: flex;
+    }
 }
 
 .JobPosting__left {
-  margin: 0 0 2rem 0;
+    margin: 0 0 2rem 0;
 }
 
 @media (min-width: 992px) {
-  .JobPosting__left {
-    flex: 2;
-    padding-right: 6rem;
-  }
+    .JobPosting__left {
+        flex: 2;
+        padding-right: 6rem;
+    }
 }
 
 @media (min-width: 1200px) {
-  .JobPosting__left {
-    padding-right: 8rem;
-  }
+    .JobPosting__left {
+        padding-right: 8rem;
+    }
 }
 
 @media (min-width: 992px) {
-  .JobPosting__right {
-    width: 340px;
-  }
+    .JobPosting__right {
+        width: 340px;
+    }
 }
 
 .JobPosting__section {
-  width: 100%;
-  margin-bottom: 2rem;
-  padding-bottom: 1.5rem;
+    width: 100%;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
 }
 
 .JobPosting__dl dd,
 .JobPosting__dl dt {
-  line-height: 1.33;
-  font-size: 1.125rem;
+    line-height: 1.33;
+    font-size: 1.125rem;
 }
 
 .JobPosting__dl dt {
-  margin: 0;
-  font-weight: 600;
+    margin: 0;
+    font-weight: 600;
 }
 
 .JobPosting__dl dd {
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-  margin: 0 0 0.75rem 0;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    margin: 0 0 0.75rem 0;
 }
 
 .JobPosting__p {
-  font-size: 1.125rem;
-  line-height: 1.5;
+    font-size: 1.125rem;
+    line-height: 1.5;
 }

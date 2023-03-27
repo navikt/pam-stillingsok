@@ -18,7 +18,7 @@
 }
 
 .checkboks:hover + .skjemaelement__label:before,
-.radioknapp:hover + .skjemaelement__label:before{
+.radioknapp:hover + .skjemaelement__label:before {
     background-color: #ffe7fb;
     border-color: var(--primaryPurple);
 }
@@ -43,7 +43,7 @@
 }
 
 .radioknapp:checked:focus + .skjemaelement__label:before {
-    box-shadow: 0 0 0 2px var(--blueDarken), 0 0 0 3px #FFF inset, 0 0 0 12px var(--primaryPurple) inset;
+    box-shadow: 0 0 0 2px var(--blueDarken), 0 0 0 3px #fff inset, 0 0 0 12px var(--primaryPurple) inset;
 }
 
 .skjemaelement__input:hover {

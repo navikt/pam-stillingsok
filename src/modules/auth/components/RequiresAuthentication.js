@@ -24,7 +24,9 @@ function RequiresAuthentication({ children }) {
                 <p className="LoginRequiredMessage__text">
                     Logg inn med MinID, BankID, BankID på mobil, Buypass eller Commfides.
                 </p>
-                <Button variant="primary" onClick={login}>Logg inn</Button>
+                <Button variant="primary" onClick={login}>
+                    Logg inn
+                </Button>
             </section>
         );
     }

@@ -76,7 +76,9 @@ const BrowserSupportInfoModal = ({ tillatLukking = false }) => {
 
                 {tillatLukking && (
                     <Normaltekst className="BrowserInfo-knapp-wrapper">
-                        <Button variant="secondary" onClick={closeModal}>Lukk</Button>
+                        <Button variant="secondary" onClick={closeModal}>
+                            Lukk
+                        </Button>
                     </Normaltekst>
                 )}
             </section>

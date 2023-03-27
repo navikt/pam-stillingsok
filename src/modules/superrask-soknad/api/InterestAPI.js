@@ -1,6 +1,6 @@
 import { INTEREST_API_URL } from "../../../common/environment";
 import APIError from "../../../common/api/APIError";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 
 const NAV_CALLID_FIELD = "Nav-CallId";
 

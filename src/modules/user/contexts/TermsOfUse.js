@@ -67,7 +67,9 @@ function TermsOfUse({ onClose, onTermsAccepted }) {
                         gjerne tilbake igjen ved en senere anledning.
                     </p>
                     <div className="TermsOfUse__buttons">
-                        <Button variant="primary" onClick={onClose}>Lukk</Button>
+                        <Button variant="primary" onClick={onClose}>
+                            Lukk
+                        </Button>
                     </div>
                 </div>
             ) : (
@@ -108,7 +110,9 @@ function TermsOfUse({ onClose, onTermsAccepted }) {
                         >
                             Jeg samtykker
                         </Button>
-                        <Button variant="tertiary" onClick={onClose}>Avbryt</Button>
+                        <Button variant="tertiary" onClick={onClose}>
+                            Avbryt
+                        </Button>
                     </div>
                 </div>
             )}
