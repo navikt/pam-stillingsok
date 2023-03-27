@@ -1,72 +1,72 @@
 .Typeahead {
-  flex: 1;
-  position: relative;
+    flex: 1;
+    position: relative;
 }
 
 @media (max-width: 767px) {
-  .Typeahead {
-    padding: 0 1rem;
-  }
+    .Typeahead {
+        padding: 0 1rem;
+    }
 }
 
 .Typeahead ul {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  z-index: 2;
-  min-width: 100%;
-  padding: 0;
-  margin: 0.5rem 0 0 0;
-  background-color: #fff;
-  overflow: auto;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 2;
+    min-width: 100%;
+    padding: 0;
+    margin: 0.5rem 0 0 0;
+    background-color: #fff;
+    overflow: auto;
 }
 
 @media (max-width: 767px) {
-  .Typeahead ul {
-    box-shadow: 0px 6px 6px -3px var(--gray4);
-  }
+    .Typeahead ul {
+        box-shadow: 0px 6px 6px -3px var(--gray4);
+    }
 }
 
 @media (min-width: 768px) {
-  .Typeahead ul {
-    margin: 0;
-    border-bottom: 2px solid var(--blueDarken);
-    border-left: 2px solid var(--blueDarken);
-    border-right: 2px solid var(--blueDarken);
-  }
+    .Typeahead ul {
+        margin: 0;
+        border-bottom: 2px solid var(--blueDarken);
+        border-left: 2px solid var(--blueDarken);
+        border-right: 2px solid var(--blueDarken);
+    }
 }
 
 .Typeahead ul li {
-  display: block;
-  clear: both;
-  line-height: 2rem;
-  color: #333;
-  white-space: nowrap;
-  font-size: initial;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  cursor: pointer;
+    display: block;
+    clear: both;
+    line-height: 2rem;
+    color: #333;
+    white-space: nowrap;
+    font-size: initial;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: pointer;
 }
 
 .Typeahead__input {
-  width: 100%;
-  padding: 1rem;
-  font-size: 110%;
-  border: 1px solid var(--gray4);
-  border-radius: 0;
+    width: 100%;
+    padding: 1rem;
+    font-size: 110%;
+    border: 1px solid var(--gray4);
+    border-radius: 0;
 }
 
 .Typeahead__input:focus {
-  outline: 0;
+    outline: 0;
 }
 
 .Typeahead__suggestions {
-  width: calc(100% - 4rem);
-  overflow-x: hidden;
+    width: calc(100% - 4rem);
+    overflow-x: hidden;
 }
 
 .Typeahead__suggestions--hidden {
-  display: none;
+    display: none;
 }

@@ -5,8 +5,8 @@ import { formatDate, isValidEmail, isValidISOString, isValidUrl } from "../../..
 import "./HowToApply.css";
 import logAmplitudeEvent from "../../../common/tracking/amplitude";
 import FavouritesButton from "../../favourites/components/FavouritesButton";
-import CalendarIcon from "../../../common/components/icons/CalendarIcon";
 import { CONTEXT_PATH } from "../../../common/environment";
+import { Button } from "@navikt/ds-react";
 
 export function getApplicationUrl(source, properties) {
     if (source === "FINN") {
@@ -55,26 +55,24 @@ export default function HowToApply({ stilling, showFavouriteButton, isInternal }
                 )}
 
                 {stilling._source.status === "ACTIVE" && (
-                    <Link
+                    <Button
+                        as={Link}
                         onClick={() => {
                             logAmplitudeEvent("click superrask søknad link", {
                                 id: stilling._id
                             });
                         }}
-                        className="Knapp Knapp--hoved"
                         to={`${CONTEXT_PATH}/${path}/${stilling._id}/superrask-soknad`}
                     >
                         Gå til superrask søknad
-                    </Link>
+                    </Button>
                 )}
 
                 {!isFinn && properties.applicationemail && (
                     <p className="JobPosting__p">
                         Alternativt kan du sende søknad via e-post til{" "}
                         {isValidEmail(properties.applicationemail) ? (
-                            <a className="link" href={`mailto:${properties.applicationemail}`}>
-                                {properties.applicationemail}
-                            </a>
+                            <a href={`mailto:${properties.applicationemail}`}>{properties.applicationemail}</a>
                         ) : (
                             properties.applicationemail
                         )}
@@ -86,11 +84,7 @@ export default function HowToApply({ stilling, showFavouriteButton, isInternal }
                         {isValidUrl(applicationUrl) ? (
                             <p className="JobPosting__p">
                                 Alternativt kan du{" "}
-                                <a
-                                    href={applicationUrl}
-                                    onClick={() => applyForPosition(isFinn, stilling)}
-                                    className="link"
-                                >
+                                <a href={applicationUrl} onClick={() => applyForPosition(isFinn, stilling)}>
                                     sende søknad her.
                                 </a>
                             </p>
@@ -115,10 +109,7 @@ export default function HowToApply({ stilling, showFavouriteButton, isInternal }
     if (properties.applicationdue || properties.applicationemail || applicationUrl) {
         return (
             <section className="JobPosting__section">
-                <h2 className="JobPosting__h2">
-                    <CalendarIcon />
-                    Søknad
-                </h2>
+                <h2 className="JobPosting__h2">Søknad</h2>
                 <dl className="JobPosting__dl">
                     {properties.applicationdue && (
                         <React.Fragment>
@@ -135,9 +126,7 @@ export default function HowToApply({ stilling, showFavouriteButton, isInternal }
                             <dt>Send søknad til:</dt>
                             <dd>
                                 {isValidEmail(properties.applicationemail) ? (
-                                    <a className="link" href={`mailto:${properties.applicationemail}`}>
-                                        {properties.applicationemail}
-                                    </a>
+                                    <a href={`mailto:${properties.applicationemail}`}>{properties.applicationemail}</a>
                                 ) : (
                                     properties.applicationemail
                                 )}
@@ -149,11 +138,7 @@ export default function HowToApply({ stilling, showFavouriteButton, isInternal }
                             <dt>Søknadslenke:</dt>
                             <dd>
                                 {isValidUrl(applicationUrl) ? (
-                                    <a
-                                        href={applicationUrl}
-                                        onClick={() => applyForPosition(isFinn, stilling)}
-                                        className="link"
-                                    >
+                                    <a href={applicationUrl} onClick={() => applyForPosition(isFinn, stilling)}>
                                         Søk på stillingen
                                     </a>
                                 ) : (

@@ -3,11 +3,10 @@ import { Link } from "react-router-dom";
 import Alert from "../../../common/components/alert/Alert";
 import H1WithAutoFocus from "../../../common/components/h1WithAutoFocus/H1WithAutoFocus";
 import { Checkbox, Textarea } from "nav-frontend-skjema";
-import { Hovedknapp } from "@navikt/arbeidsplassen-knapper";
+import { Button, Loader } from "@navikt/ds-react";
 import { isValidEmail } from "../../../common/components/utils";
 import "./SuperraskSoknad.css";
 import { CONTEXT_PATH } from "../../../common/environment";
-import Spinner from "nav-frontend-spinner";
 import TextField from "../../../common/components/textField/TextField";
 
 const SuperraskSoknadForm = ({ ad, interestForm, isInternal, submitForm, isSending, hasError, error }) => {
@@ -160,23 +159,17 @@ const SuperraskSoknadForm = ({ ad, interestForm, isInternal, submitForm, isSendi
                             <ul className="InterestForm__error-list">
                                 {telephoneValidationError && (
                                     <li>
-                                        <a href="#register-interest-telephone" className="link">
-                                            {telephoneValidationError}
-                                        </a>
+                                        <a href="#register-interest-telephone">{telephoneValidationError}</a>
                                     </li>
                                 )}
                                 {emailValidationError && (
                                     <li>
-                                        <a href="#register-interest-email" className="link">
-                                            {emailValidationError}
-                                        </a>
+                                        <a href="#register-interest-email">{emailValidationError}</a>
                                     </li>
                                 )}
                                 {aboutValidationError && (
                                     <li>
-                                        <a href="#register-interest-about" className="link">
-                                            {aboutValidationError}
-                                        </a>
+                                        <a href="#register-interest-about">{aboutValidationError}</a>
                                     </li>
                                 )}
                             </ul>
@@ -289,7 +282,7 @@ const SuperraskSoknadForm = ({ ad, interestForm, isInternal, submitForm, isSendi
                 kontaktinformasjonen din.
             </p>
             <p className="InterestForm__p InterestForm__mb-2">Du kan når som helst trekke tilbake søknaden din.</p>
-            <a target="_blank" rel="noopener noreferrer" href="/personvern-superrask-soknad" className="link">
+            <a target="_blank" rel="noopener noreferrer" href="/personvern-superrask-soknad">
                 Les om hvordan vi behandler dine data (åpner i ny fane)
             </a>
 
@@ -297,16 +290,20 @@ const SuperraskSoknadForm = ({ ad, interestForm, isInternal, submitForm, isSendi
 
             {isSending ? (
                 <div aria-live="polite" className="InterestForm__progress">
-                    <Spinner type="S" /> Sender søknad
+                    <Loader size="small" /> Sender søknad
                 </div>
             ) : (
                 <div className="InterestForm__buttons">
-                    <Hovedknapp htmlType="button" onClick={handleSendMessageClick}>
+                    <Button variant="primary" type="button" onClick={handleSendMessageClick}>
                         Send søknad
-                    </Hovedknapp>
-                    <Link to={`${CONTEXT_PATH}/${isInternal ? "intern" : "stilling"}/${ad._id}`} className="Knapp">
+                    </Button>
+                    <Button
+                        variant="secondary"
+                        as={Link}
+                        to={`${CONTEXT_PATH}/${isInternal ? "intern" : "stilling"}/${ad._id}`}
+                    >
                         Avbryt
-                    </Link>
+                    </Button>
                 </div>
             )}
         </form>

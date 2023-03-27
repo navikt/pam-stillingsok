@@ -3,15 +3,11 @@ import PropTypes from "prop-types";
 import { formatDate } from "../../../common/components/utils";
 import { Link } from "react-router-dom";
 import { CONTEXT_PATH } from "../../../common/environment";
-import HistoryIcon from "../../../common/components/icons/HistoryIcon";
 
 export default function AdDetails({ id, source }) {
     return (
         <section className="JobPosting__section">
-            <h2 className="JobPosting__h2">
-                <HistoryIcon />
-                Om annonsen
-            </h2>
+            <h2 className="JobPosting__h2">Om annonsen</h2>
             <dl className="JobPosting__dl">
                 {source.updated && (
                     <React.Fragment>
@@ -38,9 +34,7 @@ export default function AdDetails({ id, source }) {
                     </React.Fragment>
                 )}
             </dl>
-            <Link className="link" to={`${CONTEXT_PATH}/rapporter-annonse?uuid=${id}`}>
-                Rapportér annonse
-            </Link>
+            <Link to={`${CONTEXT_PATH}/rapporter-annonse?uuid=${id}`}>Rapportér annonse</Link>
         </section>
     );
 }

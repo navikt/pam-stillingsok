@@ -1,36 +1,36 @@
 .Favourites {
-  max-width: 800px;
-  margin: 2rem auto 4rem;
-  padding: 0 1rem;
+    max-width: 800px;
+    margin: 2rem auto 4rem;
+    padding: 0 1rem;
 }
 
 .Favourites__h1 {
-  margin: 0 0 2rem 0;
-  font-weight: 600;
-  font-size: 2.5rem;
+    margin: 0 0 2rem 0;
+    font-weight: 600;
+    font-size: 2.5rem;
 }
 
 @media (min-width: 992px) {
-  .FavouritesList__total-and-sorting {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
+    .FavouritesList__total-and-sorting {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
 }
 
 .Favourites__h2 {
-  font-size: 1.25rem;
-  font-weight: 600;
-  margin: 0 0 1rem 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0 0 1rem 0;
 }
 
 .FavouritesList_Sorting {
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 }
 
 .FavouritesList_Sorting label {
-  margin-right: 0.5rem;
-  white-space: nowrap;
-  margin-bottom: 0;
+    margin-right: 0.5rem;
+    white-space: nowrap;
+    margin-bottom: 0;
 }

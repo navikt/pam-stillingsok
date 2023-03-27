@@ -1,68 +1,31 @@
-.CriteriaPanel {
-  margin-bottom: 1rem;
-}
-
-.CriteriaPanel__h3 {
-  margin: 0 0 1rem 0;
-  display: inline-block;
-}
-
-.CriteriaPanel__button {
-  background: transparent;
-  border: 0;
-  margin: 0;
-  padding: 0 1rem 0 0;
-  text-align: left;
-  line-height: 1;
-  font-size: 1.25rem;
-  font-weight: 600;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  color: var(--blueDarken);
-}
-
-.CriteriaPanel__button svg {
-  margin-right: 0.5rem;
-}
-
-.CriteriaPanel__button:focus-visible {
-  outline: 3px solid transparent;
-  box-shadow: 0 0 0 3px var(--blueDarken);
-}
-
-.CriteriaPanel__button:hover {
-  text-decoration: underline;
-}
-
 .CriteriaPanel__fieldset {
-  padding: 0 0 2rem 1.75rem;
-  margin: 0;
-  border: 0;
+    padding: 0;
+    margin: 0;
+    border: 0;
 }
 
 .CriteriaPanel__fieldset legend {
-  font-size: 1rem;
-  font-weight: 600;
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  margin: -1px;
-  padding: 0;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  border: 0;
-  white-space: nowrap;
+    font-size: 1rem;
+    font-weight: 600;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+    white-space: nowrap;
 }
 
 .CriteriaPanel__fieldset--sub {
-  padding: 0 0 0 1.25rem;
+    padding: 0 0 0 1.25rem;
 }
 
 .Facet__zero__count label {
-  color: #78706a !important;
+    color: #78706a !important;
 }
 
 .RemoteFacet {
-  margin-top: 1.5rem;
+    margin-top: 1.5rem;
 }

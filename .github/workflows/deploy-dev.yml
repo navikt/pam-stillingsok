@@ -19,3 +19,4 @@ jobs:
     secrets:
       NAIS_DEPLOY_APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
       SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      OPTIONAL_SECRET: ${{ secrets.READER_TOKEN }}

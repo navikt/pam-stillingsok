@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { UAParser } from "ua-parser-js";
-import ShareIcon from "../../../common/components/icons/ShareIcon";
 import FacebookIcon from "../../../common/components/icons/FacebookIcon";
 import LinkedinIcon from "../../../common/components/icons/LinkedinIcon";
 import TwitterIcon from "../../../common/components/icons/TwitterIcon";
@@ -14,10 +13,7 @@ export default function ShareAd({ source }) {
 
     return (
         <section className="JobPosting__section">
-            <h2 className="JobPosting__h2">
-                <ShareIcon />
-                Del annonsen
-            </h2>
+            <h2 className="JobPosting__h2">Del annonsen</h2>
             <div className="SocialShare">
                 <a
                     className="SocialShare__facebook SocialShare__link"

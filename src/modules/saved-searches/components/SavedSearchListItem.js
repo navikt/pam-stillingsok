@@ -10,10 +10,10 @@ import { FetchStatus } from "../../../common/hooks/useFetchReducer";
 import DeleteButton from "../../../common/components/buttons/DeleteButton";
 import EditButton from "../../../common/components/buttons/EditButton";
 import RefreshButton from "../../../common/components/buttons/RefreshButton";
-import Tag from "../../../common/components/tag/Tag";
 import Alert from "../../../common/components/alert/Alert";
 import { FormModes } from "./modal/SaveSearchForm";
 import AlertModalWithPageReload from "../../../common/components/modals/AlertModalWithPageReload";
+import { Tag } from "@navikt/ds-react";
 
 function SavedSearchListItem({ savedSearch, removeSavedSearchFromList, replaceSavedSearchInList, autoOpenModal }) {
     const [deleteStatus, setDeleteStatus] = useState(FetchStatus.NOT_FETCHED);
@@ -66,9 +66,7 @@ function SavedSearchListItem({ savedSearch, removeSavedSearchFromList, replaceSa
     return (
         <article className="SavedSearchListItem">
             <h3 className="SavedSearchListItem__title">
-                <a className="link" href={`${CONTEXT_PATH}${savedSearch.searchQuery}&saved=${savedSearch.uuid}`}>
-                    {savedSearch.title}
-                </a>
+                <a href={`${CONTEXT_PATH}${savedSearch.searchQuery}&saved=${savedSearch.uuid}`}>{savedSearch.title}</a>
             </h3>
 
             {isValidISOString(savedSearch.updated) && (
@@ -94,19 +92,24 @@ function SavedSearchListItem({ savedSearch, removeSavedSearchFromList, replaceSa
             </div>
 
             {isEmailNotificationExpired && (
-                <Tag className="SavedSearchListItem__expired">
-                    Ditt varsel for dette søket har gått ut
+                <React.Fragment>
+                    <div>
+                        <Tag variant="warning-filled" className="mt-0_5 mb-0_5">
+                            Ditt varsel for dette søket har gått ut
+                        </Tag>
+                    </div>
+
                     <RefreshButton
                         onClick={reactivateEmailNotification}
                         disabled={restartEmailNotificationStatus === FetchStatus.IS_FETCHING}
-                        spinner={restartEmailNotificationStatus === FetchStatus.IS_FETCHING}
+                        loading={restartEmailNotificationStatus === FetchStatus.IS_FETCHING}
                         text="Start ny varsling"
                     />
-                </Tag>
+                </React.Fragment>
             )}
 
             {restartEmailNotificationStatus === FetchStatus.SUCCESS && (
-                <Tag>
+                <Tag variant="success-filled">
                     <div role="status">Ny varsling startet</div>
                 </Tag>
             )}

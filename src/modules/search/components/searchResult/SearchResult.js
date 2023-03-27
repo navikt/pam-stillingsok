@@ -1,4 +1,5 @@
 import React from "react";
+import { ArrowUpIcon } from "@navikt/aksel-icons";
 import DelayedSpinner from "../../../../common/components/spinner/DelayedSpinner";
 import SearchResultCount from "./SearchResultCount";
 import Sorting from "./Sorting";
@@ -7,7 +8,6 @@ import ErrorMessage from "../../../../common/components/messages/ErrorMessage";
 import NoResults from "./NoResults";
 import Pagination from "./Pagination";
 import SkipToCriteria from "../skiplinks/SkipToCriteria";
-import ArrowUpIcon from "../../../../common/components/icons/ArrowUpIcon";
 import SearchResultItem from "./SearchResultItem";
 import "./SearchResult.css";
 import FavouritesButton from "../../../favourites/components/FavouritesButton";
@@ -59,11 +59,8 @@ const SearchResult = ({ searchResponse, queryDispatch, query, loadMoreResults })
                             onLoadMoreClick={loadMoreResults}
                         />
 
-                        <a
-                            href="#main-content"
-                            className="SearchResult__skip-to-top link"
-                        >
-                            <ArrowUpIcon ariaHidden={true} />
+                        <a href="#main-content" className="SearchResult__skip-to-top">
+                            <ArrowUpIcon aria-hidden="true" />
                             Til toppen
                         </a>
                     </div>

@@ -3,8 +3,7 @@ import { Link } from "react-router-dom";
 import { CONTEXT_PATH } from "../../../common/environment";
 import getEmployer from "../../../../server/common/getEmployer";
 import Alert from "../../../common/components/alert/Alert";
-import Spinner from "nav-frontend-spinner";
-import { Hovedknapp } from "@navikt/arbeidsplassen-knapper";
+import { Button, Loader } from "@navikt/ds-react";
 
 function TrekkSoknadConfirmationRequired({ ad, handleWithDrawClick, isDeleting, hasError }) {
     return (
@@ -17,9 +16,7 @@ function TrekkSoknadConfirmationRequired({ ad, handleWithDrawClick, isDeleting, 
             {ad && (
                 <div className="InterestMessageDelete__ad">
                     <p className="InterestMessageDelete__ad-title">
-                        <Link to={`${CONTEXT_PATH}/stilling/${ad._id}`} className="link">
-                            {ad._source.title}
-                        </Link>
+                        <Link to={`${CONTEXT_PATH}/stilling/${ad._id}`}>{ad._source.title}</Link>
                     </p>
                     <p className="InterestForm__employer">{getEmployer(ad._source)}</p>
                 </div>
@@ -35,12 +32,12 @@ function TrekkSoknadConfirmationRequired({ ad, handleWithDrawClick, isDeleting, 
             )}
             {isDeleting ? (
                 <div aria-live="polite" className="InterestForm__progress">
-                    <Spinner type="S" /> Trekker søknad
+                    <Loader size="small" /> Trekker søknad
                 </div>
             ) : (
-                <Hovedknapp onClick={handleWithDrawClick} spinner={isDeleting} disabled={isDeleting}>
+                <Button variant="primary" onClick={handleWithDrawClick} loading={isDeleting}>
                     Trekk søknad
-                </Hovedknapp>
+                </Button>
             )}
         </React.Fragment>
     );

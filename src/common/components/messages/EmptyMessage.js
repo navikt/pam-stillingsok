@@ -9,9 +9,7 @@ function EmptyMessage({ title, text }) {
             <h2 className="EmptyMessage__h2">{title}</h2>
             <p className="EmptyMessage__text">{text}</p>
             <p className="EmptyMessage__text">
-                <Link to={CONTEXT_PATH} className="link">
-                    Tilbake til søk
-                </Link>
+                <Link to={CONTEXT_PATH}>Tilbake til søk</Link>
             </p>
         </section>
     );

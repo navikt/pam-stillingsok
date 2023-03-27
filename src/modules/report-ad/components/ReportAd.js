@@ -2,7 +2,7 @@ import * as React from "react";
 import { useContext, useEffect, useState } from "react";
 import "./ReportAd.css";
 import Checkbox from "nav-frontend-skjema/lib/checkbox";
-import { Hovedknapp } from "@navikt/arbeidsplassen-knapper";
+import { Button } from "@navikt/ds-react";
 import { CONTEXT_PATH } from "../../../common/environment";
 import logAmplitudeEvent from "../../../common/tracking/amplitude";
 import { Textarea } from "nav-frontend-skjema";
@@ -113,7 +113,9 @@ const ReportAd = () => {
                 <div>
                     <h2>Du må logge inn</h2>
                     <p>Logg inn med MinID, BankID, BankID på mobil, Buypass eller Commfides.</p>
-                    <Hovedknapp onClick={login}>Logg inn</Hovedknapp>
+                    <Button variant="primary" onClick={login}>
+                        Logg inn
+                    </Button>
                 </div>
             )}
 
@@ -200,21 +202,20 @@ const ReportAd = () => {
                                 />
 
                                 <p>
-                                    <a href="/retningslinjer-stillingsannonser" className="link">
-                                        Les om gjeldende regler
-                                    </a>
+                                    <a href="/retningslinjer-stillingsannonser">Les om gjeldende regler</a>
                                 </p>
                             </div>
 
                             {error && <Alert>Rapportering feilet - prøv igjen</Alert>}
 
                             {authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED && (
-                                <Hovedknapp
+                                <Button
+                                    variant="primary"
                                     disabled={(violationCategory === null && scamCategory === null) || !description}
                                     onClick={handleSendTip}
                                 >
                                     Send tips
-                                </Hovedknapp>
+                                </Button>
                             )}
                         </div>
                     )}
