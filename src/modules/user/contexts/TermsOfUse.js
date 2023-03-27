@@ -1,7 +1,6 @@
 import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
-import { BekreftCheckboksPanel } from "nav-frontend-skjema";
-import { Button } from "@navikt/ds-react";
+import { Button, ConfirmationPanel } from "@navikt/ds-react";
 import CustomModal from "../../../common/components/modals/CustomModal";
 import UserAPI from "../../../common/api/UserAPI";
 import "./TermsOfUse.css";
@@ -77,27 +76,20 @@ function TermsOfUse({ onClose, onTermsAccepted }) {
                     <p className="TermsOfUse__section">
                         Du må samtykke for å bruke innloggede tjenester i stillingssøk.
                     </p>
-                    <BekreftCheckboksPanel
+                    <ConfirmationPanel
                         className="TermsOfUse__section"
                         label="Dine favoritter, søk og søkekriterier"
                         checked={checked}
                         onChange={onCheckboxClick}
-                        inputProps={{ id: "TermsOfUse__checkbox" }}
+                        error={shouldShowError ? "Du må huke av i avkryssingsboksen for å samtykke" : undefined}
                     >
                         Vi lagrer dine favoritter, søk med søkekriterier og e-postadresse (valgfri). Det er kun du som
                         kan se hva du har lagret.
-                    </BekreftCheckboksPanel>
+                    </ConfirmationPanel>
                     <p className="TermsOfUse__section TermsOfUse__section--last">
                         Du kan trekke samtykket hvis du ikke lenger ønsker å bruke de innloggede tjenestene. Dette kan
                         du gjøre under innstillinger.
                     </p>
-                    {shouldShowError && (
-                        <div role="alert">
-                            <div className="skjemaelement__feilmelding blokk-s">
-                                Du må huke av i avkryssingsboksen for å samtykke
-                            </div>
-                        </div>
-                    )}
                     {fetchStatus === FetchStatus.FAILURE && (
                         <Alert>Det oppsto en feil ved lagring av samtykke. Forsøk igjen.</Alert>
                     )}

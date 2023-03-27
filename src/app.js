@@ -19,7 +19,6 @@ import ReportAdPage from "./modules/report-ad/ReportAdPage";
 import FavouritesPage from "./modules/favourites/FavouritesPage";
 import SavedSearchesPage from "./modules/saved-searches/SavedSearchesPage";
 import TrekkSoknadPage from "./modules/superrask-soknad/TrekkSoknadPage";
-import "nav-frontend-core/less/core.less";
 import "./common/styles/styles.css";
 import googleTranslateWorkaround from "./common/utils/googleTranslateWorkaround";
 
