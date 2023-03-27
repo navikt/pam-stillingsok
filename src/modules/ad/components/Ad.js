@@ -84,7 +84,9 @@ const Ad = ({ match }) => {
 
     return (
         <div className="JobPosting">
-            <AdBackLink />
+            <div className="mb-2">
+                <AdBackLink />
+            </div>
 
             {status === FetchStatus.FAILURE && error.statusCode === 404 && (
                 <NotFound404

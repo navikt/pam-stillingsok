@@ -1,14 +1,8 @@
 .Search__flex-wrapper {
     margin: 0 auto 2rem;
-    max-width: 1200px;
+    max-width: 1232px;
     width: 100%;
     padding: 0 1rem;
-}
-
-@media (min-width: 900px) {
-    .Search__flex-wrapper {
-        padding: 0 2.5rem;
-    }
 }
 
 @media (min-width: 992px) {
@@ -49,7 +43,7 @@
     .Search__form {
         padding-top: 12px;
         position: relative;
-        width: 375px;
+        width: 400px;
     }
 }
 

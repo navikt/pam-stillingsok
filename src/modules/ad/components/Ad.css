@@ -1,14 +1,8 @@
 .JobPosting {
     margin: 2rem auto;
-    max-width: 1200px;
+    max-width: 1232px;
     padding: 0 1rem;
     min-height: 100vh;
-}
-
-@media (min-width: 900px) {
-    .JobPosting {
-        padding: 0 2.5rem;
-    }
 }
 
 .JobPosting__h1 {
@@ -23,7 +17,7 @@
 @media (min-width: 992px) {
     .JobPosting__h1 {
         margin: 0 0 1rem;
-        font-size: 2.5rem;
+        font-size: 2.75rem;
     }
 }
 
