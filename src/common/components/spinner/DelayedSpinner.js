@@ -22,7 +22,7 @@ export default function DelayedSpinner() {
 
     return (
         <div className="DelayedSpinner" role="status">
-            {showSpinner && <Loader size="xlarge" />}
+            {showSpinner && <Loader size="2xlarge" />}
         </div>
     );
 }
