@@ -3,8 +3,7 @@ import { Link } from "react-router-dom";
 import { CONTEXT_PATH } from "../../../common/environment";
 import getEmployer from "../../../../server/common/getEmployer";
 import Alert from "../../../common/components/alert/Alert";
-import Spinner from "nav-frontend-spinner";
-import { Button } from "@navikt/ds-react";
+import { Button, Loader } from "@navikt/ds-react";
 
 function TrekkSoknadConfirmationRequired({ ad, handleWithDrawClick, isDeleting, hasError }) {
     return (
@@ -35,7 +34,7 @@ function TrekkSoknadConfirmationRequired({ ad, handleWithDrawClick, isDeleting, 
             )}
             {isDeleting ? (
                 <div aria-live="polite" className="InterestForm__progress">
-                    <Spinner type="S" /> Trekker søknad
+                    <Loader size="small" /> Trekker søknad
                 </div>
             ) : (
                 <Button variant="primary" onClick={handleWithDrawClick} loading={isDeleting}>

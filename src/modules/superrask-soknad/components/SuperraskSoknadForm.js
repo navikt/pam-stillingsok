@@ -3,11 +3,10 @@ import { Link } from "react-router-dom";
 import Alert from "../../../common/components/alert/Alert";
 import H1WithAutoFocus from "../../../common/components/h1WithAutoFocus/H1WithAutoFocus";
 import { Checkbox, Textarea } from "nav-frontend-skjema";
-import { Button } from "@navikt/ds-react";
+import { Button, Loader } from "@navikt/ds-react";
 import { isValidEmail } from "../../../common/components/utils";
 import "./SuperraskSoknad.css";
 import { CONTEXT_PATH } from "../../../common/environment";
-import Spinner from "nav-frontend-spinner";
 import TextField from "../../../common/components/textField/TextField";
 
 const SuperraskSoknadForm = ({ ad, interestForm, isInternal, submitForm, isSending, hasError, error }) => {
@@ -297,7 +296,7 @@ const SuperraskSoknadForm = ({ ad, interestForm, isInternal, submitForm, isSendi
 
             {isSending ? (
                 <div aria-live="polite" className="InterestForm__progress">
-                    <Spinner type="S" /> Sender søknad
+                    <Loader size="small" /> Sender søknad
                 </div>
             ) : (
                 <div className="InterestForm__buttons">
