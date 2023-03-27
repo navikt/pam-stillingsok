@@ -1,11 +1,11 @@
 import React from "react";
-import "./Alert.css";
+import { Alert as AkselAlert } from "@navikt/ds-react";
 
 function Alert({ children }) {
     return (
-        <p className="Alert" role="alert">
+        <AkselAlert variant="error" className="mb-1 mt-1" role="alert">
             {children}
-        </p>
+        </AkselAlert>
     );
 }
 
