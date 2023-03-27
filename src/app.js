@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "@navikt/ds-css";
 import "@navikt/arbeidsplassen-css";
-import { Footer } from "@navikt/arbeidsplassen-react";
+import { Footer, SkipLink } from "@navikt/arbeidsplassen-react";
 import AuthenticationProvider, { fixUrlAfterLogin } from "./modules/auth/contexts/AuthenticationProvider";
 import UserProvider from "./modules/user/contexts/UserProvider";
 import FavouritesProvider from "./modules/favourites/context/FavouritesProvider";
@@ -34,9 +34,7 @@ function Application() {
         <AuthenticationProvider>
             <UserProvider>
                 <FavouritesProvider>
-                    <a className="dsa-skiplink" href="#main-content">
-                        Gå til hovedinnhold
-                    </a>
+                    <SkipLink href="#main-content" />
                     <div className="push-footer-down">
                         <BrowserRouter>
                             <HistoryProvider>
