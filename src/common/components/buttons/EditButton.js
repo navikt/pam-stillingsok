@@ -1,9 +1,9 @@
 import React from "react";
 import IconButton from "./IconButton";
-import EditIcon from "../icons/EditIcon";
+import { PencilIcon } from "@navikt/aksel-icons";
 
 function EditButton(props) {
-    return <IconButton text="Endre" icon={<EditIcon />} {...props} />;
+    return <IconButton text="Endre" icon={<PencilIcon aria-hidden="true" />} {...props} />;
 }
 
 export default EditButton;

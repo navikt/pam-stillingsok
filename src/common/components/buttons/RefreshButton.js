@@ -1,9 +1,10 @@
 import React from "react";
 import IconButton from "./IconButton";
-import RefreshIcon from "../icons/RefreshIcon";
-
+import { ArrowsCirclepathIcon } from "@navikt/aksel-icons";
 function RefreshButton(props) {
-    return <IconButton text={props.text || "Last på ny"} icon={<RefreshIcon />} {...props} />;
+    return (
+        <IconButton text={props.text || "Last på ny"} icon={<ArrowsCirclepathIcon aria-hidden="true" />} {...props} />
+    );
 }
 
 export default RefreshButton;
