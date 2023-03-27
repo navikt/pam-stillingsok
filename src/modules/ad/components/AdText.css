@@ -8,21 +8,6 @@
     word-wrap: break-word;
 }
 
-.AdText a {
-    color: var(--primaryPurple);
-}
-
-.AdText a:hover {
-    text-decoration-line: none;
-    color: #9c4f9c;
-}
-
-.AdText a:focus {
-    outline: none;
-    color: #fff;
-    background: var(--blueDarken);
-}
-
 .AdText h1 {
     margin: 2rem 0 1rem 0;
     font-size: 2rem;

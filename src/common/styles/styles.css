@@ -4,7 +4,6 @@
 
 :root {
     --primaryPurple: #8c368e;
-    --secondaryPurple: #fbd8e7;
     --blueDarken: #062140;
     --greenLighten: #98f1d7;
     --gray1: #f9f9f9;
@@ -22,9 +21,9 @@ body {
 
 body {
     overflow-y: scroll;
-    background: #fff;
+    background: var(--a-surface-default);
     color: var(--a-text-default);
-    font-family: "Source Sans Pro", Arial, sans-serif;
+    font-family: var(--a-font-family);
     font-size: 1.125rem;
 }
 

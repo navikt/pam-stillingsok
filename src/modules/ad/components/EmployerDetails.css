@@ -25,21 +25,6 @@
     word-wrap: break-word;
 }
 
-.EmployerDetails__description a {
-    color: var(--primaryPurple);
-}
-
-.EmployerDetails__description a:hover {
-    text-decoration-line: none;
-    color: #9c4f9c;
-}
-
-.EmployerDetails__description a:focus {
-    outline: none;
-    color: #fff;
-    background: var(--blueDarken);
-}
-
 .EmployerDetails__dl {
     display: flex;
     flex-wrap: wrap;
