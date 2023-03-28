@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ReactHtmlParser from "react-html-parser";
+const parse = require('html-react-parser');
 import "./AdText.css";
 import { containsEmail, extractEmail, isValidEmail, mailtoInString } from "../../../common/components/utils";
 
@@ -25,7 +25,7 @@ const preprocessAd = (adText) => {
 export default function AdText({ adText }) {
     if (adText) {
         const preprocessedAd = preprocessAd(adText);
-        return <section className="AdText">{ReactHtmlParser(preprocessedAd)}</section>;
+        return <section className="AdText">{parse(preprocessedAd)}</section>;
     }
     return null;
 }
