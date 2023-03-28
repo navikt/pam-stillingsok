@@ -1,5 +1,5 @@
 import React from "react";
-import * as ReactDOMClient from 'react-dom/client';
+import * as ReactDOMClient from "react-dom/client";
 import "@navikt/ds-css";
 import "@navikt/arbeidsplassen-css";
 import { Footer, SkipLink } from "@navikt/arbeidsplassen-react";
@@ -72,6 +72,6 @@ function Application() {
     );
 }
 
-const container = document.getElementById('app');
+const container = document.getElementById("app");
 const root = ReactDOMClient.createRoot(container);
 root.render(<Application />);

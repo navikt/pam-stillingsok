@@ -1,5 +1,5 @@
 import React from "react";
-import { BodyLong, Heading, Panel } from "@navikt/ds-react";
+import { BodyLong, Heading, Panel, Link as AkselLink } from "@navikt/ds-react";
 
 function Feedback() {
     return (
@@ -12,9 +12,9 @@ function Feedback() {
                 bedre med denne tjenesten.
             </BodyLong>
             <BodyLong>
-                <a href="https://surveys.hotjar.com/096eea6f-8509-467b-b627-20b40340d1f8">
+                <AkselLink href="https://surveys.hotjar.com/096eea6f-8509-467b-b627-20b40340d1f8">
                     Skriv en kort tilbakemelding
-                </a>
+                </AkselLink>
             </BodyLong>
         </Panel>
     );

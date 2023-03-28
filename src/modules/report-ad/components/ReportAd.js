@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useContext, useEffect, useState } from "react";
 import "./ReportAd.css";
-import { BodyLong, Button, Checkbox, Heading, Textarea } from "@navikt/ds-react";
+import { BodyLong, Button, Checkbox, Heading, Textarea, Link as AkselLink } from "@navikt/ds-react";
 import { CONTEXT_PATH } from "../../../common/environment";
 import logAmplitudeEvent from "../../../common/tracking/amplitude";
 import { AuthenticationContext, AuthenticationStatus } from "../../auth/contexts/AuthenticationProvider";
@@ -130,7 +130,7 @@ const ReportAd = () => {
                             <div className="report-form">
                                 <BodyLong spacing>Takk for at du tok deg tid til å rapportere denne annonsen.</BodyLong>
                                 <BodyLong spacing>
-                                    Har du spørsmål kan du <a href="/kontakt">kontakte oss her.</a>
+                                    Har du spørsmål kan du <AkselLink href="/kontakt">kontakte oss her.</AkselLink>
                                 </BodyLong>
                                 <BodyLong>Med vennlig hilsen arbeidsplassen.no</BodyLong>
                             </div>
@@ -199,7 +199,9 @@ const ReportAd = () => {
                                 />
 
                                 <BodyLong>
-                                    <a href="/retningslinjer-stillingsannonser">Les om gjeldende regler</a>
+                                    <AkselLink href="/retningslinjer-stillingsannonser">
+                                        Les om gjeldende regler
+                                    </AkselLink>
                                 </BodyLong>
                             </div>
 

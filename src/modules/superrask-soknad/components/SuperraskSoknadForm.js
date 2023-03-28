@@ -11,7 +11,8 @@ import {
     Loader,
     ReadMore,
     Textarea,
-    TextField
+    TextField,
+    Link as AkselLink
 } from "@navikt/ds-react";
 import { isValidEmail } from "../../../common/components/utils";
 import "./SuperraskSoknad.css";
@@ -303,9 +304,9 @@ const SuperraskSoknadForm = ({ ad, interestForm, isInternal, submitForm, isSendi
             </BodyLong>
             <BodyLong spacing>Du kan når som helst trekke tilbake søknaden din.</BodyLong>
             <BodyLong>
-                <a target="_blank" rel="noopener noreferrer" href="/personvern-superrask-soknad">
+                <AkselLink target="_blank" rel="noopener noreferrer" href="/personvern-superrask-soknad">
                     Les om hvordan vi behandler dine data (åpner i ny fane)
-                </a>
+                </AkselLink>
             </BodyLong>
 
             {hasError && <Alert>{getErrorMessage(error)}</Alert>}
