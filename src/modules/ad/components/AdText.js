@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-const parse = require('html-react-parser');
+import parse from 'html-react-parser';
 import "./AdText.css";
 import { containsEmail, extractEmail, isValidEmail, mailtoInString } from "../../../common/components/utils";
 

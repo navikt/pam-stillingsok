@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-const parse = require('html-react-parser');
+import parse from 'html-react-parser';
 import fixLocationName from "../../../../server/common/fixLocationName";
 import { isValidUrl } from "../../../common/components/utils";
 import getEmployer from "../../../../server/common/getEmployer";
