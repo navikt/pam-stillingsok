@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { BodyLong, Heading, Label } from "@navikt/ds-react";
+import { BodyLong, Heading, Label, Link as AkselLink } from "@navikt/ds-react";
 import { isValidEmail } from "../../../common/components/utils";
 
 export default function ContactPerson({ contactList }) {
@@ -18,9 +18,9 @@ export default function ContactPerson({ contactList }) {
                         {contact.email && (
                             <BodyLong>
                                 {isValidEmail(contact.email) ? (
-                                    <a rel="nofollow" href={`mailto:${contact.email}`}>
+                                    <AkselLink rel="nofollow" href={`mailto:${contact.email}`}>
                                         {contact.email}
-                                    </a>
+                                    </AkselLink>
                                 ) : (
                                     contact.email
                                 )}

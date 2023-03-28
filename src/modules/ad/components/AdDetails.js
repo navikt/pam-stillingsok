@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { formatDate } from "../../../common/components/utils";
 import { Link } from "react-router-dom";
 import { CONTEXT_PATH } from "../../../common/environment";
-import { Heading } from "@navikt/ds-react";
+import { Heading, Link as AkselLink } from "@navikt/ds-react";
 
 export default function AdDetails({ id, source }) {
     return (
@@ -37,7 +37,9 @@ export default function AdDetails({ id, source }) {
                     </div>
                 )}
             </dl>
-            <Link to={`${CONTEXT_PATH}/rapporter-annonse?uuid=${id}`}>Rapportér annonse</Link>
+            <AkselLink as={Link} to={`${CONTEXT_PATH}/rapporter-annonse?uuid=${id}`}>
+                Rapportér annonse
+            </AkselLink>
         </section>
     );
 }

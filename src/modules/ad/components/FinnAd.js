@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { BodyLong, Heading } from "@navikt/ds-react";
+import { BodyLong, Heading, Link as AkselLink } from "@navikt/ds-react";
 
 export default function FinnAd({ stilling }) {
     return (
@@ -11,7 +11,9 @@ export default function FinnAd({ stilling }) {
             <BodyLong spacing>Du kan lese hele annonseteksten og søke på stillingen på finn.no</BodyLong>
             {stilling && stilling._source && stilling._source.reference && (
                 <BodyLong>
-                    <a href={`https://www.finn.no/${stilling._source.reference}`}>Åpne annonsen på FINN</a>
+                    <AkselLink href={`https://www.finn.no/${stilling._source.reference}`}>
+                        Åpne annonsen på FINN
+                    </AkselLink>
                 </BodyLong>
             )}
         </section>
