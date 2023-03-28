@@ -9,7 +9,7 @@ function AdBackLink() {
     const FAVOURITES_PATH = `${CONTEXT_PATH}/favoritter`;
 
     if (hasHistory && previousLocation.pathname === SEARCH_PATH) {
-        return <BackLink to={SEARCH_PATH + previousLocation.search} text="Tilbake til søkeresultat" />;
+        return <BackLink to={SEARCH_PATH + previousLocation.search} text="Tilbake til søket" />;
     } else if (hasHistory && previousLocation.pathname === FAVOURITES_PATH) {
         return <BackLink to={FAVOURITES_PATH} text="Tilbake til favoritter" />;
     } else {

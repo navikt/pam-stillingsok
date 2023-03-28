@@ -84,7 +84,7 @@ const Ad = ({ match }) => {
 
     return (
         <div className="JobPosting">
-            <div className="mb-2">
+            <div className="mb-1">
                 <AdBackLink />
             </div>
 
