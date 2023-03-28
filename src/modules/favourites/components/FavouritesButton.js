@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
+import { HeartIcon, HeartFillIcon } from "@navikt/aksel-icons";
 import { HasAcceptedTermsStatus, UserContext } from "../../user/contexts/UserProvider";
 import { AuthenticationContext, AuthenticationStatus } from "../../auth/contexts/AuthenticationProvider";
 import { FavouritesContext } from "../context/FavouritesProvider";
@@ -11,8 +12,6 @@ import LoginModal from "../../auth/components/LoginModal";
 import useToggle from "../../../common/hooks/useToggle";
 import IconButton from "../../../common/components/buttons/IconButton";
 import AlertModalWithPageReload from "../../../common/components/modals/AlertModalWithPageReload";
-import HeartIcon from "../../../common/components/icons/HeartIcon";
-import HeartIconFilled from "../../../common/components/icons/HeartIconFilled";
 
 /**
  * Displays a button "Lagre favoritt" or "Slett favoritt".
@@ -110,7 +109,7 @@ function FavouritesButton({ id, stilling, useShortText, className, type }) {
                 onClick={isFavourite ? handleDeleteFavouriteClick : handleSaveFavouriteClick}
                 className={className ? `FavouriteButton ${className}` : "FavouritesButton"}
                 text={isFavourite ? deleteText : saveText}
-                icon={isFavourite ? <HeartIconFilled ariaHidden="true" /> : <HeartIcon ariaHidden="true" />}
+                icon={isFavourite ? <HeartFillIcon aria-hidden="true" /> : <HeartIcon aria-hidden="true" />}
                 type={type}
             />
 

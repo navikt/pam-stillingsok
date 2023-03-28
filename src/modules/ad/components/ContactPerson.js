@@ -1,28 +1,26 @@
 import React from "react";
 import PropTypes from "prop-types";
-import PersonIcon from "../../../common/components/icons/PersonIcon";
 import ContactAccordion from "../../favourites/components/ContactAccordion";
+import { Heading } from "@navikt/ds-react";
 
-export default function ContactPerson({contactList}) {
+export default function ContactPerson({ contactList }) {
     if (contactList && contactList.length > 1) {
         return (
             <section className="JobPosting__section">
-                <h2 className="JobPosting__h2">
-                    <PersonIcon/>
+                <Heading level="2" size="medium">
                     Kontaktpersoner for stillingen
-                </h2>
-                {contactList.map(contact =>
+                </Heading>
+                {contactList.map((contact) => (
                     <ContactAccordion contact={contact} title={contact.name}></ContactAccordion>
-                )}
+                ))}
             </section>
         );
     } else if (contactList && contactList.length == 1) {
         return (
             <section className="JobPosting__section">
-                <h2 className="JobPosting__h2">
-                    <PersonIcon />
+                <Heading level="2" size="medium">
                     Kontaktperson for stillingen
-                </h2>
+                </Heading>
                 <dl className="JobPosting__dl">
                     {contactList[0].name && (
                         <React.Fragment>
@@ -46,7 +44,7 @@ export default function ContactPerson({contactList}) {
                         <React.Fragment>
                             <dt>Epost:</dt>
                             <dd>
-                                <a className="link" rel="nofollow" href={`mailto:${contactList[0].email}`}>
+                                <a rel="nofollow" href={`mailto:${contactList[0].email}`}>
                                     {contactList[0].email}
                                 </a>
                             </dd>

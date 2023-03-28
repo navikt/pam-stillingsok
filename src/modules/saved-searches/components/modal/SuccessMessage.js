@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { CONTEXT_PATH } from "../../../../common/environment";
+import { BodyLong, Button } from "@navikt/ds-react";
 
 function SuccessMessage({ onClose }) {
     let buttonRef = useRef(null);
@@ -13,16 +14,14 @@ function SuccessMessage({ onClose }) {
 
     return (
         <section role="status">
-            <p className="SavedSearches__p">
+            <BodyLong>
                 Søket ble lagret! Du finner alle dine søk på{" "}
-                <Link className="link" to={`${CONTEXT_PATH}/lagrede-sok`}>
-                    Lagrede søk.
-                </Link>
-            </p>
+                <Link to={`${CONTEXT_PATH}/lagrede-sok`}>Lagrede søk.</Link>
+            </BodyLong>
             <div className="SaveSearchForm__buttons">
-                <button className="Knapp Knapp--hoved" ref={buttonRef} onClick={onClose}>
+                <Button variant="primary" ref={buttonRef} onClick={onClose}>
                     Lukk
-                </button>
+                </Button>
             </div>
         </section>
     );

@@ -30,7 +30,7 @@ export const logAmplitudePageview = (additionalData) => {
 };
 
 export function logStillingVisning(ad) {
-    const employerLocation = ad._source.employer ? ad._source.employer.location : null
+    const employerLocation = ad._source.employer ? ad._source.employer.location : null;
 
     logAmplitudeEvent("Stilling visning", {
         title: ad._source.title || "N/A",

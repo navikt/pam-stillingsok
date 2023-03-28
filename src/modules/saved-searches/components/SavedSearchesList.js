@@ -6,6 +6,7 @@ import UserAPI from "../../../common/api/UserAPI";
 import { FetchAction, FetchStatus, useFetchReducer } from "../../../common/hooks/useFetchReducer";
 import { extractParam } from "../../../common/components/utils";
 import SavedSearchesIsEmpty from "./SavedSearchesIsEmpty";
+import { Heading } from "@navikt/ds-react";
 
 /**
  * Displays a list of all saved searches.
@@ -65,7 +66,9 @@ function SavedSearchesList() {
             {status === FetchStatus.SUCCESS && data.length === 0 && <SavedSearchesIsEmpty />}
             {status === FetchStatus.SUCCESS && data.length > 0 && (
                 <React.Fragment>
-                    <h2 className="SavedSearches__h2">{data.length} søk</h2>
+                    <Heading level="2" size="medium" className="mb-1">
+                        {data.length} søk
+                    </Heading>
                     {data.map((savedSearch) => (
                         <SavedSearchListItem
                             key={savedSearch.uuid}

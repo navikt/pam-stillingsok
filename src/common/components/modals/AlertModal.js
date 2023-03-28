@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
-import React, { useRef } from "react";
-import Modal from "nav-frontend-modal";
+import React, { useEffect, useRef } from "react";
+import { BodyLong, Heading, Modal } from "@navikt/ds-react";
 import { Button } from "@navikt/ds-react";
 import "./AlertModal.css";
 
@@ -17,36 +17,34 @@ export default function AlertModal({
 }) {
     const cancelButtonRef = useRef();
 
+    useEffect(() => {
+        Modal.setAppElement("#app");
+    }, []);
+
     return (
         <Modal
-            appElement={document.getElementById("app")}
             className="AlertModal"
             role="alertdialog"
-            isOpen
-            onRequestClose={onCancel}
-            onAfterOpen={() => {
-                cancelButtonRef.current.focus();
-            }}
-            aria={{
-                labelledby: `${id}-h1`,
-                describedby: `${id}-message`
-            }}
+            open={true}
+            onClose={onCancel}
+            aria-labelledby={`${id}-h1`}
+            aria-describedby={`${id}-message`}
         >
-            <h1 id={`${id}-h1`} className="AlertModal__h1">
+            <Heading level="1" size="large" id={`${id}-h1`} spacing>
                 {title}
-            </h1>
-            <p id={`${id}-message`} className="AlertModal__message">
+            </Heading>
+            <BodyLong id={`${id}-message`} className="mb-2_5">
                 {children}
-            </p>
+            </BodyLong>
             <div className="AlertModal__buttons">
-                <button
+                <Button
                     ref={cancelButtonRef}
-                    className={useOnlyCancelButton ? "Knapp Knapp--hoved" : "Knapp"}
-                    disabled={spinner}
+                    variant={useOnlyCancelButton ? "primary" : "secondary"}
+                    loading={spinner}
                     onClick={onCancel}
                 >
                     {cancelLabel}
-                </button>
+                </Button>
                 {!useOnlyCancelButton && (
                     <Button variant="primary" loading={spinner} disabled={spinner} onClick={onConfirm}>
                         {confirmLabel}

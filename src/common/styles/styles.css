@@ -1,64 +1,39 @@
 @import "./fonts.css";
-@import "./footer.css";
-@import "./header.css";
-@import "./skiplink.css";
-@import "./button.css";
-@import "./link.css";
-@import "./overrides.css";
-
-:root {
-  --primaryPurple: #8C368E;
-  --secondaryPurple: #FBD8E7;
-  --blueDarken: #062140;
-  --greenLighten: #98f1d7;
-  --gray1: #f9f9f9;
-  --gray2: #f1f1f1;
-  --gray3: #DBDBDB;
-  --gray4: #8E9095;
-  --gray5: #424448;
-}
+@import "./spacing.css";
 
 html,
 body {
-  height: 100%;
-  margin: 0;
+    height: 100%;
+    margin: 0;
 }
 
 body {
-  overflow-y: scroll;
-  background: #fff;
-  color: var(--blueDarken);
-  font-family: "Source Sans Pro", Arial, sans-serif;
-  font-size: 1.125rem;
+    overflow-y: scroll;
+    background: var(--a-surface-default);
+    color: var(--a-text-default);
+    font-family: var(--a-font-family);
+    font-size: 1.125rem;
 }
 
 #app {
-  height: 100%;
+    height: 100%;
 }
 
 .push-footer-down {
-  min-height: 100%;
-  margin-bottom: -691px;
-  padding-bottom: 691px;
+    min-height: 100%;
+    margin-bottom: -794px;
+    padding-bottom: 794px;
 }
 
 @media (min-width: 940px) {
-  .push-footer-down {
-    margin-bottom: -327px;
-    padding-bottom: 327px;
-  }
-}
-
-input[type="search"] {
-  -webkit-appearance: none;
-}
-
-input::-ms-clear {
-  display: none;
+    .push-footer-down {
+        margin-bottom: -476px;
+        padding-bottom: 476px;
+    }
 }
 
 .bold {
-  font-weight: bold;
+    font-weight: bold;
 }
 
 /*
@@ -66,6 +41,6 @@ input::-ms-clear {
  * Unngår at ødelagt teller-tekst tildekker det man har skrevet inn i textarea.
  */
 .textarea--medMeta__teller {
-  position: static;
-  margin-top: 0.5rem!important;
+    position: static;
+    margin-top: 0.5rem !important;
 }

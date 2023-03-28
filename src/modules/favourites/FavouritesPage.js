@@ -14,7 +14,9 @@ function FavouritesPage() {
 
     return (
         <div className="Favourites">
-            <BackLink to={CONTEXT_PATH} text="Ledige stillinger" />
+            <div className="mb-2">
+                <BackLink to={CONTEXT_PATH} text="Ledige stillinger" />
+            </div>
             <H1WithAutoFocus className="Favourites__h1">Favoritter</H1WithAutoFocus>
             <RequiresAuthentication>
                 <RequiresHasAcceptedTerms>

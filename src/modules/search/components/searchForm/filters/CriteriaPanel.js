@@ -1,8 +1,7 @@
 import PropTypes from "prop-types";
 import React, { useState } from "react";
+import { Accordion } from "@navikt/ds-react";
 import "./CriteriaPanel.css";
-import ChevronCollapseIcon from "../../../../../common/components/icons/ChevronCollapseIcon";
-import ChevronExpandIcon from "../../../../../common/components/icons/ChevronExpandIcon";
 
 function CriteriaPanel({ isOpenByDefault, title, children, panelId }) {
     const [isOpen, setIsOpen] = useState(() => {
@@ -39,15 +38,10 @@ function CriteriaPanel({ isOpenByDefault, title, children, panelId }) {
     }
 
     return (
-        <section className="CriteriaPanel">
-            <h3 className="CriteriaPanel__h3">
-                <button className="CriteriaPanel__button" type="button" aria-expanded={isOpen} onClick={onPanelClick}>
-                    {isOpen ? <ChevronCollapseIcon ariaHidden={true} /> : <ChevronExpandIcon ariaHidden={true} />}
-                    <span>{title}</span>
-                </button>
-            </h3>
-            {isOpen && children}
-        </section>
+        <Accordion.Item defaultOpen={isOpen}>
+            <Accordion.Header onClick={onPanelClick}>{title}</Accordion.Header>
+            <Accordion.Content>{children}</Accordion.Content>
+        </Accordion.Item>
     );
 }
 

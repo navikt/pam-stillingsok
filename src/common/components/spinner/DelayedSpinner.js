@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Spinner from "nav-frontend-spinner";
+import { Loader } from "@navikt/ds-react";
 import "./DelayedSpinner.css";
 
 /**
@@ -22,7 +22,7 @@ export default function DelayedSpinner() {
 
     return (
         <div className="DelayedSpinner" role="status">
-            {showSpinner && <Spinner type="XL" />}
+            {showSpinner && <Loader size="2xlarge" />}
         </div>
     );
 }

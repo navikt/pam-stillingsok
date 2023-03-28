@@ -1,14 +1,21 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import Alert from "../../../common/components/alert/Alert";
 import H1WithAutoFocus from "../../../common/components/h1WithAutoFocus/H1WithAutoFocus";
-import { Checkbox, Textarea } from "nav-frontend-skjema";
-import { Button } from "@navikt/ds-react";
+import {
+    BodyLong,
+    Button,
+    Checkbox,
+    ErrorSummary,
+    Heading,
+    Loader,
+    ReadMore,
+    Textarea,
+    TextField
+} from "@navikt/ds-react";
 import { isValidEmail } from "../../../common/components/utils";
 import "./SuperraskSoknad.css";
 import { CONTEXT_PATH } from "../../../common/environment";
-import Spinner from "nav-frontend-spinner";
-import TextField from "../../../common/components/textField/TextField";
 
 const SuperraskSoknadForm = ({ ad, interestForm, isInternal, submitForm, isSending, hasError, error }) => {
     // Form data
@@ -16,6 +23,7 @@ const SuperraskSoknadForm = ({ ad, interestForm, isInternal, submitForm, isSendi
     const [telephone, setTelephone] = useState("");
     const [email, setEmail] = useState("");
     const [about, setAbout] = useState("");
+    const [shouldFocusErrorSummary, setShouldFocusErrorSummary] = useState(false);
     const [checkedMustRequirements, setCheckedMustRequirements] = useState([]);
     const [checkedShouldRequirements, setCheckedShouldRequirements] = useState([]);
 
@@ -26,6 +34,12 @@ const SuperraskSoknadForm = ({ ad, interestForm, isInternal, submitForm, isSendi
     const errorSummary = useRef();
 
     const ABOUT_MAX_LENGTH = 400;
+
+    useEffect(() => {
+        if (shouldFocusErrorSummary) {
+            errorSummary.current.focus();
+        }
+    }, [shouldFocusErrorSummary]);
 
     function handleFormSubmit(e) {
         e.preventDefault();
@@ -53,6 +67,7 @@ const SuperraskSoknadForm = ({ ad, interestForm, isInternal, submitForm, isSendi
 
     function validateForm() {
         let isValid = true;
+        setShouldFocusErrorSummary(false);
 
         if (email && email.length > 0 && !isValidEmail(email)) {
             isValid = false;
@@ -75,11 +90,9 @@ const SuperraskSoknadForm = ({ ad, interestForm, isInternal, submitForm, isSendi
                 } tegn for mye i din begrunnelse. Begrunnelsen kan ikke være lengre enn ${ABOUT_MAX_LENGTH} tegn`
             );
         }
-
         if (!isValid) {
-            errorSummary.current.focus();
+            setShouldFocusErrorSummary(true);
         }
-
         return isValid;
     }
 
@@ -88,18 +101,21 @@ const SuperraskSoknadForm = ({ ad, interestForm, isInternal, submitForm, isSendi
     }
 
     function handleTelephoneChange(e) {
-        setTelephone(e.target.value);
+        setShouldFocusErrorSummary(false);
         setTelephoneValidationError(undefined);
+        setTelephone(e.target.value);
     }
 
     function handleEmailChange(e) {
-        setEmail(e.target.value);
+        setShouldFocusErrorSummary(false);
         setEmailValidationError(undefined);
+        setEmail(e.target.value);
     }
 
     function handleAboutChange(e) {
-        setAbout(e.target.value);
+        setShouldFocusErrorSummary(false);
         setAboutValidationError(undefined);
+        setAbout(e.target.value);
     }
 
     function handleMustRequirementCheck(e) {
@@ -137,74 +153,65 @@ const SuperraskSoknadForm = ({ ad, interestForm, isInternal, submitForm, isSendi
         }
     };
 
+    const errors = [];
+    if (telephoneValidationError)
+        errors.push(
+            <ErrorSummary.Item href="#register-interest-telephone" key="1">
+                {telephoneValidationError}
+            </ErrorSummary.Item>
+        );
+    if (emailValidationError)
+        errors.push(
+            <ErrorSummary.Item href="#register-interest-email" key="2">
+                {emailValidationError}
+            </ErrorSummary.Item>
+        );
+    if (aboutValidationError)
+        errors.push(
+            <ErrorSummary.Item href="#register-interest-about" key="3">
+                {aboutValidationError}
+            </ErrorSummary.Item>
+        );
+
     return (
         <form onSubmit={handleFormSubmit}>
             <section className="InterestForm__section">
                 <H1WithAutoFocus className="InterestForm__h1">Superrask søknad</H1WithAutoFocus>
-                <p className="InterestForm__p">
+                <BodyLong spacing>
                     Ingen CV eller langt søknadsbrev, kun tre raske steg. Du får beskjed på e-post med en gang bedriften
                     har vurdert søknaden din.
-                </p>
-                <p className="InterestForm__p">* felter du må fylle ut</p>
-                <div
-                    ref={errorSummary}
-                    tabIndex={-1}
-                    aria-live="polite"
-                    aria-labelledby="register-interest-error-title"
-                >
-                    {(telephoneValidationError || emailValidationError || aboutValidationError) && (
-                        <div className="InterestForm__error-summary">
-                            <h2 id="register-interest-error-title" className="InterestForm__error-title">
-                                Skjemaet inneholder feil:
-                            </h2>
-                            <ul className="InterestForm__error-list">
-                                {telephoneValidationError && (
-                                    <li>
-                                        <a href="#register-interest-telephone" className="link">
-                                            {telephoneValidationError}
-                                        </a>
-                                    </li>
-                                )}
-                                {emailValidationError && (
-                                    <li>
-                                        <a href="#register-interest-email" className="link">
-                                            {emailValidationError}
-                                        </a>
-                                    </li>
-                                )}
-                                {aboutValidationError && (
-                                    <li>
-                                        <a href="#register-interest-about" className="link">
-                                            {aboutValidationError}
-                                        </a>
-                                    </li>
-                                )}
-                            </ul>
-                        </div>
-                    )}
-                </div>
+                </BodyLong>
+                <BodyLong spacing>* felter du må fylle ut</BodyLong>
+                {errors.length > 0 && (
+                    <ErrorSummary ref={errorSummary} heading="Skjemaet inneholder feil">
+                        {errors}
+                    </ErrorSummary>
+                )}
             </section>
 
             {((interestForm.must && interestForm.must.length > 0) ||
                 (interestForm.should && interestForm.should.length > 0)) && (
                 <section className="InterestForm__section">
-                    <h2 className="InterestForm__h2">Bedriftens ønskede kvalifikasjoner</h2>
-                    <p className="InterestForm__p InterestForm__mb-2">
+                    <Heading level="2" size="large" spacing>
+                        Bedriftens ønskede kvalifikasjoner
+                    </Heading>
+                    <BodyLong className="mb-2">
                         Husk at du kan være rett person for jobben selv om du ikke treffer på alle kvalifikasjoner.
-                    </p>
+                    </BodyLong>
 
                     {interestForm.must && interestForm.must.length > 0 && (
                         <fieldset className="InterestForm__fieldset">
                             <legend className="InterestForm__legend">Må-krav for stillingen.</legend>
-                            <p className="InterestForm__p">Kryss av for dem du oppfyller.</p>
+                            <BodyLong>Kryss av for dem du oppfyller.</BodyLong>
                             {interestForm.must.map((it) => (
                                 <Checkbox
                                     key={it.id}
-                                    label={it.label}
                                     value={it.label}
                                     onChange={handleMustRequirementCheck}
                                     checked={checkedMustRequirements.includes(it.label)}
-                                />
+                                >
+                                    {it.label}
+                                </Checkbox>
                             ))}
                         </fieldset>
                     )}
@@ -215,11 +222,12 @@ const SuperraskSoknadForm = ({ ad, interestForm, isInternal, submitForm, isSendi
                             {interestForm.should.map((it) => (
                                 <Checkbox
                                     key={it.id}
-                                    label={it.label}
                                     value={it.label}
                                     onChange={handleShouldRequirementCheck}
                                     checked={checkedShouldRequirements.includes(it.label)}
-                                />
+                                >
+                                    {it.label}
+                                </Checkbox>
                             ))}
                         </fieldset>
                     )}
@@ -227,86 +235,97 @@ const SuperraskSoknadForm = ({ ad, interestForm, isInternal, submitForm, isSendi
             )}
 
             <section className="InterestForm__section">
-                <h2 className="InterestForm__h2">Hvorfor du er den rette for jobben</h2>
-                <details className="InterestForm__details">
-                    <summary>Hvordan skrive en god begrunnelse?</summary>
-                    <div className="InterestForm__details-content">
-                        <p className="InterestForm__p">
-                            Vis hvorfor du er et trygt valg for denne jobben. Fortell om arbeidserfaring,
-                            praksisplasser, utdanning, frivillig arbeid, verv eller annen relevant erfaring.
-                        </p>
-                        <p className="InterestForm__p">
-                            Tenk gjerne litt utradisjonelt og husk at personlige egenskaper kan være avgjørende.
-                        </p>
-                    </div>
-                </details>
+                <Heading level="2" size="large">
+                    Hvorfor du er den rette for jobben
+                </Heading>
+                <ReadMore header="Hvordan skrive en god begrunnelse?" className="mb-1">
+                    <BodyLong className="mb-1">
+                        Vis hvorfor du er et trygt valg for denne jobben. Fortell om arbeidserfaring, praksisplasser,
+                        utdanning, frivillig arbeid, verv eller annen relevant erfaring.
+                    </BodyLong>
+                    <BodyLong>
+                        Tenk gjerne litt utradisjonelt og husk at personlige egenskaper kan være avgjørende.
+                    </BodyLong>
+                </ReadMore>
                 <Textarea
                     id="register-interest-about"
                     label="Skriv en begrunnelse"
                     onChange={handleAboutChange}
                     value={about}
                     maxLength={ABOUT_MAX_LENGTH}
-                    feil={aboutValidationError ? { feilmelding: aboutValidationError } : undefined}
+                    error={aboutValidationError}
                 />
             </section>
 
             <section className="InterestForm__section">
-                <h2 className="InterestForm__h2">Din kontaktinformasjon</h2>
-                <p className="InterestForm__p InterestForm__mb-2">Vær nøye med å oppgi riktig informasjon.</p>
+                <Heading level="2" size="large" spacing>
+                    Din kontaktinformasjon
+                </Heading>
+                <BodyLong className="mb-1">Vær nøye med å oppgi riktig informasjon.</BodyLong>
 
                 <TextField
                     label="Navn"
                     id="register-interest-name"
-                    autoComplete="name"
+                    auto-complete="name"
                     onChange={handleNameChange}
                     value={name}
+                    className="mb-1"
                 />
 
                 <TextField
                     label="E-post *"
                     type="email"
-                    autoComplete="email"
+                    auto-complete="email"
+                    aria-required="true"
                     id="register-interest-email"
                     onChange={handleEmailChange}
                     value={email}
                     error={emailValidationError}
+                    className="mb-1"
                 />
 
                 <TextField
                     label="Telefonnummer *"
                     id="register-interest-telephone"
                     type="tel"
-                    autoComplete="tel"
+                    auto-complete="tel"
+                    aria-required="true"
                     onChange={handleTelephoneChange}
                     value={telephone}
                     error={telephoneValidationError}
                 />
             </section>
 
-            <p className="InterestForm__p">
+            <BodyLong spacing>
                 Når du har sendt søknaden, kan bedriften se begrunnelsen din og hvilke kvalifikasjoner du har huket av,
                 samt navnet ditt dersom du har oppgitt det. Hvis bedriften ønsker å kontakte deg, får de også se
                 kontaktinformasjonen din.
-            </p>
-            <p className="InterestForm__p InterestForm__mb-2">Du kan når som helst trekke tilbake søknaden din.</p>
-            <a target="_blank" rel="noopener noreferrer" href="/personvern-superrask-soknad" className="link">
-                Les om hvordan vi behandler dine data (åpner i ny fane)
-            </a>
+            </BodyLong>
+            <BodyLong spacing>Du kan når som helst trekke tilbake søknaden din.</BodyLong>
+            <BodyLong>
+                <a target="_blank" rel="noopener noreferrer" href="/personvern-superrask-soknad">
+                    Les om hvordan vi behandler dine data (åpner i ny fane)
+                </a>
+            </BodyLong>
 
             {hasError && <Alert>{getErrorMessage(error)}</Alert>}
 
             {isSending ? (
                 <div aria-live="polite" className="InterestForm__progress">
-                    <Spinner type="S" /> Sender søknad
+                    <Loader size="small" /> Sender søknad
                 </div>
             ) : (
                 <div className="InterestForm__buttons">
                     <Button variant="primary" type="button" onClick={handleSendMessageClick}>
                         Send søknad
                     </Button>
-                    <Link to={`${CONTEXT_PATH}/${isInternal ? "intern" : "stilling"}/${ad._id}`} className="Knapp">
+                    <Button
+                        variant="secondary"
+                        as={Link}
+                        to={`${CONTEXT_PATH}/${isInternal ? "intern" : "stilling"}/${ad._id}`}
+                    >
                         Avbryt
-                    </Link>
+                    </Button>
                 </div>
             )}
         </form>

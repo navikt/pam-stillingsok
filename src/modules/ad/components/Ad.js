@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
+import { Tag } from "@navikt/ds-react";
 import AdDetails from "./AdDetails";
 import AdText from "./AdText";
 import ContactPerson from "./ContactPerson";
@@ -16,7 +17,6 @@ import SearchAPI from "../../../common/api/SearchAPI";
 import { FetchAction, FetchStatus, useFetchReducer } from "../../../common/hooks/useFetchReducer";
 import ErrorMessage from "../../../common/components/messages/ErrorMessage";
 import useRobotsNoIndexMetaTag from "../../../common/hooks/useRobotsNoIndexMetaTag";
-import Tag from "../../../common/components/tag/Tag";
 import AdBackLink from "./AdBackLink";
 import H1WithAutoFocus from "../../../common/components/h1WithAutoFocus/H1WithAutoFocus";
 import NotFound404 from "../../../common/components/NotFound/NotFound404";
@@ -84,7 +84,9 @@ const Ad = ({ match }) => {
 
     return (
         <div className="JobPosting">
-            <AdBackLink />
+            <div className="mb-2">
+                <AdBackLink />
+            </div>
 
             {status === FetchStatus.FAILURE && error.statusCode === 404 && (
                 <NotFound404
@@ -99,7 +101,9 @@ const Ad = ({ match }) => {
                     <div className="JobPosting__left">
                         <H1WithAutoFocus className="JobPosting__h1">{ad._source.title}</H1WithAutoFocus>
 
-                        {ad._source.status !== "ACTIVE" && <Tag>Stillingsannonsen er inaktiv.</Tag>}
+                        {ad._source.status !== "ACTIVE" && (
+                            <Tag variant="warning-filled">Stillingsannonsen er inaktiv.</Tag>
+                        )}
 
                         {isFinn && <FinnAd stilling={ad} />}
 

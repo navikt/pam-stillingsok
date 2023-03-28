@@ -1,7 +1,6 @@
-import React, { useContext, useState } from "react";
-import { Checkbox, Fieldset, Input, Radio, SkjemaGruppe } from "nav-frontend-skjema";
+import React, { useContext, useRef, useState } from "react";
 import { UserContext } from "../../../user/contexts/UserProvider";
-import { Button } from "@navikt/ds-react";
+import { BodyLong, Button, Checkbox, Radio, RadioGroup, TextField } from "@navikt/ds-react";
 import useToggle from "../../../../common/hooks/useToggle";
 import { FetchStatus } from "../../../../common/hooks/useFetchReducer";
 import Alert from "../../../../common/components/alert/Alert";
@@ -35,7 +34,7 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
     // Validation
     const [titleValidationError, setTitleValidationError] = useState(undefined);
 
-    let titleRef;
+    const titleRef = useRef();
 
     function handleFormSubmit(e) {
         e.preventDefault();
@@ -94,7 +93,9 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
         if (title.trim().length === 0) {
             isValid = false;
             setTitleValidationError("Tittel mangler");
-            titleRef.focus();
+            if (titleRef.current) {
+                titleRef.current.focus();
+            }
         } else {
             setTitleValidationError(undefined);
         }
@@ -102,8 +103,7 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
         return isValid;
     }
 
-    function handleFormModeChange(e) {
-        const value = e.target.value;
+    function handleFormModeChange(value) {
         if (value === FormModes.ADD) {
             showForm();
         } else {
@@ -125,90 +125,59 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
         }
     }
 
-    function handleDurationChange(e) {
-        setDuration(parseInt(e.target.value, 10));
+    function handleDurationChange(value) {
+        setDuration(value, 10);
     }
 
     return (
         <form onSubmit={handleFormSubmit}>
             {defaultFormMode === FormModes.UPDATE_QUERY_ONLY && existingSavedSearch && (
-                <Fieldset
+                <RadioGroup
                     legend={`Ønsker du å lagre endringene for ${existingSavedSearch.title} eller lagre et nytt søk?`}
+                    onChange={handleFormModeChange}
+                    name="add_or_replace"
+                    value={formMode}
                 >
-                    <Radio
-                        label="Lagre endringene"
-                        name="add_or_replace"
-                        value={FormModes.UPDATE_QUERY_ONLY}
-                        onChange={handleFormModeChange}
-                        checked={formMode === FormModes.UPDATE_QUERY_ONLY}
-                    />
-                    <Radio
-                        label="Lagre nytt søk"
-                        name="add_or_replace"
-                        value={FormModes.ADD}
-                        onChange={handleFormModeChange}
-                        checked={formMode === FormModes.ADD}
-                    />
-                </Fieldset>
+                    <Radio value={FormModes.UPDATE_QUERY_ONLY}>Lagre endringene</Radio>
+                    <Radio value={FormModes.ADD}>Lagre nytt søk</Radio>
+                </RadioGroup>
             )}
 
             {shouldShowForm && (
                 <React.Fragment>
-                    <Input
+                    <TextField
                         id="SavedSearchModal__name"
                         className="SavedSearchModal__body__name"
                         label="Navn*"
                         onChange={handleTitleChange}
                         value={title}
-                        feil={titleValidationError ? { feilmelding: titleValidationError } : undefined}
-                        inputRef={(el) => {
-                            titleRef = el;
-                        }}
+                        error={titleValidationError}
+                        ref={titleRef}
                     />
                     <Checkbox
                         className="SavedSearchModal__body__notify"
-                        label="Ja, jeg ønsker å motta e-post med varsel om nye treff"
                         onChange={handleSubscribeChange}
                         checked={notifyType === "EMAIL"}
-                    />
+                    >
+                        Ja, jeg ønsker å motta e-post med varsel om nye treff
+                    </Checkbox>
                     {notifyType === "EMAIL" && (
                         <React.Fragment>
-                            <SkjemaGruppe className="blokk-s">
-                                <Fieldset legend="Varighet på varsel:">
-                                    <Radio
-                                        label="30 dager"
-                                        className="SavedSearchModal__body__duration"
-                                        name="duration"
-                                        value="30"
-                                        onChange={handleDurationChange}
-                                        checked={duration === 30}
-                                    />
-                                    <Radio
-                                        label="60 dager"
-                                        className="SavedSearchModal__body__duration"
-                                        name="duration"
-                                        value="60"
-                                        onChange={handleDurationChange}
-                                        checked={duration === 60}
-                                    />
-                                    <Radio
-                                        label="90 dager"
-                                        className="SavedSearchModal__body__duration"
-                                        name="duration"
-                                        value="90"
-                                        onChange={handleDurationChange}
-                                        checked={duration === 90}
-                                    />
-                                </Fieldset>
-                            </SkjemaGruppe>
+                            <RadioGroup
+                                legend="Varighet på varsel"
+                                onChange={handleDurationChange}
+                                name="duration"
+                                value={duration}
+                            >
+                                <Radio value={30}>30 dager</Radio>
+                                <Radio value={60}>60 dager</Radio>
+                                <Radio value={90}>90 dager</Radio>
+                            </RadioGroup>
                             {!isStringEmpty(user.data.email) && (
-                                <p className="SavedSearches__p">
-                                    Varsel sendes på e-post. Gå til{" "}
-                                    <a href="/personinnstillinger" className="link">
-                                        Innstillinger
-                                    </a>{" "}
-                                    for å endre e-postadresse.
-                                </p>
+                                <BodyLong>
+                                    Varsel sendes på e-post. Gå til <a href="/personinnstillinger">Innstillinger</a> for
+                                    å endre e-postadresse.
+                                </BodyLong>
                             )}
                         </React.Fragment>
                     )}

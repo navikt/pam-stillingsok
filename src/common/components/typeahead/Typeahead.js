@@ -3,6 +3,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import TypeaheadSuggestion from "./TypeaheadSuggestion";
 import "./Typeahead.css";
+import { Search } from "@navikt/ds-react";
 
 export default class Typeahead extends React.Component {
     constructor(props) {
@@ -26,8 +27,7 @@ export default class Typeahead extends React.Component {
     /**
      * Vil skje hver gang man legger til eller fjerner en bokstav fra inputfeltet
      */
-    onChange = (e) => {
-        const { value } = e.target;
+    onChange = (value) => {
         this.setState({
             activeSuggestionIndex: -1, // Nullstill eventuelt markering av et forslag i listen
             shouldShowSuggestions: true // Vis forslagslisten igjen. Den kan ha blitt skjult om man trykket Esc
@@ -194,20 +194,23 @@ export default class Typeahead extends React.Component {
                 aria-owns={`${this.props.id}-suggestions`}
                 aria-haspopup="listbox"
             >
-                <input
+                <Search
+                    hideLabel={false}
+                    label="Søk i ledige stillinger"
+                    variant="primary"
                     id={this.props.id}
                     type="search"
                     role="textbox"
                     aria-autocomplete="list"
                     aria-controls={`${this.props.id}-suggestions`}
                     aria-activedescendant={activeDescendant}
-                    aria-label="Søk etter stilling"
                     value={this.props.value}
                     autoComplete="off"
                     onChange={this.onChange}
                     onBlur={this.onBlur}
                     onKeyDown={this.onKeyDown}
                     onFocus={this.onFocus}
+                    onSearchClick={this.props.onSearchButtonClick}
                     ref={(input) => {
                         this.input = input;
                     }}

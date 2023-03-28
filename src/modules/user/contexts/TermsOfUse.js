@@ -1,7 +1,6 @@
 import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
-import { BekreftCheckboksPanel } from "nav-frontend-skjema";
-import { Button } from "@navikt/ds-react";
+import { BodyLong, Button, ConfirmationPanel } from "@navikt/ds-react";
 import CustomModal from "../../../common/components/modals/CustomModal";
 import UserAPI from "../../../common/api/UserAPI";
 import "./TermsOfUse.css";
@@ -59,43 +58,38 @@ function TermsOfUse({ onClose, onTermsAccepted }) {
             : "Ta i bruk innloggede tjenester";
 
     return (
-        <CustomModal onCloseClick={onClose} title={title} appElement={document.getElementById("app")}>
+        <CustomModal onCloseClick={onClose} title={title}>
             {userNameAndInfo && userNameAndInfo.erUnderFemten ? (
                 <div className="TermsOfUse">
-                    <p className="TermsOfUse__section">
+                    <BodyLong className="TermsOfUse__section">
                         Du er under 15 år og er dessverre ikke gammel nok til å ha en profil på arbeidsplassen.no. Kom
                         gjerne tilbake igjen ved en senere anledning.
-                    </p>
+                    </BodyLong>
                     <div className="TermsOfUse__buttons">
-                        <Button variant="primary" onClick={onClose}>Lukk</Button>
+                        <Button variant="primary" onClick={onClose}>
+                            Lukk
+                        </Button>
                     </div>
                 </div>
             ) : (
                 <div className="TermsOfUse">
-                    <p className="TermsOfUse__section">
+                    <BodyLong className="TermsOfUse__section">
                         Du må samtykke for å bruke innloggede tjenester i stillingssøk.
-                    </p>
-                    <BekreftCheckboksPanel
+                    </BodyLong>
+                    <ConfirmationPanel
                         className="TermsOfUse__section"
                         label="Dine favoritter, søk og søkekriterier"
                         checked={checked}
                         onChange={onCheckboxClick}
-                        inputProps={{ id: "TermsOfUse__checkbox" }}
+                        error={shouldShowError ? "Du må huke av i avkryssingsboksen for å samtykke" : undefined}
                     >
                         Vi lagrer dine favoritter, søk med søkekriterier og e-postadresse (valgfri). Det er kun du som
                         kan se hva du har lagret.
-                    </BekreftCheckboksPanel>
-                    <p className="TermsOfUse__section TermsOfUse__section--last">
+                    </ConfirmationPanel>
+                    <BodyLong className="TermsOfUse__section TermsOfUse__section--last">
                         Du kan trekke samtykket hvis du ikke lenger ønsker å bruke de innloggede tjenestene. Dette kan
                         du gjøre under innstillinger.
-                    </p>
-                    {shouldShowError && (
-                        <div role="alert">
-                            <div className="skjemaelement__feilmelding blokk-s">
-                                Du må huke av i avkryssingsboksen for å samtykke
-                            </div>
-                        </div>
-                    )}
+                    </BodyLong>
                     {fetchStatus === FetchStatus.FAILURE && (
                         <Alert>Det oppsto en feil ved lagring av samtykke. Forsøk igjen.</Alert>
                     )}
@@ -108,7 +102,9 @@ function TermsOfUse({ onClose, onTermsAccepted }) {
                         >
                             Jeg samtykker
                         </Button>
-                        <Button variant="tertiary" onClick={onClose}>Avbryt</Button>
+                        <Button variant="tertiary" onClick={onClose}>
+                            Avbryt
+                        </Button>
                     </div>
                 </div>
             )}

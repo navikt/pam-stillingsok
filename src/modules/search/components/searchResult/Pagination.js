@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Button } from "@navikt/ds-react";
+import { BodyShort, Button } from "@navikt/ds-react";
 import "./Pagination.css";
 
 const Pagination = ({ searchResult, isSearching, query, onLoadMoreClick }) => {
@@ -11,7 +11,9 @@ const Pagination = ({ searchResult, isSearching, query, onLoadMoreClick }) => {
 
     return (
         <React.Fragment>
-            {total > 0 && <p className="Pagination__numberOfTotal">{`Viser ${count} av ${total} treff`}</p>}
+            {total > 0 && (
+                <BodyShort className="Pagination__numberOfTotal">{`Viser ${count} av ${total} treff`}</BodyShort>
+            )}
             {hasMore && (
                 <Button
                     variant="secondary"

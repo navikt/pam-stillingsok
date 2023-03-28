@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Checkbox } from "nav-frontend-skjema";
 import fixLocationName from "../../../../../../server/common/fixLocationName";
+import { Checkbox, Heading } from "@navikt/ds-react";
 
 export default function UnknownSearchCriteriaValues({
     namePrefix,
@@ -19,26 +19,30 @@ export default function UnknownSearchCriteriaValues({
 
     return (
         <React.Fragment>
-            <h4>Følgende kriterier gir 0 treff:</h4>
+            <Heading level="4" size="small" spacing>
+                Følgende kriterier gir 0 treff:
+            </Heading>
             {unknownValues.map((sec) => (
                 <Checkbox
                     key={sec}
                     name={`${namePrefix}-unknownFacetValue`}
-                    label={`${shouldFixLocationName ? fixLocationName(sec, true) : sec} (0)`}
                     value={sec}
                     onChange={onClick}
                     checked={checkedValues.includes(sec)}
-                />
+                >
+                    {`${shouldFixLocationName ? fixLocationName(sec, true) : sec} (0)`}
+                </Checkbox>
             ))}
             {unknownNestedValues.map((second) => (
                 <Checkbox
                     key={second}
                     name={`${namePrefix}-unknownFacetNestedValue`}
-                    label={`${shouldFixLocationName ? fixLocationName(second.split(".")[1]) : second} (0)`}
                     value={second}
                     onChange={onNestedLevelClick}
                     checked={checkedNestedValues.includes(second)}
-                />
+                >
+                    {`${shouldFixLocationName ? fixLocationName(second.split(".")[1]) : second} (0)`}
+                </Checkbox>
             ))}
         </React.Fragment>
     );

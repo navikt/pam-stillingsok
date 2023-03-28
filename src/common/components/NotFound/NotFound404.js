@@ -1,6 +1,7 @@
 import React from "react";
 import "./NotFound404.css";
 import PropTypes from "prop-types";
+import { BodyLong, Heading } from "@navikt/ds-react";
 
 function NotFound404({ title, text }) {
     return (
@@ -21,8 +22,10 @@ function NotFound404({ title, text }) {
                 />
             </svg>
 
-            <h1 className="InterestForm__h1">{title}</h1>
-            <p className="InterestForm__p">{text}</p>
+            <Heading level="1" size="xlarge" spacing>
+                {title}
+            </Heading>
+            <BodyLong>{text}</BodyLong>
         </div>
     );
 }

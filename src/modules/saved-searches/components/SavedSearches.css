@@ -14,17 +14,6 @@
     margin-bottom: 4rem;
 }
 
-.SavedSearches__h2 {
-    font-weight: 600;
-    font-size: 1.25rem;
-    margin: 0 0 1rem 0;
-}
-
-.SavedSearches__p {
-    line-height: 1.5;
-    font-size: 1.125rem;
-}
-
 .SaveSearchForm__buttons {
     display: flex;
     margin-top: 2rem;
@@ -38,7 +27,7 @@
 }
 
 .SavedSearchListItem:nth-child(even) {
-    background-color: var(--gray1);
+    background-color: var(--arb-gray-100);
 }
 
 @media (max-width: 767px) {
@@ -60,14 +49,12 @@
     }
 
     .SavedSearchListItem__title {
-        font-size: 1.25rem;
         margin-right: 1rem;
     }
 }
 
 @media (max-width: 991px) {
     .SavedSearchListItem__title {
-        font-size: 18px !important;
         margin-bottom: 0.75rem;
     }
 
@@ -89,8 +76,6 @@
 
 .SavedSearchListItem__created {
     white-space: nowrap;
-    color: var(--blueDarken);
-    font-size: 1.125rem;
 }
 
 .SavedSearchListItem__expired {
@@ -132,19 +117,4 @@
     .SavedSearchModal__form-mode {
         margin-bottom: 0;
     }
-}
-
-@media (min-width: 450px) {
-    .SavedSearchModal__body__duration {
-        display: inline;
-    }
-
-    .SavedSearchModal__body__duration:not(:last-child) {
-        margin-right: 2rem;
-    }
-}
-
-.SavedSearchModal__p {
-    font-size: 1rem;
-    line-height: 1.5;
 }

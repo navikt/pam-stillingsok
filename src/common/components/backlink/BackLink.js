@@ -1,25 +1,27 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import ChevronLeftIcon from "../icons/ChevronLeftIcon";
-import "./BackLink.css";
+import { ChevronLeftIcon } from "@navikt/aksel-icons";
+import { Link as AkselLink } from "@navikt/ds-react";
 
-function BackLink({ to, text }) {
+function BackLink({ to, text, className }) {
     return (
-        <Link to={to} className="BackLink link">
-            <ChevronLeftIcon ariaHidden={true} />
+        <AkselLink as={Link} to={to} className={className}>
+            <ChevronLeftIcon aria-hidden="true" width="1.5em" height="1.5em" />
             {text}
-        </Link>
+        </AkselLink>
     );
 }
 
 BackLink.defaultProps = {
-    text: "Tilbake"
+    text: "Tilbake",
+    className: undefined
 };
 
 BackLink.propsTypes = {
     to: PropTypes.string.isRequired,
-    text: PropTypes.string
+    text: PropTypes.string,
+    className: PropTypes.string
 };
 
 export default BackLink;

@@ -20,7 +20,9 @@ function SavedSearchesPage() {
 
     return (
         <div className="SavedSearches">
-            <BackLink to={CONTEXT_PATH} text="Ledige stillinger" />
+            <div className="mb-2">
+                <BackLink to={CONTEXT_PATH} text="Ledige stillinger" />
+            </div>
             <H1WithAutoFocus className="SavedSearches__h1">Lagrede søk</H1WithAutoFocus>
             <RequiresAuthentication>
                 <RequiresHasAcceptedTerms>

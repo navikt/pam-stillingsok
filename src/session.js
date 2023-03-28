@@ -1,6 +1,6 @@
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 
-export const FIELD_SESSION_ID = 'sessionId';
+export const FIELD_SESSION_ID = "sessionId";
 export default function getSessionId() {
     let sessionId = null;
     try {
@@ -11,7 +11,7 @@ export default function getSessionId() {
         }
     } catch (e) {
         // It's possible user has disabled persistent data
-        sessionId = 'undefined';
+        sessionId = "undefined";
     }
     return sessionId;
 }

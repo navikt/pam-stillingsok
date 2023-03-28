@@ -1,12 +1,12 @@
 import PropTypes from "prop-types";
 import React, { useLayoutEffect, useRef } from "react";
 import { Link } from "react-router-dom";
+import { BodyShort, Heading, Tag } from "@navikt/ds-react";
 import getEmployer from "../../../../../server/common/getEmployer";
 import getWorkLocation from "../../../../../server/common/getWorkLocation";
 import { CONTEXT_PATH } from "../../../../common/environment";
 import { formatDate } from "../../../../common/components/utils";
 import "./SearchResultsItem.css";
-import Tag from "../../../../common/components/tag/Tag";
 
 export default function SearchResultItem({ ad, showExpired, favouriteButton, shouldAutoFocus }) {
     const location = getWorkLocation(ad.properties.location, ad.locationList);
@@ -31,36 +31,46 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, sho
             className="SearchResultItem"
             aria-labelledby={`${ad.uuid}-h3 ${ad.uuid}-jobTitle ${ad.uuid}-employer ${ad.uuid}-location`}
         >
-            <h3 className="SearchResultsItem__title" id={`${ad.uuid}-h3`}>
+            <Heading level="3" size="small" className="SearchResultsItem__title" id={`${ad.uuid}-h3`}>
                 <LinkToAd stilling={ad} isFinn={isFinn} employer={employer}>
                     {ad.title}
                 </LinkToAd>
-            </h3>
+            </Heading>
 
-            {showExpired && <Tag className="SearchResultsItem__expired">Annonsen er utløpt</Tag>}
+            {showExpired && (
+                <Tag variant="warning-filled" className="mb-1">
+                    Annonsen er utløpt
+                </Tag>
+            )}
 
             {jobTitle && (
-                <p id={`${ad.uuid}-jobTitle`} className="SearchResultsItem__jobtitle">
+                <BodyShort id={`${ad.uuid}-jobTitle`} className="SearchResultsItem__jobtitle">
                     {jobTitle}
-                </p>
+                </BodyShort>
             )}
             {employer && (
-                <p id={`${ad.uuid}-employer`} className="SearchResultsItem__employer">
+                <BodyShort id={`${ad.uuid}-employer`} className="SearchResultsItem__employer">
                     {employer}
-                </p>
+                </BodyShort>
             )}
             {location && (
-                <p id={`${ad.uuid}-location`} className="SearchResultsItem__location">
+                <BodyShort id={`${ad.uuid}-location`} className="SearchResultsItem__location">
                     {location}
-                </p>
+                </BodyShort>
             )}
 
             <div className="SearchResultsItem__bottom">
                 <div>
-                    {frist && <p className="SearchResultsItem__applicationdue">Frist: {frist}</p>}
-                    {published && <p className="SearchResultsItem__published">Publisert: {published}</p>}
-                    {isFinn && <p className="SearchResultsItem__external-link">Åpnes på FINN.no</p>}
-                    {hasInterestform && <p className="SearchResultsItem__hasInterestform">Superrask søknad</p>}
+                    {frist && <BodyShort className="SearchResultsItem__applicationdue">Frist: {frist}</BodyShort>}
+                    {published && (
+                        <BodyShort className="SearchResultsItem__published">Publisert: {published}</BodyShort>
+                    )}
+                    {isFinn && <BodyShort className="SearchResultsItem__external-link">Åpnes på FINN.no</BodyShort>}
+                    {hasInterestform && (
+                        <Tag size="small" variant="info-filled" className="mt-1">
+                            Superrask søknad
+                        </Tag>
+                    )}
                 </div>
                 {favouriteButton}
             </div>
@@ -90,15 +100,7 @@ SearchResultItem.propTypes = {
 
 function LinkToAd({ children, stilling, isFinn }) {
     if (isFinn) {
-        return (
-            <a href={`https://www.finn.no/${stilling.reference}`} className="link">
-                {children}
-            </a>
-        );
+        return <a href={`https://www.finn.no/${stilling.reference}`}>{children}</a>;
     }
-    return (
-        <Link to={`${CONTEXT_PATH}/stilling/${stilling.uuid}`} className="link">
-            {children}
-        </Link>
-    );
+    return <Link to={`${CONTEXT_PATH}/stilling/${stilling.uuid}`}>{children}</Link>;
 }

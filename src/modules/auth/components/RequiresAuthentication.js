@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Button } from "@navikt/ds-react";
+import { BodyLong, Button, Heading } from "@navikt/ds-react";
 import { AuthenticationContext, AuthenticationStatus } from "../contexts/AuthenticationProvider";
 import DelayedSpinner from "../../../common/components/spinner/DelayedSpinner";
 import ErrorMessage from "../../../common/components/messages/ErrorMessage";
@@ -20,11 +20,15 @@ function RequiresAuthentication({ children }) {
     } else {
         return (
             <section className="LoginRequiredMessage">
-                <h2 className="LoginRequiredMessage__h2">Du må logge inn</h2>
-                <p className="LoginRequiredMessage__text">
+                <Heading level="2" size="large" spacing>
+                    Du må logge inn
+                </Heading>
+                <BodyLong className="LoginRequiredMessage__text">
                     Logg inn med MinID, BankID, BankID på mobil, Buypass eller Commfides.
-                </p>
-                <Button variant="primary" onClick={login}>Logg inn</Button>
+                </BodyLong>
+                <Button variant="primary" onClick={login}>
+                    Logg inn
+                </Button>
             </section>
         );
     }

@@ -40,7 +40,7 @@ const TrekkSoknad = ({ match }) => {
                 deleteSoknadDispatch({ type: FetchAction.REJECT, error });
             });
         try {
-            logAmplitudeEvent('delete superrask søknad', {
+            logAmplitudeEvent("delete superrask søknad", {
                 stillingsId: match.params.adUuid,
                 candidateId: match.params.uuid,
                 success

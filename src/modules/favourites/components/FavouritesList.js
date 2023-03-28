@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Select } from "nav-frontend-skjema";
 import DelayedSpinner from "../../../common/components/spinner/DelayedSpinner";
 import ErrorMessage from "../../../common/components/messages/ErrorMessage";
 import EmptyMessage from "../../../common/components/messages/EmptyMessage";
@@ -7,6 +6,7 @@ import UserAPI from "../../../common/api/UserAPI";
 import { FetchAction, FetchStatus, useFetchReducer } from "../../../common/hooks/useFetchReducer";
 import FavouritesListItem from "./FavouritesListItem";
 import "./Favourites.css";
+import { Heading, Select } from "@navikt/ds-react";
 
 function FavouritesList() {
     const [response, dispatch] = useFetchReducer();
@@ -58,10 +58,10 @@ function FavouritesList() {
     } else {
         return (
             <section>
-                <div className="FavouritesList__total-and-sorting">
-                    <h2 className="Favourites__h2">
+                <div className="FavouritesList__total-and-sorting mb-1">
+                    <Heading level="2" size="large">
                         {response.data.length !== 1 ? `${response.data.length} annonser` : "1 annonse"}
-                    </h2>
+                    </Heading>
                     <Select
                         onChange={(e) => {
                             setSortBy(e.target.value);

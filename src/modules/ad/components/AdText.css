@@ -6,21 +6,7 @@
     min-height: 60px;
     overflow-wrap: break-word;
     word-wrap: break-word;
-}
-
-.AdText a {
-    color: var(--primaryPurple);
-}
-
-.AdText a:hover {
-    text-decoration-line: none;
-    color: #9c4f9c;
-}
-
-.AdText a:focus {
-    outline: none;
-    color: #fff;
-    background: var(--blueDarken);
+    max-width: 75ch;
 }
 
 .AdText h1 {

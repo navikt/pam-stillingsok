@@ -1,11 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ReactHtmlParser from "react-html-parser";
+import parse from 'html-react-parser';
 import fixLocationName from "../../../../server/common/fixLocationName";
 import { isValidUrl } from "../../../common/components/utils";
 import getEmployer from "../../../../server/common/getEmployer";
 import "./EmployerDetails.css";
-import EmployerIcon from "../../../common/components/icons/EmployerIcon";
+import { Heading } from "@navikt/ds-react";
 
 function getEmployerLocation(employer) {
     let employerLocation = null;
@@ -31,10 +31,9 @@ export default function EmployerDetails({ stilling }) {
     const employerLocation = getEmployerLocation(stilling.employer);
     return (
         <section>
-            <h2 className="EmployerDetails__h2">
-                <EmployerIcon />
+            <Heading level="2" size="large" className="mt-4" spacing>
                 Om arbeidsgiveren
-            </h2>
+            </Heading>
             <dl className="EmployerDetails__dl">
                 {employer && (
                     <React.Fragment>
@@ -53,9 +52,7 @@ export default function EmployerDetails({ stilling }) {
                         <dt>Hjemmeside:</dt>
                         <dd>
                             {isValidUrl(properties.employerhomepage) ? (
-                                <a href={properties.employerhomepage} className="link">
-                                    {properties.employerhomepage}
-                                </a>
+                                <a href={properties.employerhomepage}>{properties.employerhomepage}</a>
                             ) : (
                                 properties.employerhomepage
                             )}
@@ -67,9 +64,7 @@ export default function EmployerDetails({ stilling }) {
                         <dt>LinkedIn:</dt>
                         <dd>
                             {isValidUrl(properties.linkedinpage) ? (
-                                <a href={properties.linkedinpage} className="link">
-                                    {properties.linkedinpage}
-                                </a>
+                                <a href={properties.linkedinpage}>{properties.linkedinpage}</a>
                             ) : (
                                 properties.linkedinpage
                             )}
@@ -81,9 +76,7 @@ export default function EmployerDetails({ stilling }) {
                         <dt>Twitter:</dt>
                         <dd>
                             {isValidUrl(properties.twitteraddress) ? (
-                                <a href={properties.twitteraddress} className="link">
-                                    {properties.twitteraddress}
-                                </a>
+                                <a href={properties.twitteraddress}>{properties.twitteraddress}</a>
                             ) : (
                                 properties.twitteraddress
                             )}
@@ -95,9 +88,7 @@ export default function EmployerDetails({ stilling }) {
                         <dt>Facebook:</dt>
                         <dd>
                             {isValidUrl(properties.facebookpage) ? (
-                                <a href={properties.facebookpage} className="link">
-                                    {properties.facebookpage}
-                                </a>
+                                <a href={properties.facebookpage}>{properties.facebookpage}</a>
                             ) : (
                                 properties.facebookpage
                             )}
@@ -106,7 +97,7 @@ export default function EmployerDetails({ stilling }) {
                 )}
             </dl>
             {properties.employerdescription && (
-                <div className="EmployerDetails__description">{ReactHtmlParser(properties.employerdescription)}</div>
+                <div className="EmployerDetails__description">{parse(properties.employerdescription)}</div>
             )}
         </section>
     );

@@ -6,13 +6,9 @@ function SkipToResult({ data }) {
     return (
         <div className="SkipTo SkipTo--vis-treff">
             {data && data.totalAds ? (
-                <a href="#resultat" className="link">
-                    {`Vis ${data.totalAds} treff`}
-                </a>
+                <a href="#resultat">{`Vis ${data.totalAds} treff`}</a>
             ) : (
-                <a href="#resultat" className="link">
-                    Vis treff
-                </a>
+                <a href="#resultat">Vis treff</a>
             )}
         </div>
     );
