@@ -13,6 +13,12 @@ export default function EmploymentDetails({ stilling }) {
                 Om stillingen
             </Heading>
             <dl className="JobPosting__dl">
+                {properties.jobtitle && (
+                    <React.Fragment>
+                        <dt>Stillingstittel:</dt>
+                        <dd>{properties.jobtitle}</dd>
+                    </React.Fragment>
+                )}
                 {properties.positioncount && (
                     <React.Fragment>
                         <dt>Antall stillinger:</dt>

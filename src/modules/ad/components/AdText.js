@@ -1,8 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import parse from 'html-react-parser';
+import parse from "html-react-parser";
 import "./AdText.css";
 import { containsEmail, extractEmail, isValidEmail, mailtoInString } from "../../../common/components/utils";
+import { Heading } from "@navikt/ds-react";
 
 const preprocessAd = (adText) => {
     if (containsEmail(adText)) {
@@ -25,7 +26,14 @@ const preprocessAd = (adText) => {
 export default function AdText({ adText }) {
     if (adText) {
         const preprocessedAd = preprocessAd(adText);
-        return <section className="AdText">{parse(preprocessedAd)}</section>;
+        return (
+            <section>
+                <Heading level="2" size="large" spacing>
+                    Om jobben
+                </Heading>
+                <div className="AdText">{parse(preprocessedAd)}</div>
+            </section>
+        );
     }
     return null;
 }
