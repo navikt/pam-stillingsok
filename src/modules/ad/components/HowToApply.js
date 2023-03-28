@@ -1,13 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import { BodyLong, BodyShort, Button, Heading } from "@navikt/ds-react";
+import { ExternalLinkIcon } from "@navikt/aksel-icons";
 import { formatDate, isValidEmail, isValidISOString, isValidUrl } from "../../../common/components/utils";
 import "./HowToApply.css";
 import logAmplitudeEvent from "../../../common/tracking/amplitude";
 import FavouritesButton from "../../favourites/components/FavouritesButton";
 import { CONTEXT_PATH } from "../../../common/environment";
-import { BodyLong, BodyShort, Button, Heading } from "@navikt/ds-react";
-import { ExternalLinkIcon } from "@navikt/aksel-icons";
 
 export function getApplicationUrl(source, properties) {
     if (source === "FINN") {
@@ -48,7 +48,7 @@ export default function HowToApply({ stilling, showFavouriteButton, isInternal }
 
                 {properties.applicationdue && (
                     <dl className="JobPosting__dl">
-                        <dt>Søknadsfrist:</dt>
+                        <dt>Søknadsfrist</dt>
                         <dd>
                             {isValidISOString(properties.applicationdue)
                                 ? formatDate(properties.applicationdue, "DD.MM.YYYY")
@@ -119,7 +119,7 @@ export default function HowToApply({ stilling, showFavouriteButton, isInternal }
                 <dl className="JobPosting__dl">
                     {properties.applicationdue && (
                         <React.Fragment>
-                            <dt>Søknadsfrist:</dt>
+                            <dt>Søknadsfrist</dt>
                             <dd>
                                 {isValidISOString(properties.applicationdue)
                                     ? formatDate(properties.applicationdue, "DD.MM.YYYY")
@@ -129,7 +129,7 @@ export default function HowToApply({ stilling, showFavouriteButton, isInternal }
                     )}
                     {!isFinn && properties.applicationemail && (
                         <React.Fragment>
-                            <dt>Send søknad til:</dt>
+                            <dt>Send søknad til</dt>
                             <dd>
                                 {isValidEmail(properties.applicationemail) ? (
                                     <a href={`mailto:${properties.applicationemail}`}>{properties.applicationemail}</a>
@@ -141,7 +141,7 @@ export default function HowToApply({ stilling, showFavouriteButton, isInternal }
                     )}
                     {applicationUrl && !isValidUrl(applicationUrl) && (
                         <React.Fragment>
-                            <dt>Søknadslenke:</dt>
+                            <dt>Søknadslenke</dt>
                             <dd>{applicationUrl}</dd>
                         </React.Fragment>
                     )}

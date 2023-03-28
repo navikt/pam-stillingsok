@@ -14,25 +14,25 @@ export default function AdDetails({ id, source }) {
             <dl className="JobPosting__dl">
                 {source.updated && (
                     <React.Fragment>
-                        <dt>Sist endret:</dt>
+                        <dt>Sist endret</dt>
                         <dd>{formatDate(source.updated, "DD.MM.YYYY")}</dd>
                     </React.Fragment>
                 )}
                 {source.medium && (
                     <React.Fragment>
-                        <dt>Hentet fra:</dt>
+                        <dt>Hentet fra</dt>
                         <dd>{source.medium}</dd>
                     </React.Fragment>
                 )}
                 {source.reference && (
                     <React.Fragment>
-                        <dt>Referanse:</dt>
+                        <dt>Referanse</dt>
                         <dd>{source.reference}</dd>
                     </React.Fragment>
                 )}
                 {source.id && (
                     <React.Fragment>
-                        <dt>Stillingsnummer:</dt>
+                        <dt>Stillingsnummer</dt>
                         <dd>{source.id}</dd>
                     </React.Fragment>
                 )}
