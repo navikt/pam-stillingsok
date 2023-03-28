@@ -113,5 +113,9 @@ function LinkToAd({ children, stilling, isFinn }) {
             </AkselLink>
         );
     }
-    return <Link to={`${CONTEXT_PATH}/stilling/${stilling.uuid}`}>{children}</Link>;
+    return (
+        <AkselLink as={Link} to={`${CONTEXT_PATH}/stilling/${stilling.uuid}`}>
+            {children}
+        </AkselLink>
+    );
 }
