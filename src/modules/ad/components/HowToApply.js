@@ -1,13 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import { BodyLong, BodyShort, Button, Heading } from "@navikt/ds-react";
+import { ExternalLinkIcon } from "@navikt/aksel-icons";
 import { formatDate, isValidEmail, isValidISOString, isValidUrl } from "../../../common/components/utils";
 import "./HowToApply.css";
 import logAmplitudeEvent from "../../../common/tracking/amplitude";
 import FavouritesButton from "../../favourites/components/FavouritesButton";
 import { CONTEXT_PATH } from "../../../common/environment";
-import { BodyLong, BodyShort, Button, Heading } from "@navikt/ds-react";
-import { ExternalLinkIcon } from "@navikt/aksel-icons";
 
 export function getApplicationUrl(source, properties) {
     if (source === "FINN") {
