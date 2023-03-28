@@ -48,7 +48,7 @@ export default function HowToApply({ stilling, showFavouriteButton, isInternal }
 
                 {properties.applicationdue && (
                     <dl className="JobPosting__dl">
-                        <dt>Søknadsfrist:</dt>
+                        <dt>Søknadsfrist</dt>
                         <dd>
                             {isValidISOString(properties.applicationdue)
                                 ? formatDate(properties.applicationdue, "DD.MM.YYYY")
@@ -119,7 +119,7 @@ export default function HowToApply({ stilling, showFavouriteButton, isInternal }
                 <dl className="JobPosting__dl">
                     {properties.applicationdue && (
                         <React.Fragment>
-                            <dt>Søknadsfrist:</dt>
+                            <dt>Søknadsfrist</dt>
                             <dd>
                                 {isValidISOString(properties.applicationdue)
                                     ? formatDate(properties.applicationdue, "DD.MM.YYYY")
@@ -129,7 +129,7 @@ export default function HowToApply({ stilling, showFavouriteButton, isInternal }
                     )}
                     {!isFinn && properties.applicationemail && (
                         <React.Fragment>
-                            <dt>Send søknad til:</dt>
+                            <dt>Send søknad til</dt>
                             <dd>
                                 {isValidEmail(properties.applicationemail) ? (
                                     <a href={`mailto:${properties.applicationemail}`}>{properties.applicationemail}</a>
@@ -141,7 +141,7 @@ export default function HowToApply({ stilling, showFavouriteButton, isInternal }
                     )}
                     {applicationUrl && !isValidUrl(applicationUrl) && (
                         <React.Fragment>
-                            <dt>Søknadslenke:</dt>
+                            <dt>Søknadslenke</dt>
                             <dd>{applicationUrl}</dd>
                         </React.Fragment>
                     )}

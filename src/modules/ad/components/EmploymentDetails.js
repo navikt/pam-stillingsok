@@ -15,19 +15,29 @@ export default function EmploymentDetails({ stilling }) {
             <dl className="JobPosting__dl">
                 {properties.jobtitle && (
                     <React.Fragment>
-                        <dt>Stillingstittel:</dt>
+                        <dt>Stillingstittel</dt>
                         <dd>{properties.jobtitle}</dd>
                     </React.Fragment>
                 )}
                 {properties.positioncount && (
                     <React.Fragment>
-                        <dt>Antall stillinger:</dt>
+                        <dt>Antall stillinger</dt>
                         <dd>{properties.positioncount}</dd>
+                    </React.Fragment>
+                )}
+                {properties.starttime && (
+                    <React.Fragment>
+                        <dt>Oppstart</dt>
+                        <dd>
+                            {isValidISOString(properties.starttime)
+                                ? formatDate(properties.starttime, "DD.MM.YYYY")
+                                : properties.starttime}
+                        </dd>
                     </React.Fragment>
                 )}
                 {(properties.remote === "Hjemmekontor" || properties.remote === "Hybridkontor") && (
                     <React.Fragment>
-                        <dt>Hjemmekontor:</dt>
+                        <dt>Hjemmekontor</dt>
                         <dd>
                             {properties.remote === "Hjemmekontor"
                                 ? "Kun hjemmekontor"
@@ -37,54 +47,44 @@ export default function EmploymentDetails({ stilling }) {
                 )}
                 {properties.engagementtype && (
                     <React.Fragment>
-                        <dt>Ansettelsesform:</dt>
+                        <dt>Ansettelsesform</dt>
                         <dd>{properties.engagementtype}</dd>
                     </React.Fragment>
                 )}
                 {properties.jobpercentage && (
                     <React.Fragment>
-                        <dt>Prosent:</dt>
+                        <dt>Prosent</dt>
                         <dd>{properties.jobpercentage} %</dd>
                     </React.Fragment>
                 )}
                 {properties.extent && (
                     <React.Fragment>
-                        <dt>Heltid/deltid:</dt>
+                        <dt>Heltid/deltid</dt>
                         <dd>{properties.extent}</dd>
                     </React.Fragment>
                 )}
                 {properties.sector && (
                     <React.Fragment>
-                        <dt>Sektor:</dt>
+                        <dt>Sektor</dt>
                         <dd>{properties.sector}</dd>
                     </React.Fragment>
                 )}
                 {properties.workday && (
                     <React.Fragment>
-                        <dt>Arbeidsdager:</dt>
+                        <dt>Arbeidsdager</dt>
                         <dd>{worktimeParser(properties.workday)}</dd>
                     </React.Fragment>
                 )}
                 {properties.workhours && (
                     <React.Fragment>
-                        <dt>Arbeidstid:</dt>
+                        <dt>Arbeidstid</dt>
                         <dd>{worktimeParser(properties.workhours)}</dd>
                     </React.Fragment>
                 )}
                 {properties.jobarrangement && (
                     <React.Fragment>
-                        <dt>Arbeidstidsordning:</dt>
+                        <dt>Arbeidstidsordning</dt>
                         <dd>{properties.jobarrangement}</dd>
-                    </React.Fragment>
-                )}
-                {properties.starttime && (
-                    <React.Fragment>
-                        <dt>Oppstart:</dt>
-                        <dd>
-                            {isValidISOString(properties.starttime)
-                                ? formatDate(properties.starttime, "DD.MM.YYYY")
-                                : properties.starttime}
-                        </dd>
                     </React.Fragment>
                 )}
             </dl>

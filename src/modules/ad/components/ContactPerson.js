@@ -24,25 +24,25 @@ export default function ContactPerson({ contactList }) {
                 <dl className="JobPosting__dl">
                     {contactList[0].name && (
                         <React.Fragment>
-                            <dt>Kontaktperson:</dt>
+                            <dt>Kontaktperson</dt>
                             <dd>{contactList[0].name}</dd>
                         </React.Fragment>
                     )}
                     {contactList[0].title && (
                         <React.Fragment>
-                            <dt>Stillingstittel:</dt>
+                            <dt>Stillingstittel</dt>
                             <dd>{contactList[0].title}</dd>
                         </React.Fragment>
                     )}
                     {contactList[0].phone && (
                         <React.Fragment>
-                            <dt>Telefon:</dt>
+                            <dt>Telefon</dt>
                             <dd>{contactList[0].phone}</dd>
                         </React.Fragment>
                     )}
                     {contactList[0].email && (
                         <React.Fragment>
-                            <dt>Epost:</dt>
+                            <dt>Epost</dt>
                             <dd>
                                 <a rel="nofollow" href={`mailto:${contactList[0].email}`}>
                                     {contactList[0].email}

@@ -65,8 +65,7 @@
 
 .JobPosting__section {
     width: 100%;
-    margin-bottom: 2rem;
-    padding-bottom: 1.5rem;
+    margin-bottom: 2.5rem;
 }
 
 .JobPosting__dl dd,
@@ -83,6 +82,6 @@
 .JobPosting__dl dd {
     word-wrap: break-word;
     overflow-wrap: break-word;
-    margin: 0 0 0.75rem 0;
+    margin: 0 0 1rem 0;
 }
 

@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import parse from 'html-react-parser';
+import parse from "html-react-parser";
 import fixLocationName from "../../../../server/common/fixLocationName";
 import { isValidUrl } from "../../../common/components/utils";
 import getEmployer from "../../../../server/common/getEmployer";
@@ -37,19 +37,19 @@ export default function EmployerDetails({ stilling }) {
             <dl className="EmployerDetails__dl">
                 {employer && (
                     <React.Fragment>
-                        <dt>Arbeidsgiver:</dt>
+                        <dt>Arbeidsgiver</dt>
                         <dd>{employer}</dd>
                     </React.Fragment>
                 )}
                 {employerLocation && (
                     <React.Fragment>
-                        <dt>Adresse:</dt>
+                        <dt>Adresse</dt>
                         <dd>{employerLocation}</dd>
                     </React.Fragment>
                 )}
                 {properties.employerhomepage && (
                     <React.Fragment>
-                        <dt>Hjemmeside:</dt>
+                        <dt>Hjemmeside</dt>
                         <dd>
                             {isValidUrl(properties.employerhomepage) ? (
                                 <a href={properties.employerhomepage}>{properties.employerhomepage}</a>
@@ -61,7 +61,7 @@ export default function EmployerDetails({ stilling }) {
                 )}
                 {properties.linkedinpage && (
                     <React.Fragment>
-                        <dt>LinkedIn:</dt>
+                        <dt>LinkedIn</dt>
                         <dd>
                             {isValidUrl(properties.linkedinpage) ? (
                                 <a href={properties.linkedinpage}>{properties.linkedinpage}</a>
@@ -73,7 +73,7 @@ export default function EmployerDetails({ stilling }) {
                 )}
                 {properties.twitteraddress && (
                     <React.Fragment>
-                        <dt>Twitter:</dt>
+                        <dt>Twitter</dt>
                         <dd>
                             {isValidUrl(properties.twitteraddress) ? (
                                 <a href={properties.twitteraddress}>{properties.twitteraddress}</a>
@@ -85,7 +85,7 @@ export default function EmployerDetails({ stilling }) {
                 )}
                 {properties.facebookpage && (
                     <React.Fragment>
-                        <dt>Facebook:</dt>
+                        <dt>Facebook</dt>
                         <dd>
                             {isValidUrl(properties.facebookpage) ? (
                                 <a href={properties.facebookpage}>{properties.facebookpage}</a>
