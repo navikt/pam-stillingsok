@@ -77,13 +77,13 @@
 .JobPosting__dl--flex dt {
     flex: 1;
     margin-bottom: 0.5rem !important;
-    overflow-wrap: anywhere;
 }
 
 .JobPosting__dl dd,
 .JobPosting__dl dt {
     line-height: 1.33;
     font-size: 1.125rem;
+    overflow-wrap: anywhere;
 }
 
 .JobPosting__dl dt {
