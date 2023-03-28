@@ -34,20 +34,11 @@
     margin: 0;
 }
 
-.SearchResultsItem__external-link {
-    margin: 0.5rem 0 0 0;
-    white-space: nowrap;
-    display: flex;
-    align-items: center;
-    font-size: 1rem;
-}
-
 .SearchResultsItem__jobtitle,
 .SearchResultsItem__employer,
 .SearchResultsItem__location,
 .SearchResultsItem__applicationdue,
-.SearchResultsItem__published,
-.SearchResultsItem__external-link {
+.SearchResultsItem__published {
     word-wrap: break-word;
     overflow-wrap: break-word;
 }

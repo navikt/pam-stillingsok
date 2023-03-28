@@ -1,12 +1,14 @@
 import PropTypes from "prop-types";
 import React, { useLayoutEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { BodyShort, Heading, Tag } from "@navikt/ds-react";
+import { BodyShort, Heading, Label, Tag } from "@navikt/ds-react";
 import getEmployer from "../../../../../server/common/getEmployer";
 import getWorkLocation from "../../../../../server/common/getWorkLocation";
 import { CONTEXT_PATH } from "../../../../common/environment";
 import { formatDate } from "../../../../common/components/utils";
 import "./SearchResultsItem.css";
+import { ExternalLinkIcon } from "@navikt/aksel-icons";
+import { Link as AkselLink } from "@navikt/ds-react";
 
 export default function SearchResultItem({ ad, showExpired, favouriteButton, shouldAutoFocus }) {
     const location = getWorkLocation(ad.properties.location, ad.locationList);
@@ -44,9 +46,9 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, sho
             )}
 
             {jobTitle && (
-                <BodyShort id={`${ad.uuid}-jobTitle`} className="SearchResultsItem__jobtitle">
+                <Label as="p" id={`${ad.uuid}-jobTitle`} className="SearchResultsItem__jobtitle">
                     {jobTitle}
-                </BodyShort>
+                </Label>
             )}
             {employer && (
                 <BodyShort id={`${ad.uuid}-employer`} className="SearchResultsItem__employer">
@@ -65,7 +67,6 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, sho
                     {published && (
                         <BodyShort className="SearchResultsItem__published">Publisert: {published}</BodyShort>
                     )}
-                    {isFinn && <BodyShort className="SearchResultsItem__external-link">Åpnes på FINN.no</BodyShort>}
                     {hasInterestform && (
                         <Tag size="small" variant="info-filled" className="mt-1">
                             Superrask søknad
@@ -100,7 +101,11 @@ SearchResultItem.propTypes = {
 
 function LinkToAd({ children, stilling, isFinn }) {
     if (isFinn) {
-        return <a href={`https://www.finn.no/${stilling.reference}`}>{children}</a>;
+        return (
+            <AkselLink href={`https://www.finn.no/${stilling.reference}`}>
+                {children} <ExternalLinkIcon width="1.25em" height="1.25em" aria-label="Åpnes på Finn" />
+            </AkselLink>
+        );
     }
     return <Link to={`${CONTEXT_PATH}/stilling/${stilling.uuid}`}>{children}</Link>;
 }
