@@ -121,7 +121,7 @@ function Locations({ initialValues, updatedValues, query, dispatch }) {
                                     (location.key === "UTLAND" && query.international === true)
                                 }
                             >
-                                {`${fixLocationName(location.key)} (${location.count})`}
+                                <span translate="no">{`${fixLocationName(location.key)} (${location.count})`}</span>
                             </Checkbox>
                             {(query.counties.includes(location.key) ||
                                 (location.key === "UTLAND" && query.international === true)) &&
@@ -142,7 +142,11 @@ function Locations({ initialValues, updatedValues, query, dispatch }) {
                                                         query.countries.includes(subLocation.key)
                                                     }
                                                 >
-                                                    {`${fixLocationName(subLocation.key, true)} (${subLocation.count})`}
+                                                    <span translate="no">
+                                                        {`${fixLocationName(subLocation.key, true)} (${
+                                                            subLocation.count
+                                                        })`}
+                                                    </span>
                                                 </Checkbox>
                                             ))}
                                     </fieldset>
