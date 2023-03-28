@@ -105,7 +105,7 @@ const ReportAd = () => {
 
     return (
         <div className="RapporterAnnonse">
-            <BackLink to={`${CONTEXT_PATH}/stilling/${stillingId}`} text="Tilbake til annonsen" />
+            <BackLink to={`${CONTEXT_PATH}/stilling/${stillingId}`} text="Tilbake til annonsen" className="mb-2" />
 
             {authenticationStatus !== AuthenticationStatus.IS_AUTHENTICATED && (
                 <div>
@@ -195,6 +195,7 @@ const ReportAd = () => {
                                     value={description}
                                     onChange={handleDescriptionChange}
                                     description="Legg ikke igjen personopplysinger i dette feltet"
+                                    className="mb-2"
                                 />
 
                                 <BodyLong>
@@ -209,6 +210,7 @@ const ReportAd = () => {
                                     variant="primary"
                                     disabled={(violationCategory === null && scamCategory === null) || !description}
                                     onClick={handleSendTip}
+                                    className="mb-2"
                                 >
                                     Send tips
                                 </Button>
