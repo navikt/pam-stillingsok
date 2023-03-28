@@ -14,78 +14,74 @@ export default function EmploymentDetails({ stilling }) {
             </Heading>
             <dl className="JobPosting__dl">
                 {properties.jobtitle && (
-                    <React.Fragment>
-                        <dt>Stillingstittel</dt>
+                    <div className="JobPosting__dl--flex">
+                        <dt>Stillingstittel:</dt>
                         <dd>{properties.jobtitle}</dd>
-                    </React.Fragment>
+                    </div>
                 )}
                 {properties.positioncount && (
-                    <React.Fragment>
-                        <dt>Antall stillinger</dt>
+                    <div className="JobPosting__dl--flex">
+                        <dt>Antall stillinger:</dt>
                         <dd>{properties.positioncount}</dd>
-                    </React.Fragment>
+                    </div>
                 )}
                 {properties.starttime && (
-                    <React.Fragment>
-                        <dt>Oppstart</dt>
+                    <div className="JobPosting__dl--flex">
+                        <dt>Oppstart:</dt>
                         <dd>
                             {isValidISOString(properties.starttime)
                                 ? formatDate(properties.starttime, "DD.MM.YYYY")
                                 : properties.starttime}
                         </dd>
-                    </React.Fragment>
+                    </div>
                 )}
                 {(properties.remote === "Hjemmekontor" || properties.remote === "Hybridkontor") && (
-                    <React.Fragment>
-                        <dt>Hjemmekontor</dt>
-                        <dd>
-                            {properties.remote === "Hjemmekontor"
-                                ? "Kun hjemmekontor"
-                                : "Hybrid (noe hjemme, noe på arbeidsplassen)"}
-                        </dd>
-                    </React.Fragment>
+                    <div className="JobPosting__dl--flex">
+                        <dt>Hjemmekontor:</dt>
+                        <dd>{properties.remote === "Hjemmekontor" ? "Kun hjemmekontor" : "Hybrid"}</dd>
+                    </div>
                 )}
                 {properties.engagementtype && (
-                    <React.Fragment>
-                        <dt>Ansettelsesform</dt>
+                    <div className="JobPosting__dl--flex">
+                        <dt>Ansettelsesform:</dt>
                         <dd>{properties.engagementtype}</dd>
-                    </React.Fragment>
+                    </div>
                 )}
                 {properties.jobpercentage && (
-                    <React.Fragment>
-                        <dt>Prosent</dt>
+                    <div className="JobPosting__dl--flex">
+                        <dt>Prosent:</dt>
                         <dd>{properties.jobpercentage} %</dd>
-                    </React.Fragment>
+                    </div>
                 )}
                 {properties.extent && (
-                    <React.Fragment>
-                        <dt>Heltid/deltid</dt>
+                    <div className="JobPosting__dl--flex">
+                        <dt>Heltid/deltid:</dt>
                         <dd>{properties.extent}</dd>
-                    </React.Fragment>
+                    </div>
                 )}
                 {properties.sector && (
-                    <React.Fragment>
-                        <dt>Sektor</dt>
+                    <div className="JobPosting__dl--flex">
+                        <dt>Sektor:</dt>
                         <dd>{properties.sector}</dd>
-                    </React.Fragment>
+                    </div>
                 )}
                 {properties.workday && (
-                    <React.Fragment>
-                        <dt>Arbeidsdager</dt>
+                    <div className="JobPosting__dl--flex">
+                        <dt>Arbeidsdager:</dt>
                         <dd>{worktimeParser(properties.workday)}</dd>
-                    </React.Fragment>
+                    </div>
                 )}
                 {properties.workhours && (
-                    <React.Fragment>
-                        <dt>Arbeidstid</dt>
+                    <div className="JobPosting__dl--flex">
+                        <dt>Arbeidstid:</dt>
                         <dd>{worktimeParser(properties.workhours)}</dd>
-                    </React.Fragment>
+                    </div>
                 )}
                 {properties.jobarrangement && (
-                    <React.Fragment>
-                        <dt>Arbeidstidsordning</dt>
+                    <div className="JobPosting__dl--flex">
+                        <dt>Arbeidstidsordning:</dt>
                         <dd>{properties.jobarrangement}</dd>
-                    </React.Fragment>
+                    </div>
                 )}
             </dl>
         </section>

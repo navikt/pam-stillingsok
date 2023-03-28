@@ -68,6 +68,17 @@
     margin-bottom: 2.5rem;
 }
 
+.JobPosting__dl--flex {
+    display: flex;
+    gap: 1rem;
+}
+
+.JobPosting__dl--flex dd,
+.JobPosting__dl--flex dt {
+    flex: 1;
+    margin-bottom: 0.5rem !important;
+}
+
 .JobPosting__dl dd,
 .JobPosting__dl dt {
     line-height: 1.33;

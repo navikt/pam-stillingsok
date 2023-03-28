@@ -13,28 +13,28 @@ export default function AdDetails({ id, source }) {
             </Heading>
             <dl className="JobPosting__dl">
                 {source.updated && (
-                    <React.Fragment>
-                        <dt>Sist endret</dt>
+                    <div className="JobPosting__dl--flex">
+                        <dt>Sist endret:</dt>
                         <dd>{formatDate(source.updated, "DD.MM.YYYY")}</dd>
-                    </React.Fragment>
+                    </div>
                 )}
                 {source.medium && (
-                    <React.Fragment>
-                        <dt>Hentet fra</dt>
+                    <div className="JobPosting__dl--flex">
+                        <dt>Hentet fra:</dt>
                         <dd>{source.medium}</dd>
-                    </React.Fragment>
+                    </div>
                 )}
                 {source.reference && (
-                    <React.Fragment>
-                        <dt>Referanse</dt>
+                    <div className="JobPosting__dl--flex">
+                        <dt>Referanse:</dt>
                         <dd>{source.reference}</dd>
-                    </React.Fragment>
+                    </div>
                 )}
                 {source.id && (
-                    <React.Fragment>
-                        <dt>Stillingsnummer</dt>
+                    <div className="JobPosting__dl--flex">
+                        <dt>Stillingsnummer:</dt>
                         <dd>{source.id}</dd>
-                    </React.Fragment>
+                    </div>
                 )}
             </dl>
             <Link to={`${CONTEXT_PATH}/rapporter-annonse?uuid=${id}`}>Rapportér annonse</Link>

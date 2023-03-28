@@ -120,12 +120,12 @@ const Ad = ({ match }) => {
                         <HowToApply stilling={ad} showFavouriteButton={!isInternal} isInternal={isInternal} />
                         {!isFinn && (
                             <React.Fragment>
-                                <EmploymentDetails stilling={ad._source} />
                                 <ContactPerson contactList={ad._source.contactList} />
-                                {!isInternal && <ShareAd source={ad._source} />}
+                                <EmploymentDetails stilling={ad._source} />
                             </React.Fragment>
                         )}
                         <AdDetails id={ad._id} source={ad._source} />
+                        {!isFinn && !isInternal && <ShareAd source={ad._source} />}
                     </div>
                 </article>
             )}
