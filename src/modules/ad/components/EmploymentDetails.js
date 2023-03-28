@@ -13,12 +13,6 @@ export default function EmploymentDetails({ stilling }) {
                 Om stillingen
             </Heading>
             <dl className="JobPosting__dl">
-                {properties.jobtitle && (
-                    <div className="JobPosting__dl--flex">
-                        <dt>Stillingstittel:</dt>
-                        <dd>{properties.jobtitle}</dd>
-                    </div>
-                )}
                 {properties.positioncount && (
                     <div className="JobPosting__dl--flex">
                         <dt>Antall stillinger:</dt>

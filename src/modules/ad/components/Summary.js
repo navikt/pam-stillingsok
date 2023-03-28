@@ -3,14 +3,21 @@ import PropTypes from "prop-types";
 import getWorkLocation from "../../../../server/common/getWorkLocation";
 import getEmployer from "../../../../server/common/getEmployer";
 import "./Summary.css";
-import { Buldings3Icon, PinIcon } from "@navikt/aksel-icons";
+import { Buldings3Icon, PinIcon, PersonSuitIcon } from "@navikt/aksel-icons";
 
 export default function Summary({ stilling }) {
     const location = getWorkLocation(stilling.properties.location, stilling.locationList, false);
     const employer = getEmployer(stilling);
+    const { jobtitle } = stilling.properties;
 
     return (
         <section className="Summary">
+            {jobtitle && (
+                <p className="Summary__item">
+                    <PersonSuitIcon aria-label="Stillingstittel" width="1.25em" height="1.25em" />
+                    {jobtitle}
+                </p>
+            )}
             {employer && (
                 <p className="Summary__item">
                     <Buldings3Icon aria-label="Arbeidsgiver" width="1.25em" height="1.25em" />
