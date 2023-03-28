@@ -9,25 +9,25 @@ export default function EmploymentDetails({ stilling }) {
 
     return (
         <section className="JobPosting__section">
-            <Heading level="2" size="medium" spacing>
+            <Heading level="2" size="large" spacing>
                 Om stillingen
             </Heading>
-            <dl className="JobPosting__dl">
+            <dl className="JobPosting__dl JobPosting__dl--flex">
                 {properties.jobtitle && (
-                    <div className="JobPosting__dl--flex">
+                    <div>
                         <dt>Stillingstittel:</dt>
                         <dd>{properties.jobtitle}</dd>
                     </div>
                 )}
                 {properties.positioncount && (
-                    <div className="JobPosting__dl--flex">
+                    <div>
                         <dt>Antall stillinger:</dt>
                         <dd>{properties.positioncount}</dd>
                     </div>
                 )}
                 {properties.starttime && (
-                    <div className="JobPosting__dl--flex">
-                        <dt>Oppstart:</dt>
+                    <div>
+                        <dt>Oppstart</dt>
                         <dd>
                             {isValidISOString(properties.starttime)
                                 ? formatDate(properties.starttime, "DD.MM.YYYY")
@@ -36,54 +36,50 @@ export default function EmploymentDetails({ stilling }) {
                     </div>
                 )}
                 {(properties.remote === "Hjemmekontor" || properties.remote === "Hybridkontor") && (
-                    <div className="JobPosting__dl--flex">
-                        <dt>Hjemmekontor:</dt>
-                        <dd>
-                            {properties.remote === "Hjemmekontor"
-                                ? "Kun hjemmekontor"
-                                : "Hybrid (noe hjemme, noe på arbeidsplassen)"}
-                        </dd>
+                    <div>
+                        <dt>Hjemmekontor</dt>
+                        <dd>{properties.remote === "Hjemmekontor" ? "Kun hjemmekontor" : "Hybrid"}</dd>
                     </div>
                 )}
                 {properties.engagementtype && (
-                    <div className="JobPosting__dl--flex">
-                        <dt>Ansettelsesform:</dt>
+                    <div>
+                        <dt>Ansettelsesform</dt>
                         <dd>{properties.engagementtype}</dd>
                     </div>
                 )}
                 {properties.jobpercentage && (
-                    <div className="JobPosting__dl--flex">
-                        <dt>Prosent:</dt>
+                    <div>
+                        <dt>Prosent</dt>
                         <dd>{properties.jobpercentage} %</dd>
                     </div>
                 )}
                 {properties.extent && (
-                    <div className="JobPosting__dl--flex">
-                        <dt>Heltid/deltid:</dt>
+                    <div>
+                        <dt>Heltid/deltid</dt>
                         <dd>{properties.extent}</dd>
                     </div>
                 )}
                 {properties.sector && (
-                    <div className="JobPosting__dl--flex">
-                        <dt>Sektor:</dt>
+                    <div>
+                        <dt>Sektor</dt>
                         <dd>{properties.sector}</dd>
                     </div>
                 )}
                 {properties.workday && (
-                    <div className="JobPosting__dl--flex">
-                        <dt>Arbeidsdager:</dt>
+                    <div>
+                        <dt>Arbeidsdager</dt>
                         <dd>{worktimeParser(properties.workday)}</dd>
                     </div>
                 )}
                 {properties.workhours && (
-                    <div className="JobPosting__dl--flex">
-                        <dt>Arbeidstid:</dt>
+                    <div>
+                        <dt>Arbeidstid</dt>
                         <dd>{worktimeParser(properties.workhours)}</dd>
                     </div>
                 )}
                 {properties.jobarrangement && (
-                    <div className="JobPosting__dl--flex">
-                        <dt>Arbeidstidsordning:</dt>
+                    <div>
+                        <dt>Arbeidstidsordning</dt>
                         <dd>{properties.jobarrangement}</dd>
                     </div>
                 )}

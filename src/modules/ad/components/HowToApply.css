@@ -8,6 +8,15 @@
     margin: 1rem 0 0;
 }
 
-.HowToApply__full-width-button {
-    width: 100%;
+@media (max-width: 479px) {
+    .HowToApply__full-width-button {
+        width: 100%;
+    }
 }
+
+@media (min-width: 992px) {
+    .HowToApply__full-width-button {
+        width: 100%;
+    }
+}
+

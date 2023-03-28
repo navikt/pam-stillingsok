@@ -13,25 +13,25 @@ export default function AdDetails({ id, source }) {
             </Heading>
             <dl className="JobPosting__dl">
                 {source.updated && (
-                    <div className="JobPosting__dl--flex">
+                    <div>
                         <dt>Sist endret:</dt>
                         <dd>{formatDate(source.updated, "DD.MM.YYYY")}</dd>
                     </div>
                 )}
                 {source.medium && (
-                    <div className="JobPosting__dl--flex">
+                    <div>
                         <dt>Hentet fra:</dt>
                         <dd>{source.medium}</dd>
                     </div>
                 )}
                 {source.reference && (
-                    <div className="JobPosting__dl--flex">
+                    <div>
                         <dt>Referanse:</dt>
                         <dd>{source.reference}</dd>
                     </div>
                 )}
                 {source.id && (
-                    <div className="JobPosting__dl--flex">
+                    <div>
                         <dt>Stillingsnummer:</dt>
                         <dd>{source.id}</dd>
                     </div>
