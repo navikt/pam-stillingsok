@@ -77,6 +77,8 @@
 .JobPosting__dl--flex dt {
     flex: 1;
     margin-bottom: 0.5rem !important;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
 }
 
 .JobPosting__dl dd,
