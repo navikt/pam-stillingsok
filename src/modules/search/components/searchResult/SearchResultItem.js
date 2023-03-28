@@ -63,9 +63,15 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, sho
 
             <div className="SearchResultsItem__bottom">
                 <div>
-                    {frist && <BodyShort className="SearchResultsItem__applicationdue">Frist: {frist}</BodyShort>}
+                    {frist && (
+                        <BodyShort size="small" className="SearchResultsItem__applicationdue mb-0_25">
+                            Frist: {frist}
+                        </BodyShort>
+                    )}
                     {published && (
-                        <BodyShort className="SearchResultsItem__published">Publisert: {published}</BodyShort>
+                        <BodyShort size="small" className="SearchResultsItem__published">
+                            Publisert: {published}
+                        </BodyShort>
                     )}
                     {hasInterestform && (
                         <Tag size="small" variant="info-filled" className="mt-1">
