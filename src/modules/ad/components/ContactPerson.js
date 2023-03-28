@@ -1,56 +1,33 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ContactAccordion from "../../favourites/components/ContactAccordion";
-import { Heading } from "@navikt/ds-react";
+import { BodyLong, Heading, Label } from "@navikt/ds-react";
+import { isValidEmail } from "../../../common/components/utils";
 
 export default function ContactPerson({ contactList }) {
-    if (contactList && contactList.length > 1) {
+    if (contactList && contactList.length > 0) {
         return (
             <section className="JobPosting__section">
                 <Heading level="2" size="medium">
-                    Kontaktpersoner for stillingen
+                    {contactList.length > 1 ? "Kontaktpersoner for stillingen" : "Kontaktperson for stillingen"}
                 </Heading>
                 {contactList.map((contact) => (
-                    <ContactAccordion contact={contact} title={contact.name}></ContactAccordion>
+                    <div className="mt-1">
+                        {contact.name && <Label as="p">{contact.name}</Label>}
+                        {contact.title && <BodyLong>{contact.title}</BodyLong>}
+                        {contact.phone && <BodyLong>{contact.phone}</BodyLong>}
+                        {contact.email && (
+                            <BodyLong>
+                                {isValidEmail(contact.email) ? (
+                                    <a rel="nofollow" href={`mailto:${contact.email}`}>
+                                        {contact.email}
+                                    </a>
+                                ) : (
+                                    contact.email
+                                )}
+                            </BodyLong>
+                        )}
+                    </div>
                 ))}
-            </section>
-        );
-    } else if (contactList && contactList.length == 1) {
-        return (
-            <section className="JobPosting__section">
-                <Heading level="2" size="medium">
-                    Kontaktperson for stillingen
-                </Heading>
-                <dl className="JobPosting__dl">
-                    {contactList[0].name && (
-                        <React.Fragment>
-                            <dt>Kontaktperson</dt>
-                            <dd>{contactList[0].name}</dd>
-                        </React.Fragment>
-                    )}
-                    {contactList[0].title && (
-                        <React.Fragment>
-                            <dt>Stillingstittel</dt>
-                            <dd>{contactList[0].title}</dd>
-                        </React.Fragment>
-                    )}
-                    {contactList[0].phone && (
-                        <React.Fragment>
-                            <dt>Telefon</dt>
-                            <dd>{contactList[0].phone}</dd>
-                        </React.Fragment>
-                    )}
-                    {contactList[0].email && (
-                        <React.Fragment>
-                            <dt>Epost</dt>
-                            <dd>
-                                <a rel="nofollow" href={`mailto:${contactList[0].email}`}>
-                                    {contactList[0].email}
-                                </a>
-                            </dd>
-                        </React.Fragment>
-                    )}
-                </dl>
             </section>
         );
     }
