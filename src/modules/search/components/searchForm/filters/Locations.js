@@ -121,7 +121,9 @@ function Locations({ initialValues, updatedValues, query, dispatch }) {
                                     (location.key === "UTLAND" && query.international === true)
                                 }
                             >
-                                <span translate="no">{`${fixLocationName(location.key)} (${location.count})`}</span>
+                                <span translate={location.key !== "UTLAND" ? "no" : undefined}>
+                                    {`${fixLocationName(location.key)} (${location.count})`}
+                                </span>
                             </Checkbox>
                             {(query.counties.includes(location.key) ||
                                 (location.key === "UTLAND" && query.international === true)) &&
