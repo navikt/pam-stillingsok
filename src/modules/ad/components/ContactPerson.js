@@ -16,7 +16,7 @@ export default function ContactPerson({ contactList }) {
                         {contact.title && <BodyLong>{contact.title}</BodyLong>}
                         {contact.phone && <BodyLong>{contact.phone}</BodyLong>}
                         {contact.email && (
-                            <BodyLong>
+                            <BodyLong className="JobPosting__overflow">
                                 {isValidEmail(contact.email) ? (
                                     <AkselLink rel="nofollow" href={`mailto:${contact.email}`}>
                                         {contact.email}
