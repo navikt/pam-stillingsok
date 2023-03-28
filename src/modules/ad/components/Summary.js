@@ -1,45 +1,28 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { formatDate, isValidISOString } from "../../../common/components/utils";
 import getWorkLocation from "../../../../server/common/getWorkLocation";
 import getEmployer from "../../../../server/common/getEmployer";
 import "./Summary.css";
+import { Buldings3Icon, PinIcon } from "@navikt/aksel-icons";
 
 export default function Summary({ stilling }) {
-    const { properties } = stilling;
     const location = getWorkLocation(stilling.properties.location, stilling.locationList, false);
     const employer = getEmployer(stilling);
 
     return (
-        <section className="Summary__dl">
-            <dl className="Summary__dl">
-                {employer && (
-                    <React.Fragment>
-                        <dt>Arbeidsgiver:</dt>
-                        <dd>{employer}</dd>
-                    </React.Fragment>
-                )}
-                {location && (
-                    <React.Fragment>
-                        <dt>Sted:</dt>
-                        <dd>{location}</dd>
-                    </React.Fragment>
-                )}
-                {properties.jobtitle && (
-                    <React.Fragment>
-                        <dt>Stillingstittel:</dt>
-                        <dd>{properties.jobtitle}</dd>
-                    </React.Fragment>
-                )}
-                {properties.applicationdue && [
-                    <dt key="dt">Søknadsfrist:</dt>,
-                    <dd key="dd">
-                        {isValidISOString(properties.applicationdue)
-                            ? formatDate(properties.applicationdue, "DD.MM.YYYY")
-                            : properties.applicationdue}
-                    </dd>
-                ]}
-            </dl>
+        <section className="Summary">
+            {employer && (
+                <p className="Summary__item">
+                    <Buldings3Icon aria-label="Arbeidsgiver" width="1.25em" height="1.25em" />
+                    {employer}
+                </p>
+            )}
+            {location && (
+                <p className="Summary__item">
+                    <PinIcon aria-label="Sted" width="1.25em" height="1.25em" />
+                    {location}
+                </p>
+            )}
         </section>
     );
 }
