@@ -11,7 +11,7 @@ import SkipToCriteria from "../skiplinks/SkipToCriteria";
 import SearchResultItem from "./SearchResultItem";
 import "./SearchResult.css";
 import FavouritesButton from "../../../favourites/components/FavouritesButton";
-import { Heading } from "@navikt/ds-react";
+import { Link as AkselLink } from "@navikt/ds-react";
 
 const SearchResult = ({ searchResponse, queryDispatch, query, loadMoreResults }) => {
     const { status, data } = searchResponse;
@@ -57,10 +57,10 @@ const SearchResult = ({ searchResponse, queryDispatch, query, loadMoreResults })
                             onLoadMoreClick={loadMoreResults}
                         />
 
-                        <a href="#main-content" className="SearchResult__skip-to-top">
+                        <AkselLink href="#main-content" className="SearchResult__skip-to-top">
                             <ArrowUpIcon aria-hidden="true" />
                             Til toppen
-                        </a>
+                        </AkselLink>
                     </div>
                 </React.Fragment>
             )}

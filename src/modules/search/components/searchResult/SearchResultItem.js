@@ -109,7 +109,9 @@ function LinkToAd({ children, stilling, isFinn }) {
     if (isFinn) {
         return (
             <AkselLink href={`https://www.finn.no/${stilling.reference}`}>
-                {children} <ExternalLinkIcon width="1.25em" height="1.25em" aria-label="Åpnes på Finn" />
+                <span className="SearchResultsItem__title-external">
+                    {children} <ExternalLinkIcon width="1.125em" height="1.125em" aria-label="Åpnes på Finn" />
+                </span>
             </AkselLink>
         );
     }

@@ -26,15 +26,6 @@
     align-items: center;
 }
 
-.SearchResult__skip-to-top {
-    display: inline-flex;
-    align-items: center;
-}
-
-.SearchResult__skip-to-top svg {
-    margin-right: 0.5rem;
-}
-
 @media (max-width: 991px) {
     .SearchResult__skip-to-top {
         display: none;

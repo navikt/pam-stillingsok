@@ -11,6 +11,10 @@
     margin: 0 0 0.75rem 0;
 }
 
+.SearchResultsItem__title-external svg {
+    margin-bottom: -4px
+}
+
 .SearchResultsItem__jobtitle {
     margin: 0 0 0.75rem 0;
 }
