@@ -30,8 +30,8 @@ export default function EmployerDetails({ stilling }) {
     const employer = getEmployer(stilling);
     const employerLocation = getEmployerLocation(stilling.employer);
     return (
-        <section>
-            <Heading level="2" size="large" className="mt-4" spacing>
+        <section className="mt-4 mb-4">
+            <Heading level="2" size="large" spacing>
                 Om arbeidsgiveren
             </Heading>
             <dl className="EmployerDetails__dl">
