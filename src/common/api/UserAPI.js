@@ -1,5 +1,5 @@
 import APIError from "./APIError";
-import { AD_USER_API, CONTEXT_PATH } from "../environment";
+import { CONTEXT_PATH } from "../environment";
 
 function getCookie(name) {
     const re = new RegExp(`${name}=([^;]+)`);
@@ -10,7 +10,7 @@ function getCookie(name) {
 async function get(url) {
     let response;
     try {
-        response = await fetch(`${AD_USER_API}/${url}`, {
+        response = await fetch(`/stillinger/${url}`, {
             credentials: "include",
             method: "GET",
             referrer: CONTEXT_PATH
@@ -28,7 +28,7 @@ async function get(url) {
 async function post(url, query, toJson = true) {
     let response;
     try {
-        response = await fetch(`${AD_USER_API}/${url}`, {
+        response = await fetch(`/stillinger/${url}`, {
             credentials: "include",
             body: JSON.stringify(query),
             method: "POST",
@@ -52,7 +52,7 @@ async function post(url, query, toJson = true) {
 async function put(url, query) {
     let response;
     try {
-        response = await fetch(`${AD_USER_API}/${url}`, {
+        response = await fetch(`/stillinger/${url}`, {
             credentials: "include",
             body: JSON.stringify(query),
             method: "PUT",
@@ -75,8 +75,8 @@ async function put(url, query) {
 async function remove(url) {
     let response;
     try {
-        response = await fetch(`${AD_USER_API}/${url}`, {
-            credentials: "include",
+        response = await fetch(`/stillinger/${url}`, {
+            //credentials: "include",
             method: "DELETE",
             referrer: CONTEXT_PATH,
             headers: {

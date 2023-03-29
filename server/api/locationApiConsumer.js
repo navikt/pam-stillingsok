@@ -1,7 +1,7 @@
 const fetch = require('node-fetch');
 
 const host = process.env.PAMADUSER_URL ? process.env.PAMADUSER_URL : 'https://arbeidsplassen.nav.no';
-const baseUrl = `${host}/aduser/api/v1/geography/`;
+const baseUrl = `${host}/api/v1/geography/`;
 
 const fetchLocations = async (type = "counties") => {
     const url = `${baseUrl}${type}`;

@@ -30,15 +30,18 @@ spec:
       memory: 256Mi
   vault:
     enabled: false
+  idporten:
+    enabled: true
+    sidecar:
+      enabled: true
+      level: Level3
+  tokenx:
+    enabled: true
   ingresses:
   {{#each ingress as |url|}}
      - {{url}}
   {{/each}}
   env:
-    - name: LOGINSERVICE_URL
-      value: {{ loginservice_url }}
-    - name: LOGOUTSERVICE_URL
-      value: {{ logoutservice_url }}
     - name: PAMADUSER_URL
       value: {{ pamaduser_url }}
     - name: INTEREST_API_URL
@@ -53,6 +56,16 @@ spec:
       value: {{ pam_jobbtreff_api_url }}
     - name: AMPLITUDE_TOKEN
       value: {{ amplitude_token }}
+    - name: ARBEIDSPLASSEN_URL
+      value: {{ arbeidsplassen_url }}
+    - name: CV_API_URL
+      value: {{ cv-api-url }}
+    - name: ADUSER_AUDIENCE
+      value: {{ aduser_audience }}
+    - name: CV_API_AUDIENCE
+      value: {{ cv_api_audience }}
+    - name: IDPORTEN_AUDIENCE
+      value: {{ idporten_audience }}
   accessPolicy:
     inbound:
       rules:
@@ -60,3 +73,7 @@ spec:
     outbound:
       rules:
         - application: pam-search-api
+        - application: pam-aduser
+      external:
+        - host: {{ cv-api-host }}
+
