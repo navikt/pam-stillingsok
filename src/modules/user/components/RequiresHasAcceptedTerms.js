@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import DelayedSpinner from "../../../common/components/spinner/DelayedSpinner";
-import { BodyLong, Button, Heading } from "@navikt/ds-react";
+import { BodyLong, Button, Heading, Link as AkselLink } from "@navikt/ds-react";
 import { Link } from "react-router-dom";
 import { CONTEXT_PATH } from "../../../common/environment";
 import TermsOfUse from "../contexts/TermsOfUse";
@@ -33,7 +33,9 @@ function RequiresHasAcceptedTerms({ children }) {
                     </Button>
                 </div>
                 <div className="NoUserMessage__buttons">
-                    <Link to={CONTEXT_PATH}>Fortsett uten å samtykke</Link>
+                    <AkselLink as={Link} to={CONTEXT_PATH}>
+                        Fortsett uten å samtykke
+                    </AkselLink>
                 </div>
 
                 {showTermsModal && (

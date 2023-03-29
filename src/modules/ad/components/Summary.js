@@ -13,13 +13,13 @@ export default function Summary({ stilling }) {
         <section className="Summary">
             {employer && (
                 <p className="Summary__item">
-                    <Buldings3Icon aria-label="Arbeidsgiver" width="1.25em" height="1.25em" />
+                    <Buldings3Icon title="Arbeidsgiver" width="1.25em" height="1.25em" />
                     {employer}
                 </p>
             )}
             {location && (
                 <p className="Summary__item">
-                    <PinIcon aria-label="Sted" width="1.25em" height="1.25em" />
+                    <PinIcon title="Sted" width="1.25em" height="1.25em" />
                     {location}
                 </p>
             )}

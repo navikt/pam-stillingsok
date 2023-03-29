@@ -1,13 +1,7 @@
 .LinkMenu {
     margin: 1.5rem auto 0.5rem;
-    max-width: 1200px;
+    max-width: 1232px;
     padding: 0 1rem;
-}
-
-@media (min-width: 900px) {
-    .LinkMenu {
-        padding: 0;
-    }
 }
 
 @media (min-width: 992px) {

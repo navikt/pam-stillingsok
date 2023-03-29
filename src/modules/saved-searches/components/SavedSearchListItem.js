@@ -13,7 +13,7 @@ import RefreshButton from "../../../common/components/buttons/RefreshButton";
 import Alert from "../../../common/components/alert/Alert";
 import { FormModes } from "./modal/SaveSearchForm";
 import AlertModalWithPageReload from "../../../common/components/modals/AlertModalWithPageReload";
-import { BodyLong, BodyShort, Heading, Tag } from "@navikt/ds-react";
+import { Link as AkselLink, BodyShort, Heading, Tag } from "@navikt/ds-react";
 
 function SavedSearchListItem({ savedSearch, removeSavedSearchFromList, replaceSavedSearchInList, autoOpenModal }) {
     const [deleteStatus, setDeleteStatus] = useState(FetchStatus.NOT_FETCHED);
@@ -66,7 +66,9 @@ function SavedSearchListItem({ savedSearch, removeSavedSearchFromList, replaceSa
     return (
         <article className="SavedSearchListItem">
             <Heading level="3" size="small" className="SavedSearchListItem__title" spacing>
-                <a href={`${CONTEXT_PATH}${savedSearch.searchQuery}&saved=${savedSearch.uuid}`}>{savedSearch.title}</a>
+                <AkselLink href={`${CONTEXT_PATH}${savedSearch.searchQuery}&saved=${savedSearch.uuid}`}>
+                    {savedSearch.title}
+                </AkselLink>
             </Heading>
 
             {isValidISOString(savedSearch.updated) && (

@@ -3,41 +3,34 @@ import PropTypes from "prop-types";
 import { formatDate } from "../../../common/components/utils";
 import { Link } from "react-router-dom";
 import { CONTEXT_PATH } from "../../../common/environment";
-import { Heading } from "@navikt/ds-react";
+import { BodyLong, BodyShort, Heading, Label, Link as AkselLink } from "@navikt/ds-react";
 
 export default function AdDetails({ id, source }) {
     return (
         <section className="JobPosting__section">
-            <Heading level="2" size="medium" spacing>
-                Om annonsen
-            </Heading>
-            <dl className="JobPosting__dl">
-                {source.updated && (
-                    <React.Fragment>
-                        <dt>Sist endret</dt>
-                        <dd>{formatDate(source.updated, "DD.MM.YYYY")}</dd>
-                    </React.Fragment>
-                )}
-                {source.medium && (
-                    <React.Fragment>
-                        <dt>Hentet fra</dt>
-                        <dd>{source.medium}</dd>
-                    </React.Fragment>
-                )}
-                {source.reference && (
-                    <React.Fragment>
-                        <dt>Referanse</dt>
-                        <dd>{source.reference}</dd>
-                    </React.Fragment>
-                )}
-                {source.id && (
-                    <React.Fragment>
-                        <dt>Stillingsnummer</dt>
-                        <dd>{source.id}</dd>
-                    </React.Fragment>
-                )}
-            </dl>
-            <Link to={`${CONTEXT_PATH}/rapporter-annonse?uuid=${id}`}>Rapportér annonse</Link>
+            {source.updated && (
+                <BodyShort spacing>
+                    <Label as="span">Sist endret:</Label> {formatDate(source.updated, "DD.MM.YYYY")}
+                </BodyShort>
+            )}
+            {source.medium && (
+                <BodyShort spacing>
+                    <Label as="span">Hentet fra:</Label> {source.medium}
+                </BodyShort>
+            )}
+            {source.reference && (
+                <BodyShort spacing>
+                    <Label as="span">Referanse:</Label> {source.reference}
+                </BodyShort>
+            )}
+            {source.id && (
+                <BodyShort spacing>
+                    <Label as="span">Stillingsnummer:</Label> {source.id}
+                </BodyShort>
+            )}
+            <AkselLink as={Link} to={`${CONTEXT_PATH}/rapporter-annonse?uuid=${id}`}>
+                Rapporter annonse
+            </AkselLink>
         </section>
     );
 }

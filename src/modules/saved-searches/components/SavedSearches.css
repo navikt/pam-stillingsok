@@ -21,13 +21,10 @@
 }
 
 .SavedSearchListItem {
-    padding: 1.25rem;
+    padding: 1.25rem 0 0.75rem 0;
     display: block;
     margin: 0;
-}
-
-.SavedSearchListItem:nth-child(even) {
-    background-color: var(--arb-gray-100);
+    border-bottom: 1px solid var(--a-border-divider);
 }
 
 @media (max-width: 767px) {

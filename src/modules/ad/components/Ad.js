@@ -84,7 +84,7 @@ const Ad = ({ match }) => {
 
     return (
         <div className="JobPosting">
-            <div className="mb-2">
+            <div className="mb-1">
                 <AdBackLink />
             </div>
 
@@ -112,19 +112,15 @@ const Ad = ({ match }) => {
                                 <Summary stilling={ad._source} />
                                 <AdText adText={ad._source.properties.adtext} />
                                 <EmployerDetails stilling={ad._source} />
+                                <EmploymentDetails stilling={ad._source} />
                             </React.Fragment>
                         )}
                     </div>
 
                     <div className="JobPosting__right">
                         <HowToApply stilling={ad} showFavouriteButton={!isInternal} isInternal={isInternal} />
-                        {!isFinn && (
-                            <React.Fragment>
-                                <EmploymentDetails stilling={ad._source} />
-                                <ContactPerson contactList={ad._source.contactList} />
-                                {!isInternal && <ShareAd source={ad._source} />}
-                            </React.Fragment>
-                        )}
+                        {!isFinn && <ContactPerson contactList={ad._source.contactList} />}
+                        {!isFinn && !isInternal && <ShareAd source={ad._source} />}
                         <AdDetails id={ad._id} source={ad._source} />
                     </div>
                 </article>

@@ -11,6 +11,10 @@
     margin: 0 0 0.75rem 0;
 }
 
+.SearchResultsItem__title-external svg {
+    margin-bottom: -4px;
+}
+
 .SearchResultsItem__jobtitle {
     margin: 0 0 0.75rem 0;
 }
@@ -27,6 +31,7 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
+    gap: 1rem 2rem;
 }
 
 .SearchResultsItem__published,
@@ -34,20 +39,11 @@
     margin: 0;
 }
 
-.SearchResultsItem__external-link {
-    margin: 0.5rem 0 0 0;
-    white-space: nowrap;
-    display: flex;
-    align-items: center;
-    font-size: 1rem;
-}
-
 .SearchResultsItem__jobtitle,
 .SearchResultsItem__employer,
 .SearchResultsItem__location,
 .SearchResultsItem__applicationdue,
-.SearchResultsItem__published,
-.SearchResultsItem__external-link {
+.SearchResultsItem__published {
     word-wrap: break-word;
     overflow-wrap: break-word;
 }

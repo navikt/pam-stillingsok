@@ -6,7 +6,7 @@ import LinkedinIcon from "../../../common/components/icons/LinkedinIcon";
 import TwitterIcon from "../../../common/components/icons/TwitterIcon";
 import MessengerIcon from "../../../common/components/icons/MessengerIcon";
 import "./ShareAd.css";
-import { Heading } from "@navikt/ds-react";
+import { Heading, Link as AkselLink } from "@navikt/ds-react";
 
 export default function ShareAd({ source }) {
     const title = source.title;
@@ -18,40 +18,40 @@ export default function ShareAd({ source }) {
                 Del annonsen
             </Heading>
             <div className="SocialShare">
-                <a
-                    className="SocialShare__facebook SocialShare__link"
+                <AkselLink
+                    className="SocialShare__facebook"
                     href={"https://www.facebook.com/sharer/sharer.php?u=" + location.href}
                     rel="noopener noreferrer"
                 >
                     <FacebookIcon />
-                    <div className="SocialShare__text">Del på Facebook</div>
-                </a>
-                <a
-                    className="SocialShare__linkedin SocialShare__link"
+                    Del på Facebook
+                </AkselLink>
+                <AkselLink
+                    className="SocialShare__linkedin"
                     href={"https://www.linkedin.com/shareArticle?mini=true&url=" + location.href}
                     rel="noopener noreferrer"
                 >
                     <LinkedinIcon />
-                    <div className="SocialShare__text">Del på LinkedIn</div>
-                </a>
-                <a
-                    className="SocialShare__twitter SocialShare__link"
+                    Del på LinkedIn
+                </AkselLink>
+                <AkselLink
+                    className="SocialShare__twitter"
                     href={"https://twitter.com/intent/tweet?url=" + location.href + "&text=" + encodeURI(title)}
                     rel="noopener noreferrer"
                 >
                     <TwitterIcon />
-                    <div className="SocialShare__text">Del på Twitter</div>
-                </a>
+                    Del på Twitter
+                </AkselLink>
 
                 {(deviceType === "mobile" || deviceType === "tablet") && (
-                    <a
-                        className="SocialShare__messenger SocialShare__link"
+                    <AkselLink
+                        className="SocialShare__messenger"
                         href={"fb-messenger://share/?link=" + encodeURIComponent(location.href)}
                         rel="noopener noreferrer"
                     >
                         <MessengerIcon />
-                        <div className="SocialShare__text">Del på Messenger</div>
-                    </a>
+                        Del på Messenger
+                    </AkselLink>
                 )}
             </div>
         </section>

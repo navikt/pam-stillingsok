@@ -5,7 +5,7 @@ import fixLocationName from "../../../../server/common/fixLocationName";
 import { isValidUrl } from "../../../common/components/utils";
 import getEmployer from "../../../../server/common/getEmployer";
 import "./EmployerDetails.css";
-import { Heading } from "@navikt/ds-react";
+import { Heading, Link as AkselLink } from "@navikt/ds-react";
 
 function getEmployerLocation(employer) {
     let employerLocation = null;
@@ -30,11 +30,11 @@ export default function EmployerDetails({ stilling }) {
     const employer = getEmployer(stilling);
     const employerLocation = getEmployerLocation(stilling.employer);
     return (
-        <section>
-            <Heading level="2" size="large" className="mt-4" spacing>
+        <section className="mt-4 mb-4">
+            <Heading level="2" size="large" spacing>
                 Om arbeidsgiveren
             </Heading>
-            <dl className="EmployerDetails__dl">
+            <dl className="JobPosting__dl mb-1">
                 {employer && (
                     <React.Fragment>
                         <dt>Arbeidsgiver</dt>
@@ -52,7 +52,7 @@ export default function EmployerDetails({ stilling }) {
                         <dt>Hjemmeside</dt>
                         <dd>
                             {isValidUrl(properties.employerhomepage) ? (
-                                <a href={properties.employerhomepage}>{properties.employerhomepage}</a>
+                                <AkselLink href={properties.employerhomepage}>{properties.employerhomepage}</AkselLink>
                             ) : (
                                 properties.employerhomepage
                             )}
@@ -64,7 +64,7 @@ export default function EmployerDetails({ stilling }) {
                         <dt>LinkedIn</dt>
                         <dd>
                             {isValidUrl(properties.linkedinpage) ? (
-                                <a href={properties.linkedinpage}>{properties.linkedinpage}</a>
+                                <AkselLink href={properties.linkedinpage}>{properties.linkedinpage}</AkselLink>
                             ) : (
                                 properties.linkedinpage
                             )}
@@ -76,7 +76,7 @@ export default function EmployerDetails({ stilling }) {
                         <dt>Twitter</dt>
                         <dd>
                             {isValidUrl(properties.twitteraddress) ? (
-                                <a href={properties.twitteraddress}>{properties.twitteraddress}</a>
+                                <AkselLink href={properties.twitteraddress}>{properties.twitteraddress}</AkselLink>
                             ) : (
                                 properties.twitteraddress
                             )}
@@ -88,7 +88,7 @@ export default function EmployerDetails({ stilling }) {
                         <dt>Facebook</dt>
                         <dd>
                             {isValidUrl(properties.facebookpage) ? (
-                                <a href={properties.facebookpage}>{properties.facebookpage}</a>
+                                <AkselLink href={properties.facebookpage}>{properties.facebookpage}</AkselLink>
                             ) : (
                                 properties.facebookpage
                             )}

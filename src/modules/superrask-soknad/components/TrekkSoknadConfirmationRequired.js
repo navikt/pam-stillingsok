@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { CONTEXT_PATH } from "../../../common/environment";
 import getEmployer from "../../../../server/common/getEmployer";
-import { Alert, BodyLong, BodyShort, Button, Heading, Label, Loader } from "@navikt/ds-react";
+import { Alert, BodyLong, BodyShort, Button, Heading, Label, Loader, Link as AkselLink } from "@navikt/ds-react";
 
 function TrekkSoknadConfirmationRequired({ ad, handleWithDrawClick, isDeleting, hasError }) {
     return (
@@ -17,7 +17,9 @@ function TrekkSoknadConfirmationRequired({ ad, handleWithDrawClick, isDeleting, 
             {ad && (
                 <div className="mb-2">
                     <BodyShort>
-                        <Link to={`${CONTEXT_PATH}/stilling/${ad._id}`}>{ad._source.title}</Link>
+                        <AkselLink as={Link} to={`${CONTEXT_PATH}/stilling/${ad._id}`}>
+                            {ad._source.title}
+                        </AkselLink>
                     </BodyShort>
                     <Label as="p">{getEmployer(ad._source)}</Label>
                 </div>

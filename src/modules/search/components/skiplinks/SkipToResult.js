@@ -1,14 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
 import "./SkipTo.css";
+import { Link as AkselLink } from "@navikt/ds-react";
 
 function SkipToResult({ data }) {
     return (
         <div className="SkipTo SkipTo--vis-treff">
             {data && data.totalAds ? (
-                <a href="#resultat">{`Vis ${data.totalAds} treff`}</a>
+                <AkselLink href="#resultat">{`Vis ${data.totalAds} treff`}</AkselLink>
             ) : (
-                <a href="#resultat">Vis treff</a>
+                <AkselLink href="#resultat">Vis treff</AkselLink>
             )}
         </div>
     );

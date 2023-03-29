@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import { BodyLong, BodyShort, Button, Heading } from "@navikt/ds-react";
+import { BodyLong, BodyShort, Button, Heading, Link as AkselLink } from "@navikt/ds-react";
 import { ExternalLinkIcon } from "@navikt/aksel-icons";
 import { formatDate, isValidEmail, isValidISOString, isValidUrl } from "../../../common/components/utils";
 import "./HowToApply.css";
@@ -76,7 +76,9 @@ export default function HowToApply({ stilling, showFavouriteButton, isInternal }
                     <BodyLong className="mt-1">
                         Alternativt kan du sende søknad via e-post til{" "}
                         {isValidEmail(properties.applicationemail) ? (
-                            <a href={`mailto:${properties.applicationemail}`}>{properties.applicationemail}</a>
+                            <AkselLink href={`mailto:${properties.applicationemail}`}>
+                                {properties.applicationemail}
+                            </AkselLink>
                         ) : (
                             properties.applicationemail
                         )}
@@ -88,9 +90,9 @@ export default function HowToApply({ stilling, showFavouriteButton, isInternal }
                         {isValidUrl(applicationUrl) ? (
                             <BodyLong className="mt-1">
                                 Alternativt kan du{" "}
-                                <a href={applicationUrl} onClick={() => applyForPosition(isFinn, stilling)}>
+                                <AkselLink href={applicationUrl} onClick={() => applyForPosition(isFinn, stilling)}>
                                     sende søknad her.
-                                </a>
+                                </AkselLink>
                             </BodyLong>
                         ) : (
                             <BodyLong className="mt-1">Alternativt kan du sende søknad på {applicationUrl}.</BodyLong>
@@ -132,7 +134,9 @@ export default function HowToApply({ stilling, showFavouriteButton, isInternal }
                             <dt>Send søknad til</dt>
                             <dd>
                                 {isValidEmail(properties.applicationemail) ? (
-                                    <a href={`mailto:${properties.applicationemail}`}>{properties.applicationemail}</a>
+                                    <AkselLink href={`mailto:${properties.applicationemail}`}>
+                                        {properties.applicationemail}
+                                    </AkselLink>
                                 ) : (
                                     properties.applicationemail
                                 )}

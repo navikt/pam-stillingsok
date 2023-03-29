@@ -59,7 +59,7 @@ function FavouritesList() {
         return (
             <section>
                 <div className="FavouritesList__total-and-sorting mb-1">
-                    <Heading level="2" size="large">
+                    <Heading level="2" size="medium">
                         {response.data.length !== 1 ? `${response.data.length} annonser` : "1 annonse"}
                     </Heading>
                     <Select
@@ -67,7 +67,7 @@ function FavouritesList() {
                             setSortBy(e.target.value);
                         }}
                         value={sortBy}
-                        label="Sortér etter"
+                        label="Sorter etter"
                         className="FavouritesList_Sorting"
                     >
                         <option key="published" value="published">

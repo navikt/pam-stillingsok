@@ -1,25 +1,8 @@
-.SocialShare__link {
+.SocialShare {
     display: flex;
-    align-items: center;
-    margin-bottom: 1rem;
-}
-
-.SocialShare__link:focus,
-.SocialShare__link:active {
-    box-shadow: 0 0 0 3px var(--a-border-focus);
-    outline: none;
-}
-
-.SocialShare__link:hover {
-    text-decoration: none;
-}
-
-.SocialShare__text {
-    margin-left: 0.5rem;
-}
-
-.SocialShare__label {
-    font-size: 18px;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
 }
 
 .SocialShare__facebook {

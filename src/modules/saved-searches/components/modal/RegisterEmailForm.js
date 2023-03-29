@@ -67,7 +67,7 @@ function RegisterEmailForm({ onClose, onSuccess }) {
 
     return (
         <React.Fragment>
-            <BodyLong role="status">
+            <BodyLong role="status" spacing>
                 <span className="bold">Søket ditt er lagret, men du har ikke registrert e-postadresse.</span>
                 <br />
                 For å motta varsler på e-post må du registrere e-postadressen din.

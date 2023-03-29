@@ -1,6 +1,6 @@
 import React, { useContext, useRef, useState } from "react";
 import { UserContext } from "../../../user/contexts/UserProvider";
-import { BodyLong, Button, Checkbox, Radio, RadioGroup, TextField } from "@navikt/ds-react";
+import { BodyLong, Button, Checkbox, Radio, RadioGroup, TextField, Link as AkselLink } from "@navikt/ds-react";
 import useToggle from "../../../../common/hooks/useToggle";
 import { FetchStatus } from "../../../../common/hooks/useFetchReducer";
 import Alert from "../../../../common/components/alert/Alert";
@@ -175,8 +175,9 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
                             </RadioGroup>
                             {!isStringEmpty(user.data.email) && (
                                 <BodyLong>
-                                    Varsel sendes på e-post. Gå til <a href="/personinnstillinger">Innstillinger</a> for
-                                    å endre e-postadresse.
+                                    Varsel sendes på e-post. Gå til{" "}
+                                    <AkselLink href="/personinnstillinger">Innstillinger</AkselLink> for å endre
+                                    e-postadresse.
                                 </BodyLong>
                             )}
                         </React.Fragment>
