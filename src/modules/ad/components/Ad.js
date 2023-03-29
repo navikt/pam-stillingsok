@@ -120,8 +120,8 @@ const Ad = ({ match }) => {
                     <div className="JobPosting__right">
                         <HowToApply stilling={ad} showFavouriteButton={!isInternal} isInternal={isInternal} />
                         {!isFinn && <ContactPerson contactList={ad._source.contactList} />}
-                        <AdDetails id={ad._id} source={ad._source} />
                         {!isFinn && !isInternal && <ShareAd source={ad._source} />}
+                        <AdDetails id={ad._id} source={ad._source} />
                     </div>
                 </article>
             )}

@@ -67,7 +67,7 @@ function FavouritesList() {
                             setSortBy(e.target.value);
                         }}
                         value={sortBy}
-                        label="Sortér etter"
+                        label="Sorter etter"
                         className="FavouritesList_Sorting"
                     >
                         <option key="published" value="published">
