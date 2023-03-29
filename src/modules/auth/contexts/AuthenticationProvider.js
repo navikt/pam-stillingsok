@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { AD_USER_API, CONTEXT_PATH, LOGIN_URL, LOGOUT_URL, STILLINGSOK_URL } from "../../../common/environment";
+import { CONTEXT_PATH, LOGIN_URL, LOGOUT_URL, STILLINGSOK_URL } from "../../../common/environment";
 import { extractParam } from "../../../common/components/utils";
 import { stringifyQuery } from "../../search/query";
 
@@ -39,7 +39,7 @@ const AuthenticationProvider = ({ children }) => {
     const fetchIsAuthenticated = () => {
         setAuthenticationStatus(AuthenticationStatus.IS_FETCHING);
 
-        fetch(`${AD_USER_API}/isAuthenticated`, {
+        fetch(`/stillinger/isAuthenticated`, {
             credentials: "include",
             referrer: CONTEXT_PATH
         })
@@ -59,7 +59,7 @@ const AuthenticationProvider = ({ children }) => {
 
     function fetchUserNameAndInfo() {
         if (process.env.NODE_ENV === "production") {
-            fetch("/api/cv/rest/person/headerinfo", {
+            fetch("/stillinger/headerinfo", {
                 method: "GET",
                 credentials: "include"
             }).then((response) => {
@@ -109,13 +109,13 @@ const AuthenticationProvider = ({ children }) => {
         } else {
             redirectUrlAfterSuccessfulLogin = STILLINGSOK_URL;
         }
-        window.location.href = `${LOGIN_URL}?level=Level3&redirect=${encodeURIComponent(
+        window.location.href = `/stillinger${LOGIN_URL}?redirect=${encodeURIComponent(
             redirectUrlAfterSuccessfulLogin
         )}`;
     }
 
     function logout() {
-        window.location.href = LOGOUT_URL;
+        window.location.href = `/stillinger${LOGOUT_URL}`;
     }
 
     return (
@@ -131,8 +131,9 @@ AuthenticationProvider.propTypes = {
 
 export default AuthenticationProvider;
 
+
 /**
- * Om man logget inn mens man var inne på en stillingsannonse, så vil loginservice
+ * Om man logget inn mens man var inne på en stillingsannonse, så vil wonderwall
  * redirecte til en url med dette url-formatet: '/stillinger/stilling?uuid=12345'.
  * Redirecter derfor til riktig url-format: '/stillinger/stilling/:uuid'
  */
