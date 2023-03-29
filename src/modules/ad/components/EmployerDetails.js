@@ -34,7 +34,7 @@ export default function EmployerDetails({ stilling }) {
             <Heading level="2" size="large" spacing>
                 Om arbeidsgiveren
             </Heading>
-            <dl className="EmployerDetails__dl">
+            <dl className="JobPosting__dl mb-1">
                 {employer && (
                     <React.Fragment>
                         <dt>Arbeidsgiver</dt>

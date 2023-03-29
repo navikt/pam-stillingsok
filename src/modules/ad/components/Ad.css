@@ -71,8 +71,8 @@
 @media (min-width: 992px) {
     .JobPosting__dl--flex {
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 0 2rem ;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0 4rem;
     }
 }
 
