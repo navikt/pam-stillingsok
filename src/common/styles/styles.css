@@ -35,12 +35,3 @@ body {
 .bold {
     font-weight: bold;
 }
-
-/*
- * Denne workarounden  er relatert til googleTranslateWorkaround.js.
- * Unngår at ødelagt teller-tekst tildekker det man har skrevet inn i textarea.
- */
-.textarea--medMeta__teller {
-    position: static;
-    margin-top: 0.5rem !important;
-}
