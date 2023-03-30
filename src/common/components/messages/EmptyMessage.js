@@ -7,7 +7,7 @@ import { BodyLong, Heading, Link as AkselLink } from "@navikt/ds-react";
 function EmptyMessage({ title, text }) {
     return (
         <section className="EmptyMessage">
-            <Heading level="2" size="medium">
+            <Heading level="2" size="medium" spacing>
                 {title}
             </Heading>
             <BodyLong className="EmptyMessage__text" spacing>

@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "dev": "./runDev.sh",
     "wonderwall": "scripts/wonderwall.sh",
     "start": "concurrently \"npm run wonderwall\" \"npm run start-webpack\" \"npm run start-express\"",
     "clean-build": "rimraf ./dist",
@@ -24,8 +25,8 @@
   "license": "ISC",
   "dependencies": {
     "@navikt/aksel-icons": "^2.8.4",
-    "@navikt/arbeidsplassen-css": "^1.0.30",
-    "@navikt/arbeidsplassen-react": "^1.0.30",
+    "@navikt/arbeidsplassen-css": "^1.1.0",
+    "@navikt/arbeidsplassen-react": "^1.1.0",
     "@navikt/ds-css": "^2.8.4",
     "@navikt/ds-react": "^2.8.4",
     "@sentry/browser": "^6.19.6",

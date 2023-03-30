@@ -5,7 +5,7 @@
 .Summary__item {
     margin: 0 0 0.5rem 0;
     font-weight: 600;
-    font-size: 1.25rem;
+    font-size: var(--a-font-size-heading-small);
     line-height: 1.4;
     display: flex;
     gap: 0.75rem;

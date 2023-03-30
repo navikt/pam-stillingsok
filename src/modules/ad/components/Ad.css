@@ -5,35 +5,6 @@
     min-height: 100vh;
 }
 
-.JobPosting__h1 {
-    margin: 0 0 1rem;
-    font-size: 2rem;
-    line-height: 1.2;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    font-weight: 600;
-}
-
-@media (min-width: 992px) {
-    .JobPosting__h1 {
-        margin: 0 0 1rem;
-        font-size: 2.75rem;
-    }
-}
-
-.JobPosting__h2 {
-    margin: 0 0 1rem 0;
-    font-size: 1.5rem;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    line-height: 1.33;
-}
-
-.JobPosting__h2 svg {
-    margin-right: 0.75rem;
-}
-
 @media (min-width: 992px) {
     .JobPosting__flex {
         display: flex;
@@ -80,7 +51,6 @@
 .JobPosting__dl dd,
 .JobPosting__dl dt {
     line-height: 1.33;
-    font-size: 1.125rem;
     overflow-wrap: anywhere;
 }
 

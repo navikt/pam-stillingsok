@@ -4,14 +4,13 @@ import { Link } from "react-router-dom";
 import { CONTEXT_PATH } from "../../../common/environment";
 import Feedback from "./Feedback";
 import { BodyLong, Button, Heading } from "@navikt/ds-react";
+import H1WithAutoFocus from "../../../common/components/h1WithAutoFocus/H1WithAutoFocus";
 
 function SuperraskSoknadSuccess({ data }) {
     return (
         <ScrollToTop>
             <div className="InterestForm__success-message">
-                <Heading level="1" size="xlarge" spacing>
-                    Din søknad er sendt til bedriften
-                </Heading>
+                <H1WithAutoFocus size="large">Din søknad er sendt til bedriften</H1WithAutoFocus>
                 <BodyLong spacing>
                     Du vil straks få en bekreftelse på din e-post {data.email}. Ønsker du å trekke din søknad finner du
                     informasjon om dette i e-posten.

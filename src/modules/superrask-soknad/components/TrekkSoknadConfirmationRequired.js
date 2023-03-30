@@ -2,12 +2,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { CONTEXT_PATH } from "../../../common/environment";
 import getEmployer from "../../../../server/common/getEmployer";
-import { Alert, BodyLong, BodyShort, Button, Heading, Label, Loader, Link as AkselLink } from "@navikt/ds-react";
+import { Alert, BodyLong, BodyShort, Button, Heading, Label, Link as AkselLink } from "@navikt/ds-react";
 
 function TrekkSoknadConfirmationRequired({ ad, handleWithDrawClick, isDeleting, hasError }) {
     return (
         <React.Fragment>
-            <Heading level="1" size="xlarge" spacing>
+            <Heading level="1" size="large" spacing>
                 Bekreft at du ønsker å trekke din søknad
             </Heading>
             <BodyLong className="mb-2">
@@ -30,15 +30,9 @@ function TrekkSoknadConfirmationRequired({ ad, handleWithDrawClick, isDeleting, 
                     Det oppsto dessverre en feil og vi kunne ikke trekke søknaden din. Prøv å trekk søknaden på nytt.
                 </Alert>
             )}
-            {isDeleting ? (
-                <div aria-live="polite" className="InterestForm__progress">
-                    <Loader size="small" /> Trekker søknad
-                </div>
-            ) : (
-                <Button variant="primary" onClick={handleWithDrawClick} loading={isDeleting}>
-                    Trekk søknad
-                </Button>
-            )}
+            <Button variant="primary" onClick={handleWithDrawClick} loading={isDeleting}>
+                Trekk søknad
+            </Button>
         </React.Fragment>
     );
 }

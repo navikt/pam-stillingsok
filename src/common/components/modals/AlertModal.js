@@ -30,7 +30,7 @@ export default function AlertModal({
             aria-labelledby={`${id}-h1`}
             aria-describedby={`${id}-message`}
         >
-            <Heading level="1" size="large" id={`${id}-h1`} spacing>
+            <Heading level="1" size="medium" id={`${id}-h1`} spacing>
                 {title}
             </Heading>
             <BodyLong id={`${id}-message`} className="mb-2_5">

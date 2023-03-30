@@ -136,7 +136,9 @@ const Search = () => {
 
     return (
         <React.Fragment>
-            <H1WithAutoFocus className="Search__h1">Søk etter din neste jobb</H1WithAutoFocus>
+            <H1WithAutoFocus className="Search__h1" spacing={false}>
+                Søk etter din neste jobb
+            </H1WithAutoFocus>
 
             {authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED && <LinkMenu />}
 

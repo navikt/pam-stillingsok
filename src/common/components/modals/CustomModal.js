@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
-import { Modal } from "@navikt/ds-react";
+import { Heading, Modal } from "@navikt/ds-react";
 import "./CustomModal.css";
 
 function CustomModal({ title, children, onCloseClick }) {
@@ -10,7 +10,9 @@ function CustomModal({ title, children, onCloseClick }) {
 
     return (
         <Modal className="CustomModal" open={true} onClose={onCloseClick}>
-            <h1 className="CustomModal__title">{title}</h1>
+            <Heading level="1" size="medium" spacing>
+                {title}
+            </Heading>
             {children}
         </Modal>
     );

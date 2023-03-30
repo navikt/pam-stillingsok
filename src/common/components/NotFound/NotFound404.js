@@ -22,7 +22,7 @@ function NotFound404({ title, text }) {
                 />
             </svg>
 
-            <Heading level="1" size="xlarge" spacing>
+            <Heading level="1" size="large" spacing>
                 {title}
             </Heading>
             <BodyLong>{text}</BodyLong>

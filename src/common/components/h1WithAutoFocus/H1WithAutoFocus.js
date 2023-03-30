@@ -1,6 +1,7 @@
 import React, { useContext, useLayoutEffect, useRef } from "react";
 import { HistoryContext } from "../../context/HistoryProvider";
 import "./H1WithAutoFocus.css";
+import { Heading } from "@navikt/ds-react";
 
 /**
  * This view sets focus to h1 title when navigating to a new page.
@@ -9,7 +10,7 @@ import "./H1WithAutoFocus.css";
  * announce that a new page is loaded, as it would do when loading a page from server.
  * Focus is also lost somewhere in the DOM. Setting focus to h1 may improve this.
  */
-function H1WithAutoFocus({ children, className }) {
+function H1WithAutoFocus({ children, className, spacing = true, size = "xlarge" }) {
     const ref = useRef(null);
     const { hasHistory } = useContext(HistoryContext);
 
@@ -22,9 +23,16 @@ function H1WithAutoFocus({ children, className }) {
     }, []);
 
     return (
-        <h1 ref={ref} className={["H1WithAutoFocus", className].join(" ")} tabIndex={-1}>
+        <Heading
+            level="1"
+            size={size}
+            ref={ref}
+            className={["H1WithAutoFocus", className].join(" ")}
+            tabIndex={-1}
+            spacing={spacing}
+        >
             {children}
-        </h1>
+        </Heading>
     );
 }
 

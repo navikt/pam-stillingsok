@@ -12,7 +12,8 @@ import {
     ReadMore,
     Textarea,
     TextField,
-    Link as AkselLink
+    Link as AkselLink,
+    Fieldset
 } from "@navikt/ds-react";
 import { isValidEmail } from "../../../common/components/utils";
 import "./SuperraskSoknad.css";
@@ -177,7 +178,7 @@ const SuperraskSoknadForm = ({ ad, interestForm, isInternal, submitForm, isSendi
     return (
         <form onSubmit={handleFormSubmit}>
             <section className="InterestForm__section">
-                <H1WithAutoFocus className="InterestForm__h1">Superrask søknad</H1WithAutoFocus>
+                <H1WithAutoFocus>Superrask søknad</H1WithAutoFocus>
                 <BodyLong spacing>
                     Ingen CV eller langt søknadsbrev, kun tre raske steg. Du får beskjed på e-post med en gang bedriften
                     har vurdert søknaden din.
@@ -193,7 +194,7 @@ const SuperraskSoknadForm = ({ ad, interestForm, isInternal, submitForm, isSendi
             {((interestForm.must && interestForm.must.length > 0) ||
                 (interestForm.should && interestForm.should.length > 0)) && (
                 <section className="InterestForm__section">
-                    <Heading level="2" size="large" spacing>
+                    <Heading level="2" size="medium" spacing>
                         Bedriftens ønskede kvalifikasjoner
                     </Heading>
                     <BodyLong className="mb-2">
@@ -201,9 +202,7 @@ const SuperraskSoknadForm = ({ ad, interestForm, isInternal, submitForm, isSendi
                     </BodyLong>
 
                     {interestForm.must && interestForm.must.length > 0 && (
-                        <fieldset className="InterestForm__fieldset">
-                            <legend className="InterestForm__legend">Må-krav for stillingen.</legend>
-                            <BodyLong>Kryss av for dem du oppfyller.</BodyLong>
+                        <Fieldset legend="Må-krav for stillingen">
                             {interestForm.must.map((it) => (
                                 <Checkbox
                                     key={it.id}
@@ -214,12 +213,11 @@ const SuperraskSoknadForm = ({ ad, interestForm, isInternal, submitForm, isSendi
                                     {it.label}
                                 </Checkbox>
                             ))}
-                        </fieldset>
+                        </Fieldset>
                     )}
 
                     {interestForm.should && interestForm.should.length > 0 && (
-                        <fieldset className="InterestForm__fieldset">
-                            <legend className="InterestForm__legend">Huk av for kvalifikasjonene du oppfyller</legend>
+                        <Fieldset legend="Huk av for kvalifikasjonene du oppfyller">
                             {interestForm.should.map((it) => (
                                 <Checkbox
                                     key={it.id}
@@ -230,13 +228,13 @@ const SuperraskSoknadForm = ({ ad, interestForm, isInternal, submitForm, isSendi
                                     {it.label}
                                 </Checkbox>
                             ))}
-                        </fieldset>
+                        </Fieldset>
                     )}
                 </section>
             )}
 
             <section className="InterestForm__section">
-                <Heading level="2" size="large">
+                <Heading level="2" size="medium" spacing>
                     Hvorfor du er den rette for jobben
                 </Heading>
                 <ReadMore header="Hvordan skrive en god begrunnelse?" className="mb-1">
@@ -259,7 +257,7 @@ const SuperraskSoknadForm = ({ ad, interestForm, isInternal, submitForm, isSendi
             </section>
 
             <section className="InterestForm__section">
-                <Heading level="2" size="large" spacing>
+                <Heading level="2" size="medium" spacing>
                     Din kontaktinformasjon
                 </Heading>
                 <BodyLong className="mb-1">Vær nøye med å oppgi riktig informasjon.</BodyLong>
@@ -311,24 +309,19 @@ const SuperraskSoknadForm = ({ ad, interestForm, isInternal, submitForm, isSendi
 
             {hasError && <Alert>{getErrorMessage(error)}</Alert>}
 
-            {isSending ? (
-                <div aria-live="polite" className="InterestForm__progress">
-                    <Loader size="small" /> Sender søknad
-                </div>
-            ) : (
-                <div className="InterestForm__buttons">
-                    <Button variant="primary" type="button" onClick={handleSendMessageClick}>
-                        Send søknad
-                    </Button>
-                    <Button
-                        variant="secondary"
-                        as={Link}
-                        to={`${CONTEXT_PATH}/${isInternal ? "intern" : "stilling"}/${ad._id}`}
-                    >
-                        Avbryt
-                    </Button>
-                </div>
-            )}
+            <div className="InterestForm__buttons">
+                <Button variant="primary" loading={isSending} type="button" onClick={handleSendMessageClick}>
+                    Send søknad
+                </Button>
+                <Button
+                    disabled={isSending}
+                    variant="secondary"
+                    as={Link}
+                    to={`${CONTEXT_PATH}/${isInternal ? "intern" : "stilling"}/${ad._id}`}
+                >
+                    Avbryt
+                </Button>
+            </div>
         </form>
     );
 };

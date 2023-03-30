@@ -138,10 +138,10 @@ const ReportAd = () => {
                     )}
                     {!finished && (
                         <div>
-                            <H1WithAutoFocus>Rapportér annonse</H1WithAutoFocus>
+                            <H1WithAutoFocus>Rapporter annonse</H1WithAutoFocus>
 
                             <div className="report-form">
-                                <Heading level="2" size="medium" spacing>
+                                <Heading level="2" size="small" spacing>
                                     Henveldensen gjelder
                                 </Heading>
 

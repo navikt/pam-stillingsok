@@ -14,17 +14,12 @@
 
 .Search__h1 {
     text-align: center;
-    font-size: 1.75rem;
-    font-weight: 600;
-    margin: 0;
     word-wrap: break-word;
-    line-height: 1.5;
     padding: 1rem;
 }
 
 @media (min-width: 768px) {
     .Search__h1 {
-        font-size: 3.125rem;
         padding: 3rem 0 2rem 0;
     }
 }
