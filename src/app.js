@@ -3,7 +3,7 @@ import * as ReactDOMClient from "react-dom/client";
 import "@navikt/ds-css";
 import "@navikt/arbeidsplassen-css";
 import { Footer, SkipLink } from "@navikt/arbeidsplassen-react";
-import AuthenticationProvider, { fixUrlAfterLogin } from "./modules/auth/contexts/AuthenticationProvider";
+import AuthenticationProvider from "./modules/auth/contexts/AuthenticationProvider";
 import UserProvider from "./modules/user/contexts/UserProvider";
 import FavouritesProvider from "./modules/favourites/context/FavouritesProvider";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
@@ -23,7 +23,6 @@ import "./common/styles/styles.css";
 import googleTranslateWorkaround from "./common/utils/googleTranslateWorkaround";
 
 initSentry();
-fixUrlAfterLogin();
 initAmplitude();
 googleTranslateWorkaround();
 
