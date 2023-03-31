@@ -20,14 +20,14 @@ body {
 
 .push-footer-down {
     min-height: 100%;
-    margin-bottom: -794px;
-    padding-bottom: 794px;
+    margin-bottom: -764px;
+    padding-bottom: 764px;
 }
 
 @media (min-width: 940px) {
     .push-footer-down {
-        margin-bottom: -476px;
-        padding-bottom: 476px;
+        margin-bottom: -464px;
+        padding-bottom: 464px;
     }
 }
 
