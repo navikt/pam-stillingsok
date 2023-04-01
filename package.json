@@ -31,7 +31,7 @@
     "@navikt/ds-react": "^2.8.4",
     "@sentry/browser": "^6.19.6",
     "@types/react-router-dom": "^4.3.5",
-    "amplitude-js": "8.21.3",
+    "amplitude-js": "8.21.6",
     "body-parser": "^1.19.2",
     "classnames": "^2.3.1",
     "compression": "^1.7.3",
