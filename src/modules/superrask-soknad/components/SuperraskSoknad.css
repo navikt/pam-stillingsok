@@ -4,19 +4,13 @@
 
 .InterestForm__green-box {
     background: #e6f4ef;
-    margin: 0 0 2rem 0;
+    margin: 0 0 3rem 0;
     padding: 1rem 0;
 }
 
 .InterestForm__green-box-inner {
     margin: 0 auto;
     max-width: 832px;
-    padding: 0 1rem;
-}
-
-.InterestForm__backlink {
-    margin: 0 auto;
-    max-width: 1156px;
     padding: 0 1rem;
 }
 

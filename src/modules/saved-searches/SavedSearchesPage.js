@@ -1,12 +1,10 @@
 import React from "react";
-import { CONTEXT_PATH } from "../../common/environment";
 import SavedSearchesList from "./components/SavedSearchesList";
 import RequiresAuthentication from "../auth/components/RequiresAuthentication";
 import RequiresHasAcceptedTerms from "../user/components/RequiresHasAcceptedTerms";
 import useDocumentTitle from "../../common/hooks/useDocumentTitle";
 import useScrollToTop from "../../common/hooks/useScrollToTop";
 import H1WithAutoFocus from "../../common/components/h1WithAutoFocus/H1WithAutoFocus";
-import BackLink from "../../common/components/backlink/BackLink";
 import "./components/SavedSearches.css";
 
 /**
@@ -20,9 +18,6 @@ function SavedSearchesPage() {
 
     return (
         <div className="SavedSearches">
-            <div className="mb-2">
-                <BackLink to={CONTEXT_PATH} text="Ledige stillinger" />
-            </div>
             <H1WithAutoFocus>Lagrede søk</H1WithAutoFocus>
             <RequiresAuthentication>
                 <RequiresHasAcceptedTerms>

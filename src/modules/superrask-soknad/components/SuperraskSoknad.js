@@ -6,8 +6,6 @@ import { FetchAction, FetchStatus, useFetchReducer } from "../../../common/hooks
 import DelayedSpinner from "../../../common/components/spinner/DelayedSpinner";
 import "./SuperraskSoknad.css";
 import getEmployer from "../../../../server/common/getEmployer";
-import { CONTEXT_PATH } from "../../../common/environment";
-import BackLink from "../../../common/components/backlink/BackLink";
 import NotFound404 from "../../../common/components/NotFound/NotFound404";
 import SuperraskSoknadForm from "./SuperraskSoknadForm";
 import SuperraskSoknadSuccess from "./SuperraskSoknadSuccess";
@@ -93,14 +91,6 @@ const SuperraskSoknad = ({ match }) => {
                             <BodyShort>{data.ad._source.title}</BodyShort>
                         </div>
                     </div>
-                    {postSoknadResponse.status !== FetchStatus.SUCCESS && (
-                        <div className="InterestForm__backlink">
-                            <BackLink
-                                to={`${CONTEXT_PATH}/${isInternal ? "intern" : "stilling"}/${data.ad._id}`}
-                                text="Tilbake"
-                            />
-                        </div>
-                    )}
                     <div className="InterestForm__inner">
                         {postSoknadResponse.status !== FetchStatus.SUCCESS && (
                             <SuperraskSoknadForm

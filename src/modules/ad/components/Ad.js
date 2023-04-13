@@ -17,7 +17,6 @@ import SearchAPI from "../../../common/api/SearchAPI";
 import { FetchAction, FetchStatus, useFetchReducer } from "../../../common/hooks/useFetchReducer";
 import ErrorMessage from "../../../common/components/messages/ErrorMessage";
 import useRobotsNoIndexMetaTag from "../../../common/hooks/useRobotsNoIndexMetaTag";
-import AdBackLink from "./AdBackLink";
 import H1WithAutoFocus from "../../../common/components/h1WithAutoFocus/H1WithAutoFocus";
 import NotFound404 from "../../../common/components/NotFound/NotFound404";
 
@@ -84,10 +83,6 @@ const Ad = ({ match }) => {
 
     return (
         <div className="JobPosting">
-            <div className="mb-1">
-                <AdBackLink />
-            </div>
-
             {status === FetchStatus.FAILURE && error.statusCode === 404 && (
                 <NotFound404
                     title="Vi fant dessverre ikke stillingsannonsen"

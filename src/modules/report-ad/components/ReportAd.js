@@ -2,12 +2,10 @@ import * as React from "react";
 import { useContext, useEffect, useState } from "react";
 import "./ReportAd.css";
 import { BodyLong, Button, Checkbox, Heading, Textarea, Link as AkselLink } from "@navikt/ds-react";
-import { CONTEXT_PATH } from "../../../common/environment";
 import logAmplitudeEvent from "../../../common/tracking/amplitude";
 import { AuthenticationContext, AuthenticationStatus } from "../../auth/contexts/AuthenticationProvider";
 import UserAPI from "../../../common/api/UserAPI";
 import Alert from "../../../common/components/alert/Alert";
-import BackLink from "../../../common/components/backlink/BackLink";
 import H1WithAutoFocus from "../../../common/components/h1WithAutoFocus/H1WithAutoFocus";
 
 const violationCategories = [
@@ -105,8 +103,6 @@ const ReportAd = () => {
 
     return (
         <div className="RapporterAnnonse">
-            <BackLink to={`${CONTEXT_PATH}/stilling/${stillingId}`} text="Tilbake til annonsen" className="mb-2" />
-
             {authenticationStatus !== AuthenticationStatus.IS_AUTHENTICATED && (
                 <div>
                     <Heading level="2" size="large" spacing>
