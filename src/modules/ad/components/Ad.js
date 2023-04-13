@@ -97,7 +97,9 @@ const Ad = ({ match }) => {
                         <H1WithAutoFocus>{ad._source.title}</H1WithAutoFocus>
 
                         {ad._source.status !== "ACTIVE" && (
-                            <Tag variant="warning-filled">Stillingsannonsen er inaktiv.</Tag>
+                            <Tag variant="warning-filled" className="mb-1">
+                                Stillingsannonsen er inaktiv.
+                            </Tag>
                         )}
 
                         {isFinn && <FinnAd stilling={ad} />}
