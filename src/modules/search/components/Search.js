@@ -145,7 +145,7 @@ const Search = () => {
             {initialSearchResponse.status === FetchStatus.FAILURE && <ErrorMessage />}
             {initialSearchResponse.status === FetchStatus.IS_FETCHING && <LoadingScreen />}
             {initialSearchResponse.status === FetchStatus.SUCCESS && (
-                <div className="container-large Search__flex-wrapper">
+                <div className="container-large mb-4 Search__flex-wrapper">
                     <div>
                         <SearchForm
                             query={query}
