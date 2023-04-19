@@ -11,7 +11,7 @@ function FavouritesPage() {
     useScrollToTop();
 
     return (
-        <div className="Favourites">
+        <div className="container-medium mt-3 mb-3">
             <H1WithAutoFocus>Favoritter</H1WithAutoFocus>
             <RequiresAuthentication>
                 <RequiresHasAcceptedTerms>

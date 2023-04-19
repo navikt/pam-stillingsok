@@ -1,11 +1,10 @@
 .JobPosting {
-    margin: 3rem auto 2rem;
-    max-width: 1232px;
-    padding: 0 1rem;
+    margin-top: 3rem;
+    margin-bottom: 2rem;
     min-height: 100vh;
 }
 
-@media (min-width: 992px) {
+@media (min-width: 1025px) {
     .JobPosting__flex {
         display: flex;
     }
@@ -15,20 +14,20 @@
     margin: 0 0 2rem 0;
 }
 
-@media (min-width: 992px) {
+@media (min-width: 1025px) {
     .JobPosting__left {
         flex: 2;
-        padding-right: 6rem;
+        padding-right: 3rem;
     }
 }
 
 @media (min-width: 1200px) {
     .JobPosting__left {
-        padding-right: 8rem;
+        padding-right: 6rem;
     }
 }
 
-@media (min-width: 992px) {
+@media (min-width: 1025px) {
     .JobPosting__right {
         width: 340px;
     }
@@ -39,7 +38,7 @@
     margin-bottom: 2.5rem;
 }
 
-@media (min-width: 992px) {
+@media (min-width: 1025px) {
     .JobPosting__dl--flex {
         display: grid;
         grid-template-columns: repeat(2, 1fr);

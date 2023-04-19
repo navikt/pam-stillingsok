@@ -1,13 +1,5 @@
-.Search__flex-wrapper {
-    margin: 0 auto 2rem;
-    max-width: 1232px;
-    width: 100%;
-    padding: 0 1rem;
-}
-
 @media (min-width: 992px) {
     .Search__flex-wrapper {
-        margin: 2rem auto;
         display: flex;
     }
 }

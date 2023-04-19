@@ -1,9 +1,3 @@
-.Favourites {
-    max-width: 800px;
-    margin: 4rem auto;
-    padding: 0 1rem;
-}
-
 @media (min-width: 992px) {
     .FavouritesList__total-and-sorting {
         display: flex;

@@ -82,7 +82,7 @@ const Ad = ({ match }) => {
     const isFinn = ad && ad._source && ad._source.source && ad._source.source.toLowerCase() === "finn";
 
     return (
-        <div className="JobPosting">
+        <div className="container-large JobPosting">
             {status === FetchStatus.FAILURE && error.statusCode === 404 && (
                 <NotFound404
                     title="Vi fant dessverre ikke stillingsannonsen"

@@ -17,7 +17,7 @@ function SavedSearchesPage() {
     useScrollToTop();
 
     return (
-        <div className="SavedSearches">
+        <div className="container-medium mt-3 mb-4">
             <H1WithAutoFocus>Lagrede søk</H1WithAutoFocus>
             <RequiresAuthentication>
                 <RequiresHasAcceptedTerms>

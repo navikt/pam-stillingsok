@@ -102,7 +102,7 @@ const ReportAd = () => {
     }
 
     return (
-        <div className="RapporterAnnonse">
+        <div className="container-medium mt-3 mb-4">
             {authenticationStatus !== AuthenticationStatus.IS_AUTHENTICATED && (
                 <div>
                     <Heading level="2" size="large" spacing>

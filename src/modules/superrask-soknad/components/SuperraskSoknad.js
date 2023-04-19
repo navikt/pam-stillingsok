@@ -69,7 +69,7 @@ const SuperraskSoknad = ({ match }) => {
             {status === FetchStatus.IS_FETCHING && <DelayedSpinner />}
 
             {status === FetchStatus.FAILURE && error.statusCode !== 404 && (
-                <div className="InterestForm__inner mt-1 mb-1">
+                <div className="container-small mt-1 mb-1">
                     <Alert variant="error">Det oppsto dessverre en feil. Prøv å last inn siden på nytt.</Alert>
                 </div>
             )}
@@ -91,7 +91,7 @@ const SuperraskSoknad = ({ match }) => {
                             <BodyShort>{data.ad._source.title}</BodyShort>
                         </div>
                     </div>
-                    <div className="InterestForm__inner">
+                    <div className="container-small">
                         {postSoknadResponse.status !== FetchStatus.SUCCESS && (
                             <SuperraskSoknadForm
                                 ad={data.ad}
