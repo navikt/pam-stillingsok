@@ -169,7 +169,6 @@ const Search = () => {
                             >
                                 {`${searchResponse.data.totalAds} treff på "${readableQuery}"`}
                             </Heading>
-                            <StickyBar />
                             <SearchResult
                                 searchResponse={searchResponse}
                                 query={query}
