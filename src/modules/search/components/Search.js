@@ -28,7 +28,6 @@ import EmptyState from "./emptyState/EmptyState";
 
 const Search = () => {
     const [query, queryDispatch] = useReducer(queryReducer, initialQuery, initQueryWithValuesFromBrowserUrl);
-    const [showEmptyState, setShowEmptyState] = useState(Object.keys(toBrowserQuery(query)).length === 0);
     const [initialSearchResponse, initialSearchDispatch] = useFetchReducer();
     const [searchResponse, searchDispatch] = useFetchReducer();
     const latestSearch = useRef();
@@ -65,13 +64,6 @@ const Search = () => {
             history.replace(CONTEXT_PATH + stringifyQuery(browserQuery));
         } catch (error) {
             // ignore any errors
-        }
-    }, [query]);
-
-    useEffect(() => {
-        const numberOfSelectedFilters = Object.keys(toBrowserQuery(query)).length;
-        if (numberOfSelectedFilters > 0) {
-            setShowEmptyState(false);
         }
     }, [query]);
 
@@ -165,7 +157,7 @@ const Search = () => {
                         searchResult={searchResponse.data}
                         fetchSearch={fetchSearch}
                     />
-                    {!showEmptyState ? (
+                    {numberOfSelectedFilters > 0 ? (
                         <React.Fragment>
                             {searchResponse && searchResponse.data && searchResponse.data.totalAds >= 0 && (
                                 <Heading
