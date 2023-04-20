@@ -28,7 +28,6 @@ import EmptyState from "./emptyState/EmptyState";
 
 const Search = () => {
     const [query, queryDispatch] = useReducer(queryReducer, initialQuery, initQueryWithValuesFromBrowserUrl);
-    const [showEmptyState, setShowEmptyState] = useState(Object.keys(toBrowserQuery(query)).length === 0);
     const [initialSearchResponse, initialSearchDispatch] = useFetchReducer();
     const [searchResponse, searchDispatch] = useFetchReducer();
     const latestSearch = useRef();
@@ -157,9 +156,8 @@ const Search = () => {
                         initialSearchResult={initialSearchResponse.data}
                         searchResult={searchResponse.data}
                         fetchSearch={fetchSearch}
-                        setShowEmptyState={setShowEmptyState}
                     />
-                    {!showEmptyState ? (
+                    {numberOfSelectedFilters > 0 ? (
                         <React.Fragment>
                             {searchResponse && searchResponse.data && searchResponse.data.totalAds >= 0 && (
                                 <Heading

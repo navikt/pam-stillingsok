@@ -15,7 +15,7 @@ import { Link } from "react-router-dom";
 import { CONTEXT_PATH } from "../../../../common/environment";
 import { AuthenticationContext, AuthenticationStatus } from "../../../auth/contexts/AuthenticationProvider";
 
-const SearchForm = ({ fetchSearch, query, dispatchQuery, initialSearchResult, searchResult, setShowEmptyState }) => {
+const SearchForm = ({ fetchSearch, query, dispatchQuery, initialSearchResult, searchResult }) => {
     const [isLocationsVisible, setIsLocationsVisible] = useState(false);
     const [isOccupationsVisible, setIsOccupationsVisible] = useState(false);
     const [isOtherVisible, setIsOtherVisible] = useState(false);
@@ -73,7 +73,6 @@ const SearchForm = ({ fetchSearch, query, dispatchQuery, initialSearchResult, se
                         type="button"
                         variant="tertiary"
                         onClick={() => {
-                            setShowEmptyState(true);
                             dispatchQuery({ type: "RESET" });
                         }}
                         icon={<TrashIcon aria-hidden="true" />}
@@ -100,7 +99,6 @@ const SearchForm = ({ fetchSearch, query, dispatchQuery, initialSearchResult, se
             {isLocationsVisible && (
                 <FilterModal
                     numberOfHits={numberOfHits}
-                    setShowEmptyState={setShowEmptyState}
                     onCloseClick={() => {
                         setIsLocationsVisible(false);
                     }}
@@ -118,7 +116,6 @@ const SearchForm = ({ fetchSearch, query, dispatchQuery, initialSearchResult, se
             {isOccupationsVisible && (
                 <FilterModal
                     numberOfHits={numberOfHits}
-                    setShowEmptyState={setShowEmptyState}
                     onCloseClick={() => setIsOccupationsVisible(false)}
                     title="Filter på yrke"
                 >
@@ -134,7 +131,6 @@ const SearchForm = ({ fetchSearch, query, dispatchQuery, initialSearchResult, se
             {isOtherVisible && (
                 <FilterModal
                     numberOfHits={numberOfHits}
-                    setShowEmptyState={setShowEmptyState}
                     onCloseClick={() => setIsOtherVisible(false)}
                     title="Andre filter"
                 >
