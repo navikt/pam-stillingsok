@@ -58,18 +58,20 @@ export default function HowToApply({ stilling, showFavouriteButton, isInternal }
                 )}
 
                 {stilling._source.status === "ACTIVE" && (
-                    <Button
-                        as={Link}
-                        onClick={() => {
-                            logAmplitudeEvent("click superrask søknad link", {
-                                id: stilling._id
-                            });
-                        }}
-                        to={`${CONTEXT_PATH}/${path}/${stilling._id}/superrask-soknad`}
-                        className="HowToApply__full-width-button"
-                    >
-                        Gå til superrask søknad
-                    </Button>
+                    <div>
+                        <Button
+                            as={Link}
+                            onClick={() => {
+                                logAmplitudeEvent("click superrask søknad link", {
+                                    id: stilling._id
+                                });
+                            }}
+                            to={`${CONTEXT_PATH}/${path}/${stilling._id}/superrask-soknad`}
+                            className="HowToApply__full-width-button"
+                        >
+                            Gå til superrask søknad
+                        </Button>
+                    </div>
                 )}
 
                 {!isFinn && properties.applicationemail && (
