@@ -13,7 +13,11 @@ function StickyBar() {
             };
 
             const observer = new IntersectionObserver((entries) => {
-                setIsVisible(!entries[0].isIntersecting);
+                if (entries[0].isIntersecting) {
+                    setIsVisible(false);
+                } else {
+                    setIsVisible(true);
+                }
             }, options);
 
             const targetElement = document.getElementById("search-result-count");
@@ -35,7 +39,7 @@ function StickyBar() {
     if (!isVisible) return null;
 
     return (
-        <div className="StickyBar">
+        <div className="StickyBar container-medium">
             <Button variant="secondary" onClick={handleClick}>
                 Endre søk
             </Button>

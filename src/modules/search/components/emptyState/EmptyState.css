@@ -6,7 +6,8 @@
 }
 
 .EmptyState__svg {
-    width: 70%;
+    width: 50%;
+    height: 50%;
 }
 
 @media (min-width: 728px) {

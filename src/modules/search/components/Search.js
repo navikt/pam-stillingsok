@@ -160,7 +160,6 @@ const Search = () => {
                     />
                     {numberOfSelectedFilters > 0 ? (
                         <React.Fragment>
-                            <StickyBar />
                             <Heading
                                 id="search-result-count"
                                 level="2"
@@ -170,6 +169,7 @@ const Search = () => {
                             >
                                 {`${searchResponse.data.totalAds} treff på "${readableQuery}"`}
                             </Heading>
+                            <StickyBar />
                             <SearchResult
                                 searchResponse={searchResponse}
                                 query={query}
