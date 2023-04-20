@@ -91,7 +91,7 @@ const SearchForm = ({ fetchSearch, query, dispatchQuery, initialSearchResult, se
                         }}
                         icon={<ClockIcon aria-hidden="true" />}
                     >
-                        Bruk et lagret søk
+                        Mine søk
                     </Button>
                 )}
             </div>
