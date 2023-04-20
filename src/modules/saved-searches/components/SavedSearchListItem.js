@@ -14,6 +14,7 @@ import Alert from "../../../common/components/alert/Alert";
 import { FormModes } from "./modal/SaveSearchForm";
 import AlertModalWithPageReload from "../../../common/components/modals/AlertModalWithPageReload";
 import { Link as AkselLink, BodyShort, Heading, Tag } from "@navikt/ds-react";
+import { Link } from "react-router-dom";
 
 function SavedSearchListItem({ savedSearch, removeSavedSearchFromList, replaceSavedSearchInList, autoOpenModal }) {
     const [deleteStatus, setDeleteStatus] = useState(FetchStatus.NOT_FETCHED);
@@ -66,7 +67,7 @@ function SavedSearchListItem({ savedSearch, removeSavedSearchFromList, replaceSa
     return (
         <article className="SavedSearchListItem">
             <Heading level="3" size="small" spacing>
-                <AkselLink href={`${CONTEXT_PATH}${savedSearch.searchQuery}&saved=${savedSearch.uuid}`}>
+                <AkselLink as={Link} to={`${CONTEXT_PATH}${savedSearch.searchQuery}&saved=${savedSearch.uuid}`}>
                     {savedSearch.title}
                 </AkselLink>
             </Heading>
