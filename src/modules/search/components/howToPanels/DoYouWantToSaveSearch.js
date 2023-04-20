@@ -17,7 +17,7 @@ function DoYouWantToSaveSearch({ query }) {
                     Varsel ved nye treff?
                 </Heading>
                 {authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED ? (
-                    <BodyLong>Du kan motta e-post når det kommer nye treff.</BodyLong>
+                    <BodyLong>Motta e-post ved nye treff.</BodyLong>
                 ) : (
                     <BodyLong>Vil du lagre søket, må du først logge inn.</BodyLong>
                 )}
@@ -31,7 +31,7 @@ function DoYouWantToSaveSearch({ query }) {
                         as={Link}
                         to={`${CONTEXT_PATH}/lagrede-sok`}
                     >
-                        Vis mine søk
+                        Mine søk
                     </Button>
                 </React.Fragment>
             ) : (

@@ -29,7 +29,7 @@ function HowToAddFavourites() {
                         as={Link}
                         to={`${CONTEXT_PATH}/favoritter`}
                     >
-                        Vis mine favoritter
+                        Mine favoritter
                     </Button>
                 ) : (
                     <Button variant="tertiary" icon={<EnterIcon aria-hidden="true" />} onClick={login}>
