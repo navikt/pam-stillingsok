@@ -170,8 +170,8 @@ const Search = () => {
                                     className="mt-1 mb-1"
                                 >
                                     {readableQuery.length > 0
-                                        ? `${searchResponse.data.totalAds} treff på "${readableQuery}"`
-                                        : `${searchResponse.data.totalAds} treff`}
+                                        ? `${searchResponse.data.totalAds.toLocaleString()} treff på "${readableQuery}"`
+                                        : `${searchResponse.data.totalAds.toLocaleString()} treff`}
                                 </Heading>
                             )}
 
