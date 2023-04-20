@@ -27,7 +27,7 @@
     "@navikt/aksel-icons": "^2.8.4",
     "@navikt/arbeidsplassen-css": "^1.1.10",
     "@navikt/arbeidsplassen-react": "^1.1.10",
-    "@navikt/ds-css": "^2.8.4",
+    "@navikt/ds-css": "^2.8.7",
     "@navikt/ds-react": "^2.8.4",
     "@sentry/browser": "^6.19.6",
     "@types/react-router-dom": "^4.3.5",
