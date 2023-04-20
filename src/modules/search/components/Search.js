@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useReducer, useRef } from "react";
 import { CONTEXT_PATH } from "../../../common/environment";
-import { AuthenticationContext, AuthenticationStatus } from "../../auth/contexts/AuthenticationProvider";
 import queryReducer, {
     initialQuery,
     initQueryWithValuesFromBrowserUrl,
@@ -8,23 +7,27 @@ import queryReducer, {
     SET_FROM,
     stringifyQuery,
     toApiQuery,
-    toBrowserQuery
+    toBrowserQuery,
+    toReadableQuery
 } from "../query";
 import { extractParam } from "../../../common/components/utils";
 import { FetchAction, FetchStatus, useFetchReducer } from "../../../common/hooks/useFetchReducer";
 import SearchAPI from "../../../common/api/SearchAPI";
 import ErrorMessage from "../../../common/components/messages/ErrorMessage";
 import SearchForm from "./searchForm/SearchForm";
-import LinkMenu from "./linkMenu/LinkMenu";
 import LoadingScreen from "./loadingScreen/LoadingScreen";
 import useRestoreScroll from "../../../common/hooks/useRestoreScroll";
 import "./Search.css";
 import { useHistory } from "react-router";
 import SearchResult from "./searchResult/SearchResult";
 import H1WithAutoFocus from "../../../common/components/h1WithAutoFocus/H1WithAutoFocus";
+import StickyBar from "./stickyBar/StickyBar";
+import { Heading } from "@navikt/ds-react";
+import DoYouWantToSaveSearch from "./howToPanels/DoYouWantToSaveSearch";
+import HowToAddFavourites from "./howToPanels/HowToAddFavourites";
+import EmptyState from "./emptyState/EmptyState";
 
 const Search = () => {
-    const { authenticationStatus } = useContext(AuthenticationContext);
     const [query, queryDispatch] = useReducer(queryReducer, initialQuery, initQueryWithValuesFromBrowserUrl);
     const [initialSearchResponse, initialSearchDispatch] = useFetchReducer();
     const [searchResponse, searchDispatch] = useFetchReducer();
@@ -134,36 +137,54 @@ const Search = () => {
         };
     }
 
+    const numberOfSelectedFilters = Object.keys(toBrowserQuery(query)).length;
+    const readableQueryFullLength = toReadableQuery(query);
+    const readableQuery =
+        readableQueryFullLength.length > 60
+            ? `${readableQueryFullLength.substring(0, 70)} (...)`
+            : readableQueryFullLength;
+
     return (
-        <React.Fragment>
-            <H1WithAutoFocus className="Search__h1" spacing={false}>
-                Søk etter din neste jobb
-            </H1WithAutoFocus>
-
-            {authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED && <LinkMenu />}
-
+        <div className="container-medium mb-4">
+            <H1WithAutoFocus className="Search__h1">Søk i ledige jobber</H1WithAutoFocus>
             {initialSearchResponse.status === FetchStatus.FAILURE && <ErrorMessage />}
             {initialSearchResponse.status === FetchStatus.IS_FETCHING && <LoadingScreen />}
             {initialSearchResponse.status === FetchStatus.SUCCESS && (
-                <div className="container-large mb-4 Search__flex-wrapper">
-                    <div>
-                        <SearchForm
-                            query={query}
-                            dispatchQuery={queryDispatch}
-                            initialSearchResult={initialSearchResponse.data}
-                            searchResult={searchResponse.data}
-                            fetchSearch={fetchSearch}
-                        />
-                    </div>
-                    <SearchResult
-                        searchResponse={searchResponse}
+                <React.Fragment>
+                    <SearchForm
                         query={query}
-                        queryDispatch={queryDispatch}
-                        loadMoreResults={loadMoreResults}
+                        dispatchQuery={queryDispatch}
+                        initialSearchResult={initialSearchResponse.data}
+                        searchResult={searchResponse.data}
+                        fetchSearch={fetchSearch}
                     />
-                </div>
+                    {numberOfSelectedFilters > 0 ? (
+                        <React.Fragment>
+                            <StickyBar />
+                            <Heading
+                                id="search-result-count"
+                                level="2"
+                                size="small"
+                                role="status"
+                                className="mt-1 mb-1"
+                            >
+                                {`${searchResponse.data.totalAds} treff på "${readableQuery}"`}
+                            </Heading>
+                            <SearchResult
+                                searchResponse={searchResponse}
+                                query={query}
+                                queryDispatch={queryDispatch}
+                                loadMoreResults={loadMoreResults}
+                            />
+                            <DoYouWantToSaveSearch query={query} />
+                            <HowToAddFavourites />
+                        </React.Fragment>
+                    ) : (
+                        <EmptyState totalPositions={initialSearchResponse.data.totalPositions} />
+                    )}
+                </React.Fragment>
             )}
-        </React.Fragment>
+        </div>
     );
 };
 

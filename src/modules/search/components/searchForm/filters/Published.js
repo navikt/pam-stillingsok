@@ -1,9 +1,8 @@
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 import { SET_PUBLISHED } from "../../../query";
-import CriteriaPanel from "./CriteriaPanel";
 import mergeCount from "../utils/mergeCount";
-import { Checkbox } from "@navikt/ds-react";
+import { Checkbox, Fieldset } from "@navikt/ds-react";
 
 export const PublishedLabelsEnum = {
     "now/d": "Nye i dag"
@@ -29,21 +28,19 @@ function Published({ dispatch, query, initialValues, updatedValues }) {
     }
 
     return (
-        <CriteriaPanel panelId="published-panel" title="Publisert">
-            <div className="CriteriaPanel__fieldset">
-                {values.map((item) => (
-                    <Checkbox
-                        name="published"
-                        key={item.key}
-                        value={item.key}
-                        onChange={handleClick}
-                        checked={query.published === item.key}
-                    >
-                        {`${PublishedLabelsEnum[item.key]} (${item.count})`}
-                    </Checkbox>
-                ))}
-            </div>
-        </CriteriaPanel>
+        <Fieldset legend="Publisert">
+            {values.map((item) => (
+                <Checkbox
+                    name="published"
+                    key={item.key}
+                    value={item.key}
+                    onChange={handleClick}
+                    checked={query.published === item.key}
+                >
+                    {`${PublishedLabelsEnum[item.key]} (${item.count})`}
+                </Checkbox>
+            ))}
+        </Fieldset>
     );
 }
 

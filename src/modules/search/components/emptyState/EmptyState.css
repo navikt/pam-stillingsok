@@ -1,0 +1,20 @@
+.EmptyState {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.EmptyState__svg {
+    width: 70%;
+}
+
+@media (min-width: 728px) {
+    .EmptyState {
+        margin-top: 2rem;
+    }
+
+    .EmptyState__svg {
+        width: auto;
+    }
+}

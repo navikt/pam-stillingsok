@@ -19,7 +19,7 @@ import AlertModalWithPageReload from "../../../common/components/modals/AlertMod
  * If user click button, this view will ensure that user is logged in
  * and has accepted usage terms before it save a favourite
  */
-function FavouritesButton({ id, stilling, useShortText, className, type }) {
+function FavouritesButton({ id, stilling, useShortText, className, type, hideText }) {
     const favouritesProvider = useContext(FavouritesContext);
     const { authenticationStatus, login } = useContext(AuthenticationContext);
     const { hasAcceptedTermsStatus } = useContext(UserContext);
@@ -111,6 +111,7 @@ function FavouritesButton({ id, stilling, useShortText, className, type }) {
                 text={isFavourite ? deleteText : saveText}
                 icon={isFavourite ? <HeartFillIcon aria-hidden="true" /> : <HeartIcon aria-hidden="true" />}
                 type={type}
+                hideText={hideText}
             />
 
             {shouldShowLoginModal && <LoginModal onLoginClick={login} onCloseClick={closeLoginModal} />}
@@ -129,7 +130,8 @@ function FavouritesButton({ id, stilling, useShortText, className, type }) {
 FavouritesButton.defaultProps = {
     className: undefined,
     useShortText: false,
-    type: undefined
+    type: undefined,
+    hideText: false
 };
 
 FavouritesButton.propTypes = {
@@ -137,7 +139,8 @@ FavouritesButton.propTypes = {
     stilling: PropTypes.shape({}).isRequired,
     className: PropTypes.string,
     useShortText: PropTypes.bool,
-    type: PropTypes.string
+    type: PropTypes.string,
+    hideText: PropTypes.bool
 };
 
 export default FavouritesButton;

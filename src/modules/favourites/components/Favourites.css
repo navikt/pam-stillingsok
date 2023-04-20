@@ -1,9 +1,9 @@
-@media (min-width: 992px) {
-    .FavouritesList__total-and-sorting {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
+.FavouritesList__total-and-sorting {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
 }
 
 .FavouritesList_Sorting {
@@ -15,4 +15,8 @@
     margin-right: 0.5rem;
     white-space: nowrap;
     margin-bottom: 0;
+}
+
+.FavouriteListItem__delete-button {
+    margin-top: -0.5rem;
 }

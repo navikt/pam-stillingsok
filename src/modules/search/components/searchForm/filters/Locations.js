@@ -11,14 +11,13 @@ import {
     REMOVE_REMOTE,
     SET_INTERNATIONAL
 } from "../../../query";
-import CriteriaPanel from "./CriteriaPanel";
 import UnknownSearchCriteriaValues from "./UnknownSearchCriteriaValues";
 import buildLocations from "../utils/buildLocations";
 import buildHomeOfficeValues from "../utils/buildHomeOfficeValues";
 import mergeCount from "../utils/mergeCount";
 import { findUnknownSearchCriteriaValues } from "../utils/findUnknownSearchCriteriaValues";
 import findZeroCountLocationFacets from "../utils/findZeroCountLocationFacets";
-import { Checkbox } from "@navikt/ds-react";
+import { Checkbox, Fieldset } from "@navikt/ds-react";
 
 function Locations({ initialValues, updatedValues, query, dispatch }) {
     const [locationValues, setLocationValues] = useState(buildLocations(initialValues));
@@ -106,80 +105,78 @@ function Locations({ initialValues, updatedValues, query, dispatch }) {
     const checkedLocations = [...query.countries, ...query.counties, ...query.municipals];
 
     return (
-        <CriteriaPanel panelId="locations-panel" title="Område">
-            <fieldset className="CriteriaPanel__fieldset">
-                <legend>Velg fylke, kommune, land eller hjemmekontor</legend>
-                {locationValues &&
-                    locationValues.map((location) => (
-                        <React.Fragment key={location.key}>
-                            <Checkbox
-                                name="location"
-                                value={location.key}
-                                onChange={handleCheckboxClick(location.key, location.type)}
-                                checked={
-                                    query.counties.includes(location.key) ||
-                                    (location.key === "UTLAND" && query.international === true)
-                                }
-                            >
-                                <span translate={location.key !== "UTLAND" ? "no" : undefined}>
-                                    {`${fixLocationName(location.key)} (${location.count})`}
-                                </span>
-                            </Checkbox>
-                            {(query.counties.includes(location.key) ||
-                                (location.key === "UTLAND" && query.international === true)) &&
-                                location.key !== "OSLO" &&
-                                location.key !== "SVALBARD" && (
-                                    <fieldset className="CriteriaPanel__fieldset CriteriaPanel__fieldset--sub">
-                                        <legend>Områder i {fixLocationName(location.key)}</legend>
-                                        {location.subLocations &&
-                                            location.subLocations.map((subLocation) => (
-                                                <Checkbox
-                                                    className={subLocation.count === 0 ? "Facet__zero__count" : ""}
-                                                    name="location"
-                                                    key={subLocation.key}
-                                                    value={subLocation.key}
-                                                    onChange={handleCheckboxClick(subLocation.key, subLocation.type)}
-                                                    checked={
-                                                        query.municipals.includes(subLocation.key) ||
-                                                        query.countries.includes(subLocation.key)
-                                                    }
-                                                >
-                                                    <span translate="no">
-                                                        {`${fixLocationName(subLocation.key, true)} (${
-                                                            subLocation.count
-                                                        })`}
-                                                    </span>
-                                                </Checkbox>
-                                            ))}
-                                    </fieldset>
-                                )}
-                        </React.Fragment>
+        <Fieldset hideLegend legend="Velg fylke, kommune, land eller hjemmekontor" className="FilterModal__fieldset">
+            {locationValues &&
+                locationValues.map((location) => (
+                    <React.Fragment key={location.key}>
+                        <Checkbox
+                            name="location"
+                            value={location.key}
+                            onChange={handleCheckboxClick(location.key, location.type)}
+                            checked={
+                                query.counties.includes(location.key) ||
+                                (location.key === "UTLAND" && query.international === true)
+                            }
+                        >
+                            <span translate={location.key !== "UTLAND" ? "no" : undefined}>
+                                {`${fixLocationName(location.key)} (${location.count})`}
+                            </span>
+                        </Checkbox>
+                        {(query.counties.includes(location.key) ||
+                            (location.key === "UTLAND" && query.international === true)) &&
+                            location.key !== "OSLO" &&
+                            location.key !== "SVALBARD" && (
+                                <Fieldset
+                                    hideLegend
+                                    legend={`Områder i ${fixLocationName(location.key)}`}
+                                    className="FilterModal__sub-fieldset FilterModal__columns-3"
+                                >
+                                    {location.subLocations &&
+                                        location.subLocations.map((subLocation) => (
+                                            <Checkbox
+                                                className={subLocation.count === 0 ? "Facet__zero__count" : ""}
+                                                name="location"
+                                                key={subLocation.key}
+                                                value={subLocation.key}
+                                                onChange={handleCheckboxClick(subLocation.key, subLocation.type)}
+                                                checked={
+                                                    query.municipals.includes(subLocation.key) ||
+                                                    query.countries.includes(subLocation.key)
+                                                }
+                                            >
+                                                <span translate="no">
+                                                    {`${fixLocationName(subLocation.key, true)} (${subLocation.count})`}
+                                                </span>
+                                            </Checkbox>
+                                        ))}
+                                </Fieldset>
+                            )}
+                    </React.Fragment>
+                ))}
+
+            <div className="RemoteFacet">
+                {homeOfficeValues &&
+                    homeOfficeValues.map((remote) => (
+                        <Checkbox
+                            name="remote"
+                            key={remote.key}
+                            value={remote.key}
+                            onChange={handleHomeOfficeClick}
+                            checked={query.remote.includes(remote.key)}
+                        >
+                            {`${remote.key} (${remote.count})`}
+                        </Checkbox>
                     ))}
+            </div>
 
-                <div className="RemoteFacet">
-                    {homeOfficeValues &&
-                        homeOfficeValues.map((remote) => (
-                            <Checkbox
-                                name="remote"
-                                key={remote.key}
-                                value={remote.key}
-                                onChange={handleHomeOfficeClick}
-                                checked={query.remote.includes(remote.key)}
-                            >
-                                {`${remote.key} (${remote.count})`}
-                            </Checkbox>
-                        ))}
-                </div>
-
-                <UnknownSearchCriteriaValues
-                    shouldFixLocationName={true}
-                    namePrefix="counties"
-                    unknownValues={unknownLocations}
-                    checkedValues={checkedLocations}
-                    onClick={handleZeroCountFacetClick(unknownCountries, unknownCounties, unknownMunicipals)}
-                />
-            </fieldset>
-        </CriteriaPanel>
+            <UnknownSearchCriteriaValues
+                shouldFixLocationName={true}
+                namePrefix="counties"
+                unknownValues={unknownLocations}
+                checkedValues={checkedLocations}
+                onClick={handleZeroCountFacetClick(unknownCountries, unknownCounties, unknownMunicipals)}
+            />
+        </Fieldset>
     );
 }
 

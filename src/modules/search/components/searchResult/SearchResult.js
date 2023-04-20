@@ -1,19 +1,16 @@
-import React from "react";
-import { ArrowUpIcon } from "@navikt/aksel-icons";
-import DelayedSpinner from "../../../../common/components/spinner/DelayedSpinner";
-import SearchResultCount from "./SearchResultCount";
-import Sorting from "./Sorting";
+import React, { useContext } from "react";
 import { FetchStatus } from "../../../../common/hooks/useFetchReducer";
 import ErrorMessage from "../../../../common/components/messages/ErrorMessage";
-import NoResults from "./NoResults";
-import Pagination from "./Pagination";
-import SkipToCriteria from "../skiplinks/SkipToCriteria";
+import Pagination from "../pagination/Pagination";
 import SearchResultItem from "./SearchResultItem";
 import "./SearchResult.css";
 import FavouritesButton from "../../../favourites/components/FavouritesButton";
-import { Link as AkselLink } from "@navikt/ds-react";
+import LoadingScreen from "../loadingScreen/LoadingScreen";
+import { AuthenticationContext, AuthenticationStatus } from "../../../auth/contexts/AuthenticationProvider";
 
-const SearchResult = ({ searchResponse, queryDispatch, query, loadMoreResults }) => {
+const SearchResult = ({ searchResponse, query, loadMoreResults }) => {
+    const { authenticationStatus } = useContext(AuthenticationContext);
+
     const { status, data } = searchResponse;
 
     // If user clicked "Load more" in the search result, move focus from
@@ -21,16 +18,9 @@ const SearchResult = ({ searchResponse, queryDispatch, query, loadMoreResults })
     const adToBeFocused = query.from > 0 && data ? data.ads[query.from] : undefined;
 
     return (
-        <section id="resultat" className="SearchResult">
-            <SkipToCriteria />
-            <div className="SearchResult__header">
-                <SearchResultCount searchResult={data} />
-                <Sorting dispatch={queryDispatch} query={query} />
-            </div>
-
+        <section className="SearchResult">
             {status === FetchStatus.FAILURE && <ErrorMessage />}
-            {status === FetchStatus.IS_FETCHING && query.from === 0 && <DelayedSpinner />}
-            {status === FetchStatus.SUCCESS && data.totalAds === 0 && <NoResults query={query} />}
+            {status === FetchStatus.IS_FETCHING && query.from === 0 && <LoadingScreen />}
             {(status === FetchStatus.SUCCESS || (status === FetchStatus.IS_FETCHING && query.from > 0)) && (
                 <React.Fragment>
                     {data.ads &&
@@ -40,28 +30,28 @@ const SearchResult = ({ searchResponse, queryDispatch, query, loadMoreResults })
                                 key={ad.uuid}
                                 ad={ad}
                                 favouriteButton={
-                                    <FavouritesButton
-                                        useShortText={true}
-                                        className="SearchResultsItem__favourite-button"
-                                        stilling={ad}
-                                        id={ad.uuid}
-                                    />
+                                    authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED ? (
+                                        <FavouritesButton
+                                            useShortText={true}
+                                            className="SearchResultsItem__favourite-button"
+                                            stilling={ad}
+                                            id={ad.uuid}
+                                            hideText
+                                        />
+                                    ) : null
                                 }
                             />
                         ))}
-                    <div className="SearchResult__footer">
-                        <Pagination
-                            query={query}
-                            isSearching={status === FetchStatus.IS_FETCHING}
-                            searchResult={data}
-                            onLoadMoreClick={loadMoreResults}
-                        />
-
-                        <AkselLink href="#main-content" className="SearchResult__skip-to-top">
-                            <ArrowUpIcon aria-hidden="true" />
-                            Til toppen
-                        </AkselLink>
-                    </div>
+                    {data.ads && data.ads.length > 0 && (
+                        <div className="SearchResult__footer">
+                            <Pagination
+                                query={query}
+                                isSearching={status === FetchStatus.IS_FETCHING}
+                                searchResult={data}
+                                onLoadMoreClick={loadMoreResults}
+                            />
+                        </div>
+                    )}
                 </React.Fragment>
             )}
         </section>

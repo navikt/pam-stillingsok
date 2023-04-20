@@ -5,7 +5,7 @@
 .TypeaheadSuggestion__inner {
     display: block;
     width: 100%;
-    padding: 0px 1rem;
+    padding: 0.5rem 1rem;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -16,9 +16,3 @@
     background-color: var(--arb-blue-600);
 }
 
-@media (max-width: 991px) {
-    .TypeaheadSuggestion__inner {
-        padding: 0.5rem 1rem;
-        border-top: 1px solid var(--arb-gray-200);
-    }
-}

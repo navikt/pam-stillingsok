@@ -6,12 +6,11 @@ import {
     REMOVE_OCCUPATION_FIRST_LEVEL,
     REMOVE_OCCUPATION_SECOND_LEVEL
 } from "../../../query";
-import CriteriaPanel from "./CriteriaPanel";
 import UnknownSearchCriteriaValues from "./UnknownSearchCriteriaValues";
 import moveCriteriaToBottom from "../utils/moveFacetToBottom";
 import mergeCount from "../utils/mergeCount";
 import { findUnknownSearchCriteriaValues } from "../utils/findUnknownSearchCriteriaValues";
-import { Checkbox } from "@navikt/ds-react";
+import { Checkbox, Fieldset } from "@navikt/ds-react";
 
 const OCCUPATION_LEVEL_OTHER = "Uoppgitt/ ikke identifiserbare";
 
@@ -67,57 +66,57 @@ function Occupations({ initialValues, updatedValues, query, dispatch }) {
     }
 
     return (
-        <CriteriaPanel panelId="occupations-panel" title="Yrke">
-            <fieldset className="CriteriaPanel__fieldset">
-                <legend>Velg yrke</legend>
-                {values &&
-                    values.map((firstLevel) => (
-                        <React.Fragment key={firstLevel.key}>
-                            <Checkbox
-                                name="occupation"
-                                label={`${firstLevel.key} (${firstLevel.count})`}
-                                value={firstLevel.key}
-                                onChange={handleFirstLevelClick}
-                                checked={query.occupationFirstLevels.includes(firstLevel.key)}
-                            >
-                                {`${firstLevel.key} (${firstLevel.count})`}
-                            </Checkbox>
-                            {query.occupationFirstLevels &&
-                                query.occupationFirstLevels.includes(firstLevel.key) &&
-                                firstLevel.key !== OCCUPATION_LEVEL_OTHER && (
-                                    <fieldset className="CriteriaPanel__fieldset CriteriaPanel__fieldset--sub">
-                                        <legend>Yrker innen {firstLevel.key}</legend>
-                                        {firstLevel.occupationSecondLevels &&
-                                            firstLevel.occupationSecondLevels.map((secondLevel) => (
-                                                <Checkbox
-                                                    name="occupation"
-                                                    key={editedSecondLevelItemKey(secondLevel.key)}
-                                                    value={secondLevel.key}
-                                                    onChange={handleSecondLevelClick}
-                                                    checked={query.occupationSecondLevels.includes(secondLevel.key)}
-                                                >
-                                                    {`${editedSecondLevelItemKey(secondLevel.label)} (${
-                                                        secondLevel.count
-                                                    })`}
-                                                </Checkbox>
-                                            ))}
-                                    </fieldset>
-                                )}
-                        </React.Fragment>
-                    ))}
+        <Fieldset hideLegend legend="Velg yrkesgruppe" className="FilterModal__fieldset">
+            {values &&
+                values.map((firstLevel) => (
+                    <React.Fragment key={firstLevel.key}>
+                        <Checkbox
+                            name="occupation"
+                            label={`${firstLevel.key} (${firstLevel.count})`}
+                            value={firstLevel.key}
+                            onChange={handleFirstLevelClick}
+                            checked={query.occupationFirstLevels.includes(firstLevel.key)}
+                        >
+                            {`${firstLevel.key} (${firstLevel.count})`}
+                        </Checkbox>
+                        {query.occupationFirstLevels &&
+                            query.occupationFirstLevels.includes(firstLevel.key) &&
+                            firstLevel.key !== OCCUPATION_LEVEL_OTHER && (
+                                <Fieldset
+                                    hideLegend
+                                    legend={`Yrker innen ${firstLevel.key}`}
+                                    className="FilterModal__sub-fieldset FilterModal__columns-2"
+                                >
+                                    {firstLevel.occupationSecondLevels &&
+                                        firstLevel.occupationSecondLevels.map((secondLevel) => (
+                                            <Checkbox
+                                                name="occupation"
+                                                key={editedSecondLevelItemKey(secondLevel.key)}
+                                                value={secondLevel.key}
+                                                onChange={handleSecondLevelClick}
+                                                checked={query.occupationSecondLevels.includes(secondLevel.key)}
+                                            >
+                                                {`${editedSecondLevelItemKey(secondLevel.label)} (${
+                                                    secondLevel.count
+                                                })`}
+                                            </Checkbox>
+                                        ))}
+                                </Fieldset>
+                            )}
+                    </React.Fragment>
+                ))}
 
-                <UnknownSearchCriteriaValues
-                    namePrefix="occupation"
-                    unknownValues={unknownFirstValues}
-                    unknownNestedValues={unknownSecondValues}
-                    checkedValues={query.occupationFirstLevels}
-                    checkedNestedValues={query.occupationSecondLevels}
-                    onClick={handleFirstLevelClick}
-                    onNestedLevelClick={handleSecondLevelClick}
-                    shouldFixLocationName={true}
-                />
-            </fieldset>
-        </CriteriaPanel>
+            <UnknownSearchCriteriaValues
+                namePrefix="occupation"
+                unknownValues={unknownFirstValues}
+                unknownNestedValues={unknownSecondValues}
+                checkedValues={query.occupationFirstLevels}
+                checkedNestedValues={query.occupationSecondLevels}
+                onClick={handleFirstLevelClick}
+                onNestedLevelClick={handleSecondLevelClick}
+                shouldFixLocationName={true}
+            />
+        </Fieldset>
     );
 }
 

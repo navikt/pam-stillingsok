@@ -10,6 +10,7 @@ import TermsOfUse from "../../user/contexts/TermsOfUse";
 import LoginModal from "../../auth/components/LoginModal";
 import useToggle from "../../../common/hooks/useToggle";
 import { FormModes } from "./modal/SaveSearchForm";
+import { FloppydiskIcon } from "@navikt/aksel-icons";
 
 /**
  * Displays the "Save search" button.
@@ -54,7 +55,7 @@ function SaveSearchButton({ query }) {
 
     return (
         <React.Fragment>
-            <Button variant="secondary" type="button" onClick={handleClick}>
+            <Button variant="tertiary" icon={<FloppydiskIcon aria-hidden="true" />} type="button" onClick={handleClick}>
                 Lagre søk
             </Button>
 

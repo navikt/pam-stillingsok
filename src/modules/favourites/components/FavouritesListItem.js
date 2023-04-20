@@ -49,7 +49,11 @@ function FavouritesListItem({ favourite, removeFavouriteFromList }) {
                     }
                 }}
                 showExpired={favourite.favouriteAd.status !== "ACTIVE"}
-                favouriteButton={<DeleteButton onClick={openConfirmDeleteModal}>Slett</DeleteButton>}
+                favouriteButton={
+                    <DeleteButton className="FavouriteListItem__delete-button" onClick={openConfirmDeleteModal}>
+                        Slett
+                    </DeleteButton>
+                }
             />
 
             {shouldShowConfirmDeleteModal && (

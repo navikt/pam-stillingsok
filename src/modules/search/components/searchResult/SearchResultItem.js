@@ -33,11 +33,14 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, sho
             className="SearchResultItem"
             aria-labelledby={`${ad.uuid}-h3 ${ad.uuid}-jobTitle ${ad.uuid}-employer ${ad.uuid}-location`}
         >
-            <Heading level="3" size="small" className="SearchResultsItem__title" id={`${ad.uuid}-h3`}>
-                <LinkToAd stilling={ad} isFinn={isFinn} employer={employer}>
-                    {ad.title}
-                </LinkToAd>
-            </Heading>
+            <div className="SearchResultItem__heading-and-favourite">
+                <Heading level="3" size="small" className="SearchResultsItem__title" id={`${ad.uuid}-h3`}>
+                    <LinkToAd stilling={ad} isFinn={isFinn} employer={employer}>
+                        {ad.title}
+                    </LinkToAd>
+                </Heading>
+                {favouriteButton}
+            </div>
 
             {showExpired && (
                 <Tag variant="warning-filled" className="mb-1">
@@ -46,40 +49,47 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, sho
             )}
 
             {jobTitle && (
-                <Label as="p" id={`${ad.uuid}-jobTitle`} className="SearchResultsItem__jobtitle">
+                <Label as="p" id={`${ad.uuid}-jobTitle`} className="mb-1">
                     {jobTitle}
                 </Label>
             )}
-            {employer && (
-                <BodyShort id={`${ad.uuid}-employer`} className="SearchResultsItem__employer">
-                    {employer}
-                </BodyShort>
-            )}
-            {location && (
-                <BodyShort id={`${ad.uuid}-location`} className="SearchResultsItem__location">
-                    {location}
-                </BodyShort>
-            )}
+
+            <div className="SearchResultItem__details">
+                {employer && (
+                    <div>
+                        <Label size="small" as="p">
+                            Bedrift
+                        </Label>
+                        <BodyShort id={`${ad.uuid}-employer`}>{employer}</BodyShort>
+                    </div>
+                )}
+
+                {location && (
+                    <div>
+                        <Label size="small" as="p">
+                            Sted
+                        </Label>
+                        <BodyShort id={`${ad.uuid}-location`}>{location}</BodyShort>
+                    </div>
+                )}
+                {frist && (
+                    <div>
+                        <Label size="small" as="p">
+                            Frist
+                        </Label>
+                        <BodyShort size="small">{frist}</BodyShort>
+                    </div>
+                )}
+            </div>
 
             <div className="SearchResultsItem__bottom">
                 <div>
-                    {frist && (
-                        <BodyShort size="small" className="SearchResultsItem__applicationdue mb-0_25">
-                            Frist: {frist}
-                        </BodyShort>
-                    )}
-                    {published && (
-                        <BodyShort size="small" className="SearchResultsItem__published">
-                            Publisert: {published}
-                        </BodyShort>
-                    )}
                     {hasInterestform && (
                         <Tag size="small" variant="info-filled" className="mt-1">
                             Superrask søknad
                         </Tag>
                     )}
                 </div>
-                {favouriteButton}
             </div>
         </article>
     );

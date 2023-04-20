@@ -1,33 +1,6 @@
-@media (min-width: 992px) {
-    .SearchResult {
-        position: relative;
-        flex: 1;
-        margin-left: 6rem;
-    }
-}
-
-.SearchResult__header {
-    padding-bottom: 0.75rem;
-    line-height: 1;
-}
-
-@media (min-width: 768px) {
-    .SearchResult__header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-}
-
 .SearchResult__footer {
-    margin-top: 2rem;
+    margin: 2rem 0 3rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-}
-
-@media (max-width: 991px) {
-    .SearchResult__skip-to-top {
-        display: none;
-    }
 }

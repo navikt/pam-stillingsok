@@ -1,0 +1,24 @@
+.HowToPanel {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+    text-align: center;
+}
+
+.HowToPanel .navds-button {
+    white-space: nowrap;
+}
+
+@media (min-width: 475px) {
+    .HowToPanel {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        text-align: unset;
+    }
+}
+
+.HowToPanel__text {
+    flex: 1;
+}

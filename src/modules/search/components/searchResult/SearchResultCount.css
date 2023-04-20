@@ -1,9 +1,0 @@
-.SearchResultCount {
-    margin: 0;
-}
-
-@media (max-width: 991px) {
-    .SearchResultCount {
-        margin: 1rem 0 2rem;
-    }
-}

@@ -65,16 +65,14 @@ function SavedSearchListItem({ savedSearch, removeSavedSearchFromList, replaceSa
 
     return (
         <article className="SavedSearchListItem">
-            <Heading level="3" size="small" className="SavedSearchListItem__title" spacing>
+            <Heading level="3" size="small" spacing>
                 <AkselLink href={`${CONTEXT_PATH}${savedSearch.searchQuery}&saved=${savedSearch.uuid}`}>
                     {savedSearch.title}
                 </AkselLink>
             </Heading>
 
             {isValidISOString(savedSearch.updated) && (
-                <BodyShort className="SavedSearchListItem__created" spacing>
-                    Sist endret: {formatDate(savedSearch.updated, "DD.MM.YYYY")}
-                </BodyShort>
+                <BodyShort spacing>Sist endret: {formatDate(savedSearch.updated, "DD.MM.YYYY")}</BodyShort>
             )}
 
             {savedSearch.notifyType === "EMAIL" ? (
@@ -88,33 +86,30 @@ function SavedSearchListItem({ savedSearch, removeSavedSearchFromList, replaceSa
                 <BodyShort>Ingen varsling</BodyShort>
             )}
 
+            {isEmailNotificationExpired && (
+                <Tag variant="warning-filled" className="mt-0_5 mb-0_5">
+                    Ditt varsel for dette søket har gått ut
+                </Tag>
+            )}
+
+            {restartEmailNotificationStatus === FetchStatus.SUCCESS && (
+                <Tag variant="success-filled" className="mt-0_5 mb-0_5">
+                    <div role="status">Ny varsling startet</div>
+                </Tag>
+            )}
+
             <div className="SavedSearchListItem__bottom">
                 <EditButton onClick={openSavedSearchModal} />
                 <DeleteButton onClick={openConfirmationModal} />
-            </div>
-
-            {isEmailNotificationExpired && (
-                <React.Fragment>
-                    <div>
-                        <Tag variant="warning-filled" className="mt-0_5 mb-0_5">
-                            Ditt varsel for dette søket har gått ut
-                        </Tag>
-                    </div>
-
+                {isEmailNotificationExpired && (
                     <RefreshButton
                         onClick={reactivateEmailNotification}
                         disabled={restartEmailNotificationStatus === FetchStatus.IS_FETCHING}
                         loading={restartEmailNotificationStatus === FetchStatus.IS_FETCHING}
                         text="Start ny varsling"
                     />
-                </React.Fragment>
-            )}
-
-            {restartEmailNotificationStatus === FetchStatus.SUCCESS && (
-                <Tag variant="success-filled">
-                    <div role="status">Ny varsling startet</div>
-                </Tag>
-            )}
+                )}
+            </div>
 
             {restartEmailNotificationStatus === FetchStatus.FAILURE && (
                 <Alert>

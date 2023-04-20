@@ -1,12 +1,11 @@
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
-import CriteriaPanel from "./CriteriaPanel";
 import UnknownSearchCriteriaValues from "./UnknownSearchCriteriaValues";
 import { ADD_SECTOR, REMOVE_SECTOR } from "../../../query";
 import moveCriteriaToBottom from "../utils/moveFacetToBottom";
 import mergeCount from "../utils/mergeCount";
 import { findUnknownSearchCriteriaValues } from "../utils/findUnknownSearchCriteriaValues";
-import { Checkbox } from "@navikt/ds-react";
+import { Checkbox, Fieldset } from "@navikt/ds-react";
 
 function Sector({ initialValues, updatedValues, query, dispatch }) {
     const [values, setValues] = useState(moveCriteriaToBottom(initialValues, "Ikke oppgitt"));
@@ -28,29 +27,26 @@ function Sector({ initialValues, updatedValues, query, dispatch }) {
     }
 
     return (
-        <CriteriaPanel panelId="sector-panel" title="Sektor">
-            <fieldset className="CriteriaPanel__fieldset">
-                <legend>Velg sektor</legend>
-                {values.map((item) => (
-                    <Checkbox
-                        name="sector"
-                        key={item.key}
-                        value={item.key}
-                        onChange={handleClick}
-                        checked={query.sector.includes(item.key)}
-                    >
-                        {`${item.key} (${item.count})`}
-                    </Checkbox>
-                ))}
+        <Fieldset legend="Sektor">
+            {values.map((item) => (
+                <Checkbox
+                    name="sector"
+                    key={item.key}
+                    value={item.key}
+                    onChange={handleClick}
+                    checked={query.sector.includes(item.key)}
+                >
+                    {`${item.key} (${item.count})`}
+                </Checkbox>
+            ))}
 
-                <UnknownSearchCriteriaValues
-                    namePrefix="sector"
-                    unknownValues={findUnknownSearchCriteriaValues(query.sector, initialValues)}
-                    checkedValues={query.sector}
-                    onClick={handleClick}
-                />
-            </fieldset>
-        </CriteriaPanel>
+            <UnknownSearchCriteriaValues
+                namePrefix="sector"
+                unknownValues={findUnknownSearchCriteriaValues(query.sector, initialValues)}
+                checkedValues={query.sector}
+                onClick={handleClick}
+            />
+        </Fieldset>
     );
 }
 
