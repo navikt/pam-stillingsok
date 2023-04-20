@@ -31,7 +31,7 @@ const SearchForm = ({ fetchSearch, query, dispatchQuery, initialSearchResult, se
     }
 
     const numberOfSelectedFilters = Object.keys(toBrowserQuery(query)).length;
-    const numberOfHits = searchResult.totalAds;
+    const numberOfHits = searchResult && searchResult.totalAds ? searchResult.totalAds : 0;
 
     return (
         <form id="sok" className="mb-2" onSubmit={submitForm} role="search">

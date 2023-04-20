@@ -160,15 +160,18 @@ const Search = () => {
                     />
                     {numberOfSelectedFilters > 0 ? (
                         <React.Fragment>
-                            <Heading
-                                id="search-result-count"
-                                level="2"
-                                size="small"
-                                role="status"
-                                className="mt-1 mb-1"
-                            >
-                                {`${searchResponse.data.totalAds} treff på "${readableQuery}"`}
-                            </Heading>
+                            {searchResponse && searchResponse.data && searchResponse.data.totalAds && (
+                                <Heading
+                                    id="search-result-count"
+                                    level="2"
+                                    size="small"
+                                    role="status"
+                                    className="mt-1 mb-1"
+                                >
+                                    {`${searchResponse.data.totalAds} treff på "${readableQuery}"`}
+                                </Heading>
+                            )}
+
                             <SearchResult
                                 searchResponse={searchResponse}
                                 query={query}
