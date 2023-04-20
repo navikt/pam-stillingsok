@@ -25,14 +25,6 @@ function DoYouWantToSaveSearch({ query }) {
             {authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED ? (
                 <React.Fragment>
                     <SaveSearchButton query={query} />
-                    <Button
-                        icon={<ClockIcon aria-hidden="true" />}
-                        variant="tertiary"
-                        as={Link}
-                        to={`${CONTEXT_PATH}/lagrede-sok`}
-                    >
-                        Mine søk
-                    </Button>
                 </React.Fragment>
             ) : (
                 <Button variant="tertiary" icon={<EnterIcon aria-hidden="true" />} onClick={login}>
