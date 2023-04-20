@@ -27,7 +27,7 @@ import HowToAddFavourites from "./howToPanels/HowToAddFavourites";
 import EmptyState from "./emptyState/EmptyState";
 
 const Search = () => {
-    const [showEmptyState, setShowEmptyState] = useState(false);
+    const [showEmptyState, setShowEmptyState] = useState(true);
     const [query, queryDispatch] = useReducer(queryReducer, initialQuery, initQueryWithValuesFromBrowserUrl);
     const [initialSearchResponse, initialSearchDispatch] = useFetchReducer();
     const [searchResponse, searchDispatch] = useFetchReducer();
