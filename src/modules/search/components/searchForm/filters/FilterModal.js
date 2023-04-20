@@ -4,7 +4,7 @@ import { Button, Heading, Modal } from "@navikt/ds-react";
 import "./FilterModal.css";
 import { XMarkIcon } from "@navikt/aksel-icons";
 
-function FilterModal({ title, children, onCloseClick, numberOfHits }) {
+function FilterModal({ title, children, onCloseClick, numberOfHits, setShowEmptyState }) {
     useEffect(() => {
         Modal.setAppElement("#app");
     }, []);
@@ -29,7 +29,13 @@ function FilterModal({ title, children, onCloseClick, numberOfHits }) {
             </div>
             <div className="FilterModal__content">{children}</div>
             <div className="FilterModal__bottom">
-                <Button variant="primary" onClick={onCloseClick}>
+                <Button
+                    variant="primary"
+                    onClick={() => {
+                        setShowEmptyState(false);
+                        onCloseClick();
+                    }}
+                >
                     Vis {numberOfHits} treff
                 </Button>
             </div>

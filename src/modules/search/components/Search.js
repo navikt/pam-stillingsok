@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useReducer, useRef } from "react";
+import React, { useEffect, useReducer, useRef, useState } from "react";
 import { CONTEXT_PATH } from "../../../common/environment";
 import queryReducer, {
     initialQuery,
@@ -21,13 +21,13 @@ import "./Search.css";
 import { useHistory } from "react-router";
 import SearchResult from "./searchResult/SearchResult";
 import H1WithAutoFocus from "../../../common/components/h1WithAutoFocus/H1WithAutoFocus";
-import StickyBar from "./stickyBar/StickyBar";
 import { Heading } from "@navikt/ds-react";
 import DoYouWantToSaveSearch from "./howToPanels/DoYouWantToSaveSearch";
 import HowToAddFavourites from "./howToPanels/HowToAddFavourites";
 import EmptyState from "./emptyState/EmptyState";
 
 const Search = () => {
+    const [showEmptyState, setShowEmptyState] = useState(false);
     const [query, queryDispatch] = useReducer(queryReducer, initialQuery, initQueryWithValuesFromBrowserUrl);
     const [initialSearchResponse, initialSearchDispatch] = useFetchReducer();
     const [searchResponse, searchDispatch] = useFetchReducer();
@@ -157,8 +157,9 @@ const Search = () => {
                         initialSearchResult={initialSearchResponse.data}
                         searchResult={searchResponse.data}
                         fetchSearch={fetchSearch}
+                        setShowEmptyState={setShowEmptyState}
                     />
-                    {numberOfSelectedFilters > 0 ? (
+                    {!showEmptyState ? (
                         <React.Fragment>
                             {searchResponse && searchResponse.data && searchResponse.data.totalAds >= 0 && (
                                 <Heading
@@ -168,7 +169,9 @@ const Search = () => {
                                     role="status"
                                     className="mt-1 mb-1"
                                 >
-                                    {`${searchResponse.data.totalAds} treff på "${readableQuery}"`}
+                                    {readableQuery.length > 0
+                                        ? `${searchResponse.data.totalAds} treff på "${readableQuery}"`
+                                        : `${searchResponse.data.totalAds} treff`}
                                 </Heading>
                             )}
 
