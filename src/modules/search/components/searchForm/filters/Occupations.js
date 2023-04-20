@@ -1,34 +1,18 @@
 import PropTypes from "prop-types";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
     ADD_OCCUPATION_FIRST_LEVEL,
     ADD_OCCUPATION_SECOND_LEVEL,
     REMOVE_OCCUPATION_FIRST_LEVEL,
     REMOVE_OCCUPATION_SECOND_LEVEL
 } from "../../../query";
-import UnknownSearchCriteriaValues from "./UnknownSearchCriteriaValues";
 import moveCriteriaToBottom from "../utils/moveFacetToBottom";
-import mergeCount from "../utils/mergeCount";
-import { findUnknownSearchCriteriaValues } from "../utils/findUnknownSearchCriteriaValues";
 import { Checkbox, Fieldset } from "@navikt/ds-react";
 
 const OCCUPATION_LEVEL_OTHER = "Uoppgitt/ ikke identifiserbare";
 
 function Occupations({ initialValues, updatedValues, query, dispatch }) {
-    const [values, setValues] = useState(moveCriteriaToBottom(initialValues, OCCUPATION_LEVEL_OTHER));
-    const unknownFirstValues = findUnknownSearchCriteriaValues(query.occupationFirstLevels, initialValues);
-    const unknownSecondValues = findUnknownSearchCriteriaValues(
-        query.occupationSecondLevels,
-        initialValues,
-        "occupationSecondLevels"
-    );
-
-    useEffect(() => {
-        if (updatedValues) {
-            const merged = mergeCount(values, updatedValues, "occupationSecondLevels");
-            setValues(merged);
-        }
-    }, [updatedValues]);
+    const values = moveCriteriaToBottom(initialValues, OCCUPATION_LEVEL_OTHER);
 
     function handleFirstLevelClick(e) {
         const { value } = e.target;
@@ -77,7 +61,7 @@ function Occupations({ initialValues, updatedValues, query, dispatch }) {
                             onChange={handleFirstLevelClick}
                             checked={query.occupationFirstLevels.includes(firstLevel.key)}
                         >
-                            {`${firstLevel.key} (${firstLevel.count})`}
+                            {firstLevel.key}
                         </Checkbox>
                         {query.occupationFirstLevels &&
                             query.occupationFirstLevels.includes(firstLevel.key) &&
@@ -96,26 +80,13 @@ function Occupations({ initialValues, updatedValues, query, dispatch }) {
                                                 onChange={handleSecondLevelClick}
                                                 checked={query.occupationSecondLevels.includes(secondLevel.key)}
                                             >
-                                                {`${editedSecondLevelItemKey(secondLevel.label)} (${
-                                                    secondLevel.count
-                                                })`}
+                                                {editedSecondLevelItemKey(secondLevel.label)}
                                             </Checkbox>
                                         ))}
                                 </Fieldset>
                             )}
                     </React.Fragment>
                 ))}
-
-            <UnknownSearchCriteriaValues
-                namePrefix="occupation"
-                unknownValues={unknownFirstValues}
-                unknownNestedValues={unknownSecondValues}
-                checkedValues={query.occupationFirstLevels}
-                checkedNestedValues={query.occupationSecondLevels}
-                onClick={handleFirstLevelClick}
-                onNestedLevelClick={handleSecondLevelClick}
-                shouldFixLocationName={true}
-            />
         </Fieldset>
     );
 }

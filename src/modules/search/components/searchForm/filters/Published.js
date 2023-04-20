@@ -1,22 +1,14 @@
 import PropTypes from "prop-types";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { SET_PUBLISHED } from "../../../query";
-import mergeCount from "../utils/mergeCount";
 import { Checkbox, Fieldset } from "@navikt/ds-react";
 
 export const PublishedLabelsEnum = {
     "now/d": "Nye i dag"
 };
 
-function Published({ dispatch, query, initialValues, updatedValues }) {
-    const [values, setValues] = useState(initialValues);
-
-    useEffect(() => {
-        if (updatedValues) {
-            const merged = mergeCount(values, updatedValues);
-            setValues(merged);
-        }
-    }, [updatedValues]);
+function Published({ dispatch, query, initialValues }) {
+    const values = initialValues;
 
     function handleClick(e) {
         const { value } = e.target;
@@ -37,7 +29,7 @@ function Published({ dispatch, query, initialValues, updatedValues }) {
                     onChange={handleClick}
                     checked={query.published === item.key}
                 >
-                    {`${PublishedLabelsEnum[item.key]} (${item.count})`}
+                    {PublishedLabelsEnum[item.key]}
                 </Checkbox>
             ))}
         </Fieldset>

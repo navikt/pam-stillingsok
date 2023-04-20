@@ -1,20 +1,10 @@
 import PropTypes from "prop-types";
-import React, { useEffect, useState } from "react";
-import UnknownSearchCriteriaValues from "./UnknownSearchCriteriaValues";
+import React from "react";
 import { ADD_EXTENT, REMOVE_EXTENT } from "../../../query";
-import mergeCount from "../utils/mergeCount";
-import { findUnknownSearchCriteriaValues } from "../utils/findUnknownSearchCriteriaValues";
 import { Checkbox, Fieldset } from "@navikt/ds-react";
 
-function Extent({ initialValues, updatedValues, query, dispatch }) {
-    const [values, setValues] = useState(initialValues);
-
-    useEffect(() => {
-        if (updatedValues) {
-            const merged = mergeCount(values, updatedValues);
-            setValues(merged);
-        }
-    }, [updatedValues]);
+function Extent({ initialValues, query, dispatch }) {
+    const values = initialValues;
 
     function handleClick(e) {
         const { value } = e.target;
@@ -39,16 +29,9 @@ function Extent({ initialValues, updatedValues, query, dispatch }) {
                     onChange={handleClick}
                     checked={query.extent.includes(item.key)}
                 >
-                    {`${labelForExtent(item)} (${item.count})`}
+                    {labelForExtent(item)}
                 </Checkbox>
             ))}
-
-            <UnknownSearchCriteriaValues
-                namePrefix="extent"
-                unknownValues={findUnknownSearchCriteriaValues(query.extent, initialValues)}
-                checkedValues={query.extent}
-                onClick={handleClick}
-            />
         </Fieldset>
     );
 }

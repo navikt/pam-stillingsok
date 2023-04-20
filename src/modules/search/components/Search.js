@@ -160,7 +160,7 @@ const Search = () => {
                     />
                     {numberOfSelectedFilters > 0 ? (
                         <React.Fragment>
-                            {searchResponse && searchResponse.data && searchResponse.data.totalAds && (
+                            {searchResponse && searchResponse.data && searchResponse.data.totalAds >= 0 && (
                                 <Heading
                                     id="search-result-count"
                                     level="2"
