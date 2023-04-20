@@ -60,7 +60,9 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, sho
                         <Label size="small" as="p">
                             Bedrift
                         </Label>
-                        <BodyShort id={`${ad.uuid}-employer`}>{employer}</BodyShort>
+                        <BodyShort size="small" id={`${ad.uuid}-employer`}>
+                            {employer}
+                        </BodyShort>
                     </div>
                 )}
 
@@ -69,7 +71,9 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, sho
                         <Label size="small" as="p">
                             Sted
                         </Label>
-                        <BodyShort id={`${ad.uuid}-location`}>{location}</BodyShort>
+                        <BodyShort size="small" id={`${ad.uuid}-location`}>
+                            {location}
+                        </BodyShort>
                     </div>
                 )}
                 {frist && (
