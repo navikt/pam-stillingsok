@@ -24,7 +24,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@navikt/aksel-icons": "^2.8.4",
+    "@navikt/aksel-icons": "^2.8.7",
     "@navikt/arbeidsplassen-css": "^1.1.10",
     "@navikt/arbeidsplassen-react": "^1.1.10",
     "@navikt/ds-css": "^2.8.4",
