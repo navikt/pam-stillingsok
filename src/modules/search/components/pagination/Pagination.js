@@ -1,7 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Button } from "@navikt/ds-react";
+import { Button, Link as AkselLink } from "@navikt/ds-react";
 import "./Pagination.css";
+import { ArrowUpIcon } from "@navikt/aksel-icons";
 
 const Pagination = ({ searchResult, isSearching, query, onLoadMoreClick }) => {
     const total = searchResult.totalAds;
@@ -20,6 +21,10 @@ const Pagination = ({ searchResult, isSearching, query, onLoadMoreClick }) => {
                     Last flere resultater
                 </Button>
             )}
+
+            <AkselLink href="#top" className="mt-1_5">
+                <ArrowUpIcon aria-hidden="true" /> Til topppen
+            </AkselLink>
         </React.Fragment>
     );
 };
