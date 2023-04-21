@@ -15,7 +15,7 @@ import { Link } from "react-router-dom";
 import { CONTEXT_PATH } from "../../../../common/environment";
 import { AuthenticationContext, AuthenticationStatus } from "../../../auth/contexts/AuthenticationProvider";
 
-const SearchForm = ({ fetchSearch, query, dispatchQuery, initialSearchResult, searchResult }) => {
+const SearchForm = ({ fetchSearch, query, dispatchQuery, initialSearchResult, searchResult, setShowEmptyState }) => {
     const [isLocationsVisible, setIsLocationsVisible] = useState(false);
     const [isOccupationsVisible, setIsOccupationsVisible] = useState(false);
     const [isOtherVisible, setIsOtherVisible] = useState(false);
@@ -74,10 +74,11 @@ const SearchForm = ({ fetchSearch, query, dispatchQuery, initialSearchResult, se
                         variant="tertiary"
                         onClick={() => {
                             dispatchQuery({ type: "RESET" });
+                            setShowEmptyState(true);
                         }}
                         icon={<TrashIcon aria-hidden="true" />}
                     >
-                        Tøm filter ({numberOfSelectedFilters})
+                        Nullstill søk
                     </Button>
                 )}
                 {authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED && (
@@ -99,6 +100,10 @@ const SearchForm = ({ fetchSearch, query, dispatchQuery, initialSearchResult, se
             {isLocationsVisible && (
                 <FilterModal
                     numberOfHits={numberOfHits}
+                    onShowResultClick={() => {
+                        setShowEmptyState(false);
+                        setIsLocationsVisible(false);
+                    }}
                     onCloseClick={() => {
                         setIsLocationsVisible(false);
                     }}
@@ -116,6 +121,10 @@ const SearchForm = ({ fetchSearch, query, dispatchQuery, initialSearchResult, se
             {isOccupationsVisible && (
                 <FilterModal
                     numberOfHits={numberOfHits}
+                    onShowResultClick={() => {
+                        setShowEmptyState(false);
+                        setIsOccupationsVisible(false);
+                    }}
                     onCloseClick={() => setIsOccupationsVisible(false)}
                     title="Filter på yrke"
                 >
@@ -131,6 +140,10 @@ const SearchForm = ({ fetchSearch, query, dispatchQuery, initialSearchResult, se
             {isOtherVisible && (
                 <FilterModal
                     numberOfHits={numberOfHits}
+                    onShowResultClick={() => {
+                        setShowEmptyState(false);
+                        setIsOtherVisible(false);
+                    }}
                     onCloseClick={() => setIsOtherVisible(false)}
                     title="Andre filter"
                 >

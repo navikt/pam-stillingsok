@@ -28,6 +28,7 @@ import EmptyState from "./emptyState/EmptyState";
 
 const Search = () => {
     const [query, queryDispatch] = useReducer(queryReducer, initialQuery, initQueryWithValuesFromBrowserUrl);
+    const [showEmptyState, setShowEmptyState] = useState(true);
     const [initialSearchResponse, initialSearchDispatch] = useFetchReducer();
     const [searchResponse, searchDispatch] = useFetchReducer();
     const latestSearch = useRef();
@@ -156,8 +157,11 @@ const Search = () => {
                         initialSearchResult={initialSearchResponse.data}
                         searchResult={searchResponse.data}
                         fetchSearch={fetchSearch}
+                        setShowEmptyState={setShowEmptyState}
                     />
-                    {numberOfSelectedFilters > 0 ? (
+                    {numberOfSelectedFilters === 0 && showEmptyState ? (
+                        <EmptyState totalPositions={initialSearchResponse.data.totalPositions} />
+                    ) : (
                         <React.Fragment>
                             {searchResponse && searchResponse.data && searchResponse.data.totalAds >= 0 && (
                                 <Heading
@@ -182,8 +186,6 @@ const Search = () => {
                             <DoYouWantToSaveSearch query={query} />
                             <HowToAddFavourites />
                         </React.Fragment>
-                    ) : (
-                        <EmptyState totalPositions={initialSearchResponse.data.totalPositions} />
                     )}
                 </React.Fragment>
             )}
