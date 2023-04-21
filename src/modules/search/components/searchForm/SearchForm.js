@@ -10,7 +10,6 @@ import SearchBox from "./SearchBox";
 import FilterModal from "./filters/FilterModal";
 import { toBrowserQuery } from "../../query";
 import { ChevronDownIcon, ClockIcon, TrashIcon } from "@navikt/aksel-icons";
-import Sorting from "./filters/Sorting";
 import { Link } from "react-router-dom";
 import { CONTEXT_PATH } from "../../../../common/environment";
 import { AuthenticationContext, AuthenticationStatus } from "../../../auth/contexts/AuthenticationProvider";
@@ -155,17 +154,6 @@ const SearchForm = ({ fetchSearch, query, dispatchQuery, initialSearchResult, se
                                 initialValues={initialSearchResult.aggregations.published}
                                 updatedValues={searchResult && searchResult.aggregations.published}
                             />
-                            <Sorting dispatch={dispatchQuery} query={query} />
-                        </div>
-                        <div className="FilterModal__column">
-                            <EngagementType
-                                query={query}
-                                dispatch={dispatchQuery}
-                                initialValues={initialSearchResult.aggregations.engagementTypes}
-                                updatedValues={searchResult && searchResult.aggregations.engagementTypes}
-                            />
-                        </div>
-                        <div className="FilterModal__column">
                             <Extent
                                 query={query}
                                 dispatch={dispatchQuery}
@@ -177,6 +165,14 @@ const SearchForm = ({ fetchSearch, query, dispatchQuery, initialSearchResult, se
                                 dispatch={dispatchQuery}
                                 initialValues={initialSearchResult.aggregations.sector}
                                 updatedValues={searchResult && searchResult.aggregations.sector}
+                            />
+                        </div>
+                        <div className="FilterModal__column">
+                            <EngagementType
+                                query={query}
+                                dispatch={dispatchQuery}
+                                initialValues={initialSearchResult.aggregations.engagementTypes}
+                                updatedValues={searchResult && searchResult.aggregations.engagementTypes}
                             />
                         </div>
                     </div>

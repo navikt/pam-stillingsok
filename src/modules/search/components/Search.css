@@ -12,18 +12,16 @@
 
 .Search__filter-buttons {
     background: #fff;
-    z-index: 1;
     display: flex;
-    align-items: center;
-    justify-content: center;
     flex-wrap: wrap;
     gap: 1rem;
     padding: 1rem 0;
 }
 
-@media (max-width: 374px) {
-    .Search__filter-buttons .navds-button__icon{
-        display: none;
+@media (min-width: 690px) {
+    .Search__filter-buttons {
+        align-items: center;
+        justify-content: center;
     }
 }
 
@@ -46,7 +44,7 @@
     padding-bottom: 1rem;
 }
 
-@media (min-width: 475px) {
+@media (min-width: 660px) {
     .Search__number-of-hits-and-sorting {
         flex-direction: row;
         align-items: center;
