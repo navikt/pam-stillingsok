@@ -119,7 +119,7 @@ function Locations({ initialValues, query, dispatch }) {
                             onChange={handleHomeOfficeClick}
                             checked={query.remote.includes(remote.key)}
                         >
-                            {`${remote.key} (${remote.count})`}
+                            {remote.key}
                         </Checkbox>
                     ))}
             </div>
