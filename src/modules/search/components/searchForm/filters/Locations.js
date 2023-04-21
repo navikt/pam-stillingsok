@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import fixLocationName from "../../../../../../server/common/fixLocationName";
 import {
     ADD_COUNTRY,
@@ -11,13 +11,44 @@ import {
     REMOVE_REMOTE,
     SET_INTERNATIONAL
 } from "../../../query";
+import UnknownSearchCriteriaValues from "./UnknownSearchCriteriaValues";
 import buildLocations from "../utils/buildLocations";
 import buildHomeOfficeValues from "../utils/buildHomeOfficeValues";
+import mergeCount from "../utils/mergeCount";
+import { findUnknownSearchCriteriaValues } from "../utils/findUnknownSearchCriteriaValues";
+import findZeroCountLocationFacets from "../utils/findZeroCountLocationFacets";
 import { Checkbox, Fieldset } from "@navikt/ds-react";
 
-function Locations({ initialValues, query, dispatch }) {
-    const locationValues = buildLocations(initialValues);
-    const homeOfficeValues = buildHomeOfficeValues(initialValues.aggregations.remote);
+function Locations({ initialValues, updatedValues, query, dispatch }) {
+    const [locationValues, setLocationValues] = useState(buildLocations(initialValues));
+    const [homeOfficeValues, setHomeOfficeValues] = useState(buildHomeOfficeValues(initialValues.aggregations.remote));
+    const unknownCounties = findUnknownSearchCriteriaValues(query.counties, initialValues.locations);
+    const unknownMunicipals = findUnknownSearchCriteriaValues(query.municipals, initialValues.locations, "municipals");
+    const unknownCountries = findZeroCountLocationFacets(
+        query.countries,
+        initialValues.aggregations.nationalCountMap,
+        initialValues.aggregations.internationalCountMap
+    );
+
+    /**
+     * Update count in all locations after a search is done
+     */
+    useEffect(() => {
+        if (updatedValues) {
+            setHomeOfficeValues(mergeCount(homeOfficeValues, buildHomeOfficeValues(updatedValues.aggregations.remote)));
+
+            setLocationValues(
+                mergeCount(
+                    locationValues,
+                    buildLocations({
+                        ...updatedValues,
+                        locations: initialValues.locations
+                    }),
+                    "subLocations"
+                )
+            );
+        }
+    }, [updatedValues]);
 
     function handleLocationClick(value, type, checked) {
         if (type === "county") {
@@ -48,6 +79,14 @@ function Locations({ initialValues, query, dispatch }) {
         }
     }
 
+    const handleZeroCountFacetClick = (countries, counties, municipals, homeOffice) => (e) => {
+        const { value } = e.target;
+
+        if (countries.includes(value)) handleLocationClick(value, "country", e.target.checked);
+        else if (counties.includes(value)) handleLocationClick(value, "county", e.target.checked);
+        else if (municipals.includes(value)) handleLocationClick(value, "municipal", e.target.checked);
+    };
+
     const handleCheckboxClick = (key, type) => (e) => {
         handleLocationClick(key, type, e.target.checked);
     };
@@ -61,6 +100,9 @@ function Locations({ initialValues, query, dispatch }) {
             dispatch({ type: REMOVE_REMOTE, value: "Hybridkontor" });
         }
     };
+
+    const unknownLocations = [...new Set([...unknownCountries, ...unknownCounties, ...unknownMunicipals])];
+    const checkedLocations = [...query.countries, ...query.counties, ...query.municipals];
 
     return (
         <Fieldset hideLegend legend="Velg fylke, kommune, land eller hjemmekontor" className="FilterModal__fieldset">
@@ -77,7 +119,7 @@ function Locations({ initialValues, query, dispatch }) {
                             }
                         >
                             <span translate={location.key !== "UTLAND" ? "no" : undefined}>
-                                {fixLocationName(location.key)}
+                                {`${fixLocationName(location.key)} (${location.count})`}
                             </span>
                         </Checkbox>
                         {(query.counties.includes(location.key) ||
@@ -92,6 +134,7 @@ function Locations({ initialValues, query, dispatch }) {
                                     {location.subLocations &&
                                         location.subLocations.map((subLocation) => (
                                             <Checkbox
+                                                className={subLocation.count === 0 ? "Facet__zero__count" : ""}
                                                 name="location"
                                                 key={subLocation.key}
                                                 value={subLocation.key}
@@ -101,7 +144,9 @@ function Locations({ initialValues, query, dispatch }) {
                                                     query.countries.includes(subLocation.key)
                                                 }
                                             >
-                                                <span translate="no">{fixLocationName(subLocation.key, true)}</span>
+                                                <span translate="no">
+                                                    {`${fixLocationName(subLocation.key, true)} (${subLocation.count})`}
+                                                </span>
                                             </Checkbox>
                                         ))}
                                 </Fieldset>
@@ -109,7 +154,7 @@ function Locations({ initialValues, query, dispatch }) {
                     </React.Fragment>
                 ))}
 
-            <div className="mt-1_5">
+            <div className="RemoteFacet">
                 {homeOfficeValues &&
                     homeOfficeValues.map((remote) => (
                         <Checkbox
@@ -119,10 +164,18 @@ function Locations({ initialValues, query, dispatch }) {
                             onChange={handleHomeOfficeClick}
                             checked={query.remote.includes(remote.key)}
                         >
-                            {remote.key}
+                            {`${remote.key} (${remote.count})`}
                         </Checkbox>
                     ))}
             </div>
+
+            <UnknownSearchCriteriaValues
+                shouldFixLocationName={true}
+                namePrefix="counties"
+                unknownValues={unknownLocations}
+                checkedValues={checkedLocations}
+                onClick={handleZeroCountFacetClick(unknownCountries, unknownCounties, unknownMunicipals)}
+            />
         </Fieldset>
     );
 }

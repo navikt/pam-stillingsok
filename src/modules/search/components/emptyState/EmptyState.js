@@ -11,7 +11,7 @@ function EmptyState({ totalPositions }) {
     const { authenticationStatus } = useContext(AuthenticationContext);
 
     return (
-        <div className="EmptyState">
+        <div className="container-medium EmptyState">
             <Illustration />
             <Label as="p" className="mt-1 mb-0_25 text-center">
                 Akkurat nå er det {totalPositions.toLocaleString()} ledige stillinger

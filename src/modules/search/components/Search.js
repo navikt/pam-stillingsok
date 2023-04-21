@@ -21,10 +21,11 @@ import "./Search.css";
 import { useHistory } from "react-router";
 import SearchResult from "./searchResult/SearchResult";
 import H1WithAutoFocus from "../../../common/components/h1WithAutoFocus/H1WithAutoFocus";
-import { Heading } from "@navikt/ds-react";
+import { BodyLong, Heading } from "@navikt/ds-react";
 import DoYouWantToSaveSearch from "./howToPanels/DoYouWantToSaveSearch";
 import HowToAddFavourites from "./howToPanels/HowToAddFavourites";
 import EmptyState from "./emptyState/EmptyState";
+import Sorting from "./searchResult/Sorting";
 
 const Search = () => {
     const [query, queryDispatch] = useReducer(queryReducer, initialQuery, initQueryWithValuesFromBrowserUrl);
@@ -145,8 +146,8 @@ const Search = () => {
             : readableQueryFullLength;
 
     return (
-        <div className="container-medium mb-4">
-            <H1WithAutoFocus className="Search__h1">Søk i ledige jobber</H1WithAutoFocus>
+        <div className="mb-4">
+            <H1WithAutoFocus className="container-medium  Search__h1">Søk i ledige jobber</H1WithAutoFocus>
             {initialSearchResponse.status === FetchStatus.FAILURE && <ErrorMessage />}
             {initialSearchResponse.status === FetchStatus.IS_FETCHING && <LoadingScreen />}
             {initialSearchResponse.status === FetchStatus.SUCCESS && (
@@ -163,28 +164,26 @@ const Search = () => {
                         <EmptyState totalPositions={initialSearchResponse.data.totalPositions} />
                     ) : (
                         <React.Fragment>
-                            {searchResponse && searchResponse.data && searchResponse.data.totalAds >= 0 && (
-                                <Heading
-                                    id="search-result-count"
-                                    level="2"
-                                    size="small"
-                                    role="status"
-                                    className="mt-1 mb-1"
-                                >
-                                    {readableQuery.length > 0
-                                        ? `${searchResponse.data.totalAds.toLocaleString()} treff på "${readableQuery}"`
-                                        : `${searchResponse.data.totalAds.toLocaleString()} treff`}
-                                </Heading>
-                            )}
-
-                            <SearchResult
-                                searchResponse={searchResponse}
-                                query={query}
-                                queryDispatch={queryDispatch}
-                                loadMoreResults={loadMoreResults}
-                            />
-                            <DoYouWantToSaveSearch query={query} />
-                            <HowToAddFavourites />
+                            <div className="Search__number-of-hits-and-sorting-wrapper">
+                                <div className="container-medium Search__number-of-hits-and-sorting">
+                                    {searchResponse && searchResponse.data && searchResponse.data.totalAds >= 0 && (
+                                        <Heading level="2" size="small" role="status">
+                                            {`Søkeresultat: ${searchResponse.data.totalAds.toLocaleString()} treff`}
+                                        </Heading>
+                                    )}
+                                    <Sorting dispatch={queryDispatch} query={query} />
+                                </div>
+                            </div>
+                            <div className="container-medium">
+                                <SearchResult
+                                    searchResponse={searchResponse}
+                                    query={query}
+                                    queryDispatch={queryDispatch}
+                                    loadMoreResults={loadMoreResults}
+                                />
+                                <DoYouWantToSaveSearch query={query} />
+                                <HowToAddFavourites />
+                            </div>
                         </React.Fragment>
                     )}
                 </React.Fragment>

@@ -34,7 +34,7 @@ const SearchForm = ({ fetchSearch, query, dispatchQuery, initialSearchResult, se
     const numberOfHits = searchResult && searchResult.totalAds ? searchResult.totalAds : 0;
 
     return (
-        <form id="sok" className="mb-2" onSubmit={submitForm} role="search">
+        <form id="sok" className="container-medium mb-2" onSubmit={submitForm} role="search">
             <SearchBox query={query} dispatch={dispatchQuery} />
 
             <div className="Search__filter-buttons">
@@ -66,7 +66,7 @@ const SearchForm = ({ fetchSearch, query, dispatchQuery, initialSearchResult, se
                     }}
                     icon={<ChevronDownIcon aria-hidden="true" />}
                 >
-                    Mer
+                    Andre filter
                 </Button>
                 {numberOfSelectedFilters > 0 && (
                     <Button

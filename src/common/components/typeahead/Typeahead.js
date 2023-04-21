@@ -205,6 +205,7 @@ export default class Typeahead extends React.Component {
                     aria-activedescendant={activeDescendant}
                     value={this.props.value}
                     autoComplete="off"
+                    placeholder="Skriv søkeord, f.eks Bergen"
                     onChange={this.onChange}
                     onBlur={this.onBlur}
                     onKeyDown={this.onKeyDown}

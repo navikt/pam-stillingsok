@@ -32,3 +32,29 @@
         gap: 1rem 0.35rem;
     }
 }
+
+.Search__number-of-hits-and-sorting-wrapper {
+    background: var(--arb-green-50);
+    margin-bottom: 2rem;
+}
+
+.Search__number-of-hits-and-sorting {
+    display: flex;
+    gap: 1rem;
+    flex-direction: column;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+@media (min-width: 475px) {
+    .Search__number-of-hits-and-sorting {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+}
+
+.SearchBox {
+    max-width: 600px;
+    margin: 0 auto;
+}

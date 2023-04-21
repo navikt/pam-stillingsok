@@ -1,6 +1,7 @@
 .Typeahead {
     flex: 1;
     position: relative;
+    max-width: 600px;
 }
 
 .Typeahead ul {
