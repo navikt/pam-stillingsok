@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Chips } from "@navikt/ds-react";
+import { Button, Chips, Heading } from "@navikt/ds-react";
 import { PublishedLabelsEnum } from "../searchForm/filters/Published";
 import fixLocationName from "../../../../../server/common/fixLocationName";
 import "./SelectedFilters.css";
@@ -191,24 +191,34 @@ function SelectedFilters({ query, queryDispatch }) {
         );
     }
 
+    if (chips.length === 0) {
+        return null;
+    }
+
     return (
         <div className="SelectedFilters">
-            {chips.length > MAX_CHIPS ? (
-                <React.Fragment>
-                    {showAll ? chips : chips.slice(0, MAX_CHIPS)}
-                    <Button
-                        size="small"
-                        variant="secondary"
-                        onClick={() => {
-                            setShowAll(!showAll);
-                        }}
-                    >
-                        {showAll ? `Skjul ${chips.length - MAX_CHIPS}` : `Vis ${chips.length - MAX_CHIPS} til`}
-                    </Button>
-                </React.Fragment>
-            ) : (
-                <React.Fragment>{chips}</React.Fragment>
-            )}
+            <Heading size="small" level="2" spacing>
+                Valgte filter ({chips.length})
+            </Heading>
+
+            <div className="SelectedFilters__chips">
+                {chips.length > MAX_CHIPS ? (
+                    <React.Fragment>
+                        {showAll ? chips : chips.slice(0, MAX_CHIPS)}
+                        <Button
+                            size="small"
+                            variant="secondary"
+                            onClick={() => {
+                                setShowAll(!showAll);
+                            }}
+                        >
+                            {showAll ? `Skjul ${chips.length - MAX_CHIPS}` : `Vis ${chips.length - MAX_CHIPS} til`}
+                        </Button>
+                    </React.Fragment>
+                ) : (
+                    <React.Fragment>{chips}</React.Fragment>
+                )}
+            </div>
         </div>
     );
 }
