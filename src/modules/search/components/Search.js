@@ -26,6 +26,7 @@ import DoYouWantToSaveSearch from "./howToPanels/DoYouWantToSaveSearch";
 import HowToAddFavourites from "./howToPanels/HowToAddFavourites";
 import EmptyState from "./emptyState/EmptyState";
 import Sorting from "./searchResult/Sorting";
+import SelectedFilters from "./selectedFilters/SelectedFilters";
 
 const Search = () => {
     const [query, queryDispatch] = useReducer(queryReducer, initialQuery, initQueryWithValuesFromBrowserUrl);
@@ -164,6 +165,9 @@ const Search = () => {
                         <EmptyState totalPositions={initialSearchResponse.data.totalPositions} />
                     ) : (
                         <React.Fragment>
+                            <div className="container-medium">
+                                <SelectedFilters query={query} queryDispatch={queryDispatch} />
+                            </div>
                             <div className="Search__number-of-hits-and-sorting-wrapper">
                                 <div className="container-medium Search__number-of-hits-and-sorting">
                                     {searchResponse && searchResponse.data && searchResponse.data.totalAds >= 0 && (
