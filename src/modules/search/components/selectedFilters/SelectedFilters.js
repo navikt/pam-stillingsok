@@ -205,15 +205,17 @@ function SelectedFilters({ query, queryDispatch }) {
                 {chips.length > MAX_CHIPS ? (
                     <React.Fragment>
                         {showAll ? chips : chips.slice(0, MAX_CHIPS)}
-                        <Button
-                            size="small"
-                            variant="secondary"
-                            onClick={() => {
-                                setShowAll(!showAll);
-                            }}
-                        >
-                            {showAll ? `Skjul ${chips.length - MAX_CHIPS}` : `Vis ${chips.length - MAX_CHIPS} til`}
-                        </Button>
+                        {!showAll && (
+                            <Button
+                                size="small"
+                                variant="secondary"
+                                onClick={() => {
+                                    setShowAll(!showAll);
+                                }}
+                            >
+                                {`Vis ${chips.length - MAX_CHIPS} til`}
+                            </Button>
+                        )}
                     </React.Fragment>
                 ) : (
                     <React.Fragment>{chips}</React.Fragment>

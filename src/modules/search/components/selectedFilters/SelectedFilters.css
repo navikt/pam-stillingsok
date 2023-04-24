@@ -5,5 +5,6 @@
 .SelectedFilters__chips {
     display: flex;
     flex-wrap: wrap;
-    gap: 1rem 0.5rem;
+    align-items: center;
+    gap: 0.5rem;
 }
