@@ -12,16 +12,20 @@ export default function Summary({ stilling }) {
     return (
         <section className="Summary">
             {employer && (
-                <p className="Summary__item">
-                    <Buldings3Icon title="Arbeidsgiver" width="1.25em" height="1.25em" />
-                    {employer}
-                </p>
+                <div className="Summary__item">
+                    <div>
+                        <Buldings3Icon title="Arbeidsgiver" width="1.25em" height="1.25em" />
+                    </div>
+                    <div>{employer}</div>
+                </div>
             )}
             {location && (
-                <p className="Summary__item">
-                    <PinIcon title="Sted" width="1.25em" height="1.25em" />
-                    {location}
-                </p>
+                <div className="Summary__item">
+                    <div>
+                        <PinIcon title="Sted" width="1.25em" height="1.25em" />
+                    </div>
+                    <div>{location}</div>
+                </div>
             )}
         </section>
     );
