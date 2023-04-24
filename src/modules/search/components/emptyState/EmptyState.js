@@ -13,10 +13,9 @@ function EmptyState({ totalPositions }) {
     return (
         <div className="container-medium EmptyState">
             <Illustration />
-            <Label as="p" className="mt-1 mb-0_25 text-center">
+            <BodyLong className="mt-1 text-center">
                 Akkurat nå er det {totalPositions.toLocaleString()} ledige stillinger
-            </Label>
-            <BodyLong className="text-center">Fyll inn sted, yrke og andre filter for å søke.</BodyLong>
+            </BodyLong>
             {authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED && (
                 <BodyLong className="text-center mt-1">
                     <Link to={`${CONTEXT_PATH}/favoritter`}>
