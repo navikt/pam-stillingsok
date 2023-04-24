@@ -23,7 +23,7 @@ const Pagination = ({ searchResult, isSearching, query, onLoadMoreClick }) => {
             )}
 
             <AkselLink href="#top" className="mt-1_5">
-                <ArrowUpIcon aria-hidden="true" /> Til topppen
+                <ArrowUpIcon aria-hidden="true" /> Til toppen
             </AkselLink>
         </React.Fragment>
     );
