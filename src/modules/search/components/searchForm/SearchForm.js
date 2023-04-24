@@ -65,7 +65,7 @@ const SearchForm = ({ fetchSearch, query, dispatchQuery, initialSearchResult, se
                     }}
                     icon={<ChevronDownIcon aria-hidden="true" />}
                 >
-                    Andre filter
+                    Andre filtre
                 </Button>
                 {numberOfSelectedFilters > 0 && (
                     <Button
@@ -144,7 +144,7 @@ const SearchForm = ({ fetchSearch, query, dispatchQuery, initialSearchResult, se
                         setIsOtherVisible(false);
                     }}
                     onCloseClick={() => setIsOtherVisible(false)}
-                    title="Andre filter"
+                    title="Andre filtre"
                 >
                     <div className="FilterModal__flex-columns">
                         <div className="FilterModal__column">
