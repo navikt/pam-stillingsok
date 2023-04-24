@@ -16,7 +16,7 @@ function HowToAddFavourites() {
                     Dine favoritter
                 </Heading>
                 {authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED ? (
-                    <BodyLong>Klikk på hjertet for å lagre en annsonse.</BodyLong>
+                    <BodyLong>Klikk på hjertet for å lagre en annonse.</BodyLong>
                 ) : (
                     <BodyLong>Vil du lagre favoritter, må du først logge inn.</BodyLong>
                 )}
