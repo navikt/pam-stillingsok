@@ -28,6 +28,7 @@ import EmptyState from "./emptyState/EmptyState";
 import Sorting from "./searchResult/Sorting";
 import SelectedFilters from "./selectedFilters/SelectedFilters";
 import Feedback from "./feedback/Feedback";
+import DelayedSpinner from "../../../common/components/spinner/DelayedSpinner";
 
 const Search = () => {
     const [query, queryDispatch] = useReducer(queryReducer, initialQuery, initQueryWithValuesFromBrowserUrl);
@@ -151,7 +152,7 @@ const Search = () => {
         <div className="mb-4">
             <H1WithAutoFocus className="container-medium  Search__h1">Søk i ledige jobber</H1WithAutoFocus>
             {initialSearchResponse.status === FetchStatus.FAILURE && <ErrorMessage />}
-            {initialSearchResponse.status === FetchStatus.IS_FETCHING && <LoadingScreen />}
+            {initialSearchResponse.status === FetchStatus.IS_FETCHING && <DelayedSpinner />}
             {initialSearchResponse.status === FetchStatus.SUCCESS && (
                 <React.Fragment>
                     <SearchForm
