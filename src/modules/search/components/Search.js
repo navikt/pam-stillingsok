@@ -21,12 +21,13 @@ import "./Search.css";
 import { useHistory } from "react-router";
 import SearchResult from "./searchResult/SearchResult";
 import H1WithAutoFocus from "../../../common/components/h1WithAutoFocus/H1WithAutoFocus";
-import { BodyLong, Heading } from "@navikt/ds-react";
+import { Heading } from "@navikt/ds-react";
 import DoYouWantToSaveSearch from "./howToPanels/DoYouWantToSaveSearch";
 import HowToAddFavourites from "./howToPanels/HowToAddFavourites";
 import EmptyState from "./emptyState/EmptyState";
 import Sorting from "./searchResult/Sorting";
 import SelectedFilters from "./selectedFilters/SelectedFilters";
+import Feedback from "./feedback/Feedback";
 
 const Search = () => {
     const [query, queryDispatch] = useReducer(queryReducer, initialQuery, initQueryWithValuesFromBrowserUrl);
@@ -187,6 +188,7 @@ const Search = () => {
                                 />
                                 <DoYouWantToSaveSearch query={query} />
                                 <HowToAddFavourites />
+                                <Feedback />
                             </div>
                         </React.Fragment>
                     )}
