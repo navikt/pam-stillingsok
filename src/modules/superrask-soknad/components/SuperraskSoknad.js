@@ -67,7 +67,6 @@ const SuperraskSoknad = ({ match }) => {
     return (
         <div className="InterestForm">
             {status === FetchStatus.IS_FETCHING && <DelayedSpinner />}
-
             {status === FetchStatus.FAILURE && error.statusCode !== 404 && (
                 <div className="container-small mt-1 mb-1">
                     <Alert variant="error">Det oppsto dessverre en feil. Prøv å last inn siden på nytt.</Alert>
@@ -76,8 +75,8 @@ const SuperraskSoknad = ({ match }) => {
 
             {status === FetchStatus.FAILURE && error.statusCode === 404 && (
                 <NotFound404
-                    title="Vi fant dessverre ikke innholdet du ser etter"
-                    text="Det kan være en feil i lenken du brukte, eller så kan bedriften ha avsluttet søknadsprosessen for denne stillingen."
+                    title="Vi fant dessverre ikke din søknad"
+                    text="Det kan hende at du allerede har trukket søknaden din eller at bedriften har avslått søknaden din."
                 />
             )}
 
