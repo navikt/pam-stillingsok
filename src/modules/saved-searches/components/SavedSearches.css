@@ -8,6 +8,18 @@
     margin: 3rem 0 0;
 }
 
+.SavedSearchListItem {
+    margin: 3rem 0 0;
+    padding-left: 1rem;
+    border-left: 2px solid var(--arb-blue-50);
+}
+
+@media (min-width: 728px) {
+    .SavedSearchListItem {
+        padding-left: 2rem;
+    }
+}
+
 @media (max-width: 991px) {
     .SavedSearchListItem__button-alertstripe {
         display: block !important;

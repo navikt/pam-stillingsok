@@ -1,5 +1,13 @@
 .SearchResultItem {
     margin-bottom: 3rem;
+    padding-left: 1rem;
+    border-left: 2px solid var(--arb-blue-50);
+}
+
+@media (min-width: 728px) {
+    .SearchResultItem {
+        padding-left: 2rem;
+    }
 }
 
 .SearchResultItem:focus {
