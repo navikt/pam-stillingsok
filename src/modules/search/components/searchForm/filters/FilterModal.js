@@ -30,7 +30,7 @@ function FilterModal({ title, children, onCloseClick, numberOfHits, onShowResult
             <div className="FilterModal__content">{children}</div>
             <div className="FilterModal__bottom">
                 <Button variant="primary" onClick={onShowResultClick}>
-                    Vis {numberOfHits.toLocaleString()} treff
+                    Vis {numberOfHits} treff
                 </Button>
             </div>
         </Modal>

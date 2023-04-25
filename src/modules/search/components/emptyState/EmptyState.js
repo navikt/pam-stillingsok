@@ -13,9 +13,7 @@ function EmptyState({ totalPositions }) {
     return (
         <div className="container-medium EmptyState">
             <Illustration />
-            <BodyLong className="mt-1 text-center">
-                Akkurat nå er det {totalPositions.toLocaleString()} ledige stillinger
-            </BodyLong>
+            <BodyLong className="mt-1 text-center">Akkurat nå er det {totalPositions} ledige stillinger</BodyLong>
             {authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED && (
                 <BodyLong className="text-center mt-1">
                     <Link to={`${CONTEXT_PATH}/favoritter`}>
