@@ -4,8 +4,11 @@ body {
     margin: 0;
 }
 
-body {
+html {
     overflow-y: scroll;
+}
+
+body {
     background: var(--a-surface-default);
     color: var(--a-text-default);
     font-family: var(--a-font-family);
