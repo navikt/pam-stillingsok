@@ -36,9 +36,14 @@ const Search = () => {
     const [initialSearchResponse, initialSearchDispatch] = useFetchReducer();
     const [searchResponse, searchDispatch] = useFetchReducer();
     const latestSearch = useRef();
+    const numberOfSelectedFilters = Object.keys(toBrowserQuery(query)).length;
+
     let history = useHistory();
 
-    useRestoreScroll("search-page", initialSearchResponse.status === FetchStatus.SUCCESS);
+    useRestoreScroll(
+        "search-page",
+        initialSearchResponse.status === FetchStatus.SUCCESS && numberOfSelectedFilters > 0
+    );
 
     /**
      * Make an initial search when view is shown.
@@ -141,7 +146,6 @@ const Search = () => {
         };
     }
 
-    const numberOfSelectedFilters = Object.keys(toBrowserQuery(query)).length;
     const readableQueryFullLength = toReadableQuery(query);
     const readableQuery =
         readableQueryFullLength.length > 60
