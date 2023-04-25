@@ -25,8 +25,8 @@
   "license": "ISC",
   "dependencies": {
     "@navikt/aksel-icons": "^2.8.14",
-    "@navikt/arbeidsplassen-css": "^1.1.10",
-    "@navikt/arbeidsplassen-react": "^1.1.10",
+    "@navikt/arbeidsplassen-css": "^1.1.13",
+    "@navikt/arbeidsplassen-react": "^1.1.13",
     "@navikt/ds-css": "^2.8.14",
     "@navikt/ds-react": "^2.8.14",
     "@sentry/browser": "^6.19.6",
