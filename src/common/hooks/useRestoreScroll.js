@@ -16,6 +16,8 @@ export default function useRestoreScroll(id, shouldRestore) {
                 if (storedValue) {
                     window.scrollTo(0, parseInt(storedValue, 10));
                 }
+            } else {
+                window.scrollTo(0, 0);
             }
         } catch (error) {
             // ignore sessionStorage error
