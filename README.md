@@ -115,6 +115,11 @@ $ kubectl config use-context dev-gcp
 $ kubectl -n teampam port-forward deployment/pam-search-api 9000:9000
 ```
 
+Dersom du får får feilmelding ved kjøring av kommandoene over kan du prøve å logge inn i Gcloud med følgende kommando.
+```
+gcloud auth login
+```
+
 Om du får følgende output betyr det at port-forwarden funket og pam-search-api er tilgjengelig på port 9000. 
 ```
 Forwarding from 127.0.0.1:9000 -> 9000
