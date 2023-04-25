@@ -76,6 +76,14 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, sho
                         </BodyShort>
                     </div>
                 )}
+                {published && (
+                    <div>
+                        <Label size="small" as="p">
+                            Publisert
+                        </Label>
+                        <BodyShort size="small">{published}</BodyShort>
+                    </div>
+                )}
                 {frist && (
                     <div>
                         <Label size="small" as="p">
