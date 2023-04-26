@@ -76,7 +76,7 @@ const SuperraskSoknad = ({ match }) => {
             {status === FetchStatus.FAILURE && error.statusCode === 404 && (
                 <NotFound404
                     title="Vi fant dessverre ikke din søknad"
-                    text="Det kan hende at du allerede har trukket søknaden din eller at bedriften har avslått søknaden din."
+                    text="Det kan være at du allerede har trukket søknaden din eller at bedriften har avslått søknaden din."
                 />
             )}
 
