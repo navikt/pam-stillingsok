@@ -1,12 +1,21 @@
 import { format } from "date-fns";
 import { nb } from "date-fns/locale";
 
-export function formatDate(dateString, dateFormat = "d. MMMM yyyy") {
+const ISO_8601_DATE = /^\d{4}(-\d\d(-\d\d(T\d\d:\d\d(:\d\d)?(\.\d+)?(([+-]\d\d:\d\d)|Z)?)?)?)?$/i;
+
+export function isValidISOString(isoString) {
+    return ISO_8601_DATE.test(isoString);
+}
+
+export function formatDate(isoString, dateFormat = "d. MMMM yyyy") {
+    if (!isValidISOString(isoString)) {
+        return isoString;
+    }
     try {
-        const date = new Date(dateString);
+        const date = new Date(isoString);
         return format(date, dateFormat, { locale: nb });
     } catch (error) {
-        return dateString;
+        return isoString;
     }
 }
 
