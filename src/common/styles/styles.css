@@ -4,10 +4,6 @@ body {
     margin: 0;
 }
 
-html {
-    overflow-y: scroll;
-}
-
 body {
     background: var(--a-surface-default);
     color: var(--a-text-default);
