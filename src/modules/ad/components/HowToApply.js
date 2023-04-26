@@ -154,16 +154,18 @@ export default function HowToApply({ stilling, showFavouriteButton, isInternal }
                 </dl>
 
                 {applicationUrl && isValidUrl(applicationUrl) && (
-                    <Button
-                        className="HowToApply__full-width-button"
-                        variant="primary"
-                        as="a"
-                        href={applicationUrl}
-                        onClick={() => applyForPosition(isFinn, stilling)}
-                        icon={<ExternalLinkIcon aria-hidden="true" />}
-                    >
-                        Gå til søknad
-                    </Button>
+                    <div>
+                        <Button
+                            className="HowToApply__full-width-button"
+                            variant="primary"
+                            as="a"
+                            href={applicationUrl}
+                            onClick={() => applyForPosition(isFinn, stilling)}
+                            icon={<ExternalLinkIcon aria-hidden="true" />}
+                        >
+                            Gå til søknad
+                        </Button>
+                    </div>
                 )}
 
                 {isFinn && (
