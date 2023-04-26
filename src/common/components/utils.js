@@ -1,22 +1,34 @@
-import { format } from "date-fns";
-import { nb } from "date-fns/locale";
-
 const ISO_8601_DATE = /^\d{4}(-\d\d(-\d\d(T\d\d:\d\d(:\d\d)?(\.\d+)?(([+-]\d\d:\d\d)|Z)?)?)?)?$/i;
-
+const months = [
+    "januar",
+    "februar",
+    "mars",
+    "april",
+    "mai",
+    "juni",
+    "juli",
+    "august",
+    "september",
+    "oktober",
+    "november",
+    "desember"
+];
 export function isValidISOString(isoString) {
     return ISO_8601_DATE.test(isoString);
 }
 
-export function formatDate(isoString, dateFormat = "d. MMMM yyyy") {
-    if (!isValidISOString(isoString)) {
-        return isoString;
-    }
+export function formatDate(isoString) {
     try {
-        const date = new Date(isoString);
-        return format(date, dateFormat, { locale: nb });
+        if (isValidISOString(isoString)) {
+            const dt = isoString.split("-");
+            const day = parseInt(dt[2].split("T")[0]);
+            const month = months[parseInt(dt[1] - 1)];
+            return `${day}. ${month} ${dt[0]}`;
+        }
     } catch (error) {
         return isoString;
     }
+    return isoString;
 }
 
 export function formatNumber(number) {
