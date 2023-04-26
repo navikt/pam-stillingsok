@@ -15,7 +15,6 @@
     justify-content: space-between;
     gap: 0.5rem;
     align-items: flex-start;
-    margin-bottom: 0.75rem;
 }
 
 .SearchResultsItem__title-external svg {
@@ -24,8 +23,9 @@
 
 .SearchResultItem__details {
     display: flex;
-    gap: 1rem 2rem;
+    gap: 1rem;
     flex-wrap: wrap;
+    align-items: center;
 }
 
 .SearchResultsItem__bottom {
@@ -35,8 +35,16 @@
     gap: 1rem 2rem;
 }
 
+.SearchResultItem__text-and-icon {
+    display: flex;
+    gap: 0.75rem;
+}
 
 .SearchResultsItem__favourite-button {
     margin-right: -8px;
     margin-bottom: -8px;
+}
+
+.SearchResultItem__subtle-text {
+    color: var(--arb-gray-700);
 }

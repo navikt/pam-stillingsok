@@ -3,14 +3,14 @@ import PropTypes from "prop-types";
 import { formatDate } from "../../../common/components/utils";
 import { Link } from "react-router-dom";
 import { CONTEXT_PATH } from "../../../common/environment";
-import { BodyLong, BodyShort, Heading, Label, Link as AkselLink } from "@navikt/ds-react";
+import { BodyShort, Label, Link as AkselLink } from "@navikt/ds-react";
 
 export default function AdDetails({ id, source }) {
     return (
         <section className="JobPosting__section">
             {source.updated && (
                 <BodyShort spacing>
-                    <Label as="span">Sist endret:</Label> {formatDate(source.updated, "DD.MM.YYYY")}
+                    <Label as="span">Sist endret:</Label> {formatDate(source.updated)}
                 </BodyShort>
             )}
             {source.medium && (

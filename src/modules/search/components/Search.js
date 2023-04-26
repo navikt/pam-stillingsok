@@ -7,15 +7,13 @@ import queryReducer, {
     SET_FROM,
     stringifyQuery,
     toApiQuery,
-    toBrowserQuery,
-    toReadableQuery
+    toBrowserQuery
 } from "../query";
-import { extractParam, formatNumber } from "../../../common/components/utils";
+import { extractParam } from "../../../common/components/utils";
 import { FetchAction, FetchStatus, useFetchReducer } from "../../../common/hooks/useFetchReducer";
 import SearchAPI from "../../../common/api/SearchAPI";
 import ErrorMessage from "../../../common/components/messages/ErrorMessage";
 import SearchForm from "./searchForm/SearchForm";
-import LoadingScreen from "./loadingScreen/LoadingScreen";
 import useRestoreScroll from "../../../common/hooks/useRestoreScroll";
 import "./Search.css";
 import { useHistory } from "react-router";
@@ -29,6 +27,7 @@ import Sorting from "./searchResult/Sorting";
 import SelectedFilters from "./selectedFilters/SelectedFilters";
 import Feedback from "./feedback/Feedback";
 import DelayedSpinner from "../../../common/components/spinner/DelayedSpinner";
+import SearchResultCount from "./searchResult/SearchResultCount";
 
 const Search = () => {
     const [query, queryDispatch] = useReducer(queryReducer, initialQuery, initQueryWithValuesFromBrowserUrl);
@@ -146,12 +145,6 @@ const Search = () => {
         };
     }
 
-    const readableQueryFullLength = toReadableQuery(query);
-    const readableQuery =
-        readableQueryFullLength.length > 60
-            ? `${readableQueryFullLength.substring(0, 70)} (...)`
-            : readableQueryFullLength;
-
     return (
         <div className="mb-4">
             <H1WithAutoFocus className="container-medium  Search__h1">Søk i ledige jobber</H1WithAutoFocus>
@@ -177,9 +170,12 @@ const Search = () => {
                             <div className="Search__number-of-hits-and-sorting-wrapper">
                                 <div className="container-medium Search__number-of-hits-and-sorting">
                                     {searchResponse && searchResponse.data && searchResponse.data.totalAds >= 0 && (
-                                        <Heading level="2" size="small" role="status">
-                                            {`Søkeresultat: ${formatNumber(searchResponse.data.totalAds)} treff`}
-                                        </Heading>
+                                        <div>
+                                            <Heading level="2" size="small" role="status">
+                                                Søkeresultat
+                                            </Heading>
+                                            <SearchResultCount searchResult={searchResponse.data} />
+                                        </div>
                                     )}
                                     <Sorting dispatch={queryDispatch} query={query} />
                                 </div>

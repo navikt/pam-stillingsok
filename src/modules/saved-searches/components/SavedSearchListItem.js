@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React, { useState } from "react";
 import { CONTEXT_PATH } from "../../../common/environment";
-import { formatDate, isValidISOString } from "../../../common/components/utils";
+import { formatDate } from "../../../common/components/utils";
 import AlertModal from "../../../common/components/modals/AlertModal";
 import SaveSearchModal from "./modal/SaveSearchModal";
 import UserAPI from "../../../common/api/UserAPI";
@@ -72,16 +72,12 @@ function SavedSearchListItem({ savedSearch, removeSavedSearchFromList, replaceSa
                 </AkselLink>
             </Heading>
 
-            {isValidISOString(savedSearch.updated) && (
-                <BodyShort spacing>Sist endret: {formatDate(savedSearch.updated, "DD.MM.YYYY")}</BodyShort>
-            )}
+            {savedSearch.updated && <BodyShort spacing>Sist endret: {formatDate(savedSearch.updated)}</BodyShort>}
 
             {savedSearch.notifyType === "EMAIL" ? (
                 <React.Fragment>
                     <BodyShort>Varighet på varsel: {savedSearch.duration} dager</BodyShort>
-                    {isValidISOString(savedSearch.expires) && (
-                        <BodyShort>Utløper: {formatDate(savedSearch.expires, "DD.MM.YYYY")}</BodyShort>
-                    )}
+                    {savedSearch.expires && <BodyShort>Utløper: {formatDate(savedSearch.expires)}</BodyShort>}
                 </React.Fragment>
             ) : (
                 <BodyShort>Ingen varsling</BodyShort>

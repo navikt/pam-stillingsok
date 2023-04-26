@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { formatDate, isValidISOString } from "../../../common/components/utils";
+import { formatDate } from "../../../common/components/utils";
 import worktimeParser from "./worktimeParser";
 import { Heading } from "@navikt/ds-react";
 
@@ -28,11 +28,7 @@ export default function EmploymentDetails({ stilling }) {
                 {properties.starttime && (
                     <div>
                         <dt>Oppstart</dt>
-                        <dd>
-                            {isValidISOString(properties.starttime)
-                                ? formatDate(properties.starttime, "DD.MM.YYYY")
-                                : properties.starttime}
-                        </dd>
+                        <dd>{formatDate(properties.starttime)}</dd>
                     </div>
                 )}
                 {(properties.remote === "Hjemmekontor" || properties.remote === "Hybridkontor") && (

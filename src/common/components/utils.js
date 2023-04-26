@@ -1,23 +1,13 @@
-const ISO_8601_DATE = /^\d{4}(-\d\d(-\d\d(T\d\d:\d\d(:\d\d)?(\.\d+)?(([+-]\d\d:\d\d)|Z)?)?)?)?$/i;
+import { format } from "date-fns";
+import { nb } from "date-fns/locale";
 
-export function isValidISOString(isoString) {
-    return ISO_8601_DATE.test(isoString);
-}
-
-export function formatDate(isoString, format = "DD.MM.YYYY") {
+export function formatDate(dateString, dateFormat = "d. MMMM yyyy") {
     try {
-        if (isValidISOString(isoString)) {
-            const dt = isoString.split("-");
-            if (format === "DD.MM.YYYY") {
-                const day = dt[2].split("T")[0];
-                return `${day}.${dt[1]}.${dt[0]}`;
-            }
-            return isoString;
-        }
+        const date = new Date(dateString);
+        return format(date, dateFormat, { locale: nb });
     } catch (error) {
-        return isoString;
+        return dateString;
     }
-    return isoString;
 }
 
 export function formatNumber(number) {

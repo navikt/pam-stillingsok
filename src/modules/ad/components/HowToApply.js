@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { BodyLong, BodyShort, Button, Heading, Link as AkselLink } from "@navikt/ds-react";
 import { ExternalLinkIcon } from "@navikt/aksel-icons";
-import { formatDate, isValidEmail, isValidISOString, isValidUrl } from "../../../common/components/utils";
+import { formatDate, isValidEmail, isValidUrl } from "../../../common/components/utils";
 import "./HowToApply.css";
 import logAmplitudeEvent from "../../../common/tracking/amplitude";
 import FavouritesButton from "../../favourites/components/FavouritesButton";
@@ -49,11 +49,7 @@ export default function HowToApply({ stilling, showFavouriteButton, isInternal }
                 {properties.applicationdue && (
                     <dl className="JobPosting__dl">
                         <dt>Søknadsfrist</dt>
-                        <dd>
-                            {isValidISOString(properties.applicationdue)
-                                ? formatDate(properties.applicationdue, "DD.MM.YYYY")
-                                : properties.applicationdue}
-                        </dd>
+                        <dd>{formatDate(properties.applicationdue)}</dd>
                     </dl>
                 )}
 
@@ -124,11 +120,7 @@ export default function HowToApply({ stilling, showFavouriteButton, isInternal }
                     {properties.applicationdue && (
                         <React.Fragment>
                             <dt>Søknadsfrist</dt>
-                            <dd>
-                                {isValidISOString(properties.applicationdue)
-                                    ? formatDate(properties.applicationdue, "DD.MM.YYYY")
-                                    : properties.applicationdue}
-                            </dd>
+                            <dd>{formatDate(properties.applicationdue)}</dd>
                         </React.Fragment>
                     )}
                     {!isFinn && properties.applicationemail && (
