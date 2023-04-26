@@ -32,12 +32,20 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, sho
             className="SearchResultItem"
             aria-labelledby={`${ad.uuid}-h3 ${ad.uuid}-jobTitle ${ad.uuid}-employer ${ad.uuid}-location`}
         >
-            {published && (
-                <Label as="p" size="small" className="SearchResultItem__subtle-text mb-0_5">
-                    {published}
-                </Label>
-            )}
-            <div className="SearchResultItem__heading-and-favourite mb-0_5">
+            <div className="SearchResultItem__details mb-0_5">
+                {published && (
+                    <Label as="p" size="small" className="SearchResultItem__subtle-text">
+                        {published}
+                    </Label>
+                )}
+            </div>
+            <div
+                className={
+                    jobTitle
+                        ? "SearchResultItem__heading-and-favourite mb-0_5"
+                        : "SearchResultItem__heading-and-favourite mb-1"
+                }
+            >
                 <Heading level="3" size="small" className="SearchResultsItem__title" id={`${ad.uuid}-h3`}>
                     <LinkToAd stilling={ad} isFinn={isFinn} employer={employer}>
                         {ad.title}
@@ -46,21 +54,15 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, sho
                 {favouriteButton}
             </div>
 
-            {showExpired && (
-                <Tag variant="warning-filled" className="mb-1">
-                    Annonsen er utløpt
-                </Tag>
-            )}
-
             {jobTitle && (
                 <Label as="p" id={`${ad.uuid}-jobTitle`} className="mb-1">
                     {jobTitle}
                 </Label>
             )}
 
-            <div className="mb-1">
+            <div className="mb-0_5">
                 {employer && (
-                    <div className="SearchResultItem__text-and-icon mb-0_5">
+                    <div className="SearchResultItem__text-and-icon mb-0_25">
                         <div>
                             <Buldings3Icon width="1.5em" height="1.5em" aria-label="Arbeidsgiver" />
                         </div>
@@ -68,7 +70,7 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, sho
                     </div>
                 )}
                 {location && (
-                    <div className="SearchResultItem__text-and-icon">
+                    <div className="SearchResultItem__text-and-icon mb-0_25">
                         <div>
                             <PinIcon width="1.5em" height="1.5em" aria-label="Sted" />
                         </div>
@@ -78,11 +80,8 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, sho
             </div>
 
             <div className="SearchResultItem__details">
-                {hasInterestform && (
-                    <Tag size="small" variant="info-filled">
-                        Superrask søknad
-                    </Tag>
-                )}
+                {showExpired && <Tag variant="warning-filled">Annonsen er utløpt</Tag>}
+                {hasInterestform && <Tag variant="info-filled">Superrask søknad</Tag>}
                 {frist && (
                     <Label as="p" size="small" className="SearchResultItem__subtle-text">
                         Frist: {frist}
