@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { Button, Heading, Modal } from "@navikt/ds-react";
 import "./FilterModal.css";
 import { XMarkIcon } from "@navikt/aksel-icons";
+import { formatNumber } from "../../../../../common/components/utils";
 
 function FilterModal({ title, children, onCloseClick, numberOfHits, onShowResultClick }) {
     useEffect(() => {
@@ -30,7 +31,7 @@ function FilterModal({ title, children, onCloseClick, numberOfHits, onShowResult
             <div className="FilterModal__content">{children}</div>
             <div className="FilterModal__bottom">
                 <Button variant="primary" onClick={onShowResultClick}>
-                    Vis {numberOfHits} treff
+                    Vis {formatNumber(numberOfHits)} treff
                 </Button>
             </div>
         </Modal>

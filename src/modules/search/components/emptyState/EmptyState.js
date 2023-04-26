@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { CONTEXT_PATH } from "../../../../common/environment";
 import { Link as AkselLink } from "@navikt/ds-react/esm/link";
 import "./EmptyState.css";
+import { formatNumber } from "../../../../common/components/utils";
 
 function EmptyState({ totalPositions }) {
     const { authenticationStatus } = useContext(AuthenticationContext);
@@ -13,7 +14,9 @@ function EmptyState({ totalPositions }) {
     return (
         <div className="container-medium EmptyState">
             <Illustration />
-            <BodyLong className="mt-1 text-center">Akkurat nå er det {totalPositions} ledige stillinger</BodyLong>
+            <BodyLong className="mt-1 text-center">
+                Akkurat nå er det {formatNumber(totalPositions)} ledige stillinger
+            </BodyLong>
             {authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED && (
                 <BodyLong className="text-center mt-1">
                     <Link to={`${CONTEXT_PATH}/favoritter`}>

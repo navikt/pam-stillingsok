@@ -10,7 +10,7 @@ import queryReducer, {
     toBrowserQuery,
     toReadableQuery
 } from "../query";
-import { extractParam } from "../../../common/components/utils";
+import { extractParam, formatNumber } from "../../../common/components/utils";
 import { FetchAction, FetchStatus, useFetchReducer } from "../../../common/hooks/useFetchReducer";
 import SearchAPI from "../../../common/api/SearchAPI";
 import ErrorMessage from "../../../common/components/messages/ErrorMessage";
@@ -178,7 +178,7 @@ const Search = () => {
                                 <div className="container-medium Search__number-of-hits-and-sorting">
                                     {searchResponse && searchResponse.data && searchResponse.data.totalAds >= 0 && (
                                         <Heading level="2" size="small" role="status">
-                                            {`Søkeresultat: ${searchResponse.data.totalAds} treff`}
+                                            {`Søkeresultat: ${formatNumber(searchResponse.data.totalAds)} treff`}
                                         </Heading>
                                     )}
                                     <Sorting dispatch={queryDispatch} query={query} />

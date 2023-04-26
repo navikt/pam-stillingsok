@@ -20,6 +20,14 @@ export function formatDate(isoString, format = "DD.MM.YYYY") {
     return isoString;
 }
 
+export function formatNumber(number) {
+    try {
+        return number.toLocaleString("no");
+    } catch (err) {
+        return number;
+    }
+}
+
 export function userAgentIsInternetExplorer() {
     const userAgent = window.navigator.userAgent;
     return userAgent.indexOf("MSIE ") >= 0 || userAgent.indexOf("Trident/") >= 0;
