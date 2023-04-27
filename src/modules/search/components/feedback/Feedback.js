@@ -38,7 +38,7 @@ function Feedback() {
                     <Option rating={4} text="Fantastisk" emoji={<HeartIcon aria-hidden="true" />} />
                 </div>
             ) : (
-                <BodyLong className="mt-1 mb-1">Takk for tilbakemeldingen!</BodyLong>
+                <BodyLong className="mt-1 mb-1 bold">Takk for tilbakemeldingen!</BodyLong>
             )}
 
             <BodyLong className="mb-0_5">
