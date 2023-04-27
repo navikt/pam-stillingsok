@@ -34,8 +34,7 @@ function Feedback() {
                 <div className="Feedback__options">
                     <Option rating={1} text="Dårlig" emoji={<FaceFrownIcon aria-hidden="true" />} />
                     <Option rating={2} text="Mangler en del" emoji={<FaceIcon aria-hidden="true" />} />
-                    <Option rating={3} text="Bra" emoji={<FaceSmileIcon aria-hidden="true" />} />
-                    <Option rating={4} text="Fantastisk" emoji={<HeartIcon aria-hidden="true" />} />
+                    <Option rating={3} text="Bra!" emoji={<FaceSmileIcon aria-hidden="true" />} />
                 </div>
             ) : (
                 <BodyLong className="mt-1 mb-1 bold">Takk for tilbakemeldingen!</BodyLong>
