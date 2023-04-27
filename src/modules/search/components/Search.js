@@ -39,11 +39,6 @@ const Search = () => {
 
     let history = useHistory();
 
-    useRestoreScroll(
-        "search-page",
-        initialSearchResponse.status === FetchStatus.SUCCESS && numberOfSelectedFilters > 0
-    );
-
     /**
      * Make an initial search when view is shown.
      * Search again when user changes a search criteria.
@@ -182,6 +177,7 @@ const Search = () => {
                             </div>
                             <div className="container-medium">
                                 <SearchResult
+                                    initialSearchResponse={initialSearchResponse}
                                     searchResponse={searchResponse}
                                     query={query}
                                     queryDispatch={queryDispatch}

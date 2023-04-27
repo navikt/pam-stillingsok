@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FetchStatus } from "../../../../common/hooks/useFetchReducer";
 import ErrorMessage from "../../../../common/components/messages/ErrorMessage";
 import Pagination from "../pagination/Pagination";
@@ -7,15 +7,24 @@ import "./SearchResult.css";
 import FavouritesButton from "../../../favourites/components/FavouritesButton";
 import LoadingScreen from "../loadingScreen/LoadingScreen";
 import { AuthenticationContext, AuthenticationStatus } from "../../../auth/contexts/AuthenticationProvider";
+import useRestoreScroll from "../../../../common/hooks/useRestoreScroll";
 
-const SearchResult = ({ searchResponse, query, loadMoreResults }) => {
+const SearchResult = ({ initialSearchResponse, searchResponse, query, loadMoreResults }) => {
     const { authenticationStatus } = useContext(AuthenticationContext);
-
     const { status, data } = searchResponse;
+    const [lastAdIndex, setLastAdIndex] = useState();
+    const [nextAdIndex, setNextAdIndex] = useState();
 
-    // If user clicked "Load more" in the search result, move focus from
-    // "Load more" button to the next item in the result list
-    const adToBeFocused = query.from > 0 && data ? data.ads[query.from] : undefined;
+    useRestoreScroll("search-page", initialSearchResponse.status === FetchStatus.SUCCESS);
+
+    /**
+     * If user clicked "Load more" in the search result, move focus from
+     * "Load more" button to the next item in the result list
+     */
+    useEffect(() => {
+        setNextAdIndex(query.from > 0 ? lastAdIndex + 1 : undefined);
+        setLastAdIndex(data.ads.length - 1);
+    }, [data]);
 
     return (
         <section className="SearchResult">
@@ -24,9 +33,9 @@ const SearchResult = ({ searchResponse, query, loadMoreResults }) => {
             {(status === FetchStatus.SUCCESS || (status === FetchStatus.IS_FETCHING && query.from > 0)) && (
                 <React.Fragment>
                     {data.ads &&
-                        data.ads.map((ad) => (
+                        data.ads.map((ad, index) => (
                             <SearchResultItem
-                                shouldAutoFocus={adToBeFocused && ad.uuid === adToBeFocused.uuid}
+                                shouldAutoFocus={index === nextAdIndex}
                                 key={ad.uuid}
                                 ad={ad}
                                 favouriteButton={

@@ -21,7 +21,7 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, sho
 
     useLayoutEffect(() => {
         if (shouldAutoFocus && ref.current) {
-            ref.current.focus();
+            ref.current.focus({ preventScroll: true });
         }
     }, [shouldAutoFocus]);
 
