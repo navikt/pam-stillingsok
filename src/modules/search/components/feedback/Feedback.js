@@ -41,7 +41,9 @@ function Feedback() {
                 <BodyLong className="mt-1 mb-1">Takk for tilbakemeldingen!</BodyLong>
             )}
 
-            <BodyLong>Er noe du savner eller noe du synes kunne vært bedre, så vil vi gjerne høre det.</BodyLong>
+            <BodyLong className="mb-0_5">
+                Er noe du savner eller noe du synes kunne vært bedre, så vil vi gjerne høre det.
+            </BodyLong>
             <BodyLong>
                 <AkselLink href="https://surveys.hotjar.com/8eedca7e-3fae-4852-8d96-4c9c80424cdc">
                     Skriv en kort tilbakemelding

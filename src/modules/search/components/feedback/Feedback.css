@@ -1,8 +1,8 @@
 .Feedback__options {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 1rem;
     margin-bottom: 2rem;
-    justify-content: space-evenly;
 }
 
 .Feedback__option {
@@ -17,6 +17,12 @@
     flex: 1;
     font-size: 14px;
     cursor: pointer;
+}
+
+@media (min-width: 620px) {
+    .Feedback__options {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
 }
 
 .Feedback__option:hover {
