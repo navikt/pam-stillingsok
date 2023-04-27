@@ -7,7 +7,7 @@ import { FaceFrownIcon, FaceIcon, FaceSmileIcon, HeartIcon } from "@navikt/aksel
 function Feedback() {
     const [hasGivenRating, setHasGiverRating] = useState(false);
 
-    function Option({ emoji, text, rating }) {
+    function Option({ emoji, text }) {
         return (
             <button
                 type="button"
@@ -32,9 +32,9 @@ function Feedback() {
             </Heading>
             {!hasGivenRating ? (
                 <div className="Feedback__options">
-                    <Option rating={1} text="Dårlig" emoji={<FaceFrownIcon aria-hidden="true" />} />
-                    <Option rating={2} text="Nøytral" emoji={<FaceIcon aria-hidden="true" />} />
-                    <Option rating={3} text="Bra!" emoji={<FaceSmileIcon aria-hidden="true" />} />
+                    <Option text="Dårlig" emoji={<FaceFrownIcon aria-hidden="true" />} />
+                    <Option text="Nøytral" emoji={<FaceIcon aria-hidden="true" />} />
+                    <Option text="Bra" emoji={<FaceSmileIcon aria-hidden="true" />} />
                 </div>
             ) : (
                 <BodyLong className="mt-1 mb-1 bold">Takk for tilbakemeldingen!</BodyLong>
