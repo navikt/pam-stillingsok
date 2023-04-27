@@ -1,0 +1,29 @@
+.Feedback__options {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    justify-content: space-evenly;
+}
+
+.Feedback__option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    border: 1px solid var(--a-border-subtle);
+    background: transparent;
+    border-radius: 6px;
+    padding: 0.5rem;
+    flex: 1;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.Feedback__option:hover {
+    border: 1px solid var(--a-border-action);
+    background: var(--arb-blue-50);
+}
+
+.Feedback__emoji {
+    font-size: 2rem;
+}

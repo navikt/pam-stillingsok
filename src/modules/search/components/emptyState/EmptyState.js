@@ -19,9 +19,9 @@ function EmptyState({ totalPositions }) {
             </BodyLong>
             {authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED && (
                 <BodyLong className="text-center mt-1">
-                    <Link to={`${CONTEXT_PATH}/favoritter`}>
-                        <AkselLink>Dine favoritter</AkselLink>
-                    </Link>
+                    <AkselLink as={Link} to={`${CONTEXT_PATH}/favoritter`}>
+                        Dine favoritter
+                    </AkselLink>
                 </BodyLong>
             )}
         </div>
