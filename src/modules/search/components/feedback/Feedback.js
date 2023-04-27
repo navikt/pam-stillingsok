@@ -28,7 +28,7 @@ function Feedback() {
     return (
         <Panel className="arb-panel mt-2">
             <Heading level="2" size="medium" spacing>
-                Hve synes du om søketjenesten?
+                Hva synes du om søketjenesten?
             </Heading>
             {!hasGivenRating ? (
                 <div className="Feedback__options">
