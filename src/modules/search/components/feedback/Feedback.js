@@ -33,7 +33,7 @@ function Feedback() {
             {!hasGivenRating ? (
                 <div className="Feedback__options">
                     <Option rating={1} text="Dårlig" emoji={<FaceFrownIcon aria-hidden="true" />} />
-                    <Option rating={2} text="Hverken eller" emoji={<FaceIcon aria-hidden="true" />} />
+                    <Option rating={2} text="Nøytral" emoji={<FaceIcon aria-hidden="true" />} />
                     <Option rating={3} text="Bra!" emoji={<FaceSmileIcon aria-hidden="true" />} />
                 </div>
             ) : (
