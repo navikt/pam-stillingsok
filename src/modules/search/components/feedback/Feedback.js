@@ -14,7 +14,8 @@ function Feedback() {
                 className="Feedback__option"
                 onClick={() => {
                     logAmplitudeEvent("rate new layout", {
-                        rating: text
+                        rating: text,
+                        innerWidth: window.innerWidth
                     });
                     setHasGiverRating(true);
                 }}
