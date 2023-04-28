@@ -7,15 +7,12 @@ import "./SearchResult.css";
 import FavouritesButton from "../../../favourites/components/FavouritesButton";
 import LoadingScreen from "../loadingScreen/LoadingScreen";
 import { AuthenticationContext, AuthenticationStatus } from "../../../auth/contexts/AuthenticationProvider";
-import useRestoreScroll from "../../../../common/hooks/useRestoreScroll";
 
-const SearchResult = ({ initialSearchResponse, searchResponse, query, loadMoreResults }) => {
+const SearchResult = ({ searchResponse, query, loadMoreResults }) => {
     const { authenticationStatus } = useContext(AuthenticationContext);
     const { status, data } = searchResponse;
     const [lastAdIndex, setLastAdIndex] = useState();
     const [nextAdIndex, setNextAdIndex] = useState();
-
-    useRestoreScroll("search-page", initialSearchResponse.status === FetchStatus.SUCCESS);
 
     /**
      * If user clicked "Load more" in the search result, move focus from

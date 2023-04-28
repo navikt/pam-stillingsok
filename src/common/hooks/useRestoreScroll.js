@@ -6,6 +6,10 @@ export default function useRestoreScroll(id, shouldRestore) {
     const debouncedScrollTop = useDebounce(scrollTop, 100);
     const SESSION_STORAGE_ID = `restore-scroll-${id}`;
 
+    const resetScroll = () => {
+        sessionStorage.setItem(SESSION_STORAGE_ID, 0);
+    };
+
     /**
      * Restore previous scroll position
      */
@@ -13,7 +17,7 @@ export default function useRestoreScroll(id, shouldRestore) {
         try {
             if (shouldRestore) {
                 const storedValue = sessionStorage.getItem(SESSION_STORAGE_ID);
-                if (storedValue) {
+                if (storedValue && parseInt(storedValue, 10) > 0) {
                     window.scrollTo(0, parseInt(storedValue, 10));
                 }
             } else {
@@ -57,4 +61,6 @@ export default function useRestoreScroll(id, shouldRestore) {
             // ignore sessionStorage error
         }
     }, [debouncedScrollTop]);
+
+    return { resetScroll };
 }

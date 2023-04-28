@@ -38,6 +38,13 @@ const Search = () => {
     const numberOfSelectedFilters = Object.keys(toBrowserQuery(query)).length;
 
     let history = useHistory();
+    const { resetScroll } = useRestoreScroll("search-page", initialSearchResponse.status === FetchStatus.SUCCESS);
+
+    useEffect(() => {
+        if (numberOfSelectedFilters === 0) {
+            resetScroll();
+        }
+    }, []);
 
     /**
      * Make an initial search when view is shown.
