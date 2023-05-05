@@ -103,8 +103,8 @@ function SelectedFilters({ query, queryDispatch }) {
         ))
     );
 
-    chips.push(
-        ...(query.international && query.countries.length === 0 && (
+    if (query.international && query.countries.length === 0) {
+        chips.push(
             <Chips.Removable
                 variant="neutral"
                 onClick={() => {
@@ -113,8 +113,8 @@ function SelectedFilters({ query, queryDispatch }) {
             >
                 Utland
             </Chips.Removable>
-        ))
-    );
+        );
+    }
 
     chips.push(
         ...query.countries.map((value) => (
