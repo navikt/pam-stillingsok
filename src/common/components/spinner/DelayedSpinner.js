@@ -7,13 +7,13 @@ import "./DelayedSpinner.css";
  * visible just for a few milliseconds. To reduce visual noise, it can
  * be delayed, and appear only for slower fetch calls.
  */
-export default function DelayedSpinner({ delay = 1000 }) {
+export default function DelayedSpinner() {
     const [showSpinner, setShowSpinner] = useState(false);
 
     useEffect(() => {
         const spinnerTimeout = setTimeout(() => {
             setShowSpinner(true);
-        }, delay);
+        }, 1000);
 
         return () => {
             clearTimeout(spinnerTimeout);
