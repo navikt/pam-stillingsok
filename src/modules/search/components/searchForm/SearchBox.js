@@ -64,12 +64,12 @@ function SearchBox({ dispatch, query }) {
 
     function handleTypeAheadSuggestionSelected(value) {
         setValue(value);
-        dispatch({ type: SET_MATCH, value: "occupation" });
+        //  dispatch({ type: SET_MATCH, value: "occupation" });
         dispatch({ type: SET_SEARCH_STRING, value });
     }
 
     function handleSearchButtonClick() {
-        dispatch({ type: SET_MATCH, value: undefined });
+        //   dispatch({ type: SET_MATCH, value: undefined });
         dispatch({ type: SET_SEARCH_STRING, value });
     }
 
