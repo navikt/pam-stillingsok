@@ -41,7 +41,7 @@ const Search = () => {
     const latestSearch = useRef();
     const numberOfSelectedFilters = Object.keys(toBrowserQuery(query)).length;
     const { device } = useDevice();
-    const [isFiltersVisible, setIsFiltersVisible] = useState(device === Device.DESKTOP);
+    const [isFiltersVisible, setIsFiltersVisible] = useState(false);
     let history = useHistory();
     const { resetScroll } = useRestoreScroll("search-page", initialSearchResponse.status === FetchStatus.SUCCESS);
 
