@@ -1,0 +1,110 @@
+.FilterModal {
+    width: 100%;
+    max-width: 960px;
+    padding: 0;
+}
+
+@media (max-width: 727px) {
+    .FilterModal {
+        border-radius: 0;
+        height: 100%;
+    }
+
+    .FilterModal__overlay {
+        padding: 0;
+    }
+}
+
+.FilterModal__heading {
+    padding: 0.5rem 0.5rem 0.5rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: center;
+    background: var(--a-surface-default);
+    border-bottom: 1px solid var(--arb-gray-100);
+}
+
+.FilterModal__content {
+    padding: 1rem;
+}
+
+@media (min-width: 728px) {
+    .FilterModal__bottom button {
+        padding: 2rem;
+    }
+}
+
+.FilterModal__bottom {
+    padding: 1rem;
+    background: var(--a-surface-default);
+    background: var(--arb-green-50);
+}
+
+@media (max-width: 475px) {
+    .FilterModal__bottom button {
+        width: 100%;
+    }
+}
+
+.FilterModal__flex-columns {
+    display: flex;
+    gap: 2rem 1rem;
+    flex-direction: column;
+}
+
+@media (min-width: 728px) {
+    .FilterModal__flex-columns {
+        display: flex;
+        flex-direction: row;
+        gap: 2rem 8rem;
+    }
+}
+
+.FilterModal__column {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem 1rem;
+}
+
+.FilterModal__sub-fieldset {
+    padding: 0 1rem 0.5rem 1rem;
+    margin-top: 0!important;
+    border-radius: 6px;
+}
+
+.Facet__zero__count label {
+    color: #78706a !important;
+}
+
+.RemoteFacet {
+    margin-top: 1.5rem;
+}
+
+.Facet__zero__count label {
+    color: #78706a !important;
+}
+
+.RemoteFacet {
+    margin-top: 1.5rem;
+}
+
+.SearchForm__expand-filter-button {
+    display: flex;
+    align-items: center;
+    background: 0;
+    padding: 0;
+    margin: 0 0 0.5rem 0;
+    font-size: var(--a-font-size-heading-small);
+    font-weight: 600;
+    border: 0;
+    cursor: pointer;
+}
+
+.SearchForm__expand-filter-button:hover {
+    text-decoration: underline;
+}
+
+.Filter__section {
+    padding: 0.75rem 0;
+}
