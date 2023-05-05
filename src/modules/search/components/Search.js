@@ -154,7 +154,9 @@ const Search = () => {
 
     return (
         <div className={isFiltersVisible ? "filter-visible" : "filter-not-visible"}>
-            <H1WithAutoFocus className="container-medium  Search__h1">Søk i ledige jobber</H1WithAutoFocus>
+            <H1WithAutoFocus className="container-medium  Search__h1" spacing={false}>
+                Søk etter din neste jobb
+            </H1WithAutoFocus>
             {initialSearchResponse.status === FetchStatus.FAILURE && <ErrorMessage />}
             {initialSearchResponse.status === FetchStatus.IS_FETCHING && <DelayedSpinner />}
             {initialSearchResponse.status === FetchStatus.SUCCESS && (

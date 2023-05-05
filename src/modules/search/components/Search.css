@@ -28,7 +28,7 @@
 
 .Search__flex-right {
     flex: 1;
-    padding-top: 1.5rem;
+    padding-top: 2rem;
     width: 100%;
 }
 
@@ -46,7 +46,7 @@
 
 @media (min-width: 768px) {
     .Search__h1 {
-        padding: 3rem 0 2rem 0;
+        padding: 3rem 0 2.5rem 0;
     }
 }
 
@@ -114,12 +114,13 @@
     display: flex;
     gap: 0.5rem;
     flex-wrap: wrap;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
 }
 
 @media (min-width: 769px) {
     .Search__buttons {
         justify-content: center;
+        margin-bottom: 3rem;
     }
 }
 
