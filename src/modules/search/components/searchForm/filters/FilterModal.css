@@ -7,11 +7,24 @@
 @media (max-width: 727px) {
     .FilterModal {
         border-radius: 0;
+        display: flex;
+        flex-direction: column;
         height: 100%;
     }
 
     .FilterModal__overlay {
         padding: 0;
+    }
+
+    .FilterModal__heading {
+        position: sticky;
+        top: 0;
+        z-index: 999;
+    }
+
+    .FilterModal__bottom {
+        bottom: 0;
+        position: sticky;
     }
 }
 
