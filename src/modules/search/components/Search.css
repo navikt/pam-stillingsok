@@ -92,7 +92,7 @@
 }
 
 @media (min-width: 1156px) {
-    .filter-visible .Search__count {
+    .Search__count {
         padding-left: 480px;
     }
 }
