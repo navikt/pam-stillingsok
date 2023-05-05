@@ -43,7 +43,6 @@
 
 .FilterModal__bottom {
     padding: 1rem;
-    background: var(--a-surface-default);
     background: var(--arb-green-50);
     bottom: 0;
     position: sticky;
