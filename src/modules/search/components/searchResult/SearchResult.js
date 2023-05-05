@@ -6,10 +6,8 @@ import SearchResultItem from "./SearchResultItem";
 import "./SearchResult.css";
 import FavouritesButton from "../../../favourites/components/FavouritesButton";
 import LoadingScreen from "../loadingScreen/LoadingScreen";
-import { AuthenticationContext, AuthenticationStatus } from "../../../auth/contexts/AuthenticationProvider";
 
 const SearchResult = ({ searchResponse, query, loadMoreResults }) => {
-    const { authenticationStatus } = useContext(AuthenticationContext);
     const { status, data } = searchResponse;
     const [lastAdIndex, setLastAdIndex] = useState();
     const [nextAdIndex, setNextAdIndex] = useState();
@@ -36,15 +34,13 @@ const SearchResult = ({ searchResponse, query, loadMoreResults }) => {
                                 key={ad.uuid}
                                 ad={ad}
                                 favouriteButton={
-                                    authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED ? (
-                                        <FavouritesButton
-                                            useShortText={true}
-                                            className="SearchResultsItem__favourite-button"
-                                            stilling={ad}
-                                            id={ad.uuid}
-                                            hideText
-                                        />
-                                    ) : null
+                                    <FavouritesButton
+                                        useShortText={true}
+                                        className="SearchResultsItem__favourite-button"
+                                        stilling={ad}
+                                        id={ad.uuid}
+                                        hideText
+                                    />
                                 }
                             />
                         ))}

@@ -14,8 +14,11 @@ import {
     REMOVE_REMOTE,
     REMOVE_SECTOR,
     SET_INTERNATIONAL,
-    SET_PUBLISHED
+    SET_PUBLISHED,
+    SET_SEARCH_STRING
 } from "../../query";
+import { TrashIcon } from "@navikt/aksel-icons";
+import SaveSearchButton from "../../../saved-searches/components/SaveSearchButton";
 
 function SelectedFilters({ query, queryDispatch }) {
     const MAX_CHIPS = 10;
@@ -71,6 +74,14 @@ function SelectedFilters({ query, queryDispatch }) {
 
     // Opprett chips for alle filter
     const chips = [];
+
+    if (query.q) {
+        chips.push(
+            <Chips.Removable variant="neutral" onClick={() => queryDispatch({ type: SET_SEARCH_STRING, value: "" })}>
+                {query.q}
+            </Chips.Removable>
+        );
+    }
 
     chips.push(
         ...query.municipals.map((value) => (
@@ -198,7 +209,7 @@ function SelectedFilters({ query, queryDispatch }) {
     return (
         <div className="SelectedFilters">
             <Heading size="small" level="2" spacing>
-                Valgte filter ({chips.length})
+                Ditt søk
             </Heading>
 
             <div className="SelectedFilters__chips">
@@ -220,6 +231,17 @@ function SelectedFilters({ query, queryDispatch }) {
                 ) : (
                     <React.Fragment>{chips}</React.Fragment>
                 )}
+                <Button
+                    type="button"
+                    variant="tertiary"
+                    onClick={() => {
+                        queryDispatch({ type: "RESET" });
+                    }}
+                    icon={<TrashIcon aria-hidden="true" />}
+                >
+                    Fjern alle
+                </Button>
+                <SaveSearchButton query={query} />
             </div>
         </div>
     );

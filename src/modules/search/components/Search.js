@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useRef, useState } from "react";
+import React, { useContext, useEffect, useReducer, useRef, useState } from "react";
 import { CONTEXT_PATH } from "../../../common/environment";
 import queryReducer, {
     initialQuery,
@@ -19,24 +19,28 @@ import "./Search.css";
 import { useHistory } from "react-router";
 import SearchResult from "./searchResult/SearchResult";
 import H1WithAutoFocus from "../../../common/components/h1WithAutoFocus/H1WithAutoFocus";
-import { Heading } from "@navikt/ds-react";
+import { Button } from "@navikt/ds-react";
 import DoYouWantToSaveSearch from "./howToPanels/DoYouWantToSaveSearch";
-import HowToAddFavourites from "./howToPanels/HowToAddFavourites";
-import EmptyState from "./emptyState/EmptyState";
-import Sorting from "./searchResult/Sorting";
 import SelectedFilters from "./selectedFilters/SelectedFilters";
 import Feedback from "./feedback/Feedback";
 import DelayedSpinner from "../../../common/components/spinner/DelayedSpinner";
-import SearchResultCount from "./searchResult/SearchResultCount";
+import useDevice, { Device } from "../../../common/hooks/useDevice";
+import FilterForm from "./searchForm/filters/FilterForm";
+import SearchResultHeader from "./searchResultHeader/SearchResultHeader";
+import FilterIcon from "../../../common/components/icons/FilterIcon";
+import { ClockIcon, HeartIcon } from "@navikt/aksel-icons";
+import { AuthenticationContext, AuthenticationStatus } from "../../auth/contexts/AuthenticationProvider";
+import { Link } from "react-router-dom";
 
 const Search = () => {
+    const { authenticationStatus } = useContext(AuthenticationContext);
     const [query, queryDispatch] = useReducer(queryReducer, initialQuery, initQueryWithValuesFromBrowserUrl);
-    const [showEmptyState, setShowEmptyState] = useState(true);
     const [initialSearchResponse, initialSearchDispatch] = useFetchReducer();
     const [searchResponse, searchDispatch] = useFetchReducer();
     const latestSearch = useRef();
     const numberOfSelectedFilters = Object.keys(toBrowserQuery(query)).length;
-
+    const { device } = useDevice();
+    const [isFiltersVisible, setIsFiltersVisible] = useState(device === Device.DESKTOP);
     let history = useHistory();
     const { resetScroll } = useRestoreScroll("search-page", initialSearchResponse.status === FetchStatus.SUCCESS);
 
@@ -148,54 +152,95 @@ const Search = () => {
     }
 
     return (
-        <div className="mb-4">
+        <div className={isFiltersVisible ? "filter-visible" : "filter-not-visible"}>
             <H1WithAutoFocus className="container-medium  Search__h1">Søk i ledige jobber</H1WithAutoFocus>
             {initialSearchResponse.status === FetchStatus.FAILURE && <ErrorMessage />}
             {initialSearchResponse.status === FetchStatus.IS_FETCHING && <DelayedSpinner />}
             {initialSearchResponse.status === FetchStatus.SUCCESS && (
                 <React.Fragment>
-                    <SearchForm
-                        query={query}
-                        dispatchQuery={queryDispatch}
-                        initialSearchResult={initialSearchResponse.data}
-                        searchResult={searchResponse.data}
-                        fetchSearch={fetchSearch}
-                        setShowEmptyState={setShowEmptyState}
-                    />
-                    {numberOfSelectedFilters === 0 && showEmptyState ? (
-                        <EmptyState totalPositions={initialSearchResponse.data.totalPositions} />
-                    ) : (
-                        <React.Fragment>
-                            <div className="container-medium">
-                                <SelectedFilters query={query} queryDispatch={queryDispatch} />
-                            </div>
-                            <div className="Search__number-of-hits-and-sorting-wrapper">
-                                <div className="container-medium Search__number-of-hits-and-sorting">
-                                    {searchResponse && searchResponse.data && searchResponse.data.totalAds >= 0 && (
-                                        <div>
-                                            <Heading level="2" size="small" role="status">
-                                                Søkeresultat
-                                            </Heading>
-                                            <SearchResultCount searchResult={searchResponse.data} />
-                                        </div>
-                                    )}
-                                    <Sorting dispatch={queryDispatch} query={query} />
+                    <div className="container-small">
+                        <SearchForm
+                            query={query}
+                            dispatchQuery={queryDispatch}
+                            initialSearchResult={initialSearchResponse.data}
+                            searchResult={searchResponse.data}
+                            fetchSearch={fetchSearch}
+                        />
+                        <div className="Search__buttons">
+                            {device === Device.MOBILE && (
+                                <Button
+                                    variant="tertiary"
+                                    onClick={() => {
+                                        setIsFiltersVisible(!isFiltersVisible);
+                                    }}
+                                    icon={<FilterIcon />}
+                                    aria-expanded={isFiltersVisible}
+                                >
+                                    Filtre
+                                </Button>
+                            )}
+                            {(device === Device.DESKTOP ||
+                                (device === Device.MOBILE &&
+                                    authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED)) && (
+                                <div className="Search__favourites-saved-search-buttons">
+                                    <Button
+                                        as={Link}
+                                        to={`${CONTEXT_PATH}/lagrede-sok`}
+                                        type="button"
+                                        variant="tertiary"
+                                        onClick={() => {}}
+                                        icon={<ClockIcon aria-hidden="true" />}
+                                    >
+                                        Mine lagrede søk
+                                    </Button>
+                                    <Button
+                                        as={Link}
+                                        to={`${CONTEXT_PATH}/favoritter`}
+                                        type="button"
+                                        variant="tertiary"
+                                        onClick={() => {}}
+                                        icon={<HeartIcon aria-hidden="true" />}
+                                    >
+                                        Mine favoritter
+                                    </Button>
                                 </div>
-                            </div>
-                            <div className="container-medium">
-                                <SearchResult
-                                    initialSearchResponse={initialSearchResponse}
-                                    searchResponse={searchResponse}
+                            )}
+                        </div>
+                        <SelectedFilters query={query} queryDispatch={queryDispatch} />
+                    </div>
+                    <SearchResultHeader
+                        isFiltersVisible={isFiltersVisible}
+                        searchResponse={searchResponse}
+                        query={query}
+                        queryDispatch={queryDispatch}
+                    />
+                    <div className="Search__flex container-large">
+                        {(device === Device.DESKTOP || (device === Device.MOBILE && isFiltersVisible)) && (
+                            <div className="Search__flex-left">
+                                <FilterForm
                                     query={query}
-                                    queryDispatch={queryDispatch}
-                                    loadMoreResults={loadMoreResults}
+                                    dispatchQuery={queryDispatch}
+                                    initialSearchResult={initialSearchResponse.data}
+                                    searchResult={searchResponse.data}
+                                    fetchSearch={fetchSearch}
+                                    isFilterModalOpen={isFiltersVisible}
+                                    setIsFilterModalOpen={setIsFiltersVisible}
+                                    device={device}
                                 />
-                                <DoYouWantToSaveSearch query={query} />
-                                <HowToAddFavourites />
-                                <Feedback />
                             </div>
-                        </React.Fragment>
-                    )}
+                        )}
+                        <div className="Search__flex-right">
+                            <SearchResult
+                                initialSearchResponse={initialSearchResponse}
+                                searchResponse={searchResponse}
+                                query={query}
+                                queryDispatch={queryDispatch}
+                                loadMoreResults={loadMoreResults}
+                            />
+                            <DoYouWantToSaveSearch query={query} />
+                            <Feedback />
+                        </div>
+                    </div>
                 </React.Fragment>
             )}
         </div>

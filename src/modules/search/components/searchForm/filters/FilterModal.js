@@ -13,8 +13,8 @@ function FilterModal({ title, children, onCloseClick, numberOfHits, onShowResult
     return (
         <Modal
             className="FilterModal"
-            overlayClassName="FilterModal__overlay"
             closeButton={false}
+            overlayClassName="FilterModal__overlay"
             open={true}
             onClose={onCloseClick}
         >
@@ -30,7 +30,7 @@ function FilterModal({ title, children, onCloseClick, numberOfHits, onShowResult
             </div>
             <div className="FilterModal__content">{children}</div>
             <div className="FilterModal__bottom">
-                <Button variant="primary" onClick={onShowResultClick}>
+                <Button variant="primary" onClick={onCloseClick}>
                     Vis {formatNumber(numberOfHits)} treff
                 </Button>
             </div>

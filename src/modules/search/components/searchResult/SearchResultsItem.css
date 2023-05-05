@@ -6,6 +6,10 @@
     outline: none;
 }
 
+.SearchResultsItem__title {
+    overflow-wrap: anywhere;
+}
+
 .SearchResultItem .FavouriteButton {
     margin-top: -0.5rem;
 }

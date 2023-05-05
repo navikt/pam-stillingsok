@@ -16,30 +16,28 @@
 }
 
 .FilterModal__heading {
-    padding: 1rem 1rem 1rem 2rem;
+    padding: 0.5rem 0.5rem 0.5rem 1rem;
     display: flex;
     justify-content: space-between;
     gap: 1rem;
     align-items: center;
-    position: sticky;
-    top: 0;
     background: var(--a-surface-default);
-    z-index: 1;
+    border-bottom: 1px solid var(--arb-gray-100);
 }
 
 .FilterModal__content {
-    padding: 0 2rem 2rem;
+    padding: 1rem;
+}
+
+@media (min-width: 728px) {
+    .FilterModal__bottom button {
+        padding: 2rem;
+    }
 }
 
 .FilterModal__bottom {
-    display: flex;
-    align-items: center;
-    justify-content: center;
     padding: 1rem;
     background: var(--a-surface-default);
-    z-index: 1;
-    position: sticky;
-    bottom: 0;
     background: var(--arb-green-50);
 }
 
@@ -70,23 +68,10 @@
 }
 
 .FilterModal__sub-fieldset {
-    padding: 0.5rem 1rem;
+    padding: 0 1rem 0.5rem 1rem;
+    margin-top: 0!important;
     border-radius: 6px;
-    margin-bottom: 1rem;
-    background: var(--arb-blue-50);
 }
-
-@media (min-width: 728px) {
-    .FilterModal__columns-2 {
-        columns: 2;
-    }
-
-    .FilterModal__columns-3 {
-        columns: 3;
-    }
-}
-
-
 
 .Facet__zero__count label {
     color: #78706a !important;
@@ -102,4 +87,24 @@
 
 .RemoteFacet {
     margin-top: 1.5rem;
+}
+
+.SearchForm__expand-filter-button {
+    display: flex;
+    align-items: center;
+    background: 0;
+    padding: 0;
+    margin: 0 0 0.5rem 0;
+    font-size: var(--a-font-size-heading-small);
+    font-weight: 600;
+    border: 0;
+    cursor: pointer;
+}
+
+.SearchForm__expand-filter-button:hover {
+    text-decoration: underline;
+}
+
+.Filter__section {
+    padding: 0.75rem 0;
 }
