@@ -7,7 +7,11 @@ export default function useRestoreScroll(id, shouldRestore) {
     const SESSION_STORAGE_ID = `restore-scroll-${id}`;
 
     const resetScroll = () => {
-        sessionStorage.setItem(SESSION_STORAGE_ID, 0);
+        try {
+            sessionStorage.setItem(SESSION_STORAGE_ID, 0);
+        } catch (error) {
+            // ignore sessionStorage error
+        }
     };
 
     /**
