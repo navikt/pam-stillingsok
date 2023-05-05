@@ -28,7 +28,7 @@ function Published({ dispatch, query, initialValues, updatedValues }) {
     }
 
     return (
-        <Fieldset legend="Publisert">
+        <Fieldset legend="Publisert" hideLegend>
             {values.map((item) => (
                 <Checkbox
                     name="published"

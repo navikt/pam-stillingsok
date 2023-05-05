@@ -5,7 +5,7 @@ import "./LoadingScreen.css";
 function LoadingScreen() {
     return (
         <div className="LoadingScreen">
-            <DelayedSpinner />
+            <DelayedSpinner delay={500} />
         </div>
     );
 }

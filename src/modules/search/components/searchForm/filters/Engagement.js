@@ -40,7 +40,7 @@ function Engagement({ initialValues, updatedValues, query, dispatch }) {
     }
 
     return (
-        <Fieldset legend="Ansettelsesform">
+        <Fieldset legend="Ansettelsesform" className="mt-1" hideLegend>
             {values.map((item) => (
                 <Checkbox
                     name="engagementType"
