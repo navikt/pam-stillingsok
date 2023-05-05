@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import { SET_SEARCH_STRING } from "../../query";
+import { SET_MATCH, SET_SEARCH_STRING } from "../../query";
 import Typeahead from "../../../../common/components/typeahead/Typeahead";
 import { FetchAction, useFetchReducer } from "../../../../common/hooks/useFetchReducer";
 import useDebounce from "../../../../common/hooks/useDebounce";
 import SearchAPI from "../../../../common/api/SearchAPI";
+import capitalizeFirstLetter from "../../../../common/utils/capitalizeFirstLetter";
 
 function SearchBox({ dispatch, query }) {
     const [value, setValue] = useState("");
@@ -30,8 +31,12 @@ function SearchBox({ dispatch, query }) {
         return [
             ...new Set(
                 [
-                    ...result.suggest.category_suggest[0].options.map((suggestion) => suggestion.text),
-                    ...result.suggest.searchtags_suggest[0].options.map((suggestion) => suggestion.text)
+                    ...result.suggest.searchtags_suggest[0].options.map((suggestion) =>
+                        capitalizeFirstLetter(suggestion.text)
+                    ),
+                    ...result.suggest.category_suggest[0].options.map((suggestion) =>
+                        capitalizeFirstLetter(suggestion.text)
+                    )
                 ].sort()
             )
         ];
@@ -59,10 +64,12 @@ function SearchBox({ dispatch, query }) {
 
     function handleTypeAheadSuggestionSelected(value) {
         setValue(value);
+        dispatch({ type: SET_MATCH, value: "occupation" });
         dispatch({ type: SET_SEARCH_STRING, value });
     }
 
     function handleSearchButtonClick() {
+        dispatch({ type: SET_MATCH, value: undefined });
         dispatch({ type: SET_SEARCH_STRING, value });
     }
 

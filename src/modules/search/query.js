@@ -25,10 +25,12 @@ export const SET_SEARCH_STRING = "SET_SEARCH_STRING";
 export const SET_SORTING = "SET_SORTING";
 export const SET_INTERNATIONAL = "SET_INTERNATIONAL";
 export const SET_FROM = "SET_FROM";
+export const SET_MATCH = "SET_MATCH";
 export const RESET = "RESET";
 
 export const initialQuery = {
     q: "",
+    match: undefined,
     from: 0,
     size: SEARCH_CHUNK_SIZE,
     counties: [],
@@ -56,6 +58,7 @@ export function initQueryWithValuesFromBrowserUrl(initialState) {
         from: 0,
         size: fromBrowserUrl.to ? parseInt(fromBrowserUrl.to, 10) : SEARCH_CHUNK_SIZE,
         q: fromBrowserUrl.q || initialState.q,
+        match: fromBrowserUrl.match || initialState.match,
         municipals: fromBrowserUrl.municipals || initialState.municipals,
         counties: fromBrowserUrl.counties || initialState.counties,
         countries: fromBrowserUrl.countries || initialState.countries,
@@ -189,6 +192,11 @@ export default function queryReducer(state, action) {
                 ...state,
                 q: action.value
             };
+        case SET_MATCH:
+            return {
+                ...state,
+                match: action.value
+            };
         case SET_SORTING:
             return {
                 ...state,
@@ -214,15 +222,6 @@ export function toApiQuery(query) {
     const apiSearchQuery = {
         ...query
     };
-
-    try {
-        const searchAllFields = localStorage.getItem("searchAllFields");
-        if (searchAllFields === "false") {
-            apiSearchQuery.searchAllFields = "false";
-        }
-    } catch (err) {
-        // ignore
-    }
     return removeEmptyPropertiesFromQuery(apiSearchQuery);
 }
 

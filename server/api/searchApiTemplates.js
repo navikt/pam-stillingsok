@@ -308,18 +308,13 @@ exports.suggestionsTemplate = (match, minLength) => ({
 });
 
 /* Experimental alternative relevance model with AND-logic and using cross-fields matching. */
-function mainQueryConjunctionTuning(q, searchAllFields) {
-    const searchFields = [
-        "category_no^2",
-        "title_no^1",
-        "keywords_no^0.8",
-        "searchtags_no^0.3",
-        "geography_all_no^0.2"
-    ];
+function mainQueryConjunctionTuning(q, match) {
+    const matchFields = ["category_no^2", "title_no^1", "keywords_no^0.8", "searchtags_no^0.3"];
 
-    if (searchAllFields !== "false") {
-        searchFields.push("adtext_no^0.2");
-        searchFields.push("employerdescription_no^0.1");
+    if (match !== "occupation") {
+        matchFields.push("geography_all_no^0.2");
+        matchFields.push("adtext_no^0.2");
+        matchFields.push("employerdescription_no^0.1");
     }
     return {
         bool: {
@@ -330,7 +325,7 @@ function mainQueryConjunctionTuning(q, searchAllFields) {
                             multi_match: {
                                 query: q,
                                 type: "cross_fields",
-                                fields: searchFields,
+                                fields: matchFields,
                                 operator: "and",
                                 tie_breaker: 0.3,
                                 analyzer: "norwegian",
@@ -492,7 +487,7 @@ exports.searchTemplate = (query) => {
         occupationFirstLevels,
         occupationSecondLevels,
         international,
-        searchAllFields
+        match
     } = query;
     let { sort, q, operator } = query;
 
@@ -513,7 +508,7 @@ exports.searchTemplate = (query) => {
         from: from || 0,
         size: size || 50,
         track_total_hits: true,
-        query: mainQueryTemplateFunc(q, searchAllFields),
+        query: mainQueryTemplateFunc(q, match),
         post_filter: {
             bool: {
                 filter: [
