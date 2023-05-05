@@ -19,7 +19,7 @@ function Sorting({ query, dispatch }) {
                 Mest relevant
             </option>
             <option key="published" value="published">
-                Vis nyeste øverst
+                Nyeste øverst
             </option>
             <option key="expires" value="expires">
                 Søknadsfrist
