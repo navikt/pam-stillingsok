@@ -17,8 +17,10 @@ const SearchResult = ({ searchResponse, query, loadMoreResults }) => {
      * "Load more" button to the next item in the result list
      */
     useEffect(() => {
-        setNextAdIndex(query.from > 0 ? lastAdIndex + 1 : undefined);
-        setLastAdIndex(data.ads.length - 1);
+        if (data && data.ads) {
+            setNextAdIndex(query.from > 0 ? lastAdIndex + 1 : undefined);
+            setLastAdIndex(data.ads.length - 1);
+        }
     }, [data]);
 
     return (
