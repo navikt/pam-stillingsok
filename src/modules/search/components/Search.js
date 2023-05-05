@@ -31,6 +31,7 @@ import FilterIcon from "../../../common/components/icons/FilterIcon";
 import { ClockIcon, HeartIcon } from "@navikt/aksel-icons";
 import { AuthenticationContext, AuthenticationStatus } from "../../auth/contexts/AuthenticationProvider";
 import { Link } from "react-router-dom";
+import LoadingScreen from "./loadingScreen/LoadingScreen";
 
 const Search = () => {
     const { authenticationStatus } = useContext(AuthenticationContext);
@@ -230,15 +231,21 @@ const Search = () => {
                         )}
                         <div className="Search__flex-right">
                             <SelectedFilters query={query} queryDispatch={queryDispatch} />
-                            <SearchResult
-                                initialSearchResponse={initialSearchResponse}
-                                searchResponse={searchResponse}
-                                query={query}
-                                queryDispatch={queryDispatch}
-                                loadMoreResults={loadMoreResults}
-                            />
-                            <DoYouWantToSaveSearch query={query} />
-                            <Feedback />
+                            {searchResponse.status === FetchStatus.IS_FETCHING && query.from === 0 ? (
+                                <LoadingScreen />
+                            ) : (
+                                <React.Fragment>
+                                    <SearchResult
+                                        initialSearchResponse={initialSearchResponse}
+                                        searchResponse={searchResponse}
+                                        query={query}
+                                        queryDispatch={queryDispatch}
+                                        loadMoreResults={loadMoreResults}
+                                    />
+                                    <DoYouWantToSaveSearch query={query} />
+                                    <Feedback />
+                                </React.Fragment>
+                            )}
                         </div>
                     </div>
                 </React.Fragment>
