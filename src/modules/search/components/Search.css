@@ -73,7 +73,6 @@
 
 .Search__number-of-hits-and-sorting-wrapper {
     background: var(--arb-green-50);
-    margin-bottom: 2rem;
 }
 
 .Search__count {
@@ -118,10 +117,22 @@
     margin-bottom: 2rem;
 }
 
+@media (min-width: 769px) {
+    .Search__buttons {
+        justify-content: center;
+    }
+}
+
 .Search__favourites-saved-search-buttons {
     width: 100%;
     display: flex;
     gap: 0.5rem;
     flex-wrap: wrap;
-    justify-content: center;
+
+}
+
+@media (min-width: 769px) {
+    .Search__link-to-favourites-and-saved-search {
+        justify-content: center;
+    }
 }

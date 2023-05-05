@@ -208,10 +208,6 @@ function SelectedFilters({ query, queryDispatch }) {
 
     return (
         <div className="SelectedFilters">
-            <Heading size="small" level="2" spacing>
-                Ditt søk
-            </Heading>
-
             <div className="SelectedFilters__chips">
                 {chips.length > MAX_CHIPS ? (
                     <React.Fragment>

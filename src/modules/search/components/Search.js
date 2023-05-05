@@ -182,7 +182,7 @@ const Search = () => {
                             {(device === Device.DESKTOP ||
                                 (device === Device.MOBILE &&
                                     authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED)) && (
-                                <div className="Search__favourites-saved-search-buttons">
+                                <React.Fragment>
                                     <Button
                                         as={Link}
                                         to={`${CONTEXT_PATH}/lagrede-sok`}
@@ -191,7 +191,7 @@ const Search = () => {
                                         onClick={() => {}}
                                         icon={<ClockIcon aria-hidden="true" />}
                                     >
-                                        Mine lagrede søk
+                                        Bruk et lagret søk
                                     </Button>
                                     <Button
                                         as={Link}
@@ -203,10 +203,9 @@ const Search = () => {
                                     >
                                         Mine favoritter
                                     </Button>
-                                </div>
+                                </React.Fragment>
                             )}
                         </div>
-                        <SelectedFilters query={query} queryDispatch={queryDispatch} />
                     </div>
                     <SearchResultHeader
                         isFiltersVisible={isFiltersVisible}
@@ -230,6 +229,7 @@ const Search = () => {
                             </div>
                         )}
                         <div className="Search__flex-right">
+                            <SelectedFilters query={query} queryDispatch={queryDispatch} />
                             <SearchResult
                                 initialSearchResponse={initialSearchResponse}
                                 searchResponse={searchResponse}
