@@ -211,7 +211,19 @@ export default function queryReducer(state, action) {
  * Returns a search query optimized for backend api call
  */
 export function toApiQuery(query) {
-    return removeEmptyPropertiesFromQuery(query);
+    const apiSearchQuery = {
+        ...query
+    };
+
+    try {
+        const searchAllFields = localStorage.getItem("searchAllFields");
+        if (searchAllFields === "false") {
+            apiSearchQuery.searchAllFields = "false";
+        }
+    } catch (err) {
+        // ignore
+    }
+    return removeEmptyPropertiesFromQuery(apiSearchQuery);
 }
 
 /**
