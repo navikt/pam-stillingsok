@@ -31,7 +31,9 @@ function FilterModal({ title, children, onCloseClick, searchResult }) {
             <div className="FilterModal__content">{children}</div>
             <div className="FilterModal__bottom">
                 <Button variant="primary" onClick={onCloseClick}>
-                    {searchResult ? `Vis ${formatNumber(searchResult.totalAds)} treff` : "Vis treff"}
+                    {searchResult && searchResult.totalAds
+                        ? `Vis ${formatNumber(searchResult.totalAds)} treff`
+                        : "Vis treff"}
                 </Button>
             </div>
         </Modal>
