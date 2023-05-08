@@ -5,7 +5,7 @@ import "./FilterModal.css";
 import { XMarkIcon } from "@navikt/aksel-icons";
 import { formatNumber } from "../../../../../common/components/utils";
 
-function FilterModal({ title, children, onCloseClick, numberOfHits, onShowResultClick }) {
+function FilterModal({ title, children, onCloseClick, searchResult }) {
     useEffect(() => {
         Modal.setAppElement("#app");
     }, []);
@@ -31,7 +31,9 @@ function FilterModal({ title, children, onCloseClick, numberOfHits, onShowResult
             <div className="FilterModal__content">{children}</div>
             <div className="FilterModal__bottom">
                 <Button variant="primary" onClick={onCloseClick}>
-                    Vis {formatNumber(numberOfHits)} treff
+                    {searchResult && searchResult.totalAds
+                        ? `Vis ${formatNumber(searchResult.totalAds)} treff`
+                        : "Vis treff"}
                 </Button>
             </div>
         </Modal>

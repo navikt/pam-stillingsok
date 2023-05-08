@@ -37,11 +37,7 @@ const FilterForm = ({
 
     if (device === Device.MOBILE && isFilterModalOpen) {
         return (
-            <FilterModal
-                title="Filtre"
-                numberOfHits={formatNumber(searchResult.totalAds)}
-                onCloseClick={() => setIsFilterModalOpen(false)}
-            >
+            <FilterModal title="Filtre" searchResult={searchResult} onCloseClick={() => setIsFilterModalOpen(false)}>
                 {form}
             </FilterModal>
         );
