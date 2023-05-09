@@ -5,7 +5,7 @@ import RequiresAuthentication from "./RequiresAuthentication";
 
 function LoginModal({onLoginClick, onCloseClick }) {
     return (
-        <AlertModal id="login-modal" onCancel={onCloseClick}>
+        <AlertModal id="login-modal" onCancel={onCloseClick} showButtons={false}>
             <RequiresAuthentication onLogin={onLoginClick} onCancel={onCloseClick}></RequiresAuthentication>
             {/* Logg inn med MinID, BankID, BankID på mobil, Buypass eller Commfides. */}
         </AlertModal>
@@ -13,7 +13,8 @@ function LoginModal({onLoginClick, onCloseClick }) {
 }
 
 LoginModal.propTypes = {
-    onCloseClick: PropTypes.func.isRequired
+    onCloseClick: PropTypes.func.isRequired,
+    onLoginClick: PropTypes.func.isRequired
 };
 
 export default LoginModal;

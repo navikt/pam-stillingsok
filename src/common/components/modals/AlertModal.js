@@ -65,7 +65,7 @@ AlertModal.defaultProps = {
     spinner: false,
     useOnlyCancelButton: false,
     onConfirm: undefined,
-    showButtons: false
+    showButtons: true
 };
 
 AlertModal.propTypes = {
