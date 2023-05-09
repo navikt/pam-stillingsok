@@ -10,8 +10,7 @@ Applikasjonen henter stillinger fra en dokumentdatabase (ElasticSearch) gjennom
 e-poster skjer gjennom applikasjonen [pam-aduser](https://github.com/navikt/pam-aduser).
 
 ## Avhengigheter
- - [pam-search-api]()
- - 
+ - [pam-search-api](https://github.com/navikt/pam-search-api)
 
 # Teknisk dokumentasjon
 
@@ -29,7 +28,7 @@ Bildet viser en forenklet skisse av pam-stillingsok og nærmeste integrasjoner.
 ### Frontend
 
 Appens frontend er skrevet i React. Den viser stillinger, favoritter og lagrede søk. Brukere kan søke etter 
-stillinger uten å logge inn, mens favoritter og lagrede søk krever innlogging. 
+stillinger uten å logge inn, mens favoritter og lagrede søk krever innlogging.
 
 ### Backend
 
@@ -67,6 +66,23 @@ Før du starter må du installere alle npm pakkene, dette kan du gjøre ved å k
 ```
 $ npm install
 ```
+
+### Hvordan få tilgang til @navikt/arbeidsplassen-react og  @navikt/arbeidsplassen-css
+
+Opprett fila `.npmrc` i hjemkatalogen din. F.eks. `~/.npmrc` Mer info: https://docs.npmjs.com/cli/v9/configuring-npm/npmrc
+
+Legg til følgende i fila
+
+```
+@navikt:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=$TOKEN
+```
+
+Opprett et token med "read:packages" rettigheter. [https://github.com/settings/tokens](https://github.com/settings/tokens) Bytt ut \$TOKEN med tokenet du akkurat opprettet. Velg Authorize token under "Configure SSO" for å gi tokenet tilgang til @navikt.
+
+Ikke sjekk inn `.npmrc` til GitHub.
+
+Mer informasjon om autentisering: https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#authenticating-with-a-personal-access-token
 
 For å starte docker-containere for redis og mock-oauth2-server. 
 ```
