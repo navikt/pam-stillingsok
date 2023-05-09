@@ -144,3 +144,4 @@ FavouritesButton.propTypes = {
 };
 
 export default FavouritesButton;
+
