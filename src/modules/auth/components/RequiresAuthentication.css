@@ -6,6 +6,6 @@
     padding: 0 1rem;
 }
 
-.login-buttons-wrapper button {
-    display: inline-block;
+.login-buttons-wrapper {
+    display: flex;
 }
