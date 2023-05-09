@@ -7,7 +7,6 @@ function LoginModal({onLoginClick, onCloseClick }) {
     return (
         <AlertModal id="login-modal" onCancel={onCloseClick} showButtons={false}>
             <RequiresAuthentication onLogin={onLoginClick} onCancel={onCloseClick}></RequiresAuthentication>
-            {/* Logg inn med MinID, BankID, BankID på mobil, Buypass eller Commfides. */}
         </AlertModal>
     );
 }
