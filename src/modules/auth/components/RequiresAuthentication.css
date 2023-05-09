@@ -8,4 +8,5 @@
 
 .login-buttons-wrapper {
     display: flex;
+    gap: 1rem;
 }
