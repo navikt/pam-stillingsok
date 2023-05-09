@@ -22,7 +22,7 @@ function RequiresAuthentication({ children, onCancel }) {
     } else {
         return (
             <section className="LoginRequiredMessage">
-                <Heading level="2" size="large" spacing>
+                <Heading level="1" size="large" spacing>
                     Du må først logge inn
                 </Heading>
                 <BodyLong className="LoginRequiredMessage__text mb-2">
