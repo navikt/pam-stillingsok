@@ -8,7 +8,6 @@ import {
     Checkbox,
     ErrorSummary,
     Heading,
-    Loader,
     ReadMore,
     Textarea,
     TextField,
@@ -26,7 +25,6 @@ const SuperraskSoknadForm = ({ ad, interestForm, isInternal, submitForm, isSendi
     const [email, setEmail] = useState("");
     const [about, setAbout] = useState("");
     const [shouldFocusErrorSummary, setShouldFocusErrorSummary] = useState(false);
-    const [checkedMustRequirements, setCheckedMustRequirements] = useState([]);
     const [checkedShouldRequirements, setCheckedShouldRequirements] = useState([]);
 
     // Validation
@@ -55,10 +53,6 @@ const SuperraskSoknadForm = ({ ad, interestForm, isInternal, submitForm, isSendi
                 telephone: telephone,
                 email,
                 about,
-                must: interestForm.must.map((it) => ({
-                    ...it,
-                    checked: checkedMustRequirements.includes(it.label)
-                })),
                 should: interestForm.should.map((it) => ({
                     ...it,
                     checked: checkedShouldRequirements.includes(it.label)
@@ -118,15 +112,6 @@ const SuperraskSoknadForm = ({ ad, interestForm, isInternal, submitForm, isSendi
         setShouldFocusErrorSummary(false);
         setAboutValidationError(undefined);
         setAbout(e.target.value);
-    }
-
-    function handleMustRequirementCheck(e) {
-        const { checked, value } = e.target;
-        if (checked) {
-            setCheckedMustRequirements((prevState) => (prevState.includes(value) ? prevState : [...prevState, value]));
-        } else {
-            setCheckedMustRequirements((prevState) => prevState.filter((it) => it !== value));
-        }
     }
 
     function handleShouldRequirementCheck(e) {
@@ -191,8 +176,7 @@ const SuperraskSoknadForm = ({ ad, interestForm, isInternal, submitForm, isSendi
                 )}
             </section>
 
-            {((interestForm.must && interestForm.must.length > 0) ||
-                (interestForm.should && interestForm.should.length > 0)) && (
+            {((interestForm.should && interestForm.should.length > 0)) && (
                 <section className="InterestForm__section">
                     <Heading level="2" size="medium" spacing>
                         Bedriftens ønskede kvalifikasjoner
@@ -200,21 +184,6 @@ const SuperraskSoknadForm = ({ ad, interestForm, isInternal, submitForm, isSendi
                     <BodyLong className="mb-2">
                         Husk at du kan være rett person for jobben selv om du ikke treffer på alle kvalifikasjoner.
                     </BodyLong>
-
-                    {interestForm.must && interestForm.must.length > 0 && (
-                        <Fieldset legend="Må-krav for stillingen">
-                            {interestForm.must.map((it) => (
-                                <Checkbox
-                                    key={it.id}
-                                    value={it.label}
-                                    onChange={handleMustRequirementCheck}
-                                    checked={checkedMustRequirements.includes(it.label)}
-                                >
-                                    {it.label}
-                                </Checkbox>
-                            ))}
-                        </Fieldset>
-                    )}
 
                     {interestForm.should && interestForm.should.length > 0 && (
                         <Fieldset legend="Huk av for kvalifikasjonene du oppfyller">

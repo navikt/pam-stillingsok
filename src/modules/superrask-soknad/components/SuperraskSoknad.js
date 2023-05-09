@@ -53,9 +53,8 @@ const SuperraskSoknad = ({ match }) => {
         try {
             logAmplitudeEvent("submit superrask søknad", {
                 id: data.ad._id,
-                antallKrav: soknad.must.length + soknad.should.length,
-                antallKravHuket:
-                    soknad.must.filter((it) => it.checked).length + soknad.should.filter((it) => it.checked).length,
+                antallKrav: soknad.should.length,
+                antallKravHuket: soknad.should.filter((it) => it.checked).length,
                 antallTegnIFritekst: soknad.about.length,
                 harNavn: soknad.name.length > 0
             });
