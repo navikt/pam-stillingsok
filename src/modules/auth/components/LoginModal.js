@@ -1,11 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 import AlertModal from "../../../common/components/modals/AlertModal";
+import RequiresAuthentication from "./RequiresAuthentication";
 
 function LoginModal({ onLoginClick, onCloseClick }) {
     return (
-        <AlertModal onCancel={onCloseClick} onConfirm={onLoginClick} confirmLabel="Logg inn" title="Du må logge inn">
-            Logg inn med MinID, BankID, BankID på mobil, Buypass eller Commfides.
+        <AlertModal onCancel={onCloseClick}>
+            <RequiresAuthentication onCancel={onCloseClick}></RequiresAuthentication>
+            {/* Logg inn med MinID, BankID, BankID på mobil, Buypass eller Commfides. */}
         </AlertModal>
     );
 }

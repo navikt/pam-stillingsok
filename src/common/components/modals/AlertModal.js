@@ -13,7 +13,8 @@ export default function AlertModal({
     onConfirm,
     onCancel,
     spinner,
-    useOnlyCancelButton
+    useOnlyCancelButton,
+    showButtons
 }) {
     const cancelButtonRef = useRef();
 
@@ -36,21 +37,24 @@ export default function AlertModal({
             <BodyLong id={`${id}-message`} className="mb-2_5">
                 {children}
             </BodyLong>
-            <div className="AlertModal__buttons">
-                <Button
-                    ref={cancelButtonRef}
-                    variant={useOnlyCancelButton ? "primary" : "secondary"}
-                    loading={spinner}
-                    onClick={onCancel}
-                >
-                    {cancelLabel}
-                </Button>
-                {!useOnlyCancelButton && (
-                    <Button variant="primary" loading={spinner} disabled={spinner} onClick={onConfirm}>
-                        {confirmLabel}
+            {showButtons && (
+                <div className="AlertModal__buttons">
+                    <Button
+                        ref={cancelButtonRef}
+                        variant={useOnlyCancelButton ? "primary" : "secondary"}
+                        loading={spinner}
+                        onClick={onCancel}
+                    >
+                        {cancelLabel}
                     </Button>
-                )}
-            </div>
+                    {!useOnlyCancelButton && (
+                        <Button variant="primary" loading={spinner} disabled={spinner} onClick={onConfirm}>
+                            {confirmLabel}
+                        </Button>
+                    )}
+                </div>
+            )}
+            
         </Modal>
     );
 }
@@ -60,7 +64,8 @@ AlertModal.defaultProps = {
     cancelLabel: "Avbryt",
     spinner: false,
     useOnlyCancelButton: false,
-    onConfirm: undefined
+    onConfirm: undefined,
+    showButtons: false
 };
 
 AlertModal.propTypes = {
@@ -72,5 +77,6 @@ AlertModal.propTypes = {
     onConfirm: PropTypes.func,
     onCancel: PropTypes.func.isRequired,
     spinner: PropTypes.bool,
-    useOnlyCancelButton: PropTypes.bool
+    useOnlyCancelButton: PropTypes.bool,
+    showButtons: PropTypes.bool
 };

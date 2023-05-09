@@ -3,8 +3,7 @@ import SavedSearchesList from "./components/SavedSearchesList";
 import RequiresAuthentication from "../auth/components/RequiresAuthentication";
 import RequiresHasAcceptedTerms from "../user/components/RequiresHasAcceptedTerms";
 import useDocumentTitle from "../../common/hooks/useDocumentTitle";
-import useScrollToTop from "../../common/hooks/useScrollToTop";
-import H1WithAutoFocus from "../../common/components/h1WithAutoFocus/H1WithAutoFocus";
+import useScrollToTop from "../../common/hooks/useScrollToTop"
 import "./components/SavedSearches.css";
 
 /**
@@ -18,7 +17,6 @@ function SavedSearchesPage() {
 
     return (
         <div className="container-medium mt-3 mb-4">
-            <H1WithAutoFocus>Lagrede søk</H1WithAutoFocus>
             <RequiresAuthentication>
                 <RequiresHasAcceptedTerms>
                     <SavedSearchesList />
