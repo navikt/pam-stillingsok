@@ -7,7 +7,7 @@ import ErrorMessage from "../../../common/components/messages/ErrorMessage";
 import LoginBubble from "../../../common/components/icons/LoginBubble";
 import "./RequiresAuthentication.css";
 
-function RequiresAuthentication({ children, onCancel }) {
+function RequiresAuthentication({ children, onCancel, onLogin }) {
     const { authenticationStatus, login } = useContext(AuthenticationContext);
 
     if (
@@ -33,9 +33,16 @@ function RequiresAuthentication({ children, onCancel }) {
                 </div>
                 
                 <div className="login-buttons-wrapper">
-                    <Button variant="primary" icon={<EnterIcon aria-hidden="true" />} onClick={login}>
-                        Logg inn
-                    </Button>
+                    {onLogin ? (
+                        <Button variant="primary" icon={<EnterIcon aria-hidden="true" />} onClick={onLogin}>
+                            Logg inn
+                        </Button>
+                    ) : (
+                        <Button variant="primary" icon={<EnterIcon aria-hidden="true" />} onClick={login}>
+                            Logg inn
+                        </Button>
+                    )}
+                    
                     
                     {onCancel && (
                         <Button variant="secondary" onClick={onCancel}>

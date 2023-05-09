@@ -73,12 +73,16 @@ const AuthenticationProvider = ({ children }) => {
         window.location.href = `/stillinger${LOGIN_URL}?redirect=${encodeURIComponent(window.location.href)}`
     }
 
+    function loginAndRedirect(navigateTo) {
+        window.location.href = `/stillinger${LOGIN_URL}?redirect=${encodeURIComponent(navigateTo)}`
+    }
+
     function logout() {
         window.location.href = `/stillinger${LOGOUT_URL}`;
     }
 
     return (
-        <AuthenticationContext.Provider value={{ userNameAndInfo, authenticationStatus, login, logout }}>
+        <AuthenticationContext.Provider value={{ userNameAndInfo, authenticationStatus, login, logout, loginAndRedirect }}>
             {children}
         </AuthenticationContext.Provider>
     );
