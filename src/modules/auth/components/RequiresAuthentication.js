@@ -23,7 +23,7 @@ function RequiresAuthentication({ children, onCancel, onLogin }) {
         return (
             <section className="LoginRequiredMessage">
                 <Heading level="1" size="large" spacing>
-                    Du må først logge inn
+                    Du må logge inn først
                 </Heading>
                 <BodyLong className="LoginRequiredMessage__text mb-2">
                     Du bruker BankID for å logge inn på arbeidsplassen.no
