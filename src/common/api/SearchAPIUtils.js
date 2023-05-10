@@ -7,7 +7,7 @@ export async function simplifySearchResponse(response) {
     const internationalCountMap = {};
 
     response.aggregations.counties.nestedLocations.values.buckets.forEach((c) => {
-        nationalCountMap[c.key] = c.doc_count;
+        nationalCountMap[c.key] = c.root_doc_count.doc_count;
 
         c.municipals.buckets.forEach((m) => {
             nationalCountMap[`${c.key}.${m.key}`] = m.doc_count;
