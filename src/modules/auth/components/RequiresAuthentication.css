@@ -11,3 +11,10 @@
     display: flex;
     gap: 1rem;
 }
+
+
+@media (max-width: 425px) {
+    .login-buttons-wrapper {
+        flex-direction: column;
+    }
+}
