@@ -7,7 +7,10 @@
 }
 
 .LoginRequiredMessage__text {
-    margin: 0 0 2rem 0;
-    max-width: 400px;
     text-align: center;
+}
+
+.login-buttons-wrapper {
+    display: flex;
+    gap: 1rem;
 }

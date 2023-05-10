@@ -32,9 +32,14 @@ import { ClockIcon, HeartIcon } from "@navikt/aksel-icons";
 import { AuthenticationContext, AuthenticationStatus } from "../../auth/contexts/AuthenticationProvider";
 import { Link } from "react-router-dom";
 import LoadingScreen from "./loadingScreen/LoadingScreen";
+import useToggle from "../../../common/hooks/useToggle";
+import TermsOfUse from "../../user/contexts/TermsOfUse";
+import LoginModal from "../../auth/components/LoginModal";
+import { HasAcceptedTermsStatus, UserContext } from "../../user/contexts/UserProvider";
 
 const Search = () => {
-    const { authenticationStatus } = useContext(AuthenticationContext);
+    const { authenticationStatus, loginAndRedirect } = useContext(AuthenticationContext);
+    const { hasAcceptedTermsStatus } = useContext(UserContext);
     const [query, queryDispatch] = useReducer(queryReducer, initialQuery, initQueryWithValuesFromBrowserUrl);
     const [initialSearchResponse, initialSearchDispatch] = useFetchReducer();
     const [searchResponse, searchDispatch] = useFetchReducer();
@@ -44,6 +49,32 @@ const Search = () => {
     const [isFiltersVisible, setIsFiltersVisible] = useState(false);
     let history = useHistory();
     const { resetScroll } = useRestoreScroll("search-page", initialSearchResponse.status === FetchStatus.SUCCESS);
+    const [shouldShowTermsModal, openTermsModal, closeTermsModal] = useToggle();
+    const [shouldShowLoginModalFavorites, openLoginModalFavorites, closeLoginModalFavorites] = useToggle();
+    const [shouldShowLoginModalSavedSearch, openLoginModalSavedSearch, closeLoginModalSavedSearch] = useToggle();
+
+    function handleClick(e, navigateTo, type) {
+        e.preventDefault();
+        if (authenticationStatus === AuthenticationStatus.NOT_AUTHENTICATED && type === "FAVORITES") {
+            openLoginModalFavorites();
+        } else if (authenticationStatus === AuthenticationStatus.NOT_AUTHENTICATED  && type === "SAVEDSEARCH") {
+            openLoginModalSavedSearch();
+        } else if (hasAcceptedTermsStatus === HasAcceptedTermsStatus.NOT_ACCEPTED) {
+            openTermsModal();
+        } else if (
+            authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED &&
+            hasAcceptedTermsStatus === HasAcceptedTermsStatus.HAS_ACCEPTED
+        ) {
+            history.push(navigateTo);
+        } else {
+            return false;
+        }
+    }
+
+    function handleTermsAccepted(navigateTo) {
+        closeTermsModal();
+        history.push(navigateTo);
+    }
 
     useEffect(() => {
         if (numberOfSelectedFilters === 0) {
@@ -186,26 +217,42 @@ const Search = () => {
                                 (device === Device.MOBILE &&
                                     authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED)) && (
                                 <React.Fragment>
-                                    <Button
-                                        as={Link}
-                                        to={`${CONTEXT_PATH}/lagrede-sok`}
-                                        type="button"
-                                        variant="tertiary"
-                                        onClick={() => {}}
-                                        icon={<ClockIcon aria-hidden="true" />}
-                                    >
-                                        Bruk et lagret søk
-                                    </Button>
-                                    <Button
-                                        as={Link}
-                                        to={`${CONTEXT_PATH}/favoritter`}
-                                        type="button"
-                                        variant="tertiary"
-                                        onClick={() => {}}
-                                        icon={<HeartIcon aria-hidden="true" />}
-                                    >
-                                        Mine favoritter
-                                    </Button>
+                                    <React.Fragment>
+                                        <Button
+                                            as={Link}
+                                            to={`${CONTEXT_PATH}/lagrede-sok`}
+                                            type="button"
+                                            variant="tertiary"
+                                            onClick={(e) => {
+                                                handleClick(e, `${CONTEXT_PATH}/lagrede-sok`, "SAVEDSEARCH")
+                                            }}
+                                            icon={<ClockIcon aria-hidden="true" />}
+                                        >
+                                            Bruk et lagret søk
+                                        </Button>
+
+                                        {shouldShowLoginModalSavedSearch && <LoginModal onLoginClick={() => {loginAndRedirect(`${CONTEXT_PATH}/lagrede-sok`)}} onCloseClick={closeLoginModalSavedSearch} />}
+
+                                    </React.Fragment>
+                                    <React.Fragment>
+                                        <Button
+                                            as={Link}
+                                            to={`${CONTEXT_PATH}/favoritter`}
+                                            type="button"
+                                            variant="tertiary"
+                                            onClick={(e) => {
+                                                handleClick(e, `${CONTEXT_PATH}/favoritter`, "FAVORITES")
+                                            }}
+                                            icon={<HeartIcon aria-hidden="true" />}
+                                        >
+                                            Mine favoritter
+                                        </Button>
+
+                                            {shouldShowLoginModalFavorites && <LoginModal onLoginClick={() => {loginAndRedirect(`${CONTEXT_PATH}/favoritter`)}} onCloseClick={closeLoginModalFavorites} />}
+
+                                            {shouldShowTermsModal && <TermsOfUse onClose={closeTermsModal} onTermsAccepted={handleTermsAccepted(`${CONTEXT_PATH}/favoritter`)} />}
+
+                                    </React.Fragment>
                                 </React.Fragment>
                             )}
                         </div>

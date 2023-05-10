@@ -6,6 +6,7 @@ import UserAPI from "../../../common/api/UserAPI";
 import { FetchAction, FetchStatus, useFetchReducer } from "../../../common/hooks/useFetchReducer";
 import { extractParam } from "../../../common/components/utils";
 import SavedSearchesIsEmpty from "./SavedSearchesIsEmpty";
+import H1WithAutoFocus from "../../../common/components/h1WithAutoFocus/H1WithAutoFocus";
 
 /**
  * Displays a list of all saved searches.
@@ -65,6 +66,7 @@ function SavedSearchesList() {
             {status === FetchStatus.SUCCESS && data.length === 0 && <SavedSearchesIsEmpty />}
             {status === FetchStatus.SUCCESS && data.length > 0 && (
                 <React.Fragment>
+                    <H1WithAutoFocus>Lagrede søk</H1WithAutoFocus>
                     {data.map((savedSearch) => (
                         <SavedSearchListItem
                             key={savedSearch.uuid}
