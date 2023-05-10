@@ -32,3 +32,4 @@ const LoginBubble = () => (
 );
 
 export default LoginBubble;
+
