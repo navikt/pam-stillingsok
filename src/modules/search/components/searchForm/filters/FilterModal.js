@@ -6,9 +6,6 @@ import { XMarkIcon } from "@navikt/aksel-icons";
 import { formatNumber } from "../../../../../common/components/utils";
 
 function FilterModal({ title, children, onCloseClick, searchResult }) {
-    useEffect(() => {
-        Modal.setAppElement("#app");
-    }, []);
 
     return (
         <Modal
