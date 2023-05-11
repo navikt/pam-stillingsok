@@ -4,9 +4,6 @@ import RequiresAuthentication from "./RequiresAuthentication";
 import { Modal } from "@navikt/ds-react";
 
 function LoginModal({onLoginClick, onCloseClick }) {
-    useEffect(() => {
-        Modal.setAppElement("#app");
-    }, []);
 
     return (
         <Modal 
