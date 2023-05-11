@@ -1,0 +1,6 @@
+**/.git
+**/node_modules
+**/.nais
+**/.github
+*.yml
+package-lock.json
