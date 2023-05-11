@@ -102,5 +102,5 @@
             "npm run prettier:fix"
         ]
     },
-    "snyk": true
+    "snyk": false
 }
