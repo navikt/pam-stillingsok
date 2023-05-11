@@ -26,7 +26,7 @@ function RequiresAuthentication({ children, onCancel, onLogin }) {
                     Du må logge inn først
                 </Heading>
                 <BodyLong className="LoginRequiredMessage__text mb-2">
-                    Du bruker BankID for å logge inn på arbeidsplassen.no
+                    Du bruker BankID for å logge inn på <span translate="no">arbeidsplassen.no</span>
                 </BodyLong>
                 <div className="mb-2">
                     <LoginBubble />
