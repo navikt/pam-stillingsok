@@ -96,11 +96,11 @@
     },
     "lint-staged": {
         "./*/**/*.{js,jsx,ts,tsx,json,css,yml,yaml}": [
-            "npx prettier --write \"**/*.+(js|jsx|ts|tsx|json|yml|yaml|md|css)\"",
-            "npx eslint --fix \"**/*.+(js|jsx|ts|tsx)\""
+            "npx prettier --write",
+            "npx eslint --fix"
         ],
         "*.{json,md}": [
-            "npx prettier --write \"*.+(json|md)\""
+            "npx prettier --write"
         ]
     },
     "snyk": false
