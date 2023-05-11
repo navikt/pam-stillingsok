@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import * as ReactDOMClient from "react-dom/client";
 import "@navikt/ds-css";
 import "@navikt/arbeidsplassen-css";
@@ -21,12 +21,17 @@ import SavedSearchesPage from "./modules/saved-searches/SavedSearchesPage";
 import TrekkSoknadPage from "./modules/superrask-soknad/TrekkSoknadPage";
 import "./common/styles/styles.css";
 import googleTranslateWorkaround from "./common/utils/googleTranslateWorkaround";
+import { Modal } from "@navikt/ds-react";
 
 initSentry();
 initAmplitude();
 googleTranslateWorkaround();
 
 function Application() {
+    useEffect(() => {
+        Modal.setAppElement("#app");
+    }, []);
+    
     return (
         <AuthenticationProvider>
             <UserProvider>

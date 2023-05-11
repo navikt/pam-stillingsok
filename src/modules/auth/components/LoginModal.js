@@ -1,13 +1,18 @@
-import React from "react";
+import React, {useEffect} from "react";
 import PropTypes from "prop-types";
-import AlertModal from "../../../common/components/modals/AlertModal";
 import RequiresAuthentication from "./RequiresAuthentication";
+import { Modal } from "@navikt/ds-react";
 
 function LoginModal({onLoginClick, onCloseClick }) {
+
     return (
-        <AlertModal id="login-modal" onCancel={onCloseClick} showButtons={false}>
+        <Modal 
+            role="alertdialog"
+            open={true} 
+            aria-label="Du må logge inn først"
+            onClose={onCloseClick}>
             <RequiresAuthentication onLogin={onLoginClick} onCancel={onCloseClick}></RequiresAuthentication>
-        </AlertModal>
+        </Modal>
     );
 }
 

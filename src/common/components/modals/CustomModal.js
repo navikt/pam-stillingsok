@@ -4,9 +4,6 @@ import { Heading, Modal } from "@navikt/ds-react";
 import "./CustomModal.css";
 
 function CustomModal({ title, children, onCloseClick }) {
-    useEffect(() => {
-        Modal.setAppElement("#app");
-    }, []);
 
     return (
         <Modal className="CustomModal" open={true} onClose={onCloseClick}>
