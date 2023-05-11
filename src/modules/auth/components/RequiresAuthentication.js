@@ -22,7 +22,7 @@ function RequiresAuthentication({ children, onCancel, onLogin }) {
     } else {
         return (
             <section className="LoginRequiredMessage">
-                <Heading level="1" size="large" spacing>
+                <Heading level="1" size="large" className="mb-0_5">
                     Du må logge inn først
                 </Heading>
                 <BodyLong className="LoginRequiredMessage__text mb-2">
@@ -31,7 +31,7 @@ function RequiresAuthentication({ children, onCancel, onLogin }) {
                 <div className="mb-2">
                     <LoginBubble />
                 </div>
-                
+
                 <div className="login-buttons-wrapper">
                     {onLogin ? (
                         <Button variant="primary" icon={<EnterIcon aria-hidden="true" />} onClick={onLogin}>
@@ -42,14 +42,12 @@ function RequiresAuthentication({ children, onCancel, onLogin }) {
                             Logg inn
                         </Button>
                     )}
-                    
-                    
+
                     {onCancel && (
                         <Button variant="secondary" onClick={onCancel}>
                             Avbryt
                         </Button>
                     )}
-                    
                 </div>
             </section>
         );
