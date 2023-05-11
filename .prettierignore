@@ -3,3 +3,4 @@
 **/.nais
 **/.github
 *.yml
+package-lock.json
