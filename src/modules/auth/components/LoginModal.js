@@ -12,7 +12,7 @@ function LoginModal({onLoginClick, onCloseClick }) {
         <Modal 
             role="alertdialog"
             open={true} 
-            id="login-modal"
+            aria-label="Logg inn"
             onClose={onCloseClick}>
             <RequiresAuthentication onLogin={onLoginClick} onCancel={onCloseClick}></RequiresAuthentication>
         </Modal>
