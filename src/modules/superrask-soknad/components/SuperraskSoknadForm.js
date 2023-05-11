@@ -8,7 +8,6 @@ import {
     Checkbox,
     ErrorSummary,
     Heading,
-    Loader,
     ReadMore,
     Textarea,
     TextField,
@@ -25,9 +24,8 @@ const SuperraskSoknadForm = ({ ad, interestForm, isInternal, submitForm, isSendi
     const [telephone, setTelephone] = useState("");
     const [email, setEmail] = useState("");
     const [about, setAbout] = useState("");
-    const [shouldFocusErrorSummary, setShouldFocusErrorSummary] = useState(false);
-    const [checkedMustRequirements, setCheckedMustRequirements] = useState([]);
-    const [checkedShouldRequirements, setCheckedShouldRequirements] = useState([]);
+    const [qualificationsFocusErrorSummary, setQualificationsFocusErrorSummary] = useState(false);
+    const [checkedQualifications, setCheckedQualifications] = useState([]);
 
     // Validation
     const [telephoneValidationError, setTelephoneValidationError] = useState(undefined);
@@ -38,10 +36,10 @@ const SuperraskSoknadForm = ({ ad, interestForm, isInternal, submitForm, isSendi
     const ABOUT_MAX_LENGTH = 400;
 
     useEffect(() => {
-        if (shouldFocusErrorSummary) {
+        if (qualificationsFocusErrorSummary) {
             errorSummary.current.focus();
         }
-    }, [shouldFocusErrorSummary]);
+    }, [qualificationsFocusErrorSummary]);
 
     function handleFormSubmit(e) {
         e.preventDefault();
@@ -55,13 +53,9 @@ const SuperraskSoknadForm = ({ ad, interestForm, isInternal, submitForm, isSendi
                 telephone: telephone,
                 email,
                 about,
-                must: interestForm.must.map((it) => ({
+                qualifications: interestForm.qualifications.map((it) => ({
                     ...it,
-                    checked: checkedMustRequirements.includes(it.label)
-                })),
-                should: interestForm.should.map((it) => ({
-                    ...it,
-                    checked: checkedShouldRequirements.includes(it.label)
+                    checked: checkedQualifications.includes(it.label)
                 }))
             });
         }
@@ -69,7 +63,7 @@ const SuperraskSoknadForm = ({ ad, interestForm, isInternal, submitForm, isSendi
 
     function validateForm() {
         let isValid = true;
-        setShouldFocusErrorSummary(false);
+        setQualificationsFocusErrorSummary(false);
 
         if (email && email.length > 0 && !isValidEmail(email)) {
             isValid = false;
@@ -93,7 +87,7 @@ const SuperraskSoknadForm = ({ ad, interestForm, isInternal, submitForm, isSendi
             );
         }
         if (!isValid) {
-            setShouldFocusErrorSummary(true);
+            setQualificationsFocusErrorSummary(true);
         }
         return isValid;
     }
@@ -103,40 +97,31 @@ const SuperraskSoknadForm = ({ ad, interestForm, isInternal, submitForm, isSendi
     }
 
     function handleTelephoneChange(e) {
-        setShouldFocusErrorSummary(false);
+        setQualificationsFocusErrorSummary(false);
         setTelephoneValidationError(undefined);
         setTelephone(e.target.value);
     }
 
     function handleEmailChange(e) {
-        setShouldFocusErrorSummary(false);
+        setQualificationsFocusErrorSummary(false);
         setEmailValidationError(undefined);
         setEmail(e.target.value);
     }
 
     function handleAboutChange(e) {
-        setShouldFocusErrorSummary(false);
+        setQualificationsFocusErrorSummary(false);
         setAboutValidationError(undefined);
         setAbout(e.target.value);
     }
 
-    function handleMustRequirementCheck(e) {
+    function handleQualificationsCheck(e) {
         const { checked, value } = e.target;
         if (checked) {
-            setCheckedMustRequirements((prevState) => (prevState.includes(value) ? prevState : [...prevState, value]));
-        } else {
-            setCheckedMustRequirements((prevState) => prevState.filter((it) => it !== value));
-        }
-    }
-
-    function handleShouldRequirementCheck(e) {
-        const { checked, value } = e.target;
-        if (checked) {
-            setCheckedShouldRequirements((prevState) =>
+            setCheckedQualifications((prevState) =>
                 prevState.includes(value) ? prevState : [...prevState, value]
             );
         } else {
-            setCheckedShouldRequirements((prevState) => prevState.filter((it) => it !== value));
+            setCheckedQualifications((prevState) => prevState.filter((it) => it !== value));
         }
     }
 
@@ -191,8 +176,7 @@ const SuperraskSoknadForm = ({ ad, interestForm, isInternal, submitForm, isSendi
                 )}
             </section>
 
-            {((interestForm.must && interestForm.must.length > 0) ||
-                (interestForm.should && interestForm.should.length > 0)) && (
+            {((interestForm.qualifications && interestForm.qualifications.length > 0)) && (
                 <section className="InterestForm__section">
                     <Heading level="2" size="medium" spacing>
                         Bedriftens ønskede kvalifikasjoner
@@ -201,29 +185,14 @@ const SuperraskSoknadForm = ({ ad, interestForm, isInternal, submitForm, isSendi
                         Husk at du kan være rett person for jobben selv om du ikke treffer på alle kvalifikasjoner.
                     </BodyLong>
 
-                    {interestForm.must && interestForm.must.length > 0 && (
-                        <Fieldset legend="Må-krav for stillingen">
-                            {interestForm.must.map((it) => (
-                                <Checkbox
-                                    key={it.id}
-                                    value={it.label}
-                                    onChange={handleMustRequirementCheck}
-                                    checked={checkedMustRequirements.includes(it.label)}
-                                >
-                                    {it.label}
-                                </Checkbox>
-                            ))}
-                        </Fieldset>
-                    )}
-
-                    {interestForm.should && interestForm.should.length > 0 && (
+                    {interestForm.qualifications && interestForm.qualifications.length > 0 && (
                         <Fieldset legend="Huk av for kvalifikasjonene du oppfyller">
-                            {interestForm.should.map((it) => (
+                            {interestForm.qualifications.map((it) => (
                                 <Checkbox
                                     key={it.id}
                                     value={it.label}
-                                    onChange={handleShouldRequirementCheck}
-                                    checked={checkedShouldRequirements.includes(it.label)}
+                                    onChange={handleQualificationsCheck}
+                                    checked={checkedQualifications.includes(it.label)}
                                 >
                                     {it.label}
                                 </Checkbox>
