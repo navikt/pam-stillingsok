@@ -17,7 +17,6 @@
     }
 }
 
-
 .FilterModal__heading {
     padding: 0.5rem 0.5rem 0.5rem 1rem;
     display: flex;
@@ -75,8 +74,8 @@
 }
 
 .FilterModal__sub-fieldset {
-    padding: 0 1rem 0.5rem 1rem;
-    margin-top: 0!important;
+    padding: 0 1rem 0.5rem 2rem;
+    margin-top: 0 !important;
     border-radius: 6px;
 }
 
