@@ -94,7 +94,7 @@ const Ad = ({ match }) => {
             {status === FetchStatus.SUCCESS && (
                 <article className="JobPosting__flex">
                     <div className="JobPosting__left">
-                        <H1WithAutoFocus>{ad._source.title}</H1WithAutoFocus>
+                        <H1WithAutoFocus className="JobPosting__h1">{ad._source.title}</H1WithAutoFocus>
 
                         {ad._source.status !== "ACTIVE" && (
                             <Tag variant="warning-filled" className="mb-1">
