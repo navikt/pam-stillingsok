@@ -728,6 +728,11 @@ exports.searchTemplate = (query) => {
                                         terms: {
                                             field: "occupationList.level2",
                                             size: 100
+                                        },
+                                        aggs: {
+                                            root_doc_count: {
+                                                reverse_nested: {}
+                                            }
                                         }
                                     }
                                 }
