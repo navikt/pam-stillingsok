@@ -95,12 +95,9 @@
         "webpack-merge": "^4.2.1"
     },
     "lint-staged": {
-        "./*/**/*.{js,jsx,ts,tsx}": [
-            "npm run prettier:fix",
-            "npm run eslint:fix"
-        ],
-        "*.{json,md}": [
-            "npm run prettier:fixjson"
+        "./*/**/*.{js,jsx,ts,tsx,json}": [
+            "npx prettier --write \"**/*.+(js|jsx|ts|tsx|json|yml|yaml|md|css)\"",
+            "npx eslint --fix \"**/*.+(js|jsx|ts|tsx)\""
         ]
     },
     "snyk": false
