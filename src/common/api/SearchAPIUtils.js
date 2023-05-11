@@ -33,7 +33,7 @@ export async function simplifySearchResponse(response) {
                     occupationSecondLevels: firstLevel.occupationSecondLevels.buckets.map((secondLevel) => ({
                         key: `${firstLevel.key}.${secondLevel.key}`,
                         label: secondLevel.key,
-                        count: secondLevel.doc_count
+                        count: secondLevel.root_doc_count.doc_count
                     }))
                 })),
             extent: response.aggregations.extent.values.buckets.map((item) => ({
