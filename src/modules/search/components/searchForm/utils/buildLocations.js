@@ -22,6 +22,7 @@ export default function buildLocations(values) {
 
         if (l.key === "UTLAND") {
             facet.type = "international";
+            facet.count = values.totalInternational;
 
             for (let key in internationalCountMap) {
                 if (internationalCountMap.hasOwnProperty(key)) {
@@ -30,8 +31,6 @@ export default function buildLocations(values) {
                         key: key.toUpperCase(),
                         count: internationalCountMap[key]
                     });
-
-                    facet.count += internationalCountMap[key];
                 }
             }
         } else {

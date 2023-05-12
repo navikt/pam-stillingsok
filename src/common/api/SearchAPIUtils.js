@@ -22,6 +22,7 @@ export async function simplifySearchResponse(response) {
         ads: response.hits.hits.map((stilling) => fixMissingAdProperties(stilling._source)),
         totalAds: response.hits.total.value,
         totalPositions: response.aggregations.positioncount.sum.value,
+        totalInternational: response.aggregations.countries.doc_count,
         aggregations: {
             nationalCountMap,
             internationalCountMap,
