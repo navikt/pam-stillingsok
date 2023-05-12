@@ -1,19 +1,16 @@
 {
-  "ingress": [
-    "https://arbeidsplassen.dev.nav.no/stillinger",
-    "https://arbeidsplassen.intern.dev.nav.no/stillinger"
-  ],
-  "pamaduser_url": "http://pam-aduser/aduser",
-  "arbeidsplassen_url": "https://arbeidsplassen.intern.dev.nav.no",
-  "pam_stillingsok_url": "https://arbeidsplassen.intern.dev.nav.no/stillinger",
-  "pam_var_side_url": "https://arbeidsplassen.intern.dev.nav.no/stillingsregistrering",
-  "pamsearchapi_url": "http://pam-search-api",
-  "pam_jobbtreff_api_url": "https://arbeidsplassen.intern.dev.nav.no/jobbtreff-promo",
-  "amplitude_token": "3acd3a52e065d2d99856a12e7e9e1432",
-  "interest_api_url": "https://arbeidsplassen.intern.dev.nav.no/interesse-api",
-  "cv-api-url": "https://pam-cv-api.dev-fss-pub.nais.io",
-  "cv-api-host": "pam-cv-api.dev-fss-pub.nais.io",
-  "cv_api_audience": "dev-fss:teampam:pam-cv-api",
-  "aduser_audience": "dev-gcp:teampam:pam-aduser",
-  "idporten_audience": "https://nav.no"
+    "ingress": ["https://arbeidsplassen.dev.nav.no/stillinger", "https://arbeidsplassen.intern.dev.nav.no/stillinger"],
+    "pamaduser_url": "http://pam-aduser/aduser",
+    "arbeidsplassen_url": "https://arbeidsplassen.intern.dev.nav.no",
+    "pam_stillingsok_url": "https://arbeidsplassen.intern.dev.nav.no/stillinger",
+    "pam_var_side_url": "https://arbeidsplassen.intern.dev.nav.no/stillingsregistrering",
+    "pamsearchapi_url": "http://pam-search-api",
+    "pam_jobbtreff_api_url": "https://arbeidsplassen.intern.dev.nav.no/jobbtreff-promo",
+    "amplitude_token": "3acd3a52e065d2d99856a12e7e9e1432",
+    "interest_api_url": "https://arbeidsplassen.intern.dev.nav.no/interesse-api",
+    "cv-api-url": "https://pam-cv-api.dev-fss-pub.nais.io",
+    "cv-api-host": "pam-cv-api.dev-fss-pub.nais.io",
+    "cv_api_audience": "dev-fss:teampam:pam-cv-api",
+    "aduser_audience": "dev-gcp:teampam:pam-aduser",
+    "idporten_audience": "https://nav.no"
 }
