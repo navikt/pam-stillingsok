@@ -1,0 +1,39 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true,
+        "node": true
+    },
+    "extends": ["plugin:react/recommended", "airbnb", "prettier"],
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 12,
+        "sourceType": "module"
+    },
+    "plugins": ["react", "prettier"],
+    "rules": {
+        "react/no-unescaped-entities": "off",
+        "prettier/prettier": "error",
+        "react/react-in-jsx-scope": "off",
+        "react/jsx-props-no-spreading": "off",
+        "react/forbid-prop-types": "off",
+        // defaultProps rule to be deprecated on function components
+        // https://github.com/reactjs/rfcs/pull/107
+        "react/require-default-props": [
+            "error",
+            {
+                "ignoreFunctionalComponents": true
+            }
+        ]
+    },
+    "settings": {
+        "import/resolver": {
+            "alias": {
+                "extensions": [".js", ".jsx"],
+                "map": [["@", "."]]
+            }
+        }
+    }
+}

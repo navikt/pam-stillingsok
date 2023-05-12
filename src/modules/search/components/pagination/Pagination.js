@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Button, Link as AkselLink } from "@navikt/ds-react";
+import { Button } from "@navikt/ds-react";
 import "./Pagination.css";
 import { ArrowUpIcon } from "@navikt/aksel-icons";
 
@@ -8,6 +8,10 @@ const Pagination = ({ searchResult, isSearching, query, onLoadMoreClick }) => {
     const total = searchResult.totalAds;
     const to = query.from + query.size;
     const hasMore = to < total;
+
+    const scrollTop = (e) => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    };
 
     return (
         <React.Fragment>
@@ -22,9 +26,9 @@ const Pagination = ({ searchResult, isSearching, query, onLoadMoreClick }) => {
                 </Button>
             )}
 
-            <AkselLink href="#top" className="mt-1_5">
+            <Button variant="tertiary" onClick={scrollTop} className="mt-1_5">
                 <ArrowUpIcon aria-hidden="true" /> Til toppen
-            </AkselLink>
+            </Button>
         </React.Fragment>
     );
 };

@@ -22,16 +22,16 @@ function RequiresAuthentication({ children, onCancel, onLogin }) {
     } else {
         return (
             <section className="LoginRequiredMessage">
-                <Heading level="1" size="large" spacing>
-                    Du må først logge inn
+                <Heading level="1" size="large" className="mb-0_5">
+                    Du må logge inn først
                 </Heading>
                 <BodyLong className="LoginRequiredMessage__text mb-2">
-                    Du bruker BankID for å logge inn på arbeidsplassen.no
+                    Du bruker BankID for å logge inn på <span translate="no">arbeidsplassen.no</span>
                 </BodyLong>
                 <div className="mb-2">
                     <LoginBubble />
                 </div>
-                
+
                 <div className="login-buttons-wrapper">
                     {onLogin ? (
                         <Button variant="primary" icon={<EnterIcon aria-hidden="true" />} onClick={onLogin}>
@@ -42,14 +42,12 @@ function RequiresAuthentication({ children, onCancel, onLogin }) {
                             Logg inn
                         </Button>
                     )}
-                    
-                    
+
                     {onCancel && (
                         <Button variant="secondary" onClick={onCancel}>
                             Avbryt
                         </Button>
                     )}
-                    
                 </div>
             </section>
         );

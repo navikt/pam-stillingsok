@@ -18,10 +18,6 @@ export default function AlertModal({
 }) {
     const cancelButtonRef = useRef();
 
-    useEffect(() => {
-        Modal.setAppElement("#app");
-    }, []);
-
     return (
         <Modal
             className="AlertModal"

@@ -2,15 +2,17 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 4rem;
-    padding: 0 1rem;
-}
-
-.LoginRequiredMessage__text {
+    padding: 2rem 3rem;
     text-align: center;
 }
 
 .login-buttons-wrapper {
     display: flex;
     gap: 1rem;
+}
+
+@media (max-width: 425px) {
+    .login-buttons-wrapper {
+        flex-direction: column;
+    }
 }

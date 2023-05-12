@@ -4,6 +4,10 @@
     min-height: 100%;
 }
 
+.JobPosting__h1 {
+    overflow-wrap: anywhere;
+}
+
 @media (min-width: 1025px) {
     .JobPosting__flex {
         display: flex;

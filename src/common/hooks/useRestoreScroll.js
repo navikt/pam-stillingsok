@@ -1,9 +1,16 @@
-import { useEffect, useLayoutEffect, useState } from "react";
-import useDebounce from "./useDebounce";
+import { useEffect, useLayoutEffect } from "react";
+
+function debounce(fn, delay = 200) {
+    let timeout;
+    return () => {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => {
+            fn();
+        }, delay);
+    };
+}
 
 export default function useRestoreScroll(id, shouldRestore) {
-    const [scrollTop, setScrollTop] = useState(undefined);
-    const debouncedScrollTop = useDebounce(scrollTop, 100);
     const SESSION_STORAGE_ID = `restore-scroll-${id}`;
 
     const resetScroll = () => {
@@ -38,9 +45,10 @@ export default function useRestoreScroll(id, shouldRestore) {
     useEffect(() => {
         try {
             if (shouldRestore) {
-                function handleScroll() {
-                    setScrollTop(Math.round(window.pageYOffset || document.documentElement.scrollTop));
-                }
+                const handleScroll = debounce(() => {
+                    const scrollTop = Math.round(window.pageYOffset || document.documentElement.scrollTop);
+                    sessionStorage.setItem(SESSION_STORAGE_ID, `${scrollTop}`);
+                });
 
                 window.addEventListener("scroll", handleScroll);
 
@@ -52,19 +60,6 @@ export default function useRestoreScroll(id, shouldRestore) {
             // ignore sessionStorage error
         }
     }, [shouldRestore]);
-
-    /**
-     * Store current scroll position
-     */
-    useEffect(() => {
-        try {
-            if (debouncedScrollTop !== undefined) {
-                sessionStorage.setItem(SESSION_STORAGE_ID, `${debouncedScrollTop}`);
-            }
-        } catch (error) {
-            // ignore sessionStorage error
-        }
-    }, [debouncedScrollTop]);
 
     return { resetScroll };
 }
