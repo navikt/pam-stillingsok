@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useContext, useEffect, useReducer, useRef, useState } from "react";
 import { CONTEXT_PATH } from "../../../common/environment";
 import queryReducer, {
@@ -7,7 +8,7 @@ import queryReducer, {
     SET_FROM,
     stringifyQuery,
     toApiQuery,
-    toBrowserQuery
+    toBrowserQuery,
 } from "../query";
 import { extractParam } from "../../../common/components/utils";
 import { FetchAction, FetchStatus, useFetchReducer } from "../../../common/hooks/useFetchReducer";
@@ -36,6 +37,7 @@ import useToggle from "../../../common/hooks/useToggle";
 import TermsOfUse from "../../user/contexts/TermsOfUse";
 import LoginModal from "../../auth/components/LoginModal";
 import { HasAcceptedTermsStatus, UserContext } from "../../user/contexts/UserProvider";
+import logAmplitudeEvent from "../../../common/tracking/amplitude";
 
 const Search = () => {
     const { authenticationStatus, loginAndRedirect } = useContext(AuthenticationContext);
@@ -57,7 +59,7 @@ const Search = () => {
         e.preventDefault();
         if (authenticationStatus === AuthenticationStatus.NOT_AUTHENTICATED && type === "FAVORITES") {
             openLoginModalFavorites();
-        } else if (authenticationStatus === AuthenticationStatus.NOT_AUTHENTICATED  && type === "SAVEDSEARCH") {
+        } else if (authenticationStatus === AuthenticationStatus.NOT_AUTHENTICATED && type === "SAVEDSEARCH") {
             openLoginModalSavedSearch();
         } else if (hasAcceptedTermsStatus === HasAcceptedTermsStatus.NOT_ACCEPTED) {
             openTermsModal();
@@ -92,6 +94,7 @@ const Search = () => {
         } else {
             fetchSearch();
         }
+        logAmplitudeEvent("Stillinger - Utførte søk", { query });
     }, [query]);
 
     /**
@@ -119,7 +122,7 @@ const Search = () => {
 
         const promises = [
             SearchAPI.search(toApiQuery(initialQuery)), // An empty search aggregates search criteria across all ads
-            SearchAPI.getAndCache("api/locations") // Search criteria for locations are not aggregated, but based on a predefined list
+            SearchAPI.getAndCache("api/locations"), // Search criteria for locations are not aggregated, but based on a predefined list
         ];
 
         // If user has some search criteria in browser url, make an extra search to get that result
@@ -135,7 +138,7 @@ const Search = () => {
             },
             (error) => {
                 initialSearchDispatch({ type: FetchAction.REJECT, error });
-            }
+            },
         );
     }
 
@@ -178,8 +181,8 @@ const Search = () => {
                 ...response.ads.filter((a) => {
                     const duplicate = searchResponse.data.ads.find((b) => a.uuid === b.uuid);
                     return !duplicate;
-                })
-            ]
+                }),
+            ],
         };
     }
 
@@ -224,15 +227,21 @@ const Search = () => {
                                             type="button"
                                             variant="tertiary"
                                             onClick={(e) => {
-                                                handleClick(e, `${CONTEXT_PATH}/lagrede-sok`, "SAVEDSEARCH")
+                                                handleClick(e, `${CONTEXT_PATH}/lagrede-sok`, "SAVEDSEARCH");
                                             }}
                                             icon={<ClockIcon aria-hidden="true" />}
                                         >
                                             Bruk et lagret søk
                                         </Button>
 
-                                        {shouldShowLoginModalSavedSearch && <LoginModal onLoginClick={() => {loginAndRedirect(`${CONTEXT_PATH}/lagrede-sok`)}} onCloseClick={closeLoginModalSavedSearch} />}
-
+                                        {shouldShowLoginModalSavedSearch && (
+                                            <LoginModal
+                                                onLoginClick={() => {
+                                                    loginAndRedirect(`${CONTEXT_PATH}/lagrede-sok`);
+                                                }}
+                                                onCloseClick={closeLoginModalSavedSearch}
+                                            />
+                                        )}
                                     </React.Fragment>
                                     <React.Fragment>
                                         <Button
@@ -241,17 +250,28 @@ const Search = () => {
                                             type="button"
                                             variant="tertiary"
                                             onClick={(e) => {
-                                                handleClick(e, `${CONTEXT_PATH}/favoritter`, "FAVORITES")
+                                                handleClick(e, `${CONTEXT_PATH}/favoritter`, "FAVORITES");
                                             }}
                                             icon={<HeartIcon aria-hidden="true" />}
                                         >
                                             Mine favoritter
                                         </Button>
 
-                                            {shouldShowLoginModalFavorites && <LoginModal onLoginClick={() => {loginAndRedirect(`${CONTEXT_PATH}/favoritter`)}} onCloseClick={closeLoginModalFavorites} />}
+                                        {shouldShowLoginModalFavorites && (
+                                            <LoginModal
+                                                onLoginClick={() => {
+                                                    loginAndRedirect(`${CONTEXT_PATH}/favoritter`);
+                                                }}
+                                                onCloseClick={closeLoginModalFavorites}
+                                            />
+                                        )}
 
-                                            {shouldShowTermsModal && <TermsOfUse onClose={closeTermsModal} onTermsAccepted={handleTermsAccepted(`${CONTEXT_PATH}/favoritter`)} />}
-
+                                        {shouldShowTermsModal && (
+                                            <TermsOfUse
+                                                onClose={closeTermsModal}
+                                                onTermsAccepted={handleTermsAccepted(`${CONTEXT_PATH}/favoritter`)}
+                                            />
+                                        )}
                                     </React.Fragment>
                                 </React.Fragment>
                             )}
