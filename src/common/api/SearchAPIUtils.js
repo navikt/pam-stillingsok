@@ -7,7 +7,7 @@ export async function simplifySearchResponse(response) {
     const internationalCountMap = {};
 
     response.aggregations.counties.nestedLocations.values.buckets.forEach((c) => {
-        nationalCountMap[c.key] = c.doc_count;
+        nationalCountMap[c.key] = c.root_doc_count.doc_count;
 
         c.municipals.buckets.forEach((m) => {
             nationalCountMap[`${c.key}.${m.key}`] = m.doc_count;
@@ -22,6 +22,7 @@ export async function simplifySearchResponse(response) {
         ads: response.hits.hits.map((stilling) => fixMissingAdProperties(stilling._source)),
         totalAds: response.hits.total.value,
         totalPositions: response.aggregations.positioncount.sum.value,
+        totalInternational: response.aggregations.countries.doc_count,
         aggregations: {
             nationalCountMap,
             internationalCountMap,
@@ -33,7 +34,7 @@ export async function simplifySearchResponse(response) {
                     occupationSecondLevels: firstLevel.occupationSecondLevels.buckets.map((secondLevel) => ({
                         key: `${firstLevel.key}.${secondLevel.key}`,
                         label: secondLevel.key,
-                        count: secondLevel.doc_count
+                        count: secondLevel.root_doc_count.doc_count
                     }))
                 })),
             extent: response.aggregations.extent.values.buckets.map((item) => ({
