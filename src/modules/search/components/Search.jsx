@@ -38,7 +38,7 @@ import LoginModal from "../../auth/components/LoginModal";
 import { HasAcceptedTermsStatus, UserContext } from "../../user/contexts/UserProvider";
 import logAmplitudeEvent from "../../../common/tracking/amplitude";
 
-const Search = () => {
+export default function Search() {
     const { authenticationStatus, loginAndRedirect } = useContext(AuthenticationContext);
     const { hasAcceptedTermsStatus } = useContext(UserContext);
     const [query, queryDispatch] = useReducer(queryReducer, initialQuery, initQueryWithValuesFromBrowserUrl);
@@ -320,5 +320,3 @@ const Search = () => {
         </div>
     );
 };
-
-export default Search;
