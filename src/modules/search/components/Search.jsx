@@ -112,13 +112,13 @@ export default function Search() {
      * ved at annonser legges til/slettes i backend, noe som fører til at pagineringen og det faktiske datasettet
      * blir usynkronisert. Funskjonen fjerner derfor duplikate annonser i søkeresultatet.
      */
-    function mergeAndRemoveDuplicates(searchResponse, response) {
+    function mergeAndRemoveDuplicates(searchResponseLocal, response) {
         return {
             ...response,
             ads: [
                 ...searchResponse.data.ads,
                 ...response.ads.filter((a) => {
-                    const duplicate = searchResponse.data.ads.find((b) => a.uuid === b.uuid);
+                    const duplicate = searchResponseLocal.data.ads.find((b) => a.uuid === b.uuid);
                     return !duplicate;
                 }),
             ],
@@ -192,14 +192,16 @@ export default function Search() {
             {initialSearchResponse.status === FetchStatus.FAILURE && <ErrorMessage />}
             {initialSearchResponse.status === FetchStatus.IS_FETCHING && <DelayedSpinner />}
             {initialSearchResponse.status === FetchStatus.SUCCESS && (
-                <React.Fragment>
+                <>
                     <div className="container-small">
                         <SearchForm
                             query={query}
                             dispatchQuery={queryDispatch}
                             initialSearchResult={initialSearchResponse.data}
                             searchResult={searchResponse.data}
-                            fetchSearch={fetchSearch}
+                            fetchSearch={() => {
+                                fetchSearch();
+                            }}
                         />
                         <div className="Search__buttons">
                             {device === Device.MOBILE && (
@@ -217,8 +219,8 @@ export default function Search() {
                             {(device === Device.DESKTOP ||
                                 (device === Device.MOBILE &&
                                     authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED)) && (
-                                <React.Fragment>
-                                    <React.Fragment>
+                                <>
+                                    <>
                                         <Button
                                             as={Link}
                                             to={`${CONTEXT_PATH}/lagrede-sok`}
@@ -240,8 +242,8 @@ export default function Search() {
                                                 onCloseClick={closeLoginModalSavedSearch}
                                             />
                                         )}
-                                    </React.Fragment>
-                                    <React.Fragment>
+                                    </>
+                                    <>
                                         <Button
                                             as={Link}
                                             to={`${CONTEXT_PATH}/favoritter`}
@@ -270,8 +272,8 @@ export default function Search() {
                                                 onTermsAccepted={handleTermsAccepted(`${CONTEXT_PATH}/favoritter`)}
                                             />
                                         )}
-                                    </React.Fragment>
-                                </React.Fragment>
+                                    </>
+                                </>
                             )}
                         </div>
                     </div>
@@ -289,7 +291,9 @@ export default function Search() {
                                     dispatchQuery={queryDispatch}
                                     initialSearchResult={initialSearchResponse.data}
                                     searchResult={searchResponse.data}
-                                    fetchSearch={fetchSearch}
+                                    fetchSearch={() => {
+                                        fetchSearch();
+                                    }}
                                     isFilterModalOpen={isFiltersVisible}
                                     setIsFilterModalOpen={setIsFiltersVisible}
                                     device={device}
@@ -301,22 +305,24 @@ export default function Search() {
                             {searchResponse.status === FetchStatus.IS_FETCHING && query.from === 0 ? (
                                 <LoadingScreen />
                             ) : (
-                                <React.Fragment>
+                                <>
                                     <SearchResult
                                         initialSearchResponse={initialSearchResponse}
                                         searchResponse={searchResponse}
                                         query={query}
                                         queryDispatch={queryDispatch}
-                                        loadMoreResults={loadMoreResults}
+                                        loadMoreResults={() => {
+                                            loadMoreResults();
+                                        }}
                                     />
                                     <DoYouWantToSaveSearch query={query} />
                                     <Feedback />
-                                </React.Fragment>
+                                </>
                             )}
                         </div>
                     </div>
-                </React.Fragment>
+                </>
             )}
         </div>
     );
-};
+}
