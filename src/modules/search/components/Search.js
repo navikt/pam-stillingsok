@@ -48,7 +48,7 @@ const Search = () => {
     const numberOfSelectedFilters = Object.keys(toBrowserQuery(query)).length;
     const { device } = useDevice();
     const [isFiltersVisible, setIsFiltersVisible] = useState(false);
-    let history = useHistory();
+    const history = useHistory();
     const { resetScroll } = useRestoreScroll("search-page", initialSearchResponse.status === FetchStatus.SUCCESS);
     const [shouldShowTermsModal, openTermsModal, closeTermsModal] = useToggle();
     const [shouldShowLoginModalFavorites, openLoginModalFavorites, closeLoginModalFavorites] = useToggle();
