@@ -52,3 +52,7 @@
 .SearchResultItem__subtle-text {
     color: var(--arb-gray-700);
 }
+
+.SearchResultItem__subtle-text.published::first-letter {
+    text-transform: capitalize;
+}

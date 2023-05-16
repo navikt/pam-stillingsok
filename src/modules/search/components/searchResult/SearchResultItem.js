@@ -8,12 +8,28 @@ import { CONTEXT_PATH } from "../../../../common/environment";
 import { formatDate } from "../../../../common/components/utils";
 import "./SearchResultsItem.css";
 import { Buldings3Icon, ExternalLinkIcon, PinIcon } from "@navikt/aksel-icons";
+import {
+    formatDistance,
+    parseISO,
+    differenceInDays,
+    addHours,
+    endOfDay,
+    endOfToday,
+    subDays,
+    isSameDay,
+    addDays,
+} from "date-fns";
+import { nb } from "date-fns/locale";
 
 export default function SearchResultItem({ ad, showExpired, favouriteButton, shouldAutoFocus }) {
     const location = getWorkLocation(ad.properties.location, ad.locationList);
     const employer = getEmployer(ad);
     const isFinn = ad.source && ad.source.toLowerCase() === "finn";
     const published = formatDate(ad.published);
+    const now = new Date();
+    //Check against end of day to avoid issues.
+    const isPublishedToday = isSameDay(endOfDay(now), endOfDay(parseISO(ad.published)));
+    const isPublishedLessThanTwoDaysOld = endOfDay(subDays(now, 2)) <= endOfDay(parseISO(ad.published));
     const hasInterestform = ad.properties.hasInterestform && ad.properties.hasInterestform === "true";
     const jobTitle = ad.properties.jobtitle && ad.title !== ad.properties.jobtitle ? ad.properties.jobtitle : undefined;
     const frist = ad.properties.applicationdue ? formatDate(ad.properties.applicationdue) : undefined;
@@ -25,6 +41,24 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, sho
         }
     }, [shouldAutoFocus]);
 
+    const fristText = () => {
+        if (frist.toLowerCase().indexOf("asap") > -1) {
+            return "Søk snarest mulig";
+        }
+
+        if (frist.toLowerCase().indexOf("snarest") > -1) {
+            return "Søk snarest mulig";
+        }
+        try {
+            return formatDistance(parseISO(ad.properties.applicationdue), new Date(), {
+                addSuffix: true,
+                locale: nb,
+            });
+        } catch (e) {
+            return frist;
+        }
+    };
+
     return (
         <article
             ref={ref}
@@ -34,8 +68,15 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, sho
         >
             <div className="SearchResultItem__details mb-0_5">
                 {published && (
-                    <Label as="p" size="small" className="SearchResultItem__subtle-text">
-                        {published}
+                    <Label as="p" size="small" className="SearchResultItem__subtle-text published">
+                        {isPublishedToday && "Ny i dag"}
+                        {isPublishedLessThanTwoDaysOld &&
+                            !isPublishedToday &&
+                            formatDistance(parseISO(ad.published), new Date(), {
+                                addSuffix: true,
+                                locale: nb,
+                            })}
+                        {!isPublishedToday && !isPublishedLessThanTwoDaysOld && published}
                     </Label>
                 )}
             </div>
@@ -84,7 +125,7 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, sho
                 {hasInterestform && <Tag variant="info-filled">Superrask søknad</Tag>}
                 {frist && (
                     <Label as="p" size="small" className="SearchResultItem__subtle-text">
-                        Frist: {frist}
+                        Frist: {fristText()}
                     </Label>
                 )}
             </div>
@@ -93,7 +134,7 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, sho
 }
 
 SearchResultItem.defaultProps = {
-    shouldAutofocus: false
+    shouldAutofocus: false,
 };
 
 SearchResultItem.propTypes = {
@@ -105,11 +146,11 @@ SearchResultItem.propTypes = {
             employer: PropTypes.string,
             jobtitle: PropTypes.string,
             location: PropTypes.string,
-            applicationdue: PropTypes.string
+            applicationdue: PropTypes.string,
         }),
-        locationList: PropTypes.arrayOf(PropTypes.object)
+        locationList: PropTypes.arrayOf(PropTypes.object),
     }).isRequired,
-    shouldAutofocus: PropTypes.bool
+    shouldAutofocus: PropTypes.bool,
 };
 
 function LinkToAd({ children, stilling, isFinn }) {
