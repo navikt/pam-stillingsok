@@ -1,4 +1,8 @@
 import React, { useContext, useEffect, useReducer, useRef, useState } from "react";
+import { ClockIcon, HeartIcon } from "@navikt/aksel-icons";
+import { Button } from "@navikt/ds-react";
+import { useHistory } from "react-router";
+import { Link } from "react-router-dom";
 import { CONTEXT_PATH } from "../../../common/environment";
 import queryReducer, {
     initialQuery,
@@ -16,10 +20,8 @@ import ErrorMessage from "../../../common/components/messages/ErrorMessage";
 import SearchForm from "./searchForm/SearchForm";
 import useRestoreScroll from "../../../common/hooks/useRestoreScroll";
 import "./Search.css";
-import { useHistory } from "react-router";
 import SearchResult from "./searchResult/SearchResult";
 import H1WithAutoFocus from "../../../common/components/h1WithAutoFocus/H1WithAutoFocus";
-import { Button } from "@navikt/ds-react";
 import DoYouWantToSaveSearch from "./howToPanels/DoYouWantToSaveSearch";
 import SelectedFilters from "./selectedFilters/SelectedFilters";
 import Feedback from "./feedback/Feedback";
@@ -28,9 +30,7 @@ import useDevice, { Device } from "../../../common/hooks/useDevice";
 import FilterForm from "./searchForm/filters/FilterForm";
 import SearchResultHeader from "./searchResultHeader/SearchResultHeader";
 import FilterIcon from "../../../common/components/icons/FilterIcon";
-import { ClockIcon, HeartIcon } from "@navikt/aksel-icons";
 import { AuthenticationContext, AuthenticationStatus } from "../../auth/contexts/AuthenticationProvider";
-import { Link } from "react-router-dom";
 import LoadingScreen from "./loadingScreen/LoadingScreen";
 import useToggle from "../../../common/hooks/useToggle";
 import TermsOfUse from "../../user/contexts/TermsOfUse";
