@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React, { useContext, useEffect, useReducer, useRef, useState } from "react";
 import { CONTEXT_PATH } from "../../../common/environment";
 import queryReducer, {
