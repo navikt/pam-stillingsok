@@ -18,6 +18,7 @@ import {
     subDays,
     isSameDay,
     addDays,
+    format as formatDateFns,
 } from "date-fns";
 import { nb } from "date-fns/locale";
 
@@ -50,10 +51,16 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, sho
             return "Søk snarest mulig";
         }
         try {
-            return formatDistance(parseISO(ad.properties.applicationdue), new Date(), {
-                addSuffix: true,
-                locale: nb,
-            });
+            if (endOfDay(now) == endOfDay(parseISO(ad.properties.applicationdue))) {
+                console.log("LOL");
+                return "Søk senest i dag";
+            } else if (endOfDay(addDays(now, 1)) == endOfDay(parseISO(ad.properties.applicationdue))) {
+                return "Søk senest i morgen";
+            } else if (endOfDay(addDays(now, 2)) == endOfDay(parseISO(ad.properties.applicationdue))) {
+                return "Søk senest i overmorgen";
+            } else {
+                return "Søk senest: " + formatDateFns(parseISO(ad.properties.applicationdue), "dd.MM") + frist;
+            }
         } catch (e) {
             return frist;
         }
@@ -126,6 +133,7 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, sho
                 {frist && (
                     <Label as="p" size="small" className="SearchResultItem__subtle-text">
                         Frist: {fristText()}
+                        gammel: {frist}
                     </Label>
                 )}
             </div>
