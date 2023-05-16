@@ -82,6 +82,71 @@ const Search = () => {
         }
     }, []);
 
+    function fetchInitialSearch() {
+        initialSearchDispatch({ type: FetchAction.BEGIN });
+
+        const promises = [
+            SearchAPI.search(toApiQuery(initialQuery)), // An empty search aggregates search criteria across all ads
+            SearchAPI.getAndCache("api/locations"), // Search criteria for locations are not aggregated, but based on a predefined list
+        ];
+
+        // If user has some search criteria in browser url, make an extra search to get that result
+        if (Object.keys(toBrowserQuery(query)).length > 0) {
+            promises.push(SearchAPI.search(toApiQuery(query)));
+        }
+
+        Promise.all(promises).then(
+            (responses) => {
+                const [initialSearchResult, locations, searchResult] = responses;
+                searchDispatch({ type: FetchAction.RESOLVE, data: searchResult ? searchResult : initialSearchResult });
+                initialSearchDispatch({ type: FetchAction.RESOLVE, data: { ...initialSearchResult, locations } });
+            },
+            (error) => {
+                initialSearchDispatch({ type: FetchAction.REJECT, error });
+            },
+        );
+    }
+
+    /**
+     * Når man laster inn flere annonser, kan en allerede lastet annonse komme på nytt. Dette kan f.eks skje
+     * ved at annonser legges til/slettes i backend, noe som fører til at pagineringen og det faktiske datasettet
+     * blir usynkronisert. Funskjonen fjerner derfor duplikate annonser i søkeresultatet.
+     */
+    function mergeAndRemoveDuplicates(searchResponse, response) {
+        return {
+            ...response,
+            ads: [
+                ...searchResponse.data.ads,
+                ...response.ads.filter((a) => {
+                    const duplicate = searchResponse.data.ads.find((b) => a.uuid === b.uuid);
+                    return !duplicate;
+                }),
+            ],
+        };
+    }
+
+    function fetchSearch() {
+        searchDispatch({ type: FetchAction.BEGIN });
+        const search = SearchAPI.search(toApiQuery(query));
+
+        // To avoid race conditions, when multiple search are done simultaneously,
+        // we handle only the latest search response
+        latestSearch.current = search;
+
+        search
+            .then((response) => {
+                if (latestSearch.current === search) {
+                    const mergedResult = query.from > 0 ? mergeAndRemoveDuplicates(searchResponse, response) : response;
+                    searchDispatch({ type: FetchAction.RESOLVE, data: mergedResult });
+                }
+            })
+            .catch((error) => {
+                if (search === latestSearch.current) {
+                    searchDispatch({ type: FetchAction.REJECT, error });
+                }
+            });
+    }
+
     /**
      * Make an initial search when view is shown.
      * Search again when user changes a search criteria.
@@ -115,73 +180,8 @@ const Search = () => {
         }
     }, [query]);
 
-    function fetchInitialSearch() {
-        initialSearchDispatch({ type: FetchAction.BEGIN });
-
-        const promises = [
-            SearchAPI.search(toApiQuery(initialQuery)), // An empty search aggregates search criteria across all ads
-            SearchAPI.getAndCache("api/locations"), // Search criteria for locations are not aggregated, but based on a predefined list
-        ];
-
-        // If user has some search criteria in browser url, make an extra search to get that result
-        if (Object.keys(toBrowserQuery(query)).length > 0) {
-            promises.push(SearchAPI.search(toApiQuery(query)));
-        }
-
-        Promise.all(promises).then(
-            (responses) => {
-                const [initialSearchResult, locations, searchResult] = responses;
-                searchDispatch({ type: FetchAction.RESOLVE, data: searchResult ? searchResult : initialSearchResult });
-                initialSearchDispatch({ type: FetchAction.RESOLVE, data: { ...initialSearchResult, locations } });
-            },
-            (error) => {
-                initialSearchDispatch({ type: FetchAction.REJECT, error });
-            },
-        );
-    }
-
-    function fetchSearch() {
-        searchDispatch({ type: FetchAction.BEGIN });
-        const search = SearchAPI.search(toApiQuery(query));
-
-        // To avoid race conditions, when multiple search are done simultaneously,
-        // we handle only the latest search response
-        latestSearch.current = search;
-
-        search
-            .then((response) => {
-                if (latestSearch.current === search) {
-                    const mergedResult = query.from > 0 ? mergeAndRemoveDuplicates(searchResponse, response) : response;
-                    searchDispatch({ type: FetchAction.RESOLVE, data: mergedResult });
-                }
-            })
-            .catch((error) => {
-                if (search === latestSearch.current) {
-                    searchDispatch({ type: FetchAction.REJECT, error });
-                }
-            });
-    }
-
     function loadMoreResults() {
         queryDispatch({ type: SET_FROM, value: query.from + query.size });
-    }
-
-    /**
-     * Når man laster inn flere annonser, kan en allerede lastet annonse komme på nytt. Dette kan f.eks skje
-     * ved at annonser legges til/slettes i backend, noe som fører til at pagineringen og det faktiske datasettet
-     * blir usynkronisert. Funskjonen fjerner derfor duplikate annonser i søkeresultatet.
-     */
-    function mergeAndRemoveDuplicates(searchResponse, response) {
-        return {
-            ...response,
-            ads: [
-                ...searchResponse.data.ads,
-                ...response.ads.filter((a) => {
-                    const duplicate = searchResponse.data.ads.find((b) => a.uuid === b.uuid);
-                    return !duplicate;
-                }),
-            ],
-        };
     }
 
     return (
