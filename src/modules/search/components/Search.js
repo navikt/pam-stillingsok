@@ -67,9 +67,8 @@ const Search = () => {
             hasAcceptedTermsStatus === HasAcceptedTermsStatus.HAS_ACCEPTED
         ) {
             history.push(navigateTo);
-        } else {
-            return false;
         }
+        return false;
     }
 
     function handleTermsAccepted(navigateTo) {
