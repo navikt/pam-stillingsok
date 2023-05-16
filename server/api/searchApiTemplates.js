@@ -728,6 +728,11 @@ exports.searchTemplate = (query) => {
                                         terms: {
                                             field: "occupationList.level2",
                                             size: 100
+                                        },
+                                        aggs: {
+                                            root_doc_count: {
+                                                reverse_nested: {}
+                                            }
                                         }
                                     }
                                 }
@@ -745,7 +750,21 @@ exports.searchTemplate = (query) => {
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
                             ...filterEngagementType(engagementType),
                             ...filterSector(sector),
-                            ...filterPublished(published)
+                            ...filterPublished(published),
+                            {
+                                "nested": {
+                                    "path": "locationList",
+                                    "query": {
+                                        "bool": {
+                                            "must_not": {
+                                                "term": {
+                                                    "locationList.country.keyword": "NORGE"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         ]
                     }
                 },
@@ -758,15 +777,9 @@ exports.searchTemplate = (query) => {
                             values: {
                                 terms: {
                                     field: "locationList.country.keyword",
-                                    exclude: "NORGE",
                                     size: 50,
                                     order: {
                                         _key: "asc"
-                                    }
-                                },
-                                aggs: {
-                                    root_doc_count: {
-                                        reverse_nested: {}
                                     }
                                 }
                             }
