@@ -98,7 +98,7 @@ const Search = () => {
         Promise.all(promises).then(
             (responses) => {
                 const [initialSearchResult, locations, searchResult] = responses;
-                searchDispatch({ type: FetchAction.RESOLVE, data: searchResult ? searchResult : initialSearchResult });
+                searchDispatch({ type: FetchAction.RESOLVE, data: searchResult || initialSearchResult });
                 initialSearchDispatch({ type: FetchAction.RESOLVE, data: { ...initialSearchResult, locations } });
             },
             (error) => {
