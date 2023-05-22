@@ -2,18 +2,8 @@ import PropTypes from "prop-types";
 import React, { useLayoutEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { BodyLong, Heading, Label, Link as AkselLink, Tag } from "@navikt/ds-react";
-import {
-    formatDistance,
-    parseISO,
-    endOfDay,
-    subDays,
-    isSameDay,
-    addDays,
-    parse,
-    format as formatDateFns,
-} from "date-fns";
+import { parseISO, endOfDay, subDays, isSameDay, addDays, parse, format as formatDateFns } from "date-fns";
 import { Buldings3Icon, ExternalLinkIcon, PinIcon } from "@navikt/aksel-icons";
-import { nb } from "date-fns/locale";
 import getEmployer from "../../../../../server/common/getEmployer";
 import getWorkLocation from "../../../../../server/common/getWorkLocation";
 import { CONTEXT_PATH } from "../../../../common/environment";
@@ -28,7 +18,8 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, sho
     const now = new Date();
     // Check against end of day to avoid issues.
     const isPublishedToday = isSameDay(endOfDay(now), endOfDay(parseISO(ad.published)));
-    const isPublishedLessThanTwoDaysOld = endOfDay(subDays(now, 2)) <= endOfDay(parseISO(ad.published));
+    const isPublishedYesterday = isSameDay(endOfDay(subDays(now, 1)), endOfDay(parseISO(ad.published)));
+    const isPublishedTwoDaysAgo = isSameDay(endOfDay(subDays(now, 2)), endOfDay(parseISO(ad.published)));
     const hasInterestform = ad.properties.hasInterestform && ad.properties.hasInterestform === "true";
     const jobTitle = ad.properties.jobtitle && ad.title !== ad.properties.jobtitle ? ad.properties.jobtitle : undefined;
     const frist = ad.properties.applicationdue ? formatDate(ad.properties.applicationdue) : undefined;
@@ -79,13 +70,9 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, sho
                 {published && (
                     <Label as="p" size="small" className="SearchResultItem__subtle-text published">
                         {isPublishedToday && "Ny i dag"}
-                        {isPublishedLessThanTwoDaysOld &&
-                            !isPublishedToday &&
-                            formatDistance(parseISO(ad.published), new Date(), {
-                                addSuffix: true,
-                                locale: nb,
-                            })}
-                        {!isPublishedToday && !isPublishedLessThanTwoDaysOld && published}
+                        {isPublishedYesterday && "Ny i går"}
+                        {isPublishedTwoDaysAgo && "Ny for to dager siden"}
+                        {!isPublishedToday && !isPublishedYesterday && !isPublishedTwoDaysAgo && published}
                     </Label>
                 )}
             </div>
