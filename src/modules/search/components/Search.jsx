@@ -192,7 +192,7 @@ export default function Search() {
             {initialSearchResponse.status === FetchStatus.FAILURE && <ErrorMessage />}
             {initialSearchResponse.status === FetchStatus.IS_FETCHING && <DelayedSpinner />}
             {initialSearchResponse.status === FetchStatus.SUCCESS && (
-                <React.Fragment>
+                <>
                     <div className="container-small">
                         <SearchForm
                             query={query}
@@ -219,8 +219,8 @@ export default function Search() {
                             {(device === Device.DESKTOP ||
                                 (device === Device.MOBILE &&
                                     authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED)) && (
-                                <React.Fragment>
-                                    <React.Fragment>
+                                <>
+                                    <>
                                         <Button
                                             as={Link}
                                             to={`${CONTEXT_PATH}/lagrede-sok`}
@@ -242,8 +242,8 @@ export default function Search() {
                                                 onCloseClick={closeLoginModalSavedSearch}
                                             />
                                         )}
-                                    </React.Fragment>
-                                    <React.Fragment>
+                                    </>
+                                    <>
                                         <Button
                                             as={Link}
                                             to={`${CONTEXT_PATH}/favoritter`}
@@ -272,8 +272,8 @@ export default function Search() {
                                                 onTermsAccepted={handleTermsAccepted(`${CONTEXT_PATH}/favoritter`)}
                                             />
                                         )}
-                                    </React.Fragment>
-                                </React.Fragment>
+                                    </>
+                                </>
                             )}
                         </div>
                     </div>
@@ -305,7 +305,7 @@ export default function Search() {
                             {searchResponse.status === FetchStatus.IS_FETCHING && query.from === 0 ? (
                                 <LoadingScreen />
                             ) : (
-                                <React.Fragment>
+                                <>
                                     <SearchResult
                                         initialSearchResponse={initialSearchResponse}
                                         searchResponse={searchResponse}
@@ -317,11 +317,11 @@ export default function Search() {
                                     />
                                     <DoYouWantToSaveSearch query={query} />
                                     <Feedback />
-                                </React.Fragment>
+                                </>
                             )}
                         </div>
                     </div>
-                </React.Fragment>
+                </>
             )}
         </div>
     );
