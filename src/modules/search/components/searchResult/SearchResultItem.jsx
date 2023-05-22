@@ -2,12 +2,6 @@ import PropTypes from "prop-types";
 import React, { useLayoutEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { BodyLong, Heading, Label, Link as AkselLink, Tag } from "@navikt/ds-react";
-import getEmployer from "../../../../../server/common/getEmployer";
-import getWorkLocation from "../../../../../server/common/getWorkLocation";
-import { CONTEXT_PATH } from "../../../../common/environment";
-import { formatDate } from "../../../../common/components/utils";
-import "./SearchResultsItem.css";
-import { Buldings3Icon, ExternalLinkIcon, PinIcon } from "@navikt/aksel-icons";
 import {
     formatDistance,
     parseISO,
@@ -18,7 +12,13 @@ import {
     parse,
     format as formatDateFns,
 } from "date-fns";
+import { Buldings3Icon, ExternalLinkIcon, PinIcon } from "@navikt/aksel-icons";
 import { nb } from "date-fns/locale";
+import getEmployer from "../../../../../server/common/getEmployer";
+import getWorkLocation from "../../../../../server/common/getWorkLocation";
+import { CONTEXT_PATH } from "../../../../common/environment";
+import { formatDate } from "../../../../common/components/utils";
+import "./SearchResultsItem.css";
 
 export default function SearchResultItem({ ad, showExpired, favouriteButton, shouldAutoFocus }) {
     const location = getWorkLocation(ad.properties.location, ad.locationList);
@@ -26,7 +26,7 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, sho
     const isFinn = ad.source && ad.source.toLowerCase() === "finn";
     const published = formatDate(ad.published);
     const now = new Date();
-    //Check against end of day to avoid issues.
+    // Check against end of day to avoid issues.
     const isPublishedToday = isSameDay(endOfDay(now), endOfDay(parseISO(ad.published)));
     const isPublishedLessThanTwoDaysOld = endOfDay(subDays(now, 2)) <= endOfDay(parseISO(ad.published));
     const hasInterestform = ad.properties.hasInterestform && ad.properties.hasInterestform === "true";
@@ -51,19 +51,20 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, sho
         try {
             if (endOfDay(now) === endOfDay(parseISO(ad.properties.applicationdue))) {
                 return "Søk senest i dag";
-            } else if (endOfDay(addDays(now, 1)) === endOfDay(parseISO(ad.properties.applicationdue))) {
-                return "Søk senest i morgen";
-            } else if (endOfDay(addDays(now, 2)) === endOfDay(parseISO(ad.properties.applicationdue))) {
-                return "Søk senest i overmorgen";
-            } else {
-                return "Søk senest: " + formatDateFns(parseISO(ad.properties.applicationdue), "dd.MM");
             }
+            if (endOfDay(addDays(now, 1)) === endOfDay(parseISO(ad.properties.applicationdue))) {
+                return "Søk senest i morgen";
+            }
+            if (endOfDay(addDays(now, 2)) === endOfDay(parseISO(ad.properties.applicationdue))) {
+                return "Søk senest i overmorgen";
+            }
+            return `Søk senest: ${formatDateFns(parseISO(ad.properties.applicationdue), "dd.MM")}`;
         } catch (e) {
             const applicationDue = parse(ad.properties.applicationdue, "dd.MM.yyyy", new Date());
             if (applicationDue != null) {
-                return "Søk senest: " + formatDateFns(applicationDue, "dd.MM");
+                return `Søk senest: ${formatDateFns(applicationDue, "dd.MM")}`;
             }
-            return "Frist: " + frist;
+            return `Frist: ${frist}`;
         }
     };
 
