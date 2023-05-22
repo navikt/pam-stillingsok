@@ -11,13 +11,11 @@ import { Buldings3Icon, ExternalLinkIcon, PinIcon } from "@navikt/aksel-icons";
 import {
     formatDistance,
     parseISO,
-    differenceInDays,
-    addHours,
     endOfDay,
-    endOfToday,
     subDays,
     isSameDay,
     addDays,
+    parse,
     format as formatDateFns,
 } from "date-fns";
 import { nb } from "date-fns/locale";
@@ -51,18 +49,21 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, sho
             return "Søk snarest mulig";
         }
         try {
-            if (endOfDay(now) == endOfDay(parseISO(ad.properties.applicationdue))) {
-                console.log("LOL");
+            if (endOfDay(now) === endOfDay(parseISO(ad.properties.applicationdue))) {
                 return "Søk senest i dag";
-            } else if (endOfDay(addDays(now, 1)) == endOfDay(parseISO(ad.properties.applicationdue))) {
+            } else if (endOfDay(addDays(now, 1)) === endOfDay(parseISO(ad.properties.applicationdue))) {
                 return "Søk senest i morgen";
-            } else if (endOfDay(addDays(now, 2)) == endOfDay(parseISO(ad.properties.applicationdue))) {
+            } else if (endOfDay(addDays(now, 2)) === endOfDay(parseISO(ad.properties.applicationdue))) {
                 return "Søk senest i overmorgen";
             } else {
-                return "Søk senest: " + formatDateFns(parseISO(ad.properties.applicationdue), "dd.MM") + frist;
+                return "Søk senest: " + formatDateFns(parseISO(ad.properties.applicationdue), "dd.MM");
             }
         } catch (e) {
-            return frist;
+            const applicationDue = parse(ad.properties.applicationdue, "dd.MM.yyyy", new Date());
+            if (applicationDue != null) {
+                return "Søk senest: " + formatDateFns(applicationDue, "dd.MM");
+            }
+            return "Frist: " + frist;
         }
     };
 
@@ -132,8 +133,7 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, sho
                 {hasInterestform && <Tag variant="info-filled">Superrask søknad</Tag>}
                 {frist && (
                     <Label as="p" size="small" className="SearchResultItem__subtle-text">
-                        Frist: {fristText()}
-                        gammel: {frist}
+                        {fristText()}
                     </Label>
                 )}
             </div>
@@ -142,23 +142,27 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, sho
 }
 
 SearchResultItem.defaultProps = {
-    shouldAutofocus: false,
+    shouldAutoFocus: false,
 };
 
 SearchResultItem.propTypes = {
     ad: PropTypes.shape({
         uuid: PropTypes.string,
+        source: PropTypes.string,
         title: PropTypes.string,
         published: PropTypes.string,
         properties: PropTypes.shape({
             employer: PropTypes.string,
+            hasInterestform: PropTypes.bool,
             jobtitle: PropTypes.string,
             location: PropTypes.string,
             applicationdue: PropTypes.string,
         }),
         locationList: PropTypes.arrayOf(PropTypes.object),
     }).isRequired,
-    shouldAutofocus: PropTypes.bool,
+    shouldAutoFocus: PropTypes.bool,
+    showExpired: PropTypes.bool,
+    favouriteButton: PropTypes.node,
 };
 
 function LinkToAd({ children, stilling, isFinn }) {
@@ -177,3 +181,12 @@ function LinkToAd({ children, stilling, isFinn }) {
         </AkselLink>
     );
 }
+
+LinkToAd.propTypes = {
+    children: PropTypes.node,
+    isFinn: PropTypes.bool,
+    stilling: PropTypes.shape({
+        reference: PropTypes.string,
+        uuid: PropTypes.string,
+    }),
+};
