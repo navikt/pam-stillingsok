@@ -5,44 +5,44 @@ const devMode = process.env.NODE_ENV !== "production";
 module.exports = {
     devtool: "source-map",
     entry: {
-        sok: ["babel-polyfill", "whatwg-fetch", "./src/app.js"]
+        sok: ["@babel/polyfill", "whatwg-fetch", "./src/app.js"],
     },
     output: {
         path: `${__dirname}/dist`,
         filename: "js/[name].js",
-        publicPath: "/sok/"
+        publicPath: "/sok/",
     },
     module: {
         rules: [
             {
-                test: /\.js$/,
+                test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
                 use: {
                     loader: "babel-loader",
                     options: {
-                        presets: ["es2015", "react", "stage-2"]
-                    }
-                }
+                        presets: ["@babel/preset-env", "@babel/preset-react"],
+                    },
+                },
             },
             {
                 test: /\.css$/,
                 use: [
                     {
-                        loader: MiniCssExtractPlugin.loader
+                        loader: MiniCssExtractPlugin.loader,
                     },
                     {
-                        loader: "css-loader"
-                    }
-                ]
-            }
-        ]
+                        loader: "css-loader",
+                    },
+                ],
+            },
+        ],
     },
     resolve: {
-        extensions: [".js", ".jsx"]
+        extensions: [".js", ".jsx"],
     },
     plugins: [
         new MiniCssExtractPlugin({
-            filename: "css/[name].css"
-        })
-    ]
+            filename: "css/[name].css",
+        }),
+    ],
 };

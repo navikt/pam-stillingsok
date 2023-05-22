@@ -1,4 +1,8 @@
 import React, { useContext, useEffect, useReducer, useRef, useState } from "react";
+import { ClockIcon, HeartIcon } from "@navikt/aksel-icons";
+import { Button } from "@navikt/ds-react";
+import { useHistory } from "react-router";
+import { Link } from "react-router-dom";
 import { CONTEXT_PATH } from "../../../common/environment";
 import queryReducer, {
     initialQuery,
@@ -7,7 +11,7 @@ import queryReducer, {
     SET_FROM,
     stringifyQuery,
     toApiQuery,
-    toBrowserQuery
+    toBrowserQuery,
 } from "../query";
 import { extractParam } from "../../../common/components/utils";
 import { FetchAction, FetchStatus, useFetchReducer } from "../../../common/hooks/useFetchReducer";
@@ -16,10 +20,8 @@ import ErrorMessage from "../../../common/components/messages/ErrorMessage";
 import SearchForm from "./searchForm/SearchForm";
 import useRestoreScroll from "../../../common/hooks/useRestoreScroll";
 import "./Search.css";
-import { useHistory } from "react-router";
 import SearchResult from "./searchResult/SearchResult";
 import H1WithAutoFocus from "../../../common/components/h1WithAutoFocus/H1WithAutoFocus";
-import { Button } from "@navikt/ds-react";
 import DoYouWantToSaveSearch from "./howToPanels/DoYouWantToSaveSearch";
 import SelectedFilters from "./selectedFilters/SelectedFilters";
 import Feedback from "./feedback/Feedback";
@@ -28,16 +30,15 @@ import useDevice, { Device } from "../../../common/hooks/useDevice";
 import FilterForm from "./searchForm/filters/FilterForm";
 import SearchResultHeader from "./searchResultHeader/SearchResultHeader";
 import FilterIcon from "../../../common/components/icons/FilterIcon";
-import { ClockIcon, HeartIcon } from "@navikt/aksel-icons";
 import { AuthenticationContext, AuthenticationStatus } from "../../auth/contexts/AuthenticationProvider";
-import { Link } from "react-router-dom";
 import LoadingScreen from "./loadingScreen/LoadingScreen";
 import useToggle from "../../../common/hooks/useToggle";
 import TermsOfUse from "../../user/contexts/TermsOfUse";
 import LoginModal from "../../auth/components/LoginModal";
 import { HasAcceptedTermsStatus, UserContext } from "../../user/contexts/UserProvider";
+import logAmplitudeEvent from "../../../common/tracking/amplitude";
 
-const Search = () => {
+export default function Search() {
     const { authenticationStatus, loginAndRedirect } = useContext(AuthenticationContext);
     const { hasAcceptedTermsStatus } = useContext(UserContext);
     const [query, queryDispatch] = useReducer(queryReducer, initialQuery, initQueryWithValuesFromBrowserUrl);
@@ -47,7 +48,7 @@ const Search = () => {
     const numberOfSelectedFilters = Object.keys(toBrowserQuery(query)).length;
     const { device } = useDevice();
     const [isFiltersVisible, setIsFiltersVisible] = useState(false);
-    let history = useHistory();
+    const history = useHistory();
     const { resetScroll } = useRestoreScroll("search-page", initialSearchResponse.status === FetchStatus.SUCCESS);
     const [shouldShowTermsModal, openTermsModal, closeTermsModal] = useToggle();
     const [shouldShowLoginModalFavorites, openLoginModalFavorites, closeLoginModalFavorites] = useToggle();
@@ -57,7 +58,7 @@ const Search = () => {
         e.preventDefault();
         if (authenticationStatus === AuthenticationStatus.NOT_AUTHENTICATED && type === "FAVORITES") {
             openLoginModalFavorites();
-        } else if (authenticationStatus === AuthenticationStatus.NOT_AUTHENTICATED  && type === "SAVEDSEARCH") {
+        } else if (authenticationStatus === AuthenticationStatus.NOT_AUTHENTICATED && type === "SAVEDSEARCH") {
             openLoginModalSavedSearch();
         } else if (hasAcceptedTermsStatus === HasAcceptedTermsStatus.NOT_ACCEPTED) {
             openTermsModal();
@@ -66,9 +67,8 @@ const Search = () => {
             hasAcceptedTermsStatus === HasAcceptedTermsStatus.HAS_ACCEPTED
         ) {
             history.push(navigateTo);
-        } else {
-            return false;
         }
+        return false;
     }
 
     function handleTermsAccepted(navigateTo) {
@@ -82,44 +82,12 @@ const Search = () => {
         }
     }, []);
 
-    /**
-     * Make an initial search when view is shown.
-     * Search again when user changes a search criteria.
-     */
-    useEffect(() => {
-        if (initialSearchResponse.status === FetchStatus.NOT_FETCHED) {
-            fetchInitialSearch();
-        } else {
-            fetchSearch();
-        }
-    }, [query]);
-
-    /**
-     * Update the browser url when user changes search criteria
-     */
-    useEffect(() => {
-        const browserQuery = toBrowserQuery(query);
-
-        // Keep saved search uuid in browser url, as long as there are some search criteria.
-        // This uuid is used when user update an existing saved search
-        const savedSearchUuid = extractParam("saved");
-        if (!isSearchQueryEmpty(browserQuery) && savedSearchUuid) {
-            browserQuery.saved = savedSearchUuid;
-        }
-
-        try {
-            history.replace(CONTEXT_PATH + stringifyQuery(browserQuery));
-        } catch (error) {
-            // ignore any errors
-        }
-    }, [query]);
-
     function fetchInitialSearch() {
         initialSearchDispatch({ type: FetchAction.BEGIN });
 
         const promises = [
             SearchAPI.search(toApiQuery(initialQuery)), // An empty search aggregates search criteria across all ads
-            SearchAPI.getAndCache("api/locations") // Search criteria for locations are not aggregated, but based on a predefined list
+            SearchAPI.getAndCache("api/locations"), // Search criteria for locations are not aggregated, but based on a predefined list
         ];
 
         // If user has some search criteria in browser url, make an extra search to get that result
@@ -130,13 +98,31 @@ const Search = () => {
         Promise.all(promises).then(
             (responses) => {
                 const [initialSearchResult, locations, searchResult] = responses;
-                searchDispatch({ type: FetchAction.RESOLVE, data: searchResult ? searchResult : initialSearchResult });
+                searchDispatch({ type: FetchAction.RESOLVE, data: searchResult || initialSearchResult });
                 initialSearchDispatch({ type: FetchAction.RESOLVE, data: { ...initialSearchResult, locations } });
             },
             (error) => {
                 initialSearchDispatch({ type: FetchAction.REJECT, error });
-            }
+            },
         );
+    }
+
+    /**
+     * Når man laster inn flere annonser, kan en allerede lastet annonse komme på nytt. Dette kan f.eks skje
+     * ved at annonser legges til/slettes i backend, noe som fører til at pagineringen og det faktiske datasettet
+     * blir usynkronisert. Funskjonen fjerner derfor duplikate annonser i søkeresultatet.
+     */
+    function mergeAndRemoveDuplicates(searchResponseLocal, response) {
+        return {
+            ...response,
+            ads: [
+                ...searchResponse.data.ads,
+                ...response.ads.filter((a) => {
+                    const duplicate = searchResponseLocal.data.ads.find((b) => a.uuid === b.uuid);
+                    return !duplicate;
+                }),
+            ],
+        };
     }
 
     function fetchSearch() {
@@ -161,26 +147,41 @@ const Search = () => {
             });
     }
 
-    function loadMoreResults() {
-        queryDispatch({ type: SET_FROM, value: query.from + query.size });
-    }
+    /**
+     * Make an initial search when view is shown.
+     * Search again when user changes a search criteria.
+     */
+    useEffect(() => {
+        if (initialSearchResponse.status === FetchStatus.NOT_FETCHED) {
+            fetchInitialSearch();
+        } else {
+            fetchSearch();
+        }
+        logAmplitudeEvent("Stillinger - Utførte søk", { query });
+    }, [query]);
 
     /**
-     * Når man laster inn flere annonser, kan en allerede lastet annonse komme på nytt. Dette kan f.eks skje
-     * ved at annonser legges til/slettes i backend, noe som fører til at pagineringen og det faktiske datasettet
-     * blir usynkronisert. Funskjonen fjerner derfor duplikate annonser i søkeresultatet.
+     * Update the browser url when user changes search criteria
      */
-    function mergeAndRemoveDuplicates(searchResponse, response) {
-        return {
-            ...response,
-            ads: [
-                ...searchResponse.data.ads,
-                ...response.ads.filter((a) => {
-                    const duplicate = searchResponse.data.ads.find((b) => a.uuid === b.uuid);
-                    return !duplicate;
-                })
-            ]
-        };
+    useEffect(() => {
+        const browserQuery = toBrowserQuery(query);
+
+        // Keep saved search uuid in browser url, as long as there are some search criteria.
+        // This uuid is used when user update an existing saved search
+        const savedSearchUuid = extractParam("saved");
+        if (!isSearchQueryEmpty(browserQuery) && savedSearchUuid) {
+            browserQuery.saved = savedSearchUuid;
+        }
+
+        try {
+            history.replace(CONTEXT_PATH + stringifyQuery(browserQuery));
+        } catch (error) {
+            // ignore any errors
+        }
+    }, [query]);
+
+    function loadMoreResults() {
+        queryDispatch({ type: SET_FROM, value: query.from + query.size });
     }
 
     return (
@@ -191,14 +192,16 @@ const Search = () => {
             {initialSearchResponse.status === FetchStatus.FAILURE && <ErrorMessage />}
             {initialSearchResponse.status === FetchStatus.IS_FETCHING && <DelayedSpinner />}
             {initialSearchResponse.status === FetchStatus.SUCCESS && (
-                <React.Fragment>
+                <>
                     <div className="container-small">
                         <SearchForm
                             query={query}
                             dispatchQuery={queryDispatch}
                             initialSearchResult={initialSearchResponse.data}
                             searchResult={searchResponse.data}
-                            fetchSearch={fetchSearch}
+                            fetchSearch={() => {
+                                fetchSearch();
+                            }}
                         />
                         <div className="Search__buttons">
                             {device === Device.MOBILE && (
@@ -216,44 +219,61 @@ const Search = () => {
                             {(device === Device.DESKTOP ||
                                 (device === Device.MOBILE &&
                                     authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED)) && (
-                                <React.Fragment>
-                                    <React.Fragment>
+                                <>
+                                    <>
                                         <Button
                                             as={Link}
                                             to={`${CONTEXT_PATH}/lagrede-sok`}
                                             type="button"
                                             variant="tertiary"
                                             onClick={(e) => {
-                                                handleClick(e, `${CONTEXT_PATH}/lagrede-sok`, "SAVEDSEARCH")
+                                                handleClick(e, `${CONTEXT_PATH}/lagrede-sok`, "SAVEDSEARCH");
                                             }}
                                             icon={<ClockIcon aria-hidden="true" />}
                                         >
                                             Bruk et lagret søk
                                         </Button>
 
-                                        {shouldShowLoginModalSavedSearch && <LoginModal onLoginClick={() => {loginAndRedirect(`${CONTEXT_PATH}/lagrede-sok`)}} onCloseClick={closeLoginModalSavedSearch} />}
-
-                                    </React.Fragment>
-                                    <React.Fragment>
+                                        {shouldShowLoginModalSavedSearch && (
+                                            <LoginModal
+                                                onLoginClick={() => {
+                                                    loginAndRedirect(`${CONTEXT_PATH}/lagrede-sok`);
+                                                }}
+                                                onCloseClick={closeLoginModalSavedSearch}
+                                            />
+                                        )}
+                                    </>
+                                    <>
                                         <Button
                                             as={Link}
                                             to={`${CONTEXT_PATH}/favoritter`}
                                             type="button"
                                             variant="tertiary"
                                             onClick={(e) => {
-                                                handleClick(e, `${CONTEXT_PATH}/favoritter`, "FAVORITES")
+                                                handleClick(e, `${CONTEXT_PATH}/favoritter`, "FAVORITES");
                                             }}
                                             icon={<HeartIcon aria-hidden="true" />}
                                         >
                                             Mine favoritter
                                         </Button>
 
-                                            {shouldShowLoginModalFavorites && <LoginModal onLoginClick={() => {loginAndRedirect(`${CONTEXT_PATH}/favoritter`)}} onCloseClick={closeLoginModalFavorites} />}
+                                        {shouldShowLoginModalFavorites && (
+                                            <LoginModal
+                                                onLoginClick={() => {
+                                                    loginAndRedirect(`${CONTEXT_PATH}/favoritter`);
+                                                }}
+                                                onCloseClick={closeLoginModalFavorites}
+                                            />
+                                        )}
 
-                                            {shouldShowTermsModal && <TermsOfUse onClose={closeTermsModal} onTermsAccepted={handleTermsAccepted(`${CONTEXT_PATH}/favoritter`)} />}
-
-                                    </React.Fragment>
-                                </React.Fragment>
+                                        {shouldShowTermsModal && (
+                                            <TermsOfUse
+                                                onClose={closeTermsModal}
+                                                onTermsAccepted={handleTermsAccepted(`${CONTEXT_PATH}/favoritter`)}
+                                            />
+                                        )}
+                                    </>
+                                </>
                             )}
                         </div>
                     </div>
@@ -271,7 +291,9 @@ const Search = () => {
                                     dispatchQuery={queryDispatch}
                                     initialSearchResult={initialSearchResponse.data}
                                     searchResult={searchResponse.data}
-                                    fetchSearch={fetchSearch}
+                                    fetchSearch={() => {
+                                        fetchSearch();
+                                    }}
                                     isFilterModalOpen={isFiltersVisible}
                                     setIsFilterModalOpen={setIsFiltersVisible}
                                     device={device}
@@ -283,24 +305,24 @@ const Search = () => {
                             {searchResponse.status === FetchStatus.IS_FETCHING && query.from === 0 ? (
                                 <LoadingScreen />
                             ) : (
-                                <React.Fragment>
+                                <>
                                     <SearchResult
                                         initialSearchResponse={initialSearchResponse}
                                         searchResponse={searchResponse}
                                         query={query}
                                         queryDispatch={queryDispatch}
-                                        loadMoreResults={loadMoreResults}
+                                        loadMoreResults={() => {
+                                            loadMoreResults();
+                                        }}
                                     />
                                     <DoYouWantToSaveSearch query={query} />
                                     <Feedback />
-                                </React.Fragment>
+                                </>
                             )}
                         </div>
                     </div>
-                </React.Fragment>
+                </>
             )}
         </div>
     );
-};
-
-export default Search;
+}
