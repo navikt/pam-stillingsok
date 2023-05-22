@@ -5,7 +5,7 @@ const devMode = process.env.NODE_ENV !== "production";
 module.exports = {
     devtool: "source-map",
     entry: {
-        sok: ["babel-polyfill", "whatwg-fetch", "./src/app.js"],
+        sok: ["@babel/polyfill", "whatwg-fetch", "./src/app.js"],
     },
     output: {
         path: `${__dirname}/dist`,
@@ -20,7 +20,7 @@ module.exports = {
                 use: {
                     loader: "babel-loader",
                     options: {
-                        presets: ["es2015", "react", "stage-2"],
+                        presets: ["@babel/preset-env", "@babel/preset-react"],
                     },
                 },
             },
