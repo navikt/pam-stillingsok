@@ -26,7 +26,7 @@
         "prettier:fix": "prettier --write \"**/*.+(js|jsx|ts|tsx|json|yml|yaml|md|css)\"",
         "prettier:fixjson": "prettier --write \"**/*.+(json|md)\"",
         "prepare": "npm run snyk-protect && husky install",
-        "pre-push": "lint-staged --diff='master'"
+        "pre-commit": "lint-staged"
     },
     "author": "",
     "license": "ISC",
