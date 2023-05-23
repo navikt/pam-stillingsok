@@ -54,10 +54,15 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, sho
                 locale: nb,
             })}`;
         } catch (e) {
-            const applicationDue = parse(ad.properties.applicationdue, "dd.MM.yyyy", new Date());
-            if (applicationDue != null) {
-                return `Søk senest ${formatDateFns(applicationDue, "EEEE d. MMMM", { locale: nb })}`;
+            try {
+                const applicationDue = parse(ad.properties.applicationdue, "dd.MM.yyyy", new Date());
+                if (applicationDue != null) {
+                    return `Søk senest ${formatDateFns(applicationDue, "EEEE d. MMMM", { locale: nb })}`;
+                }
+            } catch (er) {
+                return `Frist: ${frist}`;
             }
+
             return `Frist: ${frist}`;
         }
     };
