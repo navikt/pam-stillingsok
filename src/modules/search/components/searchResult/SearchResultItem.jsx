@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import React, { useLayoutEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { BodyLong, Heading, Label, Link as AkselLink, Tag } from "@navikt/ds-react";
-import { parseISO, endOfDay, subDays, isSameDay, addDays, parse, format as formatDateFns } from "date-fns";
+import { parseISO, endOfDay, subDays, isSameDay, addDays, parse, format as formatDateFns, isValid } from "date-fns";
 import { nb } from "date-fns/locale";
 import { Buldings3Icon, ExternalLinkIcon, PinIcon } from "@navikt/aksel-icons";
 import getEmployer from "../../../../../server/common/getEmployer";
@@ -40,29 +40,30 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, sho
         if (frist.toLowerCase().indexOf("snarest") > -1) {
             return "Søk snarest mulig";
         }
+
         try {
-            if (endOfDay(now) === endOfDay(parseISO(ad.properties.applicationdue))) {
-                return "Søk senest i dag";
+            let dueDateParsed = parseISO(ad.properties.applicationdue);
+            if (!isValid(dueDateParsed)) {
+                dueDateParsed = parse(ad.properties.applicationdue, "dd.MM.yyyy", new Date());
             }
-            if (endOfDay(addDays(now, 1)) === endOfDay(parseISO(ad.properties.applicationdue))) {
-                return "Søk senest i morgen";
-            }
-            if (endOfDay(addDays(now, 2)) === endOfDay(parseISO(ad.properties.applicationdue))) {
-                return "Søk senest i overmorgen";
-            }
-            return `Søk senest ${formatDateFns(parseISO(ad.properties.applicationdue), "EEEE d. MMMM", {
-                locale: nb,
-            })}`;
-        } catch (e) {
-            try {
-                const applicationDue = parse(ad.properties.applicationdue, "dd.MM.yyyy", new Date());
-                if (applicationDue != null) {
-                    return `Søk senest ${formatDateFns(applicationDue, "EEEE d. MMMM", { locale: nb })}`;
-                }
-            } catch (er) {
+
+            if (!isValid(dueDateParsed)) {
                 return `Frist: ${frist}`;
             }
 
+            if (isSameDay(now, dueDateParsed)) {
+                return "Søk senest i dag";
+            }
+            if (isSameDay(addDays(now, 1), dueDateParsed)) {
+                return "Søk senest i morgen";
+            }
+            if (isSameDay(addDays(now, 2), dueDateParsed)) {
+                return "Søk senest i overmorgen";
+            }
+            return `Søk senest ${formatDateFns(dueDateParsed, "EEEE d. MMMM", {
+                locale: nb,
+            })}`;
+        } catch (e) {
             return `Frist: ${frist}`;
         }
     };
@@ -149,7 +150,7 @@ SearchResultItem.propTypes = {
         published: PropTypes.string,
         properties: PropTypes.shape({
             employer: PropTypes.string,
-            hasInterestform: PropTypes.bool,
+            hasInterestform: PropTypes.string,
             jobtitle: PropTypes.string,
             location: PropTypes.string,
             applicationdue: PropTypes.string,
