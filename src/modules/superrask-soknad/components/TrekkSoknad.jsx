@@ -58,8 +58,8 @@ function TrekkSoknad({ match }) {
 
             {adFetchStatus === FetchStatus.FAILURE && deleteSoknadResponse.status === FetchStatus.NOT_FETCHED && (
                 <NotFound404
-                    title="Vi fant dessverre ikke stillingsannonsen"
-                    text="Annonsen kan være utløpt eller blitt fjernet av arbeidsgiver."
+                    title="Vi fant dessverre ikke din søknad"
+                    text="Det kan være at du allerede har trukket søknaden din eller at bedriften har avslått søknaden din."
                 />
             )}
 

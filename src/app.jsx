@@ -1,12 +1,13 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import * as ReactDOMClient from "react-dom/client";
 import "@navikt/ds-css";
 import "@navikt/arbeidsplassen-css";
 import { Footer, SkipLink } from "@navikt/arbeidsplassen-react";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { Modal } from "@navikt/ds-react";
 import AuthenticationProvider from "./modules/auth/contexts/AuthenticationProvider";
 import UserProvider from "./modules/user/contexts/UserProvider";
 import FavouritesProvider from "./modules/favourites/context/FavouritesProvider";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Header from "./modules/header/Header";
 import { CONTEXT_PATH } from "./common/environment";
 import initSentry from "./common/tracking/sentry";
@@ -21,7 +22,7 @@ import SavedSearchesPage from "./modules/saved-searches/SavedSearchesPage";
 import TrekkSoknadPage from "./modules/superrask-soknad/TrekkSoknadPage";
 import "./common/styles/styles.css";
 import googleTranslateWorkaround from "./common/utils/googleTranslateWorkaround";
-import { Modal } from "@navikt/ds-react";
+import NotFound404 from "./common/components/NotFound/NotFound404";
 
 initSentry();
 initAmplitude();
@@ -31,7 +32,7 @@ function Application() {
     useEffect(() => {
         Modal.setAppElement("#app");
     }, []);
-    
+
     return (
         <AuthenticationProvider>
             <UserProvider>
@@ -63,7 +64,7 @@ function Application() {
                                             path={`${CONTEXT_PATH}/trekk-soknad/:uuid/:adUuid`}
                                             component={TrekkSoknadPage}
                                         />
-                                        <Route path="*" component={SearchPage} />
+                                        <Route path="*" component={NotFound404} />
                                     </Switch>
                                 </main>
                             </HistoryProvider>
