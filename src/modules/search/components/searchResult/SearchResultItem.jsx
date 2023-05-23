@@ -3,6 +3,7 @@ import React, { useLayoutEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { BodyLong, Heading, Label, Link as AkselLink, Tag } from "@navikt/ds-react";
 import { parseISO, endOfDay, subDays, isSameDay, addDays, parse, format as formatDateFns } from "date-fns";
+import { nb } from "date-fns/locale";
 import { Buldings3Icon, ExternalLinkIcon, PinIcon } from "@navikt/aksel-icons";
 import getEmployer from "../../../../../server/common/getEmployer";
 import getWorkLocation from "../../../../../server/common/getWorkLocation";
@@ -49,11 +50,13 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, sho
             if (endOfDay(addDays(now, 2)) === endOfDay(parseISO(ad.properties.applicationdue))) {
                 return "Søk senest i overmorgen";
             }
-            return `Søk senest: ${formatDateFns(parseISO(ad.properties.applicationdue), "dd.MM")}`;
+            return `Søk senest ${formatDateFns(parseISO(ad.properties.applicationdue), "EEEE d. MMMM", {
+                locale: nb,
+            })}`;
         } catch (e) {
             const applicationDue = parse(ad.properties.applicationdue, "dd.MM.yyyy", new Date());
             if (applicationDue != null) {
-                return `Søk senest: ${formatDateFns(applicationDue, "dd.MM")}`;
+                return `Søk senest ${formatDateFns(applicationDue, "EEEE d. MMMM", { locale: nb })}`;
             }
             return `Frist: ${frist}`;
         }
@@ -70,8 +73,8 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, sho
                 {published && (
                     <Label as="p" size="small" className="SearchResultItem__subtle-text published">
                         {isPublishedToday && "Ny i dag"}
-                        {isPublishedYesterday && "Ny i går"}
-                        {isPublishedTwoDaysAgo && "Ny for to dager siden"}
+                        {isPublishedYesterday && "I går"}
+                        {isPublishedTwoDaysAgo && "To dager siden"}
                         {!isPublishedToday && !isPublishedYesterday && !isPublishedTwoDaysAgo && published}
                     </Label>
                 )}
