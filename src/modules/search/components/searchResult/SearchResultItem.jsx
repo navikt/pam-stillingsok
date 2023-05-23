@@ -70,8 +70,8 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, sho
                 {published && (
                     <Label as="p" size="small" className="SearchResultItem__subtle-text published">
                         {isPublishedToday && "Ny i dag"}
-                        {isPublishedYesterday && "Ny i går"}
-                        {isPublishedTwoDaysAgo && "Ny for to dager siden"}
+                        {isPublishedYesterday && "I går"}
+                        {isPublishedTwoDaysAgo && "To dager siden"}
                         {!isPublishedToday && !isPublishedYesterday && !isPublishedTwoDaysAgo && published}
                     </Label>
                 )}
