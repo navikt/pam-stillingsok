@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import PropTypes from "prop-types";
 import { FetchAction, FetchStatus, useFetchReducer } from "../../../common/hooks/useFetchReducer";
 import SearchAPI from "../../../common/api/SearchAPI";
 import DelayedSpinner from "../../../common/components/spinner/DelayedSpinner";
@@ -6,8 +7,9 @@ import InterestAPI from "../api/InterestAPI";
 import TrekkSoknadSuccess from "./TrekkSoknadSuccess";
 import TrekkSoknadConfirmationRequired from "./TrekkSoknadConfirmationRequired";
 import logAmplitudeEvent from "../../../common/tracking/amplitude";
+import NotFound404 from "../../../common/components/NotFound/NotFound404";
 
-const TrekkSoknad = ({ match }) => {
+function TrekkSoknad({ match }) {
     const [{ data: ad, status: adFetchStatus }, dispatch] = useFetchReducer();
     const [deleteSoknadResponse, deleteSoknadDispatch] = useFetchReducer();
 
@@ -43,7 +45,7 @@ const TrekkSoknad = ({ match }) => {
             logAmplitudeEvent("delete superrask søknad", {
                 stillingsId: match.params.adUuid,
                 candidateId: match.params.uuid,
-                success
+                success,
             });
         } catch (e) {
             // ignore
@@ -54,8 +56,19 @@ const TrekkSoknad = ({ match }) => {
         <div className="InterestMessageDelete">
             {adFetchStatus === FetchStatus.IS_FETCHING && <DelayedSpinner />}
 
-            {(adFetchStatus === FetchStatus.SUCCESS || adFetchStatus === FetchStatus.FAILURE) && (
-                <React.Fragment>
+            {adFetchStatus === FetchStatus.FAILURE && deleteSoknadResponse.status === FetchStatus.NOT_FETCHED && (
+                <NotFound404
+                    title="Vi fant dessverre ikke stillingsannonsen"
+                    text="Annonsen kan være utløpt eller blitt fjernet av arbeidsgiver."
+                />
+            )}
+
+            {(adFetchStatus === FetchStatus.SUCCESS ||
+                (adFetchStatus === FetchStatus.FAILURE && deleteSoknadResponse.status !== FetchStatus.NOT_FETCHED)) && (
+                <>
+                    {console.log("FETCH", FetchStatus)}
+                    {console.log("AD", adFetchStatus)}
+                    {console.log("delete", deleteSoknadResponse)}
                     {deleteSoknadResponse.status !== FetchStatus.SUCCESS ? (
                         <TrekkSoknadConfirmationRequired
                             handleWithDrawClick={handleWithDrawClick}
@@ -66,10 +79,19 @@ const TrekkSoknad = ({ match }) => {
                     ) : (
                         <TrekkSoknadSuccess />
                     )}
-                </React.Fragment>
+                </>
             )}
         </div>
     );
+}
+
+TrekkSoknad.propTypes = {
+    match: PropTypes.shape({
+        params: PropTypes.shape({
+            adUuid: PropTypes.string,
+            uuid: PropTypes.string,
+        }),
+    }),
 };
 
 export default TrekkSoknad;

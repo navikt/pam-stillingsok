@@ -95,7 +95,7 @@
         "webpack-merge": "^4.2.1"
     },
     "lint-staged": {
-        "./*/**/*.{js,jsx,ts,tsx,json,css,yml,yaml}": [
+        "./*/**/*.{js,jsx,ts,tsx,json,yml,yaml}": [
             "npx prettier --write",
             "npx eslint --fix"
         ],
