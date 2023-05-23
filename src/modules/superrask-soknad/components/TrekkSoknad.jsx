@@ -64,23 +64,17 @@ function TrekkSoknad({ match }) {
             )}
 
             {(adFetchStatus === FetchStatus.SUCCESS ||
-                (adFetchStatus === FetchStatus.FAILURE && deleteSoknadResponse.status !== FetchStatus.NOT_FETCHED)) && (
-                <>
-                    {console.log("FETCH", FetchStatus)}
-                    {console.log("AD", adFetchStatus)}
-                    {console.log("delete", deleteSoknadResponse)}
-                    {deleteSoknadResponse.status !== FetchStatus.SUCCESS ? (
-                        <TrekkSoknadConfirmationRequired
-                            handleWithDrawClick={handleWithDrawClick}
-                            isDeleting={deleteSoknadResponse.status === FetchStatus.IS_FETCHING}
-                            hasError={deleteSoknadResponse.status === FetchStatus.FAILURE}
-                            ad={adFetchStatus === FetchStatus.SUCCESS ? ad : undefined}
-                        />
-                    ) : (
-                        <TrekkSoknadSuccess />
-                    )}
-                </>
-            )}
+                (adFetchStatus === FetchStatus.FAILURE && deleteSoknadResponse.status !== FetchStatus.NOT_FETCHED)) &&
+                (deleteSoknadResponse.status !== FetchStatus.SUCCESS ? (
+                    <TrekkSoknadConfirmationRequired
+                        handleWithDrawClick={handleWithDrawClick}
+                        isDeleting={deleteSoknadResponse.status === FetchStatus.IS_FETCHING}
+                        hasError={deleteSoknadResponse.status === FetchStatus.FAILURE}
+                        ad={adFetchStatus === FetchStatus.SUCCESS ? ad : undefined}
+                    />
+                ) : (
+                    <TrekkSoknadSuccess />
+                ))}
         </div>
     );
 }
