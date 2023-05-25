@@ -2,40 +2,49 @@ import React, { useState } from "react";
 import { BodyLong, Heading, Panel, Link as AkselLink } from "@navikt/ds-react";
 import "./Feedback.css";
 import logAmplitudeEvent from "../../../../common/tracking/amplitude";
-import { FaceFrownIcon, FaceIcon, FaceSmileIcon, HeartIcon } from "@navikt/aksel-icons";
+import { ThumbUpIcon, ThumbDownIcon } from "@navikt/aksel-icons";
+import PropTypes from "prop-types";
+
+function Option({ emoji, text, onClick }) {
+    return (
+        <button
+            type="button"
+            className="Feedback__option"
+            onClick={() => {
+                onClick(text);
+            }}
+        >
+            <div className="Feedback__emoji">{emoji}</div>
+            <div>{text}</div>
+        </button>
+    );
+}
+
+Option.propTypes = {
+    emoji: PropTypes.node.isRequired,
+    text: PropTypes.string.isRequired,
+    onClick: PropTypes.func.isRequired,
+};
 
 function Feedback() {
     const [hasGivenRating, setHasGiverRating] = useState(false);
 
-    function Option({ emoji, text }) {
-        return (
-            <button
-                type="button"
-                className="Feedback__option"
-                onClick={() => {
-                    logAmplitudeEvent("rate new layout", {
-                        rating: text,
-                        innerWidth: window.innerWidth
-                    });
-                    setHasGiverRating(true);
-                }}
-            >
-                <div className="Feedback__emoji">{emoji}</div>
-                <div>{text}</div>
-            </button>
-        );
-    }
+    const onRatingClick = (text) => {
+        logAmplitudeEvent("rate search result relevance", {
+            rating: text,
+        });
+        setHasGiverRating(true);
+    };
 
     return (
         <Panel className="arb-panel mt-2">
             <Heading level="2" size="medium" spacing>
-                Hva synes du om søketjenesten?
+                Synes du søketreffene er relevante?
             </Heading>
             {!hasGivenRating ? (
                 <div className="Feedback__options">
-                    <Option text="Dårlig" emoji={<FaceFrownIcon aria-hidden="true" />} />
-                    <Option text="Nøytral" emoji={<FaceIcon aria-hidden="true" />} />
-                    <Option text="Bra" emoji={<FaceSmileIcon aria-hidden="true" />} />
+                    <Option text="Ja" onClick={onRatingClick} emoji={<ThumbUpIcon aria-hidden="true" />} />
+                    <Option text="Nei" onClick={onRatingClick} emoji={<ThumbDownIcon aria-hidden="true" />} />
                 </div>
             ) : (
                 <BodyLong className="mt-1 mb-1 bold">Takk for tilbakemeldingen!</BodyLong>
