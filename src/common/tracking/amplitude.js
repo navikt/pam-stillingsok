@@ -1,48 +1,34 @@
-import amplitude from "amplitude-js";
+import * as amplitude from "@amplitude/analytics-browser";
 import getSessionId from "../../session";
 
-export function initAmplitude() {
-    amplitude.getInstance();
-    amplitude.init(window.__AMPLITUDE_TOKEN__, null, {
-        apiEndpoint: "amplitude.nav.no/collect",
-        batchEvents: false,
-        includeReferrer: true,
-        includeUtm: true,
-        saveEvents: false,
-        transport: "beacon"
-    });
+/* eslint-disable no-underscore-dangle */
+function getAmplitudeKey() {
+    if (window.location.href.includes("nav.no")) return window.__AMPLITUDE_TOKEN__;
+    return "";
 }
+export function initAmplitude() {
+    try {
+        const amplitudeKey = getAmplitudeKey();
+        if (!amplitudeKey) return false;
 
-export const logAmplitudePageview = (additionalData) => {
-    let data = {
-        page: `${window.location.pathname}${window.location.search}`,
-        title: document.title
-    };
-
-    if (additionalData) {
-        data = {
-            ...data,
-            ...additionalData
-        };
+        amplitude.init(amplitudeKey, undefined, {
+            serverUrl: `https://amplitude.nav.no/collect`,
+            defaultTracking: {
+                pageViews: true,
+                sessions: true,
+                formInteractions: true,
+            },
+            /** Need this for /collect-auto according to https://nav-it.slack.com/archives/CMK1SCBP1/p1669722646425599
+             * but seems to work fine with /collect? Keeping it here just in case.
+             IngestionMetadata: {
+                sourceName: window.location.toString(),
+            },
+             */
+        });
+        return true;
+    } catch (e) {
+        return false;
     }
-
-    logAmplitudeEvent("Sidevisning", data);
-};
-
-export function logStillingVisning(ad) {
-    const employerLocation = ad._source.employer ? ad._source.employer.location : null;
-
-    logAmplitudeEvent("Stilling visning", {
-        title: ad._source.title || "N/A",
-        id: ad._id,
-        businessName: ad._source.businessName || "N/A",
-        country: employerLocation ? employerLocation.country : "N/A",
-        county: employerLocation ? employerLocation.county : "N/A",
-        city: employerLocation ? employerLocation.city : "N/A",
-        employer: ad._source.employer ? ad._source.employer.name : "N/A",
-        expires: ad._source.expires || "N/A",
-        published: ad._source.published || "N/A"
-    });
 }
 
 const enrichData = (data) => {
@@ -64,7 +50,39 @@ const enrichData = (data) => {
 };
 
 const logAmplitudeEvent = (event, data) => {
-    amplitude.logEvent(event, enrichData(data));
+    amplitude.track(event, enrichData(data));
 };
+
+export const logAmplitudePageview = (additionalData) => {
+    let data = {
+        page: `${window.location.pathname}${window.location.search}`,
+        title: document.title,
+    };
+
+    if (additionalData) {
+        data = {
+            ...data,
+            ...additionalData,
+        };
+    }
+
+    logAmplitudeEvent("Sidevisning", data);
+};
+
+export function logStillingVisning(ad) {
+    const employerLocation = ad._source.employer ? ad._source.employer.location : null;
+
+    logAmplitudeEvent("Stilling visning", {
+        title: ad._source.title || "N/A",
+        id: ad._id,
+        businessName: ad._source.businessName || "N/A",
+        country: employerLocation ? employerLocation.country : "N/A",
+        county: employerLocation ? employerLocation.county : "N/A",
+        city: employerLocation ? employerLocation.city : "N/A",
+        employer: ad._source.employer ? ad._source.employer.name : "N/A",
+        expires: ad._source.expires || "N/A",
+        published: ad._source.published || "N/A",
+    });
+}
 
 export default logAmplitudeEvent;
