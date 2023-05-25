@@ -91,14 +91,20 @@
         "mini-css-extract-plugin": "^0.11.0",
         "prettier": "^2.8.8",
         "rimraf": "^2.7.1",
+        "stylelint": "^15.6.2",
+        "stylelint-config-recommended": "^12.0.0",
         "webpack": "^4.44.1",
         "webpack-cli": "^3.3.12",
         "webpack-merge": "^4.2.1"
     },
     "lint-staged": {
-        "./*/**/*.{js,jsx,ts,tsx,json,css,yml,yaml}": [
+        "./*/**/*.{js,jsx,ts,tsx,json,yml,yaml}": [
             "npx prettier --write",
             "npx eslint --fix"
+        ],
+        "./*/**/*.css": [
+            "npx prettier --write",
+            "npx stylelint --fix"
         ],
         "*.{json,md}": [
             "npx prettier --write"
