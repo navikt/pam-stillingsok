@@ -33,7 +33,7 @@ function Feedback({ query }) {
         try {
             logAmplitudeEvent("rate search result relevance", {
                 rating: text,
-                hasSearchString: query.q && query.q.length > 0,
+                hasSearchString: query.q !== undefined && query.q.length > 0,
             });
         } catch (err) {
             // ignore
