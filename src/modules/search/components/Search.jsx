@@ -316,7 +316,7 @@ export default function Search() {
                                         }}
                                     />
                                     <DoYouWantToSaveSearch query={query} />
-                                    <Feedback />
+                                    <Feedback query={query} />
                                 </>
                             )}
                         </div>

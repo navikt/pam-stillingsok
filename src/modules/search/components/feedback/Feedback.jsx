@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { BodyLong, Heading, Panel, Link as AkselLink } from "@navikt/ds-react";
 import "./Feedback.css";
-import logAmplitudeEvent from "../../../../common/tracking/amplitude";
 import { ThumbUpIcon, ThumbDownIcon } from "@navikt/aksel-icons";
 import PropTypes from "prop-types";
+import logAmplitudeEvent from "../../../../common/tracking/amplitude";
 
 function Option({ emoji, text, onClick }) {
     return (
@@ -26,13 +26,18 @@ Option.propTypes = {
     onClick: PropTypes.func.isRequired,
 };
 
-function Feedback() {
+function Feedback({ query }) {
     const [hasGivenRating, setHasGiverRating] = useState(false);
 
     const onRatingClick = (text) => {
-        logAmplitudeEvent("rate search result relevance", {
-            rating: text,
-        });
+        try {
+            logAmplitudeEvent("rate search result relevance", {
+                rating: text,
+                hasSearchString: query.q && query.q.length > 0,
+            });
+        } catch (err) {
+            // ignore
+        }
         setHasGiverRating(true);
     };
 
@@ -61,5 +66,9 @@ function Feedback() {
         </Panel>
     );
 }
+
+Feedback.propTypes = {
+    query: PropTypes.shape({ q: PropTypes.string }).isRequired,
+};
 
 export default Feedback;
