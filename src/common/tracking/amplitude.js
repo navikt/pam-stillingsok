@@ -53,22 +53,6 @@ const logAmplitudeEvent = (event, data) => {
     amplitude.track(event, enrichData(data));
 };
 
-export const logAmplitudePageview = (additionalData) => {
-    let data = {
-        page: `${window.location.pathname}${window.location.search}`,
-        title: document.title,
-    };
-
-    if (additionalData) {
-        data = {
-            ...data,
-            ...additionalData,
-        };
-    }
-
-    logAmplitudeEvent("Sidevisning", data);
-};
-
 export function logStillingVisning(ad) {
     const employerLocation = ad._source.employer ? ad._source.employer.location : null;
 

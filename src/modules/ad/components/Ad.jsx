@@ -9,7 +9,7 @@ import EmploymentDetails from "./EmploymentDetails";
 import FinnAd from "./FinnAd";
 import HowToApply from "./HowToApply";
 import "./Ad.css";
-import logAmplitudeEvent, { logAmplitudePageview, logStillingVisning } from "../../../common/tracking/amplitude";
+import logAmplitudeEvent, { logStillingVisning } from "../../../common/tracking/amplitude";
 import ShareAd from "./ShareAd";
 import Summary from "./Summary";
 import DelayedSpinner from "../../../common/components/spinner/DelayedSpinner";
@@ -20,12 +20,29 @@ import useRobotsNoIndexMetaTag from "../../../common/hooks/useRobotsNoIndexMetaT
 import H1WithAutoFocus from "../../../common/components/h1WithAutoFocus/H1WithAutoFocus";
 import NotFound404 from "../../../common/components/NotFound/NotFound404";
 
-const Ad = ({ match }) => {
+/* eslint-disable no-underscore-dangle */
+function Ad({ match }) {
     const [{ data: ad, error, status }, dispatch] = useFetchReducer();
     const isInternal = match.path.startsWith("/stillinger/intern/");
     const avoidIndexing = (error && error.statusCode === 404) || (ad && ad._source.status !== "ACTIVE") || isInternal;
 
     useRobotsNoIndexMetaTag(avoidIndexing);
+
+    function fetchStilling(id) {
+        dispatch({ type: FetchAction.BEGIN });
+
+        const path = isInternal ? "intern" : "stilling";
+        SearchAPI.get(`api/${path}/${id}`).then(
+            (data) => {
+                dispatch({ type: FetchAction.RESOLVE, data });
+            },
+            // TODO: fix lint
+            // eslint-disable-next-line no-shadow
+            (error) => {
+                dispatch({ type: FetchAction.REJECT, error });
+            },
+        );
+    }
 
     /**
      * Fetch ad
@@ -45,7 +62,7 @@ const Ad = ({ match }) => {
 
             if (ad._source.properties && ad._source.properties.hasInterestform === "true") {
                 logAmplitudeEvent("land on ad with superrask søknad", {
-                    id: ad._id
+                    id: ad._id,
                 });
             }
         }
@@ -57,27 +74,12 @@ const Ad = ({ match }) => {
     useEffect(() => {
         if (!isInternal && ad && ad._source && ad._id && ad._source.title) {
             try {
-                logAmplitudePageview();
                 logStillingVisning(ad);
             } catch (e) {
                 // ignore
             }
         }
     }, [ad]);
-
-    function fetchStilling(id) {
-        dispatch({ type: FetchAction.BEGIN });
-
-        const path = isInternal ? "intern" : "stilling";
-        SearchAPI.get(`api/${path}/${id}`).then(
-            (data) => {
-                dispatch({ type: FetchAction.RESOLVE, data });
-            },
-            (error) => {
-                dispatch({ type: FetchAction.REJECT, error });
-            }
-        );
-    }
 
     const isFinn = ad && ad._source && ad._source.source && ad._source.source.toLowerCase() === "finn";
 
@@ -105,12 +107,12 @@ const Ad = ({ match }) => {
                         {isFinn && <FinnAd stilling={ad} />}
 
                         {!isFinn && (
-                            <React.Fragment>
+                            <>
                                 <Summary stilling={ad._source} />
                                 <AdText adText={ad._source.properties.adtext} />
                                 <EmployerDetails stilling={ad._source} />
                                 <EmploymentDetails stilling={ad._source} />
-                            </React.Fragment>
+                            </>
                         )}
                     </div>
 
@@ -124,18 +126,19 @@ const Ad = ({ match }) => {
             )}
         </div>
     );
-};
+}
 
 Ad.defaultProps = {
-    match: { params: {} }
+    match: { params: {} },
 };
 
 Ad.propTypes = {
     match: PropTypes.shape({
+        path: PropTypes.string,
         params: PropTypes.shape({
-            uuid: PropTypes.string
-        })
-    })
+            uuid: PropTypes.string,
+        }),
+    }),
 };
 
 export default Ad;
