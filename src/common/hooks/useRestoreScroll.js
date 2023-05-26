@@ -43,22 +43,23 @@ export default function useRestoreScroll(id, shouldRestore) {
      * Listen to scroll event, and track current scroll position
      */
     useEffect(() => {
-        try {
-            if (shouldRestore) {
-                const handleScroll = debounce(() => {
+        if (shouldRestore) {
+            const handleScroll = debounce(() => {
+                try {
                     const scrollTop = Math.round(window.pageYOffset || document.documentElement.scrollTop);
                     sessionStorage.setItem(SESSION_STORAGE_ID, `${scrollTop}`);
-                });
+                } catch (error) {
+                    // ignore sessionStorage error
+                }
+            });
 
-                window.addEventListener("scroll", handleScroll);
+            window.addEventListener("scroll", handleScroll);
 
-                return () => {
-                    window.removeEventListener("scroll", handleScroll);
-                };
-            }
-        } catch (error) {
-            // ignore sessionStorage error
+            return () => {
+                window.removeEventListener("scroll", handleScroll);
+            };
         }
+        return null;
     }, [shouldRestore]);
 
     return { resetScroll };
