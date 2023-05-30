@@ -77,7 +77,7 @@ const properties = {
     PAM_CONTEXT_PATH: "/stillinger",
     INTEREST_API_URL: process.env.INTEREST_API_URL,
     LOGIN_URL: "/oauth2/login",
-    LOGOUT_URL: "/oauth2/logout",
+    LOGOUT_URL: "/oauth2/logout?redirect=/utlogget",
     PAM_STILLINGSOK_URL: process.env.PAM_STILLINGSOK_URL,
     PAM_VAR_SIDE_URL: process.env.PAM_VAR_SIDE_URL,
     PAM_JOBBTREFF_API_URL: process.env.PAM_JOBBTREFF_API_URL,
