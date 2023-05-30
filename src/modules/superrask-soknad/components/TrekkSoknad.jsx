@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import PropTypes from "prop-types";
 import { FetchAction, FetchStatus, useFetchReducer } from "../../../common/hooks/useFetchReducer";
 import SearchAPI from "../../../common/api/SearchAPI";
 import DelayedSpinner from "../../../common/components/spinner/DelayedSpinner";
@@ -7,7 +8,7 @@ import TrekkSoknadSuccess from "./TrekkSoknadSuccess";
 import TrekkSoknadConfirmationRequired from "./TrekkSoknadConfirmationRequired";
 import logAmplitudeEvent from "../../../common/tracking/amplitude";
 
-const TrekkSoknad = ({ match }) => {
+function TrekkSoknad({ match }) {
     const [{ data: ad, status: adFetchStatus }, dispatch] = useFetchReducer();
     const [deleteSoknadResponse, deleteSoknadDispatch] = useFetchReducer();
 
@@ -43,7 +44,7 @@ const TrekkSoknad = ({ match }) => {
             logAmplitudeEvent("delete superrask søknad", {
                 stillingsId: match.params.adUuid,
                 candidateId: match.params.uuid,
-                success
+                success,
             });
         } catch (e) {
             // ignore
@@ -55,7 +56,7 @@ const TrekkSoknad = ({ match }) => {
             {adFetchStatus === FetchStatus.IS_FETCHING && <DelayedSpinner />}
 
             {(adFetchStatus === FetchStatus.SUCCESS || adFetchStatus === FetchStatus.FAILURE) && (
-                <React.Fragment>
+                <>
                     {deleteSoknadResponse.status !== FetchStatus.SUCCESS ? (
                         <TrekkSoknadConfirmationRequired
                             handleWithDrawClick={handleWithDrawClick}
@@ -66,10 +67,19 @@ const TrekkSoknad = ({ match }) => {
                     ) : (
                         <TrekkSoknadSuccess />
                     )}
-                </React.Fragment>
+                </>
             )}
         </div>
     );
+}
+
+TrekkSoknad.propTypes = {
+    match: PropTypes.shape({
+        params: PropTypes.shape({
+            adUuid: PropTypes.string,
+            uuid: PropTypes.string,
+        }),
+    }),
 };
 
 export default TrekkSoknad;

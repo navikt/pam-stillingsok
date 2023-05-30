@@ -1,9 +1,10 @@
 import React from "react";
-import ScrollToTop from "../../../common/components/ScrollToTop";
 import { Link } from "react-router-dom";
+import { BodyLong, Button, Heading } from "@navikt/ds-react";
+import PropTypes from "prop-types";
+import ScrollToTop from "../../../common/components/ScrollToTop";
 import { CONTEXT_PATH } from "../../../common/environment";
 import Feedback from "./Feedback";
-import { BodyLong, Button, Heading } from "@navikt/ds-react";
 import H1WithAutoFocus from "../../../common/components/h1WithAutoFocus/H1WithAutoFocus";
 
 function SuperraskSoknadSuccess({ data }) {
@@ -30,5 +31,9 @@ function SuperraskSoknadSuccess({ data }) {
         </ScrollToTop>
     );
 }
+
+SuperraskSoknadSuccess.propTypes = {
+    data: PropTypes.shape({ email: PropTypes.string }),
+};
 
 export default SuperraskSoknadSuccess;

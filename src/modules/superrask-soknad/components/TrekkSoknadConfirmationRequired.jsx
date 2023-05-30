@@ -1,12 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { Alert, BodyLong, BodyShort, Button, Heading, Label, Link as AkselLink } from "@navikt/ds-react";
+import PropTypes from "prop-types";
 import { CONTEXT_PATH } from "../../../common/environment";
 import getEmployer from "../../../../server/common/getEmployer";
-import { Alert, BodyLong, BodyShort, Button, Heading, Label, Link as AkselLink } from "@navikt/ds-react";
 
 function TrekkSoknadConfirmationRequired({ ad, handleWithDrawClick, isDeleting, hasError }) {
     return (
-        <React.Fragment>
+        <>
             <Heading level="1" size="large" spacing>
                 Bekreft at du ønsker å trekke din søknad
             </Heading>
@@ -33,8 +34,20 @@ function TrekkSoknadConfirmationRequired({ ad, handleWithDrawClick, isDeleting, 
             <Button variant="primary" onClick={handleWithDrawClick} loading={isDeleting}>
                 Trekk søknad
             </Button>
-        </React.Fragment>
+        </>
     );
 }
+
+TrekkSoknadConfirmationRequired.propTypes = {
+    ad: PropTypes.shape({
+        _id: PropTypes.string.isRequired,
+        _source: PropTypes.shape({
+            title: PropTypes.string,
+        }),
+    }),
+    handleWithDrawClick: PropTypes.func.isRequired,
+    isDeleting: PropTypes.bool,
+    hasError: PropTypes.bool,
+};
 
 export default TrekkSoknadConfirmationRequired;

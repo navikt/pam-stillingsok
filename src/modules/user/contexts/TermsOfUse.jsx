@@ -21,7 +21,7 @@ function TermsOfUse({ onClose, onTermsAccepted }) {
         setFetchStatus(FetchStatus.IS_FETCHING);
 
         UserAPI.post("api/v1/user", {
-            acceptedTerms: "sok_v1"
+            acceptedTerms: "sok_v1",
         })
             .then((response) => {
                 setFetchStatus(FetchStatus.SUCCESS);
@@ -113,12 +113,12 @@ function TermsOfUse({ onClose, onTermsAccepted }) {
 }
 
 TermsOfUse.defaultProps = {
-    onTermsAccepted: undefined
+    onTermsAccepted: undefined,
 };
 
 TermsOfUse.propTypes = {
     onClose: PropTypes.func.isRequired,
-    onTermsAccepted: PropTypes.func
+    onTermsAccepted: PropTypes.func,
 };
 
 export default TermsOfUse;

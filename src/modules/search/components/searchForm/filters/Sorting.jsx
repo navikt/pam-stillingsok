@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { SET_SORTING } from "../../../query";
 import { Radio, RadioGroup } from "@navikt/ds-react";
+import { SET_SORTING } from "../../../query";
 
 function Sorting({ query, dispatch }) {
     const [sort, setSort] = useState(query.sort);
@@ -22,9 +22,9 @@ function Sorting({ query, dispatch }) {
 
 Sorting.propTypes = {
     query: PropTypes.shape({
-        sort: PropTypes.string.isRequired
+        sort: PropTypes.string.isRequired,
     }).isRequired,
-    dispatch: PropTypes.func.isRequired
+    dispatch: PropTypes.func.isRequired,
 };
 
 export default Sorting;

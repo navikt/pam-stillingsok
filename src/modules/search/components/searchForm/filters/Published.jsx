@@ -1,11 +1,11 @@
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
+import { Checkbox, Fieldset } from "@navikt/ds-react";
 import { SET_PUBLISHED } from "../../../query";
 import mergeCount from "../utils/mergeCount";
-import { Checkbox, Fieldset } from "@navikt/ds-react";
 
 export const PublishedLabelsEnum = {
-    "now/d": "Nye i dag"
+    "now/d": "Nye i dag",
 };
 
 function Published({ dispatch, query, initialValues, updatedValues }) {
@@ -48,13 +48,13 @@ Published.propTypes = {
     initialValues: PropTypes.arrayOf(
         PropTypes.shape({
             key: PropTypes.string,
-            count: PropTypes.number
-        })
+            count: PropTypes.number,
+        }),
     ).isRequired,
     query: PropTypes.shape({
-        published: PropTypes.string
+        published: PropTypes.string,
     }).isRequired,
-    dispatch: PropTypes.func.isRequired
+    dispatch: PropTypes.func.isRequired,
 };
 
 export default Published;

@@ -11,29 +11,15 @@ export const UserContext = React.createContext({});
 export const HasAcceptedTermsStatus = {
     NOT_FETCHED: "NO_FETCHED",
     NOT_ACCEPTED: "NOT_ACCEPTED",
-    HAS_ACCEPTED: "HAS_ACCEPTED"
+    HAS_ACCEPTED: "HAS_ACCEPTED",
 };
 
-const UserProvider = ({ children }) => {
+function UserProvider({ children }) {
     const { authenticationStatus } = useContext(AuthenticationContext);
     const [userResponse, dispatch] = useFetchReducer();
     const [shouldShowErrorDialog, openErrorDialog, closeErrorDialog] = useToggle(false);
 
     const [hasAcceptedTermsStatus, setHasAcceptedTermsStatus] = useState(HasAcceptedTermsStatus.NOT_FETCHED);
-
-    useEffect(() => {
-        if (authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED) {
-            fetchUser();
-        }
-    }, [authenticationStatus]);
-
-    useEffect(() => {
-        if (userResponse.data) {
-            setHasAcceptedTermsStatus(HasAcceptedTermsStatus.HAS_ACCEPTED);
-        } else if (userResponse.error && userResponse.error.statusCode === 404) {
-            setHasAcceptedTermsStatus(HasAcceptedTermsStatus.NOT_ACCEPTED);
-        }
-    }, [userResponse]);
 
     function fetchUser() {
         dispatch({ type: FetchAction.BEGIN });
@@ -56,8 +42,22 @@ const UserProvider = ({ children }) => {
     const userContextValues = {
         user: userResponse,
         updateUser,
-        hasAcceptedTermsStatus
+        hasAcceptedTermsStatus,
     };
+
+    useEffect(() => {
+        if (authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED) {
+            fetchUser();
+        }
+    }, [authenticationStatus]);
+
+    useEffect(() => {
+        if (userResponse.data) {
+            setHasAcceptedTermsStatus(HasAcceptedTermsStatus.HAS_ACCEPTED);
+        } else if (userResponse.error && userResponse.error.statusCode === 404) {
+            setHasAcceptedTermsStatus(HasAcceptedTermsStatus.NOT_ACCEPTED);
+        }
+    }, [userResponse]);
 
     return (
         <UserContext.Provider value={userContextValues}>
@@ -70,10 +70,10 @@ const UserProvider = ({ children }) => {
             )}
         </UserContext.Provider>
     );
-};
+}
 
 UserProvider.propTypes = {
-    children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired
+    children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
 };
 
 export default UserProvider;

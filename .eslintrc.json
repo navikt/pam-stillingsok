@@ -14,6 +14,7 @@
     },
     "plugins": ["react", "prettier"],
     "rules": {
+        "no-underscore-dangle": "off",
         "react/no-unescaped-entities": "off",
         "prettier/prettier": "error",
         "react/react-in-jsx-scope": "off",

@@ -1,7 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import Alert from "../../../common/components/alert/Alert";
-import H1WithAutoFocus from "../../../common/components/h1WithAutoFocus/H1WithAutoFocus";
 import {
     BodyLong,
     Button,
@@ -12,13 +10,15 @@ import {
     Textarea,
     TextField,
     Link as AkselLink,
-    Fieldset
+    Fieldset,
 } from "@navikt/ds-react";
+import Alert from "../../../common/components/alert/Alert";
+import H1WithAutoFocus from "../../../common/components/h1WithAutoFocus/H1WithAutoFocus";
 import { isValidEmail } from "../../../common/components/utils";
 import "./SuperraskSoknad.css";
 import { CONTEXT_PATH } from "../../../common/environment";
 
-const SuperraskSoknadForm = ({ ad, interestForm, isInternal, submitForm, isSending, hasError, error }) => {
+function SuperraskSoknadForm({ ad, interestForm, isInternal, submitForm, isSending, hasError, error }) {
     // Form data
     const [name, setName] = useState("");
     const [telephone, setTelephone] = useState("");
@@ -50,13 +50,13 @@ const SuperraskSoknadForm = ({ ad, interestForm, isInternal, submitForm, isSendi
         if (validateForm()) {
             submitForm({
                 name,
-                telephone: telephone,
+                telephone,
                 email,
                 about,
                 qualifications: interestForm.qualifications.map((it) => ({
                     ...it,
-                    checked: checkedQualifications.includes(it.label)
-                }))
+                    checked: checkedQualifications.includes(it.label),
+                })),
             });
         }
     }
@@ -83,7 +83,7 @@ const SuperraskSoknadForm = ({ ad, interestForm, isInternal, submitForm, isSendi
             setAboutValidationError(
                 `Du har brukt ${
                     about.length - ABOUT_MAX_LENGTH
-                } tegn for mye i din begrunnelse. Begrunnelsen kan ikke være lengre enn ${ABOUT_MAX_LENGTH} tegn`
+                } tegn for mye i din begrunnelse. Begrunnelsen kan ikke være lengre enn ${ABOUT_MAX_LENGTH} tegn`,
             );
         }
         if (!isValid) {
@@ -117,9 +117,7 @@ const SuperraskSoknadForm = ({ ad, interestForm, isInternal, submitForm, isSendi
     function handleQualificationsCheck(e) {
         const { checked, value } = e.target;
         if (checked) {
-            setCheckedQualifications((prevState) =>
-                prevState.includes(value) ? prevState : [...prevState, value]
-            );
+            setCheckedQualifications((prevState) => (prevState.includes(value) ? prevState : [...prevState, value]));
         } else {
             setCheckedQualifications((prevState) => prevState.filter((it) => it !== value));
         }
@@ -145,19 +143,19 @@ const SuperraskSoknadForm = ({ ad, interestForm, isInternal, submitForm, isSendi
         errors.push(
             <ErrorSummary.Item href="#register-interest-telephone" key="1">
                 {telephoneValidationError}
-            </ErrorSummary.Item>
+            </ErrorSummary.Item>,
         );
     if (emailValidationError)
         errors.push(
             <ErrorSummary.Item href="#register-interest-email" key="2">
                 {emailValidationError}
-            </ErrorSummary.Item>
+            </ErrorSummary.Item>,
         );
     if (aboutValidationError)
         errors.push(
             <ErrorSummary.Item href="#register-interest-about" key="3">
                 {aboutValidationError}
-            </ErrorSummary.Item>
+            </ErrorSummary.Item>,
         );
 
     return (
@@ -176,7 +174,7 @@ const SuperraskSoknadForm = ({ ad, interestForm, isInternal, submitForm, isSendi
                 )}
             </section>
 
-            {((interestForm.qualifications && interestForm.qualifications.length > 0)) && (
+            {interestForm.qualifications && interestForm.qualifications.length > 0 && (
                 <section className="InterestForm__section">
                     <Heading level="2" size="medium" spacing>
                         Bedriftens ønskede kvalifikasjoner
@@ -293,7 +291,7 @@ const SuperraskSoknadForm = ({ ad, interestForm, isInternal, submitForm, isSendi
             </div>
         </form>
     );
-};
+}
 
 SuperraskSoknadForm.defaultProps = {};
 
