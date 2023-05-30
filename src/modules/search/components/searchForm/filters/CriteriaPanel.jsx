@@ -64,7 +64,8 @@ CriteriaPanel.defaultProps = {
 CriteriaPanel.propTypes = {
     isOpenByDefault: PropTypes.bool,
     title: PropTypes.string.isRequired,
-    children: PropTypes.oneOfType([PropTypes.node, PropTypes.arrayOf(PropTypes.node)]).isRequired
+    children: PropTypes.oneOfType([PropTypes.node, PropTypes.arrayOf(PropTypes.node)]).isRequired,
+    panelId: PropTypes.string.isRequired,
 };
 
 export default CriteriaPanel;

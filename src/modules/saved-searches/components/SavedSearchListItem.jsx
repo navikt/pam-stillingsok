@@ -158,8 +158,11 @@ SavedSearchListItem.propTypes = {
         duration: PropTypes.number,
         updated: PropTypes.string,
         searchQuery: PropTypes.string,
-        expired: PropTypes.string
-    }).isRequired
+        expired: PropTypes.string,
+    }).isRequired,
+    removeSavedSearchFromList: PropTypes.func.isRequired,
+    replaceSavedSearchInList: PropTypes.func.isRequired,
+    autoOpenModal: PropTypes.bool.isRequired,
 };
 
 export default SavedSearchListItem;

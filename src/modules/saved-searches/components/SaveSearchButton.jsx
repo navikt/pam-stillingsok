@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import PropTypes from "prop-types";
 import { Button } from "@navikt/ds-react";
 import SearchIsEmptyModal from "./modal/SearchIsEmptyModal";
 import SaveSearchModal from "./modal/SaveSearchModal";
@@ -82,5 +83,9 @@ function SaveSearchButton({ query }) {
         </React.Fragment>
     );
 }
+
+SaveSearchButton.propTypes = {
+    query: PropTypes.shape({}),
+};
 
 export default SaveSearchButton;
