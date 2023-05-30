@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import parse from "html-react-parser";
 import "./AdText.css";
+import DOMPurify from "isomorphic-dompurify";
 import { containsEmail, extractEmail, isValidEmail, mailtoInString } from "../../../common/components/utils";
 
 const preprocessAd = (adText) => {
@@ -25,15 +26,16 @@ const preprocessAd = (adText) => {
 export default function AdText({ adText }) {
     if (adText) {
         const preprocessedAd = preprocessAd(adText);
-        return <section className="AdText">{parse(preprocessedAd)}</section>;
+        const cleanHtml = DOMPurify.sanitize(preprocessedAd);
+        return <section className="AdText">{parse(cleanHtml)}</section>;
     }
     return null;
 }
 
 AdText.defaultProps = {
-    adText: undefined
+    adText: undefined,
 };
 
 AdText.propTypes = {
-    adText: PropTypes.string
+    adText: PropTypes.string,
 };
