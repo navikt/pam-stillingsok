@@ -1,12 +1,11 @@
-import React, { useEffect } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { Heading, Modal } from "@navikt/ds-react";
 import "./CustomModal.css";
 
 function CustomModal({ title, children, onCloseClick }) {
-
     return (
-        <Modal className="CustomModal" open={true} onClose={onCloseClick}>
+        <Modal className="CustomModal" open onClose={onCloseClick}>
             <Heading level="1" size="medium" spacing>
                 {title}
             </Heading>
@@ -18,7 +17,7 @@ function CustomModal({ title, children, onCloseClick }) {
 CustomModal.propTypes = {
     children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
     title: PropTypes.string.isRequired,
-    onCloseClick: PropTypes.func.isRequired
+    onCloseClick: PropTypes.func.isRequired,
 };
 
 export default CustomModal;

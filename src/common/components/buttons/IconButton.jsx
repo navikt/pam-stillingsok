@@ -25,7 +25,7 @@ IconButton.defaultProps = {
     disabled: false,
     spinner: false,
     className: undefined,
-    type: "flat"
+    type: "flat",
 };
 
 IconButton.propTypes = {

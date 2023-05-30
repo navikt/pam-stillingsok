@@ -1,8 +1,8 @@
 import React, { useContext, useLayoutEffect, useRef } from "react";
 import PropTypes from "prop-types";
+import { Heading } from "@navikt/ds-react";
 import { HistoryContext } from "../../context/HistoryProvider";
 import "./H1WithAutoFocus.css";
-import { Heading } from "@navikt/ds-react";
 
 /**
  * This view sets focus to h1 title when navigating to a new page.

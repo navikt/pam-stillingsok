@@ -1,11 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import IconButton from "./IconButton";
 import { ArrowsCirclepathIcon } from "@navikt/aksel-icons";
-function RefreshButton(props) {
-    return (
-        <IconButton text={props.text || "Last på ny"} icon={<ArrowsCirclepathIcon aria-hidden="true" />} {...props} />
-    );
+import IconButton from "./IconButton";
+
+function RefreshButton({ text, ...props }) {
+    return <IconButton text={text || "Last på ny"} icon={<ArrowsCirclepathIcon aria-hidden="true" />} {...props} />;
 }
 
 RefreshButton.propTypes = {

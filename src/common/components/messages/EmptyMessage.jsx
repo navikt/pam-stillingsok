@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import { BodyLong, Heading, Link as AkselLink } from "@navikt/ds-react";
 import { CONTEXT_PATH } from "../../environment";
 import "./EmptyMessage.css";
-import { BodyLong, Heading, Link as AkselLink } from "@navikt/ds-react";
 
 function EmptyMessage({ title, text }) {
     return (

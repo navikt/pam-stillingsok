@@ -1,7 +1,6 @@
 import PropTypes from "prop-types";
-import React, { useEffect, useRef } from "react";
-import { BodyLong, Heading, Modal } from "@navikt/ds-react";
-import { Button } from "@navikt/ds-react";
+import React, { useRef } from "react";
+import { BodyLong, Button, Heading, Modal } from "@navikt/ds-react";
 import "./AlertModal.css";
 
 export default function AlertModal({
@@ -14,7 +13,7 @@ export default function AlertModal({
     onCancel,
     spinner,
     useOnlyCancelButton,
-    showButtons
+    showButtons,
 }) {
     const cancelButtonRef = useRef();
 
@@ -22,7 +21,7 @@ export default function AlertModal({
         <Modal
             className="AlertModal"
             role="alertdialog"
-            open={true}
+            open
             onClose={onCancel}
             aria-labelledby={`${id}-h1`}
             aria-describedby={`${id}-message`}
@@ -50,7 +49,6 @@ export default function AlertModal({
                     )}
                 </div>
             )}
-            
         </Modal>
     );
 }
@@ -61,7 +59,7 @@ AlertModal.defaultProps = {
     spinner: false,
     useOnlyCancelButton: false,
     onConfirm: undefined,
-    showButtons: true
+    showButtons: true,
 };
 
 AlertModal.propTypes = {
@@ -74,5 +72,5 @@ AlertModal.propTypes = {
     onCancel: PropTypes.func.isRequired,
     spinner: PropTypes.bool,
     useOnlyCancelButton: PropTypes.bool,
-    showButtons: PropTypes.bool
+    showButtons: PropTypes.bool,
 };

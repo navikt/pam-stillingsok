@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 
 function removeRobotsMetaTag() {
-    let metaRobots = document.head.querySelector("meta[name=robots]");
+    const metaRobots = document.head.querySelector("meta[name=robots]");
     if (metaRobots) {
         document.head.removeChild(metaRobots);
     }

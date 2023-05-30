@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { logAmplitudePageview } from "../tracking/amplitude";
 
-export default (page) => {
+export default () => {
     useEffect(() => {
         try {
             logAmplitudePageview();

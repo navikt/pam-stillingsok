@@ -4,8 +4,8 @@ import { useLocation } from "react-router";
 
 export const HistoryContext = React.createContext({});
 
-const HistoryProvider = ({ children }) => {
-    let location = useLocation();
+function HistoryProvider({ children }) {
+    const location = useLocation();
     const [currentLocation, setCurrentLocation] = useState(undefined);
     const [previousLocation, setPreviousLocation] = useState(undefined);
     const [historyCount, setHistoryCount] = useState(0);
@@ -21,10 +21,10 @@ const HistoryProvider = ({ children }) => {
             {children}
         </HistoryContext.Provider>
     );
-};
+}
 
 HistoryProvider.propTypes = {
-    children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired
+    children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
 };
 
 export default HistoryProvider;
