@@ -16,7 +16,7 @@ export const FavouritesContext = React.createContext({});
  * removed as a favourite. This can be used to disable multiple clicks
  * on the favourite button, to prevent network race conditions while saving or deleting.
  */
-const FavouritesProvider = ({ children }) => {
+function FavouritesProvider({ children }) {
     const { hasAcceptedTermsStatus } = useContext(UserContext);
     const [shouldShowErrorDialog, openErrorDialog, closeErrorDialog] = useToggle(false);
 
@@ -67,7 +67,7 @@ const FavouritesProvider = ({ children }) => {
         addToPending,
         removeFormPending,
         addFavouriteToLocalList,
-        removeFavouriteFromLocalList
+        removeFavouriteFromLocalList,
     };
 
     return (
@@ -81,10 +81,10 @@ const FavouritesProvider = ({ children }) => {
             )}
         </FavouritesContext.Provider>
     );
-};
+}
 
 FavouritesProvider.propTypes = {
-    children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired
+    children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
 };
 
 export default FavouritesProvider;

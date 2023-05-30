@@ -20,14 +20,10 @@ export default function FinnAd({ stilling }) {
     );
 }
 
-FinnAd.defaultProps = {
-    stilling: undefined
-};
-
 FinnAd.propTypes = {
     stilling: PropTypes.shape({
         _source: PropTypes.shape({
-            reference: PropTypes.string
-        })
-    }).isRequired
+            reference: PropTypes.string,
+        }),
+    }).isRequired,
 };

@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Buldings3Icon, PinIcon } from "@navikt/aksel-icons";
 import getWorkLocation from "../../../../server/common/getWorkLocation";
 import getEmployer from "../../../../server/common/getEmployer";
 import "./Summary.css";
-import { Buldings3Icon, PinIcon } from "@navikt/aksel-icons";
 
 export default function Summary({ stilling }) {
     const location = getWorkLocation(stilling.properties.location, stilling.locationList, false);
@@ -33,6 +33,7 @@ export default function Summary({ stilling }) {
 
 Summary.propTypes = {
     stilling: PropTypes.shape({
+        locationList: PropTypes.shape({}),
         properties: PropTypes.shape({
             jobtitle: PropTypes.string,
             location: PropTypes.string,
@@ -44,8 +45,8 @@ Summary.propTypes = {
             workday: PropTypes.string,
             workhours: PropTypes.string,
             jobarrangement: PropTypes.string,
-            starttime: PropTypes.string
+            starttime: PropTypes.string,
         }),
-        location: PropTypes.shape({})
-    }).isRequired
+        location: PropTypes.shape({}),
+    }).isRequired,
 };

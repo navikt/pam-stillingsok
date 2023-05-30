@@ -1,15 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { UAParser } from "ua-parser-js";
+import { Heading, Link as AkselLink } from "@navikt/ds-react";
 import FacebookIcon from "../../../common/components/icons/FacebookIcon";
 import LinkedinIcon from "../../../common/components/icons/LinkedinIcon";
 import TwitterIcon from "../../../common/components/icons/TwitterIcon";
 import MessengerIcon from "../../../common/components/icons/MessengerIcon";
 import "./ShareAd.css";
-import { Heading, Link as AkselLink } from "@navikt/ds-react";
 
 export default function ShareAd({ source }) {
-    const title = source.title;
+    const { title } = source;
     const deviceType = new UAParser().getResult().device.type;
 
     return (
@@ -20,7 +20,7 @@ export default function ShareAd({ source }) {
             <div className="SocialShare">
                 <AkselLink
                     className="SocialShare__facebook"
-                    href={"https://www.facebook.com/sharer/sharer.php?u=" + location.href}
+                    href={`https://www.facebook.com/sharer/sharer.php?u=${window.location.href}`}
                     rel="noopener noreferrer"
                 >
                     <FacebookIcon />
@@ -28,7 +28,7 @@ export default function ShareAd({ source }) {
                 </AkselLink>
                 <AkselLink
                     className="SocialShare__linkedin"
-                    href={"https://www.linkedin.com/shareArticle?mini=true&url=" + location.href}
+                    href={`https://www.linkedin.com/shareArticle?mini=true&url=${window.location.href}`}
                     rel="noopener noreferrer"
                 >
                     <LinkedinIcon />
@@ -36,7 +36,7 @@ export default function ShareAd({ source }) {
                 </AkselLink>
                 <AkselLink
                     className="SocialShare__twitter"
-                    href={"https://twitter.com/intent/tweet?url=" + location.href + "&text=" + encodeURI(title)}
+                    href={`https://twitter.com/intent/tweet?url=${window.location.href}&text=${encodeURI(title)}`}
                     rel="noopener noreferrer"
                 >
                     <TwitterIcon />
@@ -46,7 +46,7 @@ export default function ShareAd({ source }) {
                 {(deviceType === "mobile" || deviceType === "tablet") && (
                     <AkselLink
                         className="SocialShare__messenger"
-                        href={"fb-messenger://share/?link=" + encodeURIComponent(location.href)}
+                        href={`fb-messenger://share/?link=${encodeURIComponent(window.location.href)}`}
                         rel="noopener noreferrer"
                     >
                         <MessengerIcon />
@@ -60,6 +60,6 @@ export default function ShareAd({ source }) {
 
 ShareAd.propTypes = {
     source: PropTypes.shape({
-        title: PropTypes.string
-    }).isRequired
+        title: PropTypes.string,
+    }).isRequired,
 };

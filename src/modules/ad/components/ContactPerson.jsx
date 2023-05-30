@@ -35,7 +35,7 @@ export default function ContactPerson({ contactList }) {
 }
 
 ContactPerson.defaultProps = {
-    contactList: undefined
+    contactList: undefined,
 };
 
 ContactPerson.propTypes = {
@@ -44,7 +44,7 @@ ContactPerson.propTypes = {
             person: PropTypes.string,
             title: PropTypes.string,
             phone: PropTypes.string,
-            email: PropTypes.string
-        })
-    )
+            email: PropTypes.string,
+        }),
+    ),
 };

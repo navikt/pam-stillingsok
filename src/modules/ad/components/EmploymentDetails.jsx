@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Heading } from "@navikt/ds-react";
 import { formatDate } from "../../../common/components/utils";
 import worktimeParser from "./worktimeParser";
-import { Heading } from "@navikt/ds-react";
 
 export default function EmploymentDetails({ stilling }) {
     const { properties } = stilling;
@@ -97,8 +97,9 @@ EmploymentDetails.propTypes = {
             workday: PropTypes.string,
             workhours: PropTypes.string,
             jobarrangement: PropTypes.string,
-            starttime: PropTypes.string
+            starttime: PropTypes.string,
+            remote: PropTypes.string,
         }),
-        location: PropTypes.shape({})
-    }).isRequired
+        location: PropTypes.shape({}),
+    }).isRequired,
 };

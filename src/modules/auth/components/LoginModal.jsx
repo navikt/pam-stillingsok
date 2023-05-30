@@ -1,24 +1,19 @@
-import React, {useEffect} from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import RequiresAuthentication from "./RequiresAuthentication";
 import { Modal } from "@navikt/ds-react";
+import RequiresAuthentication from "./RequiresAuthentication";
 
-function LoginModal({onLoginClick, onCloseClick }) {
-
+function LoginModal({ onLoginClick, onCloseClick }) {
     return (
-        <Modal 
-            role="alertdialog"
-            open={true} 
-            aria-label="Du må logge inn først"
-            onClose={onCloseClick}>
-            <RequiresAuthentication onLogin={onLoginClick} onCancel={onCloseClick}></RequiresAuthentication>
+        <Modal role="alertdialog" open aria-label="Du må logge inn først" onClose={onCloseClick}>
+            <RequiresAuthentication onLogin={onLoginClick} onCancel={onCloseClick} />
         </Modal>
     );
 }
 
 LoginModal.propTypes = {
     onCloseClick: PropTypes.func.isRequired,
-    onLoginClick: PropTypes.func.isRequired
+    onLoginClick: PropTypes.func.isRequired,
 };
 
 export default LoginModal;

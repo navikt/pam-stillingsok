@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { formatDate } from "../../../common/components/utils";
 import { Link } from "react-router-dom";
-import { CONTEXT_PATH } from "../../../common/environment";
 import { BodyShort, Label, Link as AkselLink } from "@navikt/ds-react";
+import { formatDate } from "../../../common/components/utils";
+import { CONTEXT_PATH } from "../../../common/environment";
 
 export default function AdDetails({ id, source }) {
     return (
@@ -40,7 +40,7 @@ AdDetails.propTypes = {
         updated: PropTypes.string,
         medium: PropTypes.string,
         reference: PropTypes.string,
-        id: PropTypes.number
+        id: PropTypes.number,
     }).isRequired,
-    id: PropTypes.string.isRequired
+    id: PropTypes.string.isRequired,
 };

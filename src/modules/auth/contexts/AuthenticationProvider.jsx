@@ -9,29 +9,19 @@ export const AuthenticationStatus = {
     IS_FETCHING: "IS_FETCHING",
     NOT_AUTHENTICATED: "IS_NOT_AUTHENTICATED",
     IS_AUTHENTICATED: "IS_AUTHENTICATED",
-    FAILURE: "FAILURE"
+    FAILURE: "FAILURE",
 };
 
-const AuthenticationProvider = ({ children }) => {
+function AuthenticationProvider({ children }) {
     const [authenticationStatus, setAuthenticationStatus] = useState(AuthenticationStatus.NOT_FETCHED);
     const [userNameAndInfo, setUserNameAndInfo] = useState(false);
-
-    useEffect(() => {
-        fetchIsAuthenticated();
-    }, []);
-
-    useEffect(() => {
-        if (authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED) {
-            fetchUserNameAndInfo();
-        }
-    }, [authenticationStatus]);
 
     const fetchIsAuthenticated = () => {
         setAuthenticationStatus(AuthenticationStatus.IS_FETCHING);
 
         fetch(`/stillinger/isAuthenticated`, {
             credentials: "include",
-            referrer: CONTEXT_PATH
+            referrer: CONTEXT_PATH,
         })
             .then((response) => {
                 if (response.status === 200) {
@@ -51,7 +41,7 @@ const AuthenticationProvider = ({ children }) => {
         if (process.env.NODE_ENV === "production") {
             fetch("/stillinger/headerinfo", {
                 method: "GET",
-                credentials: "include"
+                credentials: "include",
             }).then((response) => {
                 if (response.status === 200) {
                     response.json().then((result) => {
@@ -63,33 +53,45 @@ const AuthenticationProvider = ({ children }) => {
             const testData = {
                 fornavn: "Kristin",
                 etternavn: "Lavransdatter",
-                erUnderFemten: false
+                erUnderFemten: false,
             };
             setUserNameAndInfo(testData);
         }
     }
 
     function login() {
-        window.location.href = `/stillinger${LOGIN_URL}?redirect=${encodeURIComponent(window.location.href)}`
+        window.location.href = `/stillinger${LOGIN_URL}?redirect=${encodeURIComponent(window.location.href)}`;
     }
 
     function loginAndRedirect(navigateTo) {
-        window.location.href = `/stillinger${LOGIN_URL}?redirect=${encodeURIComponent(navigateTo)}`
+        window.location.href = `/stillinger${LOGIN_URL}?redirect=${encodeURIComponent(navigateTo)}`;
     }
 
     function logout() {
         window.location.href = `/stillinger${LOGOUT_URL}`;
     }
 
+    useEffect(() => {
+        fetchIsAuthenticated();
+    }, []);
+
+    useEffect(() => {
+        if (authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED) {
+            fetchUserNameAndInfo();
+        }
+    }, [authenticationStatus]);
+
     return (
-        <AuthenticationContext.Provider value={{ userNameAndInfo, authenticationStatus, login, logout, loginAndRedirect }}>
+        <AuthenticationContext.Provider
+            value={{ userNameAndInfo, authenticationStatus, login, logout, loginAndRedirect }}
+        >
             {children}
         </AuthenticationContext.Provider>
     );
-};
+}
 
 AuthenticationProvider.propTypes = {
-    children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired
+    children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
 };
 
 export default AuthenticationProvider;
