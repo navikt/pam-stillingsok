@@ -20,7 +20,6 @@ import useRobotsNoIndexMetaTag from "../../../common/hooks/useRobotsNoIndexMetaT
 import H1WithAutoFocus from "../../../common/components/h1WithAutoFocus/H1WithAutoFocus";
 import NotFound404 from "../../../common/components/NotFound/NotFound404";
 
-/* eslint-disable no-underscore-dangle */
 function Ad({ match }) {
     const [{ data: ad, error, status }, dispatch] = useFetchReducer();
     const isInternal = match.path.startsWith("/stillinger/intern/");
@@ -36,10 +35,8 @@ function Ad({ match }) {
             (data) => {
                 dispatch({ type: FetchAction.RESOLVE, data });
             },
-            // TODO: fix lint
-            // eslint-disable-next-line no-shadow
-            (error) => {
-                dispatch({ type: FetchAction.REJECT, error });
+            (err) => {
+                dispatch({ type: FetchAction.REJECT, err });
             },
         );
     }

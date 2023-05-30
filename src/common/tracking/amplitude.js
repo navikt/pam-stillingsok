@@ -1,7 +1,6 @@
 import * as amplitude from "@amplitude/analytics-browser";
 import getSessionId from "../../session";
 
-/* eslint-disable no-underscore-dangle */
 function getAmplitudeKey() {
     if (window.location.href.includes("nav.no")) return window.__AMPLITUDE_TOKEN__;
     return "";
