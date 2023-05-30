@@ -1,11 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 import parse from "html-react-parser";
+import { Heading, Link as AkselLink } from "@navikt/ds-react";
+import DOMPurify from "isomorphic-dompurify";
 import fixLocationName from "../../../../server/common/fixLocationName";
 import { isValidUrl } from "../../../common/components/utils";
 import getEmployer from "../../../../server/common/getEmployer";
 import "./EmployerDetails.css";
-import { Heading, Link as AkselLink } from "@navikt/ds-react";
 
 function getEmployerLocation(employer) {
     let employerLocation = null;
@@ -36,19 +37,19 @@ export default function EmployerDetails({ stilling }) {
             </Heading>
             <dl className="JobPosting__dl mb-1">
                 {employer && (
-                    <React.Fragment>
+                    <>
                         <dt>Arbeidsgiver</dt>
                         <dd>{employer}</dd>
-                    </React.Fragment>
+                    </>
                 )}
                 {employerLocation && (
-                    <React.Fragment>
+                    <>
                         <dt>Adresse</dt>
                         <dd>{employerLocation}</dd>
-                    </React.Fragment>
+                    </>
                 )}
                 {properties.employerhomepage && (
-                    <React.Fragment>
+                    <>
                         <dt>Hjemmeside</dt>
                         <dd>
                             {isValidUrl(properties.employerhomepage) ? (
@@ -57,10 +58,10 @@ export default function EmployerDetails({ stilling }) {
                                 properties.employerhomepage
                             )}
                         </dd>
-                    </React.Fragment>
+                    </>
                 )}
                 {properties.linkedinpage && (
-                    <React.Fragment>
+                    <>
                         <dt>LinkedIn</dt>
                         <dd>
                             {isValidUrl(properties.linkedinpage) ? (
@@ -69,10 +70,10 @@ export default function EmployerDetails({ stilling }) {
                                 properties.linkedinpage
                             )}
                         </dd>
-                    </React.Fragment>
+                    </>
                 )}
                 {properties.twitteraddress && (
-                    <React.Fragment>
+                    <>
                         <dt>Twitter</dt>
                         <dd>
                             {isValidUrl(properties.twitteraddress) ? (
@@ -81,10 +82,10 @@ export default function EmployerDetails({ stilling }) {
                                 properties.twitteraddress
                             )}
                         </dd>
-                    </React.Fragment>
+                    </>
                 )}
                 {properties.facebookpage && (
-                    <React.Fragment>
+                    <>
                         <dt>Facebook</dt>
                         <dd>
                             {isValidUrl(properties.facebookpage) ? (
@@ -93,11 +94,13 @@ export default function EmployerDetails({ stilling }) {
                                 properties.facebookpage
                             )}
                         </dd>
-                    </React.Fragment>
+                    </>
                 )}
             </dl>
             {properties.employerdescription && (
-                <div className="EmployerDetails__description">{parse(properties.employerdescription)}</div>
+                <div className="EmployerDetails__description">
+                    {parse(DOMPurify.sanitize(properties.employerdescription))}
+                </div>
             )}
         </section>
     );
@@ -112,7 +115,16 @@ EmployerDetails.propTypes = {
             linkedinpage: PropTypes.string,
             twitteraddress: PropTypes.string,
             facebookpage: PropTypes.string,
-            employerdescription: PropTypes.string
-        }).isRequired
-    }).isRequired
+            employerdescription: PropTypes.string,
+        }).isRequired,
+        employer: PropTypes.shape({
+            location: PropTypes.shape({
+                postalCode: PropTypes.string,
+                address: PropTypes.string,
+                municipal: PropTypes.string,
+                country: PropTypes.string,
+                city: PropTypes.string,
+            }),
+        }),
+    }).isRequired,
 };
