@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Alert as AkselAlert } from "@navikt/ds-react";
 
 function Alert({ children }) {
@@ -8,5 +9,9 @@ function Alert({ children }) {
         </AkselAlert>
     );
 }
+
+Alert.propTypes = {
+    children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
+};
 
 export default Alert;

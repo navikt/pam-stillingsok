@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { CONTEXT_PATH } from "../../environment";
 import "./EmptyMessage.css";
@@ -21,5 +22,10 @@ function EmptyMessage({ title, text }) {
         </section>
     );
 }
+
+EmptyMessage.propTypes = {
+    title: PropTypes.string,
+    text: PropTypes.string,
+};
 
 export default EmptyMessage;

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { CONTEXT_PATH } from "../../../../common/environment";
 import { BodyLong, Button, Link as AkselLink } from "@navikt/ds-react";
@@ -23,5 +24,9 @@ function SuccessMessage({ onClose }) {
         </section>
     );
 }
+
+SuccessMessage.propTypes = {
+    onClose: PropTypes.func.isRequired,
+};
 
 export default SuccessMessage;

@@ -33,7 +33,10 @@ IconButton.propTypes = {
     spinner: PropTypes.bool,
     className: PropTypes.string,
     onClick: PropTypes.func.isRequired,
-    type: PropTypes.string
+    type: PropTypes.string,
+    text: PropTypes.string,
+    hideText: PropTypes.bool,
+    icon: PropTypes.node.isRequired,
 };
 
 export default IconButton;

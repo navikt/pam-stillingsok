@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import PropTypes from "prop-types";
 import { BodyLong, Button } from "@navikt/ds-react";
 
 function ConfirmEmailMessage({ onClose }) {
@@ -23,6 +24,8 @@ function ConfirmEmailMessage({ onClose }) {
     );
 }
 
-ConfirmEmailMessage.propTypes = {};
+ConfirmEmailMessage.propTypes = {
+    onClose: PropTypes.func.isRequired,
+};
 
 export default ConfirmEmailMessage;

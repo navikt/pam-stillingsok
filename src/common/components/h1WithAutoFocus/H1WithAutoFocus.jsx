@@ -1,4 +1,5 @@
 import React, { useContext, useLayoutEffect, useRef } from "react";
+import PropTypes from "prop-types";
 import { HistoryContext } from "../../context/HistoryProvider";
 import "./H1WithAutoFocus.css";
 import { Heading } from "@navikt/ds-react";
@@ -36,6 +37,11 @@ function H1WithAutoFocus({ children, className, spacing = true, size = "xlarge" 
     );
 }
 
-H1WithAutoFocus.propTypes = {};
+H1WithAutoFocus.propTypes = {
+    children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
+    className: PropTypes.string,
+    spacing: PropTypes.bool,
+    size: PropTypes.string,
+};
 
 export default H1WithAutoFocus;

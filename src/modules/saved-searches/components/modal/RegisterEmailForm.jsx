@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
+import PropTypes from "prop-types";
 import { isValidEmail } from "../../../../common/components/utils";
 import { UserContext } from "../../../user/contexts/UserProvider";
 import { BodyLong, Button, TextField } from "@navikt/ds-react";
@@ -103,5 +104,10 @@ function RegisterEmailForm({ onClose, onSuccess }) {
         </React.Fragment>
     );
 }
+
+RegisterEmailForm.propTypes = {
+    onClose: PropTypes.func.isRequired,
+    onSuccess: PropTypes.func.isRequired,
+};
 
 export default RegisterEmailForm;

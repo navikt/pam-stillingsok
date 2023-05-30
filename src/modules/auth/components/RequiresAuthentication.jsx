@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import PropTypes from "prop-types";
 import { BodyLong, Button, Heading } from "@navikt/ds-react";
 import { EnterIcon } from "@navikt/aksel-icons";
 import { AuthenticationContext, AuthenticationStatus } from "../contexts/AuthenticationProvider";
@@ -53,5 +54,11 @@ function RequiresAuthentication({ children, onCancel, onLogin }) {
         );
     }
 }
+
+RequiresAuthentication.propTypes = {
+    children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
+    onCancel: PropTypes.func,
+    onLogin: PropTypes.func,
+};
 
 export default RequiresAuthentication;
