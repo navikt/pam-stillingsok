@@ -9,39 +9,7 @@ export function initAmplitude() {
         includeReferrer: true,
         includeUtm: true,
         saveEvents: false,
-        transport: "beacon"
-    });
-}
-
-export const logAmplitudePageview = (additionalData) => {
-    let data = {
-        page: `${window.location.pathname}${window.location.search}`,
-        title: document.title
-    };
-
-    if (additionalData) {
-        data = {
-            ...data,
-            ...additionalData
-        };
-    }
-
-    logAmplitudeEvent("Sidevisning", data);
-};
-
-export function logStillingVisning(ad) {
-    const employerLocation = ad._source.employer ? ad._source.employer.location : null;
-
-    logAmplitudeEvent("Stilling visning", {
-        title: ad._source.title || "N/A",
-        id: ad._id,
-        businessName: ad._source.businessName || "N/A",
-        country: employerLocation ? employerLocation.country : "N/A",
-        county: employerLocation ? employerLocation.county : "N/A",
-        city: employerLocation ? employerLocation.city : "N/A",
-        employer: ad._source.employer ? ad._source.employer.name : "N/A",
-        expires: ad._source.expires || "N/A",
-        published: ad._source.published || "N/A"
+        transport: "beacon",
     });
 }
 
@@ -66,5 +34,37 @@ const enrichData = (data) => {
 const logAmplitudeEvent = (event, data) => {
     amplitude.logEvent(event, enrichData(data));
 };
+
+export const logAmplitudePageview = (additionalData) => {
+    let data = {
+        page: `${window.location.pathname}${window.location.search}`,
+        title: document.title,
+    };
+
+    if (additionalData) {
+        data = {
+            ...data,
+            ...additionalData,
+        };
+    }
+
+    logAmplitudeEvent("Sidevisning", data);
+};
+
+export function logStillingVisning(ad) {
+    const employerLocation = ad._source.employer ? ad._source.employer.location : null;
+
+    logAmplitudeEvent("Stilling visning", {
+        title: ad._source.title || "N/A",
+        id: ad._id,
+        businessName: ad._source.businessName || "N/A",
+        country: employerLocation ? employerLocation.country : "N/A",
+        county: employerLocation ? employerLocation.county : "N/A",
+        city: employerLocation ? employerLocation.city : "N/A",
+        employer: ad._source.employer ? ad._source.employer.name : "N/A",
+        expires: ad._source.expires || "N/A",
+        published: ad._source.published || "N/A",
+    });
+}
 
 export default logAmplitudeEvent;

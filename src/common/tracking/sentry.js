@@ -1,5 +1,5 @@
 import * as Sentry from "@sentry/browser";
-import getSessionId, { FIELD_SESSION_ID } from "../../session";
+import getSessionId from "../../session";
 
 const ignoreStatusCodes = [0, 401, 404, 502, 504];
 
@@ -14,7 +14,7 @@ const ignoreTypeErrors = [
     "TypeError: cancelado",
     "TypeError: anulowane",
     "TypeError: avbruten",
-    "TypeError: anulat"
+    "TypeError: anulat",
 ];
 
 export default function initSentry() {
@@ -25,15 +25,14 @@ export default function initSentry() {
         autoSessionTracking: true,
         initialScope: {
             tags: { sessionId: getSessionId() },
-            user: { id: getSessionId() }
+            user: { id: getSessionId() },
         },
         beforeSend(event, hint) {
             const error = hint.originalException;
             if (error && error.statusCode !== undefined && ignoreStatusCodes.includes(error.statusCode)) {
                 return null; // event will be discarded
-            } else {
-                return event;
             }
-        }
+            return event;
+        },
     });
 }

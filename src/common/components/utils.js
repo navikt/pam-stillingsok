@@ -11,7 +11,7 @@ const months = [
     "september",
     "oktober",
     "november",
-    "desember"
+    "desember",
 ];
 export function isValidISOString(isoString) {
     return ISO_8601_DATE.test(isoString);
@@ -21,8 +21,8 @@ export function formatDate(isoString) {
     try {
         if (isValidISOString(isoString)) {
             const dt = isoString.split("-");
-            const day = parseInt(dt[2].split("T")[0]);
-            const month = months[parseInt(dt[1] - 1)];
+            const day = parseInt(dt[2].split("T")[0], 10);
+            const month = months[parseInt(dt[1] - 1, 10)];
             return `${day}. ${month} ${dt[0]}`;
         }
     } catch (error) {

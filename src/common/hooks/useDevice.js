@@ -4,8 +4,9 @@ export const MOBILE_MAX_SIZE = 768;
 
 export const Device = {
     MOBILE: "mobile",
-    DESKTOP: "desktop"
+    DESKTOP: "desktop",
 };
+
 export default function useDevice() {
     const [deviceTmp, setDeviceTmp] = useState(window.innerWidth <= MOBILE_MAX_SIZE ? Device.MOBILE : Device.DESKTOP);
     const [device, setDevice] = useState(deviceTmp);
@@ -26,9 +27,9 @@ export default function useDevice() {
     };
 
     useEffect(() => {
-        addEventListener("resize", handleResize);
+        window.addEventListener("resize", handleResize);
 
-        return () => removeEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
     }, []);
 
     return { device };

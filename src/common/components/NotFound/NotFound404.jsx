@@ -110,8 +110,8 @@ function NotFound404({ title, text }) {
 }
 
 NotFound404.defaultProps = {
-    title: "Fant ikke siden",
-    text: "Nettsiden kan være slettet eller flyttet, eller det var en feil i lenken som førte deg hit.",
+    title: "Vi fant dessverre ikke innholdet du ser etter",
+    text: "Det kan være en feil i lenken du brukte.",
 };
 
 NotFound404.propTypes = {
