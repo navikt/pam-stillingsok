@@ -50,12 +50,7 @@ function Application() {
                                             path={`${CONTEXT_PATH}/stilling/:uuid/superrask-soknad`}
                                             component={SuperraskSoknadPage}
                                         />
-                                        <Route
-                                            path={`${CONTEXT_PATH}/intern/:uuid/superrask-soknad`}
-                                            component={SuperraskSoknadPage}
-                                        />
                                         <Route path={`${CONTEXT_PATH}/stilling/:uuid`} component={AdPage} />
-                                        <Route path={`${CONTEXT_PATH}/intern/:uuid`} component={AdPage} />
                                         <Route path={`${CONTEXT_PATH}/rapporter-annonse`} component={ReportAdPage} />
                                         <Route path={`${CONTEXT_PATH}/favoritter`} component={FavouritesPage} />
                                         <Route path={`${CONTEXT_PATH}/lagrede-sok`} component={SavedSearchesPage} />

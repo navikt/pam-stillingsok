@@ -210,16 +210,6 @@ const startServer = (htmlPages) => {
             });
     });
 
-    server.get(`${properties.PAM_CONTEXT_PATH}/api/intern/:uuid`, async (req, res) => {
-        searchApiConsumer
-            .fetchInternStilling(req.params.uuid)
-            .then((val) => res.send(val))
-            .catch((err) => {
-                console.warn("Failed to fetch stilling with uuid", req.params.uuid);
-                res.sendStatus(err.statusCode ? err.statusCode : 500);
-            });
-    });
-
     server.get("/", (req, res) => {
         res.redirect(`${properties.PAM_CONTEXT_PATH}`);
     });
@@ -233,26 +223,6 @@ const startServer = (htmlPages) => {
         searchApiConsumer
             .fetchStilling(req.params.uuid)
             .then((data) => {
-                try {
-                    res.render("index", {
-                        title: htmlMeta.getStillingTitle(data._source),
-                        description: htmlMeta.getStillingDescription(data._source)
-                    });
-                } catch (err) {
-                    res.send(htmlPages.sok);
-                }
-            })
-            .catch((err) => {
-                res.send(htmlPages.sok);
-            });
-    });
-
-    server.get("/stillinger/intern/:uuid", (req, res) => {
-        searchApiConsumer
-            .fetchInternStilling(req.params.uuid)
-            .then((data) => {
-                if (data) {
-                }
                 try {
                     res.render("index", {
                         title: htmlMeta.getStillingTitle(data._source),

@@ -29,11 +29,11 @@ const applyForPosition = (finn, stilling) => {
     }
 };
 
-export default function HowToApply({ stilling, showFavouriteButton, isInternal }) {
+export default function HowToApply({ stilling, showFavouriteButton }) {
     const properties = stilling._source.properties;
     const applicationUrl = getApplicationUrl(stilling._source.source, properties);
     const isFinn = stilling._source.source === "FINN";
-    const path = isInternal ? "intern" : "stilling";
+    const path = "stilling";
 
     if (properties.hasInterestform === "true") {
         return (
@@ -194,6 +194,5 @@ HowToApply.propTypes = {
             })
         })
     }).isRequired,
-    showFavouriteButton: PropTypes.bool.isRequired,
-    isInternal: PropTypes.bool.isRequired
+    showFavouriteButton: PropTypes.bool.isRequired
 };
