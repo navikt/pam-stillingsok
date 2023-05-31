@@ -15,18 +15,16 @@ import { Alert, BodyShort, Label } from "@navikt/ds-react";
 const SuperraskSoknad = ({ match }) => {
     const [{ data, status, error }, dispatch] = useFetchReducer();
     const [postSoknadResponse, postSoknadDispatch] = useFetchReducer();
-    const isInternal = match.path.startsWith("/stillinger/intern/");
 
     /**
      * Fetch ad and superrask søknad form
      */
     useEffect(() => {
         const id = match.params.uuid;
-        const path = isInternal ? "intern" : "stilling";
 
         dispatch({ type: FetchAction.BEGIN });
 
-        const promises = [SearchAPI.get(`api/${path}/${id}`), InterestAPI.getInterestForm(id)];
+        const promises = [SearchAPI.get(`api/stilling/${id}`), InterestAPI.getInterestForm(id)];
 
         Promise.all(promises)
             .then((responses) => {
@@ -94,7 +92,6 @@ const SuperraskSoknad = ({ match }) => {
                             <SuperraskSoknadForm
                                 ad={data.ad}
                                 interestForm={data.interestForm}
-                                isInternal={isInternal}
                                 submitForm={submitSoknad}
                                 isSending={postSoknadResponse.status === FetchStatus.IS_FETCHING}
                                 hasError={postSoknadResponse.status === FetchStatus.FAILURE}

@@ -22,8 +22,7 @@ import NotFound404 from "../../../common/components/NotFound/NotFound404";
 
 const Ad = ({ match }) => {
     const [{ data: ad, error, status }, dispatch] = useFetchReducer();
-    const isInternal = match.path.startsWith("/stillinger/intern/");
-    const avoidIndexing = (error && error.statusCode === 404) || (ad && ad._source.status !== "ACTIVE") || isInternal;
+    const avoidIndexing = (error && error.statusCode === 404) || (ad && ad._source.status !== "ACTIVE");
 
     useRobotsNoIndexMetaTag(avoidIndexing);
 
@@ -52,10 +51,10 @@ const Ad = ({ match }) => {
     }, [ad]);
 
     /**
-     * Track page view for all external ads
+     * Track page view for all ads
      */
     useEffect(() => {
-        if (!isInternal && ad && ad._source && ad._id && ad._source.title) {
+        if (ad && ad._source && ad._id && ad._source.title) {
             try {
                 logAmplitudePageview();
                 logStillingVisning(ad);
@@ -68,8 +67,7 @@ const Ad = ({ match }) => {
     function fetchStilling(id) {
         dispatch({ type: FetchAction.BEGIN });
 
-        const path = isInternal ? "intern" : "stilling";
-        SearchAPI.get(`api/${path}/${id}`).then(
+        SearchAPI.get(`api/stilling/${id}`).then(
             (data) => {
                 dispatch({ type: FetchAction.RESOLVE, data });
             },
@@ -115,9 +113,9 @@ const Ad = ({ match }) => {
                     </div>
 
                     <div className="JobPosting__right">
-                        <HowToApply stilling={ad} showFavouriteButton={!isInternal} isInternal={isInternal} />
+                        <HowToApply stilling={ad} showFavouriteButton={true} />
                         {!isFinn && <ContactPerson contactList={ad._source.contactList} />}
-                        {!isFinn && !isInternal && <ShareAd source={ad._source} />}
+                        {!isFinn && <ShareAd source={ad._source} />}
                         <AdDetails id={ad._id} source={ad._source} />
                     </div>
                 </article>
