@@ -34,11 +34,9 @@ function TrekkSoknad({ match }) {
 
         InterestAPI.getCandidateInterestForm(match.params.adUuid, match.params.uuid)
             .then((data) => {
-                console.log("inside", candidateInterestForm);
                 candidateInterestFormDispatch({ type: FetchAction.RESOLVE, data });
             })
             .catch((error) => {
-                console.log("inside error", candidateInterestForm);
                 candidateInterestFormDispatch({ type: FetchAction.REJECT, error });
             });
     }, []);

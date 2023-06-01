@@ -25,11 +25,9 @@ async function head(url) {
         response = await fetch(`${INTEREST_API_URL}/${url}`, {
             method: "HEAD",
         });
-        console.log("response", response);
     } catch (e) {
         throw new APIError(e.message, 0);
     }
-    console.log("response", response);
     if (response.status !== 204) {
         throw new APIError(response.statusText, response.status);
     }
