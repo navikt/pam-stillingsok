@@ -20,7 +20,7 @@ import useRobotsNoIndexMetaTag from "../../../common/hooks/useRobotsNoIndexMetaT
 import H1WithAutoFocus from "../../../common/components/h1WithAutoFocus/H1WithAutoFocus";
 import NotFound404 from "../../../common/components/NotFound/NotFound404";
 
-const Ad = ({ match }) => {
+function Ad({ match }) {
     const [{ data: ad, error, status }, dispatch] = useFetchReducer();
     const avoidIndexing = (error && error.statusCode === 404) || (ad && ad._source.status !== "ACTIVE");
 
@@ -29,8 +29,7 @@ const Ad = ({ match }) => {
     function fetchStilling(id) {
         dispatch({ type: FetchAction.BEGIN });
 
-        const path = isInternal ? "intern" : "stilling";
-        SearchAPI.get(`api/${path}/${id}`).then(
+        SearchAPI.get(`api/stilling/${id}`).then(
             (data) => {
                 dispatch({ type: FetchAction.RESOLVE, data });
             },
@@ -113,7 +112,7 @@ const Ad = ({ match }) => {
                     </div>
 
                     <div className="JobPosting__right">
-                        <HowToApply stilling={ad} showFavouriteButton={true} />
+                        <HowToApply stilling={ad} showFavouriteButton />
                         {!isFinn && <ContactPerson contactList={ad._source.contactList} />}
                         {!isFinn && <ShareAd source={ad._source} />}
                         <AdDetails id={ad._id} source={ad._source} />
