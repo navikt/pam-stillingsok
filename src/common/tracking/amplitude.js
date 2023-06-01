@@ -1,16 +1,33 @@
-import amplitude from "amplitude-js";
+import * as amplitude from "@amplitude/analytics-browser";
 import getSessionId from "../../session";
 
+function getAmplitudeKey() {
+    if (window.location.href.includes("nav.no")) return window.__AMPLITUDE_TOKEN__;
+    return "";
+}
 export function initAmplitude() {
-    amplitude.getInstance();
-    amplitude.init(window.__AMPLITUDE_TOKEN__, null, {
-        apiEndpoint: "amplitude.nav.no/collect",
-        batchEvents: false,
-        includeReferrer: true,
-        includeUtm: true,
-        saveEvents: false,
-        transport: "beacon",
-    });
+    try {
+        const amplitudeKey = getAmplitudeKey();
+        if (!amplitudeKey) return false;
+
+        amplitude.init(amplitudeKey, undefined, {
+            serverUrl: `https://amplitude.nav.no/collect`,
+            defaultTracking: {
+                pageViews: true,
+                sessions: true,
+                formInteractions: true,
+            },
+            /** Need this for /collect-auto according to https://nav-it.slack.com/archives/CMK1SCBP1/p1669722646425599
+             * but seems to work fine with /collect? Keeping it here just in case.
+             IngestionMetadata: {
+                sourceName: window.location.toString(),
+            },
+             */
+        });
+        return true;
+    } catch (e) {
+        return false;
+    }
 }
 
 const enrichData = (data) => {
@@ -32,23 +49,7 @@ const enrichData = (data) => {
 };
 
 const logAmplitudeEvent = (event, data) => {
-    amplitude.logEvent(event, enrichData(data));
-};
-
-export const logAmplitudePageview = (additionalData) => {
-    let data = {
-        page: `${window.location.pathname}${window.location.search}`,
-        title: document.title,
-    };
-
-    if (additionalData) {
-        data = {
-            ...data,
-            ...additionalData,
-        };
-    }
-
-    logAmplitudeEvent("Sidevisning", data);
+    amplitude.track(event, enrichData(data));
 };
 
 export function logStillingVisning(ad) {
