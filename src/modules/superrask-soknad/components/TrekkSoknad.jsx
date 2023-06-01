@@ -34,9 +34,11 @@ function TrekkSoknad({ match }) {
 
         InterestAPI.getCandidateInterestForm(match.params.adUuid, match.params.uuid)
             .then((data) => {
+                console.log("inside", candidateInterestForm);
                 candidateInterestFormDispatch({ type: FetchAction.RESOLVE, data });
             })
             .catch((error) => {
+                console.log("inside error", candidateInterestForm);
                 candidateInterestFormDispatch({ type: FetchAction.REJECT, error });
             });
     }, []);
@@ -78,7 +80,10 @@ function TrekkSoknad({ match }) {
 
     return (
         <div className="InterestMessageDelete">
-            {adFetchStatus === FetchStatus.IS_FETCHING && <DelayedSpinner />}
+            {!show404Page &&
+                (adFetchStatus === FetchStatus.IS_FETCHING || candidateInterestForm === FetchStatus.IS_FETCHING) && (
+                    <DelayedSpinner />
+                )}
 
             {show404Page && (
                 <NotFound404

@@ -19,6 +19,23 @@ async function get(url) {
     return response.json();
 }
 
+async function head(url) {
+    let response;
+    try {
+        response = await fetch(`${INTEREST_API_URL}/${url}`, {
+            method: "HEAD",
+        });
+        console.log("response", response);
+    } catch (e) {
+        throw new APIError(e.message, 0);
+    }
+    console.log("response", response);
+    if (response.status !== 204) {
+        throw new APIError(response.statusText, response.status);
+    }
+    return response.text();
+}
+
 async function remove(url) {
     let response;
     try {
@@ -71,7 +88,7 @@ async function getInterestForm(adUuid) {
 }
 
 async function getCandidateInterestForm(adUuid, uuid) {
-    return get(`interest-form/${adUuid}/candidates/${uuid}`);
+    return head(`interest-form/${adUuid}/candidates/${uuid}`);
 }
 
 async function postInterest(adUuid, interest) {
