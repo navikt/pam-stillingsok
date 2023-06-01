@@ -15,6 +15,7 @@ function IconButton({ text, icon, hideText, onClick, className, disabled, spinne
             onClick={onClick}
             className={className}
             icon={icon}
+            aria-label={hideText ? text : undefined}
         >
             {!hideText && <span>{text}</span>}
         </Button>
