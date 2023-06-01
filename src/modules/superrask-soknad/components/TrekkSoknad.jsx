@@ -31,6 +31,7 @@ function TrekkSoknad({ match }) {
             })
             .catch((error) => {
                 dispatch({ type: FetchAction.REJECT, error });
+                setUseDefault404Text(true);
             });
 
         InterestAPI.getCandidateInterestForm(match.params.adUuid, match.params.uuid)
@@ -39,6 +40,9 @@ function TrekkSoknad({ match }) {
             })
             .catch((error) => {
                 candidateInterestFormDispatch({ type: FetchAction.REJECT, error });
+                if (error.statusCode === 404) {
+                    setUseDefault404Text(true);
+                }
             });
     }, []);
 
@@ -50,15 +54,6 @@ function TrekkSoknad({ match }) {
             deleteSoknadResponse.status === FetchStatus.NOT_FETCHED
         ) {
             setShow404Page(true);
-
-            if (
-                candidateInterestForm !== undefined &&
-                candidateInterestForm.error !== undefined &&
-                candidateInterestForm.error.statusCode !== undefined &&
-                candidateInterestForm.error.statusCode === 404
-            ) {
-                setUseDefault404Text(true);
-            }
         } else {
             setShow404Page(false);
         }
