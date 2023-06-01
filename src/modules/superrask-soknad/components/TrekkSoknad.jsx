@@ -14,6 +14,7 @@ function TrekkSoknad({ match }) {
     const [deleteSoknadResponse, deleteSoknadDispatch] = useFetchReducer();
     const [candidateInterestForm, candidateInterestFormDispatch] = useFetchReducer();
     const [show404Page, setShow404Page] = useState(false);
+    const [useDefault404Text, setUseDefault404Text] = useState(false);
 
     /**
      * Fetch ad
@@ -49,6 +50,15 @@ function TrekkSoknad({ match }) {
             deleteSoknadResponse.status === FetchStatus.NOT_FETCHED
         ) {
             setShow404Page(true);
+
+            if (
+                candidateInterestForm !== undefined &&
+                candidateInterestForm.error !== undefined &&
+                candidateInterestForm.error.statusCode !== undefined &&
+                candidateInterestForm.error.statusCode === 404
+            ) {
+                setUseDefault404Text(true);
+            }
         } else {
             setShow404Page(false);
         }
@@ -83,12 +93,14 @@ function TrekkSoknad({ match }) {
                     <DelayedSpinner />
                 )}
 
-            {show404Page && (
+            {show404Page && !useDefault404Text && (
                 <NotFound404
                     title="Vi fant dessverre ikke din søknad"
                     text="Det kan være at du allerede har trukket søknaden din eller at bedriften har avslått søknaden din."
                 />
             )}
+
+            {show404Page && useDefault404Text && <NotFound404 />}
 
             {!show404Page &&
                 (adFetchStatus === FetchStatus.SUCCESS ||
