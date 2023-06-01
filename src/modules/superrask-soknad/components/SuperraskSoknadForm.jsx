@@ -18,7 +18,7 @@ import { isValidEmail } from "../../../common/components/utils";
 import "./SuperraskSoknad.css";
 import { CONTEXT_PATH } from "../../../common/environment";
 
-function SuperraskSoknadForm({ ad, interestForm, isInternal, submitForm, isSending, hasError, error }) {
+function SuperraskSoknadForm({ ad, interestForm, submitForm, isSending, hasError, error }) {
     // Form data
     const [name, setName] = useState("");
     const [telephone, setTelephone] = useState("");
@@ -284,7 +284,7 @@ function SuperraskSoknadForm({ ad, interestForm, isInternal, submitForm, isSendi
                     disabled={isSending}
                     variant="secondary"
                     as={Link}
-                    to={`${CONTEXT_PATH}/${isInternal ? "intern" : "stilling"}/${ad._id}`}
+                    to={`${CONTEXT_PATH}/stilling/${ad._id}`}
                 >
                     Avbryt
                 </Button>

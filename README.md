@@ -8,10 +8,13 @@ brukere kan få daglige oppdateringer pr. e-post.
 Applikasjonen henter stillinger fra en dokumentdatabase (ElasticSearch) gjennom
 [pam-search-api](https://github.com/navikt/pam-search-api). Lagrede søk og stillingsfavoritter, samt utsending av
 e-poster skjer gjennom applikasjonen [pam-aduser](https://github.com/navikt/pam-aduser).
+Navnet til innlogget bruker hentes fra [pam-cv-api](https://github.com/navikt/pam-cv-api).
 
 ## Avhengigheter
 
 -   [pam-search-api](https://github.com/navikt/pam-search-api)
+-   [pam-cv-api](https://github.com/navikt/pam-cv-api)
+-   [pam-aduser](https://github.com/navikt/pam-aduser)
 
 # Teknisk dokumentasjon
 
@@ -125,7 +128,6 @@ PAMSEARCHAPI_URL=http://localhost:9000
 PAMADUSER_URL=http://localhost:9017
 PAM_STILLINGSOK_URL=http://localhost:8080/stillinger
 PAM_VAR_SIDE_URL=http://localhost:8080/stillingsregistrering
-PAM_INTERNAL_SEARCH_API_URL=http://localhost:9027
 PAM_JOBBTREFF_API_URL=http://localhost:8088/jobbtreff-promo
 AMPLITUDE_TOKEN=(Dev Token)
 ```
