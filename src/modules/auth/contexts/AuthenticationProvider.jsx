@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import PropTypes from "prop-types";
-import { setLoggedIn } from "@/src/common/tracking/amplitude";
 import { CONTEXT_PATH, LOGIN_URL, LOGOUT_URL } from "../../../common/environment";
+import { setLoggedIn } from "../../../common/tracking/amplitude";
 
 export const AuthenticationContext = React.createContext({});
 
