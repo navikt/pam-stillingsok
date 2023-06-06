@@ -68,4 +68,9 @@ export function logStillingVisning(ad) {
     });
 }
 
+export function setLoggedIn(isAuthenticated) {
+    const identifyEvent = new amplitude.Identify();
+    identifyEvent.set("loggedIn", isAuthenticated);
+}
+
 export default logAmplitudeEvent;
