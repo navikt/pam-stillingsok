@@ -42,7 +42,7 @@ function Filters({ query, dispatchQuery, initialSearchResult, searchResult }) {
                             updatedValues={searchResult && searchResult.aggregations.published}
                         />
                     </div>
-                    <Heading level="2" size="medium" spacing>
+                    <Heading level="2" size="small" spacing>
                         Heltid/deltid
                     </Heading>
                     <Extent
@@ -51,15 +51,18 @@ function Filters({ query, dispatchQuery, initialSearchResult, searchResult }) {
                         initialValues={initialSearchResult.aggregations.extent}
                         updatedValues={searchResult && searchResult.aggregations.extent}
                     />
-
-                    <h1>Sektor</h1>
+                    <Heading level="2" size="small" spacing>
+                        Sektor
+                    </Heading>
                     <Sector
                         query={query}
                         dispatch={dispatchQuery}
                         initialValues={initialSearchResult.aggregations.sector}
                         updatedValues={searchResult && searchResult.aggregations.sector}
                     />
-                    <h1>Ansettelsesform</h1>
+                    <Heading level="2" size="small" spacing>
+                        Ansettelsesform
+                    </Heading>
                     <EngagementType
                         query={query}
                         dispatch={dispatchQuery}
