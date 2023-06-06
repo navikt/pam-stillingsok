@@ -31,6 +31,7 @@
 }
 
 .FilterModal__content {
+    flex-grow: 1;
     padding: 1rem;
 }
 
@@ -77,14 +78,6 @@
     padding: 0 1rem 0.5rem 2rem;
     margin-top: 0 !important;
     border-radius: 6px;
-}
-
-.Facet__zero__count label {
-    color: #78706a !important;
-}
-
-.RemoteFacet {
-    margin-top: 1.5rem;
 }
 
 .Facet__zero__count label {
