@@ -1,5 +1,7 @@
 {
-    "ingress": ["https://arbeidsplassen.dev.nav.no/stillinger", "https://arbeidsplassen.intern.dev.nav.no/stillinger"],
+    "ingress": ["https://arbeidsplassen.dev.nav.no/stillinger", "https://arbeidsplassen.intern.dev.nav.no/stillinger", "https://arbeidsplassen.ekstern.dev.nav.no/stillinger/stilling",
+    "https://arbeidsplassen.ekstern.dev.nav.no/stillinger/js", "https://arbeidsplassen.ekstern.dev.nav.no/stillinger/css", "https://arbeidsplassen.ekstern.dev.nav.no/stillinger/images",
+        "https://arbeidsplassen.ekstern.dev.nav.no/stillinger/isAuthenticated", "https://arbeidsplassen.ekstern.dev.nav.no/stillinger/api"],
     "pamaduser_url": "http://pam-aduser/aduser",
     "arbeidsplassen_url": "https://arbeidsplassen.intern.dev.nav.no",
     "pam_stillingsok_url": "https://arbeidsplassen.intern.dev.nav.no/stillinger",
