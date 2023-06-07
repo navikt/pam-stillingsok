@@ -1,16 +1,16 @@
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
+import { Checkbox, Fieldset } from "@navikt/ds-react";
 import {
     ADD_OCCUPATION_FIRST_LEVEL,
     ADD_OCCUPATION_SECOND_LEVEL,
     REMOVE_OCCUPATION_FIRST_LEVEL,
-    REMOVE_OCCUPATION_SECOND_LEVEL
+    REMOVE_OCCUPATION_SECOND_LEVEL,
 } from "../../../query";
 import UnknownSearchCriteriaValues from "./UnknownSearchCriteriaValues";
 import moveCriteriaToBottom from "../utils/moveFacetToBottom";
 import mergeCount from "../utils/mergeCount";
 import { findUnknownSearchCriteriaValues } from "../utils/findUnknownSearchCriteriaValues";
-import { Checkbox, Fieldset } from "@navikt/ds-react";
 
 const OCCUPATION_LEVEL_OTHER = "Uoppgitt/ ikke identifiserbare";
 
@@ -20,7 +20,7 @@ function Occupations({ initialValues, updatedValues, query, dispatch }) {
     const unknownSecondValues = findUnknownSearchCriteriaValues(
         query.occupationSecondLevels,
         initialValues,
-        "occupationSecondLevels"
+        "occupationSecondLevels",
     );
 
     useEffect(() => {
@@ -114,7 +114,7 @@ function Occupations({ initialValues, updatedValues, query, dispatch }) {
                 checkedNestedValues={query.occupationSecondLevels}
                 onClick={handleFirstLevelClick}
                 onNestedLevelClick={handleSecondLevelClick}
-                shouldFixLocationName={true}
+                shouldFixLocationName
             />
         </Fieldset>
     );
@@ -128,16 +128,17 @@ Occupations.propTypes = {
             occupationSecondLevels: PropTypes.arrayOf(
                 PropTypes.shape({
                     key: PropTypes.string,
-                    count: PropTypes.number
-                })
-            )
-        })
+                    count: PropTypes.number,
+                }),
+            ),
+        }),
     ).isRequired,
+    updatedValues: PropTypes.arrayOf(PropTypes.object),
     query: PropTypes.shape({
         occupationFirstLevels: PropTypes.arrayOf(PropTypes.string),
-        occupationSecondLevels: PropTypes.arrayOf(PropTypes.string)
+        occupationSecondLevels: PropTypes.arrayOf(PropTypes.string),
     }).isRequired,
-    dispatch: PropTypes.func.isRequired
+    dispatch: PropTypes.func.isRequired,
 };
 
 export default Occupations;
