@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import PropTypes from "prop-types";
 import SearchResultItem from "../../search/components/searchResult/SearchResultItem";
 import useToggle from "../../../common/hooks/useToggle";
 import AlertModal from "../../../common/components/modals/AlertModal";
@@ -8,22 +9,22 @@ import AlertModalWithPageReload from "../../../common/components/modals/AlertMod
 import DeleteButton from "../../../common/components/buttons/DeleteButton";
 
 function FavouritesListItem({ favourite, removeFavouriteFromList }) {
-    const favouritesProvider = useContext(FavouritesContext);
+    const { addToPending, removeFavouriteFromLocalList, removeFormPending } = useContext(FavouritesContext);
     const [shouldShowConfirmDeleteModal, openConfirmDeleteModal, closeConfirmDeleteModal] = useToggle();
     const [shouldShowErrorDialog, openErrorDialog, closeErrorDialog] = useToggle(false);
 
     function deleteFavourite() {
-        favouritesProvider.addToPending(favourite.favouriteAd.uuid);
+        addToPending(favourite.favouriteAd.uuid);
         UserAPI.remove(`api/v1/userfavouriteads/${favourite.uuid}`)
             .then(() => {
-                favouritesProvider.removeFavouriteFromLocalList(favourite);
+                removeFavouriteFromLocalList(favourite);
                 removeFavouriteFromList(favourite);
             })
             .catch(() => {
                 openErrorDialog();
             })
             .finally(() => {
-                favouritesProvider.removeFormPending(favourite.favouriteAd.uuid);
+                removeFormPending(favourite.favouriteAd.uuid);
             });
     }
 
@@ -33,7 +34,7 @@ function FavouritesListItem({ favourite, removeFavouriteFromList }) {
     }
 
     return (
-        <React.Fragment>
+        <>
             <SearchResultItem
                 ad={{
                     uuid: favourite.favouriteAd.uuid,
@@ -45,8 +46,8 @@ function FavouritesListItem({ favourite, removeFavouriteFromList }) {
                         employer: favourite.favouriteAd.employer,
                         jobtitle: favourite.favouriteAd.jobTitle,
                         location: favourite.favouriteAd.location,
-                        applicationdue: favourite.favouriteAd.applicationdue
-                    }
+                        applicationdue: favourite.favouriteAd.applicationdue,
+                    },
                 }}
                 showExpired={favourite.favouriteAd.status !== "ACTIVE"}
                 favouriteButton={
@@ -73,10 +74,27 @@ function FavouritesListItem({ favourite, removeFavouriteFromList }) {
                     Det oppsto en feil ved dine favoritter. Prøv å last siden på nytt
                 </AlertModalWithPageReload>
             )}
-        </React.Fragment>
+        </>
     );
 }
 
-FavouritesListItem.propTypes = {};
+FavouritesListItem.propTypes = {
+    favourite: PropTypes.shape({
+        uuid: PropTypes.string,
+        favouriteAd: PropTypes.shape({
+            title: PropTypes.string,
+            status: PropTypes.string,
+            uuid: PropTypes.string,
+            published: PropTypes.string,
+            applicationdue: PropTypes.string,
+            location: PropTypes.string,
+            jobTitle: PropTypes.string,
+            employer: PropTypes.string,
+            reference: PropTypes.string,
+            source: PropTypes.string,
+        }),
+    }),
+    removeFavouriteFromList: PropTypes.func.isRequired,
+};
 
 export default FavouritesListItem;

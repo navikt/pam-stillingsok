@@ -13,7 +13,7 @@ async function get(url) {
         response = await fetch(`/stillinger/${url}`, {
             credentials: "include",
             method: "GET",
-            referrer: CONTEXT_PATH
+            referrer: CONTEXT_PATH,
         });
     } catch (e) {
         throw new APIError(e.message, 0);
@@ -35,8 +35,8 @@ async function post(url, query, toJson = true) {
             referrer: CONTEXT_PATH,
             headers: {
                 "Content-Type": "application/json",
-                "X-XSRF-TOKEN-ARBEIDSPLASSEN": getCookie("XSRF-TOKEN-ARBEIDSPLASSEN")
-            }
+                "X-XSRF-TOKEN-ARBEIDSPLASSEN": getCookie("XSRF-TOKEN-ARBEIDSPLASSEN"),
+            },
         });
     } catch (e) {
         throw new APIError(e.message, 0);
@@ -59,8 +59,8 @@ async function put(url, query) {
             referrer: CONTEXT_PATH,
             headers: {
                 "Content-Type": "application/json",
-                "X-XSRF-TOKEN-ARBEIDSPLASSEN": getCookie("XSRF-TOKEN-ARBEIDSPLASSEN")
-            }
+                "X-XSRF-TOKEN-ARBEIDSPLASSEN": getCookie("XSRF-TOKEN-ARBEIDSPLASSEN"),
+            },
         });
     } catch (e) {
         throw new APIError(e.message, 0);
@@ -76,13 +76,13 @@ async function remove(url) {
     let response;
     try {
         response = await fetch(`/stillinger/${url}`, {
-            //credentials: "include",
+            // credentials: "include",
             method: "DELETE",
             referrer: CONTEXT_PATH,
             headers: {
                 "Content-Type": "application/json",
-                "X-XSRF-TOKEN-ARBEIDSPLASSEN": getCookie("XSRF-TOKEN-ARBEIDSPLASSEN")
-            }
+                "X-XSRF-TOKEN-ARBEIDSPLASSEN": getCookie("XSRF-TOKEN-ARBEIDSPLASSEN"),
+            },
         });
     } catch (e) {
         throw new APIError(e.message, 0);
@@ -98,7 +98,7 @@ const UserAPI = {
     get,
     post,
     put,
-    remove
+    remove,
 };
 
 export default UserAPI;

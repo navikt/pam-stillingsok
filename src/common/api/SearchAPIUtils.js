@@ -1,8 +1,18 @@
+function fixMissingAdProperties(stilling) {
+    if (stilling.properties === undefined) {
+        return {
+            ...stilling,
+            properties: {},
+        };
+    }
+    return stilling;
+}
+
 /**
  * This function extract and return only the search result information
  * we need, and make response less nested.
  */
-export async function simplifySearchResponse(response) {
+export default async function simplifySearchResponse(response) {
     const nationalCountMap = {};
     const internationalCountMap = {};
 
@@ -34,35 +44,25 @@ export async function simplifySearchResponse(response) {
                     occupationSecondLevels: firstLevel.occupationSecondLevels.buckets.map((secondLevel) => ({
                         key: `${firstLevel.key}.${secondLevel.key}`,
                         label: secondLevel.key,
-                        count: secondLevel.root_doc_count.doc_count
-                    }))
+                        count: secondLevel.root_doc_count.doc_count,
+                    })),
                 })),
             extent: response.aggregations.extent.values.buckets.map((item) => ({
                 key: item.key,
-                count: item.doc_count
+                count: item.doc_count,
             })),
             engagementTypes: response.aggregations.engagementType.values.buckets.map((item) => ({
                 key: item.key,
-                count: item.doc_count
+                count: item.doc_count,
             })),
             published: response.aggregations.published.range.buckets.map((item) => ({
                 key: item.key,
-                count: item.doc_count
+                count: item.doc_count,
             })),
             sector: response.aggregations.sector.values.buckets.map((item) => ({
                 key: item.key,
-                count: item.doc_count
-            }))
-        }
+                count: item.doc_count,
+            })),
+        },
     };
-}
-
-function fixMissingAdProperties(stilling) {
-    if (stilling.properties === undefined) {
-        return {
-            ...stilling,
-            properties: {}
-        };
-    }
-    return stilling;
 }
