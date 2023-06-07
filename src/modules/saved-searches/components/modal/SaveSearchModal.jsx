@@ -1,4 +1,6 @@
 import React, { useContext, useEffect } from "react";
+import { BodyLong } from "@navikt/ds-react";
+import PropTypes from "prop-types";
 import { UserContext } from "../../../user/contexts/UserProvider";
 import CustomModal from "../../../../common/components/modals/CustomModal";
 import UserAPI from "../../../../common/api/UserAPI";
@@ -11,7 +13,6 @@ import { isStringEmpty } from "../../../../common/components/utils";
 import SuccessMessage from "./SuccessMessage";
 import ConfirmEmailMessage from "./ConfirmEmailMessage";
 import NotFoundMessage from "./NotFoundMessage";
-import { BodyLong } from "@navikt/ds-react";
 
 /**
  * This modal let user create a new or edit an existing saved search.
@@ -25,27 +26,6 @@ function SaveSearchModal({ onClose, onSaveSearchSuccess, formData, defaultFormMo
     const [shouldShowSuccessMessage, showSuccessMessage] = useToggle(false);
     const [shouldShowConfirmEmailMessage, showConfirmEmailMessage] = useToggle(false);
     const [existingSearchResponse, dispatch] = useFetchReducer();
-
-    /**
-     * If editing an existing saved search, fetch this first.
-     * Otherwise, just show the save search form right away
-     */
-    useEffect(() => {
-        if (savedSearchUuid) {
-            fetchSavedSearch(savedSearchUuid);
-        } else {
-            showSavedSearchForm();
-        }
-    }, [savedSearchUuid]);
-
-    /**
-     * When an existing search has loaded, we can show the save search form
-     */
-    useEffect(() => {
-        if (existingSearchResponse.status === FetchStatus.SUCCESS) {
-            showSavedSearchForm();
-        }
-    }, [existingSearchResponse.status]);
 
     function fetchSavedSearch(id) {
         dispatch({ type: FetchAction.BEGIN });
@@ -79,6 +59,27 @@ function SaveSearchModal({ onClose, onSaveSearchSuccess, formData, defaultFormMo
 
     const { status, data, error } = existingSearchResponse;
 
+    /**
+     * If editing an existing saved search, fetch this first.
+     * Otherwise, just show the save search form right away
+     */
+    useEffect(() => {
+        if (savedSearchUuid) {
+            fetchSavedSearch(savedSearchUuid);
+        } else {
+            showSavedSearchForm();
+        }
+    }, [savedSearchUuid]);
+
+    /**
+     * When an existing search has loaded, we can show the save search form
+     */
+    useEffect(() => {
+        if (existingSearchResponse.status === FetchStatus.SUCCESS) {
+            showSavedSearchForm();
+        }
+    }, [existingSearchResponse.status]);
+
     return (
         <CustomModal onCloseClick={onClose} title="Lagre søk">
             {status === FetchStatus.IS_FETCHING && <DelayedSpinner />}
@@ -107,5 +108,13 @@ function SaveSearchModal({ onClose, onSaveSearchSuccess, formData, defaultFormMo
         </CustomModal>
     );
 }
+
+SaveSearchModal.propTypes = {
+    onClose: PropTypes.func,
+    onSaveSearchSuccess: PropTypes.func,
+    formData: PropTypes.shape({}),
+    defaultFormMode: PropTypes.string,
+    savedSearchUuid: PropTypes.string,
+};
 
 export default SaveSearchModal;

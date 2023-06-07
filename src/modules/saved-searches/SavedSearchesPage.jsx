@@ -3,7 +3,7 @@ import SavedSearchesList from "./components/SavedSearchesList";
 import RequiresAuthentication from "../auth/components/RequiresAuthentication";
 import RequiresHasAcceptedTerms from "../user/components/RequiresHasAcceptedTerms";
 import useDocumentTitle from "../../common/hooks/useDocumentTitle";
-import useScrollToTop from "../../common/hooks/useScrollToTop"
+import useScrollToTop from "../../common/hooks/useScrollToTop";
 import "./components/SavedSearches.css";
 
 /**

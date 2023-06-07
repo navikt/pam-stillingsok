@@ -22,7 +22,7 @@ function SearchForm({ fetchSearch, query, dispatchQuery }) {
 SearchForm.propTypes = {
     fetchSearch: PropTypes.func.isRequired,
     dispatchQuery: PropTypes.func.isRequired,
-    query: PropTypes.object,
+    query: PropTypes.shape({}),
 };
 
 export default SearchForm;

@@ -60,7 +60,7 @@ Extent.propTypes = {
             count: PropTypes.number,
         }),
     ).isRequired,
-    updatedValues: PropTypes.arrayOf(PropTypes.object),
+    updatedValues: PropTypes.arrayOf(PropTypes.shape({})),
     query: PropTypes.shape({
         extent: PropTypes.arrayOf(PropTypes.string),
     }).isRequired,

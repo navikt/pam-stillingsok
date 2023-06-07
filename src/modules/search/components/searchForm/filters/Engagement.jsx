@@ -69,7 +69,7 @@ Engagement.propTypes = {
             count: PropTypes.number,
         }),
     ).isRequired,
-    updatedValues: PropTypes.arrayOf(PropTypes.object),
+    updatedValues: PropTypes.arrayOf(PropTypes.shape({})),
     query: PropTypes.shape({
         engagementType: PropTypes.arrayOf(PropTypes.string),
     }).isRequired,

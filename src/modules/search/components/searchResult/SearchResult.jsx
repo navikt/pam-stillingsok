@@ -66,7 +66,7 @@ function SearchResult({ searchResponse, query, loadMoreResults }) {
 SearchResult.propTypes = {
     searchResponse: PropTypes.shape({
         data: PropTypes.shape({
-            ads: PropTypes.arrayOf(PropTypes.object),
+            ads: PropTypes.arrayOf(PropTypes.shape({})),
         }),
         status: PropTypes.string,
     }),

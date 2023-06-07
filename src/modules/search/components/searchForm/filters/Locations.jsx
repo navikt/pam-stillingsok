@@ -182,8 +182,8 @@ function Locations({ initialValues, updatedValues, query, dispatch }) {
 }
 
 Locations.propTypes = {
-    initialValues: PropTypes.object,
-    updatedValues: PropTypes.object,
+    initialValues: PropTypes.shape({}),
+    updatedValues: PropTypes.shape({}),
     query: PropTypes.shape({
         countries: PropTypes.arrayOf(PropTypes.string),
         counties: PropTypes.arrayOf(PropTypes.string),

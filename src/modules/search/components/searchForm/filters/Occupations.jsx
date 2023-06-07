@@ -133,7 +133,7 @@ Occupations.propTypes = {
             ),
         }),
     ).isRequired,
-    updatedValues: PropTypes.arrayOf(PropTypes.object),
+    updatedValues: PropTypes.arrayOf(PropTypes.shape({})),
     query: PropTypes.shape({
         occupationFirstLevels: PropTypes.arrayOf(PropTypes.string),
         occupationSecondLevels: PropTypes.arrayOf(PropTypes.string),

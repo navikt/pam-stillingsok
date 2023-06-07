@@ -18,13 +18,6 @@ function SavedSearchesList() {
     const [{ status, data }, dispatch] = useFetchReducer();
     const uuidFromBrowserUrl = extractParam("uuid");
 
-    /**
-     * Load saved searches when list is shown
-     */
-    useEffect(() => {
-        fetchSavedSearches();
-    }, []);
-
     function fetchSavedSearches() {
         dispatch({ type: FetchAction.BEGIN });
 
@@ -44,7 +37,7 @@ function SavedSearchesList() {
     function updateSavedSearchInList(updated) {
         dispatch({
             type: FetchAction.SET_DATA,
-            data: (prevState) => prevState.map((old) => (updated.uuid === old.uuid ? updated : old))
+            data: (prevState) => prevState.map((old) => (updated.uuid === old.uuid ? updated : old)),
         });
     }
 
@@ -55,17 +48,24 @@ function SavedSearchesList() {
     function removeSavedSearchFromList(removed) {
         dispatch({
             type: FetchAction.SET_DATA,
-            data: (prevState) => prevState.filter((it) => it.uuid !== removed.uuid)
+            data: (prevState) => prevState.filter((it) => it.uuid !== removed.uuid),
         });
     }
 
+    /**
+     * Load saved searches when list is shown
+     */
+    useEffect(() => {
+        fetchSavedSearches();
+    }, []);
+
     return (
-        <React.Fragment>
+        <>
             {(status === FetchStatus.NOT_FETCHED || status === FetchStatus.IS_FETCHING) && <DelayedSpinner />}
             {status === FetchStatus.FAILURE && <ErrorMessage />}
             {status === FetchStatus.SUCCESS && data.length === 0 && <SavedSearchesIsEmpty />}
             {status === FetchStatus.SUCCESS && data.length > 0 && (
-                <React.Fragment>
+                <>
                     <H1WithAutoFocus>Lagrede søk</H1WithAutoFocus>
                     {data.map((savedSearch) => (
                         <SavedSearchListItem
@@ -76,9 +76,9 @@ function SavedSearchesList() {
                             autoOpenModal={savedSearch.uuid === uuidFromBrowserUrl}
                         />
                     ))}
-                </React.Fragment>
+                </>
             )}
-        </React.Fragment>
+        </>
     );
 }
 

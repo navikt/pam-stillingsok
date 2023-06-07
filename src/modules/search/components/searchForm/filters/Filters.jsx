@@ -64,18 +64,18 @@ function Filters({ query, dispatchQuery, initialSearchResult, searchResult }) {
 }
 
 Filters.propTypes = {
-    query: PropTypes.object,
+    query: PropTypes.shape({}),
     dispatchQuery: PropTypes.func,
     initialSearchResult: PropTypes.shape({
         aggregations: PropTypes.shape({
-            engagementTypes: PropTypes.arrayOf(PropTypes.object),
-            occupationFirstLevels: PropTypes.arrayOf(PropTypes.object),
-            published: PropTypes.arrayOf(PropTypes.object),
-            extent: PropTypes.arrayOf(PropTypes.object),
-            sector: PropTypes.arrayOf(PropTypes.object),
+            engagementTypes: PropTypes.arrayOf(PropTypes.shape({})),
+            occupationFirstLevels: PropTypes.arrayOf(PropTypes.shape({})),
+            published: PropTypes.arrayOf(PropTypes.shape({})),
+            extent: PropTypes.arrayOf(PropTypes.shape({})),
+            sector: PropTypes.arrayOf(PropTypes.shape({})),
         }),
     }),
-    searchResult: PropTypes.object,
+    searchResult: PropTypes.shape({}),
 };
 
 export default Filters;

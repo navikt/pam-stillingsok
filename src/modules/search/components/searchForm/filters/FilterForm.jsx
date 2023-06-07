@@ -59,10 +59,10 @@ FilterForm.propTypes = {
     isFilterModalOpen: PropTypes.bool,
     setIsFilterModalOpen: PropTypes.func.isRequired,
     fetchSearch: PropTypes.func.isRequired,
-    query: PropTypes.object,
+    query: PropTypes.shape({}),
     dispatchQuery: PropTypes.func,
-    initialSearchResult: PropTypes.object,
-    searchResult: PropTypes.object,
+    initialSearchResult: PropTypes.shape({}),
+    searchResult: PropTypes.shape({}),
     device: PropTypes.string,
 };
 
