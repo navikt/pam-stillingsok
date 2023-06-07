@@ -1,4 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import { FetchStatus } from "../../../../common/hooks/useFetchReducer";
 import ErrorMessage from "../../../../common/components/messages/ErrorMessage";
 import Pagination from "../pagination/Pagination";
@@ -7,7 +8,7 @@ import "./SearchResult.css";
 import FavouritesButton from "../../../favourites/components/FavouritesButton";
 import LoadingScreen from "../loadingScreen/LoadingScreen";
 
-const SearchResult = ({ searchResponse, query, loadMoreResults }) => {
+function SearchResult({ searchResponse, query, loadMoreResults }) {
     const { status, data } = searchResponse;
     const [lastAdIndex, setLastAdIndex] = useState();
     const [nextAdIndex, setNextAdIndex] = useState();
@@ -28,7 +29,7 @@ const SearchResult = ({ searchResponse, query, loadMoreResults }) => {
             {status === FetchStatus.FAILURE && <ErrorMessage />}
             {status === FetchStatus.IS_FETCHING && query.from === 0 && <LoadingScreen />}
             {(status === FetchStatus.SUCCESS || (status === FetchStatus.IS_FETCHING && query.from > 0)) && (
-                <React.Fragment>
+                <>
                     {data.ads &&
                         data.ads.map((ad, index) => (
                             <SearchResultItem
@@ -37,7 +38,7 @@ const SearchResult = ({ searchResponse, query, loadMoreResults }) => {
                                 ad={ad}
                                 favouriteButton={
                                     <FavouritesButton
-                                        useShortText={true}
+                                        useShortText
                                         className="SearchResultsItem__favourite-button"
                                         stilling={ad}
                                         id={ad.uuid}
@@ -56,10 +57,23 @@ const SearchResult = ({ searchResponse, query, loadMoreResults }) => {
                             />
                         </div>
                     )}
-                </React.Fragment>
+                </>
             )}
         </section>
     );
+}
+
+SearchResult.propTypes = {
+    searchResponse: PropTypes.shape({
+        data: PropTypes.shape({
+            ads: PropTypes.arrayOf(PropTypes.object),
+        }),
+        status: PropTypes.string,
+    }),
+    query: PropTypes.shape({
+        from: PropTypes.number,
+    }),
+    loadMoreResults: PropTypes.func.isRequired,
 };
 
 export default SearchResult;

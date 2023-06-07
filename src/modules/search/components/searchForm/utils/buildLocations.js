@@ -17,19 +17,19 @@ export default function buildLocations(values) {
             type: "county",
             key: l.key,
             count: 0,
-            subLocations: []
+            subLocations: [],
         };
 
         if (l.key === "UTLAND") {
             facet.type = "international";
             facet.count = values.totalInternational;
 
-            for (let key in internationalCountMap) {
+            for (const key in internationalCountMap) {
                 if (internationalCountMap.hasOwnProperty(key)) {
                     facet.subLocations.push({
                         type: "country",
                         key: key.toUpperCase(),
-                        count: internationalCountMap[key]
+                        count: internationalCountMap[key],
                     });
                 }
             }
@@ -40,7 +40,7 @@ export default function buildLocations(values) {
                 facet.subLocations.push({
                     type: "municipal",
                     key: m.key,
-                    count: nationalCountMap[m.key] === undefined ? 0 : nationalCountMap[m.key]
+                    count: nationalCountMap[m.key] === undefined ? 0 : nationalCountMap[m.key],
                 });
             });
         }
@@ -48,9 +48,7 @@ export default function buildLocations(values) {
         if ((facet.key === "JAN MAYEN" || facet.key === "KONTINENTALSOKKELEN") && facet.count === 0) {
             // Ikke vis disse to fylkene om de ikke har noen annonser
         } else {
-            facet.subLocations.sort((a, b) => {
-                return a.key > b.key ? 1 : -1;
-            });
+            facet.subLocations.sort((a, b) => (a.key > b.key ? 1 : -1));
 
             facets.push(facet);
         }

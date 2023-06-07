@@ -1,9 +1,10 @@
 import React from "react";
 import { Heading } from "@navikt/ds-react";
+import PropTypes from "prop-types";
 import SearchResultCount from "../searchResult/SearchResultCount";
 import Sorting from "../searchResult/Sorting";
 
-function SearchResultHeader({ searchResponse, query, queryDispatch, isFiltersVisible }) {
+function SearchResultHeader({ searchResponse, query, queryDispatch }) {
     return (
         <div className="SearchResultHeader">
             <div className="Search__number-of-hits-and-sorting-wrapper">
@@ -22,5 +23,15 @@ function SearchResultHeader({ searchResponse, query, queryDispatch, isFiltersVis
         </div>
     );
 }
+
+SearchResultHeader.propTypes = {
+    searchResponse: PropTypes.shape({
+        data: PropTypes.shape({
+            totalAds: PropTypes.number,
+        }),
+    }),
+    queryDispatch: PropTypes.func.isRequired,
+    query: PropTypes.shape({}),
+};
 
 export default SearchResultHeader;
