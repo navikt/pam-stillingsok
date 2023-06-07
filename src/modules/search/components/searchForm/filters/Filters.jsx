@@ -75,7 +75,15 @@ Filters.propTypes = {
             sector: PropTypes.arrayOf(PropTypes.shape({})),
         }),
     }),
-    searchResult: PropTypes.shape({}),
+    searchResult: PropTypes.shape({
+        aggregations: PropTypes.shape({
+            engagementTypes: PropTypes.arrayOf(PropTypes.shape({})),
+            occupationFirstLevels: PropTypes.arrayOf(PropTypes.shape({})),
+            published: PropTypes.arrayOf(PropTypes.shape({})),
+            extent: PropTypes.arrayOf(PropTypes.shape({})),
+            sector: PropTypes.arrayOf(PropTypes.shape({})),
+        }),
+    }),
 };
 
 export default Filters;
