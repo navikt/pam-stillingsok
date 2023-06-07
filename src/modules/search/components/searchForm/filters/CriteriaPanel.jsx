@@ -9,11 +9,11 @@ function CriteriaPanel({ isOpenByDefault, title, children, panelId }) {
             const found = sessionStorage.getItem(`${panelId}-open`);
             if (found && found === "true") {
                 return true;
-            } else if (found && found === "false") {
-                return false;
-            } else {
-                return isOpenByDefault;
             }
+            if (found && found === "false") {
+                return false;
+            }
+            return isOpenByDefault;
         } catch (e) {
             return isOpenByDefault;
         }
@@ -58,7 +58,7 @@ function CriteriaPanel({ isOpenByDefault, title, children, panelId }) {
 }
 
 CriteriaPanel.defaultProps = {
-    isOpenByDefault: true
+    isOpenByDefault: true,
 };
 
 CriteriaPanel.propTypes = {

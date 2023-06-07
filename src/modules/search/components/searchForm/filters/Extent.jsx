@@ -1,10 +1,10 @@
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
+import { Checkbox, Fieldset } from "@navikt/ds-react";
 import UnknownSearchCriteriaValues from "./UnknownSearchCriteriaValues";
 import { ADD_EXTENT, REMOVE_EXTENT } from "../../../query";
 import mergeCount from "../utils/mergeCount";
 import { findUnknownSearchCriteriaValues } from "../utils/findUnknownSearchCriteriaValues";
-import { Checkbox, Fieldset } from "@navikt/ds-react";
 
 function Extent({ initialValues, updatedValues, query, dispatch }) {
     const [values, setValues] = useState(initialValues);
@@ -57,13 +57,14 @@ Extent.propTypes = {
     initialValues: PropTypes.arrayOf(
         PropTypes.shape({
             key: PropTypes.string,
-            count: PropTypes.number
-        })
+            count: PropTypes.number,
+        }),
     ).isRequired,
+    updatedValues: PropTypes.arrayOf(PropTypes.object),
     query: PropTypes.shape({
-        extent: PropTypes.arrayOf(PropTypes.string)
+        extent: PropTypes.arrayOf(PropTypes.string),
     }).isRequired,
-    dispatch: PropTypes.func.isRequired
+    dispatch: PropTypes.func.isRequired,
 };
 
 export default Extent;

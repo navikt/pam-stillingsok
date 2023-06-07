@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { Button, Heading, Modal } from "@navikt/ds-react";
 import "./FilterModal.css";
@@ -6,13 +6,12 @@ import { XMarkIcon } from "@navikt/aksel-icons";
 import { formatNumber } from "../../../../../common/components/utils";
 
 function FilterModal({ title, children, onCloseClick, searchResult }) {
-
     return (
         <Modal
             className="FilterModal"
             closeButton={false}
             overlayClassName="FilterModal__overlay"
-            open={true}
+            open
             onClose={onCloseClick}
         >
             <div className="FilterModal__heading">
@@ -40,7 +39,8 @@ function FilterModal({ title, children, onCloseClick, searchResult }) {
 FilterModal.propTypes = {
     children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
     title: PropTypes.string.isRequired,
-    onCloseClick: PropTypes.func.isRequired
+    onCloseClick: PropTypes.func.isRequired,
+    searchResult: PropTypes.object,
 };
 
 export default FilterModal;

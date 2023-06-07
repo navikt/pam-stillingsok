@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Published from "./Published";
 import CriteriaPanel from "./CriteriaPanel";
 import Counties from "./Locations";
@@ -61,5 +62,20 @@ function Filters({ query, dispatchQuery, initialSearchResult, searchResult }) {
         </div>
     );
 }
+
+Filters.propTypes = {
+    query: PropTypes.object,
+    dispatchQuery: PropTypes.func,
+    initialSearchResult: PropTypes.shape({
+        aggregations: PropTypes.shape({
+            engagementTypes: PropTypes.arrayOf(PropTypes.object),
+            occupationFirstLevels: PropTypes.arrayOf(PropTypes.object),
+            published: PropTypes.arrayOf(PropTypes.object),
+            extent: PropTypes.arrayOf(PropTypes.object),
+            sector: PropTypes.arrayOf(PropTypes.object),
+        }),
+    }),
+    searchResult: PropTypes.object,
+};
 
 export default Filters;

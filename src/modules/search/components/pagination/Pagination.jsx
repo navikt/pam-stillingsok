@@ -4,17 +4,17 @@ import { Button } from "@navikt/ds-react";
 import "./Pagination.css";
 import { ArrowUpIcon } from "@navikt/aksel-icons";
 
-const Pagination = ({ searchResult, isSearching, query, onLoadMoreClick }) => {
+function Pagination({ searchResult, isSearching, query, onLoadMoreClick }) {
     const total = searchResult.totalAds;
     const to = query.from + query.size;
     const hasMore = to < total;
 
-    const scrollTop = (e) => {
+    const scrollTop = () => {
         window.scrollTo({ top: 0, behavior: "smooth" });
     };
 
     return (
-        <React.Fragment>
+        <>
             {hasMore && (
                 <Button
                     variant="primary"
@@ -29,20 +29,20 @@ const Pagination = ({ searchResult, isSearching, query, onLoadMoreClick }) => {
             <Button variant="tertiary" onClick={scrollTop} className="mt-1_5">
                 <ArrowUpIcon aria-hidden="true" /> Til toppen
             </Button>
-        </React.Fragment>
+        </>
     );
-};
+}
 
 Pagination.propTypes = {
     searchResult: PropTypes.shape({
-        totalAds: PropTypes.number.isRequired
+        totalAds: PropTypes.number.isRequired,
     }).isRequired,
     isSearching: PropTypes.bool.isRequired,
     onLoadMoreClick: PropTypes.func.isRequired,
     query: PropTypes.shape({
         from: PropTypes.number.isRequired,
-        size: PropTypes.number.isRequired
-    }).isRequired
+        size: PropTypes.number.isRequired,
+    }).isRequired,
 };
 
 export default Pagination;

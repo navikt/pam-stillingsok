@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import SaveSearchButton from "../../../saved-searches/components/SaveSearchButton";
 import { BodyLong, Heading, Panel } from "@navikt/ds-react";
+import SaveSearchButton from "../../../saved-searches/components/SaveSearchButton";
 import "./HowToPanel.css";
 
 function DoYouWantToSaveSearch({ query }) {
