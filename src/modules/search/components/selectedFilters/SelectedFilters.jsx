@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import { Button, Chips, Heading } from "@navikt/ds-react";
-import { PublishedLabelsEnum } from "../searchForm/filters/Published";
+import PropTypes from "prop-types";
+import { Button, Chips } from "@navikt/ds-react";
+import { TrashIcon } from "@navikt/aksel-icons";
 import fixLocationName from "../../../../../server/common/fixLocationName";
 import "./SelectedFilters.css";
 import {
+    PublishedLabelsEnum,
     REMOVE_COUNTRY,
     REMOVE_COUNTY,
     REMOVE_ENGAGEMENT_TYPE,
@@ -15,9 +17,8 @@ import {
     REMOVE_SECTOR,
     SET_INTERNATIONAL,
     SET_PUBLISHED,
-    SET_SEARCH_STRING
+    SET_SEARCH_STRING,
 } from "../../query";
-import { TrashIcon } from "@navikt/aksel-icons";
 import SaveSearchButton from "../../../saved-searches/components/SaveSearchButton";
 
 function SelectedFilters({ query, queryDispatch }) {
@@ -53,7 +54,7 @@ function SelectedFilters({ query, queryDispatch }) {
         // Hvis dette var det siste yrket i samme yrkeskategori, så skal yrkeskategorien også fjernes
         const firstLevel = value.split(".")[0];
         const remainingOccupationsInCategory = query.occupationSecondLevels.filter((secondLevel) =>
-            secondLevel.startsWith(`${firstLevel}.`)
+            secondLevel.startsWith(`${firstLevel}.`),
         );
         if (remainingOccupationsInCategory.length === 1) {
             queryDispatch({ type: REMOVE_OCCUPATION_FIRST_LEVEL, value: firstLevel });
@@ -79,7 +80,7 @@ function SelectedFilters({ query, queryDispatch }) {
         chips.push(
             <Chips.Removable variant="neutral" onClick={() => queryDispatch({ type: SET_SEARCH_STRING, value: "" })}>
                 {query.q}
-            </Chips.Removable>
+            </Chips.Removable>,
         );
     }
 
@@ -88,7 +89,7 @@ function SelectedFilters({ query, queryDispatch }) {
             <Chips.Removable variant="neutral" key={value} onClick={() => removeMunicipal(value)}>
                 {fixLocationName(value.split(".")[1])}
             </Chips.Removable>
-        ))
+        )),
     );
 
     chips.push(
@@ -100,7 +101,7 @@ function SelectedFilters({ query, queryDispatch }) {
             >
                 {fixLocationName(value)}
             </Chips.Removable>
-        ))
+        )),
     );
 
     if (query.international && query.countries.length === 0) {
@@ -112,7 +113,7 @@ function SelectedFilters({ query, queryDispatch }) {
                 }}
             >
                 Utland
-            </Chips.Removable>
+            </Chips.Removable>,
         );
     }
 
@@ -121,7 +122,7 @@ function SelectedFilters({ query, queryDispatch }) {
             <Chips.Removable variant="neutral" key={value} onClick={() => removeCountry(value)}>
                 {fixLocationName(value)}
             </Chips.Removable>
-        ))
+        )),
     );
 
     chips.push(
@@ -129,7 +130,7 @@ function SelectedFilters({ query, queryDispatch }) {
             <Chips.Removable variant="neutral" key={value} onClick={() => removeOccupation(value)}>
                 {value.split(".")[1]}
             </Chips.Removable>
-        ))
+        )),
     );
 
     chips.push(
@@ -141,14 +142,14 @@ function SelectedFilters({ query, queryDispatch }) {
             >
                 {value}
             </Chips.Removable>
-        ))
+        )),
     );
 
     if (query.published) {
         chips.push(
             <Chips.Removable variant="neutral" onClick={() => queryDispatch({ type: SET_PUBLISHED, undefined })}>
                 {PublishedLabelsEnum[query.published]}
-            </Chips.Removable>
+            </Chips.Removable>,
         );
     }
 
@@ -161,7 +162,7 @@ function SelectedFilters({ query, queryDispatch }) {
             >
                 {value}
             </Chips.Removable>
-        ))
+        )),
     );
 
     chips.push(
@@ -173,7 +174,7 @@ function SelectedFilters({ query, queryDispatch }) {
             >
                 {value}
             </Chips.Removable>
-        ))
+        )),
     );
 
     chips.push(
@@ -185,7 +186,7 @@ function SelectedFilters({ query, queryDispatch }) {
             >
                 {value}
             </Chips.Removable>
-        ))
+        )),
     );
 
     if (query.remote.length > 0) {
@@ -198,7 +199,7 @@ function SelectedFilters({ query, queryDispatch }) {
                 }}
             >
                 Hjemmekontor
-            </Chips.Removable>
+            </Chips.Removable>,
         );
     }
 
@@ -210,7 +211,7 @@ function SelectedFilters({ query, queryDispatch }) {
         <div className="SelectedFilters">
             <div className="SelectedFilters__chips">
                 {chips.length > MAX_CHIPS ? (
-                    <React.Fragment>
+                    <>
                         {showAll ? chips : chips.slice(0, MAX_CHIPS)}
                         {!showAll && (
                             <Button
@@ -223,9 +224,9 @@ function SelectedFilters({ query, queryDispatch }) {
                                 {`Vis ${chips.length - MAX_CHIPS} til`}
                             </Button>
                         )}
-                    </React.Fragment>
+                    </>
                 ) : (
-                    <React.Fragment>{chips}</React.Fragment>
+                    chips
                 )}
                 <Button
                     type="button"
@@ -242,5 +243,23 @@ function SelectedFilters({ query, queryDispatch }) {
         </div>
     );
 }
+
+SelectedFilters.propTypes = {
+    query: PropTypes.shape({
+        q: PropTypes.string,
+        municipals: PropTypes.arrayOf(PropTypes.object),
+        counties: PropTypes.arrayOf(PropTypes.object),
+        countries: PropTypes.arrayOf(PropTypes.object),
+        international: PropTypes.bool,
+        occupationFirstLevels: PropTypes.arrayOf(PropTypes.object),
+        occupationSecondLevels: PropTypes.arrayOf(PropTypes.object),
+        published: PropTypes.arrayOf(PropTypes.object),
+        sector: PropTypes.arrayOf(PropTypes.object),
+        engagementType: PropTypes.arrayOf(PropTypes.object),
+        extent: PropTypes.arrayOf(PropTypes.object),
+        remote: PropTypes.arrayOf(PropTypes.object),
+    }),
+    queryDispatch: PropTypes.func.isRequired,
+};
 
 export default SelectedFilters;

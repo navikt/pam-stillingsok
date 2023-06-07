@@ -1,12 +1,8 @@
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 import { Checkbox, Fieldset } from "@navikt/ds-react";
-import { SET_PUBLISHED } from "../../../query";
+import { PublishedLabelsEnum, SET_PUBLISHED } from "../../../query";
 import mergeCount from "../utils/mergeCount";
-
-export const PublishedLabelsEnum = {
-    "now/d": "Nye i dag",
-};
 
 function Published({ dispatch, query, initialValues, updatedValues }) {
     const [values, setValues] = useState(initialValues);
@@ -51,6 +47,12 @@ Published.propTypes = {
             count: PropTypes.number,
         }),
     ).isRequired,
+    updatedValues: PropTypes.arrayOf(
+        PropTypes.shape({
+            key: PropTypes.string,
+            count: PropTypes.number,
+        }),
+    ),
     query: PropTypes.shape({
         published: PropTypes.string,
     }).isRequired,

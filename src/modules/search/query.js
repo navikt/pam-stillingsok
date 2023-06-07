@@ -1,5 +1,4 @@
 import fixLocationName from "../../../server/common/fixLocationName";
-import { PublishedLabelsEnum } from "./components/searchForm/filters/Published";
 
 export const SEARCH_CHUNK_SIZE = 25;
 export const ADD_MUNICIPAL = "ADD_MUNICIPAL";
@@ -28,6 +27,10 @@ export const SET_FROM = "SET_FROM";
 export const SET_MATCH = "SET_MATCH";
 export const RESET = "RESET";
 
+export const PublishedLabelsEnum = {
+    "now/d": "Nye i dag",
+};
+
 export const initialQuery = {
     q: "",
     match: undefined,
@@ -44,8 +47,78 @@ export const initialQuery = {
     published: undefined,
     sector: [],
     sort: "",
-    international: false
+    international: false,
 };
+
+/**
+ * Decodes and parses a query string, f.ex "?q=javascript&counties[]=OSLO".
+ * @return a query object, f.ex {"q":"javascript","counties":["OSLO"]}.
+ */
+function extractQueryParameters(encodedQueryString) {
+    let decodeQueryString = encodedQueryString;
+
+    // After login, the redirect url back to this page may have been encoded several times.
+    // This function decodes url until it is no longer contains '%', for example %20 (space).
+    // When url is fully decoded, it can try to decode again if the url
+    // contains the percentage sign itself, and decode attempt will fail.
+    // This can happen for example when searching for part-time job '?=50%'.
+    try {
+        while (decodeQueryString.includes("%")) {
+            decodeQueryString = decodeURIComponent(decodeQueryString);
+        }
+    } catch (e) {
+        // Ignore failed decode attempt
+    }
+
+    // Extract query parameters
+    const urlParameters = decodeQueryString.substring(1).split("&");
+    const query = {};
+    urlParameters.forEach((parameter) => {
+        const pair = parameter.split("=");
+        if (pair[0] !== undefined && pair[0] !== "") {
+            let key = pair[0];
+            const val = pair[1] !== undefined ? pair[1] : "";
+
+            if (key === "international") {
+                query[key] = val === "true" ? true : "false";
+            } else if (key.includes("[]")) {
+                key = key.replace("[]", "");
+
+                if (query[key] === undefined) {
+                    query[key] = [val];
+                } else {
+                    query[key].push(val);
+                }
+            } else {
+                query[key] = val;
+            }
+        }
+    });
+    return query;
+}
+
+/**
+ * Takes a query and return a new object without empty properties.
+ * An empty property can be an undefined value, an empty string or an empty array.
+ */
+function removeEmptyPropertiesFromQuery(query) {
+    const newObj = {};
+    Object.keys(query).forEach((prop) => {
+        const value = query[prop];
+
+        if (prop === "international" && value === false) {
+            // Skip international flag if it is false
+        } else if (Array.isArray(value)) {
+            if (value.length > 0) {
+                newObj[prop] = value;
+            }
+        } else if (value !== undefined && value !== "") {
+            newObj[prop] = value;
+        }
+    });
+
+    return newObj;
+}
 
 /**
  * Init function used to creating initial state for this reducer.
@@ -70,148 +143,148 @@ export function initQueryWithValuesFromBrowserUrl(initialState) {
         extent: fromBrowserUrl.extent || initialState.extent,
         engagementType: fromBrowserUrl.engagementType || initialState.engagementType,
         sector: fromBrowserUrl.sector || initialState.sector,
-        sort: fromBrowserUrl.sort || initialState.sort
+        sort: fromBrowserUrl.sort || initialState.sort,
     };
 }
 
 export default function queryReducer(state, action) {
     // Reset pagination when user add or remove a search criteria
-    state = {
+    const queryState = {
         ...state,
         from: 0,
-        size: SEARCH_CHUNK_SIZE
+        size: SEARCH_CHUNK_SIZE,
     };
 
     switch (action.type) {
         case SET_INTERNATIONAL:
             return {
-                ...state,
-                international: action.value
+                ...queryState,
+                international: action.value,
             };
         case ADD_COUNTY:
             return {
-                ...state,
-                counties: [...state.counties, action.value]
+                ...queryState,
+                counties: [...queryState.counties, action.value],
             };
         case REMOVE_COUNTY:
             return {
-                ...state,
-                counties: state.counties.filter((obj) => obj !== action.value),
-                municipals: state.municipals.filter((obj) => !obj.startsWith(`${action.value}.`))
+                ...queryState,
+                counties: queryState.counties.filter((obj) => obj !== action.value),
+                municipals: queryState.municipals.filter((obj) => !obj.startsWith(`${action.value}.`)),
             };
         case ADD_MUNICIPAL:
             return {
-                ...state,
-                municipals: [...state.municipals, action.value]
+                ...queryState,
+                municipals: [...queryState.municipals, action.value],
             };
         case REMOVE_MUNICIPAL:
             return {
-                ...state,
-                municipals: state.municipals.filter((obj) => obj !== action.value)
+                ...queryState,
+                municipals: queryState.municipals.filter((obj) => obj !== action.value),
             };
         case ADD_COUNTRY:
             return {
-                ...state,
-                countries: [...state.countries, action.value]
+                ...queryState,
+                countries: [...queryState.countries, action.value],
             };
         case REMOVE_COUNTRY:
             return {
-                ...state,
-                countries: state.countries.filter((obj) => obj !== action.value)
+                ...queryState,
+                countries: queryState.countries.filter((obj) => obj !== action.value),
             };
         case ADD_OCCUPATION_FIRST_LEVEL:
             return {
-                ...state,
-                occupationFirstLevels: [...state.occupationFirstLevels, action.value]
+                ...queryState,
+                occupationFirstLevels: [...queryState.occupationFirstLevels, action.value],
             };
         case REMOVE_OCCUPATION_FIRST_LEVEL:
             return {
-                ...state,
-                occupationFirstLevels: state.occupationFirstLevels.filter((obj) => obj !== action.value),
-                occupationSecondLevels: state.occupationSecondLevels.filter(
-                    (obj) => !obj.startsWith(`${action.value}.`)
-                )
+                ...queryState,
+                occupationFirstLevels: queryState.occupationFirstLevels.filter((obj) => obj !== action.value),
+                occupationSecondLevels: queryState.occupationSecondLevels.filter(
+                    (obj) => !obj.startsWith(`${action.value}.`),
+                ),
             };
         case ADD_OCCUPATION_SECOND_LEVEL:
             return {
-                ...state,
-                occupationSecondLevels: [...state.occupationSecondLevels, action.value]
+                ...queryState,
+                occupationSecondLevels: [...queryState.occupationSecondLevels, action.value],
             };
         case REMOVE_OCCUPATION_SECOND_LEVEL:
             return {
-                ...state,
-                occupationSecondLevels: state.occupationSecondLevels.filter((obj) => obj !== action.value)
+                ...queryState,
+                occupationSecondLevels: queryState.occupationSecondLevels.filter((obj) => obj !== action.value),
             };
         case ADD_ENGAGEMENT_TYPE:
             return {
-                ...state,
-                engagementType: [...state.engagementType, action.value]
+                ...queryState,
+                engagementType: [...queryState.engagementType, action.value],
             };
         case REMOVE_ENGAGEMENT_TYPE:
             return {
-                ...state,
-                engagementType: state.engagementType.filter((obj) => obj !== action.value)
+                ...queryState,
+                engagementType: queryState.engagementType.filter((obj) => obj !== action.value),
             };
         case ADD_EXTENT:
             return {
-                ...state,
-                extent: [...state.extent, action.value]
+                ...queryState,
+                extent: [...queryState.extent, action.value],
             };
         case REMOVE_EXTENT:
             return {
-                ...state,
-                extent: state.extent.filter((obj) => obj !== action.value)
+                ...queryState,
+                extent: queryState.extent.filter((obj) => obj !== action.value),
             };
         case ADD_REMOTE:
             return {
-                ...state,
-                remote: [...state.remote, action.value]
+                ...queryState,
+                remote: [...queryState.remote, action.value],
             };
         case REMOVE_REMOTE:
             return {
-                ...state,
-                remote: state.remote.filter((obj) => obj !== action.value)
+                ...queryState,
+                remote: queryState.remote.filter((obj) => obj !== action.value),
             };
         case ADD_SECTOR:
             return {
-                ...state,
-                sector: [...state.sector, action.value]
+                ...queryState,
+                sector: [...queryState.sector, action.value],
             };
         case REMOVE_SECTOR:
             return {
-                ...state,
-                sector: state.sector.filter((obj) => obj !== action.value)
+                ...queryState,
+                sector: queryState.sector.filter((obj) => obj !== action.value),
             };
         case SET_PUBLISHED:
             return {
-                ...state,
-                published: action.value
+                ...queryState,
+                published: action.value,
             };
         case SET_SEARCH_STRING:
             return {
-                ...state,
-                q: action.value
+                ...queryState,
+                q: action.value,
             };
         case SET_MATCH:
             return {
-                ...state,
-                match: action.value
+                ...queryState,
+                match: action.value,
             };
         case SET_SORTING:
             return {
-                ...state,
-                sort: action.value
+                ...queryState,
+                sort: action.value,
             };
         case SET_FROM:
             return {
-                ...state,
+                ...queryState,
                 from: action.value,
-                size: SEARCH_CHUNK_SIZE
+                size: SEARCH_CHUNK_SIZE,
             };
         case RESET:
             return initialQuery;
         default:
-            return state;
+            return queryState;
     }
 }
 
@@ -220,7 +293,7 @@ export default function queryReducer(state, action) {
  */
 export function toApiQuery(query) {
     const apiSearchQuery = {
-        ...query
+        ...query,
     };
     return removeEmptyPropertiesFromQuery(apiSearchQuery);
 }
@@ -230,7 +303,7 @@ export function toApiQuery(query) {
  */
 export function toSavedSearchQuery(query) {
     const savedSearchQuery = {
-        ...query
+        ...query,
     };
 
     delete savedSearchQuery.from;
@@ -245,7 +318,7 @@ export function toSavedSearchQuery(query) {
  */
 export function toBrowserQuery(query) {
     const browserQuery = {
-        ...query
+        ...query,
     };
 
     if (query.from + query.size > SEARCH_CHUNK_SIZE) {
@@ -324,74 +397,4 @@ export function stringifyQuery(query = {}) {
         return `?${string}`;
     }
     return "";
-}
-
-/**
- * Decodes and parses a query string, f.ex "?q=javascript&counties[]=OSLO".
- * @return a query object, f.ex {"q":"javascript","counties":["OSLO"]}.
- */
-function extractQueryParameters(encodedQueryString) {
-    let decodeQueryString = encodedQueryString;
-
-    // After login, the redirect url back to this page may have been encoded several times.
-    // This function decodes url until it is no longer contains '%', for example %20 (space).
-    // When url is fully decoded, it can try to decode again if the url
-    // contains the percentage sign itself, and decode attempt will fail.
-    // This can happen for example when searching for part-time job '?=50%'.
-    try {
-        while (decodeQueryString.includes("%")) {
-            decodeQueryString = decodeURIComponent(decodeQueryString);
-        }
-    } catch (e) {
-        // Ignore failed decode attempt
-    }
-
-    // Extract query parameters
-    const urlParameters = decodeQueryString.substring(1).split("&");
-    const query = {};
-    urlParameters.forEach((parameter) => {
-        const pair = parameter.split("=");
-        if (pair[0] !== undefined && pair[0] !== "") {
-            let key = pair[0];
-            const val = pair[1] !== undefined ? pair[1] : "";
-
-            if (key === "international") {
-                query[key] = val === "true" ? true : "false";
-            } else if (key.includes("[]")) {
-                key = key.replace("[]", "");
-
-                if (query[key] === undefined) {
-                    query[key] = [val];
-                } else {
-                    query[key].push(val);
-                }
-            } else {
-                query[key] = val;
-            }
-        }
-    });
-    return query;
-}
-
-/**
- * Takes a query and return a new object without empty properties.
- * An empty property can be an undefined value, an empty string or an empty array.
- */
-function removeEmptyPropertiesFromQuery(query) {
-    const newObj = {};
-    Object.keys(query).forEach((prop) => {
-        const value = query[prop];
-
-        if (prop === "international" && value === false) {
-            // Skip international flag if it is false
-        } else if (Array.isArray(value)) {
-            if (value.length > 0) {
-                newObj[prop] = value;
-            }
-        } else if (value !== undefined && value !== "") {
-            newObj[prop] = value;
-        }
-    });
-
-    return newObj;
 }
