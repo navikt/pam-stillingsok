@@ -5,7 +5,7 @@ const devMode = process.env.NODE_ENV !== "production";
 module.exports = {
     devtool: "source-map",
     entry: {
-        sok: ["@babel/polyfill", "whatwg-fetch", "./src/app.js"],
+        sok: ["@babel/polyfill", "whatwg-fetch", "./src/app.jsx"],
     },
     output: {
         path: `${__dirname}/dist`,

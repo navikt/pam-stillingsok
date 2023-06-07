@@ -1,15 +1,13 @@
+import { v4 as uuidv4 } from "uuid";
 import { INTEREST_API_URL } from "../../../common/environment";
 import APIError from "../../../common/api/APIError";
-import { v4 as uuidv4 } from "uuid";
-
-const NAV_CALLID_FIELD = "Nav-CallId";
 
 async function get(url) {
     let response;
     try {
         response = await fetch(`${INTEREST_API_URL}/${url}`, {
             method: "GET",
-            headers: { NAV_CALLID_FIELD: uuidv4() }
+            headers: { NAV_CALLID_FIELD: uuidv4() },
         });
     } catch (e) {
         throw new APIError(e.message, 0);
@@ -21,14 +19,29 @@ async function get(url) {
     return response.json();
 }
 
+async function head(url) {
+    let response;
+    try {
+        response = await fetch(`${INTEREST_API_URL}/${url}`, {
+            method: "HEAD",
+        });
+    } catch (e) {
+        throw new APIError(e.message, 0);
+    }
+    if (response.status !== 204) {
+        throw new APIError(response.statusText, response.status);
+    }
+    return response.text();
+}
+
 async function remove(url) {
     let response;
     try {
         response = await fetch(`${INTEREST_API_URL}/${url}`, {
             method: "DELETE",
             headers: {
-                NAV_CALLID_FIELD: uuidv4()
-            }
+                NAV_CALLID_FIELD: uuidv4(),
+            },
         });
     } catch (e) {
         throw new APIError(e.message, 0);
@@ -47,8 +60,8 @@ async function post(url, query, toJson = true) {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                NAV_CALLID_FIELD: uuidv4()
-            }
+                NAV_CALLID_FIELD: uuidv4(),
+            },
         });
     } catch (e) {
         throw new APIError(e.message, 0);
@@ -72,6 +85,10 @@ async function getInterestForm(adUuid) {
     return get(`interest-form/${adUuid}`);
 }
 
+async function getCandidateInterestForm(adUuid, uuid) {
+    return head(`interest-form/${adUuid}/candidates/${uuid}`);
+}
+
 async function postInterest(adUuid, interest) {
     return post(`interest-form/${adUuid}/candidates`, interest, false);
 }
@@ -81,9 +98,10 @@ async function deleteInterest(adUuid, uuid) {
 }
 
 const InterestAPI = {
-    getInterestForm: getInterestForm,
-    postInterest: postInterest,
-    deleteInterest: deleteInterest
+    getInterestForm,
+    getCandidateInterestForm,
+    postInterest,
+    deleteInterest,
 };
 
 export default InterestAPI;
