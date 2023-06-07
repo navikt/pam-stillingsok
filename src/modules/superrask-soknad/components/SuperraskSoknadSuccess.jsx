@@ -16,7 +16,7 @@ function SuperraskSoknadSuccess({ data }) {
                     Du vil straks få en bekreftelse på din e-post {data.email}. Ønsker du å trekke din søknad finner du
                     informasjon om dette i e-posten.
                 </BodyLong>
-                <Heading level="2" spacing>
+                <Heading level="2" spacing size="medium">
                     Hva skjer nå?
                 </Heading>
                 <BodyLong className="mb-2">

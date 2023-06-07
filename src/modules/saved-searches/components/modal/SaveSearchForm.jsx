@@ -216,6 +216,7 @@ SaveSearchForm.propTypes = {
         searchQuery: PropTypes.string,
         duration: PropTypes.number,
         notifyType: PropTypes.string,
+        title: PropTypes.string,
     }),
     defaultFormMode: PropTypes.string,
 };

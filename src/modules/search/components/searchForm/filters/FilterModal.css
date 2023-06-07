@@ -87,14 +87,6 @@
     margin-top: 1.5rem;
 }
 
-.Facet__zero__count label {
-    color: #78706a !important;
-}
-
-.RemoteFacet {
-    margin-top: 1.5rem;
-}
-
 .SearchForm__expand-filter-button {
     display: flex;
     align-items: center;
