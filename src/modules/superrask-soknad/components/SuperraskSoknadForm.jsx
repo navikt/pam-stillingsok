@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import {
     BodyLong,
@@ -46,21 +47,6 @@ function SuperraskSoknadForm({ ad, interestForm, submitForm, isSending, hasError
         return false;
     }
 
-    function handleSendMessageClick() {
-        if (validateForm()) {
-            submitForm({
-                name,
-                telephone,
-                email,
-                about,
-                qualifications: interestForm.qualifications.map((it) => ({
-                    ...it,
-                    checked: checkedQualifications.includes(it.label),
-                })),
-            });
-        }
-    }
-
     function validateForm() {
         let isValid = true;
         setQualificationsFocusErrorSummary(false);
@@ -90,6 +76,21 @@ function SuperraskSoknadForm({ ad, interestForm, submitForm, isSending, hasError
             setQualificationsFocusErrorSummary(true);
         }
         return isValid;
+    }
+
+    function handleSendMessageClick() {
+        if (validateForm()) {
+            submitForm({
+                name,
+                telephone,
+                email,
+                about,
+                qualifications: interestForm.qualifications.map((it) => ({
+                    ...it,
+                    checked: checkedQualifications.includes(it.label),
+                })),
+            });
+        }
     }
 
     function handleNameChange(e) {
@@ -123,8 +124,8 @@ function SuperraskSoknadForm({ ad, interestForm, submitForm, isSending, hasError
         }
     }
 
-    const getErrorMessage = (error) => {
-        switch (error.message) {
+    const getErrorMessage = (err) => {
+        switch (err.message) {
             case "invalid_name":
                 return "Vi kunne ikke sende inn søknaden din. Sjekk at navnet ditt er skrevet riktig og prøv på nytt.";
             case "invalid_email":
@@ -280,12 +281,7 @@ function SuperraskSoknadForm({ ad, interestForm, submitForm, isSending, hasError
                 <Button variant="primary" loading={isSending} type="button" onClick={handleSendMessageClick}>
                     Send søknad
                 </Button>
-                <Button
-                    disabled={isSending}
-                    variant="secondary"
-                    as={Link}
-                    to={`${CONTEXT_PATH}/stilling/${ad._id}`}
-                >
+                <Button disabled={isSending} variant="secondary" as={Link} to={`${CONTEXT_PATH}/stilling/${ad._id}`}>
                     Avbryt
                 </Button>
             </div>
@@ -293,8 +289,24 @@ function SuperraskSoknadForm({ ad, interestForm, submitForm, isSending, hasError
     );
 }
 
-SuperraskSoknadForm.defaultProps = {};
-
-SuperraskSoknadForm.propTypes = {};
+SuperraskSoknadForm.propTypes = {
+    ad: PropTypes.shape({
+        _id: PropTypes.string,
+    }).isRequired,
+    interestForm: PropTypes.shape({
+        qualifications: PropTypes.arrayOf(
+            PropTypes.shape({
+                id: PropTypes.string,
+                label: PropTypes.string,
+            }),
+        ),
+    }).isRequired,
+    submitForm: PropTypes.func.isRequired,
+    isSending: PropTypes.bool,
+    hasError: PropTypes.bool,
+    error: PropTypes.shape({
+        message: PropTypes.string,
+    }),
+};
 
 export default SuperraskSoknadForm;
