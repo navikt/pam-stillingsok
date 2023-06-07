@@ -33,7 +33,7 @@ export default function Summary({ stilling }) {
 
 Summary.propTypes = {
     stilling: PropTypes.shape({
-        locationList: PropTypes.shape({}),
+        locationList: PropTypes.arrayOf(PropTypes.object),
         properties: PropTypes.shape({
             jobtitle: PropTypes.string,
             location: PropTypes.string,

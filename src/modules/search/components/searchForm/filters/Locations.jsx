@@ -184,15 +184,15 @@ function Locations({ initialValues, updatedValues, query, dispatch }) {
 Locations.propTypes = {
     initialValues: PropTypes.shape({
         aggregations: PropTypes.shape({
-            internationalCountMap: PropTypes.arrayOf(PropTypes.object),
-            nationalCountMap: PropTypes.arrayOf(PropTypes.object),
-            remote: PropTypes.arrayOf(PropTypes.object),
+            internationalCountMap: PropTypes.object,
+            nationalCountMap: PropTypes.object,
+            remote: PropTypes.object,
         }),
         locations: PropTypes.arrayOf(PropTypes.object),
     }),
     updatedValues: PropTypes.shape({
         aggregations: PropTypes.shape({
-            remote: PropTypes.arrayOf(PropTypes.object),
+            remote: PropTypes.object,
         }),
     }),
     query: PropTypes.shape({
