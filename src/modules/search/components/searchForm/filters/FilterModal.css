@@ -24,7 +24,6 @@
     gap: 1rem;
     align-items: center;
     background: var(--a-surface-default);
-    border-bottom: 1px solid var(--arb-gray-100);
     position: sticky;
     top: 0;
     z-index: 999;
@@ -32,7 +31,13 @@
 
 .FilterModal__content {
     flex-grow: 1;
-    padding: 1rem;
+    padding: 0 1rem 1rem 1rem;
+}
+
+.FilterModal__content .navds-tabs__tab {
+    margin: 0 1rem 0 0;
+    min-height: unset;
+    padding: 0;
 }
 
 @media (min-width: 728px) {
