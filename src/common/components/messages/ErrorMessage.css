@@ -6,10 +6,6 @@
     padding: 0 1rem;
 }
 
-.ErrorMessage__h2 {
-    margin: 1rem 0;
-}
-
 .ErrorMessage__text {
     margin: 0 0 2rem 0;
     max-width: 500px;

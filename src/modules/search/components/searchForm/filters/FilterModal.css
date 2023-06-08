@@ -53,26 +53,6 @@
     }
 }
 
-.FilterModal__flex-columns {
-    display: flex;
-    gap: 2rem 1rem;
-    flex-direction: column;
-}
-
-@media (min-width: 728px) {
-    .FilterModal__flex-columns {
-        display: flex;
-        flex-direction: row;
-        gap: 2rem 8rem;
-    }
-}
-
-.FilterModal__column {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem 1rem;
-}
-
 .FilterModal__sub-fieldset {
     padding: 0 1rem 0.5rem 2rem;
     margin-top: 0 !important;

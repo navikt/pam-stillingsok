@@ -32,13 +32,6 @@
     align-items: center;
 }
 
-.SearchResultsItem__bottom {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    gap: 1rem 2rem;
-}
-
 .SearchResultItem__text-and-icon {
     display: flex;
     gap: 0.75rem;

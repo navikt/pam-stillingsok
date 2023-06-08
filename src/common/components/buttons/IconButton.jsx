@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Button } from "@navikt/ds-react";
-import "./IconButton.css";
 
 function IconButton({ text, icon, hideText, onClick, className, disabled, spinner, type }) {
     let variant = "tertiary";
