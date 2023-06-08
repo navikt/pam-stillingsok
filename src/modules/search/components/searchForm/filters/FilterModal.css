@@ -107,3 +107,20 @@
 .Filter__section {
     padding: 1rem 0;
 }
+
+.Filters__desktop {
+    display: none;
+}
+
+.Filters__mobile {
+    display: block;
+}
+@media (min-width: 768px) {
+    .Filters__desktop {
+        display: block;
+    }
+
+    .Filters__mobile {
+        display: none;
+    }
+}
