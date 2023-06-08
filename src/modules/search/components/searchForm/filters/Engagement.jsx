@@ -5,7 +5,7 @@ import { ADD_ENGAGEMENT_TYPE, REMOVE_ENGAGEMENT_TYPE } from "../../../query";
 import UnknownSearchCriteriaValues from "./UnknownSearchCriteriaValues";
 import mergeCount from "../utils/mergeCount";
 import moveCriteriaToBottom from "../utils/moveFacetToBottom";
-import { findUnknownSearchCriteriaValues } from "../utils/findUnknownSearchCriteriaValues";
+import findUnknownSearchCriteriaValues from "../utils/findUnknownSearchCriteriaValues";
 
 function Engagement({ initialValues, updatedValues, query, dispatch }) {
     const [values, setValues] = useState(moveCriteriaToBottom(initialValues, "Annet"));

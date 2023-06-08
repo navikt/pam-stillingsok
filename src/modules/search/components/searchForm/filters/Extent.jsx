@@ -4,7 +4,7 @@ import { Checkbox, Fieldset } from "@navikt/ds-react";
 import UnknownSearchCriteriaValues from "./UnknownSearchCriteriaValues";
 import { ADD_EXTENT, REMOVE_EXTENT } from "../../../query";
 import mergeCount from "../utils/mergeCount";
-import { findUnknownSearchCriteriaValues } from "../utils/findUnknownSearchCriteriaValues";
+import findUnknownSearchCriteriaValues from "../utils/findUnknownSearchCriteriaValues";
 
 function Extent({ initialValues, updatedValues, query, dispatch }) {
     const [values, setValues] = useState(initialValues);

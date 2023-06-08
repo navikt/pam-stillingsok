@@ -8,7 +8,11 @@
  * @param searchCriteriaFromApi: Available search criteria from search api
  * @param nestedName, f.eks 'municipals'.
  */
-export function findUnknownSearchCriteriaValues(searchCriteriaFromBrowserUrl, searchCriteriaFromApi, nestedName) {
+export default function findUnknownSearchCriteriaValues(
+    searchCriteriaFromBrowserUrl,
+    searchCriteriaFromApi,
+    nestedName,
+) {
     return searchCriteriaFromBrowserUrl.filter((used) => {
         const found = searchCriteriaFromApi.find((knownValue) => {
             if (nestedName !== undefined && knownValue[nestedName]) {

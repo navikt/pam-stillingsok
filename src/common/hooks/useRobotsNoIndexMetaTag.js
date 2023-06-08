@@ -30,5 +30,6 @@ export default (shouldAddNoIndexMetaTag) => {
                 removeRobotsMetaTag();
             };
         }
+        return undefined;
     }, [shouldAddNoIndexMetaTag]);
 };

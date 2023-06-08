@@ -101,6 +101,7 @@ export function extractParam(param, nullValue) {
         const split = q.split("=");
 
         if (split.length === 2 && split[0].includes(param)) {
+            // eslint-disable-next-line prefer-destructuring
             value = split[1];
         }
     });

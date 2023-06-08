@@ -5,7 +5,7 @@ import UnknownSearchCriteriaValues from "./UnknownSearchCriteriaValues";
 import { ADD_SECTOR, REMOVE_SECTOR } from "../../../query";
 import moveCriteriaToBottom from "../utils/moveFacetToBottom";
 import mergeCount from "../utils/mergeCount";
-import { findUnknownSearchCriteriaValues } from "../utils/findUnknownSearchCriteriaValues";
+import findUnknownSearchCriteriaValues from "../utils/findUnknownSearchCriteriaValues";
 
 function Sector({ initialValues, updatedValues, query, dispatch }) {
     const [values, setValues] = useState(moveCriteriaToBottom(initialValues, "Ikke oppgitt"));

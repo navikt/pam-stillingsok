@@ -40,7 +40,9 @@ FilterModal.propTypes = {
     children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
     title: PropTypes.string.isRequired,
     onCloseClick: PropTypes.func.isRequired,
-    searchResult: PropTypes.shape({}),
+    searchResult: PropTypes.shape({
+        totalAds: PropTypes.number,
+    }),
 };
 
 export default FilterModal;

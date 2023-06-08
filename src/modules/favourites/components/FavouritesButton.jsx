@@ -90,10 +90,6 @@ function FavouritesButton({ id, stilling, useShortText, className, type, hideTex
             hasAcceptedTermsStatus === HasAcceptedTermsStatus.HAS_ACCEPTED
         ) {
             saveFavourite(id, stilling);
-        } else {
-            // Ignore click if authentication or hasAcceptedTermsStatus
-            // are not yet loaded or failed
-            return false;
         }
     }
 

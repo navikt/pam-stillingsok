@@ -59,6 +59,7 @@ export default function useRestoreScroll(id, shouldRestore) {
                 window.removeEventListener("scroll", handleScroll);
             };
         }
+        return undefined;
     }, [shouldRestore]);
 
     return { resetScroll };

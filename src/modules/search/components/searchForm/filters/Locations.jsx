@@ -17,7 +17,7 @@ import UnknownSearchCriteriaValues from "./UnknownSearchCriteriaValues";
 import buildLocations from "../utils/buildLocations";
 import buildHomeOfficeValues from "../utils/buildHomeOfficeValues";
 import mergeCount from "../utils/mergeCount";
-import { findUnknownSearchCriteriaValues } from "../utils/findUnknownSearchCriteriaValues";
+import findUnknownSearchCriteriaValues from "../utils/findUnknownSearchCriteriaValues";
 import findZeroCountLocationFacets from "../utils/findZeroCountLocationFacets";
 
 function Locations({ initialValues, updatedValues, query, dispatch }) {

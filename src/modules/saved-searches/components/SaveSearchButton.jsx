@@ -44,8 +44,6 @@ function SaveSearchButton({ query }) {
             hasAcceptedTermsStatus === HasAcceptedTermsStatus.HAS_ACCEPTED
         ) {
             openSaveSearchModal();
-        } else {
-            return false;
         }
     }
 
