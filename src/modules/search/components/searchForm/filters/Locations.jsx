@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
+import { Checkbox, Fieldset } from "@navikt/ds-react";
 import fixLocationName from "../../../../../../server/common/fixLocationName";
 import {
     ADD_COUNTRY,
@@ -9,7 +11,7 @@ import {
     REMOVE_COUNTY,
     REMOVE_MUNICIPAL,
     REMOVE_REMOTE,
-    SET_INTERNATIONAL
+    SET_INTERNATIONAL,
 } from "../../../query";
 import UnknownSearchCriteriaValues from "./UnknownSearchCriteriaValues";
 import buildLocations from "../utils/buildLocations";
@@ -17,7 +19,6 @@ import buildHomeOfficeValues from "../utils/buildHomeOfficeValues";
 import mergeCount from "../utils/mergeCount";
 import { findUnknownSearchCriteriaValues } from "../utils/findUnknownSearchCriteriaValues";
 import findZeroCountLocationFacets from "../utils/findZeroCountLocationFacets";
-import { Checkbox, Fieldset } from "@navikt/ds-react";
 
 function Locations({ initialValues, updatedValues, query, dispatch }) {
     const [locationValues, setLocationValues] = useState(buildLocations(initialValues));
@@ -27,7 +28,7 @@ function Locations({ initialValues, updatedValues, query, dispatch }) {
     const unknownCountries = findZeroCountLocationFacets(
         query.countries,
         initialValues.aggregations.nationalCountMap,
-        initialValues.aggregations.internationalCountMap
+        initialValues.aggregations.internationalCountMap,
     );
 
     /**
@@ -42,10 +43,10 @@ function Locations({ initialValues, updatedValues, query, dispatch }) {
                     locationValues,
                     buildLocations({
                         ...updatedValues,
-                        locations: initialValues.locations
+                        locations: initialValues.locations,
                     }),
-                    "subLocations"
-                )
+                    "subLocations",
+                ),
             );
         }
     }, [updatedValues]);
@@ -79,7 +80,7 @@ function Locations({ initialValues, updatedValues, query, dispatch }) {
         }
     }
 
-    const handleZeroCountFacetClick = (countries, counties, municipals, homeOffice) => (e) => {
+    const handleZeroCountFacetClick = (countries, counties, municipals) => (e) => {
         const { value } = e.target;
 
         if (countries.includes(value)) handleLocationClick(value, "country", e.target.checked);
@@ -170,7 +171,7 @@ function Locations({ initialValues, updatedValues, query, dispatch }) {
             </div>
 
             <UnknownSearchCriteriaValues
-                shouldFixLocationName={true}
+                shouldFixLocationName
                 namePrefix="counties"
                 unknownValues={unknownLocations}
                 checkedValues={checkedLocations}
@@ -179,5 +180,29 @@ function Locations({ initialValues, updatedValues, query, dispatch }) {
         </Fieldset>
     );
 }
+
+Locations.propTypes = {
+    initialValues: PropTypes.shape({
+        aggregations: PropTypes.shape({
+            internationalCountMap: PropTypes.object,
+            nationalCountMap: PropTypes.object,
+            remote: PropTypes.object,
+        }),
+        locations: PropTypes.arrayOf(PropTypes.object),
+    }),
+    updatedValues: PropTypes.shape({
+        aggregations: PropTypes.shape({
+            remote: PropTypes.object,
+        }),
+    }),
+    query: PropTypes.shape({
+        countries: PropTypes.arrayOf(PropTypes.string),
+        counties: PropTypes.arrayOf(PropTypes.string),
+        municipals: PropTypes.arrayOf(PropTypes.string),
+        international: PropTypes.bool,
+        remote: PropTypes.arrayOf(PropTypes.string),
+    }),
+    dispatch: PropTypes.func.isRequired,
+};
 
 export default Locations;

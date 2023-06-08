@@ -1,5 +1,7 @@
 import PropTypes from "prop-types";
 import React, { useState } from "react";
+import { Link as AkselLink, BodyShort, Heading, Tag } from "@navikt/ds-react";
+import { Link } from "react-router-dom";
 import { CONTEXT_PATH } from "../../../common/environment";
 import { formatDate } from "../../../common/components/utils";
 import AlertModal from "../../../common/components/modals/AlertModal";
@@ -13,8 +15,6 @@ import RefreshButton from "../../../common/components/buttons/RefreshButton";
 import Alert from "../../../common/components/alert/Alert";
 import { FormModes } from "./modal/SaveSearchForm";
 import AlertModalWithPageReload from "../../../common/components/modals/AlertModalWithPageReload";
-import { Link as AkselLink, BodyShort, Heading, Tag } from "@navikt/ds-react";
-import { Link } from "react-router-dom";
 
 function SavedSearchListItem({ savedSearch, removeSavedSearchFromList, replaceSavedSearchInList, autoOpenModal }) {
     const [deleteStatus, setDeleteStatus] = useState(FetchStatus.NOT_FETCHED);
@@ -44,7 +44,7 @@ function SavedSearchListItem({ savedSearch, removeSavedSearchFromList, replaceSa
 
         UserAPI.put(`api/v1/savedsearches/${savedSearch.uuid}`, {
             ...savedSearch,
-            status: "ACTIVE"
+            status: "ACTIVE",
         })
             .then((response) => {
                 setRestartEmailNotificationStatus(FetchStatus.SUCCESS);
@@ -75,10 +75,10 @@ function SavedSearchListItem({ savedSearch, removeSavedSearchFromList, replaceSa
             {savedSearch.updated && <BodyShort spacing>Sist endret: {formatDate(savedSearch.updated)}</BodyShort>}
 
             {savedSearch.notifyType === "EMAIL" ? (
-                <React.Fragment>
+                <>
                     <BodyShort>Varighet på varsel: {savedSearch.duration} dager</BodyShort>
                     {savedSearch.expires && <BodyShort>Utløper: {formatDate(savedSearch.expires)}</BodyShort>}
-                </React.Fragment>
+                </>
             ) : (
                 <BodyShort>Ingen varsling</BodyShort>
             )}
@@ -159,6 +159,8 @@ SavedSearchListItem.propTypes = {
         updated: PropTypes.string,
         searchQuery: PropTypes.string,
         expired: PropTypes.string,
+        status: PropTypes.string,
+        expires: PropTypes.string,
     }).isRequired,
     removeSavedSearchFromList: PropTypes.func.isRequired,
     replaceSavedSearchInList: PropTypes.func.isRequired,

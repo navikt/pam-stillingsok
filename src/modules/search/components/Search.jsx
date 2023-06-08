@@ -269,7 +269,9 @@ export default function Search() {
                                         {shouldShowTermsModal && (
                                             <TermsOfUse
                                                 onClose={closeTermsModal}
-                                                onTermsAccepted={handleTermsAccepted(`${CONTEXT_PATH}/favoritter`)}
+                                                onTermsAccepted={() => {
+                                                    handleTermsAccepted(`${CONTEXT_PATH}/favoritter`);
+                                                }}
                                             />
                                         )}
                                     </>

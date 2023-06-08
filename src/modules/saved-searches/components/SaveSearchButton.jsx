@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { Button } from "@navikt/ds-react";
+import { FloppydiskIcon } from "@navikt/aksel-icons";
 import SearchIsEmptyModal from "./modal/SearchIsEmptyModal";
 import SaveSearchModal from "./modal/SaveSearchModal";
 import { isSearchQueryEmpty, stringifyQuery, toReadableQuery, toSavedSearchQuery } from "../../search/query";
@@ -11,7 +12,6 @@ import TermsOfUse from "../../user/contexts/TermsOfUse";
 import LoginModal from "../../auth/components/LoginModal";
 import useToggle from "../../../common/hooks/useToggle";
 import { FormModes } from "./modal/SaveSearchForm";
-import { FloppydiskIcon } from "@navikt/aksel-icons";
 
 /**
  * Displays the "Save search" button.
@@ -54,8 +54,11 @@ function SaveSearchButton({ query }) {
         openSaveSearchModal();
     }
 
+    const title = toReadableQuery(query);
+    const shortenedTitle = title.length > 80 ? `${title.substring(0, 77)}...` : title;
+
     return (
-        <React.Fragment>
+        <>
             <Button variant="tertiary" icon={<FloppydiskIcon aria-hidden="true" />} type="button" onClick={handleClick}>
                 Lagre søk
             </Button>
@@ -69,18 +72,15 @@ function SaveSearchButton({ query }) {
             {shouldShowSaveSearchModal && (
                 <SaveSearchModal
                     formData={{
-                        title: () => {
-                            const title = toReadableQuery(query);
-                            return title.length > 80 ? `${title.substring(0, 77)}...` : title;
-                        },
-                        searchQuery: stringifyQuery(toSavedSearchQuery(query))
+                        title: shortenedTitle,
+                        searchQuery: stringifyQuery(toSavedSearchQuery(query)),
                     }}
                     onClose={closeSaveSearchModal}
                     defaultFormMode={savedSearchUuid ? FormModes.UPDATE_QUERY_ONLY : FormModes.ADD}
                     savedSearchUuid={savedSearchUuid}
                 />
             )}
-        </React.Fragment>
+        </>
     );
 }
 

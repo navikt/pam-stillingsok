@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import fixLocationName from "../../../../../../server/common/fixLocationName";
 import { Checkbox, Heading } from "@navikt/ds-react";
+import fixLocationName from "../../../../../../server/common/fixLocationName";
 
 export default function UnknownSearchCriteriaValues({
     namePrefix,
@@ -11,14 +11,14 @@ export default function UnknownSearchCriteriaValues({
     unknownNestedValues,
     checkedNestedValues,
     onNestedLevelClick,
-    shouldFixLocationName
+    shouldFixLocationName,
 }) {
     if (unknownValues.length + unknownNestedValues.length === 0) {
         return null;
     }
 
     return (
-        <React.Fragment>
+        <>
             <Heading level="4" size="small" spacing>
                 Følgende kriterier gir 0 treff:
             </Heading>
@@ -44,7 +44,7 @@ export default function UnknownSearchCriteriaValues({
                     {`${shouldFixLocationName ? fixLocationName(second.split(".")[1]) : second} (0)`}
                 </Checkbox>
             ))}
-        </React.Fragment>
+        </>
     );
 }
 
@@ -54,16 +54,16 @@ UnknownSearchCriteriaValues.defaultProps = {
     unknownNestedValues: [],
     checkedNestedValues: [],
     onNestedLevelClick: undefined,
-    shouldFixLocationName: false
+    shouldFixLocationName: false,
 };
 
 UnknownSearchCriteriaValues.propTypes = {
     namePrefix: PropTypes.string.isRequired,
-    unknownValues: PropTypes.array.isRequired,
-    checkedValues: PropTypes.array.isRequired,
+    unknownValues: PropTypes.array,
+    checkedValues: PropTypes.array,
     onClick: PropTypes.func.isRequired,
     unknownNestedValues: PropTypes.array,
     checkedNestedValues: PropTypes.array,
     onNestedLevelClick: PropTypes.func,
-    shouldFixLocationName: PropTypes.bool
+    shouldFixLocationName: PropTypes.bool,
 };

@@ -12,7 +12,7 @@ export default function mergeCount(initialValues, newValues, nestedKey) {
             const found = newValues.find((e) => e.key === item.key);
             return {
                 ...item,
-                count: found ? found.count : 0
+                count: found ? found.count : 0,
             };
         });
     }
@@ -29,9 +29,9 @@ export default function mergeCount(initialValues, newValues, nestedKey) {
                 }
                 return {
                     ...secondLevel,
-                    count: newSecondLevelCount
+                    count: newSecondLevelCount,
                 };
-            })
+            }),
         };
     });
 }

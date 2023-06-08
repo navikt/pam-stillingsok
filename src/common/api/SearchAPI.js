@@ -1,6 +1,6 @@
 import APIError from "./APIError";
 import { CONTEXT_PATH } from "../environment";
-import { simplifySearchResponse } from "./SearchAPIUtils";
+import simplifySearchResponse from "./SearchAPIUtils";
 import { stringifyQuery } from "../../modules/search/query";
 
 let cache = [];
@@ -12,7 +12,7 @@ async function get(url, query = {}) {
     try {
         response = await fetch(`${CONTEXT_PATH}/${url}${queryString}`, {
             method: "GET",
-            referrer: CONTEXT_PATH
+            referrer: CONTEXT_PATH,
         });
     } catch (e) {
         throw new APIError(e.message, 0);
@@ -45,7 +45,7 @@ async function search(query = {}) {
 const SearchAPI = {
     get,
     getAndCache,
-    search
+    search,
 };
 
 export default SearchAPI;

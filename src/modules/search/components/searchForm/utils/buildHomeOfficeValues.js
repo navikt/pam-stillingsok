@@ -4,8 +4,8 @@ export default function buildHomeOfficeValues(remote) {
     const facets = [
         {
             key: "Hjemmekontor",
-            count
-        }
+            count,
+        },
     ];
 
     return facets;

@@ -155,7 +155,7 @@ SearchResultItem.propTypes = {
             location: PropTypes.string,
             applicationdue: PropTypes.string,
         }),
-        locationList: PropTypes.arrayOf(PropTypes.object),
+        locationList: PropTypes.arrayOf(PropTypes.shape({})),
     }).isRequired,
     shouldAutoFocus: PropTypes.bool,
     showExpired: PropTypes.bool,

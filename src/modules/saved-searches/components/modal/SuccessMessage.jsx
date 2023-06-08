@@ -1,11 +1,9 @@
 import React, { useEffect, useRef } from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
-import { CONTEXT_PATH } from "../../../../common/environment";
-import { BodyLong, Button, Link as AkselLink } from "@navikt/ds-react";
+import { BodyLong, Button } from "@navikt/ds-react";
 
 function SuccessMessage({ onClose }) {
-    let buttonRef = useRef(null);
+    const buttonRef = useRef(null);
 
     useEffect(() => {
         if (buttonRef.current) {

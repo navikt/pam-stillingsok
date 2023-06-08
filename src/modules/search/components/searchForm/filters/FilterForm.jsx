@@ -1,11 +1,11 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Heading } from "@navikt/ds-react";
-import { formatNumber } from "../../../../../common/components/utils";
 import { Device } from "../../../../../common/hooks/useDevice";
 import Filters from "./Filters";
 import FilterModal from "./FilterModal";
 
-const FilterForm = ({
+function FilterForm({
     isFilterModalOpen,
     setIsFilterModalOpen,
     fetchSearch,
@@ -13,8 +13,8 @@ const FilterForm = ({
     dispatchQuery,
     initialSearchResult,
     searchResult,
-    device
-}) => {
+    device,
+}) {
     /**
      * Handles form submit. This is typically triggered if
      * user presses enter-key in the search box.
@@ -41,7 +41,8 @@ const FilterForm = ({
                 {form}
             </FilterModal>
         );
-    } else if (device === Device.DESKTOP) {
+    }
+    if (device === Device.DESKTOP) {
         return (
             <div>
                 <Heading level="2" size="medium" spacing>
@@ -52,6 +53,17 @@ const FilterForm = ({
         );
     }
     return null;
+}
+
+FilterForm.propTypes = {
+    isFilterModalOpen: PropTypes.bool,
+    setIsFilterModalOpen: PropTypes.func.isRequired,
+    fetchSearch: PropTypes.func.isRequired,
+    query: PropTypes.shape({}),
+    dispatchQuery: PropTypes.func,
+    initialSearchResult: PropTypes.shape({}),
+    searchResult: PropTypes.shape({}),
+    device: PropTypes.string,
 };
 
 export default FilterForm;

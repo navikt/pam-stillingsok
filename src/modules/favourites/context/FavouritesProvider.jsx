@@ -26,12 +26,6 @@ function FavouritesProvider({ children }) {
     // List of all ads that is about to be saved or deleted
     const [pendingFavourites, setPendingFavourites] = useState([]);
 
-    useEffect(() => {
-        if (hasAcceptedTermsStatus === HasAcceptedTermsStatus.HAS_ACCEPTED) {
-            getFavourites();
-        }
-    }, [hasAcceptedTermsStatus]);
-
     function getFavourites() {
         UserAPI.get("api/v1/userfavouriteads?size=9999")
             .then((response) => {
@@ -60,6 +54,12 @@ function FavouritesProvider({ children }) {
     function removeFavouriteFromLocalList(favourite) {
         setFavourites((prevState) => prevState.filter((it) => it.uuid !== favourite.uuid));
     }
+
+    useEffect(() => {
+        if (hasAcceptedTermsStatus === HasAcceptedTermsStatus.HAS_ACCEPTED) {
+            getFavourites();
+        }
+    }, [hasAcceptedTermsStatus]);
 
     const values = {
         favourites,

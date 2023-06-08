@@ -13,7 +13,7 @@ function SearchResultCount({ searchResult }) {
                 {searchResult.totalAds === 0
                     ? "Ingen treff"
                     : `${formatNumber(searchResult.totalPositions)} ${stillingerWord} i ${formatNumber(
-                          searchResult.totalAds
+                          searchResult.totalAds,
                       )} ${annonserWord}`}
             </BodyShort>
         );
@@ -23,14 +23,14 @@ function SearchResultCount({ searchResult }) {
 }
 
 SearchResultCount.defaultProps = {
-    searchResult: undefined
+    searchResult: undefined,
 };
 
 SearchResultCount.propTypes = {
     searchResult: PropTypes.shape({
         totalAds: PropTypes.number,
-        totalPositions: PropTypes.number
-    })
+        totalPositions: PropTypes.number,
+    }),
 };
 
 export default SearchResultCount;

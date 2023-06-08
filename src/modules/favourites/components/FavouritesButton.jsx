@@ -20,20 +20,27 @@ import AlertModalWithPageReload from "../../../common/components/modals/AlertMod
  * and has accepted usage terms before it save a favourite
  */
 function FavouritesButton({ id, stilling, useShortText, className, type, hideText }) {
-    const favouritesProvider = useContext(FavouritesContext);
+    const {
+        pendingFavourites,
+        favourites,
+        addToPending,
+        addFavouriteToLocalList,
+        removeFormPending,
+        removeFavouriteFromLocalList,
+    } = useContext(FavouritesContext);
     const { authenticationStatus, login } = useContext(AuthenticationContext);
     const { hasAcceptedTermsStatus } = useContext(UserContext);
     const [shouldShowTermsModal, openTermsModal, closeTermsModal] = useToggle();
     const [shouldShowLoginModal, openLoginModal, closeLoginModal] = useToggle();
     const [shouldShowErrorDialog, openErrorDialog, closeErrorDialog] = useToggle(false);
-    const isPending = favouritesProvider.pendingFavourites.includes(id);
-    const isFavourite = favouritesProvider.favourites.find((f) => f.favouriteAd.uuid === id) !== undefined;
+    const isPending = pendingFavourites.includes(id);
+    const isFavourite = favourites.find((f) => f.favouriteAd.uuid === id) !== undefined;
 
-    function saveFavourite(id, ad) {
-        favouritesProvider.addToPending(id);
+    function saveFavourite(adUuid, ad) {
+        addToPending(adUuid);
         UserAPI.post("api/v1/userfavouriteads", {
             favouriteAd: {
-                uuid: id,
+                uuid: adUuid,
                 source: ad.source,
                 reference: ad.reference,
                 title: ad.title,
@@ -43,33 +50,33 @@ function FavouritesButton({ id, stilling, useShortText, className, type, hideTex
                 location: getWorkLocation(ad.properties.location, ad.locationList),
                 employer: getEmployer(ad),
                 published: ad.published,
-                expires: ad.expires
-            }
+                expires: ad.expires,
+            },
         })
             .then((response) => {
-                favouritesProvider.addFavouriteToLocalList(response);
+                addFavouriteToLocalList(response);
             })
             .catch(() => {
                 openErrorDialog();
             })
             .finally(() => {
-                favouritesProvider.removeFormPending(id);
+                removeFormPending(adUuid);
             });
     }
 
-    function deleteFavourite(id) {
-        const found = favouritesProvider.favourites.find((fav) => fav.favouriteAd.uuid === id);
+    function deleteFavourite(adUuid) {
+        const found = favourites.find((fav) => fav.favouriteAd.uuid === adUuid);
 
-        favouritesProvider.addToPending(id);
+        addToPending(adUuid);
         UserAPI.remove(`api/v1/userfavouriteads/${found.uuid}`)
             .then(() => {
-                favouritesProvider.removeFavouriteFromLocalList(found);
+                removeFavouriteFromLocalList(found);
             })
             .catch(() => {
                 openErrorDialog();
             })
             .finally(() => {
-                favouritesProvider.removeFormPending(id);
+                removeFormPending(adUuid);
             });
     }
 
@@ -103,7 +110,7 @@ function FavouritesButton({ id, stilling, useShortText, className, type, hideTex
     const deleteText = useShortText ? "Lagret" : "Slett favoritt";
 
     return (
-        <React.Fragment>
+        <>
             <IconButton
                 disabled={isPending}
                 onClick={isFavourite ? handleDeleteFavouriteClick : handleSaveFavouriteClick}
@@ -123,7 +130,7 @@ function FavouritesButton({ id, stilling, useShortText, className, type, hideTex
                     Det oppsto en feil ved dine favoritter. Prøv å last siden på nytt
                 </AlertModalWithPageReload>
             )}
-        </React.Fragment>
+        </>
     );
 }
 
@@ -131,7 +138,7 @@ FavouritesButton.defaultProps = {
     className: undefined,
     useShortText: false,
     type: undefined,
-    hideText: false
+    hideText: false,
 };
 
 FavouritesButton.propTypes = {
@@ -140,8 +147,7 @@ FavouritesButton.propTypes = {
     className: PropTypes.string,
     useShortText: PropTypes.bool,
     type: PropTypes.string,
-    hideText: PropTypes.bool
+    hideText: PropTypes.bool,
 };
 
 export default FavouritesButton;
-

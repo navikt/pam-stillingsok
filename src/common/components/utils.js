@@ -40,7 +40,7 @@ export function formatNumber(number) {
 }
 
 export function userAgentIsInternetExplorer() {
-    const userAgent = window.navigator.userAgent;
+    const { userAgent } = window.navigator;
     return userAgent.indexOf("MSIE ") >= 0 || userAgent.indexOf("Trident/") >= 0;
 }
 
@@ -64,7 +64,7 @@ export function isValidUrl(input) {
 export function isValidEmail(input) {
     // Regex from https://emailregex.com
     const pattern = new RegExp(
-        /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
     );
 
     return pattern.test(input);
@@ -74,7 +74,7 @@ export function containsEmail(input) {
     // Regex from https://emailregex.com
     const preprocessedInput = input.replace(/&#64;/, "@");
     const pattern = new RegExp(
-        /(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/
+        /(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/,
     );
 
     return pattern.test(preprocessedInput);

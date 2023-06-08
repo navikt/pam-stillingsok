@@ -12,7 +12,8 @@ import { CONTEXT_PATH } from "../../../common/environment";
 export function getApplicationUrl(source, properties) {
     if (source === "FINN") {
         return properties.sourceurl;
-    } else if (properties.applicationurl !== undefined) {
+    }
+    if (properties.applicationurl !== undefined) {
         return properties.applicationurl;
     }
     return properties.sourceurl;
@@ -22,7 +23,7 @@ const applyForPosition = (finn, stilling) => {
     try {
         logAmplitudeEvent("Stilling sok-via-url", {
             title: stilling._source.title,
-            id: stilling._id
+            id: stilling._id,
         });
     } catch (e) {
         // ignore
@@ -30,7 +31,7 @@ const applyForPosition = (finn, stilling) => {
 };
 
 export default function HowToApply({ stilling, showFavouriteButton }) {
-    const properties = stilling._source.properties;
+    const { properties } = stilling._source;
     const applicationUrl = getApplicationUrl(stilling._source.source, properties);
     const isFinn = stilling._source.source === "FINN";
     const path = "stilling";
@@ -59,7 +60,7 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                             as={Link}
                             onClick={() => {
                                 logAmplitudeEvent("click superrask søknad link", {
-                                    id: stilling._id
+                                    id: stilling._id,
                                 });
                             }}
                             to={`${CONTEXT_PATH}/${path}/${stilling._id}/superrask-soknad`}
@@ -84,7 +85,7 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                 )}
 
                 {applicationUrl && (
-                    <React.Fragment>
+                    <>
                         {isValidUrl(applicationUrl) ? (
                             <BodyLong className="mt-1">
                                 Alternativt kan du{" "}
@@ -95,7 +96,7 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                         ) : (
                             <BodyLong className="mt-1">Alternativt kan du sende søknad på {applicationUrl}.</BodyLong>
                         )}
-                    </React.Fragment>
+                    </>
                 )}
 
                 {showFavouriteButton && (
@@ -118,13 +119,13 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                 </Heading>
                 <dl className="JobPosting__dl">
                     {properties.applicationdue && (
-                        <React.Fragment>
+                        <>
                             <dt>Søknadsfrist</dt>
                             <dd>{formatDate(properties.applicationdue)}</dd>
-                        </React.Fragment>
+                        </>
                     )}
                     {!isFinn && properties.applicationemail && (
-                        <React.Fragment>
+                        <>
                             <dt>Send søknad til</dt>
                             <dd>
                                 {isValidEmail(properties.applicationemail) ? (
@@ -135,13 +136,13 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                                     properties.applicationemail
                                 )}
                             </dd>
-                        </React.Fragment>
+                        </>
                     )}
                     {applicationUrl && !isValidUrl(applicationUrl) && (
-                        <React.Fragment>
+                        <>
                             <dt>Søknadslenke</dt>
                             <dd>{applicationUrl}</dd>
-                        </React.Fragment>
+                        </>
                     )}
                 </dl>
 
@@ -185,14 +186,15 @@ HowToApply.propTypes = {
         _source: PropTypes.shape({
             title: PropTypes.string,
             source: PropTypes.string,
+            status: PropTypes.string,
             properties: PropTypes.shape({
                 applicationdue: PropTypes.string,
                 applicationemail: PropTypes.string,
                 applicationurl: PropTypes.string,
                 sourceurl: PropTypes.string,
-                hasInterestform: PropTypes.string
-            })
-        })
+                hasInterestform: PropTypes.string,
+            }),
+        }),
     }).isRequired,
-    showFavouriteButton: PropTypes.bool.isRequired
+    showFavouriteButton: PropTypes.bool.isRequired,
 };

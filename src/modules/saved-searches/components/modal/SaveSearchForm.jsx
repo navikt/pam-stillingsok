@@ -1,6 +1,7 @@
 import React, { useContext, useRef, useState } from "react";
-import { UserContext } from "../../../user/contexts/UserProvider";
 import { BodyLong, Button, Checkbox, Radio, RadioGroup, TextField, Link as AkselLink } from "@navikt/ds-react";
+import PropTypes from "prop-types";
+import { UserContext } from "../../../user/contexts/UserProvider";
 import useToggle from "../../../../common/hooks/useToggle";
 import { FetchStatus } from "../../../../common/hooks/useFetchReducer";
 import Alert from "../../../../common/components/alert/Alert";
@@ -10,7 +11,7 @@ import UserAPI from "../../../../common/api/UserAPI";
 export const FormModes = {
     ADD: "ADD",
     UPDATE: "UPDATE",
-    UPDATE_QUERY_ONLY: "UPDATE_QUERY_ONLY"
+    UPDATE_QUERY_ONLY: "UPDATE_QUERY_ONLY",
 };
 
 /**
@@ -36,6 +37,22 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
 
     const titleRef = useRef();
 
+    function validateForm() {
+        let isValid = true;
+
+        if (title.trim().length === 0) {
+            isValid = false;
+            setTitleValidationError("Tittel mangler");
+            if (titleRef.current) {
+                titleRef.current.focus();
+            }
+        } else {
+            setTitleValidationError(undefined);
+        }
+
+        return isValid;
+    }
+
     function handleFormSubmit(e) {
         e.preventDefault();
         if (validateForm()) {
@@ -46,7 +63,7 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
                 notifyType,
                 duration: notifyType === "NONE" ? 0 : duration,
                 status: notifyType === "NONE" ? "INACTIVE" : "ACTIVE",
-                searchQuery: formData.searchQuery
+                searchQuery: formData.searchQuery,
             };
 
             if (formMode === FormModes.ADD) {
@@ -64,12 +81,12 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
                 if (formMode === FormModes.UPDATE) {
                     dataToBeSaved = {
                         ...existingSavedSearch,
-                        ...dataToBeSaved
+                        ...dataToBeSaved,
                     };
                 } else if (formMode === FormModes.UPDATE_QUERY_ONLY) {
                     dataToBeSaved = {
                         ...existingSavedSearch,
-                        searchQuery: formData.searchQuery
+                        searchQuery: formData.searchQuery,
                     };
                 }
 
@@ -85,22 +102,6 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
                     });
             }
         }
-    }
-
-    function validateForm() {
-        let isValid = true;
-
-        if (title.trim().length === 0) {
-            isValid = false;
-            setTitleValidationError("Tittel mangler");
-            if (titleRef.current) {
-                titleRef.current.focus();
-            }
-        } else {
-            setTitleValidationError(undefined);
-        }
-
-        return isValid;
     }
 
     function handleFormModeChange(value) {
@@ -144,7 +145,7 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
             )}
 
             {shouldShowForm && (
-                <React.Fragment>
+                <>
                     <TextField
                         id="SavedSearchModal__name"
                         className="SavedSearchModal__body__name"
@@ -162,7 +163,7 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
                         Ja, jeg ønsker å motta e-post med varsel om nye treff
                     </Checkbox>
                     {notifyType === "EMAIL" && (
-                        <React.Fragment>
+                        <>
                             <RadioGroup
                                 legend="Varighet på varsel"
                                 onChange={handleDurationChange}
@@ -180,9 +181,9 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
                                     e-postadresse.
                                 </BodyLong>
                             )}
-                        </React.Fragment>
+                        </>
                     )}
-                </React.Fragment>
+                </>
             )}
             {saveStatus === FetchStatus.FAILURE && (
                 <Alert>Noe gikk galt ved lagring, forsøk igjen eller last siden på nytt</Alert>
@@ -203,5 +204,21 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
         </form>
     );
 }
+
+SaveSearchForm.propTypes = {
+    existingSavedSearch: PropTypes.shape({
+        uuid: PropTypes.string,
+        title: PropTypes.string,
+    }),
+    onClose: PropTypes.func,
+    onSuccess: PropTypes.func,
+    formData: PropTypes.shape({
+        searchQuery: PropTypes.string,
+        duration: PropTypes.number,
+        notifyType: PropTypes.string,
+        title: PropTypes.string,
+    }),
+    defaultFormMode: PropTypes.string,
+};
 
 export default SaveSearchForm;

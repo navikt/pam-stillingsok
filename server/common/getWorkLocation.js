@@ -1,4 +1,4 @@
-const fixLocationName = require('./fixLocationName');
+const fixLocationName = require("./fixLocationName");
 
 function getWorkLocation(propertyLocation, locationList, hidePostAddress = true) {
     if (propertyLocation) {
@@ -6,7 +6,7 @@ function getWorkLocation(propertyLocation, locationList, hidePostAddress = true)
     }
 
     if (!locationList) {
-        return '';
+        return "";
     }
 
     const workLocations = [];
@@ -14,7 +14,7 @@ function getWorkLocation(propertyLocation, locationList, hidePostAddress = true)
         if (locationList[i].city && hidePostAddress) {
             workLocations.push(fixLocationName(locationList[i].city));
         } else if (locationList[i].postalCode) {
-            let tmp = locationList[i].address ? `${locationList[i].address}, ` : '';
+            let tmp = locationList[i].address ? `${locationList[i].address}, ` : "";
             tmp += `${locationList[i].postalCode} ${fixLocationName(locationList[i].city)}`;
             workLocations.push(tmp);
         } else if (locationList[i].municipal) {
@@ -26,7 +26,7 @@ function getWorkLocation(propertyLocation, locationList, hidePostAddress = true)
         }
     }
 
-    return workLocations.join(', ');
+    return workLocations.join(", ");
 }
 
 module.exports = getWorkLocation;

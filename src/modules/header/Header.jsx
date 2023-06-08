@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Header as ArbeidsplassenHeader } from "@navikt/arbeidsplassen-react";
 import { AuthenticationContext, AuthenticationStatus } from "../auth/contexts/AuthenticationProvider";
 
-const Header = () => {
+function Header() {
     const { authenticationStatus, login, logout, userNameAndInfo } = useContext(AuthenticationContext);
 
     const userName =
@@ -27,6 +27,6 @@ const Header = () => {
             userName={userName}
         />
     );
-};
+}
 
 export default Header;

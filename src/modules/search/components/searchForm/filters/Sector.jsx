@@ -51,6 +51,8 @@ function Sector({ initialValues, updatedValues, query, dispatch }) {
 }
 
 Sector.propTypes = {
+    initialValues: PropTypes.arrayOf(PropTypes.shape({})),
+    updatedValues: PropTypes.arrayOf(PropTypes.shape({})),
     sector: PropTypes.arrayOf(
         PropTypes.shape({
             key: PropTypes.string,

@@ -11,17 +11,17 @@ import H1WithAutoFocus from "../../../common/components/h1WithAutoFocus/H1WithAu
 const violationCategories = [
     { label: "Diskriminerende innhold", key: "discrimination" },
     { label: "Det er markedsføring", key: "marketing" },
-    { label: "Annet", key: "other" }
+    { label: "Annet", key: "other" },
 ];
 
 const scamCategories = [
     { label: "Falsk stillingannonse og arbeidsgiver", key: "fake" },
     { label: "Krever betaling for å søke stilling", key: "payment" },
     { label: "Ber om kredittinfo og/eller BankID", key: "creditInfo" },
-    { label: "Annet", key: "other" }
+    { label: "Annet", key: "other" },
 ];
 
-const ReportAd = () => {
+function ReportAd() {
     const { authenticationStatus, login } = useContext(AuthenticationContext);
     const [error, setError] = useState(false);
     const [finished, setFinished] = useState(false);
@@ -72,7 +72,7 @@ const ReportAd = () => {
         const subCategory = violation
             ? violationCategories.filter((c) => c.key === violationCategory)[0].label
             : scamCategories.filter((c) => c.key === scamCategory)[0].label;
-        const title = "En stilling har blitt rapportert for " + category.toLowerCase();
+        const title = `En stilling har blitt rapportert for ${category.toLowerCase()}`;
 
         try {
             await UserAPI.post(
@@ -82,9 +82,9 @@ const ReportAd = () => {
                     subCategory,
                     title,
                     postingId: stillingId,
-                    description
+                    description,
                 },
-                false
+                false,
             );
 
             setFinished(true);
@@ -94,7 +94,7 @@ const ReportAd = () => {
                 subCategory,
                 title,
                 postingId: stillingId,
-                description
+                description,
             });
         } catch (e) {
             setError(true);
@@ -150,38 +150,34 @@ const ReportAd = () => {
                                 </Checkbox>
 
                                 {violation &&
-                                    violationCategories.map((c) => {
-                                        return (
-                                            <Checkbox
-                                                className="sub-checkbox"
-                                                key={c.key}
-                                                value={c.key}
-                                                onChange={handleViolationCategoryCheck}
-                                                checked={violationCategory === c.key}
-                                            >
-                                                {c.label}
-                                            </Checkbox>
-                                        );
-                                    })}
+                                    violationCategories.map((c) => (
+                                        <Checkbox
+                                            className="sub-checkbox"
+                                            key={c.key}
+                                            value={c.key}
+                                            onChange={handleViolationCategoryCheck}
+                                            checked={violationCategory === c.key}
+                                        >
+                                            {c.label}
+                                        </Checkbox>
+                                    ))}
 
                                 <Checkbox name="svindel" onChange={handleScamCheck} checked={scam === true}>
                                     Mistanke om svindel
                                 </Checkbox>
 
                                 {scam &&
-                                    scamCategories.map((c) => {
-                                        return (
-                                            <Checkbox
-                                                className="sub-checkbox"
-                                                key={c.key}
-                                                value={c.key}
-                                                onChange={handleScamCategoryCheck}
-                                                checked={scamCategory === c.key}
-                                            >
-                                                {c.label}
-                                            </Checkbox>
-                                        );
-                                    })}
+                                    scamCategories.map((c) => (
+                                        <Checkbox
+                                            className="sub-checkbox"
+                                            key={c.key}
+                                            value={c.key}
+                                            onChange={handleScamCategoryCheck}
+                                            checked={scamCategory === c.key}
+                                        >
+                                            {c.label}
+                                        </Checkbox>
+                                    ))}
 
                                 <br />
 
@@ -225,6 +221,6 @@ const ReportAd = () => {
             )}
         </div>
     );
-};
+}
 
 export default ReportAd;

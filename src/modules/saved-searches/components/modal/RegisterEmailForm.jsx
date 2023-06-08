@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
+import { BodyLong, Button, TextField } from "@navikt/ds-react";
 import { isValidEmail } from "../../../../common/components/utils";
 import { UserContext } from "../../../user/contexts/UserProvider";
-import { BodyLong, Button, TextField } from "@navikt/ds-react";
 import { FetchStatus } from "../../../../common/hooks/useFetchReducer";
 import Alert from "../../../../common/components/alert/Alert";
 import UserAPI from "../../../../common/api/UserAPI";
@@ -20,34 +20,13 @@ function RegisterEmailForm({ onClose, onSuccess }) {
         }
     }, []);
 
-    function handleFormSubmit(e) {
-        e.preventDefault();
-
-        if (validateForm()) {
-            setSaveStatus(FetchStatus.IS_FETCHING);
-
-            UserAPI.put("api/v1/user", {
-                ...user.data,
-                email: email
-            })
-                .then((response) => {
-                    setSaveStatus(FetchStatus.SUCCESS);
-                    updateUser(response);
-                    onSuccess();
-                })
-                .catch(() => {
-                    setSaveStatus(FetchStatus.FAILURE);
-                });
-        }
-    }
-
     function validateForm() {
         let isValid = true;
 
         if (email && email.length > 0 && !isValidEmail(email)) {
             isValid = false;
             setEmailValidationError(
-                "E-postadressen er ugyldig. Den må minimum inneholde en «@» og et punktum. Den kan ikke inneholde noen mellomrom. For eksempel: navn.navnesen@gmail.com"
+                "E-postadressen er ugyldig. Den må minimum inneholde en «@» og et punktum. Den kan ikke inneholde noen mellomrom. For eksempel: navn.navnesen@gmail.com",
             );
         } else if (email === undefined || email === null || email.trim().length === 0) {
             isValid = false;
@@ -61,13 +40,34 @@ function RegisterEmailForm({ onClose, onSuccess }) {
         return isValid;
     }
 
+    function handleFormSubmit(e) {
+        e.preventDefault();
+
+        if (validateForm()) {
+            setSaveStatus(FetchStatus.IS_FETCHING);
+
+            UserAPI.put("api/v1/user", {
+                ...user.data,
+                email,
+            })
+                .then((response) => {
+                    setSaveStatus(FetchStatus.SUCCESS);
+                    updateUser(response);
+                    onSuccess();
+                })
+                .catch(() => {
+                    setSaveStatus(FetchStatus.FAILURE);
+                });
+        }
+    }
+
     function handleEmailChange(e) {
         setEmail(e.target.value);
         setEmailValidationError(undefined);
     }
 
     return (
-        <React.Fragment>
+        <>
             <BodyLong role="status" spacing>
                 <span className="bold">Søket ditt er lagret, men du har ikke registrert e-postadresse.</span>
                 <br />
@@ -101,7 +101,7 @@ function RegisterEmailForm({ onClose, onSuccess }) {
                     </Button>
                 </div>
             </form>
-        </React.Fragment>
+        </>
     );
 }
 

@@ -17,7 +17,7 @@ function SearchIsEmptyModal({ onClose }) {
 }
 
 SearchIsEmptyModal.propTypes = {
-    onClose: PropTypes.func.isRequired
+    onClose: PropTypes.func.isRequired,
 };
 
 export default SearchIsEmptyModal;

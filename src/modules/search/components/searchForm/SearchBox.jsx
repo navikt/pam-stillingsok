@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import { SET_MATCH, SET_SEARCH_STRING } from "../../query";
+import { SET_SEARCH_STRING } from "../../query";
 import Typeahead from "../../../../common/components/typeahead/Typeahead";
 import { FetchAction, useFetchReducer } from "../../../../common/hooks/useFetchReducer";
 import useDebounce from "../../../../common/hooks/useDebounce";
@@ -14,6 +14,24 @@ function SearchBox({ dispatch, query }) {
     const [suggestionsResponse, suggestionsDispatch] = useFetchReducer([]);
     const MINIMUM_LENGTH = 3;
 
+    /**
+     * Use new Set to remove duplicates across category_suggest and searchtags_suggest
+     */
+    function removeDuplicateSuggestions(result) {
+        return [
+            ...new Set(
+                [
+                    ...result.suggest.searchtags_suggest[0].options.map((suggestion) =>
+                        capitalizeFirstLetter(suggestion.text),
+                    ),
+                    ...result.suggest.category_suggest[0].options.map((suggestion) =>
+                        capitalizeFirstLetter(suggestion.text),
+                    ),
+                ].sort(),
+            ),
+        ];
+    }
+
     function fetchSuggestions() {
         SearchAPI.get("api/suggestions", { match: value, minLength: MINIMUM_LENGTH })
             .then((response) => {
@@ -24,24 +42,6 @@ function SearchBox({ dispatch, query }) {
             });
     }
 
-    /**
-     * Use new Set to remove duplicates across category_suggest and searchtags_suggest
-     */
-    function removeDuplicateSuggestions(result) {
-        return [
-            ...new Set(
-                [
-                    ...result.suggest.searchtags_suggest[0].options.map((suggestion) =>
-                        capitalizeFirstLetter(suggestion.text)
-                    ),
-                    ...result.suggest.category_suggest[0].options.map((suggestion) =>
-                        capitalizeFirstLetter(suggestion.text)
-                    )
-                ].sort()
-            )
-        ];
-    }
-
     useEffect(() => {
         setValue(query.q);
     }, [query.q]);
@@ -49,23 +49,21 @@ function SearchBox({ dispatch, query }) {
     useEffect(() => {
         if (initialRender.current) {
             initialRender.current = false;
+        } else if (debouncedValue && debouncedValue.length >= MINIMUM_LENGTH) {
+            fetchSuggestions(debouncedValue);
         } else {
-            if (debouncedValue && debouncedValue.length >= MINIMUM_LENGTH) {
-                fetchSuggestions(debouncedValue);
-            } else {
-                suggestionsDispatch({ type: FetchAction.SET_DATA, data: [] });
-            }
+            suggestionsDispatch({ type: FetchAction.SET_DATA, data: [] });
         }
     }, [debouncedValue]);
 
-    function handleTypeAheadValueChange(value) {
-        setValue(value);
+    function handleTypeAheadValueChange(newValue) {
+        setValue(newValue);
     }
 
-    function handleTypeAheadSuggestionSelected(value) {
-        setValue(value);
+    function handleTypeAheadSuggestionSelected(newValue) {
+        setValue(newValue);
         //  dispatch({ type: SET_MATCH, value: "occupation" });
-        dispatch({ type: SET_SEARCH_STRING, value });
+        dispatch({ type: SET_SEARCH_STRING, newValue });
     }
 
     function handleSearchButtonClick() {
@@ -74,28 +72,26 @@ function SearchBox({ dispatch, query }) {
     }
 
     return (
-        <React.Fragment>
-            <div className="SearchBox">
-                <Typeahead
-                    id="search-form-fritekst-input"
-                    name="q"
-                    autoComplete="off"
-                    onSelect={handleTypeAheadSuggestionSelected}
-                    onChange={handleTypeAheadValueChange}
-                    suggestions={suggestionsResponse.data}
-                    value={value ? value : ""}
-                    onSearchButtonClick={handleSearchButtonClick}
-                />
-            </div>
-        </React.Fragment>
+        <div className="SearchBox">
+            <Typeahead
+                id="search-form-fritekst-input"
+                name="q"
+                autoComplete="off"
+                onSelect={handleTypeAheadSuggestionSelected}
+                onChange={handleTypeAheadValueChange}
+                suggestions={suggestionsResponse.data}
+                value={value || ""}
+                onSearchButtonClick={handleSearchButtonClick}
+            />
+        </div>
     );
 }
 
 SearchBox.propTypes = {
     query: PropTypes.shape({
-        q: PropTypes.string
+        q: PropTypes.string,
     }).isRequired,
-    dispatch: PropTypes.func.isRequired
+    dispatch: PropTypes.func.isRequired,
 };
 
 export default SearchBox;

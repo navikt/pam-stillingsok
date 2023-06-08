@@ -1,11 +1,11 @@
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
+import { Checkbox, Fieldset } from "@navikt/ds-react";
 import { ADD_ENGAGEMENT_TYPE, REMOVE_ENGAGEMENT_TYPE } from "../../../query";
 import UnknownSearchCriteriaValues from "./UnknownSearchCriteriaValues";
 import mergeCount from "../utils/mergeCount";
 import moveCriteriaToBottom from "../utils/moveFacetToBottom";
 import { findUnknownSearchCriteriaValues } from "../utils/findUnknownSearchCriteriaValues";
-import { Checkbox, Fieldset } from "@navikt/ds-react";
 
 function Engagement({ initialValues, updatedValues, query, dispatch }) {
     const [values, setValues] = useState(moveCriteriaToBottom(initialValues, "Annet"));
@@ -66,13 +66,14 @@ Engagement.propTypes = {
     initialValues: PropTypes.arrayOf(
         PropTypes.shape({
             key: PropTypes.string,
-            count: PropTypes.number
-        })
+            count: PropTypes.number,
+        }),
     ).isRequired,
+    updatedValues: PropTypes.arrayOf(PropTypes.shape({})),
     query: PropTypes.shape({
-        engagementType: PropTypes.arrayOf(PropTypes.string)
+        engagementType: PropTypes.arrayOf(PropTypes.string),
     }).isRequired,
-    dispatch: PropTypes.func.isRequired
+    dispatch: PropTypes.func.isRequired,
 };
 
 export default Engagement;
