@@ -24,14 +24,20 @@
     gap: 1rem;
     align-items: center;
     background: var(--a-surface-default);
-    border-bottom: 1px solid var(--arb-gray-100);
     position: sticky;
     top: 0;
     z-index: 999;
 }
 
 .FilterModal__content {
-    padding: 1rem;
+    flex-grow: 1;
+    padding: 0 1rem 1rem 1rem;
+}
+
+.FilterModal__content .navds-tabs__tab {
+    margin: 0 1rem 1rem 0;
+    min-height: unset;
+    padding: 0.25rem;
 }
 
 @media (min-width: 728px) {
@@ -85,4 +91,21 @@
 
 .Filter__section {
     padding: 1rem 0;
+}
+
+.Filters__desktop {
+    display: none;
+}
+
+.Filters__mobile {
+    display: block;
+}
+@media (min-width: 768px) {
+    .Filters__desktop {
+        display: block;
+    }
+
+    .Filters__mobile {
+        display: none;
+    }
 }
