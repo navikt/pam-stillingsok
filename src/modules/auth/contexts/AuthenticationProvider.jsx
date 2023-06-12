@@ -1,7 +1,6 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { CONTEXT_PATH, LOGIN_URL, LOGOUT_URL } from "../../../common/environment";
-import { setLoggedIn } from "../../../common/tracking/amplitude";
 
 export const AuthenticationContext = React.createContext({});
 
@@ -27,18 +26,14 @@ function AuthenticationProvider({ children }) {
             .then((response) => {
                 if (response.status === 200) {
                     setAuthenticationStatus(AuthenticationStatus.IS_AUTHENTICATED);
-                    setLoggedIn(true);
                 } else if (response.status === 401) {
                     setAuthenticationStatus(AuthenticationStatus.NOT_AUTHENTICATED);
-                    setLoggedIn(false);
                 } else {
                     setAuthenticationStatus(AuthenticationStatus.FAILURE);
-                    setLoggedIn(false);
                 }
             })
             .catch(() => {
                 setAuthenticationStatus(AuthenticationStatus.FAILURE);
-                setLoggedIn(false);
             });
     };
 
@@ -86,8 +81,13 @@ function AuthenticationProvider({ children }) {
         }
     }, [authenticationStatus]);
 
-    const args = useMemo(() => ({ userNameAndInfo, authenticationStatus, login, logout, loginAndRedirect }), []);
-    return <AuthenticationContext.Provider value={args}>{children}</AuthenticationContext.Provider>;
+    return (
+        <AuthenticationContext.Provider // eslint-disable-next-line
+            value={{ userNameAndInfo, authenticationStatus, login, logout, loginAndRedirect }}
+        >
+            {children}
+        </AuthenticationContext.Provider>
+    );
 }
 
 AuthenticationProvider.propTypes = {
