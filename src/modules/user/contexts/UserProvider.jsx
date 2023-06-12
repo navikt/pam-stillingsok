@@ -63,7 +63,7 @@ function UserProvider({ children }) {
     }, [userResponse]);
 
     useEffect(() => {
-        setAuthenticatedStatus(authenticationStatus);
+        setAuthenticatedStatus(authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED);
     }, [authenticationStatus]);
 
     return (
