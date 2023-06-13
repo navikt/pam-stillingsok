@@ -48,11 +48,13 @@ function UserProvider({ children }) {
         hasAcceptedTermsStatus,
     };
 
+    const isAuthenticated = authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED;
+
     useEffect(() => {
-        if (authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED) {
+        if (isAuthenticated) {
             fetchUser();
         }
-    }, [authenticationStatus]);
+    }, [isAuthenticated]);
 
     useEffect(() => {
         if (userResponse.data) {
@@ -63,8 +65,8 @@ function UserProvider({ children }) {
     }, [userResponse]);
 
     useEffect(() => {
-        setAuthenticatedStatus(authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED);
-    }, [authenticationStatus]);
+        setAuthenticatedStatus(isAuthenticated);
+    }, [isAuthenticated]);
 
     return (
         <UserContext.Provider value={userContextValues}>
