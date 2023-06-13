@@ -76,6 +76,7 @@ function setUserProperties(property, value) {
 
 export function setAuthenticatedStatus(isAuthenticated) {
     setUserProperties("is_authenticated", isAuthenticated);
+    amplitude.track("updated authentication status", { is_authenticated: isAuthenticated });
 }
 
 export default logAmplitudeEvent;
