@@ -100,6 +100,13 @@
 .Filters__mobile {
     display: block;
 }
+
+.Filters__mobile .navds-tabs__tablist-wrapper {
+    margin-left: calc(50% - 50vw);
+    padding: 0 1rem;
+    width: 100vw;
+}
+
 @media (min-width: 768px) {
     .Filters__desktop {
         display: block;

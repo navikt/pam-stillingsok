@@ -213,7 +213,7 @@ export default function Search() {
                                     icon={<FilterIcon />}
                                     aria-expanded={isFiltersVisible}
                                 >
-                                    Filtre
+                                    Velg sted, yrke og andre filtre
                                 </Button>
                             )}
                             {(device === Device.DESKTOP ||
