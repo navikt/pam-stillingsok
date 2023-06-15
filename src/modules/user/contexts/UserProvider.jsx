@@ -5,6 +5,7 @@ import UserAPI from "../../../common/api/UserAPI";
 import { FetchAction, useFetchReducer } from "../../../common/hooks/useFetchReducer";
 import useToggle from "../../../common/hooks/useToggle";
 import AlertModalWithPageReload from "../../../common/components/modals/AlertModalWithPageReload";
+import { setAuthenticatedStatus } from "../../../common/tracking/amplitude";
 
 export const UserContext = React.createContext({});
 
@@ -39,6 +40,8 @@ function UserProvider({ children }) {
         dispatch({ type: FetchAction.SET_DATA, data });
     }
 
+    // TODO: useMemo?
+    // eslint-disable-next-line
     const userContextValues = {
         user: userResponse,
         updateUser,
@@ -58,6 +61,14 @@ function UserProvider({ children }) {
             setHasAcceptedTermsStatus(HasAcceptedTermsStatus.NOT_ACCEPTED);
         }
     }, [userResponse]);
+
+    useEffect(() => {
+        if (authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED) {
+            setAuthenticatedStatus(true);
+        } else if (authenticationStatus === AuthenticationStatus.NOT_AUTHENTICATED) {
+            setAuthenticatedStatus(false);
+        }
+    }, [authenticationStatus]);
 
     return (
         <UserContext.Provider value={userContextValues}>

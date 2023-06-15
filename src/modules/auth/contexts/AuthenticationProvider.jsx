@@ -82,7 +82,7 @@ function AuthenticationProvider({ children }) {
     }, [authenticationStatus]);
 
     return (
-        <AuthenticationContext.Provider
+        <AuthenticationContext.Provider // eslint-disable-next-line
             value={{ userNameAndInfo, authenticationStatus, login, logout, loginAndRedirect }}
         >
             {children}
