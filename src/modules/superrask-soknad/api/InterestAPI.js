@@ -82,19 +82,19 @@ async function post(url, query, toJson = true) {
 }
 
 async function getInterestForm(adUuid) {
-    return get(`interest-form/${adUuid}`);
+    return get(`application-form/${adUuid}`);
 }
 
 async function getCandidateInterestForm(adUuid, uuid) {
-    return head(`interest-form/${adUuid}/candidates/${uuid}`);
+    return head(`application-form/${adUuid}/applications/${uuid}`);
 }
 
 async function postInterest(adUuid, interest) {
-    return post(`interest-form/${adUuid}/candidates`, interest, false);
+    return post(`application-form/${adUuid}/applications`, interest, false);
 }
 
 async function deleteInterest(adUuid, uuid) {
-    return remove(`interest-form/${adUuid}/candidates/${uuid}`);
+    return remove(`application-form/${adUuid}/applications/${uuid}`);
 }
 
 const InterestAPI = {
