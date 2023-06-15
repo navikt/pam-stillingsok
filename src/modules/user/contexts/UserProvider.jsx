@@ -63,12 +63,11 @@ function UserProvider({ children }) {
     }, [userResponse]);
 
     useEffect(() => {
-        if (
-            authenticationStatus === AuthenticationStatus.NOT_FETCHED ||
-            authenticationStatus === AuthenticationStatus.IS_FETCHING
-        )
-            return;
-        setAuthenticatedStatus(authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED);
+        if (authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED) {
+            setAuthenticatedStatus(true);
+        } else if (authenticationStatus === AuthenticationStatus.NOT_AUTHENTICATED) {
+            setAuthenticatedStatus(false);
+        }
     }, [authenticationStatus]);
 
     return (
