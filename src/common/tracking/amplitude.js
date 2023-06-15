@@ -1,6 +1,8 @@
 import * as amplitude from "@amplitude/analytics-browser";
 import getSessionId from "../../session";
 
+const userProperties = new amplitude.Identify();
+
 function getAmplitudeKey() {
     if (window.location.href.includes("nav.no")) return window.__AMPLITUDE_TOKEN__;
     return "";
@@ -69,13 +71,13 @@ export function logStillingVisning(ad) {
 }
 
 function setUserProperties(property, value) {
-    const userProperties = new amplitude.Identify();
     userProperties.set(property, value);
     amplitude.identify(userProperties);
 }
 
 export function setAuthenticatedStatus(isAuthenticated) {
     setUserProperties("is_authenticated", isAuthenticated);
+    logAmplitudeEvent("login event", { is_authenticated: isAuthenticated });
 }
 
 export default logAmplitudeEvent;
