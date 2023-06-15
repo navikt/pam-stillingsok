@@ -33,9 +33,7 @@ export function initAmplitude() {
 }
 
 const enrichData = (data) => {
-    const isAuthenticated = false;
-
-    let enrichedData = { ...data, isAuthenticated, navSessionId: getSessionId() };
+    let enrichedData = { ...data, navSessionId: getSessionId() };
 
     try {
         const erMellom25og30 = sessionStorage.getItem("erMellom25og30");
