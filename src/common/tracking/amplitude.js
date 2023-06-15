@@ -3,7 +3,7 @@ import getSessionId from "../../session";
 
 function getAmplitudeKey() {
     if (window.location.href.includes("nav.no")) return window.__AMPLITUDE_TOKEN__;
-    return "";
+    return "3acd3a52e065d2d99856a12e7e9e1432";
 }
 export function initAmplitude() {
     try {
@@ -75,6 +75,7 @@ function setUserProperties(property, value) {
 }
 
 export function setAuthenticatedStatus(isAuthenticated) {
+    console.log("setAuthenticatedStatus: ", isAuthenticated);
     setUserProperties("is_authenticated", isAuthenticated);
     amplitude.track("updated authentication status", { is_authenticated: isAuthenticated });
 }
