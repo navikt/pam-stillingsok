@@ -101,7 +101,7 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, sho
             </div>
 
             {jobTitle && (
-                <Label as="p" id={`${ad.uuid}-jobTitle`} className="mb-1">
+                <Label as="p" id={`${ad.uuid}-jobTitle`} className="mb-1 break-word">
                     {jobTitle}
                 </Label>
             )}

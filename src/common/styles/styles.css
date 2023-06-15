@@ -30,3 +30,7 @@ body {
 .flex-column {
     flex-direction: column;
 }
+
+.break-word {
+    word-wrap: break-word;
+}
