@@ -24,17 +24,17 @@ function SuperraskSoknadForm({ ad, interestForm, submitForm, isSending, hasError
     const [name, setName] = useState("");
     const [telephone, setTelephone] = useState("");
     const [email, setEmail] = useState("");
-    const [about, setAbout] = useState("");
+    const [motivation, setMotivation] = useState("");
     const [qualificationsFocusErrorSummary, setQualificationsFocusErrorSummary] = useState(false);
     const [checkedQualifications, setCheckedQualifications] = useState([]);
 
     // Validation
     const [telephoneValidationError, setTelephoneValidationError] = useState(undefined);
     const [emailValidationError, setEmailValidationError] = useState(undefined);
-    const [aboutValidationError, setAboutValidationError] = useState(undefined);
+    const [motivationValidationError, setMotivationValidationError] = useState(undefined);
     const errorSummary = useRef();
 
-    const ABOUT_MAX_LENGTH = 400;
+    const MOTIVATION_MAX_LENGTH = 400;
 
     useEffect(() => {
         if (qualificationsFocusErrorSummary) {
@@ -64,12 +64,12 @@ function SuperraskSoknadForm({ ad, interestForm, submitForm, isSending, hasError
             setTelephoneValidationError("Du må oppgi ditt telefonnummer for å kunne sende inn søknaden");
         }
 
-        if (about.length > ABOUT_MAX_LENGTH) {
+        if (motivation.length > MOTIVATION_MAX_LENGTH) {
             isValid = false;
-            setAboutValidationError(
+            setMotivationValidationError(
                 `Du har brukt ${
-                    about.length - ABOUT_MAX_LENGTH
-                } tegn for mye i din begrunnelse. Begrunnelsen kan ikke være lengre enn ${ABOUT_MAX_LENGTH} tegn`,
+                    motivation.length - MOTIVATION_MAX_LENGTH
+                } tegn for mye i din begrunnelse. Begrunnelsen kan ikke være lengre enn ${MOTIVATION_MAX_LENGTH} tegn`,
             );
         }
         if (!isValid) {
@@ -84,7 +84,7 @@ function SuperraskSoknadForm({ ad, interestForm, submitForm, isSending, hasError
                 name,
                 telephone,
                 email,
-                about,
+                motivation,
                 qualifications: interestForm.qualifications.map((it) => ({
                     ...it,
                     checked: checkedQualifications.includes(it.label),
@@ -109,10 +109,10 @@ function SuperraskSoknadForm({ ad, interestForm, submitForm, isSending, hasError
         setEmail(e.target.value);
     }
 
-    function handleAboutChange(e) {
+    function handleMotivationChange(e) {
         setQualificationsFocusErrorSummary(false);
-        setAboutValidationError(undefined);
-        setAbout(e.target.value);
+        setMotivationValidationError(undefined);
+        setMotivation(e.target.value);
     }
 
     function handleQualificationsCheck(e) {
@@ -132,7 +132,7 @@ function SuperraskSoknadForm({ ad, interestForm, submitForm, isSending, hasError
                 return "Vi kunne ikke sende inn søknaden din. Sjekk at e-posten din er skrevet riktig og prøv på nytt. Eksempel: epost@mail.no";
             case "invalid_telephone":
                 return "Vi kunne ikke sende inn søknaden din. Sjekk at telefonnummeret ditt er skrevet riktig og prøv på nytt. Eksempel: +47 99 99 99 99";
-            case "invalid_about":
+            case "invalid_motivation":
                 return "Vi kunne ikke sende inn søknaden din. Sjekk at begrunnelsen din ikke inneholder noen lenker eller er lenger enn 400 tegn.";
             default:
                 return "Det oppsto dessverre en feil og vi kunne ikke sende inn søknaden din. Prøv å send søknaden på nytt.";
@@ -152,10 +152,10 @@ function SuperraskSoknadForm({ ad, interestForm, submitForm, isSending, hasError
                 {emailValidationError}
             </ErrorSummary.Item>,
         );
-    if (aboutValidationError)
+    if (motivationValidationError)
         errors.push(
-            <ErrorSummary.Item href="#register-interest-about" key="3">
-                {aboutValidationError}
+            <ErrorSummary.Item href="#register-interest-motivation" key="3">
+                {motivationValidationError}
             </ErrorSummary.Item>,
         );
 
@@ -215,12 +215,12 @@ function SuperraskSoknadForm({ ad, interestForm, submitForm, isSending, hasError
                     </BodyLong>
                 </ReadMore>
                 <Textarea
-                    id="register-interest-about"
+                    id="register-interest-motivation"
                     label="Skriv en begrunnelse"
-                    onChange={handleAboutChange}
-                    value={about}
-                    maxLength={ABOUT_MAX_LENGTH}
-                    error={aboutValidationError}
+                    onChange={handleMotivationChange}
+                    value={motivation}
+                    maxLength={MOTIVATION_MAX_LENGTH}
+                    error={motivationValidationError}
                 />
             </section>
 

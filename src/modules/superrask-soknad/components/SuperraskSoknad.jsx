@@ -53,7 +53,7 @@ function SuperraskSoknad({ match }) {
                 id: data.ad._id,
                 antallKrav: soknad.qualifications.length,
                 antallKravHuket: soknad.qualifications.filter((it) => it.checked).length,
-                antallTegnIFritekst: soknad.about.length,
+                antallTegnIFritekst: soknad.motivation.length,
                 harNavn: soknad.name.length > 0,
             });
         } catch (e) {
