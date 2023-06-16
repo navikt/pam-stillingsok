@@ -75,7 +75,7 @@ function setUserProperties(property, value) {
 
 export function setAuthenticatedStatus(isAuthenticated) {
     setUserProperties("is_authenticated", isAuthenticated);
-    logAmplitudeEvent("login event", { is_authenticated: isAuthenticated });
+    logAmplitudeEvent("auth status", { is_authenticated: isAuthenticated });
 }
 
 export default logAmplitudeEvent;
