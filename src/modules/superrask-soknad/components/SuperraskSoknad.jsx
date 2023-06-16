@@ -28,8 +28,8 @@ function SuperraskSoknad({ match }) {
 
         Promise.all(promises)
             .then((responses) => {
-                const [ad, interestForm] = responses;
-                dispatch({ type: FetchAction.RESOLVE, data: { ad, interestForm } });
+                const [ad, applicationForm] = responses;
+                dispatch({ type: FetchAction.RESOLVE, data: { ad, applicationForm } });
             })
             .catch((err) => {
                 dispatch({ type: FetchAction.REJECT, error: err });
@@ -91,7 +91,7 @@ function SuperraskSoknad({ match }) {
                         {postSoknadResponse.status !== FetchStatus.SUCCESS && (
                             <SuperraskSoknadForm
                                 ad={data.ad}
-                                interestForm={data.interestForm}
+                                applicationForm={data.applicationForm}
                                 submitForm={submitSoknad}
                                 isSending={postSoknadResponse.status === FetchStatus.IS_FETCHING}
                                 hasError={postSoknadResponse.status === FetchStatus.FAILURE}

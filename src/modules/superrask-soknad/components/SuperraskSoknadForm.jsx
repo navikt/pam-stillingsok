@@ -19,7 +19,7 @@ import { isValidEmail } from "../../../common/components/utils";
 import "./SuperraskSoknad.css";
 import { CONTEXT_PATH } from "../../../common/environment";
 
-function SuperraskSoknadForm({ ad, interestForm, submitForm, isSending, hasError, error }) {
+function SuperraskSoknadForm({ ad, applicationForm, submitForm, isSending, hasError, error }) {
     // Form data
     const [name, setName] = useState("");
     const [telephone, setTelephone] = useState("");
@@ -85,7 +85,7 @@ function SuperraskSoknadForm({ ad, interestForm, submitForm, isSending, hasError
                 telephone,
                 email,
                 motivation,
-                qualifications: interestForm.qualifications.map((it) => ({
+                qualifications: applicationForm.qualifications.map((it) => ({
                     ...it,
                     checked: checkedQualifications.includes(it.label),
                 })),
@@ -175,7 +175,7 @@ function SuperraskSoknadForm({ ad, interestForm, submitForm, isSending, hasError
                 )}
             </section>
 
-            {interestForm.qualifications && interestForm.qualifications.length > 0 && (
+            {applicationForm.qualifications && applicationForm.qualifications.length > 0 && (
                 <section className="InterestForm__section">
                     <Heading level="2" size="medium" spacing>
                         Bedriftens ønskede kvalifikasjoner
@@ -184,9 +184,9 @@ function SuperraskSoknadForm({ ad, interestForm, submitForm, isSending, hasError
                         Husk at du kan være rett person for jobben selv om du ikke treffer på alle kvalifikasjoner.
                     </BodyLong>
 
-                    {interestForm.qualifications && interestForm.qualifications.length > 0 && (
+                    {applicationForm.qualifications && applicationForm.qualifications.length > 0 && (
                         <Fieldset legend="Huk av for kvalifikasjonene du oppfyller">
-                            {interestForm.qualifications.map((it) => (
+                            {applicationForm.qualifications.map((it) => (
                                 <Checkbox
                                     key={it.id}
                                     value={it.label}
@@ -293,7 +293,7 @@ SuperraskSoknadForm.propTypes = {
     ad: PropTypes.shape({
         _id: PropTypes.string,
     }).isRequired,
-    interestForm: PropTypes.shape({
+    applicationForm: PropTypes.shape({
         qualifications: PropTypes.arrayOf(
             PropTypes.shape({
                 id: PropTypes.string,
