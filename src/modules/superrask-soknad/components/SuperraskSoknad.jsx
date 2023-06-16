@@ -24,7 +24,7 @@ function SuperraskSoknad({ match }) {
 
         dispatch({ type: FetchAction.BEGIN });
 
-        const promises = [SearchAPI.get(`api/stilling/${id}`), InterestAPI.getInterestForm(id)];
+        const promises = [SearchAPI.get(`api/stilling/${id}`), InterestAPI.getApplicationForm(id)];
 
         Promise.all(promises)
             .then((responses) => {
@@ -40,7 +40,7 @@ function SuperraskSoknad({ match }) {
 
     function submitSoknad(soknad) {
         postSoknadDispatch({ type: FetchAction.BEGIN });
-        InterestAPI.postInterest(match.params.uuid, soknad)
+        InterestAPI.postApplication(match.params.uuid, soknad)
             .then(() => {
                 postSoknadDispatch({ type: FetchAction.RESOLVE, data: soknad });
             })

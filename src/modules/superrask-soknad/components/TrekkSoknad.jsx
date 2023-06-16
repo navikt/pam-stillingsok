@@ -34,7 +34,7 @@ function TrekkSoknad({ match }) {
                 setUseDefault404Text(true);
             });
 
-        InterestAPI.getCandidateInterestForm(match.params.adUuid, match.params.uuid)
+        InterestAPI.getApplicationStatus(match.params.adUuid, match.params.uuid)
             .then((data) => {
                 candidateInterestFormDispatch({ type: FetchAction.RESOLVE, data });
             })
@@ -62,7 +62,7 @@ function TrekkSoknad({ match }) {
     const handleWithDrawClick = async () => {
         deleteSoknadDispatch({ type: FetchAction.BEGIN });
         let success = false;
-        await InterestAPI.deleteInterest(match.params.adUuid, match.params.uuid)
+        await InterestAPI.withdrawApplication(match.params.adUuid, match.params.uuid)
             .then((data) => {
                 deleteSoknadDispatch({ type: FetchAction.RESOLVE, data });
                 success = true;
