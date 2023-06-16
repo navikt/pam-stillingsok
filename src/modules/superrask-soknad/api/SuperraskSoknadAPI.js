@@ -89,19 +89,19 @@ async function getApplicationStatus(adUuid, uuid) {
     return head(`application-form/${adUuid}/application/${uuid}`);
 }
 
-async function postApplication(adUuid, interest) {
-    return post(`application-form/${adUuid}/application`, interest, false);
+async function postApplication(adUuid, application) {
+    return post(`application-form/${adUuid}/application`, application, false);
 }
 
 async function withdrawApplication(adUuid, uuid) {
     return remove(`application-form/${adUuid}/application/${uuid}`);
 }
 
-const InterestAPI = {
+const SuperraskSoknadAPI = {
     getApplicationForm,
     getApplicationStatus,
     postApplication,
     withdrawApplication,
 };
 
-export default InterestAPI;
+export default SuperraskSoknadAPI;

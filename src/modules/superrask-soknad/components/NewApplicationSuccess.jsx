@@ -7,10 +7,10 @@ import { CONTEXT_PATH } from "../../../common/environment";
 import Feedback from "./Feedback";
 import H1WithAutoFocus from "../../../common/components/h1WithAutoFocus/H1WithAutoFocus";
 
-function SuperraskSoknadSuccess({ data }) {
+function NewApplicationSuccess({ data }) {
     return (
         <ScrollToTop>
-            <div className="InterestForm__success-message">
+            <div className="NewApplicationForm__success-message">
                 <H1WithAutoFocus size="large">Din søknad er sendt til bedriften</H1WithAutoFocus>
                 <BodyLong spacing>
                     Du vil straks få en bekreftelse på din e-post {data.email}. Ønsker du å trekke din søknad finner du
@@ -32,8 +32,8 @@ function SuperraskSoknadSuccess({ data }) {
     );
 }
 
-SuperraskSoknadSuccess.propTypes = {
+NewApplicationSuccess.propTypes = {
     data: PropTypes.shape({ email: PropTypes.string }),
 };
 
-export default SuperraskSoknadSuccess;
+export default NewApplicationSuccess;

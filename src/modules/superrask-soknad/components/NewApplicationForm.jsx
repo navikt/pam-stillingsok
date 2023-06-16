@@ -19,7 +19,7 @@ import { isValidEmail } from "../../../common/components/utils";
 import "./SuperraskSoknad.css";
 import { CONTEXT_PATH } from "../../../common/environment";
 
-function SuperraskSoknadForm({ ad, applicationForm, submitForm, isSending, hasError, error }) {
+function NewApplicationForm({ ad, applicationForm, submitForm, isSending, hasError, error }) {
     // Form data
     const [name, setName] = useState("");
     const [telephone, setTelephone] = useState("");
@@ -142,26 +142,26 @@ function SuperraskSoknadForm({ ad, applicationForm, submitForm, isSending, hasEr
     const errors = [];
     if (telephoneValidationError)
         errors.push(
-            <ErrorSummary.Item href="#register-interest-telephone" key="1">
+            <ErrorSummary.Item href="#new-application-telephone" key="1">
                 {telephoneValidationError}
             </ErrorSummary.Item>,
         );
     if (emailValidationError)
         errors.push(
-            <ErrorSummary.Item href="#register-interest-email" key="2">
+            <ErrorSummary.Item href="#new-application-email" key="2">
                 {emailValidationError}
             </ErrorSummary.Item>,
         );
     if (motivationValidationError)
         errors.push(
-            <ErrorSummary.Item href="#register-interest-motivation" key="3">
+            <ErrorSummary.Item href="#new-application-motivation" key="3">
                 {motivationValidationError}
             </ErrorSummary.Item>,
         );
 
     return (
         <form onSubmit={handleFormSubmit}>
-            <section className="InterestForm__section">
+            <section className="NewApplicationForm__section">
                 <H1WithAutoFocus>Superrask søknad</H1WithAutoFocus>
                 <BodyLong spacing>
                     Ingen CV eller langt søknadsbrev, kun tre raske steg. Du får beskjed på e-post med en gang bedriften
@@ -176,7 +176,7 @@ function SuperraskSoknadForm({ ad, applicationForm, submitForm, isSending, hasEr
             </section>
 
             {applicationForm.qualifications && applicationForm.qualifications.length > 0 && (
-                <section className="InterestForm__section">
+                <section className="NewApplicationForm__section">
                     <Heading level="2" size="medium" spacing>
                         Bedriftens ønskede kvalifikasjoner
                     </Heading>
@@ -201,7 +201,7 @@ function SuperraskSoknadForm({ ad, applicationForm, submitForm, isSending, hasEr
                 </section>
             )}
 
-            <section className="InterestForm__section">
+            <section className="NewApplicationForm__section">
                 <Heading level="2" size="medium" spacing>
                     Hvorfor du er den rette for jobben
                 </Heading>
@@ -215,7 +215,7 @@ function SuperraskSoknadForm({ ad, applicationForm, submitForm, isSending, hasEr
                     </BodyLong>
                 </ReadMore>
                 <Textarea
-                    id="register-interest-motivation"
+                    id="new-application-motivation"
                     label="Skriv en begrunnelse"
                     onChange={handleMotivationChange}
                     value={motivation}
@@ -224,7 +224,7 @@ function SuperraskSoknadForm({ ad, applicationForm, submitForm, isSending, hasEr
                 />
             </section>
 
-            <section className="InterestForm__section">
+            <section className="NewApplicationForm__section">
                 <Heading level="2" size="medium" spacing>
                     Din kontaktinformasjon
                 </Heading>
@@ -232,7 +232,7 @@ function SuperraskSoknadForm({ ad, applicationForm, submitForm, isSending, hasEr
 
                 <TextField
                     label="Navn"
-                    id="register-interest-name"
+                    id="new-application-name"
                     auto-complete="name"
                     onChange={handleNameChange}
                     value={name}
@@ -244,7 +244,7 @@ function SuperraskSoknadForm({ ad, applicationForm, submitForm, isSending, hasEr
                     type="email"
                     auto-complete="email"
                     aria-required="true"
-                    id="register-interest-email"
+                    id="new-application-email"
                     onChange={handleEmailChange}
                     value={email}
                     error={emailValidationError}
@@ -253,7 +253,7 @@ function SuperraskSoknadForm({ ad, applicationForm, submitForm, isSending, hasEr
 
                 <TextField
                     label="Telefonnummer *"
-                    id="register-interest-telephone"
+                    id="new-application-telephone"
                     type="tel"
                     auto-complete="tel"
                     aria-required="true"
@@ -277,7 +277,7 @@ function SuperraskSoknadForm({ ad, applicationForm, submitForm, isSending, hasEr
 
             {hasError && <Alert>{getErrorMessage(error)}</Alert>}
 
-            <div className="InterestForm__buttons">
+            <div className="NewApplicationForm__buttons">
                 <Button variant="primary" loading={isSending} type="button" onClick={handleSendMessageClick}>
                     Send søknad
                 </Button>
@@ -289,7 +289,7 @@ function SuperraskSoknadForm({ ad, applicationForm, submitForm, isSending, hasEr
     );
 }
 
-SuperraskSoknadForm.propTypes = {
+NewApplicationForm.propTypes = {
     ad: PropTypes.shape({
         _id: PropTypes.string,
     }).isRequired,
@@ -309,4 +309,4 @@ SuperraskSoknadForm.propTypes = {
     }),
 };
 
-export default SuperraskSoknadForm;
+export default NewApplicationForm;

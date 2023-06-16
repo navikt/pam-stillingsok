@@ -3,13 +3,13 @@ import PropTypes from "prop-types";
 import { FetchAction, FetchStatus, useFetchReducer } from "../../../common/hooks/useFetchReducer";
 import SearchAPI from "../../../common/api/SearchAPI";
 import DelayedSpinner from "../../../common/components/spinner/DelayedSpinner";
-import InterestAPI from "../api/InterestAPI";
-import TrekkSoknadSuccess from "./TrekkSoknadSuccess";
-import TrekkSoknadConfirmationRequired from "./TrekkSoknadConfirmationRequired";
+import SuperraskSoknadAPI from "../api/SuperraskSoknadAPI";
+import WithdrawApplicationSuccess from "./WithdrawApplicationSuccess";
+import WithdrawApplicationConfirmationRequired from "./WithdrawApplicationConfirmationRequired";
 import logAmplitudeEvent from "../../../common/tracking/amplitude";
 import NotFound404 from "../../../common/components/NotFound/NotFound404";
 
-function TrekkSoknad({ match }) {
+function WithdrawApplication({ match }) {
     const [{ data: ad, status: adFetchStatus }, dispatch] = useFetchReducer();
     const [removeApplicationResponse, removeApplicationDispatch] = useFetchReducer();
     const [applicationStatus, applicationStatusDispatch] = useFetchReducer();
@@ -34,7 +34,7 @@ function TrekkSoknad({ match }) {
                 setUseDefault404Text(true);
             });
 
-        InterestAPI.getApplicationStatus(match.params.adUuid, match.params.uuid)
+        SuperraskSoknadAPI.getApplicationStatus(match.params.adUuid, match.params.uuid)
             .then((data) => {
                 applicationStatusDispatch({ type: FetchAction.RESOLVE, data });
             })
@@ -62,7 +62,7 @@ function TrekkSoknad({ match }) {
     const handleWithDrawClick = async () => {
         removeApplicationDispatch({ type: FetchAction.BEGIN });
         let success = false;
-        await InterestAPI.withdrawApplication(match.params.adUuid, match.params.uuid)
+        await SuperraskSoknadAPI.withdrawApplication(match.params.adUuid, match.params.uuid)
             .then((data) => {
                 removeApplicationDispatch({ type: FetchAction.RESOLVE, data });
                 success = true;
@@ -102,20 +102,20 @@ function TrekkSoknad({ match }) {
                     (adFetchStatus === FetchStatus.FAILURE &&
                         removeApplicationResponse.status !== FetchStatus.NOT_FETCHED)) &&
                 (removeApplicationResponse.status !== FetchStatus.SUCCESS ? (
-                    <TrekkSoknadConfirmationRequired
+                    <WithdrawApplicationConfirmationRequired
                         handleWithDrawClick={handleWithDrawClick}
                         isDeleting={removeApplicationResponse.status === FetchStatus.IS_FETCHING}
                         hasError={removeApplicationResponse.status === FetchStatus.FAILURE}
                         ad={adFetchStatus === FetchStatus.SUCCESS ? ad : undefined}
                     />
                 ) : (
-                    <TrekkSoknadSuccess />
+                    <WithdrawApplicationSuccess />
                 ))}
         </div>
     );
 }
 
-TrekkSoknad.propTypes = {
+WithdrawApplication.propTypes = {
     match: PropTypes.shape({
         params: PropTypes.shape({
             adUuid: PropTypes.string,
@@ -124,4 +124,4 @@ TrekkSoknad.propTypes = {
     }),
 };
 
-export default TrekkSoknad;
+export default WithdrawApplication;
