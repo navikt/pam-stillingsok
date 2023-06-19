@@ -72,8 +72,8 @@ function WithdrawApplication({ match }) {
             });
         try {
             logAmplitudeEvent("delete superrask søknad", {
-                stillingsId: match.params.adUuid,
-                candidateId: match.params.uuid,
+                adId: match.params.adUuid,
+                applicationId: match.params.uuid,
                 success,
             });
         } catch (e) {

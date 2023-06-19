@@ -51,10 +51,10 @@ function SuperraskSoknad({ match }) {
         try {
             logAmplitudeEvent("submit superrask søknad", {
                 id: data.ad._id,
-                antallKrav: application.qualifications.length,
-                antallKravHuket: application.qualifications.filter((it) => it.checked).length,
-                antallTegnIFritekst: application.motivation.length,
-                harNavn: application.name.length > 0,
+                numberOfQualifications: application.qualifications.length,
+                numberOfQualificationsChecked: application.qualifications.filter((it) => it.checked).length,
+                motivationLength: application.motivation.length,
+                hasName: application.name.length > 0,
             });
         } catch (e) {
             // ignore
