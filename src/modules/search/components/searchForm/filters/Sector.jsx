@@ -27,7 +27,7 @@ function Sector({ initialValues, updatedValues, query, dispatch }) {
     }
 
     return (
-        <Fieldset legend="Sektor" className="mt-1" hideLegend>
+        <Fieldset legend="Sektor" hideLegend>
             {values.map((item) => (
                 <Checkbox
                     name="sector"

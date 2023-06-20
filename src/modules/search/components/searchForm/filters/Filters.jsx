@@ -86,7 +86,7 @@ function Filters({ query, dispatchQuery, initialSearchResult, searchResult }) {
                         />
                     </Tabs.Panel>
                     <Tabs.Panel value="andre" className="mt-2 h-24  w-full bg-gray-50 p-4">
-                        <div className="Filter__section">
+                        <div className="mb-1_5">
                             <Published
                                 query={query}
                                 dispatch={dispatchQuery}
@@ -94,33 +94,39 @@ function Filters({ query, dispatchQuery, initialSearchResult, searchResult }) {
                                 updatedValues={searchResult && searchResult.aggregations.published}
                             />
                         </div>
-                        <Heading level="2" size="small" spacing>
-                            Heltid/deltid
-                        </Heading>
-                        <Extent
-                            query={query}
-                            dispatch={dispatchQuery}
-                            initialValues={initialSearchResult.aggregations.extent}
-                            updatedValues={searchResult && searchResult.aggregations.extent}
-                        />
-                        <Heading level="2" size="small" spacing>
-                            Sektor
-                        </Heading>
-                        <Sector
-                            query={query}
-                            dispatch={dispatchQuery}
-                            initialValues={initialSearchResult.aggregations.sector}
-                            updatedValues={searchResult && searchResult.aggregations.sector}
-                        />
-                        <Heading level="2" size="small" spacing>
-                            Ansettelsesform
-                        </Heading>
-                        <EngagementType
-                            query={query}
-                            dispatch={dispatchQuery}
-                            initialValues={initialSearchResult.aggregations.engagementTypes}
-                            updatedValues={searchResult && searchResult.aggregations.engagementTypes}
-                        />
+                        <div className="mb-1_5">
+                            <Heading level="2" size="small">
+                                Heltid/deltid
+                            </Heading>
+                            <Extent
+                                query={query}
+                                dispatch={dispatchQuery}
+                                initialValues={initialSearchResult.aggregations.extent}
+                                updatedValues={searchResult && searchResult.aggregations.extent}
+                            />
+                        </div>
+                        <div className="mb-1_5">
+                            <Heading level="2" size="small">
+                                Sektor
+                            </Heading>
+                            <Sector
+                                query={query}
+                                dispatch={dispatchQuery}
+                                initialValues={initialSearchResult.aggregations.sector}
+                                updatedValues={searchResult && searchResult.aggregations.sector}
+                            />
+                        </div>
+                        <div className="mb-1_5">
+                            <Heading level="2" size="small">
+                                Ansettelsesform
+                            </Heading>
+                            <EngagementType
+                                query={query}
+                                dispatch={dispatchQuery}
+                                initialValues={initialSearchResult.aggregations.engagementTypes}
+                                updatedValues={searchResult && searchResult.aggregations.engagementTypes}
+                            />
+                        </div>
                     </Tabs.Panel>
                 </Tabs>
             </div>
