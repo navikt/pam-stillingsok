@@ -89,10 +89,6 @@
     text-decoration: underline;
 }
 
-.Filter__section {
-    padding: 1rem 0;
-}
-
 .Filters__desktop {
     display: none;
 }
@@ -118,5 +114,9 @@
 
     .Filters__mobile {
         display: none;
+    }
+
+    .Filter__section {
+        padding: 1rem 0;
     }
 }
