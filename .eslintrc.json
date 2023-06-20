@@ -4,7 +4,7 @@
         "es2021": true,
         "node": true
     },
-    "extends": ["plugin:react/recommended", "airbnb", "prettier"],
+    "extends": ["plugin:react/recommended", "airbnb", "prettier", "plugin:jsx-a11y/recommended"],
     "parserOptions": {
         "ecmaFeatures": {
             "jsx": true
