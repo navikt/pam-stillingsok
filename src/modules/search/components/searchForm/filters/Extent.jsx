@@ -30,7 +30,7 @@ function Extent({ initialValues, updatedValues, query, dispatch }) {
     }
 
     return (
-        <Fieldset legend="Heltid/deltid" className="mt-1" hideLegend>
+        <Fieldset legend="Heltid/deltid" hideLegend>
             {values.map((item) => (
                 <Checkbox
                     name="extent"
