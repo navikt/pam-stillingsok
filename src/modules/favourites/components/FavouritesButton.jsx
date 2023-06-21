@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { HeartIcon, HeartFillIcon } from "@navikt/aksel-icons";
+import logAmplitudeEvent from "../../../common/tracking/amplitude";
 import { HasAcceptedTermsStatus, UserContext } from "../../user/contexts/UserProvider";
 import { AuthenticationContext, AuthenticationStatus } from "../../auth/contexts/AuthenticationProvider";
 import { FavouritesContext } from "../context/FavouritesProvider";
@@ -81,6 +82,7 @@ function FavouritesButton({ id, stilling, useShortText, className, type, hideTex
     }
 
     function handleSaveFavouriteClick() {
+        logAmplitudeEvent("Click add to favourite button");
         if (authenticationStatus === AuthenticationStatus.NOT_AUTHENTICATED) {
             openLoginModal();
         } else if (hasAcceptedTermsStatus === HasAcceptedTermsStatus.NOT_ACCEPTED) {
