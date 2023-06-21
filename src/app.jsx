@@ -19,7 +19,7 @@ import AdPage from "./modules/ad/AdPage";
 import ReportAdPage from "./modules/report-ad/ReportAdPage";
 import FavouritesPage from "./modules/favourites/FavouritesPage";
 import SavedSearchesPage from "./modules/saved-searches/SavedSearchesPage";
-import TrekkSoknadPage from "./modules/superrask-soknad/TrekkSoknadPage";
+import WithdrawApplicationPage from "./modules/superrask-soknad/WithdrawApplicationPage";
 import "./common/styles/styles.css";
 import googleTranslateWorkaround from "./common/utils/googleTranslateWorkaround";
 import NotFound404 from "./common/components/NotFound/NotFound404";
@@ -57,7 +57,7 @@ function Application() {
                                         <Route path={`${CONTEXT_PATH}/lagrede-sok`} component={SavedSearchesPage} />
                                         <Route
                                             path={`${CONTEXT_PATH}/trekk-soknad/:uuid/:adUuid`}
-                                            component={TrekkSoknadPage}
+                                            component={WithdrawApplicationPage}
                                         />
                                         <Route path="*" component={NotFound404} />
                                     </Switch>

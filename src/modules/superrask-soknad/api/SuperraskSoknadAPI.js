@@ -81,27 +81,27 @@ async function post(url, query, toJson = true) {
     return toJson ? response.json() : response;
 }
 
-async function getInterestForm(adUuid) {
-    return get(`interest-form/${adUuid}`);
+async function getApplicationForm(adUuid) {
+    return get(`application-form/${adUuid}`);
 }
 
-async function getCandidateInterestForm(adUuid, uuid) {
-    return head(`interest-form/${adUuid}/candidates/${uuid}`);
+async function getApplicationStatus(adUuid, uuid) {
+    return head(`application-form/${adUuid}/application/${uuid}`);
 }
 
-async function postInterest(adUuid, interest) {
-    return post(`interest-form/${adUuid}/candidates`, interest, false);
+async function postApplication(adUuid, application) {
+    return post(`application-form/${adUuid}/application`, application, false);
 }
 
-async function deleteInterest(adUuid, uuid) {
-    return remove(`interest-form/${adUuid}/candidates/${uuid}`);
+async function withdrawApplication(adUuid, uuid) {
+    return remove(`application-form/${adUuid}/application/${uuid}`);
 }
 
-const InterestAPI = {
-    getInterestForm,
-    getCandidateInterestForm,
-    postInterest,
-    deleteInterest,
+const SuperraskSoknadAPI = {
+    getApplicationForm,
+    getApplicationStatus,
+    postApplication,
+    withdrawApplication,
 };
 
-export default InterestAPI;
+export default SuperraskSoknadAPI;

@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import { CONTEXT_PATH } from "../../../common/environment";
 import getEmployer from "../../../../server/common/getEmployer";
 
-function TrekkSoknadConfirmationRequired({ ad, handleWithDrawClick, isDeleting, hasError }) {
+function WithdrawApplicationConfirmationRequired({ ad, handleWithDrawClick, isDeleting, hasError }) {
     return (
         <>
             <Heading level="1" size="large" spacing>
@@ -38,7 +38,7 @@ function TrekkSoknadConfirmationRequired({ ad, handleWithDrawClick, isDeleting, 
     );
 }
 
-TrekkSoknadConfirmationRequired.propTypes = {
+WithdrawApplicationConfirmationRequired.propTypes = {
     ad: PropTypes.shape({
         _id: PropTypes.string.isRequired,
         _source: PropTypes.shape({
@@ -50,4 +50,4 @@ TrekkSoknadConfirmationRequired.propTypes = {
     hasError: PropTypes.bool,
 };
 
-export default TrekkSoknadConfirmationRequired;
+export default WithdrawApplicationConfirmationRequired;

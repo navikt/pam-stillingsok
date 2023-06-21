@@ -1,18 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
 import useScrollToTop from "../../common/hooks/useScrollToTop";
-import TrekkSoknad from "./components/TrekkSoknad";
+import WithdrawApplication from "./components/WithdrawApplication";
 import useDocumentTitle from "../../common/hooks/useDocumentTitle";
 
-function TrekkSoknadPage({ match }) {
+function WithdrawApplicationPage({ match }) {
     useDocumentTitle("Trekk søknad");
     useScrollToTop();
 
-    return <TrekkSoknad match={match} />;
+    return <WithdrawApplication match={match} />;
 }
 
-TrekkSoknadPage.propTypes = {
+WithdrawApplicationPage.propTypes = {
     match: PropTypes.shape({}),
 };
 
-export default TrekkSoknadPage;
+export default WithdrawApplicationPage;

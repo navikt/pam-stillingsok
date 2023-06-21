@@ -5,7 +5,7 @@ import { CONTEXT_PATH } from "../../../common/environment";
 import Feedback from "./Feedback";
 import H1WithAutoFocus from "../../../common/components/h1WithAutoFocus/H1WithAutoFocus";
 
-function TrekkSoknadSuccess() {
+function WithdrawApplicationSuccess() {
     return (
         <>
             <H1WithAutoFocus level="1" size="large">
@@ -24,4 +24,4 @@ function TrekkSoknadSuccess() {
     );
 }
 
-export default TrekkSoknadSuccess;
+export default WithdrawApplicationSuccess;

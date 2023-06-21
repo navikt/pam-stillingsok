@@ -3,16 +3,16 @@ import PropTypes from "prop-types";
 import { FetchAction, FetchStatus, useFetchReducer } from "../../../common/hooks/useFetchReducer";
 import SearchAPI from "../../../common/api/SearchAPI";
 import DelayedSpinner from "../../../common/components/spinner/DelayedSpinner";
-import InterestAPI from "../api/InterestAPI";
-import TrekkSoknadSuccess from "./TrekkSoknadSuccess";
-import TrekkSoknadConfirmationRequired from "./TrekkSoknadConfirmationRequired";
+import SuperraskSoknadAPI from "../api/SuperraskSoknadAPI";
+import WithdrawApplicationSuccess from "./WithdrawApplicationSuccess";
+import WithdrawApplicationConfirmationRequired from "./WithdrawApplicationConfirmationRequired";
 import logAmplitudeEvent from "../../../common/tracking/amplitude";
 import NotFound404 from "../../../common/components/NotFound/NotFound404";
 
-function TrekkSoknad({ match }) {
+function WithdrawApplication({ match }) {
     const [{ data: ad, status: adFetchStatus }, dispatch] = useFetchReducer();
-    const [deleteSoknadResponse, deleteSoknadDispatch] = useFetchReducer();
-    const [candidateInterestForm, candidateInterestFormDispatch] = useFetchReducer();
+    const [removeApplicationResponse, removeApplicationDispatch] = useFetchReducer();
+    const [applicationStatus, applicationStatusDispatch] = useFetchReducer();
     const [show404Page, setShow404Page] = useState(false);
     const [useDefault404Text, setUseDefault404Text] = useState(false);
 
@@ -23,7 +23,7 @@ function TrekkSoknad({ match }) {
         const id = match.params.adUuid;
 
         dispatch({ type: FetchAction.BEGIN });
-        candidateInterestFormDispatch({ type: FetchAction.BEGIN });
+        applicationStatusDispatch({ type: FetchAction.BEGIN });
 
         SearchAPI.get(`api/stilling/${id}`)
             .then((data) => {
@@ -34,12 +34,12 @@ function TrekkSoknad({ match }) {
                 setUseDefault404Text(true);
             });
 
-        InterestAPI.getCandidateInterestForm(match.params.adUuid, match.params.uuid)
+        SuperraskSoknadAPI.getApplicationStatus(match.params.adUuid, match.params.uuid)
             .then((data) => {
-                candidateInterestFormDispatch({ type: FetchAction.RESOLVE, data });
+                applicationStatusDispatch({ type: FetchAction.RESOLVE, data });
             })
             .catch((error) => {
-                candidateInterestFormDispatch({ type: FetchAction.REJECT, error });
+                applicationStatusDispatch({ type: FetchAction.REJECT, error });
                 if (error.statusCode === 404) {
                     setUseDefault404Text(true);
                 }
@@ -47,33 +47,33 @@ function TrekkSoknad({ match }) {
     }, []);
 
     useEffect(() => {
-        if (adFetchStatus === FetchStatus.FAILURE && deleteSoknadResponse.status === FetchStatus.NOT_FETCHED) {
+        if (adFetchStatus === FetchStatus.FAILURE && removeApplicationResponse.status === FetchStatus.NOT_FETCHED) {
             setShow404Page(true);
         } else if (
-            candidateInterestForm.status === FetchStatus.FAILURE &&
-            deleteSoknadResponse.status === FetchStatus.NOT_FETCHED
+            applicationStatus.status === FetchStatus.FAILURE &&
+            removeApplicationResponse.status === FetchStatus.NOT_FETCHED
         ) {
             setShow404Page(true);
         } else {
             setShow404Page(false);
         }
-    }, [adFetchStatus, deleteSoknadResponse, candidateInterestForm]);
+    }, [adFetchStatus, removeApplicationResponse, applicationStatus]);
 
     const handleWithDrawClick = async () => {
-        deleteSoknadDispatch({ type: FetchAction.BEGIN });
+        removeApplicationDispatch({ type: FetchAction.BEGIN });
         let success = false;
-        await InterestAPI.deleteInterest(match.params.adUuid, match.params.uuid)
+        await SuperraskSoknadAPI.withdrawApplication(match.params.adUuid, match.params.uuid)
             .then((data) => {
-                deleteSoknadDispatch({ type: FetchAction.RESOLVE, data });
+                removeApplicationDispatch({ type: FetchAction.RESOLVE, data });
                 success = true;
             })
             .catch((error) => {
-                deleteSoknadDispatch({ type: FetchAction.REJECT, error });
+                removeApplicationDispatch({ type: FetchAction.REJECT, error });
             });
         try {
             logAmplitudeEvent("delete superrask søknad", {
-                stillingsId: match.params.adUuid,
-                candidateId: match.params.uuid,
+                adId: match.params.adUuid,
+                applicationId: match.params.uuid,
                 success,
             });
         } catch (e) {
@@ -82,9 +82,9 @@ function TrekkSoknad({ match }) {
     };
 
     return (
-        <div className="InterestMessageDelete">
+        <div className="WithdrawApplication">
             {!show404Page &&
-                (adFetchStatus === FetchStatus.IS_FETCHING || candidateInterestForm === FetchStatus.IS_FETCHING) && (
+                (adFetchStatus === FetchStatus.IS_FETCHING || applicationStatus === FetchStatus.IS_FETCHING) && (
                     <DelayedSpinner />
                 )}
 
@@ -100,22 +100,22 @@ function TrekkSoknad({ match }) {
             {!show404Page &&
                 (adFetchStatus === FetchStatus.SUCCESS ||
                     (adFetchStatus === FetchStatus.FAILURE &&
-                        deleteSoknadResponse.status !== FetchStatus.NOT_FETCHED)) &&
-                (deleteSoknadResponse.status !== FetchStatus.SUCCESS ? (
-                    <TrekkSoknadConfirmationRequired
+                        removeApplicationResponse.status !== FetchStatus.NOT_FETCHED)) &&
+                (removeApplicationResponse.status !== FetchStatus.SUCCESS ? (
+                    <WithdrawApplicationConfirmationRequired
                         handleWithDrawClick={handleWithDrawClick}
-                        isDeleting={deleteSoknadResponse.status === FetchStatus.IS_FETCHING}
-                        hasError={deleteSoknadResponse.status === FetchStatus.FAILURE}
+                        isDeleting={removeApplicationResponse.status === FetchStatus.IS_FETCHING}
+                        hasError={removeApplicationResponse.status === FetchStatus.FAILURE}
                         ad={adFetchStatus === FetchStatus.SUCCESS ? ad : undefined}
                     />
                 ) : (
-                    <TrekkSoknadSuccess />
+                    <WithdrawApplicationSuccess />
                 ))}
         </div>
     );
 }
 
-TrekkSoknad.propTypes = {
+WithdrawApplication.propTypes = {
     match: PropTypes.shape({
         params: PropTypes.shape({
             adUuid: PropTypes.string,
@@ -124,4 +124,4 @@ TrekkSoknad.propTypes = {
     }),
 };
 
-export default TrekkSoknad;
+export default WithdrawApplication;
