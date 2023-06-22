@@ -9,7 +9,7 @@ import EmploymentDetails from "./EmploymentDetails";
 import FinnAd from "./FinnAd";
 import HowToApply from "./HowToApply";
 import "./Ad.css";
-import logAmplitudeEvent, { logStillingVisning } from "../../../common/tracking/amplitude";
+import { logStillingVisning } from "../../../common/tracking/amplitude";
 import ShareAd from "./ShareAd";
 import Summary from "./Summary";
 import DelayedSpinner from "../../../common/components/spinner/DelayedSpinner";
@@ -47,18 +47,12 @@ function Ad({ match }) {
     }, []);
 
     /**
-     * Set page title and track superrask søknad
+     * Set page title
      */
     useEffect(() => {
         if (ad && ad._source) {
             if (ad._source.title) {
                 document.title = `${ad._source.title} - arbeidsplassen.no`;
-            }
-
-            if (ad._source.properties && ad._source.properties.hasInterestform === "true") {
-                logAmplitudeEvent("land on ad with superrask søknad", {
-                    id: ad._id,
-                });
             }
         }
     }, [ad]);
