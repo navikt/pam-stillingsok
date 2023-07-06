@@ -10,14 +10,13 @@ on:
       - feature/*
 jobs:
   build-and-deploy:
-    uses: navikt/pam-deploy/.github/workflows/deploy-feature-branch.yml@v3
+    uses: navikt/pam-deploy/.github/workflows/deploy-feature-branch.yml@v4
     with:
       LANGUAGE: "node"
       NODE_VERSION: "14"
       BUILD_CACHE: "npm"
-      NAIS_RESOURCE: naiserator.yml
-      NAIS_VARS: naiserator-dev.json
+      NAIS_RESOURCE: .nais/nais.yml
+      NAIS_VARS: .nais/dev.json
     secrets:
       NAIS_DEPLOY_APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
-      SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       OPTIONAL_SECRET: ${{ secrets.READER_TOKEN }}
