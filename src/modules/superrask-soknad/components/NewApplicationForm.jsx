@@ -34,7 +34,7 @@ function NewApplicationForm({ ad, applicationForm, submitForm, isSending, hasErr
     const [motivationValidationError, setMotivationValidationError] = useState(undefined);
     const errorSummary = useRef();
 
-    const MOTIVATION_MAX_LENGTH = 400;
+    const MOTIVATION_MAX_LENGTH = 800;
 
     useEffect(() => {
         if (qualificationsFocusErrorSummary) {
