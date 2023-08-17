@@ -1,9 +1,9 @@
+const path = require("path");
+const fs = require("fs");
 const express = require("express");
 const helmet = require("helmet");
-const path = require("path");
 const mustacheExpress = require("mustache-express");
 const Promise = require("promise");
-const fs = require("fs");
 const bodyParser = require("body-parser");
 const compression = require("compression");
 const searchApiConsumer = require("./api/searchApiConsumer");
@@ -12,6 +12,7 @@ const locationApiConsumer = require("./api/locationApiConsumer");
 const setUpProxyCvApi = require("./api/cvApiProxy");
 const { initializeTokenX, tokenIsValid } = require("./tokenX/tokenXUtils");
 const setUpAduserApiProxy = require("./api/userApiProxyConfig");
+const { logger } = require("./common/logger");
 
 /* eslint no-console: 0 */
 
@@ -31,7 +32,7 @@ locationApiConsumer.fetchAndProcessLocations().then((res) => {
     }
 });
 
-fs.readFile(__dirname + "/api/resources/locations.json", "utf-8", function (err, data) {
+fs.readFile(`${__dirname}/api/resources/locations.json`, "utf-8", (err, data) => {
     locationsFromFile = err ? [] : JSON.parse(data);
 });
 
@@ -60,11 +61,11 @@ server.use(
                 process.env.ARBEIDSPLASSEN_URL,
                 process.env.INTEREST_API_URL,
                 "https://amplitude.nav.no",
-                "https://sentry.gc.nav.no"
+                "https://sentry.gc.nav.no",
             ],
-            frameSrc: ["'self'"]
-        }
-    })
+            frameSrc: ["'self'"],
+        },
+    }),
 );
 
 server.set("views", `${rootDirectory}views`);
@@ -81,7 +82,7 @@ const properties = {
     PAM_STILLINGSOK_URL: process.env.PAM_STILLINGSOK_URL,
     PAM_VAR_SIDE_URL: process.env.PAM_VAR_SIDE_URL,
     PAM_JOBBTREFF_API_URL: process.env.PAM_JOBBTREFF_API_URL,
-    AMPLITUDE_TOKEN: process.env.AMPLITUDE_TOKEN
+    AMPLITUDE_TOKEN: process.env.AMPLITUDE_TOKEN,
 };
 
 const writeEnvironmentVariablesToFile = () => {
@@ -105,15 +106,15 @@ const renderSok = (htmlPages) =>
             "index.html",
             {
                 title: htmlMeta.getDefaultTitle(),
-                description: htmlMeta.getDefaultDescription()
+                description: htmlMeta.getDefaultDescription(),
             },
             (err, html) => {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve(Object.assign({ sok: html }, htmlPages));
+                    resolve({ sok: html, ...htmlPages });
                 }
-            }
+            },
         );
     });
 
@@ -139,7 +140,6 @@ const startServer = (htmlPages) => {
             res.sendStatus(401);
         }
     });
-    initializeTokenX();
     setUpProxyCvApi(server);
 
     // Give users fallback locations from local file if aduser is unresponsive
@@ -165,7 +165,7 @@ const startServer = (htmlPages) => {
             .search(req.query)
             .then((val) => res.send(val))
             .catch((err) => {
-                console.warn("Failed to query search api", err);
+                logger.warn("Failed to query search api", err);
                 res.sendStatus(err.statusCode ? err.statusCode : 500);
             });
     });
@@ -175,7 +175,7 @@ const startServer = (htmlPages) => {
             .search(req.body)
             .then((val) => res.send(val))
             .catch((err) => {
-                console.warn("Failed to query search api", err);
+                logger.warn("Failed to query search api", err);
                 res.sendStatus(err.statusCode ? err.statusCode : 500);
             });
     });
@@ -185,7 +185,7 @@ const startServer = (htmlPages) => {
             .suggestions(req.query)
             .then((result) => res.send(result))
             .catch((err) => {
-                console.warn("Failed to fetch suggestions,", err);
+                logger.warn("Failed to fetch suggestions,", err);
                 res.sendStatus(err.statusCode ? err.statusCode : 500);
             });
     });
@@ -195,7 +195,7 @@ const startServer = (htmlPages) => {
             .suggestions(req.body)
             .then((result) => res.send(result))
             .catch((err) => {
-                console.warn("Failed to fetch suggestions,", err);
+                logger.warn("Failed to fetch suggestions,", err);
                 res.sendStatus(err.statusCode ? err.statusCode : 500);
             });
     });
@@ -205,7 +205,7 @@ const startServer = (htmlPages) => {
             .fetchStilling(req.params.uuid)
             .then((val) => res.send(val))
             .catch((err) => {
-                console.warn("Failed to fetch stilling with uuid", req.params.uuid);
+                logger.warn("Failed to fetch stilling with uuid", req.params.uuid);
                 res.sendStatus(err.statusCode ? err.statusCode : 500);
             });
     });
@@ -215,7 +215,7 @@ const startServer = (htmlPages) => {
     });
 
     server.get(/^\/pam-stillingsok.*$/, (req, res) => {
-        var url = req.url.replace("/pam-stillingsok", `${properties.PAM_CONTEXT_PATH}`);
+        const url = req.url.replace("/pam-stillingsok", `${properties.PAM_CONTEXT_PATH}`);
         res.redirect(`${url}`);
     });
 
@@ -226,32 +226,43 @@ const startServer = (htmlPages) => {
                 try {
                     res.render("index", {
                         title: htmlMeta.getStillingTitle(data._source),
-                        description: htmlMeta.getStillingDescription(data._source)
+                        description: htmlMeta.getStillingDescription(data._source),
                     });
                 } catch (err) {
                     res.send(htmlPages.sok);
                 }
             })
-            .catch((err) => {
+            .catch(() => {
                 res.send(htmlPages.sok);
             });
-    });
-
-    server.get(["/stillinger/?", /^\/stillinger\/(?!.*dist).*$/], (req, res) => {
-        res.send(htmlPages.sok);
     });
 
     server.get(`${properties.PAM_CONTEXT_PATH}/internal/isAlive`, (req, res) => res.sendStatus(200));
     server.get(`${properties.PAM_CONTEXT_PATH}/internal/isReady`, (req, res) => res.sendStatus(200));
 
     server.get(`${properties.PAM_CONTEXT_PATH}/internal/metrics`, (req, res) => {
+        // eslint-disable-next-line no-undef
         res.set("Content-Type", prometheus.register.contentType);
+        // eslint-disable-next-line no-undef
         res.end(prometheus.register.metrics());
     });
 
+    // Viktig at denne kommer sist siden den vil svare på alle endepunkter under /stillinger hvis de ikke er definert før
+    server.get(["/stillinger/?", /^\/stillinger\/(?!.*dist).*$/], (req, res) => {
+        res.send(htmlPages.sok);
+    });
+
     server.listen(port, () => {
-        console.log(`Express-server startet. Server filer fra ./dist/ til localhost:${port}/`);
+        logger.info(`Express-server startet. Server filer fra ./dist/ til localhost:${port}/`);
     });
 };
 
-renderSok({}).then(startServer, (error) => console.error("Failed to render app", error));
+initializeTokenX()
+    .then(() =>
+        renderSok({}).then(startServer, (error) => {
+            logger.error("Failed to render app", error);
+        }),
+    )
+    .catch((error) => {
+        logger.error(`Initialisering av token-klienter feilet: ${error.message} `);
+    });
