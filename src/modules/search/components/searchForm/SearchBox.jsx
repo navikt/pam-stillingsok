@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { SET_SEARCH_STRING } from "../../query";
-// eslint-disable-next-line import/no-named-as-default,import/no-named-as-default-member
 import Typeahead from "../../../../common/components/typeahead/Typeahead";
 import { FetchAction, useFetchReducer } from "../../../../common/hooks/useFetchReducer";
 import useDebounce from "../../../../common/hooks/useDebounce";
