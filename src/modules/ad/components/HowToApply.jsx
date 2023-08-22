@@ -30,6 +30,17 @@ const applyForPosition = (finn, stilling) => {
     }
 };
 
+const logCopyEmailClick = (stilling) => {
+    try {
+        logAmplitudeEvent("Stilling copy-email", {
+            title: stilling._source.title,
+            id: stilling._id,
+        });
+    } catch (e) {
+        // ignore
+    }
+};
+
 export default function HowToApply({ stilling, showFavouriteButton }) {
     const { properties } = stilling._source;
     const applicationUrl = getApplicationUrl(stilling._source.source, properties);
@@ -85,6 +96,11 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                                             copyText={`${properties.applicationemail}`}
                                             variant="action"
                                             size="xsmall"
+                                            onActiveChange={(state) => {
+                                                if (state === true) {
+                                                    logCopyEmailClick(stilling);
+                                                }
+                                            }}
                                         />
                                     </Tooltip>
                                 </span>
@@ -151,6 +167,11 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                                                     copyText={`${properties.applicationemail}`}
                                                     variant="action"
                                                     size="xsmall"
+                                                    onActiveChange={(state) => {
+                                                        if (state === true) {
+                                                            logCopyEmailClick(stilling);
+                                                        }
+                                                    }}
                                                 />
                                             </Tooltip>
                                         </span>
