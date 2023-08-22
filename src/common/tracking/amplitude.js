@@ -67,6 +67,8 @@ export function logStillingVisning(ad) {
         published: ad._source.published || "N/A",
         fetchedFromSource: ad._source.source || "N/A",
         hasSuperraskSoknad: ad._source.properties.hasInterestform || "N/A",
+        hasApplicationUrl: !!ad._source.properties.applicationurl,
+        hasApplicationEmail: !!ad._source.properties.applicationemail,
     });
 }
 
