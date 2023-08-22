@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { BodyLong, CopyButton, Heading, Label, Link as AkselLink, Tooltip } from "@navikt/ds-react";
 import { isValidEmail } from "../../../common/components/utils";
+import logAmplitudeEvent from "../../../common/tracking/amplitude";
 
 export default function ContactPerson({ contactList }) {
     if (contactList && contactList.length > 0) {
@@ -23,6 +24,9 @@ export default function ContactPerson({ contactList }) {
                                         size="xsmall"
                                         copyText={contact.phone}
                                         variant="action"
+                                        onActiveChange={(state) => {
+                                            if (state) logAmplitudeEvent("copy contact info", { type: "phone" });
+                                        }}
                                     />
                                 </Tooltip>
                             </BodyLong>
@@ -36,12 +40,15 @@ export default function ContactPerson({ contactList }) {
                                 ) : (
                                     contact.email
                                 )}
-                                <Tooltip content="Kopier epost">
+                                <Tooltip content="Kopier e-postadresse">
                                     <CopyButton
                                         className="ml-0_5"
                                         size="xsmall"
                                         copyText={contact.email}
                                         variant="action"
+                                        onActiveChange={(state) => {
+                                            if (state) logAmplitudeEvent("copy contact info", { type: "email" });
+                                        }}
                                     />
                                 </Tooltip>
                             </BodyLong>
