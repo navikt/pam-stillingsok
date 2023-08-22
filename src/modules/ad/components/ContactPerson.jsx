@@ -4,7 +4,15 @@ import { BodyLong, CopyButton, Heading, Label, Link as AkselLink, Tooltip } from
 import { isValidEmail } from "../../../common/components/utils";
 import logAmplitudeEvent from "../../../common/tracking/amplitude";
 
-export default function ContactPerson({ contactList }) {
+function logCopyContactInfoEvent(type, adId, adTitle) {
+    logAmplitudeEvent("copy contact info", {
+        type,
+        id: adId,
+        title: adTitle,
+    });
+}
+
+export default function ContactPerson({ contactList, adId, adTitle }) {
     if (contactList && contactList.length > 0) {
         return (
             <section className="JobPosting__section">
@@ -25,7 +33,7 @@ export default function ContactPerson({ contactList }) {
                                         copyText={contact.phone}
                                         variant="action"
                                         onActiveChange={(state) => {
-                                            if (state) logAmplitudeEvent("copy contact info", { type: "phone" });
+                                            if (state) logCopyContactInfoEvent("phone", adId, adTitle);
                                         }}
                                     />
                                 </Tooltip>
@@ -47,7 +55,7 @@ export default function ContactPerson({ contactList }) {
                                         copyText={contact.email}
                                         variant="action"
                                         onActiveChange={(state) => {
-                                            if (state) logAmplitudeEvent("copy contact info", { type: "email" });
+                                            if (state) logCopyContactInfoEvent("email", adId, adTitle);
                                         }}
                                     />
                                 </Tooltip>
@@ -74,4 +82,6 @@ ContactPerson.propTypes = {
             email: PropTypes.string,
         }),
     ),
+    adId: PropTypes.string,
+    adTitle: PropTypes.string,
 };
