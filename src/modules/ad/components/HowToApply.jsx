@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import { BodyLong, BodyShort, Button, Heading, Link as AkselLink } from "@navikt/ds-react";
+import { BodyLong, BodyShort, Button, Heading, Link as AkselLink, CopyButton, Tooltip } from "@navikt/ds-react";
 import { ExternalLinkIcon } from "@navikt/aksel-icons";
 import { formatDate, isValidEmail, isValidUrl } from "../../../common/components/utils";
 import "./HowToApply.css";
@@ -42,18 +42,15 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                 <Heading level="2" size="medium" spacing>
                     Søk på jobben
                 </Heading>
-
                 {stilling._source.status === "ACTIVE" && (
                     <BodyShort spacing>Vis frem deg selv og din erfaring med en superrask søknad.</BodyShort>
                 )}
-
                 {properties.applicationdue && (
                     <dl className="JobPosting__dl">
                         <dt>Søknadsfrist</dt>
                         <dd>{formatDate(properties.applicationdue)}</dd>
                     </dl>
                 )}
-
                 {stilling._source.status === "ACTIVE" && (
                     <div>
                         <Button
@@ -75,17 +72,30 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                     <BodyLong className="mt-1">
                         Alternativt kan du sende søknad via e-post til{" "}
                         {isValidEmail(properties.applicationemail) ? (
-                            <AkselLink href={`mailto:${properties.applicationemail}`}>
-                                {properties.applicationemail}
-                            </AkselLink>
+                            <div className="flex">
+                                <span>
+                                    <AkselLink href={`mailto:${properties.applicationemail}`}>
+                                        {properties.applicationemail}
+                                    </AkselLink>
+                                </span>
+                                <span>
+                                    <Tooltip content="Kopier e-postadresse">
+                                        <CopyButton
+                                            className="ml-0_5"
+                                            copyText={`${properties.applicationemail}`}
+                                            variant="action"
+                                            size="xsmall"
+                                        />
+                                    </Tooltip>
+                                </span>
+                            </div>
                         ) : (
                             properties.applicationemail
                         )}
                     </BodyLong>
                 )}
-
                 {applicationUrl && (
-                    <>
+                    <div>
                         {isValidUrl(applicationUrl) ? (
                             <BodyLong className="mt-1">
                                 Alternativt kan du{" "}
@@ -96,9 +106,8 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                         ) : (
                             <BodyLong className="mt-1">Alternativt kan du sende søknad på {applicationUrl}.</BodyLong>
                         )}
-                    </>
+                    </div>
                 )}
-
                 {showFavouriteButton && (
                     <FavouritesButton
                         className="HowToApply__favourite-button HowToApply__full-width-button"
@@ -129,9 +138,23 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                             <dt>Send søknad til</dt>
                             <dd>
                                 {isValidEmail(properties.applicationemail) ? (
-                                    <AkselLink href={`mailto:${properties.applicationemail}`}>
-                                        {properties.applicationemail}
-                                    </AkselLink>
+                                    <div className="flex">
+                                        <span>
+                                            <AkselLink href={`mailto:${properties.applicationemail}`}>
+                                                {properties.applicationemail}
+                                            </AkselLink>
+                                        </span>
+                                        <span>
+                                            <Tooltip content="Kopier e-postadresse">
+                                                <CopyButton
+                                                    className="ml-0_5"
+                                                    copyText={`${properties.applicationemail}`}
+                                                    variant="action"
+                                                    size="xsmall"
+                                                />
+                                            </Tooltip>
+                                        </span>
+                                    </div>
                                 ) : (
                                     properties.applicationemail
                                 )}
