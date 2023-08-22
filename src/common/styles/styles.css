@@ -34,3 +34,7 @@ body {
 .break-word {
     word-wrap: break-word;
 }
+
+.ml-0_5 {
+    margin-left: 0.5rem;
+}
