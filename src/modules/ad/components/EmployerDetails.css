@@ -1,6 +1,7 @@
 .EmployerDetails__description {
     margin-top: 1rem;
     line-height: 1.5;
+    font-size: 1rem;
     overflow-wrap: break-word;
     word-break: break-word;
     word-wrap: break-word;

@@ -5,6 +5,13 @@
     align-items: flex-start;
 }
 
+.SocialShare__facebook,
+.SocialShare__linkedin,
+.SocialShare__twitter,
+.SocialShare__messenger {
+    font-size: 1rem;
+}
+
 .SocialShare__facebook {
     margin-right: 1rem;
 }

@@ -28,9 +28,11 @@ export default function AdDetails({ id, source }) {
                     <Label as="span">Stillingsnummer:</Label> {source.id}
                 </BodyShort>
             )}
-            <AkselLink as={Link} to={`${CONTEXT_PATH}/rapporter-annonse?uuid=${id}`}>
-                Rapporter annonse
-            </AkselLink>
+            <BodyShort>
+                <AkselLink as={Link} to={`${CONTEXT_PATH}/rapporter-annonse?uuid=${id}`}>
+                    Rapporter annonse
+                </AkselLink>
+            </BodyShort>
         </section>
     );
 }
