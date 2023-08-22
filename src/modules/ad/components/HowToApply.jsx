@@ -83,7 +83,7 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                     <BodyLong className="mt-1">
                         Alternativt kan du sende søknad via e-post til{" "}
                         {isValidEmail(properties.applicationemail) ? (
-                            <div className="flex">
+                            <div className="inline-flex">
                                 <span>
                                     <AkselLink href={`mailto:${properties.applicationemail}`}>
                                         {properties.applicationemail}
@@ -154,7 +154,7 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                             <dt>Send søknad til</dt>
                             <dd>
                                 {isValidEmail(properties.applicationemail) ? (
-                                    <div className="flex">
+                                    <div className="inline-flex">
                                         <span>
                                             <AkselLink href={`mailto:${properties.applicationemail}`}>
                                                 {properties.applicationemail}
