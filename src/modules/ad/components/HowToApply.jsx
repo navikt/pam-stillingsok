@@ -48,7 +48,7 @@ const logEmailAnchorClick = (stilling) => {
             id: stilling._id,
         });
     } catch (e) {
-        // ignore
+        //ignore
     }
 };
 
