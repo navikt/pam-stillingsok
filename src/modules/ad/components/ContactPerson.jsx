@@ -4,12 +4,12 @@ import { BodyLong, CopyButton, Heading, Label, Link as AkselLink, Tooltip } from
 import { isValidEmail } from "../../../common/components/utils";
 import logAmplitudeEvent from "../../../common/tracking/amplitude";
 
-function logCopyContactInfoEvent(type, adId, adTitle) {
-    logAmplitudeEvent("copy contact info", {
-        type,
-        id: adId,
-        title: adTitle,
-    });
+function logCopyContactInfoEvent(type, id, title) {
+    logAmplitudeEvent("copy contact info", { type, id, title });
+}
+
+function logClickEmailEvent(id, title) {
+    logAmplitudeEvent("click contact info email", { id, title });
 }
 
 export default function ContactPerson({ contactList, adId, adTitle }) {
@@ -42,7 +42,11 @@ export default function ContactPerson({ contactList, adId, adTitle }) {
                         {contact.email && (
                             <BodyLong className="JobPosting__overflow flex">
                                 {isValidEmail(contact.email) ? (
-                                    <AkselLink rel="nofollow" href={`mailto:${contact.email}`}>
+                                    <AkselLink
+                                        rel="nofollow"
+                                        href={`mailto:${contact.email}`}
+                                        onClick={() => logClickEmailEvent(adId, adTitle)}
+                                    >
                                         {contact.email}
                                     </AkselLink>
                                 ) : (
