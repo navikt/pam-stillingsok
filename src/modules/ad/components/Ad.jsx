@@ -107,7 +107,13 @@ function Ad({ match }) {
 
                     <div className="JobPosting__right">
                         <HowToApply stilling={ad} showFavouriteButton />
-                        {!isFinn && <ContactPerson contactList={ad._source.contactList} />}
+                        {!isFinn && (
+                            <ContactPerson
+                                contactList={ad._source.contactList}
+                                adId={ad._id}
+                                adTitle={ad._source.title}
+                            />
+                        )}
                         {!isFinn && <ShareAd source={ad._source} />}
                         <AdDetails id={ad._id} source={ad._source} />
                     </div>

@@ -30,6 +30,28 @@ const applyForPosition = (finn, stilling) => {
     }
 };
 
+const logCopyEmailClick = (stilling) => {
+    try {
+        logAmplitudeEvent("Stilling copy-email", {
+            title: stilling._source.title,
+            id: stilling._id,
+        });
+    } catch (e) {
+        // ignore
+    }
+};
+
+const logEmailAnchorClick = (stilling) => {
+    try {
+        logAmplitudeEvent("Stilling email-anchor-click", {
+            title: stilling._source.title,
+            id: stilling._id,
+        });
+    } catch (e) {
+        //ignore
+    }
+};
+
 export default function HowToApply({ stilling, showFavouriteButton }) {
     const { properties } = stilling._source;
     const applicationUrl = getApplicationUrl(stilling._source.source, properties);
@@ -72,9 +94,14 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                     <BodyLong className="mt-1">
                         Alternativt kan du sende søknad via e-post til{" "}
                         {isValidEmail(properties.applicationemail) ? (
-                            <div className="flex">
+                            <div className="inline-flex">
                                 <span>
-                                    <AkselLink href={`mailto:${properties.applicationemail}`}>
+                                    <AkselLink
+                                        onClick={() => {
+                                            logEmailAnchorClick(stilling);
+                                        }}
+                                        href={`mailto:${properties.applicationemail}`}
+                                    >
                                         {properties.applicationemail}
                                     </AkselLink>
                                 </span>
@@ -85,6 +112,11 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                                             copyText={`${properties.applicationemail}`}
                                             variant="action"
                                             size="xsmall"
+                                            onActiveChange={(state) => {
+                                                if (state === true) {
+                                                    logCopyEmailClick(stilling);
+                                                }
+                                            }}
                                         />
                                     </Tooltip>
                                 </span>
@@ -138,9 +170,14 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                             <dt>Send søknad til</dt>
                             <dd>
                                 {isValidEmail(properties.applicationemail) ? (
-                                    <div className="flex">
+                                    <div className="inline-flex">
                                         <span>
-                                            <AkselLink href={`mailto:${properties.applicationemail}`}>
+                                            <AkselLink
+                                                onClick={() => {
+                                                    logEmailAnchorClick(stilling);
+                                                }}
+                                                href={`mailto:${properties.applicationemail}`}
+                                            >
                                                 {properties.applicationemail}
                                             </AkselLink>
                                         </span>
@@ -151,6 +188,11 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                                                     copyText={`${properties.applicationemail}`}
                                                     variant="action"
                                                     size="xsmall"
+                                                    onActiveChange={(state) => {
+                                                        if (state === true) {
+                                                            logCopyEmailClick(stilling);
+                                                        }
+                                                    }}
                                                 />
                                             </Tooltip>
                                         </span>

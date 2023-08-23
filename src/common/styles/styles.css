@@ -37,3 +37,7 @@ body {
 .ml-0_5 {
     margin-left: 0.5rem;
 }
+
+.inline-flex {
+    display: inline-flex;
+}
