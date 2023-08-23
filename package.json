@@ -65,7 +65,8 @@
         "ua-parser-js": "^0.7.33",
         "universal-cookie": "^4.0.4",
         "uuid": "^9.0.0",
-        "whatwg-fetch": "^2.0.4"
+        "whatwg-fetch": "^2.0.4",
+        "winston": "^3.10.0"
     },
     "devDependencies": {
         "@babel/core": "^7.21.8",

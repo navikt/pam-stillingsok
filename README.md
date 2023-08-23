@@ -116,6 +116,10 @@ make install
 ```
 
 Når applikasjonen er oppe, så kan du gå inn på [http://localhost:3000/stillinger](http://localhost:3000/stillinger)
+
+Hvis du ønsker å teste innlogget flyt, så må pam-aduser også kjøre. Denne kan startes i [pam-aduser](http://github.com/navikt/pam-aduser)
+med å kjøre `no.nav.pam.aduser.Application` som en Spring Boot applikasjon, f.eks. fra IntelliJ med Spring-profilen _dev_ satt.
+
 Gå igjennom login-flyten ved å trykke login. Bruk testbruker `04010100653`
 
 ### Med dev script

@@ -1,5 +1,6 @@
 const rp = require("request-promise");
 const { searchTemplate, suggestionsTemplate } = require("./searchApiTemplates");
+const { logger } = require("../common/logger");
 
 const host = process.env.PAMSEARCHAPI_URL ? process.env.PAMSEARCHAPI_URL : "http://pam-search-api";
 const url = `${host}/stillingsok/ad/_search`;
@@ -57,7 +58,8 @@ exports.search = async (query = {}) => {
 
         return rp(options);
     } catch (error) {
-        console.error("Failed to parse query using template", error);
+        logger.error("Failed to parse query using template", error);
+        // eslint-disable-next-line prefer-promise-reject-errors
         return Promise.reject("Failed to parse query");
     }
 };
@@ -76,7 +78,8 @@ exports.suggestions = async (query = {}) => {
 
         return rp(options);
     } catch (error) {
-        console.error("Failed to parse query using template", error);
+        logger.error("Failed to parse query using template", error);
+        // eslint-disable-next-line prefer-promise-reject-errors
         return Promise.reject("Failed to parse query");
     }
 };
