@@ -41,6 +41,17 @@ const logCopyEmailClick = (stilling) => {
     }
 };
 
+const logEmailAnchorClick = (stilling) => {
+    try {
+        logAmplitudeEvent("Stilling email-anchor-click", {
+            title: stilling._source.title,
+            id: stilling._id,
+        });
+    } catch (e) {
+        // ignore
+    }
+};
+
 export default function HowToApply({ stilling, showFavouriteButton }) {
     const { properties } = stilling._source;
     const applicationUrl = getApplicationUrl(stilling._source.source, properties);
@@ -85,7 +96,12 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                         {isValidEmail(properties.applicationemail) ? (
                             <div className="inline-flex">
                                 <span>
-                                    <AkselLink href={`mailto:${properties.applicationemail}`}>
+                                    <AkselLink
+                                        onClick={() => {
+                                            logEmailAnchorClick(stilling);
+                                        }}
+                                        href={`mailto:${properties.applicationemail}`}
+                                    >
                                         {properties.applicationemail}
                                     </AkselLink>
                                 </span>
@@ -156,7 +172,12 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                                 {isValidEmail(properties.applicationemail) ? (
                                     <div className="inline-flex">
                                         <span>
-                                            <AkselLink href={`mailto:${properties.applicationemail}`}>
+                                            <AkselLink
+                                                onClick={() => {
+                                                    logEmailAnchorClick(stilling);
+                                                }}
+                                                href={`mailto:${properties.applicationemail}`}
+                                            >
                                                 {properties.applicationemail}
                                             </AkselLink>
                                         </span>
