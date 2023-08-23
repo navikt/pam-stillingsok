@@ -42,7 +42,7 @@ function Feedback({ query }) {
     };
 
     return (
-        <Panel className="arb-panel mt-2">
+        <Panel className="arb-panel-tertiary mt-2">
             <Heading level="2" size="medium" spacing>
                 Synes du søketreffene er relevante?
             </Heading>
