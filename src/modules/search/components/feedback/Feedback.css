@@ -3,6 +3,7 @@
     flex-wrap: wrap;
     gap: 1rem;
     margin-bottom: 2rem;
+    justify-content: center;
 }
 
 .Feedback__option {

@@ -42,8 +42,8 @@ function Feedback({ query }) {
     };
 
     return (
-        <Panel className="arb-panel-tertiary mt-2">
-            <Heading level="2" size="medium" spacing>
+        <Panel className="arb-panel-tertiary mt-2 text-center">
+            <Heading level="2" size="small" spacing>
                 Synes du søketreffene er relevante?
             </Heading>
             {!hasGivenRating ? (
