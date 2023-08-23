@@ -1,9 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { BodyLong, Heading, Label, Link as AkselLink } from "@navikt/ds-react";
+import { BodyLong, CopyButton, Heading, Label, Link as AkselLink, Tooltip } from "@navikt/ds-react";
 import { isValidEmail } from "../../../common/components/utils";
+import logAmplitudeEvent from "../../../common/tracking/amplitude";
 
-export default function ContactPerson({ contactList }) {
+function logCopyContactInfoEvent(type, adId, adTitle) {
+    logAmplitudeEvent("copy contact info", {
+        type,
+        id: adId,
+        title: adTitle,
+    });
+}
+
+export default function ContactPerson({ contactList, adId, adTitle }) {
     if (contactList && contactList.length > 0) {
         return (
             <section className="JobPosting__section">
@@ -14,9 +23,24 @@ export default function ContactPerson({ contactList }) {
                     <div className="mt-1">
                         {contact.name && <Label as="p">{contact.name}</Label>}
                         {contact.title && <BodyLong>{contact.title}</BodyLong>}
-                        {contact.phone && <BodyLong>{contact.phone}</BodyLong>}
+                        {contact.phone && (
+                            <BodyLong className="flex">
+                                {contact.phone}
+                                <Tooltip content="Kopier telefonnummer">
+                                    <CopyButton
+                                        className="ml-0_5"
+                                        size="xsmall"
+                                        copyText={contact.phone}
+                                        variant="action"
+                                        onActiveChange={(state) => {
+                                            if (state) logCopyContactInfoEvent("phone", adId, adTitle);
+                                        }}
+                                    />
+                                </Tooltip>
+                            </BodyLong>
+                        )}
                         {contact.email && (
-                            <BodyLong className="JobPosting__overflow">
+                            <BodyLong className="JobPosting__overflow flex">
                                 {isValidEmail(contact.email) ? (
                                     <AkselLink rel="nofollow" href={`mailto:${contact.email}`}>
                                         {contact.email}
@@ -24,6 +48,17 @@ export default function ContactPerson({ contactList }) {
                                 ) : (
                                     contact.email
                                 )}
+                                <Tooltip content="Kopier e-postadresse">
+                                    <CopyButton
+                                        className="ml-0_5"
+                                        size="xsmall"
+                                        copyText={contact.email}
+                                        variant="action"
+                                        onActiveChange={(state) => {
+                                            if (state) logCopyContactInfoEvent("email", adId, adTitle);
+                                        }}
+                                    />
+                                </Tooltip>
                             </BodyLong>
                         )}
                     </div>
@@ -47,4 +82,6 @@ ContactPerson.propTypes = {
             email: PropTypes.string,
         }),
     ),
+    adId: PropTypes.string,
+    adTitle: PropTypes.string,
 };

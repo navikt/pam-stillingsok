@@ -63,7 +63,7 @@ function SearchBox({ dispatch, query }) {
     function handleTypeAheadSuggestionSelected(newValue) {
         setValue(newValue);
         //  dispatch({ type: SET_MATCH, value: "occupation" });
-        dispatch({ type: SET_SEARCH_STRING, newValue });
+        dispatch({ type: SET_SEARCH_STRING, value: newValue });
     }
 
     function handleSearchButtonClick() {

@@ -65,8 +65,10 @@ export function logStillingVisning(ad) {
         employer: ad._source.employer ? ad._source.employer.name : "N/A",
         expires: ad._source.expires || "N/A",
         published: ad._source.published || "N/A",
-        fetchedFrom: ad._source.medium || "N/A",
+        fetchedFromSource: ad._source.source || "N/A",
         hasSuperraskSoknad: ad._source.properties.hasInterestform || "N/A",
+        hasApplicationUrl: !!ad._source.properties.applicationurl,
+        hasApplicationEmail: !!ad._source.properties.applicationemail,
     });
 }
 

@@ -50,10 +50,10 @@
     }
 }
 
-
 .JobPosting__dl dd,
 .JobPosting__dl dt {
     line-height: 1.33;
+    font-size: 1rem;
     overflow-wrap: anywhere;
 }
 
