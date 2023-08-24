@@ -54,6 +54,13 @@ const logAmplitudeEvent = (event, data) => {
 
 export function logStillingVisning(ad) {
     const employerLocation = ad._source.employer ? ad._source.employer.location : null;
+    let hasContactMail = false;
+    let hasContactPhone = false;
+    const contactList = ad._source.contactList ? ad._source.contactList : null;
+    contactList.forEach((contact) => {
+        if (contact.email) hasContactMail = true;
+        if (contact.phone) hasContactPhone = true;
+    });
 
     logAmplitudeEvent("Stilling visning", {
         title: ad._source.title || "N/A",
@@ -69,6 +76,8 @@ export function logStillingVisning(ad) {
         hasSuperraskSoknad: ad._source.properties.hasInterestform || "N/A",
         hasApplicationUrl: !!ad._source.properties.applicationurl,
         hasApplicationEmail: !!ad._source.properties.applicationemail,
+        hasContactInfoMail: hasContactMail,
+        hasContactInfoPhone: hasContactPhone,
     });
 }
 
