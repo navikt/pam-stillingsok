@@ -10,10 +10,6 @@ body {
     font-family: var(--a-font-family);
 }
 
-.push-footer-below-fold {
-    min-height: 100%;
-}
-
 #app {
     height: 100%;
 }
