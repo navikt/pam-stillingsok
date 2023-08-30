@@ -38,7 +38,7 @@ function Application() {
             <UserProvider>
                 <FavouritesProvider>
                     <SkipLink href="#main-content" />
-                    <div className="arb-push-footer-down">
+                    <div className="push-footer-below-fold">
                         <BrowserRouter>
                             <HistoryProvider>
                                 <Switch>
