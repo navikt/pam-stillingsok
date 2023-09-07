@@ -15,6 +15,7 @@ jobs:
       actions: read
       contents: write
       id-token: write
+      packages: write
       security-events: write
     with:
       LANGUAGE: "node"
