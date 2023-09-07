@@ -22,7 +22,7 @@
 }
 
 #feedback-panel {
-    background-color: #fff;
+    background-color: var(--a-surface-default);
 }
 
 @media (min-width: 475px) {

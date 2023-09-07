@@ -44,7 +44,7 @@ function Feedback({ query }) {
 
     return (
         <Panel className="mt-2 text-center" id="feedback-panel">
-            <Heading level="2" size="small" className="mb-0_5">
+            <Heading level="2" size="small" className="mb-0_5" id="feedback-panel-title">
                 Synes du søketreffene er relevante?
             </Heading>
             {!hasGivenRating ? (
@@ -52,7 +52,7 @@ function Feedback({ query }) {
                     <div className="flex-grow flex justify-center">
                         <FeedbackButton
                             onClick={onRatingClick}
-                            ariaDescribedBy="poll-title"
+                            ariaDescribedBy="feedback-panel-title"
                             icon={<FaceSmileIcon aria-hidden="true" height="1.5rem" width="1.5rem" />}
                         >
                             Ja
@@ -61,7 +61,7 @@ function Feedback({ query }) {
                     <div className="flex-grow flex justify-center">
                         <FeedbackButton
                             onClick={onRatingClick}
-                            ariaDescribedBy="poll-title"
+                            ariaDescribedBy="feedback-panel-title"
                             icon={<FaceFrownIcon aria-hidden="true" height="1.5rem" width="1.5rem" />}
                         >
                             Nei
