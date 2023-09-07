@@ -41,3 +41,7 @@ body {
 .inline-flex {
     display: inline-flex;
 }
+
+.justify-center {
+    justify-content: center;
+}
