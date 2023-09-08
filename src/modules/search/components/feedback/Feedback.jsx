@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { BodyLong, Heading, Panel, Link as AkselLink } from "@navikt/ds-react";
+import { BodyLong, Heading, Panel, Link as AkselLink, HStack } from "@navikt/ds-react";
 import "./Feedback.css";
 import { FaceSmileIcon, FaceFrownIcon } from "@navikt/aksel-icons";
 import PropTypes from "prop-types";
@@ -48,10 +48,9 @@ function Feedback({ query }) {
                 Synes du søketreffene er relevante?
             </Heading>
             {!hasGivenRating ? (
-                <div className="flex mb-0_5">
-                    <div className="flex-grow flex justify-center">
+                <HStack justify="center" className="mb-0_5">
+                    <div>
                         <FeedbackButton
-                            className="flex-grow"
                             onClick={onRatingClick}
                             ariaDescribedBy="feedback-panel-title"
                             icon={<FaceSmileIcon aria-hidden="true" height="1.5rem" />}
@@ -59,9 +58,8 @@ function Feedback({ query }) {
                             Ja
                         </FeedbackButton>
                     </div>
-                    <div className="flex-grow flex justify-center">
+                    <div>
                         <FeedbackButton
-                            className="flex-grow"
                             onClick={onRatingClick}
                             ariaDescribedBy="feedback-panel-title"
                             icon={<FaceFrownIcon aria-hidden="true" height="1.5rem" />}
@@ -69,7 +67,7 @@ function Feedback({ query }) {
                             Nei
                         </FeedbackButton>
                     </div>
-                </div>
+                </HStack>
             ) : (
                 <BodyLong className="mt-1 mb-1 bold">Takk for tilbakemeldingen!</BodyLong>
             )}
