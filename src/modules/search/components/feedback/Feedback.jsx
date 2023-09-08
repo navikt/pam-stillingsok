@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { BodyLong, Heading, Panel, Link as AkselLink } from "@navikt/ds-react";
 import "./Feedback.css";
-import { ThumbUpIcon, ThumbDownIcon } from "@navikt/aksel-icons";
+import { FaceSmileIcon, FaceFrownIcon } from "@navikt/aksel-icons";
 import PropTypes from "prop-types";
+import { FeedbackButton } from "@navikt/arbeidsplassen-react";
 import logAmplitudeEvent from "../../../../common/tracking/amplitude";
 
 function Option({ emoji, text, onClick }) {
@@ -42,21 +43,39 @@ function Feedback({ query }) {
     };
 
     return (
-        <Panel className="arb-panel-tertiary mt-2 text-center">
-            <Heading level="2" size="small" spacing>
+        <Panel className="mt-2 text-center" id="feedback-panel">
+            <Heading level="2" size="small" className="mb-0_5" id="feedback-panel-title">
                 Synes du søketreffene er relevante?
             </Heading>
             {!hasGivenRating ? (
-                <div className="Feedback__options">
-                    <Option text="Ja" onClick={onRatingClick} emoji={<ThumbUpIcon aria-hidden="true" />} />
-                    <Option text="Nei" onClick={onRatingClick} emoji={<ThumbDownIcon aria-hidden="true" />} />
+                <div className="flex mb-0_5">
+                    <div className="flex-grow flex justify-center">
+                        <FeedbackButton
+                            className="flex-grow"
+                            onClick={onRatingClick}
+                            ariaDescribedBy="feedback-panel-title"
+                            icon={<FaceSmileIcon aria-hidden="true" height="1.5rem" />}
+                        >
+                            Ja
+                        </FeedbackButton>
+                    </div>
+                    <div className="flex-grow flex justify-center">
+                        <FeedbackButton
+                            className="flex-grow"
+                            onClick={onRatingClick}
+                            ariaDescribedBy="feedback-panel-title"
+                            icon={<FaceFrownIcon aria-hidden="true" height="1.5rem" />}
+                        >
+                            Nei
+                        </FeedbackButton>
+                    </div>
                 </div>
             ) : (
                 <BodyLong className="mt-1 mb-1 bold">Takk for tilbakemeldingen!</BodyLong>
             )}
 
             <BodyLong className="mb-0_5">
-                Er noe du savner eller noe du synes kunne vært bedre, så vil vi gjerne høre det.
+                Er det noe du savner eller synes kunne vært bedre, så vil vi gjerne høre det.
             </BodyLong>
             <BodyLong>
                 <AkselLink href="https://surveys.hotjar.com/8eedca7e-3fae-4852-8d96-4c9c80424cdc">
