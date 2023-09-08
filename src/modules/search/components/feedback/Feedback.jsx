@@ -51,18 +51,20 @@ function Feedback({ query }) {
                 <div className="flex mb-0_5">
                     <div className="flex-grow flex justify-center">
                         <FeedbackButton
+                            className="flex-grow"
                             onClick={onRatingClick}
                             ariaDescribedBy="feedback-panel-title"
-                            icon={<FaceSmileIcon aria-hidden="true" height="1.5rem" width="1.5rem" />}
+                            icon={<FaceSmileIcon aria-hidden="true" height="1.5rem" />}
                         >
                             Ja
                         </FeedbackButton>
                     </div>
                     <div className="flex-grow flex justify-center">
                         <FeedbackButton
+                            className="flex-grow"
                             onClick={onRatingClick}
                             ariaDescribedBy="feedback-panel-title"
-                            icon={<FaceFrownIcon aria-hidden="true" height="1.5rem" width="1.5rem" />}
+                            icon={<FaceFrownIcon aria-hidden="true" height="1.5rem" />}
                         >
                             Nei
                         </FeedbackButton>
