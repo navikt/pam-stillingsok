@@ -17,6 +17,6 @@ export ADUSER_AUDIENCE=local:teampam:pam-aduser
 export IDPORTEN_AUDIENCE=local-token-x-client-id
 export CV_API_AUDIENCE=local:teampam:pam-cv-api
 export ARBEIDSPLASSEN_URL=http://localhost:3000
-export INTEREST_API_URL=http://localhost:8080/interesse-api
+export INTEREST_API_URL=http://localhost:3000/interesse-api
 
 exec npm start
