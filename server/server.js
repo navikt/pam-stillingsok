@@ -12,6 +12,7 @@ const locationApiConsumer = require("./api/locationApiConsumer");
 const setUpProxyCvApi = require("./api/cvApiProxy");
 const { initializeTokenX, tokenIsValid } = require("./tokenX/tokenXUtils");
 const setUpAduserApiProxy = require("./api/userApiProxyConfig");
+const setUpSuperraskApi = require("./api/superraskApiProxy");
 const { logger } = require("./common/logger");
 
 /* eslint no-console: 0 */
@@ -141,6 +142,7 @@ const startServer = (htmlPages) => {
         }
     });
     setUpProxyCvApi(server);
+    setUpSuperraskApi(server);
 
     // Give users fallback locations from local file if aduser is unresponsive
     server.get(`${properties.PAM_CONTEXT_PATH}/api/locations`, (req, res) => {
