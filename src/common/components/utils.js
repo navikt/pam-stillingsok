@@ -61,11 +61,16 @@ export function isValidUrl(input) {
     }
 }
 
+export function isValidTelephone(input) {
+    const formatted = input.trim().replaceAll(/[() .,-]/g, "");
+    const pattern = /^\+?[0-9]{0,20}$/;
+    return pattern.test(formatted);
+}
+
 export function isValidEmail(input) {
     // Regex from https://emailregex.com
-    const pattern = new RegExp(
-        /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-    );
+    const pattern =
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
     return pattern.test(input);
 }
@@ -73,9 +78,8 @@ export function isValidEmail(input) {
 export function containsEmail(input) {
     // Regex from https://emailregex.com
     const preprocessedInput = input.replace(/&#64;/, "@");
-    const pattern = new RegExp(
-        /(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/,
-    );
+    const pattern =
+        /(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/;
 
     return pattern.test(preprocessedInput);
 }
@@ -83,7 +87,7 @@ export function containsEmail(input) {
 export function extractEmail(input) {
     // Regex from https://emailregex.com
     const preprocessedInput = input.replace(/&#64;/g, "@");
-    const pattern = new RegExp(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/gi);
+    const pattern = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/gi;
 
     return preprocessedInput.match(pattern);
 }
