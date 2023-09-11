@@ -34,7 +34,7 @@ function Ad({ match }) {
                 dispatch({ type: FetchAction.RESOLVE, data });
             },
             (err) => {
-                dispatch({ type: FetchAction.REJECT, err });
+                dispatch({ type: FetchAction.REJECT, error: err });
             },
         );
     }
