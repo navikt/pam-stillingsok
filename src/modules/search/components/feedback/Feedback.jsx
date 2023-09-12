@@ -1,31 +1,10 @@
 import React, { useState } from "react";
-import { BodyLong, Heading, Panel, Link as AkselLink, HStack } from "@navikt/ds-react";
+import { BodyLong, Heading, Panel, Link as AkselLink, HStack, VStack } from "@navikt/ds-react";
 import "./Feedback.css";
 import { FaceSmileIcon, FaceFrownIcon } from "@navikt/aksel-icons";
 import PropTypes from "prop-types";
 import { FeedbackButton } from "@navikt/arbeidsplassen-react";
 import logAmplitudeEvent from "../../../../common/tracking/amplitude";
-
-function Option({ emoji, text, onClick }) {
-    return (
-        <button
-            type="button"
-            className="Feedback__option"
-            onClick={() => {
-                onClick(text);
-            }}
-        >
-            <div className="Feedback__emoji">{emoji}</div>
-            <div>{text}</div>
-        </button>
-    );
-}
-
-Option.propTypes = {
-    emoji: PropTypes.node.isRequired,
-    text: PropTypes.string.isRequired,
-    onClick: PropTypes.func.isRequired,
-};
 
 function Feedback({ query }) {
     const [hasGivenRating, setHasGiverRating] = useState(false);
@@ -43,43 +22,40 @@ function Feedback({ query }) {
     };
 
     return (
-        <Panel className="mt-8 text-center" id="feedback-panel">
-            <Heading level="2" size="small" className="mb-2" id="feedback-panel-title">
-                Synes du søketreffene er relevante?
-            </Heading>
-            {!hasGivenRating ? (
-                <HStack justify="center" className="mb-2">
-                    <div>
+        <Panel className="text-center" id="feedback-panel">
+            <VStack gap="2">
+                <Heading level="2" size="small" id="feedback-panel-title">
+                    Synes du søketreffene er relevante?
+                </Heading>
+                {!hasGivenRating ? (
+                    <HStack justify="center" gap="2">
                         <FeedbackButton
                             onClick={onRatingClick}
                             ariaDescribedBy="feedback-panel-title"
-                            icon={<FaceSmileIcon aria-hidden="true" height="1.5rem" />}
+                            icon={<FaceSmileIcon aria-hidden="true" height="1.5rem" width="1.5rem" />}
                         >
                             Ja
                         </FeedbackButton>
-                    </div>
-                    <div>
                         <FeedbackButton
                             onClick={onRatingClick}
                             ariaDescribedBy="feedback-panel-title"
-                            icon={<FaceFrownIcon aria-hidden="true" height="1.5rem" />}
+                            icon={<FaceFrownIcon aria-hidden="true" height="1.5rem" width="1.5rem" />}
                         >
                             Nei
                         </FeedbackButton>
-                    </div>
-                </HStack>
-            ) : (
-                <BodyLong className="mt-4 mb-4 bold">Takk for tilbakemeldingen!</BodyLong>
-            )}
+                    </HStack>
+                ) : (
+                    <BodyLong className="bold">Takk for tilbakemeldingen!</BodyLong>
+                )}
 
-            <BodyLong className="mb-2">
-                Er det noe du savner eller synes kunne vært bedre, så vil vi gjerne høre det.
-            </BodyLong>
-            <BodyLong>
-                <AkselLink href="https://surveys.hotjar.com/8eedca7e-3fae-4852-8d96-4c9c80424cdc">
-                    Skriv en kort tilbakemelding
-                </AkselLink>
-            </BodyLong>
+                <BodyLong>Er det noe du savner eller synes kunne vært bedre, så vil vi gjerne høre det.</BodyLong>
+
+                <BodyLong>
+                    <AkselLink href="https://surveys.hotjar.com/8eedca7e-3fae-4852-8d96-4c9c80424cdc">
+                        Skriv en kort tilbakemelding
+                    </AkselLink>
+                </BodyLong>
+            </VStack>
         </Panel>
     );
 }
