@@ -6,7 +6,7 @@ import "./HowToPanel.css";
 
 function DoYouWantToSaveSearch({ query }) {
     return (
-        <Panel className="HowToPanel arb-panel-secondary mb-2">
+        <Panel className="HowToPanel arb-panel-secondary mb-8">
             <div className="HowToPanel__text">
                 <Heading level="3" size="small">
                     Varsel ved nye treff?

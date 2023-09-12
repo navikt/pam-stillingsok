@@ -16,7 +16,7 @@ function SavedSearchesPage() {
     useScrollToTop();
 
     return (
-        <div className="container-medium mt-3 mb-4">
+        <div className="container-medium mt-12 mb-16">
             <RequiresAuthentication>
                 <RequiresHasAcceptedTerms>
                     <SavedSearchesList />

@@ -48,7 +48,7 @@ const logEmailAnchorClick = (stilling) => {
             id: stilling._id,
         });
     } catch (e) {
-        //ignore
+        // ignore
     }
 };
 
@@ -91,7 +91,7 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                 )}
 
                 {!isFinn && properties.applicationemail && (
-                    <BodyLong className="mt-1">
+                    <BodyLong className="mt-4">
                         Alternativt kan du sende søknad via e-post til{" "}
                         {isValidEmail(properties.applicationemail) ? (
                             <div className="inline-flex">
@@ -129,14 +129,14 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                 {applicationUrl && (
                     <div>
                         {isValidUrl(applicationUrl) ? (
-                            <BodyLong className="mt-1">
+                            <BodyLong className="mt-4">
                                 Alternativt kan du{" "}
                                 <AkselLink href={applicationUrl} onClick={() => applyForPosition(isFinn, stilling)}>
                                     sende søknad her.
                                 </AkselLink>
                             </BodyLong>
                         ) : (
-                            <BodyLong className="mt-1">Alternativt kan du sende søknad på {applicationUrl}.</BodyLong>
+                            <BodyLong className="mt-4">Alternativt kan du sende søknad på {applicationUrl}.</BodyLong>
                         )}
                     </div>
                 )}
@@ -227,7 +227,7 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                 )}
 
                 {isFinn && (
-                    <BodyLong className="mt-1">
+                    <BodyLong className="mt-4">
                         Denne annonsen er hentet fra FINN.no. Du kan sende søknad via den opprinnelige annonsen.
                     </BodyLong>
                 )}

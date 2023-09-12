@@ -11,12 +11,12 @@ function WithdrawApplicationConfirmationRequired({ ad, handleWithDrawClick, isDe
             <Heading level="1" size="large" spacing>
                 Bekreft at du ønsker å trekke din søknad
             </Heading>
-            <BodyLong className="mb-2">
+            <BodyLong className="mb-8">
                 Informasjonen du har oppgitt i din søknad vil bli slettet. Dette valget kan ikke angres og du må søke på
                 nytt dersom du ønsker det.
             </BodyLong>
             {ad && (
-                <div className="mb-2">
+                <div className="mb-8">
                     <BodyShort>
                         <AkselLink as={Link} to={`${CONTEXT_PATH}/stilling/${ad._id}`}>
                             {ad._source.title}
@@ -27,7 +27,7 @@ function WithdrawApplicationConfirmationRequired({ ad, handleWithDrawClick, isDe
             )}
 
             {hasError && (
-                <Alert variant="error" className="mb-2">
+                <Alert variant="error" className="mb-8">
                     Det oppsto dessverre en feil og vi kunne ikke trekke søknaden din. Prøv å trekk søknaden på nytt.
                 </Alert>
             )}

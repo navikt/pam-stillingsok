@@ -19,7 +19,7 @@ function NewApplicationSuccess({ data }) {
                 <Heading level="2" spacing size="medium">
                     Hva skjer nå?
                 </Heading>
-                <BodyLong className="mb-2">
+                <BodyLong className="mb-8">
                     Bedriften vil vurdere din søknad og ta kontakt dersom de syns du passer for jobben. Du får beskjed
                     på e-post så fort bedriften har gjort en vurdering.
                 </BodyLong>

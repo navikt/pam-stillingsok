@@ -29,7 +29,7 @@ export default function AlertModal({
             <Heading level="1" size="medium" id={`${id}-h1`} spacing>
                 {title}
             </Heading>
-            <BodyLong id={`${id}-message`} className="mb-2_5">
+            <BodyLong id={`${id}-message`} className="mb-10">
                 {children}
             </BodyLong>
             {showButtons && (

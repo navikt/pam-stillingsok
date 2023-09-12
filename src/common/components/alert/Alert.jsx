@@ -4,7 +4,7 @@ import { Alert as AkselAlert } from "@navikt/ds-react";
 
 function Alert({ children }) {
     return (
-        <AkselAlert variant="error" className="mb-1 mt-1" role="alert">
+        <AkselAlert variant="error" className="mb-4 mt-4" role="alert">
             {children}
         </AkselAlert>
     );

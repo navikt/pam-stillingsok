@@ -69,7 +69,7 @@ function Filters({ query, dispatchQuery, initialSearchResult, searchResult }) {
                         <Tabs.Tab value="yrke" label="Yrke" />
                         <Tabs.Tab value="andre" label="Andre filtre" />
                     </Tabs.List>
-                    <Tabs.Panel value="sted" className="mt-2 h-24 w-full bg-gray-50 p-4">
+                    <Tabs.Panel value="sted" className="mt-8 h-24 w-full bg-gray-50 p-4">
                         <Counties
                             query={query}
                             dispatch={dispatchQuery}
@@ -77,7 +77,7 @@ function Filters({ query, dispatchQuery, initialSearchResult, searchResult }) {
                             updatedValues={searchResult}
                         />
                     </Tabs.Panel>
-                    <Tabs.Panel value="yrke" className="mt-2 h-24 w-full bg-gray-50 p-4">
+                    <Tabs.Panel value="yrke" className="mt-8 h-24 w-full bg-gray-50 p-4">
                         <Occupations
                             query={query}
                             dispatch={dispatchQuery}
@@ -85,8 +85,8 @@ function Filters({ query, dispatchQuery, initialSearchResult, searchResult }) {
                             updatedValues={searchResult && searchResult.aggregations.occupationFirstLevels}
                         />
                     </Tabs.Panel>
-                    <Tabs.Panel value="andre" className="mt-2 h-24  w-full bg-gray-50 p-4">
-                        <div className="mb-1_5">
+                    <Tabs.Panel value="andre" className="mt-8 h-24  w-full bg-gray-50 p-4">
+                        <div className="mb-6">
                             <Published
                                 query={query}
                                 dispatch={dispatchQuery}
@@ -94,7 +94,7 @@ function Filters({ query, dispatchQuery, initialSearchResult, searchResult }) {
                                 updatedValues={searchResult && searchResult.aggregations.published}
                             />
                         </div>
-                        <div className="mb-1_5">
+                        <div className="mb-6">
                             <Heading level="2" size="small">
                                 Heltid/deltid
                             </Heading>
@@ -105,7 +105,7 @@ function Filters({ query, dispatchQuery, initialSearchResult, searchResult }) {
                                 updatedValues={searchResult && searchResult.aggregations.extent}
                             />
                         </div>
-                        <div className="mb-1_5">
+                        <div className="mb-6">
                             <Heading level="2" size="small">
                                 Sektor
                             </Heading>
@@ -116,7 +116,7 @@ function Filters({ query, dispatchQuery, initialSearchResult, searchResult }) {
                                 updatedValues={searchResult && searchResult.aggregations.sector}
                             />
                         </div>
-                        <div className="mb-1_5">
+                        <div className="mb-6">
                             <Heading level="2" size="small">
                                 Ansettelsesform
                             </Heading>

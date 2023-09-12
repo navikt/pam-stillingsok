@@ -43,12 +43,12 @@ function Feedback({ query }) {
     };
 
     return (
-        <Panel className="mt-2 text-center" id="feedback-panel">
-            <Heading level="2" size="small" className="mb-0_5" id="feedback-panel-title">
+        <Panel className="mt-8 text-center" id="feedback-panel">
+            <Heading level="2" size="small" className="mb-2" id="feedback-panel-title">
                 Synes du søketreffene er relevante?
             </Heading>
             {!hasGivenRating ? (
-                <HStack justify="center" className="mb-0_5">
+                <HStack justify="center" className="mb-2">
                     <div>
                         <FeedbackButton
                             onClick={onRatingClick}
@@ -69,10 +69,10 @@ function Feedback({ query }) {
                     </div>
                 </HStack>
             ) : (
-                <BodyLong className="mt-1 mb-1 bold">Takk for tilbakemeldingen!</BodyLong>
+                <BodyLong className="mt-4 mb-4 bold">Takk for tilbakemeldingen!</BodyLong>
             )}
 
-            <BodyLong className="mb-0_5">
+            <BodyLong className="mb-2">
                 Er det noe du savner eller synes kunne vært bedre, så vil vi gjerne høre det.
             </BodyLong>
             <BodyLong>

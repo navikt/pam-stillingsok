@@ -10,7 +10,7 @@ function FavouritesPage() {
     useScrollToTop();
 
     return (
-        <div className="container-medium mt-3 mb-3">
+        <div className="container-medium mt-12 mb-12">
             <RequiresAuthentication>
                 <RequiresHasAcceptedTerms>
                     <FavouritesList />

@@ -65,7 +65,7 @@ function SuperraskSoknad({ match }) {
         <div className="NewApplicationForm">
             {status === FetchStatus.IS_FETCHING && <DelayedSpinner />}
             {status === FetchStatus.FAILURE && error.statusCode !== 404 && (
-                <div className="container-small mt-1 mb-1">
+                <div className="container-small mt-4 mb-4">
                     <Alert variant="error">Det oppsto dessverre en feil. Prøv å last inn siden på nytt.</Alert>
                 </div>
             )}
@@ -81,7 +81,7 @@ function SuperraskSoknad({ match }) {
                 <>
                     <div className="NewApplicationForm__green-box">
                         <div className="NewApplicationForm__green-box-inner">
-                            <Label as="p" className="mb-0_25">
+                            <Label as="p" className="mb-1">
                                 {getEmployer(data.ad._source)}
                             </Label>
                             <BodyShort>{data.ad._source.title}</BodyShort>

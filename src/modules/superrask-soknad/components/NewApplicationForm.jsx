@@ -180,7 +180,7 @@ function NewApplicationForm({ ad, applicationForm, submitForm, isSending, hasErr
                     <Heading level="2" size="medium" spacing>
                         Bedriftens ønskede kvalifikasjoner
                     </Heading>
-                    <BodyLong className="mb-2">
+                    <BodyLong className="mb-8">
                         Husk at du kan være rett person for jobben selv om du ikke treffer på alle kvalifikasjoner.
                     </BodyLong>
 
@@ -205,8 +205,8 @@ function NewApplicationForm({ ad, applicationForm, submitForm, isSending, hasErr
                 <Heading level="2" size="medium" spacing>
                     Hvorfor du er den rette for jobben
                 </Heading>
-                <ReadMore header="Hvordan skrive en god begrunnelse?" className="mb-1">
-                    <BodyLong className="mb-1">
+                <ReadMore header="Hvordan skrive en god begrunnelse?" className="mb-4">
+                    <BodyLong className="mb-4">
                         Vis hvorfor du er et trygt valg for denne jobben. Fortell om arbeidserfaring, praksisplasser,
                         utdanning, frivillig arbeid, verv eller annen relevant erfaring.
                     </BodyLong>
@@ -228,7 +228,7 @@ function NewApplicationForm({ ad, applicationForm, submitForm, isSending, hasErr
                 <Heading level="2" size="medium" spacing>
                     Din kontaktinformasjon
                 </Heading>
-                <BodyLong className="mb-1">Vær nøye med å oppgi riktig informasjon.</BodyLong>
+                <BodyLong className="mb-4">Vær nøye med å oppgi riktig informasjon.</BodyLong>
 
                 <TextField
                     label="Navn"
@@ -236,7 +236,7 @@ function NewApplicationForm({ ad, applicationForm, submitForm, isSending, hasErr
                     auto-complete="name"
                     onChange={handleNameChange}
                     value={name}
-                    className="mb-1"
+                    className="mb-4"
                 />
 
                 <TextField
@@ -248,7 +248,7 @@ function NewApplicationForm({ ad, applicationForm, submitForm, isSending, hasErr
                     onChange={handleEmailChange}
                     value={email}
                     error={emailValidationError}
-                    className="mb-1"
+                    className="mb-4"
                 />
 
                 <TextField
