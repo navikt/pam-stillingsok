@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import * as ReactDOMClient from "react-dom/client";
 import "@navikt/ds-css";
 import "@navikt/arbeidsplassen-css";
+import "@navikt/arbeidsplassen-theme";
 import { Footer, SkipLink } from "@navikt/arbeidsplassen-react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { Modal } from "@navikt/ds-react";
