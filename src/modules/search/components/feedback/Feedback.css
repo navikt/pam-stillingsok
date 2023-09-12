@@ -1,11 +1,3 @@
-.Feedback__options {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    margin-bottom: 2rem;
-    justify-content: center;
-}
-
 .Feedback__option {
     flex: 1;
     display: flex;
