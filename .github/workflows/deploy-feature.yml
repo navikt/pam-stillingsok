@@ -25,4 +25,5 @@ jobs:
       NAIS_VARS: .nais/dev.json
     secrets:
       NAIS_DEPLOY_APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+      NAIS_WORKLOAD_IDENTITY_PROVIDER: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
       OPTIONAL_SECRET: ${{ secrets.READER_TOKEN }}

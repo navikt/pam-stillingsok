@@ -15,7 +15,7 @@ import {
 } from "@navikt/ds-react";
 import Alert from "../../../common/components/alert/Alert";
 import H1WithAutoFocus from "../../../common/components/h1WithAutoFocus/H1WithAutoFocus";
-import { isValidEmail } from "../../../common/components/utils";
+import { isValidEmail, isValidTelephone } from "../../../common/components/utils";
 import "./SuperraskSoknad.css";
 import { CONTEXT_PATH } from "../../../common/environment";
 
@@ -59,7 +59,10 @@ function NewApplicationForm({ ad, applicationForm, submitForm, isSending, hasErr
             setEmailValidationError("Du må oppgi din e-post for å kunne sende inn søknaden");
         }
 
-        if (telephone.trim().length === 0) {
+        if (telephone.trim().length > 0 && !isValidTelephone(telephone)) {
+            isValid = false;
+            setTelephoneValidationError("Telefonnummer er ugyldig");
+        } else if (telephone === undefined || telephone.trim().length === 0) {
             isValid = false;
             setTelephoneValidationError("Du må oppgi ditt telefonnummer for å kunne sende inn søknaden");
         }
