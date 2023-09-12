@@ -13,10 +13,6 @@
     cursor: pointer;
 }
 
-#feedback-panel {
-    background-color: var(--a-surface-default);
-}
-
 @media (min-width: 475px) {
     .Feedback__option {
         max-width: 100px;

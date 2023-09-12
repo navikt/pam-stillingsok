@@ -24,7 +24,7 @@ function Feedback({ query }) {
     return (
         <Panel className="text-center" id="feedback-panel">
             <VStack gap="2">
-                <Heading level="2" size="small" id="feedback-panel-title">
+                <Heading level="2" size="small">
                     Synes du søketreffene er relevante?
                 </Heading>
                 {!hasGivenRating ? (
