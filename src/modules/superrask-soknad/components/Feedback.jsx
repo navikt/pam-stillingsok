@@ -3,7 +3,7 @@ import { BodyLong, Heading, Panel, Link as AkselLink } from "@navikt/ds-react";
 
 function Feedback() {
     return (
-        <Panel className="arb-panel-tertiary mt-3">
+        <Panel className="arb-panel-tertiary mt-12">
             <Heading level="2" size="medium" spacing>
                 Hvordan kan vi forbedre denne tjenesten for deg?
             </Heading>

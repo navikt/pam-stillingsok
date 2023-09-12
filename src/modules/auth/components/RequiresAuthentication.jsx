@@ -25,13 +25,13 @@ function RequiresAuthentication({ children, onCancel, onLogin }) {
     }
     return (
         <section className="LoginRequiredMessage">
-            <Heading level="1" size="large" className="mb-0_5">
+            <Heading level="1" size="large" className="mb-2">
                 Du må logge inn først
             </Heading>
-            <BodyLong className="LoginRequiredMessage__text mb-2">
+            <BodyLong className="LoginRequiredMessage__text mb-8">
                 Du bruker BankID for å logge inn på <span translate="no">arbeidsplassen.no</span>
             </BodyLong>
-            <div className="mb-2">
+            <div className="mb-8">
                 <LoginBubble />
             </div>
 

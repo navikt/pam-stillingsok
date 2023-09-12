@@ -60,8 +60,8 @@ function FavouritesList() {
         );
     }
     return (
-        <section className="mb-4">
-            <div className="FavouritesList__total-and-sorting mb-3">
+        <section className="mb-16">
+            <div className="FavouritesList__total-and-sorting mb-12">
                 <H1WithAutoFocus size="xlarge" spacing={false}>
                     Favoritter
                 </H1WithAutoFocus>

@@ -26,7 +26,7 @@ function Pagination({ searchResult, isSearching, query, onLoadMoreClick }) {
                 </Button>
             )}
 
-            <Button variant="tertiary" onClick={scrollTop} className="mt-1_5">
+            <Button variant="tertiary" onClick={scrollTop} className="mt-6">
                 <ArrowUpIcon aria-hidden="true" /> Til toppen
             </Button>
         </>

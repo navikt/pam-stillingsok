@@ -31,11 +31,11 @@ export default function EmployerDetails({ stilling }) {
     const employer = getEmployer(stilling);
     const employerLocation = getEmployerLocation(stilling.employer);
     return (
-        <section className="mt-4 mb-4">
+        <section className="mt-16 mb-16">
             <Heading level="2" size="large" spacing>
                 Om arbeidsgiveren
             </Heading>
-            <dl className="JobPosting__dl mb-1">
+            <dl className="JobPosting__dl mb-4">
                 {employer && (
                     <>
                         <dt>Arbeidsgiver</dt>

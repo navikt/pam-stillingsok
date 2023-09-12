@@ -102,13 +102,13 @@ function ReportAd() {
     }
 
     return (
-        <div className="container-medium mt-3 mb-4">
+        <div className="container-medium mt-12 mb-16">
             {authenticationStatus !== AuthenticationStatus.IS_AUTHENTICATED && (
                 <div>
                     <Heading level="2" size="large" spacing>
                         Du må logge inn
                     </Heading>
-                    <BodyLong className="mb-2">
+                    <BodyLong className="mb-8">
                         Logg inn med MinID, BankID, BankID på mobil, Buypass eller Commfides.
                     </BodyLong>
                     <Button variant="primary" onClick={login}>
@@ -187,7 +187,7 @@ function ReportAd() {
                                     value={description}
                                     onChange={handleDescriptionChange}
                                     description="Legg ikke igjen personopplysinger i dette feltet"
-                                    className="mb-2"
+                                    className="mb-8"
                                 />
 
                                 <BodyLong>
@@ -204,7 +204,7 @@ function ReportAd() {
                                     variant="primary"
                                     disabled={(violationCategory === null && scamCategory === null) || !description}
                                     onClick={handleSendTip}
-                                    className="mb-2"
+                                    className="mb-8"
                                 >
                                     Send tips
                                 </Button>

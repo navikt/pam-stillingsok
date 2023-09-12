@@ -11,7 +11,7 @@ function SearchResultHeader({ searchResponse, query, queryDispatch }) {
                 <div className="Search__count container-large">
                     {searchResponse && searchResponse.data && searchResponse.data.totalAds >= 0 && (
                         <div>
-                            <Heading level="2" size="small" className="mb-0_25">
+                            <Heading level="2" size="small" className="mb-1">
                                 Søkeresultat
                             </Heading>
                             <SearchResultCount searchResult={searchResponse.data} />

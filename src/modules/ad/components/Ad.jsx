@@ -88,7 +88,7 @@ function Ad({ match }) {
                         <H1WithAutoFocus className="JobPosting__h1">{ad._source.title}</H1WithAutoFocus>
 
                         {ad._source.status !== "ACTIVE" && (
-                            <Tag variant="warning-filled" className="mb-1">
+                            <Tag variant="warning-filled" className="mb-4">
                                 Stillingsannonsen er inaktiv.
                             </Tag>
                         )}

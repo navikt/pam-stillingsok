@@ -11,7 +11,7 @@ function WithdrawApplicationSuccess() {
             <H1WithAutoFocus level="1" size="large">
                 Din søknad er nå trukket
             </H1WithAutoFocus>
-            <BodyLong className="mb-2_5">
+            <BodyLong className="mb-10">
                 Informasjonen du oppgav i din søknad er slettet. Dersom du angrer på at du trakk søknaden, kan du søke
                 på nytt.
             </BodyLong>

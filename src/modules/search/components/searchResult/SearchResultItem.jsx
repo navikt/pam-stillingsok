@@ -75,7 +75,7 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, sho
             className="SearchResultItem"
             aria-labelledby={`${ad.uuid}-h3 ${ad.uuid}-jobTitle ${ad.uuid}-employer ${ad.uuid}-location`}
         >
-            <div className="SearchResultItem__details mb-0_5">
+            <div className="SearchResultItem__details mb-2">
                 {published && (
                     <Label as="p" size="small" className="SearchResultItem__subtle-text published">
                         {isPublishedToday && "Ny i dag"}
@@ -88,8 +88,8 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, sho
             <div
                 className={
                     jobTitle
-                        ? "SearchResultItem__heading-and-favourite mb-0_5"
-                        : "SearchResultItem__heading-and-favourite mb-1"
+                        ? "SearchResultItem__heading-and-favourite mb-2"
+                        : "SearchResultItem__heading-and-favourite mb-4"
                 }
             >
                 <Heading level="3" size="small" className="SearchResultsItem__title" id={`${ad.uuid}-h3`}>
@@ -101,14 +101,14 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, sho
             </div>
 
             {jobTitle && (
-                <Label as="p" id={`${ad.uuid}-jobTitle`} className="mb-1 break-word">
+                <Label as="p" id={`${ad.uuid}-jobTitle`} className="mb-4 break-word">
                     {jobTitle}
                 </Label>
             )}
 
-            <div className="mb-0_5">
+            <div className="mb-2">
                 {employer && (
-                    <div className="SearchResultItem__text-and-icon mb-0_25">
+                    <div className="SearchResultItem__text-and-icon mb-1">
                         <div>
                             <Buldings3Icon width="1.5em" height="1.5em" aria-label="Arbeidsgiver" />
                         </div>
@@ -116,7 +116,7 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, sho
                     </div>
                 )}
                 {location && (
-                    <div className="SearchResultItem__text-and-icon mb-0_25">
+                    <div className="SearchResultItem__text-and-icon mb-1">
                         <div>
                             <PinIcon width="1.5em" height="1.5em" aria-label="Sted" />
                         </div>

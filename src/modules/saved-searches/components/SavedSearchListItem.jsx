@@ -84,13 +84,13 @@ function SavedSearchListItem({ savedSearch, removeSavedSearchFromList, replaceSa
             )}
 
             {isEmailNotificationExpired && (
-                <Tag variant="warning-filled" className="mt-0_5 mb-0_5">
+                <Tag variant="warning-filled" className="mt-2 mb-2">
                     Ditt varsel for dette søket har gått ut
                 </Tag>
             )}
 
             {restartEmailNotificationStatus === FetchStatus.SUCCESS && (
-                <Tag variant="success-filled" className="mt-0_5 mb-0_5">
+                <Tag variant="success-filled" className="mt-2 mb-2">
                     <div role="status">Ny varsling startet</div>
                 </Tag>
             )}

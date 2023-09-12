@@ -13,7 +13,7 @@ function SearchForm({ fetchSearch, query, dispatchQuery }) {
     }
 
     return (
-        <form id="sok" className="mb-1" onSubmit={submitForm} role="search">
+        <form id="sok" className="mb-4" onSubmit={submitForm} role="search">
             <SearchBox query={query} dispatch={dispatchQuery} />
         </form>
     );
