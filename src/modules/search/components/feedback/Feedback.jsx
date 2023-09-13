@@ -52,7 +52,7 @@ function Feedback({ query }) {
                     <div>
                         <FeedbackButton
                             onClick={onRatingClick}
-                            ariaDescribedBy="feedback-panel-title"
+                            aria-describedby="feedback-panel-title"
                             icon={<FaceSmileIcon aria-hidden="true" height="1.5rem" />}
                         >
                             Ja
@@ -61,7 +61,7 @@ function Feedback({ query }) {
                     <div>
                         <FeedbackButton
                             onClick={onRatingClick}
-                            ariaDescribedBy="feedback-panel-title"
+                            aria-describedby="feedback-panel-title"
                             icon={<FaceFrownIcon aria-hidden="true" height="1.5rem" />}
                         >
                             Nei
