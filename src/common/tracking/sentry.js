@@ -20,6 +20,7 @@ const ignoreTypeErrors = [
 export default function initSentry() {
     Sentry.init({
         dsn: "https://76170ea4b79246638c1d9eb1c0e4fca9@sentry.gc.nav.no/37",
+        release: window.__APP_VERSION__,
         allowUrls: ["arbeidsplassen.nav.no"],
         ignoreErrors: [...ignoreTypeErrors],
         autoSessionTracking: true,

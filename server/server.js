@@ -75,6 +75,18 @@ server.engine("html", mustacheExpress());
 
 server.use(bodyParser.json());
 
+const getAppVersion = () => {
+    // example: NAIS_APP_IMAGE=europe-north1-docker.pkg.dev/nais-management-233d/teampam/pam-stillingsok:23.256.125825
+    if (process.env.NAIS_APP_IMAGE) {
+        const splitted = process.env.NAIS_APP_IMAGE.split("/");
+        if (splitted.length > 0) {
+            const appVersion = splitted[splitted.length - 1].replace(":", "@");
+            return appVersion; // example: pam-stillingsok@23.256.125825
+        }
+    }
+    return "";
+};
+
 const properties = {
     PAM_CONTEXT_PATH: "/stillinger",
     INTEREST_API_URL: process.env.INTEREST_API_URL,
@@ -84,6 +96,7 @@ const properties = {
     PAM_VAR_SIDE_URL: process.env.PAM_VAR_SIDE_URL,
     PAM_JOBBTREFF_API_URL: process.env.PAM_JOBBTREFF_API_URL,
     AMPLITUDE_TOKEN: process.env.AMPLITUDE_TOKEN,
+    APP_VERSION: getAppVersion(),
 };
 
 const writeEnvironmentVariablesToFile = () => {
@@ -95,7 +108,8 @@ const writeEnvironmentVariablesToFile = () => {
         `window.__LOGOUT_URL__="${properties.LOGOUT_URL}";\n` +
         `window.__PAM_VAR_SIDE_URL__="${properties.PAM_VAR_SIDE_URL}";\n` +
         `window.__PAM_JOBBTREFF_API_URL__="${properties.PAM_JOBBTREFF_API_URL}";\n` +
-        `window.__AMPLITUDE_TOKEN__="${properties.AMPLITUDE_TOKEN}";\n`;
+        `window.__AMPLITUDE_TOKEN__="${properties.AMPLITUDE_TOKEN}";\n` +
+        `window.__APP_VERSION__="${properties.APP_VERSION}";\n`;
 
     fs.writeFile(path.resolve(rootDirectory, "dist/js/env.js"), fileContent, (err) => {
         if (err) throw err;
