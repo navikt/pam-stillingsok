@@ -12,5 +12,6 @@
     "cv-api-host": "pam-cv-api.prod-fss-pub.nais.io",
     "cv_api_audience": "prod-fss:teampam:pam-cv-api",
     "aduser_audience": "prod-gcp:teampam:pam-aduser",
-    "idporten_audience": "https://nav.no"
+    "idporten_audience": "https://nav.no",
+    "sentry_dsn": "https://76170ea4b79246638c1d9eb1c0e4fca9@sentry.gc.nav.no/37"
 }

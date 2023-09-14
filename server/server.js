@@ -96,6 +96,7 @@ const properties = {
     PAM_VAR_SIDE_URL: process.env.PAM_VAR_SIDE_URL,
     PAM_JOBBTREFF_API_URL: process.env.PAM_JOBBTREFF_API_URL,
     AMPLITUDE_TOKEN: process.env.AMPLITUDE_TOKEN,
+    SENTRY_DSN: process.env.SENTRY_DSN,
     APP_VERSION: getAppVersion(),
 };
 
@@ -109,6 +110,7 @@ const writeEnvironmentVariablesToFile = () => {
         `window.__PAM_VAR_SIDE_URL__="${properties.PAM_VAR_SIDE_URL}";\n` +
         `window.__PAM_JOBBTREFF_API_URL__="${properties.PAM_JOBBTREFF_API_URL}";\n` +
         `window.__AMPLITUDE_TOKEN__="${properties.AMPLITUDE_TOKEN}";\n` +
+        `window.__SENTRY_DSN__="${properties.SENTRY_DSN}";\n` +
         `window.__APP_VERSION__="${properties.APP_VERSION}";\n`;
 
     fs.writeFile(path.resolve(rootDirectory, "dist/js/env.js"), fileContent, (err) => {
