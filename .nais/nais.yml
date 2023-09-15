@@ -65,6 +65,8 @@ spec:
       value: {{ cv_api_audience }}
     - name: IDPORTEN_AUDIENCE
       value: {{ idporten_audience }}
+    - name: SENTRY_DSN
+      value: {{ sentry_dsn }}
   accessPolicy:
     inbound:
       rules:

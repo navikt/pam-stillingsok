@@ -18,21 +18,24 @@ const ignoreTypeErrors = [
 ];
 
 export default function initSentry() {
-    Sentry.init({
-        dsn: "https://76170ea4b79246638c1d9eb1c0e4fca9@sentry.gc.nav.no/37",
-        allowUrls: ["arbeidsplassen.nav.no"],
-        ignoreErrors: [...ignoreTypeErrors],
-        autoSessionTracking: true,
-        initialScope: {
-            tags: { sessionId: getSessionId() },
-            user: { id: getSessionId() },
-        },
-        beforeSend(event, hint) {
-            const error = hint.originalException;
-            if (error && error.statusCode !== undefined && ignoreStatusCodes.includes(error.statusCode)) {
-                return null; // event will be discarded
-            }
-            return event;
-        },
-    });
+    if (window.__SENTRY_DSN__) {
+        Sentry.init({
+            dsn: window.__SENTRY_DSN__,
+            release: window.__APP_VERSION__,
+            allowUrls: ["arbeidsplassen.nav.no"],
+            ignoreErrors: [...ignoreTypeErrors],
+            autoSessionTracking: true,
+            initialScope: {
+                tags: { sessionId: getSessionId() },
+                user: { id: getSessionId() },
+            },
+            beforeSend(event, hint) {
+                const error = hint.originalException;
+                if (error && error.statusCode !== undefined && ignoreStatusCodes.includes(error.statusCode)) {
+                    return null; // event will be discarded
+                }
+                return event;
+            },
+        });
+    }
 }
