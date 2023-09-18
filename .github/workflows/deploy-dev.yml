@@ -7,11 +7,12 @@ on:
       - 'LICENCE'
       - 'CODEOWNERS'
     branches:
-      - 'master'
+      - '**'
 
 jobs:
   call-workflow:
-    uses: navikt/pam-deploy/.github/workflows/deploy-dev.yml@v4
+    if: "(github.ref_name == 'master') || contains(github.event.head_commit.message, 'deploy:dev') || contains(github.ref, 'feature/')"
+    uses: navikt/pam-deploy/.github/workflows/deploy-dev.yml@v5
     permissions:
       actions: read
       contents: write
@@ -24,6 +25,7 @@ jobs:
       LANGUAGE: node
       NAIS_RESOURCE: .nais/nais.yml
       NAIS_VARS: .nais/dev.json
+      SKIP_DRAFT_RELEASE: ${{ github.ref_name != 'master' }}
     secrets:
       NAIS_DEPLOY_APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
       NAIS_WORKLOAD_IDENTITY_PROVIDER: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
