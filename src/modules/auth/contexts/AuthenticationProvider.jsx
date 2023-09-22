@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { CONTEXT_PATH, LOGIN_URL, LOGOUT_URL } from "../../../common/environment";
-import TimeoutModal from "../components/TimeoutModal";
+import TimeoutModal, {Reason} from "../components/TimeoutModal";
 
 export const AuthenticationContext = React.createContext({});
 
@@ -21,6 +21,8 @@ function AuthenticationProvider({ children }) {
     const [isSessionActive, setIsSessionActive] = useState(null);
     const [isSessionTimingOut, setIsSessionTimingOut] = useState(null);
     const [isTimeoutModalOpen, setIsTimeoutModalOpen] = useState(false)
+    const [modalReason, setModalReason] = useState(Reason.NO_REASON)
+    const [hasBeenLoggedIn, setHasBeenLoggedIn] = useState(false)
 
     const fetchIsAuthenticated = () => {
         setAuthenticationStatus(AuthenticationStatus.IS_FETCHING);
@@ -32,8 +34,13 @@ function AuthenticationProvider({ children }) {
             .then((response) => {
                 if (response.status === 200) {
                     setAuthenticationStatus(AuthenticationStatus.IS_AUTHENTICATED);
+                    setHasBeenLoggedIn(true)
                 } else if (response.status === 401) {
                     setAuthenticationStatus(AuthenticationStatus.NOT_AUTHENTICATED);
+                    if (hasBeenLoggedIn) {
+                        setModalReason(Reason.LOGGED_OUT)
+                        setIsTimeoutModalOpen(true)
+                    }
                 } else {
                     setAuthenticationStatus(AuthenticationStatus.FAILURE);
                 }
@@ -61,18 +68,32 @@ function AuthenticationProvider({ children }) {
     const handleSessionInfoResponse = async (response, errorMessage) => {
         if (response.status === 401) {
             setAuthenticationStatus(AuthenticationStatus.NOT_AUTHENTICATED)
+            if (hasBeenLoggedIn) {
+                setModalReason(Reason.LOGGED_OUT)
+                setIsTimeoutModalOpen(true)
+                setHasBeenLoggedIn(false)
+                redirectToStart()
+            }
         } else if (response.status < 200 || response.status >= 300) {
             console.error(errorMessage) // Todo ?? Fjern ??
         } else {
             const {session, tokens} = await response.json()
-            setIsSessionExpiring(session.ends_in_seconds < 60)//60 * 10)
-            setIsTokenExpiring(tokens.expire_in_seconds < 30)//60 * 5)
-            setIsSessionTimingOut(session.timeout_in_seconds > -1 && session.timeout_in_seconds < 30)//60 * 5)
+            const sessionIsExpiring = session.ends_in_seconds < 60 //60 * 10
+            const sessionIsTimingOut = session.timeout_in_seconds > -1 && session.timeout_in_seconds < 30 //60 * 5
+
+            setIsSessionExpiring(sessionIsExpiring)
+            setIsSessionTimingOut(sessionIsTimingOut)
             setIsSessionActive(session.active)
+            setIsTokenExpiring(tokens.expire_in_seconds < 30)//60 * 5)
 
             // TODO Fjern disse
             console.log("Session", session)
             console.log("Tokens", tokens)
+
+            if (!session.active) setModalReason(Reason.LOGGED_OUT)
+            else if (sessionIsTimingOut && !sessionIsExpiring) setModalReason(Reason.TIMEOUT)
+            else if (sessionIsExpiring) setModalReason(Reason.EXPIRY)
+            else setModalReason(Reason.NO_REASON)
         }
     }
 
@@ -102,11 +123,16 @@ function AuthenticationProvider({ children }) {
         window.location.href = `/stillinger${LOGIN_URL}?redirect=${encodeURIComponent(window.location.href)}`;
     }
 
+    function redirectToStart() {
+        window.location.href = `/stillinger?expired=true`
+    }
+
     function loginAndRedirect(navigateTo) {
         window.location.href = `/stillinger${LOGIN_URL}?redirect=${encodeURIComponent(navigateTo)}`;
     }
 
     function logout() {
+        setHasBeenLoggedIn(false)
         window.location.href = `/stillinger${LOGOUT_URL}`;
     }
 
@@ -123,32 +149,31 @@ function AuthenticationProvider({ children }) {
     }, [authenticationStatus]);
 
     useEffect(() => {
-        if (isSessionActive && isTokenExpiring) refreshToken();
-    }, [isTokenExpiring, isSessionExpiring, isSessionActive]);
-
-    useEffect(() => {
         const scheduledInterval = setInterval(() => fetchSessionInfo(), 10 * 1000)
         return () => clearInterval(scheduledInterval)
     }, []);
 
     useEffect(() => {
-        setIsTimeoutModalOpen(isSessionExpiring || isSessionExpiring)
-    }, [isSessionTimingOut, isSessionExpiring])
+        setIsTimeoutModalOpen(isSessionExpiring || isSessionTimingOut || isSessionActive === false)
+    }, [isSessionTimingOut, isSessionExpiring, isSessionActive])
 
     const closeModal = () => setIsTimeoutModalOpen(false)
 
     // TODO: FJERN DETTE
-    console.log("isSessionActive", isSessionActive)
     console.log("isTokenExpiring", isTokenExpiring)
     console.log("isSessionExpiring", isSessionExpiring)
+    console.log("isSessionActive", isSessionActive)
     console.log("isSessionTimingOut", isSessionTimingOut)
+    console.log("isTimeoutModalOpen", isTimeoutModalOpen)
+    console.log("modalReason", modalReason)
+    console.log("hasBeenLoggedIn", hasBeenLoggedIn)
 
     return (
         <AuthenticationContext.Provider // eslint-disable-next-line
             value={{ userNameAndInfo, authenticationStatus, login, logout, loginAndRedirect }}
         >
             {children}
-            {isTimeoutModalOpen && <TimeoutModal isSessionExpiring isSessionTimingOut onCloseClick={closeModal}/>}
+            {isTimeoutModalOpen && <TimeoutModal modalReason={modalReason} refresh={refreshToken} onCloseClick={closeModal}/>}
         </AuthenticationContext.Provider>
     );
 }
