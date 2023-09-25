@@ -56,9 +56,11 @@ function AuthenticationProvider({ children }) {
 
             if (!session.active) timeoutLogout();
 
-            const sessionIsExpiring = session.ends_in_seconds < 60; // 60 * 10
+            const sessionIsExpiring = session.ends_in_seconds < 60 * 10;
             const sessionIsTimingOut =
-                session.timeout_in_seconds > -1 ? session.timeout_in_seconds < 30 : tokens.expire_in_seconds < 30; // 60 * 5
+                session.timeout_in_seconds > -1
+                    ? session.timeout_in_seconds < 60 * 5
+                    : tokens.expire_in_seconds < 60 * 5; // 60 * 5
 
             setIsSessionExpiring(sessionIsExpiring);
             setIsSessionTimingOut(sessionIsTimingOut);
@@ -134,7 +136,7 @@ function AuthenticationProvider({ children }) {
     }, [authenticationStatus]);
 
     useEffect(() => {
-        const scheduledInterval = setInterval(() => fetchSessionInfo(), 10 * 1000);
+        const scheduledInterval = setInterval(() => fetchSessionInfo(), 30 * 1000);
         return () => clearInterval(scheduledInterval);
     }, []);
 
