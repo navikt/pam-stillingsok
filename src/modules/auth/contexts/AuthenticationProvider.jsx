@@ -25,7 +25,9 @@ function AuthenticationProvider({ children }) {
         // const logoutComponents = LOGOUT_URL.split("=");
         // const url = `/stillinger${logoutComponents[0]}`;
         // const encodedRedirect = encodeURIComponent(`${logoutComponents[1]}?timeout=true`);
-        window.location.href = `/oauth2/logout?redirect=${encodeURIComponent("/utlogget?timeout=true")}`;
+        const logoutUrl = `/stillinger/oauth2/logout?redirect=${encodeURIComponent("/utlogget?timeout=true")}`;
+        console.log("Ny versjon a 16:00", logoutUrl);
+        window.location.href = logoutUrl;
     }
 
     const fetchIsAuthenticated = () => {
