@@ -22,11 +22,10 @@ function AuthenticationProvider({ children }) {
     const [modalReason, setModalReason] = useState(Reason.NO_MODAL);
 
     function timeoutLogout() {
-        const logoutComponents = LOGOUT_URL.split("=");
-        const url = `/stillinger${logoutComponents[0]}`;
-        const encodedRedirect = encodeURIComponent(`${logoutComponents[1]}?timeout=true`);
-
-        window.location.href = `${url}=${encodedRedirect}`;
+        // const logoutComponents = LOGOUT_URL.split("=");
+        // const url = `/stillinger${logoutComponents[0]}`;
+        // const encodedRedirect = encodeURIComponent(`${logoutComponents[1]}?timeout=true`);
+        window.location.href = `/oauth2/logout?redirect=${encodeURIComponent("/utlogget?timeout=true")}`;
     }
 
     const fetchIsAuthenticated = () => {
