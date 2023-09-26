@@ -21,14 +21,14 @@ function AuthenticationProvider({ children }) {
     const [isTimeoutModalOpen, setIsTimeoutModalOpen] = useState(false);
     const [modalReason, setModalReason] = useState(Reason.NO_MODAL);
 
-    function timeoutLogout() {
+    const timeoutLogout = () => {
         // const logoutComponents = LOGOUT_URL.split("=");
         // const url = `/stillinger${logoutComponents[0]}`;
         // const encodedRedirect = encodeURIComponent(`${logoutComponents[1]}?timeout=true`);
         const logoutUrl = `/stillinger/oauth2/logout?redirect=${encodeURIComponent("/utlogget?timeout=true")}`;
         console.log("Ny versjon a 16:00", logoutUrl);
         window.location.href = logoutUrl;
-    }
+    };
 
     const fetchIsAuthenticated = () => {
         setAuthenticationStatus(AuthenticationStatus.IS_FETCHING);
@@ -59,7 +59,11 @@ function AuthenticationProvider({ children }) {
         } else {
             const { session, tokens } = await response.json();
 
-            if (!session.active) timeoutLogout();
+            if (!session.active || session.ends_in_seconds < 3560) {
+                console.log("Logger ut :)");
+                timeoutLogout();
+                return;
+            }
 
             const sessionIsExpiring = session.ends_in_seconds < 60 * 10;
             const sessionIsTimingOut =
