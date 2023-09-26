@@ -22,7 +22,11 @@ function AuthenticationProvider({ children }) {
     const [modalReason, setModalReason] = useState(Reason.NO_MODAL);
 
     function timeoutLogout() {
-        window.location.href = `/stillinger${LOGOUT_URL}?timeout=true`;
+        const logoutComponents = LOGOUT_URL.split("=");
+        const url = `/stillinger${logoutComponents[0]}`;
+        const encodedRedirect = encodeURIComponent(`${logoutComponents[1]}?timeout=true`);
+
+        window.location.href = `${url}=${encodedRedirect}`;
     }
 
     const fetchIsAuthenticated = () => {
@@ -149,6 +153,10 @@ function AuthenticationProvider({ children }) {
     console.log("isSessionTimingOut", isSessionTimingOut);
     console.log("isTimeoutModalOpen", isTimeoutModalOpen);
     console.log("modalReason", modalReason);
+    const logoutComponents = LOGOUT_URL.split("=");
+    const url = `/stillinger${logoutComponents[0]}`;
+    const encodedRedirect = encodeURIComponent(`${logoutComponents[1]}?timeout=true`);
+    console.log("redirect", `${url}=${encodedRedirect}`);
 
     return (
         <AuthenticationContext.Provider // eslint-disable-next-line
