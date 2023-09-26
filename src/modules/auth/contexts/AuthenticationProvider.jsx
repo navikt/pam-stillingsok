@@ -125,7 +125,8 @@ function AuthenticationProvider({ children }) {
     }
 
     function logout() {
-        window.location.href = `/stillinger${LOGOUT_URL}`;
+        const logoutUrl = `/stillinger/oauth2/logout?redirect=${encodeURIComponent("/utlogget?timeout=true")}`;
+        window.location.href = logoutUrl;
     }
 
     useEffect(() => {
