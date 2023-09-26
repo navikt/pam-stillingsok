@@ -16,19 +16,15 @@ export const AuthenticationStatus = {
 function AuthenticationProvider({ children }) {
     const [authenticationStatus, setAuthenticationStatus] = useState(AuthenticationStatus.NOT_FETCHED);
     const [userNameAndInfo, setUserNameAndInfo] = useState(false);
+    const [hasBeenLoggedIn, setHasBeenLoggedIn] = useState(false);
     const [isSessionExpiring, setIsSessionExpiring] = useState(null);
     const [isSessionTimingOut, setIsSessionTimingOut] = useState(null);
     const [isTimeoutModalOpen, setIsTimeoutModalOpen] = useState(false);
-    const [modalReason, setModalReason] = useState(Reason.NO_MODAL);
+    const [timeoutReason, setTimeoutReason] = useState(Reason.NO_MODAL);
 
-    function timeoutLogout() {
-        // const logoutComponents = LOGOUT_URL.split("=");
-        // const url = `/stillinger${logoutComponents[0]}`;
-        // const encodedRedirect = encodeURIComponent(`${logoutComponents[1]}?timeout=true`);
-        const logoutUrl = `/stillinger/oauth2/logout?redirect=${encodeURIComponent("/utlogget?timeout=true")}`;
-        console.log("Ny versjon a 16:00", logoutUrl);
-        window.location.href = logoutUrl;
-    }
+    const timeoutLogout = () => {
+        window.location.href = `/stillinger/oauth2/logout?redirect=${encodeURIComponent("/utlogget?timeout=true")}`;
+    };
 
     const fetchIsAuthenticated = () => {
         setAuthenticationStatus(AuthenticationStatus.IS_FETCHING);
@@ -40,8 +36,13 @@ function AuthenticationProvider({ children }) {
             .then((response) => {
                 if (response.status === 200) {
                     setAuthenticationStatus(AuthenticationStatus.IS_AUTHENTICATED);
+                    setHasBeenLoggedIn(true);
                 } else if (response.status === 401) {
                     setAuthenticationStatus(AuthenticationStatus.NOT_AUTHENTICATED);
+                    if (hasBeenLoggedIn) {
+                        setHasBeenLoggedIn(false);
+                        timeoutLogout();
+                    }
                 } else {
                     setAuthenticationStatus(AuthenticationStatus.FAILURE);
                 }
@@ -54,12 +55,21 @@ function AuthenticationProvider({ children }) {
     const handleSessionInfoResponse = async (response, errorMessage) => {
         if (response.status === 401) {
             setAuthenticationStatus(AuthenticationStatus.NOT_AUTHENTICATED);
+            if (hasBeenLoggedIn) {
+                setHasBeenLoggedIn(false);
+                timeoutLogout();
+            }
         } else if (response.status < 200 || response.status >= 300) {
             console.error(errorMessage); // Todo ?? Fjern ??
         } else {
+            setHasBeenLoggedIn(true);
             const { session, tokens } = await response.json();
 
-            if (!session.active) timeoutLogout();
+            if (!session.active) {
+                setAuthenticationStatus(AuthenticationStatus.NOT_AUTHENTICATED);
+                window.location.href = "/utlogget?timeout=true";
+                return;
+            }
 
             const sessionIsExpiring = session.ends_in_seconds < 60 * 10;
             const sessionIsTimingOut =
@@ -74,9 +84,9 @@ function AuthenticationProvider({ children }) {
             console.log("Session", session);
             console.log("Tokens", tokens);
 
-            if (sessionIsTimingOut && !sessionIsExpiring) setModalReason(Reason.TIMEOUT);
-            else if (sessionIsExpiring) setModalReason(Reason.EXPIRY);
-            else setModalReason(Reason.NO_MODAL);
+            if (sessionIsTimingOut && !sessionIsExpiring) setTimeoutReason(Reason.TIMEOUT);
+            else if (sessionIsExpiring) setTimeoutReason(Reason.EXPIRY);
+            else setTimeoutReason(Reason.NO_MODAL);
         }
     };
 
@@ -154,7 +164,7 @@ function AuthenticationProvider({ children }) {
     console.log("isSessionExpiring", isSessionExpiring);
     console.log("isSessionTimingOut", isSessionTimingOut);
     console.log("isTimeoutModalOpen", isTimeoutModalOpen);
-    console.log("modalReason", modalReason);
+    console.log("modalReason", timeoutReason);
     const logoutComponents = LOGOUT_URL.split("=");
     const url = `/stillinger${logoutComponents[0]}`;
     const encodedRedirect = encodeURIComponent(`${logoutComponents[1]}?timeout=true`);
@@ -166,7 +176,7 @@ function AuthenticationProvider({ children }) {
         >
             {children}
             {isTimeoutModalOpen && (
-                <TimeoutModal modalReason={modalReason} refresh={refreshToken} login={login} logout={logout} />
+                <TimeoutModal modalReason={timeoutReason} refresh={refreshToken} login={login} logout={logout} />
             )}
         </AuthenticationContext.Provider>
     );
