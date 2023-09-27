@@ -28,10 +28,8 @@ function SessionStatusModal({ markAsLoggedOut, setHasBeenLoggedIn, login, logout
             console.error(errorMessage);
         } else {
             const { session, tokens } = await response.json();
-            console.log(session, tokens);
 
             if (!session.active) {
-                console.log("Gjør utlogging!");
                 markAsLoggedOut();
                 setHasBeenLoggedIn(false);
                 timeoutLogout();
@@ -103,8 +101,6 @@ function SessionStatusModal({ markAsLoggedOut, setHasBeenLoggedIn, login, logout
     useEffect(() => {
         setIsTimeoutModalOpen(isSessionExpiring || isSessionTimingOut);
     }, [isSessionTimingOut, isSessionExpiring]);
-
-    console.log("hasBeenLoggedIn from modal", hasBeenLoggedIn);
 
     if (!isTimeoutModalOpen || timeoutReason === ModalOpenReason.NO_MODAL) return null;
 
