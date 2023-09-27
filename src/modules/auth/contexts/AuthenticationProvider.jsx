@@ -23,7 +23,7 @@ function AuthenticationProvider({ children }) {
     const [timeoutReason, setTimeoutReason] = useState(Reason.NO_MODAL);
 
     const timeoutLogout = () => {
-        window.location.href = `/stillinger/oauth2/logout?redirect=${encodeURIComponent("/utlogget?timeout=true")}`;
+        window.location.href = "/utlogget?timeout=true";
     };
 
     const fetchIsAuthenticated = () => {
@@ -60,29 +60,25 @@ function AuthenticationProvider({ children }) {
                 timeoutLogout();
             }
         } else if (response.status < 200 || response.status >= 300) {
-            console.error(errorMessage); // Todo ?? Fjern ??
+            console.error(errorMessage);
         } else {
             setHasBeenLoggedIn(true);
             const { session, tokens } = await response.json();
 
             if (!session.active) {
                 setAuthenticationStatus(AuthenticationStatus.NOT_AUTHENTICATED);
-                window.location.href = "/utlogget?timeout=true";
+                timeoutLogout();
                 return;
             }
 
-            const sessionIsExpiring = session.ends_in_seconds < 60 * 10;
+            const sessionIsExpiring = session.ends_in_seconds < 60 * 5;
             const sessionIsTimingOut =
                 session.timeout_in_seconds > -1
                     ? session.timeout_in_seconds < 60 * 5
-                    : tokens.expire_in_seconds < 60 * 5; // 60 * 5
+                    : tokens.expire_in_seconds < 60 * 5;
 
             setIsSessionExpiring(sessionIsExpiring);
             setIsSessionTimingOut(sessionIsTimingOut);
-
-            // TODO Fjern disse
-            console.log("Session", session);
-            console.log("Tokens", tokens);
 
             if (sessionIsTimingOut && !sessionIsExpiring) setTimeoutReason(Reason.TIMEOUT);
             else if (sessionIsExpiring) setTimeoutReason(Reason.EXPIRY);
@@ -135,8 +131,7 @@ function AuthenticationProvider({ children }) {
     }
 
     function logout() {
-        const logoutUrl = `/stillinger/oauth2/logout?redirect=${encodeURIComponent("/utlogget?timeout=true")}`;
-        window.location.href = logoutUrl;
+        window.location.href = `/stillinger${LOGOUT_URL}`;
     }
 
     useEffect(() => {
@@ -146,29 +141,18 @@ function AuthenticationProvider({ children }) {
     useEffect(() => {
         if (authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED) {
             fetchUserNameAndInfo();
-        } else if (authenticationStatus === AuthenticationStatus.NOT_AUTHENTICATED) {
-            fetchSessionInfo();
         }
     }, [authenticationStatus]);
 
     useEffect(() => {
         const scheduledInterval = setInterval(() => fetchSessionInfo(), 30 * 1000);
+        fetchSessionInfo();
         return () => clearInterval(scheduledInterval);
     }, []);
 
     useEffect(() => {
         setIsTimeoutModalOpen(isSessionExpiring || isSessionTimingOut);
     }, [isSessionTimingOut, isSessionExpiring]);
-
-    // TODO: FJERN DETTE
-    console.log("isSessionExpiring", isSessionExpiring);
-    console.log("isSessionTimingOut", isSessionTimingOut);
-    console.log("isTimeoutModalOpen", isTimeoutModalOpen);
-    console.log("modalReason", timeoutReason);
-    const logoutComponents = LOGOUT_URL.split("=");
-    const url = `/stillinger${logoutComponents[0]}`;
-    const encodedRedirect = encodeURIComponent(`${logoutComponents[1]}?timeout=true`);
-    console.log("redirect", `${url}=${encodedRedirect}`);
 
     return (
         <AuthenticationContext.Provider // eslint-disable-next-line
