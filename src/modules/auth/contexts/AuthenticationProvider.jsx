@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { CONTEXT_PATH, LOGIN_URL, LOGOUT_URL } from "../../../common/environment";
-import TimeoutModal, { Reason } from "../components/TimeoutModal";
+import SessionStatusModal from "../components/SessionStatusModal";
 
 export const AuthenticationContext = React.createContext({});
 
@@ -17,13 +17,9 @@ function AuthenticationProvider({ children }) {
     const [authenticationStatus, setAuthenticationStatus] = useState(AuthenticationStatus.NOT_FETCHED);
     const [userNameAndInfo, setUserNameAndInfo] = useState(false);
     const [hasBeenLoggedIn, setHasBeenLoggedIn] = useState(false);
-    const [isSessionExpiring, setIsSessionExpiring] = useState(null);
-    const [isSessionTimingOut, setIsSessionTimingOut] = useState(null);
-    const [isTimeoutModalOpen, setIsTimeoutModalOpen] = useState(false);
-    const [timeoutReason, setTimeoutReason] = useState(Reason.NO_MODAL);
 
     const timeoutLogout = () => {
-        window.location.href = "/utlogget?timeout=true";
+        window.location.href = `/stillinger/oauth2/logout?redirect=${encodeURIComponent("/utlogget?timeout=true")}`;
     };
 
     const fetchIsAuthenticated = () => {
@@ -52,54 +48,6 @@ function AuthenticationProvider({ children }) {
             });
     };
 
-    const handleSessionInfoResponse = async (response, errorMessage) => {
-        if (response.status === 401) {
-            setAuthenticationStatus(AuthenticationStatus.NOT_AUTHENTICATED);
-            if (hasBeenLoggedIn) {
-                setHasBeenLoggedIn(false);
-                timeoutLogout();
-            }
-        } else if (response.status < 200 || response.status >= 300) {
-            console.error(errorMessage);
-        } else {
-            setHasBeenLoggedIn(true);
-            const { session, tokens } = await response.json();
-
-            if (!session.active) {
-                setAuthenticationStatus(AuthenticationStatus.NOT_AUTHENTICATED);
-                timeoutLogout();
-                return;
-            }
-
-            const sessionIsExpiring = session.ends_in_seconds < 60 * 5;
-            const sessionIsTimingOut =
-                session.timeout_in_seconds > -1
-                    ? session.timeout_in_seconds < 60 * 5
-                    : tokens.expire_in_seconds < 60 * 5;
-
-            setIsSessionExpiring(sessionIsExpiring);
-            setIsSessionTimingOut(sessionIsTimingOut);
-
-            if (sessionIsTimingOut && !sessionIsExpiring) setTimeoutReason(Reason.TIMEOUT);
-            else if (sessionIsExpiring) setTimeoutReason(Reason.EXPIRY);
-            else setTimeoutReason(Reason.NO_MODAL);
-        }
-    };
-
-    const fetchSessionInfo = async () => {
-        const response = await fetch(`/stillinger/oauth2/session`, { credentials: "include", referrer: CONTEXT_PATH });
-        await handleSessionInfoResponse(response, "Det oppstod en feil ved henting av session status");
-    };
-
-    const refreshToken = async () => {
-        const response = await fetch(`/stillinger/oauth2/session/refresh`, {
-            method: "POST",
-            credentials: "include",
-            referrer: CONTEXT_PATH,
-        });
-        await handleSessionInfoResponse(response, "Det oppstod en feil ved refreshing av token");
-    };
-
     function fetchUserNameAndInfo() {
         if (process.env.NODE_ENV === "production") {
             fetch("/stillinger/headerinfo", {
@@ -121,6 +69,10 @@ function AuthenticationProvider({ children }) {
             setUserNameAndInfo(testData);
         }
     }
+
+    const markAsLoggedOut = () => {
+        setAuthenticationStatus(AuthenticationStatus.NOT_AUTHENTICATED);
+    };
 
     function login() {
         window.location.href = `/stillinger${LOGIN_URL}?redirect=${encodeURIComponent(window.location.href)}`;
@@ -144,24 +96,19 @@ function AuthenticationProvider({ children }) {
         }
     }, [authenticationStatus]);
 
-    useEffect(() => {
-        const scheduledInterval = setInterval(() => fetchSessionInfo(), 30 * 1000);
-        fetchSessionInfo();
-        return () => clearInterval(scheduledInterval);
-    }, []);
-
-    useEffect(() => {
-        setIsTimeoutModalOpen(isSessionExpiring || isSessionTimingOut);
-    }, [isSessionTimingOut, isSessionExpiring]);
-
     return (
         <AuthenticationContext.Provider // eslint-disable-next-line
             value={{ userNameAndInfo, authenticationStatus, login, logout, loginAndRedirect }}
         >
+            <SessionStatusModal
+                markAsLoggedOut={markAsLoggedOut}
+                setHasBeenLoggedIn={setHasBeenLoggedIn}
+                login={login}
+                logout={logout}
+                timeoutLogout={timeoutLogout}
+                hasBeenLoggedIn={hasBeenLoggedIn}
+            />
             {children}
-            {isTimeoutModalOpen && (
-                <TimeoutModal modalReason={timeoutReason} refresh={refreshToken} login={login} logout={logout} />
-            )}
         </AuthenticationContext.Provider>
     );
 }
