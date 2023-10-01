@@ -11,18 +11,17 @@
     min-width: 100%;
     padding: 0;
     margin: 0;
-    background-color: #fff;
+    background-color: var(--a-surface-action-subtle);
     overflow: auto;
     border-radius: 6px;
-    box-shadow: 0 6px 6px -3px var(--arb-gray-500);
-    border: 1px solid var(--a-border-default);
+    box-shadow: var(--a-shadow-medium);
 }
 
 .Typeahead ul li {
     display: block;
     clear: both;
     line-height: 2rem;
-    color: #333;
+    color: var(--a-text-default);
     white-space: nowrap;
     -webkit-user-select: none;
     -moz-user-select: none;

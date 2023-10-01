@@ -12,7 +12,6 @@
 }
 
 .TypeaheadSuggestion--active {
-    color: #fff;
-    background-color: var(--arb-blue-600);
+    color: var(--a-text-on-action);
+    background-color: var(--a-surface-action-active);
 }
-

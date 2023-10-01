@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { BodyLong, Heading, Panel, Link as AkselLink, HStack, VStack } from "@navikt/ds-react";
-import "./Feedback.css";
 import { FaceSmileIcon, FaceFrownIcon } from "@navikt/aksel-icons";
 import PropTypes from "prop-types";
 import { FeedbackButton } from "@navikt/arbeidsplassen-react";

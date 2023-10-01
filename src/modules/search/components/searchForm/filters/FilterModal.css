@@ -32,6 +32,7 @@
 .FilterModal__content {
     flex-grow: 1;
     padding: 0 1rem 1rem 1rem;
+    background: var(--a-surface-default);
 }
 
 .FilterModal__content .navds-tabs__tab {
@@ -48,7 +49,7 @@
 
 .FilterModal__bottom {
     padding: 1rem;
-    background: var(--arb-green-50);
+    background: var(--a-surface-alt-1-subtle);
     bottom: 0;
     position: sticky;
 }
@@ -66,7 +67,7 @@
 }
 
 .Facet__zero__count label {
-    color: #78706a !important;
+    color: var(--a-text-subtle) !important;
 }
 
 .RemoteFacet {
@@ -98,7 +99,7 @@
 }
 
 .Filters__mobile .navds-tabs__tablist-wrapper {
-    background-color: #fff;
+    background-color: var(--a-surface-default);
     margin-left: calc(50% - 50vw);
     padding: 0 1rem;
     position: sticky;

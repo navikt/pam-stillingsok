@@ -3,7 +3,7 @@
 }
 
 .NewApplicationForm__green-box {
-    background: #e6f4ef;
+    background: var(--a-surface-alt-1-subtle);
     margin: 0 0 3rem 0;
     padding: 1rem 0;
 }

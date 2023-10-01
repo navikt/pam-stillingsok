@@ -1,5 +1,5 @@
 .Facet__zero__count label {
-    color: #78706a !important;
+    color: var(--a-text-subtle) !important;
 }
 
 .RemoteFacet {
