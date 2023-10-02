@@ -5,17 +5,10 @@ import LoginBubble from "../../../common/components/icons/LoginBubble";
 import "./SessionStatusModal.css";
 import { CONTEXT_PATH } from "../../../common/environment";
 
-export const ModalOpenReason = {
-    TIMEOUT: "TIMEOUT",
-    EXPIRY: "EXPIRY",
-    NO_MODAL: "NO_MODAL",
-};
-
 function SessionStatusModal({ markAsLoggedOut, setHasBeenLoggedIn, login, logout, timeoutLogout, hasBeenLoggedIn }) {
     const [isSessionExpiring, setIsSessionExpiring] = useState(null);
     const [isSessionTimingOut, setIsSessionTimingOut] = useState(null);
     const [isTimeoutModalOpen, setIsTimeoutModalOpen] = useState(false);
-    const [timeoutReason, setTimeoutReason] = useState(ModalOpenReason.NO_MODAL);
 
     const handleSessionInfoResponse = async (response, isCurrentlyLoggedIn, errorMessage) => {
         if (response.status === 401) {
@@ -46,10 +39,6 @@ function SessionStatusModal({ markAsLoggedOut, setHasBeenLoggedIn, login, logout
 
             setIsSessionExpiring(sessionIsExpiring);
             setIsSessionTimingOut(sessionIsTimingOut);
-
-            if (sessionIsTimingOut && !sessionIsExpiring) setTimeoutReason(ModalOpenReason.TIMEOUT);
-            else if (sessionIsExpiring) setTimeoutReason(ModalOpenReason.EXPIRY);
-            else setTimeoutReason(ModalOpenReason.NO_MODAL);
         }
     };
 
@@ -77,19 +66,19 @@ function SessionStatusModal({ markAsLoggedOut, setHasBeenLoggedIn, login, logout
     let closeText = "";
     let action = () => {};
 
-    if (timeoutReason === ModalOpenReason.TIMEOUT) {
+    if (isSessionExpiring) {
+        title = "Din pålogging utløper snart";
+        message = "Logg inn på nytt for å fortsette, eller avslutt og logg ut.";
+        actionText = "Logg inn på nytt";
+        closeText = "Avslutt";
+        action = login;
+    } else if (isSessionTimingOut) {
         title = "Forbli innlogget?";
         message =
             "Av sikkerhetsgrunner lurer vi på om du vil fortsette å være innlogget. Hvis du ikke velger å fortsette, vil du automatisk bli logget ut innen kort tid.";
         actionText = "Fortsett å være innlogget";
         closeText = "Logg ut";
         action = () => refreshToken(hasBeenLoggedIn);
-    } else if (timeoutReason === ModalOpenReason.EXPIRY) {
-        title = "Din pålogging utløper snart";
-        message = "Logg inn på nytt for å fortsette, eller avslutt og logg ut.";
-        actionText = "Logg inn på nytt";
-        closeText = "Avslutt";
-        action = login;
     }
 
     useEffect(() => {
@@ -102,7 +91,7 @@ function SessionStatusModal({ markAsLoggedOut, setHasBeenLoggedIn, login, logout
         setIsTimeoutModalOpen(isSessionExpiring || isSessionTimingOut);
     }, [isSessionTimingOut, isSessionExpiring]);
 
-    if (!isTimeoutModalOpen || timeoutReason === ModalOpenReason.NO_MODAL) return null;
+    if (!isTimeoutModalOpen) return null;
 
     return (
         <Modal role="alertdialog" open aria-label={title} closeButton={false} onClose={() => {}}>

@@ -141,7 +141,7 @@ Dersom du vil få inn teststillinger kan du koble deg direkte til et kjørende i
 
 ```
 $ kubectl config use-context dev-gcp
-$ kubectl -n teampam port-forward deployment/pam-search-api 9000:9000
+$ kubectl -n teampam port-forward deployment/pam-search-api 9000:80
 ```
 
 Dersom du får får feilmelding ved kjøring av kommandoene over kan du prøve å logge inn i Gcloud med følgende kommando.
