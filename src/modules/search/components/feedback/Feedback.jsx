@@ -29,14 +29,14 @@ function Feedback({ query }) {
                 {!hasGivenRating ? (
                     <HStack justify="center" gap="2">
                         <FeedbackButton
-                            onClick={onRatingClick}
+                            onClick={() => onRatingClick("Ja")}
                             aria-describedby="feedback-panel-title"
                             icon={<FaceSmileIcon aria-hidden="true" height="1.5rem" width="1.5rem" />}
                         >
                             Ja
                         </FeedbackButton>
                         <FeedbackButton
-                            onClick={onRatingClick}
+                            onClick={() => onRatingClick("Nei")}
                             aria-describedby="feedback-panel-title"
                             icon={<FaceFrownIcon aria-hidden="true" height="1.5rem" width="1.5rem" />}
                         >
