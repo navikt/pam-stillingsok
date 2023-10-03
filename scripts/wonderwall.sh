@@ -1,6 +1,6 @@
 #! /bin/bash
 
-./.wonderwall/wonderwall-master/bin/wonderwall \
+./.wonderwall/wonderwall \
   --auto-login=false \
   --upstream-host localhost:8080 \
   --log-level info \
