@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import React, { useState } from "react";
 import "./CriteriaPanel.css";
 import { ChevronDownIcon, ChevronRightIcon } from "@navikt/aksel-icons";
+import logAmplitudeEvent from "@/src/common/tracking/amplitude";
 
 function CriteriaPanel({ isOpenByDefault, title, children, panelId }) {
     const [isOpen, setIsOpen] = useState(() => {
@@ -34,6 +35,17 @@ function CriteriaPanel({ isOpenByDefault, title, children, panelId }) {
             } catch (e) {
                 // ignore sessionStorage error
             }
+        }
+
+        // Temporary amplitude event, code can be removed if it still
+        // exists after november 2023
+        try {
+            logAmplitudeEvent("toggle filter accordion", {
+                state: isOpen ? "close" : "open",
+                filter: { title },
+            });
+        } catch (err) {
+            // ignore
         }
     }
 

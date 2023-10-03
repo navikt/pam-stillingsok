@@ -90,6 +90,11 @@
     text-decoration: underline;
 }
 
+.SearchForm__expand-filter-button:focus {
+    outline: none;
+    box-shadow: var(--a-shadow-focus);
+}
+
 .Filters__desktop {
     display: none;
 }
