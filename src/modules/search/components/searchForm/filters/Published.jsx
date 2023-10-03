@@ -25,17 +25,19 @@ function Published({ dispatch, query, initialValues, updatedValues }) {
 
     return (
         <Fieldset legend="Publisert" hideLegend>
-            {values.map((item) => (
-                <Checkbox
-                    name="published"
-                    key={item.key}
-                    value={item.key}
-                    onChange={handleClick}
-                    checked={query.published === item.key}
-                >
-                    {`${PublishedLabelsEnum[item.key]} (${item.count})`}
-                </Checkbox>
-            ))}
+            <div>
+                {values.map((item) => (
+                    <Checkbox
+                        name="published"
+                        key={item.key}
+                        value={item.key}
+                        onChange={handleClick}
+                        checked={query.published === item.key}
+                    >
+                        {`${PublishedLabelsEnum[item.key]} (${item.count})`}
+                    </Checkbox>
+                ))}
+            </div>
         </Fieldset>
     );
 }

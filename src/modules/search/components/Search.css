@@ -22,10 +22,6 @@
     }
 }
 
-.Search__flex-left .navds-checkbox {
-    margin-top: 0 !important;
-}
-
 .Search__flex-right {
     flex: 1;
     padding-top: 2rem;

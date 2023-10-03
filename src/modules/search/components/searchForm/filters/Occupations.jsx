@@ -67,55 +67,57 @@ function Occupations({ initialValues, updatedValues, query, dispatch }) {
 
     return (
         <Fieldset hideLegend legend="Velg yrkesgruppe" className="FilterModal__fieldset">
-            {values &&
-                values.map((firstLevel) => (
-                    <React.Fragment key={firstLevel.key}>
-                        <Checkbox
-                            name="occupation"
-                            label={`${firstLevel.key} (${firstLevel.count})`}
-                            value={firstLevel.key}
-                            onChange={handleFirstLevelClick}
-                            checked={query.occupationFirstLevels.includes(firstLevel.key)}
-                        >
-                            {`${firstLevel.key} (${firstLevel.count})`}
-                        </Checkbox>
-                        {query.occupationFirstLevels &&
-                            query.occupationFirstLevels.includes(firstLevel.key) &&
-                            firstLevel.key !== OCCUPATION_LEVEL_OTHER && (
-                                <Fieldset
-                                    hideLegend
-                                    legend={`Yrker innen ${firstLevel.key}`}
-                                    className="FilterModal__sub-fieldset FilterModal__columns-2"
-                                >
-                                    {firstLevel.occupationSecondLevels &&
-                                        firstLevel.occupationSecondLevels.map((secondLevel) => (
-                                            <Checkbox
-                                                name="occupation"
-                                                key={editedSecondLevelItemKey(secondLevel.key)}
-                                                value={secondLevel.key}
-                                                onChange={handleSecondLevelClick}
-                                                checked={query.occupationSecondLevels.includes(secondLevel.key)}
-                                            >
-                                                {`${editedSecondLevelItemKey(secondLevel.label)} (${
-                                                    secondLevel.count
-                                                })`}
-                                            </Checkbox>
-                                        ))}
-                                </Fieldset>
-                            )}
-                    </React.Fragment>
-                ))}
+            <div>
+                {values &&
+                    values.map((firstLevel) => (
+                        <React.Fragment key={firstLevel.key}>
+                            <Checkbox
+                                name="occupation"
+                                label={`${firstLevel.key} (${firstLevel.count})`}
+                                value={firstLevel.key}
+                                onChange={handleFirstLevelClick}
+                                checked={query.occupationFirstLevels.includes(firstLevel.key)}
+                            >
+                                {`${firstLevel.key} (${firstLevel.count})`}
+                            </Checkbox>
+                            {query.occupationFirstLevels &&
+                                query.occupationFirstLevels.includes(firstLevel.key) &&
+                                firstLevel.key !== OCCUPATION_LEVEL_OTHER && (
+                                    <Fieldset
+                                        hideLegend
+                                        legend={`Yrker innen ${firstLevel.key}`}
+                                        className="FilterModal__sub-fieldset FilterModal__columns-2"
+                                    >
+                                        {firstLevel.occupationSecondLevels &&
+                                            firstLevel.occupationSecondLevels.map((secondLevel) => (
+                                                <Checkbox
+                                                    name="occupation"
+                                                    key={editedSecondLevelItemKey(secondLevel.key)}
+                                                    value={secondLevel.key}
+                                                    onChange={handleSecondLevelClick}
+                                                    checked={query.occupationSecondLevels.includes(secondLevel.key)}
+                                                >
+                                                    {`${editedSecondLevelItemKey(secondLevel.label)} (${
+                                                        secondLevel.count
+                                                    })`}
+                                                </Checkbox>
+                                            ))}
+                                    </Fieldset>
+                                )}
+                        </React.Fragment>
+                    ))}
 
-            <UnknownSearchCriteriaValues
-                namePrefix="occupation"
-                unknownValues={unknownFirstValues}
-                unknownNestedValues={unknownSecondValues}
-                checkedValues={query.occupationFirstLevels}
-                checkedNestedValues={query.occupationSecondLevels}
-                onClick={handleFirstLevelClick}
-                onNestedLevelClick={handleSecondLevelClick}
-                shouldFixLocationName
-            />
+                <UnknownSearchCriteriaValues
+                    namePrefix="occupation"
+                    unknownValues={unknownFirstValues}
+                    unknownNestedValues={unknownSecondValues}
+                    checkedValues={query.occupationFirstLevels}
+                    checkedNestedValues={query.occupationSecondLevels}
+                    onClick={handleFirstLevelClick}
+                    onNestedLevelClick={handleSecondLevelClick}
+                    shouldFixLocationName
+                />
+            </div>
         </Fieldset>
     );
 }

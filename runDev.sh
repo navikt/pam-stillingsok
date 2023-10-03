@@ -18,5 +18,6 @@ export IDPORTEN_AUDIENCE=local-token-x-client-id
 export CV_API_AUDIENCE=local:teampam:pam-cv-api
 export ARBEIDSPLASSEN_URL=http://localhost:3000
 export INTEREST_API_URL=http://localhost:3000/interesse-api
+export SENTRY_DSN=''
 
 exec npm start
