@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import React, { useState } from "react";
 import "./CriteriaPanel.css";
 import { ChevronDownIcon, ChevronRightIcon } from "@navikt/aksel-icons";
-import logAmplitudeEvent from "@/src/common/tracking/amplitude";
+import logAmplitudeEvent from "../../../../../common/tracking/amplitude";
 
 function CriteriaPanel({ isOpenByDefault, title, children, panelId }) {
     const [isOpen, setIsOpen] = useState(() => {
