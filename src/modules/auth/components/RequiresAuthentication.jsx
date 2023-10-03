@@ -29,7 +29,7 @@ function RequiresAuthentication({ children, onCancel, onLogin }) {
                 </Heading>
             </Modal.Header>
             <Modal.Body>
-                <BodyLong className="LoginRequiredMessage__text mb-8">
+                <BodyLong className="LoginRequiredMessage__text">
                     Du bruker BankID for å logge inn på <span translate="no">arbeidsplassen.no</span>
                 </BodyLong>
             </Modal.Body>

@@ -1,7 +1,6 @@
 import PropTypes from "prop-types";
 import React, { useRef } from "react";
 import { BodyLong, Button, Heading, Modal } from "@navikt/ds-react";
-import "./AlertModal.css";
 
 export default function AlertModal({
     id,
@@ -19,21 +18,22 @@ export default function AlertModal({
 
     return (
         <Modal
-            className="AlertModal"
             role="alertdialog"
             open
             onClose={onCancel}
             aria-labelledby={`${id}-h1`}
             aria-describedby={`${id}-message`}
         >
-            <Heading level="1" size="medium" id={`${id}-h1`} spacing>
-                {title}
-            </Heading>
-            <BodyLong id={`${id}-message`} className="mb-10">
-                {children}
-            </BodyLong>
+            <Modal.Header>
+                <Heading level="1" size="medium" id={`${id}-h1`} spacing>
+                    {title}
+                </Heading>
+            </Modal.Header>
+            <Modal.Body>
+                <BodyLong id={`${id}-message`}>{children}</BodyLong>
+            </Modal.Body>
             {showButtons && (
-                <div className="AlertModal__buttons">
+                <Modal.Footer>
                     <Button
                         ref={cancelButtonRef}
                         variant={useOnlyCancelButton ? "primary" : "secondary"}
@@ -47,7 +47,7 @@ export default function AlertModal({
                             {confirmLabel}
                         </Button>
                     )}
-                </div>
+                </Modal.Footer>
             )}
         </Modal>
     );
