@@ -1,12 +1,10 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
-import { BodyLong, Button, Heading } from "@navikt/ds-react";
+import { BodyLong, Button, Heading, Modal } from "@navikt/ds-react";
 import { EnterIcon } from "@navikt/aksel-icons";
 import { AuthenticationContext, AuthenticationStatus } from "../contexts/AuthenticationProvider";
 import DelayedSpinner from "../../../common/components/spinner/DelayedSpinner";
 import ErrorMessage from "../../../common/components/messages/ErrorMessage";
-import LoginBubble from "../../../common/components/icons/LoginBubble";
-import "./RequiresAuthentication.css";
 
 function RequiresAuthentication({ children, onCancel, onLogin }) {
     const { authenticationStatus, login } = useContext(AuthenticationContext);
@@ -25,17 +23,17 @@ function RequiresAuthentication({ children, onCancel, onLogin }) {
     }
     return (
         <section className="LoginRequiredMessage">
-            <Heading level="1" size="large" className="mb-2">
-                Du må logge inn først
-            </Heading>
-            <BodyLong className="LoginRequiredMessage__text mb-8">
-                Du bruker BankID for å logge inn på <span translate="no">arbeidsplassen.no</span>
-            </BodyLong>
-            <div className="mb-8">
-                <LoginBubble />
-            </div>
-
-            <div className="login-buttons-wrapper">
+            <Modal.Header>
+                <Heading level="1" size="large" className="mb-2">
+                    Du må logge inn først
+                </Heading>
+            </Modal.Header>
+            <Modal.Body>
+                <BodyLong className="LoginRequiredMessage__text mb-8">
+                    Du bruker BankID for å logge inn på <span translate="no">arbeidsplassen.no</span>
+                </BodyLong>
+            </Modal.Body>
+            <Modal.Footer>
                 {onLogin ? (
                     <Button variant="primary" icon={<EnterIcon aria-hidden="true" />} onClick={onLogin}>
                         Logg inn
@@ -51,7 +49,7 @@ function RequiresAuthentication({ children, onCancel, onLogin }) {
                         Avbryt
                     </Button>
                 )}
-            </div>
+            </Modal.Footer>
         </section>
     );
 }
