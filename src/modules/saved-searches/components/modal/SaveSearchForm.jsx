@@ -1,5 +1,5 @@
 import React, { useContext, useRef, useState } from "react";
-import { BodyLong, Button, Checkbox, Radio, RadioGroup, TextField, Link as AkselLink } from "@navikt/ds-react";
+import { BodyLong, Button, Checkbox, Radio, RadioGroup, TextField, Link as AkselLink, Modal } from "@navikt/ds-react";
 import PropTypes from "prop-types";
 import { UserContext } from "../../../user/contexts/UserProvider";
 import useToggle from "../../../../common/hooks/useToggle";
@@ -188,7 +188,7 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
             {saveStatus === FetchStatus.FAILURE && (
                 <Alert>Noe gikk galt ved lagring, forsøk igjen eller last siden på nytt</Alert>
             )}
-            <div className="SaveSearchForm__buttons">
+            <Modal.Footer>
                 <Button
                     variant="primary"
                     type="submit"
@@ -200,7 +200,7 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
                 <Button variant="secondary" type="button" onClick={onClose}>
                     Avbryt
                 </Button>
-            </div>
+            </Modal.Footer>
         </form>
     );
 }

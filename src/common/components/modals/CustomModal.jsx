@@ -5,11 +5,13 @@ import "./CustomModal.css";
 
 function CustomModal({ title, children, onCloseClick }) {
     return (
-        <Modal className="CustomModal" open onClose={onCloseClick}>
-            <Heading level="1" size="medium" spacing>
-                {title}
-            </Heading>
-            {children}
+        <Modal open onClose={onCloseClick}>
+            <Modal.Header>
+                <Heading level="1" size="medium" spacing>
+                    {title}
+                </Heading>
+            </Modal.Header>
+            <Modal.Body>{children}</Modal.Body>
         </Modal>
     );
 }
