@@ -6,13 +6,7 @@ import { formatNumber } from "../../../../../common/components/utils";
 
 function FilterModal({ title, children, onCloseClick, searchResult }) {
     return (
-        <Modal
-            className="FilterModal"
-            closeButton={false}
-            overlayClassName="FilterModal__overlay"
-            open
-            onClose={onCloseClick}
-        >
+        <Modal closeButton={false} open onClose={onCloseClick} width="100%">
             <Modal.Header>
                 <Heading level="1" size="medium">
                     {title}
