@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
-import { Tag } from "@navikt/ds-react";
+import { BodyLong, Tag } from "@navikt/ds-react";
+import { NotFound } from "@navikt/arbeidsplassen-react";
 import AdDetails from "./AdDetails";
 import AdText from "./AdText";
 import ContactPerson from "./ContactPerson";
@@ -18,7 +19,6 @@ import { FetchAction, FetchStatus, useFetchReducer } from "../../../common/hooks
 import ErrorMessage from "../../../common/components/messages/ErrorMessage";
 import useRobotsNoIndexMetaTag from "../../../common/hooks/useRobotsNoIndexMetaTag";
 import H1WithAutoFocus from "../../../common/components/h1WithAutoFocus/H1WithAutoFocus";
-import NotFound404 from "../../../common/components/NotFound/NotFound404";
 
 function Ad({ match }) {
     const [{ data: ad, error, status }, dispatch] = useFetchReducer();
@@ -75,10 +75,11 @@ function Ad({ match }) {
     return (
         <div className="container-large JobPosting">
             {status === FetchStatus.FAILURE && error.statusCode === 404 && (
-                <NotFound404
-                    title="Vi fant dessverre ikke stillingsannonsen"
-                    text="Annonsen kan være utløpt eller blitt fjernet av arbeidsgiver."
-                />
+                <NotFound title="Vi fant dessverre ikke stillingsannonsen">
+                    <BodyLong className="text-center">
+                        Annonsen kan være utløpt eller blitt fjernet av arbeidsgiver.
+                    </BodyLong>
+                </NotFound>
             )}
             {status === FetchStatus.FAILURE && error.statusCode !== 404 && <ErrorMessage />}
             {status === FetchStatus.IS_FETCHING && <DelayedSpinner />}
