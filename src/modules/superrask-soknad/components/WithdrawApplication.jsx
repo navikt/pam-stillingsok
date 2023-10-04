@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { BodyLong } from "@navikt/ds-react";
 import { NotFound } from "@navikt/arbeidsplassen-react";
 import { FetchAction, FetchStatus, useFetchReducer } from "../../../common/hooks/useFetchReducer";
 import SearchAPI from "../../../common/api/SearchAPI";
@@ -90,12 +89,11 @@ function WithdrawApplication({ match }) {
                 )}
 
             {show404Page && !useDefault404Text && (
-                <NotFound title="Vi fant dessverre ikke din søknad">
-                    <BodyLong className="text-center">
-                        Det kan være at du allerede har trukket søknaden din eller at bedriften har avslått søknaden
-                        din.
-                    </BodyLong>
-                </NotFound>
+                <NotFound
+                    title="Vi fant dessverre ikke din søknad"
+                    text="Det kan være at du allerede har trukket søknaden din eller at bedriften har avslått søknaden
+                        din."
+                />
             )}
 
             {show404Page && useDefault404Text && <NotFound />}

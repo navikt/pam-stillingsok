@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
-import { BodyLong, Tag } from "@navikt/ds-react";
+import { Tag } from "@navikt/ds-react";
 import { NotFound } from "@navikt/arbeidsplassen-react";
 import AdDetails from "./AdDetails";
 import AdText from "./AdText";
@@ -75,11 +75,10 @@ function Ad({ match }) {
     return (
         <div className="container-large JobPosting">
             {status === FetchStatus.FAILURE && error.statusCode === 404 && (
-                <NotFound title="Vi fant dessverre ikke stillingsannonsen">
-                    <BodyLong className="text-center">
-                        Annonsen kan være utløpt eller blitt fjernet av arbeidsgiver.
-                    </BodyLong>
-                </NotFound>
+                <NotFound
+                    title="Vi fant dessverre ikke stillingsannonsen"
+                    text="Annonsen kan være utløpt eller blitt fjernet av arbeidsgiver."
+                />
             )}
             {status === FetchStatus.FAILURE && error.statusCode !== 404 && <ErrorMessage />}
             {status === FetchStatus.IS_FETCHING && <DelayedSpinner />}
