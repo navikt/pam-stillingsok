@@ -22,14 +22,14 @@ function RequiresAuthentication({ children, onCancel, onLogin }) {
         return children;
     }
     return (
-        <section className="LoginRequiredMessage">
+        <section>
             <Modal.Header>
                 <Heading level="1" size="large" className="mb-2">
                     Du må logge inn først
                 </Heading>
             </Modal.Header>
             <Modal.Body>
-                <BodyLong className="LoginRequiredMessage__text">
+                <BodyLong>
                     Du bruker BankID for å logge inn på <span translate="no">arbeidsplassen.no</span>
                 </BodyLong>
             </Modal.Body>
