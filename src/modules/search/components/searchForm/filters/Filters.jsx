@@ -69,7 +69,7 @@ function Filters({ query, dispatchQuery, initialSearchResult, searchResult }) {
                         <Tabs.Tab value="yrke" label="Yrke" />
                         <Tabs.Tab value="andre" label="Andre filtre" />
                     </Tabs.List>
-                    <Tabs.Panel value="sted" className="h-24 w-full bg-gray-50 p-4">
+                    <Tabs.Panel value="sted" className="mt-8 h-24 w-full bg-gray-50 p-4">
                         <Counties
                             query={query}
                             dispatch={dispatchQuery}
@@ -77,7 +77,7 @@ function Filters({ query, dispatchQuery, initialSearchResult, searchResult }) {
                             updatedValues={searchResult}
                         />
                     </Tabs.Panel>
-                    <Tabs.Panel value="yrke" className="h-24 w-full bg-gray-50 p-4">
+                    <Tabs.Panel value="yrke" className="mt-8 h-24 w-full bg-gray-50 p-4">
                         <Occupations
                             query={query}
                             dispatch={dispatchQuery}
@@ -85,7 +85,7 @@ function Filters({ query, dispatchQuery, initialSearchResult, searchResult }) {
                             updatedValues={searchResult && searchResult.aggregations.occupationFirstLevels}
                         />
                     </Tabs.Panel>
-                    <Tabs.Panel value="andre" className="h-24  w-full bg-gray-50 p-4">
+                    <Tabs.Panel value="andre" className="mt-8 h-24  w-full bg-gray-50 p-4">
                         <div className="mb-6">
                             <Published
                                 query={query}
