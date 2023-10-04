@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { Alert, BodyShort, Label } from "@navikt/ds-react";
+import { NotFound } from "@navikt/arbeidsplassen-react";
 import SearchAPI from "../../../common/api/SearchAPI";
 import SuperraskSoknadAPI from "../api/SuperraskSoknadAPI";
 import { FetchAction, FetchStatus, useFetchReducer } from "../../../common/hooks/useFetchReducer";
 import DelayedSpinner from "../../../common/components/spinner/DelayedSpinner";
 import "./SuperraskSoknad.css";
 import getEmployer from "../../../../server/common/getEmployer";
-import NotFound404 from "../../../common/components/NotFound/NotFound404";
 import NewApplicationForm from "./NewApplicationForm";
 import NewApplicationSuccess from "./NewApplicationSuccess";
 import logAmplitudeEvent from "../../../common/tracking/amplitude";
@@ -70,12 +70,7 @@ function SuperraskSoknad({ match }) {
                 </div>
             )}
 
-            {status === FetchStatus.FAILURE && error.statusCode === 404 && (
-                <NotFound404
-                    title="Vi fant dessverre ikke din søknad"
-                    text="Det kan være at du allerede har trukket søknaden din eller at bedriften har avslått søknaden din."
-                />
-            )}
+            {status === FetchStatus.FAILURE && error.statusCode === 404 && <NotFound className="mt-12" />}
 
             {status === FetchStatus.SUCCESS && (
                 <>
