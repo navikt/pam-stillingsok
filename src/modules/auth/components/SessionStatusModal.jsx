@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { BodyLong, Button, Heading, Modal } from "@navikt/ds-react";
-import LoginBubble from "../../../common/components/icons/LoginBubble";
+import { StrawberryWithKey } from "@navikt/arbeidsplassen-react";
 import "./SessionStatusModal.css";
 import { CONTEXT_PATH } from "../../../common/environment";
 
@@ -101,7 +101,7 @@ function SessionStatusModal({ markAsLoggedOut, setHasBeenLoggedIn, login, logout
                 </Heading>
                 <BodyLong className="LoginRequiredMessage__text mb-8 TimeoutModalBody">{message}</BodyLong>
                 <div className="mb-8">
-                    <LoginBubble />
+                    <StrawberryWithKey />
                 </div>
 
                 <div className="login-buttons-wrapper">
