@@ -103,7 +103,7 @@
     margin-left: calc(50% - 50vw);
     padding: 0 1rem;
     position: sticky;
-    top: 4.25rem;
+    top: 0;
     width: 100vw;
     z-index: 999;
 }

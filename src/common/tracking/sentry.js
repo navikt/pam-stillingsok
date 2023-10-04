@@ -18,7 +18,7 @@ const ignoreTypeErrors = [
 ];
 
 export default function initSentry() {
-    if (window.__SENTRY_DSN__) {
+    if (window.__SENTRY_DSN__ && false) {
         Sentry.init({
             dsn: window.__SENTRY_DSN__,
             release: window.__APP_VERSION__,
