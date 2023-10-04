@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { BodyLong, Button, Heading, Modal } from "@navikt/ds-react";
-import LoginBubble from "../../../common/components/icons/LoginBubble";
-import "./SessionStatusModal.css";
 import { CONTEXT_PATH } from "../../../common/environment";
 
 function SessionStatusModal({ markAsLoggedOut, setHasBeenLoggedIn, login, logout, timeoutLogout, hasBeenLoggedIn }) {
@@ -94,26 +92,24 @@ function SessionStatusModal({ markAsLoggedOut, setHasBeenLoggedIn, login, logout
     if (!isTimeoutModalOpen) return null;
 
     return (
-        <Modal role="alertdialog" open aria-label={title} closeButton={false} onClose={() => {}}>
-            <section className="LoginRequiredMessage">
+        <Modal role="alertdialog" open aria-label={title} onClose={() => {}}>
+            <Modal.Header closeButton={false}>
                 <Heading level="1" size="large" className="mb-2">
                     {title}
                 </Heading>
-                <BodyLong className="LoginRequiredMessage__text mb-8 TimeoutModalBody">{message}</BodyLong>
-                <div className="mb-8">
-                    <LoginBubble />
-                </div>
+            </Modal.Header>
+            <Modal.Body>
+                <BodyLong>{message}</BodyLong>
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant="primary" onClick={action}>
+                    {actionText}
+                </Button>
 
-                <div className="login-buttons-wrapper">
-                    <Button variant="primary" onClick={action}>
-                        {actionText}
-                    </Button>
-
-                    <Button variant="secondary" onClick={logout}>
-                        {closeText}
-                    </Button>
-                </div>
-            </section>
+                <Button variant="secondary" onClick={logout}>
+                    {closeText}
+                </Button>
+            </Modal.Footer>
         </Modal>
     );
 }
