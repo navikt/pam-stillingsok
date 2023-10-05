@@ -189,16 +189,18 @@ function NewApplicationForm({ ad, applicationForm, submitForm, isSending, hasErr
 
                     {applicationForm.qualifications && applicationForm.qualifications.length > 0 && (
                         <Fieldset legend="Huk av for kvalifikasjonene du oppfyller">
-                            {applicationForm.qualifications.map((it) => (
-                                <Checkbox
-                                    key={it.id}
-                                    value={it.label}
-                                    onChange={handleQualificationsCheck}
-                                    checked={checkedQualifications.includes(it.label)}
-                                >
-                                    {it.label}
-                                </Checkbox>
-                            ))}
+                            <div>
+                                {applicationForm.qualifications.map((it) => (
+                                    <Checkbox
+                                        key={it.id}
+                                        value={it.label}
+                                        onChange={handleQualificationsCheck}
+                                        checked={checkedQualifications.includes(it.label)}
+                                    >
+                                        {it.label}
+                                    </Checkbox>
+                                ))}
+                            </div>
                         </Fieldset>
                     )}
                 </section>

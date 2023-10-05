@@ -41,23 +41,25 @@ function Engagement({ initialValues, updatedValues, query, dispatch }) {
 
     return (
         <Fieldset legend="Ansettelsesform" hideLegend>
-            {values.map((item) => (
-                <Checkbox
-                    name="engagementType"
-                    key={editedItemKey(item.key)}
-                    value={item.key}
-                    onChange={handleClick}
-                    checked={query.engagementType.includes(item.key)}
-                >
-                    {`${editedItemKey(item.key)} (${item.count})`}
-                </Checkbox>
-            ))}
-            <UnknownSearchCriteriaValues
-                namePrefix="engagementType"
-                unknownValues={findUnknownSearchCriteriaValues(query.engagementType, initialValues)}
-                checkedValues={query.engagementType}
-                onClick={handleClick}
-            />
+            <div>
+                {values.map((item) => (
+                    <Checkbox
+                        name="engagementType"
+                        key={editedItemKey(item.key)}
+                        value={item.key}
+                        onChange={handleClick}
+                        checked={query.engagementType.includes(item.key)}
+                    >
+                        {`${editedItemKey(item.key)} (${item.count})`}
+                    </Checkbox>
+                ))}
+                <UnknownSearchCriteriaValues
+                    namePrefix="engagementType"
+                    unknownValues={findUnknownSearchCriteriaValues(query.engagementType, initialValues)}
+                    checkedValues={query.engagementType}
+                    onClick={handleClick}
+                />
+            </div>
         </Fieldset>
     );
 }

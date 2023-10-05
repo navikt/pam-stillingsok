@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { Tag } from "@navikt/ds-react";
+import { NotFound } from "@navikt/arbeidsplassen-react";
 import AdDetails from "./AdDetails";
 import AdText from "./AdText";
 import ContactPerson from "./ContactPerson";
@@ -18,7 +19,6 @@ import { FetchAction, FetchStatus, useFetchReducer } from "../../../common/hooks
 import ErrorMessage from "../../../common/components/messages/ErrorMessage";
 import useRobotsNoIndexMetaTag from "../../../common/hooks/useRobotsNoIndexMetaTag";
 import H1WithAutoFocus from "../../../common/components/h1WithAutoFocus/H1WithAutoFocus";
-import NotFound404 from "../../../common/components/NotFound/NotFound404";
 
 function Ad({ match }) {
     const [{ data: ad, error, status }, dispatch] = useFetchReducer();
@@ -75,7 +75,7 @@ function Ad({ match }) {
     return (
         <div className="container-large JobPosting">
             {status === FetchStatus.FAILURE && error.statusCode === 404 && (
-                <NotFound404
+                <NotFound
                     title="Vi fant dessverre ikke stillingsannonsen"
                     text="Annonsen kan være utløpt eller blitt fjernet av arbeidsgiver."
                 />
@@ -88,7 +88,7 @@ function Ad({ match }) {
                         <H1WithAutoFocus className="JobPosting__h1">{ad._source.title}</H1WithAutoFocus>
 
                         {ad._source.status !== "ACTIVE" && (
-                            <Tag variant="warning-filled" className="mb-4">
+                            <Tag variant="warning-moderate" className="mb-4">
                                 Stillingsannonsen er inaktiv.
                             </Tag>
                         )}

@@ -31,24 +31,26 @@ function Extent({ initialValues, updatedValues, query, dispatch }) {
 
     return (
         <Fieldset legend="Heltid/deltid" hideLegend>
-            {values.map((item) => (
-                <Checkbox
-                    name="extent"
-                    key={item.key}
-                    value={item.key}
-                    onChange={handleClick}
-                    checked={query.extent.includes(item.key)}
-                >
-                    {`${labelForExtent(item)} (${item.count})`}
-                </Checkbox>
-            ))}
+            <div>
+                {values.map((item) => (
+                    <Checkbox
+                        name="extent"
+                        key={item.key}
+                        value={item.key}
+                        onChange={handleClick}
+                        checked={query.extent.includes(item.key)}
+                    >
+                        {`${labelForExtent(item)} (${item.count})`}
+                    </Checkbox>
+                ))}
 
-            <UnknownSearchCriteriaValues
-                namePrefix="extent"
-                unknownValues={findUnknownSearchCriteriaValues(query.extent, initialValues)}
-                checkedValues={query.extent}
-                onClick={handleClick}
-            />
+                <UnknownSearchCriteriaValues
+                    namePrefix="extent"
+                    unknownValues={findUnknownSearchCriteriaValues(query.extent, initialValues)}
+                    checkedValues={query.extent}
+                    onClick={handleClick}
+                />
+            </div>
         </Fieldset>
     );
 }

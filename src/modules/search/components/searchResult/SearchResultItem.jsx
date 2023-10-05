@@ -126,7 +126,7 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, sho
             </div>
 
             <div className="SearchResultItem__details">
-                {showExpired && <Tag variant="warning-filled">Annonsen er utløpt</Tag>}
+                {showExpired && <Tag variant="warning-moderate">Annonsen er utløpt</Tag>}
                 {hasInterestform && <Tag variant="info-moderate">Superrask søknad</Tag>}
                 {frist && (
                     <Label as="p" size="small" className="SearchResultItem__subtle-text">

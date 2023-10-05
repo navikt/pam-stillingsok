@@ -28,24 +28,26 @@ function Sector({ initialValues, updatedValues, query, dispatch }) {
 
     return (
         <Fieldset legend="Sektor" hideLegend>
-            {values.map((item) => (
-                <Checkbox
-                    name="sector"
-                    key={item.key}
-                    value={item.key}
-                    onChange={handleClick}
-                    checked={query.sector.includes(item.key)}
-                >
-                    {`${item.key} (${item.count})`}
-                </Checkbox>
-            ))}
+            <div>
+                {values.map((item) => (
+                    <Checkbox
+                        name="sector"
+                        key={item.key}
+                        value={item.key}
+                        onChange={handleClick}
+                        checked={query.sector.includes(item.key)}
+                    >
+                        {`${item.key} (${item.count})`}
+                    </Checkbox>
+                ))}
 
-            <UnknownSearchCriteriaValues
-                namePrefix="sector"
-                unknownValues={findUnknownSearchCriteriaValues(query.sector, initialValues)}
-                checkedValues={query.sector}
-                onClick={handleClick}
-            />
+                <UnknownSearchCriteriaValues
+                    namePrefix="sector"
+                    unknownValues={findUnknownSearchCriteriaValues(query.sector, initialValues)}
+                    checkedValues={query.sector}
+                    onClick={handleClick}
+                />
+            </div>
         </Fieldset>
     );
 }

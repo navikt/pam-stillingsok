@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import { NotFound } from "@navikt/arbeidsplassen-react";
 import { FetchAction, FetchStatus, useFetchReducer } from "../../../common/hooks/useFetchReducer";
 import SearchAPI from "../../../common/api/SearchAPI";
 import DelayedSpinner from "../../../common/components/spinner/DelayedSpinner";
@@ -7,7 +8,6 @@ import SuperraskSoknadAPI from "../api/SuperraskSoknadAPI";
 import WithdrawApplicationSuccess from "./WithdrawApplicationSuccess";
 import WithdrawApplicationConfirmationRequired from "./WithdrawApplicationConfirmationRequired";
 import logAmplitudeEvent from "../../../common/tracking/amplitude";
-import NotFound404 from "../../../common/components/NotFound/NotFound404";
 
 function WithdrawApplication({ match }) {
     const [{ data: ad, status: adFetchStatus }, dispatch] = useFetchReducer();
@@ -89,13 +89,14 @@ function WithdrawApplication({ match }) {
                 )}
 
             {show404Page && !useDefault404Text && (
-                <NotFound404
+                <NotFound
                     title="Vi fant dessverre ikke din søknad"
-                    text="Det kan være at du allerede har trukket søknaden din eller at bedriften har avslått søknaden din."
+                    text="Det kan være at du allerede har trukket søknaden din eller at bedriften har avslått søknaden
+                        din."
                 />
             )}
 
-            {show404Page && useDefault404Text && <NotFound404 />}
+            {show404Page && useDefault404Text && <NotFound />}
 
             {!show404Page &&
                 (adFetchStatus === FetchStatus.SUCCESS ||
