@@ -6,7 +6,7 @@ import Pagination from "../pagination/Pagination";
 import SearchResultItem from "./SearchResultItem";
 import "./SearchResult.css";
 import FavouritesButton from "../../../favourites/components/FavouritesButton";
-import LoadingScreen from "../loadingScreen/LoadingScreen";
+import DelayedSpinner from "../../../../common/components/spinner/DelayedSpinner";
 
 function SearchResult({ searchResponse, query, loadMoreResults }) {
     const { status, data } = searchResponse;
@@ -27,7 +27,7 @@ function SearchResult({ searchResponse, query, loadMoreResults }) {
     return (
         <section className="SearchResult">
             {status === FetchStatus.FAILURE && <ErrorMessage />}
-            {status === FetchStatus.IS_FETCHING && query.from === 0 && <LoadingScreen />}
+            {status === FetchStatus.IS_FETCHING && query.from === 0 && <DelayedSpinner />}
             {(status === FetchStatus.SUCCESS || (status === FetchStatus.IS_FETCHING && query.from > 0)) && (
                 <>
                     {data.ads &&

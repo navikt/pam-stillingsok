@@ -13,12 +13,12 @@ import "./Ad.css";
 import { logStillingVisning } from "../../../common/tracking/amplitude";
 import ShareAd from "./ShareAd";
 import Summary from "./Summary";
-import DelayedSpinner from "../../../common/components/spinner/DelayedSpinner";
 import SearchAPI from "../../../common/api/SearchAPI";
 import { FetchAction, FetchStatus, useFetchReducer } from "../../../common/hooks/useFetchReducer";
 import ErrorMessage from "../../../common/components/messages/ErrorMessage";
 import useRobotsNoIndexMetaTag from "../../../common/hooks/useRobotsNoIndexMetaTag";
 import H1WithAutoFocus from "../../../common/components/h1WithAutoFocus/H1WithAutoFocus";
+import LoadingScreen from "../../../common/components/loadingScreen/LoadingScreen";
 
 function Ad({ match }) {
     const [{ data: ad, error, status }, dispatch] = useFetchReducer();
@@ -74,6 +74,7 @@ function Ad({ match }) {
 
     return (
         <div className="container-large JobPosting">
+            {(status === FetchStatus.IS_FETCHING || status === FetchStatus.NOT_FETCHED) && <LoadingScreen />}
             {status === FetchStatus.FAILURE && error.statusCode === 404 && (
                 <NotFound
                     title="Vi fant dessverre ikke stillingsannonsen"
@@ -81,7 +82,6 @@ function Ad({ match }) {
                 />
             )}
             {status === FetchStatus.FAILURE && error.statusCode !== 404 && <ErrorMessage />}
-            {status === FetchStatus.IS_FETCHING && <DelayedSpinner />}
             {status === FetchStatus.SUCCESS && (
                 <article className="JobPosting__flex">
                     <div className="JobPosting__left">

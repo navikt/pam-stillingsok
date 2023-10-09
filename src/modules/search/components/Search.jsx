@@ -31,7 +31,7 @@ import FilterForm from "./searchForm/filters/FilterForm";
 import SearchResultHeader from "./searchResultHeader/SearchResultHeader";
 import FilterIcon from "../../../common/components/icons/FilterIcon";
 import { AuthenticationContext, AuthenticationStatus } from "../../auth/contexts/AuthenticationProvider";
-import LoadingScreen from "./loadingScreen/LoadingScreen";
+import LoadingScreen from "../../../common/components/loadingScreen/LoadingScreen";
 import useToggle from "../../../common/hooks/useToggle";
 import TermsOfUse from "../../user/contexts/TermsOfUse";
 import LoginModal from "../../auth/components/LoginModal";
@@ -86,8 +86,8 @@ export default function Search() {
         initialSearchDispatch({ type: FetchAction.BEGIN });
 
         const promises = [
-            SearchAPI.search(toApiQuery(initialQuery)), // An empty search aggregates search criteria across all ads
-            SearchAPI.getAndCache("api/locations"), // Search criteria for locations are not aggregated, but based on a predefined list
+            SearchAPI.initialSearch(toApiQuery(initialQuery)), // An empty search aggregates search criteria across all ads
+            SearchAPI.getLocations(), // Search criteria for locations are not aggregated, but based on a predefined list
         ];
 
         // If user has some search criteria in browser url, make an extra search to get that result
@@ -189,141 +189,138 @@ export default function Search() {
             <H1WithAutoFocus className="container-medium  Search__h1" spacing={false}>
                 Søk etter din neste jobb
             </H1WithAutoFocus>
-            {initialSearchResponse.status === FetchStatus.FAILURE && <ErrorMessage />}
-            {initialSearchResponse.status === FetchStatus.IS_FETCHING && <DelayedSpinner />}
-            {initialSearchResponse.status === FetchStatus.SUCCESS && (
-                <>
-                    <div className="container-small">
-                        <SearchForm
-                            query={query}
-                            dispatchQuery={queryDispatch}
-                            initialSearchResult={initialSearchResponse.data}
-                            searchResult={searchResponse.data}
-                            fetchSearch={() => {
-                                fetchSearch();
+            <div className="container-small">
+                <SearchForm
+                    query={query}
+                    dispatchQuery={queryDispatch}
+                    fetchSearch={() => {
+                        fetchSearch();
+                    }}
+                />
+                <div className="Search__buttons">
+                    {device === Device.MOBILE && (
+                        <Button
+                            variant="tertiary"
+                            onClick={() => {
+                                setIsFiltersVisible(!isFiltersVisible);
                             }}
-                        />
-                        <div className="Search__buttons">
-                            {device === Device.MOBILE && (
+                            icon={<FilterIcon />}
+                            aria-expanded={isFiltersVisible}
+                        >
+                            Velg sted, yrke og andre filtre
+                        </Button>
+                    )}
+                    {(device === Device.DESKTOP ||
+                        (device === Device.MOBILE &&
+                            authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED)) && (
+                        <>
+                            <>
                                 <Button
+                                    as={Link}
+                                    to={`${CONTEXT_PATH}/lagrede-sok`}
+                                    type="button"
                                     variant="tertiary"
-                                    onClick={() => {
-                                        setIsFiltersVisible(!isFiltersVisible);
+                                    onClick={(e) => {
+                                        handleClick(e, `${CONTEXT_PATH}/lagrede-sok`, "SAVEDSEARCH");
                                     }}
-                                    icon={<FilterIcon />}
-                                    aria-expanded={isFiltersVisible}
+                                    icon={<ClockIcon aria-hidden="true" />}
                                 >
-                                    Velg sted, yrke og andre filtre
+                                    Bruk et lagret søk
                                 </Button>
-                            )}
-                            {(device === Device.DESKTOP ||
-                                (device === Device.MOBILE &&
-                                    authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED)) && (
-                                <>
-                                    <>
-                                        <Button
-                                            as={Link}
-                                            to={`${CONTEXT_PATH}/lagrede-sok`}
-                                            type="button"
-                                            variant="tertiary"
-                                            onClick={(e) => {
-                                                handleClick(e, `${CONTEXT_PATH}/lagrede-sok`, "SAVEDSEARCH");
-                                            }}
-                                            icon={<ClockIcon aria-hidden="true" />}
-                                        >
-                                            Bruk et lagret søk
-                                        </Button>
 
-                                        {shouldShowLoginModalSavedSearch && (
-                                            <LoginModal
-                                                onLoginClick={() => {
-                                                    loginAndRedirect(`${CONTEXT_PATH}/lagrede-sok`);
-                                                }}
-                                                onCloseClick={closeLoginModalSavedSearch}
-                                            />
-                                        )}
-                                    </>
-                                    <>
-                                        <Button
-                                            as={Link}
-                                            to={`${CONTEXT_PATH}/favoritter`}
-                                            type="button"
-                                            variant="tertiary"
-                                            onClick={(e) => {
-                                                handleClick(e, `${CONTEXT_PATH}/favoritter`, "FAVORITES");
-                                            }}
-                                            icon={<HeartIcon aria-hidden="true" />}
-                                        >
-                                            Mine favoritter
-                                        </Button>
-
-                                        {shouldShowLoginModalFavorites && (
-                                            <LoginModal
-                                                onLoginClick={() => {
-                                                    loginAndRedirect(`${CONTEXT_PATH}/favoritter`);
-                                                }}
-                                                onCloseClick={closeLoginModalFavorites}
-                                            />
-                                        )}
-
-                                        {shouldShowTermsModal && (
-                                            <TermsOfUse
-                                                onClose={closeTermsModal}
-                                                onTermsAccepted={() => {
-                                                    handleTermsAccepted(`${CONTEXT_PATH}/favoritter`);
-                                                }}
-                                            />
-                                        )}
-                                    </>
-                                </>
-                            )}
-                        </div>
-                    </div>
-                    <SearchResultHeader
-                        isFiltersVisible={isFiltersVisible}
-                        searchResponse={searchResponse}
-                        query={query}
-                        queryDispatch={queryDispatch}
-                    />
-                    <div className="Search__flex container-large">
-                        {(device === Device.DESKTOP || (device === Device.MOBILE && isFiltersVisible)) && (
-                            <div className="Search__flex-left">
-                                <FilterForm
-                                    query={query}
-                                    dispatchQuery={queryDispatch}
-                                    initialSearchResult={initialSearchResponse.data}
-                                    searchResult={searchResponse.data}
-                                    fetchSearch={() => {
-                                        fetchSearch();
+                                {shouldShowLoginModalSavedSearch && (
+                                    <LoginModal
+                                        onLoginClick={() => {
+                                            loginAndRedirect(`${CONTEXT_PATH}/lagrede-sok`);
+                                        }}
+                                        onCloseClick={closeLoginModalSavedSearch}
+                                    />
+                                )}
+                            </>
+                            <>
+                                <Button
+                                    as={Link}
+                                    to={`${CONTEXT_PATH}/favoritter`}
+                                    type="button"
+                                    variant="tertiary"
+                                    onClick={(e) => {
+                                        handleClick(e, `${CONTEXT_PATH}/favoritter`, "FAVORITES");
                                     }}
-                                    isFilterModalOpen={isFiltersVisible}
-                                    setIsFilterModalOpen={setIsFiltersVisible}
-                                    device={device}
-                                />
-                            </div>
-                        )}
-                        <div className="Search__flex-right">
-                            <SelectedFilters query={query} queryDispatch={queryDispatch} />
-                            {searchResponse.status === FetchStatus.IS_FETCHING && query.from === 0 ? (
-                                <LoadingScreen />
-                            ) : (
-                                <>
-                                    <SearchResult
-                                        initialSearchResponse={initialSearchResponse}
-                                        searchResponse={searchResponse}
-                                        query={query}
-                                        queryDispatch={queryDispatch}
-                                        loadMoreResults={() => {
-                                            loadMoreResults();
+                                    icon={<HeartIcon aria-hidden="true" />}
+                                >
+                                    Mine favoritter
+                                </Button>
+
+                                {shouldShowLoginModalFavorites && (
+                                    <LoginModal
+                                        onLoginClick={() => {
+                                            loginAndRedirect(`${CONTEXT_PATH}/favoritter`);
+                                        }}
+                                        onCloseClick={closeLoginModalFavorites}
+                                    />
+                                )}
+
+                                {shouldShowTermsModal && (
+                                    <TermsOfUse
+                                        onClose={closeTermsModal}
+                                        onTermsAccepted={() => {
+                                            handleTermsAccepted(`${CONTEXT_PATH}/favoritter`);
                                         }}
                                     />
-                                    <DoYouWantToSaveSearch query={query} />
-                                    <Feedback query={query} />
-                                </>
-                            )}
+                                )}
+                            </>
+                        </>
+                    )}
+                </div>
+            </div>
+            <SearchResultHeader
+                isFiltersVisible={isFiltersVisible}
+                searchResponse={searchResponse}
+                query={query}
+                queryDispatch={queryDispatch}
+            />
+            {(initialSearchResponse.status === FetchStatus.NOT_FETCHED ||
+                initialSearchResponse.status === FetchStatus.IS_FETCHING) && <LoadingScreen />}
+            {initialSearchResponse.status === FetchStatus.FAILURE && <ErrorMessage />}
+            {initialSearchResponse.status === FetchStatus.SUCCESS && (
+                <div className="Search__flex container-large">
+                    {(device === Device.DESKTOP || (device === Device.MOBILE && isFiltersVisible)) && (
+                        <div className="Search__flex-left">
+                            <FilterForm
+                                query={query}
+                                dispatchQuery={queryDispatch}
+                                initialSearchResult={initialSearchResponse.data}
+                                searchResult={searchResponse.data}
+                                fetchSearch={() => {
+                                    fetchSearch();
+                                }}
+                                isFilterModalOpen={isFiltersVisible}
+                                setIsFilterModalOpen={setIsFiltersVisible}
+                                device={device}
+                            />
                         </div>
+                    )}
+                    <div className="Search__flex-right">
+                        <SelectedFilters query={query} queryDispatch={queryDispatch} />
+                        {searchResponse.status === FetchStatus.IS_FETCHING && query.from === 0 ? (
+                            <DelayedSpinner />
+                        ) : (
+                            <>
+                                <SearchResult
+                                    initialSearchResponse={initialSearchResponse}
+                                    searchResponse={searchResponse}
+                                    query={query}
+                                    queryDispatch={queryDispatch}
+                                    loadMoreResults={() => {
+                                        loadMoreResults();
+                                    }}
+                                />
+                                <DoYouWantToSaveSearch query={query} />
+                                <Feedback query={query} />
+                            </>
+                        )}
                     </div>
-                </>
+                </div>
             )}
         </div>
     );

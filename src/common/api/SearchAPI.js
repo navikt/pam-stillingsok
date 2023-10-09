@@ -3,8 +3,9 @@ import { CONTEXT_PATH } from "../environment";
 import simplifySearchResponse from "./SearchAPIUtils";
 import { stringifyQuery } from "../../modules/search/query";
 
-let cache = [];
-const CACHE_MAX_SIZE = 100;
+let latestSearchResponse;
+let latestInitialResponse;
+let latestLocationsResponse;
 
 async function get(url, query = {}) {
     const queryString = stringifyQuery(query);
@@ -24,28 +25,42 @@ async function get(url, query = {}) {
     return response.json();
 }
 
-async function getAndCache(url, query = {}) {
+async function getLocations() {
+    if (latestLocationsResponse) {
+        return latestLocationsResponse;
+    }
+    const response = await get("api/locations", {});
+    latestLocationsResponse = response;
+    return latestLocationsResponse;
+}
+
+async function initialSearch(query) {
+    if (latestInitialResponse) {
+        return latestInitialResponse;
+    }
+    const response = await get("api/search", query);
+    latestInitialResponse = simplifySearchResponse(response);
+    return latestInitialResponse;
+}
+
+async function search(query) {
+    const url = "api/search";
     const queryString = stringifyQuery(query);
     const cachedUrl = `${CONTEXT_PATH}/${url}${queryString}`;
 
-    const cached = cache.find((c) => c.cachedUrl === cachedUrl);
-    if (cached) {
-        return cached.response;
+    if (latestSearchResponse && latestSearchResponse.cachedUrl === cachedUrl) {
+        return latestSearchResponse.response;
     }
     const response = await get(url, query);
-    cache = [{ cachedUrl, response }, ...cache].slice(0, CACHE_MAX_SIZE);
-    return response;
-}
-
-async function search(query = {}) {
-    const response = await get("api/search", query);
-    return simplifySearchResponse(response);
+    latestSearchResponse = { cachedUrl, response: simplifySearchResponse(response) };
+    return latestSearchResponse.response;
 }
 
 const SearchAPI = {
     get,
-    getAndCache,
+    getLocations,
     search,
+    initialSearch,
 };
 
 export default SearchAPI;

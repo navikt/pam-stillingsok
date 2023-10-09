@@ -1,15 +1,12 @@
 import React from "react";
 import DelayedSpinner from "../../../../common/components/spinner/DelayedSpinner";
-import "./LoadingScreen.css";
 
-function LoadingScreen() {
+function SearchLoading() {
     return (
-        <div className="LoadingScreen">
+        <div className="SearchLoading">
             <DelayedSpinner />
         </div>
     );
 }
 
-LoadingScreen.propTypes = {};
-
-export default LoadingScreen;
+export default SearchLoading;
