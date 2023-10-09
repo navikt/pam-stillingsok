@@ -16,7 +16,9 @@ function SearchResultHeader({ searchResponse, query, queryDispatch }) {
                         {searchResponse && searchResponse.data && searchResponse.data.totalAds >= 0 ? (
                             <SearchResultCount searchResult={searchResponse.data} />
                         ) : (
-                            <BodyShort as={Skeleton} width="200px" />
+                            <BodyShort>
+                                <span className="SearchResultHeader__skeleton" />
+                            </BodyShort>
                         )}
                     </div>
                     <Sorting dispatch={queryDispatch} query={query} />

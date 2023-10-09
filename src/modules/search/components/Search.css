@@ -50,6 +50,14 @@
     background: var(--a-surface-alt-1-subtle);
 }
 
+.SearchResultHeader__skeleton {
+    background: var(--arb-grayalpha-100);
+    border-radius: var(--a-border-radius-small);
+    width: 200px;
+    height: 1rem;
+    display: inline-flex;
+}
+
 .Search__count {
     display: flex;
     gap: 1rem;
