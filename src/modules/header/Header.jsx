@@ -3,12 +3,7 @@ import { Header as ArbeidsplassenHeader } from "@navikt/arbeidsplassen-react";
 import { AuthenticationContext, AuthenticationStatus } from "../auth/contexts/AuthenticationProvider";
 
 function Header() {
-    const { authenticationStatus, login, logout, userNameAndInfo } = useContext(AuthenticationContext);
-
-    const userName =
-        userNameAndInfo && userNameAndInfo.fornavn && userNameAndInfo.etternavn
-            ? `${userNameAndInfo.fornavn} ${userNameAndInfo.etternavn}`
-            : "";
+    const { authenticationStatus, login, logout } = useContext(AuthenticationContext);
 
     let authStatus = "unknown";
     if (authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED) {
@@ -24,7 +19,6 @@ function Header() {
             authenticationStatus={authStatus}
             onLogin={login}
             onLogout={logout}
-            userName={userName}
         />
     );
 }
