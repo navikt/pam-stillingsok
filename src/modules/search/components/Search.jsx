@@ -31,7 +31,7 @@ import FilterForm from "./searchForm/filters/FilterForm";
 import SearchResultHeader from "./searchResultHeader/SearchResultHeader";
 import FilterIcon from "./icons/FilterIcon";
 import { AuthenticationContext, AuthenticationStatus } from "../../auth/contexts/AuthenticationProvider";
-import LoadingScreen from "../../../common/components/loadingScreen/LoadingScreen";
+import LoadingScreen from "./loadingScreen/LoadingScreen";
 import useToggle from "../../../common/hooks/useToggle";
 import TermsOfUse from "../../user/contexts/TermsOfUse";
 import LoginModal from "../../auth/components/LoginModal";
