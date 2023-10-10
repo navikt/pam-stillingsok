@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import SavedSearchListItem from "./SavedSearchListItem";
-import DelayedSpinner from "../../../common/components/spinner/DelayedSpinner";
+import LoadingScreen from "../../../common/components/loadingScreen/LoadingScreen";
 import ErrorMessage from "../../../common/components/messages/ErrorMessage";
 import UserAPI from "../../../common/api/UserAPI";
 import { FetchAction, FetchStatus, useFetchReducer } from "../../../common/hooks/useFetchReducer";
@@ -61,7 +61,7 @@ function SavedSearchesList() {
 
     return (
         <>
-            {(status === FetchStatus.NOT_FETCHED || status === FetchStatus.IS_FETCHING) && <DelayedSpinner />}
+            {(status === FetchStatus.NOT_FETCHED || status === FetchStatus.IS_FETCHING) && <LoadingScreen />}
             {status === FetchStatus.FAILURE && <ErrorMessage />}
             {status === FetchStatus.SUCCESS && data.length === 0 && <SavedSearchesIsEmpty />}
             {status === FetchStatus.SUCCESS && data.length > 0 && (

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Select } from "@navikt/ds-react";
-import DelayedSpinner from "../../../common/components/spinner/DelayedSpinner";
+import LoadingScreen from "../../../common/components/loadingScreen/LoadingScreen";
 import ErrorMessage from "../../../common/components/messages/ErrorMessage";
 import EmptyMessage from "../../../common/components/messages/EmptyMessage";
 import UserAPI from "../../../common/api/UserAPI";
@@ -46,7 +46,7 @@ function FavouritesList() {
     }, [sortBy]);
 
     if (response.status === FetchStatus.NOT_FETCHED || response.status === FetchStatus.IS_FETCHING) {
-        return <DelayedSpinner />;
+        return <LoadingScreen />;
     }
     if (response.status === FetchStatus.FAILURE && response.error.statusCode !== 404) {
         return <ErrorMessage />;

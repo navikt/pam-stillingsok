@@ -5,7 +5,7 @@ import { NotFound } from "@navikt/arbeidsplassen-react";
 import SearchAPI from "../../../common/api/SearchAPI";
 import SuperraskSoknadAPI from "../api/SuperraskSoknadAPI";
 import { FetchAction, FetchStatus, useFetchReducer } from "../../../common/hooks/useFetchReducer";
-import DelayedSpinner from "../../../common/components/spinner/DelayedSpinner";
+import LoadingScreen from "../../../common/components/loadingScreen/LoadingScreen";
 import "./SuperraskSoknad.css";
 import getEmployer from "../../../../server/common/getEmployer";
 import NewApplicationForm from "./NewApplicationForm";
@@ -63,7 +63,7 @@ function SuperraskSoknad({ match }) {
 
     return (
         <div className="NewApplicationForm">
-            {status === FetchStatus.IS_FETCHING && <DelayedSpinner />}
+            {(status === FetchStatus.NOT_FETCHED || status === FetchStatus.IS_FETCHING) && <LoadingScreen />}
             {status === FetchStatus.FAILURE && error.statusCode !== 404 && (
                 <div className="container-small mt-4 mb-4">
                     <Alert variant="error">Det oppsto dessverre en feil. Prøv å last inn siden på nytt.</Alert>
