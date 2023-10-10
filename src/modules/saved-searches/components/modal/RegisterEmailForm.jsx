@@ -1,10 +1,9 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import { BodyLong, Button, TextField } from "@navikt/ds-react";
+import { Alert, BodyLong, Button, TextField } from "@navikt/ds-react";
 import { isValidEmail } from "../../../../common/components/utils";
 import { UserContext } from "../../../user/contexts/UserProvider";
 import { FetchStatus } from "../../../../common/hooks/useFetchReducer";
-import Alert from "../../../../common/components/alert/Alert";
 import UserAPI from "../../../../common/api/UserAPI";
 
 function RegisterEmailForm({ onClose, onSuccess }) {
@@ -84,7 +83,9 @@ function RegisterEmailForm({ onClose, onSuccess }) {
                 />
 
                 {saveStatus === FetchStatus.FAILURE && (
-                    <Alert>Noe gikk galt ved lagring, forsøk igjen eller last siden på nytt</Alert>
+                    <Alert variant="error" className="mb-4 mt-4" role="alert">
+                        Noe gikk galt ved lagring, forsøk igjen eller last siden på nytt
+                    </Alert>
                 )}
 
                 <div className="SaveSearchForm__buttons">

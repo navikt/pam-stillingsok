@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import {
+    Alert,
     BodyLong,
     Button,
     Checkbox,
@@ -13,7 +14,6 @@ import {
     Link as AkselLink,
     Fieldset,
 } from "@navikt/ds-react";
-import Alert from "../../../common/components/alert/Alert";
 import H1WithAutoFocus from "../../../common/components/h1WithAutoFocus/H1WithAutoFocus";
 import { isValidEmail, isValidTelephone } from "../../../common/components/utils";
 import "./SuperraskSoknad.css";
@@ -280,7 +280,11 @@ function NewApplicationForm({ ad, applicationForm, submitForm, isSending, hasErr
                 </AkselLink>
             </BodyLong>
 
-            {hasError && <Alert>{getErrorMessage(error)}</Alert>}
+            {hasError && (
+                <Alert variant="error" className="mb-4 mt-4" role="alert">
+                    {getErrorMessage(error)}
+                </Alert>
+            )}
 
             <div className="NewApplicationForm__buttons">
                 <Button variant="primary" loading={isSending} type="button" onClick={handleSendMessageClick}>

@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React, { useState } from "react";
-import { Link as AkselLink, BodyShort, Heading, Tag } from "@navikt/ds-react";
+import { Alert, Link as AkselLink, BodyShort, Heading, Tag } from "@navikt/ds-react";
 import { Link } from "react-router-dom";
 import { CONTEXT_PATH } from "../../../common/environment";
 import { formatDate } from "../../../common/components/utils";
@@ -12,7 +12,6 @@ import { FetchStatus } from "../../../common/hooks/useFetchReducer";
 import DeleteButton from "../../../common/components/buttons/DeleteButton";
 import EditButton from "../../../common/components/buttons/EditButton";
 import RefreshButton from "../../../common/components/buttons/RefreshButton";
-import Alert from "../../../common/components/alert/Alert";
 import { FormModes } from "./modal/SaveSearchForm";
 import AlertModalWithPageReload from "../../../common/components/modals/AlertModalWithPageReload";
 
@@ -109,7 +108,7 @@ function SavedSearchListItem({ savedSearch, removeSavedSearchFromList, replaceSa
             </div>
 
             {restartEmailNotificationStatus === FetchStatus.FAILURE && (
-                <Alert>
+                <Alert variant="error" className="mb-4 mt-4" role="alert">
                     Det oppsto en feil. Klarte ikke starte ny varsling. Forsøk igjen eller last siden på nytt.
                 </Alert>
             )}

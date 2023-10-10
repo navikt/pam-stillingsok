@@ -1,10 +1,9 @@
 import React, { useContext, useRef, useState } from "react";
-import { BodyLong, Button, Checkbox, Radio, RadioGroup, TextField, Link as AkselLink } from "@navikt/ds-react";
+import { Alert, BodyLong, Button, Checkbox, Radio, RadioGroup, TextField, Link as AkselLink } from "@navikt/ds-react";
 import PropTypes from "prop-types";
 import { UserContext } from "../../../user/contexts/UserProvider";
 import useToggle from "../../../../common/hooks/useToggle";
 import { FetchStatus } from "../../../../common/hooks/useFetchReducer";
-import Alert from "../../../../common/components/alert/Alert";
 import { isStringEmpty } from "../../../../common/components/utils";
 import UserAPI from "../../../../common/api/UserAPI";
 
@@ -186,7 +185,9 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
                 </>
             )}
             {saveStatus === FetchStatus.FAILURE && (
-                <Alert>Noe gikk galt ved lagring, forsøk igjen eller last siden på nytt</Alert>
+                <Alert variant="error" className="mb-4 mt-4" role="alert">
+                    Noe gikk galt ved lagring, forsøk igjen eller last siden på nytt
+                </Alert>
             )}
             <div className="SaveSearchForm__buttons">
                 <Button

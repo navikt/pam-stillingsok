@@ -1,11 +1,10 @@
 import * as React from "react";
 import { useContext, useEffect, useState } from "react";
 import "./ReportAd.css";
-import { BodyLong, Button, Checkbox, Heading, Textarea, Link as AkselLink } from "@navikt/ds-react";
+import { Alert, BodyLong, Button, Checkbox, Heading, Textarea, Link as AkselLink } from "@navikt/ds-react";
 import logAmplitudeEvent from "../../../common/tracking/amplitude";
 import { AuthenticationContext, AuthenticationStatus } from "../../auth/contexts/AuthenticationProvider";
 import UserAPI from "../../../common/api/UserAPI";
-import Alert from "../../../common/components/alert/Alert";
 import H1WithAutoFocus from "../../../common/components/h1WithAutoFocus/H1WithAutoFocus";
 
 const violationCategories = [
@@ -197,7 +196,11 @@ function ReportAd() {
                                 </BodyLong>
                             </div>
 
-                            {error && <Alert>Rapportering feilet - prøv igjen</Alert>}
+                            {error && (
+                                <Alert variant="error" className="mb-4 mt-4" role="alert">
+                                    Rapportering feilet - prøv igjen
+                                </Alert>
+                            )}
 
                             {authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED && (
                                 <Button

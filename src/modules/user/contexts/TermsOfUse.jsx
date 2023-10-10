@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
-import { BodyLong, Button, ConfirmationPanel } from "@navikt/ds-react";
+import { Alert, BodyLong, Button, ConfirmationPanel } from "@navikt/ds-react";
 import CustomModal from "../../../common/components/modals/CustomModal";
 import UserAPI from "../../../common/api/UserAPI";
 import "./TermsOfUse.css";
@@ -8,7 +8,6 @@ import { UserContext } from "./UserProvider";
 import { AuthenticationContext } from "../../auth/contexts/AuthenticationProvider";
 import { FetchStatus } from "../../../common/hooks/useFetchReducer";
 import useToggle from "../../../common/hooks/useToggle";
-import Alert from "../../../common/components/alert/Alert";
 
 function TermsOfUse({ onClose, onTermsAccepted }) {
     const { userNameAndInfo } = useContext(AuthenticationContext);
@@ -91,7 +90,9 @@ function TermsOfUse({ onClose, onTermsAccepted }) {
                         du gjøre under innstillinger.
                     </BodyLong>
                     {fetchStatus === FetchStatus.FAILURE && (
-                        <Alert>Det oppsto en feil ved lagring av samtykke. Forsøk igjen.</Alert>
+                        <Alert variant="error" className="mb-4 mt-4" role="alert">
+                            Det oppsto en feil ved lagring av samtykke. Forsøk igjen.
+                        </Alert>
                     )}
                     <div className="TermsOfUse__buttons">
                         <Button
