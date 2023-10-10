@@ -18,7 +18,7 @@ import { FetchAction, FetchStatus, useFetchReducer } from "../../../common/hooks
 import ErrorMessage from "../../../common/components/messages/ErrorMessage";
 import useRobotsNoIndexMetaTag from "../../../common/hooks/useRobotsNoIndexMetaTag";
 import H1WithAutoFocus from "../../../common/components/h1WithAutoFocus/H1WithAutoFocus";
-import LoadingScreen from "./LoadingScreen";
+import LoadingScreen from "../../../common/components/loadingScreen/LoadingScreen";
 
 function Ad({ match }) {
     const [{ data: ad, error, status }, dispatch] = useFetchReducer();
@@ -29,7 +29,7 @@ function Ad({ match }) {
     function fetchStilling(id) {
         dispatch({ type: FetchAction.BEGIN });
 
-        SearchAPI.get(`api/stilling/${id}`).then(
+        SearchAPI.getAd(id).then(
             (data) => {
                 dispatch({ type: FetchAction.RESOLVE, data });
             },

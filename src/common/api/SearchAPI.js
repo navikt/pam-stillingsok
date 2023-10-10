@@ -6,6 +6,7 @@ import { stringifyQuery } from "../../modules/search/query";
 let latestSearchResponse;
 let latestInitialResponse;
 let latestLocationsResponse;
+let latestAdResponse;
 
 async function get(url, query = {}) {
     const queryString = stringifyQuery(query);
@@ -25,11 +26,23 @@ async function get(url, query = {}) {
     return response.json();
 }
 
+async function getAd(id) {
+    const url = `api/stilling/${id}`;
+    const cachedUrl = `${CONTEXT_PATH}/${url}`;
+
+    if (latestAdResponse && latestAdResponse.cachedUrl === cachedUrl) {
+        return latestAdResponse.response;
+    }
+    const response = await get(url);
+    latestAdResponse = { cachedUrl, response };
+    return latestAdResponse.response;
+}
+
 async function getLocations() {
     if (latestLocationsResponse) {
         return latestLocationsResponse;
     }
-    const response = await get("api/locations", {});
+    const response = await get("api/locations");
     latestLocationsResponse = response;
     return latestLocationsResponse;
 }
@@ -58,6 +71,7 @@ async function search(query) {
 
 const SearchAPI = {
     get,
+    getAd,
     getLocations,
     search,
     initialSearch,
