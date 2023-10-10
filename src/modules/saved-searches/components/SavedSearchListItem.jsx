@@ -4,7 +4,7 @@ import { Alert, Link as AkselLink, BodyShort, Heading, Tag, Button } from "@navi
 import { Link } from "react-router-dom";
 import { ArrowsCirclepathIcon, PencilIcon, TrashIcon } from "@navikt/aksel-icons";
 import { CONTEXT_PATH } from "../../../common/environment";
-import { formatDate } from "../../../common/components/utils";
+import { formatDate } from "../../../common/utils/utils";
 import AlertModal from "../../../common/components/modals/AlertModal";
 import SaveSearchModal from "./modal/SaveSearchModal";
 import UserAPI from "../../../common/api/UserAPI";

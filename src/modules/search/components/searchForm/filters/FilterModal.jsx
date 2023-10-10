@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Button, Heading, Modal } from "@navikt/ds-react";
 import "./FilterModal.css";
 import { XMarkIcon } from "@navikt/aksel-icons";
-import { formatNumber } from "../../../../../common/components/utils";
+import { formatNumber } from "../../../../../common/utils/utils";
 
 function FilterModal({ title, children, onCloseClick, searchResult }) {
     return (

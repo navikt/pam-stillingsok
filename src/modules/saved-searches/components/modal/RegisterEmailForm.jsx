@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { Alert, BodyLong, Button, TextField } from "@navikt/ds-react";
-import { isValidEmail } from "../../../../common/components/utils";
+import { isValidEmail } from "../../../../common/utils/utils";
 import { UserContext } from "../../../user/contexts/UserProvider";
 import { FetchStatus } from "../../../../common/hooks/useFetchReducer";
 import UserAPI from "../../../../common/api/UserAPI";

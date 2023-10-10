@@ -7,7 +7,7 @@ import SaveSearchModal from "./modal/SaveSearchModal";
 import { isSearchQueryEmpty, stringifyQuery, toReadableQuery, toSavedSearchQuery } from "../../search/query";
 import { AuthenticationContext, AuthenticationStatus } from "../../auth/contexts/AuthenticationProvider";
 import { HasAcceptedTermsStatus, UserContext } from "../../user/contexts/UserProvider";
-import { extractParam } from "../../../common/components/utils";
+import { extractParam } from "../../../common/utils/utils";
 import TermsOfUse from "../../user/contexts/TermsOfUse";
 import LoginModal from "../../auth/components/LoginModal";
 import useToggle from "../../../common/hooks/useToggle";

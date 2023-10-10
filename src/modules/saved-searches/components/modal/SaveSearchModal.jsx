@@ -9,7 +9,7 @@ import useToggle from "../../../../common/hooks/useToggle";
 import { FetchAction, FetchStatus, useFetchReducer } from "../../../../common/hooks/useFetchReducer";
 import SaveSearchForm from "./SaveSearchForm";
 import RegisterEmailForm from "./RegisterEmailForm";
-import { isStringEmpty } from "../../../../common/components/utils";
+import { isStringEmpty } from "../../../../common/utils/utils";
 import SuccessMessage from "./SuccessMessage";
 import ConfirmEmailMessage from "./ConfirmEmailMessage";
 import NotFoundMessage from "./NotFoundMessage";

@@ -4,7 +4,7 @@ import parse from "html-react-parser";
 import { Heading, Link as AkselLink } from "@navikt/ds-react";
 import DOMPurify from "isomorphic-dompurify";
 import fixLocationName from "../../../../server/common/fixLocationName";
-import { isValidUrl } from "../../../common/components/utils";
+import { isValidUrl } from "../../../common/utils/utils";
 import getEmployer from "../../../../server/common/getEmployer";
 import "./EmployerDetails.css";
 

@@ -4,7 +4,7 @@ import DelayedSpinner from "../../../common/components/spinner/DelayedSpinner";
 import ErrorMessage from "../../../common/components/messages/ErrorMessage";
 import UserAPI from "../../../common/api/UserAPI";
 import { FetchAction, FetchStatus, useFetchReducer } from "../../../common/hooks/useFetchReducer";
-import { extractParam } from "../../../common/components/utils";
+import { extractParam } from "../../../common/utils/utils";
 import SavedSearchesIsEmpty from "./SavedSearchesIsEmpty";
 import H1WithAutoFocus from "../../../common/components/h1WithAutoFocus/H1WithAutoFocus";
 

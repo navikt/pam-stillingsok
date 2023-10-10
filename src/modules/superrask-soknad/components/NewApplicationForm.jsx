@@ -15,7 +15,7 @@ import {
     Fieldset,
 } from "@navikt/ds-react";
 import H1WithAutoFocus from "../../../common/components/h1WithAutoFocus/H1WithAutoFocus";
-import { isValidEmail, isValidTelephone } from "../../../common/components/utils";
+import { isValidEmail, isValidTelephone } from "../../../common/utils/utils";
 import "./SuperraskSoknad.css";
 import { CONTEXT_PATH } from "../../../common/environment";
 

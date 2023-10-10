@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import parse from "html-react-parser";
 import "./AdText.css";
 import DOMPurify from "isomorphic-dompurify";
-import { containsEmail, extractEmail, isValidEmail, mailtoInString } from "../../../common/components/utils";
+import { containsEmail, extractEmail, isValidEmail, mailtoInString } from "../../../common/utils/utils";
 
 const preprocessAd = (adText) => {
     if (containsEmail(adText)) {

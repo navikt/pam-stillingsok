@@ -13,7 +13,7 @@ import queryReducer, {
     toApiQuery,
     toBrowserQuery,
 } from "../query";
-import { extractParam } from "../../../common/components/utils";
+import { extractParam } from "../../../common/utils/utils";
 import { FetchAction, FetchStatus, useFetchReducer } from "../../../common/hooks/useFetchReducer";
 import SearchAPI from "../../../common/api/SearchAPI";
 import ErrorMessage from "../../../common/components/messages/ErrorMessage";

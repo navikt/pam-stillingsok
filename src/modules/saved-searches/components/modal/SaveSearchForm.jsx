@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { UserContext } from "../../../user/contexts/UserProvider";
 import useToggle from "../../../../common/hooks/useToggle";
 import { FetchStatus } from "../../../../common/hooks/useFetchReducer";
-import { isStringEmpty } from "../../../../common/components/utils";
+import { isStringEmpty } from "../../../../common/utils/utils";
 import UserAPI from "../../../../common/api/UserAPI";
 
 export const FormModes = {

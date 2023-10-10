@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { BodyShort } from "@navikt/ds-react";
-import { formatNumber } from "../../../../common/components/utils";
+import { formatNumber } from "../../../../common/utils/utils";
 
 function SearchResultCount({ searchResult }) {
     if (searchResult) {

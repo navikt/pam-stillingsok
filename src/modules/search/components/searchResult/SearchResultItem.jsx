@@ -8,7 +8,7 @@ import { Buldings3Icon, ExternalLinkIcon, PinIcon } from "@navikt/aksel-icons";
 import getEmployer from "../../../../../server/common/getEmployer";
 import getWorkLocation from "../../../../../server/common/getWorkLocation";
 import { CONTEXT_PATH } from "../../../../common/environment";
-import { formatDate } from "../../../../common/components/utils";
+import { formatDate } from "../../../../common/utils/utils";
 import "./SearchResultsItem.css";
 
 export default function SearchResultItem({ ad, showExpired, favouriteButton, shouldAutoFocus }) {
