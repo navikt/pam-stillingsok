@@ -29,7 +29,7 @@ import DelayedSpinner from "../../../common/components/spinner/DelayedSpinner";
 import useDevice, { Device } from "../../../common/hooks/useDevice";
 import FilterForm from "./searchForm/filters/FilterForm";
 import SearchResultHeader from "./searchResultHeader/SearchResultHeader";
-import FilterIcon from "../../../common/components/icons/FilterIcon";
+import FilterIcon from "./icons/FilterIcon";
 import { AuthenticationContext, AuthenticationStatus } from "../../auth/contexts/AuthenticationProvider";
 import LoadingScreen from "../../../common/components/loadingScreen/LoadingScreen";
 import useToggle from "../../../common/hooks/useToggle";

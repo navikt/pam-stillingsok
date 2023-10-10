@@ -2,10 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import { UAParser } from "ua-parser-js";
 import { Heading, Link as AkselLink } from "@navikt/ds-react";
-import FacebookIcon from "../../../common/components/icons/FacebookIcon";
-import LinkedinIcon from "../../../common/components/icons/LinkedinIcon";
-import TwitterIcon from "../../../common/components/icons/TwitterIcon";
-import MessengerIcon from "../../../common/components/icons/MessengerIcon";
+import FacebookIcon from "./icons/FacebookIcon";
+import LinkedinIcon from "./icons/LinkedinIcon";
+import TwitterIcon from "./icons/TwitterIcon";
+import MessengerIcon from "./icons/MessengerIcon";
 import "./ShareAd.css";
 
 export default function ShareAd({ source }) {
