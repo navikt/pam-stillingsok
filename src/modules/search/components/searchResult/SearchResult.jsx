@@ -43,6 +43,7 @@ function SearchResult({ searchResponse, query, loadMoreResults }) {
                                         stilling={ad}
                                         id={ad.uuid}
                                         hideText
+                                        variant="tertiary"
                                     />
                                 }
                             />

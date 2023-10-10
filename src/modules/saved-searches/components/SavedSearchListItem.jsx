@@ -1,7 +1,8 @@
 import PropTypes from "prop-types";
 import React, { useState } from "react";
-import { Alert, Link as AkselLink, BodyShort, Heading, Tag } from "@navikt/ds-react";
+import { Alert, Link as AkselLink, BodyShort, Heading, Tag, Button } from "@navikt/ds-react";
 import { Link } from "react-router-dom";
+import { ArrowsCirclepathIcon, PencilIcon, TrashIcon } from "@navikt/aksel-icons";
 import { CONTEXT_PATH } from "../../../common/environment";
 import { formatDate } from "../../../common/components/utils";
 import AlertModal from "../../../common/components/modals/AlertModal";
@@ -9,9 +10,6 @@ import SaveSearchModal from "./modal/SaveSearchModal";
 import UserAPI from "../../../common/api/UserAPI";
 import useToggle from "../../../common/hooks/useToggle";
 import { FetchStatus } from "../../../common/hooks/useFetchReducer";
-import DeleteButton from "../../../common/components/buttons/DeleteButton";
-import EditButton from "../../../common/components/buttons/EditButton";
-import RefreshButton from "../../../common/components/buttons/RefreshButton";
 import { FormModes } from "./modal/SaveSearchForm";
 import AlertModalWithPageReload from "../../../common/components/modals/AlertModalWithPageReload";
 
@@ -95,15 +93,22 @@ function SavedSearchListItem({ savedSearch, removeSavedSearchFromList, replaceSa
             )}
 
             <div className="SavedSearchListItem__bottom">
-                <EditButton onClick={openSavedSearchModal} />
-                <DeleteButton onClick={openConfirmationModal} />
+                <Button variant="tertiary" onClick={openSavedSearchModal} icon={<PencilIcon aria-hidden="true" />}>
+                    Endre
+                </Button>
+                <Button variant="tertiary" icon={<TrashIcon aria-hidden="true" />} onClick={openConfirmationModal}>
+                    Slett
+                </Button>
                 {isEmailNotificationExpired && (
-                    <RefreshButton
+                    <Button
+                        variant="tertiary"
                         onClick={reactivateEmailNotification}
                         disabled={restartEmailNotificationStatus === FetchStatus.IS_FETCHING}
                         loading={restartEmailNotificationStatus === FetchStatus.IS_FETCHING}
-                        text="Start ny varsling"
-                    />
+                        icon={<ArrowsCirclepathIcon aria-hidden="true" />}
+                    >
+                        Start ny varsling
+                    </Button>
                 )}
             </div>
 

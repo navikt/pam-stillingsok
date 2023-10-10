@@ -1,12 +1,13 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
+import { Button } from "@navikt/ds-react";
+import { TrashIcon } from "@navikt/aksel-icons";
 import SearchResultItem from "../../search/components/searchResult/SearchResultItem";
 import useToggle from "../../../common/hooks/useToggle";
 import AlertModal from "../../../common/components/modals/AlertModal";
 import UserAPI from "../../../common/api/UserAPI";
 import { FavouritesContext } from "../context/FavouritesProvider";
 import AlertModalWithPageReload from "../../../common/components/modals/AlertModalWithPageReload";
-import DeleteButton from "../../../common/components/buttons/DeleteButton";
 
 function FavouritesListItem({ favourite, removeFavouriteFromList }) {
     const { addToPending, removeFavouriteFromLocalList, removeFormPending } = useContext(FavouritesContext);
@@ -51,9 +52,14 @@ function FavouritesListItem({ favourite, removeFavouriteFromList }) {
                 }}
                 showExpired={favourite.favouriteAd.status !== "ACTIVE"}
                 favouriteButton={
-                    <DeleteButton className="FavouriteListItem__delete-button" onClick={openConfirmDeleteModal}>
+                    <Button
+                        variant="tertiary"
+                        className="FavouriteListItem__delete-button"
+                        onClick={openConfirmDeleteModal}
+                        icon={<TrashIcon aria-hidden="true" />}
+                    >
                         Slett
-                    </DeleteButton>
+                    </Button>
                 }
             />
 

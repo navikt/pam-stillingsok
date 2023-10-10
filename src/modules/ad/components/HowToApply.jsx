@@ -143,7 +143,7 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                 {showFavouriteButton && (
                     <FavouritesButton
                         className="HowToApply__favourite-button HowToApply__full-width-button"
-                        type="knapp"
+                        variant="secondary"
                         id={stilling._id}
                         stilling={stilling._source}
                     />
@@ -234,7 +234,7 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                 {showFavouriteButton && (
                     <FavouritesButton
                         className="HowToApply__favourite-button HowToApply__full-width-button"
-                        type="knapp"
+                        variant="secondary"
                         id={stilling._id}
                         stilling={stilling._source}
                     />

@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
+import { Button } from "@navikt/ds-react";
 import { HeartIcon, HeartFillIcon } from "@navikt/aksel-icons";
 import logAmplitudeEvent from "../../../common/tracking/amplitude";
 import { HasAcceptedTermsStatus, UserContext } from "../../user/contexts/UserProvider";
@@ -11,7 +12,6 @@ import getEmployer from "../../../../server/common/getEmployer";
 import TermsOfUse from "../../user/contexts/TermsOfUse";
 import LoginModal from "../../auth/components/LoginModal";
 import useToggle from "../../../common/hooks/useToggle";
-import IconButton from "../../../common/components/buttons/IconButton";
 import AlertModalWithPageReload from "../../../common/components/modals/AlertModalWithPageReload";
 
 /**
@@ -20,7 +20,7 @@ import AlertModalWithPageReload from "../../../common/components/modals/AlertMod
  * If user click button, this view will ensure that user is logged in
  * and has accepted usage terms before it save a favourite
  */
-function FavouritesButton({ id, stilling, useShortText, className, type, hideText }) {
+function FavouritesButton({ id, stilling, useShortText, className, variant, hideText }) {
     const {
         pendingFavourites,
         favourites,
@@ -106,18 +106,20 @@ function FavouritesButton({ id, stilling, useShortText, className, type, hideTex
 
     const saveText = useShortText ? "Lagre" : "Lagre annonse";
     const deleteText = useShortText ? "Lagret" : "Slett favoritt";
+    const buttonText = isFavourite ? deleteText : saveText;
 
     return (
         <>
-            <IconButton
+            <Button
+                variant={variant}
                 disabled={isPending}
                 onClick={isFavourite ? handleDeleteFavouriteClick : handleSaveFavouriteClick}
                 className={className ? `FavouriteButton ${className}` : "FavouritesButton"}
-                text={isFavourite ? deleteText : saveText}
                 icon={isFavourite ? <HeartFillIcon aria-hidden="true" /> : <HeartIcon aria-hidden="true" />}
-                type={type}
-                hideText={hideText}
-            />
+                aria-label={hideText ? buttonText : undefined}
+            >
+                {!hideText ? buttonText : undefined}
+            </Button>
 
             {shouldShowLoginModal && <LoginModal onLoginClick={login} onCloseClick={closeLoginModal} />}
 
@@ -135,7 +137,7 @@ function FavouritesButton({ id, stilling, useShortText, className, type, hideTex
 FavouritesButton.defaultProps = {
     className: undefined,
     useShortText: false,
-    type: undefined,
+    variant: undefined,
     hideText: false,
 };
 
@@ -144,7 +146,7 @@ FavouritesButton.propTypes = {
     stilling: PropTypes.shape({}).isRequired,
     className: PropTypes.string,
     useShortText: PropTypes.bool,
-    type: PropTypes.string,
+    variant: PropTypes.string,
     hideText: PropTypes.bool,
 };
 
