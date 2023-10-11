@@ -133,26 +133,31 @@ function Locations({ initialValues, updatedValues, query, dispatch }) {
                                         legend={`Områder i ${fixLocationName(location.key)}`}
                                         className="FilterModal__sub-fieldset FilterModal__columns-3"
                                     >
-                                        {location.subLocations &&
-                                            location.subLocations.map((subLocation) => (
-                                                <Checkbox
-                                                    className={subLocation.count === 0 ? "Facet__zero__count" : ""}
-                                                    name="location"
-                                                    key={subLocation.key}
-                                                    value={subLocation.key}
-                                                    onChange={handleCheckboxClick(subLocation.key, subLocation.type)}
-                                                    checked={
-                                                        query.municipals.includes(subLocation.key) ||
-                                                        query.countries.includes(subLocation.key)
-                                                    }
-                                                >
-                                                    <span translate="no">
-                                                        {`${fixLocationName(subLocation.key, true)} (${
-                                                            subLocation.count
-                                                        })`}
-                                                    </span>
-                                                </Checkbox>
-                                            ))}
+                                        <div>
+                                            {location.subLocations &&
+                                                location.subLocations.map((subLocation) => (
+                                                    <Checkbox
+                                                        className={subLocation.count === 0 ? "Facet__zero__count" : ""}
+                                                        name="location"
+                                                        key={subLocation.key}
+                                                        value={subLocation.key}
+                                                        onChange={handleCheckboxClick(
+                                                            subLocation.key,
+                                                            subLocation.type,
+                                                        )}
+                                                        checked={
+                                                            query.municipals.includes(subLocation.key) ||
+                                                            query.countries.includes(subLocation.key)
+                                                        }
+                                                    >
+                                                        <span translate="no">
+                                                            {`${fixLocationName(subLocation.key, true)} (${
+                                                                subLocation.count
+                                                            })`}
+                                                        </span>
+                                                    </Checkbox>
+                                                ))}
+                                        </div>
                                     </Fieldset>
                                 )}
                         </React.Fragment>

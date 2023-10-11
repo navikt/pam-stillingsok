@@ -88,20 +88,22 @@ function Occupations({ initialValues, updatedValues, query, dispatch }) {
                                         legend={`Yrker innen ${firstLevel.key}`}
                                         className="FilterModal__sub-fieldset FilterModal__columns-2"
                                     >
-                                        {firstLevel.occupationSecondLevels &&
-                                            firstLevel.occupationSecondLevels.map((secondLevel) => (
-                                                <Checkbox
-                                                    name="occupation"
-                                                    key={editedSecondLevelItemKey(secondLevel.key)}
-                                                    value={secondLevel.key}
-                                                    onChange={handleSecondLevelClick}
-                                                    checked={query.occupationSecondLevels.includes(secondLevel.key)}
-                                                >
-                                                    {`${editedSecondLevelItemKey(secondLevel.label)} (${
-                                                        secondLevel.count
-                                                    })`}
-                                                </Checkbox>
-                                            ))}
+                                        <div>
+                                            {firstLevel.occupationSecondLevels &&
+                                                firstLevel.occupationSecondLevels.map((secondLevel) => (
+                                                    <Checkbox
+                                                        name="occupation"
+                                                        key={editedSecondLevelItemKey(secondLevel.key)}
+                                                        value={secondLevel.key}
+                                                        onChange={handleSecondLevelClick}
+                                                        checked={query.occupationSecondLevels.includes(secondLevel.key)}
+                                                    >
+                                                        {`${editedSecondLevelItemKey(secondLevel.label)} (${
+                                                            secondLevel.count
+                                                        })`}
+                                                    </Checkbox>
+                                                ))}
+                                        </div>
                                     </Fieldset>
                                 )}
                         </React.Fragment>
