@@ -31,12 +31,6 @@
     line-height: 1.375;
 }
 
-.WithdrawApplication {
-    margin: 3rem auto;
-    max-width: 664px;
-    padding: 0 1rem;
-}
-
 .NewApplicationForm__success-message {
     margin-top: 4rem;
 }

@@ -15,12 +15,12 @@ import initSentry from "./common/tracking/sentry";
 import { initAmplitude } from "./common/tracking/amplitude";
 import HistoryProvider from "./common/context/HistoryProvider";
 import SearchPage from "./modules/search/SearchPage";
-import SuperraskSoknadPage from "./modules/superrask-soknad/SuperraskSoknadPage";
+import NewApplicationPage from "./modules/superrask-soknad/page";
 import AdPage from "./modules/ad/page";
 import ReportAdPage from "./modules/report-ad/ReportAdPage";
 import FavouritesPage from "./modules/favourites/FavouritesPage";
 import SavedSearchesPage from "./modules/saved-searches/SavedSearchesPage";
-import WithdrawApplicationPage from "./modules/superrask-soknad/WithdrawApplicationPage";
+import WithdrawApplicationPage from "./modules/trekk-soknad/page";
 import "./common/styles/styles.css";
 import googleTranslateWorkaround from "./common/utils/googleTranslateWorkaround";
 import NotFoundPage from "./modules/not-found/NotFoundPage";
@@ -49,8 +49,8 @@ function Application() {
                                     <Switch>
                                         <Route exact path={CONTEXT_PATH} component={SearchPage} />
                                         <Route
-                                            path={`${CONTEXT_PATH}/stilling/:uuid/superrask-soknad`}
-                                            component={SuperraskSoknadPage}
+                                            path={`${CONTEXT_PATH}/stilling/:id/superrask-soknad`}
+                                            component={NewApplicationPage}
                                         />
                                         <Route path={`${CONTEXT_PATH}/stilling/:id`} component={AdPage} />
                                         <Route path={`${CONTEXT_PATH}/rapporter-annonse`} component={ReportAdPage} />

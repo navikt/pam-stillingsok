@@ -20,7 +20,7 @@ import AlertModalWithPageReload from "../../../common/components/modals/AlertMod
  * If user click button, this view will ensure that user is logged in
  * and has accepted usage terms before it save a favourite
  */
-function FavouritesButton({ id, stilling, useShortText, className, variant, hideText }) {
+function FavouritesButton({ id, stilling, className, variant, useShortText = false, hideText = false }) {
     const {
         pendingFavourites,
         favourites,
@@ -133,13 +133,6 @@ function FavouritesButton({ id, stilling, useShortText, className, variant, hide
         </>
     );
 }
-
-FavouritesButton.defaultProps = {
-    className: undefined,
-    useShortText: false,
-    variant: undefined,
-    hideText: false,
-};
 
 FavouritesButton.propTypes = {
     id: PropTypes.string.isRequired,

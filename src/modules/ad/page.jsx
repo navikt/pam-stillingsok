@@ -5,8 +5,8 @@ import Ad from "./components/Ad";
 import { FetchAction, FetchStatus, useFetchReducer } from "../../common/hooks/useFetchReducer";
 import SearchAPI from "../../common/api/SearchAPI";
 import NotFound from "./not-found";
-import Loading from "./loading";
-import Error from "./error";
+import Loading from "../loading";
+import Error from "../error";
 import useRobotsNoIndexMetaTag from "../../common/hooks/useRobotsNoIndexMetaTag";
 import { STILLINGSOK_URL } from "../../common/environment";
 
@@ -57,7 +57,7 @@ function AdPage({ match }) {
         return <NotFound />;
     }
 
-    if (status === FetchStatus.FAILURE && error.statusCode !== 404) {
+    if (status === FetchStatus.FAILURE) {
         return <Error />;
     }
 
