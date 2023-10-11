@@ -51,7 +51,10 @@ function WithdrawApplicationPage({ match }) {
         return <Loading />;
     }
 
-    if (applicationResponse.status === FetchStatus.FAILURE && applicationResponse.error.statusCode === 410) {
+    if (
+        applicationResponse.status === FetchStatus.FAILURE &&
+        (applicationResponse.error.statusCode === 410 || applicationResponse.error.statusCode === 404)
+    ) {
         return <NotFound />;
     }
 
