@@ -16,7 +16,7 @@ import { initAmplitude } from "./common/tracking/amplitude";
 import HistoryProvider from "./common/context/HistoryProvider";
 import SearchPage from "./modules/search/SearchPage";
 import SuperraskSoknadPage from "./modules/superrask-soknad/SuperraskSoknadPage";
-import AdPage from "./modules/ad/AdPage";
+import AdPage from "./modules/ad/page";
 import ReportAdPage from "./modules/report-ad/ReportAdPage";
 import FavouritesPage from "./modules/favourites/FavouritesPage";
 import SavedSearchesPage from "./modules/saved-searches/SavedSearchesPage";
@@ -52,7 +52,7 @@ function Application() {
                                             path={`${CONTEXT_PATH}/stilling/:uuid/superrask-soknad`}
                                             component={SuperraskSoknadPage}
                                         />
-                                        <Route path={`${CONTEXT_PATH}/stilling/:uuid`} component={AdPage} />
+                                        <Route path={`${CONTEXT_PATH}/stilling/:id`} component={AdPage} />
                                         <Route path={`${CONTEXT_PATH}/rapporter-annonse`} component={ReportAdPage} />
                                         <Route path={`${CONTEXT_PATH}/favoritter`} component={FavouritesPage} />
                                         <Route path={`${CONTEXT_PATH}/lagrede-sok`} component={SavedSearchesPage} />

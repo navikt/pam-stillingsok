@@ -8,7 +8,7 @@ import TwitterIcon from "./icons/TwitterIcon";
 import MessengerIcon from "./icons/MessengerIcon";
 import "./ShareAd.css";
 
-export default function ShareAd({ source }) {
+export default function ShareAd({ source, shareAdRedirectUrl }) {
     const { title } = source;
     const deviceType = new UAParser().getResult().device.type;
 
@@ -20,7 +20,7 @@ export default function ShareAd({ source }) {
             <div className="SocialShare">
                 <AkselLink
                     className="SocialShare__facebook"
-                    href={`https://www.facebook.com/sharer/sharer.php?u=${window.location.href}`}
+                    href={`https://www.facebook.com/sharer/sharer.php?u=${shareAdRedirectUrl}`}
                     rel="noopener noreferrer"
                 >
                     <FacebookIcon />
@@ -28,7 +28,7 @@ export default function ShareAd({ source }) {
                 </AkselLink>
                 <AkselLink
                     className="SocialShare__linkedin"
-                    href={`https://www.linkedin.com/shareArticle?mini=true&url=${window.location.href}`}
+                    href={`https://www.linkedin.com/shareArticle?mini=true&url=${shareAdRedirectUrl}`}
                     rel="noopener noreferrer"
                 >
                     <LinkedinIcon />
@@ -36,7 +36,7 @@ export default function ShareAd({ source }) {
                 </AkselLink>
                 <AkselLink
                     className="SocialShare__twitter"
-                    href={`https://twitter.com/intent/tweet?url=${window.location.href}&text=${encodeURI(title)}`}
+                    href={`https://twitter.com/intent/tweet?url=${shareAdRedirectUrl}&text=${encodeURI(title)}`}
                     rel="noopener noreferrer"
                 >
                     <TwitterIcon />
@@ -46,7 +46,7 @@ export default function ShareAd({ source }) {
                 {(deviceType === "mobile" || deviceType === "tablet") && (
                     <AkselLink
                         className="SocialShare__messenger"
-                        href={`fb-messenger://share/?link=${encodeURIComponent(window.location.href)}`}
+                        href={`fb-messenger://share/?link=${encodeURIComponent(shareAdRedirectUrl)}`}
                         rel="noopener noreferrer"
                     >
                         <MessengerIcon />
@@ -62,4 +62,5 @@ ShareAd.propTypes = {
     source: PropTypes.shape({
         title: PropTypes.string,
     }).isRequired,
+    shareAdRedirectUrl: PropTypes.string.isRequired,
 };

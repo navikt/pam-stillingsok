@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { Tag } from "@navikt/ds-react";
-import { NotFound } from "@navikt/arbeidsplassen-react";
 import AdDetails from "./AdDetails";
 import AdText from "./AdText";
 import ContactPerson from "./ContactPerson";
@@ -13,50 +12,9 @@ import "./Ad.css";
 import { logStillingVisning } from "../../../common/tracking/amplitude";
 import ShareAd from "./ShareAd";
 import Summary from "./Summary";
-import SearchAPI from "../../../common/api/SearchAPI";
-import { FetchAction, FetchStatus, useFetchReducer } from "../../../common/hooks/useFetchReducer";
-import ErrorMessage from "../../../common/components/messages/ErrorMessage";
-import useRobotsNoIndexMetaTag from "../../../common/hooks/useRobotsNoIndexMetaTag";
 import H1WithAutoFocus from "../../../common/components/h1WithAutoFocus/H1WithAutoFocus";
-import LoadingScreen from "../../../common/components/loadingScreen/LoadingScreen";
 
-function Ad({ match }) {
-    const [{ data: ad, error, status }, dispatch] = useFetchReducer();
-    const avoidIndexing = (error && error.statusCode === 404) || (ad && ad._source.status !== "ACTIVE");
-
-    useRobotsNoIndexMetaTag(avoidIndexing);
-
-    function fetchStilling(id) {
-        dispatch({ type: FetchAction.BEGIN });
-
-        SearchAPI.getAd(id).then(
-            (data) => {
-                dispatch({ type: FetchAction.RESOLVE, data });
-            },
-            (err) => {
-                dispatch({ type: FetchAction.REJECT, error: err });
-            },
-        );
-    }
-
-    /**
-     * Fetch ad
-     */
-    useEffect(() => {
-        fetchStilling(match.params.uuid);
-    }, []);
-
-    /**
-     * Set page title
-     */
-    useEffect(() => {
-        if (ad && ad._source) {
-            if (ad._source.title) {
-                document.title = `${ad._source.title} - arbeidsplassen.no`;
-            }
-        }
-    }, [ad]);
-
+function Ad({ ad, shareAdRedirectUrl }) {
     /**
      * Track page view for all ads
      */
@@ -74,66 +32,44 @@ function Ad({ match }) {
 
     return (
         <div className="container-large JobPosting">
-            {(status === FetchStatus.IS_FETCHING || status === FetchStatus.NOT_FETCHED) && <LoadingScreen />}
-            {status === FetchStatus.FAILURE && error.statusCode === 404 && (
-                <NotFound
-                    title="Vi fant dessverre ikke stillingsannonsen"
-                    text="Annonsen kan være utløpt eller blitt fjernet av arbeidsgiver."
-                />
-            )}
-            {status === FetchStatus.FAILURE && error.statusCode !== 404 && <ErrorMessage />}
-            {status === FetchStatus.SUCCESS && (
-                <article className="JobPosting__flex">
-                    <div className="JobPosting__left">
-                        <H1WithAutoFocus className="JobPosting__h1">{ad._source.title}</H1WithAutoFocus>
+            <article className="JobPosting__flex">
+                <div className="JobPosting__left">
+                    <H1WithAutoFocus className="JobPosting__h1">{ad._source.title}</H1WithAutoFocus>
 
-                        {ad._source.status !== "ACTIVE" && (
-                            <Tag variant="warning-moderate" className="mb-4">
-                                Stillingsannonsen er inaktiv.
-                            </Tag>
-                        )}
+                    {ad._source.status !== "ACTIVE" && (
+                        <Tag variant="warning-moderate" className="mb-4">
+                            Stillingsannonsen er inaktiv.
+                        </Tag>
+                    )}
 
-                        {isFinn && <FinnAd stilling={ad} />}
+                    {isFinn && <FinnAd stilling={ad} />}
 
-                        {!isFinn && (
-                            <>
-                                <Summary stilling={ad._source} />
-                                <AdText adText={ad._source.properties.adtext} />
-                                <EmployerDetails stilling={ad._source} />
-                                <EmploymentDetails stilling={ad._source} />
-                            </>
-                        )}
-                    </div>
+                    {!isFinn && (
+                        <>
+                            <Summary stilling={ad._source} />
+                            <AdText adText={ad._source.properties.adtext} />
+                            <EmployerDetails stilling={ad._source} />
+                            <EmploymentDetails stilling={ad._source} />
+                        </>
+                    )}
+                </div>
 
-                    <div className="JobPosting__right">
-                        <HowToApply stilling={ad} showFavouriteButton />
-                        {!isFinn && (
-                            <ContactPerson
-                                contactList={ad._source.contactList}
-                                adId={ad._id}
-                                adTitle={ad._source.title}
-                            />
-                        )}
-                        {!isFinn && <ShareAd source={ad._source} />}
-                        <AdDetails id={ad._id} source={ad._source} />
-                    </div>
-                </article>
-            )}
+                <div className="JobPosting__right">
+                    <HowToApply stilling={ad} showFavouriteButton />
+                    {!isFinn && (
+                        <ContactPerson contactList={ad._source.contactList} adId={ad._id} adTitle={ad._source.title} />
+                    )}
+                    {!isFinn && <ShareAd source={ad._source} shareAdRedirectUrl={shareAdRedirectUrl} />}
+                    <AdDetails id={ad._id} source={ad._source} />
+                </div>
+            </article>
         </div>
     );
 }
 
-Ad.defaultProps = {
-    match: { params: {} },
-};
-
 Ad.propTypes = {
-    match: PropTypes.shape({
-        path: PropTypes.string,
-        params: PropTypes.shape({
-            uuid: PropTypes.string,
-        }),
-    }),
+    ad: PropTypes.shape({}).isRequired,
+    shareAdRedirectUrl: PropTypes.string.isRequired,
 };
 
 export default Ad;
