@@ -1,7 +1,10 @@
 import React from "react";
 import { BodyLong, Heading } from "@navikt/ds-react";
+import useDocumentTitle from "../common/hooks/useDocumentTitle";
 
 export default function Error() {
+    useDocumentTitle("Feil");
+
     return (
         <div className="container-large mt-12 mb-12">
             <section className="ErrorMessage" role="alert">

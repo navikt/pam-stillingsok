@@ -23,7 +23,7 @@ import SavedSearchesPage from "./modules/saved-searches/SavedSearchesPage";
 import WithdrawApplicationPage from "./modules/trekk-soknad/page";
 import "./common/styles/styles.css";
 import googleTranslateWorkaround from "./common/utils/googleTranslateWorkaround";
-import NotFoundPage from "./modules/not-found/NotFoundPage";
+import NotFound from "./modules/not-found";
 
 initSentry();
 initAmplitude();
@@ -60,7 +60,7 @@ function Application() {
                                             path={`${CONTEXT_PATH}/trekk-soknad/:uuid/:adUuid`}
                                             component={WithdrawApplicationPage}
                                         />
-                                        <Route path="*" component={NotFoundPage} />
+                                        <Route path="*" component={NotFound} />
                                     </Switch>
                                 </main>
                             </HistoryProvider>
