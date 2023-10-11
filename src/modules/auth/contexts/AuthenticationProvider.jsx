@@ -3,7 +3,13 @@ import PropTypes from "prop-types";
 import { CONTEXT_PATH, LOGIN_URL, LOGOUT_URL } from "../../../common/environment";
 import SessionStatusModal from "../components/SessionStatusModal";
 
-export const AuthenticationContext = React.createContext({});
+export const AuthenticationContext = React.createContext({
+    userNameAndInfo: undefined,
+    authenticationStatus: undefined,
+    login: () => {},
+    logout: () => {},
+    loginAndRedirect: () => {},
+});
 
 export const AuthenticationStatus = {
     NOT_FETCHED: "NO_FETCHED",

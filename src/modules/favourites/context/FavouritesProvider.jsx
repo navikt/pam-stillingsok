@@ -5,7 +5,14 @@ import { HasAcceptedTermsStatus, UserContext } from "../../user/contexts/UserPro
 import useToggle from "../../../common/hooks/useToggle";
 import AlertModalWithPageReload from "../../../common/components/modals/AlertModalWithPageReload";
 
-export const FavouritesContext = React.createContext({});
+export const FavouritesContext = React.createContext({
+    favourites: [],
+    pendingFavourites: [],
+    addToPending: () => {},
+    removeFormPending: () => {},
+    addFavouriteToLocalList: () => {},
+    removeFavouriteFromLocalList: () => {},
+});
 
 /**
  * Provides a global list over all favourites the user have. This can
