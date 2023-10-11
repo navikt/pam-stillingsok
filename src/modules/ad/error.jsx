@@ -1,3 +1,4 @@
+import React from "react";
 import { BodyLong, Heading } from "@navikt/ds-react";
 
 export default function Error() {
