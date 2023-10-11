@@ -73,10 +73,6 @@ export default function ContactPerson({ contactList, adId, adTitle }) {
     return null;
 }
 
-ContactPerson.defaultProps = {
-    contactList: undefined,
-};
-
 ContactPerson.propTypes = {
     contactList: PropTypes.arrayOf(
         PropTypes.shape({

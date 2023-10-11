@@ -32,10 +32,6 @@ export default function AdText({ adText }) {
     return null;
 }
 
-AdText.defaultProps = {
-    adText: undefined,
-};
-
 AdText.propTypes = {
     adText: PropTypes.string,
 };
