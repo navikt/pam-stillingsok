@@ -1,5 +1,5 @@
 import React from "react";
-import LoadingScreen from "../common/components/loadingScreen/LoadingScreen";
+import LoadingScreen from "./common/components/loadingScreen/LoadingScreen";
 
 export default function Loading() {
     return (
