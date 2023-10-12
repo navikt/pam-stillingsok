@@ -11,7 +11,7 @@ function CustomModal({ title, children, onCloseClick }) {
                     {title}
                 </Heading>
             </Modal.Header>
-            <Modal.Body>{children}</Modal.Body>
+            {children}
         </Modal>
     );
 }
