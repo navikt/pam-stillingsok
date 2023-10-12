@@ -1,10 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
+import PropTypes from "prop-types";
 import SavedSearchListItem from "./SavedSearchListItem";
-import LoadingScreen from "../../common/components/loadingScreen/LoadingScreen";
-import ErrorMessage from "../../common/components/messages/ErrorMessage";
-import UserAPI from "../../common/api/UserAPI";
-import { FetchAction, FetchStatus, useFetchReducer } from "../../common/hooks/useFetchReducer";
-import { extractParam } from "../../common/utils/utils";
+import { FetchAction } from "../../common/hooks/useFetchReducer";
 import SavedSearchesIsEmpty from "./SavedSearchesIsEmpty";
 import H1WithAutoFocus from "../../common/components/h1WithAutoFocus/H1WithAutoFocus";
 
@@ -14,22 +11,7 @@ import H1WithAutoFocus from "../../common/components/h1WithAutoFocus/H1WithAutoF
  * when clicking a link in a received notification email,
  * this view will auto open the edit modal for the saved search with that uuid
  */
-function SavedSearchesList() {
-    const [{ status, data }, dispatch] = useFetchReducer();
-    const uuidFromBrowserUrl = extractParam("uuid");
-
-    function fetchSavedSearches() {
-        dispatch({ type: FetchAction.BEGIN });
-
-        UserAPI.get("api/v1/savedsearches?size=999&sort=updated,desc")
-            .then((response) => {
-                dispatch({ type: FetchAction.RESOLVE, data: response.content ? response.content : [] });
-            })
-            .catch((error) => {
-                dispatch({ type: FetchAction.REJECT, error });
-            });
-    }
-
+function SavedSearchesList({ data, dispatch, uuid }) {
     /**
      * After user updated a saved search, update it in the already loaded data,
      * instead of re-loading all saved searches from backend
@@ -52,19 +34,11 @@ function SavedSearchesList() {
         });
     }
 
-    /**
-     * Load saved searches when list is shown
-     */
-    useEffect(() => {
-        fetchSavedSearches();
-    }, []);
-
     return (
-        <>
-            {(status === FetchStatus.NOT_FETCHED || status === FetchStatus.IS_FETCHING) && <LoadingScreen />}
-            {status === FetchStatus.FAILURE && <ErrorMessage />}
-            {status === FetchStatus.SUCCESS && data.length === 0 && <SavedSearchesIsEmpty />}
-            {status === FetchStatus.SUCCESS && data.length > 0 && (
+        <div className="container-medium mt-12 mb-16">
+            {data.length === 0 ? (
+                <SavedSearchesIsEmpty />
+            ) : (
                 <>
                     <H1WithAutoFocus>Lagrede søk</H1WithAutoFocus>
                     {data.map((savedSearch) => (
@@ -73,13 +47,19 @@ function SavedSearchesList() {
                             replaceSavedSearchInList={updateSavedSearchInList}
                             removeSavedSearchFromList={removeSavedSearchFromList}
                             savedSearch={savedSearch}
-                            autoOpenModal={savedSearch.uuid === uuidFromBrowserUrl}
+                            autoOpenModal={savedSearch.uuid === uuid}
                         />
                     ))}
                 </>
             )}
-        </>
+        </div>
     );
 }
+
+SavedSearchesList.propTypes = {
+    data: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+    dispatch: PropTypes.func.isRequired,
+    uuid: PropTypes.string,
+};
 
 export default SavedSearchesList;

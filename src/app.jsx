@@ -19,7 +19,7 @@ import NewApplicationPage from "./modules/stilling/superrask-soknad/page";
 import AdPage from "./modules/stilling/page";
 import ReportAdPage from "./modules/stilling/rapporter-annonse/ReportAdPage";
 import FavouritesPage from "./modules/favoritter/FavouritesPage";
-import SavedSearchesPage from "./modules/lagrede-sok/SavedSearchesPage";
+import SavedSearchesPage from "./modules/lagrede-sok/page";
 import WithdrawApplicationPage from "./modules/stilling/trekk-soknad/page";
 import "./modules/common/styles/styles.css";
 import googleTranslateWorkaround from "./modules/common/utils/googleTranslateWorkaround";
