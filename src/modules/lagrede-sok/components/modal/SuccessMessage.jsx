@@ -12,14 +12,14 @@ function SuccessMessage({ onClose }) {
     }, []);
 
     return (
-        <section role="status">
+        <>
             <BodyLong>Søket ble lagret!</BodyLong>
             <div className="SaveSearchForm__buttons">
                 <Button variant="primary" ref={buttonRef} onClick={onClose}>
                     Lukk
                 </Button>
             </div>
-        </section>
+        </>
     );
 }
 

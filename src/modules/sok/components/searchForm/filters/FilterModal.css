@@ -40,3 +40,14 @@
         padding: 1rem 0;
     }
 }
+
+.filter-modal .navds-modal__footer {
+    background-color: var(--a-surface-alt-1-subtle);
+}
+
+.filter-modal .navds-tabs__tablist-wrapper {
+    background: var(--a-surface-default);
+    position: sticky;
+    top: 0;
+    z-index: 999;
+}
