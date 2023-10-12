@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { BodyLong, Button, Heading, Modal } from "@navikt/ds-react";
-import { StrawberryWithKey } from "@navikt/arbeidsplassen-react";
 import "./SessionStatusModal.css";
 import { CONTEXT_PATH } from "../../environment";
 
