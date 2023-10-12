@@ -1,0 +1,16 @@
+.AlertModal {
+    max-width: 40rem;
+    width: 100%;
+    padding: 1rem;
+}
+
+@media (min-width: 768px) {
+    .AlertModal {
+        padding: 2rem;
+    }
+}
+
+.AlertModal__buttons {
+    display: flex;
+    gap: 1rem;
+}
