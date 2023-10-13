@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { BodyLong, Button, Heading } from "@navikt/ds-react";
 import { EnterIcon } from "@navikt/aksel-icons";
-import { StrawberryWithKey } from "@navikt/arbeidsplassen-react";
+import { FigureWithKey } from "@navikt/arbeidsplassen-react";
 import { AuthenticationContext, AuthenticationStatus } from "../contexts/AuthenticationProvider";
 import DelayedSpinner from "../../components/spinner/DelayedSpinner";
 import ErrorMessage from "../../components/messages/ErrorMessage";
@@ -32,7 +32,7 @@ function RequiresAuthentication({ children, onCancel, onLogin }) {
                 Du bruker BankID for å logge inn på <span translate="no">arbeidsplassen.no</span>
             </BodyLong>
             <div className="mb-8">
-                <StrawberryWithKey />
+                <FigureWithKey />
             </div>
 
             <div className="login-buttons-wrapper">
