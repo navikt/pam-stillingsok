@@ -211,7 +211,15 @@ function filterLocation(counties, municipals, countries, international = false) 
             if (c.municipals.length > 0) {
                 const mustObject = {
                     bool: {
-                        should: [],
+                        should: [{
+                            bool: {
+                                must_not: {
+                                    exists: {
+                                        field: "locationList.municipal.keyword"
+                                    }
+                                }
+                            }
+                        }],
                     },
                 };
 
