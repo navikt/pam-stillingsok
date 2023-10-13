@@ -34,6 +34,7 @@ function AuthenticationProvider({ children }) {
         fetch(`/stillinger/isAuthenticated`, {
             credentials: "include",
             referrer: CONTEXT_PATH,
+            cache: "no-store",
         })
             .then((response) => {
                 if (response.status === 200) {
