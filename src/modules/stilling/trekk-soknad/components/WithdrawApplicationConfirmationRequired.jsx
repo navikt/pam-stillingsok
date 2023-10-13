@@ -1,5 +1,5 @@
 import React from "react";
-import Link from "../../../common/Link";
+import Link from "../../../../migrating/Link";
 import { Alert, BodyLong, BodyShort, Button, Heading, Label, Link as AkselLink } from "@navikt/ds-react";
 import PropTypes from "prop-types";
 import { CONTEXT_PATH } from "../../../common/environment";

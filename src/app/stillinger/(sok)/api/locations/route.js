@@ -1,5 +1,5 @@
 export async function GET() {
-    const res = await fetch("https://arbeidsplassen.intern.dev.nav.no/stillinger/api/locations", {
+    const res = await fetch("http://localhost:3000/stillinger/api/locations", {
         headers: {
             "Content-Type": "application/json",
         },

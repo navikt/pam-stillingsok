@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import Link from "../../../common/Link";
+import Link from "../../../../migrating/Link";
 import {
     Alert,
     BodyLong,

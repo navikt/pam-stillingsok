@@ -1,5 +1,5 @@
 import React from "react";
-import Link from "../../../common/Link";
+import Link from "../../../../migrating/Link";
 import { BodyLong, Button } from "@navikt/ds-react";
 import { CONTEXT_PATH } from "../../../common/environment";
 import Feedback from "../../superrask-soknad/components/Feedback";

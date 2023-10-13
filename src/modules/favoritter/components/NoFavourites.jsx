@@ -1,7 +1,7 @@
 import React from "react";
 import { BodyLong, Button, Heading, VStack } from "@navikt/ds-react";
 import { FigureHoldingAHeart } from "@navikt/arbeidsplassen-react";
-import Link from "../../common/Link";
+import Link from "../../../migrating/Link";
 import { CONTEXT_PATH } from "../../common/environment";
 
 function NoFavourites() {

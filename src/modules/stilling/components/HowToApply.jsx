@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Link from "../../common/Link";
+import Link from "../../../migrating/Link";
 import { BodyLong, BodyShort, Button, Heading, Link as AkselLink, CopyButton, Tooltip } from "@navikt/ds-react";
 import { ExternalLinkIcon } from "@navikt/aksel-icons";
 import { formatDate, isValidEmail, isValidUrl } from "../../common/utils/utils";

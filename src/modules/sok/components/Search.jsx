@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useReducer, useRef, useState } from "react";
 import { ClockIcon, HeartIcon } from "@navikt/aksel-icons";
 import { Button } from "@navikt/ds-react";
-import { useHistory } from "react-router";
-import Link from "../../common/Link";
+import useRouter from "../../../migrating/useRouter";
+import Link from "../../../migrating/Link";
 import { CONTEXT_PATH } from "../../common/environment";
 import queryReducer, {
     initialQuery,
@@ -37,7 +37,6 @@ import TermsOfUse from "../../common/user/contexts/TermsOfUse";
 import LoginModal from "../../common/auth/components/LoginModal";
 import { HasAcceptedTermsStatus, UserContext } from "../../common/user/contexts/UserProvider";
 import logAmplitudeEvent from "../../common/tracking/amplitude";
-import { useRouter } from "next/navigation";
 
 export default function Search() {
     const { authenticationStatus, loginAndRedirect } = useContext(AuthenticationContext);
@@ -49,13 +48,7 @@ export default function Search() {
     const numberOfSelectedFilters = Object.keys(toBrowserQuery(query)).length;
     const { device } = useDevice();
     const [isFiltersVisible, setIsFiltersVisible] = useState(false);
-
-    let router;
-    if (process.env.NEXT_PUBLIC_IS_NEXT === "yes") {
-        router = useRouter();
-    } else {
-        router = useHistory();
-    }
+    const router = useRouter();
     const { resetScroll } = useRestoreScroll("search-page", initialSearchResponse.status === FetchStatus.SUCCESS);
     const [shouldShowTermsModal, openTermsModal, closeTermsModal] = useToggle();
     const [shouldShowLoginModalFavorites, openLoginModalFavorites, closeLoginModalFavorites] = useToggle();

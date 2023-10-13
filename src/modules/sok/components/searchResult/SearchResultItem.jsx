@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React, { useLayoutEffect, useRef } from "react";
-import Link from "../../../common/Link";
+import Link from "../../../../migrating/Link";
 import { BodyLong, Heading, Label, Link as AkselLink, Tag } from "@navikt/ds-react";
 import { parseISO, endOfDay, subDays, isSameDay, addDays, parse, format as formatDateFns, isValid } from "date-fns";
 import { nb } from "date-fns/locale";
