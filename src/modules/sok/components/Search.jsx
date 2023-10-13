@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useReducer, useRef, useState } from "reac
 import { ClockIcon, HeartIcon } from "@navikt/aksel-icons";
 import { Button } from "@navikt/ds-react";
 import { useHistory } from "react-router";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { CONTEXT_PATH } from "../../common/environment";
 import queryReducer, {
     initialQuery,
@@ -37,6 +37,7 @@ import TermsOfUse from "../../common/user/contexts/TermsOfUse";
 import LoginModal from "../../common/auth/components/LoginModal";
 import { HasAcceptedTermsStatus, UserContext } from "../../common/user/contexts/UserProvider";
 import logAmplitudeEvent from "../../common/tracking/amplitude";
+import { useRouter } from "next/navigation";
 
 export default function Search() {
     const { authenticationStatus, loginAndRedirect } = useContext(AuthenticationContext);
@@ -48,7 +49,8 @@ export default function Search() {
     const numberOfSelectedFilters = Object.keys(toBrowserQuery(query)).length;
     const { device } = useDevice();
     const [isFiltersVisible, setIsFiltersVisible] = useState(false);
-    const history = useHistory();
+    //const history = useHistory();
+    const router = useRouter();
     const { resetScroll } = useRestoreScroll("search-page", initialSearchResponse.status === FetchStatus.SUCCESS);
     const [shouldShowTermsModal, openTermsModal, closeTermsModal] = useToggle();
     const [shouldShowLoginModalFavorites, openLoginModalFavorites, closeLoginModalFavorites] = useToggle();
@@ -66,14 +68,14 @@ export default function Search() {
             authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED &&
             hasAcceptedTermsStatus === HasAcceptedTermsStatus.HAS_ACCEPTED
         ) {
-            history.push(navigateTo);
+            router.push(navigateTo);
         }
         return false;
     }
 
     function handleTermsAccepted(navigateTo) {
         closeTermsModal();
-        history.push(navigateTo);
+        router.push(navigateTo);
     }
 
     useEffect(() => {
@@ -174,7 +176,7 @@ export default function Search() {
         }
 
         try {
-            history.replace(CONTEXT_PATH + stringifyQuery(browserQuery));
+            router.replace(CONTEXT_PATH + stringifyQuery(browserQuery));
         } catch (error) {
             // ignore any errors
         }
@@ -217,7 +219,7 @@ export default function Search() {
                             <>
                                 <Button
                                     as={Link}
-                                    to={`${CONTEXT_PATH}/lagrede-sok`}
+                                    href={`${CONTEXT_PATH}/lagrede-sok`}
                                     type="button"
                                     variant="tertiary"
                                     onClick={(e) => {
@@ -240,7 +242,7 @@ export default function Search() {
                             <>
                                 <Button
                                     as={Link}
-                                    to={`${CONTEXT_PATH}/favoritter`}
+                                    href={`${CONTEXT_PATH}/favoritter`}
                                     type="button"
                                     variant="tertiary"
                                     onClick={(e) => {

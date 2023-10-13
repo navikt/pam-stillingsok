@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { BodyLong, BodyShort, Button, Heading, Link as AkselLink, CopyButton, Tooltip } from "@navikt/ds-react";
 import { ExternalLinkIcon } from "@navikt/aksel-icons";
 import { formatDate, isValidEmail, isValidUrl } from "../../common/utils/utils";
@@ -82,7 +82,7 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                                     id: stilling._id,
                                 });
                             }}
-                            to={`${CONTEXT_PATH}/${path}/${stilling._id}/superrask-soknad`}
+                            href={`${CONTEXT_PATH}/${path}/${stilling._id}/superrask-soknad`}
                             className="HowToApply__full-width-button"
                         >
                             Gå til superrask søknad
