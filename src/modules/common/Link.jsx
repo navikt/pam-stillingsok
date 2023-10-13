@@ -2,17 +2,17 @@ import React from "react";
 import { Link as ReactRouterLink } from "react-router-dom";
 import NextLink from "next/link";
 
-function Link({ href, children, ...rest }) {
+function Link({ to, children, ...rest }) {
     if (process.env.NEXT_PUBLIC_IS_NEXT === "yes") {
         return (
-            <NextLink href={href} {...rest}>
+            <NextLink href={to} {...rest}>
                 {children} 😊
             </NextLink>
         );
     }
 
     return (
-        <ReactRouterLink to={href} {...rest}>
+        <ReactRouterLink to={to} {...rest}>
             {children}
         </ReactRouterLink>
     );
