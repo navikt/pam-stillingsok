@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useReducer, useRef, useState } from "reac
 import { ClockIcon, HeartIcon } from "@navikt/aksel-icons";
 import { Button } from "@navikt/ds-react";
 import { useHistory } from "react-router";
-import Link from "next/link";
+import Link from "../../common/Link";
 import { CONTEXT_PATH } from "../../common/environment";
 import queryReducer, {
     initialQuery,
@@ -49,8 +49,13 @@ export default function Search() {
     const numberOfSelectedFilters = Object.keys(toBrowserQuery(query)).length;
     const { device } = useDevice();
     const [isFiltersVisible, setIsFiltersVisible] = useState(false);
-    //const history = useHistory();
-    const router = useRouter();
+
+    let router;
+    if (process.env.NEXT_PUBLIC_IS_NEXT === "yes") {
+        router = useRouter();
+    } else {
+        router = useHistory();
+    }
     const { resetScroll } = useRestoreScroll("search-page", initialSearchResponse.status === FetchStatus.SUCCESS);
     const [shouldShowTermsModal, openTermsModal, closeTermsModal] = useToggle();
     const [shouldShowLoginModalFavorites, openLoginModalFavorites, closeLoginModalFavorites] = useToggle();
@@ -219,7 +224,7 @@ export default function Search() {
                             <>
                                 <Button
                                     as={Link}
-                                    href={`${CONTEXT_PATH}/lagrede-sok`}
+                                    to={`${CONTEXT_PATH}/lagrede-sok`}
                                     type="button"
                                     variant="tertiary"
                                     onClick={(e) => {
@@ -242,7 +247,7 @@ export default function Search() {
                             <>
                                 <Button
                                     as={Link}
-                                    href={`${CONTEXT_PATH}/favoritter`}
+                                    to={`${CONTEXT_PATH}/favoritter`}
                                     type="button"
                                     variant="tertiary"
                                     onClick={(e) => {

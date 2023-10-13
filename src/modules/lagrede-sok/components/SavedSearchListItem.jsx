@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React, { useState } from "react";
 import { Alert, Link as AkselLink, BodyShort, Heading, Tag, Button } from "@navikt/ds-react";
-import { Link } from "react-router-dom";
+import Link from "../../common/Link";
 import { ArrowsCirclepathIcon, PencilIcon, TrashIcon } from "@navikt/aksel-icons";
 import { CONTEXT_PATH } from "../../common/environment";
 import { formatDate } from "../../common/utils/utils";

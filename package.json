@@ -4,7 +4,7 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "next": "next dev",
+        "next": "next dev -p 3003",
         "dev": "./runDev.sh",
         "wonderwall": "scripts/wonderwall.sh",
         "start": "concurrently \"npm run wonderwall\" \"npm run start-webpack\" \"npm run start-express\"",

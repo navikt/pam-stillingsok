@@ -1,7 +1,7 @@
 import React from "react";
 import { BodyLong, Button, Heading, VStack } from "@navikt/ds-react";
 import { FigureWithMagnifier } from "@navikt/arbeidsplassen-react";
-import { Link } from "react-router-dom";
+import Link from "../../common/Link";
 import { CONTEXT_PATH } from "../../common/environment";
 
 function NoSavedSearches() {

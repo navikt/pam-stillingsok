@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import Link from "next/link";
+import Link from "../../../common/Link";
 import {
     Alert,
     BodyLong,
@@ -289,7 +289,7 @@ function NewApplicationForm({ ad, applicationForm, submitForm, isSending, hasErr
                 <Button variant="primary" loading={isSending} type="button" onClick={handleSendMessageClick}>
                     Send søknad
                 </Button>
-                <Button disabled={isSending} variant="secondary" as={Link} href={`${CONTEXT_PATH}/stilling/${ad._id}`}>
+                <Button disabled={isSending} variant="secondary" as={Link} to={`${CONTEXT_PATH}/stilling/${ad._id}`}>
                     Avbryt
                 </Button>
             </div>

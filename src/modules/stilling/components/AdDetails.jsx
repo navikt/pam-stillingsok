@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Link from "next/link";
+import Link from "../../common/Link";
 import { BodyShort, Label, Link as AkselLink } from "@navikt/ds-react";
 import { formatDate } from "../../common/utils/utils";
 import { CONTEXT_PATH } from "../../common/environment";
@@ -29,7 +29,7 @@ export default function AdDetails({ id, source }) {
                 </BodyShort>
             )}
             <BodyShort>
-                <AkselLink as={Link} href={`${CONTEXT_PATH}/rapporter-annonse?uuid=${id}`}>
+                <AkselLink as={Link} to={`${CONTEXT_PATH}/rapporter-annonse?uuid=${id}`}>
                     Rapporter annonse
                 </AkselLink>
             </BodyShort>

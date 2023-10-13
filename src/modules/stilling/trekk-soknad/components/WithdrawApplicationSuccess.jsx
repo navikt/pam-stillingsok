@@ -1,5 +1,5 @@
 import React from "react";
-import Link from "next/link";
+import Link from "../../../common/Link";
 import { BodyLong, Button } from "@navikt/ds-react";
 import { CONTEXT_PATH } from "../../../common/environment";
 import Feedback from "../../superrask-soknad/components/Feedback";
@@ -15,7 +15,7 @@ function WithdrawApplicationSuccess() {
                 Informasjonen du oppgav i din søknad er slettet. Dersom du angrer på at du trakk søknaden, kan du søke
                 på nytt.
             </BodyLong>
-            <Button variant="secondary" as={Link} href={CONTEXT_PATH}>
+            <Button variant="secondary" as={Link} to={CONTEXT_PATH}>
                 Se ledige stillinger
             </Button>
 

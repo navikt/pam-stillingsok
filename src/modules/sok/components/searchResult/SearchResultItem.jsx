@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React, { useLayoutEffect, useRef } from "react";
-import Link from "next/link";
+import Link from "../../../common/Link";
 import { BodyLong, Heading, Label, Link as AkselLink, Tag } from "@navikt/ds-react";
 import { parseISO, endOfDay, subDays, isSameDay, addDays, parse, format as formatDateFns, isValid } from "date-fns";
 import { nb } from "date-fns/locale";
@@ -173,7 +173,7 @@ function LinkToAd({ children, stilling, isFinn }) {
         );
     }
     return (
-        <AkselLink as={Link} href={`${CONTEXT_PATH}/stilling/${stilling.uuid}`}>
+        <AkselLink as={Link} to={`${CONTEXT_PATH}/stilling/${stilling.uuid}`}>
             {children}
         </AkselLink>
     );
