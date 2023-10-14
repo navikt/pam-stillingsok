@@ -14,10 +14,10 @@ import { CONTEXT_PATH } from "./modules/common/environment";
 import initSentry from "./modules/common/tracking/sentry";
 import { initAmplitude } from "./modules/common/tracking/amplitude";
 import HistoryProvider from "./modules/common/context/HistoryProvider";
-import SearchPage from "./modules/sok/SearchPage";
+import SearchPage from "./modules/sok/page";
 import NewApplicationPage from "./modules/stilling/superrask-soknad/page";
 import AdPage from "./modules/stilling/page";
-import ReportAdPage from "./modules/stilling/rapporter-annonse/ReportAdPage";
+import ReportAdPage from "./modules/stilling/rapporter-annonse/page";
 import FavouritesPage from "./modules/favoritter/page";
 import SavedSearchesPage from "./modules/lagrede-sok/page";
 import WithdrawApplicationPage from "./modules/stilling/trekk-soknad/page";
@@ -53,7 +53,10 @@ function Application() {
                                             component={NewApplicationPage}
                                         />
                                         <Route path={`${CONTEXT_PATH}/stilling/:id`} component={AdPage} />
-                                        <Route path={`${CONTEXT_PATH}/rapporter-annonse`} component={ReportAdPage} />
+                                        <Route
+                                            path={`${CONTEXT_PATH}/rapporter-annonse/:id`}
+                                            component={ReportAdPage}
+                                        />
                                         <Route path={`${CONTEXT_PATH}/favoritter`} component={FavouritesPage} />
                                         <Route path={`${CONTEXT_PATH}/lagrede-sok`} component={SavedSearchesPage} />
                                         <Route

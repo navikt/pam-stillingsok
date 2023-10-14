@@ -11,7 +11,6 @@ import { FetchAction, FetchStatus, useFetchReducer } from "../common/hooks/useFe
 import UserAPI from "../common/api/UserAPI";
 import FavouritesList from "./components/FavouritesList";
 import NoFavourites from "./components/NoFavourites";
-import "./components/Favourites.css";
 
 /**
  * Page showing users favourites (saved ads).

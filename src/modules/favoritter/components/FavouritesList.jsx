@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { FetchAction } from "../../common/hooks/useFetchReducer";
 import FavouritesListItem from "./FavouritesListItem";
 import H1WithAutoFocus from "../../common/components/h1WithAutoFocus/H1WithAutoFocus";
+import "./Favourites.css";
 
 function FavouritesList({ data, dispatch, sortBy, setSortBy }) {
     /**
