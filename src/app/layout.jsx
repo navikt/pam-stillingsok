@@ -1,26 +1,30 @@
+import { Inter } from "next/font/google";
 import "@navikt/ds-css";
 import "@navikt/arbeidsplassen-css";
 import "@navikt/arbeidsplassen-theme";
 import "../modules/common/styles/styles.css";
+import "./global.css";
 import App from "./App";
+import { getDefaultDescription, getDefaultTitle } from "../../server/common/htmlMeta";
+
+const inter = Inter({
+    subsets: ["latin"],
+    display: "swap",
+    variable: "--inter-font",
+});
 
 export const metadata = {
-    title: "Ledige stillinger - arbeidsplassen.no",
-    description:
-        "Søk etter ledige stillinger. Heltid- og deltidsjobber i offentlig og privat sektor i Oslo, Bergen, Trondheim, Stavanger, Tromsø og alle kommuner i Norge.",
+    title: getDefaultTitle(),
+    description: getDefaultDescription(),
+    openGraph: {
+        title: getDefaultTitle(),
+        description: getDefaultDescription(),
+    },
 };
 
 export default function RootLayout({ children }) {
     return (
-        <html lang="en">
-            <head>
-                <link rel="preconnect" href="https://fonts.googleapis.com" />
-                <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-                <link
-                    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
-                    rel="stylesheet"
-                />
-            </head>
+        <html lang="nb" className={inter.variable}>
             <body data-theme="arbeidsplassen">
                 <App>{children}</App>
             </body>

@@ -1,5 +1,5 @@
-import NotFoundWrapper from "../../../_components/NotFoundWrapper";
+import AdNotFoundWrapper from "../../../../migrating/use-client/AdNotFoundWrapper";
 
 export default function notFound() {
-    return <NotFoundWrapper />;
+    return <AdNotFoundWrapper />;
 }

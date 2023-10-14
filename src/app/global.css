@@ -1,0 +1,7 @@
+body {
+    font-family: var(--inter-font);
+}
+
+b, strong {
+    font-weight: 700;
+}

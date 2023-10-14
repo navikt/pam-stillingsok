@@ -1,6 +1,6 @@
 "use client";
 
-import ErrorPageWrapper from "./_components/ErrorPageWrapper";
+import ErrorPageWrapper from "../migrating/use-client/ErrorPageWrapper";
 
 export default function error() {
     return <ErrorPageWrapper />;

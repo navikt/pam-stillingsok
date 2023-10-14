@@ -1,5 +1,9 @@
 import { notFound } from "next/navigation";
-import WithdrawApplicationWrapper from "./_components/WithdrawApplicationWrapper";
+import WithdrawApplicationWrapper from "../../../../../migrating/use-client/WithdrawApplicationWrapper";
+
+export const metadata = {
+    title: "Trekk søknad - arbeidsplassen.no",
+};
 
 async function getAd(id) {
     const res = await fetch(`https://arbeidsplassen.intern.dev.nav.no/stillinger/api/stilling/${id}`);

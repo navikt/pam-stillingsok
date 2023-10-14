@@ -1,11 +1,11 @@
 import * as React from "react";
-import { useContext, useEffect, useState } from "react";
+import { useState } from "react";
 import "./ReportAd.css";
-import { Alert, BodyLong, Button, Checkbox, Heading, Textarea, Link as AkselLink } from "@navikt/ds-react";
+import { Alert, BodyLong, Button, Checkbox, Heading, Link as AkselLink, Textarea } from "@navikt/ds-react";
 import logAmplitudeEvent from "../../../common/tracking/amplitude";
-import { AuthenticationContext, AuthenticationStatus } from "../../../common/auth/contexts/AuthenticationProvider";
 import UserAPI from "../../../common/api/UserAPI";
 import H1WithAutoFocus from "../../../common/components/h1WithAutoFocus/H1WithAutoFocus";
+import PropTypes from "prop-types";
 
 const violationCategories = [
     { label: "Diskriminerende innhold", key: "discrimination" },
@@ -20,23 +20,15 @@ const scamCategories = [
     { label: "Annet", key: "other" },
 ];
 
-function ReportAd() {
-    const { authenticationStatus, login } = useContext(AuthenticationContext);
+function ReportAd({ id }) {
     const [error, setError] = useState(false);
     const [finished, setFinished] = useState(false);
-    const [stillingId, setStillingId] = useState(null);
     const [violation, setViolation] = useState(false);
     const [violationCategory, setViolationCategory] = useState(null);
     const [scam, setScam] = useState(false);
     const [scamCategory, setScamCategory] = useState(null);
     const [description, setDescription] = useState("");
     const [descriptionLabel, setDescriptionLabel] = useState("Beskrivelse - må fylles ut");
-
-    useEffect(() => {
-        if (document.location.search.includes("uuid")) {
-            setStillingId(document.location.search.split("=")[1]);
-        }
-    }, []);
 
     function handleDescriptionChange(e) {
         setDescription(e.target.value);
@@ -80,7 +72,7 @@ function ReportAd() {
                     category,
                     subCategory,
                     title,
-                    postingId: stillingId,
+                    postingId: id,
                     description,
                 },
                 false,
@@ -92,7 +84,7 @@ function ReportAd() {
                 category,
                 subCategory,
                 title,
-                postingId: stillingId,
+                postingId: id,
                 description,
             });
         } catch (e) {
@@ -102,128 +94,108 @@ function ReportAd() {
 
     return (
         <div className="container-medium mt-12 mb-16">
-            {authenticationStatus !== AuthenticationStatus.IS_AUTHENTICATED && (
-                <div>
-                    <Heading level="2" size="large" spacing>
-                        Du må logge inn
-                    </Heading>
-                    <BodyLong className="mb-8">
-                        Logg inn med MinID, BankID, BankID på mobil, Buypass eller Commfides.
-                    </BodyLong>
-                    <Button variant="primary" onClick={login}>
-                        Logg inn
-                    </Button>
-                </div>
-            )}
+            <div>
+                {finished && (
+                    <div>
+                        <H1WithAutoFocus>Takk for din tilbakemelding</H1WithAutoFocus>
 
-            {authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED && (
-                <div>
-                    {finished && (
-                        <div>
-                            <H1WithAutoFocus>Takk for din tilbakemelding</H1WithAutoFocus>
-
-                            <div className="report-form">
-                                <BodyLong spacing>Takk for at du tok deg tid til å rapportere denne annonsen.</BodyLong>
-                                <BodyLong spacing>
-                                    Har du spørsmål kan du <AkselLink href="/kontakt">kontakte oss her.</AkselLink>
-                                </BodyLong>
-                                <BodyLong>Med vennlig hilsen arbeidsplassen.no</BodyLong>
-                            </div>
+                        <div className="report-form">
+                            <BodyLong spacing>Takk for at du tok deg tid til å rapportere denne annonsen.</BodyLong>
+                            <BodyLong spacing>
+                                Har du spørsmål kan du <AkselLink href="/kontakt">kontakte oss her.</AkselLink>
+                            </BodyLong>
+                            <BodyLong>Med vennlig hilsen arbeidsplassen.no</BodyLong>
                         </div>
-                    )}
-                    {!finished && (
-                        <div>
-                            <H1WithAutoFocus>Rapporter annonse</H1WithAutoFocus>
+                    </div>
+                )}
+                {!finished && (
+                    <div>
+                        <H1WithAutoFocus>Rapporter annonse</H1WithAutoFocus>
 
-                            <div className="report-form">
-                                <Heading level="2" size="small" spacing>
-                                    Henveldensen gjelder
-                                </Heading>
+                        <div className="report-form">
+                            <Heading level="2" size="small" spacing>
+                                Henveldensen gjelder
+                            </Heading>
 
-                                <Checkbox
-                                    name="regelbrudd"
-                                    onChange={handleViolationCheck}
-                                    checked={violation === true}
-                                >
-                                    Regelbrudd
-                                </Checkbox>
+                            <Checkbox name="regelbrudd" onChange={handleViolationCheck} checked={violation === true}>
+                                Regelbrudd
+                            </Checkbox>
 
-                                {violation &&
-                                    violationCategories.map((c) => (
-                                        <Checkbox
-                                            className="sub-checkbox"
-                                            key={c.key}
-                                            value={c.key}
-                                            onChange={handleViolationCategoryCheck}
-                                            checked={violationCategory === c.key}
-                                        >
-                                            {c.label}
-                                        </Checkbox>
-                                    ))}
+                            {violation &&
+                                violationCategories.map((c) => (
+                                    <Checkbox
+                                        className="sub-checkbox"
+                                        key={c.key}
+                                        value={c.key}
+                                        onChange={handleViolationCategoryCheck}
+                                        checked={violationCategory === c.key}
+                                    >
+                                        {c.label}
+                                    </Checkbox>
+                                ))}
 
-                                <Checkbox name="svindel" onChange={handleScamCheck} checked={scam === true}>
-                                    Mistanke om svindel
-                                </Checkbox>
+                            <Checkbox name="svindel" onChange={handleScamCheck} checked={scam === true}>
+                                Mistanke om svindel
+                            </Checkbox>
 
-                                {scam &&
-                                    scamCategories.map((c) => (
-                                        <Checkbox
-                                            className="sub-checkbox"
-                                            key={c.key}
-                                            value={c.key}
-                                            onChange={handleScamCategoryCheck}
-                                            checked={scamCategory === c.key}
-                                        >
-                                            {c.label}
-                                        </Checkbox>
-                                    ))}
+                            {scam &&
+                                scamCategories.map((c) => (
+                                    <Checkbox
+                                        className="sub-checkbox"
+                                        key={c.key}
+                                        value={c.key}
+                                        onChange={handleScamCategoryCheck}
+                                        checked={scamCategory === c.key}
+                                    >
+                                        {c.label}
+                                    </Checkbox>
+                                ))}
 
-                                <br />
+                            <br />
 
-                                <Textarea
-                                    label={descriptionLabel}
-                                    maxLength={255}
-                                    value={description}
-                                    onChange={handleDescriptionChange}
-                                    description="Legg ikke igjen personopplysinger i dette feltet"
-                                    className="mb-8"
-                                />
+                            <Textarea
+                                label={descriptionLabel}
+                                maxLength={255}
+                                value={description}
+                                onChange={handleDescriptionChange}
+                                description="Legg ikke igjen personopplysinger i dette feltet"
+                                className="mb-8"
+                            />
 
-                                <BodyLong>
-                                    <AkselLink href="/retningslinjer-stillingsannonser">
-                                        Les om gjeldende regler
-                                    </AkselLink>
-                                </BodyLong>
-                            </div>
-
-                            {error && (
-                                <Alert variant="error" className="mb-4 mt-4" role="alert">
-                                    Rapportering feilet - prøv igjen
-                                </Alert>
-                            )}
-
-                            {authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED && (
-                                <Button
-                                    variant="primary"
-                                    disabled={(violationCategory === null && scamCategory === null) || !description}
-                                    onClick={handleSendTip}
-                                    className="mb-8"
-                                >
-                                    Send tips
-                                </Button>
-                            )}
+                            <BodyLong>
+                                <AkselLink href="/retningslinjer-stillingsannonser">Les om gjeldende regler</AkselLink>
+                            </BodyLong>
                         </div>
-                    )}
 
-                    <BodyLong>
-                        Stillingsannonser blir som regel umiddelbart publisert på arbeidsplassen.no. Etter publisering
-                        vil alle annonser bli kontrollert etter NAVs retningslinjer. I tilfeller der det er brudd på
-                        retningslinjene vil stillingsannonsene bli fjernet.
-                    </BodyLong>
-                </div>
-            )}
+                        {error && (
+                            <Alert variant="error" className="mb-4 mt-4" role="alert">
+                                Rapportering feilet - prøv igjen
+                            </Alert>
+                        )}
+
+                        <Button
+                            variant="primary"
+                            disabled={(violationCategory === null && scamCategory === null) || !description}
+                            onClick={handleSendTip}
+                            className="mb-8"
+                        >
+                            Send tips
+                        </Button>
+                    </div>
+                )}
+
+                <BodyLong>
+                    Stillingsannonser blir som regel umiddelbart publisert på arbeidsplassen.no. Etter publisering vil
+                    alle annonser bli kontrollert etter NAVs retningslinjer. I tilfeller der det er brudd på
+                    retningslinjene vil stillingsannonsene bli fjernet.
+                </BodyLong>
+            </div>
         </div>
     );
 }
+
+ReportAd.propTypes = {
+    id: PropTypes.string.isRequired,
+};
 
 export default ReportAd;

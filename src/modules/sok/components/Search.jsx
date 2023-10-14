@@ -1,24 +1,14 @@
-import React, { useContext, useEffect, useReducer, useRef, useState } from "react";
+import React, { useContext, useEffect, useReducer, useState } from "react";
 import { ClockIcon, HeartIcon } from "@navikt/aksel-icons";
 import { Button } from "@navikt/ds-react";
 import useRouter from "../../../migrating/useRouter";
 import Link from "../../../migrating/Link";
 import { CONTEXT_PATH } from "../../common/environment";
-import queryReducer, {
-    defaultQuery,
-    initQueryWithValuesFromBrowserUrl,
-    isSearchQueryEmpty,
-    SET_FROM,
-    stringifyQuery,
-    toApiQuery,
-    toBrowserQuery,
-} from "../query";
+import queryReducer, { isSearchQueryEmpty, SET_FROM, stringifyQuery, toBrowserQuery } from "../query";
 import { extractParam } from "../../common/utils/utils";
-import { FetchAction, FetchStatus, useFetchReducer } from "../../common/hooks/useFetchReducer";
-import SearchAPI from "../../common/api/SearchAPI";
+import { FetchStatus } from "../../common/hooks/useFetchReducer";
 import ErrorMessage from "../../common/components/messages/ErrorMessage";
 import SearchForm from "./searchForm/SearchForm";
-import useRestoreScroll from "../../common/hooks/useRestoreScroll";
 import "./Search.css";
 import SearchResult from "./searchResult/SearchResult";
 import H1WithAutoFocus from "../../common/components/h1WithAutoFocus/H1WithAutoFocus";
@@ -38,21 +28,53 @@ import LoginModal from "../../common/auth/components/LoginModal";
 import { HasAcceptedTermsStatus, UserContext } from "../../common/user/contexts/UserProvider";
 import logAmplitudeEvent from "../../common/tracking/amplitude";
 
-export default function Search() {
+export default function Search({ initialSearchResponse, searchResponse, initialQuery, fetchSearch }) {
     const { authenticationStatus, loginAndRedirect } = useContext(AuthenticationContext);
     const { hasAcceptedTermsStatus } = useContext(UserContext);
-    const [query, queryDispatch] = useReducer(queryReducer, defaultQuery, initQueryWithValuesFromBrowserUrl);
-    const [initialSearchResponse, initialSearchDispatch] = useFetchReducer();
-    const [searchResponse, searchDispatch] = useFetchReducer();
-    const latestSearch = useRef();
-    const numberOfSelectedFilters = Object.keys(toBrowserQuery(query)).length;
-    const { device } = useDevice();
+    const [query, queryDispatch] = useReducer(queryReducer, initialQuery);
     const [isFiltersVisible, setIsFiltersVisible] = useState(false);
-    const router = useRouter();
-    const { resetScroll } = useRestoreScroll("search-page", initialSearchResponse.status === FetchStatus.SUCCESS);
+    const [initialRenderDone, setInitialRenderDone] = useState(false);
     const [shouldShowTermsModal, openTermsModal, closeTermsModal] = useToggle();
     const [shouldShowLoginModalFavorites, openLoginModalFavorites, closeLoginModalFavorites] = useToggle();
     const [shouldShowLoginModalSavedSearch, openLoginModalSavedSearch, closeLoginModalSavedSearch] = useToggle();
+    const { device } = useDevice();
+    const router = useRouter();
+
+    /**
+     * Perform a search when user changes search criteria
+     */
+    useEffect(() => {
+        if (initialRenderDone) {
+            const browserQuery = toBrowserQuery(query);
+
+            // Keep saved search uuid in browser url, as long as there are some search criteria.
+            // This uuid is used when user update an existing saved search
+            const savedSearchUuid = extractParam("saved");
+            if (!isSearchQueryEmpty(browserQuery) && savedSearchUuid) {
+                browserQuery.saved = savedSearchUuid;
+            }
+
+            logAmplitudeEvent("Stillinger - Utførte søk", { query });
+
+            if (fetchSearch) {
+                fetchSearch(query);
+            }
+
+            try {
+                router.replace(CONTEXT_PATH + stringifyQuery(browserQuery), { scroll: false });
+            } catch (error) {
+                // ignore any errors
+            }
+        } else {
+            // Skip search first time query change, since that
+            // will just reload the search result we already got
+            setInitialRenderDone(true);
+        }
+    }, [query]);
+
+    function loadMoreResults() {
+        queryDispatch({ type: SET_FROM, value: query.from + query.size });
+    }
 
     function handleClick(e, navigateTo, type) {
         e.preventDefault();
@@ -76,114 +98,6 @@ export default function Search() {
         router.push(navigateTo);
     }
 
-    useEffect(() => {
-        if (numberOfSelectedFilters === 0) {
-            resetScroll();
-        }
-    }, []);
-
-    function fetchInitialSearch() {
-        initialSearchDispatch({ type: FetchAction.BEGIN });
-
-        const promises = [
-            SearchAPI.initialSearch(toApiQuery(defaultQuery)), // An empty search aggregates search criteria across all ads
-            SearchAPI.getLocations(), // Search criteria for locations are not aggregated, but based on a predefined list
-        ];
-
-        // If user has some search criteria in browser url, make an extra search to get that result
-        if (Object.keys(toBrowserQuery(query)).length > 0) {
-            promises.push(SearchAPI.search(toApiQuery(query)));
-        }
-
-        Promise.all(promises).then(
-            (responses) => {
-                const [initialSearchResult, locations, searchResult] = responses;
-                searchDispatch({ type: FetchAction.RESOLVE, data: searchResult || initialSearchResult });
-                initialSearchDispatch({ type: FetchAction.RESOLVE, data: { ...initialSearchResult, locations } });
-            },
-            (error) => {
-                initialSearchDispatch({ type: FetchAction.REJECT, error });
-            },
-        );
-    }
-
-    /**
-     * Når man laster inn flere annonser, kan en allerede lastet annonse komme på nytt. Dette kan f.eks skje
-     * ved at annonser legges til/slettes i backend, noe som fører til at pagineringen og det faktiske datasettet
-     * blir usynkronisert. Funskjonen fjerner derfor duplikate annonser i søkeresultatet.
-     */
-    function mergeAndRemoveDuplicates(searchResponseLocal, response) {
-        return {
-            ...response,
-            ads: [
-                ...searchResponse.data.ads,
-                ...response.ads.filter((a) => {
-                    const duplicate = searchResponseLocal.data.ads.find((b) => a.uuid === b.uuid);
-                    return !duplicate;
-                }),
-            ],
-        };
-    }
-
-    function fetchSearch() {
-        searchDispatch({ type: FetchAction.BEGIN });
-        const search = SearchAPI.search(toApiQuery(query));
-
-        // To avoid race conditions, when multiple search are done simultaneously,
-        // we handle only the latest search response
-        latestSearch.current = search;
-
-        search
-            .then((response) => {
-                if (latestSearch.current === search) {
-                    const mergedResult = query.from > 0 ? mergeAndRemoveDuplicates(searchResponse, response) : response;
-                    searchDispatch({ type: FetchAction.RESOLVE, data: mergedResult });
-                }
-            })
-            .catch((error) => {
-                if (search === latestSearch.current) {
-                    searchDispatch({ type: FetchAction.REJECT, error });
-                }
-            });
-    }
-
-    /**
-     * Make an initial search when view is shown.
-     * Search again when user changes a search criteria.
-     */
-    useEffect(() => {
-        if (initialSearchResponse.status === FetchStatus.NOT_FETCHED) {
-            fetchInitialSearch();
-        } else {
-            fetchSearch();
-        }
-        logAmplitudeEvent("Stillinger - Utførte søk", { query });
-    }, [query]);
-
-    /**
-     * Update the browser url when user changes search criteria
-     */
-    useEffect(() => {
-        const browserQuery = toBrowserQuery(query);
-
-        // Keep saved search uuid in browser url, as long as there are some search criteria.
-        // This uuid is used when user update an existing saved search
-        const savedSearchUuid = extractParam("saved");
-        if (!isSearchQueryEmpty(browserQuery) && savedSearchUuid) {
-            browserQuery.saved = savedSearchUuid;
-        }
-
-        try {
-            router.replace(CONTEXT_PATH + stringifyQuery(browserQuery));
-        } catch (error) {
-            // ignore any errors
-        }
-    }, [query]);
-
-    function loadMoreResults() {
-        queryDispatch({ type: SET_FROM, value: query.from + query.size });
-    }
-
     return (
         <div className={isFiltersVisible ? "filter-visible" : "filter-not-visible"}>
             <H1WithAutoFocus className="container-medium  Search__h1" spacing={false}>
@@ -194,7 +108,7 @@ export default function Search() {
                     query={query}
                     dispatchQuery={queryDispatch}
                     fetchSearch={() => {
-                        fetchSearch();
+                        //  fetchSearch();
                     }}
                 />
                 <div className="Search__buttons">
@@ -292,7 +206,7 @@ export default function Search() {
                                 initialSearchResult={initialSearchResponse.data}
                                 searchResult={searchResponse.data}
                                 fetchSearch={() => {
-                                    fetchSearch();
+                                    // fetchSearch();
                                 }}
                                 isFilterModalOpen={isFiltersVisible}
                                 setIsFilterModalOpen={setIsFiltersVisible}

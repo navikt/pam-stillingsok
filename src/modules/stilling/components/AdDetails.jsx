@@ -29,7 +29,7 @@ export default function AdDetails({ id, source }) {
                 </BodyShort>
             )}
             <BodyShort>
-                <AkselLink as={Link} to={`${CONTEXT_PATH}/rapporter-annonse?uuid=${id}`}>
+                <AkselLink as={Link} to={`${CONTEXT_PATH}/rapporter-annonse/${id}`}>
                     Rapporter annonse
                 </AkselLink>
             </BodyShort>

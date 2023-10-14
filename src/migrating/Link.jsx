@@ -1,12 +1,12 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import { Link as ReactRouterLink } from "react-router-dom";
 import NextLink from "next/link";
 
-function Link({ to, children, ...rest }) {
+const Link = forwardRef(({ children, to, ...rest }, ref) => {
     if (process.env.NEXT_PUBLIC_IS_NEXT === "yes") {
         return (
             <NextLink href={to} {...rest}>
-                {children} 😊
+                {children}
             </NextLink>
         );
     }
@@ -16,6 +16,6 @@ function Link({ to, children, ...rest }) {
             {children}
         </ReactRouterLink>
     );
-}
+});
 
 export default Link;

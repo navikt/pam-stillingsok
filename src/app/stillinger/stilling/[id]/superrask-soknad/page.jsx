@@ -1,5 +1,9 @@
 import { notFound } from "next/navigation";
-import NewApplicationWrapper from "./_components/NewApplicationWrapper";
+import NewApplicationWrapper from "../../../../../migrating/use-client/NewApplicationWrapper";
+
+export const metadata = {
+    title: "Superrask søknad - arbeidsplassen.no",
+};
 
 async function getAd(id) {
     const res = await fetch(`https://arbeidsplassen.intern.dev.nav.no/stillinger/api/stilling/${id}`);

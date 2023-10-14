@@ -1,8 +1,9 @@
 import { notFound } from "next/navigation";
-import AdWrapper from "./_components/AdWrapper";
+import AdWrapper from "../../../../migrating/use-client/AdWrapper";
+import { getStillingDescription, getStillingTitle } from "../../../../../server/common/htmlMeta";
 
 async function getData(id) {
-    const res = await fetch(`https://arbeidsplassen.intern.dev.nav.no/stillinger/api/stilling/${id}`);
+    const res = await fetch(`http://localhost:3000/stillinger/api/stilling/${id}`);
     if (res.status === 404) {
         notFound();
     }
@@ -11,6 +12,19 @@ async function getData(id) {
     }
 
     return res.json();
+}
+
+export async function generateMetadata({ params }) {
+    const data = await getData(params.id);
+
+    return {
+        title: getStillingTitle(data._source),
+        description: getStillingDescription(data._source),
+        openGraph: {
+            title: getStillingTitle(data._source),
+            description: getStillingDescription(data._source),
+        },
+    };
 }
 
 export default async function Page({ params }) {
