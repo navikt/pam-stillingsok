@@ -5,7 +5,7 @@ import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 import { CONTEXT_PATH } from "../../common/environment";
 import queryReducer, {
-    initialQuery,
+    defaultQuery,
     initQueryWithValuesFromBrowserUrl,
     isSearchQueryEmpty,
     SET_FROM,
@@ -41,7 +41,7 @@ import logAmplitudeEvent from "../../common/tracking/amplitude";
 export default function Search() {
     const { authenticationStatus, loginAndRedirect } = useContext(AuthenticationContext);
     const { hasAcceptedTermsStatus } = useContext(UserContext);
-    const [query, queryDispatch] = useReducer(queryReducer, initialQuery, initQueryWithValuesFromBrowserUrl);
+    const [query, queryDispatch] = useReducer(queryReducer, defaultQuery, initQueryWithValuesFromBrowserUrl);
     const [initialSearchResponse, initialSearchDispatch] = useFetchReducer();
     const [searchResponse, searchDispatch] = useFetchReducer();
     const latestSearch = useRef();
@@ -86,7 +86,7 @@ export default function Search() {
         initialSearchDispatch({ type: FetchAction.BEGIN });
 
         const promises = [
-            SearchAPI.initialSearch(toApiQuery(initialQuery)), // An empty search aggregates search criteria across all ads
+            SearchAPI.initialSearch(toApiQuery(defaultQuery)), // An empty search aggregates search criteria across all ads
             SearchAPI.getLocations(), // Search criteria for locations are not aggregated, but based on a predefined list
         ];
 

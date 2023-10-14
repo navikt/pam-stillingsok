@@ -31,7 +31,7 @@ export const PublishedLabelsEnum = {
     "now/d": "Nye i dag",
 };
 
-export const initialQuery = {
+export const defaultQuery = {
     q: "",
     match: undefined,
     from: 0,
@@ -282,7 +282,7 @@ export default function queryReducer(state, action) {
                 size: SEARCH_CHUNK_SIZE,
             };
         case RESET:
-            return initialQuery;
+            return defaultQuery;
         default:
             return queryState;
     }
