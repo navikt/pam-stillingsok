@@ -31,9 +31,10 @@ function AuthenticationProvider({ children }) {
     const fetchIsAuthenticated = () => {
         setAuthenticationStatus(AuthenticationStatus.IS_FETCHING);
 
-        fetch(`/stillinger/isAuthenticated`, {
+        fetch(`/stillinger/api/isAuthenticated`, {
             credentials: "include",
             referrer: CONTEXT_PATH,
+            cache: "no-store",
         })
             .then((response) => {
                 if (response.status === 200) {

@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import SavedSearchListItem from "./SavedSearchListItem";
 import { FetchAction } from "../../common/hooks/useFetchReducer";
-import SavedSearchesIsEmpty from "./SavedSearchesIsEmpty";
 import H1WithAutoFocus from "../../common/components/h1WithAutoFocus/H1WithAutoFocus";
 
 /**
@@ -35,24 +34,18 @@ function SavedSearchesList({ data, dispatch, uuid }) {
     }
 
     return (
-        <div className="container-medium mt-12 mb-16">
-            {data.length === 0 ? (
-                <SavedSearchesIsEmpty />
-            ) : (
-                <>
-                    <H1WithAutoFocus>Lagrede søk</H1WithAutoFocus>
-                    {data.map((savedSearch) => (
-                        <SavedSearchListItem
-                            key={savedSearch.uuid}
-                            replaceSavedSearchInList={updateSavedSearchInList}
-                            removeSavedSearchFromList={removeSavedSearchFromList}
-                            savedSearch={savedSearch}
-                            autoOpenModal={savedSearch.uuid === uuid}
-                        />
-                    ))}
-                </>
-            )}
-        </div>
+        <section className="container-medium mt-16 mb-16">
+            <H1WithAutoFocus>Lagrede søk</H1WithAutoFocus>
+            {data.map((savedSearch) => (
+                <SavedSearchListItem
+                    key={savedSearch.uuid}
+                    replaceSavedSearchInList={updateSavedSearchInList}
+                    removeSavedSearchFromList={removeSavedSearchFromList}
+                    savedSearch={savedSearch}
+                    autoOpenModal={savedSearch.uuid === uuid}
+                />
+            ))}
+        </section>
     );
 }
 
