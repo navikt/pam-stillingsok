@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Heading, Modal } from "@navikt/ds-react";
-import "./CustomModal.css";
 
 function CustomModal({ title, children, onCloseClick }) {
     return (

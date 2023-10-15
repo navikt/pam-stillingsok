@@ -13,7 +13,3 @@
     display: flex;
     gap: 1rem;
 }
-
-.SavedSearchModal__body__notify {
-    margin: 1.5rem 0 2.5rem !important;
-}

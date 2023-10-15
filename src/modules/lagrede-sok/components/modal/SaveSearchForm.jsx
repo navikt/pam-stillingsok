@@ -141,64 +141,66 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
 
     return (
         <form onSubmit={handleFormSubmit}>
-            {defaultFormMode === FormModes.UPDATE_QUERY_ONLY && existingSavedSearch && (
-                <RadioGroup
-                    legend={`Ønsker du å lagre endringene for ${existingSavedSearch.title} eller lagre et nytt søk?`}
-                    onChange={handleFormModeChange}
-                    name="add_or_replace"
-                    value={formMode}
-                >
-                    <Radio value={FormModes.UPDATE_QUERY_ONLY}>Lagre endringene</Radio>
-                    <Radio value={FormModes.ADD}>Lagre nytt søk</Radio>
-                </RadioGroup>
-            )}
-
-            {shouldShowForm && (
-                <>
-                    <TextField
-                        id="SavedSearchModal__name"
-                        className="SavedSearchModal__body__name"
-                        label="Navn*"
-                        onChange={handleTitleChange}
-                        value={title}
-                        error={titleValidationError}
-                        ref={titleRef}
-                    />
-                    <Checkbox
-                        className="SavedSearchModal__body__notify"
-                        onChange={handleSubscribeChange}
-                        checked={notifyType === "EMAIL"}
+            <Modal.Body>
+                {defaultFormMode === FormModes.UPDATE_QUERY_ONLY && existingSavedSearch && (
+                    <RadioGroup
+                        legend={`Ønsker du å lagre endringene for ${existingSavedSearch.title} eller lagre et nytt søk?`}
+                        onChange={handleFormModeChange}
+                        name="add_or_replace"
+                        value={formMode}
                     >
-                        Ja, jeg ønsker å motta e-post med varsel om nye treff
-                    </Checkbox>
-                    {notifyType === "EMAIL" && (
-                        <>
-                            <RadioGroup
-                                legend="Varighet på varsel"
-                                onChange={handleDurationChange}
-                                name="duration"
-                                value={duration}
-                            >
-                                <Radio value={30}>30 dager</Radio>
-                                <Radio value={60}>60 dager</Radio>
-                                <Radio value={90}>90 dager</Radio>
-                            </RadioGroup>
-                            {!isStringEmpty(user.data.email) && (
-                                <BodyLong>
-                                    Varsel sendes på e-post. Gå til{" "}
-                                    <AkselLink href="/personinnstillinger">Innstillinger</AkselLink> for å endre
-                                    e-postadresse.
-                                </BodyLong>
-                            )}
-                        </>
-                    )}
-                </>
-            )}
-            {saveStatus === FetchStatus.FAILURE && (
-                <Alert variant="error" className="mb-4 mt-4" role="alert">
-                    Noe gikk galt ved lagring, forsøk igjen eller last siden på nytt
-                </Alert>
-            )}
+                        <Radio value={FormModes.UPDATE_QUERY_ONLY}>Lagre endringene</Radio>
+                        <Radio value={FormModes.ADD}>Lagre nytt søk</Radio>
+                    </RadioGroup>
+                )}
+
+                {shouldShowForm && (
+                    <>
+                        <TextField
+                            id="SavedSearchModal__name"
+                            className="SavedSearchModal__body__name"
+                            label="Navn*"
+                            onChange={handleTitleChange}
+                            value={title}
+                            error={titleValidationError}
+                            ref={titleRef}
+                        />
+                        <Checkbox
+                            className="SavedSearchModal__body__notify"
+                            onChange={handleSubscribeChange}
+                            checked={notifyType === "EMAIL"}
+                        >
+                            Ja, jeg ønsker å motta e-post med varsel om nye treff
+                        </Checkbox>
+                        {notifyType === "EMAIL" && (
+                            <>
+                                <RadioGroup
+                                    legend="Varighet på varsel"
+                                    onChange={handleDurationChange}
+                                    name="duration"
+                                    value={duration}
+                                >
+                                    <Radio value={30}>30 dager</Radio>
+                                    <Radio value={60}>60 dager</Radio>
+                                    <Radio value={90}>90 dager</Radio>
+                                </RadioGroup>
+                                {!isStringEmpty(user.data.email) && (
+                                    <BodyLong>
+                                        Varsel sendes på e-post. Gå til{" "}
+                                        <AkselLink href="/personinnstillinger">Innstillinger</AkselLink> for å endre
+                                        e-postadresse.
+                                    </BodyLong>
+                                )}
+                            </>
+                        )}
+                    </>
+                )}
+                {saveStatus === FetchStatus.FAILURE && (
+                    <Alert variant="error" className="mb-4 mt-4" role="alert">
+                        Noe gikk galt ved lagring, forsøk igjen eller last siden på nytt
+                    </Alert>
+                )}
+            </Modal.Body>
             <Modal.Footer>
                 <Button
                     variant="primary"
