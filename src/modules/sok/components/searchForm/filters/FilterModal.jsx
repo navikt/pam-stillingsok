@@ -6,7 +6,7 @@ import { formatNumber } from "../../../../common/utils/utils";
 
 function FilterModal({ title, children, onCloseClick, searchResult }) {
     return (
-        <Modal className="filter-modal" closeButton={false} open onClose={onCloseClick} width="100%">
+        <Modal className="filter-modal" open onClose={onCloseClick} width="100%">
             <Modal.Header>
                 <Heading level="1" size="medium">
                     {title}
