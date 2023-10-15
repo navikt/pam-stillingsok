@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { BodyLong } from "@navikt/ds-react";
+import { BodyLong, Modal } from "@navikt/ds-react";
 import PropTypes from "prop-types";
 import { UserContext } from "../../../common/user/contexts/UserProvider";
 import CustomModal from "../../../common/components/modals/CustomModal";
@@ -85,7 +85,9 @@ function SaveSearchModal({ onClose, onSaveSearchSuccess, formData, defaultFormMo
             {status === FetchStatus.IS_FETCHING && <DelayedSpinner />}
             {status === FetchStatus.FAILURE && error.statusCode === 404 && <NotFoundMessage />}
             {status === FetchStatus.FAILURE && error.statusCode !== 404 && (
-                <BodyLong>Feil. Forsøk å laste siden på nytt.</BodyLong>
+                <Modal.Body>
+                    <BodyLong>Feil. Forsøk å laste siden på nytt.</BodyLong>
+                </Modal.Body>
             )}
 
             {shouldShowSavedSearchForm && (
