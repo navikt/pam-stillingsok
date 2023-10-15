@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import { Alert, BodyLong, Button, TextField } from "@navikt/ds-react";
+import { Alert, BodyLong, Button, TextField, Modal } from "@navikt/ds-react";
 import { isValidEmail } from "../../../common/utils/utils";
 import { UserContext } from "../../../common/user/contexts/UserProvider";
 import { FetchStatus } from "../../../common/hooks/useFetchReducer";
@@ -66,13 +66,14 @@ function RegisterEmailForm({ onClose, onSuccess }) {
     }
 
     return (
-        <>
-            <BodyLong role="status" spacing>
-                <span className="bold">Søket ditt er lagret, men du har ikke registrert e-postadresse.</span>
-                <br />
-                For å motta varsler på e-post må du registrere e-postadressen din.
-            </BodyLong>
-            <form onSubmit={handleFormSubmit}>
+        <form onSubmit={handleFormSubmit}>
+            <Modal.Body>
+                <BodyLong role="status" spacing>
+                    <span className="bold">Søket ditt er lagret, men du har ikke registrert e-postadresse.</span>
+                    <br />
+                    For å motta varsler på e-post må du registrere e-postadressen din.
+                </BodyLong>
+
                 <TextField
                     type="email"
                     label="Skriv inn e-postadressen din"
@@ -87,22 +88,21 @@ function RegisterEmailForm({ onClose, onSuccess }) {
                         Noe gikk galt ved lagring, forsøk igjen eller last siden på nytt
                     </Alert>
                 )}
-
-                <div className="SaveSearchForm__buttons">
-                    <Button
-                        variant="primary"
-                        type="submit"
-                        loading={saveStatus === FetchStatus.IS_FETCHING}
-                        disabled={saveStatus === FetchStatus.IS_FETCHING}
-                    >
-                        Lagre e-post
-                    </Button>
-                    <Button variant="secondary" type="button" onClick={onClose}>
-                        Avbryt
-                    </Button>
-                </div>
-            </form>
-        </>
+            </Modal.Body>
+            <Modal.Footer>
+                <Button
+                    variant="primary"
+                    type="submit"
+                    loading={saveStatus === FetchStatus.IS_FETCHING}
+                    disabled={saveStatus === FetchStatus.IS_FETCHING}
+                >
+                    Lagre e-post
+                </Button>
+                <Button variant="secondary" type="button" onClick={onClose}>
+                    Avbryt
+                </Button>
+            </Modal.Footer>
+        </form>
     );
 }
 
