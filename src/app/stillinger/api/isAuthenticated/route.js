@@ -1,6 +1,13 @@
+import { cookies } from "next/headers";
+
 export async function GET() {
-    const response = new Response(undefined, {
-        status: 200,
+    const _todoLoggedInCookie = cookies().get("is-logged-in-hack");
+    if (_todoLoggedInCookie && _todoLoggedInCookie.value === "true") {
+        return new Response(undefined, {
+            status: 200,
+        });
+    }
+    return new Response(undefined, {
+        status: 401,
     });
-    return response;
 }
