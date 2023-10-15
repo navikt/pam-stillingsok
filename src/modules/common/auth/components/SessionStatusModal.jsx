@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { BodyLong, Button, Heading, Modal } from "@navikt/ds-react";
-<<<<<<< HEAD
-=======
-import { FigureWithKey } from "@navikt/arbeidsplassen-react";
->>>>>>> master
 import "./SessionStatusModal.css";
 import { CONTEXT_PATH } from "../../environment";
 
