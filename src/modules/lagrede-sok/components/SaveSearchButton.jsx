@@ -57,15 +57,6 @@ function SaveSearchButton({ query }) {
 
     return (
         <>
-            <SaveSearchModal
-                formData={{
-                    title: shortenedTitle,
-                    searchQuery: stringifyQuery(toSavedSearchQuery(query)),
-                }}
-                onClose={closeSaveSearchModal}
-                defaultFormMode={savedSearchUuid ? FormModes.UPDATE_QUERY_ONLY : FormModes.ADD}
-                savedSearchUuid={savedSearchUuid}
-            />
             <Button variant="tertiary" icon={<FloppydiskIcon aria-hidden="true" />} type="button" onClick={handleClick}>
                 Lagre søk
             </Button>
