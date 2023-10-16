@@ -95,7 +95,14 @@ function SessionStatusModal({ markAsLoggedOut, setHasBeenLoggedIn, login, logout
     if (!isTimeoutModalOpen) return null;
 
     return (
-        <Modal width="medium" role="alertdialog" open aria-label={title} onClose={() => {}}>
+        <Modal
+            width="medium"
+            role="alertdialog"
+            open
+            aria-label={title}
+            onCancel={(e) => e.preventDefault()}
+            onClose={() => {}}
+        >
             <Modal.Header closeButton={false}>
                 <Heading level="1" size="medium" className="mb-2">
                     {title}
