@@ -14,7 +14,7 @@ function SuccessMessage({ onClose }) {
     return (
         <>
             <Modal.Body>
-                <BodyLong>Søket ble lagret!</BodyLong>
+                <BodyLong role="status">Søket ble lagret!</BodyLong>
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="primary" ref={buttonRef} onClick={onClose}>

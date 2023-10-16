@@ -1,17 +1,6 @@
-.NewApplicationForm {
-    margin: 0 0 4rem 0;
-}
-
 .NewApplicationForm__green-box {
     background: var(--a-surface-alt-1-subtle);
-    margin: 0 0 3rem 0;
     padding: 1rem 0;
-}
-
-.NewApplicationForm__green-box-inner {
-    margin: 0 auto;
-    max-width: 832px;
-    padding: 0 1rem;
 }
 
 .NewApplicationForm__section {

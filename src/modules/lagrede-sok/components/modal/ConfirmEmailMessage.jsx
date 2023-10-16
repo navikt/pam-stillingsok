@@ -14,7 +14,9 @@ function ConfirmEmailMessage({ onClose }) {
     return (
         <>
             <Modal.Body>
-                <BodyLong>Du må bekrefte e-postadressen din. Klikk på lenken i e-posten du har mottatt.</BodyLong>
+                <BodyLong role="status">
+                    Du må bekrefte e-postadressen din. Klikk på lenken i e-posten du har mottatt.
+                </BodyLong>
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="primary" ref={buttonRef} onClick={onClose}>

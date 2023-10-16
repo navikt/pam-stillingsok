@@ -15,7 +15,11 @@ body {
 }
 
 .bold {
-    font-weight: bold;
+    font-weight: 600;
+}
+
+.large-text {
+    font-size: 1.25rem;
 }
 
 .flex {
@@ -38,10 +42,50 @@ body {
     margin-left: 0.5rem;
 }
 
+.ml-2 {
+    margin-left: 2rem;
+}
+
 .inline-flex {
     display: inline-flex;
 }
 
 .justify-center {
     justify-content: center;
+}
+
+.white-space-no-wrap {
+    white-space: nowrap;
+}
+
+.inline-select {
+    display: flex;
+    align-items: center;
+}
+
+.inline-select label {
+    margin-right: 0.5rem;
+    white-space: nowrap;
+    margin-bottom: 0;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.dl dd,
+.dl dt {
+    overflow-wrap: anywhere;
+}
+
+.dl dt {
+    margin: 0;
+}
+
+.dl dd {
+    margin: 0 0 1rem 0;
+}
+
+.overflow-wrap-anywhere {
+    overflow-wrap: anywhere;
 }

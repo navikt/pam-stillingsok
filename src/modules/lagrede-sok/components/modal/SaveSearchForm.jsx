@@ -158,18 +158,14 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
                     <>
                         <TextField
                             id="SavedSearchModal__name"
-                            className="SavedSearchModal__body__name mb-6"
+                            className="mb-6"
                             label="Navn*"
                             onChange={handleTitleChange}
                             value={title}
                             error={titleValidationError}
                             ref={titleRef}
                         />
-                        <Checkbox
-                            className="SavedSearchModal__body__notify"
-                            onChange={handleSubscribeChange}
-                            checked={notifyType === "EMAIL"}
-                        >
+                        <Checkbox className="mb-6" onChange={handleSubscribeChange} checked={notifyType === "EMAIL"}>
                             Ja, jeg ønsker å motta e-post med varsel om nye treff
                         </Checkbox>
                         {notifyType === "EMAIL" && (
@@ -179,14 +175,13 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
                                     onChange={handleDurationChange}
                                     name="duration"
                                     value={duration}
-                                    className="mt-6"
                                 >
                                     <Radio value={30}>30 dager</Radio>
                                     <Radio value={60}>60 dager</Radio>
                                     <Radio value={90}>90 dager</Radio>
                                 </RadioGroup>
                                 {!isStringEmpty(user.data.email) && (
-                                    <BodyLong className="mt-6">
+                                    <BodyLong>
                                         Varsel sendes på e-post. Gå til{" "}
                                         <AkselLink href="/personinnstillinger">Innstillinger</AkselLink> for å endre
                                         e-postadresse.

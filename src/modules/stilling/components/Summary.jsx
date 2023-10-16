@@ -1,31 +1,31 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { BodyLong, HStack } from "@navikt/ds-react";
 import { Buldings3Icon, PinIcon } from "@navikt/aksel-icons";
 import getWorkLocation from "../../../../server/common/getWorkLocation";
 import getEmployer from "../../../../server/common/getEmployer";
-import "./Summary.css";
 
 export default function Summary({ stilling }) {
     const location = getWorkLocation(stilling.properties.location, stilling.locationList, false);
     const employer = getEmployer(stilling);
 
     return (
-        <section className="Summary">
+        <section className="mb-12">
             {employer && (
-                <div className="Summary__item">
-                    <div>
+                <HStack className="mb-2" gap="3" align="center">
+                    <HStack align="center">
                         <Buldings3Icon title="Arbeidsgiver" width="1.25em" height="1.25em" />
-                    </div>
-                    <div>{employer}</div>
-                </div>
+                    </HStack>
+                    <BodyLong className="bold large-text">{employer}</BodyLong>
+                </HStack>
             )}
             {location && (
-                <div className="Summary__item">
-                    <div>
+                <HStack className="mb-2" gap="3" align="center">
+                    <HStack align="center">
                         <PinIcon title="Sted" width="1.25em" height="1.25em" />
-                    </div>
-                    <div>{location}</div>
-                </div>
+                    </HStack>
+                    <BodyLong className="bold large-text">{location}</BodyLong>
+                </HStack>
             )}
         </section>
     );

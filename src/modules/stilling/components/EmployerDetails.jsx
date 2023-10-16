@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import parse from "html-react-parser";
-import { Heading, Link as AkselLink } from "@navikt/ds-react";
+import { BodyLong, Heading, Label, Link as AkselLink } from "@navikt/ds-react";
 import DOMPurify from "isomorphic-dompurify";
 import fixLocationName from "../../../../server/common/fixLocationName";
 import { isValidUrl } from "../../common/utils/utils";
@@ -35,64 +35,90 @@ export default function EmployerDetails({ stilling }) {
             <Heading level="2" size="large" spacing>
                 Om arbeidsgiveren
             </Heading>
-            <dl className="JobPosting__dl mb-4">
+            <dl className="dl mb-4">
                 {employer && (
                     <>
-                        <dt>Arbeidsgiver</dt>
-                        <dd>{employer}</dd>
+                        <dt>
+                            <Label as="p">Arbeidsgiver</Label>
+                        </dt>
+                        <dd>
+                            <BodyLong>{employer}</BodyLong>
+                        </dd>
                     </>
                 )}
                 {employerLocation && (
                     <>
-                        <dt>Adresse</dt>
-                        <dd>{employerLocation}</dd>
+                        <dt>
+                            <Label as="p">Adresse</Label>
+                        </dt>
+                        <dd>
+                            <BodyLong>{employerLocation}</BodyLong>
+                        </dd>
                     </>
                 )}
                 {properties.employerhomepage && (
                     <>
-                        <dt>Hjemmeside</dt>
+                        <dt>
+                            <Label as="p">Hjemmeside</Label>
+                        </dt>
                         <dd>
-                            {isValidUrl(properties.employerhomepage) ? (
-                                <AkselLink href={properties.employerhomepage}>{properties.employerhomepage}</AkselLink>
-                            ) : (
-                                properties.employerhomepage
-                            )}
+                            <BodyLong>
+                                {isValidUrl(properties.employerhomepage) ? (
+                                    <AkselLink href={properties.employerhomepage}>
+                                        {properties.employerhomepage}
+                                    </AkselLink>
+                                ) : (
+                                    properties.employerhomepage
+                                )}
+                            </BodyLong>
                         </dd>
                     </>
                 )}
                 {properties.linkedinpage && (
                     <>
-                        <dt>LinkedIn</dt>
+                        <dt>
+                            <Label as="p">LinkedIn</Label>
+                        </dt>
                         <dd>
-                            {isValidUrl(properties.linkedinpage) ? (
-                                <AkselLink href={properties.linkedinpage}>{properties.linkedinpage}</AkselLink>
-                            ) : (
-                                properties.linkedinpage
-                            )}
+                            <BodyLong>
+                                {isValidUrl(properties.linkedinpage) ? (
+                                    <AkselLink href={properties.linkedinpage}>{properties.linkedinpage}</AkselLink>
+                                ) : (
+                                    properties.linkedinpage
+                                )}
+                            </BodyLong>
                         </dd>
                     </>
                 )}
                 {properties.twitteraddress && (
                     <>
-                        <dt>Twitter</dt>
+                        <dt>
+                            <Label as="p">Twitter</Label>
+                        </dt>
                         <dd>
-                            {isValidUrl(properties.twitteraddress) ? (
-                                <AkselLink href={properties.twitteraddress}>{properties.twitteraddress}</AkselLink>
-                            ) : (
-                                properties.twitteraddress
-                            )}
+                            <BodyLong>
+                                {isValidUrl(properties.twitteraddress) ? (
+                                    <AkselLink href={properties.twitteraddress}>{properties.twitteraddress}</AkselLink>
+                                ) : (
+                                    properties.twitteraddress
+                                )}
+                            </BodyLong>
                         </dd>
                     </>
                 )}
                 {properties.facebookpage && (
                     <>
-                        <dt>Facebook</dt>
+                        <dt>
+                            <Label as="p">Facebook</Label>
+                        </dt>
                         <dd>
-                            {isValidUrl(properties.facebookpage) ? (
-                                <AkselLink href={properties.facebookpage}>{properties.facebookpage}</AkselLink>
-                            ) : (
-                                properties.facebookpage
-                            )}
+                            <BodyLong>
+                                {isValidUrl(properties.facebookpage) ? (
+                                    <AkselLink href={properties.facebookpage}>{properties.facebookpage}</AkselLink>
+                                ) : (
+                                    properties.facebookpage
+                                )}
+                            </BodyLong>
                         </dd>
                     </>
                 )}
