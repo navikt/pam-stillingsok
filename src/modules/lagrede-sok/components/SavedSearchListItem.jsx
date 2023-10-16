@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React, { useState } from "react";
-import { Alert, Link as AkselLink, BodyShort, Heading, Tag, Button } from "@navikt/ds-react";
-import Link from "../../../migrating/Link";
+import { Alert, Link as AkselLink, BodyShort, Heading, Tag, Button, HStack } from "@navikt/ds-react";
+import { Link } from "react-router-dom";
 import { ArrowsCirclepathIcon, PencilIcon, TrashIcon } from "@navikt/aksel-icons";
 import { CONTEXT_PATH } from "../../common/environment";
 import { formatDate } from "../../common/utils/utils";
@@ -62,7 +62,7 @@ function SavedSearchListItem({ savedSearch, removeSavedSearchFromList, replaceSa
     }
 
     return (
-        <article className="SavedSearchListItem">
+        <article className="mt-12">
             <Heading level="3" size="small" spacing>
                 <AkselLink as={Link} to={`${CONTEXT_PATH}${savedSearch.searchQuery}&saved=${savedSearch.uuid}`}>
                     {savedSearch.title}
@@ -92,7 +92,7 @@ function SavedSearchListItem({ savedSearch, removeSavedSearchFromList, replaceSa
                 </Tag>
             )}
 
-            <div className="SavedSearchListItem__bottom">
+            <HStack gap="4" className="mt-4">
                 <Button variant="tertiary" onClick={openSavedSearchModal} icon={<PencilIcon aria-hidden="true" />}>
                     Endre
                 </Button>
@@ -110,7 +110,7 @@ function SavedSearchListItem({ savedSearch, removeSavedSearchFromList, replaceSa
                         Start ny varsling
                     </Button>
                 )}
-            </div>
+            </HStack>
 
             {restartEmailNotificationStatus === FetchStatus.FAILURE && (
                 <Alert variant="error" className="mb-4 mt-4" role="alert">

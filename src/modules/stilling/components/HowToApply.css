@@ -4,10 +4,6 @@
     border-radius: 6px;
 }
 
-.HowToApply__favourite-button {
-    margin: 1rem 0 0;
-}
-
 @media (max-width: 479px) {
     .HowToApply__full-width-button {
         width: 100%;

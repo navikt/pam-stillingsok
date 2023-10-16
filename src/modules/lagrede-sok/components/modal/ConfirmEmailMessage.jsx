@@ -13,13 +13,13 @@ function ConfirmEmailMessage({ onClose }) {
 
     return (
         <section role="status">
-            <BodyLong>Du må bekrefte e-postadressen din. Klikk på lenken i e-posten du har mottatt.</BodyLong>
+            <BodyLong className="mb-8">
+                Du må bekrefte e-postadressen din. Klikk på lenken i e-posten du har mottatt.
+            </BodyLong>
 
-            <div className="SaveSearchForm__buttons">
-                <Button variant="primary" ref={buttonRef} onClick={onClose}>
-                    Lukk
-                </Button>
-            </div>
+            <Button variant="primary" ref={buttonRef} onClick={onClose}>
+                Lukk
+            </Button>
         </section>
     );
 }

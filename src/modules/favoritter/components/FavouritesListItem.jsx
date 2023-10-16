@@ -52,12 +52,7 @@ function FavouritesListItem({ favourite, removeFavouriteFromList }) {
                 }}
                 showExpired={favourite.favouriteAd.status !== "ACTIVE"}
                 favouriteButton={
-                    <Button
-                        variant="tertiary"
-                        className="FavouriteListItem__delete-button"
-                        onClick={openConfirmDeleteModal}
-                        icon={<TrashIcon aria-hidden="true" />}
-                    >
+                    <Button variant="tertiary" onClick={openConfirmDeleteModal} icon={<TrashIcon aria-hidden="true" />}>
                         Slett
                     </Button>
                 }

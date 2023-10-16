@@ -2,7 +2,6 @@ import React, { useContext, useEffect } from "react";
 import SavedSearchesList from "./components/SavedSearchesList";
 import useDocumentTitle from "../common/hooks/useDocumentTitle";
 import useScrollToTop from "../common/hooks/useScrollToTop";
-import "./components/SavedSearches.css";
 import { AuthenticationContext, AuthenticationStatus } from "../common/auth/contexts/AuthenticationProvider";
 import Loading from "../loading";
 import Error from "../error";

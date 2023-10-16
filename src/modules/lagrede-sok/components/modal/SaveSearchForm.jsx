@@ -1,5 +1,15 @@
 import React, { useContext, useRef, useState } from "react";
-import { Alert, BodyLong, Button, Checkbox, Radio, RadioGroup, TextField, Link as AkselLink } from "@navikt/ds-react";
+import {
+    Alert,
+    BodyLong,
+    Button,
+    Checkbox,
+    Radio,
+    RadioGroup,
+    TextField,
+    Link as AkselLink,
+    HStack,
+} from "@navikt/ds-react";
 import PropTypes from "prop-types";
 import { UserContext } from "../../../common/user/contexts/UserProvider";
 import useToggle from "../../../common/hooks/useToggle";
@@ -147,18 +157,14 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
                 <>
                     <TextField
                         id="SavedSearchModal__name"
-                        className="SavedSearchModal__body__name"
+                        className="mb-6"
                         label="Navn*"
                         onChange={handleTitleChange}
                         value={title}
                         error={titleValidationError}
                         ref={titleRef}
                     />
-                    <Checkbox
-                        className="SavedSearchModal__body__notify"
-                        onChange={handleSubscribeChange}
-                        checked={notifyType === "EMAIL"}
-                    >
+                    <Checkbox className="mb-6" onChange={handleSubscribeChange} checked={notifyType === "EMAIL"}>
                         Ja, jeg ønsker å motta e-post med varsel om nye treff
                     </Checkbox>
                     {notifyType === "EMAIL" && (
@@ -189,7 +195,7 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
                     Noe gikk galt ved lagring, forsøk igjen eller last siden på nytt
                 </Alert>
             )}
-            <div className="SaveSearchForm__buttons">
+            <HStack gap="4" className="mt-8">
                 <Button
                     variant="primary"
                     type="submit"
@@ -201,7 +207,7 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
                 <Button variant="secondary" type="button" onClick={onClose}>
                     Avbryt
                 </Button>
-            </div>
+            </HStack>
         </form>
     );
 }

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import { Alert, BodyLong, Button, TextField } from "@navikt/ds-react";
+import { Alert, BodyLong, Button, HStack, TextField } from "@navikt/ds-react";
 import { isValidEmail } from "../../../common/utils/utils";
 import { UserContext } from "../../../common/user/contexts/UserProvider";
 import { FetchStatus } from "../../../common/hooks/useFetchReducer";
@@ -88,7 +88,7 @@ function RegisterEmailForm({ onClose, onSuccess }) {
                     </Alert>
                 )}
 
-                <div className="SaveSearchForm__buttons">
+                <HStack gap="4" className="mt-8">
                     <Button
                         variant="primary"
                         type="submit"
@@ -100,7 +100,7 @@ function RegisterEmailForm({ onClose, onSuccess }) {
                     <Button variant="secondary" type="button" onClick={onClose}>
                         Avbryt
                     </Button>
-                </div>
+                </HStack>
             </form>
         </>
     );
