@@ -1,19 +1,20 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { BodyLong, Heading, Panel } from "@navikt/ds-react";
+import { BodyShort, Heading, Panel, VStack } from "@navikt/ds-react";
 import SaveSearchButton from "../../../lagrede-sok/components/SaveSearchButton";
-import "./HowToPanel.css";
 
 function DoYouWantToSaveSearch({ query }) {
     return (
-        <Panel className="HowToPanel arb-panel-secondary mb-8">
-            <div className="HowToPanel__text">
-                <Heading level="3" size="small">
+        <Panel className="arb-panel-secondary mb-8">
+            <VStack align="center">
+                <Heading level="3" size="small" className="text-center" spacing>
                     Varsel ved nye treff?
                 </Heading>
-                <BodyLong>Lagre søket og motta e-post ved nye treff.</BodyLong>
-            </div>
-            <SaveSearchButton query={query} />
+                <BodyShort className="text-center" spacing>
+                    Lagre søket og motta e-post ved nye treff.
+                </BodyShort>
+                <SaveSearchButton query={query} />
+            </VStack>
         </Panel>
     );
 }
