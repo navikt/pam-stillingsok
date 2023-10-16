@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Select } from "@navikt/ds-react";
 import { SET_SORTING } from "../../query";
-import "./Sorting.css";
 
 function Sorting({ query, dispatch }) {
     const [sort, setSort] = useState(query.sort);
@@ -14,7 +13,7 @@ function Sorting({ query, dispatch }) {
     }
 
     return (
-        <Select onChange={handleChange} value={sort} label="Sorter etter" className="Sorting__Select">
+        <Select onChange={handleChange} value={sort} label="Sorter etter" className="inline-select">
             <option key="relevant" value="relevant">
                 Mest relevant
             </option>

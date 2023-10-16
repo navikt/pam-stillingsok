@@ -13,6 +13,7 @@ import {
     TextField,
     Link as AkselLink,
     Fieldset,
+    HStack,
 } from "@navikt/ds-react";
 import H1WithAutoFocus from "../../../common/components/h1WithAutoFocus/H1WithAutoFocus";
 import { isValidEmail, isValidTelephone } from "../../../common/utils/utils";
@@ -163,7 +164,7 @@ function NewApplicationForm({ ad, applicationForm, submitForm, isSending, hasErr
 
     return (
         <form onSubmit={handleFormSubmit}>
-            <section className="NewApplicationForm__section">
+            <section className="mb-10">
                 <H1WithAutoFocus>Superrask søknad</H1WithAutoFocus>
                 <BodyLong spacing>
                     Ingen CV eller langt søknadsbrev, kun tre raske steg. Du får beskjed på e-post med en gang bedriften
@@ -178,7 +179,7 @@ function NewApplicationForm({ ad, applicationForm, submitForm, isSending, hasErr
             </section>
 
             {applicationForm.qualifications && applicationForm.qualifications.length > 0 && (
-                <section className="NewApplicationForm__section">
+                <section className="mb-10">
                     <Heading level="2" size="medium" spacing>
                         Bedriftens ønskede kvalifikasjoner
                     </Heading>
@@ -205,7 +206,7 @@ function NewApplicationForm({ ad, applicationForm, submitForm, isSending, hasErr
                 </section>
             )}
 
-            <section className="NewApplicationForm__section">
+            <section className="mb-10">
                 <Heading level="2" size="medium" spacing>
                     Hvorfor du er den rette for jobben
                 </Heading>
@@ -228,7 +229,7 @@ function NewApplicationForm({ ad, applicationForm, submitForm, isSending, hasErr
                 />
             </section>
 
-            <section className="NewApplicationForm__section">
+            <section className="mb-10">
                 <Heading level="2" size="medium" spacing>
                     Din kontaktinformasjon
                 </Heading>
@@ -285,14 +286,14 @@ function NewApplicationForm({ ad, applicationForm, submitForm, isSending, hasErr
                 </Alert>
             )}
 
-            <div className="NewApplicationForm__buttons">
+            <HStack gap="4" className="mt-12">
                 <Button variant="primary" loading={isSending} type="button" onClick={handleSendMessageClick}>
                     Send søknad
                 </Button>
                 <Button disabled={isSending} variant="secondary" as={Link} to={`${CONTEXT_PATH}/stilling/${ad._id}`}>
                     Avbryt
                 </Button>
-            </div>
+            </HStack>
         </form>
     );
 }

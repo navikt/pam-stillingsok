@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Button } from "@navikt/ds-react";
-import "./Pagination.css";
+import { Button, VStack } from "@navikt/ds-react";
 import { ArrowUpIcon } from "@navikt/aksel-icons";
 
 function Pagination({ searchResult, isSearching, query, onLoadMoreClick }) {
@@ -14,14 +13,9 @@ function Pagination({ searchResult, isSearching, query, onLoadMoreClick }) {
     };
 
     return (
-        <>
+        <VStack align="center" className="mt-8 mb-12">
             {hasMore && (
-                <Button
-                    variant="primary"
-                    loading={isSearching}
-                    className="Pagination__button"
-                    onClick={onLoadMoreClick}
-                >
+                <Button variant="primary" loading={isSearching} onClick={onLoadMoreClick}>
                     Last flere resultater
                 </Button>
             )}
@@ -29,7 +23,7 @@ function Pagination({ searchResult, isSearching, query, onLoadMoreClick }) {
             <Button variant="tertiary" onClick={scrollTop} className="mt-6">
                 <ArrowUpIcon aria-hidden="true" /> Til toppen
             </Button>
-        </>
+        </VStack>
     );
 }
 

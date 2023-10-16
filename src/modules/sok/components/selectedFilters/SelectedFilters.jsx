@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { Button, Chips } from "@navikt/ds-react";
+import { Button, Chips, HStack } from "@navikt/ds-react";
 import { TrashIcon } from "@navikt/aksel-icons";
 import fixLocationName from "../../../../../server/common/fixLocationName";
-import "./SelectedFilters.css";
 import {
     PublishedLabelsEnum,
     REMOVE_COUNTRY,
@@ -208,8 +207,8 @@ function SelectedFilters({ query, queryDispatch }) {
     }
 
     return (
-        <div className="SelectedFilters">
-            <div className="SelectedFilters__chips">
+        <div className="mb-8">
+            <HStack gap="2" align="center">
                 {chips.length > MAX_CHIPS ? (
                     <>
                         {showAll ? chips : chips.slice(0, MAX_CHIPS)}
@@ -239,7 +238,7 @@ function SelectedFilters({ query, queryDispatch }) {
                     Fjern alle
                 </Button>
                 <SaveSearchButton query={query} />
-            </div>
+            </HStack>
         </div>
     );
 }

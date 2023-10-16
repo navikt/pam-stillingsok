@@ -4,7 +4,6 @@ import { FetchStatus } from "../../../common/hooks/useFetchReducer";
 import ErrorMessage from "../../../common/components/messages/ErrorMessage";
 import Pagination from "../pagination/Pagination";
 import SearchResultItem from "./SearchResultItem";
-import "./SearchResult.css";
 import FavouritesButton from "../../../favoritter/components/FavouritesButton";
 import DelayedSpinner from "../../../common/components/spinner/DelayedSpinner";
 
@@ -49,14 +48,12 @@ function SearchResult({ searchResponse, query, loadMoreResults }) {
                             />
                         ))}
                     {data.ads && data.ads.length > 0 && (
-                        <div className="SearchResult__footer">
-                            <Pagination
-                                query={query}
-                                isSearching={status === FetchStatus.IS_FETCHING}
-                                searchResult={data}
-                                onLoadMoreClick={loadMoreResults}
-                            />
-                        </div>
+                        <Pagination
+                            query={query}
+                            isSearching={status === FetchStatus.IS_FETCHING}
+                            searchResult={data}
+                            onLoadMoreClick={loadMoreResults}
+                        />
                     )}
                 </>
             )}

@@ -10,7 +10,7 @@ import useScrollToTop from "../../../common/hooks/useScrollToTop";
 function NewApplicationSuccess({ data }) {
     useScrollToTop();
     return (
-        <div className="NewApplicationForm__success-message">
+        <div className="mt-16 mb-16">
             <H1WithAutoFocus size="large">Din søknad er sendt til bedriften</H1WithAutoFocus>
             <BodyLong spacing>
                 Du vil straks få en bekreftelse på din e-post {data.email}. Ønsker du å trekke din søknad finner du
