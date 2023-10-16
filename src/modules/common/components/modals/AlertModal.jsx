@@ -13,6 +13,7 @@ export default function AlertModal({
     spinner,
     useOnlyCancelButton,
     showButtons,
+    width = "medium",
 }) {
     const cancelButtonRef = useRef();
 
@@ -23,6 +24,7 @@ export default function AlertModal({
             onClose={onCancel}
             aria-labelledby={`${id}-h1`}
             aria-describedby={`${id}-message`}
+            width={width}
         >
             <Modal.Header>
                 <Heading level="1" size="medium" id={`${id}-h1`} spacing>
@@ -34,6 +36,11 @@ export default function AlertModal({
             </Modal.Body>
             {showButtons && (
                 <Modal.Footer>
+                    {!useOnlyCancelButton && (
+                        <Button variant="primary" loading={spinner} disabled={spinner} onClick={onConfirm}>
+                            {confirmLabel}
+                        </Button>
+                    )}
                     <Button
                         ref={cancelButtonRef}
                         variant={useOnlyCancelButton ? "primary" : "secondary"}
@@ -42,11 +49,6 @@ export default function AlertModal({
                     >
                         {cancelLabel}
                     </Button>
-                    {!useOnlyCancelButton && (
-                        <Button variant="primary" loading={spinner} disabled={spinner} onClick={onConfirm}>
-                            {confirmLabel}
-                        </Button>
-                    )}
                 </Modal.Footer>
             )}
         </Modal>
@@ -73,4 +75,5 @@ AlertModal.propTypes = {
     spinner: PropTypes.bool,
     useOnlyCancelButton: PropTypes.bool,
     showButtons: PropTypes.bool,
+    width: PropTypes.string,
 };
