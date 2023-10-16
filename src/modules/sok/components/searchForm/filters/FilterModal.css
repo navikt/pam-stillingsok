@@ -1,79 +1,3 @@
-.FilterModal {
-    width: 100%;
-    max-width: 960px;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-}
-
-@media (max-width: 727px) {
-    .FilterModal {
-        border-radius: 0;
-        height: 100%;
-    }
-
-    .FilterModal__overlay {
-        padding: 0;
-    }
-}
-
-.FilterModal__heading {
-    padding: 0.5rem 0.5rem 0 1rem;
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
-    align-items: center;
-    background: var(--a-surface-default);
-    position: sticky;
-    top: 0;
-    z-index: 999;
-}
-
-.FilterModal__content {
-    flex-grow: 1;
-    padding: 0 1rem 1rem 1rem;
-    background: var(--a-surface-default);
-}
-
-.FilterModal__content .navds-tabs__tab {
-    margin: 0 1rem 1rem 0;
-    min-height: unset;
-    padding: 0.25rem;
-}
-
-@media (min-width: 728px) {
-    .FilterModal__bottom button {
-        padding: 2rem;
-    }
-}
-
-.FilterModal__bottom {
-    padding: 1rem;
-    background: var(--a-surface-alt-1-subtle);
-    bottom: 0;
-    position: sticky;
-}
-
-@media (max-width: 475px) {
-    .FilterModal__bottom button {
-        width: 100%;
-    }
-}
-
-.FilterModal__sub-fieldset {
-    padding: 0 1rem 0.5rem 2rem;
-    margin-top: 0 !important;
-    border-radius: 6px;
-}
-
-.Facet__zero__count label {
-    color: var(--a-text-subtle) !important;
-}
-
-.RemoteFacet {
-    margin-top: 1.5rem;
-}
-
 .SearchForm__expand-filter-button {
     display: flex;
     align-items: center;
@@ -103,14 +27,14 @@
     display: block;
 }
 
-.Filters__mobile .navds-tabs__tablist-wrapper {
-    background-color: var(--a-surface-default);
-    margin-left: calc(50% - 50vw);
-    padding: 0 1rem;
-    position: sticky;
-    top: 4.25rem;
-    width: 100vw;
-    z-index: 999;
+@media (max-width: 479px) {
+    .filter-modal {
+        border-radius: 0;
+    }
+
+    .filter-modal .navds-modal__footer {
+        flex-flow: column;
+    }
 }
 
 @media (min-width: 768px) {
@@ -125,4 +49,15 @@
     .Filter__section {
         padding: 1rem 0;
     }
+}
+
+.filter-modal .navds-modal__footer {
+    background-color: var(--a-surface-alt-1-subtle);
+}
+
+.filter-modal .navds-tabs__tablist-wrapper {
+    background: var(--a-surface-default);
+    position: sticky;
+    top: 0;
+    z-index: 999;
 }

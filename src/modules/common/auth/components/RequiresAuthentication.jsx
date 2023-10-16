@@ -1,12 +1,11 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
-import { BodyLong, Button, Heading } from "@navikt/ds-react";
+import { BodyLong, Button, Heading, Modal, HStack, VStack } from "@navikt/ds-react";
 import { EnterIcon } from "@navikt/aksel-icons";
 import { FigureWithKey } from "@navikt/arbeidsplassen-react";
 import { AuthenticationContext, AuthenticationStatus } from "../contexts/AuthenticationProvider";
 import DelayedSpinner from "../../components/spinner/DelayedSpinner";
 import ErrorMessage from "../../components/messages/ErrorMessage";
-import "./RequiresAuthentication.css";
 
 function RequiresAuthentication({ children, onCancel, onLogin }) {
     const { authenticationStatus, login } = useContext(AuthenticationContext);
@@ -24,18 +23,23 @@ function RequiresAuthentication({ children, onCancel, onLogin }) {
         return children;
     }
     return (
-        <section className="LoginRequiredMessage">
-            <Heading level="1" size="large" className="mb-2">
-                Du må logge inn først
-            </Heading>
-            <BodyLong className="LoginRequiredMessage__text mb-8">
-                Du bruker BankID for å logge inn på <span translate="no">arbeidsplassen.no</span>
-            </BodyLong>
-            <div className="mb-8">
-                <FigureWithKey />
-            </div>
-
-            <div className="login-buttons-wrapper">
+        <section>
+            <Modal.Header>
+                <Heading level="1" size="medium" className="mb-2">
+                    Du må logge inn først
+                </Heading>
+            </Modal.Header>
+            <Modal.Body>
+                <VStack gap="6">
+                    <BodyLong>
+                        Du bruker BankID for å logge inn på <span translate="no">arbeidsplassen.no</span>
+                    </BodyLong>
+                    <HStack justify="center">
+                        <FigureWithKey />
+                    </HStack>
+                </VStack>
+            </Modal.Body>
+            <Modal.Footer>
                 {onLogin ? (
                     <Button variant="primary" icon={<EnterIcon aria-hidden="true" />} onClick={onLogin}>
                         Logg inn
@@ -51,7 +55,7 @@ function RequiresAuthentication({ children, onCancel, onLogin }) {
                         Avbryt
                     </Button>
                 )}
-            </div>
+            </Modal.Footer>
         </section>
     );
 }

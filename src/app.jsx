@@ -1,11 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import * as ReactDOMClient from "react-dom/client";
 import "@navikt/ds-css";
 import "@navikt/arbeidsplassen-css";
 import "@navikt/arbeidsplassen-theme";
 import { Footer, SkipLink } from "@navikt/arbeidsplassen-react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import { Modal } from "@navikt/ds-react";
 import AuthenticationProvider from "./modules/common/auth/contexts/AuthenticationProvider";
 import UserProvider from "./modules/common/user/contexts/UserProvider";
 import FavouritesProvider from "./modules/favoritter/context/FavouritesProvider";
@@ -30,10 +29,6 @@ initAmplitude();
 googleTranslateWorkaround();
 
 function Application() {
-    useEffect(() => {
-        Modal.setAppElement("#app");
-    }, []);
-
     return (
         <AuthenticationProvider>
             <UserProvider>

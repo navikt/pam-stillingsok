@@ -3,17 +3,11 @@
 }
 
 .TermsOfUse__section--last {
-    margin-bottom: 2.5rem;
+    margin-bottom: 0;
 }
 
 .TermsOfUse__buttons {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
-}
-
-@media (max-width: 767px) {
-    .TermsOfUse {
-        padding: 0;
-    }
 }

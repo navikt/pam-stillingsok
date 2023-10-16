@@ -1,7 +1,6 @@
 import PropTypes from "prop-types";
 import React, { useRef } from "react";
 import { BodyLong, Button, Heading, Modal } from "@navikt/ds-react";
-import "./AlertModal.css";
 
 export default function AlertModal({
     id,
@@ -14,26 +13,29 @@ export default function AlertModal({
     spinner,
     useOnlyCancelButton,
     showButtons,
+    width = "medium",
 }) {
     const cancelButtonRef = useRef();
 
     return (
         <Modal
-            className="AlertModal"
             role="alertdialog"
             open
             onClose={onCancel}
-            aria-labelledby={`${id}-h1`}
+            header={{ heading: title }}
             aria-describedby={`${id}-message`}
+            width={width}
         >
-            <Heading level="1" size="medium" id={`${id}-h1`} spacing>
-                {title}
-            </Heading>
-            <BodyLong id={`${id}-message`} className="mb-10">
-                {children}
-            </BodyLong>
+            <Modal.Body>
+                <BodyLong id={`${id}-message`}>{children}</BodyLong>
+            </Modal.Body>
             {showButtons && (
-                <div className="AlertModal__buttons">
+                <Modal.Footer>
+                    {!useOnlyCancelButton && (
+                        <Button variant="primary" loading={spinner} disabled={spinner} onClick={onConfirm}>
+                            {confirmLabel}
+                        </Button>
+                    )}
                     <Button
                         ref={cancelButtonRef}
                         variant={useOnlyCancelButton ? "primary" : "secondary"}
@@ -42,12 +44,7 @@ export default function AlertModal({
                     >
                         {cancelLabel}
                     </Button>
-                    {!useOnlyCancelButton && (
-                        <Button variant="primary" loading={spinner} disabled={spinner} onClick={onConfirm}>
-                            {confirmLabel}
-                        </Button>
-                    )}
-                </div>
+                </Modal.Footer>
             )}
         </Modal>
     );
@@ -73,4 +70,5 @@ AlertModal.propTypes = {
     spinner: PropTypes.bool,
     useOnlyCancelButton: PropTypes.bool,
     showButtons: PropTypes.bool,
+    width: PropTypes.string,
 };
