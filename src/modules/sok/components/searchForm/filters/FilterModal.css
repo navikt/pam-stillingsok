@@ -27,6 +27,16 @@
     display: block;
 }
 
+@media (max-width: 479px) {
+    .filter-modal {
+        border-radius: 0;
+    }
+
+    .filter-modal .navds-modal__footer {
+        flex-flow: column;
+    }
+}
+
 @media (min-width: 768px) {
     .Filters__desktop {
         display: block;
