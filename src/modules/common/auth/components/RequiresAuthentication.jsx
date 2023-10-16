@@ -24,7 +24,7 @@ function RequiresAuthentication({ children, onCancel, onLogin }) {
     return (
         <section>
             <Modal.Header>
-                <Heading level="1" size="large" className="mb-2">
+                <Heading level="1" size="medium" className="mb-2">
                     Du må logge inn først
                 </Heading>
             </Modal.Header>
