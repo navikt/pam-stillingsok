@@ -1,7 +1,6 @@
 import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import { Alert, BodyLong, Button, ConfirmationPanel, Modal } from "@navikt/ds-react";
-import CustomModal from "../../components/modals/CustomModal";
 import UserAPI from "../../api/UserAPI";
 import "./TermsOfUse.css";
 import { UserContext } from "./UserProvider";
@@ -57,19 +56,21 @@ function TermsOfUse({ onClose, onTermsAccepted }) {
             : "Ta i bruk innloggede tjenester";
 
     return (
-        <CustomModal onCloseClick={onClose} title={title}>
+        <Modal width="medium" onClose={onClose} header={{ heading: title }} open>
             {userNameAndInfo && userNameAndInfo.erUnderFemten ? (
-                <Modal.Body>
-                    <BodyLong className="TermsOfUse__section">
-                        Du er under 15 år og er dessverre ikke gammel nok til å ha en profil på arbeidsplassen.no. Kom
-                        gjerne tilbake igjen ved en senere anledning.
-                    </BodyLong>
-                    <div className="TermsOfUse__buttons">
+                <>
+                    <Modal.Body>
+                        <BodyLong>
+                            Du er under 15 år og er dessverre ikke gammel nok til å ha en profil på arbeidsplassen.no.
+                            Kom gjerne tilbake igjen ved en senere anledning.
+                        </BodyLong>
+                    </Modal.Body>
+                    <Modal.Footer>
                         <Button variant="primary" onClick={onClose}>
                             Lukk
                         </Button>
-                    </div>
-                </Modal.Body>
+                    </Modal.Footer>
+                </>
             ) : (
                 <>
                     <Modal.Body>
@@ -111,7 +112,7 @@ function TermsOfUse({ onClose, onTermsAccepted }) {
                     </Modal.Footer>
                 </>
             )}
-        </CustomModal>
+        </Modal>
     );
 }
 

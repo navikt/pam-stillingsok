@@ -22,15 +22,10 @@ export default function AlertModal({
             role="alertdialog"
             open
             onClose={onCancel}
-            aria-labelledby={`${id}-h1`}
+            header={{ heading: title }}
             aria-describedby={`${id}-message`}
             width={width}
         >
-            <Modal.Header>
-                <Heading level="1" size="medium" id={`${id}-h1`} spacing>
-                    {title}
-                </Heading>
-            </Modal.Header>
             <Modal.Body>
                 <BodyLong id={`${id}-message`}>{children}</BodyLong>
             </Modal.Body>
