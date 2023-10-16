@@ -7,7 +7,7 @@ import { CONTEXT_PATH } from "../../common/environment";
 
 export default function AdDetails({ id, source }) {
     return (
-        <section className="JobPosting__section">
+        <section className="full-width">
             {source.updated && (
                 <BodyShort spacing>
                     <Label as="span">Sist endret:</Label> {formatDate(source.updated)}

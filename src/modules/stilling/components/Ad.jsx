@@ -31,10 +31,10 @@ function Ad({ ad, shareAdRedirectUrl }) {
     const isFinn = ad && ad._source && ad._source.source && ad._source.source.toLowerCase() === "finn";
 
     return (
-        <div className="container-large JobPosting">
+        <div className="container-large mb-16 mt-16">
             <article className="JobPosting__flex">
                 <div className="JobPosting__left">
-                    <H1WithAutoFocus className="JobPosting__h1">{ad._source.title}</H1WithAutoFocus>
+                    <H1WithAutoFocus className="overflow-wrap-anywhere">{ad._source.title}</H1WithAutoFocus>
 
                     {ad._source.status !== "ACTIVE" && (
                         <Tag variant="warning-moderate" className="mb-4">

@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import { BodyLong, BodyShort, Button, Heading, Link as AkselLink, CopyButton, Tooltip } from "@navikt/ds-react";
+import { BodyLong, BodyShort, Button, Heading, Link as AkselLink, CopyButton, Tooltip, Label } from "@navikt/ds-react";
 import { ExternalLinkIcon } from "@navikt/aksel-icons";
 import { formatDate, isValidEmail, isValidUrl } from "../../common/utils/utils";
 import "./HowToApply.css";
@@ -60,7 +60,7 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
 
     if (properties.hasInterestform === "true") {
         return (
-            <section className="JobPosting__section HowToApply">
+            <section className="full-width mb-10 HowToApply">
                 <Heading level="2" size="medium" spacing>
                     Søk på jobben
                 </Heading>
@@ -68,9 +68,13 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                     <BodyShort spacing>Vis frem deg selv og din erfaring med en superrask søknad.</BodyShort>
                 )}
                 {properties.applicationdue && (
-                    <dl className="JobPosting__dl">
-                        <dt>Søknadsfrist</dt>
-                        <dd>{formatDate(properties.applicationdue)}</dd>
+                    <dl className="dl">
+                        <dt>
+                            <Label as="p">Søknadsfrist</Label>
+                        </dt>
+                        <dd>
+                            <BodyLong>{formatDate(properties.applicationdue)}</BodyLong>
+                        </dd>
                     </dl>
                 )}
                 {stilling._source.status === "ACTIVE" && (
@@ -142,7 +146,7 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                 )}
                 {showFavouriteButton && (
                     <FavouritesButton
-                        className="HowToApply__favourite-button HowToApply__full-width-button"
+                        className="mt-4 HowToApply__full-width-button"
                         variant="secondary"
                         id={stilling._id}
                         stilling={stilling._source}
@@ -154,59 +158,71 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
 
     if (properties.applicationdue || properties.applicationemail || applicationUrl) {
         return (
-            <section className="JobPosting__section HowToApply">
+            <section className="full-width mb-10 HowToApply">
                 <Heading level="2" size="medium" spacing>
                     Søk på jobben
                 </Heading>
-                <dl className="JobPosting__dl">
+                <dl className="dl">
                     {properties.applicationdue && (
                         <>
-                            <dt>Søknadsfrist</dt>
-                            <dd>{formatDate(properties.applicationdue)}</dd>
+                            <dt>
+                                <Label as="p">Søknadsfrist</Label>
+                            </dt>
+                            <dd>
+                                <BodyLong>{formatDate(properties.applicationdue)}</BodyLong>
+                            </dd>
                         </>
                     )}
                     {!isFinn && properties.applicationemail && (
                         <>
-                            <dt>Send søknad til</dt>
+                            <dt>
+                                <Label as="p">Send søknad til</Label>
+                            </dt>
                             <dd>
-                                {isValidEmail(properties.applicationemail) ? (
-                                    <div className="inline-flex">
-                                        <span>
-                                            <AkselLink
-                                                onClick={() => {
-                                                    logEmailAnchorClick(stilling);
-                                                }}
-                                                href={`mailto:${properties.applicationemail}`}
-                                            >
-                                                {properties.applicationemail}
-                                            </AkselLink>
-                                        </span>
-                                        <span>
-                                            <Tooltip content="Kopier e-postadresse">
-                                                <CopyButton
-                                                    className="ml-0_5"
-                                                    copyText={`${properties.applicationemail}`}
-                                                    variant="action"
-                                                    size="xsmall"
-                                                    onActiveChange={(state) => {
-                                                        if (state === true) {
-                                                            logCopyEmailClick(stilling);
-                                                        }
+                                <BodyLong>
+                                    {isValidEmail(properties.applicationemail) ? (
+                                        <span className="inline-flex">
+                                            <span>
+                                                <AkselLink
+                                                    onClick={() => {
+                                                        logEmailAnchorClick(stilling);
                                                     }}
-                                                />
-                                            </Tooltip>
+                                                    href={`mailto:${properties.applicationemail}`}
+                                                >
+                                                    {properties.applicationemail}
+                                                </AkselLink>
+                                            </span>
+                                            <span>
+                                                <Tooltip content="Kopier e-postadresse">
+                                                    <CopyButton
+                                                        className="ml-0_5"
+                                                        copyText={`${properties.applicationemail}`}
+                                                        variant="action"
+                                                        size="xsmall"
+                                                        onActiveChange={(state) => {
+                                                            if (state === true) {
+                                                                logCopyEmailClick(stilling);
+                                                            }
+                                                        }}
+                                                    />
+                                                </Tooltip>
+                                            </span>
                                         </span>
-                                    </div>
-                                ) : (
-                                    properties.applicationemail
-                                )}
+                                    ) : (
+                                        properties.applicationemail
+                                    )}
+                                </BodyLong>
                             </dd>
                         </>
                     )}
                     {applicationUrl && !isValidUrl(applicationUrl) && (
                         <>
-                            <dt>Søknadslenke</dt>
-                            <dd>{applicationUrl}</dd>
+                            <dt>
+                                <Label as="p">Søknadslenke</Label>
+                            </dt>
+                            <dd>
+                                <BodyLong>{applicationUrl}</BodyLong>
+                            </dd>
                         </>
                     )}
                 </dl>
@@ -233,7 +249,7 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                 )}
                 {showFavouriteButton && (
                     <FavouritesButton
-                        className="HowToApply__favourite-button HowToApply__full-width-button"
+                        className="mt-4 HowToApply__full-width-button"
                         variant="secondary"
                         id={stilling._id}
                         stilling={stilling._source}

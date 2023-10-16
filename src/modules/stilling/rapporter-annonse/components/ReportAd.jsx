@@ -1,11 +1,10 @@
 import * as React from "react";
 import { useState } from "react";
-import "./ReportAd.css";
+import PropTypes from "prop-types";
 import { Alert, BodyLong, Button, Checkbox, Heading, Link as AkselLink, Textarea } from "@navikt/ds-react";
 import logAmplitudeEvent from "../../../common/tracking/amplitude";
 import UserAPI from "../../../common/api/UserAPI";
 import H1WithAutoFocus from "../../../common/components/h1WithAutoFocus/H1WithAutoFocus";
-import PropTypes from "prop-types";
 
 const violationCategories = [
     { label: "Diskriminerende innhold", key: "discrimination" },
@@ -93,7 +92,7 @@ function ReportAd({ id }) {
     }
 
     return (
-        <div className="container-medium mt-12 mb-16">
+        <div className="container-medium mt-12 mb-16 RapporterAnnonse">
             <div>
                 {finished && (
                     <div>
@@ -124,7 +123,7 @@ function ReportAd({ id }) {
                             {violation &&
                                 violationCategories.map((c) => (
                                     <Checkbox
-                                        className="sub-checkbox"
+                                        className="ml-2"
                                         key={c.key}
                                         value={c.key}
                                         onChange={handleViolationCategoryCheck}
@@ -141,7 +140,7 @@ function ReportAd({ id }) {
                             {scam &&
                                 scamCategories.map((c) => (
                                     <Checkbox
-                                        className="sub-checkbox"
+                                        className="ml-2"
                                         key={c.key}
                                         value={c.key}
                                         onChange={handleScamCategoryCheck}
@@ -162,7 +161,7 @@ function ReportAd({ id }) {
                                 className="mb-8"
                             />
 
-                            <BodyLong>
+                            <BodyLong spacing>
                                 <AkselLink href="/retningslinjer-stillingsannonser">Les om gjeldende regler</AkselLink>
                             </BodyLong>
                         </div>

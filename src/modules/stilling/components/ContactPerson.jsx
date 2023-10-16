@@ -15,7 +15,7 @@ function logClickEmailEvent(id, title) {
 export default function ContactPerson({ contactList, adId, adTitle }) {
     if (contactList && contactList.length > 0) {
         return (
-            <section className="JobPosting__section">
+            <section className="full-width mb-10">
                 <Heading level="2" size="medium">
                     {contactList.length > 1 ? "Kontaktpersoner for stillingen" : "Kontaktperson for stillingen"}
                 </Heading>
@@ -40,7 +40,7 @@ export default function ContactPerson({ contactList, adId, adTitle }) {
                             </BodyLong>
                         )}
                         {contact.email && (
-                            <BodyLong className="JobPosting__overflow flex">
+                            <BodyLong className="overflow-wrap-anywhere flex">
                                 {isValidEmail(contact.email) ? (
                                     <AkselLink
                                         rel="nofollow"

@@ -36,9 +36,9 @@ function NewApplication({ id, ad, applicationForm }) {
     }
 
     return (
-        <div className="NewApplicationForm">
-            <div className="NewApplicationForm__green-box">
-                <div className="NewApplicationForm__green-box-inner">
+        <div className="mb-16">
+            <div className="NewApplicationForm__green-box mb-12">
+                <div className="container-medium NewApplicationForm__green-box-inner">
                     <Label as="p" className="mb-1">
                         {getEmployer(ad._source)}
                     </Label>
