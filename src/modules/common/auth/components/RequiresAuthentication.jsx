@@ -1,7 +1,8 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
-import { BodyLong, Button, Heading, Modal } from "@navikt/ds-react";
+import { BodyLong, Button, Heading, Modal, HStack, VStack } from "@navikt/ds-react";
 import { EnterIcon } from "@navikt/aksel-icons";
+import { FigureWithKey } from "@navikt/arbeidsplassen-react";
 import { AuthenticationContext, AuthenticationStatus } from "../contexts/AuthenticationProvider";
 import DelayedSpinner from "../../components/spinner/DelayedSpinner";
 import ErrorMessage from "../../components/messages/ErrorMessage";
@@ -29,9 +30,14 @@ function RequiresAuthentication({ children, onCancel, onLogin }) {
                 </Heading>
             </Modal.Header>
             <Modal.Body>
-                <BodyLong>
-                    Du bruker BankID for å logge inn på <span translate="no">arbeidsplassen.no</span>
-                </BodyLong>
+                <VStack gap="6">
+                    <BodyLong>
+                        Du bruker BankID for å logge inn på <span translate="no">arbeidsplassen.no</span>
+                    </BodyLong>
+                    <HStack justify="center">
+                        <FigureWithKey />
+                    </HStack>
+                </VStack>
             </Modal.Body>
             <Modal.Footer>
                 {onLogin ? (

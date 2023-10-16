@@ -5,7 +5,7 @@ import RequiresAuthentication from "./RequiresAuthentication";
 
 function LoginModal({ onLoginClick, onCloseClick }) {
     return (
-        <Modal width="medium" role="alertdialog" open aria-label="Du må logge inn først" onClose={onCloseClick}>
+        <Modal width="small" role="alertdialog" open aria-label="Du må logge inn først" onClose={onCloseClick}>
             <RequiresAuthentication onLogin={onLoginClick} onCancel={onCloseClick} />
         </Modal>
     );

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { BodyLong, Button, Heading, Modal } from "@navikt/ds-react";
+import { BodyLong, Button, Heading, Modal, HStack, VStack } from "@navikt/ds-react";
+import { FigureWithKey } from "@navikt/arbeidsplassen-react";
 import "./SessionStatusModal.css";
 import { CONTEXT_PATH } from "../../environment";
 
@@ -96,7 +97,7 @@ function SessionStatusModal({ markAsLoggedOut, setHasBeenLoggedIn, login, logout
 
     return (
         <Modal
-            width="medium"
+            width="small"
             role="alertdialog"
             open
             aria-label={title}
@@ -109,7 +110,12 @@ function SessionStatusModal({ markAsLoggedOut, setHasBeenLoggedIn, login, logout
                 </Heading>
             </Modal.Header>
             <Modal.Body>
-                <BodyLong>{message}</BodyLong>
+                <VStack gap="6">
+                    <BodyLong>{message}</BodyLong>
+                    <HStack justify="center">
+                        <FigureWithKey />
+                    </HStack>
+                </VStack>
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="primary" onClick={action}>
