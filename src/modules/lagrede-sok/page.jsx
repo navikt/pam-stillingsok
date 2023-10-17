@@ -6,7 +6,7 @@ import { AuthenticationContext, AuthenticationStatus } from "../common/auth/cont
 import Loading from "../loading";
 import Error from "../error";
 import LoginIsRequiredPage from "../common/auth/components/LoginIsRequiredPage";
-import { HasAcceptedTermsStatus, UserContext } from "../common/user/contexts/UserProvider";
+import { HasAcceptedTermsStatus, UserContext } from "../common/user/UserProvider";
 import UserConsentIsRequired from "./components/UserConsentIsRequired";
 import { FetchAction, FetchStatus, useFetchReducer } from "../common/hooks/useFetchReducer";
 import UserAPI from "../common/api/UserAPI";
