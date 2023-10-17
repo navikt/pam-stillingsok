@@ -21,3 +21,5 @@ export INTEREST_API_URL=http://localhost:3000/interesse-api
 export SENTRY_DSN=''
 
 exec npm start
+
+#
