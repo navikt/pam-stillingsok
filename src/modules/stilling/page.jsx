@@ -9,6 +9,7 @@ import Loading from "../loading";
 import Error from "../error";
 import useRobotsNoIndexMetaTag from "../common/hooks/useRobotsNoIndexMetaTag";
 import { STILLINGSOK_URL } from "../common/environment";
+import "./ad.css";
 
 function AdPage({ match }) {
     const [{ data: ad, error, status }, dispatch] = useFetchReducer();

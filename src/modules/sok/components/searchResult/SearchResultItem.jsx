@@ -1,15 +1,14 @@
 import PropTypes from "prop-types";
 import React, { useLayoutEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { BodyLong, Heading, Label, Link as AkselLink, Tag } from "@navikt/ds-react";
-import { parseISO, endOfDay, subDays, isSameDay, addDays, parse, format as formatDateFns, isValid } from "date-fns";
+import { BodyLong, Heading, HStack, Link as AkselLink, Tag } from "@navikt/ds-react";
+import { addDays, endOfDay, format as formatDateFns, isSameDay, isValid, parse, parseISO, subDays } from "date-fns";
 import { nb } from "date-fns/locale";
 import { Buldings3Icon, ExternalLinkIcon, PinIcon } from "@navikt/aksel-icons";
 import getEmployer from "../../../../../server/common/getEmployer";
 import getWorkLocation from "../../../../../server/common/getWorkLocation";
 import { CONTEXT_PATH } from "../../../common/environment";
 import { formatDate } from "../../../common/utils/utils";
-import "./SearchResultsItem.css";
 
 export default function SearchResultItem({ ad, showExpired, favouriteButton, shouldAutoFocus }) {
     const location = getWorkLocation(ad.properties.location, ad.locationList);
@@ -72,68 +71,61 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, sho
         <article
             ref={ref}
             tabIndex={shouldAutoFocus ? -1 : undefined}
-            className="SearchResultItem"
+            className="mb-12"
             aria-labelledby={`${ad.uuid}-h3 ${ad.uuid}-jobTitle ${ad.uuid}-employer ${ad.uuid}-location`}
         >
-            <div className="SearchResultItem__details mb-2">
-                {published && (
-                    <Label as="p" size="small" className="SearchResultItem__subtle-text published">
-                        {isPublishedToday && "Ny i dag"}
-                        {isPublishedYesterday && "I går"}
-                        {isPublishedTwoDaysAgo && "To dager siden"}
-                        {!isPublishedToday && !isPublishedYesterday && !isPublishedTwoDaysAgo && published}
-                    </Label>
-                )}
-            </div>
-            <div
-                className={
-                    jobTitle
-                        ? "SearchResultItem__heading-and-favourite mb-2"
-                        : "SearchResultItem__heading-and-favourite mb-4"
-                }
-            >
-                <Heading level="3" size="small" className="SearchResultsItem__title" id={`${ad.uuid}-h3`}>
+            {published && (
+                <BodyLong weight="semibold" size="small" textColor="subtle">
+                    {isPublishedToday && "Ny i dag"}
+                    {isPublishedYesterday && "I går"}
+                    {isPublishedTwoDaysAgo && "To dager siden"}
+                    {!isPublishedToday && !isPublishedYesterday && !isPublishedTwoDaysAgo && published}
+                </BodyLong>
+            )}
+
+            <HStack gap="2" wrap={false} align="center" justify="space-between" className="mb-2">
+                <Heading level="3" size="small" className="overflow-wrap-anywhere" id={`${ad.uuid}-h3`}>
                     <LinkToAd stilling={ad} isFinn={isFinn} employer={employer}>
                         {ad.title}
                     </LinkToAd>
                 </Heading>
                 {favouriteButton}
-            </div>
+            </HStack>
 
             {jobTitle && (
-                <Label as="p" id={`${ad.uuid}-jobTitle`} className="mb-4 break-word">
+                <BodyLong weight="semibold" id={`${ad.uuid}-jobTitle`} className="mb-4 break-word">
                     {jobTitle}
-                </Label>
+                </BodyLong>
             )}
 
             <div className="mb-2">
                 {employer && (
-                    <div className="SearchResultItem__text-and-icon mb-1">
+                    <HStack gap="2" className="mb-1">
                         <div>
                             <Buldings3Icon width="1.5em" height="1.5em" aria-label="Arbeidsgiver" />
                         </div>
                         <BodyLong id={`${ad.uuid}-employer`}>{employer}</BodyLong>
-                    </div>
+                    </HStack>
                 )}
                 {location && (
-                    <div className="SearchResultItem__text-and-icon mb-1">
+                    <HStack gap="2" className="mb-1">
                         <div>
                             <PinIcon width="1.5em" height="1.5em" aria-label="Sted" />
                         </div>
                         <BodyLong id={`${ad.uuid}-location`}>{location}</BodyLong>
-                    </div>
+                    </HStack>
                 )}
             </div>
 
-            <div className="SearchResultItem__details">
+            <HStack gap="4" align="center">
                 {showExpired && <Tag variant="warning-moderate">Annonsen er utløpt</Tag>}
                 {hasInterestform && <Tag variant="info-moderate">Superrask søknad</Tag>}
                 {frist && (
-                    <Label as="p" size="small" className="SearchResultItem__subtle-text">
+                    <BodyLong weight="semibold" size="small" textColor="subtle">
                         {fristText()}
-                    </Label>
+                    </BodyLong>
                 )}
-            </div>
+            </HStack>
         </article>
     );
 }
@@ -166,9 +158,7 @@ function LinkToAd({ children, stilling, isFinn }) {
     if (isFinn) {
         return (
             <AkselLink href={`https://www.finn.no/${stilling.reference}`}>
-                <span className="SearchResultsItem__title-external">
-                    {children} <ExternalLinkIcon width="1.125em" height="1.125em" aria-label="Åpnes på Finn" />
-                </span>
+                {children} <ExternalLinkIcon width="1.125em" height="1.125em" aria-label="Åpnes på Finn" />
             </AkselLink>
         );
     }

@@ -11,6 +11,7 @@ import {
     Tooltip,
     Label,
     Box,
+    HStack,
 } from "@navikt/ds-react";
 import { ExternalLinkIcon } from "@navikt/aksel-icons";
 import { formatDate, isValidEmail, isValidUrl } from "../../common/utils/utils";
@@ -106,7 +107,7 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                     <BodyLong className="mt-4">
                         Alternativt kan du sende søknad via e-post til{" "}
                         {isValidEmail(properties.applicationemail) ? (
-                            <div className="inline-flex">
+                            <HStack gap="2" as="span" wrap={false}>
                                 <span>
                                     <AkselLink
                                         onClick={() => {
@@ -120,7 +121,6 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                                 <span>
                                     <Tooltip content="Kopier e-postadresse">
                                         <CopyButton
-                                            className="ml-0_5"
                                             copyText={`${properties.applicationemail}`}
                                             variant="action"
                                             size="xsmall"
@@ -132,7 +132,7 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                                         />
                                     </Tooltip>
                                 </span>
-                            </div>
+                            </HStack>
                         ) : (
                             properties.applicationemail
                         )}
@@ -189,7 +189,7 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                             <dd>
                                 <BodyLong>
                                     {isValidEmail(properties.applicationemail) ? (
-                                        <span className="inline-flex">
+                                        <HStack gap="2" as="span" wrap={false}>
                                             <span>
                                                 <AkselLink
                                                     onClick={() => {
@@ -203,7 +203,6 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                                             <span>
                                                 <Tooltip content="Kopier e-postadresse">
                                                     <CopyButton
-                                                        className="ml-0_5"
                                                         copyText={`${properties.applicationemail}`}
                                                         variant="action"
                                                         size="xsmall"
@@ -215,7 +214,7 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                                                     />
                                                 </Tooltip>
                                             </span>
-                                        </span>
+                                        </HStack>
                                     ) : (
                                         properties.applicationemail
                                     )}

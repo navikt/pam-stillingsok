@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Heading } from "@navikt/ds-react";
 import { Device } from "../../../../common/hooks/useDevice";
 import Filters from "./Filters";
 import FilterModal from "./FilterModal";
@@ -25,7 +24,7 @@ function FilterForm({
     }
 
     const form = (
-        <form id="filter" onSubmit={submitForm}>
+        <form id="filter" aria-label="Søkefiltre" onSubmit={submitForm}>
             <Filters
                 query={query}
                 dispatchQuery={dispatchQuery}
@@ -43,14 +42,7 @@ function FilterForm({
         );
     }
     if (device === Device.DESKTOP) {
-        return (
-            <div>
-                <Heading level="2" size="medium" spacing>
-                    Filtre
-                </Heading>
-                {form}
-            </div>
-        );
+        return <div>{form}</div>;
     }
     return null;
 }

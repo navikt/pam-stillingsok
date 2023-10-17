@@ -2,7 +2,6 @@ import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import { Alert, BodyLong, Button, ConfirmationPanel, Modal } from "@navikt/ds-react";
 import UserAPI from "../../api/UserAPI";
-import "./TermsOfUse.css";
 import { UserContext } from "./UserProvider";
 import { AuthenticationContext } from "../../auth/contexts/AuthenticationProvider";
 import { FetchStatus } from "../../hooks/useFetchReducer";
@@ -74,11 +73,9 @@ function TermsOfUse({ onClose, onTermsAccepted }) {
             ) : (
                 <>
                     <Modal.Body>
-                        <BodyLong className="TermsOfUse__section">
-                            Du må samtykke for å bruke innloggede tjenester i stillingssøk.
-                        </BodyLong>
+                        <BodyLong spacing>Du må samtykke for å bruke innloggede tjenester i stillingssøk.</BodyLong>
                         <ConfirmationPanel
-                            className="TermsOfUse__section"
+                            className="mb-8"
                             label="Dine favoritter, søk og søkekriterier"
                             checked={checked}
                             onChange={onCheckboxClick}
@@ -87,7 +84,7 @@ function TermsOfUse({ onClose, onTermsAccepted }) {
                             Vi lagrer dine favoritter, søk med søkekriterier og e-postadresse (valgfri). Det er kun du
                             som kan se hva du har lagret.
                         </ConfirmationPanel>
-                        <BodyLong className="TermsOfUse__section TermsOfUse__section--last">
+                        <BodyLong>
                             Du kan trekke samtykket hvis du ikke lenger ønsker å bruke de innloggede tjenestene. Dette
                             kan du gjøre under innstillinger.
                         </BodyLong>

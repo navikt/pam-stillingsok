@@ -20,7 +20,7 @@ import ReportAdPage from "./modules/stilling/rapporter-annonse/page";
 import FavouritesPage from "./modules/favoritter/page";
 import SavedSearchesPage from "./modules/lagrede-sok/page";
 import WithdrawApplicationPage from "./modules/stilling/trekk-soknad/page";
-import "./modules/common/styles/styles.css";
+import "./modules/styles.css";
 import googleTranslateWorkaround from "./modules/common/utils/googleTranslateWorkaround";
 import NotFound from "./modules/not-found";
 

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Loader } from "@navikt/ds-react";
-import "./DelayedSpinner.css";
+import { HStack, Loader } from "@navikt/ds-react";
 
 /**
  * While doing fetch calls on a fast network, a spinner will normally be
@@ -21,8 +20,8 @@ export default function DelayedSpinner() {
     }, []);
 
     return (
-        <div className="DelayedSpinner" role="status">
+        <HStack justify="center" className="mt-8 mb-8" role="status">
             {showSpinner && <Loader size="2xlarge" />}
-        </div>
+        </HStack>
     );
 }

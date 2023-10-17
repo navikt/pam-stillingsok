@@ -6,7 +6,6 @@ import DOMPurify from "isomorphic-dompurify";
 import fixLocationName from "../../../../server/common/fixLocationName";
 import { isValidUrl } from "../../common/utils/utils";
 import getEmployer from "../../../../server/common/getEmployer";
-import "./EmployerDetails.css";
 
 function getEmployerLocation(employer) {
     let employerLocation = null;
@@ -124,9 +123,7 @@ export default function EmployerDetails({ stilling }) {
                 )}
             </dl>
             {properties.employerdescription && (
-                <div className="EmployerDetails__description">
-                    {parse(DOMPurify.sanitize(properties.employerdescription))}
-                </div>
+                <div className="ad-html-content mt-4">{parse(DOMPurify.sanitize(properties.employerdescription))}</div>
             )}
         </section>
     );

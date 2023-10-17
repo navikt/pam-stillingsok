@@ -1,7 +1,6 @@
 import PropTypes from "prop-types";
 import React, { useState } from "react";
-import "./CriteriaPanel.css";
-import { ChevronDownIcon, ChevronRightIcon } from "@navikt/aksel-icons";
+import { Accordion } from "@navikt/ds-react";
 import logAmplitudeEvent from "../../../../common/tracking/amplitude";
 
 function CriteriaPanel({ isOpenByDefault, title, children, panelId }) {
@@ -50,22 +49,10 @@ function CriteriaPanel({ isOpenByDefault, title, children, panelId }) {
     }
 
     return (
-        <div className="Filter__section">
-            <button
-                type="button"
-                className="SearchForm__expand-filter-button"
-                onClick={onPanelClick}
-                aria-expanded={isOpen}
-            >
-                {isOpen ? (
-                    <ChevronDownIcon aria-hidden="true" width="1.5em" height="1.5em" />
-                ) : (
-                    <ChevronRightIcon aria-hidden="true" width="1.5em" height="1.5em" />
-                )}
-                {title}
-            </button>
-            {isOpen && children}
-        </div>
+        <Accordion.Item open={isOpen}>
+            <Accordion.Header onClick={onPanelClick}>{title}</Accordion.Header>
+            <Accordion.Content>{children}</Accordion.Content>
+        </Accordion.Item>
     );
 }
 

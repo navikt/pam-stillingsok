@@ -12,19 +12,23 @@ export default function Summary({ stilling }) {
     return (
         <section className="mb-12">
             {employer && (
-                <HStack className="mb-2" gap="3" align="center">
+                <HStack className="mb-2" gap="3" align="center" wrap={false}>
                     <HStack align="center">
-                        <Buldings3Icon title="Arbeidsgiver" width="1.25em" height="1.25em" />
+                        <Buldings3Icon title="Arbeidsgiver" width="1.5em" height="1.5em" />
                     </HStack>
-                    <BodyLong className="bold large-text">{employer}</BodyLong>
+                    <BodyLong weight="semibold" size="large">
+                        {employer}
+                    </BodyLong>
                 </HStack>
             )}
             {location && (
-                <HStack className="mb-2" gap="3" align="center">
+                <HStack className="mb-2" gap="3" align="center" wrap={false}>
                     <HStack align="center">
-                        <PinIcon title="Sted" width="1.25em" height="1.25em" />
+                        <PinIcon title="Sted" width="1.5em" height="1.5em" />
                     </HStack>
-                    <BodyLong className="bold large-text">{location}</BodyLong>
+                    <BodyLong weight="semibold" size="large">
+                        {location}
+                    </BodyLong>
                 </HStack>
             )}
         </section>

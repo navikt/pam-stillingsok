@@ -4,7 +4,7 @@ import { BodyLong, Button, Heading, HStack, VStack } from "@navikt/ds-react";
 import { EnterIcon } from "@navikt/aksel-icons";
 import { FigureWithKey } from "@navikt/arbeidsplassen-react";
 
-function LoginIsRequired({ onCancel, onLogin }) {
+function LoginIsRequiredPage({ onCancel, onLogin }) {
     return (
         <section className="container-small mt-12 mb-12">
             <VStack align="center">
@@ -32,9 +32,9 @@ function LoginIsRequired({ onCancel, onLogin }) {
     );
 }
 
-LoginIsRequired.propTypes = {
+LoginIsRequiredPage.propTypes = {
     onLogin: PropTypes.func.isRequired,
     onCancel: PropTypes.func,
 };
 
-export default LoginIsRequired;
+export default LoginIsRequiredPage;

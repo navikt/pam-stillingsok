@@ -5,6 +5,7 @@ import { defaultQuery, initQueryWithValuesFromBrowserUrl, toApiQuery, toBrowserQ
 import logAmplitudeEvent from "../common/tracking/amplitude";
 import Search from "./components/Search";
 import useRestoreScroll from "../common/hooks/useRestoreScroll";
+import "./search.css";
 
 function SearchPage() {
     const [initialSearchResponse, initialSearchDispatch] = useFetchReducer();

@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React, { useRef } from "react";
-import { BodyLong, Button, Heading, Modal } from "@navikt/ds-react";
+import { BodyLong, Button, Modal } from "@navikt/ds-react";
 
 export default function AlertModal({
     id,

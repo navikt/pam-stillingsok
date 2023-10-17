@@ -2,7 +2,6 @@ import React, { useContext, useLayoutEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import { Heading } from "@navikt/ds-react";
 import { HistoryContext } from "../../context/HistoryProvider";
-import "./H1WithAutoFocus.css";
 
 /**
  * This view sets focus to h1 title when navigating to a new page.
@@ -28,7 +27,7 @@ function H1WithAutoFocus({ children, className, spacing = true, size = "xlarge" 
             level="1"
             size={size}
             ref={ref}
-            className={["H1WithAutoFocus", className].join(" ")}
+            className={["no-focus-outline", className].join(" ")}
             tabIndex={-1}
             spacing={spacing}
         >

@@ -68,12 +68,12 @@ function RegisterEmailForm({ onClose, onSuccess }) {
     return (
         <form onSubmit={handleFormSubmit}>
             <Modal.Body>
-                <BodyLong role="status" spacing>
-                    <span className="bold">Søket ditt er lagret, men du har ikke registrert e-postadresse.</span>
-                    <br />
-                    For å motta varsler på e-post må du registrere e-postadressen din.
-                </BodyLong>
-
+                <div role="status">
+                    <BodyLong weight="semibold">
+                        Søket ditt er lagret, men du har ikke registrert e-postadresse.
+                    </BodyLong>
+                    <BodyLong spacing>For å motta varsler på e-post må du registrere e-postadressen din.</BodyLong>
+                </div>
                 <TextField
                     type="email"
                     label="Skriv inn e-postadressen din"

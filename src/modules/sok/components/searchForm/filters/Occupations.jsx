@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
-import { Checkbox, Fieldset } from "@navikt/ds-react";
+import { Box, Checkbox, Fieldset } from "@navikt/ds-react";
 import {
     ADD_OCCUPATION_FIRST_LEVEL,
     ADD_OCCUPATION_SECOND_LEVEL,
@@ -83,12 +83,8 @@ function Occupations({ initialValues, updatedValues, query, dispatch }) {
                             {query.occupationFirstLevels &&
                                 query.occupationFirstLevels.includes(firstLevel.key) &&
                                 firstLevel.key !== OCCUPATION_LEVEL_OTHER && (
-                                    <Fieldset
-                                        hideLegend
-                                        legend={`Yrker innen ${firstLevel.key}`}
-                                        className="FilterModal__sub-fieldset FilterModal__columns-2"
-                                    >
-                                        <div>
+                                    <Fieldset hideLegend legend={`Yrker innen ${firstLevel.key}`}>
+                                        <Box paddingInline="8 0">
                                             {firstLevel.occupationSecondLevels &&
                                                 firstLevel.occupationSecondLevels.map((secondLevel) => (
                                                     <Checkbox
@@ -103,7 +99,7 @@ function Occupations({ initialValues, updatedValues, query, dispatch }) {
                                                         })`}
                                                     </Checkbox>
                                                 ))}
-                                        </div>
+                                        </Box>
                                     </Fieldset>
                                 )}
                         </React.Fragment>

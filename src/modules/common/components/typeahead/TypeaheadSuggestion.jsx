@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import "./TypeaheadSuggestion.css";
 
 export default class TypeaheadSuggestion extends React.Component {
     constructor(props) {
@@ -60,5 +59,5 @@ TypeaheadSuggestion.propTypes = {
     active: PropTypes.bool.isRequired,
     index: PropTypes.number.isRequired,
     setSuggestionIndex: PropTypes.func.isRequired,
-    avoidBlur: PropTypes.func.isRequired
+    avoidBlur: PropTypes.func.isRequired,
 };

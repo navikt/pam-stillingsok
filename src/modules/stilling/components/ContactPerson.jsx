@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { BodyLong, CopyButton, Heading, Label, Link as AkselLink, Tooltip } from "@navikt/ds-react";
+import { BodyLong, CopyButton, Heading, HStack, Label, Link as AkselLink, Tooltip } from "@navikt/ds-react";
 import { isValidEmail } from "../../common/utils/utils";
 import logAmplitudeEvent from "../../common/tracking/amplitude";
 
@@ -24,45 +24,47 @@ export default function ContactPerson({ contactList, adId, adTitle }) {
                         {contact.name && <Label as="p">{contact.name}</Label>}
                         {contact.title && <BodyLong>{contact.title}</BodyLong>}
                         {contact.phone && (
-                            <BodyLong className="flex">
-                                {contact.phone}
-                                <Tooltip content="Kopier telefonnummer">
-                                    <CopyButton
-                                        className="ml-0_5"
-                                        size="xsmall"
-                                        copyText={contact.phone}
-                                        variant="action"
-                                        onActiveChange={(state) => {
-                                            if (state) logCopyContactInfoEvent("phone", adId, adTitle);
-                                        }}
-                                    />
-                                </Tooltip>
+                            <BodyLong>
+                                <HStack gap="2" as="span" wrap={false}>
+                                    {contact.phone}
+                                    <Tooltip content="Kopier telefonnummer">
+                                        <CopyButton
+                                            size="xsmall"
+                                            copyText={contact.phone}
+                                            variant="action"
+                                            onActiveChange={(state) => {
+                                                if (state) logCopyContactInfoEvent("phone", adId, adTitle);
+                                            }}
+                                        />
+                                    </Tooltip>
+                                </HStack>
                             </BodyLong>
                         )}
                         {contact.email && (
-                            <BodyLong className="overflow-wrap-anywhere flex">
-                                {isValidEmail(contact.email) ? (
-                                    <AkselLink
-                                        rel="nofollow"
-                                        href={`mailto:${contact.email}`}
-                                        onClick={() => logClickEmailEvent(adId, adTitle)}
-                                    >
-                                        {contact.email}
-                                    </AkselLink>
-                                ) : (
-                                    contact.email
-                                )}
-                                <Tooltip content="Kopier e-postadresse">
-                                    <CopyButton
-                                        className="ml-0_5"
-                                        size="xsmall"
-                                        copyText={contact.email}
-                                        variant="action"
-                                        onActiveChange={(state) => {
-                                            if (state) logCopyContactInfoEvent("email", adId, adTitle);
-                                        }}
-                                    />
-                                </Tooltip>
+                            <BodyLong className="overflow-wrap-anywhere">
+                                <HStack gap="2" as="span" wrap={false}>
+                                    {isValidEmail(contact.email) ? (
+                                        <AkselLink
+                                            rel="nofollow"
+                                            href={`mailto:${contact.email}`}
+                                            onClick={() => logClickEmailEvent(adId, adTitle)}
+                                        >
+                                            {contact.email}
+                                        </AkselLink>
+                                    ) : (
+                                        contact.email
+                                    )}
+                                    <Tooltip content="Kopier e-postadresse">
+                                        <CopyButton
+                                            size="xsmall"
+                                            copyText={contact.email}
+                                            variant="action"
+                                            onActiveChange={(state) => {
+                                                if (state) logCopyContactInfoEvent("email", adId, adTitle);
+                                            }}
+                                        />
+                                    </Tooltip>
+                                </HStack>
                             </BodyLong>
                         )}
                     </div>
