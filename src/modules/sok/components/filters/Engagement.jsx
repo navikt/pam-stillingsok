@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 import { Checkbox, Fieldset } from "@navikt/ds-react";
-import { ADD_ENGAGEMENT_TYPE, REMOVE_ENGAGEMENT_TYPE } from "../../../query";
+import { ADD_ENGAGEMENT_TYPE, REMOVE_ENGAGEMENT_TYPE } from "../../query";
 import UnknownSearchCriteriaValues from "./UnknownSearchCriteriaValues";
 import mergeCount from "../utils/mergeCount";
 import moveCriteriaToBottom from "../utils/moveFacetToBottom";

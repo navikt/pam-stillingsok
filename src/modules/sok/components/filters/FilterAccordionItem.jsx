@@ -1,9 +1,9 @@
 import PropTypes from "prop-types";
 import React, { useState } from "react";
 import { Accordion } from "@navikt/ds-react";
-import logAmplitudeEvent from "../../../../common/tracking/amplitude";
+import logAmplitudeEvent from "../../../common/tracking/amplitude";
 
-function CriteriaPanel({ isOpenByDefault, title, children, panelId }) {
+function FilterAccordionItem({ isOpenByDefault, title, children, panelId }) {
     const [isOpen, setIsOpen] = useState(() => {
         try {
             const found = sessionStorage.getItem(`${panelId}-open`);
@@ -56,15 +56,15 @@ function CriteriaPanel({ isOpenByDefault, title, children, panelId }) {
     );
 }
 
-CriteriaPanel.defaultProps = {
+FilterAccordionItem.defaultProps = {
     isOpenByDefault: true,
 };
 
-CriteriaPanel.propTypes = {
+FilterAccordionItem.propTypes = {
     isOpenByDefault: PropTypes.bool,
     title: PropTypes.string.isRequired,
     children: PropTypes.oneOfType([PropTypes.node, PropTypes.arrayOf(PropTypes.node)]).isRequired,
     panelId: PropTypes.string.isRequired,
 };
 
-export default CriteriaPanel;
+export default FilterAccordionItem;

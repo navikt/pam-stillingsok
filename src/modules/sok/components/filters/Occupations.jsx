@@ -6,7 +6,7 @@ import {
     ADD_OCCUPATION_SECOND_LEVEL,
     REMOVE_OCCUPATION_FIRST_LEVEL,
     REMOVE_OCCUPATION_SECOND_LEVEL,
-} from "../../../query";
+} from "../../query";
 import UnknownSearchCriteriaValues from "./UnknownSearchCriteriaValues";
 import moveCriteriaToBottom from "../utils/moveFacetToBottom";
 import mergeCount from "../utils/mergeCount";
