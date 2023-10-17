@@ -2,7 +2,7 @@ import { Inter } from "next/font/google";
 import "@navikt/ds-css";
 import "@navikt/arbeidsplassen-css";
 import "@navikt/arbeidsplassen-theme";
-import "../modules/common/styles/styles.css";
+import "../modules/styles.css";
 import "./global.css";
 import App from "./App";
 import { getDefaultDescription, getDefaultTitle } from "../../server/common/htmlMeta";

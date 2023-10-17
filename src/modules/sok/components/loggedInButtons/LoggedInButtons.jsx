@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 import { Button } from "@navikt/ds-react";
-import { Link } from "react-router-dom";
+import Link from "../../../../migrating/Link";
 import { ClockIcon, HeartIcon } from "@navikt/aksel-icons";
-import { useHistory } from "react-router";
+import useRouter from "../../../../migrating/useRouter";
 import useToggle from "../../../common/hooks/useToggle";
 import { AuthenticationContext, AuthenticationStatus } from "../../../common/auth/contexts/AuthenticationProvider";
 import { HasAcceptedTermsStatus, UserContext } from "../../../common/user/contexts/UserProvider";
@@ -16,7 +16,7 @@ function LoggedInButtons() {
     const [shouldShowTermsModal, openTermsModal, closeTermsModal] = useToggle();
     const [shouldShowLoginModalFavorites, openLoginModalFavorites, closeLoginModalFavorites] = useToggle();
     const [shouldShowLoginModalSavedSearch, openLoginModalSavedSearch, closeLoginModalSavedSearch] = useToggle();
-    const router = useHistory();
+    const router = useRouter();
 
     function handleClick(e, navigateTo, type) {
         e.preventDefault();
