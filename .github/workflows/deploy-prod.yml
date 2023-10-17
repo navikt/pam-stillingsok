@@ -5,6 +5,8 @@ on:
 
 jobs:
   call-workflow:
+    permissions:
+      contents: write
     uses: navikt/pam-deploy/.github/workflows/deploy-prod.yml@v5
     with:
       NAIS_RESOURCE: .nais/nais.yml
