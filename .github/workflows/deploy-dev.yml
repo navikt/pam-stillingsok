@@ -20,7 +20,7 @@ jobs:
       packages: write
       security-events: write
     with:
-      NODE_VERSION: 14
+      NODE_VERSION: 16
       BUILD_CACHE: npm
       LANGUAGE: node
       NAIS_RESOURCE: .nais/nais.yml
