@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import UserAPI from "../../common/api/UserAPI";
-import { HasAcceptedTermsStatus, UserContext } from "../../common/user/contexts/UserProvider";
+import { HasAcceptedTermsStatus, UserContext } from "../../common/user/UserProvider";
 import useToggle from "../../common/hooks/useToggle";
 import AlertModalWithPageReload from "../../common/components/modals/AlertModalWithPageReload";
 

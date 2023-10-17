@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { BodyLong, Button, Heading, VStack } from "@navikt/ds-react";
-import TermsOfUse from "../../common/user/contexts/TermsOfUse";
+import UserConsentModal from "../../common/user/UserConsentModal";
 
 function UserConsentIsRequired() {
     const [showTermsModal, setShowTermModal] = useState(false);
@@ -26,7 +26,7 @@ function UserConsentIsRequired() {
             </VStack>
 
             {showTermsModal && (
-                <TermsOfUse
+                <UserConsentModal
                     onClose={() => {
                         setShowTermModal(false);
                     }}

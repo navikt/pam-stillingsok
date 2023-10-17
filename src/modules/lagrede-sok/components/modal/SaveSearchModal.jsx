@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { BodyLong, Modal } from "@navikt/ds-react";
 import PropTypes from "prop-types";
-import { UserContext } from "../../../common/user/contexts/UserProvider";
+import { UserContext } from "../../../common/user/UserProvider";
 import UserAPI from "../../../common/api/UserAPI";
 import DelayedSpinner from "../../../common/components/spinner/DelayedSpinner";
 import useToggle from "../../../common/hooks/useToggle";

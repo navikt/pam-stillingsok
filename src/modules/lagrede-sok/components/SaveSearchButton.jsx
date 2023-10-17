@@ -6,9 +6,9 @@ import SearchIsEmptyModal from "./modal/SearchIsEmptyModal";
 import SaveSearchModal from "./modal/SaveSearchModal";
 import { isSearchQueryEmpty, stringifyQuery, toReadableQuery, toSavedSearchQuery } from "../../sok/query";
 import { AuthenticationContext, AuthenticationStatus } from "../../common/auth/contexts/AuthenticationProvider";
-import { HasAcceptedTermsStatus, UserContext } from "../../common/user/contexts/UserProvider";
+import { HasAcceptedTermsStatus, UserContext } from "../../common/user/UserProvider";
 import { extractParam } from "../../common/utils/utils";
-import TermsOfUse from "../../common/user/contexts/TermsOfUse";
+import UserConsentModal from "../../common/user/UserConsentModal";
 import LoginModal from "../../common/auth/components/LoginModal";
 import useToggle from "../../common/hooks/useToggle";
 import { FormModes } from "./modal/SaveSearchForm";
@@ -65,7 +65,9 @@ function SaveSearchButton({ query }) {
 
             {shouldShowLoginModal && <LoginModal onLoginClick={login} onCloseClick={closeLoginModal} />}
 
-            {shouldShowTermsModal && <TermsOfUse onClose={closeTermsModal} onTermsAccepted={handleTermsAccepted} />}
+            {shouldShowTermsModal && (
+                <UserConsentModal onClose={closeTermsModal} onTermsAccepted={handleTermsAccepted} />
+            )}
 
             {shouldShowSaveSearchModal && (
                 <SaveSearchModal

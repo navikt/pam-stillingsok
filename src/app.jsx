@@ -6,7 +6,7 @@ import "@navikt/arbeidsplassen-theme";
 import { Footer, SkipLink } from "@navikt/arbeidsplassen-react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import AuthenticationProvider from "./modules/common/auth/contexts/AuthenticationProvider";
-import UserProvider from "./modules/common/user/contexts/UserProvider";
+import UserProvider from "./modules/common/user/UserProvider";
 import FavouritesProvider from "./modules/favoritter/context/FavouritesProvider";
 import Header from "./modules/common/components/header/Header";
 import { CONTEXT_PATH } from "./modules/common/environment";

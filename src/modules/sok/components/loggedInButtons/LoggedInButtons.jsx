@@ -5,10 +5,10 @@ import { ClockIcon, HeartIcon } from "@navikt/aksel-icons";
 import { useHistory } from "react-router";
 import useToggle from "../../../common/hooks/useToggle";
 import { AuthenticationContext, AuthenticationStatus } from "../../../common/auth/contexts/AuthenticationProvider";
-import { HasAcceptedTermsStatus, UserContext } from "../../../common/user/contexts/UserProvider";
+import { HasAcceptedTermsStatus, UserContext } from "../../../common/user/UserProvider";
 import { CONTEXT_PATH } from "../../../common/environment";
 import LoginModal from "../../../common/auth/components/LoginModal";
-import TermsOfUse from "../../../common/user/contexts/TermsOfUse";
+import UserConsentModal from "../../../common/user/UserConsentModal";
 
 function LoggedInButtons() {
     const { authenticationStatus, loginAndRedirect } = useContext(AuthenticationContext);
@@ -87,7 +87,7 @@ function LoggedInButtons() {
             )}
 
             {shouldShowTermsModal && (
-                <TermsOfUse
+                <UserConsentModal
                     onClose={closeTermsModal}
                     onTermsAccepted={() => {
                         handleTermsAccepted(`${CONTEXT_PATH}/favoritter`);

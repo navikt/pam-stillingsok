@@ -1,13 +1,13 @@
 import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import { Alert, BodyLong, Button, ConfirmationPanel, Modal } from "@navikt/ds-react";
-import UserAPI from "../../api/UserAPI";
+import UserAPI from "../api/UserAPI";
 import { UserContext } from "./UserProvider";
-import { AuthenticationContext } from "../../auth/contexts/AuthenticationProvider";
-import { FetchStatus } from "../../hooks/useFetchReducer";
-import useToggle from "../../hooks/useToggle";
+import { AuthenticationContext } from "../auth/contexts/AuthenticationProvider";
+import { FetchStatus } from "../hooks/useFetchReducer";
+import useToggle from "../hooks/useToggle";
 
-function TermsOfUse({ onClose, onTermsAccepted }) {
+function UserConsentModal({ onClose, onTermsAccepted }) {
     const { userNameAndInfo } = useContext(AuthenticationContext);
     const { updateUser } = useContext(UserContext);
     const [shouldShowError, showError, hideError] = useToggle();
@@ -113,13 +113,13 @@ function TermsOfUse({ onClose, onTermsAccepted }) {
     );
 }
 
-TermsOfUse.defaultProps = {
+UserConsentModal.defaultProps = {
     onTermsAccepted: undefined,
 };
 
-TermsOfUse.propTypes = {
+UserConsentModal.propTypes = {
     onClose: PropTypes.func.isRequired,
     onTermsAccepted: PropTypes.func,
 };
 
-export default TermsOfUse;
+export default UserConsentModal;

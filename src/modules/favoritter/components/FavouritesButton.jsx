@@ -3,13 +3,13 @@ import PropTypes from "prop-types";
 import { Button } from "@navikt/ds-react";
 import { HeartIcon, HeartFillIcon } from "@navikt/aksel-icons";
 import logAmplitudeEvent from "../../common/tracking/amplitude";
-import { HasAcceptedTermsStatus, UserContext } from "../../common/user/contexts/UserProvider";
+import { HasAcceptedTermsStatus, UserContext } from "../../common/user/UserProvider";
 import { AuthenticationContext, AuthenticationStatus } from "../../common/auth/contexts/AuthenticationProvider";
 import { FavouritesContext } from "../context/FavouritesProvider";
 import UserAPI from "../../common/api/UserAPI";
 import getWorkLocation from "../../../../server/common/getWorkLocation";
 import getEmployer from "../../../../server/common/getEmployer";
-import TermsOfUse from "../../common/user/contexts/TermsOfUse";
+import UserConsentModal from "../../common/user/UserConsentModal";
 import LoginModal from "../../common/auth/components/LoginModal";
 import useToggle from "../../common/hooks/useToggle";
 import AlertModalWithPageReload from "../../common/components/modals/AlertModalWithPageReload";
@@ -123,7 +123,9 @@ function FavouritesButton({ id, stilling, className, variant, useShortText = fal
 
             {shouldShowLoginModal && <LoginModal onLoginClick={login} onCloseClick={closeLoginModal} />}
 
-            {shouldShowTermsModal && <TermsOfUse onClose={closeTermsModal} onTermsAccepted={handleTermsAccepted} />}
+            {shouldShowTermsModal && (
+                <UserConsentModal onClose={closeTermsModal} onTermsAccepted={handleTermsAccepted} />
+            )}
 
             {shouldShowErrorDialog && (
                 <AlertModalWithPageReload id="favourites-page-error" onClose={closeErrorDialog} title="Feil">

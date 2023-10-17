@@ -11,7 +11,7 @@ import {
     Modal,
 } from "@navikt/ds-react";
 import PropTypes from "prop-types";
-import { UserContext } from "../../../common/user/contexts/UserProvider";
+import { UserContext } from "../../../common/user/UserProvider";
 import useToggle from "../../../common/hooks/useToggle";
 import { FetchStatus } from "../../../common/hooks/useFetchReducer";
 import { isStringEmpty } from "../../../common/utils/utils";
