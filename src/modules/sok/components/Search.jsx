@@ -6,21 +6,21 @@ import queryReducer, { isSearchQueryEmpty, SET_FROM, stringifyQuery, toBrowserQu
 import { extractParam } from "../../common/utils/utils";
 import { FetchStatus } from "../../common/hooks/useFetchReducer";
 import ErrorMessage from "../../common/components/messages/ErrorMessage";
-import SearchForm from "./searchForm/SearchForm";
+import SearchBoxForm from "./searchBox/SearchBoxForm";
 import SearchResult from "./searchResult/SearchResult";
 import H1WithAutoFocus from "../../common/components/h1WithAutoFocus/H1WithAutoFocus";
 import DoYouWantToSaveSearch from "./howToPanels/DoYouWantToSaveSearch";
 import SelectedFilters from "./selectedFilters/SelectedFilters";
 import Feedback from "./feedback/Feedback";
 import DelayedSpinner from "../../common/components/spinner/DelayedSpinner";
-import useDevice, { Device } from "../../common/hooks/useDevice";
-import FilterForm from "./searchForm/filters/FilterForm";
+import FiltersDesktop from "./filters/FiltersDesktop";
 import SearchResultHeader from "./searchResultHeader/SearchResultHeader";
 import FilterIcon from "./icons/FilterIcon";
 import { AuthenticationContext, AuthenticationStatus } from "../../common/auth/contexts/AuthenticationProvider";
 import LoadingScreen from "../../common/components/loadingScreen/LoadingScreen";
 import logAmplitudeEvent from "../../common/tracking/amplitude";
 import LoggedInButtons from "./loggedInButtons/LoggedInButtons";
+import FiltersMobile from "./filters/FiltersMobile";
 
 export default function Search({ initialSearchResponse, searchResponse, initialQuery, fetchSearch }) {
     const { authenticationStatus } = useContext(AuthenticationContext);
@@ -28,7 +28,6 @@ export default function Search({ initialSearchResponse, searchResponse, initialQ
     const [isFiltersVisible, setIsFiltersVisible] = useState(false);
     const [initialRenderDone, setInitialRenderDone] = useState(false);
 
-    const { device } = useDevice();
     const router = useRouter();
 
     /**
@@ -68,12 +67,13 @@ export default function Search({ initialSearchResponse, searchResponse, initialQ
     }
 
     return (
-        <div className="mt-12">
-            <H1WithAutoFocus className="container-medium mb-12 text-center" spacing={false}>
+        <>
+            <H1WithAutoFocus className="container-medium mt-12 mb-12 text-center" spacing={false}>
                 Søk etter din neste jobb
             </H1WithAutoFocus>
+
             <div className="container-small">
-                <SearchForm
+                <SearchBoxForm
                     query={query}
                     dispatchQuery={queryDispatch}
                     fetchSearch={() => {
@@ -98,7 +98,18 @@ export default function Search({ initialSearchResponse, searchResponse, initialQ
                         >
                             Velg sted, yrke og andre filtre
                         </Button>
+
+                        {isFiltersVisible && (
+                            <FiltersMobile
+                                query={query}
+                                dispatchQuery={queryDispatch}
+                                initialSearchResult={initialSearchResponse.data}
+                                onCloseClick={() => setIsFiltersVisible(false)}
+                                searchResult={searchResponse.data}
+                            />
+                        )}
                     </Show>
+
                     {authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED ? (
                         <LoggedInButtons />
                     ) : (
@@ -108,35 +119,32 @@ export default function Search({ initialSearchResponse, searchResponse, initialQ
                     )}
                 </Stack>
             </div>
+
             <SearchResultHeader
                 isFiltersVisible={isFiltersVisible}
                 searchResponse={searchResponse}
                 query={query}
                 queryDispatch={queryDispatch}
             />
+
             {(initialSearchResponse.status === FetchStatus.NOT_FETCHED ||
                 initialSearchResponse.status === FetchStatus.IS_FETCHING) && <LoadingScreen />}
             {initialSearchResponse.status === FetchStatus.FAILURE && <ErrorMessage />}
             {initialSearchResponse.status === FetchStatus.SUCCESS && (
                 <HGrid
                     columns={{ xs: 1, md: "280px auto", lg: "320px auto" }}
-                    gap={{ xs: "16", sm: "8", md: "12" }}
+                    gap={{ xs: "0", md: "12" }}
                     className="container-large mt-8 mb-16"
                 >
-                    {(device === Device.DESKTOP || (device === Device.MOBILE && isFiltersVisible)) && (
-                        <FilterForm
+                    <Hide below="md">
+                        <FiltersDesktop
                             query={query}
                             dispatchQuery={queryDispatch}
                             initialSearchResult={initialSearchResponse.data}
                             searchResult={searchResponse.data}
-                            fetchSearch={() => {
-                              //  fetchSearch();
-                            }}
-                            isFilterModalOpen={isFiltersVisible}
-                            setIsFilterModalOpen={setIsFiltersVisible}
-                            device={device}
                         />
-                    )}
+                    </Hide>
+
                     <div>
                         <SelectedFilters query={query} queryDispatch={queryDispatch} />
                         {searchResponse.status === FetchStatus.IS_FETCHING && query.from === 0 ? (
@@ -159,6 +167,6 @@ export default function Search({ initialSearchResponse, searchResponse, initialQ
                     </div>
                 </HGrid>
             )}
-        </div>
+        </>
     );
 }

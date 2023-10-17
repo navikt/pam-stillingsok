@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Radio, RadioGroup } from "@navikt/ds-react";
-import { SET_SORTING } from "../../../query";
+import { SET_SORTING } from "../../query";
 
 function Sorting({ query, dispatch }) {
     const [sort, setSort] = useState(query.sort);

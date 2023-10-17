@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 import { Checkbox, Fieldset } from "@navikt/ds-react";
-import { PublishedLabelsEnum, SET_PUBLISHED } from "../../../query";
+import { PublishedLabelsEnum, SET_PUBLISHED } from "../../query";
 import mergeCount from "../utils/mergeCount";
 
 function Published({ dispatch, query, initialValues, updatedValues }) {

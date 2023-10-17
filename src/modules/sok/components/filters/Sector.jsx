@@ -2,12 +2,13 @@ import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 import { Checkbox, Fieldset } from "@navikt/ds-react";
 import UnknownSearchCriteriaValues from "./UnknownSearchCriteriaValues";
-import { ADD_EXTENT, REMOVE_EXTENT } from "../../../query";
+import { ADD_SECTOR, REMOVE_SECTOR } from "../../query";
+import moveCriteriaToBottom from "../utils/moveFacetToBottom";
 import mergeCount from "../utils/mergeCount";
 import findUnknownSearchCriteriaValues from "../utils/findUnknownSearchCriteriaValues";
 
-function Extent({ initialValues, updatedValues, query, dispatch }) {
-    const [values, setValues] = useState(initialValues);
+function Sector({ initialValues, updatedValues, query, dispatch }) {
+    const [values, setValues] = useState(moveCriteriaToBottom(initialValues, "Ikke oppgitt"));
 
     useEffect(() => {
         if (updatedValues) {
@@ -19,35 +20,31 @@ function Extent({ initialValues, updatedValues, query, dispatch }) {
     function handleClick(e) {
         const { value } = e.target;
         if (e.target.checked) {
-            dispatch({ type: ADD_EXTENT, value });
+            dispatch({ type: ADD_SECTOR, value });
         } else {
-            dispatch({ type: REMOVE_EXTENT, value });
+            dispatch({ type: REMOVE_SECTOR, value });
         }
     }
 
-    function labelForExtent(item) {
-        return item.key === "Heltid" ? `${item.key} eller ikke oppgitt` : `${item.key}`;
-    }
-
     return (
-        <Fieldset legend="Heltid/deltid" hideLegend>
+        <Fieldset legend="Sektor" hideLegend>
             <div>
                 {values.map((item) => (
                     <Checkbox
-                        name="extent"
+                        name="sector"
                         key={item.key}
                         value={item.key}
                         onChange={handleClick}
-                        checked={query.extent.includes(item.key)}
+                        checked={query.sector.includes(item.key)}
                     >
-                        {`${labelForExtent(item)} (${item.count})`}
+                        {`${item.key} (${item.count})`}
                     </Checkbox>
                 ))}
 
                 <UnknownSearchCriteriaValues
-                    namePrefix="extent"
-                    unknownValues={findUnknownSearchCriteriaValues(query.extent, initialValues)}
-                    checkedValues={query.extent}
+                    namePrefix="sector"
+                    unknownValues={findUnknownSearchCriteriaValues(query.sector, initialValues)}
+                    checkedValues={query.sector}
                     onClick={handleClick}
                 />
             </div>
@@ -55,18 +52,19 @@ function Extent({ initialValues, updatedValues, query, dispatch }) {
     );
 }
 
-Extent.propTypes = {
-    initialValues: PropTypes.arrayOf(
+Sector.propTypes = {
+    initialValues: PropTypes.arrayOf(PropTypes.shape({})),
+    updatedValues: PropTypes.arrayOf(PropTypes.shape({})),
+    sector: PropTypes.arrayOf(
         PropTypes.shape({
             key: PropTypes.string,
             count: PropTypes.number,
         }),
-    ).isRequired,
-    updatedValues: PropTypes.arrayOf(PropTypes.shape({})),
+    ),
     query: PropTypes.shape({
-        extent: PropTypes.arrayOf(PropTypes.string),
+        sector: PropTypes.arrayOf(PropTypes.string),
     }).isRequired,
     dispatch: PropTypes.func.isRequired,
 };
 
-export default Extent;
+export default Sector;

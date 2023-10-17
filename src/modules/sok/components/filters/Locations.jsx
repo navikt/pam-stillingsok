@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { BodyShort, Box, Checkbox, Fieldset } from "@navikt/ds-react";
-import fixLocationName from "../../../../../../server/common/fixLocationName";
+import fixLocationName from "../../../../../server/common/fixLocationName";
 import {
     ADD_COUNTRY,
     ADD_COUNTY,
@@ -12,7 +12,7 @@ import {
     REMOVE_MUNICIPAL,
     REMOVE_REMOTE,
     SET_INTERNATIONAL,
-} from "../../../query";
+} from "../../query";
 import UnknownSearchCriteriaValues from "./UnknownSearchCriteriaValues";
 import buildLocations from "../utils/buildLocations";
 import buildHomeOfficeValues from "../utils/buildHomeOfficeValues";
