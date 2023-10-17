@@ -1,9 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { BodyShort, Label } from "@navikt/ds-react";
+import { BodyShort, Box, Label } from "@navikt/ds-react";
 import SuperraskSoknadAPI from "../api/SuperraskSoknadAPI";
 import { FetchAction, FetchStatus, useFetchReducer } from "../../../common/hooks/useFetchReducer";
-import "./NewApplication.css";
 import getEmployer from "../../../../../server/common/getEmployer";
 import NewApplicationForm from "./NewApplicationForm";
 import NewApplicationSuccess from "./NewApplicationSuccess";
@@ -37,14 +36,14 @@ function NewApplication({ id, ad, applicationForm }) {
 
     return (
         <div className="mb-16">
-            <div className="NewApplicationForm__green-box mb-12">
-                <div className="container-medium NewApplicationForm__green-box-inner">
+            <Box background="surface-alt-1-subtle" paddingBlock="4" className="mb-12">
+                <div className="container-medium">
                     <Label as="p" className="mb-1">
                         {getEmployer(ad._source)}
                     </Label>
                     <BodyShort>{ad._source.title}</BodyShort>
                 </div>
-            </div>
+            </Box>
             <div className="container-small">
                 {postApplicationResponse.status !== FetchStatus.SUCCESS && (
                     <NewApplicationForm

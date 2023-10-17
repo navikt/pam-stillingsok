@@ -1,14 +1,15 @@
 import React from "react";
-import { BodyShort, Heading, Skeleton } from "@navikt/ds-react";
+import { BodyShort, Box, Heading, HGrid, HStack } from "@navikt/ds-react";
 import PropTypes from "prop-types";
 import SearchResultCount from "../searchResult/SearchResultCount";
 import Sorting from "../searchResult/Sorting";
 
 function SearchResultHeader({ searchResponse, query, queryDispatch }) {
     return (
-        <div className="SearchResultHeader">
-            <div className="Search__number-of-hits-and-sorting-wrapper">
-                <div className="Search__count container-large">
+        <Box background="surface-alt-1-subtle" paddingBlock="4">
+            <HGrid columns={{ xs: 1, lg: "320px auto" }} gap={{ lg: "12" }} className="container-large">
+                <div />
+                <HStack justify="space-between" align="center" gap="4 8">
                     <div>
                         <Heading level="2" size="small" className="mb-1">
                             Søkeresultat
@@ -16,15 +17,13 @@ function SearchResultHeader({ searchResponse, query, queryDispatch }) {
                         {searchResponse && searchResponse.data && searchResponse.data.totalAds >= 0 ? (
                             <SearchResultCount searchResult={searchResponse.data} />
                         ) : (
-                            <BodyShort>
-                                <span className="SearchResultHeader__skeleton" />
-                            </BodyShort>
+                            <BodyShort textColor="subtle">Laster...</BodyShort>
                         )}
                     </div>
                     <Sorting dispatch={queryDispatch} query={query} />
-                </div>
-            </div>
-        </div>
+                </HStack>
+            </HGrid>
+        </Box>
     );
 }
 

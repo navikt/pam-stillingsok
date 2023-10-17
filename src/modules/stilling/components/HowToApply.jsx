@@ -1,10 +1,20 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Link from "../../../migrating/Link";
-import { BodyLong, BodyShort, Button, Heading, Link as AkselLink, CopyButton, Tooltip, Label } from "@navikt/ds-react";
+import {
+    BodyLong,
+    BodyShort,
+    Button,
+    Heading,
+    Link as AkselLink,
+    CopyButton,
+    Tooltip,
+    Label,
+    Box,
+    HStack,
+} from "@navikt/ds-react";
 import { ExternalLinkIcon } from "@navikt/aksel-icons";
 import { formatDate, isValidEmail, isValidUrl } from "../../common/utils/utils";
-import "./HowToApply.css";
 import logAmplitudeEvent from "../../common/tracking/amplitude";
 import FavouritesButton from "../../favoritter/components/FavouritesButton";
 import { CONTEXT_PATH } from "../../common/environment";
@@ -60,7 +70,7 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
 
     if (properties.hasInterestform === "true") {
         return (
-            <section className="full-width mb-10 HowToApply">
+            <Box background="surface-alt-1-subtle" borderRadius="medium" padding="4" className="full-width mb-10">
                 <Heading level="2" size="medium" spacing>
                     Søk på jobben
                 </Heading>
@@ -87,7 +97,6 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                                 });
                             }}
                             to={`${CONTEXT_PATH}/${path}/${stilling._id}/superrask-soknad`}
-                            className="HowToApply__full-width-button"
                         >
                             Gå til superrask søknad
                         </Button>
@@ -98,7 +107,7 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                     <BodyLong className="mt-4">
                         Alternativt kan du sende søknad via e-post til{" "}
                         {isValidEmail(properties.applicationemail) ? (
-                            <div className="inline-flex">
+                            <HStack gap="2" as="span" wrap={false}>
                                 <span>
                                     <AkselLink
                                         onClick={() => {
@@ -112,7 +121,6 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                                 <span>
                                     <Tooltip content="Kopier e-postadresse">
                                         <CopyButton
-                                            className="ml-0_5"
                                             copyText={`${properties.applicationemail}`}
                                             variant="action"
                                             size="xsmall"
@@ -124,7 +132,7 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                                         />
                                     </Tooltip>
                                 </span>
-                            </div>
+                            </HStack>
                         ) : (
                             properties.applicationemail
                         )}
@@ -146,19 +154,19 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                 )}
                 {showFavouriteButton && (
                     <FavouritesButton
-                        className="mt-4 HowToApply__full-width-button"
+                        className="mt-4"
                         variant="secondary"
                         id={stilling._id}
                         stilling={stilling._source}
                     />
                 )}
-            </section>
+            </Box>
         );
     }
 
     if (properties.applicationdue || properties.applicationemail || applicationUrl) {
         return (
-            <section className="full-width mb-10 HowToApply">
+            <Box background="surface-alt-1-subtle" borderRadius="medium" padding="4" className="full-width mb-10">
                 <Heading level="2" size="medium" spacing>
                     Søk på jobben
                 </Heading>
@@ -181,7 +189,7 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                             <dd>
                                 <BodyLong>
                                     {isValidEmail(properties.applicationemail) ? (
-                                        <span className="inline-flex">
+                                        <HStack gap="2" as="span" wrap={false}>
                                             <span>
                                                 <AkselLink
                                                     onClick={() => {
@@ -195,7 +203,6 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                                             <span>
                                                 <Tooltip content="Kopier e-postadresse">
                                                     <CopyButton
-                                                        className="ml-0_5"
                                                         copyText={`${properties.applicationemail}`}
                                                         variant="action"
                                                         size="xsmall"
@@ -207,7 +214,7 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                                                     />
                                                 </Tooltip>
                                             </span>
-                                        </span>
+                                        </HStack>
                                     ) : (
                                         properties.applicationemail
                                     )}
@@ -230,7 +237,6 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                 {applicationUrl && isValidUrl(applicationUrl) && (
                     <div>
                         <Button
-                            className="HowToApply__full-width-button"
                             variant="primary"
                             as="a"
                             href={applicationUrl}
@@ -249,13 +255,13 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                 )}
                 {showFavouriteButton && (
                     <FavouritesButton
-                        className="mt-4 HowToApply__full-width-button"
+                        className="mt-4"
                         variant="secondary"
                         id={stilling._id}
                         stilling={stilling._source}
                     />
                 )}
-            </section>
+            </Box>
         );
     }
     return null;

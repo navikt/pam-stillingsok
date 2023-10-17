@@ -4,7 +4,7 @@ import useScrollToTop from "../../common/hooks/useScrollToTop";
 import useDocumentTitle from "../../common/hooks/useDocumentTitle";
 import Loading from "../../loading";
 import { AuthenticationContext, AuthenticationStatus } from "../../common/auth/contexts/AuthenticationProvider";
-import LoginIsRequired from "../../common/auth/LoginIsRequired";
+import LoginIsRequiredPage from "../../common/auth/components/LoginIsRequiredPage";
 import ReportAd from "./components/ReportAd";
 
 function ReportAdPage({ match }) {
@@ -21,7 +21,7 @@ function ReportAdPage({ match }) {
     }
 
     if (authenticationStatus !== AuthenticationStatus.IS_AUTHENTICATED) {
-        return <LoginIsRequired onLogin={login} />;
+        return <LoginIsRequiredPage onLogin={login} />;
     }
 
     return <ReportAd id={match.params.id} />;

@@ -4,7 +4,7 @@ import useScrollToTop from "../common/hooks/useScrollToTop";
 import { AuthenticationContext, AuthenticationStatus } from "../common/auth/contexts/AuthenticationProvider";
 import Loading from "../loading";
 import Error from "../error";
-import LoginIsRequired from "../common/auth/LoginIsRequired";
+import LoginIsRequiredPage from "../common/auth/components/LoginIsRequiredPage";
 import { HasAcceptedTermsStatus, UserContext } from "../common/user/contexts/UserProvider";
 import UserConsentIsRequired from "./components/UserConsentIsRequired";
 import { FetchAction, FetchStatus, useFetchReducer } from "../common/hooks/useFetchReducer";
@@ -53,7 +53,7 @@ function FavouritesPage() {
     }, [authenticationStatus, hasAcceptedTermsStatus, sortBy]);
 
     if (authenticationStatus === AuthenticationStatus.NOT_AUTHENTICATED) {
-        return <LoginIsRequired onLogin={login} />;
+        return <LoginIsRequiredPage onLogin={login} />;
     }
 
     if (hasAcceptedTermsStatus === HasAcceptedTermsStatus.NOT_ACCEPTED) {

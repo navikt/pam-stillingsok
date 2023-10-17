@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
-import { Tag } from "@navikt/ds-react";
+import { HGrid, Tag } from "@navikt/ds-react";
 import AdDetails from "./AdDetails";
 import AdText from "./AdText";
 import ContactPerson from "./ContactPerson";
@@ -8,7 +8,6 @@ import EmployerDetails from "./EmployerDetails";
 import EmploymentDetails from "./EmploymentDetails";
 import FinnAd from "./FinnAd";
 import HowToApply from "./HowToApply";
-import "./Ad.css";
 import { logStillingVisning } from "../../common/tracking/amplitude";
 import ShareAd from "./ShareAd";
 import Summary from "./Summary";
@@ -32,8 +31,8 @@ function Ad({ ad, shareAdRedirectUrl }) {
 
     return (
         <div className="container-large mb-16 mt-16">
-            <article className="JobPosting__flex">
-                <div className="JobPosting__left">
+            <HGrid as="article" columns={{ xs: 1, lg: "auto 340px" }} gap="16">
+                <div>
                     <H1WithAutoFocus className="overflow-wrap-anywhere">{ad._source.title}</H1WithAutoFocus>
 
                     {ad._source.status !== "ACTIVE" && (
@@ -54,7 +53,7 @@ function Ad({ ad, shareAdRedirectUrl }) {
                     )}
                 </div>
 
-                <div className="JobPosting__right">
+                <div>
                     <HowToApply stilling={ad} showFavouriteButton />
                     {!isFinn && (
                         <ContactPerson contactList={ad._source.contactList} adId={ad._id} adTitle={ad._source.title} />
@@ -62,7 +61,7 @@ function Ad({ ad, shareAdRedirectUrl }) {
                     {!isFinn && <ShareAd source={ad._source} shareAdRedirectUrl={shareAdRedirectUrl} />}
                     <AdDetails id={ad._id} source={ad._source} />
                 </div>
-            </article>
+            </HGrid>
         </div>
     );
 }

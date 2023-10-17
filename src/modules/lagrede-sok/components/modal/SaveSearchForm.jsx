@@ -8,7 +8,7 @@ import {
     RadioGroup,
     TextField,
     Link as AkselLink,
-    HStack,
+    Modal,
 } from "@navikt/ds-react";
 import PropTypes from "prop-types";
 import { UserContext } from "../../../common/user/contexts/UserProvider";
@@ -141,61 +141,63 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
 
     return (
         <form onSubmit={handleFormSubmit}>
-            {defaultFormMode === FormModes.UPDATE_QUERY_ONLY && existingSavedSearch && (
-                <RadioGroup
-                    legend={`Ønsker du å lagre endringene for ${existingSavedSearch.title} eller lagre et nytt søk?`}
-                    onChange={handleFormModeChange}
-                    name="add_or_replace"
-                    value={formMode}
-                >
-                    <Radio value={FormModes.UPDATE_QUERY_ONLY}>Lagre endringene</Radio>
-                    <Radio value={FormModes.ADD}>Lagre nytt søk</Radio>
-                </RadioGroup>
-            )}
+            <Modal.Body>
+                {defaultFormMode === FormModes.UPDATE_QUERY_ONLY && existingSavedSearch && (
+                    <RadioGroup
+                        legend={`Ønsker du å lagre endringene for ${existingSavedSearch.title} eller lagre et nytt søk?`}
+                        onChange={handleFormModeChange}
+                        name="add_or_replace"
+                        value={formMode}
+                    >
+                        <Radio value={FormModes.UPDATE_QUERY_ONLY}>Lagre endringene</Radio>
+                        <Radio value={FormModes.ADD}>Lagre nytt søk</Radio>
+                    </RadioGroup>
+                )}
 
-            {shouldShowForm && (
-                <>
-                    <TextField
-                        id="SavedSearchModal__name"
-                        className="mb-6"
-                        label="Navn*"
-                        onChange={handleTitleChange}
-                        value={title}
-                        error={titleValidationError}
-                        ref={titleRef}
-                    />
-                    <Checkbox className="mb-6" onChange={handleSubscribeChange} checked={notifyType === "EMAIL"}>
-                        Ja, jeg ønsker å motta e-post med varsel om nye treff
-                    </Checkbox>
-                    {notifyType === "EMAIL" && (
-                        <>
-                            <RadioGroup
-                                legend="Varighet på varsel"
-                                onChange={handleDurationChange}
-                                name="duration"
-                                value={duration}
-                            >
-                                <Radio value={30}>30 dager</Radio>
-                                <Radio value={60}>60 dager</Radio>
-                                <Radio value={90}>90 dager</Radio>
-                            </RadioGroup>
-                            {!isStringEmpty(user.data.email) && (
-                                <BodyLong>
-                                    Varsel sendes på e-post. Gå til{" "}
-                                    <AkselLink href="/personinnstillinger">Innstillinger</AkselLink> for å endre
-                                    e-postadresse.
-                                </BodyLong>
-                            )}
-                        </>
-                    )}
-                </>
-            )}
-            {saveStatus === FetchStatus.FAILURE && (
-                <Alert variant="error" className="mb-4 mt-4" role="alert">
-                    Noe gikk galt ved lagring, forsøk igjen eller last siden på nytt
-                </Alert>
-            )}
-            <HStack gap="4" className="mt-8">
+                {shouldShowForm && (
+                    <>
+                        <TextField
+                            id="SavedSearchModal__name"
+                            className="mb-6"
+                            label="Navn*"
+                            onChange={handleTitleChange}
+                            value={title}
+                            error={titleValidationError}
+                            ref={titleRef}
+                        />
+                        <Checkbox className="mb-6" onChange={handleSubscribeChange} checked={notifyType === "EMAIL"}>
+                            Ja, jeg ønsker å motta e-post med varsel om nye treff
+                        </Checkbox>
+                        {notifyType === "EMAIL" && (
+                            <>
+                                <RadioGroup
+                                    legend="Varighet på varsel"
+                                    onChange={handleDurationChange}
+                                    name="duration"
+                                    value={duration}
+                                >
+                                    <Radio value={30}>30 dager</Radio>
+                                    <Radio value={60}>60 dager</Radio>
+                                    <Radio value={90}>90 dager</Radio>
+                                </RadioGroup>
+                                {!isStringEmpty(user.data.email) && (
+                                    <BodyLong>
+                                        Varsel sendes på e-post. Gå til{" "}
+                                        <AkselLink href="/personinnstillinger">Innstillinger</AkselLink> for å endre
+                                        e-postadresse.
+                                    </BodyLong>
+                                )}
+                            </>
+                        )}
+                    </>
+                )}
+                {saveStatus === FetchStatus.FAILURE && (
+                    <Alert variant="error" className="mb-4 mt-4" role="alert">
+                        Noe gikk galt ved lagring, forsøk igjen eller last siden på nytt
+                    </Alert>
+                )}
+            </Modal.Body>
+            <Modal.Footer>
                 <Button
                     variant="primary"
                     type="submit"
@@ -207,7 +209,7 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
                 <Button variant="secondary" type="button" onClick={onClose}>
                     Avbryt
                 </Button>
-            </HStack>
+            </Modal.Footer>
         </form>
     );
 }

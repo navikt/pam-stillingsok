@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useState } from "react";
 import PropTypes from "prop-types";
-import { Alert, BodyLong, Button, Checkbox, Heading, Link as AkselLink, Textarea } from "@navikt/ds-react";
+import { Alert, BodyLong, Box, Button, Checkbox, Heading, Link as AkselLink, Textarea } from "@navikt/ds-react";
 import logAmplitudeEvent from "../../../common/tracking/amplitude";
 import UserAPI from "../../../common/api/UserAPI";
 import H1WithAutoFocus from "../../../common/components/h1WithAutoFocus/H1WithAutoFocus";
@@ -120,36 +120,36 @@ function ReportAd({ id }) {
                                 Regelbrudd
                             </Checkbox>
 
-                            {violation &&
-                                violationCategories.map((c) => (
-                                    <Checkbox
-                                        className="ml-2"
-                                        key={c.key}
-                                        value={c.key}
-                                        onChange={handleViolationCategoryCheck}
-                                        checked={violationCategory === c.key}
-                                    >
-                                        {c.label}
-                                    </Checkbox>
-                                ))}
-
+                            <Box paddingInline="8 0">
+                                {violation &&
+                                    violationCategories.map((c) => (
+                                        <Checkbox
+                                            key={c.key}
+                                            value={c.key}
+                                            onChange={handleViolationCategoryCheck}
+                                            checked={violationCategory === c.key}
+                                        >
+                                            {c.label}
+                                        </Checkbox>
+                                    ))}
+                            </Box>
                             <Checkbox name="svindel" onChange={handleScamCheck} checked={scam === true}>
                                 Mistanke om svindel
                             </Checkbox>
 
-                            {scam &&
-                                scamCategories.map((c) => (
-                                    <Checkbox
-                                        className="ml-2"
-                                        key={c.key}
-                                        value={c.key}
-                                        onChange={handleScamCategoryCheck}
-                                        checked={scamCategory === c.key}
-                                    >
-                                        {c.label}
-                                    </Checkbox>
-                                ))}
-
+                            <Box paddingInline="8 0">
+                                {scam &&
+                                    scamCategories.map((c) => (
+                                        <Checkbox
+                                            key={c.key}
+                                            value={c.key}
+                                            onChange={handleScamCategoryCheck}
+                                            checked={scamCategory === c.key}
+                                        >
+                                            {c.label}
+                                        </Checkbox>
+                                    ))}
+                            </Box>
                             <br />
 
                             <Textarea

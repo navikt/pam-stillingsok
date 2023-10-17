@@ -1,0 +1,51 @@
+html,
+body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    background: var(--a-surface-default);
+    color: var(--a-text-default);
+    font-family: var(--a-font-family);
+}
+
+#app {
+    height: 100%;
+}
+
+.overflow-wrap-anywhere {
+    overflow-wrap: anywhere;
+}
+
+.inline-select {
+    display: flex;
+    align-items: center;
+}
+
+.inline-select label {
+    white-space: nowrap;
+    margin-bottom: 0;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.height-100vh {
+    height: 100vh;
+}
+
+.dl dt {
+    margin: 0;
+    overflow-wrap: anywhere;
+}
+
+.dl dd {
+    margin: 0 0 1rem 0;
+    overflow-wrap: anywhere;
+}
+
+.no-focus-outline:focus {
+    outline: 0;
+}

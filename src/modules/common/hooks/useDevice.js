@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export const MOBILE_MAX_SIZE = 768;
+export const MOBILE_MAX_SIZE = 767;
 
 export const Device = {
     MOBILE: "mobile",

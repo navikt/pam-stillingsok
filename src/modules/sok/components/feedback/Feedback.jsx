@@ -44,7 +44,7 @@ function Feedback({ query }) {
                         </FeedbackButton>
                     </HStack>
                 ) : (
-                    <BodyLong className="bold">Takk for tilbakemeldingen!</BodyLong>
+                    <BodyLong weight="semibold">Takk for tilbakemeldingen!</BodyLong>
                 )}
 
                 <BodyLong>Er det noe du savner eller synes kunne vært bedre, så vil vi gjerne høre det.</BodyLong>

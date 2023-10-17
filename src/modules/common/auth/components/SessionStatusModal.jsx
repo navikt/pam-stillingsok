@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { BodyLong, Button, Heading, Modal } from "@navikt/ds-react";
+import { BodyLong, Button, Heading, Modal, HStack, VStack } from "@navikt/ds-react";
 import { FigureWithKey } from "@navikt/arbeidsplassen-react";
-import "./SessionStatusModal.css";
 import { CONTEXT_PATH } from "../../environment";
 
 function SessionStatusModal({ markAsLoggedOut, setHasBeenLoggedIn, login, logout, timeoutLogout, hasBeenLoggedIn }) {
@@ -96,26 +95,36 @@ function SessionStatusModal({ markAsLoggedOut, setHasBeenLoggedIn, login, logout
     if (!isTimeoutModalOpen) return null;
 
     return (
-        <Modal role="alertdialog" open aria-label={title} closeButton={false} onClose={() => {}}>
-            <section className="LoginRequiredMessage">
-                <Heading level="1" size="large" className="mb-2">
+        <Modal
+            width="small"
+            role="alertdialog"
+            open
+            aria-label={title}
+            onCancel={(e) => e.preventDefault()}
+            onClose={() => {}}
+        >
+            <Modal.Header closeButton={false}>
+                <Heading level="1" size="medium" className="mb-2">
                     {title}
                 </Heading>
-                <BodyLong className="LoginRequiredMessage__text mb-8 TimeoutModalBody">{message}</BodyLong>
-                <div className="mb-8">
-                    <FigureWithKey />
-                </div>
+            </Modal.Header>
+            <Modal.Body>
+                <VStack gap="6">
+                    <BodyLong>{message}</BodyLong>
+                    <HStack justify="center">
+                        <FigureWithKey />
+                    </HStack>
+                </VStack>
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant="primary" onClick={action}>
+                    {actionText}
+                </Button>
 
-                <div className="login-buttons-wrapper">
-                    <Button variant="primary" onClick={action}>
-                        {actionText}
-                    </Button>
-
-                    <Button variant="secondary" onClick={logout}>
-                        {closeText}
-                    </Button>
-                </div>
-            </section>
+                <Button variant="secondary" onClick={logout}>
+                    {closeText}
+                </Button>
+            </Modal.Footer>
         </Modal>
     );
 }

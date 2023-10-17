@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import parse from "html-react-parser";
-import "./AdText.css";
 import DOMPurify from "isomorphic-dompurify";
 import { containsEmail, extractEmail, isValidEmail, mailtoInString } from "../../common/utils/utils";
 
@@ -27,7 +26,7 @@ export default function AdText({ adText }) {
     if (adText) {
         const preprocessedAd = preprocessAd(adText);
         const cleanHtml = DOMPurify.sanitize(preprocessedAd);
-        return <section className="AdText">{parse(cleanHtml)}</section>;
+        return <section className="ad-html-content">{parse(cleanHtml)}</section>;
     }
     return null;
 }
