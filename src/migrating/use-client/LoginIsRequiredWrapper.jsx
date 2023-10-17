@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import LoginIsRequired from "../../modules/common/auth/LoginIsRequired";
+import LoginIsRequiredPage from "../../modules/common/auth/components/LoginIsRequiredPage";
 
 export default function () {
-    return <LoginIsRequired />;
+    return <LoginIsRequiredPage />;
 }
