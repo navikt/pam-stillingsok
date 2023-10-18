@@ -113,11 +113,9 @@ const writeEnvironmentVariablesToFile = () => {
         `window.__SENTRY_DSN__="${properties.SENTRY_DSN}";\n` +
         `window.__APP_VERSION__="${properties.APP_VERSION}";\n`;
 
-    fs.mkdir(path.resolve(rootDirectory, "dist/js"), { recursive: true }, (err) => {
-        if (err) throw err;
-    });
+    fs.mkdirSync(path.resolve(rootDirectory, "dist/js"), { recursive: true });
 
-    fs.writeFile(path.resolve(rootDirectory, "dist/js/env.js"), fileContent, (err) => {
+    fs.writeFileSync(path.resolve(rootDirectory, "dist/js/env.js"), fileContent, (err) => {
         if (err) throw err;
     });
 };
