@@ -8,7 +8,7 @@
         "wonderwall": "scripts/wonderwall.sh",
         "start": "concurrently \"npm run wonderwall\" \"npm run start-webpack\" \"npm run start-express\"",
         "clean-build": "rimraf ./dist",
-        "build": "npm run clean-build && webpack -p",
+        "build": "npm run clean-build && webpack --mode production",
         "start-express": "node server/server.js",
         "start-webpack": "webpack --watch --config webpack.config.dev.js",
         "start:dependencies": "docker-compose up --build --remove-orphans mock-oauth2-server redis",
