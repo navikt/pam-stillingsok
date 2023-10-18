@@ -1,4 +1,4 @@
-FROM navikt/node-express:16
+FROM ghcr.io/navikt/baseimages/node-express:18
 
 USER root
 RUN sed -i 's/^apprunner:x:[0-9]*:/apprunner:x:1069:/' /etc/group
