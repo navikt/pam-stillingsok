@@ -1,22 +1,17 @@
-FROM ghcr.io/navikt/baseimages/node-express:18
-
-USER root
-RUN sed -i 's/^apprunner:x:[0-9]*:/apprunner:x:1069:/' /etc/group
-RUN sed -i 's|^apprunner:x:[0-9]*:[0-9]*:\([^:]*\):/var/server|apprunner:x:1069:1069:\1:/app|' /etc/passwd
-RUN rm /run-script.sh   # /entry-point.sh from base image prefers this file, but we discard it to use our own CMD.
+FROM node:20-alpine as build
+ENV TZ=Europe/Oslo
 WORKDIR /app
-RUN chown apprunner:apprunner /app
-USER apprunner
+COPY package.json package-lock.json ./
+RUN --mount=type=secret,id=optional_secret \
+  npm config set //npm.pkg.github.com/:_authToken=$(cat /run/secrets/optional_secret)
+RUN npm ci --prefer-offline --no-audit
+COPY . .
+RUN npm run build
 
-COPY --chown=apprunner package.json ./
-COPY --chown=apprunner server/ ./server
-COPY --chown=apprunner dist/ ./dist
-COPY --chown=apprunner node_modules/ ./node_modules
-COPY --chown=apprunner views/ ./views
-COPY --chown=apprunner images/ ./images
 
-VOLUME /app
-
+FROM gcr.io/distroless/nodejs20-debian12
+COPY --from=build --chown=nonroot:nonroot /app /app
+WORKDIR /app
+USER nonroot
 EXPOSE 8080
-
-CMD ["npm", "run", "start-express"]
+CMD ["server/server.js"]
