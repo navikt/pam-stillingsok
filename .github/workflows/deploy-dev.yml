@@ -20,9 +20,9 @@ jobs:
       packages: write
       security-events: write
     with:
-      NODE_VERSION: 18
       BUILD_CACHE: npm
-      LANGUAGE: node
+      LANGUAGE: ""
+      BUILD_SCRIPT: ""
       NAIS_RESOURCE: .nais/nais.yml
       NAIS_VARS: .nais/dev.json
       SKIP_DRAFT_RELEASE: ${{ github.ref_name != 'master' }}
