@@ -77,7 +77,11 @@ function SelectedFilters({ query, queryDispatch }) {
 
     if (query.q) {
         chips.push(
-            <Chips.Removable variant="neutral" onClick={() => queryDispatch({ type: SET_SEARCH_STRING, value: "" })}>
+            <Chips.Removable
+                key={`q-${query.q}`}
+                variant="neutral"
+                onClick={() => queryDispatch({ type: SET_SEARCH_STRING, value: "" })}
+            >
                 {query.q}
             </Chips.Removable>,
         );

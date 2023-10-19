@@ -211,15 +211,17 @@ function filterLocation(counties, municipals, countries, international = false) 
             if (c.municipals.length > 0) {
                 const mustObject = {
                     bool: {
-                        should: [{
-                            bool: {
-                                must_not: {
-                                    exists: {
-                                        field: "locationList.municipal.keyword"
-                                    }
-                                }
-                            }
-                        }],
+                        should: [
+                            {
+                                bool: {
+                                    must_not: {
+                                        exists: {
+                                            field: "locationList.municipal.keyword",
+                                        },
+                                    },
+                                },
+                            },
+                        ],
                     },
                 };
 
@@ -314,10 +316,10 @@ exports.suggestionsTemplate = (match, minLength) => ({
 });
 
 /* Experimental alternative relevance model with AND-logic and using cross-fields matching. */
-function mainQueryConjunctionTuning(q, match) {
+function mainQueryConjunctionTuning(q, searchFields) {
     const matchFields = ["category_no^2", "title_no^1", "keywords_no^0.8", "searchtags_no^0.3"];
 
-    if (match !== "occupation") {
+    if (searchFields !== "occupation") {
         matchFields.push("geography_all_no^0.2");
         matchFields.push("adtext_no^0.2");
         matchFields.push("employerdescription_no^0.1");

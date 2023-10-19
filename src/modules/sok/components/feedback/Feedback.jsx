@@ -13,6 +13,7 @@ function Feedback({ query }) {
             logAmplitudeEvent("rate search result relevance", {
                 rating: text,
                 hasSearchString: query.q !== undefined && query.q.length > 0,
+                field: query.field ? query.field : "all",
             });
         } catch (err) {
             // ignore
@@ -60,7 +61,10 @@ function Feedback({ query }) {
 }
 
 Feedback.propTypes = {
-    query: PropTypes.shape({ q: PropTypes.string }).isRequired,
+    query: PropTypes.shape({
+        q: PropTypes.string,
+        field: PropTypes.string,
+    }).isRequired,
 };
 
 export default Feedback;

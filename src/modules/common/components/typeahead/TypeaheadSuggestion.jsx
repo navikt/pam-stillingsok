@@ -1,5 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { MagnifyingGlassIcon } from "@navikt/aksel-icons";
+import { HStack } from "@navikt/ds-react";
 
 export default class TypeaheadSuggestion extends React.Component {
     constructor(props) {
@@ -8,7 +10,7 @@ export default class TypeaheadSuggestion extends React.Component {
     }
 
     onClick = () => {
-        this.props.onClick(this.value);
+        this.props.onClick(this.props.value);
     };
 
     onMouseMove = () => {
@@ -30,20 +32,31 @@ export default class TypeaheadSuggestion extends React.Component {
                 onKeyDown={this.props.avoidBlur}
                 className="TypeaheadSuggestion typo-normal"
             >
-                {matchFound ? (
+                {this.props.isSearchInWholeAdOption ? (
                     <span
-                        className={`TypeaheadSuggestion__inner ${this.props.active && "TypeaheadSuggestion--active"}`}
+                        className={`TypeaheadSuggestion__inner TypeaheadSuggestion__last ${
+                            this.props.active && "TypeaheadSuggestion--active"
+                        }`}
                     >
-                        <span className="TypeaheadSuggestion__substring">
-                            {this.value.substring(0, this.props.match.length)}
-                        </span>
-                        <span>{this.value.substring(this.props.match.length)}</span>
+                        <HStack as="span" align="center" gap="1">
+                            <MagnifyingGlassIcon aria-hidden="true" height="1.25em" width="1.25em" />
+                            Søk på <b>&laquo;{this.value}&raquo;</b> i hele annonsen
+                        </HStack>
                     </span>
                 ) : (
                     <span
                         className={`TypeaheadSuggestion__inner ${this.props.active && "TypeaheadSuggestion--active"}`}
                     >
-                        {this.value}
+                        {matchFound ? (
+                            <>
+                                <span className="TypeaheadSuggestion__substring">
+                                    {this.value.substring(0, this.props.match.length)}
+                                </span>
+                                <span>{this.value.substring(this.props.match.length)}</span>
+                            </>
+                        ) : (
+                            this.value
+                        )}
                     </span>
                 )}
             </li>

@@ -1,18 +1,17 @@
 import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import { SET_SEARCH_STRING } from "../../query";
+import { SET_SEARCH_FIELDS, SET_SEARCH_STRING } from "../../query";
 import Typeahead from "../../../common/components/typeahead/Typeahead";
 import { FetchAction, useFetchReducer } from "../../../common/hooks/useFetchReducer";
-import useDebounce from "../../../common/hooks/useDebounce";
 import SearchAPI from "../../../common/api/SearchAPI";
 import capitalizeFirstLetter from "../../../common/utils/capitalizeFirstLetter";
+import logAmplitudeEvent from "../../../common/tracking/amplitude";
 
 function SearchBox({ dispatch, query }) {
     const [value, setValue] = useState("");
-    const debouncedValue = useDebounce(value);
     const initialRender = useRef(true);
     const [suggestionsResponse, suggestionsDispatch] = useFetchReducer([]);
-    const MINIMUM_LENGTH = 3;
+    const MINIMUM_LENGTH = 1;
 
     /**
      * Use new Set to remove duplicates across category_suggest and searchtags_suggest
@@ -33,7 +32,7 @@ function SearchBox({ dispatch, query }) {
     }
 
     function fetchSuggestions() {
-        SearchAPI.get("api/suggestions", { match: value, minLength: MINIMUM_LENGTH })
+        SearchAPI.getSuggestions({ match: value, minLength: MINIMUM_LENGTH })
             .then((response) => {
                 suggestionsDispatch({ type: FetchAction.RESOLVE, data: removeDuplicateSuggestions(response) });
             })
@@ -49,37 +48,72 @@ function SearchBox({ dispatch, query }) {
     useEffect(() => {
         if (initialRender.current) {
             initialRender.current = false;
-        } else if (debouncedValue && debouncedValue.length >= MINIMUM_LENGTH) {
-            fetchSuggestions(debouncedValue);
+        } else if (value && value.length >= MINIMUM_LENGTH) {
+            fetchSuggestions(value);
         } else {
             suggestionsDispatch({ type: FetchAction.SET_DATA, data: [] });
         }
-    }, [debouncedValue]);
+    }, [value]);
 
     function handleTypeAheadValueChange(newValue) {
         setValue(newValue);
     }
 
-    function handleTypeAheadSuggestionSelected(newValue) {
+    function handleTypeAheadSuggestionSelected(newValue, shouldSearchInWholeAd) {
         setValue(newValue);
-        //  dispatch({ type: SET_MATCH, value: "occupation" });
+        if (shouldSearchInWholeAd) {
+            dispatch({ type: SET_SEARCH_FIELDS, value: undefined });
+        } else {
+            dispatch({ type: SET_SEARCH_FIELDS, value: "occupation" });
+        }
+
+        try {
+            // Track only search box values if they are suggestions from our own api.
+            // Do not track other values if they free text entered by user.
+            // This amplitude event can be removed if it still exists after december 2023
+            const found = suggestionsResponse.data.find((it) => it.toLowerCase() === newValue.toLowerCase());
+            if (found) {
+                logAmplitudeEvent("selected typeahead suggestion", { value: found });
+                console.log(found);
+            }
+        } catch (err) {
+            // ignore
+        }
+
         dispatch({ type: SET_SEARCH_STRING, value: newValue });
     }
 
     function handleSearchButtonClick() {
-        //   dispatch({ type: SET_MATCH, value: undefined });
+        const found = suggestionsResponse.data.find((it) => it.toLowerCase() === value.toLowerCase());
+        if (found) {
+            dispatch({ type: SET_SEARCH_FIELDS, value: "occupation" });
+        } else {
+            dispatch({ type: SET_SEARCH_FIELDS, value: undefined });
+        }
         dispatch({ type: SET_SEARCH_STRING, value });
+    }
+
+    function onClear() {
+        dispatch({ type: SET_SEARCH_STRING, value: "" });
+    }
+
+    // Add the current value as last suggestion entry,
+    // This will show a typeahead suggestion like this: "Søk på {value} i hele annonsen"
+    const allSuggestions = [...suggestionsResponse.data];
+    if ((value && value.length > 1) || (value.length > 0 && suggestionsResponse.data.length > 0)) {
+        allSuggestions.push(value);
     }
 
     return (
         <div className="SearchBox">
             <Typeahead
+                onClear={onClear}
                 id="search-form-fritekst-input"
                 name="q"
                 autoComplete="off"
                 onSelect={handleTypeAheadSuggestionSelected}
                 onChange={handleTypeAheadValueChange}
-                suggestions={suggestionsResponse.data}
+                suggestions={value.length > 0 ? allSuggestions : []}
                 value={value || ""}
                 onSearchButtonClick={handleSearchButtonClick}
             />

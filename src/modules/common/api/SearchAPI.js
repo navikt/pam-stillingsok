@@ -8,6 +8,9 @@ let latestInitialResponse;
 let latestLocationsResponse;
 let latestAdResponse;
 
+let suggestionsCache = [];
+const CACHE_MAX_SIZE = 100;
+
 async function get(url, query = {}) {
     const queryString = stringifyQuery(query);
     let response;
@@ -69,8 +72,23 @@ async function search(query) {
     return latestSearchResponse.response;
 }
 
+async function getSuggestions(query) {
+    const url = "api/suggestions";
+    const queryString = stringifyQuery(query);
+    const cachedUrl = `${CONTEXT_PATH}/${url}${queryString}`;
+
+    const cached = suggestionsCache.find((c) => c.cachedUrl === cachedUrl);
+    if (cached) {
+        return cached.response;
+    }
+    const response = await get(url, query);
+    suggestionsCache = [{ cachedUrl, response }, ...suggestionsCache].slice(0, CACHE_MAX_SIZE);
+    return response;
+}
+
 const SearchAPI = {
     get,
+    getSuggestions,
     getAd,
     getLocations,
     search,
