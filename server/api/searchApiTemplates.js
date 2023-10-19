@@ -495,7 +495,7 @@ exports.searchTemplate = (query) => {
         occupationFirstLevels,
         occupationSecondLevels,
         international,
-        match,
+        match: fields,
     } = query;
     let { sort, q, operator } = query;
 
@@ -516,7 +516,7 @@ exports.searchTemplate = (query) => {
         from: from || 0,
         size: size || 50,
         track_total_hits: true,
-        query: mainQueryTemplateFunc(q, match),
+        query: mainQueryTemplateFunc(q, fields),
         post_filter: {
             bool: {
                 filter: [
