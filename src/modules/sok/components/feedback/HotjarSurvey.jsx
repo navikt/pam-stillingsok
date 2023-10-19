@@ -42,8 +42,8 @@ function HotjarSurvey() {
 
     return (
         <Box className="mb-12" padding={{ xs: "4", md: "6" }} background="surface-alt-2-subtle" borderRadius="small">
-            <HStack justify="space-between" align="start" wrap={false} className="mb-1">
-                <Heading level="2" size="small">
+            <HStack justify="space-between" align="start" wrap={false}>
+                <Heading level="2" size="small" spacing>
                     Hjelp oss med å forbedre jobbannonsene på arbeidsplassen.no
                 </Heading>
                 <Button
