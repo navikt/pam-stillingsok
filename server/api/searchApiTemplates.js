@@ -495,7 +495,7 @@ exports.searchTemplate = (query) => {
         occupationFirstLevels,
         occupationSecondLevels,
         international,
-        match: fields,
+        fields,
     } = query;
     let { sort, q, operator } = query;
 
