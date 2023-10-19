@@ -74,13 +74,7 @@ export default function Search({ initialSearchResponse, searchResponse, initialQ
             </H1WithAutoFocus>
 
             <div className="container-small">
-                <SearchBoxForm
-                    query={query}
-                    dispatchQuery={queryDispatch}
-                    fetchSearch={() => {
-                        fetchSearch();
-                    }}
-                />
+                <SearchBoxForm query={query} dispatchQuery={queryDispatch} />
                 <Stack
                     gap="2"
                     direction={{ xs: "column", md: "row" }}

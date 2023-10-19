@@ -6,13 +6,13 @@ export default function AlertModal({
     id,
     title,
     children,
-    confirmLabel,
-    cancelLabel,
+    confirmLabel = "Fortsett",
+    cancelLabel = "Avbryt",
     onConfirm,
     onCancel,
-    spinner,
-    useOnlyCancelButton,
-    showButtons,
+    spinner = false,
+    useOnlyCancelButton = false,
+    showButtons = true,
     width = "medium",
 }) {
     const cancelButtonRef = useRef();
@@ -49,15 +49,6 @@ export default function AlertModal({
         </Modal>
     );
 }
-
-AlertModal.defaultProps = {
-    confirmLabel: "Fortsett",
-    cancelLabel: "Avbryt",
-    spinner: false,
-    useOnlyCancelButton: false,
-    onConfirm: undefined,
-    showButtons: true,
-};
 
 AlertModal.propTypes = {
     id: PropTypes.string.isRequired,
