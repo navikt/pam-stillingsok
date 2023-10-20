@@ -209,21 +209,29 @@ function filterLocation(counties, municipals, countries, international = false) 
             ];
 
             if (c.municipals.length > 0) {
-                const mustObject = {
+                let mustObject = {
                     bool: {
-                        should: [
-                            {
-                                bool: {
-                                    must_not: {
-                                        exists: {
-                                            field: "locationList.municipal.keyword",
+                        should: [],
+                    },
+                };
+
+                if (countries && countries.includes("Hack")) {
+                    mustObject = {
+                        bool: {
+                            should: [
+                                {
+                                    bool: {
+                                        must_not: {
+                                            exists: {
+                                                field: "locationList.municipal.keyword",
+                                            },
                                         },
                                     },
                                 },
-                            },
-                        ],
-                    },
-                };
+                            ],
+                        },
+                    };
+                }
 
                 c.municipals.forEach((m) => {
                     mustObject.bool.should.push({
