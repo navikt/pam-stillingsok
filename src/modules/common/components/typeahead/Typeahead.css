@@ -52,6 +52,12 @@
     text-overflow: ellipsis;
 }
 
+.TypeaheadSuggestion__truncate {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
 .TypeaheadSuggestion__last {
     border-top: 1px solid var(--a-border-divider);
 }

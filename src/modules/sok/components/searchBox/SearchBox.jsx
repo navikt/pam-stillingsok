@@ -74,7 +74,6 @@ function SearchBox({ dispatch, query }) {
             const found = suggestionsResponse.data.find((it) => it.toLowerCase() === newValue.toLowerCase());
             if (found) {
                 logAmplitudeEvent("selected typeahead suggestion", { value: found });
-                console.log(found);
             }
         } catch (err) {
             // ignore

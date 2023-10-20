@@ -38,9 +38,11 @@ export default class TypeaheadSuggestion extends React.Component {
                             this.props.active && "TypeaheadSuggestion--active"
                         }`}
                     >
-                        <HStack as="span" align="center" gap="1">
+                        <HStack as="span" align="center" gap="1" wrap={false}>
                             <MagnifyingGlassIcon aria-hidden="true" height="1.25em" width="1.25em" />
-                            Søk på <b>&laquo;{this.value}&raquo;</b> i hele annonsen
+                            <span className="TypeaheadSuggestion__truncate">
+                                Søk på <b>&laquo;{this.value}&raquo;</b> i hele annonsen
+                            </span>
                         </HStack>
                     </span>
                 ) : (
