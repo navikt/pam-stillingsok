@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
-import { HGrid, Tag } from "@navikt/ds-react";
+import { Box, HGrid, Tag } from "@navikt/ds-react";
 import AdDetails from "./AdDetails";
 import AdText from "./AdText";
 import ContactPerson from "./ContactPerson";
@@ -30,7 +30,7 @@ function Ad({ ad, shareAdRedirectUrl }) {
     const isFinn = ad && ad._source && ad._source.source && ad._source.source.toLowerCase() === "finn";
 
     return (
-        <div className="container-large mb-16 mt-16">
+        <Box className="container-large" paddingBlock={{ xs: "4 12", md: "16" }}>
             <HGrid as="article" columns={{ xs: 1, lg: "auto 340px" }} gap="16">
                 <div>
                     <H1WithAutoFocus className="overflow-wrap-anywhere">{ad._source.title}</H1WithAutoFocus>
@@ -62,7 +62,7 @@ function Ad({ ad, shareAdRedirectUrl }) {
                     <AdDetails id={ad._id} source={ad._source} />
                 </div>
             </HGrid>
-        </div>
+        </Box>
     );
 }
 

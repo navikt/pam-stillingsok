@@ -52,7 +52,7 @@ function LoggedInButtons() {
                 }}
                 icon={<ClockIcon aria-hidden="true" />}
             >
-                Bruk et lagret søk
+                Lagrede søk
             </Button>
 
             <Button
@@ -65,7 +65,7 @@ function LoggedInButtons() {
                 }}
                 icon={<HeartIcon aria-hidden="true" />}
             >
-                Mine favoritter
+                Favoritter
             </Button>
 
             {shouldShowLoginModalSavedSearch && (

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useReducer, useState } from "react";
-import { Button, HGrid, Hide, Show, Stack } from "@navikt/ds-react";
+import { Box, Button, HGrid, Hide, HStack, Show, Stack } from "@navikt/ds-react";
 import { useHistory } from "react-router";
 import { CONTEXT_PATH } from "../../common/environment";
 import queryReducer, { isSearchQueryEmpty, SET_FROM, stringifyQuery, toBrowserQuery } from "../query";
@@ -16,7 +16,7 @@ import DelayedSpinner from "../../common/components/spinner/DelayedSpinner";
 import FiltersDesktop from "./filters/FiltersDesktop";
 import SearchResultHeader from "./searchResultHeader/SearchResultHeader";
 import FilterIcon from "./icons/FilterIcon";
-import { AuthenticationContext, AuthenticationStatus } from "../../common/auth/contexts/AuthenticationProvider";
+import { AuthenticationContext } from "../../common/auth/contexts/AuthenticationProvider";
 import LoadingScreen from "../../common/components/loadingScreen/LoadingScreen";
 import logAmplitudeEvent from "../../common/tracking/amplitude";
 import LoggedInButtons from "./loggedInButtons/LoggedInButtons";
@@ -69,40 +69,32 @@ export default function Search({ initialSearchResponse, searchResponse, initialQ
 
     return (
         <>
-            <H1WithAutoFocus className="container-medium mt-12 mb-12 text-center" spacing={false}>
-                Søk etter din neste jobb
-            </H1WithAutoFocus>
+            <Box paddingBlock={{ xs: "4", md: "12" }} paddingInline={{ xs: "4", sm: "6" }}>
+                <Stack justify={{ md: "center" }}>
+                    <H1WithAutoFocus spacing={false}>Søk etter din neste jobb</H1WithAutoFocus>
+                </Stack>
+            </Box>
 
             <div className="container-small">
                 <SearchBoxForm query={query} dispatchQuery={queryDispatch} />
-                <Stack
-                    gap="2"
-                    direction={{ xs: "column", md: "row" }}
-                    justify={{ xs: "start", md: "center" }}
-                    align={{ xs: "start", md: "center" }}
-                    className="mb-12"
-                >
-                    <Show below="md">
-                        <Button
-                            variant="tertiary"
-                            onClick={() => {
-                                setIsFiltersVisible(!isFiltersVisible);
-                            }}
-                            icon={<FilterIcon />}
-                            aria-expanded={isFiltersVisible}
-                        >
-                            Velg sted, yrke og andre filtre
-                        </Button>
-                    </Show>
+                <Box paddingBlock={{ xs: "0 4", md: "0 12" }}>
+                    <HStack gap="2" justify={{ xs: "start", md: "center" }} align={{ xs: "start", md: "center" }}>
+                        <Show below="md">
+                            <Button
+                                variant="tertiary"
+                                onClick={() => {
+                                    setIsFiltersVisible(!isFiltersVisible);
+                                }}
+                                icon={<FilterIcon />}
+                                aria-expanded={isFiltersVisible}
+                            >
+                                Velg sted, yrke og andre filtre
+                            </Button>
+                        </Show>
 
-                    {authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED ? (
                         <LoggedInButtons />
-                    ) : (
-                        <Hide below="md">
-                            <LoggedInButtons />
-                        </Hide>
-                    )}
-                </Stack>
+                    </HStack>
+                </Box>
             </div>
 
             <SearchResultHeader

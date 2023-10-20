@@ -13,7 +13,7 @@ function Sorting({ query, dispatch }) {
     }
 
     return (
-        <Select onChange={handleChange} value={sort} label="Sorter" className="inline-select">
+        <Select onChange={handleChange} value={sort} label="Sorter etter" className="inline-select">
             <option key="relevant" value="relevant">
                 Mest relevant
             </option>
