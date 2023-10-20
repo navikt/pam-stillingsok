@@ -213,7 +213,10 @@ export default class Typeahead extends React.Component {
                     onBlur={this.onBlur}
                     onKeyDown={this.onKeyDown}
                     onFocus={this.onFocus}
-                    onClear={this.props.onClear}
+                    onClear={() => {
+                        this.clearBlurDelay();
+                        this.props.onClear();
+                    }}
                     onSearchClick={this.props.onSearchButtonClick}
                     ref={(input) => {
                         this.input = input;
