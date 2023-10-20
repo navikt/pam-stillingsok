@@ -93,16 +93,6 @@ export default function Search({ initialSearchResponse, searchResponse, initialQ
                         >
                             Velg sted, yrke og andre filtre
                         </Button>
-
-                        {isFiltersVisible && (
-                            <FiltersMobile
-                                query={query}
-                                dispatchQuery={queryDispatch}
-                                initialSearchResult={initialSearchResponse.data}
-                                onCloseClick={() => setIsFiltersVisible(false)}
-                                searchResult={searchResponse.data}
-                            />
-                        )}
                     </Show>
 
                     {authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED ? (
@@ -139,6 +129,18 @@ export default function Search({ initialSearchResponse, searchResponse, initialQ
                             searchResult={searchResponse.data}
                         />
                     </Hide>
+
+                    <Show below="md">
+                        {isFiltersVisible && (
+                            <FiltersMobile
+                                query={query}
+                                dispatchQuery={queryDispatch}
+                                initialSearchResult={initialSearchResponse.data}
+                                onCloseClick={() => setIsFiltersVisible(false)}
+                                searchResult={searchResponse.data}
+                            />
+                        )}
+                    </Show>
 
                     <div>
                         <HotjarSurvey />
