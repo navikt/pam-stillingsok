@@ -264,7 +264,7 @@ export default function queryReducer(state, action) {
             return {
                 ...queryState,
                 q: action.value,
-                fields: action.value && action.value.length === 0 ? undefined : queryState.fields,
+                fields: action.value === "" ? undefined : queryState.fields,
             };
         case SET_SEARCH_FIELDS:
             return {
