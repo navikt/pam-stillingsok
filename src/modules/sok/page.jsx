@@ -6,6 +6,7 @@ import logAmplitudeEvent from "../common/tracking/amplitude";
 import Search from "./components/Search";
 import useRestoreScroll from "../common/hooks/useRestoreScroll";
 import "./search.css";
+import useDocumentTitle from "../common/hooks/useDocumentTitle";
 
 function SearchPage() {
     const [initialSearchResponse, initialSearchDispatch] = useFetchReducer();
@@ -14,6 +15,8 @@ function SearchPage() {
     const initialQuery = initQueryWithValuesFromBrowserUrl(defaultQuery);
 
     const { resetScroll } = useRestoreScroll("search-page", initialSearchResponse.status === FetchStatus.SUCCESS);
+
+    useDocumentTitle("Ledige stillinger");
 
     /**
      * Når man laster inn flere annonser, kan en allerede lastet annonse komme på nytt. Dette kan f.eks skje
