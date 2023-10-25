@@ -45,7 +45,7 @@ export default function Search({ initialSearchResponse, searchResponse, initialQ
                 browserQuery.saved = savedSearchUuid;
             }
 
-            logAmplitudeEvent("Stillinger - Utførte søk", { query });
+            logAmplitudeEvent("Stillinger - Utførte søk");
 
             if (fetchSearch) {
                 fetchSearch(query);
