@@ -295,6 +295,7 @@ export default function queryReducer(state, action) {
 export function toApiQuery(query) {
     const apiSearchQuery = {
         ...query,
+        sort: query.sort === "" ? "published" : query.sort,
     };
     return removeEmptyPropertiesFromQuery(apiSearchQuery);
 }

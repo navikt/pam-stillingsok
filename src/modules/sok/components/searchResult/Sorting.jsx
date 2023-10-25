@@ -14,11 +14,11 @@ function Sorting({ query, dispatch }) {
 
     return (
         <Select onChange={handleChange} value={sort} label="Sorter etter" className="inline-select">
-            <option key="relevant" value="relevant">
-                Mest relevant
-            </option>
             <option key="published" value="published">
                 Nyeste øverst
+            </option>
+            <option key="relevant" value="relevant">
+                Mest relevant
             </option>
             <option key="expires" value="expires">
                 Søknadsfrist
