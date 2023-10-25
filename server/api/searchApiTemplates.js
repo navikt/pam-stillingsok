@@ -314,7 +314,7 @@ function filterSector(sector) {
 exports.suggestionsTemplate = (match, minLength) => ({
     suggest: {
         category_suggest: {
-            ...suggest("category_suggest", match, minLength),
+            ...suggest("category_name_suggest", match, minLength),
         },
         searchtags_suggest: {
             ...suggest("searchtags_suggest", match, minLength),
@@ -325,12 +325,20 @@ exports.suggestionsTemplate = (match, minLength) => ({
 
 /* Experimental alternative relevance model with AND-logic and using cross-fields matching. */
 function mainQueryConjunctionTuning(q, searchFields) {
-    const matchFields = ["category_no^2", "title_no^1", "keywords_no^0.8", "searchtags_no^0.3"];
+    let matchFields;
 
-    if (searchFields !== "occupation") {
-        matchFields.push("geography_all_no^0.2");
-        matchFields.push("adtext_no^0.2");
-        matchFields.push("employerdescription_no^0.1");
+    if (searchFields === "occupation") {
+        matchFields = ["category_name_no^2", "title_no^1", "keywords_no^0.8", "searchtags_no^0.3"];
+    } else {
+        matchFields = [
+            "category_name_no^2",
+            "title_no^1",
+            "keywords_no^0.8",
+            "searchtags_no^0.3",
+            "geography_all_no^0.2",
+            "adtext_no^0.2",
+            "employerdescription_no^0.1",
+        ];
     }
     return {
         bool: {
