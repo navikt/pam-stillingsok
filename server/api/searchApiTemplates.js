@@ -32,7 +32,7 @@ function filterPublished(published) {
     return filters;
 }
 
-function suggest(field, match, minLength) {
+function suggest(field, match) {
     return {
         prefix: match,
         completion: {
@@ -42,9 +42,6 @@ function suggest(field, match, minLength) {
                 status: "ACTIVE",
             },
             size: 5,
-            fuzzy: {
-                prefix_length: minLength,
-            },
         },
     };
 }
