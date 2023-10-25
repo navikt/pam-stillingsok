@@ -558,6 +558,8 @@ exports.searchTemplate = (query) => {
                 "categoryList",
                 "properties.keywords",
                 "properties.searchtags",
+                "properties.arbeidsplassenoccupation",
+                "occupationList",
             ],
         },
         aggs: {
