@@ -555,6 +555,10 @@ exports.searchTemplate = (query) => {
                 "status",
                 "source",
                 "reference",
+                "categoryList",
+                "properties.keywords",
+                "properties.searchtags",
+                "occupationList",
             ],
         },
         aggs: {

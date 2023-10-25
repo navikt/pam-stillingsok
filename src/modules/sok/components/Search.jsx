@@ -109,7 +109,7 @@ export default function Search({ initialSearchResponse, searchResponse, initialQ
             {initialSearchResponse.status === FetchStatus.FAILURE && <ErrorMessage />}
             {initialSearchResponse.status === FetchStatus.SUCCESS && (
                 <HGrid
-                    columns={{ xs: 1, md: "280px auto", lg: "320px auto" }}
+                    columns={{ xs: 1, md: "280px auto", lg: "370px auto" }}
                     gap={{ xs: "0", md: "12" }}
                     className="container-large mt-8 mb-16"
                 >

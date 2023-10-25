@@ -7,7 +7,7 @@ import Sorting from "../searchResult/Sorting";
 function SearchResultHeader({ searchResponse, query, queryDispatch }) {
     return (
         <Box background="surface-alt-1-subtle" paddingBlock="4">
-            <HGrid columns={{ xs: 1, lg: "320px auto" }} gap={{ lg: "12" }} className="container-large">
+            <HGrid columns={{ xs: 1, lg: "370px auto" }} gap={{ lg: "12" }} className="container-large">
                 <div />
                 <Stack
                     direction={{ xs: "column", md: "row" }}
