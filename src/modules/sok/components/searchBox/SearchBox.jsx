@@ -99,7 +99,7 @@ function SearchBox({ dispatch, query }) {
     // Add the current value as last suggestion entry,
     // This will show a typeahead suggestion like this: "Søk på {value} i hele annonsen"
     const allSuggestions = [...suggestionsResponse.data];
-    if ((value && value.length > 1) || (value.length > 0 && suggestionsResponse.data.length > 0)) {
+    if (suggestionsResponse.data.length > 0 && value && value.length > 0) {
         allSuggestions.push(value);
     }
 
