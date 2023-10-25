@@ -29,7 +29,7 @@ export default class Typeahead extends React.Component {
      */
     onChange = (value) => {
         this.setState({
-            activeSuggestionIndex: 0, // Nullstill eventuelt markering av et forslag i listen
+            activeSuggestionIndex: -1, // Nullstill eventuelt markering av et forslag i listen
             shouldShowSuggestions: true, // Vis forslagslisten igjen. Den kan ha blitt skjult om man trykket Esc
         });
         this.props.onChange(value);
