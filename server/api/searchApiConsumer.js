@@ -7,6 +7,7 @@ const url = `${host}/stillingsok/ad/_search`;
 
 const excludes = [
     "administration",
+    "categoryList",
     "created",
     "createdBy",
     "employer.id",
@@ -34,7 +35,9 @@ const excludes = [
     "occupationList",
     "properties.author",
     "properties.industry",
+    "properties.keywords",
     "properties.occupation",
+    "properties.searchtags",
     "properties.sourceupdated",
     "updatedBy",
     "uuid",
