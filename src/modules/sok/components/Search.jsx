@@ -21,7 +21,6 @@ import LoadingScreen from "../../common/components/loadingScreen/LoadingScreen";
 import logAmplitudeEvent from "../../common/tracking/amplitude";
 import LoggedInButtons from "./loggedInButtons/LoggedInButtons";
 import FiltersMobile from "./filters/FiltersMobile";
-import HotjarSurvey from "./feedback/HotjarSurvey";
 
 export default function Search({ initialSearchResponse, searchResponse, initialQuery, fetchSearch }) {
     const { authenticationStatus } = useContext(AuthenticationContext);
@@ -135,7 +134,6 @@ export default function Search({ initialSearchResponse, searchResponse, initialQ
                     </Show>
 
                     <div>
-                        <HotjarSurvey />
                         <SelectedFilters query={query} queryDispatch={queryDispatch} />
                         {searchResponse.status === FetchStatus.IS_FETCHING && query.from === 0 ? (
                             <DelayedSpinner />

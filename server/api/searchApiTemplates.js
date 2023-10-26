@@ -325,7 +325,7 @@ function mainQueryConjunctionTuning(q, searchFields) {
     let matchFields;
 
     if (searchFields === "occupation") {
-        matchFields = ["category_name_no^2", "title_no^1", "keywords_no^0.8", "searchtags_no^0.3"];
+        matchFields = ["category_name_no^2", "title_no^1", "searchtags_no^0.3"];
     } else {
         matchFields = [
             "category_name_no^2",
