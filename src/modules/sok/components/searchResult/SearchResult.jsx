@@ -73,6 +73,7 @@ SearchResult.propTypes = {
         from: PropTypes.number,
     }),
     loadMoreResults: PropTypes.func.isRequired,
+    isDebug: PropTypes.bool,
 };
 
 export default SearchResult;

@@ -1,6 +1,6 @@
-const fetch = require('node-fetch');
+const fetch = require("node-fetch");
 
-const host = process.env.PAMADUSER_URL ? process.env.PAMADUSER_URL : 'https://arbeidsplassen.nav.no';
+const host = process.env.PAMADUSER_URL ? process.env.PAMADUSER_URL : "https://arbeidsplassen.nav.no";
 const baseUrl = `${host}/api/v1/geography/`;
 
 const fetchLocations = async (type = "counties") => {
@@ -14,7 +14,7 @@ const fetchLocations = async (type = "counties") => {
 };
 
 exports.fetchAndProcessLocations = async () => {
-    let [municipals, counties] = await Promise.all([fetchLocations("municipals"), fetchLocations()]);
+    const [municipals, counties] = await Promise.all([fetchLocations("municipals"), fetchLocations()]);
 
     // Aduser is unresponsive
     if (municipals === null || counties === null) {
@@ -23,7 +23,7 @@ exports.fetchAndProcessLocations = async () => {
 
     const countyMap = {};
 
-    counties.forEach(c => {
+    counties.forEach((c) => {
         countyMap[c.code] = {
             key: c.name,
             code: c.code,
@@ -31,7 +31,7 @@ exports.fetchAndProcessLocations = async () => {
         };
     });
 
-    municipals.forEach(m => {
+    municipals.forEach((m) => {
         if (countyMap[m.countyCode] !== undefined) {
             countyMap[m.countyCode].municipals.push({
                 key: `${countyMap[m.countyCode].key}.${m.name}`,
@@ -42,13 +42,13 @@ exports.fetchAndProcessLocations = async () => {
 
     const res = [
         {
-            key: 'UTLAND',
+            key: "UTLAND",
             municipals: [],
             code: 999,
-        }
+        },
     ];
 
-    for (let key in countyMap) {
+    for (const key in countyMap) {
         if (countyMap.hasOwnProperty(key)) {
             res.push(countyMap[key]);
         }

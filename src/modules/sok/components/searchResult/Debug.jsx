@@ -1,5 +1,6 @@
 import React from "react";
-import { BodyLong, Heading, HStack, ReadMore } from "@navikt/ds-react";
+import { BodyLong, Heading, HStack, ReadMore, VStack } from "@navikt/ds-react";
+import PropTypes from "prop-types";
 
 function Debug({ ad }) {
     return (
@@ -19,14 +20,14 @@ function Debug({ ad }) {
                     <Heading level="4" size="xsmall" spacing>
                         ad.occupationList
                     </Heading>
-                    <HStack gap="4" className="mb-8">
+                    <VStack gap="4" className="mb-8">
                         {ad.occupationList &&
                             ad.occupationList.map((occupation) => (
                                 <BodyLong className="metadata">
                                     {occupation.level1} > {occupation.level2}
                                 </BodyLong>
                             ))}
-                    </HStack>
+                    </VStack>
                 </>
             )}
 
@@ -76,5 +77,16 @@ function Debug({ ad }) {
         </ReadMore>
     );
 }
+
+Debug.propTypes = {
+    ad: PropTypes.shape({
+        categoryList: PropTypes.arrayOf(PropTypes.shape({ name: PropTypes.string, categoryType: PropTypes.string })),
+        occupationList: PropTypes.arrayOf(PropTypes.shape({ level1: PropTypes.string, level2: PropTypes.string })),
+        properties: {
+            keywords: PropTypes.string,
+            searchtags: PropTypes.arrayOf(PropTypes.shape({ label: PropTypes.string, score: PropTypes.score })),
+        },
+    }),
+};
 
 export default Debug;

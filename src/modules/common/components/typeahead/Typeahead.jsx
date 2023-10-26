@@ -1,4 +1,4 @@
-/* eslint-disable jsx-a11y/mouse-events-have-key-events,no-trailing-spaces */
+/* eslint-disable */
 import React from "react";
 import PropTypes from "prop-types";
 import TypeaheadSuggestion from "./TypeaheadSuggestion";

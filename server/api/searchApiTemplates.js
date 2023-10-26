@@ -509,8 +509,9 @@ exports.searchTemplate = (query) => {
         occupationSecondLevels,
         international,
         fields,
+        operator,
     } = query;
-    let { sort, q, operator } = query;
+    let { sort, q } = query;
 
     // To ensure consistent search results across multiple shards in elasticsearch when query is blank
     if (!q || q.trim().length === 0) {

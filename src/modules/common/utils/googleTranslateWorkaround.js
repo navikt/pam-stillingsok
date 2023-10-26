@@ -1,3 +1,4 @@
+/* eslint-disable */
 /**
  *  React og Google Translate (høyreklikk og velg Oversett til engelsk), men også andre plugins etc,
  *  bruker samme DOM i nettleseren.

@@ -7,15 +7,15 @@ const DEFAULT_DESCRIPTION =
     "Søk etter ledige stillinger. Heltid- og deltidsjobber i offentlig og privat sektor i Oslo, Bergen, Trondheim, Stavanger, Tromsø og alle kommuner i Norge.";
 const DEFAULT_DESCRIPTION_STILLING = "Her kan du se hele stillingen, sende søknad eller finne andre ledige stillinger.";
 
-exports.getDefaultTitle = function () {
+exports.getDefaultTitle = function getDefaultTitle() {
     return DEFAULT_TITLE;
 };
 
-exports.getDefaultDescription = function () {
+exports.getDefaultDescription = function getDefaultDescription() {
     return DEFAULT_DESCRIPTION;
 };
 
-exports.getStillingTitle = function (source) {
+exports.getStillingTitle = function getStillingTitle(source) {
     if (source && source.title) {
         return `${source.title} - arbeidsplassen.no`;
     }
@@ -31,7 +31,7 @@ exports.getStillingTitle = function (source) {
  * @param source
  * @returns {string}
  */
-exports.getStillingDescription = function (source) {
+exports.getStillingDescription = function getStillingDescription(source) {
     if (source && source.properties) {
         const descriptionFragments = [];
         const employer = getEmployer(source);

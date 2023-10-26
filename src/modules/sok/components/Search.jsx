@@ -1,4 +1,5 @@
-import React, { useContext, useEffect, useReducer, useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
+import PropTypes from "prop-types";
 import { Box, Button, HGrid, Hide, HStack, Show, Stack } from "@navikt/ds-react";
 import { useHistory } from "react-router";
 import { CONTEXT_PATH } from "../../common/environment";
@@ -16,14 +17,12 @@ import DelayedSpinner from "../../common/components/spinner/DelayedSpinner";
 import FiltersDesktop from "./filters/FiltersDesktop";
 import SearchResultHeader from "./searchResultHeader/SearchResultHeader";
 import FilterIcon from "./icons/FilterIcon";
-import { AuthenticationContext } from "../../common/auth/contexts/AuthenticationProvider";
 import LoadingScreen from "../../common/components/loadingScreen/LoadingScreen";
 import logAmplitudeEvent from "../../common/tracking/amplitude";
 import LoggedInButtons from "./loggedInButtons/LoggedInButtons";
 import FiltersMobile from "./filters/FiltersMobile";
 
 export default function Search({ initialSearchResponse, searchResponse, initialQuery, fetchSearch, isDebug }) {
-    const { authenticationStatus } = useContext(AuthenticationContext);
     const [query, queryDispatch] = useReducer(queryReducer, initialQuery);
     const [isFiltersVisible, setIsFiltersVisible] = useState(false);
     const [initialRenderDone, setInitialRenderDone] = useState(false);
@@ -159,3 +158,17 @@ export default function Search({ initialSearchResponse, searchResponse, initialQ
         </>
     );
 }
+
+Search.propTypes = {
+    initialSearchResponse: PropTypes.shape({
+        data: PropTypes.shape({}),
+        status: PropTypes.shape({}),
+    }),
+    searchResponse: PropTypes.shape({
+        data: PropTypes.shape({}),
+        status: PropTypes.shape({}),
+    }),
+    initialQuery: PropTypes.shape({}),
+    fetchSearch: PropTypes.func,
+    isDebug: PropTypes.bool,
+};

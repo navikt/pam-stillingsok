@@ -155,6 +155,7 @@ SearchResultItem.propTypes = {
     shouldAutoFocus: PropTypes.bool,
     showExpired: PropTypes.bool,
     favouriteButton: PropTypes.node,
+    isDebug: PropTypes.bool,
 };
 
 function LinkToAd({ children, stilling, isFinn }) {

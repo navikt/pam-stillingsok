@@ -68,6 +68,7 @@ function FavouritesProvider({ children }) {
         }
     }, [hasAcceptedTermsStatus]);
 
+    // eslint-disable-next-line react/jsx-no-constructed-context-values
     const values = {
         favourites,
         pendingFavourites,

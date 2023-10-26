@@ -67,7 +67,18 @@ function Ad({ ad, shareAdRedirectUrl }) {
 }
 
 Ad.propTypes = {
-    ad: PropTypes.shape({}).isRequired,
+    ad: PropTypes.shape({
+        _id: PropTypes.string,
+        _source: PropTypes.shape({
+            status: PropTypes.string,
+            contactList: PropTypes.array,
+            source: PropTypes.string,
+            title: PropTypes.string,
+            properties: PropTypes.shape({
+                adtext: PropTypes.string,
+            }),
+        }),
+    }).isRequired,
     shareAdRedirectUrl: PropTypes.string.isRequired,
 };
 

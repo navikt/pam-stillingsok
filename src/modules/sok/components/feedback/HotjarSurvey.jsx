@@ -10,10 +10,7 @@ function HotjarSurvey() {
             if (!found) {
                 return false;
             }
-            if (found === "true") {
-                return true;
-            }
-            return false;
+            return found === "true";
         } catch (e) {
             return false;
         }

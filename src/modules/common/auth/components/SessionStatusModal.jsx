@@ -17,6 +17,7 @@ function SessionStatusModal({ markAsLoggedOut, setHasBeenLoggedIn, login, logout
                 timeoutLogout();
             }
         } else if (response.status < 200 || response.status >= 300) {
+            // eslint-disable-next-line no-console
             console.error(errorMessage);
         } else {
             const { session, tokens } = await response.json();
