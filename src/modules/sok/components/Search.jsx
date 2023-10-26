@@ -22,7 +22,7 @@ import logAmplitudeEvent from "../../common/tracking/amplitude";
 import LoggedInButtons from "./loggedInButtons/LoggedInButtons";
 import FiltersMobile from "./filters/FiltersMobile";
 
-export default function Search({ initialSearchResponse, searchResponse, initialQuery, fetchSearch }) {
+export default function Search({ initialSearchResponse, searchResponse, initialQuery, fetchSearch, isDebug }) {
     const { authenticationStatus } = useContext(AuthenticationContext);
     const [query, queryDispatch] = useReducer(queryReducer, initialQuery);
     const [isFiltersVisible, setIsFiltersVisible] = useState(false);
@@ -147,6 +147,7 @@ export default function Search({ initialSearchResponse, searchResponse, initialQ
                                     loadMoreResults={() => {
                                         loadMoreResults();
                                     }}
+                                    isDebug={isDebug}
                                 />
                                 <DoYouWantToSaveSearch query={query} />
                                 <Feedback query={query} />

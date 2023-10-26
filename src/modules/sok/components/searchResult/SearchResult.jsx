@@ -7,7 +7,7 @@ import SearchResultItem from "./SearchResultItem";
 import FavouritesButton from "../../../favoritter/components/FavouritesButton";
 import DelayedSpinner from "../../../common/components/spinner/DelayedSpinner";
 
-function SearchResult({ searchResponse, query, loadMoreResults }) {
+function SearchResult({ searchResponse, query, loadMoreResults, isDebug }) {
     const { status, data } = searchResponse;
     const [lastAdIndex, setLastAdIndex] = useState();
     const [nextAdIndex, setNextAdIndex] = useState();
@@ -45,6 +45,7 @@ function SearchResult({ searchResponse, query, loadMoreResults }) {
                                         variant="tertiary"
                                     />
                                 }
+                                isDebug={isDebug}
                             />
                         ))}
                     {data.ads && data.ads.length > 0 && (

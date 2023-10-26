@@ -99,12 +99,23 @@ function SearchPage() {
         }
     }, []);
 
+    let isDebug = false;
+    try {
+        const valueFromLocalStorage = localStorage.getItem("isDebug");
+        if (valueFromLocalStorage && valueFromLocalStorage === "true") {
+            isDebug = true;
+        }
+    } catch (err) {
+        // ignore
+    }
+
     return (
         <Search
             searchResponse={searchResponse}
             initialSearchResponse={initialSearchResponse}
             initialQuery={initialQuery}
             fetchSearch={fetchSearch}
+            isDebug={isDebug}
         />
     );
 }
