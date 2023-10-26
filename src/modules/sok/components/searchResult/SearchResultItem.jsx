@@ -9,8 +9,9 @@ import getEmployer from "../../../../../server/common/getEmployer";
 import getWorkLocation from "../../../../../server/common/getWorkLocation";
 import { CONTEXT_PATH } from "../../../common/environment";
 import { formatDate } from "../../../common/utils/utils";
+import Debug from "./Debug";
 
-export default function SearchResultItem({ ad, showExpired, favouriteButton, shouldAutoFocus }) {
+export default function SearchResultItem({ ad, showExpired, favouriteButton, shouldAutoFocus, isDebug }) {
     const location = getWorkLocation(ad.properties.location, ad.locationList);
     const employer = getEmployer(ad);
     const isFinn = ad.source && ad.source.toLowerCase() === "finn";
@@ -126,6 +127,8 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, sho
                     </BodyLong>
                 )}
             </HStack>
+
+            {isDebug && <Debug ad={ad} />}
         </article>
     );
 }
@@ -152,6 +155,7 @@ SearchResultItem.propTypes = {
     shouldAutoFocus: PropTypes.bool,
     showExpired: PropTypes.bool,
     favouriteButton: PropTypes.node,
+    isDebug: PropTypes.bool,
 };
 
 function LinkToAd({ children, stilling, isFinn }) {

@@ -68,7 +68,12 @@ function NewApplication({ id, ad, applicationForm }) {
 
 NewApplication.propTypes = {
     id: PropTypes.string,
-    ad: PropTypes.shape({}),
+    ad: PropTypes.shape({
+        _id: PropTypes.string,
+        _source: PropTypes.shape({
+            title: PropTypes.string,
+        }),
+    }),
     applicationForm: PropTypes.shape({}),
 };
 

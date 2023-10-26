@@ -1,5 +1,5 @@
 import React from "react";
-import { BodyShort, Box, Heading, HGrid, HStack } from "@navikt/ds-react";
+import { BodyShort, Box, Heading, HGrid, Stack } from "@navikt/ds-react";
 import PropTypes from "prop-types";
 import SearchResultCount from "../searchResult/SearchResultCount";
 import Sorting from "../searchResult/Sorting";
@@ -7,9 +7,15 @@ import Sorting from "../searchResult/Sorting";
 function SearchResultHeader({ searchResponse, query, queryDispatch }) {
     return (
         <Box background="surface-alt-1-subtle" paddingBlock="4">
-            <HGrid columns={{ xs: 1, lg: "320px auto" }} gap={{ lg: "12" }} className="container-large">
+            <HGrid columns={{ xs: 1, lg: "370px auto" }} gap={{ lg: "12" }} className="container-large">
                 <div />
-                <HStack justify="space-between" align="center" gap="4 8">
+                <Stack
+                    direction={{ xs: "column", md: "row" }}
+                    justify={{ md: "space-between" }}
+                    align={{ sm: "flex-start", md: "center" }}
+                    gap="4 8"
+                    wrap={false}
+                >
                     <div>
                         <Heading level="2" size="small" className="mb-1">
                             Søkeresultat
@@ -21,7 +27,7 @@ function SearchResultHeader({ searchResponse, query, queryDispatch }) {
                         )}
                     </div>
                     <Sorting dispatch={queryDispatch} query={query} />
-                </HStack>
+                </Stack>
             </HGrid>
         </Box>
     );

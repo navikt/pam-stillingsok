@@ -16,9 +16,7 @@ export default function Summary({ stilling }) {
                     <HStack align="center">
                         <Buldings3Icon title="Arbeidsgiver" width="1.5em" height="1.5em" />
                     </HStack>
-                    <BodyLong weight="semibold" size="large">
-                        {employer}
-                    </BodyLong>
+                    <BodyLong weight="semibold">{employer}</BodyLong>
                 </HStack>
             )}
             {location && (
@@ -26,9 +24,7 @@ export default function Summary({ stilling }) {
                     <HStack align="center">
                         <PinIcon title="Sted" width="1.5em" height="1.5em" />
                     </HStack>
-                    <BodyLong weight="semibold" size="large">
-                        {location}
-                    </BodyLong>
+                    <BodyLong weight="semibold">{location}</BodyLong>
                 </HStack>
             )}
         </section>

@@ -33,8 +33,8 @@
     "dependencies": {
         "@amplitude/analytics-browser": "^1.10.3",
         "@navikt/aksel-icons": "^4.11.0",
-        "@navikt/arbeidsplassen-css": "^8.1.1",
-        "@navikt/arbeidsplassen-react": "^8.1.1",
+        "@navikt/arbeidsplassen-css": "^8.1.3",
+        "@navikt/arbeidsplassen-react": "^8.1.3",
         "@navikt/arbeidsplassen-theme": "^5.5.6",
         "@navikt/ds-css": "^5.6.0",
         "@navikt/ds-react": "^5.6.0",
@@ -72,11 +72,11 @@
         "winston": "^3.10.0"
     },
     "devDependencies": {
-        "@babel/core": "^7.21.8",
-        "@babel/eslint-parser": "^7.22.10",
-        "@babel/polyfill": "^7.0.0",
-        "@babel/preset-env": "^7.21.5",
-        "@babel/preset-react": "^7.22.5",
+        "@babel/core": "^7.23.2",
+        "@babel/eslint-parser": "^7.22.15",
+        "@babel/polyfill": "^7.12.1",
+        "@babel/preset-env": "^7.23.2",
+        "@babel/preset-react": "^7.22.15",
         "babel-loader": "^8.3.0",
         "concurrently": "^6.2.0",
         "css-loader": "^1.0.0",
@@ -96,9 +96,14 @@
         "rimraf": "^2.7.1",
         "stylelint": "^15.10.1",
         "stylelint-config-recommended": "^12.0.0",
-        "webpack": "^4.44.1",
+        "webpack": "^4.47.0",
         "webpack-cli": "^3.3.12",
         "webpack-merge": "^4.2.1"
+    },
+    "overrides": {
+        "webpack@^4.47.0": {
+            "terser-webpack-plugin": "^4.2.3"
+        }
     },
     "lint-staged": {
         "./*/**/*.{js,jsx,ts,tsx,json,yml,yaml}": [

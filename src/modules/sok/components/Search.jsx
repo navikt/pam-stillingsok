@@ -1,6 +1,7 @@
-import React, { useContext, useEffect, useReducer, useState } from "react";
-import { Button, HGrid, Hide, Show, Stack } from "@navikt/ds-react";
-import useRouter from "../../../migrating/useRouter";
+import React, { useEffect, useReducer, useState } from "react";
+import PropTypes from "prop-types";
+import { Box, Button, HGrid, Hide, HStack, Show, Stack } from "@navikt/ds-react";
+import { useHistory } from "react-router";
 import { CONTEXT_PATH } from "../../common/environment";
 import queryReducer, { isSearchQueryEmpty, SET_FROM, stringifyQuery, toBrowserQuery } from "../query";
 import { extractParam } from "../../common/utils/utils";
@@ -16,19 +17,17 @@ import DelayedSpinner from "../../common/components/spinner/DelayedSpinner";
 import FiltersDesktop from "./filters/FiltersDesktop";
 import SearchResultHeader from "./searchResultHeader/SearchResultHeader";
 import FilterIcon from "./icons/FilterIcon";
-import { AuthenticationContext, AuthenticationStatus } from "../../common/auth/contexts/AuthenticationProvider";
 import LoadingScreen from "../../common/components/loadingScreen/LoadingScreen";
 import logAmplitudeEvent from "../../common/tracking/amplitude";
 import LoggedInButtons from "./loggedInButtons/LoggedInButtons";
 import FiltersMobile from "./filters/FiltersMobile";
 
-export default function Search({ initialSearchResponse, searchResponse, initialQuery, fetchSearch }) {
-    const { authenticationStatus } = useContext(AuthenticationContext);
+export default function Search({ initialSearchResponse, searchResponse, initialQuery, fetchSearch, isDebug }) {
     const [query, queryDispatch] = useReducer(queryReducer, initialQuery);
     const [isFiltersVisible, setIsFiltersVisible] = useState(false);
     const [initialRenderDone, setInitialRenderDone] = useState(false);
 
-    const router = useRouter();
+    const router = useHistory();
 
     /**
      * Perform a search when user changes search criteria
@@ -44,7 +43,7 @@ export default function Search({ initialSearchResponse, searchResponse, initialQ
                 browserQuery.saved = savedSearchUuid;
             }
 
-            logAmplitudeEvent("Stillinger - Utførte søk", { query });
+            logAmplitudeEvent("Stillinger - Utførte søk");
 
             if (fetchSearch) {
                 fetchSearch(query);
@@ -68,56 +67,32 @@ export default function Search({ initialSearchResponse, searchResponse, initialQ
 
     return (
         <>
-            <H1WithAutoFocus className="container-medium mt-12 mb-12 text-center" spacing={false}>
-                Søk etter din neste jobb
-            </H1WithAutoFocus>
+            <Box paddingBlock={{ xs: "4", md: "12" }} paddingInline={{ xs: "4", sm: "6" }}>
+                <Stack justify={{ md: "center" }}>
+                    <H1WithAutoFocus spacing={false}>Søk etter din neste jobb</H1WithAutoFocus>
+                </Stack>
+            </Box>
 
             <div className="container-small">
-                <SearchBoxForm
-                    query={query}
-                    dispatchQuery={queryDispatch}
-                    fetchSearch={() => {
-                        //  fetchSearch();
-                    }}
-                />
-                <Stack
-                    gap="2"
-                    direction={{ xs: "column", md: "row" }}
-                    justify={{ xs: "start", md: "center" }}
-                    align={{ xs: "start", md: "center" }}
-                    className="mb-12"
-                >
-                    <Show below="md">
-                        <Button
-                            variant="tertiary"
-                            onClick={() => {
-                                setIsFiltersVisible(!isFiltersVisible);
-                            }}
-                            icon={<FilterIcon />}
-                            aria-expanded={isFiltersVisible}
-                        >
-                            Velg sted, yrke og andre filtre
-                        </Button>
+                <SearchBoxForm query={query} dispatchQuery={queryDispatch} />
+                <Box paddingBlock={{ xs: "0 4", md: "0 12" }}>
+                    <HStack gap="2" justify={{ xs: "start", md: "center" }} align={{ xs: "start", md: "center" }}>
+                        <Show below="md">
+                            <Button
+                                variant="tertiary"
+                                onClick={() => {
+                                    setIsFiltersVisible(!isFiltersVisible);
+                                }}
+                                icon={<FilterIcon />}
+                                aria-expanded={isFiltersVisible}
+                            >
+                                Velg sted, yrke og andre filtre
+                            </Button>
+                        </Show>
 
-                        {isFiltersVisible && (
-                            <FiltersMobile
-                                query={query}
-                                dispatchQuery={queryDispatch}
-                                initialSearchResult={initialSearchResponse.data}
-                                onCloseClick={() => setIsFiltersVisible(false)}
-                                searchResult={searchResponse.data}
-                            />
-                        )}
-                    </Show>
-
-                    {authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED ? (
                         <LoggedInButtons />
-                    ) : (
-                        <Hide below="md">
-                            <LoggedInButtons />
-                        </Hide>
-                    )}
-                </Stack>
+                    </HStack>
+                </Box>
             </div>
 
             <SearchResultHeader
@@ -132,7 +107,7 @@ export default function Search({ initialSearchResponse, searchResponse, initialQ
             {initialSearchResponse.status === FetchStatus.FAILURE && <ErrorMessage />}
             {initialSearchResponse.status === FetchStatus.SUCCESS && (
                 <HGrid
-                    columns={{ xs: 1, md: "280px auto", lg: "320px auto" }}
+                    columns={{ xs: 1, md: "280px auto", lg: "370px auto" }}
                     gap={{ xs: "0", md: "12" }}
                     className="container-large mt-8 mb-16"
                 >
@@ -144,6 +119,18 @@ export default function Search({ initialSearchResponse, searchResponse, initialQ
                             searchResult={searchResponse.data}
                         />
                     </Hide>
+
+                    <Show below="md">
+                        {isFiltersVisible && (
+                            <FiltersMobile
+                                query={query}
+                                dispatchQuery={queryDispatch}
+                                initialSearchResult={initialSearchResponse.data}
+                                onCloseClick={() => setIsFiltersVisible(false)}
+                                searchResult={searchResponse.data}
+                            />
+                        )}
+                    </Show>
 
                     <div>
                         <SelectedFilters query={query} queryDispatch={queryDispatch} />
@@ -159,6 +146,7 @@ export default function Search({ initialSearchResponse, searchResponse, initialQ
                                     loadMoreResults={() => {
                                         loadMoreResults();
                                     }}
+                                    isDebug={isDebug}
                                 />
                                 <DoYouWantToSaveSearch query={query} />
                                 <Feedback query={query} />
@@ -170,3 +158,17 @@ export default function Search({ initialSearchResponse, searchResponse, initialQ
         </>
     );
 }
+
+Search.propTypes = {
+    initialSearchResponse: PropTypes.shape({
+        data: PropTypes.shape({}),
+        status: PropTypes.shape({}),
+    }),
+    searchResponse: PropTypes.shape({
+        data: PropTypes.shape({}),
+        status: PropTypes.shape({}),
+    }),
+    initialQuery: PropTypes.shape({}),
+    fetchSearch: PropTypes.func,
+    isDebug: PropTypes.bool,
+};

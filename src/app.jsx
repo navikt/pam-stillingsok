@@ -1,6 +1,10 @@
 import React from "react";
 import * as ReactDOMClient from "react-dom/client";
-import "@navikt/ds-css";
+import "@navikt/ds-css/dist/global/tokens.css";
+import "@navikt/ds-css/dist/global/reset.css";
+import "@navikt/ds-css/dist/global/baseline.css";
+import "@navikt/ds-css/dist/global/print.css";
+import "@navikt/ds-css/dist/components.css";
 import "@navikt/arbeidsplassen-css";
 import "@navikt/arbeidsplassen-theme";
 import { Footer, SkipLink } from "@navikt/arbeidsplassen-react";

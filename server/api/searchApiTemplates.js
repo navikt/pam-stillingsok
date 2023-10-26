@@ -32,7 +32,7 @@ function filterPublished(published) {
     return filters;
 }
 
-function suggest(field, match, minLength) {
+function suggest(field, match) {
     return {
         prefix: match,
         completion: {
@@ -41,10 +41,7 @@ function suggest(field, match, minLength) {
             contexts: {
                 status: "ACTIVE",
             },
-            size: 5,
-            fuzzy: {
-                prefix_length: minLength,
-            },
+            size: 10,
         },
     };
 }
@@ -209,19 +206,29 @@ function filterLocation(counties, municipals, countries, international = false) 
             ];
 
             if (c.municipals.length > 0) {
-                const mustObject = {
+                let mustObject = {
                     bool: {
-                        should: [{
-                            bool: {
-                                must_not: {
-                                    exists: {
-                                        field: "locationList.municipal.keyword"
-                                    }
-                                }
-                            }
-                        }],
+                        should: [],
                     },
                 };
+
+                if (countries && countries.includes("Hack")) {
+                    mustObject = {
+                        bool: {
+                            should: [
+                                {
+                                    bool: {
+                                        must_not: {
+                                            exists: {
+                                                field: "locationList.municipal.keyword",
+                                            },
+                                        },
+                                    },
+                                },
+                            ],
+                        },
+                    };
+                }
 
                 c.municipals.forEach((m) => {
                     mustObject.bool.should.push({
@@ -304,7 +311,7 @@ function filterSector(sector) {
 exports.suggestionsTemplate = (match, minLength) => ({
     suggest: {
         category_suggest: {
-            ...suggest("category_suggest", match, minLength),
+            ...suggest("category_name_suggest", match, minLength),
         },
         searchtags_suggest: {
             ...suggest("searchtags_suggest", match, minLength),
@@ -314,13 +321,21 @@ exports.suggestionsTemplate = (match, minLength) => ({
 });
 
 /* Experimental alternative relevance model with AND-logic and using cross-fields matching. */
-function mainQueryConjunctionTuning(q, match) {
-    const matchFields = ["category_no^2", "title_no^1", "keywords_no^0.8", "searchtags_no^0.3"];
+function mainQueryConjunctionTuning(q, searchFields) {
+    let matchFields;
 
-    if (match !== "occupation") {
-        matchFields.push("geography_all_no^0.2");
-        matchFields.push("adtext_no^0.2");
-        matchFields.push("employerdescription_no^0.1");
+    if (searchFields === "occupation") {
+        matchFields = ["category_name_no^2", "title_no^1", "searchtags_no^0.3"];
+    } else {
+        matchFields = [
+            "category_name_no^2",
+            "title_no^1",
+            "keywords_no^0.8",
+            "searchtags_no^0.3",
+            "geography_all_no^0.2",
+            "adtext_no^0.2",
+            "employerdescription_no^0.1",
+        ];
     }
     return {
         bool: {
@@ -493,9 +508,10 @@ exports.searchTemplate = (query) => {
         occupationFirstLevels,
         occupationSecondLevels,
         international,
-        match,
+        fields,
+        operator,
     } = query;
-    let { sort, q, operator } = query;
+    let { sort, q } = query;
 
     // To ensure consistent search results across multiple shards in elasticsearch when query is blank
     if (!q || q.trim().length === 0) {
@@ -514,7 +530,7 @@ exports.searchTemplate = (query) => {
         from: from || 0,
         size: size || 50,
         track_total_hits: true,
-        query: mainQueryTemplateFunc(q, match),
+        query: mainQueryTemplateFunc(q, fields),
         post_filter: {
             bool: {
                 filter: [
@@ -545,6 +561,10 @@ exports.searchTemplate = (query) => {
                 "status",
                 "source",
                 "reference",
+                "categoryList",
+                "properties.keywords",
+                "properties.searchtags",
+                "occupationList",
             ],
         },
         aggs: {

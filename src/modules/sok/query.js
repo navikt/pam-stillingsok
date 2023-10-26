@@ -21,10 +21,10 @@ export const ADD_SECTOR = "ADD_SECTOR";
 export const REMOVE_SECTOR = "REMOVE_SECTOR";
 export const SET_PUBLISHED = "SET_PUBLISHED";
 export const SET_SEARCH_STRING = "SET_SEARCH_STRING";
+export const SET_SEARCH_FIELDS = "SET_SEARCH_FIELDS";
 export const SET_SORTING = "SET_SORTING";
 export const SET_INTERNATIONAL = "SET_INTERNATIONAL";
 export const SET_FROM = "SET_FROM";
-export const SET_MATCH = "SET_MATCH";
 export const RESET = "RESET";
 
 export const PublishedLabelsEnum = {
@@ -33,7 +33,7 @@ export const PublishedLabelsEnum = {
 
 export const defaultQuery = {
     q: "",
-    match: undefined,
+    fields: undefined,
     from: 0,
     size: SEARCH_CHUNK_SIZE,
     counties: [],
@@ -131,7 +131,7 @@ export function initQueryWithValuesFromBrowserUrl(initialState) {
         from: 0,
         size: fromBrowserUrl.to ? parseInt(fromBrowserUrl.to, 10) : SEARCH_CHUNK_SIZE,
         q: fromBrowserUrl.q || initialState.q,
-        match: fromBrowserUrl.match || initialState.match,
+        fields: fromBrowserUrl.fields || initialState.fields,
         municipals: fromBrowserUrl.municipals || initialState.municipals,
         counties: fromBrowserUrl.counties || initialState.counties,
         countries: fromBrowserUrl.countries || initialState.countries,
@@ -264,11 +264,12 @@ export default function queryReducer(state, action) {
             return {
                 ...queryState,
                 q: action.value,
+                fields: action.value === "" ? undefined : queryState.fields,
             };
-        case SET_MATCH:
+        case SET_SEARCH_FIELDS:
             return {
                 ...queryState,
-                match: action.value,
+                fields: action.value,
             };
         case SET_SORTING:
             return {
@@ -294,6 +295,7 @@ export default function queryReducer(state, action) {
 export function toApiQuery(query) {
     const apiSearchQuery = {
         ...query,
+        sort: query.sort === "" ? "published" : query.sort,
     };
     return removeEmptyPropertiesFromQuery(apiSearchQuery);
 }

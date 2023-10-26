@@ -17,6 +17,7 @@ function HistoryProvider({ children }) {
     }, [location]);
 
     return (
+        // eslint-disable-next-line react/jsx-no-constructed-context-values
         <HistoryContext.Provider value={{ previousLocation, hasHistory: historyCount > 1 }}>
             {children}
         </HistoryContext.Provider>

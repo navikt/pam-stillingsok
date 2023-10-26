@@ -49,3 +49,11 @@ body {
 .no-focus-outline:focus {
     outline: 0;
 }
+
+.metadata {
+    font-family: monospace;
+    font-size: 0.9rem;
+    background: var(--a-surface-subtle);
+    padding: var(--a-spacing-2);
+    border-radius: var(--a-border-radius-small);
+}

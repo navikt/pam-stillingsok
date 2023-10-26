@@ -110,6 +110,7 @@ function Locations({ initialValues, updatedValues, query, dispatch }) {
             <div>
                 {locationValues &&
                     locationValues.map((location) => {
+                        // todo, trengs vel ikke om hack i searchApiTemplate.js tas vekk
                         let countyLevelHitsCount =
                             location.count - location.subLocations.reduce((sum, e) => sum + e.count, 0);
                         if (countyLevelHitsCount < 0) countyLevelHitsCount = 0;

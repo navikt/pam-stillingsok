@@ -1,4 +1,4 @@
-/* eslint-disable jsx-a11y/mouse-events-have-key-events,no-trailing-spaces */
+/* eslint-disable */
 import React from "react";
 import PropTypes from "prop-types";
 import TypeaheadSuggestion from "./TypeaheadSuggestion";
@@ -12,7 +12,7 @@ export default class Typeahead extends React.Component {
             activeSuggestionIndex: -1,
             hasFocus: false,
             shouldShowSuggestions: true,
-            setAriaActiveDescendant: false
+            setAriaActiveDescendant: false,
         };
         this.shouldBlur = true;
     }
@@ -30,7 +30,7 @@ export default class Typeahead extends React.Component {
     onChange = (value) => {
         this.setState({
             activeSuggestionIndex: -1, // Nullstill eventuelt markering av et forslag i listen
-            shouldShowSuggestions: true // Vis forslagslisten igjen. Den kan ha blitt skjult om man trykket Esc
+            shouldShowSuggestions: true, // Vis forslagslisten igjen. Den kan ha blitt skjult om man trykket Esc
         });
         this.props.onChange(value);
     };
@@ -41,7 +41,7 @@ export default class Typeahead extends React.Component {
      */
     onKeyDown = (e) => {
         let { activeSuggestionIndex } = this.state;
-        const hasSelectedSuggestion = activeSuggestionIndex > -1;
+        const hasSelectedSuggestion = this.props.suggestions.length > 0 && activeSuggestionIndex > -1;
 
         /**
          * It’s important to only set aria-activedescendant after the Down arrow key is used to start traversing the
@@ -53,7 +53,7 @@ export default class Typeahead extends React.Component {
          * https://www.levelaccess.com/differences-aria-1-0-1-1-changes-rolecombobox/
          */
         this.setState({
-            setAriaActiveDescendant: e.keyCode === 38 || e.keyCode === 40
+            setAriaActiveDescendant: e.keyCode === 38 || e.keyCode === 40,
         });
 
         switch (e.keyCode) {
@@ -68,7 +68,7 @@ export default class Typeahead extends React.Component {
                     this.setValue(this.props.suggestions[activeSuggestionIndex]);
                 } else {
                     this.setState({
-                        shouldShowSuggestions: false
+                        shouldShowSuggestions: false,
                     });
                 }
                 break;
@@ -77,9 +77,11 @@ export default class Typeahead extends React.Component {
                 // Hvis forslagslisten allerede er skjult, så vil verdien i
                 // inputfeltet slettes (hvis dette er standard oppførsel i browseren).
                 if (this.state.shouldShowSuggestions && this.props.suggestions.length > 0) {
-                    e.preventDefault(); // Unngå at verdi i inputfelt slettes
+                    // Unngå at verdi i inputfelt slettes
+                    e.stopPropagation();
+                    e.preventDefault();
                     this.setState({
-                        shouldShowSuggestions: false
+                        shouldShowSuggestions: false,
                     });
                 }
                 break;
@@ -113,7 +115,7 @@ export default class Typeahead extends React.Component {
     onFocus = () => {
         this.setState({
             hasFocus: true,
-            activeSuggestionIndex: -1
+            activeSuggestionIndex: -1,
         });
     };
 
@@ -127,7 +129,7 @@ export default class Typeahead extends React.Component {
         this.blurDelay = setTimeout(() => {
             if (this.shouldBlur) {
                 this.setState({
-                    hasFocus: false
+                    hasFocus: false,
                 });
             }
         }, 10);
@@ -140,7 +142,7 @@ export default class Typeahead extends React.Component {
      */
     setSuggestionIndex = (index) => {
         this.setState({
-            activeSuggestionIndex: index
+            activeSuggestionIndex: index,
         });
         this.clearBlurDelay();
     };
@@ -150,17 +152,18 @@ export default class Typeahead extends React.Component {
      * @param suggestionValue
      */
     setValue = (value) => {
+        const isLast = this.state.activeSuggestionIndex === this.props.suggestions.length - 1;
         this.setState(
             {
                 shouldShowSuggestions: false,
-                activeSuggestionIndex: -1
+                activeSuggestionIndex: -1,
             },
             () => {
                 this.input.focus();
-            }
+            },
         );
         this.clearBlurDelay();
-        this.props.onSelect(value);
+        this.props.onSelect(value, isLast);
     };
 
     avoidBlur = () => {
@@ -205,11 +208,15 @@ export default class Typeahead extends React.Component {
                     aria-activedescendant={activeDescendant}
                     value={this.props.value}
                     autoComplete="off"
-                    placeholder="Skriv søkeord, f.eks sommerjobb"
+                    placeholder="Skriv søkeord, f.eks sykepleier"
                     onChange={this.onChange}
                     onBlur={this.onBlur}
                     onKeyDown={this.onKeyDown}
                     onFocus={this.onFocus}
+                    onClear={() => {
+                        this.clearBlurDelay();
+                        this.props.onClear();
+                    }}
                     onSearchClick={this.props.onSearchButtonClick}
                     ref={(input) => {
                         this.input = input;
@@ -222,19 +229,23 @@ export default class Typeahead extends React.Component {
                     className={showSuggestions ? "Typeahead__suggestions" : "Typeahead__suggestions--hidden"}
                 >
                     {showSuggestions &&
-                        this.props.suggestions.map((li, i) => (
-                            <TypeaheadSuggestion
-                                id={`${this.props.id}-item-${i}`}
-                                key={li}
-                                index={i}
-                                value={li}
-                                match={this.props.value}
-                                active={i === this.state.activeSuggestionIndex}
-                                onClick={this.setValue}
-                                setSuggestionIndex={this.setSuggestionIndex}
-                                avoidBlur={this.avoidBlur}
-                            />
-                        ))}
+                        this.props.suggestions.map((li, i) => {
+                            const isSearchInWholeAdOption = i === this.props.suggestions.length - 1;
+                            return (
+                                <TypeaheadSuggestion
+                                    id={`${this.props.id}-item-${i}`}
+                                    key={`${li}${isSearchInWholeAdOption ? "-last" : ""}`}
+                                    index={i}
+                                    value={li}
+                                    isSearchInWholeAdOption={isSearchInWholeAdOption}
+                                    match={this.props.value}
+                                    active={i === this.state.activeSuggestionIndex}
+                                    onClick={this.setValue}
+                                    setSuggestionIndex={this.setSuggestionIndex}
+                                    avoidBlur={this.avoidBlur}
+                                />
+                            );
+                        })}
                 </ul>
             </div>
         );
@@ -242,7 +253,7 @@ export default class Typeahead extends React.Component {
 }
 
 Typeahead.defaultProps = {
-    ariaLabel: undefined
+    ariaLabel: undefined,
 };
 
 Typeahead.propTypes = {
@@ -251,5 +262,5 @@ Typeahead.propTypes = {
     suggestions: PropTypes.arrayOf(PropTypes.string).isRequired,
     value: PropTypes.string.isRequired,
     ariaLabel: PropTypes.string,
-    id: PropTypes.string.isRequired
+    id: PropTypes.string.isRequired,
 };
