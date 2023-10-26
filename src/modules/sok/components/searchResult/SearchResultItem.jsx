@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React, { useLayoutEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { BodyLong, Heading, HStack, Link as AkselLink, ReadMore, Tag } from "@navikt/ds-react";
+import { BodyLong, Heading, HStack, Link as AkselLink, Tag } from "@navikt/ds-react";
 import { addDays, endOfDay, format as formatDateFns, isSameDay, isValid, parse, parseISO, subDays } from "date-fns";
 import { nb } from "date-fns/locale";
 import { Buldings3Icon, ExternalLinkIcon, PinIcon } from "@navikt/aksel-icons";
@@ -9,6 +9,7 @@ import getEmployer from "../../../../../server/common/getEmployer";
 import getWorkLocation from "../../../../../server/common/getWorkLocation";
 import { CONTEXT_PATH } from "../../../common/environment";
 import { formatDate } from "../../../common/utils/utils";
+import Debug from "./Debug";
 
 export default function SearchResultItem({ ad, showExpired, favouriteButton, shouldAutoFocus, isDebug }) {
     const location = getWorkLocation(ad.properties.location, ad.locationList);
@@ -127,55 +128,7 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, sho
                 )}
             </HStack>
 
-            {isDebug && (
-                <ReadMore header="Metadata" className="mt-2">
-                    {ad.categoryList && ad.categoryList.length > 0 && (
-                        <>
-                            <Heading level="4" size="xsmall" spacing>
-                                ad.categoryList
-                            </Heading>
-                            <HStack gap="4" className="mb-8">
-                                {ad.categoryList &&
-                                    ad.categoryList.map((category) => (
-                                        <BodyLong className="metadata">
-                                            {category.name} ({category.categoryType})
-                                        </BodyLong>
-                                    ))}
-                            </HStack>
-                        </>
-                    )}
-
-                    {ad.properties.searchtags && ad.properties.searchtags.length > 0 && (
-                        <>
-                            <Heading level="4" size="xsmall" spacing>
-                                ad.properties.searchtags
-                            </Heading>
-
-                            <HStack gap="4" className="mb-8">
-                                {ad.properties.searchtags &&
-                                    ad.properties.searchtags.map((tag) => (
-                                        <BodyLong className="metadata">
-                                            {tag.label} (score {tag.score})
-                                        </BodyLong>
-                                    ))}
-                            </HStack>
-                        </>
-                    )}
-
-                    {ad.properties.keywords && (
-                        <>
-                            <Heading level="4" size="xsmall" spacing>
-                                ad.properties.keywords
-                            </Heading>
-                            <HStack gap="4" className="mb-8">
-                                {ad.properties.keywords && (
-                                    <BodyLong className="metadata">{ad.properties.keywords}</BodyLong>
-                                )}
-                            </HStack>
-                        </>
-                    )}
-                </ReadMore>
-            )}
+            {isDebug && <Debug ad={ad} />}
         </article>
     );
 }

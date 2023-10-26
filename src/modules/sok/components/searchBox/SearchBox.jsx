@@ -28,7 +28,7 @@ function SearchBox({ dispatch, query }) {
                     ),
                 ].sort(),
             ),
-        ];
+        ].slice(0, 10);
     }
 
     function fetchSuggestions() {

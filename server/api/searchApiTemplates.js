@@ -41,7 +41,7 @@ function suggest(field, match) {
             contexts: {
                 status: "ACTIVE",
             },
-            size: 5,
+            size: 10,
         },
     };
 }
