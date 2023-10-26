@@ -560,6 +560,7 @@ exports.searchTemplate = (query) => {
                 "uuid",
                 "status",
                 "source",
+                "medium",
                 "reference",
                 "categoryList",
                 "properties.keywords",

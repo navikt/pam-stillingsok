@@ -59,6 +59,21 @@ function SearchBox({ dispatch, query }) {
         setValue(newValue);
     }
 
+    function track(newValue) {
+        try {
+            // Track only search box values if they are suggestions from our own api.
+            // Do not track other values if they free text entered by user.
+            const found = suggestionsResponse.data.find((it) => it.toLowerCase() === newValue.toLowerCase());
+            if (found) {
+                logAmplitudeEvent("selected typeahead suggestion", { value: found });
+            } else {
+                logAmplitudeEvent("selected typeahead suggestion", { value: "(fritekst)" });
+            }
+        } catch (err) {
+            // ignore
+        }
+    }
+
     function handleTypeAheadSuggestionSelected(newValue, shouldSearchInWholeAd) {
         setValue(newValue);
         if (shouldSearchInWholeAd) {
@@ -67,17 +82,7 @@ function SearchBox({ dispatch, query }) {
             dispatch({ type: SET_SEARCH_FIELDS, value: "occupation" });
         }
 
-        try {
-            // Track only search box values if they are suggestions from our own api.
-            // Do not track other values if they free text entered by user.
-            // This amplitude event can be removed if it still exists after december 2023
-            const found = suggestionsResponse.data.find((it) => it.toLowerCase() === newValue.toLowerCase());
-            if (found) {
-                logAmplitudeEvent("selected typeahead suggestion", { value: found });
-            }
-        } catch (err) {
-            // ignore
-        }
+        track(newValue);
 
         dispatch({ type: SET_SEARCH_STRING, value: newValue });
     }
@@ -89,6 +94,9 @@ function SearchBox({ dispatch, query }) {
         } else {
             dispatch({ type: SET_SEARCH_FIELDS, value: undefined });
         }
+
+        track(value);
+
         dispatch({ type: SET_SEARCH_STRING, value });
     }
 
@@ -112,7 +120,7 @@ function SearchBox({ dispatch, query }) {
                 autoComplete="off"
                 onSelect={handleTypeAheadSuggestionSelected}
                 onChange={handleTypeAheadValueChange}
-                suggestions={value.length > 0 ? allSuggestions : []}
+                suggestions={value && value.length > 0 ? allSuggestions : []}
                 value={value || ""}
                 onSearchButtonClick={handleSearchButtonClick}
             />
