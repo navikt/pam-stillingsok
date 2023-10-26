@@ -1,7 +1,7 @@
 import React, { useEffect, useReducer, useState } from "react";
 import PropTypes from "prop-types";
 import { Box, Button, HGrid, Hide, HStack, Show, Stack } from "@navikt/ds-react";
-import { useHistory } from "react-router";
+import useRouter from "../../../migrating/useRouter";
 import { CONTEXT_PATH } from "../../common/environment";
 import queryReducer, { isSearchQueryEmpty, SET_FROM, stringifyQuery, toBrowserQuery } from "../query";
 import { extractParam } from "../../common/utils/utils";
@@ -27,7 +27,7 @@ export default function Search({ initialSearchResponse, searchResponse, initialQ
     const [isFiltersVisible, setIsFiltersVisible] = useState(false);
     const [initialRenderDone, setInitialRenderDone] = useState(false);
 
-    const router = useHistory();
+    const router = useRouter();
 
     /**
      * Perform a search when user changes search criteria

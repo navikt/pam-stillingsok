@@ -24,7 +24,7 @@ function Debug({ ad }) {
                         {ad.occupationList &&
                             ad.occupationList.map((occupation) => (
                                 <BodyLong className="metadata">
-                                    {occupation.level1} > {occupation.level2}
+                                    {occupation.level1}: {occupation.level2}
                                 </BodyLong>
                             ))}
                     </VStack>

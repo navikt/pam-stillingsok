@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import NotFound from "@/src/modules/not-found";
+import NotFound from "../../modules/not-found";
 
 export default function () {
     return <NotFound />;
