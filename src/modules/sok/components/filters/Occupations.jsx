@@ -49,7 +49,7 @@ function Occupations({ initialValues, updatedValues, query, dispatch }) {
         const { value } = e.target;
         if (e.target.checked) {
             try {
-                logAmplitudeEvent("add occupation second level", { value });
+                logAmplitudeEvent("add occupation second level", { value: value.split(".")[1] });
             } catch (err) {
                 // ignore
             }
