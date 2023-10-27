@@ -35,7 +35,7 @@ function Occupations({ initialValues, updatedValues, query, dispatch }) {
         const { value } = e.target;
         if (e.target.checked) {
             try {
-                logAmplitudeEvent("add occupation first level", { value });
+                logAmplitudeEvent("Add occupation first level", { value });
             } catch (err) {
                 // ignore
             }
@@ -49,7 +49,7 @@ function Occupations({ initialValues, updatedValues, query, dispatch }) {
         const { value } = e.target;
         if (e.target.checked) {
             try {
-                logAmplitudeEvent("add occupation second level", { value: value.split(".")[1] });
+                logAmplitudeEvent("Add occupation second level", { value: value.split(".")[1] });
             } catch (err) {
                 // ignore
             }
