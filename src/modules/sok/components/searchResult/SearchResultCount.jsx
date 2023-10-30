@@ -22,10 +22,6 @@ function SearchResultCount({ searchResult }) {
     return <div />;
 }
 
-SearchResultCount.defaultProps = {
-    searchResult: undefined,
-};
-
 SearchResultCount.propTypes = {
     searchResult: PropTypes.shape({
         totalAds: PropTypes.number,

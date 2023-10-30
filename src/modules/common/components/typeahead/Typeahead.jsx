@@ -252,10 +252,6 @@ export default class Typeahead extends React.Component {
     }
 }
 
-Typeahead.defaultProps = {
-    ariaLabel: undefined,
-};
-
 Typeahead.propTypes = {
     onSelect: PropTypes.func.isRequired,
     onChange: PropTypes.func.isRequired,

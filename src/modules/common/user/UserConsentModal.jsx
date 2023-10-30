@@ -113,10 +113,6 @@ function UserConsentModal({ onClose, onTermsAccepted }) {
     );
 }
 
-UserConsentModal.defaultProps = {
-    onTermsAccepted: undefined,
-};
-
 UserConsentModal.propTypes = {
     onClose: PropTypes.func.isRequired,
     onTermsAccepted: PropTypes.func,
