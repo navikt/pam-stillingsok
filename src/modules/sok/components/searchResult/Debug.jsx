@@ -1,17 +1,17 @@
 import React from "react";
-import { BodyLong, Heading, HStack, ReadMore, VStack } from "@navikt/ds-react";
+import { BodyLong, Heading, HStack, ReadMore } from "@navikt/ds-react";
 import PropTypes from "prop-types";
 
 function Debug({ ad }) {
     return (
         <ReadMore header="Metadata" className="mt-2">
-            {ad.properties.jobtitle && ad.properties.jobtitle !== "" && (
+            {ad.medium !== "" && (
                 <>
                     <Heading level="4" size="xsmall" spacing>
-                        ad.properties.jobtitle
+                        ad.medium
                     </Heading>
                     <HStack gap="4" className="mb-8">
-                        <BodyLong className="metadata">{ad.properties.jobtitle}</BodyLong>
+                        <BodyLong className="metadata">{ad.medium}</BodyLong>
                     </HStack>
                 </>
             )}
@@ -20,14 +20,14 @@ function Debug({ ad }) {
                     <Heading level="4" size="xsmall" spacing>
                         ad.occupationList
                     </Heading>
-                    <VStack gap="4" className="mb-8">
+                    <HStack gap="4" className="mb-8">
                         {ad.occupationList &&
                             ad.occupationList.map((occupation) => (
                                 <BodyLong className="metadata">
                                     {occupation.level1}: {occupation.level2}
                                 </BodyLong>
                             ))}
-                    </VStack>
+                    </HStack>
                 </>
             )}
 
@@ -80,6 +80,7 @@ function Debug({ ad }) {
 
 Debug.propTypes = {
     ad: PropTypes.shape({
+        medium: PropTypes.string,
         categoryList: PropTypes.arrayOf(PropTypes.shape({ name: PropTypes.string, categoryType: PropTypes.string })),
         occupationList: PropTypes.arrayOf(PropTypes.shape({ level1: PropTypes.string, level2: PropTypes.string })),
         properties: {

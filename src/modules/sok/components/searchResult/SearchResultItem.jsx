@@ -11,7 +11,7 @@ import { CONTEXT_PATH } from "../../../common/environment";
 import { formatDate } from "../../../common/utils/utils";
 import Debug from "./Debug";
 
-export default function SearchResultItem({ ad, showExpired, favouriteButton, shouldAutoFocus, isDebug }) {
+export default function SearchResultItem({ ad, showExpired, favouriteButton, isDebug, shouldAutoFocus = false }) {
     const location = getWorkLocation(ad.properties.location, ad.locationList);
     const employer = getEmployer(ad);
     const isFinn = ad.source && ad.source.toLowerCase() === "finn";
@@ -132,10 +132,6 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, sho
         </article>
     );
 }
-
-SearchResultItem.defaultProps = {
-    shouldAutoFocus: false,
-};
 
 SearchResultItem.propTypes = {
     ad: PropTypes.shape({

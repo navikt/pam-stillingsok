@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Accordion } from "@navikt/ds-react";
 import logAmplitudeEvent from "../../../common/tracking/amplitude";
 
-function FilterAccordionItem({ isOpenByDefault, title, children, panelId }) {
+function FilterAccordionItem({ title, children, panelId, isOpenByDefault = true }) {
     const [isOpen, setIsOpen] = useState(() => {
         try {
             const found = sessionStorage.getItem(`${panelId}-open`);
@@ -55,10 +55,6 @@ function FilterAccordionItem({ isOpenByDefault, title, children, panelId }) {
         </Accordion.Item>
     );
 }
-
-FilterAccordionItem.defaultProps = {
-    isOpenByDefault: true,
-};
 
 FilterAccordionItem.propTypes = {
     isOpenByDefault: PropTypes.bool,

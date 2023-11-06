@@ -5,13 +5,13 @@ import fixLocationName from "../../../../../server/common/fixLocationName";
 
 export default function UnknownSearchCriteriaValues({
     namePrefix,
-    unknownValues,
-    checkedValues,
     onClick,
-    unknownNestedValues,
-    checkedNestedValues,
     onNestedLevelClick,
-    shouldFixLocationName,
+    unknownValues = [],
+    checkedValues = [],
+    unknownNestedValues = [],
+    checkedNestedValues = [],
+    shouldFixLocationName = false,
 }) {
     if (unknownValues.length + unknownNestedValues.length === 0) {
         return null;
@@ -47,15 +47,6 @@ export default function UnknownSearchCriteriaValues({
         </>
     );
 }
-
-UnknownSearchCriteriaValues.defaultProps = {
-    unknownValues: [],
-    checkedValues: [],
-    unknownNestedValues: [],
-    checkedNestedValues: [],
-    onNestedLevelClick: undefined,
-    shouldFixLocationName: false,
-};
 
 UnknownSearchCriteriaValues.propTypes = {
     namePrefix: PropTypes.string.isRequired,
