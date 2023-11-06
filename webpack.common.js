@@ -1,6 +1,5 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-
-const devMode = process.env.NODE_ENV !== "production";
 
 module.exports = {
     devtool: "source-map",

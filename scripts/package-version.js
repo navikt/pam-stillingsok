@@ -1,7 +1,8 @@
-const npmPackage = require('../package.json');
+const npmPackage = require("../package.json");
 
 const { version } = npmPackage;
-let versionNumberList = version.split('.');
+const versionNumberList = version.split(".");
 versionNumberList.pop();
 
-console.log(versionNumberList.join('.'));
+// eslint-disable-next-line no-console
+console.log(versionNumberList.join("."));

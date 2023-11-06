@@ -24,28 +24,25 @@ function filterPublished(published) {
             range: {
                 published: {
                     gte: published,
-                    time_zone: "CET"
-                }
-            }
+                    time_zone: "CET",
+                },
+            },
         });
     }
     return filters;
 }
 
-function suggest(field, match, minLength) {
+function suggest(field, match) {
     return {
         prefix: match,
         completion: {
             field,
             skip_duplicates: true,
             contexts: {
-                status: "ACTIVE"
+                status: "ACTIVE",
             },
-            size: 5,
-            fuzzy: {
-                prefix_length: minLength
-            }
-        }
+            size: 10,
+        },
     };
 }
 
@@ -54,14 +51,14 @@ function filterExtent(extent) {
     if (extent && extent.length > 0) {
         const filter = {
             bool: {
-                should: []
-            }
+                should: [],
+            },
         };
         extent.forEach((item) => {
             filter.bool.should.push({
                 term: {
-                    extent_facet: item
-                }
+                    extent_facet: item,
+                },
             });
         });
         filters.push(filter);
@@ -76,20 +73,20 @@ function filterRemote(remote) {
         if (remote && remote.length > 0) {
             const filter = {
                 bool: {
-                    should: []
-                }
+                    should: [],
+                },
             };
             remote.forEach((item) => {
                 filter.bool.should.push({
                     term: {
-                        "properties.remote": item
-                    }
+                        "properties.remote": item,
+                    },
                 });
             });
             filter.bool.should.push({
                 match: {
-                    adtext_no: "hjemmekontor"
-                }
+                    adtext_no: "hjemmekontor",
+                },
             });
 
             filters.push(filter);
@@ -103,14 +100,14 @@ function filterEngagementType(engagementTypes) {
     if (engagementTypes && engagementTypes.length > 0) {
         const filter = {
             bool: {
-                should: []
-            }
+                should: [],
+            },
         };
         engagementTypes.forEach((engagementType) => {
             filter.bool.should.push({
                 term: {
-                    engagementtype_facet: engagementType
-                }
+                    engagementtype_facet: engagementType,
+                },
             });
         });
         filters.push(filter);
@@ -131,9 +128,9 @@ function filterNestedFacets(parents, children = [], parentKey, childKey, nestedF
             let must = [
                 {
                     term: {
-                        [parentKey]: parent
-                    }
-                }
+                        [parentKey]: parent,
+                    },
+                },
             ];
 
             const childrenOfCurrentParent = children.filter((m) => m.split(".")[0] === parent);
@@ -144,11 +141,11 @@ function filterNestedFacets(parents, children = [], parentKey, childKey, nestedF
                         bool: {
                             should: childrenOfCurrentParent.map((child) => ({
                                 term: {
-                                    [childKey]: child.split(".")[1] // child kan feks være AKERSHUS.ASKER
-                                }
-                            }))
-                        }
-                    }
+                                    [childKey]: child.split(".")[1], // child kan feks være AKERSHUS.ASKER
+                                },
+                            })),
+                        },
+                    },
                 ];
             }
 
@@ -160,18 +157,18 @@ function filterNestedFacets(parents, children = [], parentKey, childKey, nestedF
         bool: {
             should: allMusts.map((must) => ({
                 bool: {
-                    must
-                }
-            }))
-        }
+                    must,
+                },
+            })),
+        },
     };
 
     return nestedField
         ? {
               nested: {
                   path: nestedField,
-                  query: queryObject
-              }
+                  query: queryObject,
+              },
           }
         : queryObject;
 }
@@ -183,10 +180,10 @@ function filterLocation(counties, municipals, countries, international = false) 
             path: "locationList",
             query: {
                 bool: {
-                    should: []
-                }
-            }
-        }
+                    should: [],
+                },
+            },
+        },
     };
 
     if (Array.isArray(counties)) {
@@ -195,7 +192,7 @@ function filterLocation(counties, municipals, countries, international = false) 
         counties.forEach((c) => {
             countiesComputed.push({
                 key: c,
-                municipals: Array.isArray(municipals) ? municipals.filter((m) => m.split(".")[0] === c) : []
+                municipals: Array.isArray(municipals) ? municipals.filter((m) => m.split(".")[0] === c) : [],
             });
         });
 
@@ -203,23 +200,41 @@ function filterLocation(counties, municipals, countries, international = false) 
             const must = [
                 {
                     term: {
-                        "locationList.county.keyword": c.key
-                    }
-                }
+                        "locationList.county.keyword": c.key,
+                    },
+                },
             ];
 
             if (c.municipals.length > 0) {
-                const mustObject = {
+                let mustObject = {
                     bool: {
-                        should: []
-                    }
+                        should: [],
+                    },
                 };
+
+                if (countries && countries.includes("Hack")) {
+                    mustObject = {
+                        bool: {
+                            should: [
+                                {
+                                    bool: {
+                                        must_not: {
+                                            exists: {
+                                                field: "locationList.municipal.keyword",
+                                            },
+                                        },
+                                    },
+                                },
+                            ],
+                        },
+                    };
+                }
 
                 c.municipals.forEach((m) => {
                     mustObject.bool.should.push({
                         term: {
-                            "locationList.municipal.keyword": m.split(".")[1]
-                        }
+                            "locationList.municipal.keyword": m.split(".")[1],
+                        },
                     });
                 });
 
@@ -228,33 +243,31 @@ function filterLocation(counties, municipals, countries, international = false) 
 
             filter.nested.query.bool.should.push({
                 bool: {
-                    must: must
-                }
+                    must,
+                },
             });
         });
     }
 
     const internationalObject = {
-        bool: {}
+        bool: {},
     };
 
     if (international) {
-        internationalObject.bool["must_not"] = {
+        internationalObject.bool.must_not = {
             term: {
-                "locationList.country.keyword": "NORGE"
-            }
+                "locationList.country.keyword": "NORGE",
+            },
         };
     }
 
     if (Array.isArray(countries) && countries.length > 0) {
-        internationalObject.bool["should"] = [
-            ...countries.map((c) => {
-                return {
-                    term: {
-                        "locationList.country.keyword": c
-                    }
-                };
-            })
+        internationalObject.bool.should = [
+            ...countries.map((c) => ({
+                term: {
+                    "locationList.country.keyword": c,
+                },
+            })),
         ];
     }
 
@@ -271,7 +284,7 @@ function filterOccupation(occupationFirstLevels, occupationSecondLevels) {
         occupationSecondLevels,
         "occupationList.level1",
         "occupationList.level2",
-        "occupationList"
+        "occupationList",
     );
 }
 
@@ -280,14 +293,14 @@ function filterSector(sector) {
     if (sector && sector.length > 0) {
         const filter = {
             bool: {
-                should: []
-            }
+                should: [],
+            },
         };
         sector.forEach((item) => {
             filter.bool.should.push({
                 term: {
-                    sector_facet: item
-                }
+                    sector_facet: item,
+                },
             });
         });
         filters.push(filter);
@@ -298,23 +311,31 @@ function filterSector(sector) {
 exports.suggestionsTemplate = (match, minLength) => ({
     suggest: {
         category_suggest: {
-            ...suggest("category_suggest", match, minLength)
+            ...suggest("category_name_suggest", match, minLength),
         },
         searchtags_suggest: {
-            ...suggest("searchtags_suggest", match, minLength)
-        }
+            ...suggest("searchtags_suggest", match, minLength),
+        },
     },
-    _source: false
+    _source: false,
 });
 
 /* Experimental alternative relevance model with AND-logic and using cross-fields matching. */
-function mainQueryConjunctionTuning(q, match) {
-    const matchFields = ["category_no^2", "title_no^1", "keywords_no^0.8", "searchtags_no^0.3"];
+function mainQueryConjunctionTuning(q, searchFields) {
+    let matchFields;
 
-    if (match !== "occupation") {
-        matchFields.push("geography_all_no^0.2");
-        matchFields.push("adtext_no^0.2");
-        matchFields.push("employerdescription_no^0.1");
+    if (searchFields === "occupation") {
+        matchFields = ["category_name_no^2", "title_no^1", "searchtags_no^0.3"];
+    } else {
+        matchFields = [
+            "category_name_no^2",
+            "title_no^1",
+            "keywords_no^0.8",
+            "searchtags_no^0.3",
+            "geography_all_no^0.2",
+            "adtext_no^0.2",
+            "employerdescription_no^0.1",
+        ];
     }
     return {
         bool: {
@@ -329,70 +350,70 @@ function mainQueryConjunctionTuning(q, match) {
                                 operator: "and",
                                 tie_breaker: 0.3,
                                 analyzer: "norwegian",
-                                zero_terms_query: "all"
-                            }
+                                zero_terms_query: "all",
+                            },
                         },
                         {
                             match_phrase: {
                                 employername: {
                                     query: q,
                                     slop: 0,
-                                    boost: 2
-                                }
-                            }
+                                    boost: 2,
+                                },
+                            },
                         },
                         {
                             match: {
                                 id: {
                                     query: q,
                                     operator: "and",
-                                    boost: 1
-                                }
-                            }
-                        }
-                    ]
-                }
+                                    boost: 1,
+                                },
+                            },
+                        },
+                    ],
+                },
             },
             should: [
                 {
                     match_phrase: {
                         title: {
                             query: q,
-                            slop: 2
-                        }
-                    }
+                            slop: 2,
+                        },
+                    },
                 },
                 {
                     constant_score: {
                         filter: {
                             match: {
                                 "location.municipal": {
-                                    query: q
-                                }
-                            }
+                                    query: q,
+                                },
+                            },
                         },
-                        boost: 3
-                    }
+                        boost: 3,
+                    },
                 },
                 {
                     constant_score: {
                         filter: {
                             match: {
                                 "location.county": {
-                                    query: q
-                                }
-                            }
+                                    query: q,
+                                },
+                            },
                         },
-                        boost: 3
-                    }
-                }
+                        boost: 3,
+                    },
+                },
             ],
             filter: {
                 term: {
-                    status: "ACTIVE"
-                }
-            }
-        }
+                    status: "ACTIVE",
+                },
+            },
+        },
     };
 }
 
@@ -413,62 +434,62 @@ function mainQueryDisjunctionTuning(q) {
                         "searchtags_no^0.4",
                         "geography_all_no^0.2",
                         "adtext_no^0.2",
-                        "employerdescription_no^0.1"
+                        "employerdescription_no^0.1",
                     ],
                     tie_breaker: 0.3,
                     minimum_should_match: 1,
-                    zero_terms_query: "all"
-                }
+                    zero_terms_query: "all",
+                },
             },
             should: [
                 {
                     match_phrase: {
                         title: {
                             query: q,
-                            slop: 2
-                        }
-                    }
+                            slop: 2,
+                        },
+                    },
                 },
                 {
                     match_phrase: {
                         employername: {
                             query: q,
                             slop: 0,
-                            boost: 1
-                        }
-                    }
+                            boost: 1,
+                        },
+                    },
                 },
                 {
                     constant_score: {
                         filter: {
                             match: {
                                 "location.municipal": {
-                                    query: q
-                                }
-                            }
+                                    query: q,
+                                },
+                            },
                         },
-                        boost: 3
-                    }
+                        boost: 3,
+                    },
                 },
                 {
                     constant_score: {
                         filter: {
                             match: {
                                 "location.county": {
-                                    query: q
-                                }
-                            }
+                                    query: q,
+                                },
+                            },
                         },
-                        boost: 3
-                    }
-                }
+                        boost: 3,
+                    },
+                },
             ],
             filter: {
                 term: {
-                    status: "ACTIVE"
-                }
-            }
-        }
+                    status: "ACTIVE",
+                },
+            },
+        },
     };
 }
 
@@ -487,9 +508,10 @@ exports.searchTemplate = (query) => {
         occupationFirstLevels,
         occupationSecondLevels,
         international,
-        match
+        fields,
+        operator,
     } = query;
-    let { sort, q, operator } = query;
+    let { sort, q } = query;
 
     // To ensure consistent search results across multiple shards in elasticsearch when query is blank
     if (!q || q.trim().length === 0) {
@@ -508,7 +530,7 @@ exports.searchTemplate = (query) => {
         from: from || 0,
         size: size || 50,
         track_total_hits: true,
-        query: mainQueryTemplateFunc(q, match),
+        query: mainQueryTemplateFunc(q, fields),
         post_filter: {
             bool: {
                 filter: [
@@ -518,9 +540,9 @@ exports.searchTemplate = (query) => {
                     filterOccupation(occupationFirstLevels, occupationSecondLevels),
                     ...filterEngagementType(engagementType),
                     ...filterSector(sector),
-                    ...filterPublished(published)
-                ]
-            }
+                    ...filterPublished(published),
+                ],
+            },
         },
         _source: {
             includes: [
@@ -538,8 +560,13 @@ exports.searchTemplate = (query) => {
                 "uuid",
                 "status",
                 "source",
-                "reference"
-            ]
+                "medium",
+                "reference",
+                "categoryList",
+                "properties.keywords",
+                "properties.searchtags",
+                "occupationList",
+            ],
         },
         aggs: {
             positioncount: {
@@ -552,18 +579,18 @@ exports.searchTemplate = (query) => {
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
                             ...filterEngagementType(engagementType),
                             ...filterSector(sector),
-                            ...filterPublished(published)
-                        ]
-                    }
+                            ...filterPublished(published),
+                        ],
+                    },
                 },
                 aggs: {
                     sum: {
                         sum: {
                             field: "properties.positioncount",
-                            missing: 1
-                        }
-                    }
-                }
+                            missing: 1,
+                        },
+                    },
+                },
             },
             published: {
                 filter: {
@@ -574,9 +601,9 @@ exports.searchTemplate = (query) => {
                             filterLocation(counties, municipals, countries, international),
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
                             ...filterEngagementType(engagementType),
-                            ...filterSector(sector)
-                        ]
-                    }
+                            ...filterSector(sector),
+                        ],
+                    },
                 },
                 aggs: {
                     range: {
@@ -586,12 +613,12 @@ exports.searchTemplate = (query) => {
                             ranges: [
                                 {
                                     key: "now/d",
-                                    from: "now/d"
-                                }
-                            ]
-                        }
-                    }
-                }
+                                    from: "now/d",
+                                },
+                            ],
+                        },
+                    },
+                },
             },
             sector: {
                 filter: {
@@ -602,15 +629,15 @@ exports.searchTemplate = (query) => {
                             filterLocation(counties, municipals, countries, international),
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
                             ...filterEngagementType(engagementType),
-                            ...filterPublished(published)
-                        ]
-                    }
+                            ...filterPublished(published),
+                        ],
+                    },
                 },
                 aggs: {
                     values: {
-                        terms: { field: "sector_facet" }
-                    }
-                }
+                        terms: { field: "sector_facet" },
+                    },
+                },
             },
             extent: {
                 filter: {
@@ -621,15 +648,15 @@ exports.searchTemplate = (query) => {
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
                             ...filterEngagementType(engagementType),
                             ...filterSector(sector),
-                            ...filterPublished(published)
-                        ]
-                    }
+                            ...filterPublished(published),
+                        ],
+                    },
                 },
                 aggs: {
                     values: {
-                        terms: { field: "extent_facet" }
-                    }
-                }
+                        terms: { field: "extent_facet" },
+                    },
+                },
             },
             engagementType: {
                 filter: {
@@ -640,15 +667,15 @@ exports.searchTemplate = (query) => {
                             filterLocation(counties, municipals, countries, international),
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
                             ...filterSector(sector),
-                            ...filterPublished(published)
-                        ]
-                    }
+                            ...filterPublished(published),
+                        ],
+                    },
                 },
                 aggs: {
                     values: {
-                        terms: { field: "engagementtype_facet" }
-                    }
-                }
+                        terms: { field: "engagementtype_facet" },
+                    },
+                },
             },
             counties: {
                 filter: {
@@ -659,14 +686,14 @@ exports.searchTemplate = (query) => {
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
                             ...filterEngagementType(engagementType),
                             ...filterSector(sector),
-                            ...filterPublished(published)
-                        ]
-                    }
+                            ...filterPublished(published),
+                        ],
+                    },
                 },
                 aggs: {
                     nestedLocations: {
                         nested: {
-                            path: "locationList"
+                            path: "locationList",
                         },
                         aggs: {
                             values: {
@@ -674,27 +701,27 @@ exports.searchTemplate = (query) => {
                                     field: "locationList.county.keyword",
                                     size: 50,
                                     order: {
-                                        _key: "asc"
-                                    }
+                                        _key: "asc",
+                                    },
                                 },
                                 aggs: {
                                     root_doc_count: {
-                                        reverse_nested: {}
+                                        reverse_nested: {},
                                     },
                                     municipals: {
                                         terms: {
                                             field: "locationList.municipal.keyword",
                                             size: 200,
                                             order: {
-                                                _key: "asc"
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+                                                _key: "asc",
+                                            },
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                },
             },
             occupations: {
                 filter: {
@@ -705,41 +732,41 @@ exports.searchTemplate = (query) => {
                             filterLocation(counties, municipals, countries, international),
                             ...filterEngagementType(engagementType),
                             ...filterSector(sector),
-                            ...filterPublished(published)
-                        ]
-                    }
+                            ...filterPublished(published),
+                        ],
+                    },
                 },
                 aggs: {
                     nestedOccupations: {
                         nested: {
-                            path: "occupationList"
+                            path: "occupationList",
                         },
                         aggs: {
                             occupationFirstLevels: {
                                 terms: {
                                     field: "occupationList.level1",
-                                    size: 50
+                                    size: 50,
                                 },
                                 aggs: {
                                     root_doc_count: {
-                                        reverse_nested: {}
+                                        reverse_nested: {},
                                     },
                                     occupationSecondLevels: {
                                         terms: {
                                             field: "occupationList.level2",
-                                            size: 100
+                                            size: 100,
                                         },
                                         aggs: {
                                             root_doc_count: {
-                                                reverse_nested: {}
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+                                                reverse_nested: {},
+                                            },
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                },
             },
             countries: {
                 filter: {
@@ -752,26 +779,26 @@ exports.searchTemplate = (query) => {
                             ...filterSector(sector),
                             ...filterPublished(published),
                             {
-                                "nested": {
-                                    "path": "locationList",
-                                    "query": {
-                                        "bool": {
-                                            "must_not": {
-                                                "term": {
-                                                    "locationList.country.keyword": "NORGE"
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        ]
-                    }
+                                nested: {
+                                    path: "locationList",
+                                    query: {
+                                        bool: {
+                                            must_not: {
+                                                term: {
+                                                    "locationList.country.keyword": "NORGE",
+                                                },
+                                            },
+                                        },
+                                    },
+                                },
+                            },
+                        ],
+                    },
                 },
                 aggs: {
                     nestedLocations: {
                         nested: {
-                            path: "locationList"
+                            path: "locationList",
                         },
                         aggs: {
                             values: {
@@ -779,15 +806,15 @@ exports.searchTemplate = (query) => {
                                     field: "locationList.country.keyword",
                                     size: 50,
                                     order: {
-                                        _key: "asc"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
+                                        _key: "asc",
+                                    },
+                                },
+                            },
+                        },
+                    },
+                },
+            },
+        },
     };
 
     if (useRemoteFilter) {
@@ -802,9 +829,9 @@ exports.searchTemplate = (query) => {
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
                             ...filterEngagementType(engagementType),
                             ...filterSector(sector),
-                            ...filterPublished(published)
-                        ]
-                    }
+                            ...filterPublished(published),
+                        ],
+                    },
                 },
                 aggs: {
                     values: {
@@ -816,27 +843,27 @@ exports.searchTemplate = (query) => {
                                         should: [
                                             {
                                                 term: {
-                                                    "properties.remote": "Hjemmekontor"
-                                                }
+                                                    "properties.remote": "Hjemmekontor",
+                                                },
                                             },
                                             {
                                                 term: {
-                                                    "properties.remote": "Hybridkontor"
-                                                }
+                                                    "properties.remote": "Hybridkontor",
+                                                },
                                             },
                                             {
                                                 match: {
-                                                    adtext_no: "hjemmekontor"
-                                                }
-                                            }
-                                        ]
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+                                                    adtext_no: "hjemmekontor",
+                                                },
+                                            },
+                                        ],
+                                    },
+                                },
+                            },
+                        },
+                    },
+                },
+            },
         };
     }
 
@@ -846,11 +873,11 @@ exports.searchTemplate = (query) => {
             sort: [
                 {
                     [mapSortByValue(sort)]: {
-                        order: mapSortByOrder(sort)
-                    }
+                        order: mapSortByOrder(sort),
+                    },
                 },
-                "_score"
-            ]
+                "_score",
+            ],
         };
     }
 

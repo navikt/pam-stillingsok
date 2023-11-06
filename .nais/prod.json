@@ -1,0 +1,17 @@
+{
+    "ingress": ["https://arbeidsplassen.nav.no/stillinger"],
+    "pamaduser_url": "http://pam-aduser/aduser",
+    "arbeidsplassen_url": "https://arbeidsplassen.nav.no",
+    "pam_stillingsok_url": "https://arbeidsplassen.nav.no/stillinger",
+    "pam_var_side_url": "https://arbeidsplassen.nav.no/stillingsregistrering",
+    "pamsearchapi_url": "http://pam-search-api",
+    "pam_jobbtreff_api_url": "https://arbeidsplassen.nav.no/jobbtreff-promo",
+    "amplitude_token": "a7b3f00008ae250a08c3ebbc6bf718f9",
+    "interest_api_url": "https://arbeidsplassen.nav.no/interesse-api",
+    "cv-api-url": "https://pam-cv-api.prod-fss-pub.nais.io",
+    "cv-api-host": "pam-cv-api.prod-fss-pub.nais.io",
+    "cv_api_audience": "prod-fss:teampam:pam-cv-api",
+    "aduser_audience": "prod-gcp:teampam:pam-aduser",
+    "idporten_audience": "https://nav.no",
+    "sentry_dsn": "https://76170ea4b79246638c1d9eb1c0e4fca9@sentry.gc.nav.no/37"
+}

@@ -4,12 +4,12 @@ function isValidISOString(isoString) {
     return ISO_8601_DATE.test(isoString);
 }
 
-exports.formatISOString = function (isoString, format = 'DD.MM.YYYY') {
+exports.formatISOString = function formatISOString(isoString, format = "DD.MM.YYYY") {
     try {
         if (isValidISOString(isoString)) {
-            const dt = isoString.split('-');
-            if (format === 'DD.MM.YYYY') {
-                const day = dt[2].split('T')[0];
+            const dt = isoString.split("-");
+            if (format === "DD.MM.YYYY") {
+                const day = dt[2].split("T")[0];
                 return `${day}.${dt[1]}.${dt[0]}`;
             }
             return isoString;

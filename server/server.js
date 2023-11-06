@@ -1,9 +1,9 @@
+const path = require("path");
+const fs = require("fs");
 const express = require("express");
 const helmet = require("helmet");
-const path = require("path");
 const mustacheExpress = require("mustache-express");
 const Promise = require("promise");
-const fs = require("fs");
 const bodyParser = require("body-parser");
 const compression = require("compression");
 const searchApiConsumer = require("./api/searchApiConsumer");
@@ -12,6 +12,8 @@ const locationApiConsumer = require("./api/locationApiConsumer");
 const setUpProxyCvApi = require("./api/cvApiProxy");
 const { initializeTokenX, tokenIsValid } = require("./tokenX/tokenXUtils");
 const setUpAduserApiProxy = require("./api/userApiProxyConfig");
+const setUpSuperraskApi = require("./api/superraskApiProxy");
+const { logger } = require("./common/logger");
 
 /* eslint no-console: 0 */
 
@@ -31,7 +33,7 @@ locationApiConsumer.fetchAndProcessLocations().then((res) => {
     }
 });
 
-fs.readFile(__dirname + "/api/resources/locations.json", "utf-8", function (err, data) {
+fs.readFile(`${__dirname}/api/resources/locations.json`, "utf-8", (err, data) => {
     locationsFromFile = err ? [] : JSON.parse(data);
 });
 
@@ -60,11 +62,11 @@ server.use(
                 process.env.ARBEIDSPLASSEN_URL,
                 process.env.INTEREST_API_URL,
                 "https://amplitude.nav.no",
-                "https://sentry.gc.nav.no"
+                "https://sentry.gc.nav.no",
             ],
-            frameSrc: ["'self'"]
-        }
-    })
+            frameSrc: ["'self'"],
+        },
+    }),
 );
 
 server.set("views", `${rootDirectory}views`);
@@ -72,6 +74,18 @@ server.set("view engine", "html");
 server.engine("html", mustacheExpress());
 
 server.use(bodyParser.json());
+
+const getAppVersion = () => {
+    // example: NAIS_APP_IMAGE=europe-north1-docker.pkg.dev/nais-management-233d/teampam/pam-stillingsok:23.256.125825
+    if (process.env.NAIS_APP_IMAGE) {
+        const splitted = process.env.NAIS_APP_IMAGE.split("/");
+        if (splitted.length > 0) {
+            const appVersion = splitted[splitted.length - 1].replace(":", "@");
+            return appVersion; // example: pam-stillingsok@23.256.125825
+        }
+    }
+    return "";
+};
 
 const properties = {
     PAM_CONTEXT_PATH: "/stillinger",
@@ -81,7 +95,9 @@ const properties = {
     PAM_STILLINGSOK_URL: process.env.PAM_STILLINGSOK_URL,
     PAM_VAR_SIDE_URL: process.env.PAM_VAR_SIDE_URL,
     PAM_JOBBTREFF_API_URL: process.env.PAM_JOBBTREFF_API_URL,
-    AMPLITUDE_TOKEN: process.env.AMPLITUDE_TOKEN
+    AMPLITUDE_TOKEN: process.env.AMPLITUDE_TOKEN,
+    SENTRY_DSN: process.env.SENTRY_DSN,
+    APP_VERSION: getAppVersion(),
 };
 
 const writeEnvironmentVariablesToFile = () => {
@@ -93,9 +109,13 @@ const writeEnvironmentVariablesToFile = () => {
         `window.__LOGOUT_URL__="${properties.LOGOUT_URL}";\n` +
         `window.__PAM_VAR_SIDE_URL__="${properties.PAM_VAR_SIDE_URL}";\n` +
         `window.__PAM_JOBBTREFF_API_URL__="${properties.PAM_JOBBTREFF_API_URL}";\n` +
-        `window.__AMPLITUDE_TOKEN__="${properties.AMPLITUDE_TOKEN}";\n`;
+        `window.__AMPLITUDE_TOKEN__="${properties.AMPLITUDE_TOKEN}";\n` +
+        `window.__SENTRY_DSN__="${properties.SENTRY_DSN}";\n` +
+        `window.__APP_VERSION__="${properties.APP_VERSION}";\n`;
 
-    fs.writeFile(path.resolve(rootDirectory, "dist/js/env.js"), fileContent, (err) => {
+    fs.mkdirSync(path.resolve(rootDirectory, "dist/js"), { recursive: true });
+
+    fs.writeFileSync(path.resolve(rootDirectory, "dist/js/env.js"), fileContent, (err) => {
         if (err) throw err;
     });
 };
@@ -105,15 +125,15 @@ const renderSok = (htmlPages) =>
             "index.html",
             {
                 title: htmlMeta.getDefaultTitle(),
-                description: htmlMeta.getDefaultDescription()
+                description: htmlMeta.getDefaultDescription(),
             },
             (err, html) => {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve(Object.assign({ sok: html }, htmlPages));
+                    resolve({ sok: html, ...htmlPages });
                 }
-            }
+            },
         );
     });
 
@@ -126,7 +146,7 @@ const startServer = (htmlPages) => {
 
     server.use(`${properties.PAM_CONTEXT_PATH}/images`, express.static(path.resolve(rootDirectory, "images")));
 
-    server.get(`${properties.PAM_CONTEXT_PATH}/isAuthenticated`, async (req, res) => {
+    server.get(`${properties.PAM_CONTEXT_PATH}/api/isAuthenticated`, async (req, res) => {
         if (req.headers.authorization) {
             const accessToken = req.headers.authorization.split(" ")[1];
             const validToken = await tokenIsValid(accessToken);
@@ -139,8 +159,8 @@ const startServer = (htmlPages) => {
             res.sendStatus(401);
         }
     });
-    initializeTokenX();
     setUpProxyCvApi(server);
+    setUpSuperraskApi(server);
 
     // Give users fallback locations from local file if aduser is unresponsive
     server.get(`${properties.PAM_CONTEXT_PATH}/api/locations`, (req, res) => {
@@ -165,7 +185,7 @@ const startServer = (htmlPages) => {
             .search(req.query)
             .then((val) => res.send(val))
             .catch((err) => {
-                console.warn("Failed to query search api", err);
+                logger.warn("Failed to query search api", err);
                 res.sendStatus(err.statusCode ? err.statusCode : 500);
             });
     });
@@ -175,7 +195,7 @@ const startServer = (htmlPages) => {
             .search(req.body)
             .then((val) => res.send(val))
             .catch((err) => {
-                console.warn("Failed to query search api", err);
+                logger.warn("Failed to query search api", err);
                 res.sendStatus(err.statusCode ? err.statusCode : 500);
             });
     });
@@ -185,7 +205,7 @@ const startServer = (htmlPages) => {
             .suggestions(req.query)
             .then((result) => res.send(result))
             .catch((err) => {
-                console.warn("Failed to fetch suggestions,", err);
+                logger.warn("Failed to fetch suggestions,", err);
                 res.sendStatus(err.statusCode ? err.statusCode : 500);
             });
     });
@@ -195,7 +215,7 @@ const startServer = (htmlPages) => {
             .suggestions(req.body)
             .then((result) => res.send(result))
             .catch((err) => {
-                console.warn("Failed to fetch suggestions,", err);
+                logger.warn("Failed to fetch suggestions,", err);
                 res.sendStatus(err.statusCode ? err.statusCode : 500);
             });
     });
@@ -205,7 +225,7 @@ const startServer = (htmlPages) => {
             .fetchStilling(req.params.uuid)
             .then((val) => res.send(val))
             .catch((err) => {
-                console.warn("Failed to fetch stilling with uuid", req.params.uuid);
+                logger.warn("Failed to fetch stilling with uuid", req.params.uuid);
                 res.sendStatus(err.statusCode ? err.statusCode : 500);
             });
     });
@@ -215,7 +235,7 @@ const startServer = (htmlPages) => {
     });
 
     server.get(/^\/pam-stillingsok.*$/, (req, res) => {
-        var url = req.url.replace("/pam-stillingsok", `${properties.PAM_CONTEXT_PATH}`);
+        const url = req.url.replace("/pam-stillingsok", `${properties.PAM_CONTEXT_PATH}`);
         res.redirect(`${url}`);
     });
 
@@ -226,32 +246,36 @@ const startServer = (htmlPages) => {
                 try {
                     res.render("index", {
                         title: htmlMeta.getStillingTitle(data._source),
-                        description: htmlMeta.getStillingDescription(data._source)
+                        description: htmlMeta.getStillingDescription(data._source),
                     });
                 } catch (err) {
                     res.send(htmlPages.sok);
                 }
             })
-            .catch((err) => {
+            .catch(() => {
                 res.send(htmlPages.sok);
             });
-    });
-
-    server.get(["/stillinger/?", /^\/stillinger\/(?!.*dist).*$/], (req, res) => {
-        res.send(htmlPages.sok);
     });
 
     server.get(`${properties.PAM_CONTEXT_PATH}/internal/isAlive`, (req, res) => res.sendStatus(200));
     server.get(`${properties.PAM_CONTEXT_PATH}/internal/isReady`, (req, res) => res.sendStatus(200));
 
-    server.get(`${properties.PAM_CONTEXT_PATH}/internal/metrics`, (req, res) => {
-        res.set("Content-Type", prometheus.register.contentType);
-        res.end(prometheus.register.metrics());
+    // Viktig at denne kommer sist siden den vil svare på alle endepunkter under /stillinger hvis de ikke er definert før
+    server.get(["/stillinger/?", /^\/stillinger\/(?!.*dist).*$/], (req, res) => {
+        res.send(htmlPages.sok);
     });
 
     server.listen(port, () => {
-        console.log(`Express-server startet. Server filer fra ./dist/ til localhost:${port}/`);
+        logger.info(`Express-server startet. Server filer fra ./dist/ til localhost:${port}/`);
     });
 };
 
-renderSok({}).then(startServer, (error) => console.error("Failed to render app", error));
+initializeTokenX()
+    .then(() =>
+        renderSok({}).then(startServer, (error) => {
+            logger.error("Failed to render app", error);
+        }),
+    )
+    .catch((error) => {
+        logger.error(`Initialisering av token-klienter feilet: ${error.message} `);
+    });

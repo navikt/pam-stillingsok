@@ -116,6 +116,10 @@ make install
 ```
 
 Når applikasjonen er oppe, så kan du gå inn på [http://localhost:3000/stillinger](http://localhost:3000/stillinger)
+
+Hvis du ønsker å teste innlogget flyt, så må pam-aduser også kjøre. Denne kan startes i [pam-aduser](http://github.com/navikt/pam-aduser)
+med å kjøre `no.nav.pam.aduser.Application` som en Spring Boot applikasjon, f.eks. fra IntelliJ med Spring-profilen _dev_ satt.
+
 Gå igjennom login-flyten ved å trykke login. Bruk testbruker `04010100653`
 
 ### Med dev script
@@ -152,6 +156,10 @@ Om du får følgende output betyr det at port-forwarden funket og pam-search-api
 Forwarding from 127.0.0.1:9000 -> 9000
 Forwarding from [::1]:9000 -> 9000
 ```
+
+### Deployment
+
+Lyst til å teste i dev-miljøet? `feature/**` branches pushes automatisk til dev eller så kan man alternativt legge til `deploy:dev` i commit meldingen for å trigge deployment til dev. Dette vil hoppe over opprettelsen av draft release, se deploy-dev.yml fila eller [pam-deploy](https://github.com/navikt/pam-deploy/blob/master/.github/workflows/deploy-dev.yml) for mer.
 
 ## Bruk av innloggede tjenester
 
