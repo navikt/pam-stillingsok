@@ -1,28 +1,28 @@
 import * as React from "react";
-import { useContext, useEffect, useState } from "react";
+import {useContext, useEffect, useState} from "react";
 import "./ReportAd.css";
-import { BodyLong, Button, Checkbox, Heading, Textarea, Link as AkselLink } from "@navikt/ds-react";
+import {BodyLong, Button, Checkbox, Heading, Textarea, Link as AkselLink} from "@navikt/ds-react";
 import logAmplitudeEvent from "../../../common/tracking/amplitude";
-import { AuthenticationContext, AuthenticationStatus } from "../../auth/contexts/AuthenticationProvider";
+import {AuthenticationContext, AuthenticationStatus} from "../../auth/contexts/AuthenticationProvider";
 import UserAPI from "../../../common/api/UserAPI";
 import Alert from "../../../common/components/alert/Alert";
 import H1WithAutoFocus from "../../../common/components/h1WithAutoFocus/H1WithAutoFocus";
 
 const violationCategories = [
-    { label: "Diskriminerende innhold", key: "discrimination" },
-    { label: "Det er markedsføring", key: "marketing" },
-    { label: "Annet", key: "other" }
+    {label: "Diskriminerende innhold", key: "discrimination"},
+    {label: "Det er markedsføring", key: "marketing"},
+    {label: "Annet", key: "other"}
 ];
 
 const scamCategories = [
-    { label: "Falsk stillingannonse og arbeidsgiver", key: "fake" },
-    { label: "Krever betaling for å søke stilling", key: "payment" },
-    { label: "Ber om kredittinfo og/eller BankID", key: "creditInfo" },
-    { label: "Annet", key: "other" }
+    {label: "Falsk stillingannonse og arbeidsgiver", key: "fake"},
+    {label: "Krever betaling for å søke stilling", key: "payment"},
+    {label: "Ber om kredittinfo og/eller BankID", key: "creditInfo"},
+    {label: "Annet", key: "other"}
 ];
 
 const ReportAd = () => {
-    const { authenticationStatus, login } = useContext(AuthenticationContext);
+    const {authenticationStatus, login} = useContext(AuthenticationContext);
     const [error, setError] = useState(false);
     const [finished, setFinished] = useState(false);
     const [stillingId, setStillingId] = useState(null);
@@ -183,7 +183,7 @@ const ReportAd = () => {
                                         );
                                     })}
 
-                                <br />
+                                <br/>
 
                                 <Textarea
                                     label={descriptionLabel}
@@ -216,10 +216,25 @@ const ReportAd = () => {
                         </div>
                     )}
 
-                    <BodyLong>
+                    <BodyLong spacing>
                         Stillingsannonser blir som regel umiddelbart publisert på arbeidsplassen.no. Etter publisering
                         vil alle annonser bli kontrollert etter NAVs retningslinjer. I tilfeller der det er brudd på
                         retningslinjene vil stillingsannonsene bli fjernet.
+                    </BodyLong>
+                    <BodyLong spacing>
+                        Dersom det gjelder mistanke om straffbare forhold ved virksomheten, for eksempel manglende
+                        etterlevelse av arbeidsmiljøloven, svart arbeid eller lignende. Så kan du også tipse
+                        Skatteetaten eller Arbeidstilsynet direkte.
+                    </BodyLong>
+                    <BodyLong spacing> Skatteetaten:
+                        <AkselLink href="https://tips.skatteetaten.no/web/tips/">
+                            Tips oss
+                        </AkselLink>
+                    </BodyLong>
+                    <BodyLong spacing> Arbeidstilsynet:
+                        <AkselLink href="https://tips.skatteetaten.no/web/tips/">
+                            Tips oss
+                        </AkselLink>
                     </BodyLong>
                 </div>
             )}
