@@ -1,25 +1,25 @@
 import * as React from "react";
-import { useState } from "react";
+import {useState} from "react";
 import PropTypes from "prop-types";
-import { Alert, BodyLong, Box, Button, Checkbox, Heading, Link as AkselLink, Textarea } from "@navikt/ds-react";
+import {Alert, BodyLong, Box, Button, Checkbox, Heading, Link as AkselLink, Textarea} from "@navikt/ds-react";
 import logAmplitudeEvent from "../../../common/tracking/amplitude";
 import UserAPI from "../../../common/api/UserAPI";
 import H1WithAutoFocus from "../../../common/components/h1WithAutoFocus/H1WithAutoFocus";
 
 const violationCategories = [
-    { label: "Diskriminerende innhold", key: "discrimination" },
-    { label: "Det er markedsføring", key: "marketing" },
-    { label: "Annet", key: "other" },
+    {label: "Diskriminerende innhold", key: "discrimination"},
+    {label: "Det er markedsføring", key: "marketing"},
+    {label: "Annet", key: "other"},
 ];
 
 const scamCategories = [
-    { label: "Falsk stillingannonse og arbeidsgiver", key: "fake" },
-    { label: "Krever betaling for å søke stilling", key: "payment" },
-    { label: "Ber om kredittinfo og/eller BankID", key: "creditInfo" },
-    { label: "Annet", key: "other" },
+    {label: "Falsk stillingannonse og arbeidsgiver", key: "fake"},
+    {label: "Krever betaling for å søke stilling", key: "payment"},
+    {label: "Ber om kredittinfo og/eller BankID", key: "creditInfo"},
+    {label: "Annet", key: "other"},
 ];
 
-function ReportAd({ id }) {
+function ReportAd({id}) {
     const [error, setError] = useState(false);
     const [finished, setFinished] = useState(false);
     const [violation, setViolation] = useState(false);
@@ -150,7 +150,7 @@ function ReportAd({ id }) {
                                         </Checkbox>
                                     ))}
                             </Box>
-                            <br />
+                            <br/>
 
                             <Textarea
                                 label={descriptionLabel}
@@ -183,10 +183,25 @@ function ReportAd({ id }) {
                     </div>
                 )}
 
-                <BodyLong>
+                <BodyLong spacing>
                     Stillingsannonser blir som regel umiddelbart publisert på arbeidsplassen.no. Etter publisering vil
                     alle annonser bli kontrollert etter NAVs retningslinjer. I tilfeller der det er brudd på
                     retningslinjene vil stillingsannonsene bli fjernet.
+                </BodyLong>
+                <BodyLong spacing>
+                    Dersom det gjelder mistanke om straffbare forhold ved virksomheten, for eksempel manglende
+                    etterlevelse av arbeidsmiljøloven, svart arbeid eller lignende. Så kan du også tipse
+                    Skatteetaten eller Arbeidstilsynet direkte.
+                </BodyLong>
+                <BodyLong spacing> Skatteetaten:
+                    <AkselLink href="https://tips.skatteetaten.no/web/tips/">
+                        Tips oss
+                    </AkselLink>
+                </BodyLong>
+                <BodyLong spacing> Arbeidstilsynet:
+                    <AkselLink href="https://tips.skatteetaten.no/web/tips/">
+                        Tips oss
+                    </AkselLink>
                 </BodyLong>
             </div>
         </div>
