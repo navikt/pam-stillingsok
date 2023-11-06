@@ -195,13 +195,15 @@ function ReportAd({id}) {
                 </BodyLong>
                 <BodyLong spacing> Skatteetaten:
                     <AkselLink href="https://tips.skatteetaten.no/web/tips/">
-                        <svg role="img" aria-hidden=true src="https://www.google.com/s2/favicons?domain=https://tips.skatteetaten.no/web/tips/"/>
+                        <svg role="img" aria-hidden="true"
+                             src="https://www.google.com/s2/favicons?domain=https://tips.skatteetaten.no/web/tips/"/>
                         Tips oss
                     </AkselLink>
                 </BodyLong>
                 <BodyLong spacing> Arbeidstilsynet:
                     <AkselLink href="https://www.arbeidstilsynet.no/kontakt-oss/tips/">
-                        <svg role="img" aria-hidden=true src="https://www.google.com/s2/favicons?domain=https://www.arbeidstilsynet.no/kontakt-oss/tips/"/>
+                        <svg role="img" aria-hidden="true"
+                             src="https://www.google.com/s2/favicons?domain=https://www.arbeidstilsynet.no/kontakt-oss/tips/"/>
                         Tips oss
                     </AkselLink>
                 </BodyLong>
