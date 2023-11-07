@@ -50,6 +50,10 @@ body {
     outline: 0;
 }
 
+.monospace {
+    font-family: monospace;
+}
+
 .metadata {
     font-family: monospace;
     font-size: 0.9rem;
