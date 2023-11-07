@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 function Debug({ ad }) {
     return (
-        <ReadMore header={`score: ${ad.score.toFixed(1)}`} className="mt-2 monospace">
+        <ReadMore header={`score: ${ad.score.toFixed(2)}`} className="mt-2 monospace">
             {ad.medium !== "" && (
                 <>
                     <Heading level="4" size="xsmall" spacing>
