@@ -111,6 +111,7 @@ function SelectedFilters({ query, queryDispatch }) {
         chips.push(
             <Chips.Removable
                 variant="neutral"
+                key="utland-filter"
                 onClick={() => {
                     queryDispatch({ type: SET_INTERNATIONAL, value: false });
                 }}
@@ -150,7 +151,11 @@ function SelectedFilters({ query, queryDispatch }) {
 
     if (query.published) {
         chips.push(
-            <Chips.Removable variant="neutral" onClick={() => queryDispatch({ type: SET_PUBLISHED, undefined })}>
+            <Chips.Removable
+                key="published-filter"
+                variant="neutral"
+                onClick={() => queryDispatch({ type: SET_PUBLISHED, undefined })}
+            >
                 {PublishedLabelsEnum[query.published]}
             </Chips.Removable>,
         );
@@ -196,6 +201,7 @@ function SelectedFilters({ query, queryDispatch }) {
         chips.push(
             <Chips.Removable
                 variant="neutral"
+                key="remote-filter"
                 onClick={() => {
                     queryDispatch({ type: REMOVE_REMOTE, value: "Hjemmekontor" });
                     queryDispatch({ type: REMOVE_REMOTE, value: "Hybridkontor" });
