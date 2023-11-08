@@ -1,25 +1,25 @@
 import * as React from "react";
-import {useState} from "react";
+import { useState } from "react";
 import PropTypes from "prop-types";
-import {Alert, BodyLong, Box, Button, Checkbox, Heading, Link as AkselLink, Textarea} from "@navikt/ds-react";
+import { Alert, BodyLong, Box, Button, Checkbox, Heading, Link as AkselLink, Textarea } from "@navikt/ds-react";
 import logAmplitudeEvent from "../../../common/tracking/amplitude";
 import UserAPI from "../../../common/api/UserAPI";
 import H1WithAutoFocus from "../../../common/components/h1WithAutoFocus/H1WithAutoFocus";
 
 const violationCategories = [
-    {label: "Diskriminerende innhold", key: "discrimination"},
-    {label: "Det er markedsføring", key: "marketing"},
-    {label: "Annet", key: "other"},
+    { label: "Diskriminerende innhold", key: "discrimination" },
+    { label: "Det er markedsføring", key: "marketing" },
+    { label: "Annet", key: "other" },
 ];
 
 const scamCategories = [
-    {label: "Falsk stillingannonse og arbeidsgiver", key: "fake"},
-    {label: "Krever betaling for å søke stilling", key: "payment"},
-    {label: "Ber om kredittinfo og/eller BankID", key: "creditInfo"},
-    {label: "Annet", key: "other"},
+    { label: "Falsk stillingannonse og arbeidsgiver", key: "fake" },
+    { label: "Krever betaling for å søke stilling", key: "payment" },
+    { label: "Ber om kredittinfo og/eller BankID", key: "creditInfo" },
+    { label: "Annet", key: "other" },
 ];
 
-function ReportAd({id}) {
+function ReportAd({ id }) {
     const [error, setError] = useState(false);
     const [finished, setFinished] = useState(false);
     const [violation, setViolation] = useState(false);
@@ -150,7 +150,7 @@ function ReportAd({id}) {
                                         </Checkbox>
                                     ))}
                             </Box>
-                            <br/>
+                            <br />
 
                             <Textarea
                                 label={descriptionLabel}
@@ -190,18 +190,14 @@ function ReportAd({id}) {
                 </BodyLong>
                 <BodyLong spacing>
                     Dersom det gjelder mistanke om straffbare forhold ved virksomheten, for eksempel manglende
-                    etterlevelse av arbeidsmiljøloven, svart arbeid eller lignende. Så kan du også tipse
-                    Skatteetaten eller Arbeidstilsynet direkte.
+                    etterlevelse av arbeidsmiljøloven, svart arbeid eller lignende, så kan du også tipse Skatteetaten
+                    eller Arbeidstilsynet direkte.
                 </BodyLong>
-                <BodyLong spacing> Skatteetaten:
-                    <AkselLink href="https://tips.skatteetaten.no/web/tips/">
-                        Tips oss
-                    </AkselLink>
+                <BodyLong spacing>
+                    <AkselLink href="https://tips.skatteetaten.no/web/tips/">Tips Skatteetaten</AkselLink>
                 </BodyLong>
-                <BodyLong spacing> Arbeidstilsynet:
-                    <AkselLink href="https://tips.skatteetaten.no/web/tips/">
-                        Tips oss
-                    </AkselLink>
+                <BodyLong spacing>
+                    <AkselLink href="https://www.arbeidstilsynet.no/kontakt-oss/tips/">Tips Arbeidstilsynet</AkselLink>
                 </BodyLong>
             </div>
         </div>
