@@ -119,6 +119,19 @@ function removeEmptyPropertiesFromQuery(query) {
     return newObj;
 }
 
+function getSort(previousSort, searchString, searchFields) {
+    if (previousSort !== "expires") {
+        if (searchFields === "occupation") {
+            return "published";
+        }
+        if (searchString) {
+            return "relevant";
+        }
+        return "";
+    }
+    return previousSort;
+}
+
 /**
  * Init function used to creating initial state for this reducer.
  * If user already has some search criteria in browser url, this will
@@ -260,24 +273,11 @@ export default function queryReducer(state, action) {
                 published: action.value,
             };
         case SET_SEARCH_STRING:
-            let sort;
-            if (queryState.sort !== "expires") {
-                if (action.fields === "occupation") {
-                    sort = "published";
-                } else if (action.value) {
-                    sort = "relevant";
-                } else {
-                    sort = "";
-                }
-            } else {
-                sort = queryState.sort;
-            }
-
             return {
                 ...queryState,
                 q: action.value,
                 fields: action.fields,
-                sort,
+                sort: getSort(queryState.sort, action.value, action.fields),
             };
         case SET_SORTING:
             return {

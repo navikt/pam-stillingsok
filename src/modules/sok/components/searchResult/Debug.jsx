@@ -83,10 +83,10 @@ Debug.propTypes = {
         medium: PropTypes.string,
         categoryList: PropTypes.arrayOf(PropTypes.shape({ name: PropTypes.string, categoryType: PropTypes.string })),
         occupationList: PropTypes.arrayOf(PropTypes.shape({ level1: PropTypes.string, level2: PropTypes.string })),
-        properties: {
+        properties: PropTypes.shape({
             keywords: PropTypes.string,
-            searchtags: PropTypes.arrayOf(PropTypes.shape({ label: PropTypes.string, score: PropTypes.score })),
-        },
+            searchtags: PropTypes.arrayOf(PropTypes.shape({ label: PropTypes.string, score: PropTypes.number })),
+        }),
         score: PropTypes.number,
     }),
     score: PropTypes.string,
