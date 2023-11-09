@@ -19,6 +19,8 @@ export const ADD_REMOTE = "ADD_REMOTE";
 export const REMOVE_REMOTE = "REMOVE_REMOTE";
 export const ADD_SECTOR = "ADD_SECTOR";
 export const REMOVE_SECTOR = "REMOVE_SECTOR";
+export const ADD_LANGUAGE = "ADD_LANGUAGE";
+export const REMOVE_LANGUAGE = "REMOVE_LANGUAGE";
 export const SET_PUBLISHED = "SET_PUBLISHED";
 export const SET_SEARCH_STRING = "SET_SEARCH_STRING";
 export const SET_SORTING = "SET_SORTING";
@@ -253,6 +255,16 @@ export default function queryReducer(state, action) {
             return {
                 ...queryState,
                 sector: queryState.sector.filter((obj) => obj !== action.value),
+            };
+        case ADD_LANGUAGE:
+            return {
+                ...queryState,
+                sector: [...queryState.language, action.value],
+            };
+        case REMOVE_LANGUAGE:
+            return {
+                ...queryState,
+                sector: queryState.language.filter((obj) => obj !== action.value),
             };
         case SET_PUBLISHED:
             return {
