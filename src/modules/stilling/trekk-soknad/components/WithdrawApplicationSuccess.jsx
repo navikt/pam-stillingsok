@@ -1,8 +1,8 @@
 import React from "react";
-import Link from "../../../../migrating/Link";
 import { BodyLong, Button } from "@navikt/ds-react";
+import Link from "../../../../migrating/Link";
 import { CONTEXT_PATH } from "../../../common/environment";
-import Feedback from "../../superrask-soknad/components/Feedback";
+import GiveFeedback from "../../superrask-soknad/components/GiveFeedback";
 import H1WithAutoFocus from "../../../common/components/h1WithAutoFocus/H1WithAutoFocus";
 
 function WithdrawApplicationSuccess() {
@@ -19,7 +19,7 @@ function WithdrawApplicationSuccess() {
                 Se ledige stillinger
             </Button>
 
-            <Feedback />
+            <GiveFeedback />
         </>
     );
 }

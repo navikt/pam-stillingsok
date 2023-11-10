@@ -18,7 +18,7 @@ import initSentry from "./modules/common/tracking/sentry";
 import { initAmplitude } from "./modules/common/tracking/amplitude";
 import HistoryProvider from "./modules/common/context/HistoryProvider";
 import SearchPage from "./modules/sok/page";
-import NewApplicationPage from "./modules/stilling/superrask-soknad/page";
+import SuperraskPage from "./modules/stilling/superrask-soknad/page";
 import AdPage from "./modules/stilling/page";
 import ReportAdPage from "./modules/stilling/rapporter-annonse/page";
 import FavouritesPage from "./modules/favoritter/page";
@@ -49,7 +49,7 @@ function Application() {
                                         <Route exact path={CONTEXT_PATH} component={SearchPage} />
                                         <Route
                                             path={`${CONTEXT_PATH}/stilling/:id/superrask-soknad`}
-                                            component={NewApplicationPage}
+                                            component={SuperraskPage}
                                         />
                                         <Route path={`${CONTEXT_PATH}/stilling/:id`} component={AdPage} />
                                         <Route

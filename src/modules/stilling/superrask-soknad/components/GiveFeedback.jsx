@@ -1,7 +1,7 @@
 import React from "react";
 import { BodyLong, Heading, Panel, Link as AkselLink } from "@navikt/ds-react";
 
-function Feedback() {
+function GiveFeedback() {
     return (
         <Panel className="arb-panel-tertiary mt-12">
             <Heading level="2" size="medium" spacing>
@@ -20,4 +20,4 @@ function Feedback() {
     );
 }
 
-export default Feedback;
+export default GiveFeedback;
