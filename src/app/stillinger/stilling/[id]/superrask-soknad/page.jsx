@@ -42,6 +42,7 @@ export default async function Page({ params }) {
         const application = parseFormData(formData, applicationFormFields.qualifications);
         const errors = validateForm(application);
         const isValid = Object.keys(errors).length === 0;
+
         const defaultState = {
             success: false,
             validationErrors: {},
