@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 function Debug({ ad }) {
     return (
-        <ReadMore header="Metadata" className="mt-2">
+        <ReadMore header={`score: ${ad.score.toFixed(2)}`} className="mt-2 monospace">
             {ad.medium !== "" && (
                 <>
                     <Heading level="4" size="xsmall" spacing>
@@ -87,7 +87,9 @@ Debug.propTypes = {
             keywords: PropTypes.string,
             searchtags: PropTypes.arrayOf(PropTypes.shape({ label: PropTypes.string, score: PropTypes.score })),
         },
+        score: PropTypes.number,
     }),
+    score: PropTypes.string,
 };
 
 export default Debug;

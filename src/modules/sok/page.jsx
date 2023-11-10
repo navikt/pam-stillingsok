@@ -89,7 +89,7 @@ function SearchPage() {
      */
     useEffect(() => {
         fetchInitialSearch();
-        logAmplitudeEvent("Stillinger - Utførte søk", { initialQuery });
+        logAmplitudeEvent("Stillinger - Utførte søk");
     }, []);
 
     useEffect(() => {

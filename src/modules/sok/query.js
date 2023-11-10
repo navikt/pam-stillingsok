@@ -21,7 +21,6 @@ export const ADD_SECTOR = "ADD_SECTOR";
 export const REMOVE_SECTOR = "REMOVE_SECTOR";
 export const SET_PUBLISHED = "SET_PUBLISHED";
 export const SET_SEARCH_STRING = "SET_SEARCH_STRING";
-export const SET_SEARCH_FIELDS = "SET_SEARCH_FIELDS";
 export const SET_SORTING = "SET_SORTING";
 export const SET_INTERNATIONAL = "SET_INTERNATIONAL";
 export const SET_FROM = "SET_FROM";
@@ -261,15 +260,24 @@ export default function queryReducer(state, action) {
                 published: action.value,
             };
         case SET_SEARCH_STRING:
+            let sort;
+            if (queryState.sort !== "expires") {
+                if (action.fields === "occupation") {
+                    sort = "published";
+                } else if (action.value) {
+                    sort = "relevant";
+                } else {
+                    sort = "";
+                }
+            } else {
+                sort = queryState.sort;
+            }
+
             return {
                 ...queryState,
                 q: action.value,
-                fields: action.value === "" ? undefined : queryState.fields,
-            };
-        case SET_SEARCH_FIELDS:
-            return {
-                ...queryState,
-                fields: action.value,
+                fields: action.fields,
+                sort,
             };
         case SET_SORTING:
             return {

@@ -183,10 +183,21 @@ function ReportAd({ id }) {
                     </div>
                 )}
 
-                <BodyLong>
+                <BodyLong spacing>
                     Stillingsannonser blir som regel umiddelbart publisert på arbeidsplassen.no. Etter publisering vil
                     alle annonser bli kontrollert etter NAVs retningslinjer. I tilfeller der det er brudd på
                     retningslinjene vil stillingsannonsene bli fjernet.
+                </BodyLong>
+                <BodyLong spacing>
+                    Dersom det gjelder mistanke om straffbare forhold ved virksomheten, for eksempel manglende
+                    etterlevelse av arbeidsmiljøloven, svart arbeid eller lignende, så kan du også tipse Skatteetaten
+                    eller Arbeidstilsynet direkte.
+                </BodyLong>
+                <BodyLong spacing>
+                    <AkselLink href="https://tips.skatteetaten.no/web/tips/">Tips Skatteetaten</AkselLink>
+                </BodyLong>
+                <BodyLong spacing>
+                    <AkselLink href="https://www.arbeidstilsynet.no/kontakt-oss/tips/">Tips Arbeidstilsynet</AkselLink>
                 </BodyLong>
             </div>
         </div>

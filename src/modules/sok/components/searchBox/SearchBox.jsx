@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import { SET_SEARCH_FIELDS, SET_SEARCH_STRING } from "../../query";
+import { SET_SEARCH_STRING } from "../../query";
 import Typeahead from "../../../common/components/typeahead/Typeahead";
 import { FetchAction, useFetchReducer } from "../../../common/hooks/useFetchReducer";
 import SearchAPI from "../../../common/api/SearchAPI";
@@ -75,29 +75,27 @@ function SearchBox({ dispatch, query }) {
     }
 
     function handleTypeAheadSuggestionSelected(newValue, shouldSearchInWholeAd) {
+        let fields;
         setValue(newValue);
-        if (shouldSearchInWholeAd) {
-            dispatch({ type: SET_SEARCH_FIELDS, value: undefined });
-        } else {
-            dispatch({ type: SET_SEARCH_FIELDS, value: "occupation" });
+        if (!shouldSearchInWholeAd) {
+            fields = "occupation";
         }
 
         track(newValue);
 
-        dispatch({ type: SET_SEARCH_STRING, value: newValue });
+        dispatch({ type: SET_SEARCH_STRING, value: newValue, fields });
     }
 
     function handleSearchButtonClick() {
         const found = suggestionsResponse.data.find((it) => it.toLowerCase() === value.toLowerCase());
+        let fields;
         if (found) {
-            dispatch({ type: SET_SEARCH_FIELDS, value: "occupation" });
-        } else {
-            dispatch({ type: SET_SEARCH_FIELDS, value: undefined });
+            fields = "occupation";
         }
 
         track(value);
 
-        dispatch({ type: SET_SEARCH_STRING, value });
+        dispatch({ type: SET_SEARCH_STRING, value, fields });
     }
 
     function onClear() {

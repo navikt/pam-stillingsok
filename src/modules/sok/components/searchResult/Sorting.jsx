@@ -1,19 +1,23 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { Select } from "@navikt/ds-react";
 import { SET_SORTING } from "../../query";
+import logAmplitudeEvent from "../../../common/tracking/amplitude";
 
 function Sorting({ query, dispatch }) {
-    const [sort, setSort] = useState(query.sort);
-
     function handleChange(e) {
         const { value } = e.target;
-        setSort(value);
         dispatch({ type: SET_SORTING, value });
+        logAmplitudeEvent("changed sorting", { value });
     }
 
     return (
-        <Select onChange={handleChange} value={sort} label="Sorter etter" className="inline-select">
+        <Select
+            onChange={handleChange}
+            value={query.sort || "published"}
+            label="Sorter etter"
+            className="inline-select"
+        >
             <option key="published" value="published">
                 Nyeste øverst
             </option>
