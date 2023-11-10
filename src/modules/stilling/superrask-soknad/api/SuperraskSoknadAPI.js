@@ -71,9 +71,9 @@ async function post(url, query, toJson = true) {
         let errorMsg;
         try {
             const errorJson = await response.json();
-            errorMsg = errorJson.error_code || response.statusText;
+            errorMsg = errorJson.error_code || "unknown";
         } catch (parseError) {
-            errorMsg = response.statusText;
+            errorMsg = "unknown";
         }
         throw new APIError(errorMsg, response.status);
     }
