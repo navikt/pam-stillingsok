@@ -32,21 +32,7 @@ export function initAmplitude() {
     }
 }
 
-const enrichData = (data) => {
-    let enrichedData = { ...data, navSessionId: getSessionId() };
-
-    try {
-        const erMellom25og30 = sessionStorage.getItem("erMellom25og30");
-
-        if (erMellom25og30 !== "undefined" && erMellom25og30 === "true") {
-            enrichedData = { ...enrichedData, ageGroup: "25-30" };
-        }
-    } catch (e) {
-        // ignore sessionStorage error
-    }
-
-    return enrichedData;
-};
+const enrichData = (data) => ({ ...data, navSessionId: getSessionId() });
 
 const logAmplitudeEvent = (event, data) => {
     amplitude.track(event, enrichData(data));

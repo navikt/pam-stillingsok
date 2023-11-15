@@ -1,7 +1,6 @@
 import PropTypes from "prop-types";
 import React, { useState } from "react";
 import { Accordion } from "@navikt/ds-react";
-import logAmplitudeEvent from "../../../common/tracking/amplitude";
 
 function FilterAccordionItem({ title, children, panelId, isOpenByDefault = true }) {
     const [isOpen, setIsOpen] = useState(() => {
@@ -34,17 +33,6 @@ function FilterAccordionItem({ title, children, panelId, isOpenByDefault = true 
             } catch (e) {
                 // ignore sessionStorage error
             }
-        }
-
-        // Temporary amplitude event, code can be removed if it still
-        // exists after november 2023
-        try {
-            logAmplitudeEvent("toggle filter accordion", {
-                state: isOpen ? "close" : "open",
-                filter: { title },
-            });
-        } catch (err) {
-            // ignore
         }
     }
 
