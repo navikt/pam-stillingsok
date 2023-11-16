@@ -84,7 +84,6 @@ function ReportAd({ id }) {
                 subCategory,
                 title,
                 postingId: id,
-                description,
             });
         } catch (e) {
             setError(true);
