@@ -36,9 +36,13 @@ function fixTyposInLocationName(text) {
 }
 
 function fixLocationName(text, splitOnDot = false) {
-    if (splitOnDot && text.includes(".")) text = text.split(".")[1];
+    let location = text;
+    if (splitOnDot && location.includes(".")) {
+        // eslint-disable-next-line prefer-destructuring
+        location = location.split(".")[1];
+    }
 
-    let fixedLocationName = capitalizeLocationName(text);
+    let fixedLocationName = capitalizeLocationName(location);
     fixedLocationName = fixTyposInLocationName(fixedLocationName);
     return fixedLocationName;
 }

@@ -121,7 +121,7 @@ function filterEngagementType(engagementTypes) {
  * Feks (Akershus AND (Asker OR Bærum)) OR (Buskerud AND Drammen) om man ser etter jobb i Asker, Bærum eller Drammen
  * Feks (Akershus) OR (Buskerud AND Drammen) om man ser etter jobb i hele Akershus fylke, men også i Drammen kommune.
  */
-function filterNestedFacets(parents, children = [], parentKey, childKey, nestedField = undefined) {
+function filterNestedFacets(parents, children, parentKey, childKey, nestedField = undefined) {
     let allMusts = [];
     if (parents && parents.length > 0) {
         parents.forEach((parent) => {
@@ -271,14 +271,17 @@ function filterLocation(counties, municipals, countries, international = false) 
         ];
     }
 
-    if (internationalObject.bool.hasOwnProperty("must_not") || internationalObject.bool.hasOwnProperty("should")) {
+    if (
+        Object.keys(internationalObject.bool).includes("must_not") ||
+        Object.keys(internationalObject.bool).includes("should")
+    ) {
         filter.nested.query.bool.should.push(internationalObject);
     }
 
     return filter;
 }
 
-function filterOccupation(occupationFirstLevels, occupationSecondLevels) {
+function filterOccupation(occupationFirstLevels, occupationSecondLevels = []) {
     return filterNestedFacets(
         occupationFirstLevels,
         occupationSecondLevels,

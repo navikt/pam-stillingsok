@@ -162,11 +162,11 @@ export default function Search({ initialSearchResponse, searchResponse, initialQ
 Search.propTypes = {
     initialSearchResponse: PropTypes.shape({
         data: PropTypes.shape({}),
-        status: PropTypes.shape({}),
+        status: PropTypes.string,
     }),
     searchResponse: PropTypes.shape({
         data: PropTypes.shape({}),
-        status: PropTypes.shape({}),
+        status: PropTypes.string,
     }),
     initialQuery: PropTypes.shape({}),
     fetchSearch: PropTypes.func,
