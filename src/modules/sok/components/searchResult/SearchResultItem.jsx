@@ -94,7 +94,7 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, isD
             </HStack>
 
             {jobTitle && (
-                <BodyLong weight="semibold" id={`${ad.uuid}-jobTitle`} className="mb-4 break-word">
+                <BodyLong weight="semibold" id={`${ad.uuid}-jobTitle`} className="mb-4 overflow-wrap-anywhere">
                     {jobTitle}
                 </BodyLong>
             )}
@@ -105,7 +105,9 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, isD
                         <div>
                             <Buldings3Icon width="1.5em" height="1.5em" aria-label="Arbeidsgiver" />
                         </div>
-                        <BodyLong id={`${ad.uuid}-employer`}>{employer}</BodyLong>
+                        <BodyLong id={`${ad.uuid}-employer`} className="overflow-wrap-anywhere">
+                            {employer}
+                        </BodyLong>
                     </HStack>
                 )}
                 {location && (
@@ -113,7 +115,9 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, isD
                         <div>
                             <PinIcon width="1.5em" height="1.5em" aria-label="Sted" />
                         </div>
-                        <BodyLong id={`${ad.uuid}-location`}>{location}</BodyLong>
+                        <BodyLong id={`${ad.uuid}-location`} className="overflow-wrap-anywhere">
+                            {location}
+                        </BodyLong>
                     </HStack>
                 )}
             </div>
