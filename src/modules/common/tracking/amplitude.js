@@ -17,7 +17,6 @@ export function initAmplitude() {
             defaultTracking: {
                 pageViews: true,
                 sessions: true,
-                formInteractions: true,
             },
             /** Need this for /collect-auto according to https://nav-it.slack.com/archives/CMK1SCBP1/p1669722646425599
              * but seems to work fine with /collect? Keeping it here just in case.
