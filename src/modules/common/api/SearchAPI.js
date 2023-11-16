@@ -29,26 +29,6 @@ async function get(url, query = {}) {
     return response.json();
 }
 
-async function post(url, body) {
-    let response;
-    try {
-        response = await fetch(`${CONTEXT_PATH}/${url}`, {
-            body: JSON.stringify(body),
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-        });
-    } catch (e) {
-        throw new APIError(e.message, 0);
-    }
-
-    if (response.status !== 200) {
-        throw new APIError(response.statusText, response.status);
-    }
-    return response.json();
-}
-
 async function getAd(id) {
     const url = `api/stilling/${id}`;
     const cachedUrl = `${CONTEXT_PATH}/${url}`;
@@ -74,7 +54,7 @@ async function initialSearch(query) {
     if (latestInitialResponse) {
         return latestInitialResponse;
     }
-    const response = await post("api/search", query);
+    const response = await get("api/search", query);
     latestInitialResponse = simplifySearchResponse(response);
     return latestInitialResponse;
 }
@@ -87,7 +67,7 @@ async function search(query) {
     if (latestSearchResponse && latestSearchResponse.cachedUrl === cachedUrl) {
         return latestSearchResponse.response;
     }
-    const response = await post(url, query);
+    const response = await get(url, query);
     latestSearchResponse = { cachedUrl, response: simplifySearchResponse(response) };
     return latestSearchResponse.response;
 }
@@ -101,7 +81,7 @@ async function getSuggestions(query) {
     if (cached) {
         return cached.response;
     }
-    const response = await post(url, query);
+    const response = await get(url, query);
     suggestionsCache = [{ cachedUrl, response }, ...suggestionsCache].slice(0, CACHE_MAX_SIZE);
     return response;
 }
