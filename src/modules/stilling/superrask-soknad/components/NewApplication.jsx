@@ -4,7 +4,7 @@ import Success from "./Success";
 import Form from "./Form";
 import AdDetailsHeader from "./AdDetailsHeader";
 
-function NewApplication({ formAction, submitForm, ad, applicationForm, submitFormState }) {
+function NewApplication({ submitForm, ad, applicationForm, submitFormState }) {
     return (
         <div className="mb-16">
             <AdDetailsHeader source={ad._source} />
@@ -15,7 +15,6 @@ function NewApplication({ formAction, submitForm, ad, applicationForm, submitFor
                     <Form
                         ad={ad}
                         applicationForm={applicationForm}
-                        formAction={formAction}
                         submitForm={submitForm}
                         pending={submitFormState.pending}
                         submitApiError={submitFormState.error}
@@ -36,7 +35,6 @@ NewApplication.propTypes = {
     }),
     applicationForm: PropTypes.shape({}),
     submitForm: PropTypes.func,
-    formAction: PropTypes.oneOf([PropTypes.func, PropTypes.string]),
     submitFormState: PropTypes.shape({
         success: PropTypes.bool,
         pending: PropTypes.bool,
