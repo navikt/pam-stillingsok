@@ -52,27 +52,6 @@ function Form({ ad, applicationForm, submitForm, pending, submitApiError, valida
                 )}
             </section>
 
-            {applicationForm.qualifications && applicationForm.qualifications.length > 0 && (
-                <section className="mb-10">
-                    <Heading level="2" size="medium" spacing>
-                        Bedriftens ønskede kvalifikasjoner
-                    </Heading>
-                    <BodyLong className="mb-8">
-                        Husk at du kan være rett person for jobben selv om du ikke treffer på alle kvalifikasjoner.
-                    </BodyLong>
-
-                    {applicationForm.qualifications && applicationForm.qualifications.length > 0 && (
-                        <Fieldset legend="Huk av for kvalifikasjonene du oppfyller">
-                            {applicationForm.qualifications.map((it) => (
-                                <Checkbox key={it.id} value={it.label} name="qualification">
-                                    {it.label}
-                                </Checkbox>
-                            ))}
-                        </Fieldset>
-                    )}
-                </section>
-            )}
-
             <section className="mb-10">
                 <Heading level="2" size="medium" spacing>
                     Hvorfor du er den rette for jobben
@@ -86,16 +65,6 @@ function Form({ ad, applicationForm, submitForm, pending, submitApiError, valida
                         Tenk gjerne litt utradisjonelt og husk at personlige egenskaper kan være avgjørende.
                     </BodyLong>
                 </ReadMore>
-                <Textarea
-                    id="new-application-checkedQualifications"
-                    label="Skriv en begrunnelse"
-                    name="motivation"
-                    onChange={() => {
-                        setHideMotivationError(true);
-                    }}
-                    maxLength={MOTIVATION_MAX_LENGTH}
-                    error={!hideMotivationError && validationErrors.motivation}
-                />
             </section>
 
             <section className="mb-10">
