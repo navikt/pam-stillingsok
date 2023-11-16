@@ -180,32 +180,12 @@ const startServer = (htmlPages) => {
 
     setUpAduserApiProxy(server);
 
-    server.get(`${properties.PAM_CONTEXT_PATH}/api/search`, async (req, res) => {
-        searchApiConsumer
-            .search(req.query)
-            .then((val) => res.send(val))
-            .catch((err) => {
-                logger.warn("Failed to query search api", err);
-                res.sendStatus(err.statusCode ? err.statusCode : 500);
-            });
-    });
-
     server.post(`${properties.PAM_CONTEXT_PATH}/api/search`, async (req, res) => {
         searchApiConsumer
             .search(req.body)
             .then((val) => res.send(val))
             .catch((err) => {
                 logger.warn("Failed to query search api", err);
-                res.sendStatus(err.statusCode ? err.statusCode : 500);
-            });
-    });
-
-    server.get(`${properties.PAM_CONTEXT_PATH}/api/suggestions`, async (req, res) => {
-        searchApiConsumer
-            .suggestions(req.query)
-            .then((result) => res.send(result))
-            .catch((err) => {
-                logger.warn("Failed to fetch suggestions,", err);
                 res.sendStatus(err.statusCode ? err.statusCode : 500);
             });
     });
