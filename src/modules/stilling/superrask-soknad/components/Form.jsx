@@ -90,8 +90,11 @@ function Form({ ad, applicationForm, submitForm, pending, submitApiError, valida
                     id="new-application-checkedQualifications"
                     label="Skriv en begrunnelse"
                     name="motivation"
+                    onChange={() => {
+                        setHideMotivationError(true);
+                    }}
                     maxLength={MOTIVATION_MAX_LENGTH}
-                    error={validationErrors.motivation}
+                    error={!hideMotivationError && validationErrors.motivation}
                 />
             </section>
 
@@ -111,7 +114,10 @@ function Form({ ad, applicationForm, submitForm, pending, submitApiError, valida
                     auto-complete="email"
                     aria-required="true"
                     id="new-application-email"
-                    error={validationErrors.email}
+                    onChange={() => {
+                        setHideEmailError(true);
+                    }}
+                    error={!hideEmailError && validationErrors.email}
                     className="mb-4"
                 />
 
@@ -123,7 +129,10 @@ function Form({ ad, applicationForm, submitForm, pending, submitApiError, valida
                     name="telephone"
                     auto-complete="tel"
                     aria-required="true"
-                    error={validationErrors.telephone}
+                    onChange={() => {
+                        setHideTelephoneError(true);
+                    }}
+                    error={!hideTelephoneError && validationErrors.telephone}
                 />
             </section>
 
