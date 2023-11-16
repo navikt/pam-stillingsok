@@ -48,11 +48,9 @@ exports.fetchAndProcessLocations = async () => {
         },
     ];
 
-    for (const key in countyMap) {
-        if (countyMap.hasOwnProperty(key)) {
-            res.push(countyMap[key]);
-        }
-    }
+    Object.values(countyMap).forEach((value) => {
+        res.push(value);
+    });
 
     return res;
 };
