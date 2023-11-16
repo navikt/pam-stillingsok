@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import useScrollToTop from "../../common/hooks/useScrollToTop";
-import NewApplication from "./components/NewApplication";
 import useDocumentTitle from "../../common/hooks/useDocumentTitle";
 import { FetchAction, FetchStatus, useFetchReducer } from "../../common/hooks/useFetchReducer";
 import SearchAPI from "../../common/api/SearchAPI";
@@ -9,19 +8,70 @@ import SuperraskSoknadAPI from "./api/SuperraskSoknadAPI";
 import Loading from "../../loading";
 import NotFound from "../../not-found";
 import Error from "../../error";
+import logAmplitudeEvent from "../../common/tracking/amplitude";
+import validateForm, { parseFormData } from "./components/validateForm";
+import NewApplication from "./components/NewApplication";
 
-function NewApplicationPage({ match }) {
+function SuperraskPage({ match }) {
+    const defaultState = { success: false, validationErrors: {}, error: undefined, pending: false, data: undefined };
+    const { id } = match.params;
     const [{ data, status, error }, dispatch] = useFetchReducer();
+    const [submitFormState, setSubmitFormState] = useState(defaultState);
 
     useDocumentTitle("Superrask søknad");
     useScrollToTop();
+
+    function submitApplication(e) {
+        e.preventDefault();
+
+        const formData = new FormData(e.target);
+        const application = parseFormData(formData, data.applicationForm.qualifications);
+        const errors = validateForm(application);
+        const isAllFormDataValid = Object.keys(errors).length > 0;
+
+        setSubmitFormState({
+            ...defaultState,
+            validationErrors: errors,
+        });
+
+        if (!isAllFormDataValid) {
+            setSubmitFormState({
+                ...defaultState,
+                pending: true,
+            });
+
+            SuperraskSoknadAPI.postApplication(id, application)
+                .then(() => {
+                    setSubmitFormState({
+                        ...defaultState,
+                        success: true,
+                        data: { email: application.email },
+                    });
+                })
+                .catch((err) => {
+                    setSubmitFormState({
+                        ...defaultState,
+                        error: err.message,
+                    });
+                });
+
+            try {
+                logAmplitudeEvent("submit superrask søknad", {
+                    numberOfQualifications: data.applicationForm.qualifications.length,
+                    numberOfQualificationsChecked: application.qualifications.length,
+                    motivationLength: application.motivation.length,
+                    hasName: application.name.length > 0,
+                });
+            } catch (err) {
+                // ignore
+            }
+        }
+    }
 
     /**
      * Fetch ad and superrask søknad form
      */
     useEffect(() => {
-        const { id } = match.params;
-
         dispatch({ type: FetchAction.BEGIN });
 
         const promises = [SearchAPI.get(`api/stilling/${id}`), SuperraskSoknadAPI.getApplicationForm(id)];
@@ -48,10 +98,18 @@ function NewApplicationPage({ match }) {
         return <Error />;
     }
 
-    return <NewApplication id={match.params.id} ad={data.ad} applicationForm={data.applicationForm} />;
+    return (
+        <NewApplication
+            formAction="/stillinger"
+            submitForm={submitApplication}
+            ad={data.ad}
+            applicationForm={data.applicationForm}
+            submitFormState={submitFormState}
+        />
+    );
 }
 
-NewApplicationPage.propTypes = {
+SuperraskPage.propTypes = {
     match: PropTypes.shape({
         params: PropTypes.shape({
             id: PropTypes.string,
@@ -59,4 +117,4 @@ NewApplicationPage.propTypes = {
     }),
 };
 
-export default NewApplicationPage;
+export default SuperraskPage;

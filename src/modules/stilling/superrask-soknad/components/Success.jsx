@@ -1,19 +1,20 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { BodyLong, Button, Heading } from "@navikt/ds-react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 import { CONTEXT_PATH } from "../../../common/environment";
-import Feedback from "./Feedback";
+import GiveFeedback from "./GiveFeedback";
 import H1WithAutoFocus from "../../../common/components/h1WithAutoFocus/H1WithAutoFocus";
 import useScrollToTop from "../../../common/hooks/useScrollToTop";
 
-function NewApplicationSuccess({ data }) {
+function Success({ email }) {
     useScrollToTop();
+
     return (
-        <div className="mt-16 mb-16">
+        <>
             <H1WithAutoFocus size="large">Din søknad er sendt til bedriften</H1WithAutoFocus>
             <BodyLong spacing>
-                Du vil straks få en bekreftelse på din e-post {data.email}. Ønsker du å trekke din søknad finner du
+                Du vil straks få en bekreftelse på din e-post {email}. Ønsker du å trekke din søknad finner du
                 informasjon om dette i e-posten.
             </BodyLong>
             <Heading level="2" spacing size="medium">
@@ -26,13 +27,14 @@ function NewApplicationSuccess({ data }) {
             <Button variant="secondary" as={Link} to={CONTEXT_PATH}>
                 Tilbake til stillingssøket
             </Button>
-            <Feedback />
-        </div>
+
+            <GiveFeedback />
+        </>
     );
 }
 
-NewApplicationSuccess.propTypes = {
-    data: PropTypes.shape({ email: PropTypes.string }),
+Success.propTypes = {
+    email: PropTypes.string,
 };
 
-export default NewApplicationSuccess;
+export default Success;
