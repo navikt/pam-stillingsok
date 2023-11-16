@@ -148,7 +148,7 @@ function Form({ ad, applicationForm, submitForm, pending, submitApiError, valida
                 </AkselLink>
             </BodyLong>
 
-            {submitApiError && <ApiErrorMessage apiErrorCode={submitApiError.message} />}
+            {submitApiError && <ApiErrorMessage apiErrorCode={submitApiError} />}
 
             <HStack gap="4" className="mt-12">
                 <Button variant="primary" loading={pending} type="submit">

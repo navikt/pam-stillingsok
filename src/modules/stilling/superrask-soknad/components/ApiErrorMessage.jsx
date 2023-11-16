@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { Alert } from "@navikt/ds-react";
 
 const getErrorMessage = (apiErrorCode) => {
-    console.log(apiErrorCode);
     switch (apiErrorCode) {
         case "invalid_name":
             return "Vi kunne ikke sende inn søknaden din. Sjekk at navnet ditt er skrevet riktig og prøv på nytt.";
