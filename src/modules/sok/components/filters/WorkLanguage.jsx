@@ -34,7 +34,7 @@ function WorkLanguage({ initialValues, updatedValues, query, dispatch }) {
             <div>
                 {values.map((item) => (
                     <Checkbox
-                        name="extent"
+                        name="workLanguage"
                         key={item.key}
                         value={item.key}
                         onChange={handleClick}
