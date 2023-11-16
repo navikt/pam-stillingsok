@@ -104,7 +104,13 @@ function Form({ ad, applicationForm, submitForm, pending, submitApiError, valida
                 </Heading>
                 <BodyLong className="mb-4">Vær nøye med å oppgi riktig informasjon.</BodyLong>
 
-                <TextField label="Navn" id="new-application-name" auto-complete="name" name="name" className="mb-4" />
+                <TextField
+                    label="Navn"
+                    id="new-application-name"
+                    auto-complete="name"
+                    name="fullname"
+                    className="mb-4"
+                />
 
                 <TextField
                     label="E-post"
