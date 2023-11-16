@@ -55,7 +55,7 @@ async function remove(url) {
 async function post(url, query, toJson = true) {
     let response;
     try {
-        response = await fetch(url, {
+        response = await fetch(`${INTEREST_API_URL}/${url}`, {
             body: JSON.stringify(query),
             method: "POST",
             headers: {
@@ -90,7 +90,7 @@ async function getApplicationStatus(adUuid, uuid) {
 }
 
 async function postApplication(adUuid, application) {
-    return post(`${INTEREST_API_URL}/application-form/${adUuid}/application`, application, false);
+    return post(`application-form/${adUuid}/application`, application, false);
 }
 
 async function withdrawApplication(adUuid, uuid) {
@@ -102,7 +102,6 @@ const SuperraskSoknadAPI = {
     getApplicationStatus,
     postApplication,
     withdrawApplication,
-    post,
 };
 
 export default SuperraskSoknadAPI;

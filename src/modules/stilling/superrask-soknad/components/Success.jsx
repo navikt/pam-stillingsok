@@ -9,6 +9,7 @@ import useScrollToTop from "../../../common/hooks/useScrollToTop";
 
 function Success({ email }) {
     useScrollToTop();
+
     return (
         <>
             <H1WithAutoFocus size="large">Din søknad er sendt til bedriften</H1WithAutoFocus>
@@ -26,6 +27,7 @@ function Success({ email }) {
             <Button variant="secondary" as={Link} to={CONTEXT_PATH}>
                 Tilbake til stillingssøket
             </Button>
+
             <GiveFeedback />
         </>
     );
