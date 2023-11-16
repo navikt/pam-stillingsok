@@ -108,7 +108,7 @@ function Form({ ad, applicationForm, submitForm, pending, submitApiError, valida
                     label="Navn"
                     id="new-application-name"
                     auto-complete="name"
-                    name="fullname"
+                    name="fullName"
                     className="mb-4"
                 />
 
