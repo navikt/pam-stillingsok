@@ -35,7 +35,6 @@ async function post(url, body) {
         response = await fetch(`${CONTEXT_PATH}/${url}`, {
             body: JSON.stringify(body),
             method: "POST",
-            referrer: CONTEXT_PATH,
             headers: {
                 "Content-Type": "application/json",
             },
