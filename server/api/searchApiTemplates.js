@@ -66,6 +66,26 @@ function filterExtent(extent) {
     return filters;
 }
 
+function filterWorkLanguage(workLanguage) {
+    const filters = [];
+    if (workLanguage && workLanguage.length > 0) {
+        const filter = {
+            bool: {
+                should: [],
+            },
+        };
+        workLanguage.forEach((item) => {
+            filter.bool.should.push({
+                term: {
+                    workLanguage_facet: item,
+                },
+            });
+        });
+        filters.push(filter);
+    }
+    return filters;
+}
+
 function filterRemote(remote) {
     const filters = [];
 
@@ -501,6 +521,7 @@ exports.searchTemplate = (query) => {
         countries,
         municipals,
         extent,
+        workLanguage,
         remote,
         engagementType,
         sector,
@@ -535,6 +556,7 @@ exports.searchTemplate = (query) => {
             bool: {
                 filter: [
                     ...filterExtent(extent),
+                    ...filterWorkLanguage(workLanguage),
                     ...filterRemote(remote),
                     filterLocation(counties, municipals, countries, international),
                     filterOccupation(occupationFirstLevels, occupationSecondLevels),
@@ -553,6 +575,7 @@ exports.searchTemplate = (query) => {
                 "properties.location",
                 "properties.applicationdue",
                 "properties.hasInterestform",
+                "properties.workLanguage",
                 "locationList",
                 "title",
                 "published",
@@ -574,6 +597,7 @@ exports.searchTemplate = (query) => {
                     bool: {
                         filter: [
                             ...filterExtent(extent),
+                            ...filterWorkLanguage(workLanguage),
                             ...filterRemote(remote),
                             filterLocation(counties, municipals, countries, international),
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
@@ -597,6 +621,7 @@ exports.searchTemplate = (query) => {
                     bool: {
                         filter: [
                             ...filterExtent(extent),
+                            ...filterWorkLanguage(workLanguage),
                             ...filterRemote(remote),
                             filterLocation(counties, municipals, countries, international),
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
@@ -625,6 +650,7 @@ exports.searchTemplate = (query) => {
                     bool: {
                         filter: [
                             ...filterExtent(extent),
+                            ...filterWorkLanguage(workLanguage),
                             ...filterRemote(remote),
                             filterLocation(counties, municipals, countries, international),
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
@@ -644,6 +670,7 @@ exports.searchTemplate = (query) => {
                     bool: {
                         filter: [
                             ...filterRemote(remote),
+                            ...filterWorkLanguage(workLanguage),
                             filterLocation(counties, municipals, countries, international),
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
                             ...filterEngagementType(engagementType),
@@ -658,11 +685,32 @@ exports.searchTemplate = (query) => {
                     },
                 },
             },
+            workLanguage: {
+                filter: {
+                    bool: {
+                        filter: [
+                            ...filterExtent(extent),
+                            ...filterRemote(remote),
+                            filterLocation(counties, municipals, countries, international),
+                            filterOccupation(occupationFirstLevels, occupationSecondLevels),
+                            ...filterEngagementType(engagementType),
+                            ...filterSector(sector),
+                            ...filterPublished(published),
+                        ],
+                    },
+                },
+                aggs: {
+                    values: {
+                        terms: { field: "workLanguage_facet" },
+                    },
+                },
+            },
             engagementType: {
                 filter: {
                     bool: {
                         filter: [
                             ...filterExtent(extent),
+                            ...filterWorkLanguage(workLanguage),
                             ...filterRemote(remote),
                             filterLocation(counties, municipals, countries, international),
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
@@ -682,6 +730,7 @@ exports.searchTemplate = (query) => {
                     bool: {
                         filter: [
                             ...filterExtent(extent),
+                            ...filterWorkLanguage(workLanguage),
                             ...filterRemote(remote),
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
                             ...filterEngagementType(engagementType),
@@ -728,6 +777,7 @@ exports.searchTemplate = (query) => {
                     bool: {
                         filter: [
                             ...filterExtent(extent),
+                            ...filterWorkLanguage(workLanguage),
                             ...filterRemote(remote),
                             filterLocation(counties, municipals, countries, international),
                             ...filterEngagementType(engagementType),
@@ -773,6 +823,7 @@ exports.searchTemplate = (query) => {
                     bool: {
                         filter: [
                             ...filterExtent(extent),
+                            ...filterWorkLanguage(workLanguage),
                             ...filterRemote(remote),
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
                             ...filterEngagementType(engagementType),
@@ -825,6 +876,7 @@ exports.searchTemplate = (query) => {
                     bool: {
                         filter: [
                             ...filterExtent(extent),
+                            ...filterWorkLanguage(workLanguage),
                             filterLocation(counties, municipals, countries, international),
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
                             ...filterEngagementType(engagementType),

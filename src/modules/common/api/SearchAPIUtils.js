@@ -55,6 +55,10 @@ export default async function simplifySearchResponse(response) {
                 key: item.key,
                 count: item.doc_count,
             })),
+            workLanguage: response.aggregations.workLanguage.values.buckets.map((item) => ({
+                key: item.key,
+                count: item.doc_count,
+            })),
             engagementTypes: response.aggregations.engagementType.values.buckets.map((item) => ({
                 key: item.key,
                 count: item.doc_count,

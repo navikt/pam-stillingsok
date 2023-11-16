@@ -8,6 +8,7 @@ import Occupations from "./Occupations";
 import Extent from "./Extent";
 import Sector from "./Sector";
 import EngagementType from "./Engagement";
+import WorkLanguage from "./WorkLanguage";
 
 function FiltersDesktop({ query, dispatchQuery, initialSearchResult, searchResult }) {
     function submitForm(e) {
@@ -59,6 +60,14 @@ function FiltersDesktop({ query, dispatchQuery, initialSearchResult, searchResul
                 </FilterAccordionItem>
                 <FilterAccordionItem title="Ansettelsesform" panelId="engagementType">
                     <EngagementType
+                        query={query}
+                        dispatch={dispatchQuery}
+                        initialValues={initialSearchResult.aggregations.engagementTypes}
+                        updatedValues={searchResult && searchResult.aggregations.engagementTypes}
+                    />
+                </FilterAccordionItem>
+                <FilterAccordionItem title="Språk" panelId="workLanguage">
+                    <WorkLanguage
                         query={query}
                         dispatch={dispatchQuery}
                         initialValues={initialSearchResult.aggregations.engagementTypes}
