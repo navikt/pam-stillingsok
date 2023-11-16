@@ -56,15 +56,6 @@ function Form({ ad, applicationForm, submitForm, pending, submitApiError, valida
                 <Heading level="2" size="medium" spacing>
                     Hvorfor du er den rette for jobben
                 </Heading>
-                <ReadMore header="Hvordan skrive en god begrunnelse?" className="mb-4">
-                    <BodyLong className="mb-4">
-                        Vis hvorfor du er et trygt valg for denne jobben. Fortell om arbeidserfaring, praksisplasser,
-                        utdanning, frivillig arbeid, verv eller annen relevant erfaring.
-                    </BodyLong>
-                    <BodyLong>
-                        Tenk gjerne litt utradisjonelt og husk at personlige egenskaper kan være avgjørende.
-                    </BodyLong>
-                </ReadMore>
             </section>
 
             <section className="mb-10">
