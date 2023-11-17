@@ -25,10 +25,6 @@ function WorkLanguage({ initialValues, updatedValues, query, dispatch }) {
         }
     }
 
-    function labelForExtent(item) {
-        return item.key === "Heltid" ? `${item.key} eller ikke oppgitt` : `${item.key}`;
-    }
-
     return (
         <Fieldset legend="Heltid/deltid" hideLegend>
             <div>
@@ -40,7 +36,7 @@ function WorkLanguage({ initialValues, updatedValues, query, dispatch }) {
                         onChange={handleClick}
                         checked={query.workLanguage.includes(item.key)}
                     >
-                        {`${labelForExtent(item)} (${item.count})`}
+                        {`${item.key} (${item.count})`}
                     </Checkbox>
                 ))}
 
