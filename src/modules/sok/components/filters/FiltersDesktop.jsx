@@ -70,8 +70,8 @@ function FiltersDesktop({ query, dispatchQuery, initialSearchResult, searchResul
                     <WorkLanguage
                         query={query}
                         dispatch={dispatchQuery}
-                        initialValues={initialSearchResult.aggregations.engagementTypes}
-                        updatedValues={searchResult && searchResult.aggregations.engagementTypes}
+                        initialValues={initialSearchResult.aggregations.workLanguage}
+                        updatedValues={searchResult && searchResult.aggregations.workLanguage}
                     />
                 </FilterAccordionItem>
             </Accordion>
@@ -89,6 +89,7 @@ FiltersDesktop.propTypes = {
             published: PropTypes.arrayOf(PropTypes.shape({})),
             extent: PropTypes.arrayOf(PropTypes.shape({})),
             sector: PropTypes.arrayOf(PropTypes.shape({})),
+            workLanguage: PropTypes.arrayOf(PropTypes.shape({})),
         }),
     }),
     searchResult: PropTypes.shape({
@@ -98,6 +99,7 @@ FiltersDesktop.propTypes = {
             published: PropTypes.arrayOf(PropTypes.shape({})),
             extent: PropTypes.arrayOf(PropTypes.shape({})),
             sector: PropTypes.arrayOf(PropTypes.shape({})),
+            workLanguage: PropTypes.arrayOf(PropTypes.shape({})),
         }),
     }),
 };

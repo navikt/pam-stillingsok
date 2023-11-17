@@ -77,7 +77,7 @@ function filterWorkLanguage(workLanguage) {
         workLanguage.forEach((item) => {
             filter.bool.should.push({
                 term: {
-                    workLanguage_facet: item,
+                    worklanguage_facet: item,
                 },
             });
         });
@@ -701,7 +701,7 @@ exports.searchTemplate = (query) => {
                 },
                 aggs: {
                     values: {
-                        terms: { field: "workLanguage_facet" },
+                        terms: { field: "worklanguage_facet" },
                     },
                 },
             },

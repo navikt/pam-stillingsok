@@ -8,6 +8,7 @@ import Published from "./Published";
 import Extent from "./Extent";
 import Sector from "./Sector";
 import EngagementType from "./Engagement";
+import WorkLanguage from "./WorkLanguage";
 
 function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, initialSearchResult }) {
     function submitForm(e) {
@@ -82,6 +83,17 @@ function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, initi
                                     updatedValues={searchResult && searchResult.aggregations.engagementTypes}
                                 />
                             </div>
+                            <div className="mb-6">
+                                <Heading level="2" size="small">
+                                    Arbeidsspråk
+                                </Heading>
+                                <WorkLanguage
+                                    query={query}
+                                    dispatch={dispatchQuery}
+                                    initialValues={initialSearchResult.aggregations.workLanguage}
+                                    updatedValues={searchResult && searchResult.aggregations.workLanguage}
+                                />
+                            </div>
                         </Tabs.Panel>
                     </Tabs>
                 </Modal.Body>
@@ -108,6 +120,7 @@ FiltersMobile.propTypes = {
             published: PropTypes.arrayOf(PropTypes.shape({})),
             extent: PropTypes.arrayOf(PropTypes.shape({})),
             sector: PropTypes.arrayOf(PropTypes.shape({})),
+            workLanguage: PropTypes.arrayOf(PropTypes.shape({})),
         }),
     }),
     searchResult: PropTypes.shape({
@@ -118,6 +131,7 @@ FiltersMobile.propTypes = {
             published: PropTypes.arrayOf(PropTypes.shape({})),
             extent: PropTypes.arrayOf(PropTypes.shape({})),
             sector: PropTypes.arrayOf(PropTypes.shape({})),
+            workLanguage: PropTypes.arrayOf(PropTypes.shape({})),
         }),
     }),
 };

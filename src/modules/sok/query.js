@@ -15,6 +15,8 @@ export const ADD_ENGAGEMENT_TYPE = "ADD_ENGAGEMENT_TYPE";
 export const REMOVE_ENGAGEMENT_TYPE = "REMOVE_ENGAGEMENT_TYPE";
 export const ADD_EXTENT = "ADD_EXTENT";
 export const REMOVE_EXTENT = "REMOVE_EXTENT";
+export const ADD_WORKLANGUAGE = "ADD_WORKLANGUAGE";
+export const REMOVE_WORKLANGUAGE = "REMOVE_WORKLANGUAGE";
 export const ADD_REMOTE = "ADD_REMOTE";
 export const REMOVE_REMOTE = "REMOVE_REMOTE";
 export const ADD_SECTOR = "ADD_SECTOR";
@@ -47,6 +49,7 @@ export const defaultQuery = {
     sector: [],
     sort: "",
     international: false,
+    workLanguage: [],
 };
 
 /**
@@ -143,6 +146,7 @@ export function initQueryWithValuesFromBrowserUrl(initialState) {
         engagementType: fromBrowserUrl.engagementType || initialState.engagementType,
         sector: fromBrowserUrl.sector || initialState.sector,
         sort: fromBrowserUrl.sort || initialState.sort,
+        workLanguage: fromBrowserUrl.workLanguage || initialState.workLanguage,
     };
 }
 
@@ -233,6 +237,16 @@ export default function queryReducer(state, action) {
             return {
                 ...queryState,
                 extent: queryState.extent.filter((obj) => obj !== action.value),
+            };
+        case ADD_WORKLANGUAGE:
+            return {
+                ...queryState,
+                workLanguage: [...queryState.workLanguage, action.value],
+            };
+        case REMOVE_WORKLANGUAGE:
+            return {
+                ...queryState,
+                workLanguage: queryState.workLanguage.filter((obj) => obj !== action.value),
             };
         case ADD_REMOTE:
             return {
