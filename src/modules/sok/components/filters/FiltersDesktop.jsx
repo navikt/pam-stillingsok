@@ -8,6 +8,7 @@ import Occupations from "./Occupations";
 import Extent from "./Extent";
 import Sector from "./Sector";
 import EngagementType from "./Engagement";
+import WorkLanguage from "./WorkLanguage";
 
 function FiltersDesktop({ query, dispatchQuery, initialSearchResult, searchResult }) {
     function submitForm(e) {
@@ -65,6 +66,14 @@ function FiltersDesktop({ query, dispatchQuery, initialSearchResult, searchResul
                         updatedValues={searchResult && searchResult.aggregations.engagementTypes}
                     />
                 </FilterAccordionItem>
+                <FilterAccordionItem title="Språk" panelId="workLanguage">
+                    <WorkLanguage
+                        query={query}
+                        dispatch={dispatchQuery}
+                        initialValues={initialSearchResult.aggregations.workLanguage}
+                        updatedValues={searchResult && searchResult.aggregations.workLanguage}
+                    />
+                </FilterAccordionItem>
             </Accordion>
         </form>
     );
@@ -80,6 +89,7 @@ FiltersDesktop.propTypes = {
             published: PropTypes.arrayOf(PropTypes.shape({})),
             extent: PropTypes.arrayOf(PropTypes.shape({})),
             sector: PropTypes.arrayOf(PropTypes.shape({})),
+            workLanguage: PropTypes.arrayOf(PropTypes.shape({})),
         }),
     }),
     searchResult: PropTypes.shape({
@@ -89,6 +99,7 @@ FiltersDesktop.propTypes = {
             published: PropTypes.arrayOf(PropTypes.shape({})),
             extent: PropTypes.arrayOf(PropTypes.shape({})),
             sector: PropTypes.arrayOf(PropTypes.shape({})),
+            workLanguage: PropTypes.arrayOf(PropTypes.shape({})),
         }),
     }),
 };
