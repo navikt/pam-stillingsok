@@ -5,6 +5,7 @@ import UnknownSearchCriteriaValues from "./UnknownSearchCriteriaValues";
 import { ADD_EXTENT, REMOVE_EXTENT } from "../../query";
 import mergeCount from "../utils/mergeCount";
 import findUnknownSearchCriteriaValues from "../utils/findUnknownSearchCriteriaValues";
+import { logSearchFilterAdded, logSearchFilterRemoved } from "../../../common/tracking/amplitude";
 
 function Extent({ initialValues, updatedValues, query, dispatch }) {
     const [values, setValues] = useState(initialValues);
@@ -20,8 +21,10 @@ function Extent({ initialValues, updatedValues, query, dispatch }) {
         const { value } = e.target;
         if (e.target.checked) {
             dispatch({ type: ADD_EXTENT, value });
+            logSearchFilterAdded({ extent: value });
         } else {
             dispatch({ type: REMOVE_EXTENT, value });
+            logSearchFilterRemoved({ extent: value });
         }
     }
 

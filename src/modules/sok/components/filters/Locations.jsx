@@ -19,6 +19,7 @@ import buildHomeOfficeValues from "../utils/buildHomeOfficeValues";
 import mergeCount from "../utils/mergeCount";
 import findUnknownSearchCriteriaValues from "../utils/findUnknownSearchCriteriaValues";
 import findZeroCountLocationFacets from "../utils/findZeroCountLocationFacets";
+import { logSearchFilterAdded, logSearchFilterRemoved } from "../../../common/tracking/amplitude";
 
 function Locations({ initialValues, updatedValues, query, dispatch }) {
     const [locationValues, setLocationValues] = useState(buildLocations(initialValues));
@@ -54,21 +55,27 @@ function Locations({ initialValues, updatedValues, query, dispatch }) {
     function handleLocationClick(value, type, checked) {
         if (type === "county") {
             if (checked) {
+                logSearchFilterAdded({ sted: value });
                 dispatch({ type: ADD_COUNTY, value });
             } else {
                 dispatch({ type: REMOVE_COUNTY, value });
+                logSearchFilterRemoved({ sted: value });
             }
         } else if (type === "municipal") {
             if (checked) {
                 dispatch({ type: ADD_MUNICIPAL, value });
+                logSearchFilterAdded({ sted: value });
             } else {
                 dispatch({ type: REMOVE_MUNICIPAL, value });
+                logSearchFilterRemoved({ sted: value });
             }
         } else if (type === "country") {
             if (checked) {
                 dispatch({ type: ADD_COUNTRY, value });
+                logSearchFilterAdded({ sted: value });
             } else {
                 dispatch({ type: REMOVE_COUNTRY, value });
+                logSearchFilterRemoved({ sted: value });
             }
         } else if (type === "international") {
             if (query.international) {

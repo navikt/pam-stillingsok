@@ -11,6 +11,7 @@ import UnknownSearchCriteriaValues from "./UnknownSearchCriteriaValues";
 import moveCriteriaToBottom from "../utils/moveFacetToBottom";
 import mergeCount from "../utils/mergeCount";
 import findUnknownSearchCriteriaValues from "../utils/findUnknownSearchCriteriaValues";
+import { logSearchFilterAdded, logSearchFilterRemoved } from "../../../common/tracking/amplitude";
 
 const OCCUPATION_LEVEL_OTHER = "Uoppgitt/ ikke identifiserbare";
 
@@ -34,8 +35,10 @@ function Occupations({ initialValues, updatedValues, query, dispatch }) {
         const { value } = e.target;
         if (e.target.checked) {
             dispatch({ type: ADD_OCCUPATION_FIRST_LEVEL, value });
+            logSearchFilterAdded({ yrke: value });
         } else {
             dispatch({ type: REMOVE_OCCUPATION_FIRST_LEVEL, value });
+            logSearchFilterRemoved({ yrke: value });
         }
     }
 
@@ -43,8 +46,10 @@ function Occupations({ initialValues, updatedValues, query, dispatch }) {
         const { value } = e.target;
         if (e.target.checked) {
             dispatch({ type: ADD_OCCUPATION_SECOND_LEVEL, value });
+            logSearchFilterAdded({ yrke: value });
         } else {
             dispatch({ type: REMOVE_OCCUPATION_SECOND_LEVEL, value });
+            logSearchFilterRemoved({ yrke: value });
         }
     }
 
