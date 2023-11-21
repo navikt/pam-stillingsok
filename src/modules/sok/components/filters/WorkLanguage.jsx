@@ -5,6 +5,7 @@ import UnknownSearchCriteriaValues from "./UnknownSearchCriteriaValues";
 import { ADD_WORKLANGUAGE, REMOVE_WORKLANGUAGE } from "../../query";
 import mergeCount from "../utils/mergeCount";
 import findUnknownSearchCriteriaValues from "../utils/findUnknownSearchCriteriaValues";
+import logAmplitudeEvent from "../../../common/tracking/amplitude";
 
 function WorkLanguage({ initialValues, updatedValues, query, dispatch }) {
     const [values, setValues] = useState(initialValues);
@@ -20,8 +21,10 @@ function WorkLanguage({ initialValues, updatedValues, query, dispatch }) {
         const { value } = e.target;
         if (e.target.checked) {
             dispatch({ type: ADD_WORKLANGUAGE, value });
+            logAmplitudeEvent(`Søkefilter - Arbeidsspråk - Lagt til - ${value}`);
         } else {
             dispatch({ type: REMOVE_WORKLANGUAGE, value });
+            logAmplitudeEvent(`Søkefilter - Arbeidsspråk - Fjernet - ${value}`);
         }
     }
 
