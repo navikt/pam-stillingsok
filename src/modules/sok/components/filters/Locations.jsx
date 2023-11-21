@@ -19,7 +19,7 @@ import buildHomeOfficeValues from "../utils/buildHomeOfficeValues";
 import mergeCount from "../utils/mergeCount";
 import findUnknownSearchCriteriaValues from "../utils/findUnknownSearchCriteriaValues";
 import findZeroCountLocationFacets from "../utils/findZeroCountLocationFacets";
-import logAmplitudeEvent from "../../../common/tracking/amplitude";
+import { logSearchFilterAdded, logSearchFilterRemoved } from "../../../common/tracking/amplitude";
 
 function Locations({ initialValues, updatedValues, query, dispatch }) {
     const [locationValues, setLocationValues] = useState(buildLocations(initialValues));
@@ -55,27 +55,27 @@ function Locations({ initialValues, updatedValues, query, dispatch }) {
     function handleLocationClick(value, type, checked) {
         if (type === "county") {
             if (checked) {
-                logAmplitudeEvent(`Søkefilter - Sted - Lagt til - ${value}`);
+                logSearchFilterAdded({ sted: value });
                 dispatch({ type: ADD_COUNTY, value });
             } else {
                 dispatch({ type: REMOVE_COUNTY, value });
-                logAmplitudeEvent(`Søkefilter - Sted - Fjernet - ${value}`);
+                logSearchFilterRemoved({ sted: value });
             }
         } else if (type === "municipal") {
             if (checked) {
                 dispatch({ type: ADD_MUNICIPAL, value });
-                logAmplitudeEvent(`Søkefilter - Sted - Lagt til - ${value}`);
+                logSearchFilterAdded({ sted: value });
             } else {
                 dispatch({ type: REMOVE_MUNICIPAL, value });
-                logAmplitudeEvent(`Søkefilter - Sted - Fjernet - ${value}`);
+                logSearchFilterRemoved({ sted: value });
             }
         } else if (type === "country") {
             if (checked) {
                 dispatch({ type: ADD_COUNTRY, value });
-                logAmplitudeEvent(`Søkefilter - Sted - Lagt til - ${value}`);
+                logSearchFilterAdded({ sted: value });
             } else {
                 dispatch({ type: REMOVE_COUNTRY, value });
-                logAmplitudeEvent(`Søkefilter - Sted - Fjernet - ${value}`);
+                logSearchFilterRemoved({ sted: value });
             }
         } else if (type === "international") {
             if (query.international) {

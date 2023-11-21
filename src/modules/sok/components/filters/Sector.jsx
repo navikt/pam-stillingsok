@@ -6,7 +6,7 @@ import { ADD_SECTOR, REMOVE_SECTOR } from "../../query";
 import moveCriteriaToBottom from "../utils/moveFacetToBottom";
 import mergeCount from "../utils/mergeCount";
 import findUnknownSearchCriteriaValues from "../utils/findUnknownSearchCriteriaValues";
-import logAmplitudeEvent from "../../../common/tracking/amplitude";
+import { logSearchFilterAdded, logSearchFilterRemoved } from "../../../common/tracking/amplitude";
 
 function Sector({ initialValues, updatedValues, query, dispatch }) {
     const [values, setValues] = useState(moveCriteriaToBottom(initialValues, "Ikke oppgitt"));
@@ -22,10 +22,10 @@ function Sector({ initialValues, updatedValues, query, dispatch }) {
         const { value } = e.target;
         if (e.target.checked) {
             dispatch({ type: ADD_SECTOR, value });
-            logAmplitudeEvent(`Søkefilter - Sektor - Lagt til - ${value}`);
+            logSearchFilterAdded({ sektor: value });
         } else {
             dispatch({ type: REMOVE_SECTOR, value });
-            logAmplitudeEvent(`Søkefilter - Sektor - Fjernet - ${value}`);
+            logSearchFilterRemoved({ sektor: value });
         }
     }
 

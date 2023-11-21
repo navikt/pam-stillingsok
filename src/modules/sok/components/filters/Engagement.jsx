@@ -6,7 +6,7 @@ import UnknownSearchCriteriaValues from "./UnknownSearchCriteriaValues";
 import mergeCount from "../utils/mergeCount";
 import moveCriteriaToBottom from "../utils/moveFacetToBottom";
 import findUnknownSearchCriteriaValues from "../utils/findUnknownSearchCriteriaValues";
-import logAmplitudeEvent from "../../../common/tracking/amplitude";
+import { logSearchFilterAdded, logSearchFilterRemoved } from "../../../common/tracking/amplitude";
 
 function Engagement({ initialValues, updatedValues, query, dispatch }) {
     const [values, setValues] = useState(moveCriteriaToBottom(initialValues, "Annet"));
@@ -22,10 +22,10 @@ function Engagement({ initialValues, updatedValues, query, dispatch }) {
         const { value } = e.target;
         if (e.target.checked) {
             dispatch({ type: ADD_ENGAGEMENT_TYPE, value });
-            logAmplitudeEvent(`Søkefilter - Ansettelsesform - Lagt til - ${value}`);
+            logSearchFilterAdded({ ansettelsesform: value });
         } else {
             dispatch({ type: REMOVE_ENGAGEMENT_TYPE, value });
-            logAmplitudeEvent(`Søkefilter - Ansettelsesform - Fjernet - ${value}`);
+            logSearchFilterRemoved({ ansettelsesform: value });
         }
     }
 

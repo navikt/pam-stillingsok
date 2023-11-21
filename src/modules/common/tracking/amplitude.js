@@ -38,6 +38,14 @@ const logAmplitudeEvent = (event, data) => {
     amplitude.track(event, enrichData(data));
 };
 
+export const logSearchFilterAdded = (data) => {
+    amplitude.track("Søkefilter lagt til", enrichData(data));
+};
+
+export const logSearchFilterRemoved = (data) => {
+    amplitude.track("Søkefilter fjernet", enrichData(data));
+};
+
 export function logStillingVisning(ad) {
     const employerLocation = ad._source.employer ? ad._source.employer.location : null;
     let hasContactMail = false;
