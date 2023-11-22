@@ -66,7 +66,7 @@ function FiltersDesktop({ query, dispatchQuery, initialSearchResult, searchResul
                         updatedValues={searchResult && searchResult.aggregations.engagementTypes}
                     />
                 </FilterAccordionItem>
-                <FilterAccordionItem title="Språk" panelId="workLanguage">
+                <FilterAccordionItem title="Arbeidsspråk" panelId="workLanguage">
                     <WorkLanguage
                         query={query}
                         dispatch={dispatchQuery}
