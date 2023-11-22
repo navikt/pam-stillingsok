@@ -7,6 +7,27 @@ import worktimeParser from "./worktimeParser";
 export default function EmploymentDetails({ stilling }) {
     const { properties } = stilling;
 
+    const formatWorkLanguage = (languages) => {
+        if (languages.length === 1) {
+            return languages[0];
+        }
+        let languageString = "";
+        for (let i = 0; i < languages.length; i += 1) {
+            // Add "eller" before the last language
+            if (i === languages.length - 1) {
+                languageString += " eller ";
+            }
+
+            languageString += languages[i];
+
+            // Separate languages with ", ", except the last language
+            if (i < languages.length - 2) {
+                languageString += ", ";
+            }
+        }
+        return languageString;
+    };
+
     return (
         <section className="full-width">
             <Heading level="2" size="large" spacing>
@@ -126,6 +147,16 @@ export default function EmploymentDetails({ stilling }) {
                             </dd>
                         </div>
                     )}
+                    {properties.workLanguage && (
+                        <div>
+                            <dt>
+                                <Label as="p">Arbeidsspråk</Label>
+                            </dt>
+                            <dd>
+                                <BodyLong>{formatWorkLanguage(properties.workLanguage)}</BodyLong>
+                            </dd>
+                        </div>
+                    )}
                 </HGrid>
             </dl>
         </section>
@@ -147,6 +178,7 @@ EmploymentDetails.propTypes = {
             jobarrangement: PropTypes.string,
             starttime: PropTypes.string,
             remote: PropTypes.string,
+            workLanguage: PropTypes.array,
         }),
         location: PropTypes.shape({}),
     }).isRequired,
