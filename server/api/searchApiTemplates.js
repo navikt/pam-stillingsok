@@ -704,7 +704,7 @@ exports.searchTemplate = (query) => {
                 },
                 aggs: {
                     values: {
-                        terms: { field: "worklanguage_facet" },
+                        terms: { field: "worklanguage_facet", missing: "Ikke Oppgitt" },
                     },
                 },
             },
