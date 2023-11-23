@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import {
     Alert,
@@ -28,12 +28,20 @@ const reportCategories = [
 
 function ReportAd({ id }) {
     const [error, setError] = useState(false);
+    const [isSubmittingForm, setIsSubmittingForm] = useState(false);
     const [validationError, setValidationError] = useState(null);
     const [finished, setFinished] = useState(false);
     const [category, setCategory] = useState(null);
     const [description, setDescription] = useState("");
-    const categoryFieldId = "checkbox-categories";
-    const messageFieldId = "textarea-information";
+    const categoryFieldError = "Du må velge minst én grunn til at annonsen bryter rettningslinjene";
+    const messageFieldError = "Du har brukt for mange tegn";
+
+    useEffect(() => {
+        if (isSubmittingForm && validationError === null) {
+            submitForm();
+            setIsSubmittingForm(false);
+        }
+    }, [validationError, isSubmittingForm]);
 
     const handleDescriptionChange = (e) => {
         setDescription(e.target.value);
@@ -43,22 +51,25 @@ function ReportAd({ id }) {
         setCategory({ ...values });
     };
 
-    const validateForm = async () => {
-        console.log("VALIDATE", category);
+    const validateForm = () => {
+        setValidationError(null);
         if (category === null) {
-            console.log("VALIDATE ERRORORORO");
-            await setValidationError({ ...validationError, categoryFieldId });
-            console.log("VALIDATE DONE", validationError);
+            setValidationError({ ...validationError, categoryFieldError });
+        }
+
+        if (description.length > 300) {
+            setValidationError({ ...validationError, messageFieldError });
         }
     };
 
-    async function handleSendTip() {
-        console.log("CATEGORY", category);
-        await validateForm();
-        console.log("ERROR", validationError);
-        if (validationError.length > 0) {
-            throw new Error("validation error");
-        }
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        validateForm();
+        setIsSubmittingForm(true);
+    };
+
+    const submitForm = async () => {
+        console.log("OYOY", category);
         const title = `En stilling har blitt rapportert for ${category.split(" ").toLowerCase()}`;
 
         try {
@@ -83,7 +94,7 @@ function ReportAd({ id }) {
         } catch (e) {
             setError(true);
         }
-    }
+    };
 
     return (
         <div className="container-medium mt-12 mb-16 RapporterAnnonse">
@@ -111,9 +122,12 @@ function ReportAd({ id }) {
                             </AkselLink>
                             . I tilfeller der det er brudd på retningslinjene vil stillingsannonsene bli fjernet.
                         </BodyLong>
-                        <form>
+                        <form onSubmit={handleSubmit}>
                             <Fieldset legend={<Heading level="2">Hvilke retningslinjer bryter annonsen?</Heading>}>
-                                <CheckboxGroup onChange={(values) => handleCategoryChange(values)}>
+                                <CheckboxGroup
+                                    onChange={(values) => handleCategoryChange(values)}
+                                    error={validationError?.categoryFieldError}
+                                >
                                     {reportCategories.map((c) => (
                                         <Checkbox key={c.key} value={c.key}>
                                             {c.label}
@@ -121,6 +135,7 @@ function ReportAd({ id }) {
                                     ))}
                                 </CheckboxGroup>
                                 <Textarea
+                                    error={validationError?.messageFieldError}
                                     label="Legg til utdypende informasjon"
                                     maxLength={300}
                                     value={description}
@@ -131,7 +146,7 @@ function ReportAd({ id }) {
                                     Når du har sendt inn tipset, vurderer vi om annonsen bryter retningslinjene og om
                                     den skal fjernes. Ditt tips er anonymt.
                                 </BodyLong>
-                                <Button variant="primary" onClick={handleSendTip} className="mb-8">
+                                <Button variant="primary" className="mb-8">
                                     Rapporter annonse
                                 </Button>
                             </Fieldset>
