@@ -3,7 +3,9 @@ import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import {
     Alert,
+    Bleed,
     BodyLong,
+    Box,
     Button,
     Checkbox,
     Heading,
@@ -12,6 +14,7 @@ import {
     Textarea,
     Fieldset,
     CheckboxGroup,
+    VStack,
 } from "@navikt/ds-react";
 import logAmplitudeEvent from "../../../common/tracking/amplitude";
 import UserAPI from "../../../common/api/UserAPI";
@@ -70,7 +73,7 @@ function ReportAd({ id }) {
 
     const submitForm = async () => {
         console.log("OYOY", category);
-        const title = `En stilling har blitt rapportert for ${category.split(" ").toLowerCase()}`;
+        const title = `En stilling har blitt rapportert for ${Object.values(category).split(" ").toLowerCase()}`;
 
         try {
             // await UserAPI.post(
@@ -97,7 +100,7 @@ function ReportAd({ id }) {
     };
 
     return (
-        <div className="container-medium mt-12 mb-16 RapporterAnnonse">
+        <div className="container-medium mb-16 RapporterAnnonse">
             <div>
                 {finished && (
                     <div>
@@ -114,8 +117,15 @@ function ReportAd({ id }) {
                 )}
                 {!finished && (
                     <>
-                        <Heading level="1">Rapporter annonse</Heading>
-                        <BodyLong>
+                        <Bleed marginInline="full">
+                            <Box background="surface-alt-1-subtle" paddingBlock="4">
+                                hehihie
+                            </Box>
+                        </Bleed>
+                        <Heading level="1" className="mb-4">
+                            Rapporter annonse
+                        </Heading>
+                        <BodyLong className="mb-8">
                             Alle annonser på arbeidsplassen.no skal følge{" "}
                             <AkselLink href="/retningslinjer-stillingsannonser">
                                 NAVs retningslinjer for stillingsannonser
@@ -125,6 +135,7 @@ function ReportAd({ id }) {
                         <form onSubmit={handleSubmit}>
                             <Fieldset legend={<Heading level="2">Hvilke retningslinjer bryter annonsen?</Heading>}>
                                 <CheckboxGroup
+                                    className="mb-8"
                                     onChange={(values) => handleCategoryChange(values)}
                                     error={validationError?.categoryFieldError}
                                 >
@@ -135,6 +146,7 @@ function ReportAd({ id }) {
                                     ))}
                                 </CheckboxGroup>
                                 <Textarea
+                                    className="mb-8"
                                     error={validationError?.messageFieldError}
                                     label="Legg til utdypende informasjon"
                                     maxLength={300}
@@ -142,34 +154,38 @@ function ReportAd({ id }) {
                                     onChange={handleDescriptionChange}
                                     description="Valgfritt. Vennligst ikke skriv inn personopplysninger."
                                 />
-                                <BodyLong>
+                                <BodyLong className="mb-4">
                                     Når du har sendt inn tipset, vurderer vi om annonsen bryter retningslinjene og om
                                     den skal fjernes. Ditt tips er anonymt.
                                 </BodyLong>
-                                <Button variant="primary" className="mb-8">
+                                <Button variant="primary" className="mb-12">
                                     Rapporter annonse
                                 </Button>
                             </Fieldset>
                         </form>
                     </>
                 )}
-
-                <LinkPanel className="arb-link-panel-primary" href="https://tips.skatteetaten.no/web/tips/">
-                    <LinkPanel.Title className="navds-link-panel__title navds-heading--small">
-                        Send tips til Skatteetaten
-                    </LinkPanel.Title>
-                    <LinkPanel.Description className="navds-link-panel__description navds-body-long">
-                        Ved mistanke om for eksempel svart arbeid eller ulovlig utleie.
-                    </LinkPanel.Description>
-                </LinkPanel>
-                <LinkPanel className="arb-link-panel-secondary" href="https://www.arbeidstilsynet.no/kontakt-oss/tips/">
-                    <LinkPanel.Title className="navds-link-panel__title navds-heading--small">
-                        Send tips til Arbeidstilsynet
-                    </LinkPanel.Title>
-                    <LinkPanel.Description className="navds-link-panel__description navds-body-long">
-                        Ved mistanke om kritikkverdige arbeidsmiljøforhold.
-                    </LinkPanel.Description>
-                </LinkPanel>
+                <VStack gap="4">
+                    <LinkPanel className="arb-link-panel-tertiary" href="https://tips.skatteetaten.no/web/tips/">
+                        <LinkPanel.Title className="navds-link-panel__title navds-heading--small">
+                            Send tips til Skatteetaten
+                        </LinkPanel.Title>
+                        <LinkPanel.Description className="navds-link-panel__description navds-body-long">
+                            Ved mistanke om for eksempel svart arbeid eller ulovlig utleie.
+                        </LinkPanel.Description>
+                    </LinkPanel>
+                    <LinkPanel
+                        className="arb-link-panel-tertiary"
+                        href="https://www.arbeidstilsynet.no/kontakt-oss/tips/"
+                    >
+                        <LinkPanel.Title className="navds-link-panel__title navds-heading--small">
+                            Send tips til Arbeidstilsynet
+                        </LinkPanel.Title>
+                        <LinkPanel.Description className="navds-link-panel__description navds-body-long">
+                            Ved mistanke om kritikkverdige arbeidsmiljøforhold.
+                        </LinkPanel.Description>
+                    </LinkPanel>
+                </VStack>
             </div>
         </div>
     );
