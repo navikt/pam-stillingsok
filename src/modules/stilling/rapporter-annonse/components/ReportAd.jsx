@@ -29,7 +29,7 @@ const reportCategories = [
     { label: "Annet", key: "other" },
 ];
 
-function ReportAd({ id }) {
+function ReportAd({ ad }) {
     const [error, setError] = useState(false);
     const [isSubmittingForm, setIsSubmittingForm] = useState(false);
     const [validationError, setValidationError] = useState(null);
@@ -72,7 +72,6 @@ function ReportAd({ id }) {
     };
 
     const submitForm = async () => {
-        console.log("OYOY", category);
         const title = `En stilling har blitt rapportert for ${Object.values(category).split(" ").toLowerCase()}`;
 
         try {
@@ -81,7 +80,7 @@ function ReportAd({ id }) {
             //     {
             //         category,
             //         title,
-            //         postingId: id,
+            //         postingId: ad._source.id,
             //         description,
             //     },
             //     false,
@@ -92,7 +91,7 @@ function ReportAd({ id }) {
             logAmplitudeEvent("Rapportering av stillingsannonse", {
                 category,
                 title,
-                postingId: id,
+                postingId: ad._source.id,
             });
         } catch (e) {
             setError(true);
@@ -101,6 +100,7 @@ function ReportAd({ id }) {
 
     return (
         <div className="container-medium mb-16 RapporterAnnonse">
+            {console.log("OYOY", ad)}
             <div>
                 {finished && (
                     <div>
@@ -119,7 +119,7 @@ function ReportAd({ id }) {
                     <>
                         <Bleed marginInline="full">
                             <Box background="surface-alt-1-subtle" paddingBlock="4">
-                                hehihie
+                                {ad._source.title}
                             </Box>
                         </Bleed>
                         <Heading level="1" className="mb-4">
@@ -192,7 +192,12 @@ function ReportAd({ id }) {
 }
 
 ReportAd.propTypes = {
-    id: PropTypes.string.isRequired,
+    ad: PropTypes.shape({
+        _id: PropTypes.string,
+        _source: PropTypes.shape({,
+            title: PropTypes.string,
+        }),
+    }).isRequired,
 };
 
 export default ReportAd;
