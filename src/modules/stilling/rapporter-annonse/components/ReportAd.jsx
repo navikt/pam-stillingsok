@@ -15,10 +15,10 @@ import {
     Fieldset,
     CheckboxGroup,
     VStack,
+    BodyShort,
 } from "@navikt/ds-react";
 import logAmplitudeEvent from "../../../common/tracking/amplitude";
 import UserAPI from "../../../common/api/UserAPI";
-import H1WithAutoFocus from "../../../common/components/h1WithAutoFocus/H1WithAutoFocus";
 
 const reportCategories = [
     { label: "Diskriminerende innhold", key: "discrimination" },
@@ -38,6 +38,33 @@ function ReportAd({ ad }) {
     const [description, setDescription] = useState("");
     const categoryFieldError = "Du må velge minst én grunn til at annonsen bryter rettningslinjene";
     const messageFieldError = "Du har brukt for mange tegn";
+
+    const submitForm = async () => {
+        const title = `En stilling har blitt rapportert for ${Object.values(category).toString().toLowerCase()}`;
+
+        try {
+            await UserAPI.post(
+                "api/v1/reportposting",
+                {
+                    category,
+                    title,
+                    postingId: ad.id,
+                    description,
+                },
+                false,
+            );
+
+            setFinished(true);
+
+            logAmplitudeEvent("Rapportering av stillingsannonse", {
+                category: Object.values(category).toString(),
+                title,
+                postingId: ad.id,
+            });
+        } catch (e) {
+            setError(true);
+        }
+    };
 
     useEffect(() => {
         if (isSubmittingForm && validationError === null) {
@@ -71,42 +98,24 @@ function ReportAd({ ad }) {
         setIsSubmittingForm(true);
     };
 
-    const submitForm = async () => {
-        const title = `En stilling har blitt rapportert for ${Object.values(category).split(" ").toLowerCase()}`;
-
-        try {
-            // await UserAPI.post(
-            //     "api/v1/reportposting",
-            //     {
-            //         category,
-            //         title,
-            //         postingId: ad._source.id,
-            //         description,
-            //     },
-            //     false,
-            // );
-
-            setFinished(true);
-
-            logAmplitudeEvent("Rapportering av stillingsannonse", {
-                category,
-                title,
-                postingId: ad._source.id,
-            });
-        } catch (e) {
-            setError(true);
-        }
-    };
-
     return (
-        <div className="container-medium mb-16 RapporterAnnonse">
-            {console.log("OYOY", ad)}
+        <div className="container-small mb-16 RapporterAnnonse">
+            <Bleed marginInline="full" className="mb-8" asChild>
+                <Box background="surface-alt-1-subtle" paddingBlock="4">
+                    <div className="container-small">
+                        <BodyShort weight="semibold">{ad._source.title}</BodyShort>
+                        <BodyShort>{ad._source.businessName}</BodyShort>
+                    </div>
+                </Box>
+            </Bleed>
             <div>
                 {finished && (
                     <div>
-                        <H1WithAutoFocus>Takk for din tilbakemelding</H1WithAutoFocus>
+                        <Heading level="1" className="mb-4">
+                            Takk for din tilbakemelding
+                        </Heading>
 
-                        <div className="report-form">
+                        <div className="report-form mb-12">
                             <BodyLong spacing>Takk for at du tok deg tid til å rapportere denne annonsen.</BodyLong>
                             <BodyLong spacing>
                                 Har du spørsmål kan du <AkselLink href="/kontakt">kontakte oss her.</AkselLink>
@@ -117,11 +126,6 @@ function ReportAd({ ad }) {
                 )}
                 {!finished && (
                     <>
-                        <Bleed marginInline="full">
-                            <Box background="surface-alt-1-subtle" paddingBlock="4">
-                                {ad._source.title}
-                            </Box>
-                        </Bleed>
                         <Heading level="1" className="mb-4">
                             Rapporter annonse
                         </Heading>
@@ -193,8 +197,9 @@ function ReportAd({ ad }) {
 
 ReportAd.propTypes = {
     ad: PropTypes.shape({
-        _id: PropTypes.string,
-        _source: PropTypes.shape({,
+        id: PropTypes.string,
+        _source: PropTypes.shape({
+            businessName: PropTypes.string,
             title: PropTypes.string,
         }),
     }).isRequired,
