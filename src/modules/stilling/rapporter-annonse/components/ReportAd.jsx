@@ -40,9 +40,11 @@ function ReportAd({ ad }) {
     const messageFieldError = "Du har brukt for mange tegn";
 
     const submitForm = async () => {
+        console.log("submit form");
         const title = `En stilling har blitt rapportert for ${Object.values(category).toString().toLowerCase()}`;
 
         try {
+            console.log("submit form inside");
             await UserAPI.post(
                 "api/v1/reportposting",
                 {
@@ -62,6 +64,7 @@ function ReportAd({ ad }) {
                 postingId: ad.id,
             });
         } catch (e) {
+            console.log("submit form error");
             setError(true);
         }
     };
@@ -76,25 +79,30 @@ function ReportAd({ ad }) {
     const handleDescriptionChange = (e) => {
         setDescription(e.target.value);
     };
-
     const handleCategoryChange = (values) => {
         setCategory({ ...values });
     };
 
-    const validateForm = () => {
-        setValidationError(null);
+    const validateForm = async () => {
+        await setValidationError(() => {
+            return null;
+        });
         if (category === null) {
-            setValidationError({ ...validationError, categoryFieldError });
+            await setValidationError((validationError) => {
+                return { ...validationError, categoryFieldError };
+            });
         }
 
         if (description.length > 300) {
-            setValidationError({ ...validationError, messageFieldError });
+            await setValidationError((validationError) => {
+                return { ...validationError, messageFieldError };
+            });
         }
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        validateForm();
+        await validateForm();
         setIsSubmittingForm(true);
     };
 
