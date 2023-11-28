@@ -40,7 +40,7 @@ function ReportAd({ ad }) {
     const messageFieldError = "Du har brukt for mange tegn";
 
     const submitForm = async () => {
-        console.log("submit form");
+        console.log("submit form", ad._id);
         const title = `En stilling har blitt rapportert for ${Object.values(category).toString().toLowerCase()}`;
 
         try {
@@ -50,7 +50,7 @@ function ReportAd({ ad }) {
                 {
                     category: Object.values(category).toString(),
                     title,
-                    postingId: ad.id,
+                    postingId: ad._id,
                     description,
                 },
                 false,
@@ -61,7 +61,7 @@ function ReportAd({ ad }) {
             logAmplitudeEvent("Rapportering av stillingsannonse", {
                 category: Object.values(category).toString(),
                 title,
-                postingId: ad.id,
+                postingId: ad._id,
             });
         } catch (e) {
             console.log("submit form error");
@@ -205,7 +205,7 @@ function ReportAd({ ad }) {
 
 ReportAd.propTypes = {
     ad: PropTypes.shape({
-        id: PropTypes.string,
+        _id: PropTypes.string,
         _source: PropTypes.shape({
             businessName: PropTypes.string,
             title: PropTypes.string,
