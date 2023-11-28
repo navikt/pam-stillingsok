@@ -48,7 +48,7 @@ function ReportAd({ ad }) {
             await UserAPI.post(
                 "api/v1/reportposting",
                 {
-                    category,
+                    category: Object.values(category).toString(),
                     title,
                     postingId: ad.id,
                     description,
