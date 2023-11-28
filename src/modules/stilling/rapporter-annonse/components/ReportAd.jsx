@@ -49,6 +49,7 @@ function ReportAd({ ad }) {
                 "api/v1/reportposting",
                 {
                     category: Object.values(category).toString(),
+                    subCategory: "",
                     title,
                     postingId: ad._id,
                     description,
