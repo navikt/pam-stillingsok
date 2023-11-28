@@ -1,4 +1,4 @@
-const NOT_DEFINED = "Ikke Oppgitt";
+const NOT_DEFINED = "Ikke oppgitt";
 const useRemoteFilter = true;
 
 function mapSortByValue(value) {

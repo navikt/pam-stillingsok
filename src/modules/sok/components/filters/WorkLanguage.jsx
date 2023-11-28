@@ -9,7 +9,7 @@ import { logSearchFilterAdded, logSearchFilterRemoved } from "../../../common/tr
 import moveCriteriaToBottom from "../utils/moveFacetToBottom";
 
 function WorkLanguage({ initialValues, updatedValues, query, dispatch }) {
-    const [values, setValues] = useState(moveCriteriaToBottom(initialValues, "Ikke Oppgitt"));
+    const [values, setValues] = useState(moveCriteriaToBottom(initialValues, "Ikke oppgitt"));
 
     useEffect(() => {
         if (updatedValues) {
