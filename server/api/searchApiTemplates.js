@@ -1,3 +1,4 @@
+const NOT_DEFINED = "Ikke Oppgitt";
 const useRemoteFilter = true;
 
 function mapSortByValue(value) {
@@ -75,11 +76,25 @@ function filterWorkLanguage(workLanguage) {
             },
         };
         workLanguage.forEach((item) => {
-            filter.bool.should.push({
-                term: {
-                    worklanguage_facet: item,
-                },
-            });
+            if (item === NOT_DEFINED) {
+                filter.bool.should.push({
+                    bool: {
+                        must_not: [
+                            {
+                                exists: {
+                                    field: "worklanguage_facet",
+                                },
+                            },
+                        ],
+                    },
+                });
+            } else {
+                filter.bool.should.push({
+                    term: {
+                        worklanguage_facet: item,
+                    },
+                });
+            }
         });
         filters.push(filter);
     }
@@ -704,7 +719,7 @@ exports.searchTemplate = (query) => {
                 },
                 aggs: {
                     values: {
-                        terms: { field: "worklanguage_facet", missing: "Ikke Oppgitt" },
+                        terms: { field: "worklanguage_facet", missing: NOT_DEFINED },
                     },
                 },
             },
