@@ -27,6 +27,21 @@ function AuthenticationProvider({ children }) {
     const timeoutLogout = () => {
         window.location.href = `/stillinger/oauth2/logout?redirect=${encodeURIComponent("/utlogget?timeout=true")}`;
     };
+    const markAsLoggedOut = () => {
+        setAuthenticationStatus(AuthenticationStatus.NOT_AUTHENTICATED);
+    };
+
+    function login() {
+        window.location.href = `/stillinger${LOGIN_URL}?redirect=${encodeURIComponent(window.location.href)}`;
+    }
+
+    function loginAndRedirect(navigateTo) {
+        window.location.href = `/stillinger${LOGIN_URL}?redirect=${encodeURIComponent(navigateTo)}`;
+    }
+
+    function logout() {
+        window.location.href = `/stillinger${LOGOUT_URL}`;
+    }
 
     const fetchIsAuthenticated = () => {
         setAuthenticationStatus(AuthenticationStatus.IS_FETCHING);
@@ -66,6 +81,10 @@ function AuthenticationProvider({ children }) {
                         setUserNameAndInfo(result);
                     });
                 }
+
+                if (response.status === 403) {
+                    logout();
+                }
             });
         } else {
             const testData = {
@@ -75,22 +94,6 @@ function AuthenticationProvider({ children }) {
             };
             setUserNameAndInfo(testData);
         }
-    }
-
-    const markAsLoggedOut = () => {
-        setAuthenticationStatus(AuthenticationStatus.NOT_AUTHENTICATED);
-    };
-
-    function login() {
-        window.location.href = `/stillinger${LOGIN_URL}?redirect=${encodeURIComponent(window.location.href)}`;
-    }
-
-    function loginAndRedirect(navigateTo) {
-        window.location.href = `/stillinger${LOGIN_URL}?redirect=${encodeURIComponent(navigateTo)}`;
-    }
-
-    function logout() {
-        window.location.href = `/stillinger${LOGOUT_URL}`;
     }
 
     useEffect(() => {
