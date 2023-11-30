@@ -113,7 +113,7 @@ function ReportAd({ ad }) {
                 <div>
                     {finished && (
                         <div>
-                            <Heading level="1" className="mb-4">
+                            <Heading level="1" className="mb-4" size="xlarge">
                                 Takk for din tilbakemelding
                             </Heading>
 
@@ -128,7 +128,7 @@ function ReportAd({ ad }) {
                     )}
                     {!finished && (
                         <>
-                            <Heading level="1" className="mb-4">
+                            <Heading level="1" className="mb-4" size="xlarge">
                                 Rapporter annonse
                             </Heading>
                             <BodyLong className="mb-8">
