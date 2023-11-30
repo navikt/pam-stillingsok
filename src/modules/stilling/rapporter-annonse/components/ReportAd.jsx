@@ -141,7 +141,7 @@ function ReportAd({ ad }) {
                             <form onSubmit={handleSubmit}>
                                 <CheckboxGroup
                                     legend={
-                                        <Heading level="2" className="mb-2">
+                                        <Heading level="2" className="mb-2" size="small">
                                             Hvilke retningslinjer bryter annonsen?
                                         </Heading>
                                     }
