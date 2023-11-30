@@ -32,7 +32,7 @@
     "dependencies": {
         "@amplitude/analytics-browser": "^1.10.3",
         "@navikt/aksel-icons": "^5.11.1",
-        "@navikt/arbeidsplassen-css": "^8.2.1",
+        "@navikt/arbeidsplassen-css": "^8.2.2",
         "@navikt/arbeidsplassen-react": "^8.2.1",
         "@navikt/arbeidsplassen-theme": "^5.5.6",
         "@navikt/ds-css": "^5.11.1",
