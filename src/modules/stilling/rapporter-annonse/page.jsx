@@ -1,30 +1,50 @@
-import React, { useContext } from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
+import { FetchAction, FetchStatus, useFetchReducer } from "../../common/hooks/useFetchReducer";
+import SearchAPI from "../../common/api/SearchAPI";
 import useScrollToTop from "../../common/hooks/useScrollToTop";
-import useDocumentTitle from "../../common/hooks/useDocumentTitle";
+import NotFound from "../../not-found";
 import Loading from "../../loading";
-import { AuthenticationContext, AuthenticationStatus } from "../../common/auth/contexts/AuthenticationProvider";
-import LoginIsRequiredPage from "../../common/auth/components/LoginIsRequiredPage";
+import Error from "../../error";
+import useDocumentTitle from "../../common/hooks/useDocumentTitle";
 import ReportAd from "./components/ReportAd";
 
 function ReportAdPage({ match }) {
-    const { authenticationStatus, login } = useContext(AuthenticationContext);
+    const [{ data: ad, error, status }, dispatch] = useFetchReducer();
 
     useDocumentTitle("Rapporter annonse");
     useScrollToTop();
 
-    if (
-        authenticationStatus === AuthenticationStatus.NOT_FETCHED ||
-        authenticationStatus === AuthenticationStatus.IS_FETCHING
-    ) {
+    function fetchStilling(id) {
+        dispatch({ type: FetchAction.BEGIN });
+
+        SearchAPI.getAd(id).then(
+            (data) => {
+                dispatch({ type: FetchAction.RESOLVE, data });
+            },
+            (err) => {
+                dispatch({ type: FetchAction.REJECT, error: err });
+            },
+        );
+    }
+
+    useEffect(() => {
+        fetchStilling(match.params.id);
+    }, []);
+
+    if (status === FetchStatus.NOT_FETCHED || status === FetchStatus.IS_FETCHING) {
         return <Loading />;
     }
 
-    if (authenticationStatus !== AuthenticationStatus.IS_AUTHENTICATED) {
-        return <LoginIsRequiredPage onLogin={login} />;
+    if (status === FetchStatus.FAILURE && error.statusCode === 404) {
+        return <NotFound />;
     }
 
-    return <ReportAd id={match.params.id} />;
+    if (status === FetchStatus.FAILURE) {
+        return <Error />;
+    }
+
+    return <ReportAd ad={ad} />;
 }
 
 ReportAdPage.propTypes = {
