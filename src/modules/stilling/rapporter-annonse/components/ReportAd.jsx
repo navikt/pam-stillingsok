@@ -12,7 +12,6 @@ import {
     Link as AkselLink,
     LinkPanel,
     Textarea,
-    Fieldset,
     CheckboxGroup,
     VStack,
     BodyShort,
@@ -34,7 +33,7 @@ function ReportAd({ ad }) {
     const [isSubmittingForm, setIsSubmittingForm] = useState(false);
     const [validationError, setValidationError] = useState(null);
     const [finished, setFinished] = useState(false);
-    const [category, setCategory] = useState(null);
+    const [category, setCategory] = useState({});
     const [description, setDescription] = useState("");
     const categoryFieldError = "Du må velge minst én grunn til at annonsen bryter rettningslinjene";
     const messageFieldError = "Du har brukt for mange tegn";
@@ -81,19 +80,16 @@ function ReportAd({ ad }) {
     };
 
     const validateForm = async () => {
-        await setValidationError(() => {
-            return null;
-        });
-        if (category === null) {
-            await setValidationError((validationError) => {
-                return { ...validationError, categoryFieldError };
-            });
+        await setIsSubmittingForm(() => false);
+
+        await setValidationError(() => null);
+
+        if (Object.keys(category).length === 0) {
+            await setValidationError((errors) => ({ ...errors, categoryFieldError }));
         }
 
         if (description.length > 300) {
-            await setValidationError((validationError) => {
-                return { ...validationError, messageFieldError };
-            });
+            await setValidationError((errors) => ({ ...errors, messageFieldError }));
         }
     };
 
@@ -105,7 +101,7 @@ function ReportAd({ ad }) {
 
     return (
         <>
-            <Bleed className="mb-8">
+            <Bleed className="mb-12">
                 <Box background="surface-alt-1-subtle" paddingBlock="4">
                     <div className="container-small">
                         <BodyShort weight="semibold">{ad._source.title}</BodyShort>
@@ -143,35 +139,44 @@ function ReportAd({ ad }) {
                                 . I tilfeller der det er brudd på retningslinjene vil stillingsannonsene bli fjernet.
                             </BodyLong>
                             <form onSubmit={handleSubmit}>
-                                <Fieldset legend={<Heading level="2">Hvilke retningslinjer bryter annonsen?</Heading>}>
-                                    <CheckboxGroup
-                                        className="mb-8"
-                                        onChange={(values) => handleCategoryChange(values)}
-                                        error={validationError?.categoryFieldError}
-                                    >
-                                        {reportCategories.map((c) => (
-                                            <Checkbox key={c.key} value={c.key}>
-                                                {c.label}
-                                            </Checkbox>
-                                        ))}
-                                    </CheckboxGroup>
-                                    <Textarea
-                                        className="mb-8"
-                                        error={validationError?.messageFieldError}
-                                        label="Legg til utdypende informasjon"
-                                        maxLength={300}
-                                        value={description}
-                                        onChange={handleDescriptionChange}
-                                        description="Valgfritt. Vennligst ikke skriv inn personopplysninger."
-                                    />
-                                    <BodyLong className="mb-4">
-                                        Når du har sendt inn tipset, vurderer vi om annonsen bryter retningslinjene og
-                                        om den skal fjernes. Ditt tips er anonymt.
-                                    </BodyLong>
-                                    <Button variant="primary" className="mb-12">
-                                        Rapporter annonse
-                                    </Button>
-                                </Fieldset>
+                                <CheckboxGroup
+                                    legend={
+                                        <Heading level="2" className="mb-2">
+                                            Hvilke retningslinjer bryter annonsen?
+                                        </Heading>
+                                    }
+                                    description="Velg minst én"
+                                    className="mb-8"
+                                    onChange={(values) => handleCategoryChange(values)}
+                                    error={validationError?.categoryFieldError}
+                                >
+                                    {reportCategories.map((c) => (
+                                        <Checkbox key={c.key} value={c.key}>
+                                            {c.label}
+                                        </Checkbox>
+                                    ))}
+                                </CheckboxGroup>
+                                <Textarea
+                                    className="mb-8"
+                                    error={validationError?.messageFieldError}
+                                    label="Legg til utdypende informasjon"
+                                    maxLength={300}
+                                    value={description}
+                                    onChange={handleDescriptionChange}
+                                    description="Valgfritt. Vennligst ikke skriv inn personopplysninger."
+                                />
+                                <BodyLong className="mb-4">
+                                    Når du har sendt inn tipset, vurderer vi om annonsen bryter retningslinjene og om
+                                    den skal fjernes. Ditt tips er anonymt.
+                                </BodyLong>
+                                {error && (
+                                    <Alert variant="error" className="mb-4 mt-4" role="alert">
+                                        Rapportering feilet - prøv igjen
+                                    </Alert>
+                                )}
+                                <Button variant="primary" className="mb-12">
+                                    Rapporter annonse
+                                </Button>
                             </form>
                         </>
                     )}
