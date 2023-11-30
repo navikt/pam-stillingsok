@@ -40,16 +40,13 @@ function ReportAd({ ad }) {
     const messageFieldError = "Du har brukt for mange tegn";
 
     const submitForm = async () => {
-        console.log("submit form", ad._id);
         const title = `En stilling har blitt rapportert for ${Object.values(category).toString().toLowerCase()}`;
 
         try {
-            console.log("submit form inside");
             await UserAPI.post(
                 "api/v1/reportposting",
                 {
                     category: Object.values(category).toString(),
-                    subCategory: "",
                     title,
                     postingId: ad._id,
                     description,
@@ -65,7 +62,6 @@ function ReportAd({ ad }) {
                 postingId: ad._id,
             });
         } catch (e) {
-            console.log("submit form error");
             setError(true);
         }
     };
