@@ -43,7 +43,7 @@ function ReportAd({ ad }) {
         const title = `En stilling har blitt rapportert for ${Object.values(category).toString().toLowerCase()}`;
 
         try {
-            await UserAPI.post(
+            await UserAPI.postWithoutCredentials(
                 "api/v1/reportposting",
                 {
                     category: Object.values(category).toString(),
