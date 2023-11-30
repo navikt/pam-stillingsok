@@ -151,7 +151,7 @@ function ReportAd({ ad }) {
                                     error={validationError?.categoryFieldError}
                                 >
                                     {reportCategories.map((c) => (
-                                        <Checkbox key={c.key} value={c.key}>
+                                        <Checkbox key={c.key} value={c.label}>
                                             {c.label}
                                         </Checkbox>
                                     ))}
