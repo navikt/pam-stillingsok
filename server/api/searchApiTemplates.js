@@ -43,6 +43,7 @@ function suggest(field, match) {
                 status: "ACTIVE",
             },
             size: 10,
+            fuzzy: true,
         },
     };
 }
