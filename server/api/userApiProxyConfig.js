@@ -13,7 +13,6 @@ const origins = [
     "/stillinger/api/v1/user",
     "/stillinger/api/v1/userfavouriteads/:uuid",
     "/stillinger/api/v1/userfavouriteads",
-    "/stillinger/api/v1/reportposting",
     "/stillinger/api/v1/savedsearches/:uuid",
     "/stillinger/api/v1/savedsearches",
 ];
