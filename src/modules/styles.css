@@ -61,3 +61,7 @@ body {
     padding: var(--a-spacing-2);
     border-radius: var(--a-border-radius-small);
 }
+
+.display-inline {
+    display: inline;
+}
