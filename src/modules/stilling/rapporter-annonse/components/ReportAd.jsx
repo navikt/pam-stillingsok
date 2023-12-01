@@ -96,7 +96,7 @@ function ReportAd({ ad, submitForm, postReportStatus, validationErrors }) {
                             <Fieldset
                                 id="categoryFieldSet"
                                 legend="Velg kategori"
-                                hideLegend
+                                description="Velg minst èn"
                                 error={validationErrors.categoryFieldset}
                                 className="mb-8"
                             >
