@@ -124,7 +124,7 @@ function ReportAd({ ad, submitForm, postReportStatus, validationErrors }) {
 
                             {postReportStatus === FetchStatus.FAILURE && (
                                 <Alert variant="error" className="mb-4">
-                                    Noe feil
+                                    Rapportering av annonse feilet.
                                 </Alert>
                             )}
                             <Button
