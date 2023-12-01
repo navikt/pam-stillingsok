@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import {
     Alert,
@@ -8,6 +8,7 @@ import {
     Box,
     Button,
     Checkbox,
+    ErrorSummary,
     Fieldset,
     Heading,
     Link as AkselLink,
@@ -27,10 +28,18 @@ const reportCategories = [
 ];
 
 function ReportAd({ ad, submitForm, postReportStatus, validationErrors }) {
+    const errorSummary = useRef();
+
     const handleSubmit = (e) => {
         e.preventDefault();
         submitForm(e);
     };
+
+    useEffect(() => {
+        if (Object.keys(validationErrors).length > 0) {
+            errorSummary.current.focus();
+        }
+    }, [validationErrors]);
 
     return (
         <>
@@ -70,13 +79,25 @@ function ReportAd({ ad, submitForm, postReportStatus, validationErrors }) {
                                 </AkselLink>
                                 . I tilfeller der det er brudd på retningslinjene vil stillingsannonsene bli fjernet.
                             </BodyLong>
+
+                            {Object.keys(validationErrors).length > 0 && (
+                                <ErrorSummary ref={errorSummary} heading="Skjemaet inneholder feil" className="mb-12">
+                                    {Object.entries(validationErrors).map(([key, value]) => (
+                                        <ErrorSummary.Item key={key} href={`#${key}`}>
+                                            {value}
+                                        </ErrorSummary.Item>
+                                    ))}
+                                </ErrorSummary>
+                            )}
+
                             <Heading level="2" className="mb-4">
                                 Hvilke retningslinjer bryter annonsen?
                             </Heading>
                             <Fieldset
+                                id="categoryFieldSet"
                                 legend="Velg kategori"
                                 hideLegend
-                                error={validationErrors.categoryFieldError}
+                                error={validationErrors.categoryFieldset}
                                 className="mb-8"
                             >
                                 <div>
@@ -88,8 +109,9 @@ function ReportAd({ ad, submitForm, postReportStatus, validationErrors }) {
                                 </div>
                             </Fieldset>
                             <Textarea
+                                id="messageField"
                                 className="mb-8"
-                                error={validationErrors.messageFieldError}
+                                error={validationErrors.messageField}
                                 label="Legg til utdypende informasjon"
                                 maxLength={300}
                                 name="description"
@@ -154,8 +176,8 @@ ReportAd.propTypes = {
     submitForm: PropTypes.func.isRequired,
     postReportStatus: PropTypes.string.isRequired,
     validationErrors: PropTypes.shape({
-        categoryFieldError: PropTypes.string,
-        messageFieldError: PropTypes.string,
+        categoryFieldset: PropTypes.string,
+        messageField: PropTypes.string,
     }).isRequired,
 };
 
