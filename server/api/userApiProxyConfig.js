@@ -13,10 +13,11 @@ const origins = [
     "/stillinger/api/v1/user",
     "/stillinger/api/v1/userfavouriteads/:uuid",
     "/stillinger/api/v1/userfavouriteads",
-    "/stillinger/api/v1/reportposting",
     "/stillinger/api/v1/savedsearches/:uuid",
     "/stillinger/api/v1/savedsearches",
 ];
+
+const originsWithoutToken = ["/stillinger/api/v1/reportposting"];
 
 const setCallId = async (req, res, next) => {
     let callId = req.headers["nav-callid"];
@@ -66,6 +67,10 @@ const setUpAduserApiProxy = (server) => {
         server.delete(origin, setCallId, setTokenX, setupProxy);
         server.post(origin, setCallId, setTokenX, setupProxy);
         server.put(origin, setCallId, setTokenX, setupProxy);
+    });
+
+    originsWithoutToken.forEach((origin) => {
+        server.post(origin, setCallId, setupProxy);
     });
 };
 

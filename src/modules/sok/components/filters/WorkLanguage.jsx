@@ -6,9 +6,10 @@ import { ADD_WORKLANGUAGE, REMOVE_WORKLANGUAGE } from "../../query";
 import mergeCount from "../utils/mergeCount";
 import findUnknownSearchCriteriaValues from "../utils/findUnknownSearchCriteriaValues";
 import { logSearchFilterAdded, logSearchFilterRemoved } from "../../../common/tracking/amplitude";
+import moveCriteriaToBottom from "../utils/moveFacetToBottom";
 
 function WorkLanguage({ initialValues, updatedValues, query, dispatch }) {
-    const [values, setValues] = useState(initialValues);
+    const [values, setValues] = useState(moveCriteriaToBottom(initialValues, "Ikke oppgitt"));
 
     useEffect(() => {
         if (updatedValues) {

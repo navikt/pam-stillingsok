@@ -43,7 +43,7 @@ function ReportAd({ ad, submitForm, postReportStatus, validationErrors }) {
 
     return (
         <>
-            <Bleed className="mb-8">
+            <Bleed className="mb-12">
                 <Box background="surface-alt-1-subtle" paddingBlock="4">
                     <div className="container-small">
                         <BodyShort weight="semibold">{ad._source.title}</BodyShort>

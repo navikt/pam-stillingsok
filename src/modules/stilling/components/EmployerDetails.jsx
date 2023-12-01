@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import parse from "html-react-parser";
 import { BodyLong, Heading, Label, Link as AkselLink } from "@navikt/ds-react";
 import DOMPurify from "isomorphic-dompurify";
+import { RichText } from "@navikt/arbeidsplassen-react";
 import fixLocationName from "../../../../server/common/fixLocationName";
 import { isValidUrl } from "../../common/utils/utils";
 import getEmployer from "../../../../server/common/getEmployer";
@@ -123,7 +124,9 @@ export default function EmployerDetails({ stilling }) {
                 )}
             </dl>
             {properties.employerdescription && (
-                <div className="ad-html-content mt-4">{parse(DOMPurify.sanitize(properties.employerdescription))}</div>
+                <RichText className="job-posting-text mt-4">
+                    {parse(DOMPurify.sanitize(properties.employerdescription))}
+                </RichText>
             )}
         </section>
     );
