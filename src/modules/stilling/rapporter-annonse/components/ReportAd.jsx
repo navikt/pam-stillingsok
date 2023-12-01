@@ -79,11 +79,13 @@ function ReportAd({ ad, submitForm, postReportStatus, validationErrors }) {
                                 error={validationErrors.categoryFieldError}
                                 className="mb-8"
                             >
-                                {reportCategories.map((c) => (
-                                    <Checkbox name="category" value={c.label} key={c.key}>
-                                        {c.label}
-                                    </Checkbox>
-                                ))}
+                                <div>
+                                    {reportCategories.map((c) => (
+                                        <Checkbox name="category" value={c.label} key={c.key}>
+                                            {c.label}
+                                        </Checkbox>
+                                    ))}
+                                </div>
                             </Fieldset>
                             <Textarea
                                 className="mb-8"
