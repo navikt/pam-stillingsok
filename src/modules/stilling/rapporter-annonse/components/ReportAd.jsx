@@ -1,23 +1,22 @@
-import * as React from "react";
-import { useState, useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import {
     Alert,
     Bleed,
     BodyLong,
+    BodyShort,
     Box,
     Button,
     Checkbox,
+    ErrorSummary,
+    Fieldset,
     Heading,
     Link as AkselLink,
     LinkPanel,
     Textarea,
-    CheckboxGroup,
     VStack,
-    BodyShort,
 } from "@navikt/ds-react";
-import logAmplitudeEvent from "../../../common/tracking/amplitude";
-import UserAPI from "../../../common/api/UserAPI";
+import { FetchStatus } from "../../../common/hooks/useFetchReducer";
 
 const reportCategories = [
     { label: "Diskriminerende innhold", key: "discrimination" },
@@ -28,76 +27,19 @@ const reportCategories = [
     { label: "Annet", key: "other" },
 ];
 
-function ReportAd({ ad }) {
-    const [error, setError] = useState(false);
-    const [isSubmittingForm, setIsSubmittingForm] = useState(false);
-    const [validationError, setValidationError] = useState(null);
-    const [finished, setFinished] = useState(false);
-    const [category, setCategory] = useState({});
-    const [description, setDescription] = useState("");
-    const categoryFieldError = "Du må velge minst én grunn til at annonsen bryter rettningslinjene";
-    const messageFieldError = "Du har brukt for mange tegn";
+function ReportAd({ ad, submitForm, postReportStatus, validationErrors }) {
+    const errorSummary = useRef();
 
-    const submitForm = async () => {
-        const title = `En stilling har blitt rapportert for ${Object.values(category).toString().toLowerCase()}`;
-
-        try {
-            await UserAPI.postWithoutCredentials(
-                "api/v1/reportposting",
-                {
-                    category: Object.values(category).toString(),
-                    title,
-                    postingId: ad._id,
-                    description,
-                },
-                false,
-            );
-
-            setFinished(true);
-
-            logAmplitudeEvent("Rapportering av stillingsannonse", {
-                category: Object.values(category).toString(),
-                title,
-                postingId: ad._id,
-            });
-        } catch (e) {
-            setError(true);
-        }
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        submitForm(e);
     };
 
     useEffect(() => {
-        if (isSubmittingForm && validationError === null) {
-            submitForm();
-            setIsSubmittingForm(false);
+        if (Object.keys(validationErrors).length > 0) {
+            errorSummary.current.focus();
         }
-    }, [validationError, isSubmittingForm]);
-
-    const handleDescriptionChange = (e) => {
-        setDescription(e.target.value);
-    };
-    const handleCategoryChange = (values) => {
-        setCategory({ ...values });
-    };
-
-    const validateForm = async () => {
-        await setIsSubmittingForm(() => false);
-
-        await setValidationError(() => null);
-
-        if (Object.keys(category).length === 0) {
-            await setValidationError((errors) => ({ ...errors, categoryFieldError }));
-        }
-
-        if (description.length > 300) {
-            await setValidationError((errors) => ({ ...errors, messageFieldError }));
-        }
-    };
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        await validateForm();
-        setIsSubmittingForm(true);
-    };
+    }, [validationErrors]);
 
     return (
         <>
@@ -109,11 +51,11 @@ function ReportAd({ ad }) {
                     </div>
                 </Box>
             </Bleed>
-            <div className="container-small mb-16 RapporterAnnonse">
+            <div className="container-small mb-16">
                 <div>
-                    {finished && (
+                    {postReportStatus === FetchStatus.SUCCESS ? (
                         <div>
-                            <Heading level="1" className="mb-4" size="xlarge">
+                            <Heading level="1" size="xlarge" className="mb-4">
                                 Takk for din tilbakemelding
                             </Heading>
 
@@ -125,61 +67,77 @@ function ReportAd({ ad }) {
                                 <BodyLong>Med vennlig hilsen arbeidsplassen.no</BodyLong>
                             </div>
                         </div>
-                    )}
-                    {!finished && (
-                        <>
-                            <Heading level="1" className="mb-4" size="xlarge">
+                    ) : (
+                        <form onSubmit={handleSubmit}>
+                            <Heading level="1" size="xlarge" className="mb-4">
                                 Rapporter annonse
                             </Heading>
                             <BodyLong className="mb-8">
                                 Alle annonser på arbeidsplassen.no skal følge{" "}
-                                <AkselLink href="/retningslinjer-stillingsannonser">
+                                <AkselLink href="/retningslinjer-stillingsannonser" className="display-inline">
                                     NAVs retningslinjer for stillingsannonser
                                 </AkselLink>
                                 . I tilfeller der det er brudd på retningslinjene vil stillingsannonsene bli fjernet.
                             </BodyLong>
-                            <form onSubmit={handleSubmit}>
-                                <CheckboxGroup
-                                    legend={
-                                        <Heading level="2" className="mb-2" size="small">
-                                            Hvilke retningslinjer bryter annonsen?
-                                        </Heading>
-                                    }
-                                    description="Velg minst én"
-                                    className="mb-8"
-                                    onChange={(values) => handleCategoryChange(values)}
-                                    error={validationError?.categoryFieldError}
-                                >
+
+                            {Object.keys(validationErrors).length > 0 && (
+                                <ErrorSummary ref={errorSummary} heading="Skjemaet inneholder feil" className="mb-12">
+                                    {Object.entries(validationErrors).map(([key, value]) => (
+                                        <ErrorSummary.Item key={key} href={`#${key}`}>
+                                            {value}
+                                        </ErrorSummary.Item>
+                                    ))}
+                                </ErrorSummary>
+                            )}
+
+                            <Heading level="2" className="mb-4">
+                                Hvilke retningslinjer bryter annonsen?
+                            </Heading>
+                            <Fieldset
+                                id="categoryFieldSet"
+                                legend="Velg kategori"
+                                description="Velg minst èn"
+                                error={validationErrors.categoryFieldset}
+                                className="mb-8"
+                            >
+                                <div>
                                     {reportCategories.map((c) => (
-                                        <Checkbox key={c.key} value={c.label}>
+                                        <Checkbox name="category" value={c.label} key={c.key}>
                                             {c.label}
                                         </Checkbox>
                                     ))}
-                                </CheckboxGroup>
-                                <Textarea
-                                    className="mb-8"
-                                    error={validationError?.messageFieldError}
-                                    label="Legg til utdypende informasjon"
-                                    maxLength={300}
-                                    value={description}
-                                    onChange={handleDescriptionChange}
-                                    description="Valgfritt. Vennligst ikke skriv inn personopplysninger."
-                                />
-                                <BodyLong className="mb-4">
-                                    Når du har sendt inn tipset, vurderer vi om annonsen bryter retningslinjene og om
-                                    den skal fjernes. Ditt tips er anonymt.
-                                </BodyLong>
-                                {error && (
-                                    <Alert variant="error" className="mb-4 mt-4" role="alert">
-                                        Rapportering feilet - prøv igjen
-                                    </Alert>
-                                )}
-                                <Button variant="primary" className="mb-12">
-                                    Rapporter annonse
-                                </Button>
-                            </form>
-                        </>
+                                </div>
+                            </Fieldset>
+                            <Textarea
+                                id="messageField"
+                                className="mb-8"
+                                error={validationErrors.messageField}
+                                label="Legg til utdypende informasjon"
+                                maxLength={300}
+                                name="description"
+                                description="Valgfritt. Vennligst ikke skriv inn personopplysninger."
+                            />
+                            <BodyLong className="mb-4">
+                                Når du har sendt inn tipset, vurderer vi om annonsen bryter retningslinjene og om den
+                                skal fjernes. Ditt tips er anonymt.
+                            </BodyLong>
+
+                            {postReportStatus === FetchStatus.FAILURE && (
+                                <Alert variant="error" className="mb-4">
+                                    Rapportering av annonse feilet.
+                                </Alert>
+                            )}
+                            <Button
+                                type="submit"
+                                loading={postReportStatus === FetchStatus.IS_FETCHING}
+                                variant="primary"
+                                className="mb-12"
+                            >
+                                Rapporter annonse
+                            </Button>
+                        </form>
                     )}
+
                     <VStack gap="4">
                         <LinkPanel className="arb-link-panel-tertiary" href="https://tips.skatteetaten.no/web/tips/">
                             <LinkPanel.Title className="navds-link-panel__title navds-heading--small">
@@ -214,6 +172,12 @@ ReportAd.propTypes = {
             businessName: PropTypes.string,
             title: PropTypes.string,
         }),
+    }).isRequired,
+    submitForm: PropTypes.func.isRequired,
+    postReportStatus: PropTypes.string.isRequired,
+    validationErrors: PropTypes.shape({
+        categoryFieldset: PropTypes.string,
+        messageField: PropTypes.string,
     }).isRequired,
 };
 

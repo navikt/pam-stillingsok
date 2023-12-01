@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { FetchAction, FetchStatus, useFetchReducer } from "../../common/hooks/useFetchReducer";
 import SearchAPI from "../../common/api/SearchAPI";
@@ -8,9 +8,15 @@ import Loading from "../../loading";
 import Error from "../../error";
 import useDocumentTitle from "../../common/hooks/useDocumentTitle";
 import ReportAd from "./components/ReportAd";
+import UserAPI from "../../common/api/UserAPI";
+import logAmplitudeEvent from "../../common/tracking/amplitude";
+import APIError from "../../common/api/APIError";
+import validateForm from "./components/validate";
 
 function ReportAdPage({ match }) {
     const [{ data: ad, error, status }, dispatch] = useFetchReducer();
+    const [validationErrors, setValidationErrors] = useState({});
+    const [postReportStatus, setPostReportStatus] = useState(FetchStatus.NOT_FETCHED);
 
     useDocumentTitle("Rapporter annonse");
     useScrollToTop();
@@ -26,6 +32,49 @@ function ReportAdPage({ match }) {
                 dispatch({ type: FetchAction.REJECT, error: err });
             },
         );
+    }
+
+    async function submitForm(e) {
+        const formData = new FormData(e.target);
+        const categories = formData.getAll("category");
+        const description = formData.get("description");
+        const errors = validateForm(categories, description);
+        setValidationErrors(errors);
+
+        const isFormDataValid = Object.keys(errors).length === 0;
+
+        if (isFormDataValid) {
+            setPostReportStatus(FetchStatus.IS_FETCHING);
+            const categoryString = categories.join(", ");
+            const title = `En stilling har blitt rapportert for ${categoryString.toLowerCase()}`;
+
+            try {
+                await UserAPI.post(
+                    "api/v1/reportposting",
+                    {
+                        category: categoryString,
+                        title,
+                        postingId: ad._id,
+                        description,
+                    },
+                    false,
+                );
+
+                setPostReportStatus(FetchStatus.SUCCESS);
+
+                logAmplitudeEvent("Rapportering av stillingsannonse", {
+                    category: categoryString,
+                    title,
+                    postingId: ad._id,
+                });
+            } catch (err) {
+                if (err instanceof APIError) {
+                    setPostReportStatus(FetchStatus.FAILURE);
+                } else {
+                    throw err;
+                }
+            }
+        }
     }
 
     useEffect(() => {
@@ -44,7 +93,14 @@ function ReportAdPage({ match }) {
         return <Error />;
     }
 
-    return <ReportAd ad={ad} />;
+    return (
+        <ReportAd
+            ad={ad}
+            submitForm={submitForm}
+            validationErrors={validationErrors}
+            postReportStatus={postReportStatus}
+        />
+    );
 }
 
 ReportAdPage.propTypes = {
