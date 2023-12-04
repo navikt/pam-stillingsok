@@ -6,7 +6,6 @@ import SessionStatusModal from "../components/SessionStatusModal";
 export const AuthenticationContext = React.createContext({
     userNameAndInfo: undefined,
     authenticationStatus: undefined,
-    forbiddenUser: undefined,
     login: () => {},
     logout: () => {},
     loginAndRedirect: () => {},
@@ -24,7 +23,6 @@ function AuthenticationProvider({ children }) {
     const [authenticationStatus, setAuthenticationStatus] = useState(AuthenticationStatus.NOT_FETCHED);
     const [userNameAndInfo, setUserNameAndInfo] = useState(false);
     const [hasBeenLoggedIn, setHasBeenLoggedIn] = useState(false);
-    const [, setForbiddenUser] = useState(false);
 
     const timeoutLogout = () => {
         window.location.href = `/stillinger/oauth2/logout?redirect=${encodeURIComponent("/utlogget?timeout=true")}`;
@@ -82,9 +80,6 @@ function AuthenticationProvider({ children }) {
                     response.json().then((result) => {
                         setUserNameAndInfo(result);
                     });
-                }
-                if (response.status === 403) {
-                    setForbiddenUser(true);
                 }
             });
         } else {

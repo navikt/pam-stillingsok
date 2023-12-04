@@ -18,11 +18,12 @@ export const HasAcceptedTermsStatus = {
 };
 
 function UserProvider({ children }) {
-    const { authenticationStatus, forbiddenUser, logout } = useContext(AuthenticationContext);
+    const { authenticationStatus, logout } = useContext(AuthenticationContext);
     const [userResponse, dispatch] = useFetchReducer();
     const [shouldShowErrorDialog, openErrorDialog, closeErrorDialog] = useToggle(false);
 
     const [hasAcceptedTermsStatus, setHasAcceptedTermsStatus] = useState(HasAcceptedTermsStatus.NOT_FETCHED);
+    const [forbiddenUser, setForbiddenUser] = useState(false);
 
     function fetchUser() {
         dispatch({ type: FetchAction.BEGIN });
@@ -33,7 +34,9 @@ function UserProvider({ children }) {
             })
             .catch((error) => {
                 dispatch({ type: FetchAction.REJECT, error });
-                if (error.statusCode !== 404) {
+                if (error.statusCode === 403) {
+                    setForbiddenUser(true);
+                } else if (error.statusCode !== 404) {
                     openErrorDialog();
                 }
             });
