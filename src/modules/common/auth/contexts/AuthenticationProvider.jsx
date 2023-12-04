@@ -24,7 +24,7 @@ function AuthenticationProvider({ children }) {
     const [authenticationStatus, setAuthenticationStatus] = useState(AuthenticationStatus.NOT_FETCHED);
     const [userNameAndInfo, setUserNameAndInfo] = useState(false);
     const [hasBeenLoggedIn, setHasBeenLoggedIn] = useState(false);
-    const [setForbiddenUser] = useState(false);
+    const [, setForbiddenUser] = useState(false);
 
     const timeoutLogout = () => {
         window.location.href = `/stillinger/oauth2/logout?redirect=${encodeURIComponent("/utlogget?timeout=true")}`;
