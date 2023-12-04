@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { BodyLong, Button, Modal } from "@navikt/ds-react";
+import { WorriedFigure } from "@navikt/arbeidsplassen-react";
 import { AuthenticationContext, AuthenticationStatus } from "../auth/contexts/AuthenticationProvider";
 import UserAPI from "../api/UserAPI";
 import { FetchAction, useFetchReducer } from "../hooks/useFetchReducer";
@@ -17,7 +18,7 @@ export const HasAcceptedTermsStatus = {
 };
 
 function UserProvider({ children }) {
-    const { authenticationStatus, userNameAndInfo, logout } = useContext(AuthenticationContext);
+    const { authenticationStatus, forbiddenUser, logout } = useContext(AuthenticationContext);
     const [userResponse, dispatch] = useFetchReducer();
     const [shouldShowErrorDialog, openErrorDialog, closeErrorDialog] = useToggle(false);
 
@@ -25,8 +26,6 @@ function UserProvider({ children }) {
 
     function fetchUser() {
         dispatch({ type: FetchAction.BEGIN });
-
-        console.log(`username: ${userNameAndInfo}`);
 
         UserAPI.get("api/v1/user")
             .then((data) => {
@@ -78,14 +77,21 @@ function UserProvider({ children }) {
         <UserContext.Provider value={userContextValues}>
             {children}
 
-            {authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED && userNameAndInfo === false && (
-                <Modal width="medium" onClose={logout} header={{ heading: "Ikke tilgang" }} open>
+            {authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED && forbiddenUser && (
+                <Modal
+                    width="medium"
+                    onClose={logout}
+                    header={{ heading: "Du kan dessverre ikke ta i bruk de innloggede tjenestene" }}
+                    open
+                >
                     <>
                         <Modal.Body>
                             <BodyLong>
-                                Du har dessverre ikke tilgang til denne tjenesten. Har du tidligere hatt aktive søk er
-                                disse nå fjernet.
+                                Personnummeret ditt kan ikke brukes for innloggede tjenester og vi må logge deg ut. Vi
+                                beklager dette. Du kan fortsatt søke etter stillinger og delta på jobbtreff selv om du
+                                ikke er innlogget.
                             </BodyLong>
+                            <WorriedFigure className="mb-8" />
                         </Modal.Body>
                         <Modal.Footer>
                             <Button variant="primary" onClick={logout}>
