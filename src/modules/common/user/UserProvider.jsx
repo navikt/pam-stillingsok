@@ -80,30 +80,37 @@ function UserProvider({ children }) {
         <UserContext.Provider value={userContextValues}>
             {children}
 
-            {authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED && forbiddenUser && (
-                <Modal
-                    width="medium"
-                    onClose={logout}
-                    header={{ heading: "Du kan dessverre ikke ta i bruk de innloggede tjenestene" }}
-                    open
-                >
-                    <>
-                        <Modal.Body>
-                            <BodyLong>
-                                Personnummeret ditt kan ikke brukes for innloggede tjenester og vi må logge deg ut. Vi
-                                beklager dette. Du kan fortsatt søke etter stillinger og delta på jobbtreff selv om du
-                                ikke er innlogget.
-                            </BodyLong>
-                            <WorriedFigure className="mb-8" />
-                        </Modal.Body>
-                        <Modal.Footer>
-                            <Button variant="primary" onClick={logout}>
-                                Logg ut
-                            </Button>
-                        </Modal.Footer>
-                    </>
-                </Modal>
-            )}
+            {authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED &&
+                forbiddenUser &&
+                !shouldShowErrorDialog && (
+                    <Modal
+                        width="medium"
+                        onClose={logout}
+                        header={{
+                            heading: "Du kan dessverre ikke ta i bruk de innloggede tjenestene",
+                            closeButton: false,
+                        }}
+                        open
+                    >
+                        <>
+                            <Modal.Body>
+                                <BodyLong className="mb-8">
+                                    Personnummeret ditt kan ikke brukes for innloggede tjenester og vi må logge deg ut.
+                                    Vi beklager dette. Du kan fortsatt søke etter stillinger og delta på jobbtreff selv
+                                    om du ikke er innlogget.
+                                </BodyLong>
+                                <div className="worried-figure">
+                                    <WorriedFigure />
+                                </div>
+                            </Modal.Body>
+                            <Modal.Footer>
+                                <Button variant="primary" onClick={logout}>
+                                    Logg ut
+                                </Button>
+                            </Modal.Footer>
+                        </>
+                    </Modal>
+                )}
 
             {shouldShowErrorDialog && (
                 <AlertModalWithPageReload id="user-provider-error" onClose={closeErrorDialog} title="Feil">
