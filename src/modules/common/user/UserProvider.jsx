@@ -18,7 +18,7 @@ export const HasAcceptedTermsStatus = {
 };
 
 function UserProvider({ children }) {
-    const { authenticationStatus, logout } = useContext(AuthenticationContext);
+    const { authenticationStatus } = useContext(AuthenticationContext);
     const [userResponse, dispatch] = useFetchReducer();
     const [shouldShowErrorDialog, openErrorDialog, closeErrorDialog] = useToggle(false);
 
@@ -44,6 +44,10 @@ function UserProvider({ children }) {
 
     function updateUser(data) {
         dispatch({ type: FetchAction.SET_DATA, data });
+    }
+
+    function logout() {
+        window.location.href = `/stillinger/oauth2/logout?redirect=${encodeURIComponent(window.location.href)}`;
     }
 
     // TODO: useMemo?
