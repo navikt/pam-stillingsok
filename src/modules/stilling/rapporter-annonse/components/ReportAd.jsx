@@ -81,7 +81,11 @@ function ReportAd({ ad, submitForm, postReportStatus, validationErrors }) {
                             </BodyLong>
 
                             {Object.keys(validationErrors).length > 0 && (
-                                <ErrorSummary ref={errorSummary} heading="Skjemaet inneholder feil" className="mb-12">
+                                <ErrorSummary
+                                    ref={errorSummary}
+                                    heading="Du må rette noen feil før du kan rapportere annonsen"
+                                    className="mb-12"
+                                >
                                     {Object.entries(validationErrors).map(([key, value]) => (
                                         <ErrorSummary.Item key={key} href={`#${key}`}>
                                             {value}
@@ -90,12 +94,9 @@ function ReportAd({ ad, submitForm, postReportStatus, validationErrors }) {
                                 </ErrorSummary>
                             )}
 
-                            <Heading level="2" className="mb-4">
-                                Hvilke retningslinjer bryter annonsen?
-                            </Heading>
                             <Fieldset
                                 id="categoryFieldSet"
-                                legend="Velg kategori"
+                                legend="Velg hvilke retningslinjer annonsen bryter"
                                 description="Velg minst èn"
                                 error={validationErrors.categoryFieldset}
                                 className="mb-8"

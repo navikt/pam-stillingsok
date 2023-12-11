@@ -6,7 +6,7 @@ export default function validateForm(categories, description) {
     }
 
     if (description && description.length > 300) {
-        errors.messageField = `Du har brukt ${description.length - 300} tegn for mye`;
+        errors.messageField = `${description.length - 300} antall tegn for mye i utdypende informasjon`;
     }
     return errors;
 }
