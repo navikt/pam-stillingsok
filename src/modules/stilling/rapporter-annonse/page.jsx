@@ -16,7 +16,6 @@ import validateForm from "./components/validate";
 function ReportAdPage({ match }) {
     const [{ data: ad, error, status }, dispatch] = useFetchReducer();
     const [validationErrors, setValidationErrors] = useState({});
-    const [runningValidationErrors, setRunningValidationErrors] = useState({});
     const [postReportStatus, setPostReportStatus] = useState(FetchStatus.NOT_FETCHED);
     const [hasTriedSubmit, setHasTriedSubmit] = useState(false);
 
@@ -42,7 +41,7 @@ function ReportAdPage({ match }) {
             const categories = formData.getAll("category");
             const description = formData.get("description");
             const errors = validateForm(categories, description);
-            setRunningValidationErrors(errors);
+            setValidationErrors(errors);
         }
     };
 
@@ -51,7 +50,6 @@ function ReportAdPage({ match }) {
         const categories = formData.getAll("category");
         const description = formData.get("description");
         const errors = validateForm(categories, description);
-        setRunningValidationErrors(errors);
         setValidationErrors(errors);
         setHasTriedSubmit(true);
 
@@ -113,7 +111,6 @@ function ReportAdPage({ match }) {
             submitForm={submitForm}
             postReportStatus={postReportStatus}
             validationErrors={validationErrors}
-            runningValidationErrors={runningValidationErrors}
             validateOnChange={validateOnChange}
         />
     );

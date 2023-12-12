@@ -27,18 +27,20 @@ const reportCategories = [
     { label: "Annet", key: "other" },
 ];
 
-function ReportAd({ ad, submitForm, postReportStatus, validationErrors, runningValidationErrors, validateOnChange }) {
+function ReportAd({ ad, submitForm, postReportStatus, validationErrors, validateOnChange }) {
     const errorSummary = useRef();
     const formData = useRef();
     const [description, setDescription] = useState("");
+    const [hasTriedSubmit, setHasTriedSubmit] = useState(false);
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        setHasTriedSubmit(true);
         submitForm(e);
     };
 
     useEffect(() => {
-        if (Object.keys(validationErrors).length > 0) {
+        if (Object.keys(validationErrors).length > 0 && !hasTriedSubmit) {
             errorSummary.current.focus();
         }
     }, [validationErrors]);
@@ -82,25 +84,11 @@ function ReportAd({ ad, submitForm, postReportStatus, validationErrors, runningV
                                 . I tilfeller der det er brudd på retningslinjene vil stillingsannonsene bli fjernet.
                             </BodyLong>
 
-                            {Object.keys(validationErrors).length > 0 && (
-                                <ErrorSummary
-                                    ref={errorSummary}
-                                    heading="Du må rette noen feil før du kan rapportere annonsen"
-                                    className="mb-12"
-                                >
-                                    {Object.entries(validationErrors).map(([key, value]) => (
-                                        <ErrorSummary.Item key={key} href={`#${key}`}>
-                                            {value}
-                                        </ErrorSummary.Item>
-                                    ))}
-                                </ErrorSummary>
-                            )}
-
                             <Fieldset
                                 id="categoryFieldSet"
                                 legend="Velg hvilke retningslinjer annonsen bryter"
                                 description="Velg minst èn"
-                                error={runningValidationErrors.categoryFieldset}
+                                error={validationErrors.categoryFieldset}
                                 className="mb-8"
                             >
                                 <div>
@@ -121,7 +109,7 @@ function ReportAd({ ad, submitForm, postReportStatus, validationErrors, runningV
                             <Textarea
                                 id="messageField"
                                 className="mb-8"
-                                error={runningValidationErrors.messageField}
+                                error={validationErrors.messageField}
                                 label="Legg til utdypende informasjon"
                                 maxLength={300}
                                 name="description"
@@ -136,6 +124,20 @@ function ReportAd({ ad, submitForm, postReportStatus, validationErrors, runningV
                                 Når du har sendt inn tipset, vurderer vi om annonsen bryter retningslinjene og om den
                                 skal fjernes. Ditt tips er anonymt.
                             </BodyLong>
+
+                            {Object.keys(validationErrors).length > 0 && (
+                                <ErrorSummary
+                                    ref={errorSummary}
+                                    heading="Du må rette noen feil før du kan rapportere annonsen"
+                                    className="mb-12"
+                                >
+                                    {Object.entries(validationErrors).map(([key, value]) => (
+                                        <ErrorSummary.Item key={key} href={`#${key}`}>
+                                            {value}
+                                        </ErrorSummary.Item>
+                                    ))}
+                                </ErrorSummary>
+                            )}
 
                             {postReportStatus === FetchStatus.FAILURE && (
                                 <Alert variant="error" className="mb-4">
@@ -190,10 +192,6 @@ ReportAd.propTypes = {
     }).isRequired,
     submitForm: PropTypes.func.isRequired,
     postReportStatus: PropTypes.string.isRequired,
-    runningValidationErrors: PropTypes.shape({
-        categoryFieldset: PropTypes.string,
-        messageField: PropTypes.string,
-    }).isRequired,
     validationErrors: PropTypes.shape({
         categoryFieldset: PropTypes.string,
         messageField: PropTypes.string,
