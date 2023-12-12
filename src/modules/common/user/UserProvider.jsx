@@ -23,7 +23,7 @@ function UserProvider({ children }) {
     const [shouldShowErrorDialog, openErrorDialog, closeErrorDialog] = useToggle(false);
 
     const [hasAcceptedTermsStatus, setHasAcceptedTermsStatus] = useState(HasAcceptedTermsStatus.NOT_FETCHED);
-    const [forbiddenUser, setForbiddenUser] = useState(true);
+    const [forbiddenUser, setForbiddenUser] = useState(false);
 
     function fetchUser() {
         dispatch({ type: FetchAction.BEGIN });
