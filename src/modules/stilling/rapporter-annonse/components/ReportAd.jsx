@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import {
     Alert,
@@ -27,8 +27,10 @@ const reportCategories = [
     { label: "Annet", key: "other" },
 ];
 
-function ReportAd({ ad, submitForm, postReportStatus, validationErrors }) {
+function ReportAd({ ad, submitForm, postReportStatus, validationErrors, runningValidationErrors, validateOnChange }) {
     const errorSummary = useRef();
+    const formData = useRef();
+    const [description, setDescription] = useState("");
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -68,7 +70,7 @@ function ReportAd({ ad, submitForm, postReportStatus, validationErrors }) {
                             </div>
                         </div>
                     ) : (
-                        <form onSubmit={handleSubmit}>
+                        <form onSubmit={handleSubmit} ref={formData}>
                             <Heading level="1" size="xlarge" className="mb-4">
                                 Rapporter annonse
                             </Heading>
@@ -81,7 +83,11 @@ function ReportAd({ ad, submitForm, postReportStatus, validationErrors }) {
                             </BodyLong>
 
                             {Object.keys(validationErrors).length > 0 && (
-                                <ErrorSummary ref={errorSummary} heading="Skjemaet inneholder feil" className="mb-12">
+                                <ErrorSummary
+                                    ref={errorSummary}
+                                    heading="Du må rette noen feil før du kan rapportere annonsen"
+                                    className="mb-12"
+                                >
                                     {Object.entries(validationErrors).map(([key, value]) => (
                                         <ErrorSummary.Item key={key} href={`#${key}`}>
                                             {value}
@@ -90,19 +96,23 @@ function ReportAd({ ad, submitForm, postReportStatus, validationErrors }) {
                                 </ErrorSummary>
                             )}
 
-                            <Heading level="2" className="mb-4">
-                                Hvilke retningslinjer bryter annonsen?
-                            </Heading>
                             <Fieldset
                                 id="categoryFieldSet"
-                                legend="Velg kategori"
+                                legend="Velg hvilke retningslinjer annonsen bryter"
                                 description="Velg minst èn"
-                                error={validationErrors.categoryFieldset}
+                                error={runningValidationErrors.categoryFieldset}
                                 className="mb-8"
                             >
                                 <div>
                                     {reportCategories.map((c) => (
-                                        <Checkbox name="category" value={c.label} key={c.key}>
+                                        <Checkbox
+                                            name="category"
+                                            value={c.label}
+                                            key={c.key}
+                                            onChange={() => {
+                                                validateOnChange(formData.current);
+                                            }}
+                                        >
                                             {c.label}
                                         </Checkbox>
                                     ))}
@@ -111,11 +121,16 @@ function ReportAd({ ad, submitForm, postReportStatus, validationErrors }) {
                             <Textarea
                                 id="messageField"
                                 className="mb-8"
-                                error={validationErrors.messageField}
+                                error={runningValidationErrors.messageField}
                                 label="Legg til utdypende informasjon"
                                 maxLength={300}
                                 name="description"
                                 description="Valgfritt. Vennligst ikke skriv inn personopplysninger."
+                                value={description}
+                                onChange={(e) => {
+                                    setDescription(e.target.value);
+                                    validateOnChange(formData.current);
+                                }}
                             />
                             <BodyLong className="mb-4">
                                 Når du har sendt inn tipset, vurderer vi om annonsen bryter retningslinjene og om den
@@ -175,10 +190,15 @@ ReportAd.propTypes = {
     }).isRequired,
     submitForm: PropTypes.func.isRequired,
     postReportStatus: PropTypes.string.isRequired,
+    runningValidationErrors: PropTypes.shape({
+        categoryFieldset: PropTypes.string,
+        messageField: PropTypes.string,
+    }).isRequired,
     validationErrors: PropTypes.shape({
         categoryFieldset: PropTypes.string,
         messageField: PropTypes.string,
     }).isRequired,
+    validateOnChange: PropTypes.func.isRequired,
 };
 
 export default ReportAd;

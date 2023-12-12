@@ -16,7 +16,9 @@ import validateForm from "./components/validate";
 function ReportAdPage({ match }) {
     const [{ data: ad, error, status }, dispatch] = useFetchReducer();
     const [validationErrors, setValidationErrors] = useState({});
+    const [runningValidationErrors, setRunningValidationErrors] = useState({});
     const [postReportStatus, setPostReportStatus] = useState(FetchStatus.NOT_FETCHED);
+    const [hasTriedSubmit, setHasTriedSubmit] = useState(false);
 
     useDocumentTitle("Rapporter annonse");
     useScrollToTop();
@@ -34,12 +36,24 @@ function ReportAdPage({ match }) {
         );
     }
 
+    const validateOnChange = (e) => {
+        if (hasTriedSubmit) {
+            const formData = new FormData(e);
+            const categories = formData.getAll("category");
+            const description = formData.get("description");
+            const errors = validateForm(categories, description);
+            setRunningValidationErrors(errors);
+        }
+    };
+
     async function submitForm(e) {
         const formData = new FormData(e.target);
         const categories = formData.getAll("category");
         const description = formData.get("description");
         const errors = validateForm(categories, description);
+        setRunningValidationErrors(errors);
         setValidationErrors(errors);
+        setHasTriedSubmit(true);
 
         const isFormDataValid = Object.keys(errors).length === 0;
 
@@ -97,8 +111,10 @@ function ReportAdPage({ match }) {
         <ReportAd
             ad={ad}
             submitForm={submitForm}
-            validationErrors={validationErrors}
             postReportStatus={postReportStatus}
+            validationErrors={validationErrors}
+            runningValidationErrors={runningValidationErrors}
+            validateOnChange={validateOnChange}
         />
     );
 }
