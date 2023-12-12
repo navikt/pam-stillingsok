@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { BodyLong, Button, Modal } from "@navikt/ds-react";
+import { BodyLong, Button, HStack, Modal } from "@navikt/ds-react";
 import { WorriedFigure } from "@navikt/arbeidsplassen-react";
 import { AuthenticationContext, AuthenticationStatus } from "../auth/contexts/AuthenticationProvider";
 import UserAPI from "../api/UserAPI";
@@ -23,7 +23,7 @@ function UserProvider({ children }) {
     const [shouldShowErrorDialog, openErrorDialog, closeErrorDialog] = useToggle(false);
 
     const [hasAcceptedTermsStatus, setHasAcceptedTermsStatus] = useState(HasAcceptedTermsStatus.NOT_FETCHED);
-    const [forbiddenUser, setForbiddenUser] = useState(false);
+    const [forbiddenUser, setForbiddenUser] = useState(true);
 
     function fetchUser() {
         dispatch({ type: FetchAction.BEGIN });
@@ -103,9 +103,9 @@ function UserProvider({ children }) {
                                     Vi beklager dette. Du kan fortsatt søke etter stillinger og delta på jobbtreff selv
                                     om du ikke er innlogget.
                                 </BodyLong>
-                                <div className="worried-figure">
+                                <HStack justify="center">
                                     <WorriedFigure />
-                                </div>
+                                </HStack>
                             </Modal.Body>
                             <Modal.Footer>
                                 <Button variant="primary" onClick={logout}>
