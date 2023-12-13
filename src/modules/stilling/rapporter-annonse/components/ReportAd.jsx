@@ -36,13 +36,13 @@ function ReportAd({ ad, submitForm, postReportStatus, validationErrors, validate
     const handleSubmit = (e) => {
         e.preventDefault();
         submitForm(e);
-        setHasTriedSubmit(true);
     };
 
     useEffect(() => {
         if (Object.keys(validationErrors).length > 0 && !hasTriedSubmit) {
             errorSummary.current.focus();
         }
+        setHasTriedSubmit(true);
     }, [validationErrors]);
 
     return (
