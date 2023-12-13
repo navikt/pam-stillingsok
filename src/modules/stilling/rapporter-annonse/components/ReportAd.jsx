@@ -35,8 +35,8 @@ function ReportAd({ ad, submitForm, postReportStatus, validationErrors, validate
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        setHasTriedSubmit(true);
         submitForm(e);
+        setHasTriedSubmit(true);
     };
 
     useEffect(() => {
