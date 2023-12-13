@@ -85,7 +85,7 @@ function ReportAd({ ad, submitForm, postReportStatus, validationErrors, validate
                             </BodyLong>
 
                             <Fieldset
-                                id="categoryFieldSet"
+                                id="categoryFieldset"
                                 legend="Velg hvilke retningslinjer annonsen bryter"
                                 description="Velg minst èn"
                                 error={validationErrors.categoryFieldset}
