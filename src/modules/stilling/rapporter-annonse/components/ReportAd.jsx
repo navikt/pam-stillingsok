@@ -34,8 +34,8 @@ function ReportAd({ ad, submitForm, postReportStatus, validationErrors, validate
     const [hasTriedSubmit, setHasTriedSubmit] = useState(false);
 
     const handleSubmit = (e) => {
+        setHasTriedSubmit(false);
         e.preventDefault();
-        setHasTriedSubmit(true);
         submitForm(e);
     };
 
@@ -43,6 +43,7 @@ function ReportAd({ ad, submitForm, postReportStatus, validationErrors, validate
         if (Object.keys(validationErrors).length > 0 && !hasTriedSubmit) {
             errorSummary.current.focus();
         }
+        setHasTriedSubmit(true);
     }, [validationErrors]);
 
     return (
