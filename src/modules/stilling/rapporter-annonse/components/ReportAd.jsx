@@ -34,6 +34,7 @@ function ReportAd({ ad, submitForm, postReportStatus, validationErrors, validate
     const [hasTriedSubmit, setHasTriedSubmit] = useState(false);
 
     const handleSubmit = (e) => {
+        setHasTriedSubmit(false);
         e.preventDefault();
         submitForm(e);
     };
