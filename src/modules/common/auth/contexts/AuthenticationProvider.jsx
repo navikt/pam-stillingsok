@@ -81,10 +81,6 @@ function AuthenticationProvider({ children }) {
                         setUserNameAndInfo(result);
                     });
                 }
-
-                if (response.status === 403) {
-                    logout();
-                }
             });
         } else {
             const testData = {
