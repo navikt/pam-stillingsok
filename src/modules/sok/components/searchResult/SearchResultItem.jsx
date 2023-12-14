@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React, { useLayoutEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { BodyLong, Heading, HStack, Link as AkselLink, Tag } from "@navikt/ds-react";
+import { BodyLong, BodyShort, Heading, HStack, Link as AkselLink, Tag } from "@navikt/ds-react";
 import { addDays, endOfDay, format as formatDateFns, isSameDay, isValid, parse, parseISO, subDays } from "date-fns";
 import { nb } from "date-fns/locale";
 import { Buldings3Icon, ExternalLinkIcon, PinIcon } from "@navikt/aksel-icons";
@@ -103,7 +103,8 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, isD
                 {employer && (
                     <HStack gap="2" className="mb-1">
                         <div>
-                            <Buldings3Icon width="1.5em" height="1.5em" aria-label="Arbeidsgiver" />
+                            <Buldings3Icon width="1.5em" height="1.5em" aria-hidden="true" />
+                            <BodyShort visuallyHidden>Arbeidsgiver</BodyShort>
                         </div>
                         <BodyLong id={`${ad.uuid}-employer`} className="overflow-wrap-anywhere">
                             {employer}
@@ -113,7 +114,8 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, isD
                 {location && (
                     <HStack gap="2" className="mb-1">
                         <div>
-                            <PinIcon width="1.5em" height="1.5em" aria-label="Sted" />
+                            <PinIcon width="1.5em" height="1.5em" aria-label="Sted" aria-hidden="true" />
+                            <BodyShort visuallyHidden>Sted</BodyShort>
                         </div>
                         <BodyLong id={`${ad.uuid}-location`} className="overflow-wrap-anywhere">
                             {location}
