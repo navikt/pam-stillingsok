@@ -13,10 +13,11 @@ const origins = [
     "/stillinger/api/v1/user",
     "/stillinger/api/v1/userfavouriteads/:uuid",
     "/stillinger/api/v1/userfavouriteads",
-    "/stillinger/api/v1/reportposting",
     "/stillinger/api/v1/savedsearches/:uuid",
     "/stillinger/api/v1/savedsearches",
 ];
+
+const originsWithoutToken = ["/stillinger/api/v1/reportposting"];
 
 const setCallId = async (req, res, next) => {
     let callId = req.headers["nav-callid"];
@@ -29,12 +30,14 @@ const setCallId = async (req, res, next) => {
     req.headers["nav-callid"] = callId;
     next();
 };
-const getToken = async (accessToken) => getTokenX(accessToken, audience);
 
 const setTokenX = async (req, res, next) => {
     if (req.headers.authorization) {
         const accessToken = req.headers.authorization.split(" ")[1];
-        const tokenX = await getToken(accessToken);
+        const tokenX = await getTokenX(accessToken, audience);
+        if (tokenX === null) {
+            res.status(401).send("Det skjedde noe feil under utveksling av token");
+        }
         req.headers.authorization = `Bearer ${tokenX.access_token}`;
     } else {
         res.redirect("/oauth2/login");
@@ -66,6 +69,10 @@ const setUpAduserApiProxy = (server) => {
         server.delete(origin, setCallId, setTokenX, setupProxy);
         server.post(origin, setCallId, setTokenX, setupProxy);
         server.put(origin, setCallId, setTokenX, setupProxy);
+    });
+
+    originsWithoutToken.forEach((origin) => {
+        server.post(origin, setCallId, setupProxy);
     });
 };
 

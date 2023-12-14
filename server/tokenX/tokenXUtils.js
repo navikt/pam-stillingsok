@@ -72,6 +72,7 @@ async function getTokenX(token, tokenAudience) {
         );
     } catch (e) {
         logger.error(`Kunne ikke veksle inn til tokenX: ${e.message}`);
+        return null;
     }
     return tokenX;
 }

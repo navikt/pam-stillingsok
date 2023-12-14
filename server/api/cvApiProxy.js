@@ -10,12 +10,13 @@ const isLocal =
 
 const audience = process.env.CV_API_AUDIENCE;
 
-const getToken = async (accessToken) => getTokenX(accessToken, audience);
-
 const setTokenX = async (req, res, next) => {
     if (req.headers.authorization) {
         const accessToken = req.headers.authorization.split(" ")[1];
-        const tokenX = await getToken(accessToken);
+        const tokenX = await getTokenX(accessToken, audience);
+        if (tokenX === null) {
+            res.status(401).send("Det skjedde noe feil under utveksling av token");
+        }
         req.headers.authorization = `Bearer ${tokenX.access_token}`;
     } else {
         res.redirect("/oauth2/login");
