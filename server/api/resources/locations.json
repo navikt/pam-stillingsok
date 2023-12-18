@@ -107,16 +107,16 @@
         "code": "15",
         "municipals": [
             {
-                "key": "MØRE OG ROMSDAL.ÅLESUND",
-                "code": "1507"
-            },
-            {
                 "key": "MØRE OG ROMSDAL.SYKKYLVEN",
                 "code": "1528"
             },
             {
                 "key": "MØRE OG ROMSDAL.ULSTEIN",
                 "code": "1516"
+            },
+            {
+                "key": "MØRE OG ROMSDAL.ÅLESUND",
+                "code": "1508"
             },
             {
                 "key": "MØRE OG ROMSDAL.SUNNDAL",
@@ -145,10 +145,6 @@
             {
                 "key": "MØRE OG ROMSDAL.KRISTIANSUND",
                 "code": "1505"
-            },
-            {
-                "key": "MØRE OG ROMSDAL.SANDE",
-                "code": "1514"
             },
             {
                 "key": "MØRE OG ROMSDAL.TINGVOLL",
@@ -191,8 +187,16 @@
                 "code": "1525"
             },
             {
+                "key": "MØRE OG ROMSDAL.HARAM",
+                "code": "1580"
+            },
+            {
                 "key": "MØRE OG ROMSDAL.AURE",
                 "code": "1576"
+            },
+            {
+                "key": "MØRE OG ROMSDAL.SANDE (MØRE OG ROMSDAL)",
+                "code": "1514"
             },
             {
                 "key": "MØRE OG ROMSDAL.VESTNES",
@@ -231,6 +235,10 @@
             {
                 "key": "NORDLAND.NARVIK",
                 "code": "1806"
+            },
+            {
+                "key": "NORDLAND.BØ (NORDLAND)",
+                "code": "1867"
             },
             {
                 "key": "NORDLAND.HADSEL",
@@ -275,10 +283,6 @@
             {
                 "key": "NORDLAND.MELØY",
                 "code": "1837"
-            },
-            {
-                "key": "NORDLAND.BØ",
-                "code": "1867"
             },
             {
                 "key": "NORDLAND.VEGA",
@@ -408,212 +412,224 @@
         "municipals": []
     },
     {
-        "key": "VIKEN",
-        "code": "30",
+        "key": "ØSTFOLD",
+        "code": "31",
         "municipals": [
             {
-                "key": "VIKEN.RAKKESTAD",
-                "code": "3016"
+                "key": "ØSTFOLD.HVALER",
+                "code": "3110"
             },
             {
-                "key": "VIKEN.KRØDSHERAD",
-                "code": "3046"
+                "key": "ØSTFOLD.RÅDE",
+                "code": "3112"
             },
             {
-                "key": "VIKEN.SKIPTVET",
-                "code": "3015"
+                "key": "ØSTFOLD.FREDRIKSTAD",
+                "code": "3107"
             },
             {
-                "key": "VIKEN.HEMSEDAL",
-                "code": "3042"
+                "key": "ØSTFOLD.HALDEN",
+                "code": "3101"
             },
             {
-                "key": "VIKEN.HOLE",
-                "code": "3038"
+                "key": "ØSTFOLD.MARKER",
+                "code": "3122"
             },
             {
-                "key": "VIKEN.LIER",
-                "code": "3049"
+                "key": "ØSTFOLD.AREMARK",
+                "code": "3124"
             },
             {
-                "key": "VIKEN.JEVNAKER",
-                "code": "3053"
+                "key": "ØSTFOLD.SKIPTVET",
+                "code": "3116"
             },
             {
-                "key": "VIKEN.VÅLER (VIKEN)",
-                "code": "3018"
+                "key": "ØSTFOLD.MOSS",
+                "code": "3103"
             },
             {
-                "key": "VIKEN.MODUM",
-                "code": "3047"
+                "key": "ØSTFOLD.VÅLER (VIKEN)",
+                "code": "3114"
             },
             {
-                "key": "VIKEN.HURDAL",
-                "code": "3037"
+                "key": "ØSTFOLD.INDRE ØSTFOLD",
+                "code": "3118"
             },
             {
-                "key": "VIKEN.RÅDE",
-                "code": "3017"
+                "key": "ØSTFOLD.RAKKESTAD",
+                "code": "3120"
             },
             {
-                "key": "VIKEN.NANNESTAD",
-                "code": "3036"
+                "key": "ØSTFOLD.SARPSBORG",
+                "code": "3105"
+            }
+        ]
+    },
+    {
+        "key": "AKERSHUS",
+        "code": "32",
+        "municipals": [
+            {
+                "key": "AKERSHUS.HURDAL",
+                "code": "3242"
             },
             {
-                "key": "VIKEN.AREMARK",
-                "code": "3012"
+                "key": "AKERSHUS.JEVNAKER",
+                "code": "3236"
             },
             {
-                "key": "VIKEN.MARKER",
-                "code": "3013"
+                "key": "AKERSHUS.ULLENSAKER",
+                "code": "3209"
             },
             {
-                "key": "VIKEN.ENEBAKK",
-                "code": "3028"
+                "key": "AKERSHUS.ASKER",
+                "code": "3203"
             },
             {
-                "key": "VIKEN.DRAMMEN",
-                "code": "3005"
+                "key": "AKERSHUS.FROGN",
+                "code": "3214"
             },
             {
-                "key": "VIKEN.INDRE ØSTFOLD",
-                "code": "3014"
+                "key": "AKERSHUS.BÆRUM",
+                "code": "3201"
             },
             {
-                "key": "VIKEN.HVALER",
-                "code": "3011"
+                "key": "AKERSHUS.NITTEDAL",
+                "code": "3232"
             },
             {
-                "key": "VIKEN.KONGSBERG",
-                "code": "3006"
+                "key": "AKERSHUS.VESTBY",
+                "code": "3216"
             },
             {
-                "key": "VIKEN.FREDRIKSTAD",
-                "code": "3004"
+                "key": "AKERSHUS.ENEBAKK",
+                "code": "3220"
             },
             {
-                "key": "VIKEN.AURSKOG-HØLAND",
-                "code": "3026"
+                "key": "AKERSHUS.ÅS",
+                "code": "3218"
             },
             {
-                "key": "VIKEN.ÅS",
-                "code": "3021"
+                "key": "AKERSHUS.RÆLINGEN",
+                "code": "3224"
             },
             {
-                "key": "VIKEN.MOSS",
-                "code": "3002"
+                "key": "AKERSHUS.NES (AKERSHUS)",
+                "code": "3228"
             },
             {
-                "key": "VIKEN.HOL",
-                "code": "3044"
+                "key": "AKERSHUS.LØRENSKOG",
+                "code": "3222"
             },
             {
-                "key": "VIKEN.NORE OG UVDAL",
-                "code": "3052"
+                "key": "AKERSHUS.NESODDEN",
+                "code": "3212"
             },
             {
-                "key": "VIKEN.SARPSBORG",
-                "code": "3003"
+                "key": "AKERSHUS.LILLESTRØM",
+                "code": "3205"
             },
             {
-                "key": "VIKEN.ÅL",
-                "code": "3043"
+                "key": "AKERSHUS.LUNNER",
+                "code": "3234"
             },
             {
-                "key": "VIKEN.GOL",
-                "code": "3041"
+                "key": "AKERSHUS.NANNESTAD",
+                "code": "3238"
             },
             {
-                "key": "VIKEN.ØVRE EIKER",
-                "code": "3048"
+                "key": "AKERSHUS.AURSKOG-HØLAND",
+                "code": "3226"
             },
             {
-                "key": "VIKEN.LILLESTRØM",
-                "code": "3030"
+                "key": "AKERSHUS.EIDSVOLL",
+                "code": "3240"
             },
             {
-                "key": "VIKEN.VESTBY",
-                "code": "3019"
+                "key": "AKERSHUS.NORDRE FOLLO",
+                "code": "3207"
             },
             {
-                "key": "VIKEN.LØRENSKOG",
-                "code": "3029"
+                "key": "AKERSHUS.GJERDRUM",
+                "code": "3230"
+            }
+        ]
+    },
+    {
+        "key": "BUSKERUD",
+        "code": "33",
+        "municipals": [
+            {
+                "key": "BUSKERUD.DRAMMEN",
+                "code": "3301"
             },
             {
-                "key": "VIKEN.GJERDRUM",
-                "code": "3032"
+                "key": "BUSKERUD.RINGERIKE",
+                "code": "3305"
             },
             {
-                "key": "VIKEN.NESBYEN",
-                "code": "3040"
+                "key": "BUSKERUD.HOL",
+                "code": "3330"
             },
             {
-                "key": "VIKEN.RÆLINGEN",
-                "code": "3027"
+                "key": "BUSKERUD.KRØDSHERAD",
+                "code": "3318"
             },
             {
-                "key": "VIKEN.HALDEN",
-                "code": "3001"
+                "key": "BUSKERUD.NESBYEN",
+                "code": "3322"
             },
             {
-                "key": "VIKEN.ASKER",
-                "code": "3025"
+                "key": "BUSKERUD.SIGDAL",
+                "code": "3332"
             },
             {
-                "key": "VIKEN.BÆRUM",
-                "code": "3024"
+                "key": "BUSKERUD.ÅL",
+                "code": "3328"
             },
             {
-                "key": "VIKEN.LUNNER",
-                "code": "3054"
+                "key": "BUSKERUD.HOLE",
+                "code": "3310"
             },
             {
-                "key": "VIKEN.NITTEDAL",
-                "code": "3031"
+                "key": "BUSKERUD.HEMSEDAL",
+                "code": "3326"
             },
             {
-                "key": "VIKEN.NES",
-                "code": "3034"
+                "key": "BUSKERUD.KONGSBERG",
+                "code": "3303"
             },
             {
-                "key": "VIKEN.ULLENSAKER",
-                "code": "3033"
+                "key": "BUSKERUD.GOL",
+                "code": "3324"
             },
             {
-                "key": "VIKEN.NORDRE FOLLO",
-                "code": "3020"
+                "key": "BUSKERUD.LIER",
+                "code": "3312"
             },
             {
-                "key": "VIKEN.SIGDAL",
-                "code": "3045"
+                "key": "BUSKERUD.FLÅ",
+                "code": "3320"
             },
             {
-                "key": "VIKEN.NESODDEN",
-                "code": "3023"
+                "key": "BUSKERUD.NORE OG UVDAL",
+                "code": "3338"
             },
             {
-                "key": "VIKEN.FLÅ",
-                "code": "3039"
+                "key": "BUSKERUD.FLESBERG",
+                "code": "3334"
             },
             {
-                "key": "VIKEN.RINGERIKE",
-                "code": "3007"
+                "key": "BUSKERUD.ØVRE EIKER",
+                "code": "3314"
             },
             {
-                "key": "VIKEN.ROLLAG",
-                "code": "3051"
+                "key": "BUSKERUD.ROLLAG",
+                "code": "3336"
             },
             {
-                "key": "VIKEN.FROGN",
-                "code": "3022"
-            },
-            {
-                "key": "VIKEN.EIDSVOLL",
-                "code": "3035"
-            },
-            {
-                "key": "VIKEN.FLESBERG",
-                "code": "3050"
+                "key": "BUSKERUD.MODUM",
+                "code": "3316"
             }
         ]
     },
@@ -621,10 +637,6 @@
         "key": "INNLANDET",
         "code": "34",
         "municipals": [
-            {
-                "key": "INNLANDET.OS",
-                "code": "3430"
-            },
             {
                 "key": "INNLANDET.VESTRE SLIDRE",
                 "code": "3452"
@@ -652,6 +664,10 @@
             {
                 "key": "INNLANDET.LOM",
                 "code": "3434"
+            },
+            {
+                "key": "INNLANDET.OS (INNLANDET)",
+                "code": "3430"
             },
             {
                 "key": "INNLANDET.ENGERDAL",
@@ -808,100 +824,106 @@
         ]
     },
     {
-        "key": "VESTFOLD OG TELEMARK",
-        "code": "38",
+        "key": "VESTFOLD",
+        "code": "39",
         "municipals": [
             {
-                "key": "VESTFOLD OG TELEMARK.SANDEFJORD",
-                "code": "3804"
+                "key": "VESTFOLD.LARVIK",
+                "code": "3909"
             },
             {
-                "key": "VESTFOLD OG TELEMARK.VINJE",
-                "code": "3825"
+                "key": "VESTFOLD.FÆRDER",
+                "code": "3911"
             },
             {
-                "key": "VESTFOLD OG TELEMARK.SILJAN",
-                "code": "3812"
+                "key": "VESTFOLD.SANDEFJORD",
+                "code": "3907"
             },
             {
-                "key": "VESTFOLD OG TELEMARK.TØNSBERG",
-                "code": "3803"
+                "key": "VESTFOLD.HOLMESTRAND",
+                "code": "3903"
             },
             {
-                "key": "VESTFOLD OG TELEMARK.TOKKE",
-                "code": "3824"
+                "key": "VESTFOLD.HORTEN",
+                "code": "3901"
             },
             {
-                "key": "VESTFOLD OG TELEMARK.NISSEDAL",
-                "code": "3822"
+                "key": "VESTFOLD.TØNSBERG",
+                "code": "3905"
+            }
+        ]
+    },
+    {
+        "key": "TELEMARK",
+        "code": "40",
+        "municipals": [
+            {
+                "key": "TELEMARK.MIDT-TELEMARK",
+                "code": "4020"
             },
             {
-                "key": "VESTFOLD OG TELEMARK.MIDT-TELEMARK",
-                "code": "3817"
+                "key": "TELEMARK.NISSEDAL",
+                "code": "4030"
             },
             {
-                "key": "VESTFOLD OG TELEMARK.BAMBLE",
-                "code": "3813"
+                "key": "TELEMARK.NOME",
+                "code": "4018"
             },
             {
-                "key": "VESTFOLD OG TELEMARK.SKIEN",
-                "code": "3807"
+                "key": "TELEMARK.FYRESDAL",
+                "code": "4032"
             },
             {
-                "key": "VESTFOLD OG TELEMARK.KVITESEID",
-                "code": "3821"
+                "key": "TELEMARK.SKIEN",
+                "code": "4003"
             },
             {
-                "key": "VESTFOLD OG TELEMARK.FYRESDAL",
-                "code": "3823"
+                "key": "TELEMARK.KRAGERØ",
+                "code": "4014"
             },
             {
-                "key": "VESTFOLD OG TELEMARK.HORTEN",
-                "code": "3801"
+                "key": "TELEMARK.BAMBLE",
+                "code": "4012"
             },
             {
-                "key": "VESTFOLD OG TELEMARK.NOTODDEN",
-                "code": "3808"
+                "key": "TELEMARK.PORSGRUNN",
+                "code": "4001"
             },
             {
-                "key": "VESTFOLD OG TELEMARK.HOLMESTRAND",
-                "code": "3802"
+                "key": "TELEMARK.KVITESEID",
+                "code": "4028"
             },
             {
-                "key": "VESTFOLD OG TELEMARK.LARVIK",
-                "code": "3805"
+                "key": "TELEMARK.SELJORD",
+                "code": "4022"
             },
             {
-                "key": "VESTFOLD OG TELEMARK.HJARTDAL",
-                "code": "3819"
+                "key": "TELEMARK.DRANGEDAL",
+                "code": "4016"
             },
             {
-                "key": "VESTFOLD OG TELEMARK.KRAGERØ",
-                "code": "3814"
+                "key": "TELEMARK.TOKKE",
+                "code": "4034"
             },
             {
-                "key": "VESTFOLD OG TELEMARK.SELJORD",
-                "code": "3820"
+                "key": "TELEMARK.SILJAN",
+                "code": "4010"
             },
             {
-                "key": "VESTFOLD OG TELEMARK.PORSGRUNN",
-                "code": "3806"
+                "key": "TELEMARK.VINJE",
+                "code": "4036"
             },
             {
-                "key": "VESTFOLD OG TELEMARK.DRANGEDAL",
-                "code": "3815"
+                "key": "TELEMARK.TINN",
+                "code": "4026"
             },
             {
-                "key": "VESTFOLD OG TELEMARK.FÆRDER",
-                "code": "3811"
+                "key": "TELEMARK.NOTODDEN",
+                "code": "4005"
             },
             {
-                "key": "VESTFOLD OG TELEMARK.NOME",
-                "code": "3816"
-            },
-            {
-                "key": "VESTFOLD OG TELEMARK.TINN",
-                "code": "3818"
+                "key": "TELEMARK.HJARTDAL",
+                "code": "4024"
             }
         ]
     },
@@ -1348,164 +1370,170 @@
         ]
     },
     {
-        "key": "TROMS OG FINNMARK",
-        "code": "54",
+        "key": "TROMS",
+        "code": "55",
         "municipals": [
             {
-                "key": "TROMS OG FINNMARK.KARASJOHKA KARASJOK",
-                "code": "5437"
+                "key": "TROMS.LAVANGEN",
+                "code": "5518"
             },
             {
-                "key": "TROMS OG FINNMARK.HASVIK",
-                "code": "5433"
+                "key": "TROMS.KVÆNANGEN",
+                "code": "5546"
             },
             {
-                "key": "TROMS OG FINNMARK.VARDØ",
-                "code": "5404"
+                "key": "TROMS.GRATANGEN",
+                "code": "5516"
             },
             {
-                "key": "TROMS OG FINNMARK.BÅTSFJORD",
-                "code": "5443"
+                "key": "TROMS.SKJERVØY",
+                "code": "5542"
             },
             {
-                "key": "TROMS OG FINNMARK.SKJERVØY",
-                "code": "5427"
+                "key": "TROMS.BARDU",
+                "code": "5520"
             },
             {
-                "key": "TROMS OG FINNMARK.GÁIVUOTNA KÅFJORD",
-                "code": "5426"
+                "key": "TROMS.IBESTAD",
+                "code": "5514"
             },
             {
-                "key": "TROMS OG FINNMARK.IBESTAD",
-                "code": "5413"
+                "key": "TROMS.NORDREISA",
+                "code": "5544"
             },
             {
-                "key": "TROMS OG FINNMARK.LYNGEN",
-                "code": "5424"
+                "key": "TROMS.HARSTAD",
+                "code": "5503"
             },
             {
-                "key": "TROMS OG FINNMARK.GAMVIK",
-                "code": "5439"
+                "key": "TROMS.KARLSØY",
+                "code": "5534"
             },
             {
-                "key": "TROMS OG FINNMARK.HARSTAD",
-                "code": "5402"
+                "key": "TROMS.TROMSØ",
+                "code": "5501"
             },
             {
-                "key": "TROMS OG FINNMARK.UNJARGGA NESSEBY",
-                "code": "5442"
+                "key": "TROMS.BALSFJORD",
+                "code": "5532"
             },
             {
-                "key": "TROMS OG FINNMARK.NORDREISA",
-                "code": "5428"
+                "key": "TROMS.SALANGEN",
+                "code": "5522"
             },
             {
-                "key": "TROMS OG FINNMARK.PORSANGER PORSÁNGU PORSANKI",
-                "code": "5436"
+                "key": "TROMS.TJELDSUND",
+                "code": "5512"
             },
             {
-                "key": "TROMS OG FINNMARK.TROMSØ",
-                "code": "5401"
+                "key": "TROMS.STORFJORD",
+                "code": "5538"
             },
             {
-                "key": "TROMS OG FINNMARK.SØR-VARANGER",
-                "code": "5444"
+                "key": "TROMS.SENJA",
+                "code": "5530"
             },
             {
-                "key": "TROMS OG FINNMARK.SALANGEN",
-                "code": "5417"
+                "key": "TROMS.GÁIVUOTNA KÅFJORD",
+                "code": "5540"
             },
             {
-                "key": "TROMS OG FINNMARK.KARLSØY",
-                "code": "5423"
+                "key": "TROMS.MÅLSELV",
+                "code": "5524"
             },
             {
-                "key": "TROMS OG FINNMARK.MÅLSELV",
-                "code": "5418"
+                "key": "TROMS.SØRREISA",
+                "code": "5526"
             },
             {
-                "key": "TROMS OG FINNMARK.BERLEVÅG",
-                "code": "5440"
+                "key": "TROMS.KVÆFJORD",
+                "code": "5510"
             },
             {
-                "key": "TROMS OG FINNMARK.NORDKAPP",
-                "code": "5435"
+                "key": "TROMS.DYRØY",
+                "code": "5528"
             },
             {
-                "key": "TROMS OG FINNMARK.STORFJORD",
-                "code": "5425"
+                "key": "TROMS.LYNGEN",
+                "code": "5536"
+            }
+        ]
+    },
+    {
+        "key": "FINNMARK",
+        "code": "56",
+        "municipals": [
+            {
+                "key": "FINNMARK.VADSØ",
+                "code": "5607"
             },
             {
-                "key": "TROMS OG FINNMARK.MÅSØY",
-                "code": "5434"
+                "key": "FINNMARK.VARDØ",
+                "code": "5634"
             },
             {
-                "key": "TROMS OG FINNMARK.GRATANGEN",
-                "code": "5414"
+                "key": "FINNMARK.ALTA",
+                "code": "5601"
             },
             {
-                "key": "TROMS OG FINNMARK.LAVANGEN",
-                "code": "5415"
+                "key": "FINNMARK.HAMMERFEST",
+                "code": "5603"
             },
             {
-                "key": "TROMS OG FINNMARK.DYRØY",
-                "code": "5420"
+                "key": "FINNMARK.GUOVDAGEAIDNU KAUTOKEINO",
+                "code": "5612"
             },
             {
-                "key": "TROMS OG FINNMARK.TJELDSUND",
-                "code": "5412"
+                "key": "FINNMARK.HASVIK",
+                "code": "5616"
             },
             {
-                "key": "TROMS OG FINNMARK.GUOVDAGEAIDNU KAUTOKEINO",
-                "code": "5430"
+                "key": "FINNMARK.MÅSØY",
+                "code": "5618"
             },
             {
-                "key": "TROMS OG FINNMARK.VADSØ",
-                "code": "5405"
+                "key": "FINNMARK.LEBESBY",
+                "code": "5624"
             },
             {
-                "key": "TROMS OG FINNMARK.SØRREISA",
-                "code": "5419"
+                "key": "FINNMARK.LOPPA",
+                "code": "5614"
             },
             {
-                "key": "TROMS OG FINNMARK.LEBESBY",
-                "code": "5438"
+                "key": "FINNMARK.UNJARGGA NESSEBY",
+                "code": "5636"
             },
             {
-                "key": "TROMS OG FINNMARK.SENJA",
-                "code": "5421"
+                "key": "FINNMARK.KARASJOHKA KARASJOK",
+                "code": "5610"
             },
             {
-                "key": "TROMS OG FINNMARK.DEATNU TANA",
-                "code": "5441"
+                "key": "FINNMARK.SØR-VARANGER",
+                "code": "5605"
             },
             {
-                "key": "TROMS OG FINNMARK.BALSFJORD",
-                "code": "5422"
+                "key": "FINNMARK.PORSANGER PORSÁNGU PORSANKI",
+                "code": "5622"
             },
             {
-                "key": "TROMS OG FINNMARK.KVÆFJORD",
-                "code": "5411"
+                "key": "FINNMARK.BÅTSFJORD",
+                "code": "5632"
             },
             {
-                "key": "TROMS OG FINNMARK.LOPPA",
-                "code": "5432"
+                "key": "FINNMARK.DEATNU TANA",
+                "code": "5628"
             },
             {
-                "key": "TROMS OG FINNMARK.KVÆNANGEN",
-                "code": "5429"
+                "key": "FINNMARK.NORDKAPP",
+                "code": "5620"
             },
             {
-                "key": "TROMS OG FINNMARK.BARDU",
-                "code": "5416"
+                "key": "FINNMARK.GAMVIK",
+                "code": "5626"
             },
             {
-                "key": "TROMS OG FINNMARK.HAMMERFEST",
-                "code": "5406"
-            },
-            {
-                "key": "TROMS OG FINNMARK.ALTA",
-                "code": "5403"
+                "key": "FINNMARK.BERLEVÅG",
+                "code": "5630"
             }
         ]
     },
