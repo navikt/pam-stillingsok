@@ -15,7 +15,7 @@ function UserConsentIsRequired() {
                     Du må samtykke for å kunne ta i bruk favoritter
                 </Heading>
                 <BodyLong className="text-center" spacing>
-                    Ikke har tid til å lese annonsen akkurat nå, eller lyst å søke først senere når du kommer hjem? Med
+                    Har du ikke tid til å lese annonsen akkurat nå, eller lyst til å søke senere når du kommer hjem? Med
                     favoritter finner du raskt tilbake til annonsen.
                 </BodyLong>
                 <Button
