@@ -209,10 +209,10 @@ function filterNestedFacets(parents, children, parentKey, childKey, nestedField 
 }
 
 const specialMunicipals = {
-    OS: "OS (INNLANDET)",
-    SANDE: "SANDE (MØRE OG ROMSDAL)",
-    BØ: "BØ (NORDLAND)",
-    NES: "NES (VIKEN)",
+    OS: ["OS (INNLANDET)"],
+    SANDE: ["SANDE (MØRE OG ROMSDAL)"],
+    BØ: ["BØ (NORDLAND)"],
+    NES: ["NES (VIKEN)", "NES (AKERSHUS)"],
 };
 
 // Filtrer på alle type locations (land, kommune, fylke, internasjonalt)
@@ -277,7 +277,7 @@ function filterLocation(counties, municipals, countries, international = false) 
                     if (municipal in specialMunicipals) {
                         mustObject.bool.should.push({
                             terms: {
-                                "locationList.municipal.keyword": [municipal, specialMunicipals[municipal]],
+                                "locationList.municipal.keyword": [municipal, ...specialMunicipals[municipal]],
                             },
                         });
                     } else {
