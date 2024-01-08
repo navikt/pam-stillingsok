@@ -32,11 +32,24 @@ export default function buildLocations(values) {
             facet.count = nationalCountMap[l.key] === undefined ? 0 : nationalCountMap[l.key];
 
             l.municipals.forEach((m) => {
-                facet.subLocations.push({
-                    type: "municipal",
-                    key: m.key,
-                    count: nationalCountMap[m.key] === undefined ? 0 : nationalCountMap[m.key],
-                });
+                // Special case "NES (AKERSHUS)" which could be represented as "NES" and "NES (VIKEN)".
+                if (m.key === "AKERSHUS.NES (AKERSHUS)") {
+                    const total =
+                        nationalCountMap[m.key] +
+                        (nationalCountMap["VIKEN.NES"] || 0) +
+                        (nationalCountMap["VIKEN.NES (VIKEN)"] || 0);
+                    facet.subLocations.push({
+                        type: "municipal",
+                        key: m.key,
+                        count: total,
+                    });
+                } else {
+                    facet.subLocations.push({
+                        type: "municipal",
+                        key: m.key,
+                        count: nationalCountMap[m.key] === undefined ? 0 : nationalCountMap[m.key],
+                    });
+                }
             });
         }
 
