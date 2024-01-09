@@ -54,8 +54,8 @@ server.use(
             objectSrc: ["'none'"],
             frameAncestors: ["'none'"],
             formAction: ["'self'"],
-            styleSrc: ["'self'", "https://fonts.googleapis.com/"],
-            fontSrc: ["'self'", "data:", "https://fonts.gstatic.com"],
+            styleSrc: ["'self'"],
+            fontSrc: ["'self'", "data:"],
             imgSrc: ["'self'", "data:"],
             connectSrc: [
                 "'self'",

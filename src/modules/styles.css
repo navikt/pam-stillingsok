@@ -7,7 +7,7 @@ body {
 body {
     background: var(--a-surface-default);
     color: var(--a-text-default);
-    font-family: var(--a-font-family);
+    font-family: "Inter Variable";
 }
 
 #app {
