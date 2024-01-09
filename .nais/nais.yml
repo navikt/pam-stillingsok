@@ -35,7 +35,7 @@ spec:
     enabled: true
     sidecar:
       enabled: true
-      level: Level4
+      level: Level3
   tokenx:
     enabled: true
   ingresses:
@@ -59,12 +59,8 @@ spec:
       value: {{ amplitude_token }}
     - name: ARBEIDSPLASSEN_URL
       value: {{ arbeidsplassen_url }}
-    - name: CV_API_URL
-      value: {{ cv-api-url }}
     - name: ADUSER_AUDIENCE
       value: {{ aduser_audience }}
-    - name: CV_API_AUDIENCE
-      value: {{ cv_api_audience }}
     - name: IDPORTEN_AUDIENCE
       value: {{ idporten_audience }}
     - name: SENTRY_DSN
@@ -77,6 +73,3 @@ spec:
       rules:
         - application: pam-search-api
         - application: pam-aduser
-      external:
-        - host: {{ cv-api-host }}
-
