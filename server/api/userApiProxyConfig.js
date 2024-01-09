@@ -15,6 +15,7 @@ const origins = [
     "/stillinger/api/v1/userfavouriteads",
     "/stillinger/api/v1/savedsearches/:uuid",
     "/stillinger/api/v1/savedsearches",
+    "/stillinger/api/v1/personalia",
 ];
 
 const originsWithoutToken = ["/stillinger/api/v1/reportposting"];
