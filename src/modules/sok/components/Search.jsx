@@ -1,6 +1,6 @@
 import React, { useEffect, useReducer, useState } from "react";
 import PropTypes from "prop-types";
-import { Box, Button, HGrid, Hide, HStack, Show, Stack } from "@navikt/ds-react";
+import { Box, Button, HGrid, Hide, HStack, Show, Stack, Heading } from "@navikt/ds-react";
 import { useHistory } from "react-router";
 import { CONTEXT_PATH } from "../../common/environment";
 import queryReducer, { isSearchQueryEmpty, SET_FROM, stringifyQuery, toBrowserQuery } from "../query";
@@ -9,7 +9,6 @@ import { FetchStatus } from "../../common/hooks/useFetchReducer";
 import ErrorMessage from "../../common/components/messages/ErrorMessage";
 import SearchBoxForm from "./searchBox/SearchBoxForm";
 import SearchResult from "./searchResult/SearchResult";
-import H1WithAutoFocus from "../../common/components/h1WithAutoFocus/H1WithAutoFocus";
 import DoYouWantToSaveSearch from "./howToPanels/DoYouWantToSaveSearch";
 import SelectedFilters from "./selectedFilters/SelectedFilters";
 import Feedback from "./feedback/Feedback";
@@ -68,7 +67,9 @@ export default function Search({ initialSearchResponse, searchResponse, initialQ
         <>
             <Box paddingBlock={{ xs: "4", md: "12" }} paddingInline={{ xs: "4", sm: "6" }}>
                 <Stack justify={{ md: "center" }}>
-                    <H1WithAutoFocus spacing={false}>Søk etter din neste jobb</H1WithAutoFocus>
+                    <Heading level="1" size="xlarge" spacing={false}>
+                        Søk etter din neste jobb
+                    </Heading>
                 </Stack>
             </Box>
 

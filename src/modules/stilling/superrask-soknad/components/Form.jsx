@@ -14,7 +14,6 @@ import {
     TextField,
 } from "@navikt/ds-react";
 import { Link } from "react-router-dom";
-import H1WithAutoFocus from "../../../common/components/h1WithAutoFocus/H1WithAutoFocus";
 import { MOTIVATION_MAX_LENGTH } from "./validateForm";
 import ApiErrorMessage from "./ApiErrorMessage";
 
@@ -36,7 +35,9 @@ function Form({ ad, applicationForm, submitForm, pending, submitApiError, valida
     return (
         <form onSubmit={submitForm} className="mb-16">
             <section className="mb-10">
-                <H1WithAutoFocus>Superrask søknad</H1WithAutoFocus>
+                <Heading level="1" size="xlarge" spacing>
+                    Superrask søknad
+                </Heading>
                 <BodyLong spacing>
                     Ingen CV eller langt søknadsbrev, kun tre raske steg. Du får beskjed på e-post med en gang bedriften
                     har vurdert søknaden din.

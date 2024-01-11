@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Heading } from "@navikt/ds-react";
 import SavedSearchListItem from "./SavedSearchListItem";
 import { FetchAction } from "../../common/hooks/useFetchReducer";
-import H1WithAutoFocus from "../../common/components/h1WithAutoFocus/H1WithAutoFocus";
 
 /**
  * Displays a list of all saved searches.
@@ -35,7 +35,10 @@ function SavedSearchesList({ data, dispatch, uuid }) {
 
     return (
         <section className="container-medium mt-16 mb-16">
-            <H1WithAutoFocus>Lagrede søk</H1WithAutoFocus>
+            <Heading level="1" size="xlarge" spacing>
+                Lagrede søk
+            </Heading>
+
             {data.map((savedSearch) => (
                 <SavedSearchListItem
                     key={savedSearch.uuid}

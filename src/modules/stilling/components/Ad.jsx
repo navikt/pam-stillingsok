@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
-import { Box, HGrid, Tag } from "@navikt/ds-react";
+import { Box, HGrid, Tag, Heading } from "@navikt/ds-react";
 import AdDetails from "./AdDetails";
 import AdText from "./AdText";
 import ContactPerson from "./ContactPerson";
@@ -11,7 +11,6 @@ import HowToApply from "./HowToApply";
 import { logStillingVisning } from "../../common/tracking/amplitude";
 import ShareAd from "./ShareAd";
 import Summary from "./Summary";
-import H1WithAutoFocus from "../../common/components/h1WithAutoFocus/H1WithAutoFocus";
 
 function Ad({ ad, shareAdRedirectUrl }) {
     /**
@@ -33,7 +32,9 @@ function Ad({ ad, shareAdRedirectUrl }) {
         <Box className="container-large" paddingBlock={{ xs: "4 12", md: "16" }}>
             <HGrid as="article" columns={{ xs: 1, lg: "auto 340px" }} gap="16">
                 <div>
-                    <H1WithAutoFocus className="overflow-wrap-anywhere">{ad._source.title}</H1WithAutoFocus>
+                    <Heading level="1" size="xlarge" spacing>
+                        {ad._source.title}
+                    </Heading>
 
                     {ad._source.status !== "ACTIVE" && (
                         <Tag variant="warning-moderate" className="mb-4">

@@ -1,9 +1,8 @@
 import React from "react";
-import { HStack, Select } from "@navikt/ds-react";
+import { HStack, Select, Heading } from "@navikt/ds-react";
 import PropTypes from "prop-types";
 import { FetchAction } from "../../common/hooks/useFetchReducer";
 import FavouritesListItem from "./FavouritesListItem";
-import H1WithAutoFocus from "../../common/components/h1WithAutoFocus/H1WithAutoFocus";
 
 function FavouritesList({ data, dispatch, sortBy, setSortBy }) {
     /**
@@ -20,9 +19,10 @@ function FavouritesList({ data, dispatch, sortBy, setSortBy }) {
     return (
         <section className="container-medium mt-16 mb-16">
             <HStack gap="4" align="center" justify="space-between" className="mb-12">
-                <H1WithAutoFocus size="xlarge" spacing={false}>
+                <Heading level="1" size="xlarge" spacing={false}>
                     Favoritter
-                </H1WithAutoFocus>
+                </Heading>
+
                 <Select
                     onChange={(e) => {
                         setSortBy(e.target.value);
