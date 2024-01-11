@@ -6,7 +6,6 @@ module.exports = {
     devtool: "source-map",
     entry: {
         sok: ["@babel/polyfill", "whatwg-fetch", "./src/app.jsx"],
-        inter: "./src/fonts/inter.css",
     },
     output: {
         path: `${__dirname}/dist`,
