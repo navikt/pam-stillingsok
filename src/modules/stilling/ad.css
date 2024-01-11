@@ -4,9 +4,9 @@
     max-width: 70ch;
 }
 
-.job-posting-text #aapningstekst,
-.job-posting-text #arbeidsoppgaver,
-.job-posting-text #tilbyr,
-.job-posting-text #serEtter {
+.job-posting-text #arb-aapningstekst,
+.job-posting-text #arb-arbeidsoppgaver,
+.job-posting-text #arb-tilbyr,
+.job-posting-text #arb-serEtter {
     margin-bottom: var(--a-spacing-16);
 }
