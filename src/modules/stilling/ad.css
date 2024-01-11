@@ -3,3 +3,10 @@
     word-wrap: break-word;
     max-width: 70ch;
 }
+
+.job-posting-text #aapningstekst,
+.job-posting-text #arbeidsoppgaver,
+.job-posting-text #tilbyr,
+.job-posting-text #serEtter {
+    margin-bottom: var(--a-spacing-16);
+}
