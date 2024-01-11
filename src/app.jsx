@@ -25,7 +25,6 @@ import FavouritesPage from "./modules/favoritter/page";
 import SavedSearchesPage from "./modules/lagrede-sok/page";
 import WithdrawApplicationPage from "./modules/stilling/trekk-soknad/page";
 import "./modules/styles.css";
-import "./fonts/inter.css";
 import googleTranslateWorkaround from "./modules/common/utils/googleTranslateWorkaround";
 import NotFound from "./modules/not-found";
 

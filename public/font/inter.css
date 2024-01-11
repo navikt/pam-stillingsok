@@ -1,5 +1,5 @@
 @font-face {
     font-family: "Inter Variable";
     font-style: normal;
-    src: local(""), url("./InterVariable.ttf") format("ttf");
+    src: url("./InterVariable.ttf") format("ttf");
 }
