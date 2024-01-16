@@ -35,7 +35,7 @@ spec:
     enabled: true
     sidecar:
       enabled: true
-      level: Level4
+      level: Level3
   tokenx:
     enabled: true
   ingresses:
