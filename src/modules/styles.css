@@ -7,7 +7,9 @@ body {
 body {
     background: var(--a-surface-default);
     color: var(--a-text-default);
-    font-family: "Inter Variable";
+    font-family: "InterVariable";
+    font-feature-settings: "salt", "ss03";
+    font-variation-settings: "opsz" 14;
 }
 
 #app {
