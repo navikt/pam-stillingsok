@@ -120,11 +120,7 @@ function SessionStatusModal({ markAsLoggedOut, setHasBeenLoggedIn, login, logout
             </Modal.Header>
             <Modal.Body>
                 <VStack gap="6">
-                    <BodyLong
-                        className="login-required-message__text mb-8 session-modal-body"
-                        role="timer"
-                        suppressHydrationWarning
-                    >
+                    <BodyLong role="timer" suppressHydrationWarning>
                         {message}
                     </BodyLong>
                     <HStack justify="center">
