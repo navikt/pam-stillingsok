@@ -183,8 +183,8 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
                                 {!isStringEmpty(user.data.email) && (
                                     <BodyLong>
                                         Varsel sendes på e-post. Gå til{" "}
-                                        <AkselLink href="/personinnstillinger">Innstillinger</AkselLink> for å endre
-                                        e-postadresse.
+                                        <AkselLink href="/min-side/innstillinger">samtykker og innstillinger</AkselLink>{" "}
+                                        for å endre e-postadresse.
                                     </BodyLong>
                                 )}
                             </>
