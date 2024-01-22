@@ -19,7 +19,7 @@ function NoFavourites() {
                 <BodyLong className="text-center" spacing>
                     Du kan markere annonser som favoritter både fra søket og inne i annonsen.
                 </BodyLong>
-                <Button variant="primary" as={Link} to={CONTEXT_PATH}>
+                <Button variant="primary" as={Link} role="link" to={CONTEXT_PATH}>
                     Gå til søket
                 </Button>
             </VStack>
