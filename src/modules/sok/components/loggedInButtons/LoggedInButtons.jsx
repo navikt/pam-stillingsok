@@ -44,8 +44,8 @@ function LoggedInButtons() {
         <>
             <Button
                 as={Link}
+                role="link"
                 to={`${CONTEXT_PATH}/lagrede-sok`}
-                type="button"
                 variant="tertiary"
                 onClick={(e) => {
                     handleClick(e, `${CONTEXT_PATH}/lagrede-sok`, "SAVEDSEARCH");
@@ -57,8 +57,8 @@ function LoggedInButtons() {
 
             <Button
                 as={Link}
+                role="link"
                 to={`${CONTEXT_PATH}/favoritter`}
-                type="button"
                 variant="tertiary"
                 onClick={(e) => {
                     handleClick(e, `${CONTEXT_PATH}/favoritter`, "FAVORITES");
