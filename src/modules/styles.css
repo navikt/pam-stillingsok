@@ -12,6 +12,16 @@ body {
     font-variation-settings: "opsz" 14;
 }
 
+input,
+select,
+option,
+textarea,
+button {
+    font-family: "InterVariable";
+    font-feature-settings: "salt", "ss03";
+    font-variation-settings: "opsz" 14;
+}
+
 #app {
     height: 100%;
 }
