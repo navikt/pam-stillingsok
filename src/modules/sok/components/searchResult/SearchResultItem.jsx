@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { BodyLong, BodyShort, Heading, HStack, Link as AkselLink, Tag } from "@navikt/ds-react";
 import { addDays, endOfDay, format as formatDateFns, isSameDay, isValid, parse, parseISO, subDays } from "date-fns";
 import { nb } from "date-fns/locale";
-import { Buldings3Icon, ExternalLinkIcon, PinIcon } from "@navikt/aksel-icons";
+import { Buldings3Icon, ExternalLinkIcon, EarthIcon } from "@navikt/aksel-icons";
 import getEmployer from "../../../../../server/common/getEmployer";
 import getWorkLocation from "../../../../../server/common/getWorkLocation";
 import { CONTEXT_PATH } from "../../../common/environment";
@@ -114,7 +114,7 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, isD
                 {location && (
                     <HStack gap="2" className="mb-1">
                         <div>
-                            <PinIcon width="1.5em" height="1.5em" aria-label="Sted" aria-hidden="true" />
+                            <EarthIcon width="1.5em" height="1.5em" aria-label="Sted" aria-hidden="true" />
                             <BodyShort visuallyHidden>Sted</BodyShort>
                         </div>
                         <BodyLong id={`${ad.uuid}-location`} className="overflow-wrap-anywhere">
