@@ -23,6 +23,7 @@ function Form({ ad, applicationForm, submitForm, pending, submitApiError, valida
     const [hideMotivationError, setHideMotivationError] = useState(false);
     const [hideEmailError, setHideEmailError] = useState(false);
     const [hideTelephoneError, setHideTelephoneError] = useState(false);
+    const [motivation, setMotivation] = useState("");
 
     useEffect(() => {
         if (Object.keys(validationErrors).length > 0) {
@@ -90,7 +91,9 @@ function Form({ ad, applicationForm, submitForm, pending, submitApiError, valida
                     id="new-application-checkedQualifications"
                     label="Skriv en begrunnelse"
                     name="motivation"
-                    onChange={() => {
+                    value={motivation}
+                    onChange={(e) => {
+                        setMotivation(e.target.value);
                         setHideMotivationError(true);
                     }}
                     maxLength={MOTIVATION_MAX_LENGTH}

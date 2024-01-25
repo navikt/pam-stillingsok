@@ -73,7 +73,7 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, isD
             ref={ref}
             tabIndex={shouldAutoFocus ? -1 : undefined}
             className="mb-12"
-            aria-labelledby={`${ad.uuid}-h3 ${ad.uuid}-jobTitle ${ad.uuid}-employer ${ad.uuid}-location`}
+            aria-labelledby={`${ad.uuid}-h3`}
         >
             {published && (
                 <BodyLong weight="semibold" size="small" textColor="subtle">

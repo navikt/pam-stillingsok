@@ -9,7 +9,6 @@ const compression = require("compression");
 const searchApiConsumer = require("./api/searchApiConsumer");
 const htmlMeta = require("./common/htmlMeta");
 const locationApiConsumer = require("./api/locationApiConsumer");
-const setUpProxyCvApi = require("./api/cvApiProxy");
 const { initializeTokenX, tokenIsValid } = require("./tokenX/tokenXUtils");
 const setUpAduserApiProxy = require("./api/userApiProxyConfig");
 const setUpSuperraskApi = require("./api/superraskApiProxy");
@@ -161,7 +160,6 @@ const startServer = (htmlPages) => {
             res.sendStatus(401);
         }
     });
-    setUpProxyCvApi(server);
     setUpSuperraskApi(server);
 
     // Give users fallback locations from local file if aduser is unresponsive

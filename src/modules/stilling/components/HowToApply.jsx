@@ -242,6 +242,7 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                             href={applicationUrl}
                             onClick={() => applyForPosition(isFinn, stilling)}
                             icon={<ExternalLinkIcon aria-hidden="true" />}
+                            role="link"
                         >
                             Gå til søknad
                         </Button>

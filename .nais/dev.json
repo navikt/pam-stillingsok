@@ -16,9 +16,6 @@
     "pam_jobbtreff_api_url": "https://arbeidsplassen.intern.dev.nav.no/jobbtreff-promo",
     "amplitude_token": "3acd3a52e065d2d99856a12e7e9e1432",
     "interest_api_url": "https://arbeidsplassen.intern.dev.nav.no/interesse-api",
-    "cv-api-url": "https://pam-cv-api.dev-fss-pub.nais.io",
-    "cv-api-host": "pam-cv-api.dev-fss-pub.nais.io",
-    "cv_api_audience": "dev-fss:teampam:pam-cv-api",
     "aduser_audience": "dev-gcp:teampam:pam-aduser",
     "idporten_audience": "https://nav.no",
     "sentry_dsn": ""
