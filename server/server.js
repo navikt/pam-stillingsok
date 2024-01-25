@@ -53,8 +53,8 @@ server.use(
             objectSrc: ["'none'"],
             frameAncestors: ["'none'"],
             formAction: ["'self'"],
-            styleSrc: ["'self'", "https://fonts.googleapis.com/"],
-            fontSrc: ["'self'", "data:", "https://fonts.gstatic.com"],
+            styleSrc: ["'self'"],
+            fontSrc: ["'self'", "data:"],
             imgSrc: ["'self'", "data:"],
             connectSrc: [
                 "'self'",
@@ -142,6 +142,8 @@ const startServer = (htmlPages) => {
     server.use(`${properties.PAM_CONTEXT_PATH}/js`, express.static(path.resolve(rootDirectory, "dist/js")));
 
     server.use(`${properties.PAM_CONTEXT_PATH}/css`, express.static(path.resolve(rootDirectory, "dist/css")));
+
+    server.use(`${properties.PAM_CONTEXT_PATH}/public`, express.static(path.resolve(rootDirectory, "dist/public")));
 
     server.use(`${properties.PAM_CONTEXT_PATH}/images`, express.static(path.resolve(rootDirectory, "images")));
 
