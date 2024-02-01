@@ -249,11 +249,7 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                     </div>
                 )}
 
-                {isFinn && (
-                    <BodyLong className="mt-4">
-                        Denne annonsen er hentet fra FINN.no. Du kan sende søknad via den opprinnelige annonsen.
-                    </BodyLong>
-                )}
+                {isFinn && <BodyLong className="mt-4">Søk via opprinnelig annonse på FINN.no.</BodyLong>}
                 {showFavouriteButton && (
                     <FavouritesButton
                         className="mt-4"
