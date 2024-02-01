@@ -1,0 +1,9 @@
+@media (min-width: 1024px) {
+    #employment-details {
+        column-count: 2;
+    }
+
+    #employment-details dd {
+        break-before: avoid;
+    }
+}
