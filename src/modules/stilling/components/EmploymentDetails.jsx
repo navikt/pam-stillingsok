@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { BodyLong, Heading, Label } from "@navikt/ds-react";
 import { formatDate } from "../../common/utils/utils";
 import worktimeParser from "./worktimeParser";
+import "./EmploymentDetails.css";
 
 export default function EmploymentDetails({ stilling }) {
     const { properties } = stilling;
@@ -33,7 +34,8 @@ export default function EmploymentDetails({ stilling }) {
             <Heading level="2" size="large" spacing>
                 Om stillingen
             </Heading>
-            <dl className="dl">
+
+            <dl className="dl" id="employment-details">
                 {properties.jobtitle && (
                     <>
                         <dt>
