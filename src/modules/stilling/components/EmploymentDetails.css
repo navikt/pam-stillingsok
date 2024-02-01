@@ -2,4 +2,8 @@
     #employment-details {
         column-count: 2;
     }
+
+    #employment-details dd {
+        break-before: avoid;
+    }
 }
