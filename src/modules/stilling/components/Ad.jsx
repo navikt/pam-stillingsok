@@ -26,13 +26,15 @@ function Ad({ ad, shareAdRedirectUrl }) {
         }
     }, [ad]);
 
+    const annonseErAktiv = ad._source.status === "ACTIVE";
+
     return (
         <Box className="container-large" paddingBlock={{ xs: "4 12", md: "16" }}>
             <HGrid as="article" columns={{ xs: 1, lg: "auto 340px" }} gap="16">
                 <div>
                     <H1WithAutoFocus className="overflow-wrap-anywhere">{ad._source.title}</H1WithAutoFocus>
 
-                    {ad._source.status !== "ACTIVE" && (
+                    {!annonseErAktiv && (
                         <Tag variant="warning-moderate" className="mb-4">
                             Stillingsannonsen er inaktiv.
                         </Tag>
@@ -45,9 +47,18 @@ function Ad({ ad, shareAdRedirectUrl }) {
                 </div>
 
                 <div>
-                    <HowToApply stilling={ad} showFavouriteButton />
-                    <ContactPerson contactList={ad._source.contactList} adId={ad._id} adTitle={ad._source.title} />
-                    <ShareAd source={ad._source} shareAdRedirectUrl={shareAdRedirectUrl} />
+                    {annonseErAktiv && (
+                        <>
+                            <HowToApply stilling={ad} showFavouriteButton />
+                            <ContactPerson
+                                contactList={ad._source.contactList}
+                                adId={ad._id}
+                                adTitle={ad._source.title}
+                            />
+                            <ShareAd source={ad._source} shareAdRedirectUrl={shareAdRedirectUrl} />
+                        </>
+                    )}
+
                     <AdDetails id={ad._id} source={ad._source} />
                 </div>
             </HGrid>
