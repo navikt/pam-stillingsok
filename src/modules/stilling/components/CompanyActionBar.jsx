@@ -4,16 +4,18 @@ import { BodyShort, Box, Button, HStack } from "@navikt/ds-react";
 import { BulletListIcon, EyeIcon, FilesIcon, PauseIcon, PencilIcon } from "@navikt/aksel-icons";
 import { CompanyContext } from "../../common/context/CompanyProvider";
 import { STILLINGSREGISTRERING_URL } from "../../common/environment";
+import ConfirmBeforeUnPublish from "./ConfirmBeforeUnPublish";
 
-function CompanyActionBar({ uuid }) {
+function CompanyActionBar({ ad }) {
     const { organizationNumber } = useContext(CompanyContext);
     const [showActionbar, setShowActionBar] = useState(false);
     const [copyAdResponseStatus, setCopyAdResponseStatus] = useState("not-fetched");
     const [stopAdResponseStatus, setStopAdResponseStatus] = useState("not-fetched");
+    const [isConfirmStopAdModalOpen, setIsConfirmStopAdModalOpen] = useState(false);
 
     async function checkIfAdBelongsToCompany() {
         try {
-            const response = await fetch(`/stillingsregistrering/api/stillinger/UUID/${uuid}`);
+            const response = await fetch(`/stillingsregistrering/api/stillinger/UUID/${ad._id}`);
             setShowActionBar(response.status === 200);
         } catch (err) {
             setShowActionBar(false);
@@ -23,7 +25,13 @@ function CompanyActionBar({ uuid }) {
     async function copyAd() {
         setCopyAdResponseStatus("pending");
         try {
-            const response = await fetch(`/stillingsregistrering/api/stillinger/UUID/${uuid}/copy`);
+            const response = await fetch(`/stillingsregistrering/api/stillinger/UUID/${ad._id}/copy`, {
+                credentials: "include",
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
             window.location.href = `${STILLINGSREGISTRERING_URL}/stillingsregistrering/rediger/${response.uuid}`;
         } catch (err) {
             setCopyAdResponseStatus("error");
@@ -31,10 +39,18 @@ function CompanyActionBar({ uuid }) {
     }
 
     const stopAd = async () => {
-        if (stopAdResponseStatus) {
-            // test
-        }
         setStopAdResponseStatus("pending");
+        try {
+            await fetch(`/stillingsregistrering/api/stillinger/UUID/${ad._id}/publiser`, {
+                credentials: "include",
+                method: "DELETE",
+            });
+
+            setIsConfirmStopAdModalOpen(false);
+            setStopAdResponseStatus("success");
+        } catch (err) {
+            setStopAdResponseStatus("error");
+        }
     };
 
     useEffect(() => {
@@ -58,14 +74,20 @@ function CompanyActionBar({ uuid }) {
                     <HStack gap="2">
                         <Button
                             as="a"
-                            href={`/stillingsregistrering/stillingsannonser/rediger/${uuid}`}
+                            href={`/stillingsregistrering/stillingsannonser/rediger/${ad._id}`}
                             variant="tertiary"
                             icon={<PencilIcon aria-hidden="true" />}
                         >
                             Endre
                         </Button>
 
-                        <Button variant="tertiary" onClick={stopAd} icon={<PauseIcon aria-hidden="true" />}>
+                        <Button
+                            variant="tertiary"
+                            onClick={() => {
+                                setIsConfirmStopAdModalOpen(true);
+                            }}
+                            icon={<PauseIcon aria-hidden="true" />}
+                        >
                             Avpubliser
                         </Button>
                         <Button
@@ -89,12 +111,23 @@ function CompanyActionBar({ uuid }) {
                     </HStack>
                 </HStack>
             </div>
+
+            {isConfirmStopAdModalOpen && (
+                <ConfirmBeforeUnPublish
+                    onClose={setIsConfirmStopAdModalOpen}
+                    status={stopAdResponseStatus}
+                    stilling={ad}
+                    stopAd={stopAd}
+                />
+            )}
         </Box>
     );
 }
 
 CompanyActionBar.propTypes = {
-    uuid: PropTypes.string.isRequired,
+    ad: PropTypes.shape({
+        _id: PropTypes.string,
+    }).isRequired,
 };
 
 export default CompanyActionBar;

@@ -32,7 +32,7 @@ function Ad({ ad, shareAdRedirectUrl }) {
 
     return (
         <>
-            <CompanyActionBar uuid={ad._id} />
+            <CompanyActionBar ad={ad} />
             <Box className="container-large" paddingBlock={{ xs: "4 12", md: "16" }}>
                 <HGrid as="article" columns={{ xs: 1, lg: "auto 340px" }} gap="16">
                     <div>
