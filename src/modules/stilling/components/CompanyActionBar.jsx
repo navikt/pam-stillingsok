@@ -2,8 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { BodyShort, Box, Button, HStack } from "@navikt/ds-react";
 import { BulletListIcon, EyeIcon, FilesIcon, PauseIcon, PencilIcon } from "@navikt/aksel-icons";
-import { Link } from "react-router-dom";
 import { CompanyContext } from "../../common/context/CompanyProvider";
+import { STILLINGSREGISTRERING_URL } from "../../common/environment";
 
 function CompanyActionBar({ uuid }) {
     const { organizationNumber } = useContext(CompanyContext);
@@ -22,6 +22,12 @@ function CompanyActionBar({ uuid }) {
 
     async function copyAd() {
         setCopyAdResponseStatus("pending");
+        try {
+            const response = await fetch(`/stillingsregistrering/api/stillinger/UUID/${uuid}/copy`);
+            window.location.href = `${STILLINGSREGISTRERING_URL}/stillingsregistrering/rediger/${response.uuid}`;
+        } catch (err) {
+            setCopyAdResponseStatus("error");
+        }
     }
 
     const stopAd = async () => {
@@ -35,7 +41,7 @@ function CompanyActionBar({ uuid }) {
         checkIfAdBelongsToCompany();
     }, [organizationNumber]);
 
-    if (!showActionbar) {
+    if (showActionbar) {
         return null;
     }
 
@@ -51,8 +57,8 @@ function CompanyActionBar({ uuid }) {
                     </div>
                     <HStack gap="2">
                         <Button
-                            as={Link}
-                            to={`/stillingsregistrering/stillingsannonser/rediger/${uuid}`}
+                            as="a"
+                            href={`/stillingsregistrering/stillingsannonser/rediger/${uuid}`}
                             variant="tertiary"
                             icon={<PencilIcon aria-hidden="true" />}
                         >
@@ -74,9 +80,9 @@ function CompanyActionBar({ uuid }) {
                         </Button>
                         <Button
                             variant="tertiary"
-                            as={Link}
+                            as="a"
                             icon={<BulletListIcon aria-hidden="true" />}
-                            to="/stillingsregistrering/stillingsannonser"
+                            href="/stillingsregistrering/stillingsannonser"
                         >
                             Gå til dine stillinger
                         </Button>
