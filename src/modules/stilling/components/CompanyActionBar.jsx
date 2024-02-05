@@ -32,7 +32,7 @@ function CompanyActionBar({ ad }) {
                     "Content-Type": "application/json",
                 },
             });
-            window.location.href = `${STILLINGSREGISTRERING_URL}/stillingsregistrering/rediger/${response.uuid}`;
+            window.location.href = `${STILLINGSREGISTRERING_URL}/rediger/${response.uuid}`;
         } catch (err) {
             setCopyAdResponseStatus("error");
         }
@@ -74,7 +74,7 @@ function CompanyActionBar({ ad }) {
                     <HStack gap="2">
                         <Button
                             as="a"
-                            href={`/stillingsregistrering/stillingsannonser/rediger/${ad._id}`}
+                            href={`/stillingsregistrering/rediger/${ad._id}`}
                             variant="tertiary"
                             icon={<PencilIcon aria-hidden="true" />}
                         >
