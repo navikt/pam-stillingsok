@@ -27,6 +27,7 @@ import WithdrawApplicationPage from "./modules/stilling/trekk-soknad/page";
 import "./modules/styles.css";
 import googleTranslateWorkaround from "./modules/common/utils/googleTranslateWorkaround";
 import NotFound from "./modules/not-found";
+import ComanyProvider from "./modules/common/context/CompanyProvider";
 
 initSentry();
 initAmplitude();
@@ -36,40 +37,42 @@ function Application() {
     return (
         <AuthenticationProvider>
             <UserProvider>
-                <FavouritesProvider>
-                    <SkipLink href="#main-content" />
-                    <div className="arb-push-footer-down">
-                        <BrowserRouter>
-                            <HistoryProvider>
-                                <Switch>
-                                    <Route component={Header} />
-                                </Switch>
-                                <main id="main-content">
+                <ComanyProvider>
+                    <FavouritesProvider>
+                        <SkipLink href="#main-content" />
+                        <div className="arb-push-footer-down">
+                            <BrowserRouter>
+                                <HistoryProvider>
                                     <Switch>
-                                        <Route exact path={CONTEXT_PATH} component={SearchPage} />
-                                        <Route
-                                            path={`${CONTEXT_PATH}/stilling/:id/superrask-soknad`}
-                                            component={NewApplicationPage}
-                                        />
-                                        <Route path={`${CONTEXT_PATH}/stilling/:id`} component={AdPage} />
-                                        <Route
-                                            path={`${CONTEXT_PATH}/rapporter-annonse/:id`}
-                                            component={ReportAdPage}
-                                        />
-                                        <Route path={`${CONTEXT_PATH}/favoritter`} component={FavouritesPage} />
-                                        <Route path={`${CONTEXT_PATH}/lagrede-sok`} component={SavedSearchesPage} />
-                                        <Route
-                                            path={`${CONTEXT_PATH}/trekk-soknad/:uuid/:adUuid`}
-                                            component={WithdrawApplicationPage}
-                                        />
-                                        <Route path="*" component={NotFound} />
+                                        <Route component={Header} />
                                     </Switch>
-                                </main>
-                            </HistoryProvider>
-                        </BrowserRouter>
-                    </div>
-                    <Footer />
-                </FavouritesProvider>
+                                    <main id="main-content">
+                                        <Switch>
+                                            <Route exact path={CONTEXT_PATH} component={SearchPage} />
+                                            <Route
+                                                path={`${CONTEXT_PATH}/stilling/:id/superrask-soknad`}
+                                                component={NewApplicationPage}
+                                            />
+                                            <Route path={`${CONTEXT_PATH}/stilling/:id`} component={AdPage} />
+                                            <Route
+                                                path={`${CONTEXT_PATH}/rapporter-annonse/:id`}
+                                                component={ReportAdPage}
+                                            />
+                                            <Route path={`${CONTEXT_PATH}/favoritter`} component={FavouritesPage} />
+                                            <Route path={`${CONTEXT_PATH}/lagrede-sok`} component={SavedSearchesPage} />
+                                            <Route
+                                                path={`${CONTEXT_PATH}/trekk-soknad/:uuid/:adUuid`}
+                                                component={WithdrawApplicationPage}
+                                            />
+                                            <Route path="*" component={NotFound} />
+                                        </Switch>
+                                    </main>
+                                </HistoryProvider>
+                            </BrowserRouter>
+                        </div>
+                        <Footer />
+                    </FavouritesProvider>
+                </ComanyProvider>
             </UserProvider>
         </AuthenticationProvider>
     );

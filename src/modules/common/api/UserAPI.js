@@ -1,11 +1,6 @@
 import APIError from "./APIError";
 import { CONTEXT_PATH } from "../environment";
-
-function getCookie(name) {
-    const re = new RegExp(`${name}=([^;]+)`);
-    const match = re.exec(document.cookie);
-    return match !== null ? match[1] : "";
-}
+import getCookie from "../utils/getCookie";
 
 async function get(url) {
     let response;
