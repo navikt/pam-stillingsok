@@ -57,7 +57,7 @@ function CompanyActionBar({ ad }) {
         checkIfAdBelongsToCompany();
     }, [organizationNumber]);
 
-    if (showActionbar) {
+    if (!showActionbar) {
         return null;
     }
 
