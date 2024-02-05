@@ -32,7 +32,8 @@ function CompanyActionBar({ ad }) {
                     "Content-Type": "application/json",
                 },
             });
-            window.location.href = `${STILLINGSREGISTRERING_URL}/rediger/${response.uuid}`;
+            const copy = await response.json();
+            window.location.href = `${STILLINGSREGISTRERING_URL}/rediger/${copy.uuid}`;
         } catch (err) {
             setCopyAdResponseStatus("error");
         }
