@@ -70,7 +70,7 @@ export function logStillingVisning(ad) {
         published: ad._source.published || "N/A",
         fetchedFromSource: ad._source.source || "N/A",
         hasSuperraskSoknad: ad._source.properties.hasInterestform || "N/A",
-        hasApplicationUrl: !!ad._source.properties.applicationurl,
+        hasApplicationUrl: !!ad._source.properties.applicationurl || !!ad._source.properties.sourceurl,
         hasApplicationEmail: !!ad._source.properties.applicationemail,
         hasContactInfoMail: hasContactMail,
         hasContactInfoPhone: hasContactPhone,
