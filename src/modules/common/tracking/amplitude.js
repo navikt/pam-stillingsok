@@ -51,10 +51,12 @@ export function logStillingVisning(ad) {
     let hasContactMail = false;
     let hasContactPhone = false;
     const contactList = ad._source.contactList ? ad._source.contactList : null;
-    contactList.forEach((contact) => {
-        if (contact.email) hasContactMail = true;
-        if (contact.phone) hasContactPhone = true;
-    });
+    if (contactList !== null) {
+        contactList.forEach((contact) => {
+            if (contact.email) hasContactMail = true;
+            if (contact.phone) hasContactPhone = true;
+        });
+    }
 
     logAmplitudeEvent("Stilling visning", {
         title: ad._source.title || "N/A",
