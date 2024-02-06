@@ -9,7 +9,6 @@ const compression = require("compression");
 const searchApiConsumer = require("./api/searchApiConsumer");
 const htmlMeta = require("./common/htmlMeta");
 const locationApiConsumer = require("./api/locationApiConsumer");
-const setUpProxyCvApi = require("./api/cvApiProxy");
 const { initializeTokenX, tokenIsValid } = require("./tokenX/tokenXUtils");
 const setUpAduserApiProxy = require("./api/userApiProxyConfig");
 const setUpSuperraskApi = require("./api/superraskApiProxy");
@@ -54,8 +53,8 @@ server.use(
             objectSrc: ["'none'"],
             frameAncestors: ["'none'"],
             formAction: ["'self'"],
-            styleSrc: ["'self'", "https://fonts.googleapis.com/"],
-            fontSrc: ["'self'", "data:", "https://fonts.gstatic.com"],
+            styleSrc: ["'self'"],
+            fontSrc: ["'self'", "data:"],
             imgSrc: ["'self'", "data:"],
             connectSrc: [
                 "'self'",
@@ -144,6 +143,8 @@ const startServer = (htmlPages) => {
 
     server.use(`${properties.PAM_CONTEXT_PATH}/css`, express.static(path.resolve(rootDirectory, "dist/css")));
 
+    server.use(`${properties.PAM_CONTEXT_PATH}/public`, express.static(path.resolve(rootDirectory, "dist/public")));
+
     server.use(`${properties.PAM_CONTEXT_PATH}/images`, express.static(path.resolve(rootDirectory, "images")));
 
     server.get(`${properties.PAM_CONTEXT_PATH}/api/isAuthenticated`, async (req, res) => {
@@ -159,7 +160,6 @@ const startServer = (htmlPages) => {
             res.sendStatus(401);
         }
     });
-    setUpProxyCvApi(server);
     setUpSuperraskApi(server);
 
     // Give users fallback locations from local file if aduser is unresponsive

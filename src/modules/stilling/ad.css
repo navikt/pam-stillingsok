@@ -1,51 +1,12 @@
-.ad-html-content {
-    font-size: var(--a-font-size-large);
-    line-height: 1.5;
-    font-weight: 400;
-    min-height: 60px;
+.job-posting-text {
     overflow-wrap: break-word;
     word-wrap: break-word;
     max-width: 70ch;
 }
 
-.ad-html-content h1 {
-    margin: 2rem 0 1rem 0;
-    font-size: var(--a-font-size-heading-xlarge);
-    line-height: var(--a-font-line-height-heading-xlarge);
+.job-posting-text #arb-aapningstekst,
+.job-posting-text #arb-arbeidsoppgaver,
+.job-posting-text #arb-tilbyr,
+.job-posting-text #arb-serEtter {
+    margin-bottom: var(--a-spacing-16);
 }
-
-.ad-html-content h2 {
-    margin: 2rem 0 1rem 0;
-    font-size: var(--a-font-size-heading-large);
-    line-height: var(--a-font-line-height-heading-large);
-    font-weight: 600;
-}
-
-.ad-html-content h3 {
-    margin: 2rem 0 1rem 0;
-    font-size: var(--a-font-size-heading-medium);
-    line-height: var(--a-font-line-height-heading-medium);
-    font-weight: 600;
-}
-
-.ad-html-content h4 {
-    margin: 2rem 0 1rem 0;
-    font-size: var(--a-font-size-heading-small);
-    line-height: var(--a-font-line-height-heading-small);
-    font-weight: 600;
-}
-
-.ad-html-content h5 {
-    margin: 2rem 0 1rem 0;
-    font-size: var(--a-font-size-heading-xsmall);
-    line-height: var(--a-font-line-height-heading-xsmall);
-    font-weight: 600;
-}
-
-.ad-html-content p,
-.ad-html-content ul,
-.ad-html-content ol {
-    margin: 1rem 0;
-}
-
-

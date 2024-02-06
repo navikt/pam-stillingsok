@@ -13,7 +13,6 @@ import H1WithAutoFocus from "../../common/components/h1WithAutoFocus/H1WithAutoF
 import DoYouWantToSaveSearch from "./howToPanels/DoYouWantToSaveSearch";
 import SelectedFilters from "./selectedFilters/SelectedFilters";
 import Feedback from "./feedback/Feedback";
-import DelayedSpinner from "../../common/components/spinner/DelayedSpinner";
 import FiltersDesktop from "./filters/FiltersDesktop";
 import SearchResultHeader from "./searchResultHeader/SearchResultHeader";
 import FilterIcon from "./icons/FilterIcon";
@@ -134,24 +133,18 @@ export default function Search({ initialSearchResponse, searchResponse, initialQ
 
                     <div>
                         <SelectedFilters query={query} queryDispatch={queryDispatch} />
-                        {searchResponse.status === FetchStatus.IS_FETCHING && query.from === 0 ? (
-                            <DelayedSpinner />
-                        ) : (
-                            <>
-                                <SearchResult
-                                    initialSearchResponse={initialSearchResponse}
-                                    searchResponse={searchResponse}
-                                    query={query}
-                                    queryDispatch={queryDispatch}
-                                    loadMoreResults={() => {
-                                        loadMoreResults();
-                                    }}
-                                    isDebug={isDebug}
-                                />
-                                <DoYouWantToSaveSearch query={query} />
-                                <Feedback query={query} />
-                            </>
-                        )}
+                        <SearchResult
+                            initialSearchResponse={initialSearchResponse}
+                            searchResponse={searchResponse}
+                            query={query}
+                            queryDispatch={queryDispatch}
+                            loadMoreResults={() => {
+                                loadMoreResults();
+                            }}
+                            isDebug={isDebug}
+                        />
+                        <DoYouWantToSaveSearch query={query} />
+                        <Feedback query={query} />
                     </div>
                 </HGrid>
             )}
@@ -162,11 +155,11 @@ export default function Search({ initialSearchResponse, searchResponse, initialQ
 Search.propTypes = {
     initialSearchResponse: PropTypes.shape({
         data: PropTypes.shape({}),
-        status: PropTypes.shape({}),
+        status: PropTypes.string,
     }),
     searchResponse: PropTypes.shape({
         data: PropTypes.shape({}),
-        status: PropTypes.shape({}),
+        status: PropTypes.string,
     }),
     initialQuery: PropTypes.shape({}),
     fetchSearch: PropTypes.func,

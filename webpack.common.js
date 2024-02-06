@@ -1,5 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
     devtool: "source-map",
@@ -42,6 +43,11 @@ module.exports = {
     plugins: [
         new MiniCssExtractPlugin({
             filename: "css/[name].css",
+        }),
+        new CopyPlugin({
+            patterns: [
+                { from: "public", to: "public" }, //to the dist root directory
+            ],
         }),
     ],
 };

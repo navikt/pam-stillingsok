@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import parse from "html-react-parser";
 import DOMPurify from "isomorphic-dompurify";
+import { RichText } from "@navikt/arbeidsplassen-react";
 import { containsEmail, extractEmail, isValidEmail, mailtoInString } from "../../common/utils/utils";
 
 const preprocessAd = (adText) => {
@@ -26,7 +27,7 @@ export default function AdText({ adText }) {
     if (adText) {
         const preprocessedAd = preprocessAd(adText);
         const cleanHtml = DOMPurify.sanitize(preprocessedAd);
-        return <section className="ad-html-content">{parse(cleanHtml)}</section>;
+        return <RichText className="job-posting-text">{parse(cleanHtml)}</RichText>;
     }
     return null;
 }

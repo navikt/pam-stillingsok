@@ -100,7 +100,6 @@ function SuperraskPage({ match }) {
 
     return (
         <NewApplication
-            formAction="/stillinger"
             submitForm={submitApplication}
             ad={data.ad}
             applicationForm={data.applicationForm}

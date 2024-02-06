@@ -1,10 +1,10 @@
 import PropTypes from "prop-types";
 import React, { useLayoutEffect, useRef } from "react";
-import Link from "../../../../migrating/Link";
-import { BodyLong, Heading, HStack, Link as AkselLink, Tag } from "@navikt/ds-react";
+import { Link } from "react-router-dom";
+import { BodyLong, BodyShort, Heading, HStack, Link as AkselLink, Tag } from "@navikt/ds-react";
 import { addDays, endOfDay, format as formatDateFns, isSameDay, isValid, parse, parseISO, subDays } from "date-fns";
 import { nb } from "date-fns/locale";
-import { Buldings3Icon, ExternalLinkIcon, PinIcon } from "@navikt/aksel-icons";
+import { Buldings3Icon, EarthIcon } from "@navikt/aksel-icons";
 import getEmployer from "../../../../../server/common/getEmployer";
 import getWorkLocation from "../../../../../server/common/getWorkLocation";
 import { CONTEXT_PATH } from "../../../common/environment";
@@ -14,7 +14,6 @@ import Debug from "./Debug";
 export default function SearchResultItem({ ad, showExpired, favouriteButton, isDebug, shouldAutoFocus = false }) {
     const location = getWorkLocation(ad.properties.location, ad.locationList);
     const employer = getEmployer(ad);
-    const isFinn = ad.source && ad.source.toLowerCase() === "finn";
     const published = formatDate(ad.published);
     const now = new Date();
     // Check against end of day to avoid issues.
@@ -73,7 +72,7 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, isD
             ref={ref}
             tabIndex={shouldAutoFocus ? -1 : undefined}
             className="mb-12"
-            aria-labelledby={`${ad.uuid}-h3 ${ad.uuid}-jobTitle ${ad.uuid}-employer ${ad.uuid}-location`}
+            aria-labelledby={`${ad.uuid}-h3`}
         >
             {published && (
                 <BodyLong weight="semibold" size="small" textColor="subtle">
@@ -86,7 +85,7 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, isD
 
             <HStack gap="2" wrap={false} align="center" justify="space-between" className="mb-2">
                 <Heading level="3" size="small" className="overflow-wrap-anywhere" id={`${ad.uuid}-h3`}>
-                    <LinkToAd stilling={ad} isFinn={isFinn} employer={employer}>
+                    <LinkToAd stilling={ad} employer={employer}>
                         {ad.title}
                     </LinkToAd>
                 </Heading>
@@ -94,7 +93,7 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, isD
             </HStack>
 
             {jobTitle && (
-                <BodyLong weight="semibold" id={`${ad.uuid}-jobTitle`} className="mb-4 break-word">
+                <BodyLong weight="semibold" id={`${ad.uuid}-jobTitle`} className="mb-4 overflow-wrap-anywhere">
                     {jobTitle}
                 </BodyLong>
             )}
@@ -103,17 +102,23 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, isD
                 {employer && (
                     <HStack gap="2" className="mb-1">
                         <div>
-                            <Buldings3Icon width="1.5em" height="1.5em" aria-label="Arbeidsgiver" />
+                            <Buldings3Icon width="1.5em" height="1.5em" aria-hidden="true" />
+                            <BodyShort visuallyHidden>Arbeidsgiver</BodyShort>
                         </div>
-                        <BodyLong id={`${ad.uuid}-employer`}>{employer}</BodyLong>
+                        <BodyLong id={`${ad.uuid}-employer`} className="overflow-wrap-anywhere">
+                            {employer}
+                        </BodyLong>
                     </HStack>
                 )}
                 {location && (
                     <HStack gap="2" className="mb-1">
                         <div>
-                            <PinIcon width="1.5em" height="1.5em" aria-label="Sted" />
+                            <EarthIcon width="1.5em" height="1.5em" aria-label="Sted" aria-hidden="true" />
+                            <BodyShort visuallyHidden>Sted</BodyShort>
                         </div>
-                        <BodyLong id={`${ad.uuid}-location`}>{location}</BodyLong>
+                        <BodyLong id={`${ad.uuid}-location`} className="overflow-wrap-anywhere">
+                            {location}
+                        </BodyLong>
                     </HStack>
                 )}
             </div>
@@ -154,14 +159,7 @@ SearchResultItem.propTypes = {
     isDebug: PropTypes.bool,
 };
 
-function LinkToAd({ children, stilling, isFinn }) {
-    if (isFinn) {
-        return (
-            <AkselLink href={`https://www.finn.no/${stilling.reference}`}>
-                {children} <ExternalLinkIcon width="1.125em" height="1.125em" aria-label="Åpnes på Finn" />
-            </AkselLink>
-        );
-    }
+function LinkToAd({ children, stilling }) {
     return (
         <AkselLink as={Link} to={`${CONTEXT_PATH}/stilling/${stilling.uuid}`}>
             {children}
@@ -171,7 +169,6 @@ function LinkToAd({ children, stilling, isFinn }) {
 
 LinkToAd.propTypes = {
     children: PropTypes.node,
-    isFinn: PropTypes.bool,
     stilling: PropTypes.shape({
         reference: PropTypes.string,
         uuid: PropTypes.string,

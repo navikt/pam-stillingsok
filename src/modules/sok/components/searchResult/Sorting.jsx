@@ -2,13 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Select } from "@navikt/ds-react";
 import { SET_SORTING } from "../../query";
-import logAmplitudeEvent from "../../../common/tracking/amplitude";
 
 function Sorting({ query, dispatch }) {
     function handleChange(e) {
         const { value } = e.target;
         dispatch({ type: SET_SORTING, value });
-        logAmplitudeEvent("changed sorting", { value });
     }
 
     return (

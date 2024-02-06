@@ -13,13 +13,13 @@ function NoFavourites() {
                     Du har ikke lagret noen favoritter ennå
                 </Heading>
                 <BodyLong className="text-center" spacing>
-                    Har du ikke tid til å lese annonsen akkurat nå, eller lyst å søke først senere når du kommer hjem?
-                    Med favoritter finner du raskt tilbake til annonsen.
+                    Har du ikke tid til å lese annonsen akkurat nå, eller lyst til å søke senere når du kommer hjem? Med
+                    favoritter finner du raskt tilbake til annonsen.
                 </BodyLong>
                 <BodyLong className="text-center" spacing>
                     Du kan markere annonser som favoritter både fra søket og inne i annonsen.
                 </BodyLong>
-                <Button variant="primary" as={Link} to={CONTEXT_PATH}>
+                <Button variant="primary" as={Link} role="link" to={CONTEXT_PATH}>
                     Gå til søket
                 </Button>
             </VStack>

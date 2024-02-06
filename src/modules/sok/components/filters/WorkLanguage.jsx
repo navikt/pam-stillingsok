@@ -2,13 +2,13 @@ import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 import { Checkbox, Fieldset } from "@navikt/ds-react";
 import UnknownSearchCriteriaValues from "./UnknownSearchCriteriaValues";
-import { ADD_SECTOR, REMOVE_SECTOR } from "../../query";
-import moveCriteriaToBottom from "../utils/moveFacetToBottom";
+import { ADD_WORKLANGUAGE, REMOVE_WORKLANGUAGE } from "../../query";
 import mergeCount from "../utils/mergeCount";
 import findUnknownSearchCriteriaValues from "../utils/findUnknownSearchCriteriaValues";
 import { logSearchFilterAdded, logSearchFilterRemoved } from "../../../common/tracking/amplitude";
+import moveCriteriaToBottom from "../utils/moveFacetToBottom";
 
-function Sector({ initialValues, updatedValues, query, dispatch }) {
+function WorkLanguage({ initialValues, updatedValues, query, dispatch }) {
     const [values, setValues] = useState(moveCriteriaToBottom(initialValues, "Ikke oppgitt"));
 
     useEffect(() => {
@@ -21,33 +21,33 @@ function Sector({ initialValues, updatedValues, query, dispatch }) {
     function handleClick(e) {
         const { value } = e.target;
         if (e.target.checked) {
-            dispatch({ type: ADD_SECTOR, value });
-            logSearchFilterAdded({ sektor: value });
+            dispatch({ type: ADD_WORKLANGUAGE, value });
+            logSearchFilterAdded({ arbeidsspraak: value });
         } else {
-            dispatch({ type: REMOVE_SECTOR, value });
-            logSearchFilterRemoved({ sektor: value });
+            dispatch({ type: REMOVE_WORKLANGUAGE, value });
+            logSearchFilterRemoved({ arbeidsspraak: value });
         }
     }
 
     return (
-        <Fieldset legend="Sektor" hideLegend>
+        <Fieldset legend="Heltid/deltid" hideLegend>
             <div>
                 {values.map((item) => (
                     <Checkbox
-                        name="sector"
+                        name="workLanguage"
                         key={item.key}
                         value={item.key}
                         onChange={handleClick}
-                        checked={query.sector.includes(item.key)}
+                        checked={query.workLanguage.includes(item.key)}
                     >
                         {`${item.key} (${item.count})`}
                     </Checkbox>
                 ))}
 
                 <UnknownSearchCriteriaValues
-                    namePrefix="sector"
-                    unknownValues={findUnknownSearchCriteriaValues(query.sector, initialValues)}
-                    checkedValues={query.sector}
+                    namePrefix="workLanguage"
+                    unknownValues={findUnknownSearchCriteriaValues(query.workLanguage, initialValues)}
+                    checkedValues={query.workLanguage}
                     onClick={handleClick}
                 />
             </div>
@@ -55,19 +55,18 @@ function Sector({ initialValues, updatedValues, query, dispatch }) {
     );
 }
 
-Sector.propTypes = {
-    initialValues: PropTypes.arrayOf(PropTypes.shape({})),
-    updatedValues: PropTypes.arrayOf(PropTypes.shape({})),
-    sector: PropTypes.arrayOf(
+WorkLanguage.propTypes = {
+    initialValues: PropTypes.arrayOf(
         PropTypes.shape({
             key: PropTypes.string,
             count: PropTypes.number,
         }),
-    ),
+    ).isRequired,
+    updatedValues: PropTypes.arrayOf(PropTypes.shape({})),
     query: PropTypes.shape({
-        sector: PropTypes.arrayOf(PropTypes.string),
+        workLanguage: PropTypes.arrayOf(PropTypes.string),
     }).isRequired,
     dispatch: PropTypes.func.isRequired,
 };
 
-export default Sector;
+export default WorkLanguage;

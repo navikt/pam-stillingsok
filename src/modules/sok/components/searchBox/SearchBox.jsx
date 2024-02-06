@@ -5,7 +5,6 @@ import Typeahead from "../../../common/components/typeahead/Typeahead";
 import { FetchAction, useFetchReducer } from "../../../common/hooks/useFetchReducer";
 import SearchAPI from "../../../common/api/SearchAPI";
 import capitalizeFirstLetter from "../../../common/utils/capitalizeFirstLetter";
-import logAmplitudeEvent from "../../../common/tracking/amplitude";
 
 function SearchBox({ dispatch, query }) {
     const [value, setValue] = useState("");
@@ -59,29 +58,12 @@ function SearchBox({ dispatch, query }) {
         setValue(newValue);
     }
 
-    function track(newValue) {
-        try {
-            // Track only search box values if they are suggestions from our own api.
-            // Do not track other values if they free text entered by user.
-            const found = suggestionsResponse.data.find((it) => it.toLowerCase() === newValue.toLowerCase());
-            if (found) {
-                logAmplitudeEvent("selected typeahead suggestion", { value: found });
-            } else {
-                logAmplitudeEvent("selected typeahead suggestion", { value: "(fritekst)" });
-            }
-        } catch (err) {
-            // ignore
-        }
-    }
-
     function handleTypeAheadSuggestionSelected(newValue, shouldSearchInWholeAd) {
         let fields;
         setValue(newValue);
         if (!shouldSearchInWholeAd) {
             fields = "occupation";
         }
-
-        track(newValue);
 
         dispatch({ type: SET_SEARCH_STRING, value: newValue, fields });
     }
@@ -92,8 +74,6 @@ function SearchBox({ dispatch, query }) {
         if (found) {
             fields = "occupation";
         }
-
-        track(value);
 
         dispatch({ type: SET_SEARCH_STRING, value, fields });
     }

@@ -198,7 +198,7 @@ export default class Typeahead extends React.Component {
                 aria-haspopup="listbox"
             >
                 <Search
-                    label="Søk i ledige stillinger"
+                    label="Søkeord"
                     variant="primary"
                     id={this.props.id}
                     type="search"

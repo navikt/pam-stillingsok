@@ -19,17 +19,14 @@ import logAmplitudeEvent from "../../common/tracking/amplitude";
 import FavouritesButton from "../../favoritter/components/FavouritesButton";
 import { CONTEXT_PATH } from "../../common/environment";
 
-export function getApplicationUrl(source, properties) {
-    if (source === "FINN") {
-        return properties.sourceurl;
-    }
+export function getApplicationUrl(properties) {
     if (properties.applicationurl !== undefined) {
         return properties.applicationurl;
     }
     return properties.sourceurl;
 }
 
-const applyForPosition = (finn, stilling) => {
+const applyForPosition = (stilling) => {
     try {
         logAmplitudeEvent("Stilling sok-via-url", {
             title: stilling._source.title,
@@ -64,7 +61,7 @@ const logEmailAnchorClick = (stilling) => {
 
 export default function HowToApply({ stilling, showFavouriteButton }) {
     const { properties } = stilling._source;
-    const applicationUrl = getApplicationUrl(stilling._source.source, properties);
+    const applicationUrl = getApplicationUrl(properties);
     const isFinn = stilling._source.source === "FINN";
     const path = "stilling";
 
@@ -143,7 +140,7 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                         {isValidUrl(applicationUrl) ? (
                             <BodyLong className="mt-4">
                                 Alternativt kan du{" "}
-                                <AkselLink href={applicationUrl} onClick={() => applyForPosition(isFinn, stilling)}>
+                                <AkselLink href={applicationUrl} onClick={() => applyForPosition(stilling)}>
                                     sende søknad her.
                                 </AkselLink>
                             </BodyLong>
@@ -240,18 +237,17 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                             variant="primary"
                             as="a"
                             href={applicationUrl}
-                            onClick={() => applyForPosition(isFinn, stilling)}
+                            onClick={() => applyForPosition(stilling)}
                             icon={<ExternalLinkIcon aria-hidden="true" />}
+                            role="link"
                         >
                             Gå til søknad
                         </Button>
                     </div>
                 )}
 
-                {isFinn && (
-                    <BodyLong className="mt-4">
-                        Denne annonsen er hentet fra FINN.no. Du kan sende søknad via den opprinnelige annonsen.
-                    </BodyLong>
+                {isFinn && !properties.applicationurl && (
+                    <BodyLong className="mt-4">Søk via opprinnelig annonse på FINN.no.</BodyLong>
                 )}
                 {showFavouriteButton && (
                     <FavouritesButton

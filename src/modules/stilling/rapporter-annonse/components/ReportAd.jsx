@@ -1,211 +1,203 @@
-import * as React from "react";
-import { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import { Alert, BodyLong, Box, Button, Checkbox, Heading, Link as AkselLink, Textarea } from "@navikt/ds-react";
-import logAmplitudeEvent from "../../../common/tracking/amplitude";
-import UserAPI from "../../../common/api/UserAPI";
-import H1WithAutoFocus from "../../../common/components/h1WithAutoFocus/H1WithAutoFocus";
+import {
+    Alert,
+    Bleed,
+    BodyLong,
+    BodyShort,
+    Box,
+    Button,
+    Checkbox,
+    ErrorSummary,
+    Fieldset,
+    Heading,
+    Link as AkselLink,
+    LinkPanel,
+    Textarea,
+    VStack,
+} from "@navikt/ds-react";
+import { FetchStatus } from "../../../common/hooks/useFetchReducer";
 
-const violationCategories = [
+const reportCategories = [
     { label: "Diskriminerende innhold", key: "discrimination" },
     { label: "Det er markedsføring", key: "marketing" },
-    { label: "Annet", key: "other" },
-];
-
-const scamCategories = [
     { label: "Falsk stillingannonse og arbeidsgiver", key: "fake" },
     { label: "Krever betaling for å søke stilling", key: "payment" },
     { label: "Ber om kredittinfo og/eller BankID", key: "creditInfo" },
     { label: "Annet", key: "other" },
 ];
 
-function ReportAd({ id }) {
-    const [error, setError] = useState(false);
-    const [finished, setFinished] = useState(false);
-    const [violation, setViolation] = useState(false);
-    const [violationCategory, setViolationCategory] = useState(null);
-    const [scam, setScam] = useState(false);
-    const [scamCategory, setScamCategory] = useState(null);
+function ReportAd({ ad, submitForm, postReportStatus, validationErrors, validateOnChange }) {
+    const errorSummary = useRef();
+    const formData = useRef();
     const [description, setDescription] = useState("");
-    const [descriptionLabel, setDescriptionLabel] = useState("Beskrivelse - må fylles ut");
+    const [hasTriedSubmit, setHasTriedSubmit] = useState(false);
 
-    function handleDescriptionChange(e) {
-        setDescription(e.target.value);
-    }
+    const handleSubmit = (e) => {
+        setHasTriedSubmit(false);
+        e.preventDefault();
+        submitForm(e);
+    };
 
-    function handleViolationCheck() {
-        setViolation(!violation);
-        setScam(false);
-        setViolationCategory(null);
-        setScamCategory(null);
-        setDescriptionLabel("Beskriv regelbruddet - må fylles ut");
-    }
-
-    function handleViolationCategoryCheck(e) {
-        setViolationCategory(e.target.value);
-    }
-
-    function handleScamCheck() {
-        setScam(!scam);
-        setViolation(false);
-        setViolationCategory(null);
-        setScamCategory(null);
-        setDescriptionLabel("Beskriv svindelen - må fylles ut");
-    }
-
-    function handleScamCategoryCheck(e) {
-        setScamCategory(e.target.value);
-    }
-
-    async function handleSendTip() {
-        const category = violation ? "Regelbrudd" : "Mistanke om svindel";
-        const subCategory = violation
-            ? violationCategories.filter((c) => c.key === violationCategory)[0].label
-            : scamCategories.filter((c) => c.key === scamCategory)[0].label;
-        const title = `En stilling har blitt rapportert for ${category.toLowerCase()}`;
-
-        try {
-            await UserAPI.post(
-                "api/v1/reportposting",
-                {
-                    category,
-                    subCategory,
-                    title,
-                    postingId: id,
-                    description,
-                },
-                false,
-            );
-
-            setFinished(true);
-
-            logAmplitudeEvent("Rapportering av stillingsannonse", {
-                category,
-                subCategory,
-                title,
-                postingId: id,
-                description,
-            });
-        } catch (e) {
-            setError(true);
+    useEffect(() => {
+        if (Object.keys(validationErrors).length > 0 && !hasTriedSubmit) {
+            errorSummary.current.focus();
         }
-    }
+        setHasTriedSubmit(true);
+    }, [validationErrors]);
 
     return (
-        <div className="container-medium mt-12 mb-16 RapporterAnnonse">
-            <div>
-                {finished && (
-                    <div>
-                        <H1WithAutoFocus>Takk for din tilbakemelding</H1WithAutoFocus>
-
-                        <div className="report-form">
-                            <BodyLong spacing>Takk for at du tok deg tid til å rapportere denne annonsen.</BodyLong>
-                            <BodyLong spacing>
-                                Har du spørsmål kan du <AkselLink href="/kontakt">kontakte oss her.</AkselLink>
-                            </BodyLong>
-                            <BodyLong>Med vennlig hilsen arbeidsplassen.no</BodyLong>
-                        </div>
+        <>
+            <Bleed className="mb-12">
+                <Box background="surface-alt-1-subtle" paddingBlock="4">
+                    <div className="container-small">
+                        <BodyShort weight="semibold">{ad._source.title}</BodyShort>
+                        <BodyShort>{ad._source.businessName}</BodyShort>
                     </div>
-                )}
-                {!finished && (
-                    <div>
-                        <H1WithAutoFocus>Rapporter annonse</H1WithAutoFocus>
-
-                        <div className="report-form">
-                            <Heading level="2" size="small" spacing>
-                                Henveldensen gjelder
+                </Box>
+            </Bleed>
+            <div className="container-small mb-16">
+                <div>
+                    {postReportStatus === FetchStatus.SUCCESS ? (
+                        <div>
+                            <Heading level="1" size="xlarge" className="mb-4">
+                                Takk for din tilbakemelding
                             </Heading>
 
-                            <Checkbox name="regelbrudd" onChange={handleViolationCheck} checked={violation === true}>
-                                Regelbrudd
-                            </Checkbox>
-
-                            <Box paddingInline="8 0">
-                                {violation &&
-                                    violationCategories.map((c) => (
-                                        <Checkbox
-                                            key={c.key}
-                                            value={c.key}
-                                            onChange={handleViolationCategoryCheck}
-                                            checked={violationCategory === c.key}
-                                        >
-                                            {c.label}
-                                        </Checkbox>
-                                    ))}
-                            </Box>
-                            <Checkbox name="svindel" onChange={handleScamCheck} checked={scam === true}>
-                                Mistanke om svindel
-                            </Checkbox>
-
-                            <Box paddingInline="8 0">
-                                {scam &&
-                                    scamCategories.map((c) => (
-                                        <Checkbox
-                                            key={c.key}
-                                            value={c.key}
-                                            onChange={handleScamCategoryCheck}
-                                            checked={scamCategory === c.key}
-                                        >
-                                            {c.label}
-                                        </Checkbox>
-                                    ))}
-                            </Box>
-                            <br />
-
-                            <Textarea
-                                label={descriptionLabel}
-                                maxLength={255}
-                                value={description}
-                                onChange={handleDescriptionChange}
-                                description="Legg ikke igjen personopplysinger i dette feltet"
-                                className="mb-8"
-                            />
-
-                            <BodyLong spacing>
-                                <AkselLink href="/retningslinjer-stillingsannonser">Les om gjeldende regler</AkselLink>
-                            </BodyLong>
+                            <div className="report-form mb-12">
+                                <BodyLong spacing>Takk for at du tok deg tid til å rapportere denne annonsen.</BodyLong>
+                                <BodyLong spacing>
+                                    Har du spørsmål kan du <AkselLink href="/kontakt">kontakte oss her.</AkselLink>
+                                </BodyLong>
+                                <BodyLong>Med vennlig hilsen arbeidsplassen.no</BodyLong>
+                            </div>
                         </div>
+                    ) : (
+                        <form onSubmit={handleSubmit} ref={formData}>
+                            <Heading level="1" size="xlarge" className="mb-4">
+                                Rapporter annonse
+                            </Heading>
+                            <BodyLong className="mb-8">
+                                Alle annonser på arbeidsplassen.no skal følge{" "}
+                                <AkselLink href="/retningslinjer-stillingsannonser" className="display-inline">
+                                    NAVs retningslinjer for stillingsannonser
+                                </AkselLink>
+                                . I tilfeller der det er brudd på retningslinjene vil stillingsannonsene bli fjernet.
+                            </BodyLong>
 
-                        {error && (
-                            <Alert variant="error" className="mb-4 mt-4" role="alert">
-                                Rapportering feilet - prøv igjen
-                            </Alert>
-                        )}
+                            <Fieldset
+                                id="categoryFieldset"
+                                legend="Velg hvilke retningslinjer annonsen bryter"
+                                description="Velg minst èn"
+                                error={validationErrors.categoryFieldset}
+                                className="mb-8"
+                            >
+                                <div>
+                                    {reportCategories.map((c) => (
+                                        <Checkbox
+                                            name="category"
+                                            value={c.label}
+                                            key={c.key}
+                                            onChange={() => {
+                                                validateOnChange(formData.current);
+                                            }}
+                                        >
+                                            {c.label}
+                                        </Checkbox>
+                                    ))}
+                                </div>
+                            </Fieldset>
+                            <Textarea
+                                id="messageField"
+                                className="mb-8"
+                                error={validationErrors.messageField}
+                                label="Legg til utdypende informasjon"
+                                maxLength={300}
+                                name="description"
+                                description="Valgfritt. Vennligst ikke skriv inn personopplysninger."
+                                value={description}
+                                onChange={(e) => {
+                                    setDescription(e.target.value);
+                                    validateOnChange(formData.current);
+                                }}
+                            />
+                            <BodyLong className="mb-4">
+                                Når du har sendt inn tipset, vurderer vi om annonsen bryter retningslinjene og om den
+                                skal fjernes. Ditt tips er anonymt.
+                            </BodyLong>
 
-                        <Button
-                            variant="primary"
-                            disabled={(violationCategory === null && scamCategory === null) || !description}
-                            onClick={handleSendTip}
-                            className="mb-8"
+                            {Object.keys(validationErrors).length > 0 && (
+                                <ErrorSummary
+                                    ref={errorSummary}
+                                    heading="Du må rette noen feil før du kan rapportere annonsen"
+                                    className="mb-12"
+                                >
+                                    {Object.entries(validationErrors).map(([key, value]) => (
+                                        <ErrorSummary.Item key={key} href={`#${key}`}>
+                                            {value}
+                                        </ErrorSummary.Item>
+                                    ))}
+                                </ErrorSummary>
+                            )}
+
+                            {postReportStatus === FetchStatus.FAILURE && (
+                                <Alert variant="error" className="mb-4">
+                                    Rapportering av annonse feilet.
+                                </Alert>
+                            )}
+                            <Button
+                                type="submit"
+                                loading={postReportStatus === FetchStatus.IS_FETCHING}
+                                variant="primary"
+                                className="mb-12"
+                            >
+                                Rapporter annonse
+                            </Button>
+                        </form>
+                    )}
+
+                    <VStack gap="4">
+                        <LinkPanel className="arb-link-panel-tertiary" href="https://tips.skatteetaten.no/web/tips/">
+                            <LinkPanel.Title className="navds-link-panel__title navds-heading--small">
+                                Send tips til Skatteetaten
+                            </LinkPanel.Title>
+                            <LinkPanel.Description className="navds-link-panel__description navds-body-long">
+                                Ved mistanke om for eksempel svart arbeid eller ulovlig utleie.
+                            </LinkPanel.Description>
+                        </LinkPanel>
+                        <LinkPanel
+                            className="arb-link-panel-tertiary"
+                            href="https://www.arbeidstilsynet.no/kontakt-oss/tips/"
                         >
-                            Send tips
-                        </Button>
-                    </div>
-                )}
-
-                <BodyLong spacing>
-                    Stillingsannonser blir som regel umiddelbart publisert på arbeidsplassen.no. Etter publisering vil
-                    alle annonser bli kontrollert etter NAVs retningslinjer. I tilfeller der det er brudd på
-                    retningslinjene vil stillingsannonsene bli fjernet.
-                </BodyLong>
-                <BodyLong spacing>
-                    Dersom det gjelder mistanke om straffbare forhold ved virksomheten, for eksempel manglende
-                    etterlevelse av arbeidsmiljøloven, svart arbeid eller lignende, så kan du også tipse Skatteetaten
-                    eller Arbeidstilsynet direkte.
-                </BodyLong>
-                <BodyLong spacing>
-                    <AkselLink href="https://tips.skatteetaten.no/web/tips/">Tips Skatteetaten</AkselLink>
-                </BodyLong>
-                <BodyLong spacing>
-                    <AkselLink href="https://www.arbeidstilsynet.no/kontakt-oss/tips/">Tips Arbeidstilsynet</AkselLink>
-                </BodyLong>
+                            <LinkPanel.Title className="navds-link-panel__title navds-heading--small">
+                                Send tips til Arbeidstilsynet
+                            </LinkPanel.Title>
+                            <LinkPanel.Description className="navds-link-panel__description navds-body-long">
+                                Ved mistanke om kritikkverdige arbeidsmiljøforhold.
+                            </LinkPanel.Description>
+                        </LinkPanel>
+                    </VStack>
+                </div>
             </div>
-        </div>
+        </>
     );
 }
 
 ReportAd.propTypes = {
-    id: PropTypes.string.isRequired,
+    ad: PropTypes.shape({
+        _id: PropTypes.string,
+        _source: PropTypes.shape({
+            businessName: PropTypes.string,
+            title: PropTypes.string,
+        }),
+    }).isRequired,
+    submitForm: PropTypes.func.isRequired,
+    postReportStatus: PropTypes.string.isRequired,
+    validationErrors: PropTypes.shape({
+        categoryFieldset: PropTypes.string,
+        messageField: PropTypes.string,
+    }).isRequired,
+    validateOnChange: PropTypes.func.isRequired,
 };
 
 export default ReportAd;

@@ -13,7 +13,7 @@ import {
     Textarea,
     TextField,
 } from "@navikt/ds-react";
-import Link from "../../../../migrating/Link";
+import { Link } from "react-router-dom";
 import H1WithAutoFocus from "../../../common/components/h1WithAutoFocus/H1WithAutoFocus";
 import { MOTIVATION_MAX_LENGTH } from "./validateForm";
 import ApiErrorMessage from "./ApiErrorMessage";
@@ -23,6 +23,7 @@ function Form({ ad, applicationForm, submitForm, pending, submitApiError, valida
     const [hideMotivationError, setHideMotivationError] = useState(false);
     const [hideEmailError, setHideEmailError] = useState(false);
     const [hideTelephoneError, setHideTelephoneError] = useState(false);
+    const [motivation, setMotivation] = useState("");
 
     useEffect(() => {
         if (Object.keys(validationErrors).length > 0) {
@@ -90,7 +91,9 @@ function Form({ ad, applicationForm, submitForm, pending, submitApiError, valida
                     id="new-application-checkedQualifications"
                     label="Skriv en begrunnelse"
                     name="motivation"
-                    onChange={() => {
+                    value={motivation}
+                    onChange={(e) => {
+                        setMotivation(e.target.value);
                         setHideMotivationError(true);
                     }}
                     maxLength={MOTIVATION_MAX_LENGTH}
@@ -104,7 +107,13 @@ function Form({ ad, applicationForm, submitForm, pending, submitApiError, valida
                 </Heading>
                 <BodyLong className="mb-4">Vær nøye med å oppgi riktig informasjon.</BodyLong>
 
-                <TextField label="Navn" id="new-application-name" auto-complete="name" name="name" className="mb-4" />
+                <TextField
+                    label="Navn"
+                    id="new-application-name"
+                    auto-complete="name"
+                    name="fullName"
+                    className="mb-4"
+                />
 
                 <TextField
                     label="E-post"
@@ -148,7 +157,7 @@ function Form({ ad, applicationForm, submitForm, pending, submitApiError, valida
                 </AkselLink>
             </BodyLong>
 
-            {submitApiError && <ApiErrorMessage apiErrorCode={submitApiError.message} />}
+            {submitApiError && <ApiErrorMessage apiErrorCode={submitApiError} />}
 
             <HStack gap="4" className="mt-12">
                 <Button variant="primary" loading={pending} type="submit">

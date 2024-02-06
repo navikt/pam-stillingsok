@@ -4,7 +4,7 @@ export const MOTIVATION_MAX_LENGTH = 800;
 
 export function parseFormData(formData, qualifications) {
     return {
-        name: formData.get("name"),
+        name: formData.get("fullName"),
         telephone: formData.get("telephone"),
         email: formData.get("email"),
         motivation: formData.get("motivation"),

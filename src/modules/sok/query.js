@@ -15,6 +15,8 @@ export const ADD_ENGAGEMENT_TYPE = "ADD_ENGAGEMENT_TYPE";
 export const REMOVE_ENGAGEMENT_TYPE = "REMOVE_ENGAGEMENT_TYPE";
 export const ADD_EXTENT = "ADD_EXTENT";
 export const REMOVE_EXTENT = "REMOVE_EXTENT";
+export const ADD_WORKLANGUAGE = "ADD_WORKLANGUAGE";
+export const REMOVE_WORKLANGUAGE = "REMOVE_WORKLANGUAGE";
 export const ADD_REMOTE = "ADD_REMOTE";
 export const REMOVE_REMOTE = "REMOVE_REMOTE";
 export const ADD_SECTOR = "ADD_SECTOR";
@@ -47,6 +49,7 @@ export const defaultQuery = {
     sector: [],
     sort: "",
     international: false,
+    workLanguage: [],
 };
 
 /**
@@ -119,6 +122,19 @@ function removeEmptyPropertiesFromQuery(query) {
     return newObj;
 }
 
+function getSort(previousSort, searchString, searchFields) {
+    if (previousSort !== "expires") {
+        if (searchFields === "occupation") {
+            return "published";
+        }
+        if (searchString) {
+            return "relevant";
+        }
+        return "";
+    }
+    return previousSort;
+}
+
 /**
  * Init function used to creating initial state for this reducer.
  * If user already has some search criteria in browser url, this will
@@ -143,6 +159,7 @@ export function initQueryWithValuesFromBrowserUrl(initialState) {
         engagementType: fromBrowserUrl.engagementType || initialState.engagementType,
         sector: fromBrowserUrl.sector || initialState.sector,
         sort: fromBrowserUrl.sort || initialState.sort,
+        workLanguage: fromBrowserUrl.workLanguage || initialState.workLanguage,
     };
 }
 
@@ -234,6 +251,16 @@ export default function queryReducer(state, action) {
                 ...queryState,
                 extent: queryState.extent.filter((obj) => obj !== action.value),
             };
+        case ADD_WORKLANGUAGE:
+            return {
+                ...queryState,
+                workLanguage: [...queryState.workLanguage, action.value],
+            };
+        case REMOVE_WORKLANGUAGE:
+            return {
+                ...queryState,
+                workLanguage: queryState.workLanguage.filter((obj) => obj !== action.value),
+            };
         case ADD_REMOTE:
             return {
                 ...queryState,
@@ -260,24 +287,11 @@ export default function queryReducer(state, action) {
                 published: action.value,
             };
         case SET_SEARCH_STRING:
-            let sort;
-            if (queryState.sort !== "expires") {
-                if (action.fields === "occupation") {
-                    sort = "published";
-                } else if (action.value) {
-                    sort = "relevant";
-                } else {
-                    sort = "";
-                }
-            } else {
-                sort = queryState.sort;
-            }
-
             return {
                 ...queryState,
                 q: action.value,
                 fields: action.fields,
-                sort,
+                sort: getSort(queryState.sort, action.value, action.fields),
             };
         case SET_SORTING:
             return {

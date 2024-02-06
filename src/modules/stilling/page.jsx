@@ -14,7 +14,7 @@ import "./ad.css";
 function AdPage({ match }) {
     const [{ data: ad, error, status }, dispatch] = useFetchReducer();
     const avoidIndexing = (error && error.statusCode === 404) || (ad && ad._source.status !== "ACTIVE");
-    const shareAdRedirectUrl = `${STILLINGSOK_URL}/${match.params.id}`;
+    const shareAdRedirectUrl = `${STILLINGSOK_URL}/stilling/${match.params.id}`;
 
     useScrollToTop();
     useRobotsNoIndexMetaTag(avoidIndexing);

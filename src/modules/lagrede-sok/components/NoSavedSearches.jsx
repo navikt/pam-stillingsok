@@ -19,7 +19,7 @@ function NoSavedSearches() {
                 <BodyLong className="text-center" spacing>
                     Du kan velge å lagre ditt søk når du har fylt inn søkeord eller andre filter.
                 </BodyLong>
-                <Button variant="primary" as={Link} to={CONTEXT_PATH}>
+                <Button variant="primary" as={Link} role="link" to={CONTEXT_PATH}>
                     Gå til søket
                 </Button>
             </VStack>

@@ -4,33 +4,20 @@ import { FetchAction, FetchStatus, useFetchReducer } from "../../../common/hooks
 import SuperraskSoknadAPI from "../../superrask-soknad/api/SuperraskSoknadAPI";
 import WithdrawApplicationSuccess from "./WithdrawApplicationSuccess";
 import WithdrawApplicationConfirmationRequired from "./WithdrawApplicationConfirmationRequired";
-import logAmplitudeEvent from "../../../common/tracking/amplitude";
 
 function WithdrawApplication({ ad, adUuid, uuid }) {
     const [removeApplicationResponse, removeApplicationDispatch] = useFetchReducer();
 
     const handleWithDrawClick = async () => {
         removeApplicationDispatch({ type: FetchAction.BEGIN });
-        let success = false;
 
         await SuperraskSoknadAPI.withdrawApplication(adUuid, uuid)
             .then((data) => {
                 removeApplicationDispatch({ type: FetchAction.RESOLVE, data });
-                success = true;
             })
             .catch((error) => {
                 removeApplicationDispatch({ type: FetchAction.REJECT, error });
             });
-
-        try {
-            logAmplitudeEvent("delete superrask søknad", {
-                adId: adUuid,
-                applicationId: uuid,
-                success,
-            });
-        } catch (e) {
-            // ignore
-        }
     };
 
     return (

@@ -9,6 +9,7 @@ import {
     REMOVE_COUNTY,
     REMOVE_ENGAGEMENT_TYPE,
     REMOVE_EXTENT,
+    REMOVE_WORKLANGUAGE,
     REMOVE_MUNICIPAL,
     REMOVE_OCCUPATION_FIRST_LEVEL,
     REMOVE_OCCUPATION_SECOND_LEVEL,
@@ -111,6 +112,7 @@ function SelectedFilters({ query, queryDispatch }) {
         chips.push(
             <Chips.Removable
                 variant="neutral"
+                key="utland-filter"
                 onClick={() => {
                     queryDispatch({ type: SET_INTERNATIONAL, value: false });
                 }}
@@ -150,7 +152,11 @@ function SelectedFilters({ query, queryDispatch }) {
 
     if (query.published) {
         chips.push(
-            <Chips.Removable variant="neutral" onClick={() => queryDispatch({ type: SET_PUBLISHED, undefined })}>
+            <Chips.Removable
+                key="published-filter"
+                variant="neutral"
+                onClick={() => queryDispatch({ type: SET_PUBLISHED, undefined })}
+            >
                 {PublishedLabelsEnum[query.published]}
             </Chips.Removable>,
         );
@@ -192,10 +198,23 @@ function SelectedFilters({ query, queryDispatch }) {
         )),
     );
 
+    chips.push(
+        ...query.workLanguage.map((value) => (
+            <Chips.Removable
+                variant="neutral"
+                key={value}
+                onClick={() => queryDispatch({ type: REMOVE_WORKLANGUAGE, value })}
+            >
+                {value}
+            </Chips.Removable>
+        )),
+    );
+
     if (query.remote.length > 0) {
         chips.push(
             <Chips.Removable
                 variant="neutral"
+                key="remote-filter"
                 onClick={() => {
                     queryDispatch({ type: REMOVE_REMOTE, value: "Hjemmekontor" });
                     queryDispatch({ type: REMOVE_REMOTE, value: "Hybridkontor" });
@@ -260,6 +279,7 @@ SelectedFilters.propTypes = {
         sector: PropTypes.arrayOf(PropTypes.string),
         engagementType: PropTypes.arrayOf(PropTypes.string),
         extent: PropTypes.arrayOf(PropTypes.string),
+        workLanguage: PropTypes.arrayOf(PropTypes.string),
         remote: PropTypes.arrayOf(PropTypes.string),
     }),
     queryDispatch: PropTypes.func.isRequired,

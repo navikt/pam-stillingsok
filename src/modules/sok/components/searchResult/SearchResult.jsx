@@ -5,7 +5,6 @@ import ErrorMessage from "../../../common/components/messages/ErrorMessage";
 import Pagination from "../pagination/Pagination";
 import SearchResultItem from "./SearchResultItem";
 import FavouritesButton from "../../../favoritter/components/FavouritesButton";
-import DelayedSpinner from "../../../common/components/spinner/DelayedSpinner";
 
 function SearchResult({ searchResponse, query, loadMoreResults, isDebug }) {
     const { status, data } = searchResponse;
@@ -26,10 +25,11 @@ function SearchResult({ searchResponse, query, loadMoreResults, isDebug }) {
     return (
         <section className="SearchResult">
             {status === FetchStatus.FAILURE && <ErrorMessage />}
-            {status === FetchStatus.IS_FETCHING && query.from === 0 && <DelayedSpinner />}
-            {(status === FetchStatus.SUCCESS || (status === FetchStatus.IS_FETCHING && query.from > 0)) && (
+
+            {(status === FetchStatus.SUCCESS || status === FetchStatus.IS_FETCHING) && (
                 <>
-                    {data.ads &&
+                    {data &&
+                        data.ads &&
                         data.ads.map((ad, index) => (
                             <SearchResultItem
                                 shouldAutoFocus={index === nextAdIndex}
@@ -48,7 +48,7 @@ function SearchResult({ searchResponse, query, loadMoreResults, isDebug }) {
                                 isDebug={isDebug}
                             />
                         ))}
-                    {data.ads && data.ads.length > 0 && (
+                    {data && data.ads && data.ads.length > 0 && (
                         <Pagination
                             query={query}
                             isSearching={status === FetchStatus.IS_FETCHING}

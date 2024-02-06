@@ -27,6 +27,21 @@ function AuthenticationProvider({ children }) {
     const timeoutLogout = () => {
         window.location.href = `/stillinger/oauth2/logout?redirect=${encodeURIComponent("/utlogget?timeout=true")}`;
     };
+    const markAsLoggedOut = () => {
+        setAuthenticationStatus(AuthenticationStatus.NOT_AUTHENTICATED);
+    };
+
+    function login() {
+        window.location.href = `/stillinger${LOGIN_URL}?redirect=${encodeURIComponent(window.location.href)}`;
+    }
+
+    function loginAndRedirect(navigateTo) {
+        window.location.href = `/stillinger${LOGIN_URL}?redirect=${encodeURIComponent(navigateTo)}`;
+    }
+
+    function logout() {
+        window.location.href = `/stillinger${LOGOUT_URL}`;
+    }
 
     const fetchIsAuthenticated = () => {
         setAuthenticationStatus(AuthenticationStatus.IS_FETCHING);
@@ -57,7 +72,7 @@ function AuthenticationProvider({ children }) {
 
     function fetchUserNameAndInfo() {
         if (process.env.NODE_ENV === "production") {
-            fetch("/stillinger/headerinfo", {
+            fetch("/stillinger/api/v1/personalia", {
                 method: "GET",
                 credentials: "include",
             }).then((response) => {
@@ -69,28 +84,12 @@ function AuthenticationProvider({ children }) {
             });
         } else {
             const testData = {
-                fornavn: "Kristin",
-                etternavn: "Lavransdatter",
+                navn: "Kristin Lavransdatter",
                 erUnderFemten: false,
+                kanLoggePaa: true,
             };
             setUserNameAndInfo(testData);
         }
-    }
-
-    const markAsLoggedOut = () => {
-        setAuthenticationStatus(AuthenticationStatus.NOT_AUTHENTICATED);
-    };
-
-    function login() {
-        window.location.href = `/stillinger${LOGIN_URL}?redirect=${encodeURIComponent(window.location.href)}`;
-    }
-
-    function loginAndRedirect(navigateTo) {
-        window.location.href = `/stillinger${LOGIN_URL}?redirect=${encodeURIComponent(navigateTo)}`;
-    }
-
-    function logout() {
-        window.location.href = `/stillinger${LOGOUT_URL}`;
     }
 
     useEffect(() => {

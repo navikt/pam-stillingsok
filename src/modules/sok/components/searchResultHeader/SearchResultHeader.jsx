@@ -23,7 +23,7 @@ function SearchResultHeader({ searchResponse, query, queryDispatch }) {
                         {searchResponse && searchResponse.data && searchResponse.data.totalAds >= 0 ? (
                             <SearchResultCount searchResult={searchResponse.data} />
                         ) : (
-                            <BodyShort textColor="subtle">Laster...</BodyShort>
+                            <BodyShort>Laster...</BodyShort>
                         )}
                     </div>
                     <Sorting dispatch={queryDispatch} query={query} />

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { BodyLong, BodyShort, Box, Button, Heading, HStack, Link as AkselLink } from "@navikt/ds-react";
 import { XMarkIcon } from "@navikt/aksel-icons";
-import logAmplitudeEvent from "../../../common/tracking/amplitude";
 
 function HotjarSurvey() {
     const [isDismissed, setIsDismissed] = useState(() => {
@@ -22,14 +21,6 @@ function HotjarSurvey() {
             sessionStorage.setItem("feedback-hotjar-dismissed", "true");
         } catch (e) {
             // ignore sessionStorage error
-        }
-
-        // Temporary amplitude event, code can be removed if it still
-        // exists after november 2023
-        try {
-            logAmplitudeEvent("dismissed hotjar survey");
-        } catch (err) {
-            // ignore
         }
     }
 
