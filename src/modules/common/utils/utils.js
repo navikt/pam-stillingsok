@@ -112,3 +112,8 @@ export function extractParam(param, nullValue) {
 
     return value;
 }
+
+export const JobPostingTextEnum = {
+    STRUKTURERT: "strukturert",
+    IKKE_STRUKTURERT: "ikkeStrukturert",
+};
