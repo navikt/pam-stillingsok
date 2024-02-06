@@ -13,7 +13,7 @@ import {
     Textarea,
     TextField,
 } from "@navikt/ds-react";
-import { Link } from "react-router-dom";
+import Link from "../../../../migrating/Link";
 import H1WithAutoFocus from "../../../common/components/h1WithAutoFocus/H1WithAutoFocus";
 import { MOTIVATION_MAX_LENGTH } from "./validateForm";
 import ApiErrorMessage from "./ApiErrorMessage";

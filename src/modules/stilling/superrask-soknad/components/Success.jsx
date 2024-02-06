@@ -1,7 +1,7 @@
 import React from "react";
 import { BodyLong, Button, Heading } from "@navikt/ds-react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import Link from "../../../../migrating/Link";
 import { CONTEXT_PATH } from "../../../common/environment";
 import GiveFeedback from "./GiveFeedback";
 import H1WithAutoFocus from "../../../common/components/h1WithAutoFocus/H1WithAutoFocus";
