@@ -1,5 +1,6 @@
 import * as amplitude from "@amplitude/analytics-browser";
 import getSessionId from "../../../session";
+import { JobPostingTextEnum } from "../utils/utils";
 
 const userProperties = new amplitude.Identify();
 
@@ -46,6 +47,17 @@ export const logSearchFilterRemoved = (data) => {
     amplitude.track("Søkefilter fjernet", enrichData(data));
 };
 
+function getJobPostingFormat(jobPosting) {
+    if (
+        jobPosting._source.adtext.includes('<section id="arb-serEtter">') &&
+        jobPosting._source.adtext.includes('<section id="arb-arbeidsoppgaver">') &&
+        jobPosting._source.adtext.includes('<section id="arb-tilbyr">')
+    ) {
+        return JobPostingTextEnum.STRUKTURERT;
+    }
+    return JobPostingTextEnum.IKKE_STRUKTURERT;
+}
+
 export function logStillingVisning(ad) {
     const employerLocation = ad._source.employer ? ad._source.employer.location : null;
     let hasContactMail = false;
@@ -74,6 +86,7 @@ export function logStillingVisning(ad) {
         hasApplicationEmail: !!ad._source.properties.applicationemail,
         hasContactInfoMail: hasContactMail,
         hasContactInfoPhone: hasContactPhone,
+        jobPostingFormat: getJobPostingFormat(),
     });
 }
 
