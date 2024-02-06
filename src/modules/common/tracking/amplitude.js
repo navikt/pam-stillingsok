@@ -49,9 +49,9 @@ export const logSearchFilterRemoved = (data) => {
 
 function getJobPostingFormat(jobPosting) {
     if (
-        jobPosting._source.adtext.includes('<section id="arb-serEtter">') &&
-        jobPosting._source.adtext.includes('<section id="arb-arbeidsoppgaver">') &&
-        jobPosting._source.adtext.includes('<section id="arb-tilbyr">')
+        jobPosting._source.properties.adtext.includes('<section id="arb-serEtter">') &&
+        jobPosting._source.properties.adtext.includes('<section id="arb-arbeidsoppgaver">') &&
+        jobPosting._source.properties.adtext.includes('<section id="arb-tilbyr">')
     ) {
         return JobPostingTextEnum.STRUKTURERT;
     }
