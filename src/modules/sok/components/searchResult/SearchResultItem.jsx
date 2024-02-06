@@ -1,10 +1,10 @@
 import PropTypes from "prop-types";
 import React, { useLayoutEffect, useRef } from "react";
-import { Link } from "react-router-dom";
 import { BodyLong, BodyShort, Heading, HStack, Link as AkselLink, Tag } from "@navikt/ds-react";
 import { addDays, endOfDay, format as formatDateFns, isSameDay, isValid, parse, parseISO, subDays } from "date-fns";
 import { nb } from "date-fns/locale";
 import { Buldings3Icon, EarthIcon } from "@navikt/aksel-icons";
+import Link from "../../../../migrating/Link";
 import getEmployer from "../../../../../server/common/getEmployer";
 import getWorkLocation from "../../../../../server/common/getWorkLocation";
 import { CONTEXT_PATH } from "../../../common/environment";

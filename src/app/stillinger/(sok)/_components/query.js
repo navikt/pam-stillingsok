@@ -10,6 +10,7 @@ function asArray(value) {
     return [];
 }
 
+// eslint-disable-next-line import/prefer-default-export
 export function createQuery(initialState, searchParams) {
     return {
         from: 0,
@@ -28,6 +29,7 @@ export function createQuery(initialState, searchParams) {
         extent: asArray(searchParams["extent[]"]) || initialState.extent,
         engagementType: asArray(searchParams["engagementType[]"]) || initialState.engagementType,
         sector: asArray(searchParams["sector[]"]) || initialState.sector,
+        workLanguage: asArray(searchParams["workLanguage[]"]) || initialState.workLanguage,
         sort: searchParams.sort || initialState.sort,
     };
 }

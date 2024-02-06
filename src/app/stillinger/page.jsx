@@ -5,7 +5,7 @@ import { defaultQuery, stringifyQuery, toApiQuery } from "../../modules/sok/quer
 import { createQuery } from "./(sok)/_components/query";
 
 async function search(query) {
-    const res = await fetch(`http://localhost:3000/stillinger/api/search${query}`);
+    const res = await fetch(`https://arbeidsplassen.intern.dev.nav.no/stillinger/api/search${query}`);
     if (res.status === 404) {
         notFound();
     }
@@ -17,7 +17,7 @@ async function search(query) {
 }
 
 async function getLocations() {
-    const res = await fetch("http://localhost:3000/stillinger/api/locations");
+    const res = await fetch("https://arbeidsplassen.intern.dev.nav.no/stillinger/api/locations");
     if (res.status === 404) {
         notFound();
     }
