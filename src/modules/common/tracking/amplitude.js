@@ -49,9 +49,13 @@ export const logSearchFilterRemoved = (data) => {
 
 function getJobPostingFormat(jobPosting) {
     if (
-        jobPosting._source.adtext.includes('<section id="arb-serEtter">') &&
-        jobPosting._source.adtext.includes('<section id="arb-arbeidsoppgaver">') &&
-        jobPosting._source.adtext.includes('<section id="arb-tilbyr">')
+        jobPosting &&
+        jobPosting._source &&
+        jobPosting._source.properties &&
+        jobPosting._source.properties.adtext &&
+        jobPosting._source.properties.adtext.includes('<section id="arb-serEtter">') &&
+        jobPosting._source.properties.adtext.includes('<section id="arb-arbeidsoppgaver">') &&
+        jobPosting._source.properties.adtext.includes('<section id="arb-tilbyr">')
     ) {
         return JobPostingTextEnum.STRUKTURERT;
     }
@@ -86,7 +90,7 @@ export function logStillingVisning(ad) {
         hasApplicationEmail: !!ad._source.properties.applicationemail,
         hasContactInfoMail: hasContactMail,
         hasContactInfoPhone: hasContactPhone,
-        jobPostingFormat: getJobPostingFormat(),
+        jobPostingFormat: getJobPostingFormat(ad),
     });
 }
 
