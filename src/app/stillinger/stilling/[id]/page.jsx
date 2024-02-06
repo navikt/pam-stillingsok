@@ -3,7 +3,7 @@ import AdWrapper from "../../../../migrating/use-client/AdWrapper";
 import { getStillingDescription, getStillingTitle } from "../../../../../server/common/htmlMeta";
 
 async function getData(id) {
-    const res = await fetch(`http://localhost:3000/stillinger/api/stilling/${id}`);
+    const res = await fetch(`https://arbeidsplassen.intern.dev.nav.no/stillinger/api/stilling/${id}`);
     if (res.status === 404) {
         notFound();
     }
