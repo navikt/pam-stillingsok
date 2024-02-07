@@ -6,7 +6,6 @@ import "./styles.css";
 import "./stillinger/(sok)/_components/search.css";
 import "./stillinger/stilling/ad.css";
 import "./_common/components/typeahead/Typeahead.css";
-import "./global.css";
 import PropTypes from "prop-types";
 import App from "./App";
 import { getDefaultDescription, getDefaultTitle } from "../../server/common/htmlMeta";
