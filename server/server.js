@@ -6,7 +6,6 @@ const mustacheExpress = require("mustache-express");
 const Promise = require("promise");
 const bodyParser = require("body-parser");
 const compression = require("compression");
-const locationApiConsumer = require("./api/locationApiConsumer");
 const { initializeTokenX, tokenIsValid } = require("./tokenX/tokenXUtils");
 const setUpAduserApiProxy = require("./api/userApiProxyConfig");
 const setUpSuperraskApi = require("./api/superraskApiProxy");
@@ -20,6 +19,7 @@ const server = express();
 const port = process.env.PORT || 8080;
 server.set("port", port);
 
+/*
 // Cache locations from adusers and reuse them
 let locationsFromAduser = null;
 let locationsFromFile = [];
@@ -33,10 +33,12 @@ locationApiConsumer.fetchAndProcessLocations().then((res) => {
 fs.readFile(`${__dirname}/api/resources/locations.json`, "utf-8", (err, data) => {
     locationsFromFile = err ? [] : JSON.parse(data);
 });
+*/
 
 server.disable("x-powered-by");
 server.use(compression());
 
+// Todo: Hvilke sikkerhetsheadere etc må vi flytte over til next appen?
 server.use(helmet({ xssFilter: false, hsts: false }));
 
 server.use(helmet.referrerPolicy({ policy: "no-referrer" }));
@@ -153,6 +155,7 @@ const startServer = (htmlPages) => {
     });
     setUpSuperraskApi(server);
 
+    /*
     // Give users fallback locations from local file if aduser is unresponsive
     server.get(`${properties.PAM_CONTEXT_PATH}/api/locations`, (req, res) => {
         if (locationsFromAduser === null) {
@@ -168,6 +171,7 @@ const startServer = (htmlPages) => {
             res.send(locationsFromAduser);
         }
     });
+     */
 
     setUpAduserApiProxy(server);
 

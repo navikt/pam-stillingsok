@@ -22,6 +22,7 @@ async function fetchElasticSearch(query) {
     return simplifySearchResponse(data);
 }
 
+// TODO: Sjekk om denne kan caches over lang tid, fordi det er sjelden at fylker/kommuner endres
 async function fetchLocations() {
     const [response1, response2] = await Promise.all([
         fetch(`${process.env.PAMADUSER_URL}/api/v1/geography/municipals`),

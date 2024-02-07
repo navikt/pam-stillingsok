@@ -1,3 +1,4 @@
+// Todo: Hva er dette og trenger vi koden?
 const npmPackage = require("../package.json");
 
 const { version } = npmPackage;
