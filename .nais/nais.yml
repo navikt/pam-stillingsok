@@ -18,10 +18,10 @@ spec:
     cpuThresholdPercentage: 50
   liveness:
     initialDelay: 10
-    path: /stillinger/internal/isAlive
+    path: /stillinger/api/internal/isAlive
   readiness:
     initialDelay: 10
-    path: /stillinger/internal/isReady
+    path: /stillinger/api/internal/isReady
   resources:
     limits:
       cpu: 500m
