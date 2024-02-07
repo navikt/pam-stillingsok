@@ -63,7 +63,7 @@ export default function Search({ query, searchResult, aggregations, locations })
             </Box>
 
             <div className="container-small">
-                <SearchBoxForm query={updatedQuery} dispatchQuery={queryDispatch} />
+                <SearchBoxForm query={query} dispatchQuery={queryDispatch} />
                 <Box paddingBlock={{ xs: "0 4", md: "0 12" }}>
                     <HStack gap="2" justify={{ xs: "start", md: "center" }} align={{ xs: "start", md: "center" }}>
                         <Show below="md">

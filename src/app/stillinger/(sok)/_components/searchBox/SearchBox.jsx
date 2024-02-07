@@ -7,7 +7,7 @@ import SearchAPI from "../../../../_common/api/SearchAPI";
 import capitalizeFirstLetter from "../../../../_common/utils/capitalizeFirstLetter";
 
 function SearchBox({ dispatch, query }) {
-    const [value, setValue] = useState("");
+    const [value, setValue] = useState(query.q);
     const initialRender = useRef(true);
     const [suggestionsResponse, suggestionsDispatch] = useFetchReducer([]);
     const MINIMUM_LENGTH = 1;
