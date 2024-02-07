@@ -1,10 +1,8 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { Checkbox, Fieldset } from "@navikt/ds-react";
-import UnknownSearchCriteriaValues from "./UnknownSearchCriteriaValues";
 import { ADD_SECTOR, REMOVE_SECTOR } from "../old_query";
 import mergeCount from "../utils/mergeCount";
-import findUnknownSearchCriteriaValues from "../utils/findUnknownSearchCriteriaValues";
 import { logSearchFilterAdded, logSearchFilterRemoved } from "../../../../_common/tracking/amplitude";
 
 function Sector({ initialValues, updatedValues, query, dispatch }) {
@@ -35,13 +33,6 @@ function Sector({ initialValues, updatedValues, query, dispatch }) {
                         {`${item.key} (${item.count})`}
                     </Checkbox>
                 ))}
-
-                <UnknownSearchCriteriaValues
-                    namePrefix="sector"
-                    unknownValues={findUnknownSearchCriteriaValues(query.sector, initialValues)}
-                    checkedValues={query.sector}
-                    onClick={handleClick}
-                />
             </div>
         </Fieldset>
     );

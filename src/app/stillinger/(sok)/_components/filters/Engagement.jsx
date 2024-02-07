@@ -2,10 +2,8 @@ import PropTypes from "prop-types";
 import React from "react";
 import { Checkbox, Fieldset } from "@navikt/ds-react";
 import { ADD_ENGAGEMENT_TYPE, REMOVE_ENGAGEMENT_TYPE } from "../old_query";
-import UnknownSearchCriteriaValues from "./UnknownSearchCriteriaValues";
 import mergeCount from "../utils/mergeCount";
 import moveCriteriaToBottom from "../utils/moveFacetToBottom";
-import findUnknownSearchCriteriaValues from "../utils/findUnknownSearchCriteriaValues";
 import { logSearchFilterAdded, logSearchFilterRemoved } from "../../../../_common/tracking/amplitude";
 
 function Engagement({ initialValues, updatedValues, query, dispatch }) {
@@ -50,12 +48,6 @@ function Engagement({ initialValues, updatedValues, query, dispatch }) {
                         {`${editedItemKey(item.key)} (${item.count})`}
                     </Checkbox>
                 ))}
-                <UnknownSearchCriteriaValues
-                    namePrefix="engagementType"
-                    unknownValues={findUnknownSearchCriteriaValues(query.engagementType, initialValues)}
-                    checkedValues={query.engagementType}
-                    onClick={handleClick}
-                />
             </div>
         </Fieldset>
     );

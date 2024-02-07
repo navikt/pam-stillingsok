@@ -13,23 +13,13 @@ import {
     REMOVE_REMOTE,
     SET_INTERNATIONAL,
 } from "../old_query";
-import UnknownSearchCriteriaValues from "./UnknownSearchCriteriaValues";
 import buildLocations from "../utils/buildLocations";
 import buildHomeOfficeValues from "../utils/buildHomeOfficeValues";
-import findUnknownSearchCriteriaValues from "../utils/findUnknownSearchCriteriaValues";
-import findZeroCountLocationFacets from "../utils/findZeroCountLocationFacets";
 import { logSearchFilterAdded, logSearchFilterRemoved } from "../../../../_common/tracking/amplitude";
 
 function Locations({ aggregations, locations, query, dispatch }) {
     const locationValues = buildLocations(aggregations, locations);
     const homeOfficeValues = buildHomeOfficeValues(aggregations.remote);
-    const unknownCounties = findUnknownSearchCriteriaValues(query.counties, locations);
-    const unknownMunicipals = findUnknownSearchCriteriaValues(query.municipals, locations, "municipals");
-    const unknownCountries = findZeroCountLocationFacets(
-        query.countries,
-        aggregations.nationalCountMap,
-        aggregations.internationalCountMap,
-    );
 
     function handleLocationClick(value, type, checked) {
         if (type === "county") {
@@ -66,14 +56,6 @@ function Locations({ aggregations, locations, query, dispatch }) {
         }
     }
 
-    const handleZeroCountFacetClick = (countries, counties, municipals) => (e) => {
-        const { value } = e.target;
-
-        if (countries.includes(value)) handleLocationClick(value, "country", e.target.checked);
-        else if (counties.includes(value)) handleLocationClick(value, "county", e.target.checked);
-        else if (municipals.includes(value)) handleLocationClick(value, "municipal", e.target.checked);
-    };
-
     const handleCheckboxClick = (key, type) => (e) => {
         handleLocationClick(key, type, e.target.checked);
     };
@@ -87,9 +69,6 @@ function Locations({ aggregations, locations, query, dispatch }) {
             dispatch({ type: REMOVE_REMOTE, value: "Hybridkontor" });
         }
     };
-
-    const unknownLocations = [...new Set([...unknownCountries, ...unknownCounties, ...unknownMunicipals])];
-    const checkedLocations = [...query.countries, ...query.counties, ...query.municipals];
 
     return (
         <Fieldset hideLegend legend="Velg fylke, kommune, land eller hjemmekontor" className="FilterModal__fieldset">
@@ -172,14 +151,6 @@ function Locations({ aggregations, locations, query, dispatch }) {
                             </Checkbox>
                         ))}
                 </div>
-
-                <UnknownSearchCriteriaValues
-                    shouldFixLocationName
-                    namePrefix="counties"
-                    unknownValues={unknownLocations}
-                    checkedValues={checkedLocations}
-                    onClick={handleZeroCountFacetClick(unknownCountries, unknownCounties, unknownMunicipals)}
-                />
             </div>
         </Fieldset>
     );

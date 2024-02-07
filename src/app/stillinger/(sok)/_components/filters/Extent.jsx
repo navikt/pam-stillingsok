@@ -1,10 +1,8 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { Checkbox, Fieldset } from "@navikt/ds-react";
-import UnknownSearchCriteriaValues from "./UnknownSearchCriteriaValues";
 import { ADD_EXTENT, REMOVE_EXTENT } from "../old_query";
 import mergeCount from "../utils/mergeCount";
-import findUnknownSearchCriteriaValues from "../utils/findUnknownSearchCriteriaValues";
 import { logSearchFilterAdded, logSearchFilterRemoved } from "../../../../_common/tracking/amplitude";
 
 function Extent({ initialValues, updatedValues, query, dispatch }) {
@@ -39,13 +37,6 @@ function Extent({ initialValues, updatedValues, query, dispatch }) {
                         {`${labelForExtent(item)} (${item.count})`}
                     </Checkbox>
                 ))}
-
-                <UnknownSearchCriteriaValues
-                    namePrefix="extent"
-                    unknownValues={findUnknownSearchCriteriaValues(query.extent, initialValues)}
-                    checkedValues={query.extent}
-                    onClick={handleClick}
-                />
             </div>
         </Fieldset>
     );

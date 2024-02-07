@@ -1,10 +1,8 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { Checkbox, Fieldset } from "@navikt/ds-react";
-import UnknownSearchCriteriaValues from "./UnknownSearchCriteriaValues";
 import { ADD_WORKLANGUAGE, REMOVE_WORKLANGUAGE } from "../old_query";
 import mergeCount from "../utils/mergeCount";
-import findUnknownSearchCriteriaValues from "../utils/findUnknownSearchCriteriaValues";
 import { logSearchFilterAdded, logSearchFilterRemoved } from "../../../../_common/tracking/amplitude";
 import moveCriteriaToBottom from "../utils/moveFacetToBottom";
 
@@ -37,13 +35,6 @@ function WorkLanguage({ initialValues, updatedValues, query, dispatch }) {
                         {`${item.key} (${item.count})`}
                     </Checkbox>
                 ))}
-
-                <UnknownSearchCriteriaValues
-                    namePrefix="workLanguage"
-                    unknownValues={findUnknownSearchCriteriaValues(query.workLanguage, initialValues)}
-                    checkedValues={query.workLanguage}
-                    onClick={handleClick}
-                />
             </div>
         </Fieldset>
     );
