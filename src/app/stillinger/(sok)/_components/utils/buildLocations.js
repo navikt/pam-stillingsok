@@ -4,10 +4,9 @@
  *
  * @returns array med lokasjon facets
  */
-export default function buildLocations(values) {
+export default function buildLocations(aggregations, locations) {
     const facets = [];
-    const { nationalCountMap, internationalCountMap } = values.aggregations;
-    const { locations } = values;
+    const { nationalCountMap, internationalCountMap } = aggregations;
 
     locations.forEach((l) => {
         const facet = {
@@ -19,7 +18,7 @@ export default function buildLocations(values) {
 
         if (l.key === "UTLAND") {
             facet.type = "international";
-            facet.count = values.totalInternational;
+            facet.count = aggregations.totalInternational;
 
             Object.entries(internationalCountMap).forEach(([key, value]) => {
                 facet.subLocations.push({

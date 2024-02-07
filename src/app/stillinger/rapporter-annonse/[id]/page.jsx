@@ -1,4 +1,4 @@
-import ReportAd from "../../stilling/[id]/_components/ReportAd";
+import ReportAd from "./_components/ReportAd";
 
 export const metadata = {
     title: "Rapporter annonse - arbeidsplassen.no",

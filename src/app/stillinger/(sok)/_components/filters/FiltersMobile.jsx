@@ -10,7 +10,7 @@ import Sector from "./Sector";
 import EngagementType from "./Engagement";
 import WorkLanguage from "./WorkLanguage";
 
-function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, initialSearchResult }) {
+function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggregations, locations }) {
     function submitForm(e) {
         e.preventDefault();
     }
@@ -29,7 +29,8 @@ function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, initi
                             <Counties
                                 query={query}
                                 dispatch={dispatchQuery}
-                                initialValues={initialSearchResult}
+                                aggregations={aggregations}
+                                locations={locations}
                                 updatedValues={searchResult}
                             />
                         </Tabs.Panel>
@@ -37,7 +38,7 @@ function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, initi
                             <Occupations
                                 query={query}
                                 dispatch={dispatchQuery}
-                                initialValues={initialSearchResult.aggregations.occupationFirstLevels}
+                                initialValues={aggregations.occupationFirstLevels}
                                 updatedValues={searchResult && searchResult.aggregations.occupationFirstLevels}
                             />
                         </Tabs.Panel>
@@ -46,7 +47,7 @@ function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, initi
                                 <Published
                                     query={query}
                                     dispatch={dispatchQuery}
-                                    initialValues={initialSearchResult.aggregations.published}
+                                    initialValues={aggregations.published}
                                     updatedValues={searchResult && searchResult.aggregations.published}
                                 />
                             </div>
@@ -57,7 +58,7 @@ function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, initi
                                 <Extent
                                     query={query}
                                     dispatch={dispatchQuery}
-                                    initialValues={initialSearchResult.aggregations.extent}
+                                    initialValues={aggregations.extent}
                                     updatedValues={searchResult && searchResult.aggregations.extent}
                                 />
                             </div>
@@ -68,7 +69,7 @@ function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, initi
                                 <Sector
                                     query={query}
                                     dispatch={dispatchQuery}
-                                    initialValues={initialSearchResult.aggregations.sector}
+                                    initialValues={aggregations.sector}
                                     updatedValues={searchResult && searchResult.aggregations.sector}
                                 />
                             </div>
@@ -79,7 +80,7 @@ function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, initi
                                 <EngagementType
                                     query={query}
                                     dispatch={dispatchQuery}
-                                    initialValues={initialSearchResult.aggregations.engagementTypes}
+                                    initialValues={aggregations.engagementTypes}
                                     updatedValues={searchResult && searchResult.aggregations.engagementTypes}
                                 />
                             </div>
@@ -90,7 +91,7 @@ function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, initi
                                 <WorkLanguage
                                     query={query}
                                     dispatch={dispatchQuery}
-                                    initialValues={initialSearchResult.aggregations.workLanguage}
+                                    initialValues={aggregations.workLanguage}
                                     updatedValues={searchResult && searchResult.aggregations.workLanguage}
                                 />
                             </div>
@@ -113,16 +114,15 @@ FiltersMobile.propTypes = {
     onCloseClick: PropTypes.func.isRequired,
     query: PropTypes.shape({}),
     dispatchQuery: PropTypes.func,
-    initialSearchResult: PropTypes.shape({
-        aggregations: PropTypes.shape({
-            engagementTypes: PropTypes.arrayOf(PropTypes.shape({})),
-            occupationFirstLevels: PropTypes.arrayOf(PropTypes.shape({})),
-            published: PropTypes.arrayOf(PropTypes.shape({})),
-            extent: PropTypes.arrayOf(PropTypes.shape({})),
-            sector: PropTypes.arrayOf(PropTypes.shape({})),
-            workLanguage: PropTypes.arrayOf(PropTypes.shape({})),
-        }),
+    aggregations: PropTypes.shape({
+        engagementTypes: PropTypes.arrayOf(PropTypes.shape({})),
+        occupationFirstLevels: PropTypes.arrayOf(PropTypes.shape({})),
+        published: PropTypes.arrayOf(PropTypes.shape({})),
+        extent: PropTypes.arrayOf(PropTypes.shape({})),
+        sector: PropTypes.arrayOf(PropTypes.shape({})),
+        workLanguage: PropTypes.arrayOf(PropTypes.shape({})),
     }),
+    locations: PropTypes.shape({}),
     searchResult: PropTypes.shape({
         totalAds: PropTypes.string,
         aggregations: PropTypes.shape({

@@ -10,7 +10,7 @@ import Sector from "./Sector";
 import EngagementType from "./Engagement";
 import WorkLanguage from "./WorkLanguage";
 
-function FiltersDesktop({ query, dispatchQuery, initialSearchResult, searchResult }) {
+function FiltersDesktop({ query, dispatchQuery, aggregations, locations, searchResult }) {
     function submitForm(e) {
         e.preventDefault();
     }
@@ -22,7 +22,7 @@ function FiltersDesktop({ query, dispatchQuery, initialSearchResult, searchResul
                     <Published
                         query={query}
                         dispatch={dispatchQuery}
-                        initialValues={initialSearchResult.aggregations.published}
+                        initialValues={aggregations.published}
                         updatedValues={searchResult && searchResult.aggregations.published}
                     />
                 </FilterAccordionItem>
@@ -30,7 +30,8 @@ function FiltersDesktop({ query, dispatchQuery, initialSearchResult, searchResul
                     <Counties
                         query={query}
                         dispatch={dispatchQuery}
-                        initialValues={initialSearchResult}
+                        aggregations={aggregations}
+                        locations={locations}
                         updatedValues={searchResult}
                     />
                 </FilterAccordionItem>
@@ -38,7 +39,7 @@ function FiltersDesktop({ query, dispatchQuery, initialSearchResult, searchResul
                     <Occupations
                         query={query}
                         dispatch={dispatchQuery}
-                        initialValues={initialSearchResult.aggregations.occupationFirstLevels}
+                        initialValues={aggregations.occupationFirstLevels}
                         updatedValues={searchResult && searchResult.aggregations.occupationFirstLevels}
                     />
                 </FilterAccordionItem>
@@ -46,7 +47,7 @@ function FiltersDesktop({ query, dispatchQuery, initialSearchResult, searchResul
                     <Extent
                         query={query}
                         dispatch={dispatchQuery}
-                        initialValues={initialSearchResult.aggregations.extent}
+                        initialValues={aggregations.extent}
                         updatedValues={searchResult && searchResult.aggregations.extent}
                     />
                 </FilterAccordionItem>
@@ -54,7 +55,7 @@ function FiltersDesktop({ query, dispatchQuery, initialSearchResult, searchResul
                     <Sector
                         query={query}
                         dispatch={dispatchQuery}
-                        initialValues={initialSearchResult.aggregations.sector}
+                        initialValues={aggregations.sector}
                         updatedValues={searchResult && searchResult.aggregations.sector}
                     />
                 </FilterAccordionItem>
@@ -62,7 +63,7 @@ function FiltersDesktop({ query, dispatchQuery, initialSearchResult, searchResul
                     <EngagementType
                         query={query}
                         dispatch={dispatchQuery}
-                        initialValues={initialSearchResult.aggregations.engagementTypes}
+                        initialValues={aggregations.engagementTypes}
                         updatedValues={searchResult && searchResult.aggregations.engagementTypes}
                     />
                 </FilterAccordionItem>
@@ -70,7 +71,7 @@ function FiltersDesktop({ query, dispatchQuery, initialSearchResult, searchResul
                     <WorkLanguage
                         query={query}
                         dispatch={dispatchQuery}
-                        initialValues={initialSearchResult.aggregations.workLanguage}
+                        initialValues={aggregations.workLanguage}
                         updatedValues={searchResult && searchResult.aggregations.workLanguage}
                     />
                 </FilterAccordionItem>
@@ -82,15 +83,14 @@ function FiltersDesktop({ query, dispatchQuery, initialSearchResult, searchResul
 FiltersDesktop.propTypes = {
     query: PropTypes.shape({}),
     dispatchQuery: PropTypes.func,
-    initialSearchResult: PropTypes.shape({
-        aggregations: PropTypes.shape({
-            engagementTypes: PropTypes.arrayOf(PropTypes.shape({})),
-            occupationFirstLevels: PropTypes.arrayOf(PropTypes.shape({})),
-            published: PropTypes.arrayOf(PropTypes.shape({})),
-            extent: PropTypes.arrayOf(PropTypes.shape({})),
-            sector: PropTypes.arrayOf(PropTypes.shape({})),
-            workLanguage: PropTypes.arrayOf(PropTypes.shape({})),
-        }),
+    locations: PropTypes.shape({}),
+    aggregations: PropTypes.shape({
+        engagementTypes: PropTypes.arrayOf(PropTypes.shape({})),
+        occupationFirstLevels: PropTypes.arrayOf(PropTypes.shape({})),
+        published: PropTypes.arrayOf(PropTypes.shape({})),
+        extent: PropTypes.arrayOf(PropTypes.shape({})),
+        sector: PropTypes.arrayOf(PropTypes.shape({})),
+        workLanguage: PropTypes.arrayOf(PropTypes.shape({})),
     }),
     searchResult: PropTypes.shape({
         aggregations: PropTypes.shape({

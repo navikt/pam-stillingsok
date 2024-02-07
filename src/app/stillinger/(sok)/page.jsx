@@ -29,14 +29,15 @@ async function getLocations() {
 
 export default async function Page({ searchParams }) {
     const initialQuery = createQuery(defaultQuery, searchParams);
-    const initialSearchResult = await search(stringifyQuery(toApiQuery(defaultQuery)));
-    const result = await search(stringifyQuery(toApiQuery(initialQuery)));
+    const globalSearchResult = await search(stringifyQuery(toApiQuery(defaultQuery)));
+    const searchResult = await search(stringifyQuery(toApiQuery(initialQuery)));
     const locations = await getLocations();
 
     return (
         <Search
-            searchResponse={{ status: "SUCCESS", data: { ...result } }}
-            initialSearchResponse={{ status: "SUCCESS", data: { ...initialSearchResult, locations } }}
+            searchResult={searchResult}
+            aggregations={globalSearchResult.aggregations}
+            locations={locations}
             initialQuery={initialQuery}
         />
     );

@@ -7,8 +7,6 @@ import { useRouter } from "next/navigation";
 import { CONTEXT_PATH } from "../../../_common/environment";
 import queryReducer, { isSearchQueryEmpty, SET_FROM, stringifyQuery, toBrowserQuery } from "./old_query";
 import { extractParam } from "../../../_common/utils/utils";
-import { FetchStatus } from "../../../_common/hooks/useFetchReducer";
-import ErrorMessage from "../../../_common/components/messages/ErrorMessage";
 import SearchBoxForm from "./searchBox/SearchBoxForm";
 import SearchResult from "./searchResult/SearchResult";
 import H1WithAutoFocus from "../../../_common/components/h1WithAutoFocus/H1WithAutoFocus";
@@ -18,12 +16,11 @@ import Feedback from "./feedback/Feedback";
 import FiltersDesktop from "./filters/FiltersDesktop";
 import SearchResultHeader from "./searchResultHeader/SearchResultHeader";
 import FilterIcon from "./icons/FilterIcon";
-import LoadingScreen from "../../../_common/components/loadingScreen/LoadingScreen";
 import logAmplitudeEvent from "../../../_common/tracking/amplitude";
 import LoggedInButtons from "./loggedInButtons/LoggedInButtons";
 import FiltersMobile from "./filters/FiltersMobile";
 
-export default function Search({ initialSearchResponse, searchResponse, initialQuery, fetchSearch, isDebug }) {
+export default function Search({ searchResult, aggregations, locations, initialQuery, isDebug }) {
     const [query, queryDispatch] = useReducer(queryReducer, initialQuery);
     const [isFiltersVisible, setIsFiltersVisible] = useState(false);
     const [initialRenderDone, setInitialRenderDone] = useState(false);
@@ -45,10 +42,6 @@ export default function Search({ initialSearchResponse, searchResponse, initialQ
             }
 
             logAmplitudeEvent("Stillinger - Utførte søk");
-
-            if (fetchSearch) {
-                fetchSearch(query);
-            }
 
             try {
                 router.replace(CONTEXT_PATH + stringifyQuery(browserQuery), { scroll: false });
@@ -98,72 +91,64 @@ export default function Search({ initialSearchResponse, searchResponse, initialQ
 
             <SearchResultHeader
                 isFiltersVisible={isFiltersVisible}
-                searchResponse={searchResponse}
-                query={query}
+                searchResult={searchResult}
+                query={initialQuery}
                 queryDispatch={queryDispatch}
             />
 
-            {(initialSearchResponse.status === FetchStatus.NOT_FETCHED ||
-                initialSearchResponse.status === FetchStatus.IS_FETCHING) && <LoadingScreen />}
-            {initialSearchResponse.status === FetchStatus.FAILURE && <ErrorMessage />}
-            {initialSearchResponse.status === FetchStatus.SUCCESS && (
-                <HGrid
-                    columns={{ xs: 1, md: "280px auto", lg: "370px auto" }}
-                    gap={{ xs: "0", md: "12" }}
-                    className="container-large mt-8 mb-16"
-                >
-                    <Hide below="md">
-                        <FiltersDesktop
-                            query={query}
+            <HGrid
+                columns={{ xs: 1, md: "280px auto", lg: "370px auto" }}
+                gap={{ xs: "0", md: "12" }}
+                className="container-large mt-8 mb-16"
+            >
+                <Hide below="md">
+                    <FiltersDesktop
+                        query={initialQuery}
+                        dispatchQuery={queryDispatch}
+                        aggregations={aggregations}
+                        locations={locations}
+                        searchResult={searchResult}
+                    />
+                </Hide>
+
+                <Show below="md">
+                    {isFiltersVisible && (
+                        <FiltersMobile
+                            query={initialQuery}
                             dispatchQuery={queryDispatch}
-                            initialSearchResult={initialSearchResponse.data}
-                            searchResult={searchResponse.data}
+                            aggregations={aggregations}
+                            locations={locations}
+                            onCloseClick={() => setIsFiltersVisible(false)}
+                            searchResult={searchResult}
                         />
-                    </Hide>
+                    )}
+                </Show>
 
-                    <Show below="md">
-                        {isFiltersVisible && (
-                            <FiltersMobile
-                                query={query}
-                                dispatchQuery={queryDispatch}
-                                initialSearchResult={initialSearchResponse.data}
-                                onCloseClick={() => setIsFiltersVisible(false)}
-                                searchResult={searchResponse.data}
-                            />
-                        )}
-                    </Show>
-
-                    <div>
-                        <SelectedFilters query={query} queryDispatch={queryDispatch} />
-                        <SearchResult
-                            initialSearchResponse={initialSearchResponse}
-                            searchResponse={searchResponse}
-                            query={query}
-                            queryDispatch={queryDispatch}
-                            loadMoreResults={() => {
-                                loadMoreResults();
-                            }}
-                            isDebug={isDebug}
-                        />
-                        <DoYouWantToSaveSearch query={query} />
-                        <Feedback query={query} />
-                    </div>
-                </HGrid>
-            )}
+                <div>
+                    <SelectedFilters query={initialQuery} queryDispatch={queryDispatch} />
+                    <SearchResult
+                        searchResult={searchResult}
+                        query={initialQuery}
+                        queryDispatch={queryDispatch}
+                        loadMoreResults={() => {
+                            loadMoreResults();
+                        }}
+                        isDebug={isDebug}
+                    />
+                    <DoYouWantToSaveSearch query={initialQuery} />
+                    <Feedback query={initialQuery} />
+                </div>
+            </HGrid>
         </>
     );
 }
 
 Search.propTypes = {
-    initialSearchResponse: PropTypes.shape({
-        data: PropTypes.shape({}),
-        status: PropTypes.string,
-    }),
-    searchResponse: PropTypes.shape({
-        data: PropTypes.shape({}),
-        status: PropTypes.string,
+    aggregations: PropTypes.shape({}),
+    locations: PropTypes.shape({}),
+    searchResult: PropTypes.shape({
+        ads: PropTypes.shape({}),
     }),
     initialQuery: PropTypes.shape({}),
-    fetchSearch: PropTypes.func,
     isDebug: PropTypes.bool,
 };

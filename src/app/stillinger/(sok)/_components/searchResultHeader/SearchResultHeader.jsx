@@ -1,10 +1,13 @@
 import React from "react";
 import { BodyShort, Box, Heading, HGrid, Stack } from "@navikt/ds-react";
 import PropTypes from "prop-types";
-import SearchResultCount from "../searchResult/SearchResultCount";
 import Sorting from "../searchResult/Sorting";
+import { formatNumber } from "../../../../_common/utils/utils";
 
-function SearchResultHeader({ searchResponse, query, queryDispatch }) {
+function SearchResultHeader({ searchResult, query, queryDispatch }) {
+    const annonserWord = searchResult.totalAds === 1 ? "annonse" : "annonser";
+    const stillingerWord = searchResult.totalPositions === 1 ? "stilling" : "stillinger";
+
     return (
         <Box background="surface-alt-1-subtle" paddingBlock="4">
             <HGrid columns={{ xs: 1, lg: "370px auto" }} gap={{ lg: "12" }} className="container-large">
@@ -20,11 +23,13 @@ function SearchResultHeader({ searchResponse, query, queryDispatch }) {
                         <Heading level="2" size="small" className="mb-1">
                             Søkeresultat
                         </Heading>
-                        {searchResponse && searchResponse.data && searchResponse.data.totalAds >= 0 ? (
-                            <SearchResultCount searchResult={searchResponse.data} />
-                        ) : (
-                            <BodyShort>Laster...</BodyShort>
-                        )}
+                        <BodyShort role="status">
+                            {searchResult.totalAds === 0
+                                ? "Ingen treff"
+                                : `${formatNumber(searchResult.totalPositions)} ${stillingerWord} i ${formatNumber(
+                                      searchResult.totalAds,
+                                  )} ${annonserWord}`}
+                        </BodyShort>
                     </div>
                     <Sorting dispatch={queryDispatch} query={query} />
                 </Stack>
@@ -34,10 +39,9 @@ function SearchResultHeader({ searchResponse, query, queryDispatch }) {
 }
 
 SearchResultHeader.propTypes = {
-    searchResponse: PropTypes.shape({
-        data: PropTypes.shape({
-            totalAds: PropTypes.number,
-        }),
+    searchResult: PropTypes.shape({
+        totalAds: PropTypes.number,
+        totalPositions: PropTypes.number,
     }),
     queryDispatch: PropTypes.func.isRequired,
     query: PropTypes.shape({}),

@@ -4,7 +4,7 @@ import { FetchAction, FetchStatus, useFetchReducer } from "../../../app/_common/
 import SearchAPI from "../../../app/_common/api/SearchAPI";
 import useScrollToTop from "../../../app/_common/hooks/useScrollToTop";
 import useDocumentTitle from "../../../app/_common/hooks/useDocumentTitle";
-import ReportAd from "../../../app/stillinger/stilling/[id]/_components/ReportAd";
+import ReportAd from "../../../app/stillinger/rapporter-annonse/[id]/_components/ReportAd";
 import UserAPI from "../../../app/_common/api/UserAPI";
 import logAmplitudeEvent from "../../../app/_common/tracking/amplitude";
 import APIError from "../../../app/_common/api/APIError";

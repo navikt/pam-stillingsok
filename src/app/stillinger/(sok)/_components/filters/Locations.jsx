@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { BodyShort, Box, Checkbox, Fieldset } from "@navikt/ds-react";
 import fixLocationName from "../../../../../../server/common/fixLocationName";
@@ -16,41 +16,20 @@ import {
 import UnknownSearchCriteriaValues from "./UnknownSearchCriteriaValues";
 import buildLocations from "../utils/buildLocations";
 import buildHomeOfficeValues from "../utils/buildHomeOfficeValues";
-import mergeCount from "../utils/mergeCount";
 import findUnknownSearchCriteriaValues from "../utils/findUnknownSearchCriteriaValues";
 import findZeroCountLocationFacets from "../utils/findZeroCountLocationFacets";
 import { logSearchFilterAdded, logSearchFilterRemoved } from "../../../../_common/tracking/amplitude";
 
-function Locations({ initialValues, updatedValues, query, dispatch }) {
-    const [locationValues, setLocationValues] = useState(buildLocations(initialValues));
-    const [homeOfficeValues, setHomeOfficeValues] = useState(buildHomeOfficeValues(initialValues.aggregations.remote));
-    const unknownCounties = findUnknownSearchCriteriaValues(query.counties, initialValues.locations);
-    const unknownMunicipals = findUnknownSearchCriteriaValues(query.municipals, initialValues.locations, "municipals");
+function Locations({ aggregations, locations, query, dispatch }) {
+    const locationValues = buildLocations(aggregations, locations);
+    const homeOfficeValues = buildHomeOfficeValues(aggregations.remote);
+    const unknownCounties = findUnknownSearchCriteriaValues(query.counties, locations);
+    const unknownMunicipals = findUnknownSearchCriteriaValues(query.municipals, locations, "municipals");
     const unknownCountries = findZeroCountLocationFacets(
         query.countries,
-        initialValues.aggregations.nationalCountMap,
-        initialValues.aggregations.internationalCountMap,
+        aggregations.nationalCountMap,
+        aggregations.internationalCountMap,
     );
-
-    /**
-     * Update count in all locations after a search is done
-     */
-    useEffect(() => {
-        if (updatedValues) {
-            setHomeOfficeValues(mergeCount(homeOfficeValues, buildHomeOfficeValues(updatedValues.aggregations.remote)));
-
-            setLocationValues(
-                mergeCount(
-                    locationValues,
-                    buildLocations({
-                        ...updatedValues,
-                        locations: initialValues.locations,
-                    }),
-                    "subLocations",
-                ),
-            );
-        }
-    }, [updatedValues]);
 
     function handleLocationClick(value, type, checked) {
         if (type === "county") {
@@ -207,19 +186,12 @@ function Locations({ initialValues, updatedValues, query, dispatch }) {
 }
 
 Locations.propTypes = {
-    initialValues: PropTypes.shape({
-        aggregations: PropTypes.shape({
-            internationalCountMap: PropTypes.object,
-            nationalCountMap: PropTypes.object,
-            remote: PropTypes.object,
-        }),
-        locations: PropTypes.arrayOf(PropTypes.object),
+    aggregations: PropTypes.shape({
+        internationalCountMap: PropTypes.object,
+        nationalCountMap: PropTypes.object,
+        remote: PropTypes.object,
     }),
-    updatedValues: PropTypes.shape({
-        aggregations: PropTypes.shape({
-            remote: PropTypes.object,
-        }),
-    }),
+    locations: PropTypes.arrayOf(PropTypes.object),
     query: PropTypes.shape({
         countries: PropTypes.arrayOf(PropTypes.string),
         counties: PropTypes.arrayOf(PropTypes.string),

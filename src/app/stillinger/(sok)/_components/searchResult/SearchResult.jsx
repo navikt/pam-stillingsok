@@ -1,73 +1,40 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import { FetchStatus } from "../../../../_common/hooks/useFetchReducer";
-import ErrorMessage from "../../../../_common/components/messages/ErrorMessage";
 import Pagination from "../pagination/Pagination";
 import SearchResultItem from "./SearchResultItem";
 import FavouritesButton from "../../../favoritter/_components/FavouritesButton";
 
-function SearchResult({ searchResponse, query, loadMoreResults, isDebug }) {
-    const { status, data } = searchResponse;
-    const [lastAdIndex, setLastAdIndex] = useState();
-    const [nextAdIndex, setNextAdIndex] = useState();
-
-    /**
-     * If user clicked "Load more" in the search result, move focus from
-     * "Load more" button to the next item in the result list
-     */
-    useEffect(() => {
-        if (data && data.ads) {
-            setNextAdIndex(query.from > 0 ? lastAdIndex + 1 : undefined);
-            setLastAdIndex(data.ads.length - 1);
-        }
-    }, [data]);
-
+function SearchResult({ searchResult, query, loadMoreResults, isDebug }) {
     return (
         <section className="SearchResult">
-            {status === FetchStatus.FAILURE && <ErrorMessage />}
-
-            {(status === FetchStatus.SUCCESS || status === FetchStatus.IS_FETCHING) && (
-                <>
-                    {data &&
-                        data.ads &&
-                        data.ads.map((ad, index) => (
-                            <SearchResultItem
-                                shouldAutoFocus={index === nextAdIndex}
-                                key={ad.uuid}
-                                ad={ad}
-                                favouriteButton={
-                                    <FavouritesButton
-                                        useShortText
-                                        className="SearchResultsItem__favourite-button"
-                                        stilling={ad}
-                                        id={ad.uuid}
-                                        hideText
-                                        variant="tertiary"
-                                    />
-                                }
-                                isDebug={isDebug}
+            {searchResult.ads &&
+                searchResult.ads.map((ad) => (
+                    <SearchResultItem
+                        key={ad.uuid}
+                        ad={ad}
+                        favouriteButton={
+                            <FavouritesButton
+                                useShortText
+                                className="SearchResultsItem__favourite-button"
+                                stilling={ad}
+                                id={ad.uuid}
+                                hideText
+                                variant="tertiary"
                             />
-                        ))}
-                    {data && data.ads && data.ads.length > 0 && (
-                        <Pagination
-                            query={query}
-                            isSearching={status === FetchStatus.IS_FETCHING}
-                            searchResult={data}
-                            onLoadMoreClick={loadMoreResults}
-                        />
-                    )}
-                </>
+                        }
+                        isDebug={isDebug}
+                    />
+                ))}
+            {searchResult.ads && searchResult.ads.length > 0 && (
+                <Pagination query={query} searchResult={searchResult} onLoadMoreClick={loadMoreResults} />
             )}
         </section>
     );
 }
 
 SearchResult.propTypes = {
-    searchResponse: PropTypes.shape({
-        data: PropTypes.shape({
-            ads: PropTypes.arrayOf(PropTypes.shape({})),
-        }),
-        status: PropTypes.string,
+    searchResult: PropTypes.shape({
+        ads: PropTypes.arrayOf(PropTypes.shape({})),
     }),
     query: PropTypes.shape({
         from: PropTypes.number,
