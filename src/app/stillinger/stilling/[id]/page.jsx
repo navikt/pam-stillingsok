@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { getStillingDescription, getStillingTitle } from "../../../../../server/common/htmlMeta";
+import { getStillingDescription, getStillingTitle } from "../../../_common/utils/htmlMeta";
 import Ad from "./_components/Ad";
 import { STILLINGSOK_URL } from "../../../_common/environment";
 

@@ -1,4 +1,8 @@
-import "@navikt/ds-css";
+import "@navikt/ds-css/dist/global/tokens.css";
+import "@navikt/ds-css/dist/global/reset.css";
+import "@navikt/ds-css/dist/global/baseline.css";
+import "@navikt/ds-css/dist/global/print.css";
+import "@navikt/ds-css/dist/components.css";
 import "@navikt/arbeidsplassen-css";
 import "@navikt/arbeidsplassen-theme";
 import "./styles.css";
@@ -8,7 +12,7 @@ import "./_common/components/typeahead/Typeahead.css";
 import PropTypes from "prop-types";
 import interLocalFont from "next/font/local";
 import App from "./App";
-import { getDefaultDescription, getDefaultTitle } from "../../server/common/htmlMeta";
+import { getDefaultDescription, getDefaultTitle } from "./_common/utils/htmlMeta";
 
 const myFont = interLocalFont({
     variable: "--font-inter",

@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { BodyShort, Box, Checkbox, Fieldset } from "@navikt/ds-react";
-import fixLocationName from "../../../../../../server/common/fixLocationName";
+import fixLocationName from "../../../../_common/utils/fixLocationName";
 import {
     ADD_COUNTRY,
     ADD_COUNTY,

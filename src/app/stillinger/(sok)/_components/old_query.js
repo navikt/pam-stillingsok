@@ -1,4 +1,4 @@
-import fixLocationName from "../../../../../server/common/fixLocationName";
+import fixLocationName from "../../../_common/utils/fixLocationName";
 
 export const SEARCH_CHUNK_SIZE = 25;
 export const ADD_MUNICIPAL = "ADD_MUNICIPAL";
