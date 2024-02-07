@@ -1,37 +1,18 @@
-const getEmployer = require("./getEmployer");
-const getWorkLocation = require("./getWorkLocation");
-const date = require("./date");
+import getEmployer from "../../../../_common/utils/getEmployer";
+import getWorkLocation from "../../../../_common/utils/getWorkLocation";
+import date from "../../../../_common/utils/date";
 
-const DEFAULT_TITLE = "Ledige stillinger - arbeidsplassen.no";
-const DEFAULT_DESCRIPTION =
-    "Søk etter ledige stillinger. Heltid- og deltidsjobber i offentlig og privat sektor i Oslo, Bergen, Trondheim, Stavanger, Tromsø og alle kommuner i Norge.";
 const DEFAULT_DESCRIPTION_STILLING = "Her kan du se hele stillingen, sende søknad eller finne andre ledige stillinger.";
+const DEFAULT_TITLE = "Ledig stilling - arbeidsplassen.no";
 
-exports.getDefaultTitle = function getDefaultTitle() {
-    return DEFAULT_TITLE;
-};
-
-exports.getDefaultDescription = function getDefaultDescription() {
-    return DEFAULT_DESCRIPTION;
-};
-
-exports.getStillingTitle = function getStillingTitle(source) {
+export function getStillingTitle(source) {
     if (source && source.title) {
         return `${source.title} - arbeidsplassen.no`;
     }
     return DEFAULT_TITLE;
-};
+}
 
-/**
- * Lager meta description content.
- * F.eks:
- *   "Brukerstyrt personlig assistent, Firmaet AS, Drammen.
- *    Søknadsfrist: Snarest. Her kan du se hele stillingen, sende
- *    søknad eller finne andre ledige stillinger."
- * @param source
- * @returns {string}
- */
-exports.getStillingDescription = function getStillingDescription(source) {
+export function getStillingDescription(source) {
     if (source && source.properties) {
         const descriptionFragments = [];
         const employer = getEmployer(source);
@@ -61,4 +42,4 @@ exports.getStillingDescription = function getStillingDescription(source) {
     }
 
     return DEFAULT_DESCRIPTION_STILLING;
-};
+}

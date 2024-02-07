@@ -12,7 +12,6 @@ import "./styles.css";
 import PropTypes from "prop-types";
 import interLocalFont from "next/font/local";
 import App from "./App";
-import { getDefaultDescription, getDefaultTitle } from "./_common/utils/htmlMeta";
 
 const myFont = interLocalFont({
     variable: "--font-inter",
@@ -22,11 +21,18 @@ const myFont = interLocalFont({
 });
 
 export const metadata = {
-    title: getDefaultTitle(),
-    description: getDefaultDescription(),
+    title: "Ledige stillinger - arbeidsplassen.no",
+    description: "Alt av arbeid samlet på én plass",
     openGraph: {
-        title: getDefaultTitle(),
-        description: getDefaultDescription(),
+        title: "Ledige stillinger - arbeidsplassen.no",
+        description: "Alt av arbeid samlet på én plass",
+        images: [
+            {
+                url: "https://arbeidsplassen.nav.no/images/arbeidsplassen-open-graph.png",
+                width: 1200,
+                height: 630,
+            },
+        ],
     },
 };
 

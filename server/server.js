@@ -7,7 +7,6 @@ const Promise = require("promise");
 const bodyParser = require("body-parser");
 const compression = require("compression");
 const searchApiConsumer = require("./api/searchApiConsumer");
-const htmlMeta = require("../src/app/_common/utils/htmlMeta");
 const locationApiConsumer = require("./api/locationApiConsumer");
 const { initializeTokenX, tokenIsValid } = require("./tokenX/tokenXUtils");
 const setUpAduserApiProxy = require("./api/userApiProxyConfig");
@@ -120,20 +119,13 @@ const writeEnvironmentVariablesToFile = () => {
 };
 const renderSok = (htmlPages) =>
     new Promise((resolve, reject) => {
-        server.render(
-            "index.html",
-            {
-                title: htmlMeta.getDefaultTitle(),
-                description: htmlMeta.getDefaultDescription(),
-            },
-            (err, html) => {
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve({ sok: html, ...htmlPages });
-                }
-            },
-        );
+        server.render("index.html", {}, (err, html) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve({ sok: html, ...htmlPages });
+            }
+        });
     });
 
 const startServer = (htmlPages) => {
@@ -242,12 +234,9 @@ const startServer = (htmlPages) => {
     server.get(["/stillinger/stilling/:uuid"], (req, res) => {
         searchApiConsumer
             .fetchStilling(req.params.uuid)
-            .then((data) => {
+            .then(() => {
                 try {
-                    res.render("index", {
-                        title: htmlMeta.getStillingTitle(data._source),
-                        description: htmlMeta.getStillingDescription(data._source),
-                    });
+                    res.render("index", {});
                 } catch (err) {
                     res.send(htmlPages.sok);
                 }
