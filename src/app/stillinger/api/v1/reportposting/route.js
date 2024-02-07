@@ -1,4 +1,4 @@
-export default async function POST() {
+export async function POST() {
     return new Response({
         status: 200,
     });

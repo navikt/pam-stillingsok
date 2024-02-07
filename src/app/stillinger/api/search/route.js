@@ -1,4 +1,4 @@
-export default async function GET(request) {
+export async function GET(request) {
     const url = new URL(request.url);
     const res = await fetch(`http://localhost:3000/stillinger/api/search${url.search}`, {
         headers: {

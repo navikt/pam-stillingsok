@@ -1,4 +1,4 @@
-export default async function GET() {
+export async function GET() {
     const res = await fetch("http://localhost:3000/stillinger/api/locations", {
         headers: {
             "Content-Type": "application/json",

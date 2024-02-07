@@ -1,5 +1,5 @@
 import mockData from "./mock-data";
 
-export default async function GET() {
+export async function GET() {
     return Response.json(mockData);
 }

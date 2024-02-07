@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 
-export default async function GET() {
+export async function GET() {
     const _todoLoggedInCookie = cookies().get("is-logged-in-hack");
     if (_todoLoggedInCookie && _todoLoggedInCookie.value === "true") {
         return new Response(undefined, {
