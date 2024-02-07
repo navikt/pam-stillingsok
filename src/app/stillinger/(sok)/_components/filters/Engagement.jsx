@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Checkbox, Fieldset } from "@navikt/ds-react";
 import { ADD_ENGAGEMENT_TYPE, REMOVE_ENGAGEMENT_TYPE } from "../old_query";
 import UnknownSearchCriteriaValues from "./UnknownSearchCriteriaValues";
@@ -9,14 +9,8 @@ import findUnknownSearchCriteriaValues from "../utils/findUnknownSearchCriteriaV
 import { logSearchFilterAdded, logSearchFilterRemoved } from "../../../../_common/tracking/amplitude";
 
 function Engagement({ initialValues, updatedValues, query, dispatch }) {
-    const [values, setValues] = useState(moveCriteriaToBottom(initialValues, "Annet"));
-
-    useEffect(() => {
-        if (updatedValues) {
-            const merged = mergeCount(values, updatedValues);
-            setValues(merged);
-        }
-    }, [updatedValues]);
+    const sortedValues = moveCriteriaToBottom(initialValues, "Annet");
+    const values = mergeCount(sortedValues, updatedValues);
 
     function handleClick(e) {
         const { value } = e.target;

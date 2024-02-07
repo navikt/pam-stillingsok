@@ -1,18 +1,11 @@
 import PropTypes from "prop-types";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Checkbox, Fieldset } from "@navikt/ds-react";
 import { PublishedLabelsEnum, SET_PUBLISHED } from "../old_query";
 import mergeCount from "../utils/mergeCount";
 
 function Published({ dispatch, query, initialValues, updatedValues }) {
-    const [values, setValues] = useState(initialValues);
-
-    useEffect(() => {
-        if (updatedValues) {
-            const merged = mergeCount(values, updatedValues);
-            setValues(merged);
-        }
-    }, [updatedValues]);
+    const values = mergeCount(initialValues, updatedValues);
 
     function handleClick(e) {
         const { value } = e.target;

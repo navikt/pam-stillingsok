@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Checkbox, Fieldset } from "@navikt/ds-react";
 import UnknownSearchCriteriaValues from "./UnknownSearchCriteriaValues";
 import { ADD_EXTENT, REMOVE_EXTENT } from "../old_query";
@@ -8,14 +8,7 @@ import findUnknownSearchCriteriaValues from "../utils/findUnknownSearchCriteriaV
 import { logSearchFilterAdded, logSearchFilterRemoved } from "../../../../_common/tracking/amplitude";
 
 function Extent({ initialValues, updatedValues, query, dispatch }) {
-    const [values, setValues] = useState(initialValues);
-
-    useEffect(() => {
-        if (updatedValues) {
-            const merged = mergeCount(values, updatedValues);
-            setValues(merged);
-        }
-    }, [updatedValues]);
+    const values = mergeCount(initialValues, updatedValues);
 
     function handleClick(e) {
         const { value } = e.target;
