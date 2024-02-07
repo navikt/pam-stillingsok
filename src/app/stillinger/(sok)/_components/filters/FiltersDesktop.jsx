@@ -83,7 +83,7 @@ function FiltersDesktop({ query, dispatchQuery, aggregations, locations, searchR
 FiltersDesktop.propTypes = {
     query: PropTypes.shape({}),
     dispatchQuery: PropTypes.func,
-    locations: PropTypes.shape({}),
+    locations: PropTypes.arrayOf(PropTypes.shape({})),
     aggregations: PropTypes.shape({
         engagementTypes: PropTypes.arrayOf(PropTypes.shape({})),
         occupationFirstLevels: PropTypes.arrayOf(PropTypes.shape({})),

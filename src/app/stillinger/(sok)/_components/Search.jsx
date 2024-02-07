@@ -144,9 +144,9 @@ export default function Search({ query, searchResult, aggregations, locations })
 
 Search.propTypes = {
     aggregations: PropTypes.shape({}),
-    locations: PropTypes.shape({}),
+    locations: PropTypes.arrayOf(PropTypes.shape({})),
     searchResult: PropTypes.shape({
-        ads: PropTypes.shape({}),
+        ads: PropTypes.arrayOf(PropTypes.shape({})),
     }),
     query: PropTypes.shape({}),
 };

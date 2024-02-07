@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Button, VStack } from "@navikt/ds-react";
 import { ArrowUpIcon } from "@navikt/aksel-icons";
 
-function Pagination({ searchResult, isSearching, query, onLoadMoreClick }) {
+function Pagination({ searchResult, query, onLoadMoreClick }) {
     const total = searchResult.totalAds;
     const to = query.from + query.size;
     const hasMore = to < total;
@@ -15,7 +15,7 @@ function Pagination({ searchResult, isSearching, query, onLoadMoreClick }) {
     return (
         <VStack align="center" className="mt-8 mb-12">
             {hasMore && (
-                <Button variant="primary" loading={isSearching} onClick={onLoadMoreClick}>
+                <Button variant="primary" onClick={onLoadMoreClick}>
                     Last flere resultater
                 </Button>
             )}
@@ -31,7 +31,6 @@ Pagination.propTypes = {
     searchResult: PropTypes.shape({
         totalAds: PropTypes.number.isRequired,
     }).isRequired,
-    isSearching: PropTypes.bool.isRequired,
     onLoadMoreClick: PropTypes.func.isRequired,
     query: PropTypes.shape({
         from: PropTypes.number.isRequired,
