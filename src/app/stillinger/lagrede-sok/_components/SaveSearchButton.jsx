@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { Button } from "@navikt/ds-react";
 import { FloppydiskIcon } from "@navikt/aksel-icons";
+import { useSearchParams } from "next/navigation";
 import SearchIsEmptyModal from "./modal/SearchIsEmptyModal";
 import SaveSearchModal from "./modal/SaveSearchModal";
 import {
@@ -12,7 +13,6 @@ import {
 } from "../../(sok)/_components/old_query";
 import { AuthenticationContext, AuthenticationStatus } from "../../../_common/auth/contexts/AuthenticationProvider";
 import { HasAcceptedTermsStatus, UserContext } from "../../../_common/user/UserProvider";
-import { extractParam } from "../../../_common/utils/utils";
 import UserConsentModal from "../../../_common/user/UserConsentModal";
 import LoginModal from "../../../_common/auth/components/LoginModal";
 import useToggle from "../../../_common/hooks/useToggle";
@@ -35,7 +35,9 @@ function SaveSearchButton({ query }) {
     const [shouldShowLoginModal, openLoginModal, closeLoginModal] = useToggle();
     const [shouldShowSaveSearchModal, openSaveSearchModal, closeSaveSearchModal] = useToggle();
     const [shouldShowQueryIsEmptyModal, openQueryIsEmptyModal, closeQueryIsEmptyModal] = useToggle();
-    const savedSearchUuid = extractParam("saved");
+
+    const searchParams = useSearchParams();
+    const savedSearchUuid = searchParams.get("saved");
 
     function handleClick() {
         if (authenticationStatus === AuthenticationStatus.NOT_AUTHENTICATED) {

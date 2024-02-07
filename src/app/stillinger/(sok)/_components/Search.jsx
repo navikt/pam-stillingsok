@@ -3,10 +3,9 @@
 import React, { useEffect, useReducer, useState } from "react";
 import PropTypes from "prop-types";
 import { Box, Button, HGrid, Hide, HStack, Show, Stack, Heading } from "@navikt/ds-react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { CONTEXT_PATH } from "../../../_common/environment";
 import queryReducer, { isSearchQueryEmpty, SET_FROM, stringifyQuery, toBrowserQuery } from "./old_query";
-import { extractParam } from "../../../_common/utils/utils";
 import SearchBoxForm from "./searchBox/SearchBoxForm";
 import SearchResult from "./searchResult/SearchResult";
 import DoYouWantToSaveSearch from "./howToPanels/DoYouWantToSaveSearch";
@@ -24,6 +23,8 @@ export default function Search({ query, searchResult, aggregations, locations })
     const [isFiltersVisible, setIsFiltersVisible] = useState(false);
     const [initialRenderDone, setInitialRenderDone] = useState(false);
     const router = useRouter();
+    const searchParams = useSearchParams();
+    const savedSearchUuid = searchParams.get("saved");
 
     /**
      * Perform a search when user changes search criteria
@@ -34,7 +35,6 @@ export default function Search({ query, searchResult, aggregations, locations })
 
             // Keep saved search uuid in browser url, as long as there are some search criteria.
             // This uuid is used when user update an existing saved search
-            const savedSearchUuid = extractParam("saved");
             if (!isSearchQueryEmpty(browserQuery) && savedSearchUuid) {
                 browserQuery.saved = savedSearchUuid;
             }

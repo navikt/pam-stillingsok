@@ -97,18 +97,3 @@ export function mailtoInString(input, email) {
 
     return pattern.test(input);
 }
-
-export function extractParam(param, nullValue) {
-    let value = nullValue;
-
-    window.location.search.split("&").forEach((q) => {
-        const split = q.split("=");
-
-        if (split.length === 2 && split[0].includes(param)) {
-            // eslint-disable-next-line prefer-destructuring
-            value = split[1];
-        }
-    });
-
-    return value;
-}
