@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { FetchAction, FetchStatus, useFetchReducer } from "../../common/hooks/useFetchReducer";
-import SearchAPI from "../../common/api/SearchAPI";
-import useScrollToTop from "../../common/hooks/useScrollToTop";
+import { FetchAction, FetchStatus, useFetchReducer } from "../../../app/stillinger/_common/hooks/useFetchReducer";
+import SearchAPI from "../../../app/stillinger/_common/api/SearchAPI";
+import useScrollToTop from "../../../app/stillinger/_common/hooks/useScrollToTop";
 import NotFound from "../../not-found";
 import Loading from "../../loading";
 import Error from "../../error";
-import useDocumentTitle from "../../common/hooks/useDocumentTitle";
+import useDocumentTitle from "../../../app/stillinger/_common/hooks/useDocumentTitle";
 import ReportAd from "../../../app/stillinger/stilling/[id]/_components/ReportAd";
-import UserAPI from "../../common/api/UserAPI";
-import logAmplitudeEvent from "../../common/tracking/amplitude";
-import APIError from "../../common/api/APIError";
+import UserAPI from "../../../app/stillinger/_common/api/UserAPI";
+import logAmplitudeEvent from "../../../app/stillinger/_common/tracking/amplitude";
+import APIError from "../../../app/stillinger/_common/api/APIError";
 import validateForm from "../../../app/stillinger/stilling/[id]/_components/validate";
 
 function ReportAdPage({ match }) {

@@ -1,16 +1,19 @@
 import React, { useContext, useEffect, useState } from "react";
-import useDocumentTitle from "../common/hooks/useDocumentTitle";
-import useScrollToTop from "../common/hooks/useScrollToTop";
-import { AuthenticationContext, AuthenticationStatus } from "../common/auth/contexts/AuthenticationProvider";
+import useDocumentTitle from "../../app/stillinger/_common/hooks/useDocumentTitle";
+import useScrollToTop from "../../app/stillinger/_common/hooks/useScrollToTop";
+import {
+    AuthenticationContext,
+    AuthenticationStatus,
+} from "../../app/stillinger/_common/auth/contexts/AuthenticationProvider";
 import Loading from "../loading";
 import Error from "../error";
-import LoginIsRequiredPage from "../common/auth/components/LoginIsRequiredPage";
-import { HasAcceptedTermsStatus, UserContext } from "../common/user/UserProvider";
-import UserConsentIsRequired from "./components/UserConsentIsRequired";
-import { FetchAction, FetchStatus, useFetchReducer } from "../common/hooks/useFetchReducer";
-import UserAPI from "../common/api/UserAPI";
-import FavouritesList from "./components/FavouritesList";
-import NoFavourites from "./components/NoFavourites";
+import LoginIsRequiredPage from "../../app/stillinger/_common/auth/components/LoginIsRequiredPage";
+import { HasAcceptedTermsStatus, UserContext } from "../../app/stillinger/_common/user/UserProvider";
+import UserConsentIsRequired from "../../app/stillinger/favoritter/_components/UserConsentIsRequired";
+import { FetchAction, FetchStatus, useFetchReducer } from "../../app/stillinger/_common/hooks/useFetchReducer";
+import UserAPI from "../../app/stillinger/_common/api/UserAPI";
+import FavouritesList from "../../app/stillinger/favoritter/_components/FavouritesList";
+import NoFavourites from "../../app/stillinger/favoritter/_components/NoFavourites";
 
 /**
  * Page showing users favourites (saved ads).

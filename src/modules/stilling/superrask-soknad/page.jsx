@@ -1,14 +1,9 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import useScrollToTop from "../../common/hooks/useScrollToTop";
-import useDocumentTitle from "../../common/hooks/useDocumentTitle";
-import { FetchAction, FetchStatus, useFetchReducer } from "../../common/hooks/useFetchReducer";
-import SearchAPI from "../../common/api/SearchAPI";
-import SuperraskSoknadAPI from "./api/SuperraskSoknadAPI";
-import Loading from "../../loading";
-import NotFound from "../../not-found";
-import Error from "../../error";
-import logAmplitudeEvent from "../../common/tracking/amplitude";
+import { FetchAction, useFetchReducer } from "../../../app/stillinger/_common/hooks/useFetchReducer";
+import SearchAPI from "../../../app/stillinger/_common/api/SearchAPI";
+import SuperraskSoknadAPI from "../../../app/stillinger/stilling/[id]/superrask-soknad/SuperraskSoknadAPI";
+import logAmplitudeEvent from "../../../app/stillinger/_common/tracking/amplitude";
 import validateForm, {
     parseFormData,
 } from "../../../app/stillinger/stilling/[id]/superrask-soknad/_components/validateForm";
@@ -17,11 +12,8 @@ import NewApplication from "../../../app/stillinger/stilling/[id]/superrask-sokn
 function SuperraskPage({ match }) {
     const defaultState = { success: false, validationErrors: {}, error: undefined, pending: false, data: undefined };
     const { id } = match.params;
-    const [{ data, status, error }, dispatch] = useFetchReducer();
+    const [{ data }, dispatch] = useFetchReducer();
     const [submitFormState, setSubmitFormState] = useState(defaultState);
-
-    useDocumentTitle("Superrask søknad");
-    useScrollToTop();
 
     function submitApplication(e) {
         e.preventDefault();
@@ -87,18 +79,6 @@ function SuperraskPage({ match }) {
                 dispatch({ type: FetchAction.REJECT, error: err });
             });
     }, []);
-
-    if (status === FetchStatus.NOT_FETCHED || status === FetchStatus.IS_FETCHING) {
-        return <Loading />;
-    }
-
-    if (status === FetchStatus.FAILURE && error.statusCode === 404) {
-        return <NotFound />;
-    }
-
-    if (status === FetchStatus.FAILURE) {
-        return <Error />;
-    }
 
     return (
         <NewApplication

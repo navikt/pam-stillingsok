@@ -1,4 +1,4 @@
-import { SEARCH_CHUNK_SIZE } from "../../../../modules/sok/query";
+import { SEARCH_CHUNK_SIZE } from "./old_query";
 
 function asArray(value) {
     if (Array.isArray(value)) {

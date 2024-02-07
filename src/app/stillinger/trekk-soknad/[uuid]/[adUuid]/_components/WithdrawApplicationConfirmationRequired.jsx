@@ -2,7 +2,7 @@ import React from "react";
 import { Alert, BodyLong, BodyShort, Button, Heading, Label, Link as AkselLink } from "@navikt/ds-react";
 import PropTypes from "prop-types";
 import Link from "../../../../../../migrating/Link";
-import { CONTEXT_PATH } from "../../../../../../modules/common/environment";
+import { CONTEXT_PATH } from "../../../../_common/environment";
 import getEmployer from "../../../../../../../server/common/getEmployer";
 
 function WithdrawApplicationConfirmationRequired({ ad, handleWithDrawClick, isDeleting, hasError }) {

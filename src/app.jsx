@@ -9,14 +9,14 @@ import "@navikt/arbeidsplassen-css";
 import "@navikt/arbeidsplassen-theme";
 import { Footer, SkipLink } from "@navikt/arbeidsplassen-react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import AuthenticationProvider from "./modules/common/auth/contexts/AuthenticationProvider";
-import UserProvider from "./modules/common/user/UserProvider";
-import FavouritesProvider from "./modules/favoritter/context/FavouritesProvider";
-import Header from "./modules/common/components/header/Header";
-import { CONTEXT_PATH } from "./modules/common/environment";
-import initSentry from "./modules/common/tracking/sentry";
-import { initAmplitude } from "./modules/common/tracking/amplitude";
-import HistoryProvider from "./modules/common/context/HistoryProvider";
+import AuthenticationProvider from "./app/stillinger/_common/auth/contexts/AuthenticationProvider";
+import UserProvider from "./app/stillinger/_common/user/UserProvider";
+import FavouritesProvider from "./app/stillinger/favoritter/_components/FavouritesProvider";
+import Header from "./app/stillinger/_common/components/header/Header";
+import { CONTEXT_PATH } from "./app/stillinger/_common/environment";
+import initSentry from "./app/stillinger/_common/tracking/sentry";
+import { initAmplitude } from "./app/stillinger/_common/tracking/amplitude";
+import HistoryProvider from "./app/stillinger/_common/context/HistoryProvider";
 import SearchPage from "./modules/sok/page";
 import SuperraskPage from "./modules/stilling/superrask-soknad/page";
 import AdPage from "./modules/stilling/page";
@@ -24,14 +24,16 @@ import ReportAdPage from "./modules/stilling/rapporter-annonse/page";
 import FavouritesPage from "./modules/favoritter/page";
 import SavedSearchesPage from "./modules/lagrede-sok/page";
 import WithdrawApplicationPage from "./modules/stilling/trekk-soknad/page";
-import "./modules/styles.css";
-import googleTranslateWorkaround from "./modules/common/utils/googleTranslateWorkaround";
+import "./app/styles.css";
+import googleTranslateWorkaround from "./app/stillinger/_common/utils/googleTranslateWorkaround";
 import NotFound from "./modules/not-found";
 
+// todo flytt til App.jsx
 initSentry();
 initAmplitude();
 googleTranslateWorkaround();
 
+// todo slettes ?
 function Application() {
     return (
         <AuthenticationProvider>

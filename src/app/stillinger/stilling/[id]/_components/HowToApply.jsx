@@ -14,10 +14,10 @@ import {
 } from "@navikt/ds-react";
 import { ExternalLinkIcon } from "@navikt/aksel-icons";
 import Link from "../../../../../migrating/Link";
-import { formatDate, isValidEmail, isValidUrl } from "../../../../../modules/common/utils/utils";
-import logAmplitudeEvent from "../../../../../modules/common/tracking/amplitude";
-import FavouritesButton from "../../../../../modules/favoritter/components/FavouritesButton";
-import { CONTEXT_PATH } from "../../../../../modules/common/environment";
+import { formatDate, isValidEmail, isValidUrl } from "../../../_common/utils/utils";
+import logAmplitudeEvent from "../../../_common/tracking/amplitude";
+import FavouritesButton from "../../../favoritter/_components/FavouritesButton";
+import { CONTEXT_PATH } from "../../../_common/environment";
 
 export function getApplicationUrl(properties) {
     if (properties.applicationurl !== undefined) {

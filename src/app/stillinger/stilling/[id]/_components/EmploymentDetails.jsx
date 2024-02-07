@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { BodyLong, Heading, Label } from "@navikt/ds-react";
-import { formatDate } from "../../../../../modules/common/utils/utils";
+import { formatDate } from "../../../_common/utils/utils";
 import worktimeParser from "./worktimeParser";
 import "./EmploymentDetails.css";
 

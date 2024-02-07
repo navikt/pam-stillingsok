@@ -1,21 +1,13 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
-import useScrollToTop from "../../common/hooks/useScrollToTop";
 import WithdrawApplication from "../../../app/stillinger/trekk-soknad/[uuid]/[adUuid]/_components/WithdrawApplication";
-import useDocumentTitle from "../../common/hooks/useDocumentTitle";
-import { FetchAction, FetchStatus, useFetchReducer } from "../../common/hooks/useFetchReducer";
-import SearchAPI from "../../common/api/SearchAPI";
-import SuperraskSoknadAPI from "../superrask-soknad/api/SuperraskSoknadAPI";
-import Loading from "../../loading";
-import NotFound from "./not-found";
-import Error from "../../error";
+import { FetchAction, useFetchReducer } from "../../../app/stillinger/_common/hooks/useFetchReducer";
+import SearchAPI from "../../../app/stillinger/_common/api/SearchAPI";
+import SuperraskSoknadAPI from "../../../app/stillinger/stilling/[id]/superrask-soknad/SuperraskSoknadAPI";
 
 function WithdrawApplicationPage({ match }) {
     const [adResponse, dispatch] = useFetchReducer();
-    const [applicationResponse, applicationStatusDispatch] = useFetchReducer();
-
-    useDocumentTitle("Trekk søknad");
-    useScrollToTop();
+    const [applicationStatusDispatch] = useFetchReducer();
 
     /**
      * Fetch ad and check if job application exist
@@ -41,26 +33,6 @@ function WithdrawApplicationPage({ match }) {
                 applicationStatusDispatch({ type: FetchAction.REJECT, error: err });
             });
     }, []);
-
-    if (
-        adResponse.status === FetchStatus.NOT_FETCHED ||
-        adResponse.status === FetchStatus.IS_FETCHING ||
-        applicationResponse.status === FetchStatus.NOT_FETCHED ||
-        applicationResponse.status === FetchStatus.IS_FETCHING
-    ) {
-        return <Loading />;
-    }
-
-    if (
-        applicationResponse.status === FetchStatus.FAILURE &&
-        (applicationResponse.error.statusCode === 410 || applicationResponse.error.statusCode === 404)
-    ) {
-        return <NotFound />;
-    }
-
-    if (applicationResponse.status === FetchStatus.FAILURE) {
-        return <Error />;
-    }
 
     return <WithdrawApplication ad={adResponse.data} adUuid={match.params.adUuid} uuid={match.params.uuid} />;
 }

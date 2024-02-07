@@ -8,10 +8,10 @@ import ContactPerson from "./ContactPerson";
 import EmployerDetails from "./EmployerDetails";
 import EmploymentDetails from "./EmploymentDetails";
 import HowToApply from "./HowToApply";
-import { logStillingVisning } from "../../../../../modules/common/tracking/amplitude";
+import { logStillingVisning } from "../../../_common/tracking/amplitude";
 import ShareAd from "./ShareAd";
 import Summary from "./Summary";
-import H1WithAutoFocus from "../../../../../modules/common/components/h1WithAutoFocus/H1WithAutoFocus";
+import H1WithAutoFocus from "../../../_common/components/h1WithAutoFocus/H1WithAutoFocus";
 
 function Ad({ ad, shareAdRedirectUrl }) {
     /**

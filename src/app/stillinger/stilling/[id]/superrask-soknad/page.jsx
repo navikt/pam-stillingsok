@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import NewApplicationWrapper from "../../../../../migrating/use-client/NewApplicationWrapper";
 import validateForm, { parseFormData } from "./_components/validateForm";
-import SuperraskSoknadAPI from "../../../../../modules/stilling/superrask-soknad/api/SuperraskSoknadAPI";
+import SuperraskSoknadAPI from "./SuperraskSoknadAPI";
 
 export const metadata = {
     title: "Superrask søknad - arbeidsplassen.no",

@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import SearchWrapper from "../../../migrating/use-client/SearchWrapper";
-import simplifySearchResponse from "../../../modules/common/api/SearchAPIUtils";
-import { defaultQuery, stringifyQuery, toApiQuery } from "../../../modules/sok/query";
+import simplifySearchResponse from "../_common/api/SearchAPIUtils";
+import { defaultQuery, stringifyQuery, toApiQuery } from "./_components/old_query";
 import { createQuery } from "./_components/query";
 
 async function search(query) {

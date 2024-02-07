@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import AdWrapper from "../../../../migrating/use-client/AdWrapper";
 import { getStillingDescription, getStillingTitle } from "../../../../../server/common/htmlMeta";
 
-async function getData(id) {
+async function fetchAd(id) {
     const res = await fetch(`https://arbeidsplassen.intern.dev.nav.no/stillinger/api/stilling/${id}`);
     if (res.status === 404) {
         notFound();
@@ -15,7 +15,7 @@ async function getData(id) {
 }
 
 export async function generateMetadata({ params }) {
-    const data = await getData(params.id);
+    const data = await fetchAd(params.id);
 
     return {
         title: getStillingTitle(data._source),
@@ -28,7 +28,7 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function Page({ params }) {
-    const ad = await getData(params.id);
+    const ad = await fetchAd(params.id);
 
     return <AdWrapper ad={ad} shareAdRedirectUrl="https://arbeidsplassen.nav.no/todo" />;
 }

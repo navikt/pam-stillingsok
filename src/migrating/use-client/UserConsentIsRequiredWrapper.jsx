@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import UserConsentIsRequired from "../../modules/lagrede-sok/components/UserConsentIsRequired";
+import UserConsentIsRequired from "../../app/stillinger/lagrede-sok/_components/UserConsentIsRequired";
 
 export default function () {
     return <UserConsentIsRequired />;

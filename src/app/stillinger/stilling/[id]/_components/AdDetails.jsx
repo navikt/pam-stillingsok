@@ -2,8 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import { BodyShort, Label, Link as AkselLink } from "@navikt/ds-react";
 import Link from "../../../../../migrating/Link";
-import { formatDate } from "../../../../../modules/common/utils/utils";
-import { CONTEXT_PATH } from "../../../../../modules/common/environment";
+import { formatDate } from "../../../_common/utils/utils";
+import { CONTEXT_PATH } from "../../../_common/environment";
 
 export default function AdDetails({ id, source }) {
     return (
