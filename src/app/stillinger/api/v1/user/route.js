@@ -1,4 +1,4 @@
-export async function GET() {
+export default async function GET() {
     return Response.json({
         id: 1000,
         uuid: "6718eeab-f8d4-4132-83e6-ab2302a6e8cd",
