@@ -4,11 +4,8 @@ import PropTypes from "prop-types";
 import Link from "next/link";
 import { CONTEXT_PATH } from "../../../../../_common/environment";
 import GiveFeedback from "./GiveFeedback";
-import useScrollToTop from "../../../../../_common/hooks/useScrollToTop";
 
 function Success({ email }) {
-    useScrollToTop();
-
     return (
         <>
             <Heading level="1" size="large" spacing>

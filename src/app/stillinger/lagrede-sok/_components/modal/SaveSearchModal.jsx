@@ -1,9 +1,8 @@
 import React, { useContext, useEffect } from "react";
-import { BodyLong, Modal } from "@navikt/ds-react";
+import { BodyLong, HStack, Loader, Modal } from "@navikt/ds-react";
 import PropTypes from "prop-types";
 import { UserContext } from "../../../../_common/user/UserProvider";
 import UserAPI from "../../../../_common/api/UserAPI";
-import DelayedSpinner from "../../../../_common/components/spinner/DelayedSpinner";
 import useToggle from "../../../../_common/hooks/useToggle";
 import { FetchAction, FetchStatus, useFetchReducer } from "../../../../_common/hooks/useFetchReducer";
 import SaveSearchForm from "./SaveSearchForm";
@@ -81,7 +80,11 @@ function SaveSearchModal({ onClose, onSaveSearchSuccess, formData, defaultFormMo
 
     return (
         <Modal onClose={onClose} header={{ heading: "Lagre søk" }} open width="medium">
-            {status === FetchStatus.IS_FETCHING && <DelayedSpinner />}
+            {status === FetchStatus.IS_FETCHING && (
+                <HStack justify="center" className="mt-8 mb-8" role="status">
+                    <Loader size="2xlarge" />
+                </HStack>
+            )}
             {status === FetchStatus.FAILURE && error.statusCode === 404 && <NotFoundMessage />}
             {status === FetchStatus.FAILURE && error.statusCode !== 404 && (
                 <Modal.Body>

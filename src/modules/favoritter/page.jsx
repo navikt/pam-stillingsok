@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 import useDocumentTitle from "../../app/_common/hooks/useDocumentTitle";
-import useScrollToTop from "../../app/_common/hooks/useScrollToTop";
 import { AuthenticationContext, AuthenticationStatus } from "../../app/_common/auth/contexts/AuthenticationProvider";
 import LoginIsRequiredPage from "../../app/_common/auth/components/LoginIsRequiredPage";
 import { HasAcceptedTermsStatus, UserContext } from "../../app/_common/user/UserProvider";
@@ -22,7 +21,6 @@ function FavouritesPage() {
     const [sortBy, setSortBy] = useState("published");
 
     useDocumentTitle("Favoritter");
-    useScrollToTop();
 
     function fetchFavourites() {
         dispatch({ type: FetchAction.BEGIN });
