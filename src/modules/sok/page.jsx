@@ -118,7 +118,7 @@ function SearchPage() {
         <Search
             searchResult={searchResponse}
             initialSearchResult={initialSearchResponse}
-            initialQuery={initialQuery}
+            query={initialQuery}
             fetchSearch={fetchSearch}
             isDebug={isDebug}
         />

@@ -20,11 +20,10 @@ import logAmplitudeEvent from "../../../_common/tracking/amplitude";
 import LoggedInButtons from "./loggedInButtons/LoggedInButtons";
 import FiltersMobile from "./filters/FiltersMobile";
 
-export default function Search({ searchResult, aggregations, locations, initialQuery, isDebug }) {
-    const [query, queryDispatch] = useReducer(queryReducer, initialQuery);
+export default function Search({ query, searchResult, aggregations, locations }) {
+    const [updatedQuery, queryDispatch] = useReducer(queryReducer, query);
     const [isFiltersVisible, setIsFiltersVisible] = useState(false);
     const [initialRenderDone, setInitialRenderDone] = useState(false);
-
     const router = useRouter();
 
     /**
@@ -32,7 +31,7 @@ export default function Search({ searchResult, aggregations, locations, initialQ
      */
     useEffect(() => {
         if (initialRenderDone) {
-            const browserQuery = toBrowserQuery(query);
+            const browserQuery = toBrowserQuery(updatedQuery);
 
             // Keep saved search uuid in browser url, as long as there are some search criteria.
             // This uuid is used when user update an existing saved search
@@ -43,20 +42,16 @@ export default function Search({ searchResult, aggregations, locations, initialQ
 
             logAmplitudeEvent("Stillinger - Utførte søk");
 
-            try {
-                router.replace(CONTEXT_PATH + stringifyQuery(browserQuery), { scroll: false });
-            } catch (error) {
-                // ignore any errors
-            }
+            router.replace(CONTEXT_PATH + stringifyQuery(browserQuery), { scroll: false });
         } else {
             // Skip search first time query change, since that
             // will just reload the search result we already got
             setInitialRenderDone(true);
         }
-    }, [query]);
+    }, [updatedQuery]);
 
     function loadMoreResults() {
-        queryDispatch({ type: SET_FROM, value: query.from + query.size });
+        queryDispatch({ type: SET_FROM, value: updatedQuery.from + updatedQuery.size });
     }
 
     return (
@@ -68,7 +63,7 @@ export default function Search({ searchResult, aggregations, locations, initialQ
             </Box>
 
             <div className="container-small">
-                <SearchBoxForm query={query} dispatchQuery={queryDispatch} />
+                <SearchBoxForm query={updatedQuery} dispatchQuery={queryDispatch} />
                 <Box paddingBlock={{ xs: "0 4", md: "0 12" }}>
                     <HStack gap="2" justify={{ xs: "start", md: "center" }} align={{ xs: "start", md: "center" }}>
                         <Show below="md">
@@ -92,7 +87,7 @@ export default function Search({ searchResult, aggregations, locations, initialQ
             <SearchResultHeader
                 isFiltersVisible={isFiltersVisible}
                 searchResult={searchResult}
-                query={initialQuery}
+                query={query}
                 queryDispatch={queryDispatch}
             />
 
@@ -103,7 +98,7 @@ export default function Search({ searchResult, aggregations, locations, initialQ
             >
                 <Hide below="md">
                     <FiltersDesktop
-                        query={initialQuery}
+                        query={query}
                         dispatchQuery={queryDispatch}
                         aggregations={aggregations}
                         locations={locations}
@@ -114,7 +109,7 @@ export default function Search({ searchResult, aggregations, locations, initialQ
                 <Show below="md">
                     {isFiltersVisible && (
                         <FiltersMobile
-                            query={initialQuery}
+                            query={query}
                             dispatchQuery={queryDispatch}
                             aggregations={aggregations}
                             locations={locations}
@@ -125,18 +120,17 @@ export default function Search({ searchResult, aggregations, locations, initialQ
                 </Show>
 
                 <div>
-                    <SelectedFilters query={initialQuery} queryDispatch={queryDispatch} />
+                    <SelectedFilters query={query} queryDispatch={queryDispatch} />
                     <SearchResult
                         searchResult={searchResult}
-                        query={initialQuery}
+                        query={query}
                         queryDispatch={queryDispatch}
                         loadMoreResults={() => {
                             loadMoreResults();
                         }}
-                        isDebug={isDebug}
                     />
-                    <DoYouWantToSaveSearch query={initialQuery} />
-                    <Feedback query={initialQuery} />
+                    <DoYouWantToSaveSearch query={query} />
+                    <Feedback query={query} />
                 </div>
             </HGrid>
         </>
@@ -149,6 +143,5 @@ Search.propTypes = {
     searchResult: PropTypes.shape({
         ads: PropTypes.shape({}),
     }),
-    initialQuery: PropTypes.shape({}),
-    isDebug: PropTypes.bool,
+    query: PropTypes.shape({}),
 };

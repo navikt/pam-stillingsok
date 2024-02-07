@@ -38,7 +38,7 @@ export default async function Page({ searchParams }) {
             searchResult={searchResult}
             aggregations={globalSearchResult.aggregations}
             locations={locations}
-            initialQuery={initialQuery}
+            query={initialQuery}
         />
     );
 }

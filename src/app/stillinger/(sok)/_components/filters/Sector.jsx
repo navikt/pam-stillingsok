@@ -1,22 +1,14 @@
 import PropTypes from "prop-types";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Checkbox, Fieldset } from "@navikt/ds-react";
 import UnknownSearchCriteriaValues from "./UnknownSearchCriteriaValues";
 import { ADD_SECTOR, REMOVE_SECTOR } from "../old_query";
-import moveCriteriaToBottom from "../utils/moveFacetToBottom";
 import mergeCount from "../utils/mergeCount";
 import findUnknownSearchCriteriaValues from "../utils/findUnknownSearchCriteriaValues";
 import { logSearchFilterAdded, logSearchFilterRemoved } from "../../../../_common/tracking/amplitude";
 
 function Sector({ initialValues, updatedValues, query, dispatch }) {
-    const [values, setValues] = useState(moveCriteriaToBottom(initialValues, "Ikke oppgitt"));
-
-    useEffect(() => {
-        if (updatedValues) {
-            const merged = mergeCount(values, updatedValues);
-            setValues(merged);
-        }
-    }, [updatedValues]);
+    const values = mergeCount(initialValues, updatedValues);
 
     function handleClick(e) {
         const { value } = e.target;

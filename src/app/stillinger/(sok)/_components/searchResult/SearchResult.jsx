@@ -1,10 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import Pagination from "../pagination/Pagination";
 import SearchResultItem from "./SearchResultItem";
 import FavouritesButton from "../../../favoritter/_components/FavouritesButton";
 
-function SearchResult({ searchResult, query, loadMoreResults, isDebug }) {
+function SearchResult({ searchResult, query, loadMoreResults }) {
+    const [showAdDetailsForDebugging, setShowAdDetailsForDebugging] = useState(false);
+
+    /**
+     *  Check if we should render ad details for debugging
+     */
+    useEffect(() => {
+        try {
+            const valueFromLocalStorage = localStorage.getItem("isDebug");
+            if (valueFromLocalStorage && valueFromLocalStorage === "true") {
+                setShowAdDetailsForDebugging(true);
+            }
+        } catch (err) {
+            // ignore
+        }
+    });
+
     return (
         <section className="SearchResult">
             {searchResult.ads &&
@@ -22,7 +38,7 @@ function SearchResult({ searchResult, query, loadMoreResults, isDebug }) {
                                 variant="tertiary"
                             />
                         }
-                        isDebug={isDebug}
+                        isDebug={showAdDetailsForDebugging}
                     />
                 ))}
             {searchResult.ads && searchResult.ads.length > 0 && (
@@ -40,7 +56,6 @@ SearchResult.propTypes = {
         from: PropTypes.number,
     }),
     loadMoreResults: PropTypes.func.isRequired,
-    isDebug: PropTypes.bool,
 };
 
 export default SearchResult;

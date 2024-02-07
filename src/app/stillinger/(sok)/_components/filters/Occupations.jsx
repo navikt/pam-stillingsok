@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Box, Checkbox, Fieldset } from "@navikt/ds-react";
 import {
     ADD_OCCUPATION_FIRST_LEVEL,
@@ -16,20 +16,15 @@ import { logSearchFilterAdded, logSearchFilterRemoved } from "../../../../_commo
 const OCCUPATION_LEVEL_OTHER = "Uoppgitt/ ikke identifiserbare";
 
 function Occupations({ initialValues, updatedValues, query, dispatch }) {
-    const [values, setValues] = useState(moveCriteriaToBottom(initialValues, OCCUPATION_LEVEL_OTHER));
+    const sortedValues = moveCriteriaToBottom(initialValues, OCCUPATION_LEVEL_OTHER);
+    const values = mergeCount(sortedValues, updatedValues, "occupationSecondLevels");
+
     const unknownFirstValues = findUnknownSearchCriteriaValues(query.occupationFirstLevels, initialValues);
     const unknownSecondValues = findUnknownSearchCriteriaValues(
         query.occupationSecondLevels,
         initialValues,
         "occupationSecondLevels",
     );
-
-    useEffect(() => {
-        if (updatedValues) {
-            const merged = mergeCount(values, updatedValues, "occupationSecondLevels");
-            setValues(merged);
-        }
-    }, [updatedValues]);
 
     function handleFirstLevelClick(e) {
         const { value } = e.target;
