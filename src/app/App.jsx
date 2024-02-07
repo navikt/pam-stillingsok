@@ -17,7 +17,7 @@ function App({ children }) {
                         <SkipLink href="#main-content" />
                         <div className="arb-push-footer-down">
                             <Header />
-                            <main>{children}</main>
+                            <main id="main-content">{children}</main>
                         </div>
                         <Footer />
                     </div>
