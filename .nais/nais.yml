@@ -43,6 +43,8 @@ spec:
      - {{url}}
   {{/each}}
   env:
+    - name: PORT
+      value: "8080"
     - name: PAMADUSER_URL
       value: {{ pamaduser_url }}
     - name: INTEREST_API_URL
