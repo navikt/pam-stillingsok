@@ -1,9 +1,9 @@
 import React from "react";
-import Link from "../../../../migrating/Link";
 import { Alert, BodyLong, BodyShort, Button, Heading, Label, Link as AkselLink } from "@navikt/ds-react";
 import PropTypes from "prop-types";
-import { CONTEXT_PATH } from "../../../common/environment";
-import getEmployer from "../../../../../server/common/getEmployer";
+import Link from "../../../../../../migrating/Link";
+import { CONTEXT_PATH } from "../../../../../../modules/common/environment";
+import getEmployer from "../../../../../../../server/common/getEmployer";
 
 function WithdrawApplicationConfirmationRequired({ ad, handleWithDrawClick, isDeleting, hasError }) {
     return (

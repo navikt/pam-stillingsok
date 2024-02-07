@@ -9,8 +9,10 @@ import Loading from "../../loading";
 import NotFound from "../../not-found";
 import Error from "../../error";
 import logAmplitudeEvent from "../../common/tracking/amplitude";
-import validateForm, { parseFormData } from "./components/validateForm";
-import NewApplication from "./components/NewApplication";
+import validateForm, {
+    parseFormData,
+} from "../../../app/stillinger/stilling/[id]/superrask-soknad/_components/validateForm";
+import NewApplication from "../../../app/stillinger/stilling/[id]/superrask-soknad/_components/NewApplication";
 
 function SuperraskPage({ match }) {
     const defaultState = { success: false, validationErrors: {}, error: undefined, pending: false, data: undefined };

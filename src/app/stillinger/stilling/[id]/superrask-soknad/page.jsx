@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import NewApplicationWrapper from "../../../../../migrating/use-client/NewApplicationWrapper";
-import validateForm, { parseFormData } from "../../../../../modules/stilling/superrask-soknad/components/validateForm";
+import validateForm, { parseFormData } from "./_components/validateForm";
 import SuperraskSoknadAPI from "../../../../../modules/stilling/superrask-soknad/api/SuperraskSoknadAPI";
 
 export const metadata = {

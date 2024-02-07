@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Link from "../../../migrating/Link";
 import {
     BodyLong,
     BodyShort,
@@ -14,10 +13,11 @@ import {
     HStack,
 } from "@navikt/ds-react";
 import { ExternalLinkIcon } from "@navikt/aksel-icons";
-import { formatDate, isValidEmail, isValidUrl } from "../../common/utils/utils";
-import logAmplitudeEvent from "../../common/tracking/amplitude";
-import FavouritesButton from "../../favoritter/components/FavouritesButton";
-import { CONTEXT_PATH } from "../../common/environment";
+import Link from "../../../../../migrating/Link";
+import { formatDate, isValidEmail, isValidUrl } from "../../../../../modules/common/utils/utils";
+import logAmplitudeEvent from "../../../../../modules/common/tracking/amplitude";
+import FavouritesButton from "../../../../../modules/favoritter/components/FavouritesButton";
+import { CONTEXT_PATH } from "../../../../../modules/common/environment";
 
 export function getApplicationUrl(properties) {
     if (properties.applicationurl !== undefined) {

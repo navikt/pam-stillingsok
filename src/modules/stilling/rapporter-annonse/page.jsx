@@ -7,11 +7,11 @@ import NotFound from "../../not-found";
 import Loading from "../../loading";
 import Error from "../../error";
 import useDocumentTitle from "../../common/hooks/useDocumentTitle";
-import ReportAd from "./components/ReportAd";
+import ReportAd from "../../../app/stillinger/stilling/[id]/_components/ReportAd";
 import UserAPI from "../../common/api/UserAPI";
 import logAmplitudeEvent from "../../common/tracking/amplitude";
 import APIError from "../../common/api/APIError";
-import validateForm from "./components/validate";
+import validateForm from "../../../app/stillinger/stilling/[id]/_components/validate";
 
 function ReportAdPage({ match }) {
     const [{ data: ad, error, status }, dispatch] = useFetchReducer();

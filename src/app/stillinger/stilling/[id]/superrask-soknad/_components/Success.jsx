@@ -1,11 +1,11 @@
 import React from "react";
 import { BodyLong, Button, Heading } from "@navikt/ds-react";
 import PropTypes from "prop-types";
-import Link from "../../../../migrating/Link";
-import { CONTEXT_PATH } from "../../../common/environment";
+import Link from "../../../../../../migrating/Link";
+import { CONTEXT_PATH } from "../../../../../../modules/common/environment";
 import GiveFeedback from "./GiveFeedback";
-import H1WithAutoFocus from "../../../common/components/h1WithAutoFocus/H1WithAutoFocus";
-import useScrollToTop from "../../../common/hooks/useScrollToTop";
+import H1WithAutoFocus from "../../../../../../modules/common/components/h1WithAutoFocus/H1WithAutoFocus";
+import useScrollToTop from "../../../../../../modules/common/hooks/useScrollToTop";
 
 function Success({ email }) {
     useScrollToTop();

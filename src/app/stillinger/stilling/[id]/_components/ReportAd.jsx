@@ -16,7 +16,7 @@ import {
     Textarea,
     VStack,
 } from "@navikt/ds-react";
-import { FetchStatus } from "../../../common/hooks/useFetchReducer";
+import { FetchStatus } from "../../../../../modules/common/hooks/useFetchReducer";
 
 const reportCategories = [
     { label: "Diskriminerende innhold", key: "discrimination" },

@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import ReportAd from "../../modules/stilling/rapporter-annonse/components/ReportAd";
+import ReportAd from "../../app/stillinger/stilling/[id]/_components/ReportAd";
 
 function ReportAdWrapper(props) {
     return <ReportAd {...props} />;

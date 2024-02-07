@@ -3,7 +3,7 @@
 import React from "react";
 import { useFormState } from "react-dom";
 import PropTypes from "prop-types";
-import NewApplication from "../../modules/stilling/superrask-soknad/components/NewApplication";
+import NewApplication from "../../app/stillinger/stilling/[id]/superrask-soknad/_components/NewApplication";
 
 function NewApplicationWrapper(props) {
     const { submitApplication, ...rest } = props;

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import useScrollToTop from "../../common/hooks/useScrollToTop";
-import WithdrawApplication from "./components/WithdrawApplication";
+import WithdrawApplication from "../../../app/stillinger/trekk-soknad/[uuid]/[adUuid]/_components/WithdrawApplication";
 import useDocumentTitle from "../../common/hooks/useDocumentTitle";
 import { FetchAction, FetchStatus, useFetchReducer } from "../../common/hooks/useFetchReducer";
 import SearchAPI from "../../common/api/SearchAPI";

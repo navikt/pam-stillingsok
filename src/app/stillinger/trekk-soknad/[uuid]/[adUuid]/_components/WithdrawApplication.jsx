@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { FetchAction, FetchStatus, useFetchReducer } from "../../../common/hooks/useFetchReducer";
-import SuperraskSoknadAPI from "../../superrask-soknad/api/SuperraskSoknadAPI";
+import { FetchAction, FetchStatus, useFetchReducer } from "../../../../../../modules/common/hooks/useFetchReducer";
+import SuperraskSoknadAPI from "../../../../../../modules/stilling/superrask-soknad/api/SuperraskSoknadAPI";
 import WithdrawApplicationSuccess from "./WithdrawApplicationSuccess";
 import WithdrawApplicationConfirmationRequired from "./WithdrawApplicationConfirmationRequired";
 

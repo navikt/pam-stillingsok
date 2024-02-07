@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { BodyShort, Box, Label } from "@navikt/ds-react";
-import getEmployer from "../../../../../server/common/getEmployer";
+import getEmployer from "../../../../../../../server/common/getEmployer";
 
 function AdDetailsHeader({ source }) {
     return (

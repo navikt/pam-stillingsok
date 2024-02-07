@@ -1,4 +1,4 @@
-import { isValidEmail, isValidTelephone } from "../../../common/utils/utils";
+import { isValidEmail, isValidTelephone } from "../../../../../../modules/common/utils/utils";
 
 export const MOTIVATION_MAX_LENGTH = 800;
 

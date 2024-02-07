@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import useScrollToTop from "../common/hooks/useScrollToTop";
-import Ad from "./components/Ad";
+import Ad from "../../app/stillinger/stilling/[id]/_components/Ad";
 import { FetchAction, FetchStatus, useFetchReducer } from "../common/hooks/useFetchReducer";
 import SearchAPI from "../common/api/SearchAPI";
 import NotFound from "./not-found";
