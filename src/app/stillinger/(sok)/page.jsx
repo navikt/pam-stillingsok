@@ -1,8 +1,8 @@
 import { notFound } from "next/navigation";
-import SearchWrapper from "../../migrating/use-client/SearchWrapper";
-import simplifySearchResponse from "../../modules/common/api/SearchAPIUtils";
-import { defaultQuery, stringifyQuery, toApiQuery } from "../../modules/sok/query";
-import { createQuery } from "./(sok)/_components/query";
+import SearchWrapper from "../../../migrating/use-client/SearchWrapper";
+import simplifySearchResponse from "../../../modules/common/api/SearchAPIUtils";
+import { defaultQuery, stringifyQuery, toApiQuery } from "../../../modules/sok/query";
+import { createQuery } from "./_components/query";
 
 async function search(query) {
     const res = await fetch(`https://arbeidsplassen.intern.dev.nav.no/stillinger/api/search${query}`);
