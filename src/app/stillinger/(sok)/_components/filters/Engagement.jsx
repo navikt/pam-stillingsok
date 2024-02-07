@@ -6,7 +6,7 @@ import UnknownSearchCriteriaValues from "./UnknownSearchCriteriaValues";
 import mergeCount from "../utils/mergeCount";
 import moveCriteriaToBottom from "../utils/moveFacetToBottom";
 import findUnknownSearchCriteriaValues from "../utils/findUnknownSearchCriteriaValues";
-import { logSearchFilterAdded, logSearchFilterRemoved } from "../../../_common/tracking/amplitude";
+import { logSearchFilterAdded, logSearchFilterRemoved } from "../../../../_common/tracking/amplitude";
 
 function Engagement({ initialValues, updatedValues, query, dispatch }) {
     const [values, setValues] = useState(moveCriteriaToBottom(initialValues, "Annet"));

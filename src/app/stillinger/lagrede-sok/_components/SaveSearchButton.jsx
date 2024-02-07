@@ -10,12 +10,12 @@ import {
     toReadableQuery,
     toSavedSearchQuery,
 } from "../../(sok)/_components/old_query";
-import { AuthenticationContext, AuthenticationStatus } from "../../_common/auth/contexts/AuthenticationProvider";
-import { HasAcceptedTermsStatus, UserContext } from "../../_common/user/UserProvider";
-import { extractParam } from "../../_common/utils/utils";
-import UserConsentModal from "../../_common/user/UserConsentModal";
-import LoginModal from "../../_common/auth/components/LoginModal";
-import useToggle from "../../_common/hooks/useToggle";
+import { AuthenticationContext, AuthenticationStatus } from "../../../_common/auth/contexts/AuthenticationProvider";
+import { HasAcceptedTermsStatus, UserContext } from "../../../_common/user/UserProvider";
+import { extractParam } from "../../../_common/utils/utils";
+import UserConsentModal from "../../../_common/user/UserConsentModal";
+import LoginModal from "../../../_common/auth/components/LoginModal";
+import useToggle from "../../../_common/hooks/useToggle";
 import { FormModes } from "./modal/SaveSearchForm";
 
 /**

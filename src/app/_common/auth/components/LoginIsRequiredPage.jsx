@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import PropTypes from "prop-types";
 import { BodyLong, Button, Heading, HStack, VStack } from "@navikt/ds-react";

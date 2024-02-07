@@ -1,8 +1,8 @@
 import { cookies } from "next/headers";
-import FavouritesWrapper from "../../../migrating/use-client/FavouritesWrapper";
 import mockData from "../api/v1/userfavouriteads/mock-data";
-import LoginIsRequiredWrapper from "../../../migrating/use-client/LoginIsRequiredWrapper";
-import UserConsentIsRequiredWrapper from "../../../migrating/use-client/UserConsentIsRequiredWrapper";
+import LoginIsRequiredPage from "../../_common/auth/components/LoginIsRequiredPage";
+import FavouritesList from "./_components/FavouritesList";
+import UserConsentIsRequired from "./_components/UserConsentIsRequired";
 
 export const metadata = {
     title: "Favoritter - arbeidsplassen.no",
@@ -22,11 +22,11 @@ export default async function Page() {
     const userExist = await checkIfUserExist();
 
     if (!isAuthenticated) {
-        return <LoginIsRequiredWrapper />;
+        return <LoginIsRequiredPage />;
     }
 
     if (!userExist) {
-        return <UserConsentIsRequiredWrapper />;
+        return <UserConsentIsRequired />;
     }
-    return <FavouritesWrapper data={mockData} />;
+    return <FavouritesList data={mockData} />;
 }

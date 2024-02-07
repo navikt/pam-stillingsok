@@ -5,7 +5,7 @@ import UnknownSearchCriteriaValues from "./UnknownSearchCriteriaValues";
 import { ADD_WORKLANGUAGE, REMOVE_WORKLANGUAGE } from "../old_query";
 import mergeCount from "../utils/mergeCount";
 import findUnknownSearchCriteriaValues from "../utils/findUnknownSearchCriteriaValues";
-import { logSearchFilterAdded, logSearchFilterRemoved } from "../../../_common/tracking/amplitude";
+import { logSearchFilterAdded, logSearchFilterRemoved } from "../../../../_common/tracking/amplitude";
 import moveCriteriaToBottom from "../utils/moveFacetToBottom";
 
 function WorkLanguage({ initialValues, updatedValues, query, dispatch }) {

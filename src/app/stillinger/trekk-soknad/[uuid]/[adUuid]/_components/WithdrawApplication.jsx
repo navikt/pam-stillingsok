@@ -1,6 +1,8 @@
+"use client";
+
 import React from "react";
 import PropTypes from "prop-types";
-import { FetchAction, FetchStatus, useFetchReducer } from "../../../../_common/hooks/useFetchReducer";
+import { FetchAction, FetchStatus, useFetchReducer } from "../../../../../_common/hooks/useFetchReducer";
 import SuperraskSoknadAPI from "../../../../stilling/[id]/superrask-soknad/SuperraskSoknadAPI";
 import WithdrawApplicationSuccess from "./WithdrawApplicationSuccess";
 import WithdrawApplicationConfirmationRequired from "./WithdrawApplicationConfirmationRequired";

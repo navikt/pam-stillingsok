@@ -1,7 +1,7 @@
 import APIError from "./APIError";
 import { CONTEXT_PATH } from "../environment";
 import simplifySearchResponse from "./SearchAPIUtils";
-import { stringifyQuery } from "../../(sok)/_components/old_query";
+import { stringifyQuery } from "../../stillinger/(sok)/_components/old_query";
 
 let latestSearchResponse;
 let latestInitialResponse;

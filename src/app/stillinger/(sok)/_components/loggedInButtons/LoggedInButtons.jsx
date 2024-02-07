@@ -1,14 +1,14 @@
 import React, { useContext } from "react";
 import { Button } from "@navikt/ds-react";
-import Link from "../../../../../migrating/Link";
+import Link from "next/link";
 import { ClockIcon, HeartIcon } from "@navikt/aksel-icons";
-import useRouter from "../../../../../migrating/useRouter";
-import useToggle from "../../../_common/hooks/useToggle";
-import { AuthenticationContext, AuthenticationStatus } from "../../../_common/auth/contexts/AuthenticationProvider";
-import { HasAcceptedTermsStatus, UserContext } from "../../../_common/user/UserProvider";
-import { CONTEXT_PATH } from "../../../_common/environment";
-import LoginModal from "../../../_common/auth/components/LoginModal";
-import UserConsentModal from "../../../_common/user/UserConsentModal";
+import { useRouter } from "next/navigation";
+import useToggle from "../../../../_common/hooks/useToggle";
+import { AuthenticationContext, AuthenticationStatus } from "../../../../_common/auth/contexts/AuthenticationProvider";
+import { HasAcceptedTermsStatus, UserContext } from "../../../../_common/user/UserProvider";
+import { CONTEXT_PATH } from "../../../../_common/environment";
+import LoginModal from "../../../../_common/auth/components/LoginModal";
+import UserConsentModal from "../../../../_common/user/UserConsentModal";
 
 function LoggedInButtons() {
     const { authenticationStatus, loginAndRedirect } = useContext(AuthenticationContext);
@@ -45,7 +45,7 @@ function LoggedInButtons() {
             <Button
                 as={Link}
                 role="link"
-                to={`${CONTEXT_PATH}/lagrede-sok`}
+                href={`${CONTEXT_PATH}/lagrede-sok`}
                 variant="tertiary"
                 onClick={(e) => {
                     handleClick(e, `${CONTEXT_PATH}/lagrede-sok`, "SAVEDSEARCH");
@@ -58,7 +58,7 @@ function LoggedInButtons() {
             <Button
                 as={Link}
                 role="link"
-                to={`${CONTEXT_PATH}/favoritter`}
+                href={`${CONTEXT_PATH}/favoritter`}
                 variant="tertiary"
                 onClick={(e) => {
                     handleClick(e, `${CONTEXT_PATH}/favoritter`, "FAVORITES");

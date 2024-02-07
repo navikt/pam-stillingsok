@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
-import AdWrapper from "../../../../migrating/use-client/AdWrapper";
 import { getStillingDescription, getStillingTitle } from "../../../../../server/common/htmlMeta";
+import Ad from "./_components/Ad";
 
 async function fetchAd(id) {
     const res = await fetch(`https://arbeidsplassen.intern.dev.nav.no/stillinger/api/stilling/${id}`);
@@ -30,5 +30,5 @@ export async function generateMetadata({ params }) {
 export default async function Page({ params }) {
     const ad = await fetchAd(params.id);
 
-    return <AdWrapper ad={ad} shareAdRedirectUrl="https://arbeidsplassen.nav.no/todo" />;
+    return <Ad ad={ad} shareAdRedirectUrl="https://arbeidsplassen.nav.no/todo" />;
 }

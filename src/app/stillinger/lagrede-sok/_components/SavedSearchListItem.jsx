@@ -1,17 +1,17 @@
 import PropTypes from "prop-types";
 import React, { useState } from "react";
 import { Alert, Link as AkselLink, BodyShort, Heading, Tag, Button, HStack } from "@navikt/ds-react";
-import Link from "../../../../migrating/Link";
+import Link from "next/link";
 import { ArrowsCirclepathIcon, PencilIcon, TrashIcon } from "@navikt/aksel-icons";
-import { CONTEXT_PATH } from "../../_common/environment";
-import { formatDate } from "../../_common/utils/utils";
-import AlertModal from "../../_common/components/modals/AlertModal";
+import { CONTEXT_PATH } from "../../../_common/environment";
+import { formatDate } from "../../../_common/utils/utils";
+import AlertModal from "../../../_common/components/modals/AlertModal";
 import SaveSearchModal from "./modal/SaveSearchModal";
-import UserAPI from "../../_common/api/UserAPI";
-import useToggle from "../../_common/hooks/useToggle";
-import { FetchStatus } from "../../_common/hooks/useFetchReducer";
+import UserAPI from "../../../_common/api/UserAPI";
+import useToggle from "../../../_common/hooks/useToggle";
+import { FetchStatus } from "../../../_common/hooks/useFetchReducer";
 import { FormModes } from "./modal/SaveSearchForm";
-import AlertModalWithPageReload from "../../_common/components/modals/AlertModalWithPageReload";
+import AlertModalWithPageReload from "../../../_common/components/modals/AlertModalWithPageReload";
 
 function SavedSearchListItem({ savedSearch, removeSavedSearchFromList, replaceSavedSearchInList, autoOpenModal }) {
     const [deleteStatus, setDeleteStatus] = useState(FetchStatus.NOT_FETCHED);
@@ -64,7 +64,7 @@ function SavedSearchListItem({ savedSearch, removeSavedSearchFromList, replaceSa
     return (
         <article className="mt-12">
             <Heading level="3" size="small" spacing>
-                <AkselLink as={Link} to={`${CONTEXT_PATH}${savedSearch.searchQuery}&saved=${savedSearch.uuid}`}>
+                <AkselLink as={Link} href={`${CONTEXT_PATH}${savedSearch.searchQuery}&saved=${savedSearch.uuid}`}>
                     {savedSearch.title}
                 </AkselLink>
             </Heading>

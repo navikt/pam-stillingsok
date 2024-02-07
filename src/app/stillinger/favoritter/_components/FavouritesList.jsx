@@ -1,9 +1,11 @@
+"use client";
+
 import React from "react";
 import { HStack, Select } from "@navikt/ds-react";
 import PropTypes from "prop-types";
-import { FetchAction } from "../../_common/hooks/useFetchReducer";
+import { FetchAction } from "../../../_common/hooks/useFetchReducer";
 import FavouritesListItem from "./FavouritesListItem";
-import H1WithAutoFocus from "../../_common/components/h1WithAutoFocus/H1WithAutoFocus";
+import H1WithAutoFocus from "../../../_common/components/h1WithAutoFocus/H1WithAutoFocus";
 
 function FavouritesList({ data, dispatch, sortBy, setSortBy }) {
     /**

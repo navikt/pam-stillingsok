@@ -1,6 +1,6 @@
 import React from "react";
 import { BodyLong, Link as AkselLink, Modal } from "@navikt/ds-react";
-import { CONTEXT_PATH } from "../../../_common/environment";
+import { CONTEXT_PATH } from "../../../../_common/environment";
 
 function NotFoundMessage() {
     return (

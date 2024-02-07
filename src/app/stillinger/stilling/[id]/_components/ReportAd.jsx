@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import {
@@ -16,7 +18,7 @@ import {
     Textarea,
     VStack,
 } from "@navikt/ds-react";
-import { FetchStatus } from "../../../_common/hooks/useFetchReducer";
+import { FetchStatus } from "../../../../_common/hooks/useFetchReducer";
 
 const reportCategories = [
     { label: "Diskriminerende innhold", key: "discrimination" },

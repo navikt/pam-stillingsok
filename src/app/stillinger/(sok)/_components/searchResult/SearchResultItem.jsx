@@ -4,11 +4,11 @@ import { BodyLong, BodyShort, Heading, HStack, Link as AkselLink, Tag } from "@n
 import { addDays, endOfDay, format as formatDateFns, isSameDay, isValid, parse, parseISO, subDays } from "date-fns";
 import { nb } from "date-fns/locale";
 import { Buldings3Icon, EarthIcon } from "@navikt/aksel-icons";
-import Link from "../../../../../migrating/Link";
+import Link from "next/link";
 import getEmployer from "../../../../../../server/common/getEmployer";
 import getWorkLocation from "../../../../../../server/common/getWorkLocation";
-import { CONTEXT_PATH } from "../../../_common/environment";
-import { formatDate } from "../../../_common/utils/utils";
+import { CONTEXT_PATH } from "../../../../_common/environment";
+import { formatDate } from "../../../../_common/utils/utils";
 import Debug from "./Debug";
 
 export default function SearchResultItem({ ad, showExpired, favouriteButton, isDebug, shouldAutoFocus = false }) {
@@ -161,7 +161,7 @@ SearchResultItem.propTypes = {
 
 function LinkToAd({ children, stilling }) {
     return (
-        <AkselLink as={Link} to={`${CONTEXT_PATH}/stilling/${stilling.uuid}`}>
+        <AkselLink as={Link} href={`${CONTEXT_PATH}/stilling/${stilling.uuid}`}>
             {children}
         </AkselLink>
     );

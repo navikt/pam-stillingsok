@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { BodyShort, Label, Link as AkselLink } from "@navikt/ds-react";
-import Link from "../../../../../migrating/Link";
-import { formatDate } from "../../../_common/utils/utils";
-import { CONTEXT_PATH } from "../../../_common/environment";
+import Link from "next/link";
+import { formatDate } from "../../../../_common/utils/utils";
+import { CONTEXT_PATH } from "../../../../_common/environment";
 
 export default function AdDetails({ id, source }) {
     return (
@@ -29,7 +29,7 @@ export default function AdDetails({ id, source }) {
                 </BodyShort>
             )}
             <BodyShort>
-                <AkselLink as={Link} to={`${CONTEXT_PATH}/rapporter-annonse/${id}`}>
+                <AkselLink as={Link} href={`${CONTEXT_PATH}/rapporter-annonse/${id}`}>
                     Rapporter annonse
                 </AkselLink>
             </BodyShort>

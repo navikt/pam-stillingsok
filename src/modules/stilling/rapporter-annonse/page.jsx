@@ -1,20 +1,17 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { FetchAction, FetchStatus, useFetchReducer } from "../../../app/stillinger/_common/hooks/useFetchReducer";
-import SearchAPI from "../../../app/stillinger/_common/api/SearchAPI";
-import useScrollToTop from "../../../app/stillinger/_common/hooks/useScrollToTop";
-import NotFound from "../../not-found";
-import Loading from "../../loading";
-import Error from "../../error";
-import useDocumentTitle from "../../../app/stillinger/_common/hooks/useDocumentTitle";
+import { FetchAction, FetchStatus, useFetchReducer } from "../../../app/_common/hooks/useFetchReducer";
+import SearchAPI from "../../../app/_common/api/SearchAPI";
+import useScrollToTop from "../../../app/_common/hooks/useScrollToTop";
+import useDocumentTitle from "../../../app/_common/hooks/useDocumentTitle";
 import ReportAd from "../../../app/stillinger/stilling/[id]/_components/ReportAd";
-import UserAPI from "../../../app/stillinger/_common/api/UserAPI";
-import logAmplitudeEvent from "../../../app/stillinger/_common/tracking/amplitude";
-import APIError from "../../../app/stillinger/_common/api/APIError";
+import UserAPI from "../../../app/_common/api/UserAPI";
+import logAmplitudeEvent from "../../../app/_common/tracking/amplitude";
+import APIError from "../../../app/_common/api/APIError";
 import validateForm from "../../../app/stillinger/stilling/[id]/_components/validate";
 
 function ReportAdPage({ match }) {
-    const [{ data: ad, error, status }, dispatch] = useFetchReducer();
+    const [{ data: ad }, dispatch] = useFetchReducer();
     const [validationErrors, setValidationErrors] = useState({});
     const [postReportStatus, setPostReportStatus] = useState(FetchStatus.NOT_FETCHED);
     const [hasTriedSubmit, setHasTriedSubmit] = useState(false);
@@ -92,18 +89,6 @@ function ReportAdPage({ match }) {
     useEffect(() => {
         fetchStilling(match.params.id);
     }, []);
-
-    if (status === FetchStatus.NOT_FETCHED || status === FetchStatus.IS_FETCHING) {
-        return <Loading />;
-    }
-
-    if (status === FetchStatus.FAILURE && error.statusCode === 404) {
-        return <NotFound />;
-    }
-
-    if (status === FetchStatus.FAILURE) {
-        return <Error />;
-    }
 
     return (
         <ReportAd

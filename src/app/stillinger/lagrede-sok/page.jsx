@@ -1,8 +1,8 @@
 import { cookies } from "next/headers";
-import SavedSearchesWrapper from "../../../migrating/use-client/SavedSearchesWrapper";
 import mockData from "./mock-data";
-import LoginIsRequiredWrapper from "../../../migrating/use-client/LoginIsRequiredWrapper";
-import UserConsentIsRequiredWrapper from "../../../migrating/use-client/UserConsentIsRequiredWrapper";
+import LoginIsRequiredPage from "../../_common/auth/components/LoginIsRequiredPage";
+import SavedSearchesList from "./_components/SavedSearchesList";
+import UserConsentIsRequired from "./_components/UserConsentIsRequired";
 
 export const metadata = {
     title: "Lagrede søk - arbeidsplassen.no",
@@ -23,12 +23,12 @@ export default async function Page() {
     const userExist = await checkIfUserExist();
 
     if (!isAuthenticated) {
-        return <LoginIsRequiredWrapper />;
+        return <LoginIsRequiredPage />;
     }
 
     if (!userExist) {
-        return <UserConsentIsRequiredWrapper />;
+        return <UserConsentIsRequired />;
     }
 
-    return <SavedSearchesWrapper data={mockData} />;
+    return <SavedSearchesList data={mockData} />;
 }

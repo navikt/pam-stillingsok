@@ -3,10 +3,10 @@
 import React from "react";
 import { Footer, SkipLink } from "@navikt/arbeidsplassen-react";
 import PropTypes from "prop-types";
-import Header from "./stillinger/_common/components/header/Header";
-import AuthenticationProvider from "./stillinger/_common/auth/contexts/AuthenticationProvider";
+import Header from "./_common/components/header/Header";
+import AuthenticationProvider from "./_common/auth/contexts/AuthenticationProvider";
 import FavouritesProvider from "./stillinger/favoritter/_components/FavouritesProvider";
-import UserProvider from "./stillinger/_common/user/UserProvider";
+import UserProvider from "./_common/user/UserProvider";
 
 function App({ children }) {
     return (

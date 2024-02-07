@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import WithdrawApplicationWrapper from "../../../../../migrating/use-client/WithdrawApplicationWrapper";
+import WithdrawApplication from "./_components/WithdrawApplication";
 
 export const metadata = {
     title: "Trekk søknad - arbeidsplassen.no",
@@ -33,5 +33,5 @@ export default async function Page({ params }) {
     const ad = await getAd(params.adUuid);
     await getApplicationnStatus(params.uuid, params.adUuid);
 
-    return <WithdrawApplicationWrapper ad={ad} />;
+    return <WithdrawApplication ad={ad} />;
 }

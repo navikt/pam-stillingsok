@@ -3,11 +3,11 @@ import PropTypes from "prop-types";
 import { Button } from "@navikt/ds-react";
 import { TrashIcon } from "@navikt/aksel-icons";
 import SearchResultItem from "../../(sok)/_components/searchResult/SearchResultItem";
-import useToggle from "../../_common/hooks/useToggle";
-import AlertModal from "../../_common/components/modals/AlertModal";
-import UserAPI from "../../_common/api/UserAPI";
+import useToggle from "../../../_common/hooks/useToggle";
+import AlertModal from "../../../_common/components/modals/AlertModal";
+import UserAPI from "../../../_common/api/UserAPI";
 import { FavouritesContext } from "./FavouritesProvider";
-import AlertModalWithPageReload from "../../_common/components/modals/AlertModalWithPageReload";
+import AlertModalWithPageReload from "../../../_common/components/modals/AlertModalWithPageReload";
 
 function FavouritesListItem({ favourite, removeFavouriteFromList }) {
     const { addToPending, removeFavouriteFromLocalList, removeFormPending } = useContext(FavouritesContext);

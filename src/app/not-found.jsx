@@ -1,6 +1,6 @@
 import React from "react";
-import NotFoundWrapper from "../migrating/use-client/NotFoundWrapper";
+import NotFoundPage from "./_common/components/NotFoundPage";
 
-export default function NotFound() {
-    return <NotFoundWrapper />;
+export default function CustomNotFoundPage() {
+    return <NotFoundPage />;
 }

@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { SET_SEARCH_STRING } from "../old_query";
-import Typeahead from "../../../_common/components/typeahead/Typeahead";
-import { FetchAction, useFetchReducer } from "../../../_common/hooks/useFetchReducer";
-import SearchAPI from "../../../_common/api/SearchAPI";
-import capitalizeFirstLetter from "../../../_common/utils/capitalizeFirstLetter";
+import Typeahead from "../../../../_common/components/typeahead/Typeahead";
+import { FetchAction, useFetchReducer } from "../../../../_common/hooks/useFetchReducer";
+import SearchAPI from "../../../../_common/api/SearchAPI";
+import capitalizeFirstLetter from "../../../../_common/utils/capitalizeFirstLetter";
 
 function SearchBox({ dispatch, query }) {
     const [value, setValue] = useState("");

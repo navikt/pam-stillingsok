@@ -13,8 +13,8 @@ import {
     Textarea,
     TextField,
 } from "@navikt/ds-react";
-import Link from "../../../../../../migrating/Link";
-import H1WithAutoFocus from "../../../../_common/components/h1WithAutoFocus/H1WithAutoFocus";
+import Link from "next/link";
+import H1WithAutoFocus from "../../../../../_common/components/h1WithAutoFocus/H1WithAutoFocus";
 import { MOTIVATION_MAX_LENGTH } from "./validateForm";
 import ApiErrorMessage from "./ApiErrorMessage";
 
@@ -163,7 +163,7 @@ function Form({ ad, applicationForm, submitForm, pending, submitApiError, valida
                 <Button variant="primary" loading={pending} type="submit">
                     Send søknad
                 </Button>
-                <Button disabled={pending} variant="secondary" as={Link} to={`/stillinger/stilling/${ad._id}`}>
+                <Button disabled={pending} variant="secondary" as={Link} href={`/stillinger/stilling/${ad._id}`}>
                     Avbryt
                 </Button>
             </HStack>

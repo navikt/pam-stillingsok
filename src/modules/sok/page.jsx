@@ -1,17 +1,17 @@
 import React, { useEffect, useRef } from "react";
-import { FetchAction, FetchStatus, useFetchReducer } from "../../app/stillinger/_common/hooks/useFetchReducer";
-import SearchAPI from "../../app/stillinger/_common/api/SearchAPI";
+import { FetchAction, FetchStatus, useFetchReducer } from "../../app/_common/hooks/useFetchReducer";
+import SearchAPI from "../../app/_common/api/SearchAPI";
 import {
     defaultQuery,
     initQueryWithValuesFromBrowserUrl,
     toApiQuery,
     toBrowserQuery,
 } from "../../app/stillinger/(sok)/_components/old_query";
-import logAmplitudeEvent from "../../app/stillinger/_common/tracking/amplitude";
+import logAmplitudeEvent from "../../app/_common/tracking/amplitude";
 import Search from "../../app/stillinger/(sok)/_components/Search";
-import useRestoreScroll from "../../app/stillinger/_common/hooks/useRestoreScroll";
+import useRestoreScroll from "../../app/_common/hooks/useRestoreScroll";
 import "../../app/stillinger/(sok)/_components/search.css";
-import useDocumentTitle from "../../app/stillinger/_common/hooks/useDocumentTitle";
+import useDocumentTitle from "../../app/_common/hooks/useDocumentTitle";
 
 function SearchPage() {
     const [initialSearchResponse, initialSearchDispatch] = useFetchReducer();

@@ -1,8 +1,8 @@
 import { notFound } from "next/navigation";
-import SearchWrapper from "../../../migrating/use-client/SearchWrapper";
-import simplifySearchResponse from "../_common/api/SearchAPIUtils";
+import simplifySearchResponse from "../../_common/api/SearchAPIUtils";
 import { defaultQuery, stringifyQuery, toApiQuery } from "./_components/old_query";
 import { createQuery } from "./_components/query";
+import Search from "./_components/Search";
 
 async function search(query) {
     const res = await fetch(`https://arbeidsplassen.intern.dev.nav.no/stillinger/api/search${query}`);
@@ -34,7 +34,7 @@ export default async function Page({ searchParams }) {
     const locations = await getLocations();
 
     return (
-        <SearchWrapper
+        <Search
             searchResponse={{ status: "SUCCESS", data: { ...result } }}
             initialSearchResponse={{ status: "SUCCESS", data: { ...initialSearchResult, locations } }}
             initialQuery={initialQuery}

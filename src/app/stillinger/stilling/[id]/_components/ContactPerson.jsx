@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { BodyLong, CopyButton, Heading, HStack, Label, Link as AkselLink, Tooltip } from "@navikt/ds-react";
-import { isValidEmail } from "../../../_common/utils/utils";
-import logAmplitudeEvent from "../../../_common/tracking/amplitude";
+import { isValidEmail } from "../../../../_common/utils/utils";
+import logAmplitudeEvent from "../../../../_common/tracking/amplitude";
 
 function logCopyContactInfoEvent(type, id, title) {
     logAmplitudeEvent("copy contact info", { type, id, title });

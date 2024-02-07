@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
-import { INTEREST_API_URL } from "../../../_common/environment";
-import APIError from "../../../_common/api/APIError";
+import { INTEREST_API_URL } from "../../../../_common/environment";
+import APIError from "../../../../_common/api/APIError";
 
 async function get(url) {
     let response;

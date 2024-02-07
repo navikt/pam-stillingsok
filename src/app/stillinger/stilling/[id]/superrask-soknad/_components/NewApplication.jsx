@@ -1,24 +1,32 @@
+"use client";
+
 import React from "react";
+import { useFormState } from "react-dom";
 import PropTypes from "prop-types";
 import Success from "./Success";
 import Form from "./Form";
 import AdDetailsHeader from "./AdDetailsHeader";
 
-function NewApplication({ submitForm, ad, applicationForm, submitFormState }) {
+function NewApplication({ ad, submitApplication }) {
+    // eslint-disable-next-line no-unused-vars
+    const [state, formAction] = useFormState(submitApplication, { validationErrors: {}, success: false });
+    const applicationForm = "todo";
+    const submitForm = "todo";
+
     return (
         <div className="mb-16">
             <AdDetailsHeader source={ad._source} />
             <div className="container-small">
-                {submitFormState.success ? (
-                    <Success email={submitFormState.data.email} />
+                {state.success ? (
+                    <Success email={state.data.email} />
                 ) : (
                     <Form
                         ad={ad}
                         applicationForm={applicationForm}
                         submitForm={submitForm}
-                        pending={submitFormState.pending}
-                        submitApiError={submitFormState.error}
-                        validationErrors={submitFormState.validationErrors}
+                        pending={state.pending}
+                        submitApiError={state.error}
+                        validationErrors={state.validationErrors}
                     />
                 )}
             </div>
@@ -33,17 +41,7 @@ NewApplication.propTypes = {
             title: PropTypes.string,
         }),
     }),
-    applicationForm: PropTypes.shape({}),
-    submitForm: PropTypes.func,
-    submitFormState: PropTypes.shape({
-        success: PropTypes.bool,
-        pending: PropTypes.bool,
-        error: PropTypes.string,
-        validationErrors: PropTypes.shape({}),
-        data: PropTypes.shape({
-            email: PropTypes.string,
-        }),
-    }),
+    submitApplication: PropTypes.func.isRequired,
 };
 
 export default NewApplication;

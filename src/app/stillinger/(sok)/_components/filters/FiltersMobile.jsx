@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Button, Heading, Modal, Tabs } from "@navikt/ds-react";
-import { formatNumber } from "../../../_common/utils/utils";
+import { formatNumber } from "../../../../_common/utils/utils";
 import Counties from "./Locations";
 import Occupations from "./Occupations";
 import Published from "./Published";

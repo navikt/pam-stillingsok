@@ -1,5 +1,5 @@
 import * as amplitude from "@amplitude/analytics-browser";
-import getSessionId from "../../../../session";
+import getSessionId from "../../../session";
 
 const userProperties = new amplitude.Identify();
 

@@ -2,17 +2,17 @@ import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { Button } from "@navikt/ds-react";
 import { HeartIcon, HeartFillIcon } from "@navikt/aksel-icons";
-import logAmplitudeEvent from "../../_common/tracking/amplitude";
-import { HasAcceptedTermsStatus, UserContext } from "../../_common/user/UserProvider";
-import { AuthenticationContext, AuthenticationStatus } from "../../_common/auth/contexts/AuthenticationProvider";
+import logAmplitudeEvent from "../../../_common/tracking/amplitude";
+import { HasAcceptedTermsStatus, UserContext } from "../../../_common/user/UserProvider";
+import { AuthenticationContext, AuthenticationStatus } from "../../../_common/auth/contexts/AuthenticationProvider";
 import { FavouritesContext } from "./FavouritesProvider";
-import UserAPI from "../../_common/api/UserAPI";
+import UserAPI from "../../../_common/api/UserAPI";
 import getWorkLocation from "../../../../../server/common/getWorkLocation";
 import getEmployer from "../../../../../server/common/getEmployer";
-import UserConsentModal from "../../_common/user/UserConsentModal";
-import LoginModal from "../../_common/auth/components/LoginModal";
-import useToggle from "../../_common/hooks/useToggle";
-import AlertModalWithPageReload from "../../_common/components/modals/AlertModalWithPageReload";
+import UserConsentModal from "../../../_common/user/UserConsentModal";
+import LoginModal from "../../../_common/auth/components/LoginModal";
+import useToggle from "../../../_common/hooks/useToggle";
+import AlertModalWithPageReload from "../../../_common/components/modals/AlertModalWithPageReload";
 
 /**
  * Displays a button "Lagre favoritt" or "Slett favoritt".

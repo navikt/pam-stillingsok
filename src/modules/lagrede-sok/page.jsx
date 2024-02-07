@@ -1,19 +1,14 @@
 import React, { useContext, useEffect } from "react";
 import SavedSearchesList from "../../app/stillinger/lagrede-sok/_components/SavedSearchesList";
-import useDocumentTitle from "../../app/stillinger/_common/hooks/useDocumentTitle";
-import useScrollToTop from "../../app/stillinger/_common/hooks/useScrollToTop";
-import {
-    AuthenticationContext,
-    AuthenticationStatus,
-} from "../../app/stillinger/_common/auth/contexts/AuthenticationProvider";
-import Loading from "../loading";
-import Error from "../error";
-import LoginIsRequiredPage from "../../app/stillinger/_common/auth/components/LoginIsRequiredPage";
-import { HasAcceptedTermsStatus, UserContext } from "../../app/stillinger/_common/user/UserProvider";
+import useDocumentTitle from "../../app/_common/hooks/useDocumentTitle";
+import useScrollToTop from "../../app/_common/hooks/useScrollToTop";
+import { AuthenticationContext, AuthenticationStatus } from "../../app/_common/auth/contexts/AuthenticationProvider";
+import LoginIsRequiredPage from "../../app/_common/auth/components/LoginIsRequiredPage";
+import { HasAcceptedTermsStatus, UserContext } from "../../app/_common/user/UserProvider";
 import UserConsentIsRequired from "../../app/stillinger/lagrede-sok/_components/UserConsentIsRequired";
-import { FetchAction, FetchStatus, useFetchReducer } from "../../app/stillinger/_common/hooks/useFetchReducer";
-import UserAPI from "../../app/stillinger/_common/api/UserAPI";
-import { extractParam } from "../../app/stillinger/_common/utils/utils";
+import { FetchAction, useFetchReducer } from "../../app/_common/hooks/useFetchReducer";
+import UserAPI from "../../app/_common/api/UserAPI";
+import { extractParam } from "../../app/_common/utils/utils";
 import NoSavedSearches from "../../app/stillinger/lagrede-sok/_components/NoSavedSearches";
 
 /**
@@ -60,20 +55,6 @@ function SavedSearchesPage() {
 
     if (hasAcceptedTermsStatus === HasAcceptedTermsStatus.NOT_ACCEPTED) {
         return <UserConsentIsRequired />;
-    }
-
-    if (
-        authenticationStatus === AuthenticationStatus.NOT_FETCHED ||
-        authenticationStatus === AuthenticationStatus.IS_FETCHING ||
-        hasAcceptedTermsStatus === HasAcceptedTermsStatus.NOT_FETCHED ||
-        savedSearchResponse.status === FetchStatus.NOT_FETCHED ||
-        savedSearchResponse.status === FetchStatus.IS_FETCHING
-    ) {
-        return <Loading />;
-    }
-
-    if (authenticationStatus === AuthenticationStatus.FAILURE || savedSearchResponse.status === FetchStatus.FAILURE) {
-        return <Error />;
     }
 
     if (savedSearchResponse.data.length === 0) {

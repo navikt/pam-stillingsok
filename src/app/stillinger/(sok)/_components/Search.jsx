@@ -1,23 +1,25 @@
+"use client";
+
 import React, { useEffect, useReducer, useState } from "react";
 import PropTypes from "prop-types";
 import { Box, Button, HGrid, Hide, HStack, Show, Stack } from "@navikt/ds-react";
-import useRouter from "../../../../migrating/useRouter";
-import { CONTEXT_PATH } from "../../_common/environment";
+import { useRouter } from "next/navigation";
+import { CONTEXT_PATH } from "../../../_common/environment";
 import queryReducer, { isSearchQueryEmpty, SET_FROM, stringifyQuery, toBrowserQuery } from "./old_query";
-import { extractParam } from "../../_common/utils/utils";
-import { FetchStatus } from "../../_common/hooks/useFetchReducer";
-import ErrorMessage from "../../_common/components/messages/ErrorMessage";
+import { extractParam } from "../../../_common/utils/utils";
+import { FetchStatus } from "../../../_common/hooks/useFetchReducer";
+import ErrorMessage from "../../../_common/components/messages/ErrorMessage";
 import SearchBoxForm from "./searchBox/SearchBoxForm";
 import SearchResult from "./searchResult/SearchResult";
-import H1WithAutoFocus from "../../_common/components/h1WithAutoFocus/H1WithAutoFocus";
+import H1WithAutoFocus from "../../../_common/components/h1WithAutoFocus/H1WithAutoFocus";
 import DoYouWantToSaveSearch from "./howToPanels/DoYouWantToSaveSearch";
 import SelectedFilters from "./selectedFilters/SelectedFilters";
 import Feedback from "./feedback/Feedback";
 import FiltersDesktop from "./filters/FiltersDesktop";
 import SearchResultHeader from "./searchResultHeader/SearchResultHeader";
 import FilterIcon from "./icons/FilterIcon";
-import LoadingScreen from "../../_common/components/loadingScreen/LoadingScreen";
-import logAmplitudeEvent from "../../_common/tracking/amplitude";
+import LoadingScreen from "../../../_common/components/loadingScreen/LoadingScreen";
+import logAmplitudeEvent from "../../../_common/tracking/amplitude";
 import LoggedInButtons from "./loggedInButtons/LoggedInButtons";
 import FiltersMobile from "./filters/FiltersMobile";
 

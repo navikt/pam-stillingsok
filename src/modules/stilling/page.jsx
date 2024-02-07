@@ -2,8 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import Ad from "../../app/stillinger/stilling/[id]/_components/Ad";
 import "../../app/stillinger/stilling/ad.css";
-import useRobotsNoIndexMetaTag from "../../app/stillinger/_common/hooks/useRobotsNoIndexMetaTag";
-import { STILLINGSOK_URL } from "../../app/stillinger/_common/environment";
+import useRobotsNoIndexMetaTag from "../../app/_common/hooks/useRobotsNoIndexMetaTag";
+import { STILLINGSOK_URL } from "../../app/_common/environment";
 
 function AdPage({ match }) {
     const ad = "hack";

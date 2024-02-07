@@ -1,7 +1,9 @@
+"use client";
+
 import React, { useState } from "react";
 import { BodyLong, Button, Heading, VStack } from "@navikt/ds-react";
 import { FigureJugglingShieldWithCheckmark } from "@navikt/arbeidsplassen-react";
-import UserConsentModal from "../../_common/user/UserConsentModal";
+import UserConsentModal from "../../../_common/user/UserConsentModal";
 
 function UserConsentIsRequired() {
     const [showTermsModal, setShowTermModal] = useState(false);

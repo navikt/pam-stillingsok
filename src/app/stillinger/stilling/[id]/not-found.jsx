@@ -1,13 +1,11 @@
 import React from "react";
-import { NotFound as NotFoundComponent } from "@navikt/arbeidsplassen-react";
+import NotFoundPage from "../../../_common/components/NotFoundPage";
 
-export default function NotFound() {
+export default function CustomNotFoundPage() {
     return (
-        <div className="container-large mt-12 mb-12">
-            <NotFoundComponent
-                title="Vi fant dessverre ikke stillingsannonsen"
-                text="Annonsen kan være utløpt eller blitt fjernet av arbeidsgiver."
-            />
-        </div>
+        <NotFoundPage
+            title="Vi fant dessverre ikke stillingsannonsen"
+            text="Annonsen kan være utløpt eller blitt fjernet av arbeidsgiver."
+        />
     );
 }

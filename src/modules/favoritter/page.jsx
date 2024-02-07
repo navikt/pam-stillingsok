@@ -1,17 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
-import useDocumentTitle from "../../app/stillinger/_common/hooks/useDocumentTitle";
-import useScrollToTop from "../../app/stillinger/_common/hooks/useScrollToTop";
-import {
-    AuthenticationContext,
-    AuthenticationStatus,
-} from "../../app/stillinger/_common/auth/contexts/AuthenticationProvider";
-import Loading from "../loading";
-import Error from "../error";
-import LoginIsRequiredPage from "../../app/stillinger/_common/auth/components/LoginIsRequiredPage";
-import { HasAcceptedTermsStatus, UserContext } from "../../app/stillinger/_common/user/UserProvider";
+import useDocumentTitle from "../../app/_common/hooks/useDocumentTitle";
+import useScrollToTop from "../../app/_common/hooks/useScrollToTop";
+import { AuthenticationContext, AuthenticationStatus } from "../../app/_common/auth/contexts/AuthenticationProvider";
+import LoginIsRequiredPage from "../../app/_common/auth/components/LoginIsRequiredPage";
+import { HasAcceptedTermsStatus, UserContext } from "../../app/_common/user/UserProvider";
 import UserConsentIsRequired from "../../app/stillinger/favoritter/_components/UserConsentIsRequired";
-import { FetchAction, FetchStatus, useFetchReducer } from "../../app/stillinger/_common/hooks/useFetchReducer";
-import UserAPI from "../../app/stillinger/_common/api/UserAPI";
+import { FetchAction, useFetchReducer } from "../../app/_common/hooks/useFetchReducer";
+import UserAPI from "../../app/_common/api/UserAPI";
 import FavouritesList from "../../app/stillinger/favoritter/_components/FavouritesList";
 import NoFavourites from "../../app/stillinger/favoritter/_components/NoFavourites";
 
@@ -61,20 +56,6 @@ function FavouritesPage() {
 
     if (hasAcceptedTermsStatus === HasAcceptedTermsStatus.NOT_ACCEPTED) {
         return <UserConsentIsRequired />;
-    }
-
-    if (
-        authenticationStatus === AuthenticationStatus.NOT_FETCHED ||
-        authenticationStatus === AuthenticationStatus.IS_FETCHING ||
-        hasAcceptedTermsStatus === HasAcceptedTermsStatus.NOT_FETCHED ||
-        favouritesResponse.status === FetchStatus.NOT_FETCHED ||
-        favouritesResponse.status === FetchStatus.IS_FETCHING
-    ) {
-        return <Loading />;
-    }
-
-    if (authenticationStatus === AuthenticationStatus.FAILURE || favouritesResponse.status === FetchStatus.FAILURE) {
-        return <Error />;
     }
 
     if (favouritesResponse.data.length === 0) {

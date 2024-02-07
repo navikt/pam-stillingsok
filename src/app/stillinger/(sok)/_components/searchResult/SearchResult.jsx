@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { FetchStatus } from "../../../_common/hooks/useFetchReducer";
-import ErrorMessage from "../../../_common/components/messages/ErrorMessage";
+import { FetchStatus } from "../../../../_common/hooks/useFetchReducer";
+import ErrorMessage from "../../../../_common/components/messages/ErrorMessage";
 import Pagination from "../pagination/Pagination";
 import SearchResultItem from "./SearchResultItem";
 import FavouritesButton from "../../../favoritter/_components/FavouritesButton";

@@ -11,11 +11,11 @@ import {
     Modal,
 } from "@navikt/ds-react";
 import PropTypes from "prop-types";
-import { UserContext } from "../../../_common/user/UserProvider";
-import useToggle from "../../../_common/hooks/useToggle";
-import { FetchStatus } from "../../../_common/hooks/useFetchReducer";
-import { isStringEmpty } from "../../../_common/utils/utils";
-import UserAPI from "../../../_common/api/UserAPI";
+import { UserContext } from "../../../../_common/user/UserProvider";
+import useToggle from "../../../../_common/hooks/useToggle";
+import { FetchStatus } from "../../../../_common/hooks/useFetchReducer";
+import { isStringEmpty } from "../../../../_common/utils/utils";
+import UserAPI from "../../../../_common/api/UserAPI";
 
 export const FormModes = {
     ADD: "ADD",

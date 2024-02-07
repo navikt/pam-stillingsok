@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { Alert, BodyLong, Button, TextField, Modal } from "@navikt/ds-react";
-import { isValidEmail } from "../../../_common/utils/utils";
-import { UserContext } from "../../../_common/user/UserProvider";
-import { FetchStatus } from "../../../_common/hooks/useFetchReducer";
-import UserAPI from "../../../_common/api/UserAPI";
+import { isValidEmail } from "../../../../_common/utils/utils";
+import { UserContext } from "../../../../_common/user/UserProvider";
+import { FetchStatus } from "../../../../_common/hooks/useFetchReducer";
+import UserAPI from "../../../../_common/api/UserAPI";
 
 function RegisterEmailForm({ onClose, onSuccess }) {
     const { user, updateUser } = useContext(UserContext);

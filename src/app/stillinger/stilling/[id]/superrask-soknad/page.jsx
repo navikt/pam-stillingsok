@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
-import NewApplicationWrapper from "../../../../../migrating/use-client/NewApplicationWrapper";
 import validateForm, { parseFormData } from "./_components/validateForm";
 import SuperraskSoknadAPI from "./SuperraskSoknadAPI";
+import NewApplication from "./_components/NewApplication";
 
 export const metadata = {
     title: "Superrask søknad - arbeidsplassen.no",
@@ -75,5 +75,5 @@ export default async function Page({ params }) {
         }
     }
 
-    return <NewApplicationWrapper ad={ad} applicationForm={applicationForm} submitApplication={submitApplication} />;
+    return <NewApplication ad={ad} applicationForm={applicationForm} submitApplication={submitApplication} />;
 }

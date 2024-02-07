@@ -9,14 +9,14 @@ import "@navikt/arbeidsplassen-css";
 import "@navikt/arbeidsplassen-theme";
 import { Footer, SkipLink } from "@navikt/arbeidsplassen-react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import AuthenticationProvider from "./app/stillinger/_common/auth/contexts/AuthenticationProvider";
-import UserProvider from "./app/stillinger/_common/user/UserProvider";
+import AuthenticationProvider from "./app/_common/auth/contexts/AuthenticationProvider";
+import UserProvider from "./app/_common/user/UserProvider";
 import FavouritesProvider from "./app/stillinger/favoritter/_components/FavouritesProvider";
-import Header from "./app/stillinger/_common/components/header/Header";
-import { CONTEXT_PATH } from "./app/stillinger/_common/environment";
-import initSentry from "./app/stillinger/_common/tracking/sentry";
-import { initAmplitude } from "./app/stillinger/_common/tracking/amplitude";
-import HistoryProvider from "./app/stillinger/_common/context/HistoryProvider";
+import Header from "./app/_common/components/header/Header";
+import { CONTEXT_PATH } from "./app/_common/environment";
+import initSentry from "./app/_common/tracking/sentry";
+import { initAmplitude } from "./app/_common/tracking/amplitude";
+import HistoryProvider from "./app/_common/context/HistoryProvider";
 import SearchPage from "./modules/sok/page";
 import SuperraskPage from "./modules/stilling/superrask-soknad/page";
 import AdPage from "./modules/stilling/page";
@@ -25,8 +25,7 @@ import FavouritesPage from "./modules/favoritter/page";
 import SavedSearchesPage from "./modules/lagrede-sok/page";
 import WithdrawApplicationPage from "./modules/stilling/trekk-soknad/page";
 import "./app/styles.css";
-import googleTranslateWorkaround from "./app/stillinger/_common/utils/googleTranslateWorkaround";
-import NotFound from "./modules/not-found";
+import googleTranslateWorkaround from "./app/_common/utils/googleTranslateWorkaround";
 
 // todo flytt til App.jsx
 initSentry();
@@ -64,7 +63,6 @@ function Application() {
                                             path={`${CONTEXT_PATH}/trekk-soknad/:uuid/:adUuid`}
                                             component={WithdrawApplicationPage}
                                         />
-                                        <Route path="*" component={NotFound} />
                                     </Switch>
                                 </main>
                             </HistoryProvider>

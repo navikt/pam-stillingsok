@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import WithdrawApplication from "../../../app/stillinger/trekk-soknad/[uuid]/[adUuid]/_components/WithdrawApplication";
-import { FetchAction, useFetchReducer } from "../../../app/stillinger/_common/hooks/useFetchReducer";
-import SearchAPI from "../../../app/stillinger/_common/api/SearchAPI";
+import { FetchAction, useFetchReducer } from "../../../app/_common/hooks/useFetchReducer";
+import SearchAPI from "../../../app/_common/api/SearchAPI";
 import SuperraskSoknadAPI from "../../../app/stillinger/stilling/[id]/superrask-soknad/SuperraskSoknadAPI";
 
 function WithdrawApplicationPage({ match }) {
