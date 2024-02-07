@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import useDocumentTitle from "../../app/_common/hooks/useDocumentTitle";
 import { AuthenticationContext, AuthenticationStatus } from "../../app/_common/auth/contexts/AuthenticationProvider";
 import LoginIsRequiredPage from "../../app/_common/auth/components/LoginIsRequiredPage";
 import { HasAcceptedTermsStatus, UserContext } from "../../app/_common/user/UserProvider";
@@ -19,8 +18,6 @@ function FavouritesPage() {
     const { hasAcceptedTermsStatus } = useContext(UserContext);
     const [favouritesResponse, dispatch] = useFetchReducer();
     const [sortBy, setSortBy] = useState("published");
-
-    useDocumentTitle("Favoritter");
 
     function fetchFavourites() {
         dispatch({ type: FetchAction.BEGIN });

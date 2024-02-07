@@ -1,6 +1,5 @@
 import React, { useContext, useEffect } from "react";
 import SavedSearchesList from "../../app/stillinger/lagrede-sok/_components/SavedSearchesList";
-import useDocumentTitle from "../../app/_common/hooks/useDocumentTitle";
 import { AuthenticationContext, AuthenticationStatus } from "../../app/_common/auth/contexts/AuthenticationProvider";
 import LoginIsRequiredPage from "../../app/_common/auth/components/LoginIsRequiredPage";
 import { HasAcceptedTermsStatus, UserContext } from "../../app/_common/user/UserProvider";
@@ -20,8 +19,6 @@ function SavedSearchesPage() {
     const { hasAcceptedTermsStatus } = useContext(UserContext);
     const [savedSearchResponse, dispatch] = useFetchReducer();
     const uuidFromBrowserUrl = extractParam("uuid");
-
-    useDocumentTitle("Lagrede søk");
 
     function fetchSavedSearches() {
         dispatch({ type: FetchAction.BEGIN });

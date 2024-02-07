@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { FetchAction, FetchStatus, useFetchReducer } from "../../../app/_common/hooks/useFetchReducer";
 import SearchAPI from "../../../app/_common/api/SearchAPI";
-import useDocumentTitle from "../../../app/_common/hooks/useDocumentTitle";
 import ReportAd from "../../../app/stillinger/rapporter-annonse/[id]/_components/ReportAd";
 import UserAPI from "../../../app/_common/api/UserAPI";
 import logAmplitudeEvent from "../../../app/_common/tracking/amplitude";
@@ -14,8 +13,6 @@ function ReportAdPage({ match }) {
     const [validationErrors, setValidationErrors] = useState({});
     const [postReportStatus, setPostReportStatus] = useState(FetchStatus.NOT_FETCHED);
     const [hasTriedSubmit, setHasTriedSubmit] = useState(false);
-
-    useDocumentTitle("Rapporter annonse");
 
     function fetchStilling(id) {
         dispatch({ type: FetchAction.BEGIN });

@@ -49,6 +49,10 @@ export default function Search({ query, searchResult, aggregations, locations })
         }
     }, [updatedQuery]);
 
+    useEffect(() => {
+        logAmplitudeEvent("Stillinger - Utførte søk");
+    }, []);
+
     function loadMoreResults() {
         queryDispatch({ type: SET_FROM, value: updatedQuery.from + updatedQuery.size });
     }
