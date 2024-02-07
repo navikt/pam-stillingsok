@@ -16,7 +16,6 @@ import Header from "./app/_common/components/header/Header";
 import { CONTEXT_PATH } from "./app/_common/environment";
 import initSentry from "./app/_common/tracking/sentry";
 import { initAmplitude } from "./app/_common/tracking/amplitude";
-import HistoryProvider from "./app/_common/context/HistoryProvider";
 import SearchPage from "./modules/sok/page";
 import SuperraskPage from "./modules/stilling/superrask-soknad/page";
 import AdPage from "./modules/stilling/page";
@@ -41,31 +40,26 @@ function Application() {
                     <SkipLink href="#main-content" />
                     <div className="arb-push-footer-down">
                         <BrowserRouter>
-                            <HistoryProvider>
+                            <Switch>
+                                <Route component={Header} />
+                            </Switch>
+                            <main id="main-content">
                                 <Switch>
-                                    <Route component={Header} />
+                                    <Route exact path={CONTEXT_PATH} component={SearchPage} />
+                                    <Route
+                                        path={`${CONTEXT_PATH}/stilling/:id/superrask-soknad`}
+                                        component={SuperraskPage}
+                                    />
+                                    <Route path={`${CONTEXT_PATH}/stilling/:id`} component={AdPage} />
+                                    <Route path={`${CONTEXT_PATH}/rapporter-annonse/:id`} component={ReportAdPage} />
+                                    <Route path={`${CONTEXT_PATH}/favoritter`} component={FavouritesPage} />
+                                    <Route path={`${CONTEXT_PATH}/lagrede-sok`} component={SavedSearchesPage} />
+                                    <Route
+                                        path={`${CONTEXT_PATH}/trekk-soknad/:uuid/:adUuid`}
+                                        component={WithdrawApplicationPage}
+                                    />
                                 </Switch>
-                                <main id="main-content">
-                                    <Switch>
-                                        <Route exact path={CONTEXT_PATH} component={SearchPage} />
-                                        <Route
-                                            path={`${CONTEXT_PATH}/stilling/:id/superrask-soknad`}
-                                            component={SuperraskPage}
-                                        />
-                                        <Route path={`${CONTEXT_PATH}/stilling/:id`} component={AdPage} />
-                                        <Route
-                                            path={`${CONTEXT_PATH}/rapporter-annonse/:id`}
-                                            component={ReportAdPage}
-                                        />
-                                        <Route path={`${CONTEXT_PATH}/favoritter`} component={FavouritesPage} />
-                                        <Route path={`${CONTEXT_PATH}/lagrede-sok`} component={SavedSearchesPage} />
-                                        <Route
-                                            path={`${CONTEXT_PATH}/trekk-soknad/:uuid/:adUuid`}
-                                            component={WithdrawApplicationPage}
-                                        />
-                                    </Switch>
-                                </main>
-                            </HistoryProvider>
+                            </main>
                         </BrowserRouter>
                     </div>
                     <Footer />
