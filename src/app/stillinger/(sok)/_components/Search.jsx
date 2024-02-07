@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import { Box, Button, HGrid, Hide, HStack, Show, Stack, Heading } from "@navikt/ds-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { CONTEXT_PATH } from "../../../_common/environment";
-import queryReducer, { isSearchQueryEmpty, SET_FROM, stringifyQuery, toBrowserQuery } from "./old_query";
+import queryReducer, { isSearchQueryEmpty, SET_FROM, stringifyQuery, toBrowserQuery } from "../_utils/old_query";
 import SearchBoxForm from "./searchBox/SearchBoxForm";
 import SearchResult from "./searchResult/SearchResult";
 import DoYouWantToSaveSearch from "./howToPanels/DoYouWantToSaveSearch";

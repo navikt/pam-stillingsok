@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { Checkbox, Fieldset } from "@navikt/ds-react";
-import { ADD_ENGAGEMENT_TYPE, REMOVE_ENGAGEMENT_TYPE } from "../old_query";
+import { ADD_ENGAGEMENT_TYPE, REMOVE_ENGAGEMENT_TYPE } from "../../_utils/old_query";
 import mergeCount from "../utils/mergeCount";
 import moveCriteriaToBottom from "../utils/moveFacetToBottom";
 import { logSearchFilterAdded, logSearchFilterRemoved } from "../../../../_common/tracking/amplitude";

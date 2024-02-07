@@ -5,12 +5,7 @@ import { FloppydiskIcon } from "@navikt/aksel-icons";
 import { useSearchParams } from "next/navigation";
 import SearchIsEmptyModal from "./modal/SearchIsEmptyModal";
 import SaveSearchModal from "./modal/SaveSearchModal";
-import {
-    isSearchQueryEmpty,
-    stringifyQuery,
-    toReadableQuery,
-    toSavedSearchQuery,
-} from "../../(sok)/_components/old_query";
+import { isSearchQueryEmpty, stringifyQuery, toReadableQuery, toSavedSearchQuery } from "../../(sok)/_utils/old_query";
 import { AuthenticationContext, AuthenticationStatus } from "../../../_common/auth/contexts/AuthenticationProvider";
 import { HasAcceptedTermsStatus, UserContext } from "../../../_common/user/UserProvider";
 import UserConsentModal from "../../../_common/user/UserConsentModal";

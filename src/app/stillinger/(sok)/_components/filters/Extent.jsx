@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { Checkbox, Fieldset } from "@navikt/ds-react";
-import { ADD_EXTENT, REMOVE_EXTENT } from "../old_query";
+import { ADD_EXTENT, REMOVE_EXTENT } from "../../_utils/old_query";
 import mergeCount from "../utils/mergeCount";
 import { logSearchFilterAdded, logSearchFilterRemoved } from "../../../../_common/tracking/amplitude";
 

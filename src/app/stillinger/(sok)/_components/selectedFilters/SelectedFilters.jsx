@@ -18,7 +18,7 @@ import {
     SET_INTERNATIONAL,
     SET_PUBLISHED,
     SET_SEARCH_STRING,
-} from "../old_query";
+} from "../../_utils/old_query";
 import SaveSearchButton from "../../../lagrede-sok/_components/SaveSearchButton";
 
 function SelectedFilters({ query, queryDispatch }) {

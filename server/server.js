@@ -6,7 +6,6 @@ const mustacheExpress = require("mustache-express");
 const Promise = require("promise");
 const bodyParser = require("body-parser");
 const compression = require("compression");
-const searchApiConsumer = require("./api/searchApiConsumer");
 const locationApiConsumer = require("./api/locationApiConsumer");
 const { initializeTokenX, tokenIsValid } = require("./tokenX/tokenXUtils");
 const setUpAduserApiProxy = require("./api/userApiProxyConfig");
@@ -172,6 +171,8 @@ const startServer = (htmlPages) => {
 
     setUpAduserApiProxy(server);
 
+    /*
+    // todo: Er det noen andre 3parter som bruker dette get-endepunktet, appen gjør det ikke.
     server.get(`${properties.PAM_CONTEXT_PATH}/api/search`, async (req, res) => {
         searchApiConsumer
             .search(req.query)
@@ -191,7 +192,10 @@ const startServer = (htmlPages) => {
                 res.sendStatus(err.statusCode ? err.statusCode : 500);
             });
     });
+    */
 
+    /*
+    // todo: Er det noen andre 3parter som bruker dette endepunktet, appen gjør det ikke.
     server.get(`${properties.PAM_CONTEXT_PATH}/api/suggestions`, async (req, res) => {
         searchApiConsumer
             .suggestions(req.query)
@@ -212,6 +216,7 @@ const startServer = (htmlPages) => {
             });
     });
 
+
     server.get(`${properties.PAM_CONTEXT_PATH}/api/stilling/:uuid`, async (req, res) => {
         searchApiConsumer
             .fetchStilling(req.params.uuid)
@@ -221,6 +226,7 @@ const startServer = (htmlPages) => {
                 res.sendStatus(err.statusCode ? err.statusCode : 500);
             });
     });
+    */
 
     server.get("/", (req, res) => {
         res.redirect(`${properties.PAM_CONTEXT_PATH}`);
@@ -231,6 +237,7 @@ const startServer = (htmlPages) => {
         res.redirect(`${url}`);
     });
 
+    /*
     server.get(["/stillinger/stilling/:uuid"], (req, res) => {
         searchApiConsumer
             .fetchStilling(req.params.uuid)
@@ -245,6 +252,7 @@ const startServer = (htmlPages) => {
                 res.send(htmlPages.sok);
             });
     });
+    */
 
     server.get(`${properties.PAM_CONTEXT_PATH}/internal/isAlive`, (req, res) => res.sendStatus(200));
     server.get(`${properties.PAM_CONTEXT_PATH}/internal/isReady`, (req, res) => res.sendStatus(200));
