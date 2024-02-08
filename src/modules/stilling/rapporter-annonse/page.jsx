@@ -1,3 +1,4 @@
+/**
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { FetchAction, FetchStatus, useFetchReducer } from "../../../app/_common/hooks/useFetchReducer";
@@ -105,3 +106,4 @@ ReportAdPage.propTypes = {
 };
 
 export default ReportAdPage;
+*/
