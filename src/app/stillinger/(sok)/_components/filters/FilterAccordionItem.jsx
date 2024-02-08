@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Accordion } from "@navikt/ds-react";
 
 function FilterAccordionItem({ title, children, panelId, isOpenByDefault = true }) {
+    // Todo: Bug, noen ganger må trykke to ganger på et panel for å åpne etter page refresh
     const [isOpen, setIsOpen] = useState(() => {
         try {
             const found = sessionStorage.getItem(`${panelId}-open`);

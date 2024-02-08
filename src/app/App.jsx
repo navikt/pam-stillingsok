@@ -17,7 +17,7 @@ function App({ children }) {
                         <SkipLink href="#main-content" />
                         <div className="arb-push-footer-down">
                             <Header />
-                            <main>{children}</main>
+                            <main id="main-content">{children}</main>
                         </div>
                         <Footer />
                     </div>
@@ -28,7 +28,7 @@ function App({ children }) {
 }
 
 App.propTypes = {
-    children: PropTypes.oneOf([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
+    children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
 };
 
 export default App;

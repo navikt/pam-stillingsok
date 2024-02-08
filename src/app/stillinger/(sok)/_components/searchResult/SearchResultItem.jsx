@@ -5,8 +5,8 @@ import { addDays, endOfDay, format as formatDateFns, isSameDay, isValid, parse, 
 import { nb } from "date-fns/locale";
 import { Buldings3Icon, EarthIcon } from "@navikt/aksel-icons";
 import Link from "next/link";
-import getEmployer from "../../../../../../server/common/getEmployer";
-import getWorkLocation from "../../../../../../server/common/getWorkLocation";
+import getEmployer from "../../../../_common/utils/getEmployer";
+import getWorkLocation from "../../../../_common/utils/getWorkLocation";
 import { CONTEXT_PATH } from "../../../../_common/environment";
 import { formatDate } from "../../../../_common/utils/utils";
 import Debug from "./Debug";

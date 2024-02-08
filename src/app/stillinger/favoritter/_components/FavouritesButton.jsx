@@ -7,8 +7,8 @@ import { HasAcceptedTermsStatus, UserContext } from "../../../_common/user/UserP
 import { AuthenticationContext, AuthenticationStatus } from "../../../_common/auth/contexts/AuthenticationProvider";
 import { FavouritesContext } from "./FavouritesProvider";
 import UserAPI from "../../../_common/api/UserAPI";
-import getWorkLocation from "../../../../../server/common/getWorkLocation";
-import getEmployer from "../../../../../server/common/getEmployer";
+import getWorkLocation from "../../../_common/utils/getWorkLocation";
+import getEmployer from "../../../_common/utils/getEmployer";
 import UserConsentModal from "../../../_common/user/UserConsentModal";
 import LoginModal from "../../../_common/auth/components/LoginModal";
 import useToggle from "../../../_common/hooks/useToggle";

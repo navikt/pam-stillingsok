@@ -6,11 +6,9 @@ import {
     ADD_OCCUPATION_SECOND_LEVEL,
     REMOVE_OCCUPATION_FIRST_LEVEL,
     REMOVE_OCCUPATION_SECOND_LEVEL,
-} from "../old_query";
-import UnknownSearchCriteriaValues from "./UnknownSearchCriteriaValues";
+} from "../../_utils/old_query";
 import moveCriteriaToBottom from "../utils/moveFacetToBottom";
 import mergeCount from "../utils/mergeCount";
-import findUnknownSearchCriteriaValues from "../utils/findUnknownSearchCriteriaValues";
 import { logSearchFilterAdded, logSearchFilterRemoved } from "../../../../_common/tracking/amplitude";
 
 const OCCUPATION_LEVEL_OTHER = "Uoppgitt/ ikke identifiserbare";
@@ -18,13 +16,6 @@ const OCCUPATION_LEVEL_OTHER = "Uoppgitt/ ikke identifiserbare";
 function Occupations({ initialValues, updatedValues, query, dispatch }) {
     const sortedValues = moveCriteriaToBottom(initialValues, OCCUPATION_LEVEL_OTHER);
     const values = mergeCount(sortedValues, updatedValues, "occupationSecondLevels");
-
-    const unknownFirstValues = findUnknownSearchCriteriaValues(query.occupationFirstLevels, initialValues);
-    const unknownSecondValues = findUnknownSearchCriteriaValues(
-        query.occupationSecondLevels,
-        initialValues,
-        "occupationSecondLevels",
-    );
 
     function handleFirstLevelClick(e) {
         const { value } = e.target;
@@ -104,17 +95,6 @@ function Occupations({ initialValues, updatedValues, query, dispatch }) {
                                 )}
                         </React.Fragment>
                     ))}
-
-                <UnknownSearchCriteriaValues
-                    namePrefix="occupation"
-                    unknownValues={unknownFirstValues}
-                    unknownNestedValues={unknownSecondValues}
-                    checkedValues={query.occupationFirstLevels}
-                    checkedNestedValues={query.occupationSecondLevels}
-                    onClick={handleFirstLevelClick}
-                    onNestedLevelClick={handleSecondLevelClick}
-                    shouldFixLocationName
-                />
             </div>
         </Fieldset>
     );

@@ -122,7 +122,7 @@ FiltersMobile.propTypes = {
         sector: PropTypes.arrayOf(PropTypes.shape({})),
         workLanguage: PropTypes.arrayOf(PropTypes.shape({})),
     }),
-    locations: PropTypes.shape({}),
+    locations: PropTypes.arrayOf(PropTypes.shape({})),
     searchResult: PropTypes.shape({
         totalAds: PropTypes.string,
         aggregations: PropTypes.shape({

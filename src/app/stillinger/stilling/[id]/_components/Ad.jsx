@@ -2,7 +2,7 @@
 
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
-import { Box, HGrid, Tag } from "@navikt/ds-react";
+import { Box, HGrid, Tag, Heading } from "@navikt/ds-react";
 import { Helmet } from "react-helmet";
 import AdDetails from "./AdDetails";
 import AdText from "./AdText";
@@ -13,7 +13,6 @@ import HowToApply from "./HowToApply";
 import { logStillingVisning } from "../../../../_common/tracking/amplitude";
 import ShareAd from "./ShareAd";
 import Summary from "./Summary";
-import H1WithAutoFocus from "../../../../_common/components/h1WithAutoFocus/H1WithAutoFocus";
 
 function Ad({ ad, shareAdRedirectUrl }) {
     /**
@@ -37,7 +36,9 @@ function Ad({ ad, shareAdRedirectUrl }) {
             <article>
                 <HGrid columns={{ xs: 1, lg: "auto 340px" }} gap="16">
                     <div>
-                        <H1WithAutoFocus className="overflow-wrap-anywhere">{ad._source.title}</H1WithAutoFocus>
+                        <Heading level="1" size="xlarge" className="overflow-wrap-anywhere" spacing>
+                            {ad._source.title}
+                        </Heading>
 
                         {!annonseErAktiv && (
                             <Tag variant="warning-moderate" className="mb-4">

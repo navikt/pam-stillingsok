@@ -4,9 +4,9 @@ import parse from "html-react-parser";
 import { BodyLong, Heading, Label, Link as AkselLink } from "@navikt/ds-react";
 import DOMPurify from "isomorphic-dompurify";
 import { RichText } from "@navikt/arbeidsplassen-react";
-import fixLocationName from "../../../../../../server/common/fixLocationName";
+import fixLocationName from "../../../../_common/utils/fixLocationName";
 import { isValidUrl } from "../../../../_common/utils/utils";
-import getEmployer from "../../../../../../server/common/getEmployer";
+import getEmployer from "../../../../_common/utils/getEmployer";
 
 function getEmployerLocation(employer) {
     let employerLocation = null;

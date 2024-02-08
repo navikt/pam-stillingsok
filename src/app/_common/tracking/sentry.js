@@ -1,5 +1,5 @@
 import * as Sentry from "@sentry/browser";
-import getSessionId from "../../../session";
+import getSessionId from "./session";
 
 const ignoreStatusCodes = [0, 401, 404, 502, 504];
 

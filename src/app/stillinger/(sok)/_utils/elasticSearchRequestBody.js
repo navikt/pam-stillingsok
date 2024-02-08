@@ -33,20 +33,6 @@ function filterPublished(published) {
     return filters;
 }
 
-function suggest(field, match) {
-    return {
-        prefix: match,
-        completion: {
-            field,
-            skip_duplicates: true,
-            contexts: {
-                status: "ACTIVE",
-            },
-            size: 10,
-        },
-    };
-}
-
 function filterExtent(extent) {
     const filters = [];
     if (extent && extent.length > 0) {
@@ -362,18 +348,6 @@ function filterSector(sector) {
     return filters;
 }
 
-exports.suggestionsTemplate = (match, minLength) => ({
-    suggest: {
-        category_suggest: {
-            ...suggest("category_name_suggest", match, minLength),
-        },
-        searchtags_suggest: {
-            ...suggest("searchtags_suggest", match, minLength),
-        },
-    },
-    _source: false,
-});
-
 /* Experimental alternative relevance model with AND-logic and using cross-fields matching. */
 function mainQueryConjunctionTuning(q, searchFields) {
     let matchFields;
@@ -547,7 +521,7 @@ function mainQueryDisjunctionTuning(q) {
     };
 }
 
-exports.searchTemplate = (query) => {
+const elasticSearchRequestBody = (query) => {
     const {
         from,
         size,
@@ -969,3 +943,5 @@ exports.searchTemplate = (query) => {
 
     return template;
 };
+
+export default elasticSearchRequestBody;

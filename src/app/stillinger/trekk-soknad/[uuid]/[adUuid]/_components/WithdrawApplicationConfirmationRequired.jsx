@@ -3,7 +3,7 @@ import { Alert, BodyLong, BodyShort, Button, Heading, Label, Link as AkselLink }
 import PropTypes from "prop-types";
 import Link from "next/link";
 import { CONTEXT_PATH } from "../../../../../_common/environment";
-import getEmployer from "../../../../../../../server/common/getEmployer";
+import getEmployer from "../../../../../_common/utils/getEmployer";
 
 function WithdrawApplicationConfirmationRequired({ ad, handleWithDrawClick, isDeleting, hasError }) {
     return (

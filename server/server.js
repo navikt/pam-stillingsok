@@ -6,9 +6,6 @@ const mustacheExpress = require("mustache-express");
 const Promise = require("promise");
 const bodyParser = require("body-parser");
 const compression = require("compression");
-const searchApiConsumer = require("./api/searchApiConsumer");
-const htmlMeta = require("./common/htmlMeta");
-const locationApiConsumer = require("./api/locationApiConsumer");
 const { initializeTokenX, tokenIsValid } = require("./tokenX/tokenXUtils");
 const setUpAduserApiProxy = require("./api/userApiProxyConfig");
 const setUpSuperraskApi = require("./api/superraskApiProxy");
@@ -22,6 +19,7 @@ const server = express();
 const port = process.env.PORT || 8080;
 server.set("port", port);
 
+/*
 // Cache locations from adusers and reuse them
 let locationsFromAduser = null;
 let locationsFromFile = [];
@@ -35,10 +33,12 @@ locationApiConsumer.fetchAndProcessLocations().then((res) => {
 fs.readFile(`${__dirname}/api/resources/locations.json`, "utf-8", (err, data) => {
     locationsFromFile = err ? [] : JSON.parse(data);
 });
+*/
 
 server.disable("x-powered-by");
 server.use(compression());
 
+// Todo: Hvilke sikkerhetsheadere etc må vi flytte over til next appen?
 server.use(helmet({ xssFilter: false, hsts: false }));
 
 server.use(helmet.referrerPolicy({ policy: "no-referrer" }));
@@ -120,20 +120,13 @@ const writeEnvironmentVariablesToFile = () => {
 };
 const renderSok = (htmlPages) =>
     new Promise((resolve, reject) => {
-        server.render(
-            "index.html",
-            {
-                title: htmlMeta.getDefaultTitle(),
-                description: htmlMeta.getDefaultDescription(),
-            },
-            (err, html) => {
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve({ sok: html, ...htmlPages });
-                }
-            },
-        );
+        server.render("index.html", {}, (err, html) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve({ sok: html, ...htmlPages });
+            }
+        });
     });
 
 const startServer = (htmlPages) => {
@@ -162,6 +155,7 @@ const startServer = (htmlPages) => {
     });
     setUpSuperraskApi(server);
 
+    /*
     // Give users fallback locations from local file if aduser is unresponsive
     server.get(`${properties.PAM_CONTEXT_PATH}/api/locations`, (req, res) => {
         if (locationsFromAduser === null) {
@@ -177,9 +171,12 @@ const startServer = (htmlPages) => {
             res.send(locationsFromAduser);
         }
     });
+     */
 
     setUpAduserApiProxy(server);
 
+    /*
+    // todo: Er det noen andre 3parter som bruker dette get-endepunktet, appen gjør det ikke.
     server.get(`${properties.PAM_CONTEXT_PATH}/api/search`, async (req, res) => {
         searchApiConsumer
             .search(req.query)
@@ -199,7 +196,10 @@ const startServer = (htmlPages) => {
                 res.sendStatus(err.statusCode ? err.statusCode : 500);
             });
     });
+    */
 
+    /*
+    // todo: Er det noen andre 3parter som bruker dette endepunktet, appen gjør det ikke.
     server.get(`${properties.PAM_CONTEXT_PATH}/api/suggestions`, async (req, res) => {
         searchApiConsumer
             .suggestions(req.query)
@@ -220,6 +220,7 @@ const startServer = (htmlPages) => {
             });
     });
 
+
     server.get(`${properties.PAM_CONTEXT_PATH}/api/stilling/:uuid`, async (req, res) => {
         searchApiConsumer
             .fetchStilling(req.params.uuid)
@@ -229,6 +230,7 @@ const startServer = (htmlPages) => {
                 res.sendStatus(err.statusCode ? err.statusCode : 500);
             });
     });
+    */
 
     server.get("/", (req, res) => {
         res.redirect(`${properties.PAM_CONTEXT_PATH}`);
@@ -239,15 +241,13 @@ const startServer = (htmlPages) => {
         res.redirect(`${url}`);
     });
 
+    /*
     server.get(["/stillinger/stilling/:uuid"], (req, res) => {
         searchApiConsumer
             .fetchStilling(req.params.uuid)
-            .then((data) => {
+            .then(() => {
                 try {
-                    res.render("index", {
-                        title: htmlMeta.getStillingTitle(data._source),
-                        description: htmlMeta.getStillingDescription(data._source),
-                    });
+                    res.render("index", {});
                 } catch (err) {
                     res.send(htmlPages.sok);
                 }
@@ -256,6 +256,7 @@ const startServer = (htmlPages) => {
                 res.send(htmlPages.sok);
             });
     });
+    */
 
     server.get(`${properties.PAM_CONTEXT_PATH}/internal/isAlive`, (req, res) => res.sendStatus(200));
     server.get(`${properties.PAM_CONTEXT_PATH}/internal/isReady`, (req, res) => res.sendStatus(200));

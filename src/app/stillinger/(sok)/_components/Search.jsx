@@ -2,14 +2,12 @@
 
 import React, { useEffect, useReducer, useState } from "react";
 import PropTypes from "prop-types";
-import { Box, Button, HGrid, Hide, HStack, Show, Stack } from "@navikt/ds-react";
-import { useRouter } from "next/navigation";
+import { Box, Button, HGrid, Hide, HStack, Show, Stack, Heading } from "@navikt/ds-react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { CONTEXT_PATH } from "../../../_common/environment";
-import queryReducer, { isSearchQueryEmpty, SET_FROM, stringifyQuery, toBrowserQuery } from "./old_query";
-import { extractParam } from "../../../_common/utils/utils";
+import queryReducer, { isSearchQueryEmpty, SET_FROM, stringifyQuery, toBrowserQuery } from "../_utils/old_query";
 import SearchBoxForm from "./searchBox/SearchBoxForm";
 import SearchResult from "./searchResult/SearchResult";
-import H1WithAutoFocus from "../../../_common/components/h1WithAutoFocus/H1WithAutoFocus";
 import DoYouWantToSaveSearch from "./howToPanels/DoYouWantToSaveSearch";
 import SelectedFilters from "./selectedFilters/SelectedFilters";
 import Feedback from "./feedback/Feedback";
@@ -25,6 +23,8 @@ export default function Search({ query, searchResult, aggregations, locations })
     const [isFiltersVisible, setIsFiltersVisible] = useState(false);
     const [initialRenderDone, setInitialRenderDone] = useState(false);
     const router = useRouter();
+    const searchParams = useSearchParams();
+    const savedSearchUuid = searchParams.get("saved");
 
     /**
      * Perform a search when user changes search criteria
@@ -35,7 +35,6 @@ export default function Search({ query, searchResult, aggregations, locations })
 
             // Keep saved search uuid in browser url, as long as there are some search criteria.
             // This uuid is used when user update an existing saved search
-            const savedSearchUuid = extractParam("saved");
             if (!isSearchQueryEmpty(browserQuery) && savedSearchUuid) {
                 browserQuery.saved = savedSearchUuid;
             }
@@ -50,6 +49,10 @@ export default function Search({ query, searchResult, aggregations, locations })
         }
     }, [updatedQuery]);
 
+    useEffect(() => {
+        logAmplitudeEvent("Stillinger - Utførte søk");
+    }, []);
+
     function loadMoreResults() {
         queryDispatch({ type: SET_FROM, value: updatedQuery.from + updatedQuery.size });
     }
@@ -58,12 +61,14 @@ export default function Search({ query, searchResult, aggregations, locations })
         <>
             <Box paddingBlock={{ xs: "4", md: "12" }} paddingInline={{ xs: "4", sm: "6" }}>
                 <Stack justify={{ md: "center" }}>
-                    <H1WithAutoFocus spacing={false}>Søk etter din neste jobb</H1WithAutoFocus>
+                    <Heading level="1" size="xlarge">
+                        Søk etter din neste jobb
+                    </Heading>
                 </Stack>
             </Box>
 
             <div className="container-small">
-                <SearchBoxForm query={updatedQuery} dispatchQuery={queryDispatch} />
+                <SearchBoxForm query={query} dispatchQuery={queryDispatch} />
                 <Box paddingBlock={{ xs: "0 4", md: "0 12" }}>
                     <HStack gap="2" justify={{ xs: "start", md: "center" }} align={{ xs: "start", md: "center" }}>
                         <Show below="md">
@@ -139,9 +144,9 @@ export default function Search({ query, searchResult, aggregations, locations })
 
 Search.propTypes = {
     aggregations: PropTypes.shape({}),
-    locations: PropTypes.shape({}),
+    locations: PropTypes.arrayOf(PropTypes.shape({})),
     searchResult: PropTypes.shape({
-        ads: PropTypes.shape({}),
+        ads: PropTypes.arrayOf(PropTypes.shape({})),
     }),
     query: PropTypes.shape({}),
 };

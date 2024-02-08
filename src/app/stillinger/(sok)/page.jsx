@@ -1,37 +1,78 @@
-import { notFound } from "next/navigation";
-import simplifySearchResponse from "../../_common/api/SearchAPIUtils";
-import { defaultQuery, stringifyQuery, toApiQuery } from "./_components/old_query";
-import { createQuery } from "./_components/query";
+import simplifySearchResponse from "./_utils/simplifySearchResponse";
+import { defaultQuery, toApiQuery, toBrowserQuery } from "./_utils/old_query";
 import Search from "./_components/Search";
+import elasticSearchRequestBody from "./_utils/elasticSearchRequestBody";
+import { createQuery } from "./_utils/query";
 
-async function search(query) {
-    const res = await fetch(`https://arbeidsplassen.intern.dev.nav.no/stillinger/api/search${query}`);
-    if (res.status === 404) {
-        notFound();
-    }
+async function fetchElasticSearch(query) {
+    const body = elasticSearchRequestBody(query);
+    const res = await fetch(`${process.env.PAMSEARCHAPI_URL}/stillingsok/ad/_search`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+    });
+
     if (!res.ok) {
         throw new Error("Failed to fetch data");
     }
+
     const data = await res.json();
     return simplifySearchResponse(data);
 }
 
-async function getLocations() {
-    const res = await fetch("https://arbeidsplassen.intern.dev.nav.no/stillinger/api/locations");
-    if (res.status === 404) {
-        notFound();
-    }
-    if (!res.ok) {
+// TODO: Sjekk om denne kan caches over lang tid, fordi det er sjelden at fylker/kommuner endres
+async function fetchLocations() {
+    const [response1, response2] = await Promise.all([
+        fetch(`${process.env.PAMADUSER_URL}/api/v1/geography/municipals`),
+        fetch(`${process.env.PAMADUSER_URL}/api/v1/geography/counties`),
+    ]);
+
+    if (!response1.ok || !response2.ok) {
         throw new Error("Failed to fetch data");
     }
-    return res.json();
+
+    const municipals = await response1.json();
+    const counties = await response2.json();
+
+    const result = [
+        ...counties.map((c) => ({
+            key: c.name,
+            code: c.code,
+            municipals: municipals
+                .filter((m) => m.countyCode === c.code)
+                .map((m) => ({
+                    key: `${c.name}.${m.name}`,
+                    code: m.code,
+                })),
+        })),
+        {
+            key: "UTLAND",
+            municipals: [],
+            code: 999,
+        },
+    ];
+
+    return result;
 }
 
 export default async function Page({ searchParams }) {
     const initialQuery = createQuery(defaultQuery, searchParams);
-    const globalSearchResult = await search(stringifyQuery(toApiQuery(defaultQuery)));
-    const searchResult = await search(stringifyQuery(toApiQuery(initialQuery)));
-    const locations = await getLocations();
+
+    // An empty search aggregates all possible search filter
+    const globalSearchResult = await fetchElasticSearch(toApiQuery(defaultQuery));
+
+    // Locations filter are not aggregated, but based on a predefined list
+    const locations = await fetchLocations();
+
+    // If user has some search criteria, make an extra search to get that result
+    let searchResult;
+    if (Object.keys(toBrowserQuery(initialQuery)).length > 0) {
+        searchResult = await fetchElasticSearch(toApiQuery(initialQuery));
+    } else {
+        searchResult = globalSearchResult;
+    }
 
     return (
         <Search

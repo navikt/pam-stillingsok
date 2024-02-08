@@ -4,15 +4,13 @@ import PropTypes from "prop-types";
 import Link from "next/link";
 import { CONTEXT_PATH } from "../../../../../_common/environment";
 import GiveFeedback from "./GiveFeedback";
-import H1WithAutoFocus from "../../../../../_common/components/h1WithAutoFocus/H1WithAutoFocus";
-import useScrollToTop from "../../../../../_common/hooks/useScrollToTop";
 
 function Success({ email }) {
-    useScrollToTop();
-
     return (
         <>
-            <H1WithAutoFocus size="large">Din søknad er sendt til bedriften</H1WithAutoFocus>
+            <Heading level="1" size="large" spacing>
+                Din søknad er sendt til bedriften
+            </Heading>
             <BodyLong spacing>
                 Du vil straks få en bekreftelse på din e-post {email}. Ønsker du å trekke din søknad finner du
                 informasjon om dette i e-posten.

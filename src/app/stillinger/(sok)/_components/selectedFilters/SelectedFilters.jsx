@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Button, Chips, HStack } from "@navikt/ds-react";
 import { TrashIcon } from "@navikt/aksel-icons";
-import fixLocationName from "../../../../../../server/common/fixLocationName";
+import fixLocationName from "../../../../_common/utils/fixLocationName";
 import {
     PublishedLabelsEnum,
     REMOVE_COUNTRY,
@@ -18,7 +18,7 @@ import {
     SET_INTERNATIONAL,
     SET_PUBLISHED,
     SET_SEARCH_STRING,
-} from "../old_query";
+} from "../../_utils/old_query";
 import SaveSearchButton from "../../../lagrede-sok/_components/SaveSearchButton";
 
 function SelectedFilters({ query, queryDispatch }) {

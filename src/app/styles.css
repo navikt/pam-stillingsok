@@ -36,13 +36,13 @@ strong {
 }
 
 .inline-select {
-    display: flex;
-    align-items: center;
+    display: flex !important;
+    align-items: center !important;
 }
 
 .inline-select label {
-    white-space: nowrap;
-    margin-bottom: 0;
+    white-space: nowrap !important;
+    margin-bottom: 0 !important;
 }
 
 .full-width {
