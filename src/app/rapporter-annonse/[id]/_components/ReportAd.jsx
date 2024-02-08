@@ -18,7 +18,7 @@ import {
     Textarea,
     VStack,
 } from "@navikt/ds-react";
-import { FetchStatus } from "../../../_common/hooks/useFetchReducer";
+import { useFormState } from "react-dom";
 
 const reportCategories = [
     { label: "Diskriminerende innhold", key: "discrimination" },
@@ -29,17 +29,13 @@ const reportCategories = [
     { label: "Annet", key: "other" },
 ];
 
-function ReportAd({ ad, submitForm, postReportStatus, validationErrors, validateOnChange }) {
+function ReportAd({ ad, submitForm }) {
     const errorSummary = useRef();
-    const formData = useRef();
     const [description, setDescription] = useState("");
     const [hasTriedSubmit, setHasTriedSubmit] = useState(false);
 
-    const handleSubmit = (e) => {
-        setHasTriedSubmit(false);
-        e.preventDefault();
-        submitForm(e);
-    };
+    const [state, handleSubmit] = useFormState(submitForm, { validationErrors: {}, success: false });
+    const { validationErrors } = state;
 
     useEffect(() => {
         if (Object.keys(validationErrors).length > 0 && !hasTriedSubmit) {
@@ -60,7 +56,7 @@ function ReportAd({ ad, submitForm, postReportStatus, validationErrors, validate
             </Bleed>
             <div className="container-small mb-16">
                 <div>
-                    {postReportStatus === FetchStatus.SUCCESS ? (
+                    {state.success ? (
                         <div>
                             <Heading level="1" size="xlarge" className="mb-4">
                                 Takk for din tilbakemelding
@@ -75,7 +71,7 @@ function ReportAd({ ad, submitForm, postReportStatus, validationErrors, validate
                             </div>
                         </div>
                     ) : (
-                        <form onSubmit={handleSubmit} ref={formData}>
+                        <form action={handleSubmit}>
                             <Heading level="1" size="xlarge" className="mb-4">
                                 Rapporter annonse
                             </Heading>
@@ -96,14 +92,7 @@ function ReportAd({ ad, submitForm, postReportStatus, validationErrors, validate
                             >
                                 <div>
                                     {reportCategories.map((c) => (
-                                        <Checkbox
-                                            name="category"
-                                            value={c.label}
-                                            key={c.key}
-                                            onChange={() => {
-                                                validateOnChange(formData.current);
-                                            }}
-                                        >
+                                        <Checkbox name="category" value={c.label} key={c.key} onChange={() => {}}>
                                             {c.label}
                                         </Checkbox>
                                     ))}
@@ -120,7 +109,6 @@ function ReportAd({ ad, submitForm, postReportStatus, validationErrors, validate
                                 value={description}
                                 onChange={(e) => {
                                     setDescription(e.target.value);
-                                    validateOnChange(formData.current);
                                 }}
                             />
                             <BodyLong className="mb-4">
@@ -142,14 +130,15 @@ function ReportAd({ ad, submitForm, postReportStatus, validationErrors, validate
                                 </ErrorSummary>
                             )}
 
-                            {postReportStatus === FetchStatus.FAILURE && (
+                            {state?.error && (
                                 <Alert variant="error" className="mb-4">
                                     Rapportering av annonse feilet.
                                 </Alert>
                             )}
+                            {/* TODO: loading */}
                             <Button
                                 type="submit"
-                                loading={postReportStatus === FetchStatus.IS_FETCHING}
+                                // loading={postReportStatus === FetchStatus.IS_FETCHING}
                                 variant="primary"
                                 className="mb-12"
                             >
@@ -194,12 +183,10 @@ ReportAd.propTypes = {
         }),
     }).isRequired,
     submitForm: PropTypes.func.isRequired,
-    postReportStatus: PropTypes.string.isRequired,
     validationErrors: PropTypes.shape({
         categoryFieldset: PropTypes.string,
         messageField: PropTypes.string,
-    }).isRequired,
-    validateOnChange: PropTypes.func.isRequired,
+    }),
 };
 
 export default ReportAd;

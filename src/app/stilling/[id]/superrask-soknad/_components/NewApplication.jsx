@@ -8,7 +8,6 @@ import Form from "./Form";
 import AdDetailsHeader from "./AdDetailsHeader";
 
 export default function NewApplication({ ad, applicationForm, submitApplication }) {
-    // eslint-disable-next-line no-unused-vars
     const [state, formAction] = useFormState(submitApplication, { validationErrors: {}, success: false });
 
     return (
