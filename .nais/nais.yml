@@ -43,26 +43,22 @@ spec:
      - {{url}}
   {{/each}}
   env:
-    - name: PAMADUSER_URL
-      value: {{ pamaduser_url }}
-    - name: INTEREST_API_URL
-      value: {{ interest_api_url }}
-    - name: PAM_STILLINGSOK_URL
-      value: {{ pam_stillingsok_url }}
-    - name: PAM_VAR_SIDE_URL
-      value: {{ pam_var_side_url }}
-    - name: PAMSEARCHAPI_URL
-      value: {{ pamsearchapi_url }}
-    - name: PAM_JOBBTREFF_API_URL
-      value: {{ pam_jobbtreff_api_url }}
+    - name: ADUSER_AUDIENCE
+      value: {{ aduser_audience }}
     - name: AMPLITUDE_TOKEN
       value: {{ amplitude_token }}
     - name: ARBEIDSPLASSEN_URL
       value: {{ arbeidsplassen_url }}
-    - name: ADUSER_AUDIENCE
-      value: {{ aduser_audience }}
     - name: IDPORTEN_AUDIENCE
       value: {{ idporten_audience }}
+    - name: INTEREST_API_URL
+      value: {{ interest_api_url }}
+    - name: PAMADUSER_URL
+      value: {{ pamaduser_url }}
+    - name: PAM_STILLINGSOK_URL
+      value: {{ pam_stillingsok_url }}
+    - name: PAMSEARCHAPI_URL
+      value: {{ pamsearchapi_url }}
     - name: SENTRY_DSN
       value: {{ sentry_dsn }}
   accessPolicy:

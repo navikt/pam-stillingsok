@@ -1,4 +1,6 @@
 FROM node:20-alpine as build
+ARG VERSION_TAG
+ENV SENTRY_RELEASE pam-stillingsok@$VERSION_TAG
 ENV TZ=Europe/Oslo
 WORKDIR /app
 COPY package.json package-lock.json ./
