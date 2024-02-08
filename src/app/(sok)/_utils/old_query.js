@@ -178,6 +178,9 @@ export default function queryReducer(state, action) {
                 international: action.value,
             };
         case ADD_COUNTY:
+            if (queryState.counties.includes(action.value)) {
+                return queryState;
+            }
             return {
                 ...queryState,
                 counties: [...queryState.counties, action.value],
@@ -189,6 +192,9 @@ export default function queryReducer(state, action) {
                 municipals: queryState.municipals.filter((obj) => !obj.startsWith(`${action.value}.`)),
             };
         case ADD_MUNICIPAL:
+            if (queryState.municipals.includes(action.value)) {
+                return queryState;
+            }
             return {
                 ...queryState,
                 municipals: [...queryState.municipals, action.value],
@@ -199,6 +205,9 @@ export default function queryReducer(state, action) {
                 municipals: queryState.municipals.filter((obj) => obj !== action.value),
             };
         case ADD_COUNTRY:
+            if (queryState.countries.includes(action.value)) {
+                return queryState;
+            }
             return {
                 ...queryState,
                 countries: [...queryState.countries, action.value],
@@ -209,6 +218,9 @@ export default function queryReducer(state, action) {
                 countries: queryState.countries.filter((obj) => obj !== action.value),
             };
         case ADD_OCCUPATION_FIRST_LEVEL:
+            if (queryState.occupationFirstLevels.includes(action.value)) {
+                return queryState;
+            }
             return {
                 ...queryState,
                 occupationFirstLevels: [...queryState.occupationFirstLevels, action.value],
@@ -222,6 +234,9 @@ export default function queryReducer(state, action) {
                 ),
             };
         case ADD_OCCUPATION_SECOND_LEVEL:
+            if (queryState.occupationSecondLevels.includes(action.value)) {
+                return queryState;
+            }
             return {
                 ...queryState,
                 occupationSecondLevels: [...queryState.occupationSecondLevels, action.value],
@@ -232,6 +247,9 @@ export default function queryReducer(state, action) {
                 occupationSecondLevels: queryState.occupationSecondLevels.filter((obj) => obj !== action.value),
             };
         case ADD_ENGAGEMENT_TYPE:
+            if (queryState.engagementType.includes(action.value)) {
+                return queryState;
+            }
             return {
                 ...queryState,
                 engagementType: [...queryState.engagementType, action.value],
@@ -242,6 +260,9 @@ export default function queryReducer(state, action) {
                 engagementType: queryState.engagementType.filter((obj) => obj !== action.value),
             };
         case ADD_EXTENT:
+            if (queryState.extent.includes(action.value)) {
+                return queryState;
+            }
             return {
                 ...queryState,
                 extent: [...queryState.extent, action.value],
@@ -252,6 +273,9 @@ export default function queryReducer(state, action) {
                 extent: queryState.extent.filter((obj) => obj !== action.value),
             };
         case ADD_WORKLANGUAGE:
+            if (queryState.workLanguage.includes(action.value)) {
+                return queryState;
+            }
             return {
                 ...queryState,
                 workLanguage: [...queryState.workLanguage, action.value],
@@ -262,6 +286,9 @@ export default function queryReducer(state, action) {
                 workLanguage: queryState.workLanguage.filter((obj) => obj !== action.value),
             };
         case ADD_REMOTE:
+            if (queryState.remote.includes(action.value)) {
+                return queryState;
+            }
             return {
                 ...queryState,
                 remote: [...queryState.remote, action.value],
@@ -272,6 +299,9 @@ export default function queryReducer(state, action) {
                 remote: queryState.remote.filter((obj) => obj !== action.value),
             };
         case ADD_SECTOR:
+            if (queryState.sector.includes(action.value)) {
+                return queryState;
+            }
             return {
                 ...queryState,
                 sector: [...queryState.sector, action.value],

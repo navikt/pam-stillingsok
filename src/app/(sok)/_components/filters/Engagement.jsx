@@ -6,6 +6,19 @@ import mergeCount from "../utils/mergeCount";
 import moveCriteriaToBottom from "../utils/moveFacetToBottom";
 import { logSearchFilterAdded, logSearchFilterRemoved } from "../../../_common/tracking/amplitude";
 
+/**
+ * This ensures that 'Annet' is displayed as 'Ikke oppgitt' in the search filters.
+ * It's a mere cosmetic change since the value attributed to the checkbox
+ * remains the same. The decision behind this particular change came due to
+ * a problem in our structured data where most of the ads coming from different
+ * stakeholders don't include the correct classification 'Fast'.
+ * @param key
+ * @returns {string|*}
+ */
+export function editedItemKey(key) {
+    return key === "Annet" ? "Ikke oppgitt" : key;
+}
+
 function Engagement({ initialValues, updatedValues, query, dispatch }) {
     const sortedValues = moveCriteriaToBottom(initialValues, "Annet");
     const values = mergeCount(sortedValues, updatedValues);
@@ -19,19 +32,6 @@ function Engagement({ initialValues, updatedValues, query, dispatch }) {
             dispatch({ type: REMOVE_ENGAGEMENT_TYPE, value });
             logSearchFilterRemoved({ ansettelsesform: value });
         }
-    }
-
-    /**
-     * This ensures that 'Annet' is displayed as 'Ikke oppgitt' in the search filters.
-     * It's a mere cosmetic change since the value attributed to the checkbox
-     * remains the same. The decision behind this particular change came due to
-     * a problem in our structured data where most of the ads coming from different
-     * stakeholders don't include the correct classification 'Fast'.
-     * @param key
-     * @returns {string|*}
-     */
-    function editedItemKey(key) {
-        return key === "Annet" ? "Ikke oppgitt" : key;
     }
 
     return (
