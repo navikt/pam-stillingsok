@@ -112,7 +112,7 @@ function SearchBox({ dispatch, query }) {
     }
 
     return (
-        <div className="SearchBox">
+        <div className="mb-4">
             <Typeahead
                 onClear={onClear}
                 id="search-form-fritekst-input"

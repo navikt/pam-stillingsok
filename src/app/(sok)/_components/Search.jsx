@@ -5,7 +5,6 @@ import PropTypes from "prop-types";
 import { Box, Button, HGrid, Hide, HStack, Show, Stack, Heading } from "@navikt/ds-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import queryReducer, { isSearchQueryEmpty, SET_FROM, stringifyQuery, toBrowserQuery } from "../_utils/old_query";
-import SearchBoxForm from "./searchBox/SearchBoxForm";
 import SearchResult from "./searchResult/SearchResult";
 import DoYouWantToSaveSearch from "./howToPanels/DoYouWantToSaveSearch";
 import SelectedFilters from "./selectedFilters/SelectedFilters";
@@ -16,6 +15,7 @@ import FilterIcon from "./icons/FilterIcon";
 import logAmplitudeEvent from "../../_common/tracking/amplitude";
 import LoggedInButtons from "./loggedInButtons/LoggedInButtons";
 import FiltersMobile from "./filters/FiltersMobile";
+import SearchBox from "./searchBox/SearchBox";
 
 export default function Search({ query, searchResult, aggregations, locations }) {
     const [updatedQuery, queryDispatch] = useReducer(queryReducer, query);
@@ -71,7 +71,7 @@ export default function Search({ query, searchResult, aggregations, locations })
             </Box>
 
             <div className="container-small">
-                <SearchBoxForm query={query} dispatchQuery={queryDispatch} />
+                <SearchBox query={query} dispatch={queryDispatch} />
                 <Box paddingBlock={{ xs: "0 4", md: "0 12" }}>
                     <HStack gap="2" justify={{ xs: "start", md: "center" }} align={{ xs: "start", md: "center" }}>
                         <Show below="md">
