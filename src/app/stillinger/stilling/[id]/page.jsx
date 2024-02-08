@@ -77,6 +77,7 @@ export async function generateMetadata({ params }) {
                 },
             ],
         },
+        robots: data && data._source.status !== "ACTIVE" ? "noindex" : "",
     };
 }
 
