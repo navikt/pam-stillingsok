@@ -240,9 +240,6 @@ const startServer = (htmlPages) => {
     });
     */
 
-    server.get(`${properties.PAM_CONTEXT_PATH}/internal/isAlive`, (req, res) => res.sendStatus(200));
-    server.get(`${properties.PAM_CONTEXT_PATH}/internal/isReady`, (req, res) => res.sendStatus(200));
-
     // Viktig at denne kommer sist siden den vil svare på alle endepunkter under /stillinger hvis de ikke er definert før
     server.get(["/stillinger/?", /^\/stillinger\/(?!.*dist).*$/], (req, res) => {
         res.send(htmlPages.sok);

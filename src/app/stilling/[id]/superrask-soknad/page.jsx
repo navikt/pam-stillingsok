@@ -38,8 +38,7 @@ export default async function Page({ params }) {
     async function submitApplication(prevState, formData) {
         "use server";
 
-        const applicationFormFields = await getApplicationForm(params.id);
-        const application = parseFormData(formData, applicationFormFields.qualifications);
+        const application = parseFormData(formData, applicationForm.qualifications);
         const errors = validateForm(application);
         const isValid = Object.keys(errors).length === 0;
         const defaultState = {
