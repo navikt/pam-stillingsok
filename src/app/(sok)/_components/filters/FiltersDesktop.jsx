@@ -23,14 +23,13 @@ function FiltersDesktop({ query, dispatchQuery, aggregations, locations, searchR
                         query={query}
                         dispatch={dispatchQuery}
                         initialValues={aggregations.published}
-                        updatedValues={searchResult && searchResult.aggregations.published}
+                        updatedValues={searchResult.aggregations.published}
                     />
                 </FilterAccordionItem>
                 <FilterAccordionItem title="Sted" panelId="sted">
                     <Counties
                         query={query}
                         dispatch={dispatchQuery}
-                        aggregations={aggregations}
                         locations={locations}
                         updatedValues={searchResult}
                     />
@@ -40,7 +39,7 @@ function FiltersDesktop({ query, dispatchQuery, aggregations, locations, searchR
                         query={query}
                         dispatch={dispatchQuery}
                         initialValues={aggregations.occupationFirstLevels}
-                        updatedValues={searchResult && searchResult.aggregations.occupationFirstLevels}
+                        updatedValues={searchResult.aggregations.occupationFirstLevels}
                     />
                 </FilterAccordionItem>
                 <FilterAccordionItem title="Heltid/deltid" panelId="extent">
@@ -48,7 +47,7 @@ function FiltersDesktop({ query, dispatchQuery, aggregations, locations, searchR
                         query={query}
                         dispatch={dispatchQuery}
                         initialValues={aggregations.extent}
-                        updatedValues={searchResult && searchResult.aggregations.extent}
+                        updatedValues={searchResult.aggregations.extent}
                     />
                 </FilterAccordionItem>
                 <FilterAccordionItem title="Sektor" panelId="sector">
@@ -56,7 +55,7 @@ function FiltersDesktop({ query, dispatchQuery, aggregations, locations, searchR
                         query={query}
                         dispatch={dispatchQuery}
                         initialValues={aggregations.sector}
-                        updatedValues={searchResult && searchResult.aggregations.sector}
+                        updatedValues={searchResult.aggregations.sector}
                     />
                 </FilterAccordionItem>
                 <FilterAccordionItem title="Ansettelsesform" panelId="engagementType">
@@ -64,7 +63,7 @@ function FiltersDesktop({ query, dispatchQuery, aggregations, locations, searchR
                         query={query}
                         dispatch={dispatchQuery}
                         initialValues={aggregations.engagementTypes}
-                        updatedValues={searchResult && searchResult.aggregations.engagementTypes}
+                        updatedValues={searchResult.aggregations.engagementTypes}
                     />
                 </FilterAccordionItem>
                 <FilterAccordionItem title="Arbeidsspråk" panelId="workLanguage">
@@ -72,7 +71,7 @@ function FiltersDesktop({ query, dispatchQuery, aggregations, locations, searchR
                         query={query}
                         dispatch={dispatchQuery}
                         initialValues={aggregations.workLanguage}
-                        updatedValues={searchResult && searchResult.aggregations.workLanguage}
+                        updatedValues={searchResult.aggregations.workLanguage}
                     />
                 </FilterAccordionItem>
             </Accordion>

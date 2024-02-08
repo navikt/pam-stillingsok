@@ -29,7 +29,6 @@ function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggre
                             <Counties
                                 query={query}
                                 dispatch={dispatchQuery}
-                                aggregations={aggregations}
                                 locations={locations}
                                 updatedValues={searchResult}
                             />

@@ -17,9 +17,9 @@ import buildLocations from "../utils/buildLocations";
 import buildHomeOfficeValues from "../utils/buildHomeOfficeValues";
 import { logSearchFilterAdded, logSearchFilterRemoved } from "../../../_common/tracking/amplitude";
 
-function Locations({ aggregations, locations, query, dispatch }) {
-    const locationValues = buildLocations(aggregations, locations);
-    const homeOfficeValues = buildHomeOfficeValues(aggregations.remote);
+function Locations({ locations, query, dispatch, updatedValues }) {
+    const locationValues = buildLocations(updatedValues.aggregations, locations);
+    const homeOfficeValues = buildHomeOfficeValues(updatedValues.aggregations.remote);
 
     function handleLocationClick(value, type, checked) {
         if (type === "county") {
@@ -157,10 +157,12 @@ function Locations({ aggregations, locations, query, dispatch }) {
 }
 
 Locations.propTypes = {
-    aggregations: PropTypes.shape({
-        internationalCountMap: PropTypes.object,
-        nationalCountMap: PropTypes.object,
-        remote: PropTypes.object,
+    updatedValues: PropTypes.shape({
+        aggregations: PropTypes.shape({
+            internationalCountMap: PropTypes.object,
+            nationalCountMap: PropTypes.object,
+            remote: PropTypes.object,
+        }),
     }),
     locations: PropTypes.arrayOf(PropTypes.object),
     query: PropTypes.shape({

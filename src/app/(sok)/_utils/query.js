@@ -20,7 +20,7 @@ export function createQuery(initialState, searchParams) {
         municipals: asArray(searchParams["municipals[]"]) || initialState.municipals,
         counties: asArray(searchParams["counties[]"]) || initialState.counties,
         countries: asArray(searchParams["countries[]"]) || initialState.countries,
-        international: searchParams.international === true,
+        international: searchParams.international === "true",
         remote: asArray(searchParams["remote[]"]) || initialState.remote,
         occupationFirstLevels: asArray(searchParams["occupationFirstLevels[]"]) || initialState.occupationFirstLevels,
         occupationSecondLevels:
