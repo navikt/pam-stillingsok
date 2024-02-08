@@ -16,7 +16,7 @@ function fixMissingAdProperties(stilling, score) {
  * This function extract and return only the search result information
  * we need, and make response less nested.
  */
-export default async function simplifySearchResponse(response) {
+export default function simplifySearchResponse(response) {
     const nationalCountMap = {};
     const internationalCountMap = {};
 

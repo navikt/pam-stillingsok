@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 const host = process.env.PAMSEARCHAPI_URL ? process.env.PAMSEARCHAPI_URL : "http://pam-search-api";
 
 function suggest(field, match) {
