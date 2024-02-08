@@ -7,8 +7,6 @@ metadata:
     team: teampam
   annotations:
     nginx.ingress.kubernetes.io/proxy-buffer-size: "16k"
-    nais.io/read-only-file-system: "false"
-    nais.io/run-as-user: "65532"
 spec:
   image: {{ image }}
   port: 8080
