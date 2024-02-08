@@ -1,7 +1,7 @@
 import mockData from "./mock-data";
 
-export default async function GET(req) {
-    const sort = req.nextUrl.searchParams.get("sort");
+export async function GET(request) {
+    const sort = request.nextUrl.searchParams.get("sort");
     console.log(`GET userfavouriteads sort: ${sort}`);
 
     if (sort === "published") {

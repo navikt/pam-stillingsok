@@ -1,4 +1,6 @@
 FROM node:20-alpine AS builder
+ARG VERSION_TAG
+ENV SENTRY_RELEASE pam-stillingsok@$VERSION_TAG
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN --mount=type=secret,id=optional_secret \
