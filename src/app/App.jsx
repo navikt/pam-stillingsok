@@ -8,6 +8,8 @@ import AuthenticationProvider from "./_common/auth/contexts/AuthenticationProvid
 import FavouritesProvider from "./favoritter/_components/FavouritesProvider";
 import UserProvider from "./_common/user/UserProvider";
 
+// Todo: Gå igjennom alle fetch-kall i koden og se om referrer er satt riktig. Nå er den satt referrer: CONTEXT_PATH, men ikke sikker på hva som er rett her
+
 function App({ children }) {
     return (
         <AuthenticationProvider>

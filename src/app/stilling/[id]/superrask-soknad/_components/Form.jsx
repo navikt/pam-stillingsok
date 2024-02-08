@@ -164,7 +164,7 @@ function Form({ ad, applicationForm, submitForm, pending, submitApiError, valida
                 <Button variant="primary" loading={pending} type="submit">
                     Send søknad
                 </Button>
-                <Button disabled={pending} variant="secondary" as={Link} href={`/stillinger/stilling/${ad._id}`}>
+                <Button disabled={pending} variant="secondary" as={Link} href={`/stilling/${ad._id}`}>
                     Avbryt
                 </Button>
             </HStack>

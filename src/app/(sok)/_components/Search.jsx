@@ -4,7 +4,6 @@ import React, { useEffect, useReducer, useState } from "react";
 import PropTypes from "prop-types";
 import { Box, Button, HGrid, Hide, HStack, Show, Stack, Heading } from "@navikt/ds-react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { CONTEXT_PATH } from "../../_common/environment";
 import queryReducer, { isSearchQueryEmpty, SET_FROM, stringifyQuery, toBrowserQuery } from "../_utils/old_query";
 import SearchBoxForm from "./searchBox/SearchBoxForm";
 import SearchResult from "./searchResult/SearchResult";
@@ -41,7 +40,7 @@ export default function Search({ query, searchResult, aggregations, locations })
 
             logAmplitudeEvent("Stillinger - Utførte søk");
 
-            router.replace(CONTEXT_PATH + stringifyQuery(browserQuery), { scroll: false });
+            router.replace(`/${stringifyQuery(browserQuery)}`, { scroll: false });
         } else {
             // Skip search first time query change, since that
             // will just reload the search result we already got

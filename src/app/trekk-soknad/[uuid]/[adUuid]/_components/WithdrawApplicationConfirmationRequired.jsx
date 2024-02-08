@@ -2,7 +2,6 @@ import React from "react";
 import { Alert, BodyLong, BodyShort, Button, Heading, Label, Link as AkselLink } from "@navikt/ds-react";
 import PropTypes from "prop-types";
 import Link from "next/link";
-import { CONTEXT_PATH } from "../../../../_common/environment";
 import getEmployer from "../../../../_common/utils/getEmployer";
 
 function WithdrawApplicationConfirmationRequired({ ad, handleWithDrawClick, isDeleting, hasError }) {
@@ -18,7 +17,7 @@ function WithdrawApplicationConfirmationRequired({ ad, handleWithDrawClick, isDe
             {ad && (
                 <div className="mb-8">
                     <BodyShort>
-                        <AkselLink as={Link} href={`${CONTEXT_PATH}/stilling/${ad._id}`}>
+                        <AkselLink as={Link} href={`/stilling/${ad._id}`}>
                             {ad._source.title}
                         </AkselLink>
                     </BodyShort>

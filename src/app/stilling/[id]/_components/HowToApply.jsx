@@ -17,7 +17,6 @@ import Link from "next/link";
 import { formatDate, isValidEmail, isValidUrl } from "../../../_common/utils/utils";
 import logAmplitudeEvent from "../../../_common/tracking/amplitude";
 import FavouritesButton from "../../../favoritter/_components/FavouritesButton";
-import { CONTEXT_PATH } from "../../../_common/environment";
 
 export function getApplicationUrl(properties) {
     if (properties.applicationurl !== undefined) {
@@ -93,7 +92,7 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                                     id: stilling._id,
                                 });
                             }}
-                            href={`${CONTEXT_PATH}/${path}/${stilling._id}/superrask-soknad`}
+                            href={`/${path}/${stilling._id}/superrask-soknad`}
                         >
                             Gå til superrask søknad
                         </Button>
