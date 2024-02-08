@@ -71,7 +71,7 @@ export default function Search({ query, searchResult, aggregations, locations })
             </Box>
 
             <div className="container-small">
-                <SearchBox query={query} dispatch={queryDispatch} />
+                <SearchBox query={updatedQuery} dispatch={queryDispatch} />
                 <Box paddingBlock={{ xs: "0 4", md: "0 12" }}>
                     <HStack gap="2" justify={{ xs: "start", md: "center" }} align={{ xs: "start", md: "center" }}>
                         <Show below="md">
@@ -95,7 +95,7 @@ export default function Search({ query, searchResult, aggregations, locations })
             <SearchResultHeader
                 isFiltersVisible={isFiltersVisible}
                 searchResult={searchResult}
-                query={query}
+                query={updatedQuery}
                 queryDispatch={queryDispatch}
             />
 
@@ -106,7 +106,7 @@ export default function Search({ query, searchResult, aggregations, locations })
             >
                 <Hide below="md">
                     <FiltersDesktop
-                        query={query}
+                        query={updatedQuery}
                         dispatchQuery={queryDispatch}
                         aggregations={aggregations}
                         locations={locations}
@@ -117,7 +117,7 @@ export default function Search({ query, searchResult, aggregations, locations })
                 <Show below="md">
                     {isFiltersVisible && (
                         <FiltersMobile
-                            query={query}
+                            query={updatedQuery}
                             dispatchQuery={queryDispatch}
                             aggregations={aggregations}
                             locations={locations}
