@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { Alert, Link as AkselLink, BodyShort, Heading, Tag, Button, HStack } from "@navikt/ds-react";
 import Link from "next/link";
 import { ArrowsCirclepathIcon, PencilIcon, TrashIcon } from "@navikt/aksel-icons";
-import { CONTEXT_PATH } from "../../_common/environment";
 import { formatDate } from "../../_common/utils/utils";
 import AlertModal from "../../_common/components/modals/AlertModal";
 import SaveSearchModal from "./modal/SaveSearchModal";
@@ -64,7 +63,7 @@ function SavedSearchListItem({ savedSearch, removeSavedSearchFromList, replaceSa
     return (
         <article className="mt-12">
             <Heading level="3" size="small" spacing>
-                <AkselLink as={Link} href={`${CONTEXT_PATH}${savedSearch.searchQuery}&saved=${savedSearch.uuid}`}>
+                <AkselLink as={Link} href={`/${savedSearch.searchQuery}&saved=${savedSearch.uuid}`}>
                     {savedSearch.title}
                 </AkselLink>
             </Heading>

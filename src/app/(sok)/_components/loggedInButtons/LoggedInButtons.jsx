@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import useToggle from "../../../_common/hooks/useToggle";
 import { AuthenticationContext, AuthenticationStatus } from "../../../_common/auth/contexts/AuthenticationProvider";
 import { HasAcceptedTermsStatus, UserContext } from "../../../_common/user/UserProvider";
-import { CONTEXT_PATH } from "../../../_common/environment";
 import LoginModal from "../../../_common/auth/components/LoginModal";
 import UserConsentModal from "../../../_common/user/UserConsentModal";
 
@@ -45,10 +44,10 @@ function LoggedInButtons() {
             <Button
                 as={Link}
                 role="link"
-                href={`${CONTEXT_PATH}/lagrede-sok`}
+                href="/lagrede-sok"
                 variant="tertiary"
                 onClick={(e) => {
-                    handleClick(e, `${CONTEXT_PATH}/lagrede-sok`, "SAVEDSEARCH");
+                    handleClick(e, "/lagrede-sok", "SAVEDSEARCH");
                 }}
                 icon={<ClockIcon aria-hidden="true" />}
             >
@@ -58,10 +57,10 @@ function LoggedInButtons() {
             <Button
                 as={Link}
                 role="link"
-                href={`${CONTEXT_PATH}/favoritter`}
+                href="/favoritter"
                 variant="tertiary"
                 onClick={(e) => {
-                    handleClick(e, `${CONTEXT_PATH}/favoritter`, "FAVORITES");
+                    handleClick(e, "/favoritter", "FAVORITES");
                 }}
                 icon={<HeartIcon aria-hidden="true" />}
             >
@@ -71,7 +70,7 @@ function LoggedInButtons() {
             {shouldShowLoginModalSavedSearch && (
                 <LoginModal
                     onLoginClick={() => {
-                        loginAndRedirect(`${CONTEXT_PATH}/lagrede-sok`);
+                        loginAndRedirect("/lagrede-sok");
                     }}
                     onCloseClick={closeLoginModalSavedSearch}
                 />
@@ -80,7 +79,7 @@ function LoggedInButtons() {
             {shouldShowLoginModalFavorites && (
                 <LoginModal
                     onLoginClick={() => {
-                        loginAndRedirect(`${CONTEXT_PATH}/favoritter`);
+                        loginAndRedirect("/favoritter");
                     }}
                     onCloseClick={closeLoginModalFavorites}
                 />
@@ -90,7 +89,7 @@ function LoggedInButtons() {
                 <UserConsentModal
                     onClose={closeTermsModal}
                     onTermsAccepted={() => {
-                        handleTermsAccepted(`${CONTEXT_PATH}/favoritter`);
+                        handleTermsAccepted("/favoritter");
                     }}
                 />
             )}

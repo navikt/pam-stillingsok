@@ -2,7 +2,6 @@ import React from "react";
 import { BodyLong, Button, Heading, VStack } from "@navikt/ds-react";
 import { FigureWithMagnifier } from "@navikt/arbeidsplassen-react";
 import Link from "next/link";
-import { CONTEXT_PATH } from "../../_common/environment";
 
 function NoSavedSearches() {
     return (
@@ -19,7 +18,7 @@ function NoSavedSearches() {
                 <BodyLong className="text-center" spacing>
                     Du kan velge å lagre ditt søk når du har fylt inn søkeord eller andre filter.
                 </BodyLong>
-                <Button variant="primary" as={Link} role="link" href={CONTEXT_PATH}>
+                <Button variant="primary" as={Link} role="link" href="/">
                     Gå til søket
                 </Button>
             </VStack>

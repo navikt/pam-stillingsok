@@ -7,7 +7,6 @@ import { Buldings3Icon, EarthIcon } from "@navikt/aksel-icons";
 import Link from "next/link";
 import getEmployer from "../../../_common/utils/getEmployer";
 import getWorkLocation from "../../../_common/utils/getWorkLocation";
-import { CONTEXT_PATH } from "../../../_common/environment";
 import { formatDate } from "../../../_common/utils/utils";
 import Debug from "./Debug";
 
@@ -161,7 +160,7 @@ SearchResultItem.propTypes = {
 
 function LinkToAd({ children, stilling }) {
     return (
-        <AkselLink as={Link} href={`${CONTEXT_PATH}/stilling/${stilling.uuid}`}>
+        <AkselLink as={Link} href={`/stilling/${stilling.uuid}`}>
             {children}
         </AkselLink>
     );

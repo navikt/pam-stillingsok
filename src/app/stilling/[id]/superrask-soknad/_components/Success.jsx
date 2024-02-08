@@ -2,7 +2,6 @@ import React from "react";
 import { BodyLong, Button, Heading } from "@navikt/ds-react";
 import PropTypes from "prop-types";
 import Link from "next/link";
-import { CONTEXT_PATH } from "../../../../_common/environment";
 import GiveFeedback from "./GiveFeedback";
 
 function Success({ email }) {
@@ -22,7 +21,7 @@ function Success({ email }) {
                 Bedriften vil vurdere din søknad og ta kontakt dersom de syns du passer for jobben. Du får beskjed på
                 e-post så fort bedriften har gjort en vurdering.
             </BodyLong>
-            <Button variant="secondary" as={Link} href={CONTEXT_PATH}>
+            <Button variant="secondary" as={Link} href="/">
                 Tilbake til stillingssøket
             </Button>
 
