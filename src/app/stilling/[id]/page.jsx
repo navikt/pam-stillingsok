@@ -62,6 +62,7 @@ async function fetchAd(id) {
 
 export async function generateMetadata({ params }) {
     const data = await fetchAd(params.id);
+    const isFinn = data._source && data._source.source && data._source.source.toLowerCase() === "finn";
 
     return {
         title: getStillingTitle(data._source),
@@ -78,6 +79,9 @@ export async function generateMetadata({ params }) {
             ],
         },
         robots: data && data._source.status !== "ACTIVE" ? "noindex" : "",
+        alternates: {
+            canonical: isFinn ? data._source.properties.sourceurl : "",
+        },
     };
 }
 

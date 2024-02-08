@@ -1,3 +1,4 @@
+/**
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { FetchAction, useFetchReducer } from "../../../app/_common/hooks/useFetchReducer";
@@ -60,9 +61,6 @@ function SuperraskPage({ match }) {
         }
     }
 
-    /**
-     * Fetch ad and superrask søknad form
-     */
     useEffect(() => {
         dispatch({ type: FetchAction.BEGIN });
 
@@ -97,3 +95,4 @@ SuperraskPage.propTypes = {
 };
 
 export default SuperraskPage;
+*/

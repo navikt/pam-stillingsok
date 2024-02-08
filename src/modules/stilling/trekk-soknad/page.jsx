@@ -1,3 +1,4 @@
+/**
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import WithdrawApplication from "../../../app/trekk-soknad/[uuid]/[adUuid]/_components/WithdrawApplication";
@@ -9,9 +10,6 @@ function WithdrawApplicationPage({ match }) {
     const [adResponse, dispatch] = useFetchReducer();
     const [applicationStatusDispatch] = useFetchReducer();
 
-    /**
-     * Fetch ad and check if job application exist
-     */
     useEffect(() => {
         const id = match.params.adUuid;
 
@@ -47,3 +45,4 @@ WithdrawApplicationPage.propTypes = {
 };
 
 export default WithdrawApplicationPage;
+*/

@@ -3,8 +3,10 @@ import PropTypes from "prop-types";
 import { SET_SEARCH_STRING } from "../../_utils/old_query";
 import Typeahead from "../../../_common/components/typeahead/Typeahead";
 import { FetchAction, useFetchReducer } from "../../../_common/hooks/useFetchReducer";
-import SearchAPI from "../../../_common/api/SearchAPI";
 import capitalizeFirstLetter from "../../../_common/utils/capitalizeFirstLetter";
+
+let suggestionsCache = [];
+const CACHE_MAX_SIZE = 50;
 
 function SearchBox({ dispatch, query }) {
     const [value, setValue] = useState(query.q);
@@ -30,14 +32,34 @@ function SearchBox({ dispatch, query }) {
         ].slice(0, 10);
     }
 
-    function fetchSuggestions() {
-        SearchAPI.getSuggestions({ match: value, minLength: MINIMUM_LENGTH })
-            .then((response) => {
-                suggestionsDispatch({ type: FetchAction.RESOLVE, data: removeDuplicateSuggestions(response) });
-            })
-            .catch(() => {
-                suggestionsDispatch({ type: FetchAction.RESOLVE, data: [] });
+    async function fetchSuggestions() {
+        const cached = suggestionsCache.find((c) => c.value === value);
+        if (cached) {
+            suggestionsDispatch({ type: FetchAction.RESOLVE, data: cached.data });
+            return;
+        }
+
+        try {
+            const response = await fetch("/stillinger/api/suggestions", {
+                body: JSON.stringify({ match: value, minLength: MINIMUM_LENGTH }),
+                method: "POST",
+                referrer: process.env.NEXT_PUBLIC_CONTEXT_PATH, // Todo: Er dette rett referrer?
+                headers: {
+                    "Content-Type": "application/json",
+                },
             });
+
+            if (response.status !== 200) {
+                suggestionsDispatch({ type: FetchAction.RESOLVE, data: [] });
+            }
+
+            let data = await response.json();
+            data = removeDuplicateSuggestions(data);
+            suggestionsCache = [{ value, data }, ...suggestionsCache].slice(0, CACHE_MAX_SIZE);
+            suggestionsDispatch({ type: FetchAction.RESOLVE, data });
+        } catch (e) {
+            suggestionsDispatch({ type: FetchAction.RESOLVE, data: [] });
+        }
     }
 
     useEffect(() => {
