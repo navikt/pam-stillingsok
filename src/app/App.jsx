@@ -5,7 +5,7 @@ import { Footer, SkipLink } from "@navikt/arbeidsplassen-react";
 import PropTypes from "prop-types";
 import Header from "./_common/components/header/Header";
 import AuthenticationProvider from "./_common/auth/contexts/AuthenticationProvider";
-import FavouritesProvider from "./stillinger/favoritter/_components/FavouritesProvider";
+import FavouritesProvider from "./favoritter/_components/FavouritesProvider";
 import UserProvider from "./_common/user/UserProvider";
 
 function App({ children }) {

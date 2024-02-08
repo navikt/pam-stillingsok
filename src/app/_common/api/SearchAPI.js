@@ -1,6 +1,6 @@
 import APIError from "./APIError";
 import { CONTEXT_PATH } from "../environment";
-import { stringifyQuery } from "../../stillinger/(sok)/_utils/old_query";
+import { stringifyQuery } from "../../(sok)/_utils/old_query";
 
 let latestAdResponse;
 
