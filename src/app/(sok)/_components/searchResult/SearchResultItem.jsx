@@ -3,7 +3,7 @@ import React, { useLayoutEffect, useRef } from "react";
 import { BodyLong, BodyShort, Heading, HStack, Link as AkselLink, Tag } from "@navikt/ds-react";
 import { addDays, endOfDay, format as formatDateFns, isSameDay, isValid, parse, parseISO, subDays } from "date-fns";
 import { nb } from "date-fns/locale";
-import { Buldings3Icon, EarthIcon } from "@navikt/aksel-icons";
+import { Buldings3Icon, LocationPinIcon } from "@navikt/aksel-icons";
 import Link from "next/link";
 import getEmployer from "../../../_common/utils/getEmployer";
 import getWorkLocation from "../../../_common/utils/getWorkLocation";
@@ -112,7 +112,7 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, isD
                 {location && (
                     <HStack gap="2" className="mb-1">
                         <div>
-                            <EarthIcon width="1.5em" height="1.5em" aria-label="Sted" aria-hidden="true" />
+                            <LocationPinIcon width="1.5em" height="1.5em" aria-label="Sted" aria-hidden="true" />
                             <BodyShort visuallyHidden>Sted</BodyShort>
                         </div>
                         <BodyLong id={`${ad.uuid}-location`} className="overflow-wrap-anywhere">

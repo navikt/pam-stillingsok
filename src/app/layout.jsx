@@ -34,6 +34,9 @@ export const metadata = {
             },
         ],
     },
+    icons: {
+        icon: "https://arbeidsplassen.nav.no/favicon.png",
+    },
 };
 
 export default function RootLayout({ children }) {
