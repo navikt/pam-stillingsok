@@ -3,15 +3,7 @@ import PropTypes from "prop-types";
 import SearchBox from "./SearchBox";
 
 function SearchBoxForm({ query, dispatchQuery }) {
-    function submitForm(e) {
-        e.preventDefault();
-    }
-
-    return (
-        <form className="mb-4" onSubmit={submitForm} role="search">
-            <SearchBox query={query} dispatch={dispatchQuery} />
-        </form>
-    );
+    return <SearchBox query={query} dispatch={dispatchQuery} />;
 }
 
 SearchBoxForm.propTypes = {

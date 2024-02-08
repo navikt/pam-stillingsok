@@ -56,8 +56,12 @@ export default function Search({ query, searchResult, aggregations, locations })
         queryDispatch({ type: SET_FROM, value: updatedQuery.from + updatedQuery.size });
     }
 
+    function onFormSubmit(e) {
+        e.preventDefault();
+    }
+
     return (
-        <>
+        <form onSubmit={onFormSubmit}>
             <Box paddingBlock={{ xs: "4", md: "12" }} paddingInline={{ xs: "4", sm: "6" }}>
                 <Stack justify={{ md: "center" }}>
                     <Heading level="1" size="xlarge">
@@ -137,7 +141,7 @@ export default function Search({ query, searchResult, aggregations, locations })
                     <Feedback query={query} />
                 </div>
             </HGrid>
-        </>
+        </form>
     );
 }
 

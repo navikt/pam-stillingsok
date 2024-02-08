@@ -63,7 +63,7 @@ function Occupations({ initialValues, updatedValues, query, dispatch }) {
                     values.map((firstLevel) => (
                         <React.Fragment key={firstLevel.key}>
                             <Checkbox
-                                name="occupation"
+                                name="occupationFirstLevels[]"
                                 label={`${firstLevel.key} (${firstLevel.count})`}
                                 value={firstLevel.key}
                                 onChange={handleFirstLevelClick}
@@ -79,7 +79,7 @@ function Occupations({ initialValues, updatedValues, query, dispatch }) {
                                             {firstLevel.occupationSecondLevels &&
                                                 firstLevel.occupationSecondLevels.map((secondLevel) => (
                                                     <Checkbox
-                                                        name="occupation"
+                                                        name="occupationSecondLevels[]"
                                                         key={editedSecondLevelItemKey(secondLevel.key)}
                                                         value={secondLevel.key}
                                                         onChange={handleSecondLevelClick}

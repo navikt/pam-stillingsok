@@ -39,7 +39,7 @@ function Engagement({ initialValues, updatedValues, query, dispatch }) {
             <div>
                 {values.map((item) => (
                     <Checkbox
-                        name="engagementType"
+                        name="engagementType[]"
                         key={editedItemKey(item.key)}
                         value={item.key}
                         onChange={handleClick}

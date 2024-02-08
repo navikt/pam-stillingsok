@@ -28,7 +28,7 @@ function Extent({ initialValues, updatedValues, query, dispatch }) {
             <div>
                 {values.map((item) => (
                     <Checkbox
-                        name="extent"
+                        name="extent[]"
                         key={item.key}
                         value={item.key}
                         onChange={handleClick}

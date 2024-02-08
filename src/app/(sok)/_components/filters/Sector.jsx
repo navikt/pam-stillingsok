@@ -24,7 +24,7 @@ function Sector({ initialValues, updatedValues, query, dispatch }) {
             <div>
                 {values.map((item) => (
                     <Checkbox
-                        name="sector"
+                        name="sector[]"
                         key={item.key}
                         value={item.key}
                         onChange={handleClick}
