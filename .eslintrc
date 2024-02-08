@@ -20,6 +20,7 @@
     "plugins": ["react", "prettier"],
     "rules": {
         "no-underscore-dangle": "off",
+        "import/prefer-default-export": "off",
         "react/jsx-no-bind": "off",
         "react/no-unescaped-entities": "off",
         "prettier/prettier": "error",

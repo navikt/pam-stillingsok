@@ -7,8 +7,6 @@ metadata:
     team: teampam
   annotations:
     nginx.ingress.kubernetes.io/proxy-buffer-size: "16k"
-    nais.io/read-only-file-system: "false"
-    nais.io/run-as-user: "65532"
 spec:
   image: {{ image }}
   port: 8080
@@ -18,10 +16,10 @@ spec:
     cpuThresholdPercentage: 50
   liveness:
     initialDelay: 10
-    path: /stillinger/internal/isAlive
+    path: /stillinger/api/internal/isAlive
   readiness:
     initialDelay: 10
-    path: /stillinger/internal/isReady
+    path: /stillinger/api/internal/isReady
   resources:
     limits:
       cpu: 500m
@@ -43,6 +41,8 @@ spec:
      - {{url}}
   {{/each}}
   env:
+    - name: PORT
+      value: "8080"
     - name: PAMADUSER_URL
       value: {{ pamaduser_url }}
     - name: INTEREST_API_URL
