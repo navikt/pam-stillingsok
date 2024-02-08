@@ -10,8 +10,8 @@ import {
     Box,
     Button,
     Checkbox,
+    CheckboxGroup,
     ErrorSummary,
-    Fieldset,
     Heading,
     Link as AkselLink,
     LinkPanel,
@@ -83,21 +83,19 @@ function ReportAd({ ad, submitForm }) {
                                 . I tilfeller der det er brudd på retningslinjene vil stillingsannonsene bli fjernet.
                             </BodyLong>
 
-                            <Fieldset
+                            <CheckboxGroup
                                 id="categoryFieldset"
                                 legend="Velg hvilke retningslinjer annonsen bryter"
                                 description="Velg minst èn"
                                 error={validationErrors.categoryFieldset}
                                 className="mb-8"
                             >
-                                <div>
-                                    {reportCategories.map((c) => (
-                                        <Checkbox name="category" value={c.label} key={c.key} onChange={() => {}}>
-                                            {c.label}
-                                        </Checkbox>
-                                    ))}
-                                </div>
-                            </Fieldset>
+                                {reportCategories.map((c) => (
+                                    <Checkbox name="category" value={c.label} key={c.key} onChange={() => {}}>
+                                        {c.label}
+                                    </Checkbox>
+                                ))}
+                            </CheckboxGroup>
                             <Textarea
                                 id="messageField"
                                 className="mb-8"

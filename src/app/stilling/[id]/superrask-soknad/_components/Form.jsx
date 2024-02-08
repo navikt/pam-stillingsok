@@ -4,8 +4,8 @@ import {
     BodyLong,
     Button,
     Checkbox,
+    CheckboxGroup,
     ErrorSummary,
-    Fieldset,
     Heading,
     HStack,
     Link as AkselLink,
@@ -64,13 +64,13 @@ function Form({ ad, applicationForm, submitApplication, pending, submitApiError,
                     </BodyLong>
 
                     {applicationForm.qualifications && applicationForm.qualifications.length > 0 && (
-                        <Fieldset legend="Huk av for kvalifikasjonene du oppfyller">
+                        <CheckboxGroup legend="Huk av for kvalifikasjonene du oppfyller">
                             {applicationForm.qualifications.map((it) => (
                                 <Checkbox key={it.id} value={it.label} name="qualification">
                                     {it.label}
                                 </Checkbox>
                             ))}
-                        </Fieldset>
+                        </CheckboxGroup>
                     )}
                 </section>
             )}
