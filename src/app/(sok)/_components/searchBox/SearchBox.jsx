@@ -4,7 +4,6 @@ import { SET_SEARCH_STRING } from "../../_utils/old_query";
 import Typeahead from "../../../_common/components/typeahead/Typeahead";
 import { FetchAction, useFetchReducer } from "../../../_common/hooks/useFetchReducer";
 import capitalizeFirstLetter from "../../../_common/utils/capitalizeFirstLetter";
-import { CONTEXT_PATH } from "../../../_common/environment";
 
 let suggestionsCache = [];
 const CACHE_MAX_SIZE = 50;
@@ -44,7 +43,7 @@ function SearchBox({ dispatch, query }) {
             const response = await fetch("/stillinger/api/suggestions", {
                 body: JSON.stringify({ match: value, minLength: MINIMUM_LENGTH }),
                 method: "POST",
-                referrer: CONTEXT_PATH, // Todo: Er dette rett referrer?
+                referrer: process.env.NEXT_PUBLIC_CONTEXT_PATH, // Todo: Er dette rett referrer?
                 headers: {
                     "Content-Type": "application/json",
                 },

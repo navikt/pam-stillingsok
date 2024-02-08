@@ -1,5 +1,2 @@
-export const CONTEXT_PATH = "/stillinger";
 export const INTEREST_API_URL = "/interesse-api";
 export const STILLINGSOK_URL = "window.__PAM_STILLINGSOK_URL__";
-export const LOGIN_URL = "window.__LOGIN_URL__";
-export const LOGOUT_URL = "window.__LOGOUT_URL__";

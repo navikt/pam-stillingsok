@@ -77,22 +77,15 @@ server.use(bodyParser.json());
 const properties = {
     PAM_CONTEXT_PATH: "/stillinger",
     INTEREST_API_URL: process.env.INTEREST_API_URL,
-    LOGIN_URL: "/oauth2/login",
-    LOGOUT_URL: "/oauth2/logout?redirect=/utlogget",
     PAM_STILLINGSOK_URL: process.env.PAM_STILLINGSOK_URL,
     AMPLITUDE_TOKEN: process.env.AMPLITUDE_TOKEN,
-    SENTRY_DSN: process.env.SENTRY_DSN,
 };
 
 const writeEnvironmentVariablesToFile = () => {
     const fileContent =
         `window.__PAM_STILLINGSOK_URL__="${properties.PAM_STILLINGSOK_URL}";\n` +
-        `window.__PAM_CONTEXT_PATH__="${properties.PAM_CONTEXT_PATH}";\n` +
         `window.__INTEREST_API_URL__="${properties.INTEREST_API_URL}";\n` +
-        `window.__LOGIN_URL__="${properties.LOGIN_URL}";\n` +
-        `window.__LOGOUT_URL__="${properties.LOGOUT_URL}";\n` +
-        `window.__AMPLITUDE_TOKEN__="${properties.AMPLITUDE_TOKEN}";\n` +
-        `window.__SENTRY_DSN__="${properties.SENTRY_DSN}";\n`;
+        `window.__AMPLITUDE_TOKEN__="${properties.AMPLITUDE_TOKEN}";\n`;
 
     fs.mkdirSync(path.resolve(rootDirectory, "dist/js"), { recursive: true });
 

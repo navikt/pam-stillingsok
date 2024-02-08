@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { CONTEXT_PATH, LOGIN_URL, LOGOUT_URL } from "../../environment";
 import SessionStatusModal from "../components/SessionStatusModal";
 
 export const AuthenticationContext = React.createContext({
@@ -32,15 +31,19 @@ function AuthenticationProvider({ children }) {
     };
 
     function login() {
-        window.location.href = `/stillinger${LOGIN_URL}?redirect=${encodeURIComponent(window.location.href)}`;
+        window.location.href = `/stillinger${process.env.NEXT_PUBLIC_LOGIN_URL}?redirect=${encodeURIComponent(
+            window.location.href,
+        )}`;
     }
 
     function loginAndRedirect(navigateTo) {
-        window.location.href = `/stillinger${LOGIN_URL}?redirect=${encodeURIComponent(navigateTo)}`;
+        window.location.href = `/stillinger${process.env.NEXT_PUBLIC_LOGIN_URL}?redirect=${encodeURIComponent(
+            navigateTo,
+        )}`;
     }
 
     function logout() {
-        window.location.href = `/stillinger${LOGOUT_URL}`;
+        window.location.href = `/stillinger${process.env.NEXT_PUBLIC_LOGOUT_URL}`;
     }
 
     const fetchIsAuthenticated = () => {
@@ -48,7 +51,7 @@ function AuthenticationProvider({ children }) {
 
         fetch(`/stillinger/api/isAuthenticated`, {
             credentials: "include",
-            referrer: CONTEXT_PATH,
+            referrer: process.env.NEXT_PUBLIC_CONTEXT_PATH,
             cache: "no-store",
         })
             .then((response) => {
