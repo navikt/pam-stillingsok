@@ -2,12 +2,10 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { FetchAction, useFetchReducer } from "../../../app/_common/hooks/useFetchReducer";
 import SearchAPI from "../../../app/_common/api/SearchAPI";
-import SuperraskSoknadAPI from "../../../app/stillinger/stilling/[id]/superrask-soknad/SuperraskSoknadAPI";
+import SuperraskSoknadAPI from "../../../app/stilling/[id]/superrask-soknad/SuperraskSoknadAPI";
 import logAmplitudeEvent from "../../../app/_common/tracking/amplitude";
-import validateForm, {
-    parseFormData,
-} from "../../../app/stillinger/stilling/[id]/superrask-soknad/_components/validateForm";
-import NewApplication from "../../../app/stillinger/stilling/[id]/superrask-soknad/_components/NewApplication";
+import validateForm, { parseFormData } from "../../../app/stilling/[id]/superrask-soknad/_components/validateForm";
+import NewApplication from "../../../app/stilling/[id]/superrask-soknad/_components/NewApplication";
 
 function SuperraskPage({ match }) {
     const defaultState = { success: false, validationErrors: {}, error: undefined, pending: false, data: undefined };

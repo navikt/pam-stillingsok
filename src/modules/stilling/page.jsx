@@ -1,5 +1,6 @@
+/* eslint no-unused-vars: 0 */
 import React from "react";
-import "../../app/stillinger/stilling/ad.css";
+import "../../app/stilling/ad.css";
 
 function AdPage() {
     const ad = "hack";

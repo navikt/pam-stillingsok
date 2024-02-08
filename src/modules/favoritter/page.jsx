@@ -2,11 +2,11 @@ import React, { useContext, useEffect, useState } from "react";
 import { AuthenticationContext, AuthenticationStatus } from "../../app/_common/auth/contexts/AuthenticationProvider";
 import LoginIsRequiredPage from "../../app/_common/auth/components/LoginIsRequiredPage";
 import { HasAcceptedTermsStatus, UserContext } from "../../app/_common/user/UserProvider";
-import UserConsentIsRequired from "../../app/stillinger/favoritter/_components/UserConsentIsRequired";
+import UserConsentIsRequired from "../../app/favoritter/_components/UserConsentIsRequired";
 import { FetchAction, useFetchReducer } from "../../app/_common/hooks/useFetchReducer";
 import UserAPI from "../../app/_common/api/UserAPI";
-import FavouritesList from "../../app/stillinger/favoritter/_components/FavouritesList";
-import NoFavourites from "../../app/stillinger/favoritter/_components/NoFavourites";
+import FavouritesList from "../../app/favoritter/_components/FavouritesList";
+import NoFavourites from "../../app/favoritter/_components/NoFavourites";
 
 /**
  * Page showing users favourites (saved ads).
