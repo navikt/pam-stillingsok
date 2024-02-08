@@ -21,7 +21,6 @@ export default function NewApplication({ ad, applicationForm, submitApplication 
                         ad={ad}
                         applicationForm={applicationForm}
                         submitApplication={formAction}
-                        pending={state.pending}
                         submitApiError={state.error}
                         validationErrors={state.validationErrors}
                     />

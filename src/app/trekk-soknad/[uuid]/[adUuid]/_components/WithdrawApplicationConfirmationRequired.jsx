@@ -1,10 +1,11 @@
 import React from "react";
-import { Alert, BodyLong, BodyShort, Button, Heading, Label, Link as AkselLink } from "@navikt/ds-react";
+import { Alert, BodyLong, BodyShort, Heading, Label, Link as AkselLink } from "@navikt/ds-react";
 import PropTypes from "prop-types";
 import Link from "next/link";
 import getEmployer from "../../../../_common/utils/getEmployer";
+import { WithdrawButton } from "./WithdrawButton";
 
-function WithdrawApplicationConfirmationRequired({ ad, handleWithDrawClick, isDeleting, hasError }) {
+function WithdrawApplicationConfirmationRequired({ ad, formAction, hasError }) {
     return (
         <>
             <Heading level="1" size="large" spacing>
@@ -30,9 +31,9 @@ function WithdrawApplicationConfirmationRequired({ ad, handleWithDrawClick, isDe
                     Det oppsto dessverre en feil og vi kunne ikke trekke søknaden din. Prøv å trekk søknaden på nytt.
                 </Alert>
             )}
-            <Button variant="primary" onClick={handleWithDrawClick} loading={isDeleting}>
-                Trekk søknad
-            </Button>
+            <form action={formAction}>
+                <WithdrawButton />
+            </form>
         </>
     );
 }
@@ -44,8 +45,7 @@ WithdrawApplicationConfirmationRequired.propTypes = {
             title: PropTypes.string,
         }),
     }),
-    handleWithDrawClick: PropTypes.func.isRequired,
-    isDeleting: PropTypes.bool,
+    formAction: PropTypes.func.isRequired,
     hasError: PropTypes.bool,
 };
 

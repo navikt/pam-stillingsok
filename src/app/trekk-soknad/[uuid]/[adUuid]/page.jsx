@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { v4 as uuidv4 } from "uuid";
 import WithdrawApplication from "./_components/WithdrawApplication";
 
 export const metadata = {
@@ -16,22 +17,52 @@ async function getAd(id) {
 
     return res.json();
 }
-async function getApplicationnStatus(uuid, adUuid) {
+async function getApplicationStatus(adUuid, uuid) {
     const res = await fetch(
-        `https://arbeidsplassen.intern.dev.nav.no/interesse-api/application-form/${uuid}/application/${adUuid}`,
+        `https://arbeidsplassen.intern.dev.nav.no/interesse-api/application-form/${adUuid}/application/${uuid}`,
         {
             method: "HEAD",
         },
     );
-    if (res.status === 410) {
+    if (res.status === 410 || res.status === 404) {
         notFound();
     }
     return res.text();
 }
 
 export default async function Page({ params }) {
-    const ad = await getAd(params.adUuid);
-    await getApplicationnStatus(params.uuid, params.adUuid);
+    const { adUuid, uuid } = params;
+    const ad = await getAd(adUuid);
+    await getApplicationStatus(adUuid, uuid);
 
-    return <WithdrawApplication ad={ad} />;
+    async function withdrawApplication() {
+        "use server";
+
+        try {
+            const res = await fetch(`${process.env.INTEREST_API_URL}/application-form/${adUuid}/application/${uuid}`, {
+                method: "DELETE",
+                headers: {
+                    NAV_CALLID_FIELD: uuidv4(),
+                },
+            });
+
+            if (res.status !== 200 && res.status !== 204) {
+                return {
+                    success: false,
+                    error: "unknown",
+                };
+            }
+        } catch (err) {
+            return {
+                success: false,
+                error: "unknown",
+            };
+        }
+
+        return {
+            success: true,
+        };
+    }
+
+    return <WithdrawApplication ad={ad} withdrawApplication={withdrawApplication} />;
 }

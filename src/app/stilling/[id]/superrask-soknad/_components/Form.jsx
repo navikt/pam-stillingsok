@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import {
     BodyLong,
-    Button,
     Checkbox,
     CheckboxGroup,
     ErrorSummary,
@@ -13,11 +12,11 @@ import {
     Textarea,
     TextField,
 } from "@navikt/ds-react";
-import Link from "next/link";
 import { MOTIVATION_MAX_LENGTH } from "./validateForm";
 import ApiErrorMessage from "./ApiErrorMessage";
+import { FormButtonBar } from "./FormButtonBar";
 
-function Form({ ad, applicationForm, submitApplication, pending, submitApiError, validationErrors }) {
+function Form({ ad, applicationForm, submitApplication, submitApiError, validationErrors }) {
     const errorSummary = useRef();
     const [hideMotivationError, setHideMotivationError] = useState(false);
     const [hideEmailError, setHideEmailError] = useState(false);
@@ -161,12 +160,7 @@ function Form({ ad, applicationForm, submitApplication, pending, submitApiError,
             {submitApiError && <ApiErrorMessage apiErrorCode={submitApiError} />}
 
             <HStack gap="4" className="mt-12">
-                <Button variant="primary" loading={pending} type="submit">
-                    Send søknad
-                </Button>
-                <Button disabled={pending} variant="secondary" as={Link} href={`/stilling/${ad._id}`}>
-                    Avbryt
-                </Button>
+                <FormButtonBar id={ad._id} />
             </HStack>
         </form>
     );
@@ -188,7 +182,6 @@ Form.propTypes = {
         ),
     }).isRequired,
     submitApplication: PropTypes.func.isRequired,
-    pending: PropTypes.bool,
     submitApiError: PropTypes.shape({
         message: PropTypes.string,
     }),
