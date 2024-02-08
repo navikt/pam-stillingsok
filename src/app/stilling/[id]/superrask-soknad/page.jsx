@@ -20,7 +20,9 @@ async function getAd(id) {
 }
 
 async function getApplicationForm(id) {
-    const res = await fetch(`https://arbeidsplassen.intern.dev.nav.no/interesse-api/application-form/${id}`);
+    const res = await fetch(`https://arbeidsplassen.intern.dev.nav.no/interesse-api/application-form/${id}`, {
+        headers: { NAV_CALLID_FIELD: uuidv4() },
+    });
     if (res.status === 404) {
         notFound();
     }

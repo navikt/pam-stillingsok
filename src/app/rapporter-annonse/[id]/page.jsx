@@ -1,53 +1,14 @@
 import { notFound } from "next/navigation";
 import ReportAd from "./_components/ReportAd";
 import validateForm from "../../stilling/[id]/_components/validate";
+import { excludes } from "../../stilling/[id]/page";
 
 export const metadata = {
     title: "Rapporter annonse - arbeidsplassen.no",
 };
 
-const sourceExcludes = [
-    "administration",
-    "categoryList",
-    "created",
-    "createdBy",
-    "employer.id",
-    "employer.uuid",
-    "employer.mediaList",
-    "employer.contactList",
-    "employer.createdBy",
-    "employer.updatedBy",
-    "employer.created",
-    "employer.updated",
-    "employer.deactivated",
-    "employer.employees",
-    "employer.orgform",
-    "employer.orgnr",
-    "employer.parentOrgnr",
-    "employer.properties",
-    "employer.publicName",
-    "employer.status",
-    "geopoint",
-    "mediaList",
-    "privacy",
-    "location.latitude",
-    "location.longitude",
-    "location.county",
-    "occupationList",
-    "properties.author",
-    "properties.industry",
-    "properties.keywords",
-    "properties.occupation",
-    "properties.searchtags",
-    "properties.sourceupdated",
-    "updatedBy",
-    "uuid",
-].join(",");
-
-const host = process.env.PAMSEARCHAPI_URL ? process.env.PAMSEARCHAPI_URL : "http://pam-search-api";
-
 async function getAd(id) {
-    const res = await fetch(`${host}/stillingsok/ad/ad/${id}?_source_excludes=${sourceExcludes}`, {
+    const res = await fetch(`${process.env.PAMSEARCHAPI_URL}/stillingsok/ad/ad/${id}?_source_excludes=${excludes}`, {
         headers: {
             "Content-Type": "application/json",
         },
