@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { BodyLong, Button, Heading, Modal, HStack, VStack } from "@navikt/ds-react";
 import { FigureWithKey } from "@navikt/arbeidsplassen-react";
-import { CONTEXT_PATH } from "../../environment";
 
 function SessionStatusModal({ markAsLoggedOut, setHasBeenLoggedIn, login, logout, timeoutLogout, hasBeenLoggedIn }) {
     const [isSessionExpiring, setIsSessionExpiring] = useState(null);
@@ -53,7 +52,10 @@ function SessionStatusModal({ markAsLoggedOut, setHasBeenLoggedIn, login, logout
     };
 
     const fetchSessionInfo = async (isCurrentlyLoggedIn) => {
-        const response = await fetch(`/stillinger/oauth2/session`, { credentials: "include", referrer: CONTEXT_PATH });
+        const response = await fetch(`/stillinger/oauth2/session`, {
+            credentials: "include",
+            referrer: process.env.NEXT_PUBLIC_CONTEXT_PATH,
+        });
         await handleSessionInfoResponse(
             response,
             isCurrentlyLoggedIn,
@@ -65,7 +67,7 @@ function SessionStatusModal({ markAsLoggedOut, setHasBeenLoggedIn, login, logout
         const response = await fetch(`/stillinger/oauth2/session/refresh`, {
             method: "POST",
             credentials: "include",
-            referrer: CONTEXT_PATH,
+            referrer: process.env.NEXT_PUBLIC_CONTEXT_PATH,
         });
         await handleSessionInfoResponse(response, isCurrentlyLoggedIn, "Det oppstod en feil ved refreshing av token");
     };

@@ -1,5 +1,4 @@
 import APIError from "./APIError";
-import { CONTEXT_PATH } from "../environment";
 
 function getCookie(name) {
     const re = new RegExp(`${name}=([^;]+)`);
@@ -13,7 +12,7 @@ async function get(url) {
         response = await fetch(`/stillinger/${url}`, {
             credentials: "include",
             method: "GET",
-            referrer: CONTEXT_PATH,
+            referrer: process.env.NEXT_PUBLIC_CONTEXT_PATH,
         });
     } catch (e) {
         throw new APIError(e.message, 0);
@@ -32,7 +31,7 @@ async function post(url, query, toJson = true) {
             credentials: "include",
             body: JSON.stringify(query),
             method: "POST",
-            referrer: CONTEXT_PATH,
+            referrer: process.env.NEXT_PUBLIC_CONTEXT_PATH,
             headers: {
                 "Content-Type": "application/json",
                 "X-XSRF-TOKEN-ARBEIDSPLASSEN": getCookie("XSRF-TOKEN-ARBEIDSPLASSEN"),
@@ -55,7 +54,7 @@ async function postWithoutCredentials(url, query, toJson = true) {
         response = await fetch(`/stillinger/${url}`, {
             body: JSON.stringify(query),
             method: "POST",
-            referrer: CONTEXT_PATH,
+            referrer: process.env.NEXT_PUBLIC_CONTEXT_PATH,
             headers: {
                 "Content-Type": "application/json",
             },
@@ -78,7 +77,7 @@ async function put(url, query) {
             credentials: "include",
             body: JSON.stringify(query),
             method: "PUT",
-            referrer: CONTEXT_PATH,
+            referrer: process.env.NEXT_PUBLIC_CONTEXT_PATH,
             headers: {
                 "Content-Type": "application/json",
                 "X-XSRF-TOKEN-ARBEIDSPLASSEN": getCookie("XSRF-TOKEN-ARBEIDSPLASSEN"),
@@ -100,7 +99,7 @@ async function remove(url) {
         response = await fetch(`/stillinger/${url}`, {
             // credentials: "include",
             method: "DELETE",
-            referrer: CONTEXT_PATH,
+            referrer: process.env.NEXT_PUBLIC_CONTEXT_PATH,
             headers: {
                 "Content-Type": "application/json",
                 "X-XSRF-TOKEN-ARBEIDSPLASSEN": getCookie("XSRF-TOKEN-ARBEIDSPLASSEN"),

@@ -1,5 +1,4 @@
 import APIError from "./APIError";
-import { CONTEXT_PATH } from "../environment";
 import { stringifyQuery } from "../../(sok)/_utils/old_query";
 
 let latestAdResponse;
@@ -11,9 +10,9 @@ async function get(url, query = {}) {
     const queryString = stringifyQuery(query);
     let response;
     try {
-        response = await fetch(`${CONTEXT_PATH}/${url}${queryString}`, {
+        response = await fetch(`${process.env.NEXT_PUBLIC_CONTEXT_PATH}/${url}${queryString}`, {
             method: "GET",
-            referrer: CONTEXT_PATH,
+            referrer: process.env.NEXT_PUBLIC_CONTEXT_PATH,
         });
     } catch (e) {
         throw new APIError(e.message, 0);
@@ -28,10 +27,10 @@ async function get(url, query = {}) {
 async function post(url, body) {
     let response;
     try {
-        response = await fetch(`${CONTEXT_PATH}/${url}`, {
+        response = await fetch(`${process.env.NEXT_PUBLIC_CONTEXT_PATH}/${url}`, {
             body: JSON.stringify(body),
             method: "POST",
-            referrer: CONTEXT_PATH,
+            referrer: process.env.NEXT_PUBLIC_CONTEXT_PATH,
             headers: {
                 "Content-Type": "application/json",
             },
@@ -48,7 +47,7 @@ async function post(url, body) {
 
 async function getAd(id) {
     const url = `api/stilling/${id}`;
-    const cachedUrl = `${CONTEXT_PATH}/${url}`;
+    const cachedUrl = `${process.env.NEXT_PUBLIC_CONTEXT_PATH}/${url}`;
 
     if (latestAdResponse && latestAdResponse.cachedUrl === cachedUrl) {
         return latestAdResponse.response;
@@ -61,7 +60,7 @@ async function getAd(id) {
 async function getSuggestions(query) {
     const url = "api/suggestions";
     const queryString = stringifyQuery(query);
-    const cachedUrl = `${CONTEXT_PATH}/${url}${queryString}`;
+    const cachedUrl = `${process.env.NEXT_PUBLIC_CONTEXT_PATH}/${url}${queryString}`;
 
     const cached = suggestionsCache.find((c) => c.cachedUrl === cachedUrl);
     if (cached) {
