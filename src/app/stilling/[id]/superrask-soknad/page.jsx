@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
+import { v4 as uuidv4 } from "uuid";
 import validateForm, { parseFormData } from "./_components/validateForm";
-import SuperraskSoknadAPI from "./SuperraskSoknadAPI";
 import NewApplication from "./_components/NewApplication";
 
 export const metadata = {
@@ -56,22 +56,34 @@ export default async function Page({ params }) {
         }
 
         try {
-            await SuperraskSoknadAPI.post(
-                `https://arbeidsplassen.intern.dev.nav.no/interesse-api/application-form/${params.id}/application`,
-                application,
-                false,
-            );
-            return {
-                ...defaultState,
-                success: true,
-                data: { email: application.email },
-            };
+            const response = await fetch(`${process.env.INTEREST_API_URL}/application-form/${params.id}/application`, {
+                body: JSON.stringify(application),
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    NAV_CALLID_FIELD: uuidv4(),
+                },
+            });
+
+            if (response.status !== 200) {
+                const errorJson = await response.json();
+                return {
+                    ...defaultState,
+                    error: errorJson.error_code || "unknown",
+                };
+            }
         } catch (err) {
             return {
                 ...defaultState,
-                error: err.message,
+                error: "unknown",
             };
         }
+
+        return {
+            ...defaultState,
+            success: true,
+            data: { email: application.email },
+        };
     }
 
     return <NewApplication ad={ad} applicationForm={applicationForm} submitApplication={submitApplication} />;
