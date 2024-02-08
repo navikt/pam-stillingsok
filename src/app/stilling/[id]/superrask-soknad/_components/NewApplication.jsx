@@ -7,11 +7,9 @@ import Success from "./Success";
 import Form from "./Form";
 import AdDetailsHeader from "./AdDetailsHeader";
 
-function NewApplication({ ad, submitApplication }) {
+export default function NewApplication({ ad, applicationForm, submitApplication }) {
     // eslint-disable-next-line no-unused-vars
     const [state, formAction] = useFormState(submitApplication, { validationErrors: {}, success: false });
-    const applicationForm = "todo";
-    const submitForm = "todo";
 
     return (
         <div className="mb-16">
@@ -23,7 +21,7 @@ function NewApplication({ ad, submitApplication }) {
                     <Form
                         ad={ad}
                         applicationForm={applicationForm}
-                        submitForm={submitForm}
+                        submitApplication={formAction}
                         pending={state.pending}
                         submitApiError={state.error}
                         validationErrors={state.validationErrors}
@@ -41,7 +39,6 @@ NewApplication.propTypes = {
             title: PropTypes.string,
         }),
     }),
+    applicationForm: PropTypes.shape({}),
     submitApplication: PropTypes.func.isRequired,
 };
-
-export default NewApplication;

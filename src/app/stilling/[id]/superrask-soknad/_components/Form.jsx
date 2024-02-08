@@ -17,7 +17,7 @@ import Link from "next/link";
 import { MOTIVATION_MAX_LENGTH } from "./validateForm";
 import ApiErrorMessage from "./ApiErrorMessage";
 
-function Form({ ad, applicationForm, submitForm, pending, submitApiError, validationErrors }) {
+function Form({ ad, applicationForm, submitApplication, pending, submitApiError, validationErrors }) {
     const errorSummary = useRef();
     const [hideMotivationError, setHideMotivationError] = useState(false);
     const [hideEmailError, setHideEmailError] = useState(false);
@@ -34,7 +34,7 @@ function Form({ ad, applicationForm, submitForm, pending, submitApiError, valida
     }, [validationErrors]);
 
     return (
-        <form onSubmit={submitForm} className="mb-16">
+        <form action={submitApplication} className="mb-16">
             <section className="mb-10">
                 <Heading level="1" size="xlarge" spacing>
                     Superrask søknad
@@ -89,7 +89,7 @@ function Form({ ad, applicationForm, submitForm, pending, submitApiError, valida
                     </BodyLong>
                 </ReadMore>
                 <Textarea
-                    id="new-application-checkedQualifications"
+                    id="new-application-motivation"
                     label="Skriv en begrunnelse"
                     name="motivation"
                     value={motivation}
@@ -187,7 +187,7 @@ Form.propTypes = {
             }),
         ),
     }).isRequired,
-    submitForm: PropTypes.func.isRequired,
+    submitApplication: PropTypes.func.isRequired,
     pending: PropTypes.bool,
     submitApiError: PropTypes.shape({
         message: PropTypes.string,
