@@ -1,13 +1,13 @@
 import React, { useContext, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
-import SavedSearchesList from "../../app/stillinger/lagrede-sok/_components/SavedSearchesList";
+import SavedSearchesList from "../../app/lagrede-sok/_components/SavedSearchesList";
 import { AuthenticationContext, AuthenticationStatus } from "../../app/_common/auth/contexts/AuthenticationProvider";
 import LoginIsRequiredPage from "../../app/_common/auth/components/LoginIsRequiredPage";
 import { HasAcceptedTermsStatus, UserContext } from "../../app/_common/user/UserProvider";
-import UserConsentIsRequired from "../../app/stillinger/lagrede-sok/_components/UserConsentIsRequired";
+import UserConsentIsRequired from "../../app/lagrede-sok/_components/UserConsentIsRequired";
 import { FetchAction, useFetchReducer } from "../../app/_common/hooks/useFetchReducer";
 import UserAPI from "../../app/_common/api/UserAPI";
-import NoSavedSearches from "../../app/stillinger/lagrede-sok/_components/NoSavedSearches";
+import NoSavedSearches from "../../app/lagrede-sok/_components/NoSavedSearches";
 
 /**
  * Page showing saved searches.

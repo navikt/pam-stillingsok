@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React from "react";
-import "../../app/stillinger/(sok)/_components/search.css";
+import "../../app/(sok)/_components/search.css";
 
 function SearchPage() {
     /**
