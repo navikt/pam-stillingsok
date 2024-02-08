@@ -3,7 +3,6 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { Box, HGrid, Tag, Heading } from "@navikt/ds-react";
-import { Helmet } from "react-helmet";
 import AdDetails from "./AdDetails";
 import AdText from "./AdText";
 import ContactPerson from "./ContactPerson";
@@ -28,7 +27,6 @@ function Ad({ ad, shareAdRedirectUrl }) {
         }
     }, [ad]);
 
-    const isFinn = ad && ad._source && ad._source.source && ad._source.source.toLowerCase() === "finn";
     const annonseErAktiv = ad._source.status === "ACTIVE";
 
     return (
@@ -66,11 +64,6 @@ function Ad({ ad, shareAdRedirectUrl }) {
                         <AdDetails id={ad._id} source={ad._source} />
                     </div>
                 </HGrid>
-                {isFinn && (
-                    <Helmet>
-                        <link rel="canonical" href={ad._source.properties.sourceurl} />
-                    </Helmet>
-                )}
             </article>
         </Box>
     );
