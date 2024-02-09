@@ -14,6 +14,10 @@ import interLocalFont from "next/font/local";
 import App from "./App";
 import Script from "next/script";
 
+// Noen miljøvariabler kan bare hentes under kjøretid (spesielt de som er
+// definert i nais.yml) vi bruker da et script på endepunkt api/publicEnv for å
+// hente å lagre dem inn i variabelen under publicEnv.
+// eslint-disable-next-line no-unused-vars
 let publicEnv = {};
 
 const myFont = interLocalFont({
