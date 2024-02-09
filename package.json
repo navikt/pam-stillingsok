@@ -70,14 +70,13 @@
         "winston": "^3.10.0"
     },
     "devDependencies": {
-        "@babel/core": "^7.23.2",
         "@babel/eslint-parser": "^7.22.15",
         "@babel/polyfill": "^7.12.1",
         "@babel/preset-env": "^7.23.2",
         "@babel/preset-react": "^7.22.15",
-        "concurrently": "^6.2.0",
-        "eslint": "^8.39.0",
+        "@next/eslint-plugin-next": "^14.1.0",
         "eslint-config-airbnb": "^19.0.4",
+        "eslint-config-next": "^14.1.0",
         "eslint-config-prettier": "^8.8.0",
         "eslint-import-resolver-alias": "^1.1.2",
         "eslint-plugin-import": "^2.27.5",
