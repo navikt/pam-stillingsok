@@ -8,7 +8,7 @@ export const metadata = {
     title: getMetadataTitle("Rapporter annonse"),
 };
 
-async function getAd(id) {
+async function fetchAd(id) {
     const res = await fetch(`${process.env.PAMSEARCHAPI_URL}/stillingsok/ad/ad/${id}?_source_excludes=${excludes}`, {
         headers: {
             "Content-Type": "application/json",
@@ -36,7 +36,7 @@ function parseFormData(formData, categories, adId) {
 }
 
 export default async function Page({ params }) {
-    const ad = await getAd(params.id);
+    const ad = await fetchAd(params.id);
 
     async function submitForm(prevState, formData) {
         "use server";
