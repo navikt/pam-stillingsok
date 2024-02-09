@@ -4,7 +4,7 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "next": "next dev -p 3003",
+        "next": "npm run dev",
         "build": "next build",
         "dev": "next dev -p 3003",
         "wonderwall": "scripts/wonderwall.sh",

@@ -14,16 +14,14 @@ function App({ children }) {
     return (
         <AuthenticationProvider>
             <UserProvider>
-                <FavouritesProvider>
-                    <div id="app">
-                        <SkipLink href="#main-content" />
-                        <div className="arb-push-footer-down">
-                            <Header />
-                            <main id="main-content">{children}</main>
-                        </div>
-                        <Footer />
+                <div id="app">
+                    <SkipLink href="#main-content" />
+                    <div className="arb-push-footer-down">
+                        <Header />
+                        <main id="main-content">{children}</main>
                     </div>
-                </FavouritesProvider>
+                    <Footer />
+                </div>
             </UserProvider>
         </AuthenticationProvider>
     );
