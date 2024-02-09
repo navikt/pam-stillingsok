@@ -1,5 +1,5 @@
 {
-    "extends": ["eslint:recommended", "next", "plugin:jsx-a11y/recommended"],
+    "extends": ["plugin:@next/next/recommended", "next", "plugin:jsx-a11y/recommended"],
     "plugins": ["react", "prettier"],
     "rules": {
         "no-underscore-dangle": "off",
