@@ -75,7 +75,7 @@ function AuthenticationProvider({ children }) {
 
     function fetchUserNameAndInfo() {
         if (process.env.NODE_ENV === "production") {
-            fetch("/stillinger/api/v1/personalia", {
+            fetch("/stillinger/api/personalia", {
                 method: "GET",
                 credentials: "include",
             }).then((response) => {

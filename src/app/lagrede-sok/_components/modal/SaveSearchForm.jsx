@@ -76,7 +76,7 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
             };
 
             if (formMode === FormModes.ADD) {
-                UserAPI.post("api/v1/savedsearches/", dataToBeSaved)
+                UserAPI.post("api/user/savedsearches/", dataToBeSaved)
                     .then((response) => {
                         setSaveStatus(FetchStatus.SUCCESS);
                         if (onSuccess) {
@@ -99,7 +99,7 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
                     };
                 }
 
-                UserAPI.put(`api/v1/savedsearches/${existingSavedSearch.uuid}`, dataToBeSaved)
+                UserAPI.put(`api/user/savedsearches/${existingSavedSearch.uuid}`, dataToBeSaved)
                     .then((response) => {
                         setSaveStatus(FetchStatus.SUCCESS);
                         if (onSuccess) {

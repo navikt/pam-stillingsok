@@ -280,7 +280,7 @@ SelectedFilters.propTypes = {
         international: PropTypes.bool,
         occupationFirstLevels: PropTypes.arrayOf(PropTypes.string),
         occupationSecondLevels: PropTypes.arrayOf(PropTypes.string),
-        published: PropTypes.arrayOf(PropTypes.string),
+        published: PropTypes.string,
         sector: PropTypes.arrayOf(PropTypes.string),
         engagementType: PropTypes.arrayOf(PropTypes.string),
         extent: PropTypes.arrayOf(PropTypes.string),

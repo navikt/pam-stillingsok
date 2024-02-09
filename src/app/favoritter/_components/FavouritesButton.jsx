@@ -39,7 +39,7 @@ function FavouritesButton({ id, stilling, className, variant, useShortText = fal
 
     function saveFavourite(adUuid, ad) {
         addToPending(adUuid);
-        UserAPI.post("api/v1/userfavouriteads", {
+        UserAPI.post("api/user/favourites", {
             favouriteAd: {
                 uuid: adUuid,
                 source: ad.source,
@@ -69,7 +69,7 @@ function FavouritesButton({ id, stilling, className, variant, useShortText = fal
         const found = favourites.find((fav) => fav.favouriteAd.uuid === adUuid);
 
         addToPending(adUuid);
-        UserAPI.remove(`api/v1/userfavouriteads/${found.uuid}`)
+        UserAPI.remove(`api/user/favourites/${found.uuid}`)
             .then(() => {
                 removeFavouriteFromLocalList(found);
             })

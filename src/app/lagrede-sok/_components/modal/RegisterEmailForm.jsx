@@ -45,7 +45,7 @@ function RegisterEmailForm({ onClose, onSuccess }) {
         if (validateForm()) {
             setSaveStatus(FetchStatus.IS_FETCHING);
 
-            UserAPI.put("api/v1/user", {
+            UserAPI.put("api/user", {
                 ...user.data,
                 email,
             })

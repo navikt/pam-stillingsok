@@ -28,7 +28,7 @@ function UserProvider({ children }) {
     function fetchUser() {
         dispatch({ type: FetchAction.BEGIN });
 
-        UserAPI.get("api/v1/user")
+        UserAPI.get("api/user")
             .then((data) => {
                 dispatch({ type: FetchAction.RESOLVE, data });
             })

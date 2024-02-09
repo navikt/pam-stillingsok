@@ -34,7 +34,7 @@ function FavouritesProvider({ children }) {
     const [pendingFavourites, setPendingFavourites] = useState([]);
 
     function getFavourites() {
-        UserAPI.get("api/v1/userfavouriteads?size=9999")
+        UserAPI.get("api/user/favourites?size=9999")
             .then((response) => {
                 setFavourites(response.content ? response.content : []);
             })

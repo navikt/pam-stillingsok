@@ -27,7 +27,7 @@ function SaveSearchModal({ onClose, onSaveSearchSuccess, formData, defaultFormMo
 
     function fetchSavedSearch(id) {
         dispatch({ type: FetchAction.BEGIN });
-        UserAPI.get(`api/v1/savedsearches/${id}`)
+        UserAPI.get(`api/savedsearches/${id}`)
             .then((data) => {
                 dispatch({ type: FetchAction.RESOLVE, data });
             })
@@ -79,7 +79,7 @@ function SaveSearchModal({ onClose, onSaveSearchSuccess, formData, defaultFormMo
     }, [existingSearchResponse.status]);
 
     return (
-        <Modal onClose={onClose} header={{ heading: "Lagre søk" }} open width="medium">
+        <Modal onClose={onClose} header={{ heading: "Lagre søk" }} open width="medium" portal>
             {status === FetchStatus.IS_FETCHING && (
                 <HStack justify="center" className="mt-8 mb-8" role="status">
                     <Loader size="2xlarge" />
