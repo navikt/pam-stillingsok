@@ -28,7 +28,6 @@ export function validateEmail(email) {
     if (!email || email.trim().length === 0) {
         return "Du må oppgi din e-post for å kunne sende inn søknaden";
     }
-    // TODO: blir overridet av client-side validering, sette noValidate på form??
     if (email && email.length > 0 && !isValidEmail(email)) {
         return "E-postadressen er ugyldig";
     }

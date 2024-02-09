@@ -1,22 +1,5 @@
 {
-    "env": {
-        "browser": true,
-        "es2021": true,
-        "node": true
-    },
-    "extends": ["plugin:react/recommended", "airbnb", "prettier", "plugin:jsx-a11y/recommended"],
-    "parser": "@babel/eslint-parser",
-    "parserOptions": {
-        "ecmaFeatures": {
-            "jsx": true
-        },
-        "ecmaVersion": 6,
-        "sourceType": "module",
-        "requireConfigFile": false,
-        "babelOptions": {
-            "presets": ["@babel/preset-react"]
-        }
-    },
+    "extends": ["plugin:@next/next/recommended", "next", "plugin:jsx-a11y/recommended"],
     "plugins": ["react", "prettier"],
     "rules": {
         "no-underscore-dangle": "off",

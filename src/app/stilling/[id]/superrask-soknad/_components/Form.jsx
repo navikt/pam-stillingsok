@@ -118,7 +118,7 @@ function Form({ ad, applicationForm, submitApplication, submitApiError, validati
                 <TextField
                     label="E-post"
                     description="Må fylles ut"
-                    type="email"
+                    type="text"
                     name="email"
                     auto-complete="email"
                     aria-required="true"
