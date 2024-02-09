@@ -1,8 +1,9 @@
 import FavouritesList from "./_components/FavouritesList";
 import UserConsentIsRequired from "./_components/UserConsentIsRequired";
+import { getTitle } from "../stilling/[id]/_components/getMetaData";
 
 export const metadata = {
-    title: "Favoritter - arbeidsplassen.no",
+    title: getTitle("Favoritter"),
 };
 
 // async function checkIfUserIsAuthenticated() {

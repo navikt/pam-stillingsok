@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import Ad from "./_components/Ad";
-import { getStillingDescription, getStillingTitle } from "./_components/getMetaData";
+import { defaultOpenGraphImage, getStillingDescription, getStillingTitle } from "./_components/getMetaData";
 
 export const excludes = [
     "administration",
@@ -67,13 +67,7 @@ export async function generateMetadata({ params }) {
         openGraph: {
             title: getStillingTitle(data._source),
             description: getStillingDescription(data._source),
-            images: [
-                {
-                    url: "https://arbeidsplassen.nav.no/images/arbeidsplassen-open-graph.png",
-                    width: 1200,
-                    height: 630,
-                },
-            ],
+            images: [defaultOpenGraphImage],
         },
         robots: data && data._source.status !== "ACTIVE" ? "noindex" : "",
         alternates: {

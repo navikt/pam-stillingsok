@@ -5,6 +5,13 @@ import date from "../../../_common/utils/date";
 const DEFAULT_DESCRIPTION_STILLING = "Her kan du se hele stillingen, sende søknad eller finne andre ledige stillinger.";
 const DEFAULT_TITLE = "Ledig stilling - arbeidsplassen.no";
 
+export function getTitle(title) {
+    if (title) {
+        return `${title} - arbeidsplassen.no`;
+    }
+    return DEFAULT_TITLE;
+}
+
 export function getStillingTitle(source) {
     if (source && source.title) {
         return `${source.title} - arbeidsplassen.no`;
@@ -43,3 +50,9 @@ export function getStillingDescription(source) {
 
     return DEFAULT_DESCRIPTION_STILLING;
 }
+
+export const defaultOpenGraphImage = {
+    url: "https://arbeidsplassen.nav.no/images/arbeidsplassen-open-graph.png",
+    width: 1200,
+    height: 630,
+};

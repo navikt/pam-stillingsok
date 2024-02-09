@@ -13,6 +13,7 @@ import PropTypes from "prop-types";
 import interLocalFont from "next/font/local";
 import App from "./App";
 import Script from "next/script";
+import { defaultOpenGraphImage, getTitle } from "./stilling/[id]/_components/getMetaData";
 
 let publicEnv = {};
 
@@ -24,18 +25,12 @@ const myFont = interLocalFont({
 });
 
 export const metadata = {
-    title: "Ledige stillinger - arbeidsplassen.no",
+    title: getTitle("Ledige stillinger"),
     description: "Alt av arbeid samlet på én plass",
     openGraph: {
-        title: "Ledige stillinger - arbeidsplassen.no",
+        title: getTitle("Ledige stillinger"),
         description: "Alt av arbeid samlet på én plass",
-        images: [
-            {
-                url: "https://arbeidsplassen.nav.no/images/arbeidsplassen-open-graph.png",
-                width: 1200,
-                height: 630,
-            },
-        ],
+        images: [defaultOpenGraphImage],
     },
     icons: {
         icon: "https://arbeidsplassen.nav.no/favicon.png",

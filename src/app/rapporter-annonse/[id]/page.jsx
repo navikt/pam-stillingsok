@@ -2,9 +2,10 @@ import { notFound } from "next/navigation";
 import ReportAd from "./_components/ReportAd";
 import validateForm from "../../stilling/[id]/_components/validate";
 import { excludes } from "../../stilling/[id]/page";
+import { getTitle } from "../../stilling/[id]/_components/getMetaData";
 
 export const metadata = {
-    title: "Rapporter annonse - arbeidsplassen.no",
+    title: getTitle("Rapporter annonse"),
 };
 
 async function getAd(id) {
