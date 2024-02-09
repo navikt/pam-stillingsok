@@ -13,12 +13,14 @@ import {
     CheckboxGroup,
     ErrorSummary,
     Heading,
+    HStack,
     Link as AkselLink,
     LinkPanel,
     Textarea,
     VStack,
 } from "@navikt/ds-react";
-import { useFormState } from "react-dom";
+import { useFormState, useFormStatus } from "react-dom";
+import Link from "next/link";
 
 const reportCategories = [
     { label: "Diskriminerende innhold", key: "discrimination" },
@@ -32,16 +34,15 @@ const reportCategories = [
 function ReportAd({ ad, submitForm }) {
     const errorSummary = useRef();
     const [description, setDescription] = useState("");
-    const [hasTriedSubmit, setHasTriedSubmit] = useState(false);
 
     const [state, handleSubmit] = useFormState(submitForm, { validationErrors: {}, success: false });
     const { validationErrors } = state;
+    const { pending } = useFormStatus();
 
     useEffect(() => {
-        if (Object.keys(validationErrors).length > 0 && !hasTriedSubmit) {
+        if (Object.keys(validationErrors).length > 0) {
             errorSummary.current.focus();
         }
-        setHasTriedSubmit(true);
     }, [validationErrors]);
 
     return (
@@ -133,15 +134,17 @@ function ReportAd({ ad, submitForm }) {
                                     Rapportering av annonse feilet.
                                 </Alert>
                             )}
-                            {/* TODO: loading */}
-                            <Button
-                                type="submit"
-                                // loading={postReportStatus === FetchStatus.IS_FETCHING}
-                                variant="primary"
-                                className="mb-12"
-                            >
-                                Rapporter annonse
-                            </Button>
+
+                            <HStack gap="4" className="mb-12">
+                                <Button type="submit" variant="primary" loading={pending}>
+                                    Rapporter annonse
+                                </Button>
+                                {!pending && (
+                                    <Button type="button" variant="secondary" as={Link} href={`/stilling/${ad._id}`}>
+                                        Avbryt
+                                    </Button>
+                                )}
+                            </HStack>
                         </form>
                     )}
 
