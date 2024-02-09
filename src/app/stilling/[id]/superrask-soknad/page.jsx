@@ -3,12 +3,9 @@ import { v4 as uuidv4 } from "uuid";
 import validateForm, { parseFormData } from "./_components/validateForm";
 import NewApplication from "./_components/NewApplication";
 import { excludes } from "../page";
+import { getStillingDescription } from "../_components/getMetaData";
 
-export const metadata = {
-    title: "Superrask søknad - arbeidsplassen.no",
-};
-
-async function getAd(id) {
+async function fetchAd(id) {
     const res = await fetch(`${process.env.PAMSEARCHAPI_URL}/stillingsok/ad/ad/${id}?_source_excludes=${excludes}`, {
         headers: {
             "Content-Type": "application/json",
@@ -24,7 +21,7 @@ async function getAd(id) {
     return res.json();
 }
 
-async function getApplicationForm(id) {
+async function fetchApplicationForm(id) {
     const res = await fetch(`${process.env.INTEREST_API_URL}/application-form/${id}`, {
         headers: { NAV_CALLID_FIELD: uuidv4() },
     });
@@ -38,9 +35,30 @@ async function getApplicationForm(id) {
     return res.json();
 }
 
+export async function generateMetadata({ params }) {
+    const data = await fetchAd(params.id);
+
+    return {
+        title: "Superrask søknad - arbeidsplassen.no",
+        description: getStillingDescription(data._source),
+        openGraph: {
+            title: "Superrask søknad - arbeidsplassen.no",
+            description: getStillingDescription(data._source),
+            images: [
+                {
+                    url: "https://arbeidsplassen.nav.no/images/arbeidsplassen-open-graph.png",
+                    width: 1200,
+                    height: 630,
+                },
+            ],
+        },
+        robots: data && data._source.status !== "ACTIVE" ? "noindex" : "",
+    };
+}
+
 export default async function Page({ params }) {
-    const ad = await getAd(params.id);
-    const applicationForm = await getApplicationForm(params.id);
+    const ad = await fetchAd(params.id);
+    const applicationForm = await fetchApplicationForm(params.id);
 
     async function submitApplication(prevState, formData) {
         "use server";

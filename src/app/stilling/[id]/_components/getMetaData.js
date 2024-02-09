@@ -25,7 +25,7 @@ export function getStillingDescription(source) {
         if (employer) {
             commaSeparatedFragments.push(employer);
         }
-        if (source.properties.location) {
+        if (location) {
             commaSeparatedFragments.push(location);
         }
 
@@ -38,7 +38,7 @@ export function getStillingDescription(source) {
             descriptionFragments.push(`Søknadsfrist: ${applicationDue}`);
         }
 
-        return `${descriptionFragments.join(". ")}. ${DEFAULT_DESCRIPTION_STILLING}`;
+        return `${descriptionFragments.join(". ")}.`;
     }
 
     return DEFAULT_DESCRIPTION_STILLING;
