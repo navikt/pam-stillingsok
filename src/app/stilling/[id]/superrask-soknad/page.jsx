@@ -2,13 +2,18 @@ import { notFound } from "next/navigation";
 import { v4 as uuidv4 } from "uuid";
 import validateForm, { parseFormData } from "./_components/validateForm";
 import NewApplication from "./_components/NewApplication";
+import { excludes } from "../page";
 
 export const metadata = {
     title: "Superrask søknad - arbeidsplassen.no",
 };
 
 async function getAd(id) {
-    const res = await fetch(`https://arbeidsplassen.intern.dev.nav.no/stillinger/api/stilling/${id}`);
+    const res = await fetch(`${process.env.PAMSEARCHAPI_URL}/stillingsok/ad/ad/${id}?_source_excludes=${excludes}`, {
+        headers: {
+            "Content-Type": "application/json",
+        },
+    });
     if (res.status === 404) {
         notFound();
     }
@@ -20,7 +25,7 @@ async function getAd(id) {
 }
 
 async function getApplicationForm(id) {
-    const res = await fetch(`https://arbeidsplassen.intern.dev.nav.no/interesse-api/application-form/${id}`, {
+    const res = await fetch(`${process.env.INTEREST_API_URL}/application-form/${id}`, {
         headers: { NAV_CALLID_FIELD: uuidv4() },
     });
     if (res.status === 404) {

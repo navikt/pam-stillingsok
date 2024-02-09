@@ -1,13 +1,18 @@
 import { notFound } from "next/navigation";
 import { v4 as uuidv4 } from "uuid";
 import WithdrawApplication from "./_components/WithdrawApplication";
+import { excludes } from "../../../stilling/[id]/page";
 
 export const metadata = {
     title: "Trekk søknad - arbeidsplassen.no",
 };
 
 async function getAd(id) {
-    const res = await fetch(`https://arbeidsplassen.intern.dev.nav.no/stillinger/api/stilling/${id}`);
+    const res = await fetch(`${process.env.PAMSEARCHAPI_URL}/stillingsok/ad/ad/${id}?_source_excludes=${excludes}`, {
+        headers: {
+            "Content-Type": "application/json",
+        },
+    });
     if (res.status === 404) {
         notFound();
     }
@@ -17,13 +22,11 @@ async function getAd(id) {
 
     return res.json();
 }
+
 async function getApplicationStatus(adUuid, uuid) {
-    const res = await fetch(
-        `https://arbeidsplassen.intern.dev.nav.no/interesse-api/application-form/${adUuid}/application/${uuid}`,
-        {
-            method: "HEAD",
-        },
-    );
+    const res = await fetch(`${process.env.INTEREST_API_URL}/application-form/${adUuid}/application/${uuid}`, {
+        method: "HEAD",
+    });
     if (res.status === 410 || res.status === 404) {
         notFound();
     }
