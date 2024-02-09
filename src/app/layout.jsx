@@ -12,6 +12,9 @@ import "./styles.css";
 import PropTypes from "prop-types";
 import interLocalFont from "next/font/local";
 import App from "./App";
+import Script from "next/script";
+
+let publicEnv = {};
 
 const myFont = interLocalFont({
     variable: "--font-inter",
@@ -42,6 +45,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
     return (
         <html lang="nb">
+            <Script strategy="beforeInteractive" src={`${process.env.INGRESS ?? ""}/stillinger/api/publicEnv`} />
             <body data-theme="arbeidsplassen" className={myFont.className}>
                 <App>{children}</App>
             </body>
