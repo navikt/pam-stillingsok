@@ -15,7 +15,7 @@ services:
       - "docker.host:host-gateway"
     command: >
       --auto-login=false
-      --openid.client-id=local-token-x-client-id
+      --openid.client-id=local-idporten-client-id
       --openid.well-known-url=http://host.docker.internal:8237/idporten/.well-known/openid-configuration
       --ingress=http://localhost:3000/stillinger
       --bind-address=0.0.0.0:3000
