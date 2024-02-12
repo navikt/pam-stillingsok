@@ -6,6 +6,7 @@ import { getMetadataTitle } from "../../../layout";
 
 export const metadata = {
     title: getMetadataTitle("Trekk søknad"),
+    robots: "noindex",
 };
 
 async function getAd(id) {

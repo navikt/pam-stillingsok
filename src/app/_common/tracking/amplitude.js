@@ -4,7 +4,7 @@ import getSessionId from "./session";
 const userProperties = new amplitude.Identify();
 
 function getAmplitudeKey() {
-    if (window.location.href.includes("nav.no")) return window.__AMPLITUDE_TOKEN__;
+    if (window.location.href.includes("nav.no")) return publicEnv.AMPLITUDE_TOKEN;
     return "";
 }
 export function initAmplitude() {

@@ -7,6 +7,8 @@ import { getMetadataTitle } from "../layout";
 
 export const metadata = {
     title: getMetadataTitle("Lagrede søk"),
+    description:
+        "Med lagrede søk kan du velge å motta e-postvarsler når det kommer nye treff, eller for å raskere søke neste gang.",
 };
 
 async function checkIfUserIsAuthenticated() {

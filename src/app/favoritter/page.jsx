@@ -5,6 +5,8 @@ import { STILLINGSOK_URL } from "../_common/environment";
 
 export const metadata = {
     title: getMetadataTitle("Favoritter"),
+    description:
+        "Har du ikke tid til å lese annonsen akkurat nå, eller lyst til å søke senere når du kommer hjem? Med favoritter finner du raskt tilbake til annonsen.",
 };
 
 // async function checkIfUserIsAuthenticated() {
