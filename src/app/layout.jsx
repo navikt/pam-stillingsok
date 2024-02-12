@@ -51,8 +51,8 @@ export const metadata = {
 export default function RootLayout({ children }) {
     return (
         <html lang="nb">
-            <Script strategy="beforeInteractive" src={`${process.env.INGRESS ?? ""}/stillinger/api/publicEnv`} />
             <body data-theme="arbeidsplassen" className={myFont.className}>
+                <Script strategy="beforeInteractive" src={`${process.env.INGRESS ?? ""}/stillinger/api/publicEnv`} />
                 <App>{children}</App>
             </body>
         </html>
