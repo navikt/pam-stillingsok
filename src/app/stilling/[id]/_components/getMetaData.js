@@ -1,22 +1,20 @@
 import getEmployer from "../../../_common/utils/getEmployer";
 import getWorkLocation from "../../../_common/utils/getWorkLocation";
 import date from "../../../_common/utils/date";
-
-const DEFAULT_DESCRIPTION_STILLING = "Her kan du se hele stillingen, sende søknad eller finne andre ledige stillinger.";
-const DEFAULT_TITLE = "Ledig stilling - arbeidsplassen.no";
-
-export function getTitle(title) {
-    if (title) {
-        return `${title} - arbeidsplassen.no`;
-    }
-    return DEFAULT_TITLE;
-}
+import { getMetadataTitle } from "../../../layout";
 
 export function getStillingTitle(source) {
     if (source && source.title) {
-        return `${source.title} - arbeidsplassen.no`;
+        return getMetadataTitle(source.title);
     }
-    return DEFAULT_TITLE;
+    return getMetadataTitle("Ledig stilling");
+}
+
+export function getSuperraskTitle(source) {
+    if (source && source.title) {
+        return getMetadataTitle("Superrask søknad - " + source.title);
+    }
+    return getMetadataTitle("Superrask søknad");
 }
 
 export function getStillingDescription(source) {
@@ -48,11 +46,5 @@ export function getStillingDescription(source) {
         return `${descriptionFragments.join(". ")}.`;
     }
 
-    return DEFAULT_DESCRIPTION_STILLING;
+    return "Her kan du se hele stillingen, sende søknad eller finne andre ledige stillinger.";
 }
-
-export const defaultOpenGraphImage = {
-    url: "https://arbeidsplassen.nav.no/images/arbeidsplassen-open-graph.png",
-    width: 1200,
-    height: 630,
-};

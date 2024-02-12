@@ -13,7 +13,6 @@ import PropTypes from "prop-types";
 import interLocalFont from "next/font/local";
 import App from "./App";
 import Script from "next/script";
-import { defaultOpenGraphImage, getTitle } from "./stilling/[id]/_components/getMetaData";
 
 // Noen miljøvariabler kan bare hentes under kjøretid (spesielt de som er
 // definert i nais.yml) vi bruker da et script på endepunkt api/publicEnv for å
@@ -28,12 +27,20 @@ const myFont = interLocalFont({
     display: "swap",
 });
 
+export const getMetadataTitle = (title = "Ledige stillinger") => `${title} - arbeidsplassen.no`;
+export const defaultMetadataDescription = "Alt av arbeid samlet på én plass";
+export const defaultOpenGraphImage = {
+    url: "https://arbeidsplassen.nav.no/images/arbeidsplassen-open-graph.png",
+    width: 1200,
+    height: 630,
+};
+
 export const metadata = {
-    title: getTitle("Ledige stillinger"),
-    description: "Alt av arbeid samlet på én plass",
+    title: getMetadataTitle("Ledige stillinger"),
+    description: defaultMetadataDescription,
     openGraph: {
-        title: getTitle("Ledige stillinger"),
-        description: "Alt av arbeid samlet på én plass",
+        title: getMetadataTitle("Ledige stillinger"),
+        description: defaultMetadataDescription,
         images: [defaultOpenGraphImage],
     },
     icons: {

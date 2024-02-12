@@ -2,10 +2,10 @@ import { notFound } from "next/navigation";
 import { v4 as uuidv4 } from "uuid";
 import WithdrawApplication from "./_components/WithdrawApplication";
 import { excludes } from "../../../stilling/[id]/page";
-import { getTitle } from "../../../stilling/[id]/_components/getMetaData";
+import { getMetadataTitle } from "../../../layout";
 
 export const metadata = {
-    title: getTitle("Trekk søknad"),
+    title: getMetadataTitle("Trekk søknad"),
 };
 
 async function getAd(id) {

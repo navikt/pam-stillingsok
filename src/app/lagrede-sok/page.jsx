@@ -3,10 +3,10 @@ import mockData from "./mock-data";
 import LoginIsRequiredPage from "../_common/auth/components/LoginIsRequiredPage";
 import SavedSearchesList from "./_components/SavedSearchesList";
 import UserConsentIsRequired from "./_components/UserConsentIsRequired";
-import { getTitle } from "../stilling/[id]/_components/getMetaData";
+import { getMetadataTitle } from "../layout";
 
 export const metadata = {
-    title: getTitle("Lagrede søk"),
+    title: getMetadataTitle("Lagrede søk"),
 };
 
 async function checkIfUserIsAuthenticated() {

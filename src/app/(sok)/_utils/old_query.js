@@ -1,4 +1,5 @@
 import fixLocationName from "../../_common/utils/fixLocationName";
+import capitalizeFirstLetter from "../../_common/utils/capitalizeFirstLetter";
 
 export const SEARCH_CHUNK_SIZE = 25;
 export const ADD_MUNICIPAL = "ADD_MUNICIPAL";
@@ -392,35 +393,60 @@ export function toBrowserQuery(query) {
  */
 export function toReadableQuery(query) {
     const title = [];
+    const occupation = [];
+    let location = [];
 
-    // Ikke vis 'Utland' hvis bruker har valgt ett eller flere land
+    // Ikke vis fylket hvis bruker har valgt en eller flere tilhørende kommuner
     const counties = query.counties.filter((county) => {
         const found = query.municipals.find((obj) => obj.startsWith(`${county}.`));
         return !found;
     });
 
-    // Ikke vis yrke på nivå 1 hvis bruker har valgt et relatert yrke på nivå 2
+    // Ikke vis yrket på nivå 1 hvis bruker har valgt et relatert yrke på nivå 2
     const occupationFirstLevels = query.occupationFirstLevels.filter((firstLevel) => {
         const found = query.occupationSecondLevels.find((obj) => obj.startsWith(`${firstLevel}.`));
         return !found;
     });
 
-    if (query.q) title.push(query.q);
-    if (occupationFirstLevels.length > 0) title.push(occupationFirstLevels.join(", "));
-    if (query.occupationSecondLevels.length > 0)
-        title.push(query.occupationSecondLevels.map((o) => o.split(".")[1]).join(", "));
-    if (counties.length > 0) title.push(counties.map((c) => fixLocationName(c)).join(", "));
-    if (query.municipals.length > 0)
-        title.push(query.municipals.map((m) => fixLocationName(m.split(".")[1])).join(", "));
-    if (query.extent.length > 0) title.push(query.extent.join(", "));
-    if (query.engagementType.length > 0) title.push(query.engagementType.join(", "));
-    if (query.sector.length > 0) title.push(query.sector.join(", "));
-    if (query.countries.length > 0) title.push(query.countries.map((c) => fixLocationName(c)).join(", "));
-    if (query.published) title.push(PublishedLabelsEnum[query.published]);
-    if (query.remote.length > 0) title.push("Hjemmekontor");
-    if (query.international && query.countries.length === 0) title.push("Utland");
+    if (query.q) occupation.push(capitalizeFirstLetter(query.q));
+    if (query.published) occupation.push(PublishedLabelsEnum[query.published]);
 
-    return title.join(", ");
+    // occupation
+    if (occupationFirstLevels.length > 0) occupation.push(occupationFirstLevels.join(", "));
+    if (query.occupationSecondLevels.length > 0)
+        occupation.push(query.occupationSecondLevels.map((o) => o.split(".")[1]).join(", "));
+    if (query.sector.length > 0) occupation.push(query.sector.join(", "));
+    if (query.extent.length > 0) occupation.push(query.extent.join(", "));
+    if (query.engagementType.length > 0) occupation.push(query.engagementType.join(", "));
+    if (query.remote.length > 0) occupation.push("Hjemmekontor");
+
+    // location
+    if (counties.length > 0) {
+        location = location.concat(counties.map((c) => fixLocationName(c)));
+    }
+    if (query.municipals.length > 0) {
+        location = location.concat(query.municipals.map((m) => fixLocationName(m.split(".")[1])));
+    }
+    if (query.countries.length > 0) {
+        location = location.concat(query.countries.map((c) => fixLocationName(c)));
+    }
+    if (query.international && query.countries.length === 0) {
+        location.push("Utland");
+    }
+
+    if (occupation.length > 0) {
+        title.push(occupation.join(", "));
+    }
+
+    if (location.length > 0) {
+        const last = location.pop();
+        if (location.length > 0) {
+            title.push([location.join(", "), last].join(" og "));
+        } else {
+            title.push(last);
+        }
+    }
+    return title.join(" i ");
 }
 
 /**

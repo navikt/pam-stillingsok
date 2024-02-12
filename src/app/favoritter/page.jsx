@@ -1,10 +1,10 @@
 import FavouritesList from "./_components/FavouritesList";
 import UserConsentIsRequired from "./_components/UserConsentIsRequired";
-import { getTitle } from "../stilling/[id]/_components/getMetaData";
+import { getMetadataTitle } from "../layout";
 import { STILLINGSOK_URL } from "../_common/environment";
 
 export const metadata = {
-    title: getTitle("Favoritter"),
+    title: getMetadataTitle("Favoritter"),
 };
 
 // async function checkIfUserIsAuthenticated() {

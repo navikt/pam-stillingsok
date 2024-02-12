@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import Ad from "./_components/Ad";
-import { defaultOpenGraphImage, getStillingDescription, getStillingTitle } from "./_components/getMetaData";
+import { getStillingDescription, getStillingTitle } from "./_components/getMetaData";
+import { defaultOpenGraphImage } from "../../layout";
 
 export const excludes = [
     "administration",

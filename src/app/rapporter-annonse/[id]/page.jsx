@@ -2,10 +2,10 @@ import { notFound } from "next/navigation";
 import ReportAd from "./_components/ReportAd";
 import validateForm from "../../stilling/[id]/_components/validate";
 import { excludes } from "../../stilling/[id]/page";
-import { getTitle } from "../../stilling/[id]/_components/getMetaData";
+import { getMetadataTitle } from "../../layout";
 
 export const metadata = {
-    title: getTitle("Rapporter annonse"),
+    title: getMetadataTitle("Rapporter annonse"),
 };
 
 async function getAd(id) {

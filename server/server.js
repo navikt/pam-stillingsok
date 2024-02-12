@@ -35,7 +35,9 @@ fs.readFile(`${__dirname}/api/resources/locations.json`, "utf-8", (err, data) =>
 });
 */
 
+// Todo: Skal vi overføre denne disable x-powered-by til next?
 server.disable("x-powered-by");
+
 server.use(compression());
 
 // Todo: Hvilke sikkerhetsheadere etc må vi flytte over til next appen?

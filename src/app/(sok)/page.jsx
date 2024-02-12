@@ -1,8 +1,29 @@
 import simplifySearchResponse from "./_utils/simplifySearchResponse";
-import { defaultQuery, toApiQuery, toBrowserQuery } from "./_utils/old_query";
+import { defaultQuery, toApiQuery, toBrowserQuery, toReadableQuery } from "./_utils/old_query";
 import Search from "./_components/Search";
 import elasticSearchRequestBody from "./_utils/elasticSearchRequestBody";
+import { defaultMetadataDescription, defaultOpenGraphImage, getMetadataTitle } from "../layout";
 import { createQuery } from "./_utils/query";
+
+export async function generateMetadata({ searchParams }) {
+    const query = createQuery(defaultQuery, searchParams);
+    const readableQuery = toReadableQuery(query);
+    let pageTitle;
+    if (readableQuery) {
+        pageTitle = getMetadataTitle(["Ledige stillinger", toReadableQuery(query)].join(" - "));
+    } else {
+        pageTitle = getMetadataTitle("Ledige stillinger");
+    }
+    return {
+        title: pageTitle,
+        description: defaultMetadataDescription,
+        openGraph: {
+            title: pageTitle,
+            description: defaultMetadataDescription,
+            images: [defaultOpenGraphImage],
+        },
+    };
+}
 
 async function fetchElasticSearch(query) {
     const body = elasticSearchRequestBody(query);

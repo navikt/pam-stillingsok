@@ -3,7 +3,8 @@ import { v4 as uuidv4 } from "uuid";
 import validateForm, { parseFormData } from "./_components/validateForm";
 import NewApplication from "./_components/NewApplication";
 import { excludes } from "../page";
-import { defaultOpenGraphImage, getStillingDescription, getTitle } from "../_components/getMetaData";
+import { getStillingDescription, getSuperraskTitle } from "../_components/getMetaData";
+import { defaultOpenGraphImage } from "../../../layout";
 
 async function fetchAd(id) {
     const res = await fetch(`${process.env.PAMSEARCHAPI_URL}/stillingsok/ad/ad/${id}?_source_excludes=${excludes}`, {
@@ -39,10 +40,10 @@ export async function generateMetadata({ params }) {
     const data = await fetchAd(params.id);
 
     return {
-        title: getTitle("Superrask søknad"),
+        title: getSuperraskTitle(data._source),
         description: getStillingDescription(data._source),
         openGraph: {
-            title: getTitle("Superrask søknad"),
+            title: getSuperraskTitle(data._source),
             description: getStillingDescription(data._source),
             images: [defaultOpenGraphImage],
         },
