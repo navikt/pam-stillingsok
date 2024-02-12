@@ -9,7 +9,7 @@ export const metadata = {
     robots: "noindex",
 };
 
-async function getAd(id) {
+async function fetchAd(id) {
     const res = await fetch(`${process.env.PAMSEARCHAPI_URL}/stillingsok/ad/ad/${id}?_source_excludes=${excludes}`, {
         headers: {
             "Content-Type": "application/json",
@@ -37,14 +37,14 @@ function parseFormData(formData, categories, adId) {
 }
 
 export default async function Page({ params }) {
-    const ad = await getAd(params.id);
+    const ad = await fetchAd(params.id);
 
     async function submitForm(prevState, formData) {
         "use server";
 
         const categories = formData.getAll("category");
-        const data = parseFormData(formData, categories, ad._id);
-        const errors = validateForm(categories, data.description);
+        const reportPostingData = parseFormData(formData, categories, ad._id);
+        const errors = validateForm(categories, reportPostingData.description);
 
         const isValid = Object.keys(errors).length === 0;
 
@@ -63,27 +63,23 @@ export default async function Page({ params }) {
         }
 
         try {
-            // TODO: api call
-            // await UserAPI.post(
-            //     "api/v1/reportposting",
-            //     data,
-            //     false,
-            // );
-            // logAmplitudeEvent("Rapportering av stillingsannonse", {
-            //     category: categoryString,
-            //     title,
-            //     postingId: ad._id,
-            // });
-            return {
-                ...defaultState,
-                success: true,
-            };
+            const response = await fetch(`${process.env.PAMADUSER_URL}/api/v1/reportposting`, {
+                body: JSON.stringify(reportPostingData),
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
         } catch (err) {
             return {
                 ...defaultState,
                 error: err.message,
             };
         }
+        return {
+            ...defaultState,
+            success: true,
+        };
     }
 
     return <ReportAd ad={ad} id={params.id} submitForm={submitForm} />;
