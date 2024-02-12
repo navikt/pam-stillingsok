@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import { SET_SEARCH_STRING } from "../../_utils/old_query";
+import { SET_SEARCH_STRING } from "../../_utils/queryReducer";
 import Typeahead from "../../../_common/components/typeahead/Typeahead";
 import { FetchAction, useFetchReducer } from "../../../_common/hooks/useFetchReducer";
 import capitalizeFirstLetter from "../../../_common/utils/capitalizeFirstLetter";

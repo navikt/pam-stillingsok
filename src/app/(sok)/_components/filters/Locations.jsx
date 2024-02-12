@@ -12,7 +12,7 @@ import {
     REMOVE_MUNICIPAL,
     REMOVE_REMOTE,
     SET_INTERNATIONAL,
-} from "../../_utils/old_query";
+} from "../../_utils/queryReducer";
 import buildLocations from "../utils/buildLocations";
 import buildHomeOfficeValues from "../utils/buildHomeOfficeValues";
 import { logSearchFilterAdded, logSearchFilterRemoved } from "../../../_common/tracking/amplitude";

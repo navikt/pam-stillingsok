@@ -1,12 +1,11 @@
 import simplifySearchResponse from "./_utils/simplifySearchResponse";
-import { defaultQuery, toApiQuery, toBrowserQuery, toReadableQuery } from "./_utils/old_query";
 import Search from "./_components/Search";
 import elasticSearchRequestBody from "./_utils/elasticSearchRequestBody";
 import { defaultMetadataDescription, defaultOpenGraphImage, getMetadataTitle } from "../layout";
-import { createQuery } from "./_utils/query";
+import { createQuery, defaultQuery, toApiQuery, toBrowserQuery, toReadableQuery } from "./_utils/query";
 
 export async function generateMetadata({ searchParams }) {
-    const query = createQuery(defaultQuery, searchParams);
+    const query = createQuery(searchParams);
     const readableQuery = toReadableQuery(query);
     let pageTitle;
     if (readableQuery) {
@@ -57,7 +56,7 @@ async function fetchLocations() {
     const municipals = await response1.json();
     const counties = await response2.json();
 
-    const result = [
+    return [
         ...counties.map((c) => ({
             key: c.name,
             code: c.code,
@@ -74,12 +73,10 @@ async function fetchLocations() {
             code: 999,
         },
     ];
-
-    return result;
 }
 
 export default async function Page({ searchParams }) {
-    const initialQuery = createQuery(defaultQuery, searchParams);
+    const initialQuery = createQuery(searchParams);
 
     // An empty search aggregates all possible search filter
     const globalSearchResult = await fetchElasticSearch(toApiQuery(defaultQuery));

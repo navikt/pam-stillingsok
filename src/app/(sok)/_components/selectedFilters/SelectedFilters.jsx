@@ -4,7 +4,6 @@ import { Button, Chips, HStack } from "@navikt/ds-react";
 import { TrashIcon } from "@navikt/aksel-icons";
 import fixLocationName from "../../../_common/utils/fixLocationName";
 import {
-    PublishedLabelsEnum,
     REMOVE_COUNTRY,
     REMOVE_COUNTY,
     REMOVE_ENGAGEMENT_TYPE,
@@ -18,7 +17,8 @@ import {
     SET_INTERNATIONAL,
     SET_PUBLISHED,
     SET_SEARCH_STRING,
-} from "../../_utils/old_query";
+} from "../../_utils/queryReducer";
+import { PublishedLabelsEnum } from "../../_utils/query";
 import SaveSearchButton from "../../../lagrede-sok/_components/SaveSearchButton";
 import { editedItemKey } from "../filters/Engagement";
 
