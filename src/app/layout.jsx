@@ -28,7 +28,8 @@ const myFont = interLocalFont({
 });
 
 export const getMetadataTitle = (title = "Ledige stillinger") => `${title} - arbeidsplassen.no`;
-export const defaultMetadataDescription = "Alt av arbeid samlet på én plass";
+export const defaultMetadataDescription =
+    "Finn din neste jobb i en av Norges største samlinger av stillinger. Her finner du jobber fra alle bransjer i markedet";
 export const defaultOpenGraphImage = {
     url: "https://arbeidsplassen.nav.no/images/arbeidsplassen-open-graph.png",
     width: 1200,

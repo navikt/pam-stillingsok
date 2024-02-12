@@ -1,11 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { BodyShort, Heading, Panel, VStack } from "@navikt/ds-react";
+import { BodyShort, Box, Heading, VStack } from "@navikt/ds-react";
 import SaveSearchButton from "../../../lagrede-sok/_components/SaveSearchButton";
 
 function DoYouWantToSaveSearch({ query }) {
     return (
-        <Panel className="arb-panel-secondary mb-8">
+        <Box padding={{ xs: "4", md: "6" }} borderRadius="small" background="surface-alt-2-subtle" className="mb-8">
             <VStack align="center">
                 <Heading level="3" size="small" className="text-center" spacing>
                     Varsel ved nye treff?
@@ -15,7 +15,7 @@ function DoYouWantToSaveSearch({ query }) {
                 </BodyShort>
                 <SaveSearchButton query={query} />
             </VStack>
-        </Panel>
+        </Box>
     );
 }
 
