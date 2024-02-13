@@ -42,7 +42,7 @@ export default function Search({ query, searchResult, aggregations, locations })
 
             logAmplitudeEvent("Stillinger - Utførte søk");
 
-            router.replace(`/${stringifyQuery(browserQuery)}`, { scroll: false });
+            router.replace(`/${stringifyQuery(browserQuery)}`, { scroll: updatedQuery.from > 0 });
         } else {
             // Skip search first time query change, since that
             // will just reload the search result we already got
@@ -53,10 +53,6 @@ export default function Search({ query, searchResult, aggregations, locations })
     useEffect(() => {
         logAmplitudeEvent("Stillinger - Utførte søk");
     }, []);
-
-    function loadMoreResults() {
-        queryDispatch({ type: SET_FROM, value: updatedQuery.from + updatedQuery.size });
-    }
 
     function onFormSubmit(e) {
         e.preventDefault();
