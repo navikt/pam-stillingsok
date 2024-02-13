@@ -9,6 +9,7 @@ import UserProvider from "./_common/user/UserProvider";
 import { initAmplitude } from "./_common/tracking/amplitude";
 import googleTranslateWorkaround from "./_common/utils/googleTranslateWorkaround";
 import initSentry from "./_common/tracking/sentry";
+import FavouritesProvider from "./favoritter/_components/FavouritesProvider";
 
 // Todo: Gå igjennom alle fetch-kall i koden og se om referrer er satt riktig. Nå er den satt referrer: CONTEXT_PATH, men ikke sikker på hva som er rett her
 
@@ -22,14 +23,16 @@ function App({ children }) {
     return (
         <AuthenticationProvider>
             <UserProvider>
-                <div id="app">
-                    <SkipLink href="#main-content" />
-                    <div className="arb-push-footer-down">
-                        <Header />
-                        <main id="main-content">{children}</main>
+                <FavouritesProvider>
+                    <div id="app">
+                        <SkipLink href="#main-content" />
+                        <div className="arb-push-footer-down">
+                            <Header />
+                            <main id="main-content">{children}</main>
+                        </div>
+                        <Footer />
                     </div>
-                    <Footer />
-                </div>
+                </FavouritesProvider>
             </UserProvider>
         </AuthenticationProvider>
     );

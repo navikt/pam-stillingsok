@@ -2,7 +2,7 @@
 
 import { STILLINGSOK_URL } from "../../_common/environment";
 
-export async function deleteFavouriteAction(uuid: string) {
+export async function deleteFavouriteAction(uuid) {
     let response;
     try {
         // TODO: call real api /stillinger/api/v1/userfavouriteads/${uuid}

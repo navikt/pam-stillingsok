@@ -20,7 +20,7 @@ function FavouritesList({ favourites }) {
 
     favourites = favourites.filter((it) => !locallyRemovedUuids.includes(it.uuid));
 
-    function removeFavouriteFromLocalLis(uuid) {
+    function onFavouriteDeleted(uuid) {
         setLocallyRemovedUuids([...locallyRemovedUuids, uuid]);
     }
 
@@ -54,7 +54,7 @@ function FavouritesList({ favourites }) {
                             <FavouritesListItem
                                 key={favourite.uuid}
                                 favourite={favourite}
-                                removeFavouriteFromLocalList={removeFavouriteFromLocalLis}
+                                onFavouriteDeleted={onFavouriteDeleted}
                                 openErrorDialog={openErrorDialog}
                             />
                         ))}
