@@ -89,6 +89,7 @@ FavouritesListItem.propTypes = {
         }),
     }),
     openErrorDialog: PropTypes.func.isRequired,
+    onFavouriteDeleted: PropTypes.func.isRequired,
 };
 
 export default FavouritesListItem;

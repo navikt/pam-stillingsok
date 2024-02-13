@@ -16,7 +16,7 @@ function FavouritesList({ favourites }) {
     if (sortBy === "published") {
         favourites.sort((a, b) => b.favouriteAd.published.localeCompare(a.favouriteAd.published));
     } else if (sortBy === "expires") {
-        favourites.sort((a, b) => b.favouriteAd.expires.localeCompare(a.favouriteAd.expires));
+        favourites.sort((a, b) => a.favouriteAd.expires.localeCompare(b.favouriteAd.expires));
     }
 
     favourites = favourites.filter((it) => !locallyRemovedUuids.includes(it.uuid));
