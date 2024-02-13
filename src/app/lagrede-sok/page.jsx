@@ -25,9 +25,10 @@ export default async function Page() {
     const isAuthenticated = await checkIfUserIsAuthenticated();
     const userExist = await checkIfUserExist();
 
-    if (!isAuthenticated) {
-        return <LoginIsRequiredPage />;
-    }
+    // TODO: Legg til sjekk på autentisering
+    // if (!isAuthenticated) {
+    //     return <LoginIsRequiredPage />;
+    // }
 
     if (!userExist) {
         return <UserConsentIsRequired />;
