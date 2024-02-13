@@ -1,7 +1,7 @@
 import capitalizeFirstLetter from "../../_common/utils/capitalizeFirstLetter";
 import fixLocationName from "../../_common/utils/fixLocationName";
 
-export const SEARCH_CHUNK_SIZE = 25;
+export const SEARCH_CHUNK_SIZE = 50;
 
 export const PublishedLabelsEnum = {
     "now/d": "Nye i dag",
@@ -41,8 +41,8 @@ export const defaultQuery = {
 // eslint-disable-next-line import/prefer-default-export
 export function createQuery(searchParams) {
     return {
-        from: 0,
-        size: searchParams.to ? parseInt(searchParams.to, 10) : SEARCH_CHUNK_SIZE,
+        from: searchParams.from || 0,
+        size: searchParams.size ? parseInt(searchParams.size, 10) : defaultQuery.size,
         q: searchParams.q || defaultQuery.q,
         match: searchParams.match || defaultQuery.match,
         municipals: asArray(searchParams["municipals[]"]) || defaultQuery.municipals,
@@ -119,12 +119,11 @@ export function toBrowserQuery(query) {
         ...query,
     };
 
-    if (query.from + query.size > SEARCH_CHUNK_SIZE) {
-        browserQuery.to = query.from + query.size;
+    if (browserQuery.from === 0) {
+        delete browserQuery.from;
+        delete browserQuery.size;
     }
 
-    delete browserQuery.from;
-    delete browserQuery.size;
     return removeEmptyPropertiesFromQuery(browserQuery);
 }
 
