@@ -6,7 +6,6 @@ function getPublicEnv() {
         AMPLITUDE_TOKEN: process.env.AMPLITUDE_TOKEN,
         ARBEIDSPLASSEN_URL: process.env.ARBEIDSPLASSEN_URL,
         INTEREST_API_URL: process.env.INTEREST_API_URL,
-        PAM_STILLINGSOK_URL: process.env.PAM_STILLINGSOK_URL,
     };
 }
 
