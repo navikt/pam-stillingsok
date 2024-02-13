@@ -58,7 +58,7 @@ export default function RootLayout({ children }) {
                 />
             </head>
             <body data-theme="arbeidsplassen" className={myFont.className}>
-                <App>{children}</App>
+                <App amplitudeToken={process.env.AMPLITUDE_TOKEN}>{children}</App>
             </body>
         </html>
     );

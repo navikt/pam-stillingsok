@@ -13,10 +13,10 @@ import FavouritesProvider from "./favoritter/_components/FavouritesProvider";
 
 // Todo: Gå igjennom alle fetch-kall i koden og se om referrer er satt riktig. Nå er den satt referrer: CONTEXT_PATH, men ikke sikker på hva som er rett her
 
-function App({ children }) {
+function App({ children, amplitudeToken }) {
     useEffect(() => {
         initSentry();
-        initAmplitude();
+        initAmplitude(amplitudeToken);
         googleTranslateWorkaround();
     }, []);
 
@@ -40,6 +40,7 @@ function App({ children }) {
 
 App.propTypes = {
     children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
+    amplitudeToken: PropTypes.string,
 };
 
 export default App;

@@ -3,13 +3,9 @@ import getSessionId from "./session";
 
 const userProperties = new amplitude.Identify();
 
-function getAmplitudeKey() {
-    if (window.location.href.includes("nav.no")) return publicEnv.AMPLITUDE_TOKEN;
-    return "";
-}
-export function initAmplitude() {
+export function initAmplitude(amplitudeToken) {
     try {
-        const amplitudeKey = getAmplitudeKey();
+        const amplitudeKey = window.location.href.includes("nav.no") ? amplitudeToken : "";
         if (!amplitudeKey) return false;
 
         amplitude.init(amplitudeKey, undefined, {
