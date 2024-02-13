@@ -1,5 +1,6 @@
 function getPublicEnv() {
     // Load public env vars here
+    // TODO: check which variable is necessary, are any?
     return {
         ADUSER_AUDIENCE: process.env.ADUSER_AUDIENCE,
         AMPLITUDE_TOKEN: process.env.AMPLITUDE_TOKEN,

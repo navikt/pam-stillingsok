@@ -1,12 +1,10 @@
 "use server";
 
-import { STILLINGSOK_URL } from "../../_common/environment";
-
 export async function deleteFavouriteAction(uuid) {
     let response;
     try {
         // TODO: call real api /stillinger/api/v1/userfavouriteads/${uuid}
-        response = await fetch(`${STILLINGSOK_URL}/api/user/favourites?uuid=${uuid}`, {
+        response = await fetch(`${process.env.PAM_STILLINGSOK_URL}/api/user/favourites?uuid=${uuid}`, {
             method: "DELETE",
         });
     } catch (e) {

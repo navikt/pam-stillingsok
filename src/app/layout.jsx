@@ -17,8 +17,7 @@ import Script from "next/script";
 // Noen miljøvariabler kan bare hentes under kjøretid (spesielt de som er
 // definert i nais.yml) vi bruker da et script på endepunkt api/publicEnv for å
 // hente og lagre dem inn i variabelen under publicEnv.
-// eslint-disable-next-line no-unused-vars
-let publicEnv = {};
+export let publicEnv = {};
 
 const myFont = interLocalFont({
     variable: "--font-inter",
@@ -52,8 +51,13 @@ export const metadata = {
 export default function RootLayout({ children }) {
     return (
         <html lang="no">
+            <head>
+                <Script
+                    strategy="beforeInteractive"
+                    src={`${process.env.ARBEIDSPLASSEN_URL ?? ""}/stillinger/api/publicEnv`}
+                />
+            </head>
             <body data-theme="arbeidsplassen" className={myFont.className}>
-                <Script strategy="beforeInteractive" src={`${process.env.INGRESS ?? ""}/stillinger/api/publicEnv`} />
                 <App>{children}</App>
             </body>
         </html>

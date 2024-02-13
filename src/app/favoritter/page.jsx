@@ -1,7 +1,6 @@
 import FavouritesList from "./_components/FavouritesList";
 import UserConsentIsRequired from "./_components/UserConsentIsRequired";
 import { getMetadataTitle } from "../layout";
-import { STILLINGSOK_URL } from "../_common/environment";
 
 export const metadata = {
     title: getMetadataTitle("Favoritter"),
@@ -32,7 +31,7 @@ export default async function Page(props) {
 
     const getFavourites = async (sortByInput) => {
         const favouritesResponse = await fetch(
-            `${STILLINGSOK_URL}/api/user/favourites?size=999&sortBy=${sortByInput}`,
+            `${process.env.PAM_STILLINGSOK_URL}/api/user/favourites?size=999&sortBy=${sortByInput}`,
             {
                 method: "GET",
                 cache: "no-store",
