@@ -1,38 +1,28 @@
-import React, { useContext } from "react";
+"use client";
+
+import React, { startTransition } from "react";
 import PropTypes from "prop-types";
 import { Button } from "@navikt/ds-react";
 import { TrashIcon } from "@navikt/aksel-icons";
 import SearchResultItem from "../../(sok)/_components/searchResult/SearchResultItem";
 import useToggle from "../../_common/hooks/useToggle";
 import AlertModal from "../../_common/components/modals/AlertModal";
-import UserAPI from "../../_common/api/UserAPI";
-import { FavouritesContext } from "./FavouritesProvider";
-import AlertModalWithPageReload from "../../_common/components/modals/AlertModalWithPageReload";
+import { deleteFavouriteAction } from "./actions";
 
-function FavouritesListItem({ favourite, removeFavouriteFromList }) {
-    const { addToPending, removeFavouriteFromLocalList, removeFormPending } = useContext(FavouritesContext);
+function FavouritesListItem({ favourite, removeFavouriteFromLocalList, openErrorDialog }) {
     const [shouldShowConfirmDeleteModal, openConfirmDeleteModal, closeConfirmDeleteModal] = useToggle();
-    const [shouldShowErrorDialog, openErrorDialog, closeErrorDialog] = useToggle(false);
 
-    function deleteFavourite() {
-        addToPending(favourite.favouriteAd.uuid);
-        UserAPI.remove(`api/v1/userfavouriteads/${favourite.uuid}`)
-            .then(() => {
-                removeFavouriteFromLocalList(favourite);
-                removeFavouriteFromList(favourite);
-            })
-            .catch(() => {
-                openErrorDialog();
-            })
-            .finally(() => {
-                removeFormPending(favourite.favouriteAd.uuid);
-            });
-    }
-
-    function handleDeleteConfirmed() {
+    const handleDeleteConfirmed = () => {
         closeConfirmDeleteModal();
-        deleteFavourite();
-    }
+        startTransition(async () => {
+            const { success } = await deleteFavouriteAction(favourite.uuid);
+            if (!success) {
+                openErrorDialog();
+            } else {
+                removeFavouriteFromLocalList(favourite.uuid);
+            }
+        });
+    };
 
     return (
         <>
@@ -69,12 +59,6 @@ function FavouritesListItem({ favourite, removeFavouriteFromList }) {
                     {`Sikker på at du vil slette "${favourite.favouriteAd.title}" fra favoritter?`}
                 </AlertModal>
             )}
-
-            {shouldShowErrorDialog && (
-                <AlertModalWithPageReload id="favourites-list-item-error" onClose={closeErrorDialog} title="Feil">
-                    Det oppsto en feil ved dine favoritter. Prøv å last siden på nytt
-                </AlertModalWithPageReload>
-            )}
         </>
     );
 }
@@ -95,7 +79,8 @@ FavouritesListItem.propTypes = {
             source: PropTypes.string,
         }),
     }),
-    removeFavouriteFromList: PropTypes.func.isRequired,
+    removeFavouriteFromLocalList: PropTypes.func.isRequired,
+    openErrorDialog: PropTypes.func.isRequired,
 };
 
 export default FavouritesListItem;

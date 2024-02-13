@@ -50,5 +50,5 @@ export default async function Page(props) {
     let sortBy = props.searchParams.sortBy || "published";
     const favourites = await getFavourites(sortBy);
 
-    return <FavouritesList favourites={favourites} sortBy={sortBy} />;
+    return <FavouritesList favourites={favourites} />;
 }

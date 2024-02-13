@@ -108,6 +108,7 @@ export async function POST(request) {
     return Response.json(mock);
 }
 
-export async function DELETE() {
+export async function DELETE(request) {
+    console.log("DELETE uuid", request.nextUrl.searchParams.get("uuid"));
     return new Response("", { status: 200 });
 }
