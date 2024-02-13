@@ -6,6 +6,7 @@ import FavouritesListItem from "./FavouritesListItem";
 import PropTypes from "prop-types";
 import AlertModalWithPageReload from "../../_common/components/modals/AlertModalWithPageReload";
 import useToggle from "../../_common/hooks/useToggle";
+import NoFavourites from "./NoFavourites";
 
 function FavouritesList({ favourites }) {
     const [sortBy, setSortBy] = useState("published");
@@ -22,6 +23,10 @@ function FavouritesList({ favourites }) {
 
     function onFavouriteDeleted(uuid) {
         setLocallyRemovedUuids([...locallyRemovedUuids, uuid]);
+    }
+
+    if (favourites.length === 0) {
+        return <NoFavourites />;
     }
 
     return (
