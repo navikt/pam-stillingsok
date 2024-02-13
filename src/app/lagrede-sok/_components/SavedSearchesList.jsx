@@ -15,28 +15,18 @@ import useToggle from "../../_common/hooks/useToggle";
  * this view will auto open the edit modal for the saved search with that uuid
  */
 function SavedSearchesList({ data, uuid }) {
-    const [locallyRemovedUuids, setLocallyRemovedUuids] = useState([]);
+    const [localSavedSearchesList, setLocalSavedSearchesList] = useState(data);
     const [shouldShowErrorModal, openErrorDialog, closeErrorDialog] = useToggle();
 
-    /**
-     * After user updated a saved search, update it in the already loaded data,
-     * instead of re-loading all saved searches from backend
-     */
     function updateSavedSearchInList(updated) {
-        // TODO: implementer ending av lagrede søk
-        // dispatch({
-        //     type: FetchAction.SET_DATA,
-        //     data: (prevState) => prevState.map((old) => (updated.uuid === old.uuid ? updated : old)),
-        // });
+        setLocalSavedSearchesList(localSavedSearchesList.map((old) => (updated.uuid === old.uuid ? updated : old)));
     }
 
     function removeSavedSearchFromList(removed) {
-        setLocallyRemovedUuids([...locallyRemovedUuids, removed.uuid]);
+        setLocalSavedSearchesList(localSavedSearchesList.filter((it) => it.uuid !== removed.uuid));
     }
 
-    data = data.filter((it) => !locallyRemovedUuids.includes(it.uuid));
-
-    if (data.length === 0) {
+    if (localSavedSearchesList.length === 0) {
         return <NoFavourites />;
     }
 
@@ -45,7 +35,7 @@ function SavedSearchesList({ data, uuid }) {
             <Heading level="1" size="xlarge" spacing>
                 Lagrede søk
             </Heading>
-            {data.map((savedSearch) => (
+            {localSavedSearchesList.map((savedSearch) => (
                 <SavedSearchListItem
                     key={savedSearch.uuid}
                     replaceSavedSearchInList={updateSavedSearchInList}
