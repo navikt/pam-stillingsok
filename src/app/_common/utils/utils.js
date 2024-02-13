@@ -40,6 +40,10 @@ export function formatNumber(number) {
 }
 
 export function userAgentIsInternetExplorer() {
+    if (typeof window === "undefined") {
+        // You're on server
+        return false;
+    }
     const { userAgent } = window.navigator;
     return userAgent.indexOf("MSIE ") >= 0 || userAgent.indexOf("Trident/") >= 0;
 }
