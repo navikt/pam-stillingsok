@@ -40,8 +40,7 @@ export default async function Page(props) {
             },
         );
         if (favouritesResponse.status !== 200) {
-            // TODO: forbedre feilhåndtering
-            return <div>En feil har skjedd... </div>;
+            throw new Error("Failed to fetch favourites");
         }
         const dataFromApi = await favouritesResponse.json();
         return dataFromApi.content;

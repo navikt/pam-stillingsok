@@ -84,7 +84,6 @@ FavouritesListItem.propTypes = {
             source: PropTypes.string,
         }),
     }),
-    removeFavouriteFromLocalList: PropTypes.func.isRequired,
     openErrorDialog: PropTypes.func.isRequired,
 };
 
