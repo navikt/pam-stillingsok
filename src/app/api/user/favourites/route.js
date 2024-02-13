@@ -82,18 +82,8 @@ const mockData = [
     },
 ];
 
-export async function GET(request) {
-    const sortBy = request.nextUrl.searchParams.get("sortBy") || "published";
-    console.log(`GET favoritter sortBy: ${sortBy}`);
-
-    // TODO: enkel sortering som slettes da dette skal skje i backend
-    let data = [...mockData];
-    if (sortBy === "published") {
-        data.sort((a, b) => b.favouriteAd.published.localeCompare(a.favouriteAd.published));
-    } else if (sortBy === "expires") {
-        data.sort((a, b) => b.favouriteAd.expires.localeCompare(a.favouriteAd.expires));
-    }
-
+export async function GET() {
+    console.log(`GET favoritter`);
     return Response.json({ content: data });
 }
 
@@ -110,5 +100,6 @@ export async function POST(request) {
 
 export async function DELETE(request) {
     console.log("DELETE uuid", request.nextUrl.searchParams.get("uuid"));
+    await new Promise((r) => setTimeout(r, 1000));
     return new Response("", { status: 200 });
 }
