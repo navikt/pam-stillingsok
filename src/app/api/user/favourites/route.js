@@ -86,3 +86,20 @@ export async function GET() {
     console.log(`GET favoritter`);
     return Response.json({ content: mockData });
 }
+
+export async function POST(request) {
+    const body = await request.json();
+    const mock = {
+        uuid: new Date().getTime(),
+        userUuid: "123",
+        favouriteAd: body,
+        created: "2024-02-09T12:00:53.578776841",
+    };
+    return Response.json(mock);
+}
+
+export async function DELETE(request) {
+    console.log("DELETE uuid", request.nextUrl.searchParams.get("uuid"));
+    await new Promise((r) => setTimeout(r, 1000));
+    return new Response("", { status: 200 });
+}
