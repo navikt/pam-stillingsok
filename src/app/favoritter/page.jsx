@@ -31,7 +31,8 @@ export default async function Page(props) {
 
     const getFavourites = async (sortByInput) => {
         const favouritesResponse = await fetch(
-            `${process.env.PAM_STILLINGSOK_URL}/api/user/favourites?size=999&sortBy=${sortByInput}`,
+            // todo: call aduser
+            `http://localhost:3003/stillinger/api/user/favourites?size=999&sortBy=${sortByInput}`,
             {
                 method: "GET",
                 cache: "no-store",

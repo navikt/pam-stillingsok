@@ -3,8 +3,8 @@
 export async function deleteFavouriteAction(uuid) {
     let response;
     try {
-        // TODO: call real api /stillinger/api/v1/userfavouriteads/${uuid}
-        response = await fetch(`${process.env.PAM_STILLINGSOK_URL}/api/user/favourites?uuid=${uuid}`, {
+        // TODO: call aduser
+        response = await fetch(`http://localhost:3003/stillinger/api/user/favourites?uuid=${uuid}`, {
             method: "DELETE",
         });
     } catch (e) {
