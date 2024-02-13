@@ -32,14 +32,14 @@ export default function AlertModal({
             {showButtons && (
                 <Modal.Footer>
                     {!useOnlyCancelButton && (
-                        <Button variant="primary" loading={spinner} disabled={spinner} onClick={onConfirm}>
+                        <Button variant="primary" loading={spinner} onClick={onConfirm}>
                             {confirmLabel}
                         </Button>
                     )}
                     <Button
                         ref={cancelButtonRef}
                         variant={useOnlyCancelButton ? "primary" : "secondary"}
-                        loading={spinner}
+                        disabled={spinner}
                         onClick={onCancel}
                     >
                         {cancelLabel}

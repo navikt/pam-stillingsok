@@ -1,6 +1,6 @@
 "use client";
 
-import React, { startTransition, useContext } from "react";
+import React, { startTransition, useContext, useState } from "react";
 import PropTypes from "prop-types";
 import { Button } from "@navikt/ds-react";
 import { TrashIcon } from "@navikt/aksel-icons";
@@ -13,12 +13,15 @@ import { FavouritesContext } from "./FavouritesProvider";
 function FavouritesListItem({ favourite, onFavouriteDeleted, openErrorDialog }) {
     const [shouldShowConfirmDeleteModal, openConfirmDeleteModal, closeConfirmDeleteModal] = useToggle();
     const { addToPending, removeFormPending, removeFavouriteFromLocalList } = useContext(FavouritesContext);
+    const [isDeleting, setIsDeleting] = useState(false);
 
     const handleDeleteConfirmed = () => {
-        closeConfirmDeleteModal();
         addToPending(favourite.uuid);
+        setIsDeleting(true);
         startTransition(async () => {
             const { success } = await deleteFavouriteAction(favourite.uuid);
+            setIsDeleting(false);
+            closeConfirmDeleteModal();
             if (!success) {
                 openErrorDialog();
             } else {
@@ -60,6 +63,7 @@ function FavouritesListItem({ favourite, onFavouriteDeleted, openErrorDialog }) 
                     confirmLabel="Slett"
                     onCancel={closeConfirmDeleteModal}
                     onConfirm={handleDeleteConfirmed}
+                    spinner={isDeleting}
                 >
                     {`Sikker på at du vil slette "${favourite.favouriteAd.title}" fra favoritter?`}
                 </AlertModal>
