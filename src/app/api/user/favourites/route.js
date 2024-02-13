@@ -84,7 +84,7 @@ const mockData = [
 
 export async function GET() {
     console.log(`GET favoritter`);
-    return Response.json({ content: data });
+    return Response.json({ content: mockData });
 }
 
 export async function POST(request) {
