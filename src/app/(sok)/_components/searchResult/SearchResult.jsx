@@ -4,7 +4,7 @@ import Pagination from "../pagination/Pagination";
 import SearchResultItem from "./SearchResultItem";
 import FavouritesButton from "../../../favoritter/_components/FavouritesButton";
 
-function SearchResult({ searchResult, query, loadMoreResults }) {
+function SearchResult({ searchResult, query, queryDispatch }) {
     const [showAdDetailsForDebugging, setShowAdDetailsForDebugging] = useState(false);
 
     /**
@@ -42,7 +42,7 @@ function SearchResult({ searchResult, query, loadMoreResults }) {
                     />
                 ))}
             {searchResult.ads && searchResult.ads.length > 0 && (
-                <Pagination query={query} searchResult={searchResult} onLoadMoreClick={loadMoreResults} />
+                <Pagination query={query} searchResult={searchResult} queryDispatch={queryDispatch} />
             )}
         </section>
     );
@@ -55,7 +55,7 @@ SearchResult.propTypes = {
     query: PropTypes.shape({
         from: PropTypes.number,
     }),
-    loadMoreResults: PropTypes.func.isRequired,
+    queryDispatch: PropTypes.func.isRequired,
 };
 
 export default SearchResult;

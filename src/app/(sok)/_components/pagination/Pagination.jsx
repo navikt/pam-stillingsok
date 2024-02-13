@@ -2,25 +2,25 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Button, VStack } from "@navikt/ds-react";
 import { ArrowUpIcon } from "@navikt/aksel-icons";
-import Link from "next/link";
-import { stringifyQuery, toBrowserQuery } from "../../_utils/query";
+import { SET_FROM } from "../../_utils/queryReducer";
 
-function Pagination({ searchResult, query }) {
+function Pagination({ searchResult, query, queryDispatch }) {
     const total = searchResult.totalAds;
     const to = query.from + query.size;
     const hasMore = to < total;
-    const browserQuery = toBrowserQuery(query);
-    browserQuery.from = query.from + query.size;
-    browserQuery.size = query.size;
 
     const scrollTop = () => {
         window.scrollTo({ top: 0, behavior: "smooth" });
     };
 
+    function loadMoreResults() {
+        queryDispatch({ type: SET_FROM, value: query.from + query.size });
+    }
+
     return (
         <VStack align="center" className="mt-8 mb-12">
             {hasMore && (
-                <Button as={Link} variant="primary" href={`/${stringifyQuery(browserQuery)}`}>
+                <Button variant="primary" onClick={loadMoreResults}>
                     Neste
                 </Button>
             )}

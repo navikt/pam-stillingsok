@@ -132,14 +132,7 @@ export default function Search({ query, searchResult, aggregations, locations })
 
                     <div>
                         <SelectedFilters query={query} queryDispatch={queryDispatch} />
-                        <SearchResult
-                            searchResult={searchResult}
-                            query={query}
-                            queryDispatch={queryDispatch}
-                            loadMoreResults={() => {
-                                loadMoreResults();
-                            }}
-                        />
+                        <SearchResult searchResult={searchResult} query={query} queryDispatch={queryDispatch} />
                         <DoYouWantToSaveSearch query={query} />
                         <Feedback query={query} />
                     </div>
