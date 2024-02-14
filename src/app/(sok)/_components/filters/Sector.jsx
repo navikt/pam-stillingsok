@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { Checkbox, Fieldset } from "@navikt/ds-react";
-import { ADD_SECTOR, REMOVE_SECTOR } from "../../_utils/old_query";
+import { ADD_SECTOR, REMOVE_SECTOR } from "../../_utils/queryReducer";
 import mergeCount from "../utils/mergeCount";
 import { logSearchFilterAdded, logSearchFilterRemoved } from "../../../_common/tracking/amplitude";
 
@@ -24,7 +24,7 @@ function Sector({ initialValues, updatedValues, query, dispatch }) {
             <div>
                 {values.map((item) => (
                     <Checkbox
-                        name="sector"
+                        name="sector[]"
                         key={item.key}
                         value={item.key}
                         onChange={handleClick}

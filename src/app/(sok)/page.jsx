@@ -1,8 +1,28 @@
 import simplifySearchResponse from "./_utils/simplifySearchResponse";
-import { defaultQuery, toApiQuery, toBrowserQuery } from "./_utils/old_query";
 import Search from "./_components/Search";
 import elasticSearchRequestBody from "./_utils/elasticSearchRequestBody";
-import { createQuery } from "./_utils/query";
+import { defaultMetadataDescription, defaultOpenGraphImage, getMetadataTitle } from "../layout";
+import { createQuery, defaultQuery, toApiQuery, toBrowserQuery, toReadableQuery } from "./_utils/query";
+
+export async function generateMetadata({ searchParams }) {
+    const query = createQuery(searchParams);
+    const readableQuery = toReadableQuery(query);
+    let pageTitle;
+    if (readableQuery) {
+        pageTitle = getMetadataTitle(["Ledige stillinger", toReadableQuery(query)].join(" - "));
+    } else {
+        pageTitle = getMetadataTitle("Ledige stillinger");
+    }
+    return {
+        title: pageTitle,
+        description: defaultMetadataDescription,
+        openGraph: {
+            title: pageTitle,
+            description: defaultMetadataDescription,
+            images: [defaultOpenGraphImage],
+        },
+    };
+}
 
 async function fetchElasticSearch(query) {
     const body = elasticSearchRequestBody(query);
@@ -36,7 +56,7 @@ async function fetchLocations() {
     const municipals = await response1.json();
     const counties = await response2.json();
 
-    const result = [
+    return [
         ...counties.map((c) => ({
             key: c.name,
             code: c.code,
@@ -53,12 +73,10 @@ async function fetchLocations() {
             code: 999,
         },
     ];
-
-    return result;
 }
 
 export default async function Page({ searchParams }) {
-    const initialQuery = createQuery(defaultQuery, searchParams);
+    const initialQuery = createQuery(searchParams);
 
     // An empty search aggregates all possible search filter
     const globalSearchResult = await fetchElasticSearch(toApiQuery(defaultQuery));

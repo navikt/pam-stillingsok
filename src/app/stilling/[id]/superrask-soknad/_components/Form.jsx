@@ -2,10 +2,9 @@ import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import {
     BodyLong,
-    Button,
     Checkbox,
+    CheckboxGroup,
     ErrorSummary,
-    Fieldset,
     Heading,
     HStack,
     Link as AkselLink,
@@ -13,11 +12,11 @@ import {
     Textarea,
     TextField,
 } from "@navikt/ds-react";
-import Link from "next/link";
 import { MOTIVATION_MAX_LENGTH } from "./validateForm";
 import ApiErrorMessage from "./ApiErrorMessage";
+import { FormButtonBar } from "./FormButtonBar";
 
-function Form({ ad, applicationForm, submitApplication, pending, submitApiError, validationErrors }) {
+function Form({ ad, applicationForm, submitApplication, submitApiError, validationErrors }) {
     const errorSummary = useRef();
     const [hideMotivationError, setHideMotivationError] = useState(false);
     const [hideEmailError, setHideEmailError] = useState(false);
@@ -64,13 +63,13 @@ function Form({ ad, applicationForm, submitApplication, pending, submitApiError,
                     </BodyLong>
 
                     {applicationForm.qualifications && applicationForm.qualifications.length > 0 && (
-                        <Fieldset legend="Huk av for kvalifikasjonene du oppfyller">
+                        <CheckboxGroup legend="Huk av for kvalifikasjonene du oppfyller">
                             {applicationForm.qualifications.map((it) => (
                                 <Checkbox key={it.id} value={it.label} name="qualification">
                                     {it.label}
                                 </Checkbox>
                             ))}
-                        </Fieldset>
+                        </CheckboxGroup>
                     )}
                 </section>
             )}
@@ -119,7 +118,7 @@ function Form({ ad, applicationForm, submitApplication, pending, submitApiError,
                 <TextField
                     label="E-post"
                     description="Må fylles ut"
-                    type="email"
+                    type="text"
                     name="email"
                     auto-complete="email"
                     aria-required="true"
@@ -161,12 +160,7 @@ function Form({ ad, applicationForm, submitApplication, pending, submitApiError,
             {submitApiError && <ApiErrorMessage apiErrorCode={submitApiError} />}
 
             <HStack gap="4" className="mt-12">
-                <Button variant="primary" loading={pending} type="submit">
-                    Send søknad
-                </Button>
-                <Button disabled={pending} variant="secondary" as={Link} href={`/stilling/${ad._id}`}>
-                    Avbryt
-                </Button>
+                <FormButtonBar id={ad._id} />
             </HStack>
         </form>
     );
@@ -188,7 +182,6 @@ Form.propTypes = {
         ),
     }).isRequired,
     submitApplication: PropTypes.func.isRequired,
-    pending: PropTypes.bool,
     submitApiError: PropTypes.shape({
         message: PropTypes.string,
     }),

@@ -1,92 +1,82 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { HStack, Select, Heading } from "@navikt/ds-react";
 import FavouritesListItem from "./FavouritesListItem";
-import LoadingPage from "../../_common/components/LoadingPage";
+import PropTypes from "prop-types";
+import AlertModalWithPageReload from "../../_common/components/modals/AlertModalWithPageReload";
+import useToggle from "../../_common/hooks/useToggle";
+import NoFavourites from "./NoFavourites";
 
-function FavouritesList() {
-    const [favourites, setFavourites] = useState({ status: "not-fetched" });
+function FavouritesList({ favourites }) {
     const [sortBy, setSortBy] = useState("published");
+    const [locallyRemovedUuids, setLocallyRemovedUuids] = useState([]);
+    const [shouldShowErrorDialog, openErrorDialog, closeErrorDialog] = useToggle();
 
-    const fetchFavourites = async (sortByInput) => {
-        setFavourites({ status: "pending" });
-        const response = await fetch(`/stillinger/api/v1/userfavouriteads?sort=${sortByInput}`, {
-            credentials: "same-origin",
-            cache: "no-store",
-        });
-        if (response.status === 200) {
-            const json = await response.json();
-            setFavourites({
-                status: "success",
-                data: json,
-            });
-        } else {
-            setFavourites({ status: "error" });
-        }
-    };
+    if (sortBy === "published") {
+        favourites.sort((a, b) => b.favouriteAd.published.localeCompare(a.favouriteAd.published));
+    } else if (sortBy === "expires") {
+        favourites.sort((a, b) => a.favouriteAd.expires.localeCompare(b.favouriteAd.expires));
+    }
 
-    useEffect(() => {
-        fetchFavourites(sortBy).catch((error) => {
-            console.log("Error fetching favourites", error);
-        });
-    }, []);
+    favourites = favourites.filter((it) => !locallyRemovedUuids.includes(it.uuid));
 
-    /**
-     * If user deleted a favourite, remove it from the local data,
-     * instead of re-loading all favourites from backend
-     */
-    function removeFavouriteFromList(removed) {
-        console.log("removeFavouriteFromList", removed);
-        // TODO: gjør server kall for å fjerne favoritt
-        // dispatch({
-        //     type: FetchAction.SET_DATA,
-        //     data: (prevState) => prevState.filter((it) => it.favouriteAd.uuid !== removed.favouriteAd.uuid),
-        // });
+    function onFavouriteDeleted(uuid) {
+        setLocallyRemovedUuids([...locallyRemovedUuids, uuid]);
+    }
+
+    if (favourites.length === 0) {
+        return <NoFavourites />;
     }
 
     return (
         <div>
-            {favourites.status === "not-fetched" || favourites.status === "pending" ? (
-                <LoadingPage />
-            ) : (
-                <section className="container-medium mt-16 mb-16">
-                    <HStack gap="4" align="center" justify="space-between" className="mb-12">
-                        <Heading level="1" size="xlarge">
-                            Favoritter
-                        </Heading>
-                        <Select
-                            onChange={(e) => {
-                                setSortBy(e.target.value);
-                                fetchFavourites(e.target.value);
-                            }}
-                            value={sortBy}
-                            label="Sorter etter"
-                            className="inline-select"
-                        >
-                            <option key="published" value="published">
-                                Vis nyeste øverst
-                            </option>
-                            <option key="expires" value="expires">
-                                Søknadsfrist
-                            </option>
-                        </Select>
-                    </HStack>
-                    <div>
-                        {favourites &&
-                            favourites.data?.map((favourite) => (
-                                <FavouritesListItem
-                                    key={favourite.uuid}
-                                    favourite={favourite}
-                                    removeFavouriteFromList={removeFavouriteFromList}
-                                    onRemoved={removeFavouriteFromList}
-                                />
-                            ))}
-                    </div>
-                </section>
-            )}
+            <section className="container-medium mt-16 mb-16">
+                <HStack gap="4" align="center" justify="space-between" className="mb-12">
+                    <Heading level="1" size="xlarge">
+                        Favoritter
+                    </Heading>
+                    <Select
+                        onChange={(e) => {
+                            setSortBy(e.target.value);
+                        }}
+                        value={sortBy}
+                        name="sortBy"
+                        label="Sorter etter"
+                        className="inline-select"
+                    >
+                        <option key="published" value="published">
+                            Vis nyeste øverst
+                        </option>
+                        <option key="expires" value="expires">
+                            Søknadsfrist
+                        </option>
+                    </Select>
+                </HStack>
+                <div>
+                    {favourites &&
+                        favourites.map((favourite) => (
+                            <FavouritesListItem
+                                key={favourite.uuid}
+                                favourite={favourite}
+                                onFavouriteDeleted={onFavouriteDeleted}
+                                openErrorDialog={openErrorDialog}
+                            />
+                        ))}
+                </div>
+
+                {shouldShowErrorDialog && (
+                    <AlertModalWithPageReload id="favourites-list-item-error" onClose={closeErrorDialog} title="Feil">
+                        Det oppsto en feil ved dine favoritter. Prøv å last siden på nytt
+                    </AlertModalWithPageReload>
+                )}
+            </section>
         </div>
     );
 }
+
+FavouritesList.propTypes = {
+    favourites: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
 export default FavouritesList;

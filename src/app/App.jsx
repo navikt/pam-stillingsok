@@ -1,16 +1,25 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { Footer, SkipLink } from "@navikt/arbeidsplassen-react";
 import PropTypes from "prop-types";
 import Header from "./_common/components/header/Header";
 import AuthenticationProvider from "./_common/auth/contexts/AuthenticationProvider";
-import FavouritesProvider from "./favoritter/_components/FavouritesProvider";
 import UserProvider from "./_common/user/UserProvider";
+import { initAmplitude } from "./_common/tracking/amplitude";
+import googleTranslateWorkaround from "./_common/utils/googleTranslateWorkaround";
+import initSentry from "./_common/tracking/sentry";
+import FavouritesProvider from "./favoritter/_components/FavouritesProvider";
 
 // Todo: Gå igjennom alle fetch-kall i koden og se om referrer er satt riktig. Nå er den satt referrer: CONTEXT_PATH, men ikke sikker på hva som er rett her
 
-function App({ children }) {
+function App({ children, amplitudeToken }) {
+    useEffect(() => {
+        initSentry();
+        initAmplitude(amplitudeToken);
+        googleTranslateWorkaround();
+    }, []);
+
     return (
         <AuthenticationProvider>
             <UserProvider>
@@ -31,6 +40,7 @@ function App({ children }) {
 
 App.propTypes = {
     children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
+    amplitudeToken: PropTypes.string,
 };
 
 export default App;

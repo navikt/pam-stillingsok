@@ -1,12 +1,20 @@
 import { notFound } from "next/navigation";
+import { v4 as uuidv4 } from "uuid";
 import WithdrawApplication from "./_components/WithdrawApplication";
+import { excludes } from "../../../stilling/[id]/page";
+import { getMetadataTitle } from "../../../layout";
 
 export const metadata = {
-    title: "Trekk søknad - arbeidsplassen.no",
+    title: getMetadataTitle("Trekk søknad"),
+    robots: "noindex",
 };
 
 async function getAd(id) {
-    const res = await fetch(`https://arbeidsplassen.intern.dev.nav.no/stillinger/api/stilling/${id}`);
+    const res = await fetch(`${process.env.PAMSEARCHAPI_URL}/stillingsok/ad/ad/${id}?_source_excludes=${excludes}`, {
+        headers: {
+            "Content-Type": "application/json",
+        },
+    });
     if (res.status === 404) {
         notFound();
     }
@@ -16,22 +24,50 @@ async function getAd(id) {
 
     return res.json();
 }
-async function getApplicationnStatus(uuid, adUuid) {
-    const res = await fetch(
-        `https://arbeidsplassen.intern.dev.nav.no/interesse-api/application-form/${uuid}/application/${adUuid}`,
-        {
-            method: "HEAD",
-        },
-    );
-    if (res.status === 410) {
+
+async function getApplicationStatus(adUuid, uuid) {
+    const res = await fetch(`${process.env.INTEREST_API_URL}/application-form/${adUuid}/application/${uuid}`, {
+        method: "HEAD",
+    });
+    if (res.status === 410 || res.status === 404) {
         notFound();
     }
     return res.text();
 }
 
 export default async function Page({ params }) {
-    const ad = await getAd(params.adUuid);
-    await getApplicationnStatus(params.uuid, params.adUuid);
+    const { adUuid, uuid } = params;
+    const ad = await getAd(adUuid);
+    await getApplicationStatus(adUuid, uuid);
 
-    return <WithdrawApplication ad={ad} />;
+    async function withdrawApplication() {
+        "use server";
+
+        try {
+            const res = await fetch(`${process.env.INTEREST_API_URL}/application-form/${adUuid}/application/${uuid}`, {
+                method: "DELETE",
+                headers: {
+                    NAV_CALLID_FIELD: uuidv4(),
+                },
+            });
+
+            if (res.status !== 200 && res.status !== 204) {
+                return {
+                    success: false,
+                    error: "unknown",
+                };
+            }
+        } catch (err) {
+            return {
+                success: false,
+                error: "unknown",
+            };
+        }
+
+        return {
+            success: true,
+        };
+    }
+
+    return <WithdrawApplication ad={ad} withdrawApplication={withdrawApplication} />;
 }

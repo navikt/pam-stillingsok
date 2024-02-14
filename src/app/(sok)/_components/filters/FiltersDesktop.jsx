@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Accordion } from "@navikt/ds-react";
+import { Accordion, Button } from "@navikt/ds-react";
 import FilterAccordionItem from "./FilterAccordionItem";
 import Published from "./Published";
 import Counties from "./Locations";
@@ -11,12 +11,8 @@ import EngagementType from "./Engagement";
 import WorkLanguage from "./WorkLanguage";
 
 function FiltersDesktop({ query, dispatchQuery, aggregations, locations, searchResult }) {
-    function submitForm(e) {
-        e.preventDefault();
-    }
-
     return (
-        <form aria-label="Filtre" onSubmit={submitForm}>
+        <div>
             <Accordion indent={false} headingSize="small">
                 <FilterAccordionItem title="Publisert" panelId="publisert">
                     <Published
@@ -75,7 +71,10 @@ function FiltersDesktop({ query, dispatchQuery, aggregations, locations, searchR
                     />
                 </FilterAccordionItem>
             </Accordion>
-        </form>
+            <noscript>
+                <Button type="submit">Søk</Button>
+            </noscript>
+        </div>
     );
 }
 

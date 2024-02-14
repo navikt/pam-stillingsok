@@ -35,7 +35,9 @@ fs.readFile(`${__dirname}/api/resources/locations.json`, "utf-8", (err, data) =>
 });
 */
 
+// Todo: Skal vi overføre denne disable x-powered-by til next?
 server.disable("x-powered-by");
+
 server.use(compression());
 
 // Todo: Hvilke sikkerhetsheadere etc må vi flytte over til next appen?
@@ -151,7 +153,6 @@ const startServer = (htmlPages) => {
     setUpAduserApiProxy(server);
 
     /*
-    // todo: Er det noen andre 3parter som bruker dette get-endepunktet, appen gjør det ikke.
     server.get(`${properties.PAM_CONTEXT_PATH}/api/search`, async (req, res) => {
         searchApiConsumer
             .search(req.query)
@@ -211,6 +212,7 @@ const startServer = (htmlPages) => {
         res.redirect(`${properties.PAM_CONTEXT_PATH}`);
     });
 
+    //todo: trenger vi å støtte dette?
     server.get(/^\/pam-stillingsok.*$/, (req, res) => {
         const url = req.url.replace("/pam-stillingsok", `${properties.PAM_CONTEXT_PATH}`);
         res.redirect(`${url}`);

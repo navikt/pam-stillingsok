@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import UserAPI from "../../_common/api/UserAPI";
 import { HasAcceptedTermsStatus, UserContext } from "../../_common/user/UserProvider";
 import useToggle from "../../_common/hooks/useToggle";
 import AlertModalWithPageReload from "../../_common/components/modals/AlertModalWithPageReload";
+import { getFavouriteAction } from "./actions";
 
 export const FavouritesContext = React.createContext({
     favourites: [],
@@ -33,14 +33,13 @@ function FavouritesProvider({ children }) {
     // List of all ads that is about to be saved or deleted
     const [pendingFavourites, setPendingFavourites] = useState([]);
 
-    function getFavourites() {
-        UserAPI.get("api/v1/userfavouriteads?size=9999")
-            .then((response) => {
-                setFavourites(response.content ? response.content : []);
-            })
-            .catch(() => {
-                openErrorDialog();
-            });
+    async function getFavourites() {
+        try {
+            const content = await getFavouriteAction();
+            setFavourites(content ? content : []);
+        } catch (err) {
+            openErrorDialog();
+        }
     }
 
     function addToPending(id) {

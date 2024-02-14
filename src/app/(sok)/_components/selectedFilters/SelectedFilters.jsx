@@ -4,7 +4,6 @@ import { Button, Chips, HStack } from "@navikt/ds-react";
 import { TrashIcon } from "@navikt/aksel-icons";
 import fixLocationName from "../../../_common/utils/fixLocationName";
 import {
-    PublishedLabelsEnum,
     REMOVE_COUNTRY,
     REMOVE_COUNTY,
     REMOVE_ENGAGEMENT_TYPE,
@@ -18,8 +17,10 @@ import {
     SET_INTERNATIONAL,
     SET_PUBLISHED,
     SET_SEARCH_STRING,
-} from "../../_utils/old_query";
+} from "../../_utils/queryReducer";
+import { PublishedLabelsEnum } from "../../_utils/query";
 import SaveSearchButton from "../../../lagrede-sok/_components/SaveSearchButton";
+import { editedItemKey } from "../filters/Engagement";
 
 function SelectedFilters({ query, queryDispatch }) {
     const MAX_CHIPS = 10;
@@ -90,7 +91,7 @@ function SelectedFilters({ query, queryDispatch }) {
 
     chips.push(
         ...query.municipals.map((value) => (
-            <Chips.Removable variant="neutral" key={value} onClick={() => removeMunicipal(value)}>
+            <Chips.Removable variant="neutral" key={`municipals-${value}`} onClick={() => removeMunicipal(value)}>
                 {fixLocationName(value.split(".")[1])}
             </Chips.Removable>
         )),
@@ -100,7 +101,7 @@ function SelectedFilters({ query, queryDispatch }) {
         ...counties.map((value) => (
             <Chips.Removable
                 variant="neutral"
-                key={value}
+                key={`counties-${value}`}
                 onClick={() => queryDispatch({ type: REMOVE_COUNTY, value })}
             >
                 {fixLocationName(value)}
@@ -124,7 +125,7 @@ function SelectedFilters({ query, queryDispatch }) {
 
     chips.push(
         ...query.countries.map((value) => (
-            <Chips.Removable variant="neutral" key={value} onClick={() => removeCountry(value)}>
+            <Chips.Removable variant="neutral" key={`countries-${value}`} onClick={() => removeCountry(value)}>
                 {fixLocationName(value)}
             </Chips.Removable>
         )),
@@ -132,7 +133,11 @@ function SelectedFilters({ query, queryDispatch }) {
 
     chips.push(
         ...query.occupationSecondLevels.map((value) => (
-            <Chips.Removable variant="neutral" key={value} onClick={() => removeOccupation(value)}>
+            <Chips.Removable
+                variant="neutral"
+                key={`occupationSecondLevels-${value}`}
+                onClick={() => removeOccupation(value)}
+            >
                 {value.split(".")[1]}
             </Chips.Removable>
         )),
@@ -142,7 +147,7 @@ function SelectedFilters({ query, queryDispatch }) {
         ...occupationFirstLevels.map((value) => (
             <Chips.Removable
                 variant="neutral"
-                key={value}
+                key={`occupationFirstLevels-${value}`}
                 onClick={() => queryDispatch({ type: REMOVE_OCCUPATION_FIRST_LEVEL, value })}
             >
                 {value}
@@ -166,10 +171,10 @@ function SelectedFilters({ query, queryDispatch }) {
         ...query.sector.map((value) => (
             <Chips.Removable
                 variant="neutral"
-                key={value}
+                key={`sector-${value}`}
                 onClick={() => queryDispatch({ type: REMOVE_SECTOR, value })}
             >
-                {value}
+                {value === "Ikke oppgitt" ? "Sektor ikke oppgitt" : value}
             </Chips.Removable>
         )),
     );
@@ -178,10 +183,10 @@ function SelectedFilters({ query, queryDispatch }) {
         ...query.engagementType.map((value) => (
             <Chips.Removable
                 variant="neutral"
-                key={value}
+                key={`engagementType-${value}`}
                 onClick={() => queryDispatch({ type: REMOVE_ENGAGEMENT_TYPE, value })}
             >
-                {value}
+                {editedItemKey(value) === "Ikke oppgitt" ? "Ansettelsesform ikke oppgitt" : value}
             </Chips.Removable>
         )),
     );
@@ -190,7 +195,7 @@ function SelectedFilters({ query, queryDispatch }) {
         ...query.extent.map((value) => (
             <Chips.Removable
                 variant="neutral"
-                key={value}
+                key={`extent-${value}`}
                 onClick={() => queryDispatch({ type: REMOVE_EXTENT, value })}
             >
                 {value}
@@ -202,10 +207,10 @@ function SelectedFilters({ query, queryDispatch }) {
         ...query.workLanguage.map((value) => (
             <Chips.Removable
                 variant="neutral"
-                key={value}
+                key={`workLanguage-${value}`}
                 onClick={() => queryDispatch({ type: REMOVE_WORKLANGUAGE, value })}
             >
-                {value}
+                {value === "Ikke oppgitt" ? "Arbeidsspråk ikke oppgitt" : value}
             </Chips.Removable>
         )),
     );
@@ -275,7 +280,7 @@ SelectedFilters.propTypes = {
         international: PropTypes.bool,
         occupationFirstLevels: PropTypes.arrayOf(PropTypes.string),
         occupationSecondLevels: PropTypes.arrayOf(PropTypes.string),
-        published: PropTypes.arrayOf(PropTypes.string),
+        published: PropTypes.string,
         sector: PropTypes.arrayOf(PropTypes.string),
         engagementType: PropTypes.arrayOf(PropTypes.string),
         extent: PropTypes.arrayOf(PropTypes.string),

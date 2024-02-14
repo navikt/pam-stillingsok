@@ -12,6 +12,12 @@ import "./styles.css";
 import PropTypes from "prop-types";
 import interLocalFont from "next/font/local";
 import App from "./App";
+import Script from "next/script";
+
+// Noen miljøvariabler kan bare hentes under kjøretid (spesielt de som er
+// definert i nais.yml) vi bruker da et script på endepunkt api/publicEnv for å
+// hente og lagre dem inn i variabelen under publicEnv.
+export let publicEnv = {};
 
 const myFont = interLocalFont({
     variable: "--font-inter",
@@ -20,27 +26,39 @@ const myFont = interLocalFont({
     display: "swap",
 });
 
+export const getMetadataTitle = (title = "Ledige stillinger") => `${title} - arbeidsplassen.no`;
+export const defaultMetadataDescription =
+    "Finn din neste jobb i en av Norges største samlinger av stillinger. Her finner du jobber fra alle bransjer i markedet";
+export const defaultOpenGraphImage = {
+    url: "https://arbeidsplassen.nav.no/images/arbeidsplassen-open-graph.png",
+    width: 1200,
+    height: 630,
+};
+
 export const metadata = {
-    title: "Ledige stillinger - arbeidsplassen.no",
-    description: "Alt av arbeid samlet på én plass",
+    title: getMetadataTitle("Ledige stillinger"),
+    description: defaultMetadataDescription,
     openGraph: {
-        title: "Ledige stillinger - arbeidsplassen.no",
-        description: "Alt av arbeid samlet på én plass",
-        images: [
-            {
-                url: "https://arbeidsplassen.nav.no/images/arbeidsplassen-open-graph.png",
-                width: 1200,
-                height: 630,
-            },
-        ],
+        title: getMetadataTitle("Ledige stillinger"),
+        description: defaultMetadataDescription,
+        images: [defaultOpenGraphImage],
+    },
+    icons: {
+        icon: "https://arbeidsplassen.nav.no/favicon.png",
     },
 };
 
 export default function RootLayout({ children }) {
     return (
-        <html lang="nb">
+        <html lang="no">
+            <head>
+                <Script
+                    strategy="beforeInteractive"
+                    src={`${process.env.ARBEIDSPLASSEN_URL ?? ""}/stillinger/api/publicEnv`}
+                />
+            </head>
             <body data-theme="arbeidsplassen" className={myFont.className}>
-                <App>{children}</App>
+                <App amplitudeToken={process.env.AMPLITUDE_TOKEN}>{children}</App>
             </body>
         </html>
     );

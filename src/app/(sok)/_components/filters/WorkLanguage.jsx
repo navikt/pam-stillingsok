@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { Checkbox, Fieldset } from "@navikt/ds-react";
-import { ADD_WORKLANGUAGE, REMOVE_WORKLANGUAGE } from "../../_utils/old_query";
+import { ADD_WORKLANGUAGE, REMOVE_WORKLANGUAGE } from "../../_utils/queryReducer";
 import mergeCount from "../utils/mergeCount";
 import { logSearchFilterAdded, logSearchFilterRemoved } from "../../../_common/tracking/amplitude";
 import moveCriteriaToBottom from "../utils/moveFacetToBottom";
@@ -26,7 +26,7 @@ function WorkLanguage({ initialValues, updatedValues, query, dispatch }) {
             <div>
                 {values.map((item) => (
                     <Checkbox
-                        name="workLanguage"
+                        name="workLanguage[]"
                         key={item.key}
                         value={item.key}
                         onChange={handleClick}

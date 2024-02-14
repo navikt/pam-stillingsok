@@ -47,16 +47,8 @@ spec:
       value: {{ amplitude_token }}
     - name: ARBEIDSPLASSEN_URL
       value: {{ arbeidsplassen_url }}
-    - name: IDPORTEN_AUDIENCE
-      value: {{ idporten_audience }}
     - name: INTEREST_API_URL
       value: {{ interest_api_url }}
-    - name: PAMADUSER_URL
-      value: {{ pamaduser_url }}
-    - name: PAM_STILLINGSOK_URL
-      value: {{ pam_stillingsok_url }}
-    - name: PAMSEARCHAPI_URL
-      value: {{ pamsearchapi_url }}
     - name: PORT
       value: "8080"
   accessPolicy:

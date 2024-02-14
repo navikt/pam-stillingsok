@@ -17,7 +17,7 @@ function UserConsentModal({ onClose, onTermsAccepted }) {
     function createUser() {
         setFetchStatus(FetchStatus.IS_FETCHING);
 
-        UserAPI.post("api/v1/user", {
+        UserAPI.post("api/user", {
             acceptedTerms: "sok_v1",
         })
             .then((response) => {

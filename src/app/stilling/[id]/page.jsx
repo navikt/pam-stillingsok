@@ -1,9 +1,9 @@
 import { notFound } from "next/navigation";
 import Ad from "./_components/Ad";
-import { STILLINGSOK_URL } from "../../_common/environment";
 import { getStillingDescription, getStillingTitle } from "./_components/getMetaData";
+import { defaultOpenGraphImage } from "../../layout";
 
-const sourceExcludes = [
+export const excludes = [
     "administration",
     "categoryList",
     "created",
@@ -41,10 +41,8 @@ const sourceExcludes = [
     "uuid",
 ].join(",");
 
-const host = process.env.PAMSEARCHAPI_URL ? process.env.PAMSEARCHAPI_URL : "http://pam-search-api";
-
 async function fetchAd(id) {
-    const res = await fetch(`${host}/stillingsok/ad/ad/${id}?_source_excludes=${sourceExcludes}`, {
+    const res = await fetch(`${process.env.PAMSEARCHAPI_URL}/stillingsok/ad/ad/${id}?_source_excludes=${excludes}`, {
         headers: {
             "Content-Type": "application/json",
         },
@@ -70,13 +68,7 @@ export async function generateMetadata({ params }) {
         openGraph: {
             title: getStillingTitle(data._source),
             description: getStillingDescription(data._source),
-            images: [
-                {
-                    url: "https://arbeidsplassen.nav.no/images/arbeidsplassen-open-graph.png",
-                    width: 1200,
-                    height: 630,
-                },
-            ],
+            images: [defaultOpenGraphImage],
         },
         robots: data && data._source.status !== "ACTIVE" ? "noindex" : "",
         alternates: {
@@ -87,9 +79,7 @@ export async function generateMetadata({ params }) {
 
 export default async function Page({ params }) {
     const ad = await fetchAd(params.id);
-
-    // Todo: Sørg for at STILLINGSOK_URL variabel virker
-    const shareAdRedirectUrl = `${STILLINGSOK_URL}/stilling/${params.id}`;
+    const shareAdRedirectUrl = `${process.env.ARBEIDSPLASSEN_URL}/stillinger/stilling/${params.id}`;
 
     return <Ad ad={ad} shareAdRedirectUrl={shareAdRedirectUrl} />;
 }

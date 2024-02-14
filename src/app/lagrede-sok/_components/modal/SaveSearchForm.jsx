@@ -1,4 +1,6 @@
-import React, { useContext, useRef, useState } from "react";
+"use client";
+
+import React, { useContext, useRef, useState, useTransition } from "react";
 import {
     Alert,
     BodyLong,
@@ -13,9 +15,8 @@ import {
 import PropTypes from "prop-types";
 import { UserContext } from "../../../_common/user/UserProvider";
 import useToggle from "../../../_common/hooks/useToggle";
-import { FetchStatus } from "../../../_common/hooks/useFetchReducer";
 import { isStringEmpty } from "../../../_common/utils/utils";
-import UserAPI from "../../../_common/api/UserAPI";
+import { saveSavedSearchAction, updateSavedSearchAction } from "../action";
 
 export const FormModes = {
     ADD: "ADD",
@@ -27,10 +28,10 @@ export const FormModes = {
  * Form for creating or updating a saved search.
  */
 function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, defaultFormMode }) {
-    const { user } = useContext(UserContext);
+    const [isPending, startTransition] = useTransition();
+    const [showError, setShowError] = useState(false);
 
-    // Fetch
-    const [saveStatus, setSaveStatus] = useState(FetchStatus.NOT_FETCHED);
+    const { user } = useContext(UserContext);
 
     // Form modes
     const [formMode, setFormMode] = useState(defaultFormMode);
@@ -65,9 +66,8 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
     function handleFormSubmit(e) {
         e.preventDefault();
         if (validateForm()) {
-            setSaveStatus(FetchStatus.IS_FETCHING);
-
             let dataToBeSaved = {
+                uuid: existingSavedSearch?.uuid,
                 title,
                 notifyType,
                 duration: notifyType === "NONE" ? 0 : duration,
@@ -76,16 +76,15 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
             };
 
             if (formMode === FormModes.ADD) {
-                UserAPI.post("api/v1/savedsearches/", dataToBeSaved)
-                    .then((response) => {
-                        setSaveStatus(FetchStatus.SUCCESS);
-                        if (onSuccess) {
-                            onSuccess(response);
-                        }
-                    })
-                    .catch(() => {
-                        setSaveStatus(FetchStatus.FAILURE);
-                    });
+                startTransition(async () => {
+                    setShowError(false);
+                    const { success, data } = await saveSavedSearchAction(dataToBeSaved);
+                    if (!success) {
+                        setShowError(true);
+                    } else {
+                        onSuccess(data);
+                    }
+                });
             } else {
                 if (formMode === FormModes.UPDATE) {
                     dataToBeSaved = {
@@ -98,17 +97,15 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
                         searchQuery: formData.searchQuery,
                     };
                 }
-
-                UserAPI.put(`api/v1/savedsearches/${existingSavedSearch.uuid}`, dataToBeSaved)
-                    .then((response) => {
-                        setSaveStatus(FetchStatus.SUCCESS);
-                        if (onSuccess) {
-                            onSuccess(response);
-                        }
-                    })
-                    .catch(() => {
-                        setSaveStatus(FetchStatus.FAILURE);
-                    });
+                startTransition(async () => {
+                    setShowError(false);
+                    const { success, data } = await updateSavedSearchAction(dataToBeSaved);
+                    if (!success) {
+                        setShowError(true);
+                    } else {
+                        onSuccess(data);
+                    }
+                });
             }
         }
     }
@@ -191,19 +188,14 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
                         )}
                     </>
                 )}
-                {saveStatus === FetchStatus.FAILURE && (
+                {showError && (
                     <Alert variant="error" className="mb-4 mt-4" role="alert">
                         Noe gikk galt ved lagring, forsøk igjen eller last siden på nytt
                     </Alert>
                 )}
             </Modal.Body>
             <Modal.Footer>
-                <Button
-                    variant="primary"
-                    type="submit"
-                    loading={saveStatus === FetchStatus.IS_FETCHING}
-                    disabled={saveStatus === FetchStatus.IS_FETCHING}
-                >
+                <Button variant="primary" type="submit" loading={isPending} disabled={isPending}>
                     Lagre søk
                 </Button>
                 <Button variant="secondary" type="button" onClick={onClose}>

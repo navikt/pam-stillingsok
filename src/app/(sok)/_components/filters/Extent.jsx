@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { Checkbox, Fieldset } from "@navikt/ds-react";
-import { ADD_EXTENT, REMOVE_EXTENT } from "../../_utils/old_query";
+import { ADD_EXTENT, REMOVE_EXTENT } from "../../_utils/queryReducer";
 import mergeCount from "../utils/mergeCount";
 import { logSearchFilterAdded, logSearchFilterRemoved } from "../../../_common/tracking/amplitude";
 
@@ -28,7 +28,7 @@ function Extent({ initialValues, updatedValues, query, dispatch }) {
             <div>
                 {values.map((item) => (
                     <Checkbox
-                        name="extent"
+                        name="extent[]"
                         key={item.key}
                         value={item.key}
                         onChange={handleClick}

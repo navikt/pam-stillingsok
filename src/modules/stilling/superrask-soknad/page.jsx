@@ -48,6 +48,7 @@ function SuperraskPage({ match }) {
                     });
                 });
 
+            TODO: denne må over inn i ny kode et sted
             try {
                 logAmplitudeEvent("submit superrask søknad", {
                     numberOfQualifications: data.applicationForm.qualifications.length,

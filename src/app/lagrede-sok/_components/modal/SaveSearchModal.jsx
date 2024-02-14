@@ -1,10 +1,10 @@
-import React, { useContext, useEffect } from "react";
+"use client";
+
+import React, { useContext, useEffect, useState } from "react";
 import { BodyLong, HStack, Loader, Modal } from "@navikt/ds-react";
 import PropTypes from "prop-types";
 import { UserContext } from "../../../_common/user/UserProvider";
-import UserAPI from "../../../_common/api/UserAPI";
 import useToggle from "../../../_common/hooks/useToggle";
-import { FetchAction, FetchStatus, useFetchReducer } from "../../../_common/hooks/useFetchReducer";
 import SaveSearchForm from "./SaveSearchForm";
 import RegisterEmailForm from "./RegisterEmailForm";
 import { isStringEmpty } from "../../../_common/utils/utils";
@@ -19,21 +19,31 @@ import NotFoundMessage from "./NotFoundMessage";
  */
 function SaveSearchModal({ onClose, onSaveSearchSuccess, formData, defaultFormMode, savedSearchUuid }) {
     const { user } = useContext(UserContext);
+
+    // TODO: isLoading, notFound, errorWhileFetching is just set temporary to keep old functionality
+    const { isLoading, setIsLoading } = useState(false);
+    const { notFound, setNotFound } = useState(false);
+    const { errorWhileFetching, setErrorWhileFetching } = useState(false);
+
     const [shouldShowSavedSearchForm, showSavedSearchForm, hideSavedSearchForm] = useToggle(false);
     const [shouldShowRegisterEmailForm, showRegisterEmailForm, hideRegisterEmailForm] = useToggle(false);
     const [shouldShowSuccessMessage, showSuccessMessage] = useToggle(false);
     const [shouldShowConfirmEmailMessage, showConfirmEmailMessage] = useToggle(false);
-    const [existingSearchResponse, dispatch] = useFetchReducer();
 
     function fetchSavedSearch(id) {
-        dispatch({ type: FetchAction.BEGIN });
-        UserAPI.get(`api/v1/savedsearches/${id}`)
-            .then((data) => {
-                dispatch({ type: FetchAction.RESOLVE, data });
-            })
-            .catch((error) => {
-                dispatch({ type: FetchAction.REJECT, error });
-            });
+        // TODO: hent lagret søk på ny?
+        setIsLoading(true);
+
+        // dispatch({ type: FetchAction.BEGIN });
+        // UserAPI.get(`api/savedsearches/${id}`)
+        //     .then((data) => {
+        //         dispatch({ type: FetchAction.RESOLVE, data });
+        //     })
+        //     .catch((error) => {
+        //         dispatch({ type: FetchAction.REJECT, error });
+        //     });
+
+        setIsLoading(false);
     }
 
     function handleSavedSearchFormSuccess(response) {
@@ -55,38 +65,29 @@ function SaveSearchModal({ onClose, onSaveSearchSuccess, formData, defaultFormMo
         showConfirmEmailMessage();
     }
 
-    const { status, data, error } = existingSearchResponse;
-
     /**
      * If editing an existing saved search, fetch this first.
      * Otherwise, just show the save search form right away
      */
     useEffect(() => {
-        if (savedSearchUuid) {
-            fetchSavedSearch(savedSearchUuid);
-        } else {
-            showSavedSearchForm();
-        }
+        // TODO: Hvorfor hente lagret søk på ny?{
+        // if (savedSearchUuid) {
+        //     fetchSavedSearch(savedSearchUuid);
+        //
+        // } else {
+        showSavedSearchForm();
+        // }
     }, [savedSearchUuid]);
 
-    /**
-     * When an existing search has loaded, we can show the save search form
-     */
-    useEffect(() => {
-        if (existingSearchResponse.status === FetchStatus.SUCCESS) {
-            showSavedSearchForm();
-        }
-    }, [existingSearchResponse.status]);
-
     return (
-        <Modal onClose={onClose} header={{ heading: "Lagre søk" }} open width="medium">
-            {status === FetchStatus.IS_FETCHING && (
+        <Modal onClose={onClose} header={{ heading: "Lagre søk" }} open width="medium" portal>
+            {isLoading && (
                 <HStack justify="center" className="mt-8 mb-8" role="status">
                     <Loader size="2xlarge" />
                 </HStack>
             )}
-            {status === FetchStatus.FAILURE && error.statusCode === 404 && <NotFoundMessage />}
-            {status === FetchStatus.FAILURE && error.statusCode !== 404 && (
+            {notFound === 404 && <NotFoundMessage />}
+            {errorWhileFetching && (
                 <Modal.Body>
                     <BodyLong>Feil. Forsøk å laste siden på nytt.</BodyLong>
                 </Modal.Body>
@@ -94,7 +95,7 @@ function SaveSearchModal({ onClose, onSaveSearchSuccess, formData, defaultFormMo
 
             {shouldShowSavedSearchForm && (
                 <SaveSearchForm
-                    existingSavedSearch={data}
+                    existingSavedSearch={formData}
                     formData={formData}
                     defaultFormMode={defaultFormMode}
                     onClose={onClose}

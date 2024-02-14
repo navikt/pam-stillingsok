@@ -4,8 +4,8 @@ import React, { useEffect, useReducer, useState } from "react";
 import PropTypes from "prop-types";
 import { Box, Button, HGrid, Hide, HStack, Show, Stack, Heading } from "@navikt/ds-react";
 import { useRouter, useSearchParams } from "next/navigation";
-import queryReducer, { isSearchQueryEmpty, SET_FROM, stringifyQuery, toBrowserQuery } from "../_utils/old_query";
-import SearchBoxForm from "./searchBox/SearchBoxForm";
+import queryReducer, { SET_FROM } from "../_utils/queryReducer";
+import { toBrowserQuery, isSearchQueryEmpty, stringifyQuery } from "../_utils/query";
 import SearchResult from "./searchResult/SearchResult";
 import DoYouWantToSaveSearch from "./howToPanels/DoYouWantToSaveSearch";
 import SelectedFilters from "./selectedFilters/SelectedFilters";
@@ -16,6 +16,7 @@ import FilterIcon from "./icons/FilterIcon";
 import logAmplitudeEvent from "../../_common/tracking/amplitude";
 import LoggedInButtons from "./loggedInButtons/LoggedInButtons";
 import FiltersMobile from "./filters/FiltersMobile";
+import SearchBox from "./searchBox/SearchBox";
 
 export default function Search({ query, searchResult, aggregations, locations }) {
     const [updatedQuery, queryDispatch] = useReducer(queryReducer, query);
@@ -56,8 +57,12 @@ export default function Search({ query, searchResult, aggregations, locations })
         queryDispatch({ type: SET_FROM, value: updatedQuery.from + updatedQuery.size });
     }
 
+    function onFormSubmit(e) {
+        e.preventDefault();
+    }
+
     return (
-        <>
+        <form onSubmit={onFormSubmit}>
             <Box paddingBlock={{ xs: "4", md: "12" }} paddingInline={{ xs: "4", sm: "6" }}>
                 <Stack justify={{ md: "center" }}>
                     <Heading level="1" size="xlarge">
@@ -67,7 +72,7 @@ export default function Search({ query, searchResult, aggregations, locations })
             </Box>
 
             <div className="container-small">
-                <SearchBoxForm query={query} dispatchQuery={queryDispatch} />
+                <SearchBox query={updatedQuery} dispatch={queryDispatch} />
                 <Box paddingBlock={{ xs: "0 4", md: "0 12" }}>
                     <HStack gap="2" justify={{ xs: "start", md: "center" }} align={{ xs: "start", md: "center" }}>
                         <Show below="md">
@@ -91,7 +96,7 @@ export default function Search({ query, searchResult, aggregations, locations })
             <SearchResultHeader
                 isFiltersVisible={isFiltersVisible}
                 searchResult={searchResult}
-                query={query}
+                query={updatedQuery}
                 queryDispatch={queryDispatch}
             />
 
@@ -102,7 +107,7 @@ export default function Search({ query, searchResult, aggregations, locations })
             >
                 <Hide below="md">
                     <FiltersDesktop
-                        query={query}
+                        query={updatedQuery}
                         dispatchQuery={queryDispatch}
                         aggregations={aggregations}
                         locations={locations}
@@ -113,7 +118,7 @@ export default function Search({ query, searchResult, aggregations, locations })
                 <Show below="md">
                     {isFiltersVisible && (
                         <FiltersMobile
-                            query={query}
+                            query={updatedQuery}
                             dispatchQuery={queryDispatch}
                             aggregations={aggregations}
                             locations={locations}
@@ -137,7 +142,7 @@ export default function Search({ query, searchResult, aggregations, locations })
                     <Feedback query={query} />
                 </div>
             </HGrid>
-        </>
+        </form>
     );
 }
 

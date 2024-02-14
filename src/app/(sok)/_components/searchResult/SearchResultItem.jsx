@@ -1,9 +1,9 @@
 import PropTypes from "prop-types";
 import React, { useLayoutEffect, useRef } from "react";
-import { BodyLong, BodyShort, Heading, HStack, Link as AkselLink, Tag } from "@navikt/ds-react";
+import { BodyLong, BodyShort, Heading, HStack, Link as AkselLink, Tag, VStack } from "@navikt/ds-react";
 import { addDays, endOfDay, format as formatDateFns, isSameDay, isValid, parse, parseISO, subDays } from "date-fns";
 import { nb } from "date-fns/locale";
-import { Buldings3Icon, EarthIcon } from "@navikt/aksel-icons";
+import { Buldings3Icon, LocationPinIcon } from "@navikt/aksel-icons";
 import Link from "next/link";
 import getEmployer from "../../../_common/utils/getEmployer";
 import getWorkLocation from "../../../_common/utils/getWorkLocation";
@@ -97,22 +97,22 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, isD
                 </BodyLong>
             )}
 
-            <div className="mb-2">
+            <VStack gap="2" className="mb-2">
                 {employer && (
-                    <HStack gap="2" className="mb-1">
-                        <div>
+                    <HStack gap="2" wrap={false} align="center">
+                        <VStack align="center">
                             <Buldings3Icon width="1.5em" height="1.5em" aria-hidden="true" />
                             <BodyShort visuallyHidden>Arbeidsgiver</BodyShort>
-                        </div>
+                        </VStack>
                         <BodyLong id={`${ad.uuid}-employer`} className="overflow-wrap-anywhere">
                             {employer}
                         </BodyLong>
                     </HStack>
                 )}
                 {location && (
-                    <HStack gap="2" className="mb-1">
+                    <HStack gap="2" wrap={false}>
                         <div>
-                            <EarthIcon width="1.5em" height="1.5em" aria-label="Sted" aria-hidden="true" />
+                            <LocationPinIcon width="1.5em" height="1.5em" aria-label="Sted" aria-hidden="true" />
                             <BodyShort visuallyHidden>Sted</BodyShort>
                         </div>
                         <BodyLong id={`${ad.uuid}-location`} className="overflow-wrap-anywhere">
@@ -120,7 +120,7 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, isD
                         </BodyLong>
                     </HStack>
                 )}
-            </div>
+            </VStack>
 
             <HStack gap="4" align="center">
                 {showExpired && <Tag variant="warning-moderate">Annonsen er utløpt</Tag>}

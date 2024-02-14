@@ -12,7 +12,7 @@ import {
     REMOVE_MUNICIPAL,
     REMOVE_REMOTE,
     SET_INTERNATIONAL,
-} from "../../_utils/old_query";
+} from "../../_utils/queryReducer";
 import buildLocations from "../utils/buildLocations";
 import buildHomeOfficeValues from "../utils/buildHomeOfficeValues";
 import { logSearchFilterAdded, logSearchFilterRemoved } from "../../../_common/tracking/amplitude";
@@ -82,19 +82,28 @@ function Locations({ locations, query, dispatch, updatedValues }) {
 
                         return (
                             <React.Fragment key={location.key}>
-                                <Checkbox
-                                    name="location"
-                                    value={location.key}
-                                    onChange={handleCheckboxClick(location.key, location.type)}
-                                    checked={
-                                        query.counties.includes(location.key) ||
-                                        (location.key === "UTLAND" && query.international === true)
-                                    }
-                                >
-                                    <span translate={location.key !== "UTLAND" ? "no" : undefined}>
-                                        {`${fixLocationName(location.key)} (${location.count})`}
-                                    </span>
-                                </Checkbox>
+                                {location.key === "UTLAND" ? (
+                                    <Checkbox
+                                        name="international"
+                                        value="true"
+                                        onChange={handleCheckboxClick(location.key, location.type)}
+                                        checked={query.international === true}
+                                    >
+                                        Utland
+                                    </Checkbox>
+                                ) : (
+                                    <Checkbox
+                                        name="counties[]"
+                                        value={location.key}
+                                        onChange={handleCheckboxClick(location.key, location.type)}
+                                        checked={query.counties.includes(location.key)}
+                                    >
+                                        <span translate="no">
+                                            {`${fixLocationName(location.key)} (${location.count})`}
+                                        </span>
+                                    </Checkbox>
+                                )}
+
                                 {(query.counties.includes(location.key) ||
                                     (location.key === "UTLAND" && query.international === true)) &&
                                     location.key !== "OSLO" &&
@@ -105,7 +114,11 @@ function Locations({ locations, query, dispatch, updatedValues }) {
                                                     {location.subLocations &&
                                                         location.subLocations.map((subLocation) => (
                                                             <Checkbox
-                                                                name="location"
+                                                                name={
+                                                                    location.key === "UTLAND"
+                                                                        ? "countries[]"
+                                                                        : "municipals[]"
+                                                                }
                                                                 key={subLocation.key}
                                                                 value={subLocation.key}
                                                                 onChange={handleCheckboxClick(
@@ -141,7 +154,7 @@ function Locations({ locations, query, dispatch, updatedValues }) {
                     {homeOfficeValues &&
                         homeOfficeValues.map((remote) => (
                             <Checkbox
-                                name="remote"
+                                name="remote[]"
                                 key={remote.key}
                                 value={remote.key}
                                 onChange={handleHomeOfficeClick}
