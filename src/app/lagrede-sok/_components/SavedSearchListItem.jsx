@@ -8,7 +8,7 @@ import { ArrowsCirclepathIcon, PencilIcon, TrashIcon } from "@navikt/aksel-icons
 import { formatDate } from "../../_common/utils/utils";
 import AlertModal from "../../_common/components/modals/AlertModal";
 import SaveSearchModal from "./modal/SaveSearchModal";
-import UserAPI from "../../_common/api/UserAPI";
+import UserAPI from "../../_common/user/UserAPI";
 import useToggle from "../../_common/hooks/useToggle";
 import { FetchStatus } from "../../_common/hooks/useFetchReducer";
 import { FormModes } from "./modal/SaveSearchForm";

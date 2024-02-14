@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import { Alert, BodyLong, Button, ConfirmationPanel, Modal } from "@navikt/ds-react";
-import UserAPI from "../api/UserAPI";
+import UserAPI from "./UserAPI";
 import { UserContext } from "./UserProvider";
 import { AuthenticationContext } from "../auth/contexts/AuthenticationProvider";
 import { FetchStatus } from "../hooks/useFetchReducer";

@@ -15,7 +15,7 @@ import {
 import { ExternalLinkIcon } from "@navikt/aksel-icons";
 import Link from "next/link";
 import { formatDate, isValidEmail, isValidUrl } from "../../../_common/utils/utils";
-import logAmplitudeEvent from "../../../_common/tracking/amplitude";
+import logAmplitudeEvent from "../../../_common/monitoring/amplitude";
 import FavouritesButton from "../../../favoritter/_components/FavouritesButton";
 
 export function getApplicationUrl(properties) {

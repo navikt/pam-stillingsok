@@ -1,18 +1,14 @@
+/**
 import React, { useContext, useEffect, useState } from "react";
 import { AuthenticationContext, AuthenticationStatus } from "../../app/_common/auth/contexts/AuthenticationProvider";
 import LoginIsRequiredPage from "../../app/_common/auth/components/LoginIsRequiredPage";
 import { HasAcceptedTermsStatus, UserContext } from "../../app/_common/user/UserProvider";
 import UserConsentIsRequired from "../../app/favoritter/_components/UserConsentIsRequired";
 import { FetchAction, useFetchReducer } from "../../app/_common/hooks/useFetchReducer";
-import UserAPI from "../../app/_common/api/UserAPI";
+import UserAPI from "../../app/_common/user/UserAPI";
 import FavouritesList from "../../app/favoritter/_components/FavouritesList";
 import NoFavourites from "../../app/favoritter/_components/NoFavourites";
 
-/**
- * Page showing users favourites (saved ads).
- * If user is not logged in or hasn't accepted user terms
- * a message about this will be shown instead.
- */
 function FavouritesPage() {
     const { authenticationStatus, login } = useContext(AuthenticationContext);
     const { hasAcceptedTermsStatus } = useContext(UserContext);
@@ -32,10 +28,6 @@ function FavouritesPage() {
             });
     }
 
-    /**
-     *  Fetch favourites when user has logged in and accepted terms,
-     *  and every time sortBy is changed
-     */
     useEffect(() => {
         if (
             authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED &&
@@ -61,3 +53,4 @@ function FavouritesPage() {
 }
 
 export default FavouritesPage;
+*/

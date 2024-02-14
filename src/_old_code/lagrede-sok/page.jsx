@@ -1,3 +1,4 @@
+/**
 import React, { useContext, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import SavedSearchesList from "../../app/lagrede-sok/_components/SavedSearchesList";
@@ -6,14 +7,12 @@ import LoginIsRequiredPage from "../../app/_common/auth/components/LoginIsRequir
 import { HasAcceptedTermsStatus, UserContext } from "../../app/_common/user/UserProvider";
 import UserConsentIsRequired from "../../app/lagrede-sok/_components/UserConsentIsRequired";
 import { FetchAction, useFetchReducer } from "../../app/_common/hooks/useFetchReducer";
-import UserAPI from "../../app/_common/api/UserAPI";
+import UserAPI from "../../app/_common/user/UserAPI";
 import NoSavedSearches from "../../app/lagrede-sok/_components/NoSavedSearches";
 
-/**
  * Page showing saved searches.
  * If user is not logged in or hasn't accepted user terms
  * a message about this will be shown instead.
- */
 function SavedSearchesPage() {
     const { authenticationStatus, login } = useContext(AuthenticationContext);
     const { hasAcceptedTermsStatus } = useContext(UserContext);
@@ -34,9 +33,7 @@ function SavedSearchesPage() {
             });
     }
 
-    /**
      * Fetch saved searches when user has logged in and accepted terms
-     */
     useEffect(() => {
         if (
             authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED &&
@@ -62,3 +59,4 @@ function SavedSearchesPage() {
 }
 
 export default SavedSearchesPage;
+*/
