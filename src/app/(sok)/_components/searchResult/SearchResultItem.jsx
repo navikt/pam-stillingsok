@@ -67,73 +67,81 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, isD
     };
 
     return (
-        <article
+        <HStack
+            gap="3"
+            justify="space-between"
+            wrap={false}
+            as="article"
             ref={ref}
             tabIndex={shouldAutoFocus ? -1 : undefined}
             className="mb-12"
             aria-labelledby={`${ad.uuid}-h3`}
         >
-            {published && (
-                <BodyLong weight="semibold" size="small" textColor="subtle">
-                    {isPublishedToday && "Ny i dag"}
-                    {isPublishedYesterday && "I går"}
-                    {isPublishedTwoDaysAgo && "To dager siden"}
-                    {!isPublishedToday && !isPublishedYesterday && !isPublishedTwoDaysAgo && published}
-                </BodyLong>
-            )}
+            <VStack gap="3">
+                <VStack gap="1">
+                    {published && (
+                        <BodyShort weight="semibold" size="small" textColor="subtle">
+                            {isPublishedToday && "Ny i dag"}
+                            {isPublishedYesterday && "I går"}
+                            {isPublishedTwoDaysAgo && "To dager siden"}
+                            {!isPublishedToday && !isPublishedYesterday && !isPublishedTwoDaysAgo && published}
+                        </BodyShort>
+                    )}
 
-            <HStack gap="2" wrap={false} align="center" justify="space-between" className="mb-2">
-                <Heading level="3" size="small" className="overflow-wrap-anywhere" id={`${ad.uuid}-h3`}>
-                    <LinkToAd stilling={ad} employer={employer}>
-                        {ad.title}
-                    </LinkToAd>
-                </Heading>
-                {favouriteButton}
-            </HStack>
-
-            {jobTitle && (
-                <BodyLong weight="semibold" id={`${ad.uuid}-jobTitle`} className="mb-4 overflow-wrap-anywhere">
-                    {jobTitle}
-                </BodyLong>
-            )}
-
-            <VStack gap="2" className="mb-2">
-                {employer && (
-                    <HStack gap="2" wrap={false} align="center">
-                        <VStack align="center">
-                            <Buldings3Icon width="1.5em" height="1.5em" aria-hidden="true" />
-                            <BodyShort visuallyHidden>Arbeidsgiver</BodyShort>
-                        </VStack>
-                        <BodyLong id={`${ad.uuid}-employer`} className="overflow-wrap-anywhere">
-                            {employer}
-                        </BodyLong>
+                    <HStack gap="2" wrap={false} align="center" justify="space-between">
+                        <Heading level="3" size="small" className="overflow-wrap-anywhere" id={`${ad.uuid}-h3`}>
+                            <LinkToAd stilling={ad} employer={employer}>
+                                {ad.title}
+                            </LinkToAd>
+                        </Heading>
                     </HStack>
-                )}
-                {location && (
-                    <HStack gap="2" wrap={false}>
-                        <div>
-                            <LocationPinIcon width="1.5em" height="1.5em" aria-label="Sted" aria-hidden="true" />
-                            <BodyShort visuallyHidden>Sted</BodyShort>
-                        </div>
-                        <BodyLong id={`${ad.uuid}-location`} className="overflow-wrap-anywhere">
-                            {location}
+
+                    {jobTitle && (
+                        <BodyShort weight="semibold" id={`${ad.uuid}-jobTitle`} className="overflow-wrap-anywhere">
+                            {jobTitle}
+                        </BodyShort>
+                    )}
+                </VStack>
+
+                <VStack gap="1">
+                    {employer && (
+                        <HStack gap="2" wrap={false} align="center">
+                            <VStack align="center">
+                                <Buldings3Icon width="1.5em" height="1.5em" aria-hidden="true" />
+                                <BodyShort visuallyHidden>Arbeidsgiver</BodyShort>
+                            </VStack>
+                            <BodyShort id={`${ad.uuid}-employer`} className="overflow-wrap-anywhere">
+                                {employer}
+                            </BodyShort>
+                        </HStack>
+                    )}
+                    {location && (
+                        <HStack gap="2" wrap={false} align="center">
+                            <VStack align="center">
+                                <LocationPinIcon width="1.5em" height="1.5em" aria-label="Sted" aria-hidden="true" />
+                                <BodyShort visuallyHidden>Sted</BodyShort>
+                            </VStack>
+                            <BodyShort id={`${ad.uuid}-location`} className="overflow-wrap-anywhere">
+                                {location}
+                            </BodyShort>
+                        </HStack>
+                    )}
+                </VStack>
+
+                <HStack gap="4" align="center">
+                    {showExpired && <Tag variant="warning-moderate">Annonsen er utløpt</Tag>}
+                    {hasInterestform && <Tag variant="info-moderate">Superrask søknad</Tag>}
+                    {frist && (
+                        <BodyLong weight="semibold" size="small" textColor="subtle">
+                            {fristText()}
                         </BodyLong>
-                    </HStack>
-                )}
+                    )}
+                </HStack>
+
+                {isDebug && <Debug ad={ad} />}
             </VStack>
-
-            <HStack gap="4" align="center">
-                {showExpired && <Tag variant="warning-moderate">Annonsen er utløpt</Tag>}
-                {hasInterestform && <Tag variant="info-moderate">Superrask søknad</Tag>}
-                {frist && (
-                    <BodyLong weight="semibold" size="small" textColor="subtle">
-                        {fristText()}
-                    </BodyLong>
-                )}
-            </HStack>
-
-            {isDebug && <Debug ad={ad} />}
-        </article>
+            <div className="mt-4">{favouriteButton}</div>
+        </HStack>
     );
 }
 
