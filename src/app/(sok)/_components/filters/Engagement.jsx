@@ -4,7 +4,7 @@ import { Checkbox, Fieldset } from "@navikt/ds-react";
 import { ADD_ENGAGEMENT_TYPE, REMOVE_ENGAGEMENT_TYPE } from "../../_utils/queryReducer";
 import mergeCount from "../utils/mergeCount";
 import moveCriteriaToBottom from "../utils/moveFacetToBottom";
-import { logSearchFilterAdded, logSearchFilterRemoved } from "../../../_common/tracking/amplitude";
+import { logSearchFilterAdded, logSearchFilterRemoved } from "../../../_common/monitoring/amplitude";
 
 /**
  * This ensures that 'Annet' is displayed as 'Ikke oppgitt' in the search filters.

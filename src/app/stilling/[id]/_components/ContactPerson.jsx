@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { BodyLong, CopyButton, Heading, HStack, Label, Link as AkselLink, Tooltip } from "@navikt/ds-react";
 import { isValidEmail } from "../../../_common/utils/utils";
-import logAmplitudeEvent from "../../../_common/tracking/amplitude";
+import logAmplitudeEvent from "../../../_common/monitoring/amplitude";
 
 function logCopyContactInfoEvent(type, id, title) {
     logAmplitudeEvent("copy contact info", { type, id, title });
@@ -20,7 +20,7 @@ export default function ContactPerson({ contactList, adId, adTitle }) {
                     {contactList.length > 1 ? "Kontaktpersoner for stillingen" : "Kontaktperson for stillingen"}
                 </Heading>
                 {contactList.map((contact) => (
-                    <div className="mt-4">
+                    <div className="mt-4" key={`${adId}-contact-name`}>
                         {contact.name && <Label as="p">{contact.name}</Label>}
                         {contact.title && <BodyLong>{contact.title}</BodyLong>}
                         {contact.phone && (

@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { Button } from "@navikt/ds-react";
 import { HeartFillIcon, HeartIcon } from "@navikt/aksel-icons";
-import logAmplitudeEvent from "../../_common/tracking/amplitude";
+import logAmplitudeEvent from "../../_common/monitoring/amplitude";
 import { HasAcceptedTermsStatus, UserContext } from "../../_common/user/UserProvider";
 import { AuthenticationContext, AuthenticationStatus } from "../../_common/auth/contexts/AuthenticationProvider";
 import { FavouritesContext } from "./FavouritesProvider";

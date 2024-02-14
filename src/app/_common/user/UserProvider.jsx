@@ -3,11 +3,11 @@ import PropTypes from "prop-types";
 import { BodyLong, Button, HStack, Modal } from "@navikt/ds-react";
 import { WorriedFigure } from "@navikt/arbeidsplassen-react";
 import { AuthenticationContext, AuthenticationStatus } from "../auth/contexts/AuthenticationProvider";
-import UserAPI from "../api/UserAPI";
+import UserAPI from "./UserAPI";
 import { FetchAction, useFetchReducer } from "../hooks/useFetchReducer";
 import useToggle from "../hooks/useToggle";
 import AlertModalWithPageReload from "../components/modals/AlertModalWithPageReload";
-import { setAuthenticatedStatus } from "../tracking/amplitude";
+import { setAuthenticatedStatus } from "../monitoring/amplitude";
 
 export const UserContext = React.createContext({});
 

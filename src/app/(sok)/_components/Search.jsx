@@ -13,7 +13,7 @@ import Feedback from "./feedback/Feedback";
 import FiltersDesktop from "./filters/FiltersDesktop";
 import SearchResultHeader from "./searchResultHeader/SearchResultHeader";
 import FilterIcon from "./icons/FilterIcon";
-import logAmplitudeEvent from "../../_common/tracking/amplitude";
+import logAmplitudeEvent from "../../_common/monitoring/amplitude";
 import LoggedInButtons from "./loggedInButtons/LoggedInButtons";
 import FiltersMobile from "./filters/FiltersMobile";
 import SearchBox from "./searchBox/SearchBox";

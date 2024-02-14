@@ -4,7 +4,7 @@ import { Alert, BodyLong, Button, TextField, Modal } from "@navikt/ds-react";
 import { isValidEmail } from "../../../_common/utils/utils";
 import { UserContext } from "../../../_common/user/UserProvider";
 import { FetchStatus } from "../../../_common/hooks/useFetchReducer";
-import UserAPI from "../../../_common/api/UserAPI";
+import UserAPI from "../../../_common/user/UserAPI";
 
 function RegisterEmailForm({ onClose, onSuccess }) {
     const { user, updateUser } = useContext(UserContext);

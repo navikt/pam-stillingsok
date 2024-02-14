@@ -3,7 +3,7 @@ import React from "react";
 import { Checkbox, Fieldset } from "@navikt/ds-react";
 import { ADD_SECTOR, REMOVE_SECTOR } from "../../_utils/queryReducer";
 import mergeCount from "../utils/mergeCount";
-import { logSearchFilterAdded, logSearchFilterRemoved } from "../../../_common/tracking/amplitude";
+import { logSearchFilterAdded, logSearchFilterRemoved } from "../../../_common/monitoring/amplitude";
 
 function Sector({ initialValues, updatedValues, query, dispatch }) {
     const values = mergeCount(initialValues, updatedValues);

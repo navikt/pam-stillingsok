@@ -23,7 +23,7 @@ function Debug({ ad }) {
                     <HStack gap="4" className="mb-8">
                         {ad.occupationList &&
                             ad.occupationList.map((occupation) => (
-                                <BodyLong className="metadata">
+                                <BodyLong className="metadata" key={`${occupation.level1}-${occupation.level2}`}>
                                     {occupation.level1}: {occupation.level2}
                                 </BodyLong>
                             ))}
@@ -39,7 +39,7 @@ function Debug({ ad }) {
                     <HStack gap="4" className="mb-8">
                         {ad.categoryList &&
                             ad.categoryList.map((category) => (
-                                <BodyLong className="metadata">
+                                <BodyLong className="metadata" key={category.id}>
                                     {category.name} ({category.categoryType})
                                 </BodyLong>
                             ))}
@@ -56,7 +56,7 @@ function Debug({ ad }) {
                     <HStack gap="4" className="mb-8">
                         {ad.properties.searchtags &&
                             ad.properties.searchtags.map((tag) => (
-                                <BodyLong className="metadata">
+                                <BodyLong className="metadata" key={tag.label + "-" + tag.score}>
                                     {tag.label} (score {tag.score})
                                 </BodyLong>
                             ))}
