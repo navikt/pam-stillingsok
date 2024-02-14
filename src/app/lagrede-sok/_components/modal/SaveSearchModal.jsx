@@ -25,7 +25,7 @@ function SaveSearchModal({ onClose, onSaveSearchSuccess, formData, defaultFormMo
     const { notFound, setNotFound } = useState(false);
     const { errorWhileFetching, setErrorWhileFetching } = useState(false);
 
-    const [shouldShowSavedSearchForm, showSavedSearchForm, hideSavedSearchForm] = useToggle(false);
+    const [shouldShowSavedSearchForm, showSavedSearchForm, hideSavedSearchForm] = useToggle(true);
     const [shouldShowRegisterEmailForm, showRegisterEmailForm, hideRegisterEmailForm] = useToggle(false);
     const [shouldShowSuccessMessage, showSuccessMessage] = useToggle(false);
     const [shouldShowConfirmEmailMessage, showConfirmEmailMessage] = useToggle(false);
@@ -69,15 +69,15 @@ function SaveSearchModal({ onClose, onSaveSearchSuccess, formData, defaultFormMo
      * If editing an existing saved search, fetch this first.
      * Otherwise, just show the save search form right away
      */
-    useEffect(() => {
+    /* useEffect(() => {
         // TODO: Hvorfor hente lagret søk på ny?{
-        // if (savedSearchUuid) {
-        //     fetchSavedSearch(savedSearchUuid);
-        //
-        // } else {
-        showSavedSearchForm();
-        // }
-    }, [savedSearchUuid]);
+         if (savedSearchUuid) {
+             fetchSavedSearch(savedSearchUuid);
+
+         } else {
+         showSavedSearchForm();
+         }
+     }, [savedSearchUuid]); */
 
     return (
         <Modal onClose={onClose} header={{ heading: "Lagre søk" }} open width="medium" portal>
