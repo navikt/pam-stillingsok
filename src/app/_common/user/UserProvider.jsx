@@ -25,6 +25,23 @@ function UserProvider({ children }) {
     const [hasAcceptedTermsStatus, setHasAcceptedTermsStatus] = useState(HasAcceptedTermsStatus.NOT_FETCHED);
     const [forbiddenUser, setForbiddenUser] = useState(false);
 
+    function fetchUser() {
+        dispatch({ type: FetchAction.BEGIN });
+
+        UserAPI.get("api/user")
+            .then((data) => {
+                dispatch({ type: FetchAction.RESOLVE, data });
+            })
+            .catch((error) => {
+                dispatch({ type: FetchAction.REJECT, error });
+                if (error.statusCode === 403) {
+                    setForbiddenUser(true);
+                } else if (error.statusCode !== 404) {
+                    openErrorDialog();
+                }
+            });
+    }
+
     function updateUser(data) {
         dispatch({ type: FetchAction.SET_DATA, data });
     }
@@ -42,23 +59,6 @@ function UserProvider({ children }) {
     };
 
     useEffect(() => {
-        function fetchUser() {
-            dispatch({ type: FetchAction.BEGIN });
-
-            UserAPI.get("api/user")
-                .then((data) => {
-                    dispatch({ type: FetchAction.RESOLVE, data });
-                })
-                .catch((error) => {
-                    dispatch({ type: FetchAction.REJECT, error });
-                    if (error.statusCode === 403) {
-                        setForbiddenUser(true);
-                    } else if (error.statusCode !== 404) {
-                        openErrorDialog();
-                    }
-                });
-        }
-
         if (authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED) {
             fetchUser();
         }
