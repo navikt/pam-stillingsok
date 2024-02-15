@@ -1,38 +1,43 @@
+"use client";
+
 import PropTypes from "prop-types";
-import React, { useState } from "react";
+import React, { useState, useTransition } from "react";
 import { Alert, Link as AkselLink, BodyShort, Heading, Tag, Button, HStack } from "@navikt/ds-react";
 import Link from "next/link";
 import { ArrowsCirclepathIcon, PencilIcon, TrashIcon } from "@navikt/aksel-icons";
 import { formatDate } from "../../_common/utils/utils";
 import AlertModal from "../../_common/components/modals/AlertModal";
 import SaveSearchModal from "./modal/SaveSearchModal";
-import UserAPI from "../../_common/api/UserAPI";
+import UserAPI from "../../_common/user/UserAPI";
 import useToggle from "../../_common/hooks/useToggle";
 import { FetchStatus } from "../../_common/hooks/useFetchReducer";
 import { FormModes } from "./modal/SaveSearchForm";
-import AlertModalWithPageReload from "../../_common/components/modals/AlertModalWithPageReload";
+import { deleteSavedSearchAction } from "./action";
 
-function SavedSearchListItem({ savedSearch, removeSavedSearchFromList, replaceSavedSearchInList, autoOpenModal }) {
-    const [deleteStatus, setDeleteStatus] = useState(FetchStatus.NOT_FETCHED);
+function SavedSearchListItem({
+    savedSearch,
+    removeSavedSearchFromList,
+    replaceSavedSearchInList,
+    autoOpenModal,
+    openErrorDialog,
+}) {
+    const [isPending, startTransition] = useTransition();
+
     const [shouldShowSavedSearchModal, openSavedSearchModal, closeSavedSearchModal] = useToggle(autoOpenModal);
     const [shouldShowConfirmationModal, openConfirmationModal, closeConfirmationModal] = useToggle();
-    const [shouldShowErrorModal, openErrorModal, closeErrorModal] = useToggle();
     const [restartEmailNotificationStatus, setRestartEmailNotificationStatus] = useState(FetchStatus.NOT_FETCHED);
     const isEmailNotificationExpired = savedSearch.status === "INACTIVE" && savedSearch.notifyType === "EMAIL";
 
     function deleteSavedSearch() {
-        setDeleteStatus(FetchStatus.IS_FETCHING);
-        UserAPI.remove(`api/v1/savedsearches/${savedSearch.uuid}`)
-            .then(() => {
-                closeConfirmationModal();
-                setDeleteStatus(FetchStatus.SUCCESS);
+        startTransition(async () => {
+            const { success } = await deleteSavedSearchAction(savedSearch.uuid);
+            closeConfirmationModal();
+            if (!success) {
+                openErrorDialog();
+            } else {
                 removeSavedSearchFromList(savedSearch);
-            })
-            .catch(() => {
-                setDeleteStatus(FetchStatus.FAILURE);
-                closeConfirmationModal();
-                openErrorModal();
-            });
+            }
+        });
     }
 
     function reactivateEmailNotification() {
@@ -49,11 +54,6 @@ function SavedSearchListItem({ savedSearch, removeSavedSearchFromList, replaceSa
             .catch(() => {
                 setRestartEmailNotificationStatus(FetchStatus.FAILURE);
             });
-    }
-
-    function handleConfirmationModalClose() {
-        closeConfirmationModal();
-        setDeleteStatus(FetchStatus.NOT_FETCHED);
     }
 
     function handleSavedSearchUpdated(updatedData) {
@@ -120,24 +120,14 @@ function SavedSearchListItem({ savedSearch, removeSavedSearchFromList, replaceSa
             {shouldShowConfirmationModal && (
                 <AlertModal
                     id="confirm-delete-saved-search"
-                    onCancel={handleConfirmationModalClose}
+                    onCancel={() => closeConfirmationModal()}
                     onConfirm={deleteSavedSearch}
                     confirmLabel="Slett"
                     title="Slette lagret søk"
-                    spinner={deleteStatus === FetchStatus.IS_FETCHING}
+                    spinner={isPending}
                 >
                     {`Sikker på at du vil slette søket "${savedSearch.title}"?`}
                 </AlertModal>
-            )}
-
-            {shouldShowErrorModal && (
-                <AlertModalWithPageReload
-                    id="delete-saved-search-error"
-                    onClose={closeErrorModal}
-                    title="Feil ved sletting"
-                >
-                    Forsøk å laste siden på nytt eller prøv igjen om en liten stund.
-                </AlertModalWithPageReload>
             )}
 
             {shouldShowSavedSearchModal && (
@@ -168,6 +158,7 @@ SavedSearchListItem.propTypes = {
     removeSavedSearchFromList: PropTypes.func.isRequired,
     replaceSavedSearchInList: PropTypes.func.isRequired,
     autoOpenModal: PropTypes.bool.isRequired,
+    openErrorDialog: PropTypes.func.isRequired,
 };
 
 export default SavedSearchListItem;

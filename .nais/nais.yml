@@ -49,8 +49,6 @@ spec:
       value: {{ arbeidsplassen_url }}
     - name: INTEREST_API_URL
       value: {{ interest_api_url }}
-    - name: PAM_STILLINGSOK_URL
-      value: {{ pam_stillingsok_url }}
     - name: PORT
       value: "8080"
   accessPolicy:

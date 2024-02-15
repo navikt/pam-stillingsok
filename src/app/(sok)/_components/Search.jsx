@@ -13,11 +13,10 @@ import Feedback from "./feedback/Feedback";
 import FiltersDesktop from "./filters/FiltersDesktop";
 import SearchResultHeader from "./searchResultHeader/SearchResultHeader";
 import FilterIcon from "./icons/FilterIcon";
-import logAmplitudeEvent from "../../_common/tracking/amplitude";
+import logAmplitudeEvent from "../../_common/monitoring/amplitude";
 import LoggedInButtons from "./loggedInButtons/LoggedInButtons";
 import FiltersMobile from "./filters/FiltersMobile";
 import SearchBox from "./searchBox/SearchBox";
-import FavouritesProvider from "../../favoritter/_components/FavouritesProvider";
 
 export default function Search({ query, searchResult, aggregations, locations }) {
     const [updatedQuery, queryDispatch] = useReducer(queryReducer, query);
@@ -42,7 +41,7 @@ export default function Search({ query, searchResult, aggregations, locations })
 
             logAmplitudeEvent("Stillinger - Utførte søk");
 
-            router.replace(`/${stringifyQuery(browserQuery)}`, { scroll: updatedQuery.from > 0 });
+            router.replace(`/${stringifyQuery(browserQuery)}`, { scroll: false });
         } else {
             // Skip search first time query change, since that
             // will just reload the search result we already got
@@ -54,87 +53,96 @@ export default function Search({ query, searchResult, aggregations, locations })
         logAmplitudeEvent("Stillinger - Utførte søk");
     }, []);
 
+    function loadMoreResults() {
+        queryDispatch({ type: SET_FROM, value: updatedQuery.from + updatedQuery.size });
+    }
+
     function onFormSubmit(e) {
         e.preventDefault();
     }
 
     return (
-        <FavouritesProvider>
-            <form onSubmit={onFormSubmit}>
-                <Box paddingBlock={{ xs: "4", md: "12" }} paddingInline={{ xs: "4", sm: "6" }}>
-                    <Stack justify={{ md: "center" }}>
-                        <Heading level="1" size="xlarge">
-                            Søk etter din neste jobb
-                        </Heading>
-                    </Stack>
+        <form onSubmit={onFormSubmit}>
+            <Box paddingBlock={{ xs: "4", md: "12" }} paddingInline={{ xs: "4", sm: "6" }}>
+                <Stack justify={{ md: "center" }}>
+                    <Heading level="1" size="xlarge">
+                        Søk etter din neste jobb
+                    </Heading>
+                </Stack>
+            </Box>
+
+            <div className="container-small">
+                <SearchBox query={updatedQuery} dispatch={queryDispatch} />
+                <Box paddingBlock={{ xs: "0 4", md: "0 12" }}>
+                    <HStack gap="2" justify={{ xs: "start", md: "center" }} align={{ xs: "start", md: "center" }}>
+                        <Show below="md">
+                            <Button
+                                variant="tertiary"
+                                onClick={() => {
+                                    setIsFiltersVisible(!isFiltersVisible);
+                                }}
+                                icon={<FilterIcon />}
+                                aria-expanded={isFiltersVisible}
+                            >
+                                Velg sted, yrke og andre filtre
+                            </Button>
+                        </Show>
+
+                        <LoggedInButtons />
+                    </HStack>
                 </Box>
+            </div>
 
-                <div className="container-small">
-                    <SearchBox query={updatedQuery} dispatch={queryDispatch} />
-                    <Box paddingBlock={{ xs: "0 4", md: "0 12" }}>
-                        <HStack gap="2" justify={{ xs: "start", md: "center" }} align={{ xs: "start", md: "center" }}>
-                            <Show below="md">
-                                <Button
-                                    variant="tertiary"
-                                    onClick={() => {
-                                        setIsFiltersVisible(!isFiltersVisible);
-                                    }}
-                                    icon={<FilterIcon />}
-                                    aria-expanded={isFiltersVisible}
-                                >
-                                    Velg sted, yrke og andre filtre
-                                </Button>
-                            </Show>
+            <SearchResultHeader
+                isFiltersVisible={isFiltersVisible}
+                searchResult={searchResult}
+                query={updatedQuery}
+                queryDispatch={queryDispatch}
+            />
 
-                            <LoggedInButtons />
-                        </HStack>
-                    </Box>
-                </div>
+            <HGrid
+                columns={{ xs: 1, md: "280px auto", lg: "370px auto" }}
+                gap={{ xs: "0", md: "12" }}
+                className="container-large mt-8 mb-16"
+            >
+                <Hide below="md">
+                    <FiltersDesktop
+                        query={updatedQuery}
+                        dispatchQuery={queryDispatch}
+                        aggregations={aggregations}
+                        locations={locations}
+                        searchResult={searchResult}
+                    />
+                </Hide>
 
-                <SearchResultHeader
-                    isFiltersVisible={isFiltersVisible}
-                    searchResult={searchResult}
-                    query={updatedQuery}
-                    queryDispatch={queryDispatch}
-                />
-
-                <HGrid
-                    columns={{ xs: 1, md: "280px auto", lg: "370px auto" }}
-                    gap={{ xs: "0", md: "12" }}
-                    className="container-large mt-8 mb-16"
-                >
-                    <Hide below="md">
-                        <FiltersDesktop
+                <Show below="md">
+                    {isFiltersVisible && (
+                        <FiltersMobile
                             query={updatedQuery}
                             dispatchQuery={queryDispatch}
                             aggregations={aggregations}
                             locations={locations}
+                            onCloseClick={() => setIsFiltersVisible(false)}
                             searchResult={searchResult}
                         />
-                    </Hide>
+                    )}
+                </Show>
 
-                    <Show below="md">
-                        {isFiltersVisible && (
-                            <FiltersMobile
-                                query={updatedQuery}
-                                dispatchQuery={queryDispatch}
-                                aggregations={aggregations}
-                                locations={locations}
-                                onCloseClick={() => setIsFiltersVisible(false)}
-                                searchResult={searchResult}
-                            />
-                        )}
-                    </Show>
-
-                    <div>
-                        <SelectedFilters query={query} queryDispatch={queryDispatch} />
-                        <SearchResult searchResult={searchResult} query={query} queryDispatch={queryDispatch} />
-                        <DoYouWantToSaveSearch query={query} />
-                        <Feedback query={query} />
-                    </div>
-                </HGrid>
-            </form>
-        </FavouritesProvider>
+                <div>
+                    <SelectedFilters query={query} queryDispatch={queryDispatch} />
+                    <SearchResult
+                        searchResult={searchResult}
+                        query={query}
+                        queryDispatch={queryDispatch}
+                        loadMoreResults={() => {
+                            loadMoreResults();
+                        }}
+                    />
+                    <DoYouWantToSaveSearch query={query} />
+                    <Feedback query={query} />
+                </div>
+            </HGrid>
+        </form>
     );
 }
 

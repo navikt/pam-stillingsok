@@ -2,7 +2,7 @@
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    basePath: '/stillinger',
-}
+    basePath: "/stillinger",
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

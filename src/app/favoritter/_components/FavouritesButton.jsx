@@ -1,18 +1,18 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { Button } from "@navikt/ds-react";
-import { HeartIcon, HeartFillIcon } from "@navikt/aksel-icons";
-import logAmplitudeEvent from "../../_common/tracking/amplitude";
+import { HeartFillIcon, HeartIcon } from "@navikt/aksel-icons";
+import logAmplitudeEvent from "../../_common/monitoring/amplitude";
 import { HasAcceptedTermsStatus, UserContext } from "../../_common/user/UserProvider";
 import { AuthenticationContext, AuthenticationStatus } from "../../_common/auth/contexts/AuthenticationProvider";
 import { FavouritesContext } from "./FavouritesProvider";
-import UserAPI from "../../_common/api/UserAPI";
 import getWorkLocation from "../../_common/utils/getWorkLocation";
 import getEmployer from "../../_common/utils/getEmployer";
 import UserConsentModal from "../../_common/user/UserConsentModal";
 import LoginModal from "../../_common/auth/components/LoginModal";
 import useToggle from "../../_common/hooks/useToggle";
 import AlertModalWithPageReload from "../../_common/components/modals/AlertModalWithPageReload";
+import { addFavouriteAction, deleteFavouriteAction } from "./actions";
 
 /**
  * Displays a button "Lagre favoritt" or "Slett favoritt".
@@ -37,10 +37,11 @@ function FavouritesButton({ id, stilling, className, variant, useShortText = fal
     const isPending = pendingFavourites.includes(id);
     const isFavourite = favourites.find((f) => f.favouriteAd.uuid === id) !== undefined;
 
-    function saveFavourite(adUuid, ad) {
+    async function saveFavourite(adUuid, ad) {
         addToPending(adUuid);
-        UserAPI.post("api/user/favourites", {
-            favouriteAd: {
+
+        try {
+            const favourite = await addFavouriteAction({
                 uuid: adUuid,
                 source: ad.source,
                 reference: ad.reference,
@@ -52,33 +53,26 @@ function FavouritesButton({ id, stilling, className, variant, useShortText = fal
                 employer: getEmployer(ad),
                 published: ad.published,
                 expires: ad.expires,
-            },
-        })
-            .then((response) => {
-                addFavouriteToLocalList(response);
-            })
-            .catch(() => {
-                openErrorDialog();
-            })
-            .finally(() => {
-                removeFormPending(adUuid);
             });
+            addFavouriteToLocalList(favourite);
+        } catch (err) {
+            openErrorDialog();
+        }
+        removeFormPending(adUuid);
     }
 
-    function deleteFavourite(adUuid) {
+    async function deleteFavourite(adUuid) {
         const found = favourites.find((fav) => fav.favouriteAd.uuid === adUuid);
 
         addToPending(adUuid);
-        UserAPI.remove(`api/user/favourites/${found.uuid}`)
-            .then(() => {
-                removeFavouriteFromLocalList(found);
-            })
-            .catch(() => {
-                openErrorDialog();
-            })
-            .finally(() => {
-                removeFormPending(adUuid);
-            });
+
+        const { success } = await deleteFavouriteAction(found.uuid);
+        if (!success) {
+            openErrorDialog();
+        } else {
+            removeFavouriteFromLocalList(found);
+        }
+        removeFormPending(adUuid);
     }
 
     function handleSaveFavouriteClick() {

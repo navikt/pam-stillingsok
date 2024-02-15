@@ -15,7 +15,7 @@ import {
 } from "../../_utils/queryReducer";
 import buildLocations from "../utils/buildLocations";
 import buildHomeOfficeValues from "../utils/buildHomeOfficeValues";
-import { logSearchFilterAdded, logSearchFilterRemoved } from "../../../_common/tracking/amplitude";
+import { logSearchFilterAdded, logSearchFilterRemoved } from "../../../_common/monitoring/amplitude";
 
 function Locations({ locations, query, dispatch, updatedValues }) {
     const locationValues = buildLocations(updatedValues.aggregations, locations);

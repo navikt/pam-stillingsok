@@ -1,7 +1,6 @@
 import FavouritesList from "./_components/FavouritesList";
 import UserConsentIsRequired from "./_components/UserConsentIsRequired";
 import { getMetadataTitle } from "../layout";
-import { STILLINGSOK_URL } from "../_common/environment";
 
 export const metadata = {
     title: getMetadataTitle("Favoritter"),
@@ -32,7 +31,8 @@ export default async function Page(props) {
 
     const getFavourites = async (sortByInput) => {
         const favouritesResponse = await fetch(
-            `${STILLINGSOK_URL}/api/user/favourites?size=999&sortBy=${sortByInput}`,
+            // todo: call aduser
+            `http://localhost:3003/stillinger/api/user/favourites?size=999&sortBy=${sortByInput}`,
             {
                 method: "GET",
                 cache: "no-store",
@@ -40,8 +40,7 @@ export default async function Page(props) {
             },
         );
         if (favouritesResponse.status !== 200) {
-            // TODO: forbedre feilhåndtering
-            return <div>En feil har skjedd... </div>;
+            throw new Error("Failed to fetch favourites");
         }
         const dataFromApi = await favouritesResponse.json();
         return dataFromApi.content;
@@ -50,5 +49,5 @@ export default async function Page(props) {
     let sortBy = props.searchParams.sortBy || "published";
     const favourites = await getFavourites(sortBy);
 
-    return <FavouritesList favourites={favourites} sortBy={sortBy} />;
+    return <FavouritesList favourites={favourites} />;
 }

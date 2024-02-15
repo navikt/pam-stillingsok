@@ -1,4 +1,4 @@
-export default [
+const mock = [
     {
         id: 4159,
         uuid: "6a392f9d-9df8-42b6-8db5-7d9e50eed800",
@@ -28,3 +28,5 @@ export default [
         userUuid: "13eea315-9daa-4e0c-811b-472057ae2f9c",
     },
 ];
+
+export default mock;

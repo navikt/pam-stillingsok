@@ -1,35 +1,58 @@
 "use client";
 
-import React, { useEffect } from "react";
-import { Footer, SkipLink } from "@navikt/arbeidsplassen-react";
+import React, { useContext, useEffect } from "react";
+import { Footer, Header, SkipLink } from "@navikt/arbeidsplassen-react";
 import PropTypes from "prop-types";
-import Header from "./_common/components/header/Header";
-import AuthenticationProvider from "./_common/auth/contexts/AuthenticationProvider";
+import AuthenticationProvider, {
+    AuthenticationContext,
+    AuthenticationStatus,
+} from "./_common/auth/contexts/AuthenticationProvider";
 import UserProvider from "./_common/user/UserProvider";
-import { initAmplitude } from "./_common/tracking/amplitude";
+import { initAmplitude } from "./_common/monitoring/amplitude";
 import googleTranslateWorkaround from "./_common/utils/googleTranslateWorkaround";
-import initSentry from "./_common/tracking/sentry";
+import initSentry from "./_common/monitoring/sentry";
+import FavouritesProvider from "./favoritter/_components/FavouritesProvider";
 
 // Todo: Gå igjennom alle fetch-kall i koden og se om referrer er satt riktig. Nå er den satt referrer: CONTEXT_PATH, men ikke sikker på hva som er rett her
 
-function App({ children }) {
+function App({ children, amplitudeToken }) {
+    const { authenticationStatus, login, logout } = useContext(AuthenticationContext);
+
     useEffect(() => {
         initSentry();
-        initAmplitude();
         googleTranslateWorkaround();
     }, []);
+
+    useEffect(() => {
+        initAmplitude(amplitudeToken);
+    }, [amplitudeToken]);
+
+    let authStatus = "unknown";
+    if (authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED) {
+        authStatus = "is-authenticated";
+    } else if (authenticationStatus === AuthenticationStatus.NOT_AUTHENTICATED) {
+        authStatus = "not-authenticated";
+    }
 
     return (
         <AuthenticationProvider>
             <UserProvider>
-                <div id="app">
-                    <SkipLink href="#main-content" />
-                    <div className="arb-push-footer-down">
-                        <Header />
-                        <main id="main-content">{children}</main>
+                <FavouritesProvider>
+                    <div id="app">
+                        <SkipLink href="#main-content" />
+                        <div className="arb-push-footer-down">
+                            <Header
+                                variant="person"
+                                active="ledige-stillinger"
+                                authenticationStatus={authStatus}
+                                onLogin={login}
+                                onLogout={logout}
+                            />
+                            <main id="main-content">{children}</main>
+                        </div>
+                        <Footer />
                     </div>
-                    <Footer />
-                </div>
+                </FavouritesProvider>
             </UserProvider>
         </AuthenticationProvider>
     );
@@ -37,6 +60,7 @@ function App({ children }) {
 
 App.propTypes = {
     children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
+    amplitudeToken: PropTypes.string,
 };
 
 export default App;

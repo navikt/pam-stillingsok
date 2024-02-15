@@ -1,3 +1,5 @@
+"use server";
+
 const mockData = [
     {
         uuid: "685e37af-355a-43a5-89bf-508bf9267ebf",
@@ -82,24 +84,51 @@ const mockData = [
     },
 ];
 
-export async function GET() {
-    console.log(`GET favoritter`);
-    return Response.json({ content: mockData });
+export async function getFavouriteAction() {
+    //todo: fetch favourites?size=9999 from aduser
+    return mockData;
 }
 
-export async function POST(request) {
-    const body = await request.json();
+export async function deleteFavouriteAction(uuid) {
+    let response;
+    try {
+        // TODO: call aduser
+        response = await fetch(`http://localhost:3003/stillinger/api/user/favourites?uuid=${uuid}`, {
+            method: "DELETE",
+        });
+    } catch (e) {
+        console.log("Error deleting favourite", e);
+        return { success: false };
+    }
+    if (response.status !== 200) {
+        console.log("Error deleting favourite", response.status);
+        return { success: false };
+    }
+    return { success: true };
+}
+
+export async function addFavouriteAction(body) {
+    let response;
+    try {
+        // TODO: call aduser
+        response = await fetch(`http://localhost:3003/stillinger/api/user/favourites`, {
+            method: "POST",
+            body: JSON.stringify(body),
+        });
+    } catch (e) {
+        throw new Error("Error adding favourite");
+    }
+
+    if (response.status !== 200) {
+        throw new Error("Error adding favourite");
+    }
+
     const mock = {
         uuid: new Date().getTime(),
         userUuid: "123",
         favouriteAd: body,
         created: "2024-02-09T12:00:53.578776841",
     };
-    return Response.json(mock);
-}
 
-export async function DELETE(request) {
-    console.log("DELETE uuid", request.nextUrl.searchParams.get("uuid"));
-    await new Promise((r) => setTimeout(r, 1000));
-    return new Response("", { status: 200 });
+    return mock;
 }

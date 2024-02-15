@@ -9,7 +9,7 @@ import {
 } from "../../_utils/queryReducer";
 import moveCriteriaToBottom from "../utils/moveFacetToBottom";
 import mergeCount from "../utils/mergeCount";
-import { logSearchFilterAdded, logSearchFilterRemoved } from "../../../_common/tracking/amplitude";
+import { logSearchFilterAdded, logSearchFilterRemoved } from "../../../_common/monitoring/amplitude";
 
 const OCCUPATION_LEVEL_OTHER = "Uoppgitt/ ikke identifiserbare";
 

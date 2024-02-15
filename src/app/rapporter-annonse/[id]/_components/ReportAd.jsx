@@ -8,7 +8,6 @@ import {
     BodyLong,
     BodyShort,
     Box,
-    Button,
     Checkbox,
     CheckboxGroup,
     ErrorSummary,
@@ -19,8 +18,8 @@ import {
     Textarea,
     VStack,
 } from "@navikt/ds-react";
-import { useFormState, useFormStatus } from "react-dom";
-import Link from "next/link";
+import { useFormState } from "react-dom";
+import { FormButtonBar } from "./FormButtonBar";
 
 const reportCategories = [
     { label: "Diskriminerende innhold", key: "discrimination" },
@@ -37,7 +36,6 @@ function ReportAd({ ad, submitForm }) {
 
     const [state, handleSubmit] = useFormState(submitForm, { validationErrors: {}, success: false });
     const { validationErrors } = state;
-    const { pending } = useFormStatus();
 
     useEffect(() => {
         if (Object.keys(validationErrors).length > 0) {
@@ -136,14 +134,7 @@ function ReportAd({ ad, submitForm }) {
                             )}
 
                             <HStack gap="4" className="mb-12">
-                                <Button type="submit" variant="primary" loading={pending}>
-                                    Rapporter annonse
-                                </Button>
-                                {!pending && (
-                                    <Button type="button" variant="secondary" as={Link} href={`/stilling/${ad._id}`}>
-                                        Avbryt
-                                    </Button>
-                                )}
+                                <FormButtonBar id={ad._id} />
                             </HStack>
                         </form>
                     )}
