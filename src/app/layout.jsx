@@ -52,12 +52,6 @@ export const metadata = {
 export default function RootLayout({ children }) {
     return (
         <html lang="no">
-            <head>
-                <Script
-                    strategy="beforeInteractive"
-                    src={`${process.env.ARBEIDSPLASSEN_URL ?? ""}/stillinger/api/publicEnv`}
-                />
-            </head>
             <body data-theme="arbeidsplassen" className={myFont.className}>
                 <Providers>
                     <App amplitudeToken={process.env.AMPLITUDE_TOKEN}>{children}</App>
