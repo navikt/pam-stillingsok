@@ -1,30 +1,13 @@
 import { notFound } from "next/navigation";
 import ReportAd from "./_components/ReportAd";
 import validateForm from "../../stilling/[id]/_components/validate";
-import { excludes } from "../../stilling/[id]/page";
 import { getMetadataTitle } from "../../layout";
+import { fetchAd } from "../../stilling/FetchAd";
 
 export const metadata = {
     title: getMetadataTitle("Rapporter annonse"),
     robots: "noindex",
 };
-
-async function fetchAd(id) {
-    const res = await fetch(`${process.env.PAMSEARCHAPI_URL}/stillingsok/ad/ad/${id}?_source_excludes=${excludes}`, {
-        headers: {
-            "Content-Type": "application/json",
-        },
-    });
-
-    if (res.status === 404) {
-        notFound();
-    }
-    if (!res.ok) {
-        throw new Error("Failed to fetch data");
-    }
-
-    return res.json();
-}
 
 function parseFormData(formData, categories, adId) {
     const categoryString = categories.join(", ");
