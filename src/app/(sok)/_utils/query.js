@@ -1,7 +1,7 @@
 import capitalizeFirstLetter from "../../_common/utils/capitalizeFirstLetter";
 import fixLocationName from "../../_common/utils/fixLocationName";
 
-export const SEARCH_CHUNK_SIZE = 50;
+export const SEARCH_CHUNK_SIZE = 25;
 
 export const PublishedLabelsEnum = {
     "now/d": "Nye i dag",

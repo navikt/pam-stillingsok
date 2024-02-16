@@ -26,6 +26,7 @@ export const SET_SORTING = "SET_SORTING";
 export const SET_INTERNATIONAL = "SET_INTERNATIONAL";
 export const SET_FROM = "SET_FROM";
 export const RESET = "RESET";
+export const SET_FROM_AND_SIZE = "SET_FROM_AND_SIZE";
 
 function getSort(previousSort, searchString, searchFields) {
     if (previousSort !== "expires") {
@@ -210,6 +211,12 @@ export default function queryReducer(state, action) {
                 ...queryState,
                 from: action.value,
                 size: SEARCH_CHUNK_SIZE,
+            };
+        case SET_FROM_AND_SIZE:
+            return {
+                ...queryState,
+                from: action.value,
+                size: action.size,
             };
         case RESET:
             return defaultQuery;
