@@ -21,7 +21,6 @@ function SearchResult({ searchResult, query, queryDispatch }) {
         setTotalPages(Math.ceil(total / resultsPerPage));
         if (query.size) {
             setResultsPerPage(query.size);
-            setResultsPerPage(query.size);
         }
         if (query.from) {
             const newPageNumber = Math.floor(query.from / resultsPerPage) + 1;
