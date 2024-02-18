@@ -121,7 +121,6 @@ export function toBrowserQuery(query) {
 
     if (browserQuery.from === 0) {
         delete browserQuery.from;
-        delete browserQuery.size;
     }
 
     return removeEmptyPropertiesFromQuery(browserQuery);

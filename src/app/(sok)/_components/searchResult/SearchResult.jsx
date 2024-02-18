@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Pagination as PaginationOK, Select } from "@navikt/ds-react";
+import { Pagination, Select } from "@navikt/ds-react";
 import PropTypes from "prop-types";
-import Pagination from "../pagination/Pagination";
 import SearchResultItem from "./SearchResultItem";
 import FavouritesButton from "../../../favoritter/_components/FavouritesButton";
 import { SET_FROM_AND_SIZE } from "../../_utils/queryReducer";
@@ -20,6 +19,16 @@ function SearchResult({ searchResult, query, queryDispatch }) {
      */
     useEffect(() => {
         setTotalPages(Math.ceil(total / resultsPerPage));
+        if (query.size) {
+            setResultsPerPage(query.size);
+            setResultsPerPage(query.size);
+        }
+        if (query.from) {
+            const newPageNumber = Math.floor(query.from / resultsPerPage) + 1;
+            setPageState(newPageNumber);
+        } else {
+            setPageState(1);
+        }
 
         try {
             const valueFromLocalStorage = localStorage.getItem("isDebug");
@@ -31,19 +40,17 @@ function SearchResult({ searchResult, query, queryDispatch }) {
         }
     });
 
-    useEffect(() => {
-        setTotalPages(Math.ceil(total / resultsPerPage));
-        console.log("GOGOGO", resultsPerPage);
-        // if (query && query.from) {
-        const newPageNumber = Math.floor(query.from / resultsPerPage) + 1;
-        setPageState(Math.floor(query.from / resultsPerPage) + 1);
+    const recalculatePagination = (value) => {
+        setResultsPerPage(value);
+        setTotalPages(Math.ceil(total / value));
+        const newPageNumber = Math.floor(query.from / value) + 1;
+        setPageState(newPageNumber);
         queryDispatch({
             type: SET_FROM_AND_SIZE,
-            value: newPageNumber * resultsPerPage - resultsPerPage,
-            size: resultsPerPage,
+            value: newPageNumber * value - value,
+            size: value,
         });
-        // }
-    }, [resultsPerPage]);
+    };
 
     return (
         <section className="SearchResult">
@@ -67,25 +74,24 @@ function SearchResult({ searchResult, query, queryDispatch }) {
                 ))}
             {searchResult.ads && searchResult.ads.length > 0 && (
                 <>
-                    {console.log("QUERY", query)}
-                    {console.log("RESULT", searchResult)}
-                    {console.log("DISPATCH", queryDispatch)}
                     <Select
                         label="Antall treff per side"
                         onChange={(e) => {
-                            console.log("CHANGE", e.target.value);
-                            setResultsPerPage(e.target.value);
-                            // recalculatePagination();
+                            recalculatePagination(e.target.value);
                         }}
+                        value={resultsPerPage}
                     >
-                        <option>25</option>
-                        <option>100</option>
+                        {[25, 100].map((item) => {
+                            return (
+                                <option value={item} key={`pagi-${item}`}>
+                                    {item}
+                                </option>
+                            );
+                        })}
                     </Select>
-                    {/* <Pagination query={query} searchResult={searchResult} queryDispatch={queryDispatch} /> */}
-                    <PaginationOK
+                    <Pagination
                         page={pageState}
                         onPageChange={(x) => {
-                            console.log("go change");
                             queryDispatch({
                                 type: SET_FROM_AND_SIZE,
                                 value: x * resultsPerPage - resultsPerPage,
@@ -108,7 +114,7 @@ SearchResult.propTypes = {
         ads: PropTypes.arrayOf(PropTypes.shape({})),
     }),
     query: PropTypes.shape({
-        from: PropTypes.string,
+        from: PropTypes.number,
     }),
     queryDispatch: PropTypes.func.isRequired,
 };
