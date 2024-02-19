@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React, { useLayoutEffect, useRef } from "react";
-import { BodyLong, BodyShort, Heading, HStack, Link as AkselLink, Tag, VStack } from "@navikt/ds-react";
+import { BodyShort, Heading, HStack, Link as AkselLink, Tag, VStack } from "@navikt/ds-react";
 import { addDays, endOfDay, format as formatDateFns, isSameDay, isValid, parse, parseISO, subDays } from "date-fns";
 import { nb } from "date-fns/locale";
 import { Buldings3Icon, LocationPinIcon } from "@navikt/aksel-icons";
@@ -132,9 +132,9 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, isD
                     {showExpired && <Tag variant="warning-moderate">Annonsen er utløpt</Tag>}
                     {hasInterestform && <Tag variant="info-moderate">Superrask søknad</Tag>}
                     {frist && (
-                        <BodyLong weight="semibold" size="small" textColor="subtle">
+                        <BodyShort weight="semibold" size="small" textColor="subtle">
                             {fristText()}
-                        </BodyLong>
+                        </BodyShort>
                     )}
                 </HStack>
 
