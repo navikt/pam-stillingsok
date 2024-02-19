@@ -8,7 +8,7 @@
         "build": "next build",
         "dev": "next dev -p 3003",
         "wonderwall": "scripts/wonderwall.sh",
-        "start:dependencies": "docker-compose up --build --remove-orphans mock-oauth2-server redis",
+        "start:dependencies": "./start-docker-compose.sh",
         "docker-build": "npm run build && docker build . -t pam-stillingsok",
         "docker-start": "docker run --name pam-stillingsok -p 8080:8080 -d pam-stillingsok",
         "docker-kill": "npm run docker-stop && npm run docker-rm",
