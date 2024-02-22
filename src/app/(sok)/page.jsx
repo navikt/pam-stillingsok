@@ -32,6 +32,8 @@ async function fetchElasticSearch(query) {
             "Content-Type": "application/json",
         },
         body: JSON.stringify(body),
+        next: { revalidate: 30 },
+        // TODO: figure out how often this should be revalidated
     });
 
     if (!res.ok) {
