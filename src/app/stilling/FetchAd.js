@@ -43,6 +43,8 @@ export async function fetchAd(id) {
         headers: {
             "Content-Type": "application/json",
         },
+        next: { revalidate: 60 },
+        // TODO: figure out how often this should be revalidated
     });
 
     if (res.status === 404) {
