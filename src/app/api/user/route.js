@@ -57,7 +57,8 @@ export async function GET(req) {
 
     console.log("Fetching ok");
 
-    return res.json();
+    let data = await res.json();
+    return new Response(data, { status: 200 });
 }
 
 export async function POST() {
