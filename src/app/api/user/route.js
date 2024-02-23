@@ -14,29 +14,20 @@ const mockData = {
 export const dynamic = "force-dynamic";
 
 export async function GET(req) {
-    console.log("Get token");
     const token = getToken(req);
-    console.log("Validate token");
     const validationResult = await validateToken(token);
 
     if (!validationResult.ok) {
-        console.log("Validate not ok");
         return new Response(null, { status: 401 });
     }
-    console.log("Validate ok");
 
-    console.log("Exchange token");
     const oboRes = await requestTokenxOboToken(token, process.env.ADUSER_AUDIENCE);
     if (!oboRes.ok) {
         console.error("Failed to exchange token");
-        console.error(oboRes.error.message);
         console.error(oboRes.error);
         return new Response(null, { status: 500 });
     }
 
-    console.log("Exchange token ok");
-
-    console.log("Fetching from adser");
     let url = `${process.env.PAMADUSER_URL}/api/v1/user`;
     const res = await fetch(url, {
         method: "GET",
@@ -47,17 +38,14 @@ export async function GET(req) {
         },
     });
 
-    console.log("Fetching done");
-
     if (!res.ok) {
         console.error("Failed to fetch from aduser");
         console.error(res.status);
         return new Response(null, { status: res.status });
     }
 
-    console.log("Fetching ok");
-
     let data = await res.json();
+
     return Response.json(data);
 }
 
