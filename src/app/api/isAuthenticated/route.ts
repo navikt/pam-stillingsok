@@ -1,11 +1,11 @@
-import { getSession } from "@navikt/oasis";
+import { validateToken, getToken } from "@navikt/oasis";
 
 export const dynamic = "force-dynamic";
 
 export async function GET(req: Request) {
-    const session = await getSession(req);
+    const validationResult = await validateToken(getToken(req));
 
-    if (!session) {
+    if (!validationResult.ok) {
         return new Response(null, { status: 401 });
     }
 
