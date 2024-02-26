@@ -19,7 +19,7 @@ function SearchResult({ searchResult, query, loadMoreResults }) {
         } catch (err) {
             // ignore
         }
-    });
+    }, []);
 
     return (
         <section className="SearchResult">
