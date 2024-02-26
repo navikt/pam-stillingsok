@@ -57,6 +57,7 @@ services:
     - PAMADUSER_ARBEIDSPLASSEN_COOKIE_DOMAIN=localhost
     - PAMADUSER_ARBEIDSPLASSEN_COOKIE_SECURE=false
     - TOKEN_X_WELL_KNOWN_URL=http://host.docker.internal:8237/tokenx/.well-known/openid-configuration
+    - TOKEN_X_CLIENT_ID=local-token-x-client-id
     - DB_HOST=postgres
     - DB_PORT=5432
     - DB_DATABASE=pam-aduser
