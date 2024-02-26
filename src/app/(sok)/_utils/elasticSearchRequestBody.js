@@ -1,4 +1,4 @@
-import { SEARCH_CHUNK_SIZE } from "./query";
+import { ALLOWED_NUMBER_OF_RESULTS_PER_PAGE, SEARCH_CHUNK_SIZE } from "./query";
 
 const NOT_DEFINED = "Ikke oppgitt";
 const useRemoteFilter = true;
@@ -559,7 +559,7 @@ const elasticSearchRequestBody = (query) => {
 
     let template = {
         from: from || 0,
-        size: size || SEARCH_CHUNK_SIZE,
+        size: size && ALLOWED_NUMBER_OF_RESULTS_PER_PAGE.includes(size) ? size : SEARCH_CHUNK_SIZE,
         track_total_hits: true,
         query: mainQueryTemplateFunc(q, fields),
         post_filter: {

@@ -24,7 +24,6 @@ export const SET_PUBLISHED = "SET_PUBLISHED";
 export const SET_SEARCH_STRING = "SET_SEARCH_STRING";
 export const SET_SORTING = "SET_SORTING";
 export const SET_INTERNATIONAL = "SET_INTERNATIONAL";
-export const SET_FROM = "SET_FROM";
 export const RESET = "RESET";
 export const SET_FROM_AND_SIZE = "SET_FROM_AND_SIZE";
 
@@ -46,7 +45,6 @@ export default function queryReducer(state, action) {
     const queryState = {
         ...state,
         from: 0,
-        size: SEARCH_CHUNK_SIZE,
     };
 
     switch (action.type) {
@@ -206,20 +204,17 @@ export default function queryReducer(state, action) {
                 ...queryState,
                 sort: action.value,
             };
-        case SET_FROM:
-            return {
-                ...queryState,
-                from: action.value,
-                size: SEARCH_CHUNK_SIZE,
-            };
         case SET_FROM_AND_SIZE:
             return {
                 ...queryState,
-                from: action.value,
+                from: action.from,
                 size: action.size,
             };
         case RESET:
-            return defaultQuery;
+            return {
+                ...defaultQuery,
+                size: queryState.size,
+            };
         default:
             return queryState;
     }

@@ -235,39 +235,37 @@ function SelectedFilters({ query, queryDispatch }) {
     }
 
     return (
-        <div className="mb-8">
-            <HStack gap="2" align="center">
-                {chips.length > MAX_CHIPS ? (
-                    <>
-                        {showAll ? chips : chips.slice(0, MAX_CHIPS)}
-                        {!showAll && (
-                            <Button
-                                size="small"
-                                variant="secondary"
-                                onClick={() => {
-                                    setShowAll(!showAll);
-                                }}
-                            >
-                                {`Vis ${chips.length - MAX_CHIPS} til`}
-                            </Button>
-                        )}
-                    </>
-                ) : (
-                    chips
-                )}
-                <Button
-                    type="button"
-                    variant="tertiary"
-                    onClick={() => {
-                        queryDispatch({ type: "RESET" });
-                    }}
-                    icon={<TrashIcon aria-hidden="true" />}
-                >
-                    Fjern alle
-                </Button>
-                <SaveSearchButton query={query} />
-            </HStack>
-        </div>
+        <HStack gap="2" align="center">
+            {chips.length > MAX_CHIPS ? (
+                <>
+                    {showAll ? chips : chips.slice(0, MAX_CHIPS)}
+                    {!showAll && (
+                        <Button
+                            size="small"
+                            variant="secondary"
+                            onClick={() => {
+                                setShowAll(!showAll);
+                            }}
+                        >
+                            {`Vis ${chips.length - MAX_CHIPS} til`}
+                        </Button>
+                    )}
+                </>
+            ) : (
+                chips
+            )}
+            <Button
+                type="button"
+                variant="tertiary"
+                onClick={() => {
+                    queryDispatch({ type: "RESET" });
+                }}
+                icon={<TrashIcon aria-hidden="true" />}
+            >
+                Fjern alle
+            </Button>
+            <SaveSearchButton query={query} />
+        </HStack>
     );
 }
 
