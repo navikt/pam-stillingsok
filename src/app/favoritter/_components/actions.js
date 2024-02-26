@@ -1,5 +1,7 @@
 "use server";
 
+import logger from "@/app/_common/utils/logger";
+
 const mockData = [
     {
         uuid: "685e37af-355a-43a5-89bf-508bf9267ebf",
@@ -97,11 +99,11 @@ export async function deleteFavouriteAction(uuid) {
             method: "DELETE",
         });
     } catch (e) {
-        console.log("Error deleting favourite", e);
+        logger.error("Error deleting favourite", e);
         return { success: false };
     }
     if (response.status !== 200) {
-        console.log("Error deleting favourite", response.status);
+        logger.error("Error deleting favourite", response.status);
         return { success: false };
     }
     return { success: true };

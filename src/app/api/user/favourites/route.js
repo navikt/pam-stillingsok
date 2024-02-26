@@ -1,3 +1,5 @@
+import logger from "@/app/_common/utils/logger";
+
 const mockData = [
     {
         uuid: "685e37af-355a-43a5-89bf-508bf9267ebf",
@@ -83,7 +85,7 @@ const mockData = [
 ];
 
 export async function GET() {
-    console.log(`GET favoritter`);
+    logger.info(`GET favoritter`);
     return Response.json({ content: mockData });
 }
 
@@ -99,7 +101,7 @@ export async function POST(request) {
 }
 
 export async function DELETE(request) {
-    console.log("DELETE uuid", request.nextUrl.searchParams.get("uuid"));
+    logger.info("DELETE uuid", request.nextUrl.searchParams.get("uuid"));
     await new Promise((r) => setTimeout(r, 1000));
     return new Response("", { status: 200 });
 }
