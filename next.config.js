@@ -12,7 +12,7 @@ const cspHeader = `
     frame-src 'self';
     block-all-mixed-content;
     upgrade-insecure-requests;
-    connect-src: 'self' ${process.env.ARBEIDSPLASSEN_URL} ${process.env.INTEREST_API_URL} https://amplitude.nav.no https://sentry.gc.nav.no;
+    connect-src 'self' ${process.env.ARBEIDSPLASSEN_URL} ${process.env.INTEREST_API_URL} https://amplitude.nav.no https://sentry.gc.nav.no;
 `;
 
 /** @type {import('next').NextConfig} */
