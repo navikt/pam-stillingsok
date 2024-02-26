@@ -45,7 +45,7 @@ export const metadata = {
         images: [defaultOpenGraphImage],
     },
     icons: {
-        icon: "https://arbeidsplassen.nav.no/favicon.png",
+        icon: `/favicon.png`,
     },
 };
 
