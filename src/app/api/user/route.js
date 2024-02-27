@@ -9,7 +9,12 @@ export const dynamic = "force-dynamic";
 const ADUSER_USER_URL = `${process.env.PAMADUSER_URL}/api/v1/user`;
 
 export async function GET() {
-    const oboToken = await getAdUserOboToken();
+    let oboToken;
+    try {
+        oboToken = await getAdUserOboToken();
+    } catch (e) {
+        return new Response(null, { status: 401 });
+    }
 
     const res = await fetch(ADUSER_USER_URL, {
         method: "GET",
@@ -17,8 +22,7 @@ export async function GET() {
     });
 
     if (!res.ok) {
-        console.error("Failed to fetch from aduser");
-        console.error(res.status);
+        console.error(`GET user from aduser failed. ${res.status} ${res.statusText}`);
         return new Response(null, { status: res.status, headers: res.headers });
     }
 
@@ -28,7 +32,12 @@ export async function GET() {
 }
 
 export async function POST(req) {
-    const oboToken = await getAdUserOboToken();
+    let oboToken;
+    try {
+        oboToken = await getAdUserOboToken();
+    } catch (e) {
+        return new Response(null, { status: 401 });
+    }
 
     const res = await fetch(ADUSER_USER_URL, {
         method: "POST",
@@ -39,8 +48,7 @@ export async function POST(req) {
     });
 
     if (!res.ok) {
-        console.error("Failed to post to aduser");
-        console.error(res.status);
+        console.error(`POST user to aduser failed. ${res.status} ${res.statusText}`);
         return new Response(null, { status: res.status });
     }
 
