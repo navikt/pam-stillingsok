@@ -43,11 +43,13 @@ export const metadata = {
     },
 };
 
+const cookie = { closedFilterAccordions: ["sted", "yrke"] };
+
 export default function RootLayout({ children }) {
     return (
         <html lang="no">
             <body data-theme="arbeidsplassen" className={myFont.className}>
-                <Providers>
+                <Providers userPreferences={cookie}>
                     <App amplitudeToken={process.env.AMPLITUDE_TOKEN}>{children}</App>
                 </Providers>
             </body>
