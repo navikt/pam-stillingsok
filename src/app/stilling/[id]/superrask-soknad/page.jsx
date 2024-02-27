@@ -3,12 +3,13 @@ import { v4 as uuidv4 } from "uuid";
 import validateForm, { parseFormData } from "./_components/validateForm";
 import NewApplication from "./_components/NewApplication";
 import { getStillingDescription, getSuperraskTitle } from "../_components/getMetaData";
-import { defaultOpenGraphImage } from "../../../layout";
+import { defaultOpenGraphImage } from "@/app/layout";
 import { fetchAd } from "../../FetchAd";
 
 async function fetchApplicationForm(id) {
     const res = await fetch(`${process.env.INTEREST_API_URL}/application-form/${id}`, {
         headers: { NAV_CALLID_FIELD: uuidv4() },
+        next: { revalidate: 30 },
     });
     if (res.status === 404) {
         notFound();
