@@ -3,6 +3,7 @@ import {
     getAdUserOboToken,
     getDefaultAuthHeaders,
 } from "../../_common/auth/auth";
+import logger from "@/app/_common/utils/logger";
 
 export const dynamic = "force-dynamic";
 
@@ -22,7 +23,7 @@ export async function GET() {
     });
 
     if (!res.ok) {
-        console.error(`GET user from aduser failed. ${res.status} ${res.statusText}`);
+        logger.error(`GET user from aduser failed. ${res.status} ${res.statusText}`);
         return new Response(null, { status: res.status, headers: res.headers });
     }
 
@@ -48,7 +49,7 @@ export async function POST(req) {
     });
 
     if (!res.ok) {
-        console.error(`POST user to aduser failed. ${res.status} ${res.statusText}`);
+        logger.error(`POST user to aduser failed. ${res.status} ${res.statusText}`);
         return new Response(null, { status: res.status });
     }
 

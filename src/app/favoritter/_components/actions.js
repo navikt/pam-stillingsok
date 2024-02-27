@@ -1,11 +1,11 @@
 "use server";
 
-import logger from "@/app/_common/utils/logger";
 import {
     getAdUserDefaultAuthHeadersWithCsrfToken,
     getAdUserOboToken,
     getDefaultAuthHeaders,
 } from "@/app/_common/auth/auth";
+import logger from "@/app/_common/utils/logger";
 
 const ADUSER_FAVOURITES_URL = `${process.env.PAMADUSER_URL}/api/v1/userfavouriteads`;
 
