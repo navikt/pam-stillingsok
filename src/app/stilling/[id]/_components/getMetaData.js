@@ -1,7 +1,7 @@
-import getEmployer from "../../../_common/utils/getEmployer";
-import getWorkLocation from "../../../_common/utils/getWorkLocation";
-import date from "../../../_common/utils/date";
-import { getMetadataTitle } from "../../../layout";
+import getEmployer from "@/app/_common/utils/getEmployer";
+import getWorkLocation from "@/app/_common/utils/getWorkLocation";
+import { getMetadataTitle } from "@/app/layout";
+import formatISOString from "@/app/_common/utils/date";
 
 export function getStillingTitle(source) {
     if (source && source.title) {
@@ -39,7 +39,7 @@ export function getStillingDescription(source) {
         }
 
         if (source.properties.applicationdue) {
-            const applicationDue = date.formatISOString(source.properties.applicationdue, "DD.MM.YYYY");
+            const applicationDue = formatISOString(source.properties.applicationdue, "DD.MM.YYYY");
             descriptionFragments.push(`Søknadsfrist: ${applicationDue}`);
         }
 

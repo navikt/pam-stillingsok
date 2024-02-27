@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { BodyShort, Label, Link as AkselLink } from "@navikt/ds-react";
 import Link from "next/link";
-import { formatDate } from "../../../_common/utils/utils";
+import { formatDate } from "@/app/_common/utils/utils";
 
 export default function AdDetails({ id, source }) {
     return (

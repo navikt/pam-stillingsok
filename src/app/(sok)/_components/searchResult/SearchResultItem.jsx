@@ -5,9 +5,9 @@ import { addDays, endOfDay, format as formatDateFns, isSameDay, isValid, parse, 
 import { nb } from "date-fns/locale";
 import { Buldings3Icon, LocationPinIcon } from "@navikt/aksel-icons";
 import Link from "next/link";
-import getEmployer from "../../../_common/utils/getEmployer";
-import getWorkLocation from "../../../_common/utils/getWorkLocation";
-import { formatDate } from "../../../_common/utils/utils";
+import getEmployer from "@/app/_common/utils/getEmployer";
+import getWorkLocation from "@/app/_common/utils/getWorkLocation";
+import { formatDate } from "@/app/_common/utils/utils";
 import Debug from "./Debug";
 
 export default function SearchResultItem({ ad, showExpired, favouriteButton, isDebug, shouldAutoFocus = false }) {
@@ -74,7 +74,6 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, isD
             as="article"
             ref={ref}
             tabIndex={shouldAutoFocus ? -1 : undefined}
-            className="mb-12"
             aria-labelledby={`${ad.uuid}-h3`}
         >
             <VStack gap="3">

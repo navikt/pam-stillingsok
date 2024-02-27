@@ -2,7 +2,7 @@ import React from "react";
 import { Alert, BodyLong, BodyShort, Heading, Label, Link as AkselLink } from "@navikt/ds-react";
 import PropTypes from "prop-types";
 import Link from "next/link";
-import getEmployer from "../../../../_common/utils/getEmployer";
+import getEmployer from "@/app/_common/utils/getEmployer";
 import { WithdrawButton } from "./WithdrawButton";
 
 function WithdrawApplicationConfirmationRequired({ ad, formAction, hasError }) {

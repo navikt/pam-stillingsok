@@ -9,7 +9,6 @@ const compression = require("compression");
 const { initializeTokenX } = require("./tokenX/tokenXUtils");
 const setUpAduserApiProxy = require("./api/userApiProxyConfig");
 const setUpSuperraskApi = require("./api/superraskApiProxy");
-const { logger } = require("./common/logger");
 
 /* eslint no-console: 0 */
 
@@ -228,16 +227,16 @@ const startServer = (htmlPages) => {
     });
 
     server.listen(port, () => {
-        logger.info(`Express-server startet. Server filer fra ./dist/ til localhost:${port}/`);
+        // logger.info(`Express-server startet. Server filer fra ./dist/ til localhost:${port}/`);
     });
 };
 
 initializeTokenX()
     .then(() =>
         renderSok({}).then(startServer, (error) => {
-            logger.error("Failed to render app", error);
+            console.log("Failed to render app", error);
         }),
     )
     .catch((error) => {
-        logger.error(`Initialisering av token-klienter feilet: ${error.message} `);
+        console.log(`Initialisering av token-klienter feilet: ${error.message}`);
     });

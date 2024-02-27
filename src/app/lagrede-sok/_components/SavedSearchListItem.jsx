@@ -5,12 +5,12 @@ import React, { useState, useTransition } from "react";
 import { Alert, Link as AkselLink, BodyShort, Heading, Tag, Button, HStack } from "@navikt/ds-react";
 import Link from "next/link";
 import { ArrowsCirclepathIcon, PencilIcon, TrashIcon } from "@navikt/aksel-icons";
-import { formatDate } from "../../_common/utils/utils";
-import AlertModal from "../../_common/components/modals/AlertModal";
+import { formatDate } from "@/app/_common/utils/utils";
+import AlertModal from "@/app/_common/components/modals/AlertModal";
 import SaveSearchModal from "./modal/SaveSearchModal";
-import UserAPI from "../../_common/user/UserAPI";
-import useToggle from "../../_common/hooks/useToggle";
-import { FetchStatus } from "../../_common/hooks/useFetchReducer";
+import UserAPI from "@/app/_common/user/UserAPI";
+import useToggle from "@/app/_common/hooks/useToggle";
+import { FetchStatus } from "@/app/_common/hooks/useFetchReducer";
 import { FormModes } from "./modal/SaveSearchForm";
 import { deleteSavedSearchAction } from "./action";
 

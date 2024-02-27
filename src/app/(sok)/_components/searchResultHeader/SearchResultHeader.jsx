@@ -1,8 +1,8 @@
 import React from "react";
 import { BodyShort, Box, Heading, HGrid, Stack } from "@navikt/ds-react";
 import PropTypes from "prop-types";
-import Sorting from "../searchResult/Sorting";
-import { formatNumber } from "../../../_common/utils/utils";
+import Sorting from "@/app/(sok)/_components/searchResult/Sorting";
+import { formatNumber } from "@/app/_common/utils/utils";
 
 function SearchResultHeader({ searchResult, query, queryDispatch }) {
     const annonserWord = searchResult.totalAds === 1 ? "annonse" : "annonser";
@@ -10,7 +10,11 @@ function SearchResultHeader({ searchResult, query, queryDispatch }) {
 
     return (
         <Box background="surface-alt-1-subtle" paddingBlock="4">
-            <HGrid columns={{ xs: 1, lg: "370px auto" }} gap={{ lg: "12" }} className="container-large">
+            <HGrid
+                columns={{ xs: 1, lg: "200px auto", xl: "370px auto" }}
+                gap={{ xs: "0", lg: "6", xl: "12" }}
+                className="container-large"
+            >
                 <div />
                 <Stack
                     direction={{ xs: "column", md: "row" }}

@@ -1,7 +1,7 @@
 import React from "react";
 import { BodyLong, Button, Heading } from "@navikt/ds-react";
 import Link from "next/link";
-import GiveFeedback from "../../../../stilling/[id]/superrask-soknad/_components/GiveFeedback";
+import GiveFeedback from "@/app/stilling/[id]/superrask-soknad/_components/GiveFeedback";
 
 function WithdrawApplicationSuccess() {
     return (

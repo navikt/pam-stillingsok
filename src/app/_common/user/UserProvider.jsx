@@ -2,10 +2,10 @@ import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { BodyLong, Button, HStack, Modal } from "@navikt/ds-react";
 import { WorriedFigure } from "@navikt/arbeidsplassen-react";
-import { AuthenticationContext, AuthenticationStatus } from "../auth/contexts/AuthenticationProvider";
-import useToggle from "../hooks/useToggle";
-import AlertModalWithPageReload from "../components/modals/AlertModalWithPageReload";
-import { setAuthenticatedStatus } from "../monitoring/amplitude";
+import { AuthenticationContext, AuthenticationStatus } from "@/app/_common/auth/contexts/AuthenticationProvider";
+import useToggle from "@/app/_common/hooks/useToggle";
+import AlertModalWithPageReload from "@/app/_common/components/modals/AlertModalWithPageReload";
+import { setAuthenticatedStatus } from "@/app/_common/monitoring/amplitude";
 
 export const UserContext = React.createContext({});
 

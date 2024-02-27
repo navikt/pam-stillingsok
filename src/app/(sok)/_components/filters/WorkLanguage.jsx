@@ -1,10 +1,10 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { Checkbox, Fieldset } from "@navikt/ds-react";
-import { ADD_WORKLANGUAGE, REMOVE_WORKLANGUAGE } from "../../_utils/queryReducer";
-import mergeCount from "../utils/mergeCount";
-import { logSearchFilterAdded, logSearchFilterRemoved } from "../../../_common/monitoring/amplitude";
-import moveCriteriaToBottom from "../utils/moveFacetToBottom";
+import { ADD_WORKLANGUAGE, REMOVE_WORKLANGUAGE } from "@/app/(sok)/_utils/queryReducer";
+import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
+import { logSearchFilterAdded, logSearchFilterRemoved } from "@/app/_common/monitoring/amplitude";
+import moveCriteriaToBottom from "@/app/(sok)/_components/utils/moveFacetToBottom";
 
 function WorkLanguage({ initialValues, updatedValues, query, dispatch }) {
     const sortedValues = moveCriteriaToBottom(initialValues, "Ikke oppgitt");

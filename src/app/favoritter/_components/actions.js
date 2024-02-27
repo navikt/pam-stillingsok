@@ -1,10 +1,11 @@
 "use server";
 
+import logger from "@/app/_common/utils/logger";
 import {
     getAdUserDefaultAuthHeadersWithCsrfToken,
     getAdUserOboToken,
     getDefaultAuthHeaders,
-} from "../../_common/auth/auth";
+} from "@/app/_common/auth/auth";
 
 const ADUSER_FAVOURITES_URL = `${process.env.PAMADUSER_URL}/api/v1/userfavouriteads`;
 
@@ -17,7 +18,7 @@ export async function getFavouriteAction() {
     });
 
     if (!res.ok) {
-        console.error(`GET favourites from aduser failed. ${res.status} ${res.statusText}`);
+        logger.error(`GET favourites from aduser failed. ${res.status} ${res.statusText}`);
         throw new Error();
     }
 
@@ -36,7 +37,7 @@ export async function addFavouriteAction(favouriteAd) {
     });
 
     if (!res.ok) {
-        console.error(`POST favourite to aduser failed. ${res.status} ${res.statusText}`);
+        logger.error(`POST favourite to aduser failed. ${res.status} ${res.statusText}`);
         throw new Error();
     }
 
@@ -52,7 +53,7 @@ export async function deleteFavouriteAction(uuid) {
     });
 
     if (!res.ok) {
-        console.error(`DELETE favourite from aduser failed. ${res.status} ${res.statusText}`);
+        logger.error(`DELETE favourite from aduser failed. ${res.status} ${res.statusText}`);
         throw new Error();
     }
 }

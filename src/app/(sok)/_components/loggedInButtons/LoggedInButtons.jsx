@@ -3,11 +3,11 @@ import { Button } from "@navikt/ds-react";
 import Link from "next/link";
 import { ClockIcon, HeartIcon } from "@navikt/aksel-icons";
 import { useRouter } from "next/navigation";
-import useToggle from "../../../_common/hooks/useToggle";
-import { AuthenticationContext, AuthenticationStatus } from "../../../_common/auth/contexts/AuthenticationProvider";
-import { HasAcceptedTermsStatus, UserContext } from "../../../_common/user/UserProvider";
-import LoginModal from "../../../_common/auth/components/LoginModal";
-import UserConsentModal from "../../../_common/user/UserConsentModal";
+import useToggle from "@/app/_common/hooks/useToggle";
+import { AuthenticationContext, AuthenticationStatus } from "@/app/_common/auth/contexts/AuthenticationProvider";
+import { HasAcceptedTermsStatus, UserContext } from "@/app/_common/user/UserProvider";
+import LoginModal from "@/app/_common/auth/components/LoginModal";
+import UserConsentModal from "@/app/_common/user/UserConsentModal";
 
 function LoggedInButtons() {
     const { authenticationStatus, loginAndRedirect } = useContext(AuthenticationContext);

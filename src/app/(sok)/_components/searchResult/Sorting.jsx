@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Select } from "@navikt/ds-react";
-import { SET_SORTING } from "../../_utils/queryReducer";
+import { SET_SORTING } from "@/app/(sok)/_utils/queryReducer";
 
 function Sorting({ query, dispatch }) {
     function handleChange(e) {

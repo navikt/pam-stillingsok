@@ -1,7 +1,8 @@
-import capitalizeFirstLetter from "../../_common/utils/capitalizeFirstLetter";
-import fixLocationName from "../../_common/utils/fixLocationName";
+import capitalizeFirstLetter from "@/app/_common/utils/capitalizeFirstLetter";
+import fixLocationName from "@/app/_common/utils/fixLocationName";
 
 export const SEARCH_CHUNK_SIZE = 25;
+export const ALLOWED_NUMBER_OF_RESULTS_PER_PAGE = [SEARCH_CHUNK_SIZE, SEARCH_CHUNK_SIZE * 4];
 
 export const PublishedLabelsEnum = {
     "now/d": "Nye i dag",
@@ -41,8 +42,11 @@ export const defaultQuery = {
 // eslint-disable-next-line import/prefer-default-export
 export function createQuery(searchParams) {
     return {
-        from: 0,
-        size: searchParams.to ? parseInt(searchParams.to, 10) : SEARCH_CHUNK_SIZE,
+        from: searchParams.from ? parseInt(searchParams.from, 10) : 0,
+        size:
+            searchParams.size && ALLOWED_NUMBER_OF_RESULTS_PER_PAGE.includes(parseInt(searchParams.size, 10))
+                ? parseInt(searchParams.size, 10)
+                : defaultQuery.size,
         q: searchParams.q || defaultQuery.q,
         match: searchParams.match || defaultQuery.match,
         municipals: asArray(searchParams["municipals[]"]) || defaultQuery.municipals,
@@ -62,17 +66,15 @@ export function createQuery(searchParams) {
     };
 }
 
-/**
- * Takes a query and return a new object without empty properties.
- * An empty property can be an undefined value, an empty string or an empty array.
- */
-export function removeEmptyPropertiesFromQuery(query) {
+export function removeUnwantedOrEmptySearchParameters(query) {
     const newObj = {};
     Object.keys(query).forEach((prop) => {
         const value = query[prop];
 
         if (prop === "international" && value === false) {
             // Skip international flag if it is false
+        } else if (prop === "paginate") {
+            // Always skip paginate parameter
         } else if (Array.isArray(value)) {
             if (value.length > 0) {
                 newObj[prop] = value;
@@ -93,7 +95,7 @@ export function toApiQuery(query) {
         ...query,
         sort: query.sort === "" ? "published" : query.sort,
     };
-    return removeEmptyPropertiesFromQuery(apiSearchQuery);
+    return removeUnwantedOrEmptySearchParameters(apiSearchQuery);
 }
 
 /**
@@ -108,7 +110,7 @@ export function toSavedSearchQuery(query) {
     delete savedSearchQuery.size;
     delete savedSearchQuery.sort;
 
-    return removeEmptyPropertiesFromQuery(savedSearchQuery);
+    return removeUnwantedOrEmptySearchParameters(savedSearchQuery);
 }
 
 /**
@@ -119,13 +121,15 @@ export function toBrowserQuery(query) {
         ...query,
     };
 
-    if (query.from + query.size > SEARCH_CHUNK_SIZE) {
-        browserQuery.to = query.from + query.size;
+    if (browserQuery.from === 0) {
+        delete browserQuery.from;
     }
 
-    delete browserQuery.from;
-    delete browserQuery.size;
-    return removeEmptyPropertiesFromQuery(browserQuery);
+    if (browserQuery.size === SEARCH_CHUNK_SIZE) {
+        delete browserQuery.size;
+    }
+
+    return removeUnwantedOrEmptySearchParameters(browserQuery);
 }
 
 /**
@@ -196,7 +200,7 @@ export function toReadableQuery(query) {
  * Check if query contains one or more criteria
  */
 export function isSearchQueryEmpty(query) {
-    const queryWithoutEmptyProperties = removeEmptyPropertiesFromQuery(query);
+    const queryWithoutEmptyProperties = removeUnwantedOrEmptySearchParameters(query);
     return Object.keys(queryWithoutEmptyProperties).length === 0;
 }
 

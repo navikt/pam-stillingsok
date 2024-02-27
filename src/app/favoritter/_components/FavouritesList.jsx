@@ -4,8 +4,8 @@ import React, { useState } from "react";
 import { HStack, Select, Heading } from "@navikt/ds-react";
 import FavouritesListItem from "./FavouritesListItem";
 import PropTypes from "prop-types";
-import AlertModalWithPageReload from "../../_common/components/modals/AlertModalWithPageReload";
-import useToggle from "../../_common/hooks/useToggle";
+import AlertModalWithPageReload from "@/app/_common/components/modals/AlertModalWithPageReload";
+import useToggle from "@/app/_common/hooks/useToggle";
 import NoFavourites from "./NoFavourites";
 
 function FavouritesList({ favourites }) {

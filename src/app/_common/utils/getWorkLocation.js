@@ -1,4 +1,4 @@
-const fixLocationName = require("./fixLocationName");
+import fixLocationName from "@/app/_common/utils/fixLocationName";
 
 function getWorkLocation(propertyLocation, locationList, hidePostAddress = true) {
     if (propertyLocation) {
@@ -29,4 +29,4 @@ function getWorkLocation(propertyLocation, locationList, hidePostAddress = true)
     return workLocations.join(", ");
 }
 
-module.exports = getWorkLocation;
+export default getWorkLocation;

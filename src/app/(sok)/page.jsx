@@ -1,8 +1,8 @@
-import simplifySearchResponse from "./_utils/simplifySearchResponse";
-import Search from "./_components/Search";
-import elasticSearchRequestBody from "./_utils/elasticSearchRequestBody";
-import { defaultMetadataDescription, defaultOpenGraphImage, getMetadataTitle } from "../layout";
-import { createQuery, defaultQuery, toApiQuery, toBrowserQuery, toReadableQuery } from "./_utils/query";
+import simplifySearchResponse from "@/app/(sok)/_utils/simplifySearchResponse";
+import Search from "@/app/(sok)/_components/Search";
+import { defaultMetadataDescription, defaultOpenGraphImage, getMetadataTitle } from "@/app/layout";
+import { createQuery, defaultQuery, toApiQuery, toBrowserQuery, toReadableQuery } from "@/app/(sok)/_utils/query";
+import elasticSearchRequestBody from "@/app/(sok)/_utils/elasticSearchRequestBody";
 
 export async function generateMetadata({ searchParams }) {
     const query = createQuery(searchParams);
@@ -32,6 +32,8 @@ async function fetchElasticSearch(query) {
             "Content-Type": "application/json",
         },
         body: JSON.stringify(body),
+        next: { revalidate: 30 },
+        // TODO: figure out how often this should be revalidated
     });
 
     if (!res.ok) {
@@ -45,8 +47,8 @@ async function fetchElasticSearch(query) {
 // TODO: Sjekk om denne kan caches over lang tid, fordi det er sjelden at fylker/kommuner endres
 async function fetchLocations() {
     const [response1, response2] = await Promise.all([
-        fetch(`${process.env.PAMADUSER_URL}/api/v1/geography/municipals`),
-        fetch(`${process.env.PAMADUSER_URL}/api/v1/geography/counties`),
+        fetch(`${process.env.PAMADUSER_URL}/api/v1/geography/municipals`, { next: { revalidate: 3600 } }),
+        fetch(`${process.env.PAMADUSER_URL}/api/v1/geography/counties`, { next: { revalidate: 3600 } }),
     ]);
 
     if (!response1.ok || !response2.ok) {

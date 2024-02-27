@@ -4,9 +4,9 @@ import React, { startTransition, useContext, useState } from "react";
 import PropTypes from "prop-types";
 import { Button } from "@navikt/ds-react";
 import { TrashIcon } from "@navikt/aksel-icons";
-import SearchResultItem from "../../(sok)/_components/searchResult/SearchResultItem";
-import useToggle from "../../_common/hooks/useToggle";
-import AlertModal from "../../_common/components/modals/AlertModal";
+import SearchResultItem from "@/app/(sok)/_components/searchResult/SearchResultItem";
+import useToggle from "@/app/_common/hooks/useToggle";
+import AlertModal from "@/app/_common/components/modals/AlertModal";
 import { deleteFavouriteAction } from "./actions";
 import { FavouritesContext } from "./FavouritesProvider";
 

@@ -3,7 +3,7 @@ import { BodyLong, Heading, Panel, Link as AkselLink, HStack, VStack } from "@na
 import { FaceSmileIcon, FaceFrownIcon } from "@navikt/aksel-icons";
 import PropTypes from "prop-types";
 import { FeedbackButton } from "@navikt/arbeidsplassen-react";
-import logAmplitudeEvent from "../../../_common/monitoring/amplitude";
+import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
 
 function Feedback({ query }) {
     const [hasGivenRating, setHasGiverRating] = useState(false);
