@@ -40,6 +40,8 @@ services:
         }
 
   pam-aduser:
+    platform: linux/amd64
+    image: europe-north1-docker.pkg.dev/nais-management-233d/teampam/pam-aduser:24.057.095949
     ports:
       - "9017:9017"
     extra_hosts:
@@ -63,7 +65,6 @@ services:
     - DB_DATABASE=pam-aduser
     - DB_USERNAME=postgres
     - DB_PASSWORD=password
-    build: ../pam-aduser/.
     user: root
     volumes:
       - /secure-logs/
