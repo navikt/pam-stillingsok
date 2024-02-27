@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
-import Pagination from "@/app/(sok)/_components/pagination/Pagination";
+import React, { forwardRef, useEffect, useState } from "react";
+import { VStack } from "@navikt/ds-react";
+import { SEARCH_CHUNK_SIZE } from "../../_utils/query";
 import SearchResultItem from "./SearchResultItem";
 import FavouritesButton from "@/app/favoritter/_components/FavouritesButton";
 
-function SearchResult({ searchResult, query, loadMoreResults }) {
+export default forwardRef(function SearchResult({ searchResult, query }, ref) {
     const [showAdDetailsForDebugging, setShowAdDetailsForDebugging] = useState(false);
+    const resultsPerPage = query.size || SEARCH_CHUNK_SIZE;
+    const totalPages = Math.ceil(searchResult.totalAds / resultsPerPage);
+    const page = query.from ? Math.floor(query.from / resultsPerPage) + 1 : 1;
 
     /**
      *  Check if we should render ad details for debugging
@@ -22,7 +25,13 @@ function SearchResult({ searchResult, query, loadMoreResults }) {
     }, []);
 
     return (
-        <section className="SearchResult">
+        <VStack
+            gap="10"
+            ref={ref}
+            tabIndex={-1}
+            aria-label={`Side ${page} av ${totalPages}`}
+            className="no-focus-outline"
+        >
             {searchResult.ads &&
                 searchResult.ads.map((ad) => (
                     <SearchResultItem
@@ -41,21 +50,6 @@ function SearchResult({ searchResult, query, loadMoreResults }) {
                         isDebug={showAdDetailsForDebugging}
                     />
                 ))}
-            {searchResult.ads && searchResult.ads.length > 0 && (
-                <Pagination query={query} searchResult={searchResult} onLoadMoreClick={loadMoreResults} />
-            )}
-        </section>
+        </VStack>
     );
-}
-
-SearchResult.propTypes = {
-    searchResult: PropTypes.shape({
-        ads: PropTypes.arrayOf(PropTypes.shape({})),
-    }),
-    query: PropTypes.shape({
-        from: PropTypes.number,
-    }),
-    loadMoreResults: PropTypes.func.isRequired,
-};
-
-export default SearchResult;
+});

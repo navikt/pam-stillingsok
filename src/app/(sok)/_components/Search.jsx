@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useEffect, useReducer, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import { Box, Button, HGrid, Hide, HStack, Show, Stack, Heading } from "@navikt/ds-react";
+import { Box, Button, Heading, HGrid, Hide, HStack, Show, Stack, VStack } from "@navikt/ds-react";
 import { useRouter, useSearchParams } from "next/navigation";
-import queryReducer, { SET_FROM } from "../_utils/queryReducer";
-import { toBrowserQuery, isSearchQueryEmpty, stringifyQuery } from "../_utils/query";
+import queryReducer from "../_utils/queryReducer";
+import { isSearchQueryEmpty, SEARCH_CHUNK_SIZE, stringifyQuery, toBrowserQuery } from "../_utils/query";
 import SearchResult from "./searchResult/SearchResult";
 import DoYouWantToSaveSearch from "./howToPanels/DoYouWantToSaveSearch";
 import SelectedFilters from "./selectedFilters/SelectedFilters";
@@ -17,6 +17,7 @@ import logAmplitudeEvent from "../../_common/monitoring/amplitude";
 import LoggedInButtons from "./loggedInButtons/LoggedInButtons";
 import FiltersMobile from "./filters/FiltersMobile";
 import SearchBox from "./searchBox/SearchBox";
+import SearchPagination from "./searchResult/SearchPagination";
 
 export default function Search({ query, searchResult, aggregations, locations }) {
     const [updatedQuery, queryDispatch] = useReducer(queryReducer, query);
@@ -25,6 +26,7 @@ export default function Search({ query, searchResult, aggregations, locations })
     const router = useRouter();
     const searchParams = useSearchParams();
     const savedSearchUuid = searchParams.get("saved");
+    const searchResultRef = useRef();
 
     /**
      * Perform a search when user changes search criteria
@@ -41,7 +43,14 @@ export default function Search({ query, searchResult, aggregations, locations })
 
             logAmplitudeEvent("Stillinger - Utførte søk");
 
-            router.replace(`/${stringifyQuery(browserQuery)}`, { scroll: false });
+            if (updatedQuery.paginate) {
+                router.push(`/${stringifyQuery(browserQuery)}`);
+                if (searchResultRef.current) {
+                    searchResultRef.current.focus();
+                }
+            } else {
+                router.replace(`/${stringifyQuery(browserQuery)}`, { scroll: false });
+            }
         } else {
             // Skip search first time query change, since that
             // will just reload the search result we already got
@@ -52,10 +61,6 @@ export default function Search({ query, searchResult, aggregations, locations })
     useEffect(() => {
         logAmplitudeEvent("Stillinger - Utførte søk");
     }, []);
-
-    function loadMoreResults() {
-        queryDispatch({ type: SET_FROM, value: updatedQuery.from + updatedQuery.size });
-    }
 
     function onFormSubmit(e) {
         e.preventDefault();
@@ -75,7 +80,7 @@ export default function Search({ query, searchResult, aggregations, locations })
                 <SearchBox query={updatedQuery} dispatch={queryDispatch} />
                 <Box paddingBlock={{ xs: "0 4", md: "0 12" }}>
                     <HStack gap="2" justify={{ xs: "start", md: "center" }} align={{ xs: "start", md: "center" }}>
-                        <Show below="md">
+                        <Show below="lg">
                             <Button
                                 variant="tertiary"
                                 onClick={() => {
@@ -101,11 +106,11 @@ export default function Search({ query, searchResult, aggregations, locations })
             />
 
             <HGrid
-                columns={{ xs: 1, md: "280px auto", lg: "370px auto" }}
-                gap={{ xs: "0", md: "12" }}
+                columns={{ xs: 1, lg: "200px auto", xl: "370px auto" }}
+                gap={{ xs: "0", lg: "6", xl: "12" }}
                 className="container-large mt-8 mb-16"
             >
-                <Hide below="md">
+                <Hide below="lg">
                     <FiltersDesktop
                         query={updatedQuery}
                         dispatchQuery={queryDispatch}
@@ -115,7 +120,7 @@ export default function Search({ query, searchResult, aggregations, locations })
                     />
                 </Hide>
 
-                <Show below="md">
+                <Show below="lg">
                     {isFiltersVisible && (
                         <FiltersMobile
                             query={updatedQuery}
@@ -128,19 +133,13 @@ export default function Search({ query, searchResult, aggregations, locations })
                     )}
                 </Show>
 
-                <div>
+                <VStack gap="10">
                     <SelectedFilters query={query} queryDispatch={queryDispatch} />
-                    <SearchResult
-                        searchResult={searchResult}
-                        query={query}
-                        queryDispatch={queryDispatch}
-                        loadMoreResults={() => {
-                            loadMoreResults();
-                        }}
-                    />
-                    <DoYouWantToSaveSearch query={query} />
+                    <SearchResult ref={searchResultRef} searchResult={searchResult} query={updatedQuery} />
+                    <SearchPagination searchResult={searchResult} query={query} queryDispatch={queryDispatch} />
+                    {query.from + SEARCH_CHUNK_SIZE >= searchResult.totalAds && <DoYouWantToSaveSearch query={query} />}
                     <Feedback query={query} />
-                </div>
+                </VStack>
             </HGrid>
         </form>
     );

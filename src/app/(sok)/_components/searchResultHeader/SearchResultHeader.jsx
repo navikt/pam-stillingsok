@@ -10,7 +10,11 @@ function SearchResultHeader({ searchResult, query, queryDispatch }) {
 
     return (
         <Box background="surface-alt-1-subtle" paddingBlock="4">
-            <HGrid columns={{ xs: 1, lg: "370px auto" }} gap={{ lg: "12" }} className="container-large">
+            <HGrid
+                columns={{ xs: 1, lg: "200px auto", xl: "370px auto" }}
+                gap={{ xs: "0", lg: "6", xl: "12" }}
+                className="container-large"
+            >
                 <div />
                 <Stack
                     direction={{ xs: "column", md: "row" }}

@@ -74,7 +74,6 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, isD
             as="article"
             ref={ref}
             tabIndex={shouldAutoFocus ? -1 : undefined}
-            className="mb-12"
             aria-labelledby={`${ad.uuid}-h3`}
         >
             <VStack gap="3">
