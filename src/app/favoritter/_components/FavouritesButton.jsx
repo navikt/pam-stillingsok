@@ -66,12 +66,13 @@ function FavouritesButton({ id, stilling, className, variant, useShortText = fal
 
         addToPending(adUuid);
 
-        const { success } = await deleteFavouriteAction(found.uuid);
-        if (!success) {
-            openErrorDialog();
-        } else {
+        try {
+            await deleteFavouriteAction(found.uuid);
             removeFavouriteFromLocalList(found);
+        } catch (err) {
+            openErrorDialog();
         }
+
         removeFormPending(adUuid);
     }
 
