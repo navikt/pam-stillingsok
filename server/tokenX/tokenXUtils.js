@@ -1,6 +1,5 @@
 const { Issuer } = require("openid-client");
 const { createRemoteJWKSet } = require("jose");
-const { logger } = require("../common/logger");
 
 let tokenXClient;
 
@@ -57,7 +56,7 @@ async function getTokenX(token, tokenAudience) {
             additionalClaims,
         );
     } catch (e) {
-        logger.error(`Kunne ikke veksle inn til tokenX: ${e.message}`);
+        // logger.error(`Kunne ikke veksle inn til tokenX: ${e.message}`);
         return null;
     }
     return tokenX;

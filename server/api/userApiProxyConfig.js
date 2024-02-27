@@ -1,7 +1,6 @@
 const { createProxyMiddleware } = require("http-proxy-middleware");
 const { v4: uuidv4 } = require("uuid");
 const { getTokenX } = require("../tokenX/tokenXUtils");
-const { logger } = require("../common/logger");
 
 const isLocal =
     (process.env.ARBEIDSPLASSEN_URL && process.env.ARBEIDSPLASSEN_URL.includes("localhost")) ||
@@ -26,7 +25,7 @@ const setCallId = async (req, res, next) => {
     // sjekker om headeren finnes
     if (callId === undefined || callId === null) {
         callId = uuidv4();
-        logger.info(`Lager en callId ${callId} for ${req.url} med ${req.method}`);
+        // logger.info(`Lager en callId ${callId} for ${req.url} med ${req.method}`);
     }
     req.headers["nav-callid"] = callId;
     next();
