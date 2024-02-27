@@ -22,7 +22,6 @@ export async function GET(req) {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
-            Accept: "application/json",
             Authorization: `Bearer ${oboRes.token}`,
         },
     });
@@ -30,12 +29,12 @@ export async function GET(req) {
     if (!res.ok) {
         console.error("Failed to fetch from aduser");
         console.error(res.status);
-        return new Response(null, { status: res.status });
+        return new Response(null, { status: res.status, headers: res.headers });
     }
 
     let data = await res.json();
 
-    return Response.json(data);
+    return Response.json(data, { headers: res.headers });
 }
 
 export async function POST(req) {
