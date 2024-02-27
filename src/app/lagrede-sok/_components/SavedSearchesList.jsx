@@ -4,9 +4,9 @@ import React, { useState } from "react";
 import { Heading } from "@navikt/ds-react";
 import PropTypes from "prop-types";
 import SavedSearchListItem from "./SavedSearchListItem";
-import NoFavourites from "../../favoritter/_components/NoFavourites";
-import AlertModalWithPageReload from "../../_common/components/modals/AlertModalWithPageReload";
-import useToggle from "../../_common/hooks/useToggle";
+import NoFavourites from "@/app/favoritter/_components/NoFavourites";
+import AlertModalWithPageReload from "@/app/_common/components/modals/AlertModalWithPageReload";
+import useToggle from "@/app/_common/hooks/useToggle";
 
 /**
  * Displays a list of all saved searches.

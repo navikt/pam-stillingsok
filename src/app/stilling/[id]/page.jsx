@@ -1,6 +1,6 @@
 import Ad from "./_components/Ad";
 import { getStillingDescription, getStillingTitle } from "./_components/getMetaData";
-import { defaultOpenGraphImage } from "../../layout";
+import { defaultOpenGraphImage } from "@/app/layout";
 import { fetchAd } from "../FetchAd";
 
 export async function generateMetadata({ params }) {

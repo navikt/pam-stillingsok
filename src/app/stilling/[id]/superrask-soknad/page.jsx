@@ -4,7 +4,7 @@ import validateForm, { parseFormData } from "./_components/validateForm";
 import NewApplication from "./_components/NewApplication";
 import { getStillingDescription, getSuperraskTitle } from "../_components/getMetaData";
 import { defaultOpenGraphImage } from "@/app/layout";
-import { fetchAd } from "../../FetchAd";
+import { fetchAd } from "@/app/stilling/FetchAd";
 
 async function fetchApplicationForm(id) {
     const res = await fetch(`${process.env.INTEREST_API_URL}/application-form/${id}`, {

@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { BodyShort, Box, Checkbox, Fieldset } from "@navikt/ds-react";
-import fixLocationName from "../../../_common/utils/fixLocationName";
+import fixLocationName from "@/app/_common/utils/fixLocationName";
 import {
     ADD_COUNTRY,
     ADD_COUNTY,
@@ -12,10 +12,10 @@ import {
     REMOVE_MUNICIPAL,
     REMOVE_REMOTE,
     SET_INTERNATIONAL,
-} from "../../_utils/queryReducer";
-import buildLocations from "../utils/buildLocations";
-import buildHomeOfficeValues from "../utils/buildHomeOfficeValues";
-import { logSearchFilterAdded, logSearchFilterRemoved } from "../../../_common/monitoring/amplitude";
+} from "@/app/(sok)/_utils/queryReducer";
+import buildLocations from "@/app/(sok)/_components/utils/buildLocations";
+import buildHomeOfficeValues from "@/app/(sok)/_components/utils/buildHomeOfficeValues";
+import { logSearchFilterAdded, logSearchFilterRemoved } from "@/app/_common/monitoring/amplitude";
 
 function Locations({ locations, query, dispatch, updatedValues }) {
     const locationValues = buildLocations(updatedValues.aggregations, locations);

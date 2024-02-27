@@ -1,8 +1,7 @@
-import { notFound } from "next/navigation";
 import ReportAd from "./_components/ReportAd";
-import validateForm from "../../stilling/[id]/_components/validate";
-import { getMetadataTitle } from "../../layout";
-import { fetchAd } from "../../stilling/FetchAd";
+import validateForm from "@/app/stilling/[id]/_components/validate";
+import { getMetadataTitle } from "@/app/layout";
+import { fetchAd } from "@/app/stilling/FetchAd";
 
 export const metadata = {
     title: getMetadataTitle("Rapporter annonse"),

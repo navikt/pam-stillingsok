@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import Pagination from "../pagination/Pagination";
+import Pagination from "@/app/(sok)/_components/pagination/Pagination";
 import SearchResultItem from "./SearchResultItem";
-import FavouritesButton from "../../../favoritter/_components/FavouritesButton";
+import FavouritesButton from "@/app/favoritter/_components/FavouritesButton";
 
 function SearchResult({ searchResult, query, loadMoreResults }) {
     const [showAdDetailsForDebugging, setShowAdDetailsForDebugging] = useState(false);

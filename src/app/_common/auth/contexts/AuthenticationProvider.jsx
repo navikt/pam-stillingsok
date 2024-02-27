@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import SessionStatusModal from "../components/SessionStatusModal";
+import SessionStatusModal from "@/app/_common/auth/components/SessionStatusModal";
 
 export const AuthenticationContext = React.createContext({
     userNameAndInfo: undefined,

@@ -1,8 +1,8 @@
-import simplifySearchResponse from "./_utils/simplifySearchResponse";
-import Search from "./_components/Search";
-import elasticSearchRequestBody from "./_utils/elasticSearchRequestBody";
-import { defaultMetadataDescription, defaultOpenGraphImage, getMetadataTitle } from "../layout";
-import { createQuery, defaultQuery, toApiQuery, toBrowserQuery, toReadableQuery } from "./_utils/query";
+import simplifySearchResponse from "@/app/(sok)/_utils/simplifySearchResponse";
+import Search from "@/app/(sok)/_components/Search";
+import { defaultMetadataDescription, defaultOpenGraphImage, getMetadataTitle } from "@/app/layout";
+import { createQuery, defaultQuery, toApiQuery, toBrowserQuery, toReadableQuery } from "@/app/(sok)/_utils/query";
+import elasticSearchRequestBody from "@/app/(sok)/_utils/elasticSearchRequestBody";
 
 export async function generateMetadata({ searchParams }) {
     const query = createQuery(searchParams);

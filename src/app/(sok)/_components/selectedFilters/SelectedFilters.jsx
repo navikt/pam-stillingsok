@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Button, Chips, HStack } from "@navikt/ds-react";
 import { TrashIcon } from "@navikt/aksel-icons";
-import fixLocationName from "../../../_common/utils/fixLocationName";
+import fixLocationName from "@/app/_common/utils/fixLocationName";
 import {
     REMOVE_COUNTRY,
     REMOVE_COUNTY,

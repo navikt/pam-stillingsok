@@ -1,6 +1,5 @@
 import { cookies } from "next/headers";
 import mockData from "./mock-data";
-import LoginIsRequiredPage from "../_common/auth/components/LoginIsRequiredPage";
 import SavedSearchesList from "./_components/SavedSearchesList";
 import UserConsentIsRequired from "./_components/UserConsentIsRequired";
 import { getMetadataTitle } from "../layout";

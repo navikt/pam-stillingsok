@@ -1,5 +1,5 @@
-import capitalizeFirstLetter from "../../_common/utils/capitalizeFirstLetter";
-import fixLocationName from "../../_common/utils/fixLocationName";
+import capitalizeFirstLetter from "@/app/_common/utils/capitalizeFirstLetter";
+import fixLocationName from "@/app/_common/utils/fixLocationName";
 
 export const SEARCH_CHUNK_SIZE = 25;
 

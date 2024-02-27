@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { HasAcceptedTermsStatus, UserContext } from "../../_common/user/UserProvider";
-import useToggle from "../../_common/hooks/useToggle";
-import AlertModalWithPageReload from "../../_common/components/modals/AlertModalWithPageReload";
+import { HasAcceptedTermsStatus, UserContext } from "@/app/_common/user/UserProvider";
+import useToggle from "@/app/_common/hooks/useToggle";
+import AlertModalWithPageReload from "@/app/_common/components/modals/AlertModalWithPageReload";
 import { getFavouriteAction } from "./actions";
 
 export const FavouritesContext = React.createContext({
