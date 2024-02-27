@@ -234,9 +234,9 @@ const startServer = (htmlPages) => {
 initializeTokenX()
     .then(() =>
         renderSok({}).then(startServer, (error) => {
-            // logger.error("Failed to render app", error);
+            console.log("Failed to render app", error);
         }),
     )
     .catch((error) => {
-        // logger.error(`Initialisering av token-klienter feilet: ${error.message} `);
+        console.log(`Initialisering av token-klienter feilet: ${error.message}`);
     });
