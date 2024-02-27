@@ -1,28 +1,16 @@
-import { validateToken, requestTokenxOboToken, getToken } from "@navikt/oasis";
+import { getAdUserOboToken } from "../../_common/auth/auth";
 
 export const dynamic = "force-dynamic";
 
 export async function GET(req) {
-    const token = getToken(req);
-    const validationResult = await validateToken(token);
-
-    if (!validationResult.ok) {
-        return new Response(null, { status: 401 });
-    }
-
-    const oboRes = await requestTokenxOboToken(token, process.env.ADUSER_AUDIENCE);
-    if (!oboRes.ok) {
-        console.error("Failed to exchange token");
-        console.error(oboRes.error);
-        return new Response(null, { status: 500 });
-    }
+    const oboToken = await getAdUserOboToken();
 
     const url = `${process.env.PAMADUSER_URL}/api/v1/user`;
     const res = await fetch(url, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${oboRes.token}`,
+            Authorization: `Bearer ${oboToken}`,
         },
     });
 
@@ -38,19 +26,7 @@ export async function GET(req) {
 }
 
 export async function POST(req) {
-    const token = getToken(req);
-    const validationResult = await validateToken(token);
-
-    if (!validationResult.ok) {
-        return new Response(null, { status: 401 });
-    }
-
-    const oboRes = await requestTokenxOboToken(token, process.env.ADUSER_AUDIENCE);
-    if (!oboRes.ok) {
-        console.error("Failed to exchange token");
-        console.error(oboRes.error);
-        return new Response(null, { status: 500 });
-    }
+    const oboToken = await getAdUserOboToken();
 
     const url = `${process.env.PAMADUSER_URL}/api/v1/user`;
     const res = await fetch(url, {
@@ -61,7 +37,7 @@ export async function POST(req) {
         headers: {
             "Content-Type": "application/json",
             Accept: "application/json",
-            Authorization: `Bearer ${oboRes.token}`,
+            Authorization: `Bearer ${oboToken}`,
             cookie: `XSRF-TOKEN-ARBEIDSPLASSEN=${req.cookies?.get("XSRF-TOKEN-ARBEIDSPLASSEN")?.value}`,
             "X-XSRF-TOKEN-ARBEIDSPLASSEN": req.cookies?.get("XSRF-TOKEN-ARBEIDSPLASSEN")?.value,
         },
