@@ -55,17 +55,20 @@ export async function POST(req) {
     const url = `${process.env.PAMADUSER_URL}/api/v1/user`;
     const res = await fetch(url, {
         method: "POST",
-        body: JSON.stringify(req.body),
+        body: req.body,
         credentials: "same-origin",
+        duplex: "half",
         headers: {
             "Content-Type": "application/json",
             Accept: "application/json",
             Authorization: `Bearer ${oboRes.token}`,
+            cookie: `XSRF-TOKEN-ARBEIDSPLASSEN=${req.cookies?.get("XSRF-TOKEN-ARBEIDSPLASSEN")?.value}`,
+            "X-XSRF-TOKEN-ARBEIDSPLASSEN": req.cookies?.get("XSRF-TOKEN-ARBEIDSPLASSEN")?.value,
         },
     });
 
     if (!res.ok) {
-        console.error("Failed to fetch from aduser");
+        console.error("Failed to post to aduser");
         console.error(res.status);
         return new Response(null, { status: res.status });
     }
