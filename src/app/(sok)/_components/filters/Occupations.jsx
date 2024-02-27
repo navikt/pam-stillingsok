@@ -6,10 +6,10 @@ import {
     ADD_OCCUPATION_SECOND_LEVEL,
     REMOVE_OCCUPATION_FIRST_LEVEL,
     REMOVE_OCCUPATION_SECOND_LEVEL,
-} from "../../_utils/queryReducer";
-import moveCriteriaToBottom from "../utils/moveFacetToBottom";
-import mergeCount from "../utils/mergeCount";
-import { logSearchFilterAdded, logSearchFilterRemoved } from "../../../_common/monitoring/amplitude";
+} from "@/app/(sok)/_utils/queryReducer";
+import moveCriteriaToBottom from "@/app/(sok)/_components/utils/moveFacetToBottom";
+import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
+import { logSearchFilterAdded, logSearchFilterRemoved } from "@/app/_common/monitoring/amplitude";
 
 const OCCUPATION_LEVEL_OTHER = "Uoppgitt/ ikke identifiserbare";
 

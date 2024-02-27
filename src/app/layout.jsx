@@ -12,12 +12,7 @@ import "./styles.css";
 import PropTypes from "prop-types";
 import interLocalFont from "next/font/local";
 import App from "./App";
-import Script from "next/script";
-
-// Noen miljøvariabler kan bare hentes under kjøretid (spesielt de som er
-// definert i nais.yml) vi bruker da et script på endepunkt api/publicEnv for å
-// hente og lagre dem inn i variabelen under publicEnv.
-export let publicEnv = {};
+import Providers from "./Providers";
 
 const myFont = interLocalFont({
     variable: "--font-inter",
@@ -44,21 +39,17 @@ export const metadata = {
         images: [defaultOpenGraphImage],
     },
     icons: {
-        icon: "https://arbeidsplassen.nav.no/favicon.png",
+        icon: `/favicon.png`,
     },
 };
 
 export default function RootLayout({ children }) {
     return (
         <html lang="no">
-            <head>
-                <Script
-                    strategy="beforeInteractive"
-                    src={`${process.env.ARBEIDSPLASSEN_URL ?? ""}/stillinger/api/publicEnv`}
-                />
-            </head>
             <body data-theme="arbeidsplassen" className={myFont.className}>
-                <App amplitudeToken={process.env.AMPLITUDE_TOKEN}>{children}</App>
+                <Providers>
+                    <App amplitudeToken={process.env.AMPLITUDE_TOKEN}>{children}</App>
+                </Providers>
             </body>
         </html>
     );

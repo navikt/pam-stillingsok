@@ -21,4 +21,4 @@ const setUpSuperraskApi = (server) => {
     }
 };
 
-module.exports = setUpSuperraskApi;
+export default setUpSuperraskApi;

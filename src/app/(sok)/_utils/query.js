@@ -1,5 +1,5 @@
-import capitalizeFirstLetter from "../../_common/utils/capitalizeFirstLetter";
-import fixLocationName from "../../_common/utils/fixLocationName";
+import capitalizeFirstLetter from "@/app/_common/utils/capitalizeFirstLetter";
+import fixLocationName from "@/app/_common/utils/fixLocationName";
 
 export const SEARCH_CHUNK_SIZE = 25;
 export const ALLOWED_NUMBER_OF_RESULTS_PER_PAGE = [SEARCH_CHUNK_SIZE, SEARCH_CHUNK_SIZE * 4];

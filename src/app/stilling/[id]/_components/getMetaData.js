@@ -1,7 +1,7 @@
-import getEmployer from "../../../_common/utils/getEmployer";
-import getWorkLocation from "../../../_common/utils/getWorkLocation";
-import date from "../../../_common/utils/date";
-import { getMetadataTitle } from "../../../layout";
+import getEmployer from "@/app/_common/utils/getEmployer";
+import getWorkLocation from "@/app/_common/utils/getWorkLocation";
+import date from "@/app/_common/utils/date";
+import { getMetadataTitle } from "@/app/layout";
 
 export function getStillingTitle(source) {
     if (source && source.title) {

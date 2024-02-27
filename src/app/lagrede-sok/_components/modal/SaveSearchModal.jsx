@@ -3,11 +3,11 @@
 import React, { useContext, useEffect, useState } from "react";
 import { BodyLong, HStack, Loader, Modal } from "@navikt/ds-react";
 import PropTypes from "prop-types";
-import { UserContext } from "../../../_common/user/UserProvider";
-import useToggle from "../../../_common/hooks/useToggle";
+import { UserContext } from "@/app/_common/user/UserProvider";
+import useToggle from "@/app/_common/hooks/useToggle";
 import SaveSearchForm from "./SaveSearchForm";
 import RegisterEmailForm from "./RegisterEmailForm";
-import { isStringEmpty } from "../../../_common/utils/utils";
+import { isStringEmpty } from "@/app/_common/utils/utils";
 import SuccessMessage from "./SuccessMessage";
 import ConfirmEmailMessage from "./ConfirmEmailMessage";
 import NotFoundMessage from "./NotFoundMessage";

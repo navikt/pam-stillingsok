@@ -2,29 +2,14 @@ import { notFound } from "next/navigation";
 import { v4 as uuidv4 } from "uuid";
 import validateForm, { parseFormData } from "./_components/validateForm";
 import NewApplication from "./_components/NewApplication";
-import { excludes } from "../page";
 import { getStillingDescription, getSuperraskTitle } from "../_components/getMetaData";
-import { defaultOpenGraphImage } from "../../../layout";
-
-async function fetchAd(id) {
-    const res = await fetch(`${process.env.PAMSEARCHAPI_URL}/stillingsok/ad/ad/${id}?_source_excludes=${excludes}`, {
-        headers: {
-            "Content-Type": "application/json",
-        },
-    });
-    if (res.status === 404) {
-        notFound();
-    }
-    if (!res.ok) {
-        throw new Error("Failed to fetch data");
-    }
-
-    return res.json();
-}
+import { defaultOpenGraphImage } from "@/app/layout";
+import { fetchAd } from "@/app/stilling/FetchAd";
 
 async function fetchApplicationForm(id) {
     const res = await fetch(`${process.env.INTEREST_API_URL}/application-form/${id}`, {
         headers: { NAV_CALLID_FIELD: uuidv4() },
+        next: { revalidate: 30 },
     });
     if (res.status === 404) {
         notFound();

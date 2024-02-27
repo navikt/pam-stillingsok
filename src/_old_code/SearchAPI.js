@@ -1,5 +1,5 @@
-import APIError from "../app/_common/user/APIError";
-import { stringifyQuery } from "../app/(sok)/_utils/query";
+import APIError from "@/app/_common/user/APIError";
+import { stringifyQuery } from "@/app/(sok)/_utils/query";
 
 let latestAdResponse;
 

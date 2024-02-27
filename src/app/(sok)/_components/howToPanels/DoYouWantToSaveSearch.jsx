@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { BodyShort, Box, Heading, VStack } from "@navikt/ds-react";
-import SaveSearchButton from "../../../lagrede-sok/_components/SaveSearchButton";
+import SaveSearchButton from "@/app/lagrede-sok/_components/SaveSearchButton";
 
 function DoYouWantToSaveSearch({ query }) {
     return (

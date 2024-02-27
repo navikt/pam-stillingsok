@@ -1,6 +1,6 @@
-import elasticSearchRequestBody from "../../(sok)/_utils/elasticSearchRequestBody";
-import simplifySearchResponse from "../../(sok)/_utils/simplifySearchResponse";
-import { createQuery, toApiQuery } from "../../(sok)/_utils/query";
+import elasticSearchRequestBody from "@/app/(sok)/_utils/elasticSearchRequestBody";
+import simplifySearchResponse from "@/app/(sok)/_utils/simplifySearchResponse";
+import { createQuery, toApiQuery } from "@/app/(sok)/_utils/query";
 
 // Todo - test at denne fungere med aduser. Jeg tror aduser kaller dette endepunktet når email for lagrede søk skal sendes ut
 

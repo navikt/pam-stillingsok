@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import SessionStatusModal from "../components/SessionStatusModal";
+import SessionStatusModal from "@/app/_common/auth/components/SessionStatusModal";
 
 export const AuthenticationContext = React.createContext({
     userNameAndInfo: undefined,
@@ -31,15 +31,11 @@ function AuthenticationProvider({ children }) {
     };
 
     function login() {
-        window.location.href = `/stillinger${process.env.NEXT_PUBLIC_LOGIN_URL}?redirect=${encodeURIComponent(
-            window.location.href,
-        )}`;
+        window.location.href = `/stillinger/oauth2/login?redirect=${encodeURIComponent(window.location.href)}`;
     }
 
     function loginAndRedirect(navigateTo) {
-        window.location.href = `/stillinger${process.env.NEXT_PUBLIC_LOGIN_URL}?redirect=${encodeURIComponent(
-            navigateTo,
-        )}`;
+        window.location.href = `/stillinger/oauth2/login?redirect=${encodeURIComponent(navigateTo)}`;
     }
 
     function logout() {

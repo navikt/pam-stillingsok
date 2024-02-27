@@ -2,16 +2,16 @@ import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { Button } from "@navikt/ds-react";
 import { HeartFillIcon, HeartIcon } from "@navikt/aksel-icons";
-import logAmplitudeEvent from "../../_common/monitoring/amplitude";
-import { HasAcceptedTermsStatus, UserContext } from "../../_common/user/UserProvider";
-import { AuthenticationContext, AuthenticationStatus } from "../../_common/auth/contexts/AuthenticationProvider";
+import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
+import { HasAcceptedTermsStatus, UserContext } from "@/app/_common/user/UserProvider";
+import { AuthenticationContext, AuthenticationStatus } from "@/app/_common/auth/contexts/AuthenticationProvider";
 import { FavouritesContext } from "./FavouritesProvider";
-import getWorkLocation from "../../_common/utils/getWorkLocation";
-import getEmployer from "../../_common/utils/getEmployer";
-import UserConsentModal from "../../_common/user/UserConsentModal";
-import LoginModal from "../../_common/auth/components/LoginModal";
-import useToggle from "../../_common/hooks/useToggle";
-import AlertModalWithPageReload from "../../_common/components/modals/AlertModalWithPageReload";
+import getWorkLocation from "@/app/_common/utils/getWorkLocation";
+import getEmployer from "@/app/_common/utils/getEmployer";
+import UserConsentModal from "@/app/_common/user/UserConsentModal";
+import LoginModal from "@/app/_common/auth/components/LoginModal";
+import useToggle from "@/app/_common/hooks/useToggle";
+import AlertModalWithPageReload from "@/app/_common/components/modals/AlertModalWithPageReload";
 import { addFavouriteAction, deleteFavouriteAction } from "./actions";
 
 /**

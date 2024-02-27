@@ -2,8 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import { BodyLong, HStack } from "@navikt/ds-react";
 import { Buldings3Icon, EarthIcon } from "@navikt/aksel-icons";
-import getWorkLocation from "../../../_common/utils/getWorkLocation";
-import getEmployer from "../../../_common/utils/getEmployer";
+import getWorkLocation from "@/app/_common/utils/getWorkLocation";
+import getEmployer from "@/app/_common/utils/getEmployer";
 
 export default function Summary({ stilling }) {
     const location = getWorkLocation(stilling.properties.location, stilling.locationList, false);

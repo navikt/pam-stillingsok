@@ -1,8 +1,8 @@
 import React from "react";
 import { BodyShort, Box, Heading, HGrid, Stack } from "@navikt/ds-react";
 import PropTypes from "prop-types";
-import Sorting from "../searchResult/Sorting";
-import { formatNumber } from "../../../_common/utils/utils";
+import Sorting from "@/app/(sok)/_components/searchResult/Sorting";
+import { formatNumber } from "@/app/_common/utils/utils";
 
 function SearchResultHeader({ searchResult, query, queryDispatch }) {
     const annonserWord = searchResult.totalAds === 1 ? "annonse" : "annonser";

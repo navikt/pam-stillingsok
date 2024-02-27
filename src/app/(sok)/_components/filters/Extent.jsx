@@ -1,9 +1,9 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { Checkbox, Fieldset } from "@navikt/ds-react";
-import { ADD_EXTENT, REMOVE_EXTENT } from "../../_utils/queryReducer";
-import mergeCount from "../utils/mergeCount";
-import { logSearchFilterAdded, logSearchFilterRemoved } from "../../../_common/monitoring/amplitude";
+import { ADD_EXTENT, REMOVE_EXTENT } from "@/app/(sok)/_utils/queryReducer";
+import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
+import { logSearchFilterAdded, logSearchFilterRemoved } from "@/app/_common/monitoring/amplitude";
 
 function Extent({ initialValues, updatedValues, query, dispatch }) {
     const values = mergeCount(initialValues, updatedValues);

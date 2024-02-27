@@ -6,10 +6,9 @@ const mustacheExpress = require("mustache-express");
 const Promise = require("promise");
 const bodyParser = require("body-parser");
 const compression = require("compression");
-const { initializeTokenX, tokenIsValid } = require("./tokenX/tokenXUtils");
+const { initializeTokenX } = require("./tokenX/tokenXUtils");
 const setUpAduserApiProxy = require("./api/userApiProxyConfig");
 const setUpSuperraskApi = require("./api/superraskApiProxy");
-const { logger } = require("./common/logger");
 
 /* eslint no-console: 0 */
 
@@ -117,19 +116,6 @@ const startServer = (htmlPages) => {
 
     server.use(`${properties.PAM_CONTEXT_PATH}/images`, express.static(path.resolve(rootDirectory, "images")));
 
-    server.get(`${properties.PAM_CONTEXT_PATH}/api/isAuthenticated`, async (req, res) => {
-        if (req.headers.authorization) {
-            const accessToken = req.headers.authorization.split(" ")[1];
-            const validToken = await tokenIsValid(accessToken);
-            if (validToken) {
-                res.sendStatus(200);
-            } else {
-                res.sendStatus(401);
-            }
-        } else {
-            res.sendStatus(401);
-        }
-    });
     setUpSuperraskApi(server);
 
     /*
@@ -241,16 +227,16 @@ const startServer = (htmlPages) => {
     });
 
     server.listen(port, () => {
-        logger.info(`Express-server startet. Server filer fra ./dist/ til localhost:${port}/`);
+        // logger.info(`Express-server startet. Server filer fra ./dist/ til localhost:${port}/`);
     });
 };
 
 initializeTokenX()
     .then(() =>
         renderSok({}).then(startServer, (error) => {
-            logger.error("Failed to render app", error);
+            console.log("Failed to render app", error);
         }),
     )
     .catch((error) => {
-        logger.error(`Initialisering av token-klienter feilet: ${error.message} `);
+        console.log(`Initialisering av token-klienter feilet: ${error.message}`);
     });

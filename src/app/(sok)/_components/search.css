@@ -1,6 +1,7 @@
 @media (max-width: 479px) {
     .filter-modal {
-        border-radius: 0;
+        border-radius: var(--a-border-radius-xlarge) var(--a-border-radius-xlarge) 0 0;
+        margin-bottom: 0;
     }
 
     .filter-modal .navds-modal__footer {
@@ -18,4 +19,3 @@
     top: 0;
     z-index: 999;
 }
-

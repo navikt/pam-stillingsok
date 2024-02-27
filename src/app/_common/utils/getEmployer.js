@@ -12,4 +12,4 @@ function getEmployer(stilling) {
     return null;
 }
 
-module.exports = getEmployer;
+export default getEmployer;

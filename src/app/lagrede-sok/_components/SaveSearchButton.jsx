@@ -5,13 +5,13 @@ import { FloppydiskIcon } from "@navikt/aksel-icons";
 import { useSearchParams } from "next/navigation";
 import SearchIsEmptyModal from "./modal/SearchIsEmptyModal";
 import SaveSearchModal from "./modal/SaveSearchModal";
-import { AuthenticationContext, AuthenticationStatus } from "../../_common/auth/contexts/AuthenticationProvider";
-import { HasAcceptedTermsStatus, UserContext } from "../../_common/user/UserProvider";
-import UserConsentModal from "../../_common/user/UserConsentModal";
-import LoginModal from "../../_common/auth/components/LoginModal";
-import useToggle from "../../_common/hooks/useToggle";
+import { AuthenticationContext, AuthenticationStatus } from "@/app/_common/auth/contexts/AuthenticationProvider";
+import { HasAcceptedTermsStatus, UserContext } from "@/app/_common/user/UserProvider";
+import UserConsentModal from "@/app/_common/user/UserConsentModal";
+import LoginModal from "@/app/_common/auth/components/LoginModal";
+import useToggle from "@/app/_common/hooks/useToggle";
 import { FormModes } from "./modal/SaveSearchForm";
-import { toReadableQuery, toSavedSearchQuery, isSearchQueryEmpty, stringifyQuery } from "../../(sok)/_utils/query";
+import { toReadableQuery, toSavedSearchQuery, isSearchQueryEmpty, stringifyQuery } from "@/app/(sok)/_utils/query";
 
 /**
  * Displays the "Save search" button.

@@ -1,8 +1,8 @@
 import React, { forwardRef, useEffect, useState } from "react";
-import SearchResultItem from "./SearchResultItem";
-import FavouritesButton from "../../../favoritter/_components/FavouritesButton";
 import { VStack } from "@navikt/ds-react";
 import { SEARCH_CHUNK_SIZE } from "../../_utils/query";
+import SearchResultItem from "./SearchResultItem";
+import FavouritesButton from "@/app/favoritter/_components/FavouritesButton";
 
 export default forwardRef(function SearchResult({ searchResult, query }, ref) {
     const [showAdDetailsForDebugging, setShowAdDetailsForDebugging] = useState(false);

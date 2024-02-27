@@ -47,4 +47,4 @@ function fixLocationName(text, splitOnDot = false) {
     return fixedLocationName;
 }
 
-module.exports = fixLocationName;
+export default fixLocationName;

@@ -1,6 +1,5 @@
 const { Issuer } = require("openid-client");
-const { createRemoteJWKSet, jwtVerify } = require("jose");
-const { logger } = require("../common/logger");
+const { createRemoteJWKSet } = require("jose");
 
 let tokenXClient;
 
@@ -36,20 +35,6 @@ async function initializeTokenX() {
     }
 }
 
-async function tokenIsValid(token) {
-    try {
-        const verification = await jwtVerify(token, remoteJWKSet, {
-            audience: process.env.IDPORTEN_AUDIENCE,
-            issuer: idPortenIssuer.metadata.issuer,
-        });
-
-        return !!verification.payload;
-    } catch (e) {
-        logger.error(`Det skjedde en feil under validering av token, ${e.message}`);
-        return false;
-    }
-}
-
 async function getTokenX(token, tokenAudience) {
     let tokenX;
     const additionalClaims = {
@@ -71,10 +56,10 @@ async function getTokenX(token, tokenAudience) {
             additionalClaims,
         );
     } catch (e) {
-        logger.error(`Kunne ikke veksle inn til tokenX: ${e.message}`);
+        // logger.error(`Kunne ikke veksle inn til tokenX: ${e.message}`);
         return null;
     }
     return tokenX;
 }
 
-module.exports = { initializeTokenX, getTokenX, tokenIsValid };
+module.exports = { initializeTokenX, getTokenX };
