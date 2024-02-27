@@ -29,4 +29,4 @@ function getWorkLocation(propertyLocation, locationList, hidePostAddress = true)
     return workLocations.join(", ");
 }
 
-module.exports = getWorkLocation;
+export default getWorkLocation;

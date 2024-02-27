@@ -76,4 +76,4 @@ const setUpAduserApiProxy = (server) => {
     });
 };
 
-module.exports = setUpAduserApiProxy;
+export default setUpAduserApiProxy;
