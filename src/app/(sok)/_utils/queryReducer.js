@@ -45,6 +45,7 @@ export default function queryReducer(state, action) {
     const queryState = {
         ...state,
         from: 0,
+        paginate: undefined,
     };
 
     switch (action.type) {
@@ -209,6 +210,7 @@ export default function queryReducer(state, action) {
                 ...queryState,
                 from: action.from,
                 size: action.size,
+                paginate: true,
             };
         case RESET:
             return {

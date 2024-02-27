@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
+import React, { forwardRef, useEffect, useState } from "react";
 import SearchResultItem from "./SearchResultItem";
 import FavouritesButton from "../../../favoritter/_components/FavouritesButton";
 import { VStack } from "@navikt/ds-react";
+import { SEARCH_CHUNK_SIZE } from "../../_utils/query";
 
-function SearchResult({ searchResult }) {
+export default forwardRef(function SearchResult({ searchResult, query }, ref) {
     const [showAdDetailsForDebugging, setShowAdDetailsForDebugging] = useState(false);
+    const resultsPerPage = query.size || SEARCH_CHUNK_SIZE;
+    const totalPages = Math.ceil(searchResult.totalAds / resultsPerPage);
+    const page = query.from ? Math.floor(query.from / resultsPerPage) + 1 : 1;
 
     /**
      *  Check if we should render ad details for debugging
@@ -22,7 +25,13 @@ function SearchResult({ searchResult }) {
     }, []);
 
     return (
-        <VStack gap="10">
+        <VStack
+            gap="10"
+            ref={ref}
+            tabIndex={-1}
+            aria-label={`Side ${page} av ${totalPages}`}
+            className="no-focus-outline"
+        >
             {searchResult.ads &&
                 searchResult.ads.map((ad) => (
                     <SearchResultItem
@@ -43,12 +52,4 @@ function SearchResult({ searchResult }) {
                 ))}
         </VStack>
     );
-}
-
-SearchResult.propTypes = {
-    searchResult: PropTypes.shape({
-        ads: PropTypes.arrayOf(PropTypes.shape({})),
-    }),
-};
-
-export default SearchResult;
+});

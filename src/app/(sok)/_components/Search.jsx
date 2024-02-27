@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useEffect, useReducer, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { Box, Button, Heading, HGrid, Hide, HStack, Show, Stack, VStack } from "@navikt/ds-react";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -26,6 +26,7 @@ export default function Search({ query, searchResult, aggregations, locations })
     const router = useRouter();
     const searchParams = useSearchParams();
     const savedSearchUuid = searchParams.get("saved");
+    const searchResultRef = useRef();
 
     /**
      * Perform a search when user changes search criteria
@@ -42,11 +43,14 @@ export default function Search({ query, searchResult, aggregations, locations })
 
             logAmplitudeEvent("Stillinger - Utførte søk");
 
-            // Scroll page if user is paginating search result, not when changing search criteria
-            const shouldScroll =
-                (updatedQuery.from > 0 && updatedQuery.from !== query.from) || updatedQuery.size !== query.size;
-
-            router.replace(`/${stringifyQuery(browserQuery)}`, { scroll: shouldScroll });
+            if (updatedQuery.paginate) {
+                router.push(`/${stringifyQuery(browserQuery)}`);
+                if (searchResultRef.current) {
+                    searchResultRef.current.focus();
+                }
+            } else {
+                router.replace(`/${stringifyQuery(browserQuery)}`, { scroll: false });
+            }
         } else {
             // Skip search first time query change, since that
             // will just reload the search result we already got
@@ -131,7 +135,7 @@ export default function Search({ query, searchResult, aggregations, locations })
 
                 <VStack gap="10">
                     <SelectedFilters query={query} queryDispatch={queryDispatch} />
-                    <SearchResult searchResult={searchResult} query={query} queryDispatch={queryDispatch} />
+                    <SearchResult ref={searchResultRef} searchResult={searchResult} query={updatedQuery} />
                     <SearchPagination searchResult={searchResult} query={query} queryDispatch={queryDispatch} />
                     {query.from + SEARCH_CHUNK_SIZE >= searchResult.totalAds && <DoYouWantToSaveSearch query={query} />}
                     <Feedback query={query} />

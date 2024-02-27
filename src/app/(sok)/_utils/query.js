@@ -66,17 +66,15 @@ export function createQuery(searchParams) {
     };
 }
 
-/**
- * Takes a query and return a new object without empty properties.
- * An empty property can be an undefined value, an empty string or an empty array.
- */
-export function removeEmptyPropertiesFromQuery(query) {
+export function removeUnwantedOrEmptySearchParameters(query) {
     const newObj = {};
     Object.keys(query).forEach((prop) => {
         const value = query[prop];
 
         if (prop === "international" && value === false) {
             // Skip international flag if it is false
+        } else if (prop === "paginate") {
+            // Always skip paginate parameter
         } else if (Array.isArray(value)) {
             if (value.length > 0) {
                 newObj[prop] = value;
@@ -97,7 +95,7 @@ export function toApiQuery(query) {
         ...query,
         sort: query.sort === "" ? "published" : query.sort,
     };
-    return removeEmptyPropertiesFromQuery(apiSearchQuery);
+    return removeUnwantedOrEmptySearchParameters(apiSearchQuery);
 }
 
 /**
@@ -112,7 +110,7 @@ export function toSavedSearchQuery(query) {
     delete savedSearchQuery.size;
     delete savedSearchQuery.sort;
 
-    return removeEmptyPropertiesFromQuery(savedSearchQuery);
+    return removeUnwantedOrEmptySearchParameters(savedSearchQuery);
 }
 
 /**
@@ -131,7 +129,7 @@ export function toBrowserQuery(query) {
         delete browserQuery.size;
     }
 
-    return removeEmptyPropertiesFromQuery(browserQuery);
+    return removeUnwantedOrEmptySearchParameters(browserQuery);
 }
 
 /**
@@ -202,7 +200,7 @@ export function toReadableQuery(query) {
  * Check if query contains one or more criteria
  */
 export function isSearchQueryEmpty(query) {
-    const queryWithoutEmptyProperties = removeEmptyPropertiesFromQuery(query);
+    const queryWithoutEmptyProperties = removeUnwantedOrEmptySearchParameters(query);
     return Object.keys(queryWithoutEmptyProperties).length === 0;
 }
 
