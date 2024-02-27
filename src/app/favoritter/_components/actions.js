@@ -1,18 +1,19 @@
 "use server";
 
-import { cookies } from "next/headers";
-import { getAdUserOboToken } from "../../_common/auth/auth";
+import {
+    getAdUserDefaultAuthHeadersWithCsrfToken,
+    getAdUserOboToken,
+    getDefaultAuthHeaders,
+} from "../../_common/auth/auth";
+
+const ADUSER_FAVOURITES_URL = `${process.env.PAMADUSER_URL}/api/v1/userfavouriteads`;
 
 export async function getFavouriteAction() {
     const oboToken = await getAdUserOboToken();
 
-    const url = `${process.env.PAMADUSER_URL}/api/v1/userfavouriteads?size=9999`;
-    const res = await fetch(url, {
+    const res = await fetch(`${ADUSER_FAVOURITES_URL}?size=9999`, {
         method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${oboToken}`,
-        },
+        headers: getDefaultAuthHeaders(oboToken),
     });
 
     if (!res.ok) {
@@ -20,7 +21,6 @@ export async function getFavouriteAction() {
         console.error(res.status);
         console.error(res);
         return;
-        // return new Response(null, { status: res.status, headers: res.headers });
     }
 
     let data = await res.json();
@@ -31,15 +31,10 @@ export async function addFavouriteAction(favouriteAd) {
     const oboToken = await getAdUserOboToken();
 
     const url = `${process.env.PAMADUSER_URL}/api/v1/userfavouriteads`;
-    const res = await fetch(url, {
+    const res = await fetch(ADUSER_FAVOURITES_URL, {
         method: "POST",
         body: JSON.stringify({ favouriteAd: favouriteAd }),
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${oboToken}`,
-            cookie: `XSRF-TOKEN-ARBEIDSPLASSEN=${cookies().get("XSRF-TOKEN-ARBEIDSPLASSEN")?.value}`,
-            "X-XSRF-TOKEN-ARBEIDSPLASSEN": cookies().get("XSRF-TOKEN-ARBEIDSPLASSEN")?.value,
-        },
+        headers: getAdUserDefaultAuthHeadersWithCsrfToken(oboToken),
     });
 
     if (!res.ok) {
@@ -54,15 +49,9 @@ export async function addFavouriteAction(favouriteAd) {
 export async function deleteFavouriteAction(uuid) {
     const oboToken = await getAdUserOboToken();
 
-    const url = `${process.env.PAMADUSER_URL}/api/v1/userfavouriteads/${uuid}`;
-    const res = await fetch(url, {
+    const res = await fetch(ADUSER_FAVOURITES_URL, {
         method: "DELETE",
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${oboToken}`,
-            cookie: `XSRF-TOKEN-ARBEIDSPLASSEN=${cookies().get("XSRF-TOKEN-ARBEIDSPLASSEN")?.value}`,
-            "X-XSRF-TOKEN-ARBEIDSPLASSEN": cookies().get("XSRF-TOKEN-ARBEIDSPLASSEN")?.value,
-        },
+        headers: getAdUserDefaultAuthHeadersWithCsrfToken(oboToken),
     });
 
     if (!res.ok) {

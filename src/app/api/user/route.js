@@ -1,17 +1,19 @@
-import { getAdUserOboToken } from "../../_common/auth/auth";
+import {
+    getAdUserDefaultAuthHeadersWithCsrfToken,
+    getAdUserOboToken,
+    getDefaultAuthHeaders,
+} from "../../_common/auth/auth";
 
 export const dynamic = "force-dynamic";
 
-export async function GET(req) {
+const ADUSER_USER_URL = `${process.env.PAMADUSER_URL}/api/v1/user`;
+
+export async function GET() {
     const oboToken = await getAdUserOboToken();
 
-    const url = `${process.env.PAMADUSER_URL}/api/v1/user`;
-    const res = await fetch(url, {
+    const res = await fetch(ADUSER_USER_URL, {
         method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${oboToken}`,
-        },
+        headers: getDefaultAuthHeaders(oboToken),
     });
 
     if (!res.ok) {
@@ -28,19 +30,12 @@ export async function GET(req) {
 export async function POST(req) {
     const oboToken = await getAdUserOboToken();
 
-    const url = `${process.env.PAMADUSER_URL}/api/v1/user`;
-    const res = await fetch(url, {
+    const res = await fetch(ADUSER_USER_URL, {
         method: "POST",
         body: req.body,
         credentials: "same-origin",
         duplex: "half",
-        headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-            Authorization: `Bearer ${oboToken}`,
-            cookie: `XSRF-TOKEN-ARBEIDSPLASSEN=${req.cookies?.get("XSRF-TOKEN-ARBEIDSPLASSEN")?.value}`,
-            "X-XSRF-TOKEN-ARBEIDSPLASSEN": req.cookies?.get("XSRF-TOKEN-ARBEIDSPLASSEN")?.value,
-        },
+        headers: getAdUserDefaultAuthHeadersWithCsrfToken(oboToken),
     });
 
     if (!res.ok) {
