@@ -4,7 +4,7 @@ function isValidISOString(isoString) {
     return ISO_8601_DATE.test(isoString);
 }
 
-exports.formatISOString = function formatISOString(isoString, format = "DD.MM.YYYY") {
+export default function formatISOString(isoString, format = "DD.MM.YYYY") {
     try {
         if (isValidISOString(isoString)) {
             const dt = isoString.split("-");
@@ -18,4 +18,4 @@ exports.formatISOString = function formatISOString(isoString, format = "DD.MM.YY
         return isoString;
     }
     return isoString;
-};
+}

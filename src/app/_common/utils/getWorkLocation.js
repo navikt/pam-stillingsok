@@ -1,4 +1,4 @@
-const fixLocationName = require("./fixLocationName");
+import fixLocationName from "@/app/_common/utils/fixLocationName";
 
 function getWorkLocation(propertyLocation, locationList, hidePostAddress = true) {
     if (propertyLocation) {
