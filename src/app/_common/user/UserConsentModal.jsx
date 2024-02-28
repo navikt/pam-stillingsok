@@ -14,22 +14,28 @@ function UserConsentModal({ onClose, onTermsAccepted }) {
     const [checked, check, uncheck] = useToggle();
     const [fetchStatus, setFetchStatus] = useState(FetchStatus.NOT_FETCHED);
 
-    function createUser() {
+    async function createUser() {
         setFetchStatus(FetchStatus.IS_FETCHING);
 
-        UserAPI.post("api/user", {
-            acceptedTerms: "sok_v1",
-        })
-            .then((response) => {
-                setFetchStatus(FetchStatus.SUCCESS);
-                if (onTermsAccepted) {
-                    onTermsAccepted();
-                }
-                updateUser(response);
-            })
-            .catch(() => {
-                setFetchStatus(FetchStatus.FAILURE);
-            });
+        const res = await fetch("/stillinger/api/user", {
+            method: "POST",
+            body: JSON.stringify({ acceptedTerms: "sok_v1" }),
+        });
+
+        if (!res.ok) {
+            setFetchStatus(FetchStatus.FAILURE);
+            return;
+        }
+
+        const data = await res.json();
+
+        setFetchStatus(FetchStatus.SUCCESS);
+
+        if (onTermsAccepted) {
+            onTermsAccepted();
+        }
+
+        updateUser(data);
     }
 
     function onCheckboxClick(e) {
@@ -41,9 +47,9 @@ function UserConsentModal({ onClose, onTermsAccepted }) {
         }
     }
 
-    function onAcceptTermsClick() {
+    async function onAcceptTermsClick() {
         if (checked) {
-            createUser();
+            await createUser();
         } else {
             showError();
         }

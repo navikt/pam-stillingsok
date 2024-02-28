@@ -3,8 +3,6 @@ import PropTypes from "prop-types";
 import { BodyLong, Button, HStack, Modal } from "@navikt/ds-react";
 import { WorriedFigure } from "@navikt/arbeidsplassen-react";
 import { AuthenticationContext, AuthenticationStatus } from "@/app/_common/auth/contexts/AuthenticationProvider";
-import UserAPI from "./UserAPI";
-import { FetchAction, useFetchReducer } from "@/app/_common/hooks/useFetchReducer";
 import useToggle from "@/app/_common/hooks/useToggle";
 import AlertModalWithPageReload from "@/app/_common/components/modals/AlertModalWithPageReload";
 import { setAuthenticatedStatus } from "@/app/_common/monitoring/amplitude";
@@ -19,31 +17,35 @@ export const HasAcceptedTermsStatus = {
 
 function UserProvider({ children }) {
     const { authenticationStatus } = useContext(AuthenticationContext);
-    const [userResponse, dispatch] = useFetchReducer();
+    const [userResponse, setUserResponse] = useState();
     const [shouldShowErrorDialog, openErrorDialog, closeErrorDialog] = useToggle(false);
 
     const [hasAcceptedTermsStatus, setHasAcceptedTermsStatus] = useState(HasAcceptedTermsStatus.NOT_FETCHED);
     const [forbiddenUser, setForbiddenUser] = useState(false);
 
-    function fetchUser() {
-        dispatch({ type: FetchAction.BEGIN });
+    async function fetchUser() {
+        const res = await fetch("/stillinger/api/user");
 
-        UserAPI.get("api/user")
-            .then((data) => {
-                dispatch({ type: FetchAction.RESOLVE, data });
-            })
-            .catch((error) => {
-                dispatch({ type: FetchAction.REJECT, error });
-                if (error.statusCode === 403) {
-                    setForbiddenUser(true);
-                } else if (error.statusCode !== 404) {
-                    openErrorDialog();
-                }
-            });
+        if (!res.ok) {
+            if (res.status === 403) {
+                setForbiddenUser(true);
+            } else if (res.status === 404) {
+                setHasAcceptedTermsStatus(HasAcceptedTermsStatus.NOT_ACCEPTED);
+            } else {
+                openErrorDialog();
+            }
+
+            return;
+        }
+
+        const data = await res.json();
+
+        updateUser(data);
     }
 
     function updateUser(data) {
-        dispatch({ type: FetchAction.SET_DATA, data });
+        setUserResponse(data);
+        setHasAcceptedTermsStatus(HasAcceptedTermsStatus.HAS_ACCEPTED);
     }
 
     function logout() {
@@ -63,14 +65,6 @@ function UserProvider({ children }) {
             fetchUser();
         }
     }, [authenticationStatus]);
-
-    useEffect(() => {
-        if (userResponse.data) {
-            setHasAcceptedTermsStatus(HasAcceptedTermsStatus.HAS_ACCEPTED);
-        } else if (userResponse.error && userResponse.error.statusCode === 404) {
-            setHasAcceptedTermsStatus(HasAcceptedTermsStatus.NOT_ACCEPTED);
-        }
-    }, [userResponse]);
 
     useEffect(() => {
         if (authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED) {
