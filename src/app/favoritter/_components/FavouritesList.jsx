@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { HStack, Select, Heading } from "@navikt/ds-react";
+import { HStack, Select, Heading, VStack } from "@navikt/ds-react";
 import FavouritesListItem from "./FavouritesListItem";
 import PropTypes from "prop-types";
 import AlertModalWithPageReload from "@/app/_common/components/modals/AlertModalWithPageReload";
@@ -53,7 +53,7 @@ function FavouritesList({ favourites }) {
                         </option>
                     </Select>
                 </HStack>
-                <div>
+                <VStack gap="10">
                     {favourites &&
                         favourites.map((favourite) => (
                             <FavouritesListItem
@@ -63,7 +63,7 @@ function FavouritesList({ favourites }) {
                                 openErrorDialog={openErrorDialog}
                             />
                         ))}
-                </div>
+                </VStack>
 
                 {shouldShowErrorDialog && (
                     <AlertModalWithPageReload id="favourites-list-item-error" onClose={closeErrorDialog} title="Feil">

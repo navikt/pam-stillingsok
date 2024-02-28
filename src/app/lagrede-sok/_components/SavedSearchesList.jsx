@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Heading } from "@navikt/ds-react";
+import { Heading, VStack } from "@navikt/ds-react";
 import PropTypes from "prop-types";
 import SavedSearchListItem from "./SavedSearchListItem";
 import NoFavourites from "@/app/favoritter/_components/NoFavourites";
@@ -32,19 +32,21 @@ function SavedSearchesList({ data, uuid }) {
 
     return (
         <section className="container-medium mt-16 mb-16">
-            <Heading level="1" size="xlarge" spacing>
+            <Heading level="1" size="xlarge" className="mb-12">
                 Lagrede søk
             </Heading>
-            {localSavedSearchesList.map((savedSearch) => (
-                <SavedSearchListItem
-                    key={savedSearch.uuid}
-                    replaceSavedSearchInList={updateSavedSearchInList}
-                    removeSavedSearchFromList={removeSavedSearchFromList}
-                    savedSearch={savedSearch}
-                    autoOpenModal={savedSearch.uuid === uuid}
-                    openErrorDialog={openErrorDialog}
-                />
-            ))}
+            <VStack gap="10">
+                {localSavedSearchesList.map((savedSearch) => (
+                    <SavedSearchListItem
+                        key={savedSearch.uuid}
+                        replaceSavedSearchInList={updateSavedSearchInList}
+                        removeSavedSearchFromList={removeSavedSearchFromList}
+                        savedSearch={savedSearch}
+                        autoOpenModal={savedSearch.uuid === uuid}
+                        openErrorDialog={openErrorDialog}
+                    />
+                ))}
+            </VStack>
             {shouldShowErrorModal && (
                 <AlertModalWithPageReload
                     id="delete-saved-search-error"
