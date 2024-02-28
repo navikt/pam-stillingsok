@@ -39,13 +39,13 @@ Lokalt brukes også wonderwall, men her kjører vi mot en OIDC-provider i Docker
 
 Go er nødvendig for å bygge wonderwall binaries. Wonderwall brukes for lokal OIDC-flyt.
 
-```
+```shell
 brew install go
 ```
 
 Installer Wonderwall:
 
-```
+```shell
 make install
 ```
 
@@ -97,21 +97,21 @@ gcloud auth print-access-token \
 Du kan nå starte Docker Compose for fellestjenestene og lokalt
 
 ```shell
-./start-docker-compose.sh
+$ npm run start:dependencies
 ```
 
 Skriptet sørger for å starte felles tjenester og lage databaser som trengs.
 
 ## Start applikasjonen
 
-```
+```shell
 $ npm install
 $ npm run dev
 ```
 
 For å starte docker-containere for redis, mock-oauth2-server og wonderwall.
 
-```
+```shell
 $ npm run start:dependencies
 ```
 
@@ -124,7 +124,7 @@ Dersom du vil få inn teststillinger kan du koble deg direkte til et kjørende i
 1. Koble til [naisedevice](https://docs.nais.io/explanation/naisdevice/).
 2. Kjør port-forwarding. Dette gjør du med følgende kommando:
 
-```
+```shell
 $ kubectl config use-context dev-gcp
 $ kubectl -n teampam port-forward deployment/pam-search-api 9000:9000
 ```
@@ -132,7 +132,7 @@ $ kubectl -n teampam port-forward deployment/pam-search-api 9000:9000
 > [!TIP]
 > Dersom du får får feilmelding ved kjøring av kommandoene over kan du prøve å logge inn i gcloud med følgende kommando.
 >
-> ```
+> ```shell
 > gcloud auth login
 > ```
 
