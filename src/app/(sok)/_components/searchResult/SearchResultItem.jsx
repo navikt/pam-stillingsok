@@ -115,8 +115,16 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, isD
                 </VStack>
 
                 <HStack gap="4" align="center">
-                    {showExpired && <Tag variant="warning-moderate">Annonsen er utløpt</Tag>}
-                    {hasInterestform && <Tag variant="info-moderate">Superrask søknad</Tag>}
+                    {showExpired && (
+                        <Tag size="small" variant="warning-moderate">
+                            Annonsen er utløpt
+                        </Tag>
+                    )}
+                    {hasInterestform && (
+                        <Tag size="small" variant="info-moderate">
+                            Superrask søknad
+                        </Tag>
+                    )}
                     {frist && (
                         <BodyShort weight="semibold" size="small" textColor="subtle">
                             {fristText()}
