@@ -92,7 +92,9 @@ export default function EmploymentDetails({ stilling }) {
                             <Label as="p">Prosent</Label>
                         </dt>
                         <dd>
-                            <BodyLong>{properties.jobpercentage} %</BodyLong>
+                            <BodyLong>
+                                {properties.jobpercentage} {properties.jobpercentage.endsWith("%") ? "" : "%"}
+                            </BodyLong>
                         </dd>
                     </>
                 )}
