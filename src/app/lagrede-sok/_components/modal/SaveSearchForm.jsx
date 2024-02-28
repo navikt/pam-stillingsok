@@ -177,7 +177,7 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
                                     <Radio value={60}>60 dager</Radio>
                                     <Radio value={90}>90 dager</Radio>
                                 </RadioGroup>
-                                {!isStringEmpty(user.data.email) && (
+                                {!isStringEmpty(user.email) && (
                                     <BodyLong>
                                         Varsel sendes på e-post. Gå til{" "}
                                         <AkselLink href="/min-side/innstillinger">samtykker og innstillinger</AkselLink>{" "}
