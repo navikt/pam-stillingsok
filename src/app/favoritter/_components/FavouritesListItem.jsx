@@ -7,8 +7,8 @@ import { TrashIcon } from "@navikt/aksel-icons";
 import SearchResultItem from "@/app/(sok)/_components/searchResult/SearchResultItem";
 import useToggle from "@/app/_common/hooks/useToggle";
 import AlertModal from "@/app/_common/components/modals/AlertModal";
-import { deleteFavouriteAction } from "./actions";
 import { FavouritesContext } from "./FavouritesProvider";
+import * as actions from "@/app/_common/actions";
 
 function FavouritesListItem({ favourite, onFavouriteDeleted, openErrorDialog }) {
     const [shouldShowConfirmDeleteModal, openConfirmDeleteModal, closeConfirmDeleteModal] = useToggle();
@@ -19,7 +19,7 @@ function FavouritesListItem({ favourite, onFavouriteDeleted, openErrorDialog }) 
         addToPending(favourite.uuid);
         setIsDeleting(true);
         startTransition(async () => {
-            const { success } = await deleteFavouriteAction(favourite.uuid);
+            const { success } = await actions.deleteFavouriteAction(favourite.uuid);
             setIsDeleting(false);
             closeConfirmDeleteModal();
             if (!success) {

@@ -1,7 +1,7 @@
 import FavouritesList from "./_components/FavouritesList";
 import UserConsentIsRequired from "./_components/UserConsentIsRequired";
 import { getMetadataTitle } from "../layout";
-import { getFavouriteAction } from "@/app/favoritter/_components/actions";
+import * as actions from "@/app/_common/actions";
 
 export const metadata = {
     title: getMetadataTitle("Favoritter"),
@@ -31,7 +31,7 @@ export default async function Page(props) {
     }
 
     let sortBy = props.searchParams.sortBy || "published";
-    const favourites = await getFavouriteAction(sortBy);
+    const favourites = await actions.getFavouritesAction(sortBy);
 
     return <FavouritesList favourites={favourites} />;
 }

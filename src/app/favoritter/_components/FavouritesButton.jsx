@@ -12,7 +12,7 @@ import UserConsentModal from "@/app/_common/user/UserConsentModal";
 import LoginModal from "@/app/_common/auth/components/LoginModal";
 import useToggle from "@/app/_common/hooks/useToggle";
 import AlertModalWithPageReload from "@/app/_common/components/modals/AlertModalWithPageReload";
-import { addFavouriteAction, deleteFavouriteAction } from "./actions";
+import * as actions from "@/app/_common/actions";
 
 /**
  * Displays a button "Lagre favoritt" or "Slett favoritt".
@@ -41,7 +41,7 @@ function FavouritesButton({ id, stilling, className, variant, useShortText = fal
         addToPending(adUuid);
 
         try {
-            const favourite = await addFavouriteAction({
+            const favourite = await actions.addFavouriteAction({
                 uuid: adUuid,
                 source: ad.source,
                 reference: ad.reference,
@@ -67,7 +67,7 @@ function FavouritesButton({ id, stilling, className, variant, useShortText = fal
         addToPending(adUuid);
 
         try {
-            await deleteFavouriteAction(found.uuid);
+            await actions.deleteFavouriteAction(found.uuid);
             removeFavouriteFromLocalList(found);
         } catch (err) {
             openErrorDialog();
