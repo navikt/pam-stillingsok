@@ -13,6 +13,7 @@ import PropTypes from "prop-types";
 import interLocalFont from "next/font/local";
 import App from "./App";
 import Providers from "./Providers";
+import * as actions from "@/app/_common/actions";
 
 const myFont = interLocalFont({
     variable: "--font-inter",
@@ -43,17 +44,11 @@ export const metadata = {
     },
 };
 
-const cookie = {
-    closedFilterAccordions: [
-        /*"sted", "yrke"*/
-    ],
-};
-
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
     return (
         <html lang="no">
             <body data-theme="arbeidsplassen" className={myFont.className}>
-                <Providers userPreferences={cookie}>
+                <Providers userPreferences={await actions.getUserPreferences()}>
                     <App amplitudeToken={process.env.AMPLITUDE_TOKEN}>{children}</App>
                 </Providers>
             </body>
