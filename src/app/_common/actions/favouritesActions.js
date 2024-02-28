@@ -9,7 +9,7 @@ import logger from "@/app/_common/utils/logger";
 
 const ADUSER_FAVOURITES_URL = `${process.env.PAMADUSER_URL}/api/v1/userfavouriteads`;
 
-export async function getFavouriteAction() {
+export async function getFavouritesAction() {
     const oboToken = await getAdUserOboToken();
 
     const res = await fetch(`${ADUSER_FAVOURITES_URL}?size=9999`, {

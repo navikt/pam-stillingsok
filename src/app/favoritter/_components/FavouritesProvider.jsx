@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { HasAcceptedTermsStatus, UserContext } from "@/app/_common/user/UserProvider";
 import useToggle from "@/app/_common/hooks/useToggle";
 import AlertModalWithPageReload from "@/app/_common/components/modals/AlertModalWithPageReload";
-import { getFavouriteAction } from "./actions";
+import * as actions from "@/app/_common/actions";
 
 export const FavouritesContext = React.createContext({
     favourites: [],
@@ -35,7 +35,7 @@ function FavouritesProvider({ children }) {
 
     async function getFavourites() {
         try {
-            const content = await getFavouriteAction();
+            const content = await actions.getFavouritesAction();
             setFavourites(content ? content : []);
         } catch (err) {
             openErrorDialog();
