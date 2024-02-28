@@ -58,6 +58,28 @@ export async function POST(req) {
     return Response.json(data);
 }
 
-export async function PUT() {
-    return new Response("", { status: 200 });
+export async function PUT(req) {
+    let oboToken;
+    try {
+        oboToken = await getAdUserOboToken();
+    } catch (e) {
+        return new Response(null, { status: 401 });
+    }
+
+    const res = await fetch(ADUSER_USER_URL, {
+        method: "PUT",
+        body: req.body,
+        credentials: "same-origin",
+        duplex: "half",
+        headers: getAdUserDefaultAuthHeadersWithCsrfToken(oboToken),
+    });
+
+    if (!res.ok) {
+        logger.error(`PUT user to aduser failed. ${res.status} ${res.statusText}`);
+        return new Response(null, { status: res.status });
+    }
+
+    let data = await res.json();
+
+    return Response.json(data);
 }
