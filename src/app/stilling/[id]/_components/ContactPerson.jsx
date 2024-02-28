@@ -78,7 +78,7 @@ export default function ContactPerson({ contactList, adId, adTitle }) {
 ContactPerson.propTypes = {
     contactList: PropTypes.arrayOf(
         PropTypes.shape({
-            person: PropTypes.string,
+            name: PropTypes.string,
             title: PropTypes.string,
             phone: PropTypes.string,
             email: PropTypes.string,
