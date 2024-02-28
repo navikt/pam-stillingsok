@@ -97,7 +97,7 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, isD
                     {employer && (
                         <HStack gap="2" wrap={false} align="center">
                             <VStack align="center">
-                                <Buldings3Icon width="1.5em" height="1.5em" aria-hidden="true" />
+                                <Buldings3Icon fontSize="1.5rem" aria-hidden="true" />
                                 <BodyShort visuallyHidden>Arbeidsgiver</BodyShort>
                             </VStack>
                             <BodyShort className="overflow-wrap-anywhere">{employer}</BodyShort>
@@ -106,7 +106,7 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, isD
                     {location && (
                         <HStack gap="2" wrap={false} align="center">
                             <VStack align="center">
-                                <LocationPinIcon width="1.5em" height="1.5em" aria-label="Sted" aria-hidden="true" />
+                                <LocationPinIcon fontSize="1.5rem" aria-label="Sted" aria-hidden="true" />
                                 <BodyShort visuallyHidden>Sted</BodyShort>
                             </VStack>
                             <BodyShort className="overflow-wrap-anywhere">{location}</BodyShort>

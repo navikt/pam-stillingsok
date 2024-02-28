@@ -32,14 +32,14 @@ function Feedback({ query }) {
                         <FeedbackButton
                             onClick={() => onRatingClick("Ja")}
                             aria-describedby="feedback-panel-title"
-                            icon={<FaceSmileIcon aria-hidden="true" height="1.5em" width="1.5em" />}
+                            icon={<FaceSmileIcon aria-hidden="true" fontSize="1.5rem" />}
                         >
                             Ja
                         </FeedbackButton>
                         <FeedbackButton
                             onClick={() => onRatingClick("Nei")}
                             aria-describedby="feedback-panel-title"
-                            icon={<FaceFrownIcon aria-hidden="true" height="1.5em" width="1.5em" />}
+                            icon={<FaceFrownIcon aria-hidden="true" fontSize="1.5rem" />}
                         >
                             Nei
                         </FeedbackButton>

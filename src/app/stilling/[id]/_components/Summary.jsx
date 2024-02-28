@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { BodyLong, HStack } from "@navikt/ds-react";
-import { Buldings3Icon, EarthIcon } from "@navikt/aksel-icons";
+import { Buldings3Icon, PinIcon } from "@navikt/aksel-icons";
 import getWorkLocation from "@/app/_common/utils/getWorkLocation";
 import getEmployer from "@/app/_common/utils/getEmployer";
 
@@ -14,7 +14,7 @@ export default function Summary({ stilling }) {
             {employer && (
                 <HStack className="mb-2" gap="3" align="center" wrap={false}>
                     <HStack align="center">
-                        <Buldings3Icon title="Arbeidsgiver" width="1.5em" height="1.5em" />
+                        <Buldings3Icon title="Arbeidsgiver" fontSize="1.5rem" />
                     </HStack>
                     <BodyLong weight="semibold">{employer}</BodyLong>
                 </HStack>
@@ -22,7 +22,7 @@ export default function Summary({ stilling }) {
             {location && (
                 <HStack className="mb-2" gap="3" align="center" wrap={false}>
                     <HStack align="center">
-                        <EarthIcon title="Sted" width="1.5em" height="1.5em" />
+                        <PinIcon title="Sted" fontSize="1.5rem" />
                     </HStack>
                     <BodyLong weight="semibold">{location}</BodyLong>
                 </HStack>

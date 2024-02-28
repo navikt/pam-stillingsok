@@ -40,7 +40,7 @@ export default class TypeaheadSuggestion extends React.Component {
                         }`}
                     >
                         <HStack as="span" align="center" gap="1" wrap={false}>
-                            <MagnifyingGlassIcon aria-hidden="true" height="1.25em" width="1.25em" />
+                            <MagnifyingGlassIcon aria-hidden="true" fontSize="1.25rem" />
                             <span className="TypeaheadSuggestion__truncate">
                                 Søk på &laquo;{this.value}&raquo; i hele annonsen
                             </span>
