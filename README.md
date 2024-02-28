@@ -10,51 +10,6 @@ Applikasjonen henter stillinger fra en dokumentdatabase (ElasticSearch) gjennom
 e-poster skjer gjennom applikasjonen [pam-aduser](https://github.com/navikt/pam-aduser).
 Navnet til innlogget bruker hentes fra [pam-aduser](https://github.com/navikt/pam-aduser).
 
-## Avhengigheter
-
--   [pam-search-api](https://github.com/navikt/pam-search-api)
--   [pam-aduser](https://github.com/navikt/pam-aduser)
-
-# Teknisk dokumentasjon
-
-### Teknologier
-
-Stillingsøket kjører i Next.js rammeverket. Den viser stillinger, favoritter og lagrede søk. Brukere kan søke etter
-stillinger uten å logge inn, mens favoritter og lagrede søk krever innlogging.
-
-Server-side står for en del logikk, blant annet
-konvertering av søkekriterier i frontend til ElasticSearch for å kunne utføre spørringer mot pam-search-api.
-
-## Systemlandskap
-
-Bildet viser en forenklet skisse av pam-stillingsok og nærmeste integrasjoner.
-
-![Teknisk skisse](images/teknisk-skisse.png)
-
-### Stillingsdatabase (ElasticSearch) og pam-search-api
-
-[navikt/pam-search-api](http://github.com/navikt/pam-search-api) har en dokumentdatabase med stillinger
-(ElasticSearch) som `pam-stillingsok` henter stillinger fra via REST.
-
-En index-tjeneste henter stillinger fra stillingsdatabasen og indekserer dem til ElasticSearch via  
-REST.
-
-### Lagrede favoritter, lagrede søk og pam-aduser
-
-[navikt/pam-aduser](http://github.com/navikt/pam-aduser) har funksjonalitet for lagring av
-favorittstillinger, lagrede søk og utsending av epost med lagrede søk. Appen har et REST API som `pam-stillingsok` bruker for å
-hente og editere favoritter og lagrede søk.
-
-Favorittstillinger lagres i en Postgres-database i `pam-aduser`. Favorittene synces mot
-stillingsdatabasen med masterdata for stillinger via REST for å fange opp endringer i stillingannonsers status, tittel
-osv.
-
-Lagrede søk fungerer ved at pam-stillingsok genererer en predefinert spørring som kan eksekveres mot `pam-search-api`.
-Denne spørringen lagres i `pam-aduser`. Hver natt kjøres alle lagrede spørringer mot `pam-stillingsok`. Nye
-stillinger sendes til brukere over epost med Microsoft Graph API.
-
-# Komme i gang
-
 ## Før kjøring av applikasjonen lokalt
 
 ### Hvordan få tilgang til @navikt/arbeidsplassen-react og @navikt/arbeidsplassen-css
@@ -160,6 +115,8 @@ For å starte docker-containere for redis, mock-oauth2-server og wonderwall.
 $ npm run start:dependencies
 ```
 
+Når applikasjonen er oppe, så kan du gå inn på [http://localhost:3000/stillinger](http://localhost:3000/stillinger)
+
 ### Med teststillinger fra dev-miljøet
 
 Dersom du vil få inn teststillinger kan du koble deg direkte til et kjørende instans av `pam-search-api` i kubernetes.
@@ -193,3 +150,46 @@ Lyst til å teste i dev-miljøet? `feature/**` branches pushes automatisk til de
 ## Bruk av innloggede tjenester
 
 For å kunne bruke innloggede tjenester (dvs. favoritter og lagrede søk), må du først kjøre `pam-aduser`.
+
+## Teknisk dokumentasjon
+
+### Avhengigheter
+
+-   [pam-search-api](https://github.com/navikt/pam-search-api)
+-   [pam-aduser](https://github.com/navikt/pam-aduser)
+
+### Teknologier
+
+Stillingsøket kjører i Next.js rammeverket. Den viser stillinger, favoritter og lagrede søk. Brukere kan søke etter
+stillinger uten å logge inn, mens favoritter og lagrede søk krever innlogging.
+
+Server-side står for en del logikk, blant annet
+konvertering av søkekriterier i frontend til ElasticSearch for å kunne utføre spørringer mot pam-search-api.
+
+### Systemlandskap
+
+Bildet viser en forenklet skisse av `pam-stillingsok` og nærmeste integrasjoner.
+
+![Teknisk skisse](images/teknisk-skisse.png)
+
+### Stillingsdatabase (ElasticSearch) og pam-search-api
+
+[navikt/pam-search-api](http://github.com/navikt/pam-search-api) har en dokumentdatabase med stillinger
+(ElasticSearch) som `pam-stillingsok` henter stillinger fra via REST.
+
+En index-tjeneste henter stillinger fra stillingsdatabasen og indekserer dem til ElasticSearch via  
+REST.
+
+### Lagrede favoritter, lagrede søk og pam-aduser
+
+[navikt/pam-aduser](http://github.com/navikt/pam-aduser) har funksjonalitet for lagring av
+favorittstillinger, lagrede søk og utsending av epost med lagrede søk. Appen har et REST API som `pam-stillingsok` bruker for å
+hente og editere favoritter og lagrede søk.
+
+Favorittstillinger lagres i en Postgres-database i `pam-aduser`. Favorittene synces mot
+stillingsdatabasen med masterdata for stillinger via REST for å fange opp endringer i stillingannonsers status, tittel
+osv.
+
+Lagrede søk fungerer ved at `pam-stillingsok` genererer en predefinert spørring som kan eksekveres mot `pam-search-api`.
+Denne spørringen lagres i `pam-aduser`. Hver natt kjøres alle lagrede spørringer mot `pam-stillingsok`. Nye
+stillinger sendes til brukere over epost med Microsoft Graph API.
