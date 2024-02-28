@@ -13,7 +13,7 @@ import { logStillingVisning } from "@/app/_common/monitoring/amplitude";
 import ShareAd from "./ShareAd";
 import Summary from "./Summary";
 
-function Ad({ ad, shareAdRedirectUrl }) {
+function Ad({ ad }) {
     /**
      * Track page view for all ads
      */
@@ -58,7 +58,7 @@ function Ad({ ad, shareAdRedirectUrl }) {
                                     adId={ad._id}
                                     adTitle={ad._source.title}
                                 />
-                                <ShareAd source={ad._source} shareAdRedirectUrl={shareAdRedirectUrl} />
+                                <ShareAd source={ad._source} id={ad._id} />
                             </>
                         )}
                         <AdDetails id={ad._id} source={ad._source} />
@@ -83,7 +83,6 @@ Ad.propTypes = {
             }),
         }),
     }).isRequired,
-    shareAdRedirectUrl: PropTypes.string.isRequired,
 };
 
 export default Ad;

@@ -7,9 +7,10 @@ import LinkedinIcon from "./icons/LinkedinIcon";
 import TwitterIcon from "./icons/TwitterIcon";
 import MessengerIcon from "./icons/MessengerIcon";
 
-export default function ShareAd({ source, shareAdRedirectUrl }) {
+export default function ShareAd({ source, id }) {
     const { title } = source;
     const deviceType = new UAParser().getResult().device.type;
+    const shareAdRedirectUrl = `https://arbeidsplassen.nav.no/stillinger/stilling/${id}`;
 
     return (
         <section className="full-width mb-10">
@@ -67,5 +68,5 @@ ShareAd.propTypes = {
     source: PropTypes.shape({
         title: PropTypes.string,
     }).isRequired,
-    shareAdRedirectUrl: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
 };

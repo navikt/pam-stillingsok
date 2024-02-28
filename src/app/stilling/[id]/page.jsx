@@ -24,7 +24,6 @@ export async function generateMetadata({ params }) {
 
 export default async function Page({ params }) {
     const ad = await fetchAd(params.id);
-    const shareAdRedirectUrl = `${process.env.ARBEIDSPLASSEN_URL}/stillinger/stilling/${params.id}`;
 
-    return <Ad ad={ad} shareAdRedirectUrl={shareAdRedirectUrl} />;
+    return <Ad ad={ad} />;
 }
