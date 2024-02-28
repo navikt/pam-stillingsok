@@ -112,7 +112,7 @@ function SearchBox({ dispatch, query }) {
     }
 
     return (
-        <div className="mb-4">
+        <section aria-label="Søkeord" className="mb-4">
             <Typeahead
                 onClear={onClear}
                 id="search-form-fritekst-input"
@@ -124,7 +124,7 @@ function SearchBox({ dispatch, query }) {
                 value={value || ""}
                 onSearchButtonClick={handleSearchButtonClick}
             />
-        </div>
+        </section>
     );
 }
 

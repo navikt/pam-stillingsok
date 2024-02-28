@@ -11,10 +11,12 @@ function FilterAccordionItem({ title, children, panelId }) {
     }
 
     return (
-        <Accordion.Item defaultOpen={!closedFilterAccordions.includes(panelId)}>
-            <Accordion.Header onClick={onPanelClick}>{title}</Accordion.Header>
-            <Accordion.Content>{children}</Accordion.Content>
-        </Accordion.Item>
+        <section aria-label={`${title}, søkefilter`}>
+            <Accordion.Item defaultOpen={!closedFilterAccordions.includes(panelId)}>
+                <Accordion.Header onClick={onPanelClick}>{title}</Accordion.Header>
+                <Accordion.Content>{children}</Accordion.Content>
+            </Accordion.Item>
+        </section>
     );
 }
 

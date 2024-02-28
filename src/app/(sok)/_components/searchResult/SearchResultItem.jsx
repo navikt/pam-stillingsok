@@ -10,25 +10,18 @@ import getWorkLocation from "@/app/_common/utils/getWorkLocation";
 import { formatDate } from "@/app/_common/utils/utils";
 import Debug from "./Debug";
 
-export default function SearchResultItem({ ad, showExpired, favouriteButton, isDebug, shouldAutoFocus = false }) {
+export default function SearchResultItem({ ad, showExpired, favouriteButton, isDebug }) {
     const location = getWorkLocation(ad.properties.location, ad.locationList);
     const employer = getEmployer(ad);
     const published = formatDate(ad.published);
-    const now = new Date();
-    // Check against end of day to avoid issues.
-    const isPublishedToday = isSameDay(endOfDay(now), endOfDay(parseISO(ad.published)));
-    const isPublishedYesterday = isSameDay(endOfDay(subDays(now, 1)), endOfDay(parseISO(ad.published)));
-    const isPublishedTwoDaysAgo = isSameDay(endOfDay(subDays(now, 2)), endOfDay(parseISO(ad.published)));
     const hasInterestform = ad.properties.hasInterestform && ad.properties.hasInterestform === "true";
     const jobTitle = ad.properties.jobtitle && ad.title !== ad.properties.jobtitle ? ad.properties.jobtitle : undefined;
     const frist = ad.properties.applicationdue ? formatDate(ad.properties.applicationdue) : undefined;
-    const ref = useRef();
 
-    useLayoutEffect(() => {
-        if (shouldAutoFocus && ref.current) {
-            ref.current.focus({ preventScroll: true });
-        }
-    }, [shouldAutoFocus]);
+    const now = new Date();
+    const isPublishedToday = isSameDay(endOfDay(now), endOfDay(parseISO(ad.published)));
+    const isPublishedYesterday = isSameDay(endOfDay(subDays(now, 1)), endOfDay(parseISO(ad.published)));
+    const isPublishedTwoDaysAgo = isSameDay(endOfDay(subDays(now, 2)), endOfDay(parseISO(ad.published)));
 
     const fristText = () => {
         if (frist.toLowerCase().indexOf("asap") > -1) {
@@ -72,8 +65,6 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, isD
             justify="space-between"
             wrap={false}
             as="article"
-            ref={ref}
-            tabIndex={shouldAutoFocus ? -1 : undefined}
             aria-label={`${ad.title}, ${employer}, ${location}`}
         >
             <VStack gap="3">
