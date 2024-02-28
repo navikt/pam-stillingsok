@@ -43,7 +43,6 @@ export const logSearchFilterRemoved = (data) => {
 };
 
 export function logStillingVisning(ad) {
-    // Todo - tror employer.location er erstattet med employer.locationList
     const employerLocation = ad._source.employer ? ad._source.employer.location : null;
     let hasContactMail = false;
     let hasContactPhone = false;
