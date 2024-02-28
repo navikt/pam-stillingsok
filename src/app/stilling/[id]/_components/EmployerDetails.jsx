@@ -9,21 +9,27 @@ import { isValidUrl } from "@/app/_common/utils/utils";
 import getEmployer from "@/app/_common/utils/getEmployer";
 
 function getEmployerLocation(employer) {
-    let employerLocation = null;
+    let employerLocation = [];
 
-    if (employer && employer.location) {
-        const { location } = employer;
+    if (!employer || !employer.locationList) {
+        return undefined;
+    }
 
-        if (location.postalCode) {
-            employerLocation = location.address ? `${location.address}, ` : "";
-            employerLocation += `${location.postalCode} ${fixLocationName(location.city)}`;
-        } else if (location.municipal) {
-            employerLocation = `${fixLocationName(location.municipal)}`;
-        } else if (location.country) {
-            employerLocation = `${fixLocationName(location.country)}`;
+    const { locationList } = employer;
+
+    for (let i = 0; i < locationList.length; i += 1) {
+        if (locationList[i].postalCode) {
+            let address = locationList[i].address ? `${locationList[i].address}, ` : "";
+            address += `${locationList[i].postalCode} ${fixLocationName(locationList[i].city)}`;
+            employerLocation.push(address);
+        } else if (locationList[i].municipal) {
+            employerLocation.push(`${fixLocationName(locationList[i].municipal)}`);
+        } else if (locationList[i].country) {
+            employerLocation.push(`${fixLocationName(locationList[i].country)}`);
         }
     }
-    return employerLocation;
+
+    return employerLocation.join(", ");
 }
 
 export default function EmployerDetails({ stilling }) {
