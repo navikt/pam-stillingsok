@@ -5,7 +5,7 @@ export function middleware(request) {
     const cspHeader = `
     default-src 'none';
     script-src 'self' 'nonce-${nonce}' ${process.env.NODE_ENV === "production" ? "" : `'unsafe-eval'`};
-    style-src 'self' ${process.env.NODE_ENV === "production" ? `'nonce-${nonce}'` : `'unsafe-inline'`};
+    style-src 'self' 'unsafe-inline';
     img-src 'self';
     media-src 'none';
     font-src 'self';
