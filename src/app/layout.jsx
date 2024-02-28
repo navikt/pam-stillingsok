@@ -43,7 +43,11 @@ export const metadata = {
     },
 };
 
-const cookie = { closedFilterAccordions: ["sted", "yrke"] };
+const cookie = {
+    closedFilterAccordions: [
+        /*"sted", "yrke"*/
+    ],
+};
 
 export default function RootLayout({ children }) {
     return (
