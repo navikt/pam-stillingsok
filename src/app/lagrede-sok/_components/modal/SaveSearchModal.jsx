@@ -53,7 +53,7 @@ function SaveSearchModal({ onClose, onSaveSearchSuccess, formData, defaultFormMo
 
         hideSavedSearchForm();
 
-        if (response.notifyType === "EMAIL" && isStringEmpty(user.data.email)) {
+        if (response.notifyType === "EMAIL" && isStringEmpty(user.email)) {
             showRegisterEmailForm();
         } else {
             showSuccessMessage();
