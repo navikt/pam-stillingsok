@@ -13,7 +13,7 @@ export async function getUserPreferences() {
 
     let parsedCookie;
     try {
-        parsedCookie = JSON.parse(existingCookie.value + "feil");
+        parsedCookie = JSON.parse(existingCookie.value);
     } catch (e) {
         logger.info(`Kunne ikke parse '${USER_PREFERENCES_COOKIE_NAME}' cookie`);
         parsedCookie = {};
