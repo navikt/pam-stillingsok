@@ -43,14 +43,18 @@ export const logSearchFilterRemoved = (data) => {
 };
 
 export function logStillingVisning(ad) {
+    // Todo - tror employer.location er erstattet med employer.locationList
     const employerLocation = ad._source.employer ? ad._source.employer.location : null;
     let hasContactMail = false;
     let hasContactPhone = false;
     const contactList = ad._source.contactList ? ad._source.contactList : null;
-    contactList.forEach((contact) => {
-        if (contact.email) hasContactMail = true;
-        if (contact.phone) hasContactPhone = true;
-    });
+
+    if (contactList) {
+        contactList.forEach((contact) => {
+            if (contact.email) hasContactMail = true;
+            if (contact.phone) hasContactPhone = true;
+        });
+    }
 
     logAmplitudeEvent("Stilling visning", {
         title: ad._source.title || "N/A",
