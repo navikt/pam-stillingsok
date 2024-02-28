@@ -29,7 +29,7 @@ export default forwardRef(function SearchResult({ searchResult, query }, ref) {
             gap="10"
             ref={ref}
             tabIndex={-1}
-            aria-label={`Side ${page} av ${totalPages}`}
+            aria-label={`Søketreff, side ${page} av ${totalPages}`}
             className="no-focus-outline"
         >
             {searchResult.ads &&

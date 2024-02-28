@@ -74,7 +74,7 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, isD
             as="article"
             ref={ref}
             tabIndex={shouldAutoFocus ? -1 : undefined}
-            aria-labelledby={`${ad.uuid}-h3`}
+            aria-label={`${ad.title}, ${employer}, ${location}`}
         >
             <VStack gap="3">
                 <VStack gap="1">
@@ -88,7 +88,7 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, isD
                     )}
 
                     <HStack gap="2" wrap={false} align="center" justify="space-between">
-                        <Heading level="3" size="small" className="overflow-wrap-anywhere" id={`${ad.uuid}-h3`}>
+                        <Heading level="3" size="small" className="overflow-wrap-anywhere">
                             <LinkToAd stilling={ad} employer={employer}>
                                 {ad.title}
                             </LinkToAd>
@@ -96,7 +96,7 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, isD
                     </HStack>
 
                     {jobTitle && (
-                        <BodyShort weight="semibold" id={`${ad.uuid}-jobTitle`} className="overflow-wrap-anywhere">
+                        <BodyShort weight="semibold" className="overflow-wrap-anywhere">
                             {jobTitle}
                         </BodyShort>
                     )}
@@ -109,9 +109,7 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, isD
                                 <Buldings3Icon width="1.5em" height="1.5em" aria-hidden="true" />
                                 <BodyShort visuallyHidden>Arbeidsgiver</BodyShort>
                             </VStack>
-                            <BodyShort id={`${ad.uuid}-employer`} className="overflow-wrap-anywhere">
-                                {employer}
-                            </BodyShort>
+                            <BodyShort className="overflow-wrap-anywhere">{employer}</BodyShort>
                         </HStack>
                     )}
                     {location && (
@@ -120,9 +118,7 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, isD
                                 <LocationPinIcon width="1.5em" height="1.5em" aria-label="Sted" aria-hidden="true" />
                                 <BodyShort visuallyHidden>Sted</BodyShort>
                             </VStack>
-                            <BodyShort id={`${ad.uuid}-location`} className="overflow-wrap-anywhere">
-                                {location}
-                            </BodyShort>
+                            <BodyShort className="overflow-wrap-anywhere">{location}</BodyShort>
                         </HStack>
                     )}
                 </VStack>

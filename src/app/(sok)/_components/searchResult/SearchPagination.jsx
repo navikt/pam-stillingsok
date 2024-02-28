@@ -25,6 +25,7 @@ function SearchPagination({ searchResult, query, queryDispatch }) {
         <VStack gap="10" align="center">
             <Show above="md">
                 <Pagination
+                    aria-label="Navigasjon mellom søketreff"
                     onPageChange={onPageChange}
                     page={page}
                     count={totalPages}
@@ -35,6 +36,7 @@ function SearchPagination({ searchResult, query, queryDispatch }) {
             </Show>
             <Hide above="md">
                 <Pagination
+                    aria-label="Navigasjon mellom søketreff"
                     onPageChange={onPageChange}
                     page={page}
                     count={totalPages}

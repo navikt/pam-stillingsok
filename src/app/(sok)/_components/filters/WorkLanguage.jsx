@@ -22,7 +22,7 @@ function WorkLanguage({ initialValues, updatedValues, query, dispatch }) {
     }
 
     return (
-        <Fieldset legend="Heltid/deltid" hideLegend>
+        <Fieldset legend="Arbeidsspråk" hideLegend>
             <div>
                 {values.map((item) => (
                     <Checkbox
