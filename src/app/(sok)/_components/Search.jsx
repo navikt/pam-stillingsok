@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useReducer, useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useReducer, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { Box, Button, Heading, HGrid, Hide, HStack, Show, Stack, VStack } from "@navikt/ds-react";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -45,9 +45,6 @@ export default function Search({ query, searchResult, aggregations, locations })
 
             if (updatedQuery.paginate) {
                 router.push(`/${stringifyQuery(browserQuery)}`);
-                if (searchResultRef.current) {
-                    searchResultRef.current.focus();
-                }
             } else {
                 router.replace(`/${stringifyQuery(browserQuery)}`, { scroll: false });
             }
@@ -57,6 +54,12 @@ export default function Search({ query, searchResult, aggregations, locations })
             setInitialRenderDone(true);
         }
     }, [updatedQuery]);
+
+    useLayoutEffect(() => {
+        if (updatedQuery.paginate) {
+            searchResultRef.current.focus();
+        }
+    }, [searchParams]);
 
     useEffect(() => {
         logAmplitudeEvent("Stillinger - Utførte søk");
