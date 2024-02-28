@@ -1,7 +1,7 @@
 import { getToken, requestTokenxOboToken, validateToken } from "@navikt/oasis";
 import { cookies, headers } from "next/headers";
 
-export async function getAdUserOboToken(): Promise<String> {
+export async function getAdUserOboToken() {
     const token = getToken(headers());
 
     if (!token) {
@@ -26,7 +26,7 @@ export async function getAdUserOboToken(): Promise<String> {
 const ADUSER_XSRF_COOKIE_NAME = "XSRF-TOKEN-ARBEIDSPLASSEN";
 const ADUSER_XSRF_HEADER_NAME = "X-XSRF-TOKEN-ARBEIDSPLASSEN";
 
-export function getAdUserDefaultAuthHeadersWithCsrfToken(oboToken: String) {
+export function getAdUserDefaultAuthHeadersWithCsrfToken(oboToken) {
     const csrfToken = cookies().get(ADUSER_XSRF_COOKIE_NAME)?.value;
 
     if (!csrfToken) {
@@ -41,7 +41,7 @@ export function getAdUserDefaultAuthHeadersWithCsrfToken(oboToken: String) {
     return headers;
 }
 
-export function getDefaultAuthHeaders(oboToken: String) {
+export function getDefaultAuthHeaders(oboToken) {
     const headers = new Headers();
 
     headers.set("Content-Type", "application/json");
