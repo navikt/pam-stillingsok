@@ -69,25 +69,12 @@ function AuthenticationProvider({ children }) {
             });
     };
 
-    function fetchUserNameAndInfo() {
-        if (process.env.NODE_ENV === "production") {
-            fetch("/stillinger/api/personalia", {
-                method: "GET",
-                credentials: "include",
-            }).then((response) => {
-                if (response.status === 200) {
-                    response.json().then((result) => {
-                        setUserNameAndInfo(result);
-                    });
-                }
-            });
-        } else {
-            const testData = {
-                navn: "Kristin Lavransdatter",
-                erUnderFemten: false,
-                kanLoggePaa: true,
-            };
-            setUserNameAndInfo(testData);
+    async function fetchUserNameAndInfo() {
+        const res = await fetch("/stillinger/api/user/personalia");
+
+        if (res.ok && res.status === 200) {
+            const data = await res.json();
+            setUserNameAndInfo(data);
         }
     }
 
