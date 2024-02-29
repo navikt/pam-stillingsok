@@ -35,7 +35,7 @@
         "@navikt/ds-css": "^5.18.1",
         "@navikt/ds-react": "^5.18.1",
         "@navikt/oasis": "^3.0.0",
-        "@sentry/browser": "^6.19.6",
+        "@sentry/nextjs": "^7.103.0",
         "date-fns": "^2.30.0",
         "html-react-parser": "^3.0.15",
         "http-proxy-middleware": "^2.0.6",

@@ -6,7 +6,6 @@ import PropTypes from "prop-types";
 import { AuthenticationContext, AuthenticationStatus } from "./_common/auth/contexts/AuthenticationProvider";
 import { initAmplitude } from "./_common/monitoring/amplitude";
 import googleTranslateWorkaround from "./_common/utils/googleTranslateWorkaround";
-import initSentry from "./_common/monitoring/sentry";
 
 // Todo: Gå igjennom alle fetch-kall i koden og se om referrer er satt riktig. Nå er den satt referrer: CONTEXT_PATH, men ikke sikker på hva som er rett her
 
@@ -14,7 +13,6 @@ function App({ children, amplitudeToken }) {
     const { authenticationStatus, login, logout } = useContext(AuthenticationContext);
 
     useEffect(() => {
-        initSentry();
         googleTranslateWorkaround();
     }, []);
 
