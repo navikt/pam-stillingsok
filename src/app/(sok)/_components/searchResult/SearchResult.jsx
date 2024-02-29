@@ -24,7 +24,7 @@ export default forwardRef(function SearchResult({ searchResult, query }, ref) {
         }
     }, []);
 
-    if (searchResult.ads || searchResult.ads.length === 0) {
+    if (!searchResult.ads || searchResult.ads.length === 0) {
         return null;
     }
 
