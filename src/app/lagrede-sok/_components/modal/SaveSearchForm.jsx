@@ -16,7 +16,7 @@ import PropTypes from "prop-types";
 import { UserContext } from "@/app/_common/user/UserProvider";
 import useToggle from "@/app/_common/hooks/useToggle";
 import { isStringEmpty } from "@/app/_common/utils/utils";
-import { saveSavedSearchAction, updateSavedSearchAction } from "../action";
+import * as actions from "@/app/_common/actions";
 
 export const FormModes = {
     ADD: "ADD",
@@ -78,7 +78,7 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
             if (formMode === FormModes.ADD) {
                 startTransition(async () => {
                     setShowError(false);
-                    const { success, data } = await saveSavedSearchAction(dataToBeSaved);
+                    const { success, data } = await actions.saveSavedSearchAction(dataToBeSaved);
                     if (!success) {
                         setShowError(true);
                     } else {
@@ -99,7 +99,7 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
                 }
                 startTransition(async () => {
                     setShowError(false);
-                    const { success, data } = await updateSavedSearchAction(dataToBeSaved);
+                    const { success, data } = await actions.updateSavedSearchAction(dataToBeSaved);
                     if (!success) {
                         setShowError(true);
                     } else {

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { BodyLong, HStack, Loader, Modal } from "@navikt/ds-react";
 import PropTypes from "prop-types";
 import { UserContext } from "@/app/_common/user/UserProvider";

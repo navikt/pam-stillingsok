@@ -1,8 +1,8 @@
 import { cookies } from "next/headers";
-import mockData from "./mock-data";
 import SavedSearchesList from "./_components/SavedSearchesList";
 import UserConsentIsRequired from "./_components/UserConsentIsRequired";
 import { getMetadataTitle } from "../layout";
+import * as actions from "@/app/_common/actions";
 
 export const metadata = {
     title: getMetadataTitle("Lagrede søk"),
@@ -33,5 +33,5 @@ export default async function Page() {
         return <UserConsentIsRequired />;
     }
 
-    return <SavedSearchesList data={mockData} />;
+    return <SavedSearchesList data={await actions.getSavedSearchesAction()} />;
 }

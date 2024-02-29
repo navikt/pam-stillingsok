@@ -30,9 +30,7 @@ export async function getFavouritesAction() {
 
 export async function addFavouriteAction(favouriteAd) {
     logger.info("Add favourite", { uuid: favouriteAd.uuid });
-
     const oboToken = await getAdUserOboToken();
-
     const res = await fetch(ADUSER_FAVOURITES_URL, {
         method: "POST",
         body: JSON.stringify({ favouriteAd: favouriteAd }),
@@ -52,17 +50,16 @@ export async function addFavouriteAction(favouriteAd) {
 export async function deleteFavouriteAction(uuid) {
     logger.info("DELETE favourite ", { uuid: uuid });
     const oboToken = await getAdUserOboToken();
-
-    let url = `${ADUSER_FAVOURITES_URL}/${uuid}`;
-    const res = await fetch(url, {
+    const res = await fetch(`${ADUSER_FAVOURITES_URL}/${uuid}`, {
         method: "DELETE",
         headers: getAdUserDefaultAuthHeadersWithCsrfToken(oboToken),
     });
 
     if (!res.ok) {
         logger.error(`DELETE favourite from aduser failed. ${res.status} ${res.statusText}`);
-        throw new Error();
+        return { success: false };
     }
 
     revalidatePath("/favoritter");
+    return { success: true };
 }

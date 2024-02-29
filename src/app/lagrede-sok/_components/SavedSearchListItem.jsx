@@ -12,7 +12,7 @@ import UserAPI from "@/app/_common/user/UserAPI";
 import useToggle from "@/app/_common/hooks/useToggle";
 import { FetchStatus } from "@/app/_common/hooks/useFetchReducer";
 import { FormModes } from "./modal/SaveSearchForm";
-import { deleteSavedSearchAction } from "./action";
+import * as actions from "@/app/_common/actions";
 
 function SavedSearchListItem({
     savedSearch,
@@ -30,7 +30,7 @@ function SavedSearchListItem({
 
     function deleteSavedSearch() {
         startTransition(async () => {
-            const { success } = await deleteSavedSearchAction(savedSearch.uuid);
+            const { success } = await actions.deleteSavedSearchAction(savedSearch.uuid);
             closeConfirmationModal();
             if (!success) {
                 openErrorDialog();
