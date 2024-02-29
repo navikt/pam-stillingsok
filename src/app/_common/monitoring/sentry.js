@@ -21,7 +21,7 @@ export default function initSentry() {
     if (process.env.NEXT_PUBLIC_SENTRY_DSN) {
         Sentry.init({
             dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
-            allowUrls: ["arbeidsplassen.nav.no"],
+            allowUrls: ["arbeidsplassen.nav.no", "arbeidsplassen.intern.dev.nav.no"],
             ignoreErrors: [...ignoreTypeErrors],
             autoSessionTracking: true,
             initialScope: {
