@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 
-const includes = [
+// Expose only necessary data to client
+const sourceIncludes = [
     "businessName",
     "contactList.email",
     "contactList.name",
@@ -59,13 +60,16 @@ const includes = [
 ].join(",");
 
 export async function fetchAd(id) {
-    const res = await fetch(`${process.env.PAMSEARCHAPI_URL}/stillingsok/ad/ad/${id}?_source_includes=${includes}`, {
-        headers: {
-            "Content-Type": "application/json",
+    const res = await fetch(
+        `${process.env.PAMSEARCHAPI_URL}/stillingsok/ad/ad/${id}?_source_includes=${sourceIncludes}`,
+        {
+            headers: {
+                "Content-Type": "application/json",
+            },
+            next: { revalidate: 60 },
+            // TODO: figure out how often this should be revalidated
         },
-        next: { revalidate: 60 },
-        // TODO: figure out how often this should be revalidated
-    });
+    );
 
     if (res.status === 404) {
         notFound();

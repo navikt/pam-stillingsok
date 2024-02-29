@@ -69,6 +69,12 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, isD
         >
             <VStack gap="3">
                 <VStack gap="1">
+                    <BodyShort size="small" textColor="subtle">
+                        Publisert {formatDateFns(parseISO(ad.published), "dd. MMMM yyyy hh:mm", { locale: nb })}
+                    </BodyShort>
+                    <BodyShort size="small" textColor="subtle">
+                        Now {formatDateFns(now, "dd. MMMM yyyy hh:mm", { locale: nb })}
+                    </BodyShort>
                     {published && (
                         <BodyShort weight="semibold" size="small" textColor="subtle">
                             {isPublishedToday && "Ny i dag"}
