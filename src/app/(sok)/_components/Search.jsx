@@ -56,7 +56,7 @@ export default function Search({ query, searchResult, aggregations, locations })
     }, [updatedQuery]);
 
     useLayoutEffect(() => {
-        if (updatedQuery.paginate) {
+        if (updatedQuery.paginate && searchResultRef.current) {
             searchResultRef.current.focus({
                 preventScroll: false,
             });
