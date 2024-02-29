@@ -76,7 +76,7 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, isD
                     <BodyShort size="small" textColor="subtle">
                         Now {formatDateFns(now, "dd. MMMM yyyy HH:mm", { locale: nb })}
                     </BodyShort>
-                    <div>{formatDateFns(endOfDay(now), "dd. MMMM yyyy hh:mm")}</div>
+                    <div>{formatDateFns(endOfDay(now), "dd. MMMM yyyy HH:mm")}</div>
                     <div>{formatDateFns(endOfDay(parseISO(ad.published)), "dd. MMMM yyyy HH:mm")}</div>
                     {published && (
                         <BodyShort weight="semibold" size="small" textColor="subtle">
