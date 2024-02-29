@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { BodyLong, CopyButton, Heading, HStack, Label, Link as AkselLink, Tooltip } from "@navikt/ds-react";
+import { BodyLong, CopyButton, Heading, HStack, Label, Link as AkselLink } from "@navikt/ds-react";
 import { isValidEmail } from "@/app/_common/utils/utils";
 import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
 
@@ -27,16 +27,15 @@ export default function ContactPerson({ contactList, adId, adTitle }) {
                             <BodyLong>
                                 <HStack gap="2" as="span" wrap={false}>
                                     {contact.phone}
-                                    <Tooltip content="Kopier telefonnummer">
-                                        <CopyButton
-                                            size="xsmall"
-                                            copyText={contact.phone}
-                                            variant="action"
-                                            onActiveChange={(state) => {
-                                                if (state) logCopyContactInfoEvent("phone", adId, adTitle);
-                                            }}
-                                        />
-                                    </Tooltip>
+                                    <CopyButton
+                                        title="Kopier telefonnummer"
+                                        size="xsmall"
+                                        copyText={contact.phone}
+                                        variant="action"
+                                        onActiveChange={(state) => {
+                                            if (state) logCopyContactInfoEvent("phone", adId, adTitle);
+                                        }}
+                                    />
                                 </HStack>
                             </BodyLong>
                         )}
@@ -54,16 +53,15 @@ export default function ContactPerson({ contactList, adId, adTitle }) {
                                     ) : (
                                         contact.email
                                     )}
-                                    <Tooltip content="Kopier e-postadresse">
-                                        <CopyButton
-                                            size="xsmall"
-                                            copyText={contact.email}
-                                            variant="action"
-                                            onActiveChange={(state) => {
-                                                if (state) logCopyContactInfoEvent("email", adId, adTitle);
-                                            }}
-                                        />
-                                    </Tooltip>
+                                    <CopyButton
+                                        title="Kopier e-postadresse"
+                                        size="xsmall"
+                                        copyText={contact.email}
+                                        variant="action"
+                                        onActiveChange={(state) => {
+                                            if (state) logCopyContactInfoEvent("email", adId, adTitle);
+                                        }}
+                                    />
                                 </HStack>
                             </BodyLong>
                         )}

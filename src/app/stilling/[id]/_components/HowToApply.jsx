@@ -3,14 +3,13 @@ import PropTypes from "prop-types";
 import {
     BodyLong,
     BodyShort,
-    Button,
-    Heading,
-    Link as AkselLink,
-    CopyButton,
-    Tooltip,
-    Label,
     Box,
+    Button,
+    CopyButton,
+    Heading,
     HStack,
+    Label,
+    Link as AkselLink,
 } from "@navikt/ds-react";
 import { ExternalLinkIcon } from "@navikt/aksel-icons";
 import Link from "next/link";
@@ -115,18 +114,17 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                                     </AkselLink>
                                 </span>
                                 <span>
-                                    <Tooltip content="Kopier e-postadresse">
-                                        <CopyButton
-                                            copyText={`${properties.applicationemail}`}
-                                            variant="action"
-                                            size="xsmall"
-                                            onActiveChange={(state) => {
-                                                if (state === true) {
-                                                    logCopyEmailClick(stilling);
-                                                }
-                                            }}
-                                        />
-                                    </Tooltip>
+                                    <CopyButton
+                                        title="Kopier e-postadresse"
+                                        copyText={`${properties.applicationemail}`}
+                                        variant="action"
+                                        size="xsmall"
+                                        onActiveChange={(state) => {
+                                            if (state === true) {
+                                                logCopyEmailClick(stilling);
+                                            }
+                                        }}
+                                    />
                                 </span>
                             </HStack>
                         ) : (
@@ -197,18 +195,17 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                                                 </AkselLink>
                                             </span>
                                             <span>
-                                                <Tooltip content="Kopier e-postadresse">
-                                                    <CopyButton
-                                                        copyText={`${properties.applicationemail}`}
-                                                        variant="action"
-                                                        size="xsmall"
-                                                        onActiveChange={(state) => {
-                                                            if (state === true) {
-                                                                logCopyEmailClick(stilling);
-                                                            }
-                                                        }}
-                                                    />
-                                                </Tooltip>
+                                                <CopyButton
+                                                    title="Kopier e-postadresse"
+                                                    copyText={`${properties.applicationemail}`}
+                                                    variant="action"
+                                                    size="xsmall"
+                                                    onActiveChange={(state) => {
+                                                        if (state === true) {
+                                                            logCopyEmailClick(stilling);
+                                                        }
+                                                    }}
+                                                />
                                             </span>
                                         </HStack>
                                     ) : (
