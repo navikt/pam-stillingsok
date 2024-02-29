@@ -1,6 +1,6 @@
 "use client";
 
-import React, { startTransition, useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import { Button } from "@navikt/ds-react";
 import { TrashIcon } from "@navikt/aksel-icons";
@@ -15,21 +15,19 @@ function FavouritesListItem({ favourite, onFavouriteDeleted, openErrorDialog }) 
     const { addToPending, removeFormPending, removeFavouriteFromLocalList } = useContext(FavouritesContext);
     const [isDeleting, setIsDeleting] = useState(false);
 
-    const handleDeleteConfirmed = () => {
+    const handleDeleteConfirmed = async () => {
         addToPending(favourite.uuid);
         setIsDeleting(true);
-        startTransition(async () => {
-            const { success } = await actions.deleteFavouriteAction(favourite.uuid);
-            setIsDeleting(false);
-            closeConfirmDeleteModal();
-            if (!success) {
-                openErrorDialog();
-            } else {
-                onFavouriteDeleted(favourite.uuid);
-                removeFavouriteFromLocalList(favourite);
-            }
-            removeFormPending(favourite.uuid);
-        });
+        const { success } = await actions.deleteFavouriteAction(favourite.uuid);
+        setIsDeleting(false);
+        closeConfirmDeleteModal();
+        if (!success) {
+            openErrorDialog();
+        } else {
+            onFavouriteDeleted(favourite.uuid);
+            removeFavouriteFromLocalList(favourite);
+        }
+        removeFormPending(favourite.uuid);
     };
 
     return (
