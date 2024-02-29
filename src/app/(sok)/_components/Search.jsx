@@ -26,7 +26,6 @@ export default function Search({ query, searchResult, aggregations, locations })
     const router = useRouter();
     const searchParams = useSearchParams();
     const savedSearchUuid = searchParams.get("saved");
-    const searchResultRef = useRef();
 
     /**
      * Perform a search when user changes search criteria
@@ -54,14 +53,6 @@ export default function Search({ query, searchResult, aggregations, locations })
             setInitialRenderDone(true);
         }
     }, [updatedQuery]);
-
-    useLayoutEffect(() => {
-        if (updatedQuery.paginate && searchResultRef.current) {
-            searchResultRef.current.focus({
-                preventScroll: false,
-            });
-        }
-    }, [searchParams]);
 
     useEffect(() => {
         logAmplitudeEvent("Stillinger - Utførte søk");
@@ -140,7 +131,7 @@ export default function Search({ query, searchResult, aggregations, locations })
 
                 <VStack gap="10">
                     <SelectedFilters query={query} queryDispatch={queryDispatch} />
-                    <SearchResult ref={searchResultRef} searchResult={searchResult} query={updatedQuery} />
+                    <SearchResult searchResult={searchResult} query={updatedQuery} />
                     <SearchPagination searchResult={searchResult} query={query} queryDispatch={queryDispatch} />
                     {query.from + SEARCH_CHUNK_SIZE >= searchResult.totalAds && <DoYouWantToSaveSearch query={query} />}
                     <Feedback query={query} />
