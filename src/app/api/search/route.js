@@ -24,7 +24,5 @@ export async function GET(request) {
     }
 
     let data = await res.json();
-    data = simplifySearchResponse(data);
-
     return Response.json(data);
 }
