@@ -24,6 +24,10 @@ export default forwardRef(function SearchResult({ searchResult, query }, ref) {
         }
     }, []);
 
+    if (searchResult.ads || searchResult.ads.length === 0) {
+        return null;
+    }
+
     return (
         <VStack
             gap="10"
@@ -32,24 +36,23 @@ export default forwardRef(function SearchResult({ searchResult, query }, ref) {
             aria-label={`Søketreff, side ${page} av ${totalPages}`}
             className="no-focus-outline"
         >
-            {searchResult.ads &&
-                searchResult.ads.map((ad) => (
-                    <SearchResultItem
-                        key={ad.uuid}
-                        ad={ad}
-                        favouriteButton={
-                            <FavouritesButton
-                                useShortText
-                                className="SearchResultsItem__favourite-button"
-                                stilling={ad}
-                                id={ad.uuid}
-                                hideText
-                                variant="tertiary"
-                            />
-                        }
-                        isDebug={showAdDetailsForDebugging}
-                    />
-                ))}
+            {searchResult.ads.map((ad) => (
+                <SearchResultItem
+                    key={ad.uuid}
+                    ad={ad}
+                    favouriteButton={
+                        <FavouritesButton
+                            useShortText
+                            className="SearchResultsItem__favourite-button"
+                            stilling={ad}
+                            id={ad.uuid}
+                            hideText
+                            variant="tertiary"
+                        />
+                    }
+                    isDebug={showAdDetailsForDebugging}
+                />
+            ))}
         </VStack>
     );
 });
