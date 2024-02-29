@@ -14,7 +14,7 @@ function App({ children, amplitudeToken }) {
     const { authenticationStatus, login, logout } = useContext(AuthenticationContext);
 
     useEffect(() => {
-        initSentry();
+        // initSentry();
         googleTranslateWorkaround();
     }, []);
 
