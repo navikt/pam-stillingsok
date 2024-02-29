@@ -69,6 +69,7 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, isD
         >
             <VStack gap="3">
                 <VStack gap="1">
+                    Publisert {ad.published}
                     <BodyShort size="small" textColor="subtle">
                         Publisert {formatDateFns(parseISO(ad.published), "dd. MMMM yyyy HH:mm", { locale: nb })}
                     </BodyShort>
@@ -85,7 +86,6 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, isD
                             {!isPublishedToday && !isPublishedYesterday && !isPublishedTwoDaysAgo && published}
                         </BodyShort>
                     )}
-
                     <HStack gap="2" wrap={false} align="center" justify="space-between">
                         <Heading level="3" size="small" className="overflow-wrap-anywhere">
                             <LinkToAd stilling={ad} employer={employer}>
@@ -93,7 +93,6 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, isD
                             </LinkToAd>
                         </Heading>
                     </HStack>
-
                     {jobTitle && (
                         <BodyShort weight="semibold" className="overflow-wrap-anywhere">
                             {jobTitle}
