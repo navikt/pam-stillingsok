@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { v4 as uuidv4, validate as uuidValidate } from "uuid";
+import { NAV_CALL_ID_TAG } from "@/app/_common/utils/logger";
 
 export function middleware(request) {
     const nonce = Buffer.from(crypto.randomUUID()).toString("base64");
@@ -41,9 +42,9 @@ export function middleware(request) {
 }
 
 function addCallIdHeader(requestHeaders) {
-    const existingCallId = requestHeaders.get("Nav-CallId");
+    const existingCallId = requestHeaders.get(NAV_CALL_ID_TAG);
 
     if (!uuidValidate(existingCallId)) {
-        requestHeaders.set("Nav-CallId", uuidv4());
+        requestHeaders.set(NAV_CALL_ID_TAG, uuidv4());
     }
 }
