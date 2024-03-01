@@ -44,7 +44,7 @@ function LoggedInButtons() {
             <Button
                 as={Link}
                 role="link"
-                href="/lagrede-sok"
+                href="/stillinger/lagrede-sok"
                 variant="tertiary"
                 onClick={(e) => {
                     handleClick(e, "/lagrede-sok", "SAVEDSEARCH");
@@ -57,7 +57,7 @@ function LoggedInButtons() {
             <Button
                 as={Link}
                 role="link"
-                href="/favoritter"
+                href="/stillinger/favoritter"
                 variant="tertiary"
                 onClick={(e) => {
                     handleClick(e, "/favoritter", "FAVORITES");
@@ -70,7 +70,7 @@ function LoggedInButtons() {
             {shouldShowLoginModalSavedSearch && (
                 <LoginModal
                     onLoginClick={() => {
-                        loginAndRedirect("/lagrede-sok");
+                        loginAndRedirect("/stillinger/lagrede-sok");
                     }}
                     onCloseClick={closeLoginModalSavedSearch}
                 />
@@ -79,7 +79,7 @@ function LoggedInButtons() {
             {shouldShowLoginModalFavorites && (
                 <LoginModal
                     onLoginClick={() => {
-                        loginAndRedirect("/favoritter");
+                        loginAndRedirect("/stillinger/favoritter");
                     }}
                     onCloseClick={closeLoginModalFavorites}
                 />
@@ -89,7 +89,7 @@ function LoggedInButtons() {
                 <UserConsentModal
                     onClose={closeTermsModal}
                     onTermsAccepted={() => {
-                        handleTermsAccepted("/favoritter");
+                        handleTermsAccepted("/stillinger/favoritter");
                     }}
                 />
             )}
