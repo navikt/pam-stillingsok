@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { v4 as uuidv4, validate as uuidValidate } from "uuid";
-import { NAV_CALL_ID_TAG } from "@/app/_common/utils/logger";
+
+const NAV_CALL_ID_TAG = "Nav-CallId";
 
 export function middleware(request) {
     const nonce = Buffer.from(crypto.randomUUID()).toString("base64");
