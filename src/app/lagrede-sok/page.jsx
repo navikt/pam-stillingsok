@@ -3,6 +3,7 @@ import SavedSearchesList from "./_components/SavedSearchesList";
 import UserConsentIsRequired from "./_components/UserConsentIsRequired";
 import { getMetadataTitle } from "../layout";
 import * as actions from "@/app/_common/actions";
+import LoginIsRequiredPage from "@/app/_common/auth/components/LoginIsRequiredPage";
 
 export const metadata = {
     title: getMetadataTitle("Lagrede søk"),
@@ -10,25 +11,18 @@ export const metadata = {
         "Med lagrede søk kan du velge å motta e-postvarsler når det kommer nye treff, eller for å raskere søke neste gang.",
 };
 
-async function checkIfUserIsAuthenticated() {
-    // Todo: Replace this hack
-    const cookie = cookies().get("is-logged-in-hack");
-    return cookie && cookie.value === "true";
-}
-
 async function checkIfUserExist() {
+    // TODO: sjekk om bruker har samtykket
     return true;
 }
 
 export default async function Page() {
-    const isAuthenticated = await checkIfUserIsAuthenticated();
+    const authenticated = await actions.checkIfAuthenticated();
+    if (!authenticated.isAuthenticated) {
+        return <LoginIsRequiredPage />;
+    }
+
     const userExist = await checkIfUserExist();
-
-    // TODO: Legg til sjekk på autentisering
-    // if (!isAuthenticated) {
-    //     return <LoginIsRequiredPage />;
-    // }
-
     if (!userExist) {
         return <UserConsentIsRequired />;
     }

@@ -1,12 +1,21 @@
 "use client";
 
-import React from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { BodyLong, Button, Heading, HStack, VStack } from "@navikt/ds-react";
 import { EnterIcon } from "@navikt/aksel-icons";
 import { FigureWithKey } from "@navikt/arbeidsplassen-react";
+import { AuthenticationContext } from "@/app/_common/auth/contexts/AuthenticationProvider";
 
-function LoginIsRequiredPage({ onCancel, onLogin }) {
+function LoginIsRequiredPage() {
+    const { _, loginAndRedirect } = useContext(AuthenticationContext);
+
+    const onLogin = () => {
+        // TODO: implementer login
+        console.log("TODO: implement onLogin");
+        loginAndRedirect();
+    };
+
     return (
         <section className="container-small mt-12 mb-12">
             <VStack align="center">
@@ -23,11 +32,11 @@ function LoginIsRequiredPage({ onCancel, onLogin }) {
                         Logg inn
                     </Button>
 
-                    {onCancel && (
-                        <Button variant="secondary" onClick={onCancel}>
-                            Avbryt
-                        </Button>
-                    )}
+                    {/*{onCancel && (*/}
+                    {/*    <Button variant="secondary" onClick={onCancel}>*/}
+                    {/*        Avbryt*/}
+                    {/*    </Button>*/}
+                    {/*)}*/}
                 </HStack>
             </VStack>
         </section>
@@ -35,8 +44,8 @@ function LoginIsRequiredPage({ onCancel, onLogin }) {
 }
 
 LoginIsRequiredPage.propTypes = {
-    onLogin: PropTypes.func.isRequired,
-    onCancel: PropTypes.func,
+    // onLogin: PropTypes.func.isRequired,
+    // onCancel: PropTypes.func,
 };
 
 export default LoginIsRequiredPage;
