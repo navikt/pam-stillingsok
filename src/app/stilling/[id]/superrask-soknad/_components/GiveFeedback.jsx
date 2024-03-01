@@ -7,7 +7,7 @@ function GiveFeedback() {
             <Heading level="2" size="medium" spacing>
                 Hvordan kan vi forbedre denne tjenesten for deg?
             </Heading>
-            <BodyLong>
+            <BodyLong spacing>
                 Vi setter stor pris på dine tilbakemeldinger dersom det er noe du savner eller noe du synes kunne vært
                 bedre med denne tjenesten.
             </BodyLong>
