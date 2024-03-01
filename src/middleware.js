@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { v4 as uuidv4, validate as uuidValidate } from "uuid";
 
 export function middleware(request) {
     const nonce = Buffer.from(crypto.randomUUID()).toString("base64");
@@ -27,6 +28,8 @@ export function middleware(request) {
     requestHeaders.set("x-nonce", nonce);
     requestHeaders.set("Content-Security-Policy", contentSecurityPolicyHeaderValue);
 
+    addCallIdHeader(requestHeaders);
+
     const response = NextResponse.next({
         request: {
             headers: requestHeaders,
@@ -35,4 +38,12 @@ export function middleware(request) {
     response.headers.set("Content-Security-Policy", contentSecurityPolicyHeaderValue);
 
     return response;
+}
+
+function addCallIdHeader(requestHeaders) {
+    const existingCallId = requestHeaders.get("Nav-CallId");
+
+    if (!uuidValidate(existingCallId)) {
+        requestHeaders.set("Nav-CallId", uuidv4());
+    }
 }
