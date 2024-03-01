@@ -1,5 +1,6 @@
 import { getToken, requestTokenxOboToken, validateToken } from "@navikt/oasis";
 import { cookies, headers } from "next/headers";
+import { v4 as uuidv4, validate as uuidValidate } from "uuid";
 
 export async function getAdUserOboToken() {
     const token = getToken(headers());
@@ -42,10 +43,16 @@ export function getAdUserDefaultAuthHeadersWithCsrfToken(oboToken) {
 }
 
 export function getDefaultAuthHeaders(oboToken) {
-    const headers = new Headers();
+    let callId = headers().get("Nav-CallId");
+    if (!uuidValidate(callId)) {
+        callId = uuidv4();
+    }
 
-    headers.set("Content-Type", "application/json");
-    headers.set("Authorization", `Bearer ${oboToken}`);
+    const newHeaders = new Headers();
 
-    return headers;
+    newHeaders.set("Content-Type", "application/json");
+    newHeaders.set("Authorization", `Bearer ${oboToken}`);
+    newHeaders.set("Nav-CallId", callId);
+
+    return newHeaders;
 }
