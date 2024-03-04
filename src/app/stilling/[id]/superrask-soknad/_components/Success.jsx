@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BodyLong, Button, Heading } from "@navikt/ds-react";
 import PropTypes from "prop-types";
 import Link from "next/link";
 import GiveFeedback from "./GiveFeedback";
 
 function Success({ email }) {
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
     return (
         <>
             <Heading level="1" size="large" spacing>
