@@ -4,13 +4,15 @@ import { v4 as uuidv4, validate as uuidValidate } from "uuid";
 export const NAV_CALL_ID_TAG = "Nav-CallId";
 
 export function getCallId() {
-    return headers().get(NAV_CALL_ID_TAG);
+    let callId = headers().get(NAV_CALL_ID_TAG);
+
+    if (!uuidValidate(callId)) {
+        callId = uuidv4();
+    }
+    
+    return callId;
 }
 
 export function addCallIdHeader(requestHeaders) {
-    const existingCallId = headers().get(NAV_CALL_ID_TAG);
-
-    if (!uuidValidate(existingCallId)) {
-        requestHeaders.set(NAV_CALL_ID_TAG, uuidv4());
-    }
+    requestHeaders.set(NAV_CALL_ID_TAG, getCallId());
 }
