@@ -11,8 +11,6 @@ function LoginIsRequiredPage() {
     const { _, loginAndRedirect } = useContext(AuthenticationContext);
 
     const onLogin = () => {
-        // TODO: implementer login
-        console.log("TODO: implement onLogin");
         loginAndRedirect();
     };
 
@@ -31,21 +29,10 @@ function LoginIsRequiredPage() {
                     <Button variant="primary" icon={<EnterIcon aria-hidden="true" />} onClick={onLogin}>
                         Logg inn
                     </Button>
-
-                    {/*{onCancel && (*/}
-                    {/*    <Button variant="secondary" onClick={onCancel}>*/}
-                    {/*        Avbryt*/}
-                    {/*    </Button>*/}
-                    {/*)}*/}
                 </HStack>
             </VStack>
         </section>
     );
 }
-
-LoginIsRequiredPage.propTypes = {
-    // onLogin: PropTypes.func.isRequired,
-    // onCancel: PropTypes.func,
-};
 
 export default LoginIsRequiredPage;

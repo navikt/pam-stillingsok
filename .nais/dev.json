@@ -6,7 +6,8 @@
         "https://arbeidsplassen.ekstern.dev.nav.no/stillinger/css",
         "https://arbeidsplassen.ekstern.dev.nav.no/stillinger/images",
         "https://arbeidsplassen.ekstern.dev.nav.no/stillinger/isAuthenticated",
-        "https://arbeidsplassen.ekstern.dev.nav.no/stillinger/api"
+        "https://arbeidsplassen.ekstern.dev.nav.no/stillinger/api",
+        "https://arbeidsplassen.ekstern.dev.nav.no/stillinger/_next"
     ],
 
     "aduser_audience": "dev-gcp:teampam:pam-aduser",
