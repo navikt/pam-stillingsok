@@ -18,19 +18,32 @@ import { FormButtonBar } from "./FormButtonBar";
 
 function Form({ ad, applicationForm, submitApplication, submitApiError, validationErrors }) {
     const errorSummary = useRef();
-    const [hideMotivationError, setHideMotivationError] = useState(false);
-    const [hideEmailError, setHideEmailError] = useState(false);
-    const [hideTelephoneError, setHideTelephoneError] = useState(false);
     const [motivation, setMotivation] = useState("");
+    const [fixedErrors, setFixedErrors] = useState([]);
+    const [localSummary, setLocalSummary] = useState(validationErrors);
 
     useEffect(() => {
-        if (Object.keys(validationErrors).length > 0) {
+        setFixedErrors([]);
+        setLocalSummary(validationErrors);
+    }, [validationErrors]);
+
+    useEffect(() => {
+        if (fixedErrors.length === 0 && Object.keys(localSummary).length > 0) {
             errorSummary.current.focus();
         }
-        setHideMotivationError(false);
-        setHideEmailError(false);
-        setHideTelephoneError(false);
-    }, [validationErrors]);
+    }, [localSummary, fixedErrors, errorSummary]);
+
+    function setErrorAsFixed(fixed) {
+        if (!fixedErrors.includes(fixed)) {
+            setFixedErrors((prevState) => [...prevState, fixed]);
+
+            const localSummaryWithoutFixes = {
+                ...localSummary,
+            };
+            delete localSummaryWithoutFixes[fixed];
+            setLocalSummary(localSummaryWithoutFixes);
+        }
+    }
 
     return (
         <form action={submitApplication} className="mb-16">
@@ -42,9 +55,9 @@ function Form({ ad, applicationForm, submitApplication, submitApiError, validati
                     Ingen CV eller langt søknadsbrev, kun tre raske steg. Du får beskjed på e-post med en gang bedriften
                     har vurdert søknaden din.
                 </BodyLong>
-                {Object.keys(validationErrors).length > 0 && (
+                {Object.entries(localSummary).length > 0 && (
                     <ErrorSummary ref={errorSummary} heading="Skjemaet inneholder feil">
-                        {Object.entries(validationErrors).map(([key, value]) => (
+                        {Object.entries(localSummary).map(([key, value]) => (
                             <ErrorSummary.Item key={key} href={`#new-application-${key}`}>
                                 {value}
                             </ErrorSummary.Item>
@@ -94,10 +107,10 @@ function Form({ ad, applicationForm, submitApplication, submitApiError, validati
                     value={motivation}
                     onChange={(e) => {
                         setMotivation(e.target.value);
-                        setHideMotivationError(true);
+                        setErrorAsFixed("motivation");
                     }}
                     maxLength={MOTIVATION_MAX_LENGTH}
-                    error={!hideMotivationError && validationErrors.motivation}
+                    error={!fixedErrors.includes("motivation") && validationErrors.motivation}
                 />
             </section>
 
@@ -124,9 +137,9 @@ function Form({ ad, applicationForm, submitApplication, submitApiError, validati
                     aria-required="true"
                     id="new-application-email"
                     onChange={() => {
-                        setHideEmailError(true);
+                        setErrorAsFixed("email");
                     }}
-                    error={!hideEmailError && validationErrors.email}
+                    error={!fixedErrors.includes("email") && validationErrors.email}
                     className="mb-4"
                 />
 
@@ -139,9 +152,9 @@ function Form({ ad, applicationForm, submitApplication, submitApiError, validati
                     auto-complete="tel"
                     aria-required="true"
                     onChange={() => {
-                        setHideTelephoneError(true);
+                        setErrorAsFixed("telephone");
                     }}
-                    error={!hideTelephoneError && validationErrors.telephone}
+                    error={!fixedErrors.includes("telephone") && validationErrors.telephone}
                 />
             </section>
 
@@ -182,9 +195,7 @@ Form.propTypes = {
         ),
     }).isRequired,
     submitApplication: PropTypes.func.isRequired,
-    submitApiError: PropTypes.shape({
-        message: PropTypes.string,
-    }),
+    submitApiError: PropTypes.string,
     validationErrors: PropTypes.shape({
         email: PropTypes.string,
         telephone: PropTypes.string,
