@@ -36,12 +36,31 @@ function ReportAd({ ad, submitForm }) {
 
     const [state, handleSubmit] = useFormState(submitForm, { validationErrors: {}, success: false });
     const { validationErrors } = state;
+    const [fixedErrors, setFixedErrors] = useState([]);
+    const [localSummary, setLocalSummary] = useState(validationErrors);
 
     useEffect(() => {
-        if (Object.keys(validationErrors).length > 0) {
+        setFixedErrors([]);
+        setLocalSummary(validationErrors);
+    }, [validationErrors]);
+
+    useEffect(() => {
+        if (fixedErrors.length === 0 && Object.keys(localSummary).length > 0) {
             errorSummary.current.focus();
         }
-    }, [validationErrors]);
+    }, [localSummary, fixedErrors, errorSummary]);
+
+    function setErrorAsFixed(fixed) {
+        if (!fixedErrors.includes(fixed)) {
+            setFixedErrors((prevState) => [...prevState, fixed]);
+
+            const localSummaryWithoutFixes = {
+                ...localSummary,
+            };
+            delete localSummaryWithoutFixes[fixed];
+            setLocalSummary(localSummaryWithoutFixes);
+        }
+    }
 
     return (
         <>
@@ -74,6 +93,7 @@ function ReportAd({ ad, submitForm }) {
                             <Heading level="1" size="xlarge" className="mb-4">
                                 Rapporter annonse
                             </Heading>
+
                             <BodyLong className="mb-8">
                                 Alle annonser på arbeidsplassen.no skal følge{" "}
                                 <AkselLink href="/retningslinjer-stillingsannonser" className="display-inline">
@@ -82,12 +102,29 @@ function ReportAd({ ad, submitForm }) {
                                 . I tilfeller der det er brudd på retningslinjene vil stillingsannonsene bli fjernet.
                             </BodyLong>
 
+                            {Object.keys(localSummary).length > 0 && (
+                                <ErrorSummary
+                                    ref={errorSummary}
+                                    heading="Du må rette noen feil før du kan rapportere annonsen"
+                                    className="mb-12"
+                                >
+                                    {Object.entries(localSummary).map(([key, value]) => (
+                                        <ErrorSummary.Item key={key} href={`#${key}`}>
+                                            {value}
+                                        </ErrorSummary.Item>
+                                    ))}
+                                </ErrorSummary>
+                            )}
+
                             <CheckboxGroup
                                 id="categoryFieldset"
                                 legend="Velg hvilke retningslinjer annonsen bryter"
                                 description="Velg minst èn"
-                                error={validationErrors.categoryFieldset}
                                 className="mb-8"
+                                onChange={() => {
+                                    setErrorAsFixed("categoryFieldset");
+                                }}
+                                error={!fixedErrors.includes("categoryFieldset") && validationErrors.categoryFieldset}
                             >
                                 {reportCategories.map((c) => (
                                     <Checkbox name="category" value={c.label} key={c.key} onChange={() => {}}>
@@ -98,7 +135,6 @@ function ReportAd({ ad, submitForm }) {
                             <Textarea
                                 id="messageField"
                                 className="mb-8"
-                                error={validationErrors.messageField}
                                 label="Legg til utdypende informasjon"
                                 maxLength={300}
                                 name="description"
@@ -106,26 +142,14 @@ function ReportAd({ ad, submitForm }) {
                                 value={description}
                                 onChange={(e) => {
                                     setDescription(e.target.value);
+                                    setErrorAsFixed("messageField");
                                 }}
+                                error={!fixedErrors.includes("messageField") && validationErrors.messageField}
                             />
                             <BodyLong className="mb-4">
                                 Når du har sendt inn tipset, vurderer vi om annonsen bryter retningslinjene og om den
                                 skal fjernes. Ditt tips er anonymt.
                             </BodyLong>
-
-                            {Object.keys(validationErrors).length > 0 && (
-                                <ErrorSummary
-                                    ref={errorSummary}
-                                    heading="Du må rette noen feil før du kan rapportere annonsen"
-                                    className="mb-12"
-                                >
-                                    {Object.entries(validationErrors).map(([key, value]) => (
-                                        <ErrorSummary.Item key={key} href={`#${key}`}>
-                                            {value}
-                                        </ErrorSummary.Item>
-                                    ))}
-                                </ErrorSummary>
-                            )}
 
                             {state?.error && (
                                 <Alert variant="error" className="mb-4">
