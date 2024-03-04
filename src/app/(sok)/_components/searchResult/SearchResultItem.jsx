@@ -70,7 +70,7 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, isD
             <VStack gap="3">
                 <VStack gap="1">
                     {published && (
-                        <BodyShort weight="semibold" size="small" textColor="subtle">
+                        <BodyShort weight="semibold" size="small" textColor="subtle" suppressHydrationWarning>
                             {isPublishedToday && "Ny i dag"}
                             {isPublishedYesterday && "I går"}
                             {isPublishedTwoDaysAgo && "To dager siden"}
