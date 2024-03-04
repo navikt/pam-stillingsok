@@ -1,7 +1,5 @@
 import { NextResponse } from "next/server";
-import { v4 as uuidv4, validate as uuidValidate } from "uuid";
-
-const NAV_CALL_ID_TAG = "Nav-CallId";
+import { addCallIdHeader } from "@/app/_common/monitoring/callId";
 
 export function middleware(request) {
     const nonce = Buffer.from(crypto.randomUUID()).toString("base64");
@@ -40,12 +38,4 @@ export function middleware(request) {
     response.headers.set("Content-Security-Policy", contentSecurityPolicyHeaderValue);
 
     return response;
-}
-
-function addCallIdHeader(requestHeaders) {
-    const existingCallId = requestHeaders.get(NAV_CALL_ID_TAG);
-
-    if (!uuidValidate(existingCallId)) {
-        requestHeaders.set(NAV_CALL_ID_TAG, uuidv4());
-    }
 }

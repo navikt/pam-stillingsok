@@ -1,10 +1,8 @@
 import winston from "winston";
-import { headers } from "next/headers";
-
-const NAV_CALL_ID_TAG = "Nav-CallId";
+import { getCallId, NAV_CALL_ID_TAG } from "@/app/_common/monitoring/callId";
 
 const addCallId = winston.format((info) => {
-    info[NAV_CALL_ID_TAG] = headers().get(NAV_CALL_ID_TAG);
+    info[NAV_CALL_ID_TAG] = getCallId();
     return info;
 });
 
