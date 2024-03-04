@@ -12,6 +12,5 @@ RUN npm run build && npm prune --production --offline
 FROM gcr.io/distroless/nodejs20-debian12:debug
 WORKDIR /app
 ENV NODE_ENV=production
-ENV TZ="Europe/Oslo"
 COPY --from=builder /app /app
 CMD ["./node_modules/.bin/next", "start"]
