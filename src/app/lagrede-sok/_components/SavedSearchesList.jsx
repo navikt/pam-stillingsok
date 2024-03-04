@@ -19,7 +19,9 @@ function SavedSearchesList({ data, uuid }) {
     const [shouldShowErrorModal, openErrorDialog, closeErrorDialog] = useToggle();
 
     function updateSavedSearchInList(updated) {
-        setLocalSavedSearchesList(localSavedSearchesList.map((old) => (updated.uuid === old.uuid ? updated : old)));
+        setLocalSavedSearchesList(
+            localSavedSearchesList.map((old) => (old.id === updated.id ? { ...updated, uuid: old.uuid } : old)),
+        );
     }
 
     function removeSavedSearchFromList(removed) {
