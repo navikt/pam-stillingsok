@@ -1,6 +1,6 @@
 import { getToken, requestTokenxOboToken, validateToken } from "@navikt/oasis";
 import { cookies, headers } from "next/headers";
-import { addCallIdHeader } from "@/app/_common/monitoring/callId";
+import { getDefaultHeaders } from '@/app/_common/utils/fetch';
 
 export async function getAdUserOboToken() {
     const token = getToken(headers());
@@ -43,11 +43,9 @@ export function getAdUserDefaultAuthHeadersWithCsrfToken(oboToken) {
 }
 
 export function getDefaultAuthHeaders(oboToken) {
-    const newHeaders = new Headers();
+    const headers = getDefaultHeaders();
 
-    newHeaders.set("Content-Type", "application/json");
-    newHeaders.set("Authorization", `Bearer ${oboToken}`);
-    addCallIdHeader(newHeaders);
+    headers.set("Authorization", `Bearer ${oboToken}`);
 
-    return newHeaders;
+    return headers;
 }

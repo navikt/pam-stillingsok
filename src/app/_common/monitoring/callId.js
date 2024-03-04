@@ -12,7 +12,3 @@ export function getCallId() {
     
     return callId;
 }
-
-export function addCallIdHeader(requestHeaders) {
-    requestHeaders.set(NAV_CALL_ID_TAG, getCallId());
-}
