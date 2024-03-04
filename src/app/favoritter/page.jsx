@@ -10,19 +10,14 @@ export const metadata = {
         "Har du ikke tid til å lese annonsen akkurat nå, eller lyst til å søke senere når du kommer hjem? Med favoritter finner du raskt tilbake til annonsen.",
 };
 
-async function checkIfUserExist() {
-    // TODO: sjekk om bruker har samtykket
-    return true;
-}
-
 export default async function Page(props) {
     const authenticated = await actions.checkIfAuthenticated();
     if (!authenticated.isAuthenticated) {
         return <LoginIsRequiredPage />;
     }
 
-    const userExist = await checkIfUserExist();
-    if (!userExist) {
+    const agreementAccepted = await actions.checkIfUserAgreementIsAccepted();
+    if (!agreementAccepted.userAgreementAccepted) {
         return <UserConsentIsRequired />;
     }
 
