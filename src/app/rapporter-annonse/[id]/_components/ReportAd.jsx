@@ -33,34 +33,32 @@ const reportCategories = [
 function ReportAd({ ad, submitForm }) {
     const errorSummary = useRef();
     const [description, setDescription] = useState("");
-
     const [state, handleSubmit] = useFormState(submitForm, { validationErrors: {}, success: false });
-    const { validationErrors } = state;
     const [fixedErrors, setFixedErrors] = useState([]);
-    const [localSummary, setLocalSummary] = useState(validationErrors);
+    const { validationErrors } = state;
 
     useEffect(() => {
         setFixedErrors([]);
-        setLocalSummary(validationErrors);
     }, [validationErrors]);
 
     useEffect(() => {
-        if (fixedErrors.length === 0 && Object.keys(localSummary).length > 0) {
+        if (fixedErrors.length === 0 && Object.keys(validationErrors).length > 0 && errorSummary.current) {
             errorSummary.current.focus();
         }
-    }, [localSummary, fixedErrors, errorSummary]);
+    }, [fixedErrors, errorSummary, validationErrors]);
 
     function setErrorAsFixed(fixed) {
         if (!fixedErrors.includes(fixed)) {
             setFixedErrors((prevState) => [...prevState, fixed]);
-
-            const localSummaryWithoutFixes = {
-                ...localSummary,
-            };
-            delete localSummaryWithoutFixes[fixed];
-            setLocalSummary(localSummaryWithoutFixes);
         }
     }
+
+    const localSummaryWithoutFixes = {};
+    Object.entries(validationErrors).forEach(([key, value]) => {
+        if (!fixedErrors.includes(key)) {
+            localSummaryWithoutFixes[key] = value;
+        }
+    });
 
     return (
         <>
@@ -102,13 +100,13 @@ function ReportAd({ ad, submitForm }) {
                                 . I tilfeller der det er brudd på retningslinjene vil stillingsannonsene bli fjernet.
                             </BodyLong>
 
-                            {Object.keys(localSummary).length > 0 && (
+                            {Object.keys(localSummaryWithoutFixes).length > 0 && (
                                 <ErrorSummary
                                     ref={errorSummary}
                                     heading="Du må rette noen feil før du kan rapportere annonsen"
                                     className="mb-12"
                                 >
-                                    {Object.entries(localSummary).map(([key, value]) => (
+                                    {Object.entries(localSummaryWithoutFixes).map(([key, value]) => (
                                         <ErrorSummary.Item key={key} href={`#${key}`}>
                                             {value}
                                         </ErrorSummary.Item>
