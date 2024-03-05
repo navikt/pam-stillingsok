@@ -67,7 +67,6 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
         e.preventDefault();
         if (validateForm()) {
             let dataToBeSaved = {
-                uuid: existingSavedSearch?.uuid,
                 title,
                 notifyType,
                 duration: notifyType === "NONE" ? 0 : duration,

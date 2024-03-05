@@ -2,7 +2,8 @@ export { getUserPreferences, removeClosedFilter, addClosedFilter } from "./userP
 export { getFavouritesAction, addFavouriteAction, deleteFavouriteAction } from "./favouritesActions";
 export { checkIfAuthenticated, checkIfUserAgreementIsAccepted } from "./authenticationActions";
 export {
-    getSavedSearchesAction,
+    getAllSavedSearchesAction,
+    getSavedSearchAction,
     saveSavedSearchAction,
     updateSavedSearchAction,
     deleteSavedSearchAction,
