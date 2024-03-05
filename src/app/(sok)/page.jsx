@@ -32,7 +32,6 @@ async function fetchElasticSearch(query) {
         headers: getDefaultHeaders(),
         body: JSON.stringify(body),
         next: { revalidate: 30 },
-        // TODO: figure out how often this should be revalidated
     });
 
     if (!res.ok) {
@@ -43,7 +42,6 @@ async function fetchElasticSearch(query) {
     return simplifySearchResponse(data);
 }
 
-// TODO: Sjekk om denne kan caches over lang tid, fordi det er sjelden at fylker/kommuner endres
 async function fetchLocations() {
     const [response1, response2] = await Promise.all([
         fetch(`${process.env.PAMADUSER_URL}/api/v1/geography/municipals`, { next: { revalidate: 3600 } }),

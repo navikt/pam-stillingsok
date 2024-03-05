@@ -32,12 +32,19 @@ const reportCategories = [
 
 function ReportAd({ ad, submitForm }) {
     const errorSummary = useRef();
+    const ref = useRef(null);
     const [description, setDescription] = useState("");
 
     const [state, handleSubmit] = useFormState(submitForm, { validationErrors: {}, success: false });
     const { validationErrors } = state;
     const [fixedErrors, setFixedErrors] = useState([]);
     const [localSummary, setLocalSummary] = useState(validationErrors);
+
+    useEffect(() => {
+        if (ref.current) {
+            ref.current.focus();
+        }
+    }, []);
 
     useEffect(() => {
         setFixedErrors([]);
@@ -76,7 +83,15 @@ function ReportAd({ ad, submitForm }) {
                 <div>
                     {state.success ? (
                         <div>
-                            <Heading level="1" size="xlarge" className="mb-4">
+                            <Heading
+                                level="1"
+                                size="xlarge"
+                                className="mb-4"
+                                ref={ref}
+                                tabIndex={-1}
+                                aria-live="polite"
+                                role="alert"
+                            >
                                 Takk for din tilbakemelding
                             </Heading>
 
