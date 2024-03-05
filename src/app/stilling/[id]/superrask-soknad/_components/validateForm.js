@@ -18,7 +18,7 @@ export function parseFormData(formData, qualifications) {
 export function validateMotivationText(motivationText) {
     if (motivationText.length > MOTIVATION_MAX_LENGTH) {
         return `Du har brukt ${
-            motivationText.length - MOTIVATION_MAX_LENGTH
+            motivationText.replace(/\r\n/g, "\n").length - MOTIVATION_MAX_LENGTH
         } tegn for mye i din begrunnelse. Begrunnelsen kan ikke være lengre enn ${MOTIVATION_MAX_LENGTH} tegn`;
     }
     return undefined;

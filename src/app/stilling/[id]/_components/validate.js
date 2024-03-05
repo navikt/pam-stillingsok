@@ -6,7 +6,9 @@ export default function validateForm(categories, description) {
     }
 
     if (description && description.length > 300) {
-        errors.messageField = `${description.length - 300} antall tegn for mye i utdypende informasjon`;
+        errors.messageField = `${
+            description.replace(/\r\n/g, "\n").length - 300
+        } antall tegn for mye i utdypende informasjon`;
     }
     return errors;
 }
