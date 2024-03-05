@@ -2,6 +2,7 @@ import ReportAd from "./_components/ReportAd";
 import validateForm from "@/app/stilling/[id]/_components/validate";
 import { getMetadataTitle } from "@/app/layout";
 import { fetchAd } from "@/app/stilling/FetchAd";
+import { getDefaultHeaders } from "@/app/_common/utils/fetch";
 
 export const metadata = {
     title: getMetadataTitle("Rapporter annonse"),
@@ -48,9 +49,7 @@ export default async function Page({ params }) {
             const response = await fetch(`${process.env.PAMADUSER_URL}/api/v1/reportposting`, {
                 body: JSON.stringify(reportPostingData),
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
+                headers: getDefaultHeaders(),
             });
         } catch (err) {
             return {
