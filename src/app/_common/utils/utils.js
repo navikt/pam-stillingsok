@@ -13,6 +13,16 @@ const months = [
     "november",
     "desember",
 ];
+const patternHttpUrl = new RegExp(
+    "^(https?:\\/\\/)?" + // protocol
+        "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
+        "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
+        "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
+        "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
+        "(\\#[-a-z\\d_]*)?$", // fragment locator
+    "i",
+);
+
 export function isValidISOString(isoString) {
     return ISO_8601_DATE.test(isoString);
 }
@@ -54,8 +64,8 @@ export function isStringEmpty(value) {
 
 export function isValidUrl(input) {
     if (userAgentIsInternetExplorer()) {
-        // Gracefully degrade, 'new URL(..)' is unsupported in IE
-        return false;
+        // 'new URL(..)' is unsupported in IE
+        return patternHttpUrl.test(input);
     }
 
     try {
