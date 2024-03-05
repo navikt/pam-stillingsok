@@ -1,8 +1,8 @@
 import { notFound } from "next/navigation";
-import { v4 as uuidv4 } from "uuid";
 import WithdrawApplication from "./_components/WithdrawApplication";
 import { getMetadataTitle } from "@/app/layout";
 import { fetchAd } from "@/app/stilling/FetchAd";
+import { getDefaultHeaders } from "@/app/_common/utils/fetch";
 
 export const metadata = {
     title: getMetadataTitle("Trekk søknad"),
@@ -13,6 +13,7 @@ async function fetchApplicationExists(adUuid, uuid) {
     const res = await fetch(`${process.env.INTEREST_API_URL}/application-form/${adUuid}/application/${uuid}`, {
         method: "HEAD",
         cache: "no-store",
+        headers: getDefaultHeaders(),
     });
     if (res.status === 410 || res.status === 404) {
         notFound();
@@ -31,9 +32,7 @@ export default async function Page({ params }) {
         try {
             const res = await fetch(`${process.env.INTEREST_API_URL}/application-form/${adUuid}/application/${uuid}`, {
                 method: "DELETE",
-                headers: {
-                    NAV_CALLID_FIELD: uuidv4(),
-                },
+                headers: getDefaultHeaders(),
             });
 
             if (res.status !== 200 && res.status !== 204) {
