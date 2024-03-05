@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { getDefaultHeaders } from "@/app/_common/utils/fetch";
 
 // Expose only necessary data to client
 const sourceIncludes = [
@@ -63,9 +64,7 @@ export async function fetchAd(id) {
     const res = await fetch(
         `${process.env.PAMSEARCHAPI_URL}/stillingsok/ad/ad/${id}?_source_includes=${sourceIncludes}`,
         {
-            headers: {
-                "Content-Type": "application/json",
-            },
+            headers: getDefaultHeaders(),
             next: { revalidate: 60 },
             // TODO: figure out how often this should be revalidated
         },

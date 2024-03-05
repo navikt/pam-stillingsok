@@ -1,6 +1,7 @@
 import elasticSearchRequestBody from "@/app/(sok)/_utils/elasticSearchRequestBody";
 import simplifySearchResponse from "@/app/(sok)/_utils/simplifySearchResponse";
 import { createQuery, toApiQuery } from "@/app/(sok)/_utils/query";
+import { getDefaultHeaders } from "@/app/_common/utils/fetch";
 
 // Todo - test at denne fungere med aduser. Jeg tror aduser kaller dette endepunktet når email for lagrede søk skal sendes ut
 
@@ -13,9 +14,7 @@ export async function GET(request) {
     const body = elasticSearchRequestBody(toApiQuery(query));
     const res = await fetch(`${process.env.PAMSEARCHAPI_URL}/stillingsok/ad/_search`, {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
+        headers: getDefaultHeaders(),
         body: JSON.stringify(body),
     });
 

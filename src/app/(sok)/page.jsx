@@ -3,6 +3,7 @@ import Search from "@/app/(sok)/_components/Search";
 import { defaultMetadataDescription, defaultOpenGraphImage, getMetadataTitle } from "@/app/layout";
 import { createQuery, defaultQuery, toApiQuery, toBrowserQuery, toReadableQuery } from "@/app/(sok)/_utils/query";
 import elasticSearchRequestBody from "@/app/(sok)/_utils/elasticSearchRequestBody";
+import { getDefaultHeaders } from "@/app/_common/utils/fetch";
 
 export async function generateMetadata({ searchParams }) {
     const query = createQuery(searchParams);
@@ -28,9 +29,7 @@ async function fetchElasticSearch(query) {
     const body = elasticSearchRequestBody(query);
     const res = await fetch(`${process.env.PAMSEARCHAPI_URL}/stillingsok/ad/_search`, {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
+        headers: getDefaultHeaders(),
         body: JSON.stringify(body),
         next: { revalidate: 30 },
         // TODO: figure out how often this should be revalidated
