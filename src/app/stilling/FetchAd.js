@@ -66,7 +66,6 @@ export async function fetchAd(id) {
         {
             headers: getDefaultHeaders(),
             next: { revalidate: 60 },
-            // TODO: figure out how often this should be revalidated
         },
     );
 
