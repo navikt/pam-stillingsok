@@ -44,7 +44,7 @@ function LoggedInButtons() {
             <Button
                 as={Link}
                 role="link"
-                href="/stillinger/lagrede-sok"
+                href="/lagrede-sok"
                 variant="tertiary"
                 onClick={(e) => {
                     handleClick(e, "/lagrede-sok", "SAVEDSEARCH");
@@ -57,7 +57,7 @@ function LoggedInButtons() {
             <Button
                 as={Link}
                 role="link"
-                href="/stillinger/favoritter"
+                href="/favoritter"
                 variant="tertiary"
                 onClick={(e) => {
                     handleClick(e, "/favoritter", "FAVORITES");
