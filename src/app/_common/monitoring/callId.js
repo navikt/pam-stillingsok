@@ -9,6 +9,6 @@ export function getCallId() {
     if (!uuidValidate(callId)) {
         callId = uuidv4();
     }
-    
+
     return callId;
 }

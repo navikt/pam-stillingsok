@@ -1,6 +1,6 @@
 import { getToken, requestTokenxOboToken, validateToken } from "@navikt/oasis";
 import { cookies, headers } from "next/headers";
-import { getDefaultHeaders } from '@/app/_common/utils/fetch';
+import { getDefaultHeaders } from "@/app/_common/utils/fetch";
 
 export async function getAdUserOboToken() {
     const token = getToken(headers());

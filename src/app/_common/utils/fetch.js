@@ -1,4 +1,4 @@
-import { getCallId, NAV_CALL_ID_TAG } from '@/app/_common/monitoring/callId';
+import { getCallId, NAV_CALL_ID_TAG } from "@/app/_common/monitoring/callId";
 
 export function getDefaultHeaders() {
     const headers = new Headers();
