@@ -10,7 +10,7 @@ import { revalidatePath } from "next/cache";
 
 const SAVED_SEARCH_URL = `${process.env.PAMADUSER_URL}/api/v1/savedsearches`;
 
-export async function getSavedSearchesAction() {
+export async function getAllSavedSearchesAction() {
     logger.info("GET saved search");
 
     const oboToken = await getAdUserOboToken();
@@ -26,6 +26,24 @@ export async function getSavedSearchesAction() {
 
     let data = await res.json();
     return data ? data.content : [];
+}
+
+export async function getSavedSearchAction(uuid) {
+    logger.info("GET saved search");
+
+    const oboToken = await getAdUserOboToken();
+    const res = await fetch(`${SAVED_SEARCH_URL}/${uuid}`, {
+        method: "GET",
+        headers: getDefaultAuthHeaders(oboToken),
+    });
+
+    if (!res.ok) {
+        logger.error(`GET favourites failed. ${res.status} ${res.statusText}`);
+        return { success: false, statusCode: res.status };
+    }
+
+    let data = await res.json();
+    return { success: true, data };
 }
 
 export async function saveSavedSearchAction(savedSearch) {

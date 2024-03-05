@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { getCallId, NAV_CALL_ID_TAG } from "@/app/_common/monitoring/callId";
 
 export function middleware(request) {
     const nonce = Buffer.from(crypto.randomUUID()).toString("base64");
@@ -26,6 +27,7 @@ export function middleware(request) {
     const requestHeaders = new Headers(request.headers);
     requestHeaders.set("x-nonce", nonce);
     requestHeaders.set("Content-Security-Policy", contentSecurityPolicyHeaderValue);
+    requestHeaders.set(NAV_CALL_ID_TAG, getCallId());
 
     const response = NextResponse.next({
         request: {

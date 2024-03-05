@@ -16,11 +16,8 @@
         "docker-stop": "docker stop pam-stillingsok",
         "prettier:format": "npx prettier -w src",
         "lint": "next lint",
-        "eslint": "eslint \"**/*.+(js|jsx|ts|tsx)\"",
-        "eslint:fix": "eslint --fix \"**/*.+(js|jsx|ts|tsx)\"",
         "prettier": "prettier --check \"**/*.+(js|jsx|ts|tsx|json|yml|yaml|md|css)\"",
         "prettier:fix": "prettier --write \"**/*.+(js|jsx|ts|tsx|json|yml|yaml|md|css)\"",
-        "prettier:fixjson": "prettier --write \"**/*.+(json|md)\"",
         "prepare": "husky install",
         "pre-commit": "lint-staged"
     },

@@ -1,3 +1,5 @@
+import { getDefaultHeaders } from "@/app/_common/utils/fetch";
+
 const host = process.env.PAMSEARCHAPI_URL ? process.env.PAMSEARCHAPI_URL : "http://pam-search-api";
 
 function suggest(field, match) {
@@ -31,9 +33,7 @@ export async function POST(request) {
     const body = suggestionsTemplate(query.match, query.minLength);
     const res = await fetch(`${host}/stillingsok/ad/_search`, {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
+        headers: getDefaultHeaders(),
         body: JSON.stringify(body),
     });
     const data = await res.json();

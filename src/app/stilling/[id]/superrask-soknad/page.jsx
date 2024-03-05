@@ -1,14 +1,14 @@
 import { notFound } from "next/navigation";
-import { v4 as uuidv4 } from "uuid";
 import validateForm, { parseFormData } from "./_components/validateForm";
 import NewApplication from "./_components/NewApplication";
 import { getStillingDescription, getSuperraskTitle } from "../_components/getMetaData";
 import { defaultOpenGraphImage } from "@/app/layout";
 import { fetchAd } from "@/app/stilling/FetchAd";
+import { getDefaultHeaders } from "@/app/_common/utils/fetch";
 
 async function fetchApplicationForm(id) {
     const res = await fetch(`${process.env.INTEREST_API_URL}/application-form/${id}`, {
-        headers: { NAV_CALLID_FIELD: uuidv4() },
+        headers: getDefaultHeaders(),
         next: { revalidate: 30 },
     });
     if (res.status === 404) {
@@ -64,10 +64,7 @@ export default async function Page({ params }) {
             const response = await fetch(`${process.env.INTEREST_API_URL}/application-form/${params.id}/application`, {
                 body: JSON.stringify(application),
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    NAV_CALLID_FIELD: uuidv4(),
-                },
+                headers: getDefaultHeaders(),
             });
 
             if (response.status !== 200) {

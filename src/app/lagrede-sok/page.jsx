@@ -21,5 +21,5 @@ export default async function Page() {
         return <UserConsentIsRequired />;
     }
 
-    return <SavedSearchesList data={await actions.getSavedSearchesAction()} />;
+    return <SavedSearchesList data={await actions.getAllSavedSearchesAction()} />;
 }
