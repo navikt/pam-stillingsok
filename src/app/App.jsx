@@ -25,6 +25,7 @@ function App({ children, amplitudeToken }) {
     useEffect(() => {
         const sessionId = getSessionId();
         Sentry.setUser({ id: sessionId, sessionId });
+        Sentry.setTags({ sessionId });
     }, []);
 
     let authStatus = "unknown";
