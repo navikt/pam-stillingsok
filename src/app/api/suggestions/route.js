@@ -1,5 +1,7 @@
 import { getDefaultHeaders } from "@/app/_common/utils/fetch";
 
+export const dynamic = "force-dynamic";
+
 const host = process.env.PAMSEARCHAPI_URL ? process.env.PAMSEARCHAPI_URL : "http://pam-search-api";
 
 function suggest(field, match) {
