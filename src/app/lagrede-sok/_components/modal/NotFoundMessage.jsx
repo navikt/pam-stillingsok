@@ -8,7 +8,7 @@ function NotFoundMessage() {
             <Alert variant="warning" role="alert">
                 Det kan se ut som om du forsøker å oppdatere et lagret søk som ikke finnes lengre.{" "}
                 <AkselLink as={Link} href="/">
-                    Forsøk å laste siden på nytt uten det gamle søket.
+                    Last siden på nytt uten det gamle søket.
                 </AkselLink>
             </Alert>
         </Modal.Body>
