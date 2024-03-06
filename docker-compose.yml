@@ -68,3 +68,4 @@ services:
     user: root
     volumes:
       - /secure-logs/
+
