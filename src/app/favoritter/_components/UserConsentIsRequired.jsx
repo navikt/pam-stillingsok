@@ -4,9 +4,11 @@ import React, { useState } from "react";
 import { BodyLong, Button, Heading, VStack } from "@navikt/ds-react";
 import { FigureJugglingShieldWithCheckmark } from "@navikt/arbeidsplassen-react";
 import UserConsentModal from "../../_common/user/UserConsentModal";
+import { useRouter } from "next/navigation";
 
 function UserConsentIsRequired() {
     const [showTermsModal, setShowTermModal] = useState(false);
+    const router = useRouter();
 
     return (
         <section className="container-small mt-16 mb-16">
@@ -33,7 +35,7 @@ function UserConsentIsRequired() {
             {showTermsModal && (
                 <UserConsentModal
                     onTermsAccepted={() => {
-                        router.reload();
+                        router.refresh();
                     }}
                     onClose={() => {
                         setShowTermModal(false);
