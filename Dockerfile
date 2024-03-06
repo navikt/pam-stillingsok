@@ -9,7 +9,7 @@ RUN npm ci --prefer-offline --no-audit --ignore-scripts
 COPY . .
 RUN npm run build && npm prune --production --offline
 
-FROM gcr.io/distroless/nodejs20-debian12:debug
+FROM gcr.io/distroless/nodejs20-debian12
 WORKDIR /app
 ENV NODE_ENV=production
 ENV TZ="Europe/Oslo"
