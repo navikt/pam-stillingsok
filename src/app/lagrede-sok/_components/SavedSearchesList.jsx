@@ -4,9 +4,9 @@ import React, { useState } from "react";
 import { Heading, VStack } from "@navikt/ds-react";
 import PropTypes from "prop-types";
 import SavedSearchListItem from "./SavedSearchListItem";
-import NoFavourites from "@/app/favoritter/_components/NoFavourites";
 import AlertModalWithPageReload from "@/app/_common/components/modals/AlertModalWithPageReload";
 import useToggle from "@/app/_common/hooks/useToggle";
+import NoSavedSearches from "@/app/lagrede-sok/_components/NoSavedSearches";
 
 /**
  * Displays a list of all saved searches.
@@ -29,7 +29,7 @@ function SavedSearchesList({ data, uuid }) {
     }
 
     if (localSavedSearchesList.length === 0) {
-        return <NoFavourites />;
+        return <NoSavedSearches />;
     }
 
     return (
