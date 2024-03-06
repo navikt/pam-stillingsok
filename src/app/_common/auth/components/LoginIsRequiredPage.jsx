@@ -1,17 +1,16 @@
 "use client";
 
 import React, { useContext } from "react";
-import PropTypes from "prop-types";
 import { BodyLong, Button, Heading, HStack, VStack } from "@navikt/ds-react";
 import { EnterIcon } from "@navikt/aksel-icons";
 import { FigureWithKey } from "@navikt/arbeidsplassen-react";
 import { AuthenticationContext } from "@/app/_common/auth/contexts/AuthenticationProvider";
 
 function LoginIsRequiredPage() {
-    const { _, loginAndRedirect } = useContext(AuthenticationContext);
+    const { loginAndRedirect } = useContext(AuthenticationContext);
 
     const onLogin = () => {
-        loginAndRedirect();
+        loginAndRedirect("/");
     };
 
     return (
