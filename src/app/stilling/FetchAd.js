@@ -61,6 +61,10 @@ const sourceIncludes = [
 ].join(",");
 
 export async function fetchAd(id) {
+    if ((id = "hack")) {
+        throw new Error("Failed to fetch data");
+    }
+
     const res = await fetch(
         `${process.env.PAMSEARCHAPI_URL}/stillingsok/ad/ad/${id}?_source_includes=${sourceIncludes}`,
         {
