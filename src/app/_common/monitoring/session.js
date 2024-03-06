@@ -1,13 +1,13 @@
 import { v4 as uuidv4 } from "uuid";
 
-export const FIELD_SESSION_ID = "sessionId";
-export default function getSessionId() {
+export const SESSION_ID_TAG = "sessionId";
+export function getSessionId() {
     let sessionId = null;
     try {
-        sessionId = sessionStorage.getItem(FIELD_SESSION_ID);
+        sessionId = sessionStorage.getItem(SESSION_ID_TAG);
         if (sessionId === null) {
             sessionId = uuidv4();
-            sessionStorage.setItem(FIELD_SESSION_ID, sessionId);
+            sessionStorage.setItem(SESSION_ID_TAG, sessionId);
         }
     } catch (e) {
         // It's possible user has disabled persistent data
