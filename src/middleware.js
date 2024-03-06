@@ -5,7 +5,10 @@ export function middleware(request) {
     const requestHeaders = new Headers(request.headers);
     const responseHeaders = new Headers();
 
-    addCspHeaders(requestHeaders, responseHeaders);
+    if (shouldAddCspHeaders(request)) {
+        addCspHeaders(requestHeaders, responseHeaders);
+    }
+
     addCallIdHeader(requestHeaders);
 
     const response = NextResponse.next({
@@ -19,6 +22,19 @@ export function middleware(request) {
     });
 
     return response;
+}
+
+/*
+ * Match all request paths except for the ones starting with:
+ * - api (API routes)
+ * - _next/static (static files)
+ * - favicon.ico (favicon file)
+ * Source: https://nextjs.org/docs/pages/building-your-application/configuring/content-security-policy
+ */
+const CSP_HEADER_MATCH = /^\/((?!api|_next\/static|favicon.ico).*)$/;
+
+function shouldAddCspHeaders(request) {
+    return new RegExp(CSP_HEADER_MATCH).exec(request.nextUrl.pathname);
 }
 
 function addCspHeaders(requestHeaders, responseHeaders) {
