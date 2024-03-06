@@ -70,7 +70,7 @@ function LoggedInButtons() {
             {shouldShowLoginModalSavedSearch && (
                 <LoginModal
                     onLoginClick={() => {
-                        loginAndRedirect("/stillinger/lagrede-sok");
+                        loginAndRedirect("/lagrede-sok");
                     }}
                     onCloseClick={closeLoginModalSavedSearch}
                 />
@@ -79,7 +79,7 @@ function LoggedInButtons() {
             {shouldShowLoginModalFavorites && (
                 <LoginModal
                     onLoginClick={() => {
-                        loginAndRedirect("/stillinger/favoritter");
+                        loginAndRedirect("/favoritter");
                     }}
                     onCloseClick={closeLoginModalFavorites}
                 />
@@ -89,7 +89,7 @@ function LoggedInButtons() {
                 <UserConsentModal
                     onClose={closeTermsModal}
                     onTermsAccepted={() => {
-                        handleTermsAccepted("/stillinger/favoritter");
+                        handleTermsAccepted("/favoritter");
                     }}
                 />
             )}
