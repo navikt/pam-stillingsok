@@ -32,6 +32,9 @@ function UserConsentIsRequired() {
 
             {showTermsModal && (
                 <UserConsentModal
+                    onTermsAccepted={() => {
+                        window.location.reload();
+                    }}
                     onClose={() => {
                         setShowTermModal(false);
                     }}
