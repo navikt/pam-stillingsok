@@ -13,4 +13,5 @@ Sentry.init({
             blockAllMedia: true,
         }),
     ],
+    environment: process.env.NAIS_CLUSTER_NAME === "dev-gcp" ? "development" : "production",
 });
