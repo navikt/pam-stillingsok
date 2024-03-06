@@ -12,6 +12,5 @@
 
     "aduser_audience": "dev-gcp:teampam:pam-aduser",
     "amplitude_token": "3acd3a52e065d2d99856a12e7e9e1432",
-    "arbeidsplassen_url": "https://arbeidsplassen.intern.dev.nav.no",
     "interest_api_url": "https://arbeidsplassen.intern.dev.nav.no/interesse-api"
 }
