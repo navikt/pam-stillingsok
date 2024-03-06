@@ -41,7 +41,9 @@ function addCspHeaders(requestHeaders, responseHeaders) {
     const nonce = Buffer.from(crypto.randomUUID()).toString("base64");
     const cspHeader = `
             default-src 'none';
-            script-src 'self' 'nonce-${nonce}' ${process.env.NODE_ENV === "production" ? "" : `'unsafe-eval'`};
+            script-src 'self' 'nonce-${nonce}' 'strict-dynamic' ${
+        process.env.NODE_ENV === "production" ? "" : `'unsafe-eval'`
+    };
             style-src 'self' 'unsafe-inline';
             img-src 'self';
             media-src 'none';
