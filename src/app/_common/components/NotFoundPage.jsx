@@ -6,7 +6,7 @@ import { NotFound } from "@navikt/arbeidsplassen-react";
 
 export default function NotFoundPage({ title, text }) {
     return (
-        <div className="container-large mt-12 mb-12">
+        <div className="container-large mt-12 mb-24">
             <NotFound title={title} text={text} />
         </div>
     );

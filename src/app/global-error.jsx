@@ -22,7 +22,7 @@ export default function Error({ error }) {
         <html lang="no">
             <body data-theme="arbeidsplassen" className={myFont.className}>
                 <App>
-                    <section className="container-small mt-16 mb-16">
+                    <section className="container-small mt-16 mb-16" aria-live="assertive">
                         <VStack align="center">
                             <WorriedFigure className="mb-8" />
                             <Heading level="1" size="large" className="text-center" spacing>

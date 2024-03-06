@@ -42,6 +42,7 @@ server.use(compression());
 // Todo: Hvilke sikkerhetsheadere etc må vi flytte over til next appen?
 server.use(helmet({ xssFilter: false, hsts: false }));
 
+// todo: trenger vi denne også i next?
 server.use(helmet.referrerPolicy({ policy: "no-referrer" }));
 
 server.use(
