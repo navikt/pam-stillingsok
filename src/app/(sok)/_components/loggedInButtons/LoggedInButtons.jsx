@@ -70,7 +70,7 @@ function LoggedInButtons() {
             {shouldShowLoginModalSavedSearch && (
                 <LoginModal
                     onLoginClick={() => {
-                        loginAndRedirect("/lagrede-sok");
+                        loginAndRedirect("/stillinger/lagrede-sok");
                     }}
                     onCloseClick={closeLoginModalSavedSearch}
                 />
@@ -79,7 +79,7 @@ function LoggedInButtons() {
             {shouldShowLoginModalFavorites && (
                 <LoginModal
                     onLoginClick={() => {
-                        loginAndRedirect("/favoritter");
+                        loginAndRedirect("/stillinger/favoritter");
                     }}
                     onCloseClick={closeLoginModalFavorites}
                 />

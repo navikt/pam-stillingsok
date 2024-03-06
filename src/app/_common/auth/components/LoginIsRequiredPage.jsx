@@ -10,7 +10,7 @@ function LoginIsRequiredPage() {
     const { loginAndRedirect } = useContext(AuthenticationContext);
 
     const onLogin = () => {
-        loginAndRedirect("/");
+        loginAndRedirect("/stillinger");
     };
 
     return (
