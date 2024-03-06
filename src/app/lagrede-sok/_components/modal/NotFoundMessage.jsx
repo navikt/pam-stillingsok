@@ -1,13 +1,16 @@
 import React from "react";
-import { BodyLong, Link as AkselLink, Modal } from "@navikt/ds-react";
+import { Alert, BodyLong, Link as AkselLink, Modal } from "@navikt/ds-react";
+import Link from "next/link";
 
 function NotFoundMessage() {
     return (
         <Modal.Body>
-            <BodyLong role="alert">
-                Det oppsto en feil. Det kan se ut som om du forsøker å oppdatere et lagret søk som ikke finnes lengre.{" "}
-                <AkselLink href="/">Forsøk å laste siden på nytt uten det gamle søket.</AkselLink>
-            </BodyLong>
+            <Alert variant="warning" role="alert">
+                Det kan se ut som om du forsøker å oppdatere et lagret søk som ikke finnes lengre.{" "}
+                <AkselLink as={Link} href="/">
+                    Forsøk å laste siden på nytt uten det gamle søket.
+                </AkselLink>
+            </Alert>
         </Modal.Body>
     );
 }
