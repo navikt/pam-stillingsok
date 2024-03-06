@@ -13,7 +13,7 @@ export const metadata = {
 export default async function Page(props) {
     const authenticated = await actions.checkIfAuthenticated();
     if (!authenticated.isAuthenticated) {
-        return <LoginIsRequiredPage />;
+        return <LoginIsRequiredPage redirect="/stillinger/favoritter" />;
     }
 
     const agreementAccepted = await actions.checkIfUserAgreementIsAccepted();

@@ -1,16 +1,17 @@
 "use client";
 
 import React, { useContext } from "react";
+import PropTypes from "prop-types";
 import { BodyLong, Button, Heading, HStack, VStack } from "@navikt/ds-react";
 import { EnterIcon } from "@navikt/aksel-icons";
 import { FigureWithKey } from "@navikt/arbeidsplassen-react";
 import { AuthenticationContext } from "@/app/_common/auth/contexts/AuthenticationProvider";
 
-function LoginIsRequiredPage() {
+function LoginIsRequiredPage({ redirect = "/stillinger" }) {
     const { loginAndRedirect } = useContext(AuthenticationContext);
 
     const onLogin = () => {
-        loginAndRedirect("/stillinger");
+        loginAndRedirect(redirect);
     };
 
     return (
@@ -33,5 +34,9 @@ function LoginIsRequiredPage() {
         </section>
     );
 }
+
+LoginIsRequiredPage.propTypes = {
+    redirect: PropTypes.string,
+};
 
 export default LoginIsRequiredPage;

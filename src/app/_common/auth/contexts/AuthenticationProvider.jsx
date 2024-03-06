@@ -39,7 +39,7 @@ function AuthenticationProvider({ children }) {
     }
 
     function logout() {
-        window.location.href = `/stillinger/oauth2/logout?redirect=${encodeURIComponent(window.location.href)}`;
+        window.location.href = `/stillinger/oauth2/logout?redirect=${encodeURIComponent("/utlogget")}`;
     }
 
     const fetchIsAuthenticated = () => {
