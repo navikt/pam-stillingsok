@@ -20,8 +20,8 @@ export async function getAllSavedSearchesAction() {
     });
 
     if (!res.ok) {
-        logger.error(`GET favourites failed. ${res.status} ${res.statusText}`);
-        throw new Error();
+        logger.error(`GET saved search failed. ${res.status} ${res.statusText}`);
+        throw new Error("Kunne ikke hente lagrede søk");
     }
 
     let data = await res.json();

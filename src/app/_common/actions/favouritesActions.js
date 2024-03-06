@@ -20,7 +20,7 @@ export async function getFavouritesAction() {
 
     if (!res.ok) {
         logger.error(`GET favourites from aduser failed. ${res.status} ${res.statusText}`);
-        return [];
+        throw new Error("Kunne ikke hente favoritter");
     }
 
     let data = await res.json();

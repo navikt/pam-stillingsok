@@ -23,7 +23,7 @@ export async function checkIfUserAgreementIsAccepted() {
         return new Response(null, { status: 401 });
     }
 
-    const res = await fetch(`${process.env.PAMADUSER_URL}/api/v1/personalia`, {
+    const res = await fetch(`${process.env.PAMADUSER_URL}/api/v1/user`, {
         method: "GET",
         headers: getDefaultAuthHeaders(oboToken),
     });
