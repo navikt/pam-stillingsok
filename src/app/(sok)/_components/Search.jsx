@@ -102,7 +102,7 @@ export default function Search({ query, searchResult, aggregations, locations })
             />
 
             <HGrid
-                columns={{ xs: 1, lg: "200px auto", xl: "370px auto" }}
+                columns={{ xs: 1, lg: "220px auto", xl: "370px auto" }}
                 gap={{ xs: "0", lg: "6", xl: "12" }}
                 className="container-large mt-8"
             >
