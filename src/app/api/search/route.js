@@ -1,7 +1,8 @@
 import elasticSearchRequestBody from "@/app/(sok)/_utils/elasticSearchRequestBody";
-import simplifySearchResponse from "@/app/(sok)/_utils/simplifySearchResponse";
 import { createQuery, toApiQuery } from "@/app/(sok)/_utils/query";
 import { getDefaultHeaders } from "@/app/_common/utils/fetch";
+
+export const dynamic = "force-dynamic";
 
 // Todo - test at denne fungere med aduser. Jeg tror aduser kaller dette endepunktet når email for lagrede søk skal sendes ut
 
