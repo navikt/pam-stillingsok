@@ -5,7 +5,7 @@ export function getDefaultHeaders() {
 
     headers.set("Content-Type", "application/json");
     headers.set("Accept", "application/json");
-    // headers.set(NAV_CALL_ID_TAG, getCallId());
+    headers.set(NAV_CALL_ID_TAG, getCallId());
 
     return headers;
 }
