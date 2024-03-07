@@ -81,7 +81,7 @@ export default async function Page({ searchParams }) {
     const globalSearchResult = await fetchElasticSearch(toApiQuery(defaultQuery));
 
     // Locations filter are not aggregated, but based on a predefined list
-    const locations = await fetchLocations();
+    const locations = {};
 
     // If user has some search criteria, make an extra search to get that result
     let searchResult;
