@@ -91,12 +91,5 @@ export default async function Page({ searchParams }) {
         searchResult = globalSearchResult;
     }
 
-    return (
-        <Search
-            searchResult={searchResult}
-            aggregations={globalSearchResult.aggregations}
-            locations={locations}
-            query={initialQuery}
-        />
-    );
+    return <h1>Hello form page.js</h1>;
 }

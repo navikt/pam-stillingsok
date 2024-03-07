@@ -46,7 +46,7 @@ function App({ children, amplitudeToken }) {
                     onLogin={login}
                     onLogout={logout}
                 />
-                uten main
+                <main id="main-content">{children}</main>
             </div>
             <Footer />
         </div>
