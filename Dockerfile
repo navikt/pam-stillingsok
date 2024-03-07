@@ -13,5 +13,5 @@ FROM gcr.io/distroless/nodejs20-debian12
 WORKDIR /app
 ENV NODE_ENV=production
 ENV TZ="Europe/Oslo"
-COPY --from=builder /app /app
+COPY --from=builder --chown=nextjs:nodejs /app /app
 CMD ["./node_modules/.bin/next", "start"]
