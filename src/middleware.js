@@ -57,9 +57,7 @@ function addCspHeaders(requestHeaders, responseHeaders) {
             frame-src 'self';
             block-all-mixed-content;
             upgrade-insecure-requests;
-            connect-src 'self' ${process.env.ARBEIDSPLASSEN_URL} ${
-        process.env.INTEREST_API_URL
-    } https://amplitude.nav.no https://sentry.gc.nav.no;
+            connect-src 'self' https://amplitude.nav.no https://sentry.gc.nav.no;
     `;
 
     // Replace newline characters and spaces
