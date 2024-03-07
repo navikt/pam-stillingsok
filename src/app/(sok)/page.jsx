@@ -31,7 +31,7 @@ async function fetchElasticSearch(query) {
         method: "POST",
         headers: getDefaultHeaders(),
         body: JSON.stringify(body),
-        next: { revalidate: 30 },
+        next: { revalidate: 3060 },
     });
 
     if (!res.ok) {
