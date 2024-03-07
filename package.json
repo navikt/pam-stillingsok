@@ -32,6 +32,7 @@
         "@navikt/ds-css": "^5.18.1",
         "@navikt/ds-react": "^5.18.1",
         "@navikt/oasis": "^3.2.2",
+        "@neshca/cache-handler": "^1.0.6",
         "@sentry/nextjs": "^7.105.0",
         "date-fns": "^3.3.1",
         "html-react-parser": "^5.1.8",
@@ -40,6 +41,7 @@
         "prop-types": "^15.8.1",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
+        "redis": "^4.6.13",
         "ua-parser-js": "^1.0.37",
         "uuid": "^9.0.1",
         "winston": "^3.12.0"
