@@ -4,8 +4,6 @@ import { getDefaultHeaders } from "@/app/_common/utils/fetch";
 
 export const dynamic = "force-dynamic";
 
-// Todo - test at denne fungere med aduser. Jeg tror aduser kaller dette endepunktet når email for lagrede søk skal sendes ut
-
 /**
  * Note: This endpoint is used by pam-aduser
  */
