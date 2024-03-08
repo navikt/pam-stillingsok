@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { BodyLong, Button, HStack, Modal } from "@navikt/ds-react";

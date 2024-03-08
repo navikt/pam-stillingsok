@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { HasAcceptedTermsStatus, UserContext } from "@/app/_common/user/UserProvider";
