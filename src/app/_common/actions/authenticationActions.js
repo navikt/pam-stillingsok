@@ -7,11 +7,11 @@ import { getAdUserOboToken, getDefaultAuthHeaders } from "@/app/_common/auth/aut
 
 export async function checkIfAuthenticated() {
     return await validateToken(getToken(headers()))
-        .then((token) => {
-            return { isAuthenticated: token.ok };
+        .then((validation) => {
+            return { isAuthenticated: validation.ok, failure: false };
         })
         .catch(() => {
-            return { isAuthenticated: false };
+            return { isAuthenticated: false, failure: true };
         });
 }
 

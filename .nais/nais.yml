@@ -49,6 +49,8 @@ spec:
       value: {{ interest_api_url }}
     - name: PORT
       value: "8080"
+    - name: REDIS_AVAILABLE
+      value: "true"
   accessPolicy:
     inbound:
       rules:
@@ -57,3 +59,10 @@ spec:
       rules:
         - application: pam-search-api
         - application: pam-aduser
+      external:
+        - host: {{ arbeidsplassen_domain }}
+        - host: amplitude.nav.no
+        - host: sentry.gc.nav.no
+  redis:
+    - instance: cache
+      access: readwrite

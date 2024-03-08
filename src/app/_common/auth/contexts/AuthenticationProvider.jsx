@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import SessionStatusModal from "@/app/_common/auth/components/SessionStatusModal";
+import * as actions from "@/app/_common/actions";
 
 export const AuthenticationContext = React.createContext({
     userNameAndInfo: undefined,
@@ -42,31 +43,24 @@ function AuthenticationProvider({ children }) {
         window.location.href = `/stillinger/oauth2/logout?redirect=${encodeURIComponent("/utlogget")}`;
     }
 
-    const fetchIsAuthenticated = () => {
+    const fetchIsAuthenticated = async () => {
         setAuthenticationStatus(AuthenticationStatus.IS_FETCHING);
 
-        fetch(`/stillinger/api/isAuthenticated`, {
-            credentials: "include",
-            referrer: process.env.NEXT_PUBLIC_CONTEXT_PATH,
-            cache: "no-store",
-        })
-            .then((response) => {
-                if (response.status === 200) {
-                    setAuthenticationStatus(AuthenticationStatus.IS_AUTHENTICATED);
-                    setHasBeenLoggedIn(true);
-                } else if (response.status === 401) {
-                    setAuthenticationStatus(AuthenticationStatus.NOT_AUTHENTICATED);
-                    if (hasBeenLoggedIn) {
-                        setHasBeenLoggedIn(false);
-                        timeoutLogout();
-                    }
-                } else {
-                    setAuthenticationStatus(AuthenticationStatus.FAILURE);
-                }
-            })
-            .catch(() => {
+        const validation = await actions.checkIfAuthenticated();
+        if (validation.isAuthenticated) {
+            setAuthenticationStatus(AuthenticationStatus.IS_AUTHENTICATED);
+            setHasBeenLoggedIn(true);
+        } else {
+            if (validation.failure) {
                 setAuthenticationStatus(AuthenticationStatus.FAILURE);
-            });
+            } else {
+                setAuthenticationStatus(AuthenticationStatus.NOT_AUTHENTICATED);
+                if (hasBeenLoggedIn) {
+                    setHasBeenLoggedIn(false);
+                    timeoutLogout();
+                }
+            }
+        }
     };
 
     async function fetchUserNameAndInfo() {

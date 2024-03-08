@@ -1,6 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     basePath: "/stillinger",
+    cacheHandler:
+        process.env.NODE_ENV === "production"
+            ? require.resolve("./cache-handler.mjs")
+            : undefined,
 };
 
 const { PHASE_DEVELOPMENT_SERVER } = require("next/constants");
