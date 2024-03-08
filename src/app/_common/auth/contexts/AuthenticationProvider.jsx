@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import SessionStatusModal from "@/app/_common/auth/components/SessionStatusModal";

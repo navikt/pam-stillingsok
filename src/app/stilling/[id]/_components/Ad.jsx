@@ -1,32 +1,16 @@
-"use client";
-
-import React, { useEffect } from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import { Box, HGrid, Tag, Heading } from "@navikt/ds-react";
+import { Box, Heading, HGrid, Tag } from "@navikt/ds-react";
 import AdDetails from "./AdDetails";
 import AdText from "./AdText";
 import ContactPerson from "./ContactPerson";
 import EmployerDetails from "./EmployerDetails";
 import EmploymentDetails from "./EmploymentDetails";
 import HowToApply from "./HowToApply";
-import { logStillingVisning } from "@/app/_common/monitoring/amplitude";
 import ShareAd from "./ShareAd";
 import Summary from "./Summary";
 
 function Ad({ ad }) {
-    /**
-     * Track page view for all ads
-     */
-    useEffect(() => {
-        if (ad && ad._source && ad._id && ad._source.title) {
-            try {
-                logStillingVisning(ad);
-            } catch (e) {
-                // ignore
-            }
-        }
-    }, [ad]);
-
     const annonseErAktiv = ad._source.status === "ACTIVE";
 
     return (
