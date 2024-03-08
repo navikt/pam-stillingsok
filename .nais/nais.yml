@@ -59,6 +59,10 @@ spec:
       rules:
         - application: pam-search-api
         - application: pam-aduser
+      external:
+        - host: {{ arbeidsplassen_domain }}
+        - host: amplitude.nav.no
+        - host: sentry.gc.nav.no
   redis:
     - instance: cache
       access: readwrite
