@@ -202,7 +202,6 @@ export default class Typeahead extends React.Component {
                     label="Søkeord"
                     variant="primary"
                     id={this.props.id}
-                    type="search"
                     role="textbox"
                     aria-autocomplete="list"
                     aria-controls={`${this.props.id}-suggestions`}
