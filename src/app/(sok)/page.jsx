@@ -4,6 +4,7 @@ import { defaultMetadataDescription, defaultOpenGraphImage, getMetadataTitle } f
 import { createQuery, defaultQuery, toApiQuery, toBrowserQuery, toReadableQuery } from "@/app/(sok)/_utils/query";
 import elasticSearchRequestBody from "@/app/(sok)/_utils/elasticSearchRequestBody";
 import { getDefaultHeaders } from "@/app/_common/utils/fetch";
+import { Suspense } from "react";
 
 export async function generateMetadata({ searchParams }) {
     const query = createQuery(searchParams);
@@ -96,11 +97,13 @@ export default async function Page({ searchParams }) {
     }
 
     return (
-        <Search
-            searchResult={searchResult}
-            aggregations={globalSearchResult.aggregations}
-            locations={locations}
-            query={initialQuery}
-        />
+        <Suspense fallback={<p>Test Suspense Boundary</p>}>
+            <Search
+                searchResult={searchResult}
+                aggregations={globalSearchResult.aggregations}
+                locations={locations}
+                query={initialQuery}
+            />
+        </Suspense>
     );
 }
