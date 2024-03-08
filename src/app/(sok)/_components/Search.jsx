@@ -116,19 +116,6 @@ export default function Search({ query, searchResult, aggregations, locations })
                     />
                 </Hide>
 
-                <Show below="lg">
-                    {isFiltersVisible && (
-                        <FiltersMobile
-                            query={updatedQuery}
-                            dispatchQuery={queryDispatch}
-                            aggregations={aggregations}
-                            locations={locations}
-                            onCloseClick={() => setIsFiltersVisible(false)}
-                            searchResult={searchResult}
-                        />
-                    )}
-                </Show>
-
                 <VStack gap="10">
                     <SelectedFilters query={query} queryDispatch={queryDispatch} />
                     <SearchResult searchResult={searchResult} query={updatedQuery} />
