@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { SET_SEARCH_STRING } from "@/app/(sok)/_utils/queryReducer";
 import Typeahead from "@/app/_common/components/typeahead/Typeahead";
 import { FetchAction, useFetchReducer } from "@/app/_common/hooks/useFetchReducer";
-import capitalizeFirstLetter from "@/app/_common/utils/capitalizeFirstLetter";
+import * as actions from "@/app/_common/actions";
 
 let suggestionsCache = [];
 const CACHE_MAX_SIZE = 50;
@@ -14,24 +14,6 @@ function SearchBox({ dispatch, query }) {
     const [suggestionsResponse, suggestionsDispatch] = useFetchReducer([]);
     const MINIMUM_LENGTH = 1;
 
-    /**
-     * Use new Set to remove duplicates across category_suggest and searchtags_suggest
-     */
-    function removeDuplicateSuggestions(result) {
-        return [
-            ...new Set(
-                [
-                    ...result.suggest.searchtags_suggest[0].options.map((suggestion) =>
-                        capitalizeFirstLetter(suggestion.text),
-                    ),
-                    ...result.suggest.category_suggest[0].options.map((suggestion) =>
-                        capitalizeFirstLetter(suggestion.text),
-                    ),
-                ].sort(),
-            ),
-        ].slice(0, 10);
-    }
-
     async function fetchSuggestions() {
         const cached = suggestionsCache.find((c) => c.value === value);
         if (cached) {
@@ -39,27 +21,8 @@ function SearchBox({ dispatch, query }) {
             return;
         }
 
-        try {
-            const response = await fetch("/stillinger/api/suggestions", {
-                body: JSON.stringify({ match: value, minLength: MINIMUM_LENGTH }),
-                method: "POST",
-                referrer: process.env.NEXT_PUBLIC_CONTEXT_PATH, // Todo: Er dette rett referrer?
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            });
-
-            if (response.status !== 200) {
-                suggestionsDispatch({ type: FetchAction.RESOLVE, data: [] });
-            }
-
-            let data = await response.json();
-            data = removeDuplicateSuggestions(data);
-            suggestionsCache = [{ value, data }, ...suggestionsCache].slice(0, CACHE_MAX_SIZE);
-            suggestionsDispatch({ type: FetchAction.RESOLVE, data });
-        } catch (e) {
-            suggestionsDispatch({ type: FetchAction.RESOLVE, data: [] });
-        }
+        const data = await actions.getSuggestions(value, MINIMUM_LENGTH);
+        suggestionsDispatch({ type: FetchAction.RESOLVE, data });
     }
 
     useEffect(() => {

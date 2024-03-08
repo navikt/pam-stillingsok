@@ -8,3 +8,4 @@ export {
     updateSavedSearchAction,
     deleteSavedSearchAction,
 } from "./savedSearchActions";
+export { getSuggestions } from "./suggestionsActions";
