@@ -64,12 +64,14 @@ function AuthenticationProvider({ children }) {
     };
 
     async function fetchUserNameAndInfo() {
+        console.time("fetchUserNameAndInfo");
         const res = await fetch("/stillinger/api/user/personalia");
 
         if (res.ok && res.status === 200) {
             const data = await res.json();
             setUserNameAndInfo(data);
         }
+        console.timeEnd("fetchUserNameAndInfo");
     }
 
     useEffect(() => {

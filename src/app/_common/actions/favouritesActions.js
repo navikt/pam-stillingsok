@@ -11,6 +11,7 @@ import { revalidatePath } from "next/cache";
 const ADUSER_FAVOURITES_URL = `${process.env.PAMADUSER_URL}/api/v1/userfavouriteads`;
 
 export async function getFavouritesAction() {
+    console.time("getFavouritesAction");
     const oboToken = await getAdUserOboToken();
 
     const res = await fetch(`${ADUSER_FAVOURITES_URL}?size=9999`, {
@@ -25,6 +26,7 @@ export async function getFavouritesAction() {
 
     let data = await res.json();
 
+    console.timeEnd("getFavouritesAction");
     return data ? data.content : [];
 }
 

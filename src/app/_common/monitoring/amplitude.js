@@ -31,7 +31,9 @@ export function initAmplitude(amplitudeToken) {
 const enrichData = (data) => ({ ...data, navSessionId: getSessionId() });
 
 const logAmplitudeEvent = (event, data) => {
+    console.time("logAmplitudeEvent");
     amplitude.track(event, enrichData(data));
+    console.timeEnd("logAmplitudeEvent");
 };
 
 export const logSearchFilterAdded = (data) => {

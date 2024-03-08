@@ -26,6 +26,7 @@ export async function generateMetadata({ searchParams }) {
 }
 
 async function fetchElasticSearch(query) {
+    console.time("fetchElasticSearch");
     const body = elasticSearchRequestBody(query);
     const res = await fetch(`${process.env.PAMSEARCHAPI_URL}/stillingsok/ad/_search`, {
         method: "POST",
@@ -39,10 +40,12 @@ async function fetchElasticSearch(query) {
     }
 
     const data = await res.json();
+    console.timeEnd("fetchElasticSearch");
     return simplifySearchResponse(data);
 }
 
 async function fetchLocations() {
+    console.time("fetchLocations");
     const [response1, response2] = await Promise.all([
         fetch(`${process.env.PAMADUSER_URL}/api/v1/geography/municipals`, { next: { revalidate: 3600 } }),
         fetch(`${process.env.PAMADUSER_URL}/api/v1/geography/counties`, { next: { revalidate: 3600 } }),
@@ -55,6 +58,7 @@ async function fetchLocations() {
     const municipals = await response1.json();
     const counties = await response2.json();
 
+    console.timeEnd("fetchLocations");
     return [
         ...counties.map((c) => ({
             key: c.name,

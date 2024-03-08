@@ -3,6 +3,7 @@ import { cookies, headers } from "next/headers";
 import { getDefaultHeaders } from "@/app/_common/utils/fetch";
 
 export async function getAdUserOboToken() {
+    console.time("getAdUserOboToken");
     const token = getToken(headers());
 
     if (!token) {
@@ -20,6 +21,7 @@ export async function getAdUserOboToken() {
     if (!oboResult.ok) {
         throw new Error("Failed to get exchange token");
     }
+    console.timeEnd("getAdUserOboToken");
 
     return oboResult.token;
 }

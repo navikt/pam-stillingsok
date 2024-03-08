@@ -6,11 +6,14 @@ import logger from "@/app/_common/utils/logger";
 import { getAdUserOboToken, getDefaultAuthHeaders } from "@/app/_common/auth/auth";
 
 export async function checkIfAuthenticated() {
+    console.time("checkIfAuthenticated");
     return await validateToken(getToken(headers()))
         .then((validation) => {
+            console.timeEnd("checkIfAuthenticated");
             return { isAuthenticated: validation.ok, failure: false };
         })
         .catch(() => {
+            console.timeEnd("checkIfAuthenticated");
             return { isAuthenticated: false, failure: true };
         });
 }

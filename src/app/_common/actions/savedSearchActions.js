@@ -11,6 +11,7 @@ import { revalidatePath } from "next/cache";
 const SAVED_SEARCH_URL = `${process.env.PAMADUSER_URL}/api/v1/savedsearches`;
 
 export async function getAllSavedSearchesAction() {
+    console.time("getAllSavedSearchesAction");
     logger.info("GET saved search");
 
     const oboToken = await getAdUserOboToken();
@@ -25,6 +26,7 @@ export async function getAllSavedSearchesAction() {
     }
 
     let data = await res.json();
+    console.timeEnd("getAllSavedSearchesAction");
     return data ? data.content : [];
 }
 
