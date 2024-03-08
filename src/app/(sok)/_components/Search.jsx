@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useEffect, useLayoutEffect, useReducer, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { Box, Button, Heading, HGrid, Hide, HStack, Show, Stack, VStack } from "@navikt/ds-react";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -15,6 +15,7 @@ import SearchResultHeader from "./searchResultHeader/SearchResultHeader";
 import FilterIcon from "./icons/FilterIcon";
 import logAmplitudeEvent from "../../_common/monitoring/amplitude";
 import LoggedInButtons from "./loggedInButtons/LoggedInButtons";
+import FiltersMobile from "./filters/FiltersMobile";
 import SearchBox from "./searchBox/SearchBox";
 import SearchPagination from "./searchResult/SearchPagination";
 
