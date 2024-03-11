@@ -22,11 +22,11 @@ spec:
     path: /stillinger/api/internal/isReady
   resources:
     limits:
-      cpu: 500m
-      memory: 512Mi
+      cpu: 2000m
+      memory: 2048Mi
     requests:
-      cpu: 200m
-      memory: 256Mi
+      cpu: 1000m
+      memory: 512Mi
   vault:
     enabled: false
   idporten:
