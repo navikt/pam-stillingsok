@@ -46,6 +46,8 @@ export const metadata = {
         email: false,
         address: false,
         telephone: false,
+        date: false,
+        url: false,
     },
 };
 
