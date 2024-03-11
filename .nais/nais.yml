@@ -11,8 +11,8 @@ spec:
   image: {{ image }}
   port: 8080
   replicas:
-    min: 2
-    max: 2
+    min: 3
+    max: 4
     cpuThresholdPercentage: 50
   liveness:
     initialDelay: 10
@@ -22,11 +22,11 @@ spec:
     path: /stillinger/api/internal/isReady
   resources:
     limits:
-      cpu: 4000m
-      memory: 2048Mi
-    requests:
-      cpu: 1000m
+      cpu: 2000m
       memory: 512Mi
+    requests:
+      cpu: 500m
+      memory: 256Mi
   vault:
     enabled: false
   idporten:
