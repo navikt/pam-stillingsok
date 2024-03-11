@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { UAParser } from "ua-parser-js";
 import { BodyShort, Heading, Link as AkselLink, VStack } from "@navikt/ds-react";
 import FacebookIcon from "./icons/FacebookIcon";
 import LinkedinIcon from "./icons/LinkedinIcon";
@@ -9,7 +8,6 @@ import MessengerIcon from "./icons/MessengerIcon";
 
 export default function ShareAd({ source, id }) {
     const { title } = source;
-    const deviceType = new UAParser().getResult().device.type;
     const shareAdRedirectUrl = `https://arbeidsplassen.nav.no/stillinger/stilling/${id}`;
 
     return (
@@ -48,17 +46,15 @@ export default function ShareAd({ source, id }) {
                     </AkselLink>
                 </BodyShort>
 
-                {(deviceType === "mobile" || deviceType === "tablet") && (
-                    <BodyShort>
-                        <AkselLink
-                            href={`fb-messenger://share/?link=${encodeURIComponent(shareAdRedirectUrl)}`}
-                            rel="noopener noreferrer"
-                        >
-                            <MessengerIcon />
-                            Del på Messenger
-                        </AkselLink>
-                    </BodyShort>
-                )}
+                <BodyShort>
+                    <AkselLink
+                        href={`fb-messenger://share/?link=${encodeURIComponent(shareAdRedirectUrl)}`}
+                        rel="noopener noreferrer"
+                    >
+                        <MessengerIcon />
+                        Del på Messenger
+                    </AkselLink>
+                </BodyShort>
             </VStack>
         </section>
     );
