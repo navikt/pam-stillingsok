@@ -45,16 +45,6 @@ export default function ShareAd({ source, id }) {
                         Del på Twitter
                     </AkselLink>
                 </BodyShort>
-
-                <BodyShort>
-                    <AkselLink
-                        href={`fb-messenger://share/?link=${encodeURIComponent(shareAdRedirectUrl)}`}
-                        rel="noopener noreferrer"
-                    >
-                        <MessengerIcon />
-                        Del på Messenger
-                    </AkselLink>
-                </BodyShort>
             </VStack>
         </section>
     );
