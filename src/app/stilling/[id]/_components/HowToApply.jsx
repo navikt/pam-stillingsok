@@ -24,7 +24,7 @@ export function getApplicationUrl(properties) {
     return properties.sourceurl;
 }
 
-const applyForPosition = (stilling) => {
+const logApplyForPosition = (stilling) => {
     try {
         logAmplitudeEvent("Stilling sok-via-url", {
             title: stilling._source.title,
@@ -137,7 +137,7 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                         {isValidUrl(applicationUrl) ? (
                             <BodyLong className="mt-4">
                                 Alternativt kan du{" "}
-                                <AkselLink href={applicationUrl} onClick={() => applyForPosition(stilling)}>
+                                <AkselLink href={applicationUrl} onClick={() => logApplyForPosition(stilling)}>
                                     sende søknad her.
                                 </AkselLink>
                             </BodyLong>
@@ -233,7 +233,7 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                             variant="primary"
                             as="a"
                             href={applicationUrl}
-                            onClick={() => applyForPosition(stilling)}
+                            onClick={() => logApplyForPosition(stilling)}
                             icon={<ExternalLinkIcon aria-hidden="true" />}
                             role="link"
                         >

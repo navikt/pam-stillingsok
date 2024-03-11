@@ -27,6 +27,11 @@ spec:
     requests:
       cpu: 750m
       memory: 256Mi
+  observability:
+    logging:
+      destinations:
+        - id: loki
+        - id: elastic
   vault:
     enabled: false
   idporten:

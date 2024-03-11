@@ -1,5 +1,6 @@
 import * as amplitude from "@amplitude/analytics-browser";
 import { getSessionId } from "./session";
+import { JobPostingTextEnum } from "../utils/utils";
 
 const userProperties = new amplitude.Identify();
 
@@ -42,6 +43,21 @@ export const logSearchFilterRemoved = (data) => {
     amplitude.track("Søkefilter fjernet", enrichData(data));
 };
 
+function getJobPostingFormat(jobPosting) {
+    if (
+        jobPosting &&
+        jobPosting._source &&
+        jobPosting._source.properties &&
+        jobPosting._source.properties.adtext &&
+        jobPosting._source.properties.adtext.includes('<section id="arb-serEtter">') &&
+        jobPosting._source.properties.adtext.includes('<section id="arb-arbeidsoppgaver">') &&
+        jobPosting._source.properties.adtext.includes('<section id="arb-tilbyr">')
+    ) {
+        return JobPostingTextEnum.STRUKTURERT;
+    }
+    return JobPostingTextEnum.IKKE_STRUKTURERT;
+}
+
 export function logStillingVisning(ad) {
     // Todo - tror employer.location er erstattet med employer.locationList
     const employerLocation = ad._source.employer ? ad._source.employer.location : null;
@@ -50,6 +66,12 @@ export function logStillingVisning(ad) {
     const contactList = ad._source.contactList ? ad._source.contactList : null;
 
     if (contactList) {
+        contactList.forEach((contact) => {
+            if (contact.email) hasContactMail = true;
+            if (contact.phone) hasContactPhone = true;
+        });
+    }
+    if (contactList !== null) {
         contactList.forEach((contact) => {
             if (contact.email) hasContactMail = true;
             if (contact.phone) hasContactPhone = true;
@@ -68,10 +90,11 @@ export function logStillingVisning(ad) {
         published: ad._source.published || "N/A",
         fetchedFromSource: ad._source.source || "N/A",
         hasSuperraskSoknad: ad._source.properties.hasInterestform || "N/A",
-        hasApplicationUrl: !!ad._source.properties.applicationurl,
+        hasApplicationUrl: !!ad._source.properties.applicationurl || !!ad._source.properties.sourceurl,
         hasApplicationEmail: !!ad._source.properties.applicationemail,
         hasContactInfoMail: hasContactMail,
         hasContactInfoPhone: hasContactPhone,
+        jobPostingFormat: getJobPostingFormat(ad),
     });
 }
 
