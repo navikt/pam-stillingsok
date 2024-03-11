@@ -1,16 +1,16 @@
+"use server";
+
 import { getAdUserOboToken, getDefaultAuthHeaders } from "@/app/_common/auth/auth";
 import logger from "@/app/_common/utils/logger";
 
-export const dynamic = "force-dynamic";
-
 const ADUSER_PERSONALIA_URL = `${process.env.PAMADUSER_URL}/api/v1/personalia`;
 
-export async function GET() {
+export async function getPersonalia() {
     let oboToken;
     try {
         oboToken = await getAdUserOboToken();
     } catch (e) {
-        return new Response(null, { status: 401 });
+        return { success: false };
     }
 
     const res = await fetch(ADUSER_PERSONALIA_URL, {
@@ -20,10 +20,9 @@ export async function GET() {
 
     if (!res.ok) {
         logger.error(`GET personalia from aduser failed. ${res.status} ${res.statusText}`);
-        return new Response(null, { status: res.status, headers: res.headers });
+        return { success: false };
     }
 
     let data = await res.json();
-
-    return Response.json(data, { headers: res.headers });
+    return { success: true, data: data };
 }

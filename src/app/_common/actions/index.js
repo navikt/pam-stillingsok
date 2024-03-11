@@ -9,3 +9,4 @@ export {
     deleteSavedSearchAction,
 } from "./savedSearchActions";
 export { getSuggestions } from "./suggestionsActions";
+export { getPersonalia } from "./personaliaActions";
