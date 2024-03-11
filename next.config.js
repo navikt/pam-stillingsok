@@ -1,10 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     basePath: "/stillinger",
-    cacheHandler:
-        process.env.NODE_ENV === "production"
-            ? require.resolve("./cache-handler.mjs")
-            : undefined,
+    cacheHandler: process.env.NODE_ENV === "production" ? require.resolve("./cache-handler.mjs") : undefined,
+    experimental: {
+        optimizePackageImports: ["@navikt/ds-react", "@navikt/aksel-icons"],
+    },
 };
 
 const { PHASE_DEVELOPMENT_SERVER } = require("next/constants");
