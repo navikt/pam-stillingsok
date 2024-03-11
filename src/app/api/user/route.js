@@ -23,7 +23,9 @@ export async function GET() {
     });
 
     if (!res.ok) {
-        logger.error(`GET user from aduser failed. ${res.status} ${res.statusText}`);
+        if (!res.status === 404) {
+            logger.error(`GET user from aduser failed. ${res.status} ${res.statusText}`);
+        }
         return new Response(null, { status: res.status, headers: res.headers });
     }
 
