@@ -42,6 +42,11 @@ export const metadata = {
     icons: {
         icon: `/favicon.png`,
     },
+    formatDetection: {
+        email: false,
+        address: false,
+        telephone: false,
+    },
 };
 
 export default async function RootLayout({ children }) {
