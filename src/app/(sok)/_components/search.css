@@ -1,0 +1,21 @@
+@media (max-width: 479px) {
+    .filter-modal {
+        border-radius: var(--a-border-radius-xlarge) var(--a-border-radius-xlarge) 0 0;
+        margin-bottom: 0;
+    }
+
+    .filter-modal .navds-modal__footer {
+        flex-flow: column;
+    }
+}
+
+.filter-modal .navds-modal__footer {
+    background-color: var(--a-surface-alt-1-subtle);
+}
+
+.filter-modal .navds-tabs__tablist-wrapper {
+    background: var(--a-surface-default);
+    position: sticky;
+    top: 0;
+    z-index: 999;
+}

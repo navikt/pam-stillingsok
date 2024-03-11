@@ -7,8 +7,6 @@ metadata:
     team: teampam
   annotations:
     nginx.ingress.kubernetes.io/proxy-buffer-size: "16k"
-    nais.io/read-only-file-system: "false"
-    nais.io/run-as-user: "65532"
 spec:
   image: {{ image }}
   port: 8080
@@ -18,16 +16,16 @@ spec:
     cpuThresholdPercentage: 50
   liveness:
     initialDelay: 10
-    path: /stillinger/internal/isAlive
+    path: /stillinger/api/internal/isAlive
   readiness:
     initialDelay: 10
-    path: /stillinger/internal/isReady
+    path: /stillinger/api/internal/isReady
   resources:
     limits:
-      cpu: 500m
+      cpu: 2000m
       memory: 512Mi
     requests:
-      cpu: 200m
+      cpu: 750m
       memory: 256Mi
   observability:
     logging:
@@ -48,28 +46,16 @@ spec:
      - {{url}}
   {{/each}}
   env:
-    - name: PAMADUSER_URL
-      value: {{ pamaduser_url }}
-    - name: INTEREST_API_URL
-      value: {{ interest_api_url }}
-    - name: PAM_STILLINGSOK_URL
-      value: {{ pam_stillingsok_url }}
-    - name: PAM_VAR_SIDE_URL
-      value: {{ pam_var_side_url }}
-    - name: PAMSEARCHAPI_URL
-      value: {{ pamsearchapi_url }}
-    - name: PAM_JOBBTREFF_API_URL
-      value: {{ pam_jobbtreff_api_url }}
-    - name: AMPLITUDE_TOKEN
-      value: {{ amplitude_token }}
-    - name: ARBEIDSPLASSEN_URL
-      value: {{ arbeidsplassen_url }}
     - name: ADUSER_AUDIENCE
       value: {{ aduser_audience }}
-    - name: IDPORTEN_AUDIENCE
-      value: {{ idporten_audience }}
-    - name: SENTRY_DSN
-      value: {{ sentry_dsn }}
+    - name: AMPLITUDE_TOKEN
+      value: {{ amplitude_token }}
+    - name: INTEREST_API_URL
+      value: {{ interest_api_url }}
+    - name: PORT
+      value: "8080"
+    - name: REDIS_AVAILABLE
+      value: "true"
   accessPolicy:
     inbound:
       rules:
@@ -78,3 +64,10 @@ spec:
       rules:
         - application: pam-search-api
         - application: pam-aduser
+      external:
+        - host: {{ arbeidsplassen_domain }}
+        - host: amplitude.nav.no
+        - host: sentry.gc.nav.no
+  redis:
+    - instance: cache
+      access: readwrite
