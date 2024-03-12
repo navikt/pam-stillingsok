@@ -64,6 +64,15 @@ function Ad({ ad }) {
                         <AdDetails id={ad._id} source={ad._source} />
                     </div>
                     <div>referansenr: 4775883110</div>
+                    <p>
+                        Referansenr.: 4775883110
+                        <br />
+                        Stillingsprosent: 100%
+                        <br />
+                        Fast, Vikariat
+                        <br />
+                        Søknadsfrist: 13.03.2024
+                    </p>
                 </HGrid>
             </article>
         </Box>
