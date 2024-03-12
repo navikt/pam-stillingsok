@@ -43,13 +43,16 @@ export const metadata = {
         icon: `/favicon.png`,
     },
     formatDetection: {
-        telephone: false,
+        email: false,
     },
 };
 
 export default async function RootLayout({ children }) {
     return (
         <html lang="no">
+            <head>
+                <meta name="format-detection" content="telephone=no" />
+            </head>
             <body data-theme="arbeidsplassen" className={myFont.className}>
                 <Providers userPreferences={await actions.getUserPreferences()}>
                     <App amplitudeToken={process.env.AMPLITUDE_TOKEN}>{children}</App>
