@@ -7,6 +7,8 @@ RUN --mount=type=secret,id=optional_secret \
   npm config set //npm.pkg.github.com/:_authToken=$(cat /run/secrets/optional_secret)
 RUN npm ci --prefer-offline --no-audit --ignore-scripts
 COPY . .
+RUN --mount=type=secret,id=sentry_auth_token \
+    SENTRY_AUTH_TOKEN=$(cat /run/secrets/sentry_auth_token)
 RUN npm run build && npm prune --production --offline
 
 FROM gcr.io/distroless/nodejs20-debian12
