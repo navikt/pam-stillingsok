@@ -46,6 +46,20 @@ function Ad({ ad }) {
 
                         <Summary stilling={ad._source} />
                         <AdText adText={ad._source.properties.adtext} />
+                        <div>TEST referansenr: 4775883110</div>
+                        <div>
+                            <h3>Arbeidsgiver</h3>
+                            <p>
+                                <br />
+                                Referansenr.: 4775883110
+                                <br />
+                                Stillingsprosent: 100%
+                                <br />
+                                Fast, Vikariat
+                                <br />
+                                Søknadsfrist: 13.03.2024
+                            </p>
+                        </div>
                         <EmployerDetails stilling={ad._source} />
                         <EmploymentDetails stilling={ad._source} />
                     </div>
@@ -63,16 +77,6 @@ function Ad({ ad }) {
                         )}
                         <AdDetails id={ad._id} source={ad._source} />
                     </div>
-                    <div>referansenr: 4775883110</div>
-                    <p>
-                        Referansenr.: 4775883110
-                        <br />
-                        Stillingsprosent: 100%
-                        <br />
-                        Fast, Vikariat
-                        <br />
-                        Søknadsfrist: 13.03.2024
-                    </p>
                 </HGrid>
             </article>
         </Box>
