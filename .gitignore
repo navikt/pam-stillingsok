@@ -30,6 +30,7 @@ screenshots
 
 # next.js
 /.next/
+.env*.local
 
 # Sentry auth token
 .sentryclirc
