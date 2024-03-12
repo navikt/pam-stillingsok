@@ -77,23 +77,17 @@ async function fetchLocations() {
 export default async function Page({ searchParams }) {
     const initialQuery = createQuery(searchParams);
 
-    // An empty search aggregates all possible search filter
-    const globalSearchResult = await fetchElasticSearch(toApiQuery(defaultQuery));
-
-    // Locations filter are not aggregated, but based on a predefined list
-    const locations = await fetchLocations();
-
-    // If user has some search criteria, make an extra search to get that result
-    let searchResult;
-    if (Object.keys(toBrowserQuery(initialQuery)).length > 0) {
-        searchResult = await fetchElasticSearch(toApiQuery(initialQuery));
-    } else {
-        searchResult = globalSearchResult;
+    const shouldDoExtraCallIfUserHasSearchParams = Object.keys(toBrowserQuery(initialQuery)).length > 0;
+    const fetchCalls = [fetchElasticSearch(toApiQuery(defaultQuery)), fetchLocations()];
+    if (shouldDoExtraCallIfUserHasSearchParams) {
+        fetchCalls.push(fetchElasticSearch(toApiQuery(initialQuery)));
     }
+
+    const [globalSearchResult, locations, searchResult] = await Promise.all(fetchCalls);
 
     return (
         <Search
-            searchResult={searchResult}
+            searchResult={shouldDoExtraCallIfUserHasSearchParams ? searchResult : globalSearchResult}
             aggregations={globalSearchResult.aggregations}
             locations={locations}
             query={initialQuery}
