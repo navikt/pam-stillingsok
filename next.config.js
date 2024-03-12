@@ -21,6 +21,7 @@ module.exports = (phase) =>
                   org: "nav",
                   project: "arbeidsplassen",
                   url: "https://sentry.gc.nav.no/",
+                  authToken: process.env.SENTRY_AUTH_TOKEN,
               },
               {
                   widenClientFileUpload: true,
