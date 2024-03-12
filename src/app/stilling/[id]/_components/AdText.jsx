@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import parse from "html-react-parser";
-import DOMPurify from "isomorphic-dompurify";
 import { RichText } from "@navikt/arbeidsplassen-react";
 import { containsEmail, extractEmail, isValidEmail, mailtoInString } from "@/app/_common/utils/utils";
 import sanitizeHtml from "sanitize-html";
@@ -23,24 +22,12 @@ const preprocessAd = (adText) => {
     }
     return adText;
 };
-//
-// if (adText) {
-//     const preprocessedAd = preprocessAd(adText);
-//     const cleanHtml = DOMPurify.sanitize(preprocessedAd);
-//     return <RichText className="job-posting-text">{parse(cleanHtml)}</RichText>;
-// }
 
 export default function AdText({ adText }) {
     if (adText) {
         const preprocessedAd = preprocessAd(adText);
-        const cleanHtml = DOMPurify.sanitize(preprocessedAd);
-        return (
-            <div>
-                <div className="cleanHtml">{cleanHtml}</div>
-                <div className="preprocessedAd">{preprocessedAd}</div>
-                <div className="sanitizeHtml">{sanitizeHtml(preprocessedAd)}</div>
-            </div>
-        );
+        const cleanHtml = sanitizeHtml(preprocessedAd);
+        return <RichText className="job-posting-text">{parse(cleanHtml)}</RichText>;
     }
     return null;
 }
