@@ -27,7 +27,11 @@ export default function AdText({ adText }) {
     if (adText) {
         const preprocessedAd = preprocessAd(adText);
         const cleanHtml = DOMPurify.sanitize(preprocessedAd);
-        return <RichText className="job-posting-text">{parse(cleanHtml)}</RichText>;
+        return (
+            <RichText className="job-posting-text" suppressHydrationWarning>
+                {parse(cleanHtml)}
+            </RichText>
+        );
     }
     return null;
 }
