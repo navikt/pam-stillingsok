@@ -63,6 +63,7 @@ function Ad({ ad }) {
                         )}
                         <AdDetails id={ad._id} source={ad._source} />
                     </div>
+                    <div>referansenr: 4775883110</div>
                 </HGrid>
             </article>
         </Box>
