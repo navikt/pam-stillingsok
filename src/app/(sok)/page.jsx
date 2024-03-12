@@ -76,48 +76,21 @@ async function fetchLocations() {
 
 export default async function Page({ searchParams }) {
     const initialQuery = createQuery(searchParams);
-    let globalSearchResultRes;
-    let locationsRes;
-    let searchResultRes;
 
-    if (Object.keys(toBrowserQuery(initialQuery)).length > 0) {
-        [globalSearchResultRes, locationsRes, searchResultRes] = await Promise.all([
-            fetchElasticSearch(toApiQuery(defaultQuery)),
-            fetchLocations(),
-            fetchElasticSearch(toApiQuery(initialQuery)),
-        ]);
-
-        const [globalSearchResult, locations, searchResult] = await Promise.all([
-            globalSearchResultRes,
-            locationsRes,
-            searchResultRes,
-        ]);
-
-        return (
-            <Search
-                searchResult={searchResult}
-                aggregations={globalSearchResult.aggregations}
-                locations={locations}
-                query={initialQuery}
-            />
-        );
-    } else {
-        [globalSearchResultRes, locationsRes] = await Promise.all([
-            fetchElasticSearch(toApiQuery(defaultQuery)),
-            fetchLocations(),
-        ]);
-
-        const [globalSearchResult, locations] = await Promise.all([globalSearchResultRes, locationsRes]);
-
-        const searchResult = globalSearchResult;
-
-        return (
-            <Search
-                searchResult={searchResult}
-                aggregations={globalSearchResult.aggregations}
-                locations={locations}
-                query={initialQuery}
-            />
-        );
+    const shouldDoExtraCallIfUserHasSearchParams = Object.keys(toBrowserQuery(initialQuery)).length > 0;
+    const fetchCalls = [fetchElasticSearch(toApiQuery(defaultQuery)), fetchLocations()];
+    if (shouldDoExtraCallIfUserHasSearchParams) {
+        fetchCalls.push(fetchElasticSearch(toApiQuery(initialQuery)));
     }
+
+    const [globalSearchResult, locations, searchResult] = await Promise.all(fetchCalls);
+
+    return (
+        <Search
+            searchResult={shouldDoExtraCallIfUserHasSearchParams ? searchResult : globalSearchResult}
+            aggregations={globalSearchResult.aggregations}
+            locations={locations}
+            query={initialQuery}
+        />
+    );
 }
