@@ -43,11 +43,7 @@ export const metadata = {
         icon: `/favicon.png`,
     },
     formatDetection: {
-        email: false,
-        address: false,
         telephone: false,
-        date: false,
-        url: false,
     },
 };
 
