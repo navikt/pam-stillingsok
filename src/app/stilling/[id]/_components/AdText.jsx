@@ -4,6 +4,7 @@ import parse from "html-react-parser";
 import DOMPurify from "isomorphic-dompurify";
 import { RichText } from "@navikt/arbeidsplassen-react";
 import { containsEmail, extractEmail, isValidEmail, mailtoInString } from "@/app/_common/utils/utils";
+import sanitizeHtml from "sanitize-html";
 
 const preprocessAd = (adText) => {
     if (containsEmail(adText)) {
@@ -37,6 +38,7 @@ export default function AdText({ adText }) {
             <div>
                 <div className="cleanHtml">{parse(cleanHtml)}</div>
                 <div className="preprocessedAd">{parse(preprocessedAd)}</div>
+                <div className="sanitizeHtml">{parse(sanitizeHtml(preprocessedAd))}</div>
             </div>
         );
     }
