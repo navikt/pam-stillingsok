@@ -44,9 +44,6 @@ export const metadata = {
     },
     formatDetection: {
         telephone: false,
-        date: false,
-        email: false,
-        address: false,
     },
 };
 
