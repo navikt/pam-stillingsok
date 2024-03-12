@@ -27,7 +27,7 @@ export default function AdText({ adText }) {
     if (adText) {
         const preprocessedAd = preprocessAd(adText);
         // const cleanHtml = DOMPurify.sanitize(preprocessedAd);
-        return <div>{parse(preprocessedAd, {})}</div>;
+        return <div dangerouslySetInnerHTML={preprocessedAd} />;
     }
     return null;
 }
