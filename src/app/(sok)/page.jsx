@@ -76,27 +76,48 @@ async function fetchLocations() {
 
 export default async function Page({ searchParams }) {
     const initialQuery = createQuery(searchParams);
+    let globalSearchResultRes;
+    let locationsRes;
+    let searchResultRes;
 
-    // An empty search aggregates all possible search filter
-    const globalSearchResult = await fetchElasticSearch(toApiQuery(defaultQuery));
-
-    // Locations filter are not aggregated, but based on a predefined list
-    const locations = await fetchLocations();
-
-    // If user has some search criteria, make an extra search to get that result
-    let searchResult;
     if (Object.keys(toBrowserQuery(initialQuery)).length > 0) {
-        searchResult = await fetchElasticSearch(toApiQuery(initialQuery));
-    } else {
-        searchResult = globalSearchResult;
-    }
+        [globalSearchResultRes, locationsRes, searchResultRes] = await Promise.all([
+            fetchElasticSearch(toApiQuery(defaultQuery)),
+            fetchLocations(),
+            fetchElasticSearch(toApiQuery(initialQuery)),
+        ]);
 
-    return (
-        <Search
-            searchResult={searchResult}
-            aggregations={globalSearchResult.aggregations}
-            locations={locations}
-            query={initialQuery}
-        />
-    );
+        const [globalSearchResult, locations, searchResult] = await Promise.all([
+            globalSearchResultRes,
+            locationsRes,
+            searchResultRes,
+        ]);
+
+        return (
+            <Search
+                searchResult={searchResult}
+                aggregations={globalSearchResult.aggregations}
+                locations={locations}
+                query={initialQuery}
+            />
+        );
+    } else {
+        [globalSearchResultRes, locationsRes] = await Promise.all([
+            fetchElasticSearch(toApiQuery(defaultQuery)),
+            fetchLocations(),
+        ]);
+
+        const [globalSearchResult, locations] = await Promise.all([globalSearchResultRes, locationsRes]);
+
+        const searchResult = globalSearchResult;
+
+        return (
+            <Search
+                searchResult={searchResult}
+                aggregations={globalSearchResult.aggregations}
+                locations={locations}
+                query={initialQuery}
+            />
+        );
+    }
 }
