@@ -31,6 +31,7 @@ function Ad({ ad }) {
 
     return (
         <Box className="container-large" paddingBlock={{ xs: "4 12", md: "16" }}>
+            <meta name="format-detection" content="telephone=no, date=no, email=no, address=no" />
             <article>
                 <HGrid columns={{ xs: 1, lg: "auto 340px" }} gap="16">
                     <div>
