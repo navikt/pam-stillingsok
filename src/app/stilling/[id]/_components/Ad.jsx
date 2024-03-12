@@ -46,7 +46,7 @@ function Ad({ ad }) {
 
                         <Summary stilling={ad._source} />
                         <AdText adText={ad._source.properties.adtext} />
-                        <div>TEST referansenr: 4775883110</div>
+                        <div class="TEST">TEST referansenr: 4775883110</div>
                         <div>
                             <h3>Arbeidsgiver</h3>
                             <p>
