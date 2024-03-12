@@ -22,12 +22,23 @@ const preprocessAd = (adText) => {
     }
     return adText;
 };
+//
+// if (adText) {
+//     const preprocessedAd = preprocessAd(adText);
+//     const cleanHtml = DOMPurify.sanitize(preprocessedAd);
+//     return <RichText className="job-posting-text">{parse(cleanHtml)}</RichText>;
+// }
 
 export default function AdText({ adText }) {
     if (adText) {
         const preprocessedAd = preprocessAd(adText);
-        // const cleanHtml = DOMPurify.sanitize(preprocessedAd);
-        return <div dangerouslySetInnerHTML={preprocessedAd} />;
+        const cleanHtml = DOMPurify.sanitize(preprocessedAd);
+        return (
+            <div>
+                <div className="cleanHtml">{parse(cleanHtml)}</div>
+                <div className="preprocessedAd">{parse(preprocessedAd)}</div>
+            </div>
+        );
     }
     return null;
 }
