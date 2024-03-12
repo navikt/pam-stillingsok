@@ -36,9 +36,9 @@ export default function AdText({ adText }) {
         const cleanHtml = DOMPurify.sanitize(preprocessedAd);
         return (
             <div>
-                <div className="cleanHtml">{parse(cleanHtml)}</div>
-                <div className="preprocessedAd">{parse(preprocessedAd)}</div>
-                <div className="sanitizeHtml">{parse(sanitizeHtml(preprocessedAd))}</div>
+                <div className="cleanHtml">{cleanHtml}</div>
+                <div className="preprocessedAd">{preprocessedAd}</div>
+                <div className="sanitizeHtml">{sanitizeHtml(preprocessedAd)}</div>
             </div>
         );
     }
