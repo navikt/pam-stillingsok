@@ -9,7 +9,7 @@ metadata:
     nginx.ingress.kubernetes.io/proxy-buffer-size: "16k"
 spec:
   image: {{ image }}
-  port: 8080
+  port: 3000
   replicas:
     min: 2
     max: 4
@@ -52,8 +52,6 @@ spec:
       value: {{ amplitude_token }}
     - name: INTEREST_API_URL
       value: {{ interest_api_url }}
-    - name: PORT
-      value: "8080"
     - name: REDIS_AVAILABLE
       value: "true"
   accessPolicy:
