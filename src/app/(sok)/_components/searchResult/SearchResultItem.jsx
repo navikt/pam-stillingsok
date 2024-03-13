@@ -124,7 +124,7 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, isD
                         </Tag>
                     )}
                     {frist && (
-                        <BodyShort weight="semibold" size="small" textColor="subtle">
+                        <BodyShort weight="semibold" size="small" textColor="subtle" suppressHydrationWarning>
                             {fristText()}
                         </BodyShort>
                     )}
