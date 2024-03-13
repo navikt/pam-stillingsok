@@ -19,7 +19,7 @@ module.exports = (phase) =>
               {
                   silent: true,
                   org: "nav",
-                  project: "arbeidsplassen",
+                  project: "pam-stillingsok",
                   url: "https://sentry.gc.nav.no/",
                   authToken: process.env.SENTRY_AUTH_TOKEN,
               },
