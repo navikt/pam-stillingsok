@@ -13,7 +13,9 @@ ENV SENTRY_RELEASE pam-stillingsok@$VERSION_TAG
 WORKDIR /app
 COPY --from=base /app/node_modules ./node_modules
 COPY . .
-RUN npm run build
+RUN --mount=type=secret,id=sentry_auth_token \
+    SENTRY_AUTH_TOKEN=$(cat /run/secrets/sentry_auth_token) \
+    npm run build
 
 FROM gcr.io/distroless/nodejs20-debian12 AS runner
 WORKDIR /app
