@@ -25,7 +25,7 @@ const preprocessAd = (adText) => {
 export default function AdText({ adText }) {
     if (adText) {
         let preprocessedAd = preprocessAd(adText);
-        preprocessedAd = `<meta name="format-detection" content="telephone=no">` + preprocessedAd;
+        // preprocessedAd = `<meta name="format-detection" content="telephone=no">` + preprocessedAd;
         const cleanHtml = DOMPurify.sanitize(preprocessedAd);
         return <RichText className="job-posting-text">{parse(cleanHtml)}</RichText>;
     }
