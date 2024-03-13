@@ -96,7 +96,7 @@ function SessionStatusModal({ markAsLoggedOut, setHasBeenLoggedIn, login, logout
         const scheduledInterval = setInterval(() => {
             if (hasBeenLoggedIn) fetchSessionInfo(hasBeenLoggedIn);
         }, 30 * 1000);
-        fetchSessionInfo(hasBeenLoggedIn);
+        if (hasBeenLoggedIn) fetchSessionInfo(hasBeenLoggedIn);
         return () => clearInterval(scheduledInterval);
     }, [hasBeenLoggedIn]);
 
