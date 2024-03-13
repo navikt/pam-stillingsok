@@ -25,7 +25,10 @@ const preprocessAd = (adText) => {
 export default function AdText({ adText }) {
     if (adText) {
         let preprocessedAd = preprocessAd(adText);
-        // preprocessedAd = `<meta name="format-detection" content="telephone=no">` + preprocessedAd;
+        // Fix for IOS to prevent phone number detection. If this is not set DOMPurify will add <a href="tel:"> to phone numbers.
+        // This will lead to hydration error in the browser.
+        preprocessedAd =
+            `<meta name="format-detection" content="telephone=no,date=no,address=no,email=no,url=no">` + preprocessedAd;
         const cleanHtml = DOMPurify.sanitize(preprocessedAd);
         return <RichText className="job-posting-text">{parse(cleanHtml)}</RichText>;
     }
