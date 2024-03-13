@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import parse from "html-react-parser";
 import { RichText } from "@navikt/arbeidsplassen-react";
 import { containsEmail, extractEmail, isValidEmail, mailtoInString } from "@/app/_common/utils/utils";
-import sanitizeHtml from "sanitize-html";
 
 const preprocessAd = (adText) => {
     if (containsEmail(adText)) {
@@ -25,8 +24,9 @@ const preprocessAd = (adText) => {
 
 export default function AdText({ adText }) {
     if (adText) {
-        const preprocessedAd = preprocessAd(adText);
-        const cleanHtml = sanitizeHtml(preprocessedAd);
+        let preprocessedAd = preprocessAd(adText);
+        preprocessedAd = `<meta name="format-detection" content="telephone=no">` + preprocessedAd;
+        const cleanHtml = DOMPurify.sanitize(preprocessedAd);
         return <RichText className="job-posting-text">{parse(cleanHtml)}</RichText>;
     }
     return null;
