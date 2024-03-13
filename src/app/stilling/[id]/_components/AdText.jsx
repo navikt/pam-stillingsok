@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import parse from "html-react-parser";
 import { RichText } from "@navikt/arbeidsplassen-react";
 import { containsEmail, extractEmail, isValidEmail, mailtoInString } from "@/app/_common/utils/utils";
+import DOMPurify from "isomorphic-dompurify";
 
 const preprocessAd = (adText) => {
     if (containsEmail(adText)) {
