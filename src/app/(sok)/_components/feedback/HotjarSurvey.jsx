@@ -47,7 +47,7 @@ function HotjarSurvey() {
             </BodyShort>
 
             <BodyLong>
-                <AkselLink href="https://surveys.hotjar.com/b74bff32-713a-4ce7-b87f-29e5580f750e">
+                <AkselLink href="https://surveys.hotjar.com/11b59436-15fe-4b2c-b4c2-c6304c54dfb1">
                     Svar på noen korte spørsmål
                 </AkselLink>
             </BodyLong>
