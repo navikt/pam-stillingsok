@@ -32,7 +32,7 @@ function HotjarSurvey() {
         <Box className="mb-12" padding={{ xs: "4", md: "6" }} background="surface-alt-2-subtle" borderRadius="small">
             <HStack justify="space-between" align="start" wrap={false}>
                 <Heading level="2" size="small" spacing>
-                    Hjelp oss med å forbedre jobbannonsene på arbeidsplassen.no
+                    Hjelp oss med å forbedre opplevelsen for deg som ser etter jobber
                 </Heading>
                 <Button
                     size="small"
@@ -42,8 +42,8 @@ function HotjarSurvey() {
                 />
             </HStack>
             <BodyShort spacing>
-                Hva er viktig for deg når du leser annonser? Gi oss innspill ved å svare på noen korte spørsmål.
-                Spørreundersøkelsen er på norsk og er anonym.
+                Hva er viktig for deg når du ser etter jobber? Hva frustrerer deg mest? Gi oss innspill ved å svare på
+                noen korte spørsmål. Spørreundersøkelsen er på norsk og er anonym.
             </BodyShort>
 
             <BodyLong>
