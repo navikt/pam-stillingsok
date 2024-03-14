@@ -1,19 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BodyLong, BodyShort, Box, Button, Heading, HStack, Link as AkselLink } from "@navikt/ds-react";
 import { XMarkIcon } from "@navikt/aksel-icons";
 
 function HotjarSurvey() {
-    const [isDismissed, setIsDismissed] = useState(async () => {
+    const [isDismissed, setIsDismissed] = useState(true);
+
+    useEffect(() => {
         try {
-            const found = await sessionStorage.getItem(`feedback-hotjar-dismissed`);
+            const found = sessionStorage.getItem(`feedback-hotjar-dismissed`);
             if (!found) {
-                return false;
+                setIsDismissed(false);
+            } else {
+                setIsDismissed(true);
             }
-            return found === "true";
         } catch (e) {
-            return false;
+            setIsDismissed(false);
         }
-    });
+    }, []);
 
     function dismiss() {
         setIsDismissed(true);
@@ -25,17 +28,11 @@ function HotjarSurvey() {
     }
 
     if (isDismissed) {
-        return <></>;
+        return <div />;
     }
 
     return (
-        <Box
-            className="mb-12"
-            padding={{ xs: "4", md: "6" }}
-            background="surface-alt-2-subtle"
-            borderRadius="small"
-            suppressHydrationWarning={true}
-        >
+        <Box className="mb-12" padding={{ xs: "4", md: "6" }} background="surface-alt-2-subtle" borderRadius="small">
             <HStack justify="space-between" align="start" wrap={false}>
                 <Heading level="2" size="small" spacing>
                     Hjelp oss med å forbedre opplevelsen for deg som ser etter jobber
