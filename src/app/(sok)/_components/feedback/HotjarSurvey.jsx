@@ -3,9 +3,9 @@ import { BodyLong, BodyShort, Box, Button, Heading, HStack, Link as AkselLink } 
 import { XMarkIcon } from "@navikt/aksel-icons";
 
 function HotjarSurvey() {
-    const [isDismissed, setIsDismissed] = useState(() => {
+    const [isDismissed, setIsDismissed] = useState(async () => {
         try {
-            const found = sessionStorage.getItem(`feedback-hotjar-dismissed`);
+            const found = await sessionStorage.getItem(`feedback-hotjar-dismissed`);
             if (!found) {
                 return false;
             }
@@ -25,11 +25,17 @@ function HotjarSurvey() {
     }
 
     if (isDismissed) {
-        return <div />;
+        return <></>;
     }
 
     return (
-        <Box className="mb-12" padding={{ xs: "4", md: "6" }} background="surface-alt-2-subtle" borderRadius="small">
+        <Box
+            className="mb-12"
+            padding={{ xs: "4", md: "6" }}
+            background="surface-alt-2-subtle"
+            borderRadius="small"
+            suppressHydrationWarning={true}
+        >
             <HStack justify="space-between" align="start" wrap={false}>
                 <Heading level="2" size="small" spacing>
                     Hjelp oss med å forbedre opplevelsen for deg som ser etter jobber
