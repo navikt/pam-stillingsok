@@ -130,7 +130,7 @@ export default function Search({ query, searchResult, aggregations, locations })
                     )}
                 </Show>
 
-                <VStack gap="10" suppressHydrationWarning={true}>
+                <VStack gap="10">
                     <HotjarSurvey />
                     <SelectedFilters query={query} queryDispatch={queryDispatch} />
                     <SearchResult searchResult={searchResult} query={updatedQuery} />
