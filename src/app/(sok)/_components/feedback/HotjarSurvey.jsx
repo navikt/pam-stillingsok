@@ -28,11 +28,11 @@ function HotjarSurvey() {
     }
 
     if (isDismissed) {
-        return <div />;
+        return;
     }
 
     return (
-        <Box className="mb-12" padding={{ xs: "4", md: "6" }} background="surface-alt-2-subtle" borderRadius="small">
+        <Box padding={{ xs: "4", md: "6" }} background="surface-alt-2-subtle" borderRadius="small">
             <HStack justify="space-between" align="start" wrap={false}>
                 <Heading level="2" size="small" spacing>
                     Hjelp oss med å forbedre opplevelsen for deg som ser etter jobber
