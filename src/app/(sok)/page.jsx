@@ -64,9 +64,7 @@ export default async function Page({ searchParams }) {
         fetchCalls.push(fetchCachedElasticSearch(toApiQuery(initialQuery)));
     }
 
-    console.time("Fetching");
     const [globalSearchResult, locations, searchResult] = await Promise.all(fetchCalls);
-    console.timeEnd("Fetching");
 
     return (
         <Search
