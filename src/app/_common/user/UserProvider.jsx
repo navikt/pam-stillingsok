@@ -6,6 +6,7 @@ import { AuthenticationContext, AuthenticationStatus } from "@/app/_common/auth/
 import useToggle from "@/app/_common/hooks/useToggle";
 import AlertModalWithPageReload from "@/app/_common/components/modals/AlertModalWithPageReload";
 import { setAuthenticatedStatus } from "@/app/_common/monitoring/amplitude";
+import * as actions from "@/app/_common/actions";
 
 export const UserContext = React.createContext({});
 
@@ -24,23 +25,20 @@ function UserProvider({ children }) {
     const [forbiddenUser, setForbiddenUser] = useState(false);
 
     async function fetchUser() {
-        const res = await fetch("/stillinger/api/user");
+        const user = await actions.getUser();
 
-        if (!res.ok) {
-            if (res.status === 403) {
+        if (!user.success) {
+            if (user.statusCode === 403) {
                 setForbiddenUser(true);
-            } else if (res.status === 404) {
+            } else if (user.statusCode === 404) {
                 setHasAcceptedTermsStatus(HasAcceptedTermsStatus.NOT_ACCEPTED);
             } else {
                 openErrorDialog();
             }
-
             return;
         }
 
-        const data = await res.json();
-
-        updateUser(data);
+        updateUser(user.data);
     }
 
     function updateUser(data) {
