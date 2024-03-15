@@ -1,9 +1,7 @@
-import simplifySearchResponse from "@/app/(sok)/_utils/simplifySearchResponse";
 import Search from "@/app/(sok)/_components/Search";
 import { defaultMetadataDescription, defaultOpenGraphImage, getMetadataTitle } from "@/app/layout";
 import { createQuery, defaultQuery, toApiQuery, toBrowserQuery, toReadableQuery } from "@/app/(sok)/_utils/query";
-import elasticSearchRequestBody from "@/app/(sok)/_utils/elasticSearchRequestBody";
-import { getDefaultHeaders } from "@/app/_common/utils/fetch";
+import { fetchCachedElasticSearch } from "@/app/(sok)/_utils/fetchCachedElasticSearch";
 
 export async function generateMetadata({ searchParams }) {
     const query = createQuery(searchParams);
@@ -23,23 +21,6 @@ export async function generateMetadata({ searchParams }) {
             images: [defaultOpenGraphImage],
         },
     };
-}
-
-async function fetchElasticSearch(query) {
-    const body = elasticSearchRequestBody(query);
-    const res = await fetch(`${process.env.PAMSEARCHAPI_URL}/stillingsok/ad/_search`, {
-        method: "POST",
-        headers: getDefaultHeaders(),
-        body: JSON.stringify(body),
-        next: { revalidate: 30 },
-    });
-
-    if (!res.ok) {
-        throw new Error("Failed to fetch data");
-    }
-
-    const data = await res.json();
-    return simplifySearchResponse(data);
 }
 
 async function fetchLocations() {
@@ -78,12 +59,14 @@ export default async function Page({ searchParams }) {
     const initialQuery = createQuery(searchParams);
 
     const shouldDoExtraCallIfUserHasSearchParams = Object.keys(toBrowserQuery(initialQuery)).length > 0;
-    const fetchCalls = [fetchElasticSearch(toApiQuery(defaultQuery)), fetchLocations()];
+    const fetchCalls = [fetchCachedElasticSearch(toApiQuery(defaultQuery)), fetchLocations()];
     if (shouldDoExtraCallIfUserHasSearchParams) {
-        fetchCalls.push(fetchElasticSearch(toApiQuery(initialQuery)));
+        fetchCalls.push(fetchCachedElasticSearch(toApiQuery(initialQuery)));
     }
 
+    console.time("Fetching");
     const [globalSearchResult, locations, searchResult] = await Promise.all(fetchCalls);
+    console.timeEnd("Fetching");
 
     return (
         <Search
