@@ -18,6 +18,7 @@ import LoggedInButtons from "./loggedInButtons/LoggedInButtons";
 import FiltersMobile from "./filters/FiltersMobile";
 import SearchBox from "./searchBox/SearchBox";
 import SearchPagination from "./searchResult/SearchPagination";
+import HotjarSurvey from "./feedback/HotjarSurvey";
 
 export default function Search({ query, searchResult, aggregations, locations }) {
     const [updatedQuery, queryDispatch] = useReducer(queryReducer, query);
@@ -130,6 +131,7 @@ export default function Search({ query, searchResult, aggregations, locations })
                 </Show>
 
                 <VStack gap="10">
+                    <HotjarSurvey />
                     <SelectedFilters query={query} queryDispatch={queryDispatch} />
                     <SearchResult searchResult={searchResult} query={updatedQuery} />
                     <SearchPagination searchResult={searchResult} query={query} queryDispatch={queryDispatch} />
