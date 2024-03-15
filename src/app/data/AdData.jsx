@@ -1,7 +1,7 @@
 import EmployerData from "@/app/data/EmployerData";
 
-class AdData {
-    #id;
+export default class AdData {
+    id;
     #status;
 
     // Ad Details
@@ -47,7 +47,7 @@ class AdData {
         workLanguages,
         employer,
     ) {
-        this.#id = id;
+        this.id = id;
         this.#status = status;
         this.#title = title;
         this.#text = text;
@@ -71,10 +71,12 @@ class AdData {
     static fromQuery(queryData) {
         const data = queryData._source ? queryData._source : queryData ? queryData : undefined;
         if (!data) {
+            console.info("AdData.fromQuery data is undefined: ", data);
             return undefined;
         }
         const { properties } = data;
         if (!properties) {
+            console.info("AdData.fromQuery data.properties is undefined: ", data);
             return undefined;
         }
 
@@ -93,7 +95,7 @@ class AdData {
             properties.positioncount,
             properties.remote,
             properties.sector,
-            properties.startTime,
+            properties.starttime,
             properties.workday,
             properties.workhours,
             properties.workLanguage, // list of strings
