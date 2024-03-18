@@ -1,11 +1,11 @@
 import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import { Alert, BodyLong, Button, ConfirmationPanel, Modal } from "@navikt/ds-react";
-import UserAPI from "./UserAPI";
 import { UserContext } from "./UserProvider";
 import { AuthenticationContext } from "@/app/_common/auth/contexts/AuthenticationProvider";
 import { FetchStatus } from "@/app/_common/hooks/useFetchReducer";
 import useToggle from "@/app/_common/hooks/useToggle";
+import * as actions from "@/app/_common/actions";
 
 function UserConsentModal({ onClose, onTermsAccepted }) {
     const { userNameAndInfo } = useContext(AuthenticationContext);
@@ -17,17 +17,12 @@ function UserConsentModal({ onClose, onTermsAccepted }) {
     async function createUser() {
         setFetchStatus(FetchStatus.IS_FETCHING);
 
-        const res = await fetch("/stillinger/api/user", {
-            method: "POST",
-            body: JSON.stringify({ acceptedTerms: "sok_v1" }),
-        });
+        const user = await actions.createUser({ acceptedTerms: "sok_v1" });
 
-        if (!res.ok) {
+        if (!user.success) {
             setFetchStatus(FetchStatus.FAILURE);
             return;
         }
-
-        const data = await res.json();
 
         setFetchStatus(FetchStatus.SUCCESS);
 
@@ -35,7 +30,7 @@ function UserConsentModal({ onClose, onTermsAccepted }) {
             onTermsAccepted();
         }
 
-        updateUser(data);
+        updateUser(user.data);
     }
 
     function onCheckboxClick(e) {

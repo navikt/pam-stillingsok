@@ -10,3 +10,4 @@ export {
 } from "./savedSearchActions";
 export { getSuggestions } from "./suggestionsActions";
 export { getPersonalia } from "./personaliaActions";
+export { getUser, createUser, updateUser } from "./userActions";
