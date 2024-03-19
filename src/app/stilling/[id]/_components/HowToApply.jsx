@@ -45,7 +45,7 @@ const logCopyEmailClick = (stilling) => {
             experimentApplyBoxColor: useBlueBackground ? "blue" : "green",
         });
     } catch (e) {
-        //ignore
+        // ignore
     }
 };
 
