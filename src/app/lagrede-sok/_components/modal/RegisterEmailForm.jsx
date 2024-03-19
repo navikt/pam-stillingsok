@@ -4,7 +4,7 @@ import { Alert, BodyLong, Button, TextField, Modal } from "@navikt/ds-react";
 import { isValidEmail } from "@/app/_common/utils/utils";
 import { UserContext } from "@/app/_common/user/UserProvider";
 import { FetchStatus } from "@/app/_common/hooks/useFetchReducer";
-import UserAPI from "@/app/_common/user/UserAPI";
+import * as actions from "@/app/_common/actions";
 
 function RegisterEmailForm({ onClose, onSuccess }) {
     const { user, updateUser } = useContext(UserContext);
@@ -39,24 +39,19 @@ function RegisterEmailForm({ onClose, onSuccess }) {
         return isValid;
     }
 
-    function handleFormSubmit(e) {
+    async function handleFormSubmit(e) {
         e.preventDefault();
 
         if (validateForm()) {
             setSaveStatus(FetchStatus.IS_FETCHING);
-
-            UserAPI.put("api/user", {
-                ...user,
-                email,
-            })
-                .then((response) => {
-                    setSaveStatus(FetchStatus.SUCCESS);
-                    updateUser(response);
-                    onSuccess();
-                })
-                .catch(() => {
-                    setSaveStatus(FetchStatus.FAILURE);
-                });
+            const result = await actions.updateUser({ ...user, email });
+            if (result.success) {
+                setSaveStatus(FetchStatus.SUCCESS);
+                updateUser(result.data);
+                onSuccess();
+            } else {
+                setSaveStatus(FetchStatus.FAILURE);
+            }
         }
     }
 
