@@ -1,3 +1,4 @@
+import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import { getCallId, NAV_CALL_ID_TAG } from "@/app/_common/monitoring/callId";
 import { getSessionId, SESSION_ID_TAG } from "@/app/_common/monitoring/session";
@@ -22,6 +23,15 @@ export function middleware(request) {
     responseHeaders.forEach((value, key) => {
         response.headers.set(key, value);
     });
+
+    if (!cookies().has("APPLY_JOB_BOX_COLOR")) {
+        const thirtyDays = 30 * 24 * 60 * 60 * 1000;
+        if (Math.random() >= 0.5) {
+            response.cookies.set("APPLY_JOB_BOX_COLOR", "blue", { expires: Date.now() + thirtyDays });
+        } else {
+            response.cookies.set("APPLY_JOB_BOX_COLOR", "green", { expires: Date.now() + thirtyDays });
+        }
+    }
 
     return response;
 }

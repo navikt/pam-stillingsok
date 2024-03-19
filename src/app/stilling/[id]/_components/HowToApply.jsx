@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useCookies } from "next-client-cookies";
 import PropTypes from "prop-types";
 import {
     BodyLong,
@@ -62,10 +63,23 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
     const applicationUrl = getApplicationUrl(properties);
     const isFinn = stilling._source.source === "FINN";
     const path = "stilling";
+    const [useBlueBackground, setUseBlueBackground] = useState(false);
+    const cookies = useCookies();
+
+    useEffect(() => {
+        if (cookies.get("APPLY_JOB_BOX_COLOR") === "blue") {
+            setUseBlueBackground(true);
+        }
+    }, []);
 
     if (properties.hasInterestform === "true") {
         return (
-            <Box background="surface-alt-1-subtle" borderRadius="medium" padding="4" className="full-width mb-10">
+            <Box
+                background={useBlueBackground ? "" : "surface-alt-1-subtle"}
+                borderRadius="medium"
+                padding="4"
+                className="full-width mb-10"
+            >
                 <Heading level="2" size="medium" spacing>
                     Søk på jobben
                 </Heading>
@@ -160,7 +174,12 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
 
     if (properties.applicationdue || properties.applicationemail || applicationUrl) {
         return (
-            <Box background="surface-alt-1-subtle" borderRadius="medium" padding="4" className="full-width mb-10">
+            <Box
+                background={useBlueBackground ? "" : "surface-alt-1-subtle"}
+                borderRadius="medium"
+                padding="4"
+                className="full-width mb-10"
+            >
                 <Heading level="2" size="medium" spacing>
                     Søk på jobben
                 </Heading>
