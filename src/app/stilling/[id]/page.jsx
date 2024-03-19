@@ -2,6 +2,7 @@ import Ad from "./_components/Ad";
 import { getStillingDescription, getStillingTitle } from "./_components/getMetaData";
 import { defaultOpenGraphImage } from "@/app/layout";
 import { fetchAd } from "../FetchAd";
+import { getAdData } from "@/app/data/AdService";
 
 export async function generateMetadata({ params }) {
     const data = await fetchAd(params.id);
@@ -23,7 +24,7 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function Page({ params }) {
-    const ad = await fetchAd(params.id);
+    const adData = await getAdData(params.id);
 
-    return <Ad ad={ad} />;
+    return <Ad adData={adData} />;
 }

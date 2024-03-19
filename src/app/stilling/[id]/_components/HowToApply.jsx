@@ -18,13 +18,6 @@ import { formatDate, isValidEmail, isValidUrl } from "@/app/_common/utils/utils"
 import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
 import FavouritesButton from "@/app/favoritter/_components/FavouritesButton";
 
-export function getApplicationUrl(properties) {
-    if (properties.applicationurl !== undefined) {
-        return properties.applicationurl;
-    }
-    return properties.sourceurl;
-}
-
 const logApplyForPosition = (stilling) => {
     try {
         logAmplitudeEvent("Stilling sok-via-url", {
@@ -61,10 +54,9 @@ const logEmailAnchorClick = (stilling) => {
     }
 };
 
-export default function HowToApply({ stilling, showFavouriteButton }) {
-    const { properties } = stilling._source;
-    const applicationUrl = getApplicationUrl(properties);
-    const isFinn = stilling._source.source === "FINN";
+export default function HowToApply({ adData, showFavouriteButton }) {
+    const applicationUrl = adData.applicationUrl || adData.sourceUrl;
+    const isFinn = adData.source === "FINN";
     const path = "stilling";
     const [useBlueBackground, setUseBlueBackground] = useState(false);
     const cookies = useCookies();
@@ -75,7 +67,7 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
         }
     }, []);
 
-    if (properties.hasInterestform === "true") {
+    if (adData.hasSuperraskSoknad === "true") {
         return (
             <Box
                 background={useBlueBackground ? "surface-alt-2-subtle" : "surface-alt-1-subtle"}
@@ -86,26 +78,26 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                 <Heading level="2" size="medium" spacing>
                     Søk på jobben
                 </Heading>
-                {stilling._source.status === "ACTIVE" && (
+                {adData.status === "ACTIVE" && (
                     <BodyShort spacing>Vis frem deg selv og din erfaring med en superrask søknad.</BodyShort>
                 )}
-                {properties.applicationdue && (
+                {adData.applicationDue && (
                     <dl className="dl">
                         <dt>
                             <Label as="p">Søknadsfrist</Label>
                         </dt>
                         <dd>
-                            <BodyLong>{formatDate(properties.applicationdue)}</BodyLong>
+                            <BodyLong>{formatDate(adData.applicationDue)}</BodyLong>
                         </dd>
                     </dl>
                 )}
-                {stilling._source.status === "ACTIVE" && (
+                {adData.status === "ACTIVE" && (
                     <div>
                         <Button
                             as={Link}
                             onClick={() => {
                                 logAmplitudeEvent("click superrask søknad link", {
-                                    id: stilling._id,
+                                    id: adData.id,
                                     experimentApplyBoxColor: useBlueBackground ? "blue" : "green",
                                 });
                             }}
@@ -116,25 +108,25 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                     </div>
                 )}
 
-                {!isFinn && properties.applicationemail && (
+                {!isFinn && adData.applicationEmail && (
                     <BodyLong className="mt-4">
                         Alternativt kan du sende søknad via e-post til{" "}
-                        {isValidEmail(properties.applicationemail) ? (
+                        {adData.applicationEmail ? (
                             <HStack gap="2" as="span" wrap={false}>
                                 <span>
                                     <AkselLink
                                         onClick={() => {
                                             logEmailAnchorClick(stilling);
                                         }}
-                                        href={`mailto:${properties.applicationemail}`}
+                                        href={`mailto:${adData.applicationEmail}`}
                                     >
-                                        {properties.applicationemail}
+                                        {adData.applicationEmail}
                                     </AkselLink>
                                 </span>
                                 <span>
                                     <CopyButton
                                         title="Kopier e-postadresse"
-                                        copyText={`${properties.applicationemail}`}
+                                        copyText={`${adData.applicationEmail}`}
                                         variant="action"
                                         size="xsmall"
                                         onActiveChange={(state) => {
@@ -146,7 +138,7 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                                 </span>
                             </HStack>
                         ) : (
-                            properties.applicationemail
+                            adData.applicationEmail
                         )}
                     </BodyLong>
                 )}
@@ -176,7 +168,7 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
         );
     }
 
-    if (properties.applicationdue || properties.applicationemail || applicationUrl) {
+    if (adData.applicationDue || adData.applicationEmail || applicationUrl) {
         return (
             <Box
                 background={useBlueBackground ? "surface-alt-2-subtle" : "surface-alt-1-subtle"}
@@ -188,39 +180,39 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                     Søk på jobben
                 </Heading>
                 <dl className="dl">
-                    {properties.applicationdue && (
+                    {adData.applicationDue && (
                         <>
                             <dt>
                                 <Label as="p">Søknadsfrist</Label>
                             </dt>
                             <dd>
-                                <BodyLong>{formatDate(properties.applicationdue)}</BodyLong>
+                                <BodyLong>{formatDate(adData.applicationDue)}</BodyLong>
                             </dd>
                         </>
                     )}
-                    {!isFinn && properties.applicationemail && (
+                    {!isFinn && adData.applicationEmail && (
                         <>
                             <dt>
                                 <Label as="p">Send søknad til</Label>
                             </dt>
                             <dd>
                                 <BodyLong>
-                                    {isValidEmail(properties.applicationemail) ? (
+                                    {adData.applicationEmail ? (
                                         <HStack gap="2" as="span" wrap={false}>
                                             <span>
                                                 <AkselLink
                                                     onClick={() => {
                                                         logEmailAnchorClick(stilling);
                                                     }}
-                                                    href={`mailto:${properties.applicationemail}`}
+                                                    href={`mailto:${adData.applicationEmail}`}
                                                 >
-                                                    {properties.applicationemail}
+                                                    {adData.applicationEmail}
                                                 </AkselLink>
                                             </span>
                                             <span>
                                                 <CopyButton
                                                     title="Kopier e-postadresse"
-                                                    copyText={`${properties.applicationemail}`}
+                                                    copyText={`${adData.applicationEmail}`}
                                                     variant="action"
                                                     size="xsmall"
                                                     onActiveChange={(state) => {
@@ -232,7 +224,7 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                                             </span>
                                         </HStack>
                                     ) : (
-                                        properties.applicationemail
+                                        adData.applicationEmail
                                     )}
                                 </BodyLong>
                             </dd>
@@ -265,7 +257,7 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                     </div>
                 )}
 
-                {isFinn && !properties.applicationurl && (
+                {isFinn && !adData.applicationUrl && (
                     <BodyLong className="mt-4">Søk via opprinnelig annonse på FINN.no.</BodyLong>
                 )}
                 {showFavouriteButton && (

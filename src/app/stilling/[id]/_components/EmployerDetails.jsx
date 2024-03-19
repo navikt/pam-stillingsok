@@ -2,137 +2,104 @@ import React from "react";
 import PropTypes from "prop-types";
 import parse from "html-react-parser";
 import { BodyLong, Heading, Label, Link as AkselLink } from "@navikt/ds-react";
-import DOMPurify from "isomorphic-dompurify";
 import { RichText } from "@navikt/arbeidsplassen-react";
 import fixLocationName from "@/app/_common/utils/fixLocationName";
 import { isValidUrl } from "@/app/_common/utils/utils";
-import getEmployer from "@/app/_common/utils/getEmployer";
 
-function getEmployerLocation(employer) {
-    let employerLocation = [];
-
-    if (!employer || !employer.locationList) {
-        return undefined;
-    }
-
-    const { locationList } = employer;
-
-    for (let i = 0; i < locationList.length; i += 1) {
-        if (locationList[i].postalCode) {
-            let address = locationList[i].address ? `${locationList[i].address}, ` : "";
-            address += `${locationList[i].postalCode} ${fixLocationName(locationList[i].city)}`;
-            employerLocation.push(address);
-        } else if (locationList[i].municipal) {
-            employerLocation.push(`${fixLocationName(locationList[i].municipal)}`);
-        } else if (locationList[i].country) {
-            employerLocation.push(`${fixLocationName(locationList[i].country)}`);
-        }
-    }
-
-    return employerLocation.join(", ");
-}
-
-export default function EmployerDetails({ stilling }) {
-    const { properties } = stilling;
-    const employer = getEmployer(stilling);
-    const employerLocation = getEmployerLocation(stilling.employer);
+export default function EmployerDetails({ employer }) {
     return (
         <section className="mt-16 mb-16">
             <Heading level="2" size="large" spacing>
                 Om arbeidsgiveren
             </Heading>
             <dl className="dl mb-4">
-                {employer && (
+                {employer.name && (
                     <>
                         <dt>
                             <Label as="p">Arbeidsgiver</Label>
                         </dt>
                         <dd>
-                            <BodyLong>{employer}</BodyLong>
+                            <BodyLong>{employer.name}</BodyLong>
                         </dd>
                     </>
                 )}
-                {employerLocation && (
+                {employer.location && (
                     <>
                         <dt>
                             <Label as="p">Adresse</Label>
                         </dt>
                         <dd>
-                            <BodyLong>{employerLocation}</BodyLong>
+                            <BodyLong>{employer.location}</BodyLong>
                         </dd>
                     </>
                 )}
-                {properties.employerhomepage && (
+                {employer.homepage && (
                     <>
                         <dt>
                             <Label as="p">Hjemmeside</Label>
                         </dt>
                         <dd>
                             <BodyLong>
-                                {isValidUrl(properties.employerhomepage) ? (
-                                    <AkselLink href={properties.employerhomepage}>
-                                        {properties.employerhomepage}
-                                    </AkselLink>
+                                {isValidUrl(employer.homepage) ? (
+                                    <AkselLink href={employer.homepage}>{employer.homepage}</AkselLink>
                                 ) : (
-                                    properties.employerhomepage
+                                    employer.homepage
                                 )}
                             </BodyLong>
                         </dd>
                     </>
                 )}
-                {properties.linkedinpage && (
+                {employer.linkedinPage && (
                     <>
                         <dt>
                             <Label as="p">LinkedIn</Label>
                         </dt>
                         <dd>
                             <BodyLong>
-                                {isValidUrl(properties.linkedinpage) ? (
-                                    <AkselLink href={properties.linkedinpage}>{properties.linkedinpage}</AkselLink>
+                                {isValidUrl(employer.linkedinPage) ? (
+                                    <AkselLink href={employer.linkedinPage}>{employer.linkedinPage}</AkselLink>
                                 ) : (
-                                    properties.linkedinpage
+                                    employer.linkedinPage
                                 )}
                             </BodyLong>
                         </dd>
                     </>
                 )}
-                {properties.twitteraddress && (
+                {employer.twitterAddress && (
                     <>
                         <dt>
                             <Label as="p">Twitter</Label>
                         </dt>
                         <dd>
                             <BodyLong>
-                                {isValidUrl(properties.twitteraddress) ? (
-                                    <AkselLink href={properties.twitteraddress}>{properties.twitteraddress}</AkselLink>
+                                {isValidUrl(employer.twitterAddress) ? (
+                                    <AkselLink href={employer.twitterAddress}>{employer.twitterAddress}</AkselLink>
                                 ) : (
-                                    properties.twitteraddress
+                                    employer.twitterAddress
                                 )}
                             </BodyLong>
                         </dd>
                     </>
                 )}
-                {properties.facebookpage && (
+                {employer.facebookPage && (
                     <>
                         <dt>
                             <Label as="p">Facebook</Label>
                         </dt>
                         <dd>
                             <BodyLong>
-                                {isValidUrl(properties.facebookpage) ? (
-                                    <AkselLink href={properties.facebookpage}>{properties.facebookpage}</AkselLink>
+                                {isValidUrl(employer.facebookPage) ? (
+                                    <AkselLink href={employer.facebookPage}>{employer.facebookPage}</AkselLink>
                                 ) : (
-                                    properties.facebookpage
+                                    employer.facebookPage
                                 )}
                             </BodyLong>
                         </dd>
                     </>
                 )}
             </dl>
-            {properties.employerdescription && (
-                <RichText className="job-posting-text mt-4">
-                    {parse(DOMPurify.sanitize(properties.employerdescription))}
-                </RichText>
+            {employer.description && (
+                <RichText className="job-posting-text mt-4">{parse(employer.description)}</RichText>
             )}
         </section>
     );

@@ -5,18 +5,17 @@ import { Buldings3Icon, LocationPinIcon } from "@navikt/aksel-icons";
 import getWorkLocation from "@/app/_common/utils/getWorkLocation";
 import getEmployer from "@/app/_common/utils/getEmployer";
 
-export default function Summary({ stilling }) {
-    const location = getWorkLocation(stilling.properties.location, stilling.locationList, false);
-    const employer = getEmployer(stilling);
+export default function Summary({ adData }) {
+    const location = getWorkLocation(adData.location, adData.locationList, false);
 
     return (
         <section className="mb-12">
-            {employer && (
+            {adData.employer && (
                 <HStack className="mb-2" gap="3" align="center" wrap={false}>
                     <HStack align="center">
                         <Buldings3Icon title="Arbeidsgiver" fontSize="1.5rem" />
                     </HStack>
-                    <BodyLong weight="semibold">{employer}</BodyLong>
+                    <BodyLong weight="semibold">{adData.employer.name}</BodyLong>
                 </HStack>
             )}
             {location && (

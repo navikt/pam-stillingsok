@@ -42,17 +42,13 @@ export default function ContactPerson({ contactList, adId, adTitle }) {
                         {contact.email && (
                             <BodyLong className="overflow-wrap-anywhere">
                                 <HStack gap="2" as="span" wrap={false}>
-                                    {isValidEmail(contact.email) ? (
-                                        <AkselLink
-                                            rel="nofollow"
-                                            href={`mailto:${contact.email}`}
-                                            onClick={() => logClickEmailEvent(adId, adTitle)}
-                                        >
-                                            {contact.email}
-                                        </AkselLink>
-                                    ) : (
-                                        contact.email
-                                    )}
+                                    <AkselLink
+                                        rel="nofollow"
+                                        href={`mailto:${contact.email}`}
+                                        onClick={() => logClickEmailEvent(adId, adTitle)}
+                                    >
+                                        {contact.email}
+                                    </AkselLink>
                                     <CopyButton
                                         title="Kopier e-postadresse"
                                         size="xsmall"

@@ -5,9 +5,7 @@ import { formatDate } from "@/app/_common/utils/utils";
 import worktimeParser from "./worktimeParser";
 import "./EmploymentDetails.css";
 
-export default function EmploymentDetails({ stilling }) {
-    const { properties } = stilling;
-
+export default function EmploymentDetails({ adData }) {
     const formatWorkLanguage = (languages) => {
         if (languages.length === 1) {
             return languages[0];
@@ -36,125 +34,123 @@ export default function EmploymentDetails({ stilling }) {
             </Heading>
 
             <dl className="dl" id="employment-details">
-                {properties.jobtitle && (
+                {adData.jobTitle && (
                     <>
                         <dt>
                             <Label as="p">Stillingstittel</Label>
                         </dt>
                         <dd>
-                            <BodyLong>{properties.jobtitle}</BodyLong>
+                            <BodyLong>{adData.jobTitle}</BodyLong>
                         </dd>
                     </>
                 )}
-                {properties.positioncount && (
+                {adData.positionCount && (
                     <>
                         <dt>
                             <Label as="p">Antall stillinger</Label>
                         </dt>
                         <dd>
-                            <BodyLong>{properties.positioncount}</BodyLong>
+                            <BodyLong>{adData.positionCount}</BodyLong>
                         </dd>
                     </>
                 )}
-                {properties.starttime && (
+                {adData.startTime && (
                     <>
                         <dt>
                             <Label as="p">Oppstart</Label>
                         </dt>
                         <dd>
-                            <BodyLong>{formatDate(properties.starttime)}</BodyLong>
+                            <BodyLong>{formatDate(adData.startTime)}</BodyLong>
                         </dd>
                     </>
                 )}
-                {(properties.remote === "Hjemmekontor" || properties.remote === "Hybridkontor") && (
+                {(adData.remote === "Hjemmekontor" || adData.remote === "Hybridkontor") && (
                     <>
                         <dt>
                             <Label as="p">Hjemmekontor</Label>
                         </dt>
                         <dd>
-                            <BodyLong>{properties.remote === "Hjemmekontor" ? "Kun hjemmekontor" : "Hybrid"}</BodyLong>
+                            <BodyLong>{adData.remote === "Hjemmekontor" ? "Kun hjemmekontor" : "Hybrid"}</BodyLong>
                         </dd>
                     </>
                 )}
-                {properties.engagementtype && (
+                {adData.engagementType && (
                     <>
                         <dt>
                             <Label as="p">Ansettelsesform</Label>
                         </dt>
                         <dd>
-                            <BodyLong>{properties.engagementtype}</BodyLong>
+                            <BodyLong>{adData.engagementType}</BodyLong>
                         </dd>
                     </>
                 )}
-                {properties.jobpercentage && (
+                {adData.jobPercentage && (
                     <>
                         <dt>
                             <Label as="p">Prosent</Label>
                         </dt>
                         <dd>
-                            <BodyLong>
-                                {properties.jobpercentage} {properties.jobpercentage.endsWith("%") ? "" : "%"}
-                            </BodyLong>
+                            <BodyLong>{adData.jobPercentage}</BodyLong>
                         </dd>
                     </>
                 )}
-                {properties.extent && (
+                {adData.extent && (
                     <>
                         <dt>
                             <Label as="p">Heltid/deltid</Label>
                         </dt>
                         <dd>
-                            <BodyLong>{properties.extent}</BodyLong>
+                            <BodyLong>{adData.extent}</BodyLong>
                         </dd>
                     </>
                 )}
-                {properties.sector && (
+                {adData.sector && (
                     <>
                         <dt>
                             <Label as="p">Sektor</Label>
                         </dt>
                         <dd>
-                            <BodyLong>{properties.sector}</BodyLong>
+                            <BodyLong>{adData.sector}</BodyLong>
                         </dd>
                     </>
                 )}
-                {properties.workday && (
+                {adData.workday && (
                     <>
                         <dt>
                             <Label as="p">Arbeidsdager</Label>
                         </dt>
                         <dd>
-                            <BodyLong>{worktimeParser(properties.workday)}</BodyLong>
+                            <BodyLong>{adData.workday}</BodyLong>
                         </dd>
                     </>
                 )}
-                {properties.workhours && (
+                {adData.workhours && (
                     <>
                         <dt>
                             <Label as="p">Arbeidstid</Label>
                         </dt>
                         <dd>
-                            <BodyLong>{worktimeParser(properties.workhours)}</BodyLong>
+                            <BodyLong>{adData.workhours}</BodyLong>
                         </dd>
                     </>
                 )}
-                {properties.jobarrangement && (
+                {adData.jobArrangement && (
                     <>
                         <dt>
                             <Label as="p">Arbeidstidsordning</Label>
                         </dt>
                         <dd>
-                            <BodyLong>{properties.jobarrangement}</BodyLong>
+                            <BodyLong>{adData.jobArrangement}</BodyLong>
                         </dd>
                     </>
                 )}
-                {properties.workLanguage && (
+                {adData.workLanguages && (
                     <>
                         <dt>
                             <Label as="p">Arbeidsspråk</Label>
                         </dt>
                         <dd>
-                            <BodyLong>{formatWorkLanguage(properties.workLanguage)}</BodyLong>
+                            <BodyLong>{formatWorkLanguage(adData.workLanguages)}</BodyLong>
                         </dd>
                     </>
                 )}

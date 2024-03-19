@@ -4,31 +4,31 @@ import { BodyShort, Label, Link as AkselLink } from "@navikt/ds-react";
 import Link from "next/link";
 import { formatDate } from "@/app/_common/utils/utils";
 
-export default function AdDetails({ id, source }) {
+export default function AdDetails({ adData }) {
     return (
         <section className="full-width">
-            {source.updated && (
+            {adData.updated && (
                 <BodyShort spacing>
-                    <Label as="span">Sist endret:</Label> {formatDate(source.updated)}
+                    <Label as="span">Sist endret:</Label> {adData.updated}
                 </BodyShort>
             )}
-            {source.medium && (
+            {adData.medium && (
                 <BodyShort spacing>
-                    <Label as="span">Hentet fra:</Label> {source.medium}
+                    <Label as="span">Hentet fra:</Label> {adData.medium}
                 </BodyShort>
             )}
-            {source.reference && (
+            {adData.reference && (
                 <BodyShort spacing>
-                    <Label as="span">Referanse:</Label> {source.reference}
+                    <Label as="span">Referanse:</Label> {adData.reference}
                 </BodyShort>
             )}
-            {source.id && (
+            {adData.id && (
                 <BodyShort spacing>
-                    <Label as="span">Stillingsnummer:</Label> {source.id}
+                    <Label as="span">Stillingsnummer:</Label> {adData.id}
                 </BodyShort>
             )}
             <BodyShort>
-                <AkselLink as={Link} href={`/rapporter-annonse/${id}`}>
+                <AkselLink as={Link} href={`/rapporter-annonse/${adData.id}`}>
                     Rapporter annonse
                 </AkselLink>
             </BodyShort>
