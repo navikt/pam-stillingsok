@@ -30,6 +30,7 @@ const logApplyForPosition = (stilling) => {
         logAmplitudeEvent("Stilling sok-via-url", {
             title: stilling._source.title,
             id: stilling._id,
+            experimentApplyBoxColor: useBlueBackground ? "blue" : "green",
         });
     } catch (e) {
         // ignore
@@ -41,6 +42,7 @@ const logCopyEmailClick = (stilling) => {
         logAmplitudeEvent("Stilling copy-email", {
             title: stilling._source.title,
             id: stilling._id,
+            experimentApplyBoxColor: useBlueBackground ? "blue" : "green",
         });
     } catch (e) {
         // ignore
@@ -52,6 +54,7 @@ const logEmailAnchorClick = (stilling) => {
         logAmplitudeEvent("Stilling email-anchor-click", {
             title: stilling._source.title,
             id: stilling._id,
+            experimentApplyBoxColor: useBlueBackground ? "blue" : "green",
         });
     } catch (e) {
         // ignore
@@ -103,6 +106,7 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                             onClick={() => {
                                 logAmplitudeEvent("click superrask søknad link", {
                                     id: stilling._id,
+                                    experimentApplyBoxColor: useBlueBackground ? "blue" : "green",
                                 });
                             }}
                             href={`/${path}/${stilling._id}/superrask-soknad`}
