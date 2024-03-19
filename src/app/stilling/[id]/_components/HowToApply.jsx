@@ -75,7 +75,7 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
     if (properties.hasInterestform === "true") {
         return (
             <Box
-                background={useBlueBackground ? "" : "surface-alt-1-subtle"}
+                background={useBlueBackground ? "surface-alt-2-subtle" : "surface-alt-1-subtle"}
                 borderRadius="medium"
                 padding="4"
                 className="full-width mb-10"
@@ -175,7 +175,7 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
     if (properties.applicationdue || properties.applicationemail || applicationUrl) {
         return (
             <Box
-                background={useBlueBackground ? "" : "surface-alt-1-subtle"}
+                background={useBlueBackground ? "surface-alt-2-subtle" : "surface-alt-1-subtle"}
                 borderRadius="medium"
                 padding="4"
                 className="full-width mb-10"
