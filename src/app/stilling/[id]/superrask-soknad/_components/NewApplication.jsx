@@ -1,14 +1,25 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useFormState } from "react-dom";
 import PropTypes from "prop-types";
 import Success from "./Success";
 import Form from "./Form";
 import AdDetailsHeader from "./AdDetailsHeader";
+import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
 
 export default function NewApplication({ ad, applicationForm, submitApplication }) {
     const [state, formAction] = useFormState(submitApplication, { validationErrors: {}, success: false });
+
+    useEffect(() => {
+        if (state && state.success) {
+            try {
+                logAmplitudeEvent("submit superrask søknad");
+            } catch (err) {
+                // ignore
+            }
+        }
+    }, [state]);
 
     return (
         <div className="mb-16">
