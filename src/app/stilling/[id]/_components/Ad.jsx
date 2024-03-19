@@ -44,10 +44,10 @@ function Ad({ adData }) {
                             </Tag>
                         )}
 
-                        <Summary adData />
+                        <Summary adData={adData} />
                         <AdText adText={adData.adText} />
                         <EmployerDetails employer={adData.employer} />
-                        <EmploymentDetails adData />
+                        <EmploymentDetails adData={adData} />
                     </div>
                     <div>
                         {annonseErAktiv && (
@@ -58,10 +58,10 @@ function Ad({ adData }) {
                                     adId={adData.id}
                                     adTitle={adData.title}
                                 />
-                                <ShareAd adData />
+                                <ShareAd adData={adData} />
                             </>
                         )}
-                        <AdDetails adData />
+                        <AdDetails adData={adData} />
                     </div>
                 </HGrid>
             </article>
