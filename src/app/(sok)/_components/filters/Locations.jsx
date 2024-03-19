@@ -75,11 +75,6 @@ function Locations({ locations, query, dispatch, updatedValues }) {
             <div>
                 {locationValues &&
                     locationValues.map((location) => {
-                        // todo, trengs vel ikke om hack i searchApiTemplate.js tas vekk
-                        let countyLevelHitsCount =
-                            location.count - location.subLocations.reduce((sum, e) => sum + e.count, 0);
-                        if (countyLevelHitsCount < 0) countyLevelHitsCount = 0;
-
                         return (
                             <React.Fragment key={location.key}>
                                 {location.key === "UTLAND" ? (
@@ -137,7 +132,7 @@ function Locations({ locations, query, dispatch, updatedValues }) {
                                                                     translate="no"
                                                                 >
                                                                     {`${fixLocationName(subLocation.key, true)} (${
-                                                                        subLocation.count + countyLevelHitsCount
+                                                                        subLocation.count
                                                                     })`}
                                                                 </BodyShort>
                                                             </Checkbox>
