@@ -50,10 +50,3 @@ export default function ShareAd({ adData }) {
         </section>
     );
 }
-
-ShareAd.propTypes = {
-    source: PropTypes.shape({
-        title: PropTypes.string,
-    }).isRequired,
-    id: PropTypes.string.isRequired,
-};

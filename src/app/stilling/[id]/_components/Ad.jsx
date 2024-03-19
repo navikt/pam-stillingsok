@@ -69,20 +69,4 @@ function Ad({ adData }) {
     );
 }
 
-Ad.propTypes = {
-    ad: PropTypes.shape({
-        _id: PropTypes.string,
-        _source: PropTypes.shape({
-            status: PropTypes.string,
-            contactList: PropTypes.array,
-            source: PropTypes.string,
-            title: PropTypes.string,
-            properties: PropTypes.shape({
-                adtext: PropTypes.string,
-                sourceurl: PropTypes.string,
-            }),
-        }),
-    }).isRequired,
-};
-
 export default Ad;

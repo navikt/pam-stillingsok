@@ -29,23 +29,3 @@ export default function Summary({ adData }) {
         </section>
     );
 }
-
-Summary.propTypes = {
-    stilling: PropTypes.shape({
-        locationList: PropTypes.arrayOf(PropTypes.object),
-        properties: PropTypes.shape({
-            jobtitle: PropTypes.string,
-            location: PropTypes.string,
-            engagementtype: PropTypes.string,
-            jobpercentage: PropTypes.string,
-            extent: PropTypes.string,
-            positioncount: PropTypes.string,
-            sector: PropTypes.string,
-            workday: PropTypes.string,
-            workhours: PropTypes.string,
-            jobarrangement: PropTypes.string,
-            starttime: PropTypes.string,
-        }),
-        location: PropTypes.shape({}),
-    }).isRequired,
-};

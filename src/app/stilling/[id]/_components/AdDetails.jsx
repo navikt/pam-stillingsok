@@ -35,13 +35,3 @@ export default function AdDetails({ adData }) {
         </section>
     );
 }
-
-AdDetails.propTypes = {
-    source: PropTypes.shape({
-        updated: PropTypes.string,
-        medium: PropTypes.string,
-        reference: PropTypes.string,
-        id: PropTypes.number,
-    }).isRequired,
-    id: PropTypes.string.isRequired,
-};

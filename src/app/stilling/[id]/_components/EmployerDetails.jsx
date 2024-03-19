@@ -104,26 +104,3 @@ export default function EmployerDetails({ employer }) {
         </section>
     );
 }
-
-EmployerDetails.propTypes = {
-    stilling: PropTypes.shape({
-        properties: PropTypes.shape({
-            employer: PropTypes.string,
-            address: PropTypes.string,
-            employerhomepage: PropTypes.string,
-            linkedinpage: PropTypes.string,
-            twitteraddress: PropTypes.string,
-            facebookpage: PropTypes.string,
-            employerdescription: PropTypes.string,
-        }).isRequired,
-        employer: PropTypes.shape({
-            location: PropTypes.shape({
-                postalCode: PropTypes.string,
-                address: PropTypes.string,
-                municipal: PropTypes.string,
-                country: PropTypes.string,
-                city: PropTypes.string,
-            }),
-        }),
-    }).isRequired,
-};

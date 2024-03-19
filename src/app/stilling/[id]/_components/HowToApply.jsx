@@ -273,22 +273,3 @@ export default function HowToApply({ adData, showFavouriteButton }) {
     }
     return null;
 }
-
-HowToApply.propTypes = {
-    stilling: PropTypes.shape({
-        _id: PropTypes.string,
-        _source: PropTypes.shape({
-            title: PropTypes.string,
-            source: PropTypes.string,
-            status: PropTypes.string,
-            properties: PropTypes.shape({
-                applicationdue: PropTypes.string,
-                applicationemail: PropTypes.string,
-                applicationurl: PropTypes.string,
-                sourceurl: PropTypes.string,
-                hasInterestform: PropTypes.string,
-            }),
-        }),
-    }).isRequired,
-    showFavouriteButton: PropTypes.bool.isRequired,
-};

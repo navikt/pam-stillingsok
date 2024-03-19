@@ -68,16 +68,3 @@ export default function ContactPerson({ contactList, adId, adTitle }) {
     }
     return null;
 }
-
-ContactPerson.propTypes = {
-    contactList: PropTypes.arrayOf(
-        PropTypes.shape({
-            name: PropTypes.string,
-            title: PropTypes.string,
-            phone: PropTypes.string,
-            email: PropTypes.string,
-        }),
-    ),
-    adId: PropTypes.string,
-    adTitle: PropTypes.string,
-};
