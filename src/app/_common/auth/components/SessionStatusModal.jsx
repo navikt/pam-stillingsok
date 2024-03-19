@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { BodyLong, Button, Heading, Modal, HStack, VStack } from "@navikt/ds-react";
 import { FigureWithKey } from "@navikt/arbeidsplassen-react";
+import * as Sentry from "@sentry/nextjs";
 
 function SessionStatusModal({ markAsLoggedOut, setHasBeenLoggedIn, login, logout, timeoutLogout, hasBeenLoggedIn }) {
     const [isSessionExpiring, setIsSessionExpiring] = useState(null);
@@ -17,9 +18,11 @@ function SessionStatusModal({ markAsLoggedOut, setHasBeenLoggedIn, login, logout
                 setHasBeenLoggedIn(false);
                 timeoutLogout();
             }
+            Sentry.captureMessage("401 response");
         } else if (response.status < 200 || response.status >= 300) {
             // eslint-disable-next-line no-console
             console.error(errorMessage);
+            Sentry.captureMessage("<200 / >=300 response");
         } else {
             const { session, tokens } = await response.json();
 
