@@ -23,6 +23,12 @@ export function initAmplitude(amplitudeToken) {
             },
              */
         });
+
+        window.addEventListener("pagehide", () => {
+            amplitude.setTransport("beacon");
+            // Sets https transport to use `sendBeacon` API
+            amplitude.flush();
+        });
         return true;
     } catch (e) {
         return false;
