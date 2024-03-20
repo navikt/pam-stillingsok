@@ -9,14 +9,7 @@ export function initAmplitude(amplitudeToken) {
         const amplitudeKey = window.location.href.includes("nav.no") ? amplitudeToken : "";
         if (!amplitudeKey) return false;
 
-        amplitude.init(amplitudeKey, "test@test.no", {
-            transport: "beacon",
-
-            batchEvents: false,
-            includeReferrer: true,
-            includeUtm: true,
-            saveEvents: false,
-
+        amplitude.init(amplitudeKey, undefined, {
             serverUrl: `https://amplitude.nav.no/collect`,
             defaultTracking: {
                 pageViews: true,
@@ -29,6 +22,12 @@ export function initAmplitude(amplitudeToken) {
                 sourceName: window.location.toString(),
             },
              */
+        });
+
+        window.addEventListener("pagehide", () => {
+            amplitude.setTransport("beacon");
+            // Sets https transport to use `sendBeacon` API
+            amplitude.flush();
         });
         return true;
     } catch (e) {
