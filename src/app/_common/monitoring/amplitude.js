@@ -9,7 +9,7 @@ export function initAmplitude(amplitudeToken) {
         const amplitudeKey = window.location.href.includes("nav.no") ? amplitudeToken : "";
         if (!amplitudeKey) return false;
 
-        amplitude.init(amplitudeKey, undefined, {
+        amplitude.init(amplitudeKey, "test@test.no", {
             transport: "beacon",
 
             batchEvents: false,
