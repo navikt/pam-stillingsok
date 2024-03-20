@@ -25,12 +25,12 @@ export async function addClosedFilter(panelId) {
     const existingCookie = await getUserPreferences();
     const closedFilters = new Set(existingCookie.closedFilters || []).add(panelId);
     const newCookieValue = { ...existingCookie, closedFilters: [...closedFilters] };
-    cookies().set(USER_PREFERENCES_COOKIE_NAME, JSON.stringify(newCookieValue));
+    cookies().set(USER_PREFERENCES_COOKIE_NAME, JSON.stringify(newCookieValue), { secure: true });
 }
 
 export async function removeClosedFilter(panelId) {
     const existingCookie = await getUserPreferences();
     let closedFilters = (existingCookie.closedFilters || []).filter((it) => it !== panelId);
     const newCookieValue = { ...existingCookie, closedFilters: closedFilters };
-    cookies().set(USER_PREFERENCES_COOKIE_NAME, JSON.stringify(newCookieValue));
+    cookies().set(USER_PREFERENCES_COOKIE_NAME, JSON.stringify(newCookieValue), { secure: true });
 }
