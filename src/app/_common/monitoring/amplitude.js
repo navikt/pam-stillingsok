@@ -10,6 +10,7 @@ export function initAmplitude(amplitudeToken) {
         if (!amplitudeKey) return false;
 
         amplitude.init(amplitudeKey, undefined, {
+            transport: "beacon",
             serverUrl: `https://amplitude.nav.no/collect`,
             defaultTracking: {
                 pageViews: true,
