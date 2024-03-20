@@ -11,6 +11,12 @@ export function initAmplitude(amplitudeToken) {
 
         amplitude.init(amplitudeKey, undefined, {
             transport: "beacon",
+
+            batchEvents: false,
+            includeReferrer: true,
+            includeUtm: true,
+            saveEvents: false,
+
             serverUrl: `https://amplitude.nav.no/collect`,
             defaultTracking: {
                 pageViews: true,
