@@ -67,6 +67,8 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
     const isFinn = stilling._source.source === "FINN";
     const path = "stilling";
     const [useBlueBackground, setUseBlueBackground] = useState(false);
+
+    /*
     const cookies = useCookies();
 
     useEffect(() => {
@@ -74,15 +76,11 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
             setUseBlueBackground(true);
         }
     }, []);
+    */
 
     if (properties.hasInterestform === "true") {
         return (
-            <Box
-                background={useBlueBackground ? "surface-alt-2-subtle" : "surface-alt-1-subtle"}
-                borderRadius="medium"
-                padding="4"
-                className="full-width mb-10"
-            >
+            <Box background="surface-alt-1-subtle" borderRadius="medium" padding="4" className="full-width mb-10">
                 <Heading level="2" size="medium" spacing>
                     Søk på jobben
                 </Heading>
