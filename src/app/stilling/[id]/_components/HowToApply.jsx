@@ -246,7 +246,7 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                     <div>
                         <Button
                             variant="primary"
-                            as="a"
+                            as={Link}
                             href={applicationUrl}
                             onClick={() => logApplyForPosition(stilling)}
                             icon={<ExternalLinkIcon aria-hidden="true" />}
