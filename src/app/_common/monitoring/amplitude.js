@@ -10,6 +10,7 @@ export function initAmplitude(amplitudeToken) {
         if (!amplitudeKey) return false;
 
         amplitude.init(amplitudeKey, undefined, {
+            transport: "beacon",
             serverUrl: `https://amplitude.nav.no/collect`,
             defaultTracking: {
                 pageViews: true,
@@ -32,9 +33,7 @@ export function initAmplitude(amplitudeToken) {
 const enrichData = (data) => ({ ...data, navSessionId: getSessionId() });
 
 const logAmplitudeEvent = (event, data) => {
-    amplitude.getInstance().setTransport("beacon");
     amplitude.track(event, enrichData(data));
-    amplitude.getInstance().setTransport("http");
 };
 
 export const logSearchFilterAdded = (data) => {
