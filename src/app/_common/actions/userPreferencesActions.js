@@ -4,33 +4,37 @@ import { cookies } from "next/headers";
 import logger from "@/app/_common/utils/logger";
 
 const USER_PREFERENCES_COOKIE_NAME = "userPreferences";
+const ALLOWED_PANELID_VALUES = ["publisert", "sted", "yrke", "extent", "sector", "engagementType", "workLanguage"];
 
 export async function getUserPreferences() {
     if (!cookies().has(USER_PREFERENCES_COOKIE_NAME)) {
         return {};
     }
     const existingCookie = cookies().get(USER_PREFERENCES_COOKIE_NAME) || {};
-
-    let parsedCookie;
     try {
-        parsedCookie = JSON.parse(existingCookie.value);
+        const parsedCookie = JSON.parse(existingCookie.value);
+        let closedFilters = (parsedCookie.closedFilters || []).filter((it) => ALLOWED_PANELID_VALUES.includes(it));
+        return { closedFilters };
     } catch (e) {
         logger.info(`Kunne ikke parse '${USER_PREFERENCES_COOKIE_NAME}' cookie`);
-        parsedCookie = {};
+        return {};
     }
-    return parsedCookie;
 }
 
 export async function addClosedFilter(panelId) {
+    if (!ALLOWED_PANELID_VALUES.includes(panelId)) {
+        // Trying to set an invalid value
+        return;
+    }
     const existingCookie = await getUserPreferences();
     const closedFilters = new Set(existingCookie.closedFilters || []).add(panelId);
-    const newCookieValue = { ...existingCookie, closedFilters: [...closedFilters], httpOnly: true };
+    const newCookieValue = { closedFilters: [...closedFilters], httpOnly: true };
     cookies().set(USER_PREFERENCES_COOKIE_NAME, JSON.stringify(newCookieValue), { secure: true });
 }
 
 export async function removeClosedFilter(panelId) {
     const existingCookie = await getUserPreferences();
     let closedFilters = (existingCookie.closedFilters || []).filter((it) => it !== panelId);
-    const newCookieValue = { ...existingCookie, closedFilters: closedFilters, httpOnly: true };
+    const newCookieValue = { closedFilters: closedFilters, httpOnly: true };
     cookies().set(USER_PREFERENCES_COOKIE_NAME, JSON.stringify(newCookieValue), { secure: true });
 }
