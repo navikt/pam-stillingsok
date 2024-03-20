@@ -28,13 +28,13 @@ export async function addClosedFilter(panelId) {
     }
     const existingCookie = await getUserPreferences();
     const closedFilters = new Set(existingCookie.closedFilters || []).add(panelId);
-    const newCookieValue = { closedFilters: [...closedFilters], httpOnly: true };
-    cookies().set(USER_PREFERENCES_COOKIE_NAME, JSON.stringify(newCookieValue), { secure: true });
+    const newCookieValue = { closedFilters: [...closedFilters] };
+    cookies().set(USER_PREFERENCES_COOKIE_NAME, JSON.stringify(newCookieValue), { secure: true, httpOnly: true });
 }
 
 export async function removeClosedFilter(panelId) {
     const existingCookie = await getUserPreferences();
     let closedFilters = (existingCookie.closedFilters || []).filter((it) => it !== panelId);
-    const newCookieValue = { closedFilters: closedFilters, httpOnly: true };
-    cookies().set(USER_PREFERENCES_COOKIE_NAME, JSON.stringify(newCookieValue), { secure: true });
+    const newCookieValue = { closedFilters: closedFilters };
+    cookies().set(USER_PREFERENCES_COOKIE_NAME, JSON.stringify(newCookieValue), { secure: true, httpOnly: true });
 }
