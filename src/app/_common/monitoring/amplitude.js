@@ -16,9 +16,6 @@ export function initAmplitude(amplitudeToken) {
                 sessions: true,
                 formInteractions: true,
             },
-            transport: "beacon",
-            flushIntervalMillis: 0,
-            flushQueueSize: 1,
             /** Need this for /collect-auto according to https://nav-it.slack.com/archives/CMK1SCBP1/p1669722646425599
              * but seems to work fine with /collect? Keeping it here just in case.
              IngestionMetadata: {
@@ -35,7 +32,9 @@ export function initAmplitude(amplitudeToken) {
 const enrichData = (data) => ({ ...data, navSessionId: getSessionId() });
 
 const logAmplitudeEvent = (event, data) => {
+    amplitude.getInstance().setTransport("beacon");
     amplitude.track(event, enrichData(data));
+    amplitude.getInstance().setTransport("http");
 };
 
 export const logSearchFilterAdded = (data) => {
