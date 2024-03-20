@@ -14,7 +14,7 @@ export async function getUserPreferences() {
     const existingCookie = cookies().get(USER_PREFERENCES_COOKIE_NAME) || {};
     try {
         const parsedCookie = JSON.parse(existingCookie.value);
-        let closedFilters = (parsedCookie.closedFilters || []).filter((it) => ALLOWED_PANELID_VALUES.includes(it));
+        const closedFilters = (parsedCookie.closedFilters || []).filter((it) => ALLOWED_PANELID_VALUES.includes(it));
         return { closedFilters };
     } catch (e) {
         logger.info(`Kunne ikke parse '${USER_PREFERENCES_COOKIE_NAME}' cookie`);
