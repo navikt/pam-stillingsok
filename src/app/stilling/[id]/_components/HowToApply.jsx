@@ -1,17 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useCookies } from "next-client-cookies";
 import PropTypes from "prop-types";
-import {
-    BodyLong,
-    BodyShort,
-    Box,
-    Button,
-    CopyButton,
-    Heading,
-    HStack,
-    Label,
-    Link as AkselLink,
-} from "@navikt/ds-react";
+import { BodyLong, BodyShort, Box, Button, CopyButton, Heading, HStack, Label } from "@navikt/ds-react";
 import { ExternalLinkIcon } from "@navikt/aksel-icons";
 import Link from "next/link";
 import { formatDate, isValidEmail, isValidUrl } from "@/app/_common/utils/utils";
@@ -122,14 +112,15 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                         {isValidEmail(properties.applicationemail) ? (
                             <HStack gap="2" as="span" wrap={false}>
                                 <span>
-                                    <AkselLink
+                                    <Button
+                                        as={Link}
                                         onClick={() => {
                                             logEmailAnchorClick(stilling);
                                         }}
                                         href={`mailto:${properties.applicationemail}`}
                                     >
                                         {properties.applicationemail}
-                                    </AkselLink>
+                                    </Button>
                                 </span>
                                 <span>
                                     <CopyButton
@@ -155,9 +146,9 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                         {isValidUrl(applicationUrl) ? (
                             <BodyLong className="mt-4">
                                 Alternativt kan du{" "}
-                                <AkselLink href={applicationUrl} onClick={() => logApplyForPosition(stilling)}>
+                                <Button as={Link} href={applicationUrl} onClick={() => logApplyForPosition(stilling)}>
                                     sende søknad her.
-                                </AkselLink>
+                                </Button>
                             </BodyLong>
                         ) : (
                             <BodyLong className="mt-4">Alternativt kan du sende søknad på {applicationUrl}.</BodyLong>
@@ -208,14 +199,15 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                                     {isValidEmail(properties.applicationemail) ? (
                                         <HStack gap="2" as="span" wrap={false}>
                                             <span>
-                                                <AkselLink
+                                                <Button
+                                                    as={Link}
                                                     onClick={() => {
                                                         logEmailAnchorClick(stilling);
                                                     }}
                                                     href={`mailto:${properties.applicationemail}`}
                                                 >
                                                     {properties.applicationemail}
-                                                </AkselLink>
+                                                </Button>
                                             </span>
                                             <span>
                                                 <CopyButton
