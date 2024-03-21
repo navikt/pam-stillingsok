@@ -1,11 +1,13 @@
 "use server";
 
 import {
+    ADUSER_XSRF_COOKIE_NAME,
     getAdUserDefaultAuthHeadersWithCsrfToken,
     getAdUserOboToken,
     getDefaultAuthHeaders,
 } from "../../_common/auth/auth";
 import logger from "@/app/_common/utils/logger";
+import { cookies, headers } from "next/headers";
 
 const ADUSER_USER_URL = `${process.env.PAMADUSER_URL}/api/v1/user`;
 
@@ -27,6 +29,14 @@ export async function getUser() {
             logger.error(`GET user from aduser failed. ${res.status} ${res.statusText}`);
         }
         return { success: false, statusCode: res.status };
+    }
+
+    const adUserXsrfCookieMatch = res.headers
+        .get("Set-cookie")
+        .match(new RegExp(`${ADUSER_XSRF_COOKIE_NAME}=([^;,]+)`));
+    const cookieValue = adUserXsrfCookieMatch ? adUserXsrfCookieMatch[1] : null;
+    if (cookieValue) {
+        cookies().set(ADUSER_XSRF_COOKIE_NAME, cookieValue, { path: "/" });
     }
 
     let data = await res.json();
