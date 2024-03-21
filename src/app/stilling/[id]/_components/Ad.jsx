@@ -20,7 +20,7 @@ function Ad({ ad, adLayoutVariant }) {
     useEffect(() => {
         if (ad && ad._source && ad._id && ad._source.title) {
             try {
-                logStillingVisning(ad);
+                logStillingVisning(ad, adLayoutVariant);
             } catch (e) {
                 // ignore
             }

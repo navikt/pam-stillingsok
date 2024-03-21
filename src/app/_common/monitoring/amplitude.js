@@ -58,7 +58,7 @@ function getJobPostingFormat(jobPosting) {
     return JobPostingTextEnum.IKKE_STRUKTURERT;
 }
 
-export function logStillingVisning(ad) {
+export function logStillingVisning(ad, adLayoutVariant) {
     // Todo - tror employer.location er erstattet med employer.locationList
     const employerLocation = ad._source.employer ? ad._source.employer.location : null;
     let hasContactMail = false;
@@ -95,6 +95,7 @@ export function logStillingVisning(ad) {
         hasContactInfoMail: hasContactMail,
         hasContactInfoPhone: hasContactPhone,
         jobPostingFormat: getJobPostingFormat(ad),
+        adLayoutVariant: adLayoutVariant,
     });
 }
 
