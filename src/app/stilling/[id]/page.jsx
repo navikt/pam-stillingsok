@@ -25,12 +25,12 @@ export async function generateMetadata({ params }) {
 
 export default async function Page({ params }) {
     const ad = await fetchAd(params.id);
-    let applyPositionBgColor = "green";
+    let adLayoutVariant = "a";
 
-    // Get cookie for a b test and pass it to component
-    if (cookies().get("APPLY_JOB_BOX_COLOR")) {
-        applyPositionBgColor = cookies().get("APPLY_JOB_BOX_COLOR").value;
+    // Get cookie for ad layout a b test and pass it to component
+    if (cookies().get("AD_LAYOUT_VARIANT")) {
+        adLayoutVariant = cookies().get("AD_LAYOUT_VARIANT").value;
     }
 
-    return <Ad ad={ad} applyPositionBgColor={applyPositionBgColor} />;
+    return <Ad ad={ad} adLayoutVariant={adLayoutVariant} />;
 }

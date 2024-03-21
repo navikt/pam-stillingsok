@@ -13,7 +13,7 @@ import { logStillingVisning } from "@/app/_common/monitoring/amplitude";
 import ShareAd from "./ShareAd";
 import Summary from "./Summary";
 
-function Ad({ ad, applyPositionBgColor }) {
+function Ad({ ad, adLayoutVariant }) {
     /**
      * Track page view for all ads
      */
@@ -52,11 +52,7 @@ function Ad({ ad, applyPositionBgColor }) {
                     <div>
                         {annonseErAktiv && (
                             <>
-                                <HowToApply
-                                    stilling={ad}
-                                    showFavouriteButton
-                                    applyPositionBgColor={applyPositionBgColor}
-                                />
+                                <HowToApply stilling={ad} showFavouriteButton adLayoutVariant={adLayoutVariant} />
                                 <ContactPerson
                                     contactList={ad._source.contactList}
                                     adId={ad._id}
@@ -87,7 +83,7 @@ Ad.propTypes = {
             }),
         }),
     }).isRequired,
-    applyPositionBgColor: PropTypes.string,
+    adLayoutVariant: PropTypes.string,
 };
 
 export default Ad;

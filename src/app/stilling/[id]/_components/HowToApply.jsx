@@ -60,11 +60,12 @@ const logEmailAnchorClick = (stilling, applyPositionBgColor) => {
     }
 };
 
-export default function HowToApply({ stilling, showFavouriteButton, applyPositionBgColor }) {
+export default function HowToApply({ stilling, showFavouriteButton, adLayoutVariant }) {
     const { properties } = stilling._source;
     const applicationUrl = getApplicationUrl(properties);
     const isFinn = stilling._source.source === "FINN";
     const path = "stilling";
+    const applyPositionBgColor = adLayoutVariant === "a" ? "green" : "blue";
 
     if (properties.hasInterestform === "true") {
         return (
