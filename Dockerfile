@@ -14,3 +14,4 @@ COPY /.next/static ./.next/static
 EXPOSE 3000
 
 CMD ["server.js"]
+
