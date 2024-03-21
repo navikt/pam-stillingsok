@@ -27,6 +27,7 @@ export default async function Page({ params }) {
     const ad = await fetchAd(params.id);
     let applyPositionBgColor = "green";
 
+    // Get cookie for a b test and pass it to component
     if (cookies().get("APPLY_JOB_BOX_COLOR")) {
         applyPositionBgColor = cookies().get("APPLY_JOB_BOX_COLOR").value;
     }

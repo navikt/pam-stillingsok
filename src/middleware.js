@@ -7,6 +7,7 @@ export function middleware(request) {
     const thirtyDays = 30 * 24 * 60 * 60 * 1000;
     const random = Math.random() >= 0.5;
 
+    // Set cookie for a b test in request
     if (!cookies().has("APPLY_JOB_BOX_COLOR") && !cookies().has("X-Robots-Tag")) {
         if (random) {
             request.cookies.set("APPLY_JOB_BOX_COLOR", "blue", { expires: Date.now() + thirtyDays });
@@ -34,6 +35,7 @@ export function middleware(request) {
         response.headers.set(key, value);
     });
 
+    // Set cookie for a b test in response
     if (!cookies().has("APPLY_JOB_BOX_COLOR") && !cookies().has("X-Robots-Tag")) {
         if (random) {
             response.cookies.set("APPLY_JOB_BOX_COLOR", "blue", { expires: Date.now() + thirtyDays });
