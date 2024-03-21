@@ -55,7 +55,10 @@ function SessionStatusModal({ markAsLoggedOut, setHasBeenLoggedIn, login, logout
         const response = await fetch(`/stillinger/oauth2/session`, {
             credentials: "include",
             referrer: process.env.NEXT_PUBLIC_CONTEXT_PATH,
+        }).catch((e) => {
+            console.error("Det oppstod en feil ved henting av session status", e.message);
         });
+        if (!response) return;
         await handleSessionInfoResponse(
             response,
             isCurrentlyLoggedIn,
