@@ -47,11 +47,11 @@ function AuthenticationProvider({ children }) {
         setAuthenticationStatus(AuthenticationStatus.IS_FETCHING);
 
         const validation = await actions.checkIfAuthenticated();
-        if (validation.isAuthenticated) {
+        if (validation?.isAuthenticated) {
             setAuthenticationStatus(AuthenticationStatus.IS_AUTHENTICATED);
             setHasBeenLoggedIn(true);
         } else {
-            if (validation.failure) {
+            if (validation?.failure || !validation) {
                 setAuthenticationStatus(AuthenticationStatus.FAILURE);
             } else {
                 setAuthenticationStatus(AuthenticationStatus.NOT_AUTHENTICATED);
