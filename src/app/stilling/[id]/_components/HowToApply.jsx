@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { useCookies } from "next-client-cookies";
+import React from "react";
 import PropTypes from "prop-types";
 import {
     BodyLong,
@@ -25,62 +24,57 @@ export function getApplicationUrl(properties) {
     return properties.sourceurl;
 }
 
-const logApplyForPosition = (stilling) => {
+const logApplyForPosition = (stilling, applyPositionBgColor) => {
     try {
         logAmplitudeEvent("Stilling sok-via-url", {
             title: stilling._source.title,
             id: stilling._id,
-            experimentApplyBoxColor: useBlueBackground ? "blue" : "green",
+            experimentApplyBoxColor: applyPositionBgColor,
         });
     } catch (e) {
         // ignore
     }
 };
 
-const logCopyEmailClick = (stilling) => {
+const logCopyEmailClick = (stilling, applyPositionBgColor) => {
     try {
         logAmplitudeEvent("Stilling copy-email", {
             title: stilling._source.title,
             id: stilling._id,
-            experimentApplyBoxColor: useBlueBackground ? "blue" : "green",
+            experimentApplyBoxColor: applyPositionBgColor,
         });
     } catch (e) {
         // ignore
     }
 };
 
-const logEmailAnchorClick = (stilling) => {
+const logEmailAnchorClick = (stilling, applyPositionBgColor) => {
     try {
         logAmplitudeEvent("Stilling email-anchor-click", {
             title: stilling._source.title,
             id: stilling._id,
-            experimentApplyBoxColor: useBlueBackground ? "blue" : "green",
+            experimentApplyBoxColor: applyPositionBgColor,
         });
     } catch (e) {
         // ignore
     }
 };
 
-export default function HowToApply({ stilling, showFavouriteButton }) {
+export default function HowToApply({ stilling, showFavouriteButton, adLayoutVariant }) {
     const { properties } = stilling._source;
     const applicationUrl = getApplicationUrl(properties);
     const isFinn = stilling._source.source === "FINN";
     const path = "stilling";
-    const [useBlueBackground, setUseBlueBackground] = useState(false);
-
-    /*
-    const cookies = useCookies();
-
-    useEffect(() => {
-        if (cookies.get("APPLY_JOB_BOX_COLOR") === "blue") {
-            setUseBlueBackground(true);
-        }
-    }, []);
-    */
+    const applyPositionBgColor = adLayoutVariant === "a" ? "green" : "blue";
 
     if (properties.hasInterestform === "true") {
         return (
-            <Box background="surface-alt-1-subtle" borderRadius="medium" padding="4" className="full-width mb-10">
+            <Box
+                background={applyPositionBgColor === "blue" ? "surface-alt-2-subtle" : "surface-alt-1-subtle"}
+                borderRadius="medium"
+                padding="4"
+                className="full-width mb-10"
+            >
                 <Heading level="2" size="medium" spacing>
                     Søk på jobben
                 </Heading>
@@ -104,7 +98,7 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                             onClick={() => {
                                 logAmplitudeEvent("click superrask søknad link", {
                                     id: stilling._id,
-                                    experimentApplyBoxColor: useBlueBackground ? "blue" : "green",
+                                    experimentApplyBoxColor: applyPositionBgColor,
                                 });
                             }}
                             href={`/${path}/${stilling._id}/superrask-soknad`}
@@ -122,7 +116,7 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                                 <span>
                                     <AkselLink
                                         onClick={() => {
-                                            logEmailAnchorClick(stilling);
+                                            logEmailAnchorClick(stilling, applyPositionBgColor);
                                         }}
                                         href={`mailto:${properties.applicationemail}`}
                                     >
@@ -137,7 +131,7 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                                         size="xsmall"
                                         onActiveChange={(state) => {
                                             if (state === true) {
-                                                logCopyEmailClick(stilling);
+                                                logCopyEmailClick(stilling, applyPositionBgColor);
                                             }
                                         }}
                                     />
@@ -153,7 +147,10 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                         {isValidUrl(applicationUrl) ? (
                             <BodyLong className="mt-4">
                                 Alternativt kan du{" "}
-                                <AkselLink href={applicationUrl} onClick={() => logApplyForPosition(stilling)}>
+                                <AkselLink
+                                    href={applicationUrl}
+                                    onClick={() => logApplyForPosition(stilling, applyPositionBgColor)}
+                                >
                                     sende søknad her.
                                 </AkselLink>
                             </BodyLong>
@@ -177,7 +174,7 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
     if (properties.applicationdue || properties.applicationemail || applicationUrl) {
         return (
             <Box
-                background={useBlueBackground ? "surface-alt-2-subtle" : "surface-alt-1-subtle"}
+                background={applyPositionBgColor === "blue" ? "surface-alt-2-subtle" : "surface-alt-1-subtle"}
                 borderRadius="medium"
                 padding="4"
                 className="full-width mb-10"
@@ -208,7 +205,7 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                                             <span>
                                                 <AkselLink
                                                     onClick={() => {
-                                                        logEmailAnchorClick(stilling);
+                                                        logEmailAnchorClick(stilling, applyPositionBgColor);
                                                     }}
                                                     href={`mailto:${properties.applicationemail}`}
                                                 >
@@ -223,7 +220,7 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                                                     size="xsmall"
                                                     onActiveChange={(state) => {
                                                         if (state === true) {
-                                                            logCopyEmailClick(stilling);
+                                                            logCopyEmailClick(stilling, applyPositionBgColor);
                                                         }
                                                     }}
                                                 />
@@ -254,7 +251,7 @@ export default function HowToApply({ stilling, showFavouriteButton }) {
                             variant="primary"
                             as="a"
                             href={applicationUrl}
-                            onClick={() => logApplyForPosition(stilling)}
+                            onClick={() => logApplyForPosition(stilling, applyPositionBgColor)}
                             icon={<ExternalLinkIcon aria-hidden="true" />}
                             role="link"
                         >
@@ -297,4 +294,5 @@ HowToApply.propTypes = {
         }),
     }).isRequired,
     showFavouriteButton: PropTypes.bool.isRequired,
+    adLayoutVariant: PropTypes.string,
 };

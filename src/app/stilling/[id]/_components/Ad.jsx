@@ -13,7 +13,7 @@ import { logStillingVisning } from "@/app/_common/monitoring/amplitude";
 import ShareAd from "./ShareAd";
 import Summary from "./Summary";
 
-function Ad({ ad }) {
+function Ad({ ad, adLayoutVariant }) {
     /**
      * Track page view for all ads
      */
@@ -52,7 +52,7 @@ function Ad({ ad }) {
                     <div>
                         {annonseErAktiv && (
                             <>
-                                <HowToApply stilling={ad} showFavouriteButton />
+                                <HowToApply stilling={ad} showFavouriteButton adLayoutVariant={adLayoutVariant} />
                                 <ContactPerson
                                     contactList={ad._source.contactList}
                                     adId={ad._id}
@@ -83,6 +83,7 @@ Ad.propTypes = {
             }),
         }),
     }).isRequired,
+    adLayoutVariant: PropTypes.string,
 };
 
 export default Ad;

@@ -4,6 +4,18 @@ import { getCallId, NAV_CALL_ID_TAG } from "@/app/_common/monitoring/callId";
 import { getSessionId, SESSION_ID_TAG } from "@/app/_common/monitoring/session";
 
 export function middleware(request) {
+    const thirtyDays = 30 * 24 * 60 * 60 * 1000;
+    const random = Math.random() >= 0.5;
+    const createAdLayoutVariantCookie = !cookies().has("AD_LAYOUT_VARIANT") && !request.headers.has("X-Robots-Tag");
+
+    // Set cookie for AD layout a b test in request
+    if (createAdLayoutVariantCookie) {
+        if (random) {
+            request.cookies.set("AD_LAYOUT_VARIANT", "a", { expires: Date.now() + thirtyDays });
+        } else {
+            request.cookies.set("AD_LAYOUT_VARIANT", "b", { expires: Date.now() + thirtyDays });
+        }
+    }
     const requestHeaders = new Headers(request.headers);
     const responseHeaders = new Headers();
 
@@ -24,12 +36,12 @@ export function middleware(request) {
         response.headers.set(key, value);
     });
 
-    if (!cookies().has("APPLY_JOB_BOX_COLOR")) {
-        const thirtyDays = 30 * 24 * 60 * 60 * 1000;
-        if (Math.random() >= 0.5) {
-            response.cookies.set("APPLY_JOB_BOX_COLOR", "blue", { expires: Date.now() + thirtyDays });
+    // Set cookie for ad layout a b test in response
+    if (createAdLayoutVariantCookie) {
+        if (random) {
+            response.cookies.set("AD_LAYOUT_VARIANT", "a", { expires: Date.now() + thirtyDays });
         } else {
-            response.cookies.set("APPLY_JOB_BOX_COLOR", "green", { expires: Date.now() + thirtyDays });
+            response.cookies.set("AD_LAYOUT_VARIANT", "b", { expires: Date.now() + thirtyDays });
         }
     }
 
