@@ -294,5 +294,5 @@ HowToApply.propTypes = {
         }),
     }).isRequired,
     showFavouriteButton: PropTypes.bool.isRequired,
-    applyPositionBgColor: PropTypes.string,
+    adLayoutVariant: PropTypes.string,
 };
