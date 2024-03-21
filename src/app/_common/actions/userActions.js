@@ -35,8 +35,6 @@ export async function getUser() {
         .get("Set-cookie")
         ?.match(new RegExp(`${ADUSER_XSRF_COOKIE_NAME}=([^;,]+)`));
     const cookieValue = adUserXsrfCookieMatch ? adUserXsrfCookieMatch[1] : null;
-
-    console.log("cookieValue: ", cookieValue);
     if (cookieValue) {
         cookies().set(ADUSER_XSRF_COOKIE_NAME, cookieValue, { path: "/" });
     }
