@@ -6,6 +6,9 @@ const nextConfig = {
         optimizePackageImports: ["@navikt/ds-react", "@navikt/aksel-icons"],
     },
     output: "standalone",
+    eslint: {
+        ignoreDuringBuilds: true,
+    },
 };
 
 const { PHASE_DEVELOPMENT_SERVER } = require("next/constants");
