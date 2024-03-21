@@ -1,17 +1,13 @@
 import {
     containsEmail,
     extractEmail,
-    formatDate,
     isValidEmail,
     JobPostingTextEnum,
     mailtoInString,
 } from "@/app/_common/utils/utils";
 import DOMPurify from "isomorphic-dompurify";
-import fixLocationName from "@/app/_common/utils/fixLocationName";
+import fixLocationName from "@/app/_common/utils/fixLoctaationName";
 
-/**
- *  --------------------------- Ad Data ---------------------------
- */
 export default function mapAdData(rawElasticSearchAdResult) {
     if (!rawElasticSearchAdResult || rawElasticSearchAdResult._source) {
         return undefined;
@@ -25,8 +21,6 @@ export default function mapAdData(rawElasticSearchAdResult) {
     if (!properties) {
         return undefined;
     }
-
-    const adText = getAdText(properties.adtext);
 
     return {
         id: getString(rawElasticSearchAdResult._id),
@@ -92,7 +86,8 @@ function getEmail(email) {
     return isValidEmail(email) ? email : undefined;
 }
 
-function getJobPercentage(jobPercentage) {
+function getJobPercentage(value) {
+    const jobPercentage = getString(value);
     if (!jobPercentage) {
         return undefined;
     }
@@ -100,7 +95,8 @@ function getJobPercentage(jobPercentage) {
     return jobPercentage + jobPercentage.endsWith("%") ? "" : "  %";
 }
 
-function getWorktime(worktime) {
+function getWorktime(value) {
+    const worktime = getString(value);
     if (!worktime) {
         return undefined;
     }
@@ -126,9 +122,9 @@ function getContactList(contactList) {
 
     return contactList.map((contact) => {
         return {
-            name: contact.name,
-            title: contact.title,
-            phone: contact.phone,
+            name: getString(contact.name),
+            title: getString(contact.title),
+            phone: getString(contact.phone),
             email: getEmail(contact.email),
         };
     });
@@ -145,7 +141,7 @@ function getString(value) {
 }
 
 function getArray(arrayData) {
-    return Array.isArray(arrayData) ? arrayData : [];
+    return Array.isArray(arrayData) ? arrayData : undefined;
 }
 
 function getUrl(url) {
@@ -165,11 +161,11 @@ function getLocationListData(locationList) {
     }
     return locationList.map((location) => {
         return {
-            address: location.address,
-            city: location.city,
-            postalCode: location.postalCode,
-            municipal: location.municipal,
-            country: location.country,
+            address: getString(location.address),
+            city: getString(location.city),
+            postalCode: getString(location.postalCode),
+            municipal: getString(location.municipal),
+            country: getString(location.country),
         };
     });
 }
@@ -213,13 +209,13 @@ function getEmployerData(adData) {
 
 function getEmployerName(adData) {
     if (adData.properties.employer) {
-        return adData.properties.employer;
+        return getString(adData.properties.employer);
     }
     if (adData.businessName) {
-        return adData.businessName;
+        return getString(adData.businessName);
     }
     if (adData.employer) {
-        return adData.employer.name;
+        return getString(adData.employer.name);
     }
 
     return null;

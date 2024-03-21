@@ -2,7 +2,7 @@
 
 import { notFound } from "next/navigation";
 import { getDefaultHeaders } from "@/app/_common/utils/fetch";
-import mapAdData from "../data/AdData";
+import mapAdData from "../data/adData";
 
 // Expose only necessary data to client
 const sourceIncludes = [
