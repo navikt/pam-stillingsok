@@ -6,7 +6,7 @@ import {
     mailtoInString,
 } from "@/app/_common/utils/utils";
 import DOMPurify from "isomorphic-dompurify";
-import fixLocationName from "@/app/_common/utils/fixLoctaationName";
+import fixLocationName from "@/app/_common/utils/fixLocationName";
 
 export default function mapAdData(rawElasticSearchAdResult) {
     if (!rawElasticSearchAdResult || rawElasticSearchAdResult._source) {
@@ -37,7 +37,7 @@ export default function mapAdData(rawElasticSearchAdResult) {
         applicationEmail: getEmail(properties.applicationemail),
         applicationUrl: getUrl(properties.applicationurl),
         sourceUrl: getUrl(properties.sourceurl),
-        hasSuperraskSoknad: getString(properties, "hasInterestform"),
+        hasSuperraskSoknad: getString(properties.hasInterestform),
         jobPostingFormat: getJobPostingFormat(properties.adText),
 
         // employment details
@@ -115,7 +115,8 @@ function getWorktime(value) {
     return items.join(", ");
 }
 
-function getContactList(contactList) {
+function getContactList(value) {
+    const contactList = getArray(value);
     if (!contactList) {
         return undefined;
     }
@@ -149,13 +150,16 @@ function getUrl(url) {
         const urlIsValid = new URL(url).protocol.startsWith("http");
         if (urlIsValid) {
             return url;
+        } else {
+            return undefined;
         }
     } catch (e) {
         return undefined;
     }
 }
 
-function getLocationListData(locationList) {
+function getLocationListData(value) {
+    const locationList = getArray(value);
     if (!locationList) {
         return [];
     }
@@ -218,10 +222,11 @@ function getEmployerName(adData) {
         return getString(adData.employer.name);
     }
 
-    return null;
+    return undefined;
 }
 
-function getEmployerLocation(locationList) {
+function getEmployerLocation(value) {
+    const locationList = getArray(value);
     if (!locationList) {
         return undefined;
     }

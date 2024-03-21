@@ -166,16 +166,12 @@ export default function HowToApply({ adData, showFavouriteButton }) {
                 )}
                 {applicationUrl && (
                     <div>
-                        {isValidUrl(applicationUrl) ? (
-                            <BodyLong className="mt-4">
-                                Alternativt kan du{" "}
-                                <AkselLink href={applicationUrl} onClick={() => logApplyForPosition(adData)}>
-                                    sende søknad her.
-                                </AkselLink>
-                            </BodyLong>
-                        ) : (
-                            <BodyLong className="mt-4">Alternativt kan du sende søknad på {applicationUrl}.</BodyLong>
-                        )}
+                        <BodyLong className="mt-4">
+                            Alternativt kan du{" "}
+                            <AkselLink href={applicationUrl} onClick={() => logApplyForPosition(adData)}>
+                                sende søknad her.
+                            </AkselLink>
+                        </BodyLong>
                     </div>
                 )}
                 {showFavouriteButton && (
@@ -214,35 +210,33 @@ export default function HowToApply({ adData, showFavouriteButton }) {
                             </dt>
                             <dd>
                                 <BodyLong>
-                                    {adData.applicationEmail ? (
-                                        <HStack gap="2" as="span" wrap={false}>
-                                            <span>
-                                                <AkselLink
-                                                    onClick={() => {
-                                                        logEmailAnchorClick(adData);
-                                                    }}
-                                                    href={`mailto:${adData.applicationEmail}`}
-                                                >
-                                                    {adData.applicationEmail}
-                                                </AkselLink>
-                                            </span>
-                                            <span>
-                                                <CopyButton
-                                                    title="Kopier e-postadresse"
-                                                    copyText={`${adData.applicationEmail}`}
-                                                    variant="action"
-                                                    size="xsmall"
-                                                    onActiveChange={(state) => {
-                                                        if (state === true) {
-                                                            logCopyEmailClick(adData);
-                                                        }
-                                                    }}
-                                                />
-                                            </span>
-                                        </HStack>
-                                    ) : (
-                                        adData.applicationEmail
-                                    )}
+                                    (
+                                    <HStack gap="2" as="span" wrap={false}>
+                                        <span>
+                                            <AkselLink
+                                                onClick={() => {
+                                                    logEmailAnchorClick(adData);
+                                                }}
+                                                href={`mailto:${adData.applicationEmail}`}
+                                            >
+                                                {adData.applicationEmail}
+                                            </AkselLink>
+                                        </span>
+                                        <span>
+                                            <CopyButton
+                                                title="Kopier e-postadresse"
+                                                copyText={`${adData.applicationEmail}`}
+                                                variant="action"
+                                                size="xsmall"
+                                                onActiveChange={(state) => {
+                                                    if (state === true) {
+                                                        logCopyEmailClick(adData);
+                                                    }
+                                                }}
+                                            />
+                                        </span>
+                                    </HStack>
+                                    )
                                 </BodyLong>
                             </dd>
                         </>

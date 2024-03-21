@@ -3,6 +3,7 @@ import { getStillingDescription, getStillingTitle } from "./_components/getMetaD
 import { defaultOpenGraphImage } from "@/app/layout";
 import { fetchAd } from "../FetchAd";
 import { getAdData } from "@/app/_common/actions/adDataActions";
+import { notFound } from "next/navigation";
 
 export async function generateMetadata({ params }) {
     const data = await fetchAd(params.id);
@@ -26,7 +27,11 @@ export async function generateMetadata({ params }) {
 export default async function Page({ params }) {
     const result = await getAdData(params.id);
     if (!result.success) {
-        throw new Error("Could not retrieve ad data");
+        if (result.error === "not_found") {
+            notFound();
+        } else {
+            throw new Error("Could not retrieve ad data");
+        }
     }
 
     return <Ad adData={result.data} />;

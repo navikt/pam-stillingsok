@@ -41,11 +41,7 @@ export default function EmployerDetails({ employer }) {
                         </dt>
                         <dd>
                             <BodyLong>
-                                {isValidUrl(employer.homepage) ? (
-                                    <AkselLink href={employer.homepage}>{employer.homepage}</AkselLink>
-                                ) : (
-                                    employer.homepage
-                                )}
+                                <AkselLink href={employer.homepage}>{employer.homepage}</AkselLink>
                             </BodyLong>
                         </dd>
                     </>
@@ -57,11 +53,7 @@ export default function EmployerDetails({ employer }) {
                         </dt>
                         <dd>
                             <BodyLong>
-                                {isValidUrl(employer.linkedinPage) ? (
-                                    <AkselLink href={employer.linkedinPage}>{employer.linkedinPage}</AkselLink>
-                                ) : (
-                                    employer.linkedinPage
-                                )}
+                                <AkselLink href={employer.linkedinPage}>{employer.linkedinPage}</AkselLink>
                             </BodyLong>
                         </dd>
                     </>
@@ -73,11 +65,7 @@ export default function EmployerDetails({ employer }) {
                         </dt>
                         <dd>
                             <BodyLong>
-                                {isValidUrl(employer.twitterAddress) ? (
-                                    <AkselLink href={employer.twitterAddress}>{employer.twitterAddress}</AkselLink>
-                                ) : (
-                                    employer.twitterAddress
-                                )}
+                                <AkselLink href={employer.twitterAddress}>{employer.twitterAddress}</AkselLink>
                             </BodyLong>
                         </dd>
                     </>
@@ -89,11 +77,7 @@ export default function EmployerDetails({ employer }) {
                         </dt>
                         <dd>
                             <BodyLong>
-                                {isValidUrl(employer.facebookPage) ? (
-                                    <AkselLink href={employer.facebookPage}>{employer.facebookPage}</AkselLink>
-                                ) : (
-                                    employer.facebookPage
-                                )}
+                                <AkselLink href={employer.facebookPage}>{employer.facebookPage}</AkselLink>
                             </BodyLong>
                         </dd>
                     </>
