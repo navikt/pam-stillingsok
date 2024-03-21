@@ -2,6 +2,9 @@ import { getToken, requestTokenxOboToken, validateToken } from "@navikt/oasis";
 import { cookies, headers } from "next/headers";
 import { getDefaultHeaders } from "@/app/_common/utils/fetch";
 
+export const ADUSER_XSRF_COOKIE_NAME = "XSRF-TOKEN-ARBEIDSPLASSEN";
+const ADUSER_XSRF_HEADER_NAME = "X-XSRF-TOKEN-ARBEIDSPLASSEN";
+
 export async function getAdUserOboToken() {
     const token = getToken(headers());
 
@@ -23,9 +26,6 @@ export async function getAdUserOboToken() {
 
     return oboResult.token;
 }
-
-const ADUSER_XSRF_COOKIE_NAME = "XSRF-TOKEN-ARBEIDSPLASSEN";
-const ADUSER_XSRF_HEADER_NAME = "X-XSRF-TOKEN-ARBEIDSPLASSEN";
 
 export function getAdUserDefaultAuthHeadersWithCsrfToken(oboToken) {
     const csrfToken = cookies().get(ADUSER_XSRF_COOKIE_NAME)?.value;
