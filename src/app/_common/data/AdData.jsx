@@ -1,13 +1,23 @@
-import { containsEmail, extractEmail, formatDate, isValidEmail, mailtoInString } from "@/app/_common/utils/utils";
+import {
+    containsEmail,
+    extractEmail,
+    formatDate,
+    isValidEmail,
+    JobPostingTextEnum,
+    mailtoInString,
+} from "@/app/_common/utils/utils";
 import DOMPurify from "isomorphic-dompurify";
 import fixLocationName from "@/app/_common/utils/fixLocationName";
-import { parseISO } from "date-fns";
 
 /**
  *  --------------------------- Ad Data ---------------------------
  */
-export default function mapAdData(queryData) {
-    const data = queryData._source ? queryData._source : queryData ? queryData : undefined;
+export default function mapAdData(rawElasticSearchAdResult) {
+    if (!rawElasticSearchAdResult || rawElasticSearchAdResult._source) {
+        return undefined;
+    }
+    const data = rawElasticSearchAdResult._source;
+
     if (!data) {
         return undefined;
     }
@@ -19,37 +29,38 @@ export default function mapAdData(queryData) {
     const adText = getAdText(properties.adtext);
 
     return {
-        id: getString(queryData, "_id"),
-        status: getString(data, "status"),
-        title: getString(data, "title"),
+        id: getString(rawElasticSearchAdResult._id),
+        status: getString(data.status),
+        title: getString(data.title),
         adText: getAdText(properties.adtext),
-        published: getString(data, "published"),
-        expires: getString(data, "expires"),
-        updated: getDate(data, "updated"),
-        source: getString(data, "source"),
-        reference: getString(data, "reference"),
-        medium: getString(data, "medium"),
-        applicationDue: getString(properties, "applicationdue"),
+        published: getString(data.published),
+        expires: getString(data.expires),
+        updated: getString(data.updated),
+        source: getString(data.source),
+        reference: getString(data.reference),
+        medium: getString(data.medium),
+        applicationDue: getString(properties.applicationdue),
         applicationEmail: getEmail(properties.applicationemail),
         applicationUrl: getUrl(properties.applicationurl),
         sourceUrl: getUrl(properties.sourceurl),
         hasSuperraskSoknad: getString(properties, "hasInterestform"),
+        jobPostingFormat: getJobPostingFormat(properties.adText),
 
         // employment details
-        engagementType: getString(properties, "engagementType"),
-        extent: getString(properties, "extent"),
-        jobArrangement: getString(properties, "jobarrangement"),
+        engagementType: getString(properties.engagementType),
+        extent: getString(properties.extent),
+        jobArrangement: getString(properties.jobarrangement),
         jobPercentage: getJobPercentage(properties.jobpercentage),
-        jobTitle: getString(properties, "jobtitle"),
-        positionCount: getString(properties, "positioncount"),
-        remote: getString(properties, "remote"),
-        sector: getString(properties, "sector"),
-        startTime: getDate(properties, "starttime"),
+        jobTitle: getString(properties.jobtitle),
+        positionCount: getString(properties.positioncount),
+        remote: getString(properties.remote),
+        sector: getString(properties.sector),
+        startTime: getString(properties.starttime),
         workday: getWorktime(properties.workday),
         workhours: getWorktime(properties.workhours),
-        workLanguages: getArray(properties, "workLanguage"),
+        workLanguages: getArray(properties.workLanguage),
         locationList: getLocationListData(data.locationList),
-        location: getString(properties, "location"),
+        location: getString(properties.location),
 
         // Employer
         employer: getEmployerData(data),
@@ -115,7 +126,9 @@ function getContactList(contactList) {
 
     return contactList.map((contact) => {
         return {
-            ...contact,
+            name: contact.name,
+            title: contact.title,
+            phone: contact.phone,
             email: getEmail(contact.email),
         };
     });
@@ -124,21 +137,14 @@ function getContactList(contactList) {
 /**
  *  --------------------------- Common Functions ---------------------------
  */
-function getString(data, key) {
-    const value = data[key];
+function getString(value) {
     if (value && typeof value === "string") {
         return value;
     }
     return undefined;
 }
 
-function getDate(data, key) {
-    const date = getString(data, key);
-    return date ? formatDate(date) : undefined;
-}
-
-function getArray(data, key) {
-    const arrayData = data[key];
+function getArray(arrayData) {
     return Array.isArray(arrayData) ? arrayData : [];
 }
 
@@ -168,6 +174,18 @@ function getLocationListData(locationList) {
     });
 }
 
+function getJobPostingFormat(adText) {
+    if (
+        adText &&
+        adText.includes('<section id="arb-serEtter">') &&
+        adText.includes('<section id="arb-arbeidsoppgaver">') &&
+        adText.includes('<section id="arb-tilbyr">')
+    ) {
+        return JobPostingTextEnum.STRUKTURERT;
+    }
+    return JobPostingTextEnum.IKKE_STRUKTURERT;
+}
+
 /**
  *  --------------------------- Employer Data ---------------------------
  */
@@ -182,11 +200,11 @@ function getEmployerData(adData) {
     };
     if (adData.properties.employer && adData.properties.employer.locationList) {
         const locationList = getLocationListData(adData.properties.employer.locationList);
-        employerData["locationList"] = locationList;
+        employerData.locationList = locationList;
         if (locationList) {
             const location = getEmployerLocation(locationList);
             if (location) {
-                employerData["location"] = location;
+                employerData.location = location;
             }
         }
     }
@@ -194,13 +212,13 @@ function getEmployerData(adData) {
 }
 
 function getEmployerName(adData) {
-    if (adData && adData.properties && adData.properties.employer) {
+    if (adData.properties.employer) {
         return adData.properties.employer;
     }
-    if (adData && adData.businessName) {
+    if (adData.businessName) {
         return adData.businessName;
     }
-    if (adData && adData.employer) {
+    if (adData.employer) {
         return adData.employer.name;
     }
 

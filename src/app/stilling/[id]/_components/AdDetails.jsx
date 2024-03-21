@@ -10,7 +10,7 @@ export default function AdDetails({ adData }) {
         <section className="full-width">
             {adData.updated && (
                 <BodyShort spacing>
-                    <Label as="span">Sist endret:</Label> {adData.updated}
+                    <Label as="span">Sist endret:</Label> {formatDate(adData.updated)}
                 </BodyShort>
             )}
             {adData.medium && (

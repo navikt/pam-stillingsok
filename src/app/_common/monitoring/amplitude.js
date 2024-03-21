@@ -43,18 +43,6 @@ export const logSearchFilterRemoved = (data) => {
     amplitude.track("Søkefilter fjernet", enrichData(data));
 };
 
-function getJobPostingFormat(jobPosting) {
-    if (
-        adData.adText &&
-        adData.adText.includes('<section id="arb-serEtter">') &&
-        adData.adText.includes('<section id="arb-arbeidsoppgaver">') &&
-        adData.adText.includes('<section id="arb-tilbyr">')
-    ) {
-        return JobPostingTextEnum.STRUKTURERT;
-    }
-    return JobPostingTextEnum.IKKE_STRUKTURERT;
-}
-
 export function logStillingVisning(adData) {
     // Todo - tror employer.location er erstattet med employer.locationList
     const employerLocation = adData.employer && adData.employer.locationList ? adData.employer.locationList[0] : null;
@@ -90,7 +78,7 @@ export function logStillingVisning(adData) {
         hasApplicationEmail: !!adData.applicationemail,
         hasContactInfoMail: hasContactMail,
         hasContactInfoPhone: hasContactPhone,
-        jobPostingFormat: getJobPostingFormat(adData),
+        jobPostingFormat: adData.jobPostingFormat,
     });
 }
 

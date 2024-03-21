@@ -2,7 +2,7 @@ import Ad from "./_components/Ad";
 import { getStillingDescription, getStillingTitle } from "./_components/getMetaData";
 import { defaultOpenGraphImage } from "@/app/layout";
 import { fetchAd } from "../FetchAd";
-import { getAdData } from "@/app/data/AdService";
+import { getAdData } from "@/app/_common/actions/adDataActions";
 
 export async function generateMetadata({ params }) {
     const data = await fetchAd(params.id);
@@ -24,7 +24,10 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function Page({ params }) {
-    const adData = await getAdData(params.id);
+    const result = await getAdData(params.id);
+    if (!result.success) {
+        throw new Error("Could not retrieve ad data");
+    }
 
-    return <Ad adData={adData} />;
+    return <Ad adData={result.data} />;
 }

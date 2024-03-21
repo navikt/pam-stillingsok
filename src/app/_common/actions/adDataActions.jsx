@@ -2,7 +2,7 @@
 
 import { notFound } from "next/navigation";
 import { getDefaultHeaders } from "@/app/_common/utils/fetch";
-import mapAdData from "./AdData";
+import mapAdData from "../data/AdData";
 
 // Expose only necessary data to client
 const sourceIncludes = [
@@ -73,11 +73,21 @@ export async function getAdData(id) {
     );
 
     if (res.status === 404) {
-        notFound();
+        return {
+            success: false,
+            error: "not_found",
+        };
     }
     if (!res.ok) {
         throw new Error("Failed to fetch data");
+        return {
+            success: false,
+            error: "error",
+        };
     }
 
-    return mapAdData(await res.json());
+    return {
+        success: true,
+        data: mapAdData(await res.json()),
+    };
 }
