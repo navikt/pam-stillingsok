@@ -24,13 +24,6 @@ export async function getUser() {
         headers: getDefaultAuthHeaders(oboToken),
     });
 
-    if (!res.ok) {
-        if (!res.status === 404) {
-            logger.error(`GET user from aduser failed. ${res.status} ${res.statusText}`);
-        }
-        return { success: false, statusCode: res.status };
-    }
-
     const adUserXsrfCookieMatch = res.headers
         .get("Set-cookie")
         ?.match(new RegExp(`${ADUSER_XSRF_COOKIE_NAME}=([^;,]+)`));
@@ -39,6 +32,12 @@ export async function getUser() {
         cookies().set(ADUSER_XSRF_COOKIE_NAME, cookieValue, { path: "/" });
     }
 
+    if (!res.ok) {
+        if (!res.status === 404) {
+            logger.error(`GET user from aduser failed. ${res.status} ${res.statusText}`);
+        }
+        return { success: false, statusCode: res.status };
+    }
     let data = await res.json();
     return { success: true, data };
 }
