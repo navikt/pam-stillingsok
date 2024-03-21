@@ -2,6 +2,7 @@ import Ad from "./_components/Ad";
 import { getStillingDescription, getStillingTitle } from "./_components/getMetaData";
 import { defaultOpenGraphImage } from "@/app/layout";
 import { fetchAd } from "../FetchAd";
+import { cookies } from "next/headers";
 
 export async function generateMetadata({ params }) {
     const data = await fetchAd(params.id);
@@ -24,6 +25,11 @@ export async function generateMetadata({ params }) {
 
 export default async function Page({ params }) {
     const ad = await fetchAd(params.id);
+    let applyPositionBgColor = "green";
 
-    return <Ad ad={ad} />;
+    if (cookies().get("APPLY_JOB_BOX_COLOR")) {
+        applyPositionBgColor = cookies().get("APPLY_JOB_BOX_COLOR").value;
+    }
+
+    return <Ad ad={ad} applyPositionBgColor={applyPositionBgColor} />;
 }
