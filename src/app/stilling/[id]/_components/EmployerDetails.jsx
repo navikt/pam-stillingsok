@@ -5,6 +5,7 @@ import { BodyLong, Heading, Label, Link as AkselLink } from "@navikt/ds-react";
 import { RichText } from "@navikt/arbeidsplassen-react";
 import fixLocationName from "@/app/_common/utils/fixLocationName";
 import { isValidUrl } from "@/app/_common/utils/utils";
+import Ad from "@/app/stilling/[id]/_components/Ad";
 
 export default function EmployerDetails({ employer }) {
     return (
@@ -104,3 +105,16 @@ export default function EmployerDetails({ employer }) {
         </section>
     );
 }
+
+EmployerDetails.propTypes = {
+    employer: PropTypes.shape({
+        name: PropTypes.string,
+        description: PropTypes.string,
+        homepage: PropTypes.string,
+        linkedinPage: PropTypes.string,
+        twitterAddress: PropTypes.string,
+        facebookPage: PropTypes.string,
+        location: PropTypes.string,
+        locationList: PropTypes.array,
+    }).isRequired,
+};

@@ -4,6 +4,7 @@ import { BodyLong, Heading, Label } from "@navikt/ds-react";
 import { formatDate } from "@/app/_common/utils/utils";
 import worktimeParser from "./worktimeParser";
 import "./EmploymentDetails.css";
+import Ad from "@/app/stilling/[id]/_components/Ad";
 
 export default function EmploymentDetails({ adData }) {
     const formatWorkLanguage = (languages) => {
@@ -158,3 +159,22 @@ export default function EmploymentDetails({ adData }) {
         </section>
     );
 }
+
+EmploymentDetails.propTypes = {
+    adData: PropTypes.shape({
+        jobTitle: PropTypes.string,
+        positionCount: PropTypes.string,
+        startTime: PropTypes.string,
+        remote: PropTypes.string,
+        engagementType: PropTypes.string,
+        jobPercentage: PropTypes.string,
+        extent: PropTypes.string,
+        workday: PropTypes.string,
+        workhours: PropTypes.string,
+        jobArrangement: PropTypes.string,
+        workLanguages: PropTypes.array,
+        employer: PropTypes.shape({
+            name: PropTypes.string,
+        }),
+    }).isRequired,
+};

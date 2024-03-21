@@ -18,7 +18,7 @@ function Ad({ adData }) {
      * Track page view for all ads
      */
     useEffect(() => {
-        if (adData && adData._id && adData.title) {
+        if (adData && adData.id && adData.title) {
             try {
                 logStillingVisning(adData);
             } catch (e) {
@@ -52,7 +52,7 @@ function Ad({ adData }) {
                     <div>
                         {annonseErAktiv && (
                             <>
-                                <HowToApply adData showFavouriteButton />
+                                <HowToApply adData={adData} showFavouriteButton />
                                 <ContactPerson
                                     contactList={adData.contactList}
                                     adId={adData.id}
@@ -70,3 +70,16 @@ function Ad({ adData }) {
 }
 
 export default Ad;
+
+Ad.propTypes = {
+    adData: PropTypes.shape({
+        id: PropTypes.string,
+        status: PropTypes.string,
+        contactList: PropTypes.array,
+        title: PropTypes.string,
+        adText: PropTypes.string,
+        employer: PropTypes.shape({
+            name: PropTypes.string,
+        }),
+    }).isRequired,
+};

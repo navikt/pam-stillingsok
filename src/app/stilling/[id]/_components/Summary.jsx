@@ -4,13 +4,14 @@ import { BodyLong, HStack } from "@navikt/ds-react";
 import { Buldings3Icon, LocationPinIcon } from "@navikt/aksel-icons";
 import getWorkLocation from "@/app/_common/utils/getWorkLocation";
 import getEmployer from "@/app/_common/utils/getEmployer";
+import Ad from "@/app/stilling/[id]/_components/Ad";
 
 export default function Summary({ adData }) {
     const location = getWorkLocation(adData.location, adData.locationList, false);
 
     return (
         <section className="mb-12">
-            {adData.employer && (
+            {adData.employer && adData.employer.name && (
                 <HStack className="mb-2" gap="3" align="center" wrap={false}>
                     <HStack align="center">
                         <Buldings3Icon title="Arbeidsgiver" fontSize="1.5rem" />
@@ -29,3 +30,13 @@ export default function Summary({ adData }) {
         </section>
     );
 }
+
+Summary.propTypes = {
+    adData: PropTypes.shape({
+        location: PropTypes.string,
+        locationList: PropTypes.array,
+        employer: PropTypes.shape({
+            name: PropTypes.string,
+        }),
+    }).isRequired,
+};

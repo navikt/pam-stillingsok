@@ -18,11 +18,11 @@ import { formatDate, isValidEmail, isValidUrl } from "@/app/_common/utils/utils"
 import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
 import FavouritesButton from "@/app/favoritter/_components/FavouritesButton";
 
-const logApplyForPosition = (stilling) => {
+const logApplyForPosition = (adData) => {
     try {
         logAmplitudeEvent("Stilling sok-via-url", {
-            title: stilling._source.title,
-            id: stilling._id,
+            title: adData.title,
+            id: adData.id,
             experimentApplyBoxColor: useBlueBackground ? "blue" : "green",
         });
     } catch (e) {
@@ -30,11 +30,11 @@ const logApplyForPosition = (stilling) => {
     }
 };
 
-const logCopyEmailClick = (stilling) => {
+const logCopyEmailClick = (adData) => {
     try {
         logAmplitudeEvent("Stilling copy-email", {
-            title: stilling._source.title,
-            id: stilling._id,
+            title: adData.title,
+            id: adData.id,
             experimentApplyBoxColor: useBlueBackground ? "blue" : "green",
         });
     } catch (e) {
@@ -42,11 +42,11 @@ const logCopyEmailClick = (stilling) => {
     }
 };
 
-const logEmailAnchorClick = (stilling) => {
+const logEmailAnchorClick = (adData) => {
     try {
         logAmplitudeEvent("Stilling email-anchor-click", {
-            title: stilling._source.title,
-            id: stilling._id,
+            title: adData.title,
+            id: adData.id,
             experimentApplyBoxColor: useBlueBackground ? "blue" : "green",
         });
     } catch (e) {
@@ -60,6 +60,28 @@ export default function HowToApply({ adData, showFavouriteButton }) {
     const path = "stilling";
     const [useBlueBackground, setUseBlueBackground] = useState(false);
     const cookies = useCookies();
+
+    /**
+     *  TODO: refactor denne
+     *  Blir brukt for FavouritesButton som forventer gammeldags data.
+     *  Venter med å refaktorere FavouritesButton for den blir brukt
+     *  flere steder
+     */
+    const stilling = {
+        source: adData.source,
+        reference: adData.reference,
+        title: adData.title,
+        status: adData.status,
+        locationList: adData.locationList,
+        published: adData.published,
+        expires: adData.expires,
+        properties: {
+            jobtitle: adData.jobTitle,
+            applicationdue: adData.applicationDue,
+            location: adData.location,
+            employer: adData.employer.name,
+        },
+    };
 
     useEffect(() => {
         if (cookies.get("APPLY_JOB_BOX_COLOR") === "blue") {
@@ -101,7 +123,7 @@ export default function HowToApply({ adData, showFavouriteButton }) {
                                     experimentApplyBoxColor: useBlueBackground ? "blue" : "green",
                                 });
                             }}
-                            href={`/${path}/${stilling._id}/superrask-soknad`}
+                            href={`/${path}/${adData.id}/superrask-soknad`}
                         >
                             Gå til superrask søknad
                         </Button>
@@ -116,7 +138,7 @@ export default function HowToApply({ adData, showFavouriteButton }) {
                                 <span>
                                     <AkselLink
                                         onClick={() => {
-                                            logEmailAnchorClick(stilling);
+                                            logEmailAnchorClick(adData);
                                         }}
                                         href={`mailto:${adData.applicationEmail}`}
                                     >
@@ -131,7 +153,7 @@ export default function HowToApply({ adData, showFavouriteButton }) {
                                         size="xsmall"
                                         onActiveChange={(state) => {
                                             if (state === true) {
-                                                logCopyEmailClick(stilling);
+                                                logCopyEmailClick(adData);
                                             }
                                         }}
                                     />
@@ -147,7 +169,7 @@ export default function HowToApply({ adData, showFavouriteButton }) {
                         {isValidUrl(applicationUrl) ? (
                             <BodyLong className="mt-4">
                                 Alternativt kan du{" "}
-                                <AkselLink href={applicationUrl} onClick={() => logApplyForPosition(stilling)}>
+                                <AkselLink href={applicationUrl} onClick={() => logApplyForPosition(adData)}>
                                     sende søknad her.
                                 </AkselLink>
                             </BodyLong>
@@ -157,12 +179,7 @@ export default function HowToApply({ adData, showFavouriteButton }) {
                     </div>
                 )}
                 {showFavouriteButton && (
-                    <FavouritesButton
-                        className="mt-4"
-                        variant="secondary"
-                        id={stilling._id}
-                        stilling={stilling._source}
-                    />
+                    <FavouritesButton className="mt-4" variant="secondary" id={adData.id} stilling={stilling} />
                 )}
             </Box>
         );
@@ -202,7 +219,7 @@ export default function HowToApply({ adData, showFavouriteButton }) {
                                             <span>
                                                 <AkselLink
                                                     onClick={() => {
-                                                        logEmailAnchorClick(stilling);
+                                                        logEmailAnchorClick(adData);
                                                     }}
                                                     href={`mailto:${adData.applicationEmail}`}
                                                 >
@@ -217,7 +234,7 @@ export default function HowToApply({ adData, showFavouriteButton }) {
                                                     size="xsmall"
                                                     onActiveChange={(state) => {
                                                         if (state === true) {
-                                                            logCopyEmailClick(stilling);
+                                                            logCopyEmailClick(adData);
                                                         }
                                                     }}
                                                 />
@@ -248,7 +265,7 @@ export default function HowToApply({ adData, showFavouriteButton }) {
                             variant="primary"
                             as="a"
                             href={applicationUrl}
-                            onClick={() => logApplyForPosition(stilling)}
+                            onClick={() => logApplyForPosition(adData)}
                             icon={<ExternalLinkIcon aria-hidden="true" />}
                             role="link"
                         >
@@ -261,15 +278,23 @@ export default function HowToApply({ adData, showFavouriteButton }) {
                     <BodyLong className="mt-4">Søk via opprinnelig annonse på FINN.no.</BodyLong>
                 )}
                 {showFavouriteButton && (
-                    <FavouritesButton
-                        className="mt-4"
-                        variant="secondary"
-                        id={stilling._id}
-                        stilling={stilling._source}
-                    />
+                    <FavouritesButton className="mt-4" variant="secondary" id={adData.id} stilling={stilling} />
                 )}
             </Box>
         );
     }
     return null;
 }
+
+HowToApply.propTypes = {
+    adData: PropTypes.shape({
+        id: PropTypes.string,
+        status: PropTypes.string,
+        applicationUrl: PropTypes.string,
+        sourceUrl: PropTypes.string,
+        source: PropTypes.string,
+        hasSuperraskSoknad: PropTypes.string,
+        applicationDue: PropTypes.string,
+        applicationEmail: PropTypes.string,
+    }).isRequired,
+};

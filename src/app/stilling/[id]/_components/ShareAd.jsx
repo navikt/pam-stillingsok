@@ -5,6 +5,7 @@ import FacebookIcon from "./icons/FacebookIcon";
 import LinkedinIcon from "./icons/LinkedinIcon";
 import TwitterIcon from "./icons/TwitterIcon";
 import MessengerIcon from "./icons/MessengerIcon";
+import ContactPerson from "@/app/stilling/[id]/_components/ContactPerson";
 
 export default function ShareAd({ adData }) {
     const shareAdRedirectUrl = `https://arbeidsplassen.nav.no/stillinger/stilling/${adData.id}`;
@@ -50,3 +51,10 @@ export default function ShareAd({ adData }) {
         </section>
     );
 }
+
+ShareAd.propTypes = {
+    adData: PropTypes.shape({
+        id: PropTypes.string,
+        title: PropTypes.string,
+    }).isRequired,
+};

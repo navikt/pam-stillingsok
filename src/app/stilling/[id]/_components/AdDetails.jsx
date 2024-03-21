@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { BodyShort, Label, Link as AkselLink } from "@navikt/ds-react";
 import Link from "next/link";
 import { formatDate } from "@/app/_common/utils/utils";
+import ShareAd from "@/app/stilling/[id]/_components/ShareAd";
 
 export default function AdDetails({ adData }) {
     return (
@@ -35,3 +36,11 @@ export default function AdDetails({ adData }) {
         </section>
     );
 }
+ShareAd.propTypes = {
+    adData: PropTypes.shape({
+        id: PropTypes.string,
+        updated: PropTypes.string,
+        medium: PropTypes.string,
+        reference: PropTypes.string,
+    }).isRequired,
+};

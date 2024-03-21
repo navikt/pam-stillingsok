@@ -19,7 +19,7 @@ export default function mapAdData(queryData) {
     const adText = getAdText(properties.adtext);
 
     return {
-        id: getString(data, "id"),
+        id: getString(queryData, "_id"),
         status: getString(data, "status"),
         title: getString(data, "title"),
         adText: getAdText(properties.adtext),
