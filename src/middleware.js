@@ -56,10 +56,10 @@ function addCspHeaders(requestHeaders, responseHeaders) {
             script-src 'self' 'nonce-${nonce}' 'strict-dynamic' ${
                 process.env.NODE_ENV === "production" ? "" : `'unsafe-eval'`
             };
-            style-src 'self' 'unsafe-inline';
+            style-src 'self' 'unsafe-inline' https://cdn.nav.no;
             img-src 'self';
             media-src 'none';
-            font-src 'self';
+            font-src 'self' https://cdn.nav.no;
             object-src 'none';
             base-uri 'none';
             form-action 'self';
