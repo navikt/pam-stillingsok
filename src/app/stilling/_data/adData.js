@@ -9,7 +9,7 @@ import DOMPurify from "isomorphic-dompurify";
 import fixLocationName from "@/app/_common/utils/fixLocationName";
 
 export default function mapAdData(rawElasticSearchAdResult) {
-    if (!rawElasticSearchAdResult || rawElasticSearchAdResult._source) {
+    if (!rawElasticSearchAdResult || !rawElasticSearchAdResult._source) {
         return undefined;
     }
     const data = rawElasticSearchAdResult._source;
