@@ -124,7 +124,7 @@ function getWorktime(value) {
     } catch (e) {
         items.push(worktime);
     }
-    return items;
+    return items.join(", ");
 }
 
 function getContactList(value) {

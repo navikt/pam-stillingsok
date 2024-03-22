@@ -99,7 +99,7 @@ export default function EmploymentDetails({ adData }) {
                             <Label as="p">Arbeidsdager</Label>
                         </dt>
                         <dd>
-                            <BodyLong>{joinStringWithSeperator(adData.workdays)}</BodyLong>
+                            <BodyLong>{adData.workdays}</BodyLong>
                         </dd>
                     </>
                 )}
@@ -109,7 +109,7 @@ export default function EmploymentDetails({ adData }) {
                             <Label as="p">Arbeidstid</Label>
                         </dt>
                         <dd>
-                            <BodyLong>{joinStringWithSeperator(adData.workHours)}</BodyLong>
+                            <BodyLong>{adData.workHours}</BodyLong>
                         </dd>
                     </>
                 )}
@@ -147,8 +147,8 @@ EmploymentDetails.propTypes = {
         engagementType: PropTypes.string,
         jobPercentage: PropTypes.string,
         extent: PropTypes.string,
-        workdays: PropTypes.arrayOf(PropTypes.string),
-        workHours: PropTypes.arrayOf(PropTypes.string),
+        workdays: PropTypes.string,
+        workHours: PropTypes.string,
         jobArrangement: PropTypes.string,
         workLanguages: PropTypes.array,
         employer: PropTypes.shape({
