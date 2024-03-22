@@ -3,9 +3,6 @@ import PropTypes from "prop-types";
 import parse from "html-react-parser";
 import { BodyLong, Heading, Label, Link as AkselLink } from "@navikt/ds-react";
 import { RichText } from "@navikt/arbeidsplassen-react";
-import fixLocationName from "@/app/_common/utils/fixLocationName";
-import { isValidUrl } from "@/app/_common/utils/utils";
-import Ad from "@/app/stilling/[id]/_components/Ad";
 
 export default function EmployerDetails({ employer }) {
     return (

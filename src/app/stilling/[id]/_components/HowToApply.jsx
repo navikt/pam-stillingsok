@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useCookies } from "next-client-cookies";
 import PropTypes from "prop-types";
 import {
@@ -14,7 +14,7 @@ import {
 } from "@navikt/ds-react";
 import { ExternalLinkIcon } from "@navikt/aksel-icons";
 import Link from "next/link";
-import { formatDate, isValidEmail, isValidUrl } from "@/app/_common/utils/utils";
+import { formatDate, isValidUrl } from "@/app/_common/utils/utils";
 import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
 import FavouritesButton from "@/app/favoritter/_components/FavouritesButton";
 

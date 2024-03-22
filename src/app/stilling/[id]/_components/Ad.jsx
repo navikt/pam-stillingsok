@@ -2,7 +2,7 @@
 
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
-import { Box, HGrid, Tag, Heading } from "@navikt/ds-react";
+import { Box, Heading, HGrid, Tag } from "@navikt/ds-react";
 import AdDetails from "./AdDetails";
 import AdText from "./AdText";
 import ContactPerson from "./ContactPerson";

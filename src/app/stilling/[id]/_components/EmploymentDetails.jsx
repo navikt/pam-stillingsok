@@ -2,9 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { BodyLong, Heading, Label } from "@navikt/ds-react";
 import { formatDate } from "@/app/_common/utils/utils";
-import worktimeParser from "./worktimeParser";
 import "./EmploymentDetails.css";
-import Ad from "@/app/stilling/[id]/_components/Ad";
 
 export default function EmploymentDetails({ adData }) {
     const formatWorkLanguage = (languages) => {

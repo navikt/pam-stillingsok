@@ -3,8 +3,6 @@ import PropTypes from "prop-types";
 import { BodyLong, HStack } from "@navikt/ds-react";
 import { Buldings3Icon, LocationPinIcon } from "@navikt/aksel-icons";
 import getWorkLocation from "@/app/_common/utils/getWorkLocation";
-import getEmployer from "@/app/_common/utils/getEmployer";
-import Ad from "@/app/stilling/[id]/_components/Ad";
 
 export default function Summary({ adData }) {
     const location = getWorkLocation(adData.location, adData.locationList, false);

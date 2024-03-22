@@ -1,9 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { BodyLong, CopyButton, Heading, HStack, Label, Link as AkselLink } from "@navikt/ds-react";
-import { isValidEmail } from "@/app/_common/utils/utils";
 import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
-import HowToApply from "@/app/stilling/[id]/_components/HowToApply";
 
 function logCopyContactInfoEvent(type, id, title) {
     logAmplitudeEvent("copy contact info", { type, id, title });
