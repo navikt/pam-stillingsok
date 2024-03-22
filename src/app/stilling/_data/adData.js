@@ -22,7 +22,7 @@ export default function mapAdData(rawElasticSearchAdResult) {
         return undefined;
     }
 
-    return {
+    return removeUndefinedValues({
         id: getString(rawElasticSearchAdResult._id),
         status: getString(data.status),
         title: getString(data.title),
@@ -59,7 +59,19 @@ export default function mapAdData(rawElasticSearchAdResult) {
         // Employer
         employer: getEmployerData(data),
         contactList: getContactList(data.contactList),
-    };
+    });
+}
+
+export function removeUndefinedValues(input) {
+    const output = {};
+    Object.keys(input).forEach((prop) => {
+        const value = input[prop];
+        if (value !== undefined) {
+            output[prop] = value;
+        }
+    });
+
+    return output;
 }
 
 function getAdText(adText) {
@@ -121,14 +133,14 @@ function getContactList(value) {
         return undefined;
     }
 
-    return contactList.map((contact) => {
-        return {
+    return removeUndefinedValues(
+        contactList.map((contact) => ({
             name: getString(contact.name),
             title: getString(contact.title),
             phone: getString(contact.phone),
             email: getEmail(contact.email),
-        };
-    });
+        })),
+    );
 }
 
 /**
@@ -163,15 +175,15 @@ function getLocationListData(value) {
     if (!locationList) {
         return [];
     }
-    return locationList.map((location) => {
-        return {
+    return locationList.map((location) =>
+        removeUndefinedValues({
             address: getString(location.address),
             city: getString(location.city),
             postalCode: getString(location.postalCode),
             municipal: getString(location.municipal),
             country: getString(location.country),
-        };
-    });
+        }),
+    );
 }
 
 function getJobPostingFormat(adText) {
@@ -208,7 +220,7 @@ function getEmployerData(adData) {
             }
         }
     }
-    return employerData;
+    return removeUndefinedValues(employerData);
 }
 
 function getEmployerName(adData) {
