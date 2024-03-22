@@ -27,8 +27,8 @@ export async function generateMetadata({ params }) {
 
 export default async function Page({ params }) {
     const result = await getAdData(params.id);
-    if (!result.success) {
-        if (result.error === "not_found") {
+    if (!result.ok) {
+        if (result.status === 404) {
             notFound();
         } else {
             throw new Error("Could not retrieve ad data");

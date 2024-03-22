@@ -63,6 +63,16 @@ const sourceIncludes = [
     "updated",
 ].join(",");
 
+/**
+ * Returns a javascript object containing job posting data
+ * @param id - the id of job posting
+ * @returns
+ * {
+ *     ok: <true|false>
+ *     status: <200|404|500 osv>
+ *     data: <data|undefined>
+ * }
+ */
 export async function getAdData(id) {
     const res = await fetch(
         `${process.env.PAMSEARCHAPI_URL}/stillingsok/ad/ad/${id}?_source_includes=${sourceIncludes}`,
@@ -74,20 +84,21 @@ export async function getAdData(id) {
 
     if (res.status === 404) {
         return {
-            success: false,
-            error: "not_found",
+            ok: false,
+            status: 404,
+            data: undefined,
         };
     }
     if (!res.ok) {
-        throw new Error("Failed to fetch data");
         return {
-            success: false,
-            error: "error",
+            ok: false,
+            status: res.status,
         };
     }
 
     return {
-        success: true,
+        ok: true,
+        status: 200,
         data: mapAdData(await res.json()),
     };
 }
