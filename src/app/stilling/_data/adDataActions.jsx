@@ -85,10 +85,9 @@ export async function getAdData(id) {
             error: "error",
         };
     }
-    const data = mapAdData(await res.json());
 
     return {
         success: true,
-        data,
+        data: mapAdData(await res.json()),
     };
 }
