@@ -82,13 +82,6 @@ export async function getAdData(id) {
         },
     );
 
-    if (res.status === 404) {
-        return {
-            ok: false,
-            status: 404,
-            data: undefined,
-        };
-    }
     if (!res.ok) {
         return {
             ok: false,
