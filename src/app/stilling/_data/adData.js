@@ -124,7 +124,7 @@ function getWorktime(value) {
     } catch (e) {
         items.push(worktime);
     }
-    return items;
+    return ["Ukedager", "Lørdag", "Søndag"];
 }
 
 function getContactList(value) {

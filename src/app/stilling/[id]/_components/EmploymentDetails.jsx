@@ -3,29 +3,9 @@ import PropTypes from "prop-types";
 import { BodyLong, Heading, Label } from "@navikt/ds-react";
 import { formatDate } from "@/app/_common/utils/utils";
 import "./EmploymentDetails.css";
+import joinStringWithSeperator from "@/app/_common/utils/joinStringWithSeperator";
 
 export default function EmploymentDetails({ adData }) {
-    const formatWorkLanguage = (languages) => {
-        if (languages.length === 1) {
-            return languages[0];
-        }
-        let languageString = "";
-        for (let i = 0; i < languages.length; i += 1) {
-            // Add "eller" before the last language
-            if (i === languages.length - 1) {
-                languageString += " eller ";
-            }
-
-            languageString += languages[i];
-
-            // Separate languages with ", ", except the last language
-            if (i < languages.length - 2) {
-                languageString += ", ";
-            }
-        }
-        return languageString;
-    };
-
     return (
         <section className="full-width">
             <Heading level="2" size="large" spacing>
@@ -119,7 +99,7 @@ export default function EmploymentDetails({ adData }) {
                             <Label as="p">Arbeidsdager</Label>
                         </dt>
                         <dd>
-                            <BodyLong>{adData.workdays.join(", ")}</BodyLong>
+                            <BodyLong>{joinStringWithSeperator(adData.workdays)}</BodyLong>
                         </dd>
                     </>
                 )}
@@ -129,7 +109,7 @@ export default function EmploymentDetails({ adData }) {
                             <Label as="p">Arbeidstid</Label>
                         </dt>
                         <dd>
-                            <BodyLong>{adData.workHours.join(", ")}</BodyLong>
+                            <BodyLong>{joinStringWithSeperator(adData.workHours)}</BodyLong>
                         </dd>
                     </>
                 )}
@@ -149,7 +129,7 @@ export default function EmploymentDetails({ adData }) {
                             <Label as="p">Arbeidsspråk</Label>
                         </dt>
                         <dd>
-                            <BodyLong>{formatWorkLanguage(adData.workLanguages)}</BodyLong>
+                            <BodyLong>{joinStringWithSeperator(adData.workLanguages, "eller")}</BodyLong>
                         </dd>
                     </>
                 )}
