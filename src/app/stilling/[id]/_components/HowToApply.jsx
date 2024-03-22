@@ -201,7 +201,6 @@ export default function HowToApply({ adData, showFavouriteButton, adLayoutVarian
                             </dt>
                             <dd>
                                 <BodyLong>
-                                    (
                                     <HStack gap="2" as="span" wrap={false}>
                                         <span>
                                             <AkselLink
@@ -227,7 +226,6 @@ export default function HowToApply({ adData, showFavouriteButton, adLayoutVarian
                                             />
                                         </span>
                                     </HStack>
-                                    )
                                 </BodyLong>
                             </dd>
                         </>
