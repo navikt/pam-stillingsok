@@ -5,7 +5,11 @@ const nextConfig = {
     experimental: {
         optimizePackageImports: ["@navikt/ds-react", "@navikt/aksel-icons"],
     },
+    assetPrefix: process.env.ASSET_PREFIX || undefined,
     output: "standalone",
+    eslint: {
+        ignoreDuringBuilds: true,
+    },
 };
 
 const { PHASE_DEVELOPMENT_SERVER } = require("next/constants");

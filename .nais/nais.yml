@@ -46,14 +46,10 @@ spec:
      - {{url}}
   {{/each}}
   env:
-    - name: ADUSER_AUDIENCE
-      value: {{ aduser_audience }}
-    - name: AMPLITUDE_TOKEN
-      value: {{ amplitude_token }}
-    - name: INTEREST_API_URL
-      value: {{ interest_api_url }}
-    - name: REDIS_AVAILABLE
-      value: "true"
+  {{#each env}}
+     - name: {{@key}}
+       value: "{{this}}"
+  {{/each}}
   accessPolicy:
     inbound:
       rules:

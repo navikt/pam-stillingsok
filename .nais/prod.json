@@ -1,9 +1,0 @@
-{
-    "ingress": ["https://arbeidsplassen.nav.no/stillinger"],
-
-    "aduser_audience": "prod-gcp:teampam:pam-aduser",
-    "amplitude_token": "a7b3f00008ae250a08c3ebbc6bf718f9",
-    "interest_api_url": "https://arbeidsplassen.nav.no/interesse-api",
-    "arbeidsplassen_domain": "arbeidsplassen.nav.no"
-
-}
