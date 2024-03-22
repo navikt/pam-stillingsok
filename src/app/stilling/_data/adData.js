@@ -204,7 +204,7 @@ function getJobPostingFormat(adText) {
 function getEmployerData(adData) {
     const employerData = {
         name: getEmployerName(adData),
-        homepage: getUrl(adData.properties.homepage), //change check in EmployerDetails.jsx
+        homepage: getUrl(adData.properties.employerhomepage), //change check in EmployerDetails.jsx
         linkedinPage: getUrl(adData.properties.linkedinpage), //change check in EmployerDetails.jsx
         twitterAddress: getUrl(adData.properties.twitteraddress), //change check in EmployerDetails.jsx
         facebookPage: getUrl(adData.properties.facebookpage), //change check in EmployerDetails.jsx
