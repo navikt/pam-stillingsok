@@ -13,14 +13,14 @@ import { logStillingVisning } from "@/app/_common/monitoring/amplitude";
 import ShareAd from "./ShareAd";
 import Summary from "./Summary";
 
-function Ad({ adData }) {
+function Ad({ adData, adLayoutVariant }) {
     /**
      * Track page view for all ads
      */
     useEffect(() => {
         if (adData && adData.id && adData.title) {
             try {
-                logStillingVisning(adData);
+                logStillingVisning(adData, adLayoutVariant);
             } catch (e) {
                 // ignore
             }
@@ -52,7 +52,7 @@ function Ad({ adData }) {
                     <div>
                         {annonseErAktiv && (
                             <>
-                                <HowToApply adData={adData} showFavouriteButton />
+                                <HowToApply adData={adData} showFavouriteButton adLayoutVariant={adLayoutVariant} />
                                 <ContactPerson
                                     contactList={adData.contactList}
                                     adId={adData.id}
@@ -82,4 +82,5 @@ Ad.propTypes = {
             name: PropTypes.string,
         }),
     }).isRequired,
+    adLayoutVariant: PropTypes.string,
 };

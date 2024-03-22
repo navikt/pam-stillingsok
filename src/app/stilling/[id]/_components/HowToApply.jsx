@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { useCookies } from "next-client-cookies";
+import React from "react";
 import PropTypes from "prop-types";
 import {
     BodyLong,
@@ -18,48 +17,47 @@ import { formatDate, isValidUrl } from "@/app/_common/utils/utils";
 import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
 import FavouritesButton from "@/app/favoritter/_components/FavouritesButton";
 
-const logApplyForPosition = (adData) => {
+const logApplyForPosition = (adData, applyPositionBgColor) => {
     try {
         logAmplitudeEvent("Stilling sok-via-url", {
             title: adData.title,
             id: adData.id,
-            experimentApplyBoxColor: useBlueBackground ? "blue" : "green",
+            experimentApplyBoxColor: applyPositionBgColor,
         });
     } catch (e) {
         // ignore
     }
 };
 
-const logCopyEmailClick = (adData) => {
+const logCopyEmailClick = (adData, applyPositionBgColor) => {
     try {
         logAmplitudeEvent("Stilling copy-email", {
             title: adData.title,
             id: adData.id,
-            experimentApplyBoxColor: useBlueBackground ? "blue" : "green",
+            experimentApplyBoxColor: applyPositionBgColor,
         });
     } catch (e) {
         // ignore
     }
 };
 
-const logEmailAnchorClick = (adData) => {
+const logEmailAnchorClick = (adData, applyPositionBgColor) => {
     try {
         logAmplitudeEvent("Stilling email-anchor-click", {
             title: adData.title,
             id: adData.id,
-            experimentApplyBoxColor: useBlueBackground ? "blue" : "green",
+            experimentApplyBoxColor: applyPositionBgColor,
         });
     } catch (e) {
         // ignore
     }
 };
 
-export default function HowToApply({ adData, showFavouriteButton }) {
+export default function HowToApply({ adData, showFavouriteButton, adLayoutVariant }) {
     const applicationUrl = adData.applicationUrl || adData.sourceUrl;
     const isFinn = adData.source === "FINN";
     const path = "stilling";
-    const [useBlueBackground, setUseBlueBackground] = useState(false);
-    const cookies = useCookies();
+    const applyPositionBgColor = adLayoutVariant === "a" ? "green" : "blue";
 
     /**
      *  TODO: refactor denne
@@ -83,16 +81,10 @@ export default function HowToApply({ adData, showFavouriteButton }) {
         },
     };
 
-    useEffect(() => {
-        if (cookies.get("APPLY_JOB_BOX_COLOR") === "blue") {
-            setUseBlueBackground(true);
-        }
-    }, []);
-
     if (adData.hasSuperraskSoknad === "true") {
         return (
             <Box
-                background={useBlueBackground ? "surface-alt-2-subtle" : "surface-alt-1-subtle"}
+                background={applyPositionBgColor === "blue" ? "surface-alt-2-subtle" : "surface-alt-1-subtle"}
                 borderRadius="medium"
                 padding="4"
                 className="full-width mb-10"
@@ -120,7 +112,7 @@ export default function HowToApply({ adData, showFavouriteButton }) {
                             onClick={() => {
                                 logAmplitudeEvent("click superrask søknad link", {
                                     id: adData.id,
-                                    experimentApplyBoxColor: useBlueBackground ? "blue" : "green",
+                                    experimentApplyBoxColor: applyPositionBgColor,
                                 });
                             }}
                             href={`/${path}/${adData.id}/superrask-soknad`}
@@ -137,7 +129,7 @@ export default function HowToApply({ adData, showFavouriteButton }) {
                             <span>
                                 <AkselLink
                                     onClick={() => {
-                                        logEmailAnchorClick(adData);
+                                        logEmailAnchorClick(adData, applyPositionBgColor);
                                     }}
                                     href={`mailto:${adData.applicationEmail}`}
                                 >
@@ -152,7 +144,7 @@ export default function HowToApply({ adData, showFavouriteButton }) {
                                     size="xsmall"
                                     onActiveChange={(state) => {
                                         if (state === true) {
-                                            logCopyEmailClick(adData);
+                                            logCopyEmailClick(adData, applyPositionBgColor);
                                         }
                                     }}
                                 />
@@ -164,7 +156,10 @@ export default function HowToApply({ adData, showFavouriteButton }) {
                     <div>
                         <BodyLong className="mt-4">
                             Alternativt kan du{" "}
-                            <AkselLink href={applicationUrl} onClick={() => logApplyForPosition(adData)}>
+                            <AkselLink
+                                href={applicationUrl}
+                                onClick={() => logApplyForPosition(adData, applyPositionBgColor)}
+                            >
                                 sende søknad her.
                             </AkselLink>
                         </BodyLong>
@@ -180,7 +175,7 @@ export default function HowToApply({ adData, showFavouriteButton }) {
     if (adData.applicationDue || adData.applicationEmail || applicationUrl) {
         return (
             <Box
-                background={useBlueBackground ? "surface-alt-2-subtle" : "surface-alt-1-subtle"}
+                background={applyPositionBgColor === "blue" ? "surface-alt-2-subtle" : "surface-alt-1-subtle"}
                 borderRadius="medium"
                 padding="4"
                 className="full-width mb-10"
@@ -211,7 +206,7 @@ export default function HowToApply({ adData, showFavouriteButton }) {
                                         <span>
                                             <AkselLink
                                                 onClick={() => {
-                                                    logEmailAnchorClick(adData);
+                                                    logEmailAnchorClick(adData, applyPositionBgColor);
                                                 }}
                                                 href={`mailto:${adData.applicationEmail}`}
                                             >
@@ -226,7 +221,7 @@ export default function HowToApply({ adData, showFavouriteButton }) {
                                                 size="xsmall"
                                                 onActiveChange={(state) => {
                                                     if (state === true) {
-                                                        logCopyEmailClick(adData);
+                                                        logCopyEmailClick(adData, applyPositionBgColor);
                                                     }
                                                 }}
                                             />
@@ -255,7 +250,7 @@ export default function HowToApply({ adData, showFavouriteButton }) {
                             variant="primary"
                             as="a"
                             href={applicationUrl}
-                            onClick={() => logApplyForPosition(adData)}
+                            onClick={() => logApplyForPosition(adData, applyPositionBgColor)}
                             icon={<ExternalLinkIcon aria-hidden="true" />}
                             role="link"
                         >
@@ -287,4 +282,5 @@ HowToApply.propTypes = {
         applicationDue: PropTypes.string,
         applicationEmail: PropTypes.string,
     }).isRequired,
+    adLayoutVariant: PropTypes.string,
 };

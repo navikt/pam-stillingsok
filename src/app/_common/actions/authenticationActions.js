@@ -6,13 +6,17 @@ import logger from "@/app/_common/utils/logger";
 import { getAdUserOboToken, getDefaultAuthHeaders } from "@/app/_common/auth/auth";
 
 export async function checkIfAuthenticated() {
-    return await validateToken(getToken(headers()))
-        .then((validation) => {
-            return { isAuthenticated: validation.ok, failure: false };
-        })
-        .catch(() => {
-            return { isAuthenticated: false, failure: true };
-        });
+    try {
+        return await validateToken(getToken(headers()))
+            .then((validation) => {
+                return { isAuthenticated: validation.ok, failure: false };
+            })
+            .catch(() => {
+                return { isAuthenticated: false, failure: true };
+            });
+    } catch (_) {
+        return { isAuthenticated: false, failure: true };
+    }
 }
 
 export async function checkIfUserAgreementIsAccepted() {

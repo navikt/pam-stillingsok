@@ -4,6 +4,7 @@ import { defaultOpenGraphImage } from "@/app/layout";
 import { fetchAd } from "../FetchAd";
 import { getAdData } from "@/app/stilling/_data/adDataActions";
 import { notFound } from "next/navigation";
+import { cookies } from "next/headers";
 
 export async function generateMetadata({ params }) {
     const data = await fetchAd(params.id);
@@ -34,5 +35,11 @@ export default async function Page({ params }) {
         }
     }
 
-    return <Ad adData={result.data} />;
+    // Get cookie for ad layout a b test and pass it to component
+    let adLayoutVariant = "a";
+    if (cookies().get("AD_LAYOUT_VARIANT")) {
+        adLayoutVariant = cookies().get("AD_LAYOUT_VARIANT").value;
+    }
+
+    return <Ad adData={result.data} adLayoutVariant={adLayoutVariant} />;
 }
