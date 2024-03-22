@@ -11,6 +11,4 @@ arbeidsplassen_domain: "arbeidsplassen.intern.dev.nav.no"
 env:
   ADUSER_AUDIENCE: "dev-gcp:teampam:pam-aduser"
   AMPLITUDE_TOKEN: "3acd3a52e065d2d99856a12e7e9e1432"
-  ASSET_PREFIX: "https://cdn.nav.no/teampam/pam-stillingsok"
   INTEREST_API_URL: "https://arbeidsplassen.intern.dev.nav.no/interesse-api"
-  REDIS_AVAILABLE: "true"
