@@ -69,7 +69,7 @@ export default function ContactPerson({ contactList, adId, adTitle }) {
 }
 
 ContactPerson.propTypes = {
-    contactList: PropTypes.array,
+    contactList: PropTypes.arrayOf(PropTypes.object),
     adId: PropTypes.string,
     adTitle: PropTypes.string,
 };

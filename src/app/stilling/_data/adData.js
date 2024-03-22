@@ -133,14 +133,14 @@ function getContactList(value) {
         return undefined;
     }
 
-    return removeUndefinedValues(
-        contactList.map((contact) => ({
+    return contactList.map((contact) => {
+        return removeUndefinedValues({
             name: getString(contact.name),
             title: getString(contact.title),
             phone: getString(contact.phone),
             email: getEmail(contact.email),
-        })),
-    );
+        });
+    });
 }
 
 /**
@@ -210,8 +210,8 @@ function getEmployerData(adData) {
         facebookPage: getUrl(adData.properties.facebookpage), //change check in EmployerDetails.jsx
         description: DOMPurify.sanitize(adData.properties.employerdescription),
     };
-    if (adData.properties.employer && adData.properties.employer.locationList) {
-        const locationList = getLocationListData(adData.properties.employer.locationList);
+    if (adData.employer && adData.employer.locationList) {
+        const locationList = getLocationListData(adData.employer.locationList);
         employerData.locationList = locationList;
         if (locationList) {
             const location = getEmployerLocation(locationList);
