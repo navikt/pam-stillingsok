@@ -38,7 +38,11 @@ export default function EmployerDetails({ employer }) {
                         </dt>
                         <dd>
                             <BodyLong>
-                                <AkselLink href={employer.homepage}>{employer.homepage}</AkselLink>
+                                {employer.homepage.url ? (
+                                    <AkselLink href={employer.homepage.url}>{employer.homepage.url}</AkselLink>
+                                ) : (
+                                    employer.homepage.dangerouslyInvalidUrl
+                                )}
                             </BodyLong>
                         </dd>
                     </>
@@ -50,7 +54,11 @@ export default function EmployerDetails({ employer }) {
                         </dt>
                         <dd>
                             <BodyLong>
-                                <AkselLink href={employer.linkedinPage}>{employer.linkedinPage}</AkselLink>
+                                {employer.linkedinPage.url ? (
+                                    <AkselLink href={employer.linkedinPage.url}>{employer.linkedinPage.url}</AkselLink>
+                                ) : (
+                                    employer.linkedinPage.dangerouslyInvalidUrl
+                                )}
                             </BodyLong>
                         </dd>
                     </>
@@ -62,7 +70,13 @@ export default function EmployerDetails({ employer }) {
                         </dt>
                         <dd>
                             <BodyLong>
-                                <AkselLink href={employer.twitterAddress}>{employer.twitterAddress}</AkselLink>
+                                {employer.twitterAddress.url ? (
+                                    <AkselLink href={employer.twitterAddress.url}>
+                                        {employer.twitterAddress.url}
+                                    </AkselLink>
+                                ) : (
+                                    employer.twitterAddress.dangerouslyInvalidUrl
+                                )}
                             </BodyLong>
                         </dd>
                     </>
@@ -74,7 +88,11 @@ export default function EmployerDetails({ employer }) {
                         </dt>
                         <dd>
                             <BodyLong>
-                                <AkselLink href={employer.facebookPage}>{employer.facebookPage}</AkselLink>
+                                {employer.facebookPage.url ? (
+                                    <AkselLink href={employer.facebookPage.url}>{employer.facebookPage.url}</AkselLink>
+                                ) : (
+                                    employer.facebookPage.dangerouslyInvalidUrl
+                                )}
                             </BodyLong>
                         </dd>
                     </>
@@ -91,11 +109,23 @@ EmployerDetails.propTypes = {
     employer: PropTypes.shape({
         name: PropTypes.string,
         description: PropTypes.string,
-        homepage: PropTypes.string,
-        linkedinPage: PropTypes.string,
-        twitterAddress: PropTypes.string,
-        facebookPage: PropTypes.string,
         location: PropTypes.string,
         locationList: PropTypes.array,
+        homepage: PropTypes.shape({
+            url: PropTypes.string,
+            dangerouslyInvalidUrl: PropTypes.string,
+        }),
+        linkedinPage: PropTypes.shape({
+            url: PropTypes.string,
+            dangerouslyInvalidUrl: PropTypes.string,
+        }),
+        twitterAddress: PropTypes.shape({
+            url: PropTypes.string,
+            dangerouslyInvalidUrl: PropTypes.string,
+        }),
+        facebookPage: PropTypes.shape({
+            url: PropTypes.string,
+            dangerouslyInvalidUrl: PropTypes.string,
+        }),
     }).isRequired,
 };

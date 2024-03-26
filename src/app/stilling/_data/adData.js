@@ -7,6 +7,7 @@ import {
 } from "@/app/_common/utils/utils";
 import DOMPurify from "isomorphic-dompurify";
 import fixLocationName from "@/app/_common/utils/fixLocationName";
+import logger from "@/app/_common/utils/logger";
 
 export default function mapAdData(rawElasticSearchAdResult) {
     if (!rawElasticSearchAdResult || !rawElasticSearchAdResult._source) {
@@ -159,14 +160,17 @@ function getArray(arrayData) {
 
 function getUrl(url) {
     try {
-        const urlIsValid = new URL(url).protocol.startsWith("http");
-        if (urlIsValid) {
-            return url;
+        const validUrl = new URL(url);
+        if (validUrl.protocol.startsWith("http")) {
+            return { url };
         } else {
+            logger.info("url is valid but protocol is not: ", validUrl.protocol);
             return undefined;
         }
     } catch (e) {
-        return undefined;
+        // TODO: Remove this, do not include in production in case of sensitive information
+        logger.info("returning dangerouslyInvalidUrl: ", url);
+        return { dangerouslyInvalidUrl: url };
     }
 }
 
