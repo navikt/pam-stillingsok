@@ -23,6 +23,7 @@ export default function mapAdData(rawElasticSearchAdResult) {
         return undefined;
     }
 
+    console.info("mapAdData - id: ", getString(rawElasticSearchAdResult._id));
     return removeUndefinedValues({
         id: getString(rawElasticSearchAdResult._id),
         status: getString(data.status),
@@ -164,12 +165,12 @@ function getUrl(url) {
         if (validUrl.protocol.startsWith("http")) {
             return { url };
         } else {
-            logger.warn("getUrl - invalid protocol: ", validUrl.protocol);
+            logger.warn(`getUrl - invalid protocol: ${validUrl.protocol}`);
             return undefined;
         }
     } catch (e) {
         if (url) {
-            logger.warn("getUrl - invalid url: ", url);
+            logger.warn(`getUrl - invalid url: ${url}`);
             return { dangerouslyInvalidUrl: url };
         }
     }
