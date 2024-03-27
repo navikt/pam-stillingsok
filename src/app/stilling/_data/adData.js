@@ -164,12 +164,16 @@ function getUrl(url) {
         if (validUrl.protocol.startsWith("http")) {
             return { url };
         } else {
-            logger.warn("url is valid but protocol is not: ", validUrl.protocol);
+            logger.warn("getUrl - invalid protocol: ", validUrl.protocol);
             return undefined;
         }
     } catch (e) {
-        return url ? { dangerouslyInvalidUrl: url } : undefined;
+        if (url) {
+            logger.warn("getUrl - invalid url: ", url);
+            return { dangerouslyInvalidUrl: url };
+        }
     }
+    return undefined;
 }
 
 function getLocationListData(value) {
