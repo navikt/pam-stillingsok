@@ -54,7 +54,9 @@ const logEmailAnchorClick = (adData, applyPositionBgColor) => {
 };
 
 export default function HowToApply({ adData, showFavouriteButton, adLayoutVariant }) {
-    const applicationUrl = adData.applicationUrl || adData.sourceUrl;
+    const applicationUrl =
+        (adData.applicationUrl && (adData.applicationUrl.url || adData.applicationUrl.dangerouslyInvalidUrl)) ||
+        (adData.sourceUrl && (adData.sourceUrl.url || adData.sourceUrl.dangerouslyInvalidUrl));
     const isFinn = adData.source === "FINN";
     const path = "stilling";
     const applyPositionBgColor = adLayoutVariant === "a" ? "green" : "blue";
@@ -273,8 +275,14 @@ HowToApply.propTypes = {
     adData: PropTypes.shape({
         id: PropTypes.string,
         status: PropTypes.string,
-        applicationUrl: PropTypes.string,
-        sourceUrl: PropTypes.string,
+        applicationUrl: PropTypes.shape({
+            url: PropTypes.string,
+            dangerouslyInvalidUrl: PropTypes.string,
+        }),
+        sourceUrl: PropTypes.shape({
+            url: PropTypes.string,
+            dangerouslyInvalidUrl: PropTypes.string,
+        }),
         source: PropTypes.string,
         hasSuperraskSoknad: PropTypes.string,
         applicationDue: PropTypes.string,

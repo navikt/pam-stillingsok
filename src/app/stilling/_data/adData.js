@@ -169,9 +169,12 @@ function getUrl(url) {
         }
     } catch (e) {
         // TODO: Remove this, do not include in production in case of sensitive information
-        logger.info("returning dangerouslyInvalidUrl: ", url);
-        return { dangerouslyInvalidUrl: url };
+        if (url) {
+            logger.info("returning dangerouslyInvalidUrl: ", url);
+            return { dangerouslyInvalidUrl: url };
+        }
     }
+    return undefined;
 }
 
 function getLocationListData(value) {
