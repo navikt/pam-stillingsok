@@ -2,7 +2,7 @@
 
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
-import { Box, HGrid, Tag, Heading } from "@navikt/ds-react";
+import { Box, Heading, HGrid, Tag } from "@navikt/ds-react";
 import AdDetails from "./AdDetails";
 import AdText from "./AdText";
 import ContactPerson from "./ContactPerson";
@@ -13,21 +13,21 @@ import { logStillingVisning } from "@/app/_common/monitoring/amplitude";
 import ShareAd from "./ShareAd";
 import Summary from "./Summary";
 
-function Ad({ ad, adLayoutVariant }) {
+function Ad({ adData, adLayoutVariant }) {
     /**
      * Track page view for all ads
      */
     useEffect(() => {
-        if (ad && ad._source && ad._id && ad._source.title) {
+        if (adData && adData.id && adData.title) {
             try {
-                logStillingVisning(ad, adLayoutVariant);
+                logStillingVisning(adData, adLayoutVariant);
             } catch (e) {
                 // ignore
             }
         }
-    }, [ad]);
+    }, [adData]);
 
-    const annonseErAktiv = ad._source.status === "ACTIVE";
+    const annonseErAktiv = adData.status === "ACTIVE";
 
     return (
         <Box className="container-large" paddingBlock={{ xs: "4 12", md: "16" }}>
@@ -35,7 +35,7 @@ function Ad({ ad, adLayoutVariant }) {
                 <HGrid columns={{ xs: 1, lg: "auto 340px" }} gap="16">
                     <div>
                         <Heading level="1" size="xlarge" className="overflow-wrap-anywhere" spacing>
-                            {ad._source.title}
+                            {adData.title}
                         </Heading>
 
                         {!annonseErAktiv && (
@@ -44,24 +44,24 @@ function Ad({ ad, adLayoutVariant }) {
                             </Tag>
                         )}
 
-                        <Summary stilling={ad._source} />
-                        <AdText adText={ad._source.properties.adtext} />
-                        <EmployerDetails stilling={ad._source} />
-                        <EmploymentDetails stilling={ad._source} />
+                        <Summary adData={adData} />
+                        <AdText adText={adData.adText} />
+                        <EmployerDetails employer={adData.employer} />
+                        <EmploymentDetails adData={adData} />
                     </div>
                     <div>
                         {annonseErAktiv && (
                             <>
-                                <HowToApply stilling={ad} showFavouriteButton adLayoutVariant={adLayoutVariant} />
+                                <HowToApply adData={adData} showFavouriteButton adLayoutVariant={adLayoutVariant} />
                                 <ContactPerson
-                                    contactList={ad._source.contactList}
-                                    adId={ad._id}
-                                    adTitle={ad._source.title}
+                                    contactList={adData.contactList}
+                                    adId={adData.id}
+                                    adTitle={adData.title}
                                 />
-                                <ShareAd source={ad._source} id={ad._id} />
+                                <ShareAd adData={adData} />
                             </>
                         )}
-                        <AdDetails id={ad._id} source={ad._source} />
+                        <AdDetails adData={adData} />
                     </div>
                 </HGrid>
             </article>
@@ -69,21 +69,18 @@ function Ad({ ad, adLayoutVariant }) {
     );
 }
 
+export default Ad;
+
 Ad.propTypes = {
-    ad: PropTypes.shape({
-        _id: PropTypes.string,
-        _source: PropTypes.shape({
-            status: PropTypes.string,
-            contactList: PropTypes.array,
-            source: PropTypes.string,
-            title: PropTypes.string,
-            properties: PropTypes.shape({
-                adtext: PropTypes.string,
-                sourceurl: PropTypes.string,
-            }),
+    adData: PropTypes.shape({
+        id: PropTypes.string,
+        status: PropTypes.string,
+        contactList: PropTypes.array,
+        title: PropTypes.string,
+        adText: PropTypes.string,
+        employer: PropTypes.shape({
+            name: PropTypes.string,
         }),
     }).isRequired,
     adLayoutVariant: PropTypes.string,
 };
-
-export default Ad;

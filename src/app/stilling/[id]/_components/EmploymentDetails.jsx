@@ -2,33 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import { BodyLong, Heading, Label } from "@navikt/ds-react";
 import { formatDate } from "@/app/_common/utils/utils";
-import worktimeParser from "./worktimeParser";
 import "./EmploymentDetails.css";
+import joinStringWithSeperator from "@/app/_common/utils/joinStringWithSeperator";
 
-export default function EmploymentDetails({ stilling }) {
-    const { properties } = stilling;
-
-    const formatWorkLanguage = (languages) => {
-        if (languages.length === 1) {
-            return languages[0];
-        }
-        let languageString = "";
-        for (let i = 0; i < languages.length; i += 1) {
-            // Add "eller" before the last language
-            if (i === languages.length - 1) {
-                languageString += " eller ";
-            }
-
-            languageString += languages[i];
-
-            // Separate languages with ", ", except the last language
-            if (i < languages.length - 2) {
-                languageString += ", ";
-            }
-        }
-        return languageString;
-    };
-
+export default function EmploymentDetails({ adData }) {
     return (
         <section className="full-width">
             <Heading level="2" size="large" spacing>
@@ -36,125 +13,123 @@ export default function EmploymentDetails({ stilling }) {
             </Heading>
 
             <dl className="dl" id="employment-details">
-                {properties.jobtitle && (
+                {adData.jobTitle && (
                     <>
                         <dt>
                             <Label as="p">Stillingstittel</Label>
                         </dt>
                         <dd>
-                            <BodyLong>{properties.jobtitle}</BodyLong>
+                            <BodyLong>{adData.jobTitle}</BodyLong>
                         </dd>
                     </>
                 )}
-                {properties.positioncount && (
+                {adData.positionCount && (
                     <>
                         <dt>
                             <Label as="p">Antall stillinger</Label>
                         </dt>
                         <dd>
-                            <BodyLong>{properties.positioncount}</BodyLong>
+                            <BodyLong>{adData.positionCount}</BodyLong>
                         </dd>
                     </>
                 )}
-                {properties.starttime && (
+                {adData.startTime && (
                     <>
                         <dt>
                             <Label as="p">Oppstart</Label>
                         </dt>
                         <dd>
-                            <BodyLong>{formatDate(properties.starttime)}</BodyLong>
+                            <BodyLong>{formatDate(adData.startTime)}</BodyLong>
                         </dd>
                     </>
                 )}
-                {(properties.remote === "Hjemmekontor" || properties.remote === "Hybridkontor") && (
+                {(adData.remote === "Hjemmekontor" || adData.remote === "Hybridkontor") && (
                     <>
                         <dt>
                             <Label as="p">Hjemmekontor</Label>
                         </dt>
                         <dd>
-                            <BodyLong>{properties.remote === "Hjemmekontor" ? "Kun hjemmekontor" : "Hybrid"}</BodyLong>
+                            <BodyLong>{adData.remote === "Hjemmekontor" ? "Kun hjemmekontor" : "Hybrid"}</BodyLong>
                         </dd>
                     </>
                 )}
-                {properties.engagementtype && (
+                {adData.engagementType && (
                     <>
                         <dt>
                             <Label as="p">Ansettelsesform</Label>
                         </dt>
                         <dd>
-                            <BodyLong>{properties.engagementtype}</BodyLong>
+                            <BodyLong>{adData.engagementType}</BodyLong>
                         </dd>
                     </>
                 )}
-                {properties.jobpercentage && (
+                {adData.jobPercentage && (
                     <>
                         <dt>
                             <Label as="p">Prosent</Label>
                         </dt>
                         <dd>
-                            <BodyLong>
-                                {properties.jobpercentage} {properties.jobpercentage.endsWith("%") ? "" : "%"}
-                            </BodyLong>
+                            <BodyLong>{adData.jobPercentage}</BodyLong>
                         </dd>
                     </>
                 )}
-                {properties.extent && (
+                {adData.extent && (
                     <>
                         <dt>
                             <Label as="p">Heltid/deltid</Label>
                         </dt>
                         <dd>
-                            <BodyLong>{properties.extent}</BodyLong>
+                            <BodyLong>{adData.extent}</BodyLong>
                         </dd>
                     </>
                 )}
-                {properties.sector && (
+                {adData.sector && (
                     <>
                         <dt>
                             <Label as="p">Sektor</Label>
                         </dt>
                         <dd>
-                            <BodyLong>{properties.sector}</BodyLong>
+                            <BodyLong>{adData.sector}</BodyLong>
                         </dd>
                     </>
                 )}
-                {properties.workday && (
+                {adData.workdays && (
                     <>
                         <dt>
                             <Label as="p">Arbeidsdager</Label>
                         </dt>
                         <dd>
-                            <BodyLong>{worktimeParser(properties.workday)}</BodyLong>
+                            <BodyLong>{adData.workdays}</BodyLong>
                         </dd>
                     </>
                 )}
-                {properties.workhours && (
+                {adData.workHours && (
                     <>
                         <dt>
                             <Label as="p">Arbeidstid</Label>
                         </dt>
                         <dd>
-                            <BodyLong>{worktimeParser(properties.workhours)}</BodyLong>
+                            <BodyLong>{adData.workHours}</BodyLong>
                         </dd>
                     </>
                 )}
-                {properties.jobarrangement && (
+                {adData.jobArrangement && (
                     <>
                         <dt>
                             <Label as="p">Arbeidstidsordning</Label>
                         </dt>
                         <dd>
-                            <BodyLong>{properties.jobarrangement}</BodyLong>
+                            <BodyLong>{adData.jobArrangement}</BodyLong>
                         </dd>
                     </>
                 )}
-                {properties.workLanguage && (
+                {adData.workLanguages && (
                     <>
                         <dt>
                             <Label as="p">Arbeidsspråk</Label>
                         </dt>
                         <dd>
-                            <BodyLong>{formatWorkLanguage(properties.workLanguage)}</BodyLong>
+                            <BodyLong>{joinStringWithSeperator(adData.workLanguages, "eller")}</BodyLong>
                         </dd>
                     </>
                 )}
@@ -164,22 +139,20 @@ export default function EmploymentDetails({ stilling }) {
 }
 
 EmploymentDetails.propTypes = {
-    stilling: PropTypes.shape({
-        properties: PropTypes.shape({
-            jobtitle: PropTypes.string,
-            location: PropTypes.string,
-            engagementtype: PropTypes.string,
-            jobpercentage: PropTypes.string,
-            extent: PropTypes.string,
-            positioncount: PropTypes.string,
-            sector: PropTypes.string,
-            workday: PropTypes.string,
-            workhours: PropTypes.string,
-            jobarrangement: PropTypes.string,
-            starttime: PropTypes.string,
-            remote: PropTypes.string,
-            workLanguage: PropTypes.array,
+    adData: PropTypes.shape({
+        jobTitle: PropTypes.string,
+        positionCount: PropTypes.string,
+        startTime: PropTypes.string,
+        remote: PropTypes.string,
+        engagementType: PropTypes.string,
+        jobPercentage: PropTypes.string,
+        extent: PropTypes.string,
+        workdays: PropTypes.string,
+        workHours: PropTypes.string,
+        jobArrangement: PropTypes.string,
+        workLanguages: PropTypes.array,
+        employer: PropTypes.shape({
+            name: PropTypes.string,
         }),
-        location: PropTypes.shape({}),
     }).isRequired,
 };

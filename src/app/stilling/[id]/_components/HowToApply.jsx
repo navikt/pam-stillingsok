@@ -13,22 +13,15 @@ import {
 } from "@navikt/ds-react";
 import { ExternalLinkIcon } from "@navikt/aksel-icons";
 import Link from "next/link";
-import { formatDate, isValidEmail, isValidUrl } from "@/app/_common/utils/utils";
+import { formatDate, isValidUrl } from "@/app/_common/utils/utils";
 import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
 import FavouritesButton from "@/app/favoritter/_components/FavouritesButton";
 
-export function getApplicationUrl(properties) {
-    if (properties.applicationurl !== undefined) {
-        return properties.applicationurl;
-    }
-    return properties.sourceurl;
-}
-
-const logApplyForPosition = (stilling, applyPositionBgColor) => {
+const logApplyForPosition = (adData, applyPositionBgColor) => {
     try {
         logAmplitudeEvent("Stilling sok-via-url", {
-            title: stilling._source.title,
-            id: stilling._id,
+            title: adData.title,
+            id: adData.id,
             experimentApplyBoxColor: applyPositionBgColor,
         });
     } catch (e) {
@@ -36,11 +29,11 @@ const logApplyForPosition = (stilling, applyPositionBgColor) => {
     }
 };
 
-const logCopyEmailClick = (stilling, applyPositionBgColor) => {
+const logCopyEmailClick = (adData, applyPositionBgColor) => {
     try {
         logAmplitudeEvent("Stilling copy-email", {
-            title: stilling._source.title,
-            id: stilling._id,
+            title: adData.title,
+            id: adData.id,
             experimentApplyBoxColor: applyPositionBgColor,
         });
     } catch (e) {
@@ -48,11 +41,11 @@ const logCopyEmailClick = (stilling, applyPositionBgColor) => {
     }
 };
 
-const logEmailAnchorClick = (stilling, applyPositionBgColor) => {
+const logEmailAnchorClick = (adData, applyPositionBgColor) => {
     try {
         logAmplitudeEvent("Stilling email-anchor-click", {
-            title: stilling._source.title,
-            id: stilling._id,
+            title: adData.title,
+            id: adData.id,
             experimentApplyBoxColor: applyPositionBgColor,
         });
     } catch (e) {
@@ -60,14 +53,37 @@ const logEmailAnchorClick = (stilling, applyPositionBgColor) => {
     }
 };
 
-export default function HowToApply({ stilling, showFavouriteButton, adLayoutVariant }) {
-    const { properties } = stilling._source;
-    const applicationUrl = getApplicationUrl(properties);
-    const isFinn = stilling._source.source === "FINN";
+export default function HowToApply({ adData, showFavouriteButton, adLayoutVariant }) {
+    const applicationUrl =
+        (adData.applicationUrl && (adData.applicationUrl.url || adData.applicationUrl.dangerouslyInvalidUrl)) ||
+        (adData.sourceUrl && (adData.sourceUrl.url || adData.sourceUrl.dangerouslyInvalidUrl));
+    const isFinn = adData.source === "FINN";
     const path = "stilling";
     const applyPositionBgColor = adLayoutVariant === "a" ? "green" : "blue";
 
-    if (properties.hasInterestform === "true") {
+    /**
+     *  TODO: refactor denne
+     *  Blir brukt for FavouritesButton som forventer gammeldags data.
+     *  Venter med å refaktorere FavouritesButton for den blir brukt
+     *  flere steder
+     */
+    const stilling = {
+        source: adData.source,
+        reference: adData.reference,
+        title: adData.title,
+        status: adData.status,
+        locationList: adData.locationList,
+        published: adData.published,
+        expires: adData.expires,
+        properties: {
+            jobtitle: adData.jobTitle,
+            applicationdue: adData.applicationDue,
+            location: adData.location,
+            employer: adData.employer.name,
+        },
+    };
+
+    if (adData.hasSuperraskSoknad === "true") {
         return (
             <Box
                 background={applyPositionBgColor === "blue" ? "surface-alt-2-subtle" : "surface-alt-1-subtle"}
@@ -78,100 +94,87 @@ export default function HowToApply({ stilling, showFavouriteButton, adLayoutVari
                 <Heading level="2" size="medium" spacing>
                     Søk på jobben
                 </Heading>
-                {stilling._source.status === "ACTIVE" && (
+                {adData.status === "ACTIVE" && (
                     <BodyShort spacing>Vis frem deg selv og din erfaring med en superrask søknad.</BodyShort>
                 )}
-                {properties.applicationdue && (
+                {adData.applicationDue && (
                     <dl className="dl">
                         <dt>
                             <Label as="p">Søknadsfrist</Label>
                         </dt>
                         <dd>
-                            <BodyLong>{formatDate(properties.applicationdue)}</BodyLong>
+                            <BodyLong>{formatDate(adData.applicationDue)}</BodyLong>
                         </dd>
                     </dl>
                 )}
-                {stilling._source.status === "ACTIVE" && (
+                {adData.status === "ACTIVE" && (
                     <div>
                         <Button
                             as={Link}
                             onClick={() => {
                                 logAmplitudeEvent("click superrask søknad link", {
-                                    id: stilling._id,
+                                    id: adData.id,
                                     experimentApplyBoxColor: applyPositionBgColor,
                                 });
                             }}
-                            href={`/${path}/${stilling._id}/superrask-soknad`}
+                            href={`/${path}/${adData.id}/superrask-soknad`}
                         >
                             Gå til superrask søknad
                         </Button>
                     </div>
                 )}
 
-                {!isFinn && properties.applicationemail && (
+                {!isFinn && adData.applicationEmail && (
                     <BodyLong className="mt-4">
                         Alternativt kan du sende søknad via e-post til{" "}
-                        {isValidEmail(properties.applicationemail) ? (
-                            <HStack gap="2" as="span" wrap={false}>
-                                <span>
-                                    <AkselLink
-                                        onClick={() => {
-                                            logEmailAnchorClick(stilling, applyPositionBgColor);
-                                        }}
-                                        href={`mailto:${properties.applicationemail}`}
-                                    >
-                                        {properties.applicationemail}
-                                    </AkselLink>
-                                </span>
-                                <span>
-                                    <CopyButton
-                                        title="Kopier e-postadresse"
-                                        copyText={`${properties.applicationemail}`}
-                                        variant="action"
-                                        size="xsmall"
-                                        onActiveChange={(state) => {
-                                            if (state === true) {
-                                                logCopyEmailClick(stilling, applyPositionBgColor);
-                                            }
-                                        }}
-                                    />
-                                </span>
-                            </HStack>
-                        ) : (
-                            properties.applicationemail
-                        )}
+                        <HStack gap="2" as="span" wrap={false}>
+                            <span>
+                                <AkselLink
+                                    onClick={() => {
+                                        logEmailAnchorClick(adData, applyPositionBgColor);
+                                    }}
+                                    href={`mailto:${adData.applicationEmail}`}
+                                >
+                                    {adData.applicationEmail}
+                                </AkselLink>
+                            </span>
+                            <span>
+                                <CopyButton
+                                    title="Kopier e-postadresse"
+                                    copyText={`${adData.applicationEmail}`}
+                                    variant="action"
+                                    size="xsmall"
+                                    onActiveChange={(state) => {
+                                        if (state === true) {
+                                            logCopyEmailClick(adData, applyPositionBgColor);
+                                        }
+                                    }}
+                                />
+                            </span>
+                        </HStack>
                     </BodyLong>
                 )}
                 {applicationUrl && (
                     <div>
-                        {isValidUrl(applicationUrl) ? (
-                            <BodyLong className="mt-4">
-                                Alternativt kan du{" "}
-                                <AkselLink
-                                    href={applicationUrl}
-                                    onClick={() => logApplyForPosition(stilling, applyPositionBgColor)}
-                                >
-                                    sende søknad her.
-                                </AkselLink>
-                            </BodyLong>
-                        ) : (
-                            <BodyLong className="mt-4">Alternativt kan du sende søknad på {applicationUrl}.</BodyLong>
-                        )}
+                        <BodyLong className="mt-4">
+                            Alternativt kan du{" "}
+                            <AkselLink
+                                href={applicationUrl}
+                                onClick={() => logApplyForPosition(adData, applyPositionBgColor)}
+                            >
+                                sende søknad her.
+                            </AkselLink>
+                        </BodyLong>
                     </div>
                 )}
                 {showFavouriteButton && (
-                    <FavouritesButton
-                        className="mt-4"
-                        variant="secondary"
-                        id={stilling._id}
-                        stilling={stilling._source}
-                    />
+                    <FavouritesButton className="mt-4" variant="secondary" id={adData.id} stilling={stilling} />
                 )}
             </Box>
         );
     }
 
-    if (properties.applicationdue || properties.applicationemail || applicationUrl) {
+    if (adData.applicationDue || adData.applicationEmail || applicationUrl) {
         return (
             <Box
                 background={applyPositionBgColor === "blue" ? "surface-alt-2-subtle" : "surface-alt-1-subtle"}
@@ -183,52 +186,48 @@ export default function HowToApply({ stilling, showFavouriteButton, adLayoutVari
                     Søk på jobben
                 </Heading>
                 <dl className="dl">
-                    {properties.applicationdue && (
+                    {adData.applicationDue && (
                         <>
                             <dt>
                                 <Label as="p">Søknadsfrist</Label>
                             </dt>
                             <dd>
-                                <BodyLong>{formatDate(properties.applicationdue)}</BodyLong>
+                                <BodyLong>{formatDate(adData.applicationDue)}</BodyLong>
                             </dd>
                         </>
                     )}
-                    {!isFinn && properties.applicationemail && (
+                    {!isFinn && adData.applicationEmail && (
                         <>
                             <dt>
                                 <Label as="p">Send søknad til</Label>
                             </dt>
                             <dd>
                                 <BodyLong>
-                                    {isValidEmail(properties.applicationemail) ? (
-                                        <HStack gap="2" as="span" wrap={false}>
-                                            <span>
-                                                <AkselLink
-                                                    onClick={() => {
-                                                        logEmailAnchorClick(stilling, applyPositionBgColor);
-                                                    }}
-                                                    href={`mailto:${properties.applicationemail}`}
-                                                >
-                                                    {properties.applicationemail}
-                                                </AkselLink>
-                                            </span>
-                                            <span>
-                                                <CopyButton
-                                                    title="Kopier e-postadresse"
-                                                    copyText={`${properties.applicationemail}`}
-                                                    variant="action"
-                                                    size="xsmall"
-                                                    onActiveChange={(state) => {
-                                                        if (state === true) {
-                                                            logCopyEmailClick(stilling, applyPositionBgColor);
-                                                        }
-                                                    }}
-                                                />
-                                            </span>
-                                        </HStack>
-                                    ) : (
-                                        properties.applicationemail
-                                    )}
+                                    <HStack gap="2" as="span" wrap={false}>
+                                        <span>
+                                            <AkselLink
+                                                onClick={() => {
+                                                    logEmailAnchorClick(adData, applyPositionBgColor);
+                                                }}
+                                                href={`mailto:${adData.applicationEmail}`}
+                                            >
+                                                {adData.applicationEmail}
+                                            </AkselLink>
+                                        </span>
+                                        <span>
+                                            <CopyButton
+                                                title="Kopier e-postadresse"
+                                                copyText={`${adData.applicationEmail}`}
+                                                variant="action"
+                                                size="xsmall"
+                                                onActiveChange={(state) => {
+                                                    if (state === true) {
+                                                        logCopyEmailClick(adData, applyPositionBgColor);
+                                                    }
+                                                }}
+                                            />
+                                        </span>
+                                    </HStack>
                                 </BodyLong>
                             </dd>
                         </>
@@ -251,7 +250,7 @@ export default function HowToApply({ stilling, showFavouriteButton, adLayoutVari
                             variant="primary"
                             as="a"
                             href={applicationUrl}
-                            onClick={() => logApplyForPosition(stilling, applyPositionBgColor)}
+                            onClick={() => logApplyForPosition(adData, applyPositionBgColor)}
                             icon={<ExternalLinkIcon aria-hidden="true" />}
                             role="link"
                         >
@@ -260,16 +259,11 @@ export default function HowToApply({ stilling, showFavouriteButton, adLayoutVari
                     </div>
                 )}
 
-                {isFinn && !properties.applicationurl && (
+                {isFinn && !adData.applicationUrl && (
                     <BodyLong className="mt-4">Søk via opprinnelig annonse på FINN.no.</BodyLong>
                 )}
                 {showFavouriteButton && (
-                    <FavouritesButton
-                        className="mt-4"
-                        variant="secondary"
-                        id={stilling._id}
-                        stilling={stilling._source}
-                    />
+                    <FavouritesButton className="mt-4" variant="secondary" id={adData.id} stilling={stilling} />
                 )}
             </Box>
         );
@@ -278,21 +272,21 @@ export default function HowToApply({ stilling, showFavouriteButton, adLayoutVari
 }
 
 HowToApply.propTypes = {
-    stilling: PropTypes.shape({
-        _id: PropTypes.string,
-        _source: PropTypes.shape({
-            title: PropTypes.string,
-            source: PropTypes.string,
-            status: PropTypes.string,
-            properties: PropTypes.shape({
-                applicationdue: PropTypes.string,
-                applicationemail: PropTypes.string,
-                applicationurl: PropTypes.string,
-                sourceurl: PropTypes.string,
-                hasInterestform: PropTypes.string,
-            }),
+    adData: PropTypes.shape({
+        id: PropTypes.string,
+        status: PropTypes.string,
+        applicationUrl: PropTypes.shape({
+            url: PropTypes.string,
+            dangerouslyInvalidUrl: PropTypes.string,
         }),
+        sourceUrl: PropTypes.shape({
+            url: PropTypes.string,
+            dangerouslyInvalidUrl: PropTypes.string,
+        }),
+        source: PropTypes.string,
+        hasSuperraskSoknad: PropTypes.string,
+        applicationDue: PropTypes.string,
+        applicationEmail: PropTypes.string,
     }).isRequired,
-    showFavouriteButton: PropTypes.bool.isRequired,
     adLayoutVariant: PropTypes.string,
 };

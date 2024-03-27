@@ -43,27 +43,12 @@ export const logSearchFilterRemoved = (data) => {
     amplitude.track("Søkefilter fjernet", enrichData(data));
 };
 
-function getJobPostingFormat(jobPosting) {
-    if (
-        jobPosting &&
-        jobPosting._source &&
-        jobPosting._source.properties &&
-        jobPosting._source.properties.adtext &&
-        jobPosting._source.properties.adtext.includes('<section id="arb-serEtter">') &&
-        jobPosting._source.properties.adtext.includes('<section id="arb-arbeidsoppgaver">') &&
-        jobPosting._source.properties.adtext.includes('<section id="arb-tilbyr">')
-    ) {
-        return JobPostingTextEnum.STRUKTURERT;
-    }
-    return JobPostingTextEnum.IKKE_STRUKTURERT;
-}
-
-export function logStillingVisning(ad, adLayoutVariant) {
+export function logStillingVisning(adData, adLayoutVariant) {
     // Todo - tror employer.location er erstattet med employer.locationList
-    const employerLocation = ad._source.employer ? ad._source.employer.location : null;
+    const employerLocation = adData.employer && adData.employer.locationList ? adData.employer.locationList[0] : null;
     let hasContactMail = false;
     let hasContactPhone = false;
-    const contactList = ad._source.contactList ? ad._source.contactList : null;
+    const contactList = adData.contactList ? adData.contactList : null;
 
     if (contactList) {
         contactList.forEach((contact) => {
@@ -79,22 +64,21 @@ export function logStillingVisning(ad, adLayoutVariant) {
     }
 
     logAmplitudeEvent("Stilling visning", {
-        title: ad._source.title || "N/A",
-        id: ad._id,
-        businessName: ad._source.businessName || "N/A",
+        title: adData.title || "N/A",
+        id: adData.id,
         country: employerLocation ? employerLocation.country : "N/A",
         county: employerLocation ? employerLocation.county : "N/A",
         city: employerLocation ? employerLocation.city : "N/A",
-        employer: ad._source.employer ? ad._source.employer.name : "N/A",
-        expires: ad._source.expires || "N/A",
-        published: ad._source.published || "N/A",
-        fetchedFromSource: ad._source.source || "N/A",
-        hasSuperraskSoknad: ad._source.properties.hasInterestform || "N/A",
-        hasApplicationUrl: !!ad._source.properties.applicationurl || !!ad._source.properties.sourceurl,
-        hasApplicationEmail: !!ad._source.properties.applicationemail,
+        employer: adData.employer && adData.employer.name ? adData.employer.name : "N/A",
+        expires: adData.expires || "N/A",
+        published: adData.published || "N/A",
+        fetchedFromSource: adData.source || "N/A",
+        hasSuperraskSoknad: adData.hasSuperraskSoknad || "N/A",
+        hasApplicationUrl: !!adData.applicationurl || !!ad._source.properties.sourceurl,
+        hasApplicationEmail: !!adData.applicationemail,
         hasContactInfoMail: hasContactMail,
         hasContactInfoPhone: hasContactPhone,
-        jobPostingFormat: getJobPostingFormat(ad),
+        jobPostingFormat: adData.jobPostingFormat,
         adLayoutVariant: adLayoutVariant,
     });
 }

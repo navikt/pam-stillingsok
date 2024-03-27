@@ -1,5 +1,5 @@
 import React from "react";
-import { BodyLong, Heading, Link as AkselLink, Box } from "@navikt/ds-react";
+import { BodyLong, Box, Heading, Link as AkselLink } from "@navikt/ds-react";
 
 function GiveFeedback() {
     return (
