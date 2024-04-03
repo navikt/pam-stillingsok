@@ -31,7 +31,16 @@ export default function NewApplication({ ad, applicationForm, submitApplication 
                     <Form
                         ad={ad}
                         applicationForm={applicationForm}
-                        submitApplication={formAction}
+                        submitApplication={(e) => {
+                            console.log("SUBMIT");
+                            // state.error = true;
+                            try {
+                                console.log("inside");
+                                submitApplication(state, applicationForm);
+                            } catch (err) {
+                                console.log("ERROR");
+                            }
+                        }}
                         submitApiError={state.error}
                         validationErrors={state.validationErrors}
                     />

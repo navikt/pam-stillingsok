@@ -37,30 +37,40 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function Page({ params }) {
-    const ad = await fetchAd(params.id);
-    const applicationForm = await fetchApplicationForm(params.id);
+    let ad = {};
+    let applicationForm = {};
+    console.log("page");
+    try {
+        ad = await fetchAd(params.id);
+        applicationForm = await fetchApplicationForm(params.id);
+    } catch (e) {}
 
     async function submitApplication(prevState, formData) {
         "use server";
-
-        const application = parseFormData(formData, applicationForm.qualifications);
-        const errors = validateForm(application);
-        const isValid = Object.keys(errors).length === 0;
-        const defaultState = {
-            success: false,
-            validationErrors: {},
-            error: undefined,
-            data: undefined,
-        };
-
-        if (!isValid) {
-            return {
-                ...defaultState,
-                validationErrors: errors,
-            };
-        }
-
+        console.log("BEGIN2");
         try {
+            console.log("BEGIN3", formData);
+
+            const application = parseFormData(formData, applicationForm.qualifications);
+            const errors = validateForm(application);
+            const isValid = Object.keys(errors).length === 0;
+            console.log("ERRORS", errors);
+            console.log("IS VALID", isValid);
+            const defaultState = {
+                success: false,
+                validationErrors: {},
+                error: undefined,
+                data: undefined,
+            };
+
+            if (!isValid) {
+                return {
+                    ...defaultState,
+                    validationErrors: errors,
+                };
+            }
+
+            console.log("SEND");
             const response = await fetch(`${process.env.INTEREST_API_URL}/application-form/${params.id}/application`, {
                 body: JSON.stringify(application),
                 method: "POST",
@@ -75,11 +85,25 @@ export default async function Page({ params }) {
                 };
             }
         } catch (err) {
+            console.log("ERRORS", err);
+            const defaultState = {
+                success: false,
+                validationErrors: {},
+                error: undefined,
+                data: undefined,
+            };
             return {
                 ...defaultState,
                 error: "unknown",
             };
         }
+
+        const defaultState = {
+            success: false,
+            validationErrors: {},
+            error: undefined,
+            data: undefined,
+        };
 
         return {
             ...defaultState,
