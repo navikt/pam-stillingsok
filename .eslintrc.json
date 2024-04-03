@@ -28,13 +28,5 @@
                 "argsIgnorePattern": "^_"
             }
         ]
-    },
-    "settings": {
-        "import/resolver": {
-            "alias": {
-                "extensions": [".js", ".jsx"],
-                "map": [["@", "."]]
-            }
-        }
     }
 }
