@@ -23,7 +23,6 @@ export default function mapAdData(rawElasticSearchAdResult) {
         return undefined;
     }
 
-    console.info("mapAdData - id: ", getString(rawElasticSearchAdResult._id));
     return removeUndefinedValues({
         id: getString(rawElasticSearchAdResult._id),
         status: getString(data.status),
