@@ -23,8 +23,6 @@ export default function NewApplication({ ad, applicationForm, submitApplication 
     const [submitOffline, setSubmitOffline] = useState(false);
     const isOnline = useNetwork();
 
-    console.log("WINDOWS", typeof window);
-
     useEffect(() => {
         if (state && state.success) {
             try {
