@@ -164,7 +164,7 @@ function Form({ ad, applicationForm, submitApplication, submitApiError, offlineE
                 kontaktinformasjonen din.
             </BodyLong>
             <BodyLong spacing>Du kan når som helst trekke tilbake søknaden din.</BodyLong>
-            <BodyLong>
+            <BodyLong spacing>
                 <AkselLink target="_blank" rel="noopener noreferrer" href="/personvern-superrask-soknad">
                     Les om hvordan vi behandler dine data (åpner i ny fane)
                 </AkselLink>
