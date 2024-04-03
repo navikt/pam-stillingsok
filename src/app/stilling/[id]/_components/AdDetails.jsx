@@ -23,9 +23,9 @@ export default function AdDetails({ adData }) {
                     <Label as="span">Referanse:</Label> {adData.reference}
                 </BodyShort>
             )}
-            {adData.id && (
+            {adData.adNumber && (
                 <BodyShort spacing>
-                    <Label as="span">Stillingsnummer:</Label> {adData.id}
+                    <Label as="span">Stillingsnummer:</Label> {adData.adNumber}
                 </BodyShort>
             )}
             <BodyShort>
@@ -42,5 +42,6 @@ ShareAd.propTypes = {
         updated: PropTypes.string,
         medium: PropTypes.string,
         reference: PropTypes.string,
+        adNumber: PropTypes.string,
     }).isRequired,
 };

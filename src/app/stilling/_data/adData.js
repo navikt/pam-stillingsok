@@ -40,6 +40,7 @@ export default function mapAdData(rawElasticSearchAdResult) {
         sourceUrl: getUrl(properties.sourceurl),
         hasSuperraskSoknad: getString(properties.hasInterestform),
         jobPostingFormat: getJobPostingFormat(properties.adText),
+        adNumber: getNumber(data.id),
 
         // employment details
         engagementType: getString(properties.engagementType),
@@ -149,6 +150,13 @@ function getContactList(value) {
  */
 function getString(value) {
     if (value && typeof value === "string") {
+        return value;
+    }
+    return undefined;
+}
+
+function getNumber(value) {
+    if (value && typeof value === "number") {
         return value;
     }
     return undefined;
