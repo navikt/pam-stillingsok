@@ -1,5 +1,5 @@
 import React from "react";
-import { Alert, BodyLong, Link as AkselLink, Modal } from "@navikt/ds-react";
+import { Alert, Link as AkselLink, Modal } from "@navikt/ds-react";
 import Link from "next/link";
 
 function NotFoundMessage() {

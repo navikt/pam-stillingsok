@@ -1,4 +1,4 @@
-import { defaultQuery, SEARCH_CHUNK_SIZE } from "./query";
+import { defaultQuery } from "./query";
 
 export const ADD_MUNICIPAL = "ADD_MUNICIPAL";
 export const REMOVE_MUNICIPAL = "REMOVE_MUNICIPAL";
