@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { BodyLong, CopyButton, Heading, HStack, Label, Link as AkselLink } from "@navikt/ds-react";
-import { isValidEmail } from "@/app/_common/utils/utils";
 import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
 
 function logCopyContactInfoEvent(type, id, title) {
@@ -42,17 +41,13 @@ export default function ContactPerson({ contactList, adId, adTitle }) {
                         {contact.email && (
                             <BodyLong className="overflow-wrap-anywhere">
                                 <HStack gap="2" as="span" wrap={false}>
-                                    {isValidEmail(contact.email) ? (
-                                        <AkselLink
-                                            rel="nofollow"
-                                            href={`mailto:${contact.email}`}
-                                            onClick={() => logClickEmailEvent(adId, adTitle)}
-                                        >
-                                            {contact.email}
-                                        </AkselLink>
-                                    ) : (
-                                        contact.email
-                                    )}
+                                    <AkselLink
+                                        rel="nofollow"
+                                        href={`mailto:${contact.email}`}
+                                        onClick={() => logClickEmailEvent(adId, adTitle)}
+                                    >
+                                        {contact.email}
+                                    </AkselLink>
                                     <CopyButton
                                         title="Kopier e-postadresse"
                                         size="xsmall"
@@ -74,14 +69,7 @@ export default function ContactPerson({ contactList, adId, adTitle }) {
 }
 
 ContactPerson.propTypes = {
-    contactList: PropTypes.arrayOf(
-        PropTypes.shape({
-            name: PropTypes.string,
-            title: PropTypes.string,
-            phone: PropTypes.string,
-            email: PropTypes.string,
-        }),
-    ),
+    contactList: PropTypes.arrayOf(PropTypes.object),
     adId: PropTypes.string,
     adTitle: PropTypes.string,
 };

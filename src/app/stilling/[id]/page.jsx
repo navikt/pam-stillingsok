@@ -2,6 +2,8 @@ import Ad from "./_components/Ad";
 import { getStillingDescription, getStillingTitle } from "./_components/getMetaData";
 import { defaultOpenGraphImage } from "@/app/layout";
 import { fetchAd } from "../FetchAd";
+import { getAdData } from "@/app/stilling/_data/adDataActions";
+import { notFound } from "next/navigation";
 import { cookies } from "next/headers";
 
 export async function generateMetadata({ params }) {
@@ -24,13 +26,20 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function Page({ params }) {
-    const ad = await fetchAd(params.id);
-    let adLayoutVariant = "a";
+    const result = await getAdData(params.id);
+    if (!result.ok) {
+        if (result.status === 404) {
+            notFound();
+        } else {
+            throw new Error("Could not retrieve ad data");
+        }
+    }
 
     // Get cookie for ad layout a b test and pass it to component
+    let adLayoutVariant = "a";
     if (cookies().get("AD_LAYOUT_VARIANT")) {
         adLayoutVariant = cookies().get("AD_LAYOUT_VARIANT").value;
     }
 
-    return <Ad ad={ad} adLayoutVariant={adLayoutVariant} />;
+    return <Ad adData={result.data} adLayoutVariant={adLayoutVariant} />;
 }

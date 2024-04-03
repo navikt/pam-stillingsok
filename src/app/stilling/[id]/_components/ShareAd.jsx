@@ -4,11 +4,9 @@ import { BodyShort, Heading, Link as AkselLink, VStack } from "@navikt/ds-react"
 import FacebookIcon from "./icons/FacebookIcon";
 import LinkedinIcon from "./icons/LinkedinIcon";
 import TwitterIcon from "./icons/TwitterIcon";
-import MessengerIcon from "./icons/MessengerIcon";
 
-export default function ShareAd({ source, id }) {
-    const { title } = source;
-    const shareAdRedirectUrl = `https://arbeidsplassen.nav.no/stillinger/stilling/${id}`;
+export default function ShareAd({ adData }) {
+    const shareAdRedirectUrl = `https://arbeidsplassen.nav.no/stillinger/stilling/${adData.id}`;
 
     return (
         <section className="full-width mb-10">
@@ -38,7 +36,9 @@ export default function ShareAd({ source, id }) {
 
                 <BodyShort>
                     <AkselLink
-                        href={`https://twitter.com/intent/tweet?url=${shareAdRedirectUrl}&text=${encodeURI(title)}`}
+                        href={`https://twitter.com/intent/tweet?url=${shareAdRedirectUrl}&text=${encodeURI(
+                            adData.title,
+                        )}`}
                         rel="noopener noreferrer"
                     >
                         <TwitterIcon />
@@ -51,8 +51,8 @@ export default function ShareAd({ source, id }) {
 }
 
 ShareAd.propTypes = {
-    source: PropTypes.shape({
+    adData: PropTypes.shape({
+        id: PropTypes.string,
         title: PropTypes.string,
     }).isRequired,
-    id: PropTypes.string.isRequired,
 };
