@@ -109,24 +109,24 @@ function getJobPercentage(value) {
     return jobPercentage + jobPercentage.endsWith("%") ? "" : "  %";
 }
 
-function getWorktime(value) {
-    const worktime = getString(value);
-    if (!worktime) {
-        return undefined;
-    }
+function getWorktime(worktime) {
+    // Can be one of multiple inputs:
+    // "Ukedager Søndag"
+    // "Turnus"
+    // ["Natt"]
+    // ["Ukedager","Søndag"]
 
-    // We need this check in case of old workhour/-day property values, formatted like 'Opt1 Opt2'
-    const items = [];
     try {
         const jsonArray = JSON.parse(worktime);
 
-        for (let i = 0; i < jsonArray.length; i += 1) {
-            items.push(jsonArray[i]);
+        if (!Array.isArray(jsonArray)) {
+            return "";
         }
+
+        return jsonArray.filter((e) => typeof e === "string").join(", ");
     } catch (e) {
-        items.push(worktime);
+        return worktime;
     }
-    return items.join(", ");
 }
 
 function getContactList(value) {
@@ -264,4 +264,9 @@ function getEmployerLocation(value) {
     }
 
     return employerLocation.join(", ");
+}
+
+// Export for testing purposes
+if (process.env.NODE_ENV !== "production") {
+    module.exports.getWorktime = getWorktime;
 }
