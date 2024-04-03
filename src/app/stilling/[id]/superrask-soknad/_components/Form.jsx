@@ -171,7 +171,7 @@ function Form({ ad, applicationForm, submitApplication, submitApiError, offlineE
             </BodyLong>
 
             {submitApiError && <ApiErrorMessage apiErrorCode={submitApiError} />}
-            {offlineError && <h1>du er offline</h1>}
+            {offlineError && !submitApiError && <ApiErrorMessage apiErrorCode="offline" />}
 
             <HStack gap="4" className="mt-12">
                 <FormButtonBar id={ad._id} />

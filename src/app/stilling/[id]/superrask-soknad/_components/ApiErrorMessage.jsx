@@ -12,6 +12,8 @@ const getErrorMessage = (apiErrorCode) => {
             return "Vi kunne ikke sende inn søknaden din. Sjekk at telefonnummeret ditt er skrevet riktig og prøv på nytt. Eksempel: +47 99 99 99 99";
         case "invalid_motivation":
             return "Vi kunne ikke sende inn søknaden din. Sjekk at begrunnelsen din ikke inneholder noen lenker eller er lenger enn 800 tegn.";
+        case "offline":
+            return "Vi kunne ikke sende inn søknaden din. Sjekk forbindelsen din til internett.";
         default:
             return "Det oppsto dessverre en feil og vi kunne ikke sende inn søknaden din. Prøv å send søknaden på nytt.";
     }
