@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useFormState } from "react-dom";
 import PropTypes from "prop-types";
 import Success from "./Success";
@@ -8,8 +8,22 @@ import Form from "./Form";
 import AdDetailsHeader from "./AdDetailsHeader";
 import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
 
+function useNetwork() {
+    const [isOnline, setNetwork] = useState(true);
+    useEffect(() => {
+        if (window) {
+            window.addEventListener("offline", () => setNetwork(window.navigator.onLine));
+            window.addEventListener("online", () => setNetwork(window.navigator.onLine));
+        }
+    });
+    return isOnline;
+}
 export default function NewApplication({ ad, applicationForm, submitApplication }) {
     const [state, formAction] = useFormState(submitApplication, { validationErrors: {}, success: false });
+    const [submitOffline, setSubmitOffline] = useState(false);
+    const isOnline = useNetwork();
+
+    console.log("WINDOWS", typeof window);
 
     useEffect(() => {
         if (state && state.success) {
@@ -31,8 +45,16 @@ export default function NewApplication({ ad, applicationForm, submitApplication 
                     <Form
                         ad={ad}
                         applicationForm={applicationForm}
-                        submitApplication={formAction}
+                        submitApplication={(e) => {
+                            if (isOnline) {
+                                setSubmitOffline(false);
+                                formAction(e);
+                            } else {
+                                setSubmitOffline(true);
+                            }
+                        }}
                         submitApiError={state.error}
+                        offlineError={submitOffline}
                         validationErrors={state.validationErrors}
                     />
                 )}

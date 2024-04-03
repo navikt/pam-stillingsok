@@ -16,7 +16,7 @@ import { MOTIVATION_MAX_LENGTH } from "./validateForm";
 import ApiErrorMessage from "./ApiErrorMessage";
 import { FormButtonBar } from "./FormButtonBar";
 
-function Form({ ad, applicationForm, submitApplication, submitApiError, validationErrors }) {
+function Form({ ad, applicationForm, submitApplication, submitApiError, offlineError, validationErrors }) {
     const errorSummary = useRef();
     const [motivation, setMotivation] = useState("");
     const [fixedErrors, setFixedErrors] = useState([]);
@@ -171,6 +171,7 @@ function Form({ ad, applicationForm, submitApplication, submitApiError, validati
             </BodyLong>
 
             {submitApiError && <ApiErrorMessage apiErrorCode={submitApiError} />}
+            {offlineError && <h1>du er offline</h1>}
 
             <HStack gap="4" className="mt-12">
                 <FormButtonBar id={ad._id} />
@@ -196,6 +197,7 @@ Form.propTypes = {
     }).isRequired,
     submitApplication: PropTypes.func.isRequired,
     submitApiError: PropTypes.string,
+    offlineError: PropTypes.bool,
     validationErrors: PropTypes.shape({
         email: PropTypes.string,
         telephone: PropTypes.string,
