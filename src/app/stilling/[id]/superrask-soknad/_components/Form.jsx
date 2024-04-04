@@ -16,7 +16,7 @@ import { MOTIVATION_MAX_LENGTH } from "./validateForm";
 import ApiErrorMessage from "./ApiErrorMessage";
 import { FormButtonBar } from "./FormButtonBar";
 
-function Form({ ad, applicationForm, submitApplication, submitApiError, validationErrors }) {
+function Form({ ad, applicationForm, submitApplication, submitApiError, offlineError, validationErrors }) {
     const errorSummary = useRef();
     const [motivation, setMotivation] = useState("");
     const [fixedErrors, setFixedErrors] = useState([]);
@@ -164,13 +164,14 @@ function Form({ ad, applicationForm, submitApplication, submitApiError, validati
                 kontaktinformasjonen din.
             </BodyLong>
             <BodyLong spacing>Du kan når som helst trekke tilbake søknaden din.</BodyLong>
-            <BodyLong>
+            <BodyLong spacing>
                 <AkselLink target="_blank" rel="noopener noreferrer" href="/personvern-superrask-soknad">
                     Les om hvordan vi behandler dine data (åpner i ny fane)
                 </AkselLink>
             </BodyLong>
 
             {submitApiError && <ApiErrorMessage apiErrorCode={submitApiError} />}
+            {offlineError && !submitApiError && <ApiErrorMessage apiErrorCode="offline" />}
 
             <HStack gap="4" className="mt-12">
                 <FormButtonBar id={ad._id} />
@@ -196,6 +197,7 @@ Form.propTypes = {
     }).isRequired,
     submitApplication: PropTypes.func.isRequired,
     submitApiError: PropTypes.string,
+    offlineError: PropTypes.bool,
     validationErrors: PropTypes.shape({
         email: PropTypes.string,
         telephone: PropTypes.string,
