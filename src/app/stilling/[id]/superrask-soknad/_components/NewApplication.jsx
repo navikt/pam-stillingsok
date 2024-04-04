@@ -7,28 +7,11 @@ import Success from "./Success";
 import Form from "./Form";
 import AdDetailsHeader from "./AdDetailsHeader";
 import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
+import isBrowserAndHasNetwork from "@/app/_common/utils/capitalizeFirstLetter";
 
-function useNetwork() {
-    const [isOnline, setNetwork] = useState(true);
-    useEffect(() => {
-        if (window) {
-            window.addEventListener("offline", () => setNetwork(window.navigator.onLine));
-            window.addEventListener("online", () => setNetwork(window.navigator.onLine));
-        }
-
-        return () => {
-            if (window) {
-                window.removeEventListener("offline", () => setNetwork(window.navigator.onLine));
-                window.removeEventListener("online", () => setNetwork(window.navigator.onLine));
-            }
-        };
-    });
-    return isOnline;
-}
 export default function NewApplication({ ad, applicationForm, submitApplication }) {
     const [state, formAction] = useFormState(submitApplication, { validationErrors: {}, success: false });
     const [submitOffline, setSubmitOffline] = useState(false);
-    const isOnline = useNetwork();
 
     useEffect(() => {
         if (state && state.success) {
@@ -51,7 +34,7 @@ export default function NewApplication({ ad, applicationForm, submitApplication 
                         ad={ad}
                         applicationForm={applicationForm}
                         submitApplication={(e) => {
-                            if (isOnline) {
+                            if (isBrowserAndHasNetwork()) {
                                 setSubmitOffline(false);
                                 formAction(e);
                             } else {
