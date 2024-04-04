@@ -18,8 +18,8 @@ function useNetwork() {
 
         return () => {
             if (window) {
-                window.removeEventListener("offline");
-                window.removeEventListener("online");
+                window.removeEventListener("offline", () => setNetwork(window.navigator.onLine));
+                window.removeEventListener("online", () => setNetwork(window.navigator.onLine));
             }
         };
     });
