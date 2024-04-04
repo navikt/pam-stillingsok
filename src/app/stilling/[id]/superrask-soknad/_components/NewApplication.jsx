@@ -7,7 +7,7 @@ import Success from "./Success";
 import Form from "./Form";
 import AdDetailsHeader from "./AdDetailsHeader";
 import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
-import isBrowserAndHasNetwork from "@/app/_common/utils/capitalizeFirstLetter";
+import isBrowserAndHasNetwork from "@/app/_common/utils/isBrowserAndHasNetwork";
 
 export default function NewApplication({ ad, applicationForm, submitApplication }) {
     const [state, formAction] = useFormState(submitApplication, { validationErrors: {}, success: false });
