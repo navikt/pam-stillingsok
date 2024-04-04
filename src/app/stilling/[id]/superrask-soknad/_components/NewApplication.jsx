@@ -15,6 +15,13 @@ function useNetwork() {
             window.addEventListener("offline", () => setNetwork(window.navigator.onLine));
             window.addEventListener("online", () => setNetwork(window.navigator.onLine));
         }
+
+        return () => {
+            if (window) {
+                window.removeEventListener("offline");
+                window.removeEventListener("online");
+            }
+        };
     });
     return isOnline;
 }
