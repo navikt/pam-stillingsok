@@ -2,6 +2,7 @@ import elasticSearchRequestBody from "@/app/(sok)/_utils/elasticSearchRequestBod
 import { getDefaultHeaders } from "@/app/_common/utils/fetch";
 import simplifySearchResponse from "@/app/(sok)/_utils/simplifySearchResponse";
 import { unstable_cache } from "next/cache";
+import logger from "@/app/_common/utils/logger";
 
 /*
 Manually cached because Next.js won't cache it. We break these:
@@ -30,6 +31,7 @@ async function fetchElasticSearch(query) {
     });
 
     if (!res.ok) {
+        logger.error(`Failed to fetch data: ${res.status} ${res.statusText}`);
         throw new Error("Failed to fetch data");
     }
 
