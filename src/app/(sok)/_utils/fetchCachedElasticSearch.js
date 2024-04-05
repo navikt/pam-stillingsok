@@ -30,7 +30,7 @@ async function fetchElasticSearch(query) {
     });
 
     if (!res.ok) {
-        throw new Error("Failed to fetch data");
+        throw new Error(`Failed to fetch data: ${res.status}`);
     }
 
     const data = await res.json();
