@@ -89,40 +89,6 @@ function filterExtent(extent) {
     return filters;
 }
 
-function filterWorkLanguaeDELETE(workLanguage) {
-    const filters = [];
-    if (workLanguage && workLanguage.length > 0) {
-        const filter = {
-            bool: {
-                should: [],
-            },
-        };
-        workLanguage.forEach((item) => {
-            if (item === NOT_DEFINED) {
-                filter.bool.should.push({
-                    bool: {
-                        must_not: [
-                            {
-                                exists: {
-                                    field: "worklanguage_facet",
-                                },
-                            },
-                        ],
-                    },
-                });
-            } else {
-                filter.bool.should.push({
-                    term: {
-                        worklanguage_facet: item,
-                    },
-                });
-            }
-        });
-        filters.push(filter);
-    }
-    return filters;
-}
-
 function filterWorkLanguage(workLanguage) {
     const filters = [];
     if (workLanguage && workLanguage.length > 0) {
