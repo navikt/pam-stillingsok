@@ -41,11 +41,12 @@ function RegisterEmailForm({ onClose, onSuccess }) {
     }
 
     async function handleFormSubmit(e) {
-        e.preventDefault();
-
         if (!isBrowserAndHasNetwork) {
             setSaveStatus(FetchStatus.NO_NETWORK);
+            console.log("NO NETWORK");
         } else if (validateForm()) {
+            console.log("NETWORK");
+            e.preventDefault();
             setSaveStatus(FetchStatus.IS_FETCHING);
             const result = await actions.updateUser({ ...user, email });
             if (result.success) {

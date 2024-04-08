@@ -65,11 +65,12 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
     }
 
     function handleFormSubmit(e) {
-        e.preventDefault();
-
         if (!isBrowserAndHasNetwork) {
+            console.log("NO NETWORK");
             setShowError(true);
         } else if (validateForm()) {
+            e.preventDefault();
+            console.log("NETWORK");
             let dataToBeSaved = {
                 title,
                 notifyType,
