@@ -234,13 +234,14 @@ export function isSearchQueryEmpty(query) {
  * and returns an encoded query string, f.ex "?q=javascript&counties[]=OSLO".
  */
 export function stringifyQuery(query = {}) {
-    const string = Object.keys(query)
+    const decodedQuery = decodeQueryParameters(query);
+    const string = Object.keys(decodedQuery)
         .map((key) => {
-            const value = query[key];
+            const value = decodedQuery[key];
             if (Array.isArray(value)) {
                 return value.map((val) => `${encodeURIComponent(key)}[]=${encodeURIComponent(val)}`).join("&");
             }
-            return `${encodeURIComponent(key)}=${encodeURIComponent(query[key])}`;
+            return `${encodeURIComponent(key)}=${encodeURIComponent(decodedQuery[key])}`;
         })
         .filter((elem) => elem !== "")
         .join("&");

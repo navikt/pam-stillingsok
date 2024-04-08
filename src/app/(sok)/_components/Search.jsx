@@ -48,6 +48,7 @@ export default function Search({ query, searchResult, aggregations, locations })
                 router.replace(`/${stringifyQuery(browserQuery)}`, { scroll: false });
             }
         } else {
+            router.replace(`/${stringifyQuery(toBrowserQuery(updatedQuery))}`, { scroll: false });
             // Skip search first time query change, since that
             // will just reload the search result we already got
             setInitialRenderDone(true);
