@@ -6,6 +6,17 @@ import "./EmploymentDetails.css";
 import joinStringWithSeperator from "@/app/_common/utils/joinStringWithSeperator";
 
 export default function EmploymentDetails({ adData }) {
+    function remoteTextDescription(remoteValue) {
+        switch (remoteValue) {
+            case "Hjemmekontor":
+                return "Kun hjemmekontor";
+            case "Hybridkontor":
+                return "Hybrid (noe hjemme, noe på arbeidsplassen)";
+            default:
+                return remoteValue;
+        }
+    }
+
     return (
         <section className="full-width">
             <Heading level="2" size="large" spacing>
@@ -43,13 +54,13 @@ export default function EmploymentDetails({ adData }) {
                         </dd>
                     </>
                 )}
-                {(adData.remote === "Hjemmekontor" || adData.remote === "Hybridkontor") && (
+                {adData.remote && (
                     <>
                         <dt>
                             <Label as="p">Hjemmekontor</Label>
                         </dt>
                         <dd>
-                            <BodyLong>{adData.remote === "Hjemmekontor" ? "Kun hjemmekontor" : "Hybrid"}</BodyLong>
+                            <BodyLong>{remoteTextDescription(adData.remote)}</BodyLong>
                         </dd>
                     </>
                 )}

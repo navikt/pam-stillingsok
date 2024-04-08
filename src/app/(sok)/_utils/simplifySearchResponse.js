@@ -40,7 +40,10 @@ export default function simplifySearchResponse(response) {
             totalInternational: response.aggregations.countries.doc_count,
             nationalCountMap,
             internationalCountMap,
-            remote: response.aggregations.remote ? response.aggregations.remote.values.buckets : [],
+            remote: response.aggregations.remote.values.buckets.map((item) => ({
+                key: item.key,
+                count: item.doc_count,
+            })),
             occupationFirstLevels:
                 response.aggregations.occupations.nestedOccupations.occupationFirstLevels.buckets.map((firstLevel) => ({
                     key: firstLevel.key,

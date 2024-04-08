@@ -4,7 +4,16 @@ import { cookies } from "next/headers";
 import logger from "@/app/_common/utils/logger";
 
 const USER_PREFERENCES_COOKIE_NAME = "userPreferences";
-const ALLOWED_PANELID_VALUES = ["publisert", "sted", "yrke", "extent", "sector", "engagementType", "workLanguage"];
+const ALLOWED_PANELID_VALUES = [
+    "publisert",
+    "sted",
+    "yrke",
+    "extent",
+    "sector",
+    "engagementType",
+    "workLanguage",
+    "hjemmekontor",
+];
 const COOKIE_OPTIONS = { secure: true, httpOnly: true };
 
 export async function getUserPreferences() {

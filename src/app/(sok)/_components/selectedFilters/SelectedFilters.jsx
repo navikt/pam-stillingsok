@@ -217,16 +217,15 @@ function SelectedFilters({ query, queryDispatch }) {
 
     if (query.remote.length > 0) {
         chips.push(
-            <Chips.Removable
-                variant="neutral"
-                key="remote-filter"
-                onClick={() => {
-                    queryDispatch({ type: REMOVE_REMOTE, value: "Hjemmekontor" });
-                    queryDispatch({ type: REMOVE_REMOTE, value: "Hybridkontor" });
-                }}
-            >
-                Hjemmekontor
-            </Chips.Removable>,
+            ...query.remote.map((value) => (
+                <Chips.Removable
+                    variant="neutral"
+                    key={`remote-filter-${value}`}
+                    onClick={() => queryDispatch({ type: REMOVE_REMOTE, value })}
+                >
+                    {value === "Ikke oppgitt" ? "Hjemmekontor ikke oppgitt" : value}
+                </Chips.Removable>
+            )),
         );
     }
 
