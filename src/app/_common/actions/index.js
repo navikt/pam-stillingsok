@@ -1,4 +1,4 @@
-export { getUserPreferences, removeClosedFilter, addClosedFilter } from "./userPreferencesActions";
+export { getUserPreferences, removeClosedFilter, addClosedFilter, dismissPanel } from "./userPreferencesActions";
 export { getFavouritesAction, addFavouriteAction, deleteFavouriteAction } from "./favouritesActions";
 export { checkIfAuthenticated, checkIfUserAgreementIsAccepted } from "./authenticationActions";
 export {
