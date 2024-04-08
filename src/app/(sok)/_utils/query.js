@@ -1,5 +1,6 @@
 import capitalizeFirstLetter from "@/app/_common/utils/capitalizeFirstLetter";
 import fixLocationName from "@/app/_common/utils/fixLocationName";
+import * as Sentry from "@sentry/nextjs";
 
 export const SEARCH_CHUNK_SIZE = 25;
 export const ALLOWED_NUMBER_OF_RESULTS_PER_PAGE = [SEARCH_CHUNK_SIZE, SEARCH_CHUNK_SIZE * 4];
@@ -39,30 +40,54 @@ export const defaultQuery = {
     match: undefined,
 };
 
+function decodeQueryParameters(encodedQueryParameters) {
+    let decodeQueryString = encodedQueryParameters;
+
+    // After login, the redirect url back to this page may have been encoded several times.
+    // This function decodes url until it is no longer contains '%', for example %20 (space).
+    // When url is fully decoded, it can try to decode again if the url
+    // contains the percentage sign itself, and decode attempt will fail.
+    // This can happen for example when searching for part-time job '?=50%'.
+    for (let key in decodeQueryString) {
+        while (decodeQueryString[key].includes("%")) {
+            try {
+                decodeQueryString[key] = decodeURIComponent(decodeQueryString[key]);
+            } catch (err) {
+                Sentry.captureException(err, `Failed to decode parameter: ${key}`);
+                break;
+            }
+        }
+    }
+    return decodeQueryString;
+}
+
 // eslint-disable-next-line import/prefer-default-export
 export function createQuery(searchParams) {
+    const decodedQueryParams = decodeQueryParameters(searchParams);
     return {
-        from: searchParams.from ? parseInt(searchParams.from, 10) : 0,
+        from: decodedQueryParams.from ? parseInt(decodedQueryParams.from, 10) : 0,
         size:
-            searchParams.size && ALLOWED_NUMBER_OF_RESULTS_PER_PAGE.includes(parseInt(searchParams.size, 10))
-                ? parseInt(searchParams.size, 10)
+            decodedQueryParams.size &&
+            ALLOWED_NUMBER_OF_RESULTS_PER_PAGE.includes(parseInt(decodedQueryParams.size, 10))
+                ? parseInt(decodedQueryParams.size, 10)
                 : defaultQuery.size,
-        q: searchParams.q || defaultQuery.q,
-        match: searchParams.match || defaultQuery.match,
-        municipals: asArray(searchParams["municipals[]"]) || defaultQuery.municipals,
-        counties: asArray(searchParams["counties[]"]) || defaultQuery.counties,
-        countries: asArray(searchParams["countries[]"]) || defaultQuery.countries,
-        international: searchParams.international === "true",
-        remote: asArray(searchParams["remote[]"]) || defaultQuery.remote,
-        occupationFirstLevels: asArray(searchParams["occupationFirstLevels[]"]) || defaultQuery.occupationFirstLevels,
+        q: decodedQueryParams.q || defaultQuery.q,
+        match: decodedQueryParams.match || defaultQuery.match,
+        municipals: asArray(decodedQueryParams["municipals[]"]) || defaultQuery.municipals,
+        counties: asArray(decodedQueryParams["counties[]"]) || defaultQuery.counties,
+        countries: asArray(decodedQueryParams["countries[]"]) || defaultQuery.countries,
+        international: decodedQueryParams.international === "true",
+        remote: asArray(decodedQueryParams["remote[]"]) || defaultQuery.remote,
+        occupationFirstLevels:
+            asArray(decodedQueryParams["occupationFirstLevels[]"]) || defaultQuery.occupationFirstLevels,
         occupationSecondLevels:
-            asArray(searchParams["occupationSecondLevels[]"]) || defaultQuery.occupationSecondLevels,
-        published: searchParams.published || defaultQuery.published,
-        extent: asArray(searchParams["extent[]"]) || defaultQuery.extent,
-        engagementType: asArray(searchParams["engagementType[]"]) || defaultQuery.engagementType,
-        sector: asArray(searchParams["sector[]"]) || defaultQuery.sector,
-        workLanguage: asArray(searchParams["workLanguage[]"]) || defaultQuery.workLanguage,
-        sort: searchParams.sort || defaultQuery.sort,
+            asArray(decodedQueryParams["occupationSecondLevels[]"]) || defaultQuery.occupationSecondLevels,
+        published: decodedQueryParams.published || defaultQuery.published,
+        extent: asArray(decodedQueryParams["extent[]"]) || defaultQuery.extent,
+        engagementType: asArray(decodedQueryParams["engagementType[]"]) || defaultQuery.engagementType,
+        sector: asArray(decodedQueryParams["sector[]"]) || defaultQuery.sector,
+        workLanguage: asArray(decodedQueryParams["workLanguage[]"]) || defaultQuery.workLanguage,
+        sort: decodedQueryParams.sort || defaultQuery.sort,
     };
 }
 
