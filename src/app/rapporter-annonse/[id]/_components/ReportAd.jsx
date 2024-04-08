@@ -185,7 +185,7 @@ function ReportAd({ ad, submitForm }) {
 
                             {submitOffline && !state?.error && (
                                 <Alert variant="error" className="mb-4">
-                                    Rapportering av annonse feilet.
+                                    Rapportering av annonse feilet, sjekk nettforbindelsen din og prøv igjen.
                                 </Alert>
                             )}
 
