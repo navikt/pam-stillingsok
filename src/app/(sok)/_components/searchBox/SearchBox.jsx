@@ -22,6 +22,7 @@ function SearchBox({ dispatch, query }) {
         }
 
         const data = await actions.getSuggestions(value, MINIMUM_LENGTH);
+        suggestionsCache = [{ value, data }, ...suggestionsCache].slice(0, CACHE_MAX_SIZE);
         suggestionsDispatch({ type: FetchAction.RESOLVE, data });
     }
 
