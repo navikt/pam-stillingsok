@@ -50,9 +50,9 @@ function NewFiltersSurvey() {
                     }
                     className="mb-4"
                 >
-                    <Checkbox value="Bakerst">Nye i dag</Checkbox>
-                    <Checkbox value="Midterst">Nye siste tre døgn</Checkbox>
-                    <Checkbox value="Fremst">Nye siste uka</Checkbox>
+                    <Checkbox>Nye i dag</Checkbox>
+                    <Checkbox>Nye siste tre døgn</Checkbox>
+                    <Checkbox>Nye siste uka</Checkbox>
                 </CheckboxGroup>
 
                 <Select
@@ -78,11 +78,11 @@ function NewFiltersSurvey() {
                     }
                     className="mb-4"
                 >
-                    <Checkbox value="Bakerst">Ingen krav til utdanning</Checkbox>
-                    <Checkbox value="Fremst">Videregående skole</Checkbox>
-                    <Checkbox value="Fremst">Fagskole</Checkbox>
-                    <Checkbox value="Fremst">Bachelor</Checkbox>
-                    <Checkbox value="Fremst">Master eller tilsvarende</Checkbox>
+                    <Checkbox>Ingen krav til utdanning</Checkbox>
+                    <Checkbox>Videregående skole</Checkbox>
+                    <Checkbox>Fagskole</Checkbox>
+                    <Checkbox>Bachelor</Checkbox>
+                    <Checkbox>Master eller tilsvarende</Checkbox>
                 </CheckboxGroup>
 
                 <Select
@@ -108,7 +108,7 @@ function NewFiltersSurvey() {
                     }
                     className="mb-4"
                 >
-                    <Checkbox value="Bakerst">Ingen krav til førerkort</Checkbox>
+                    <Checkbox>Ingen krav til førerkort</Checkbox>
                 </CheckboxGroup>
 
                 <Select
@@ -134,7 +134,7 @@ function NewFiltersSurvey() {
                     }
                     className="mb-4"
                 >
-                    <Checkbox value="Bakerst">Trenger ikke være over 18 år</Checkbox>
+                    <Checkbox>Trenger ikke være over 18 år</Checkbox>
                 </CheckboxGroup>
 
                 <Select
@@ -160,9 +160,9 @@ function NewFiltersSurvey() {
                     }
                     className="mb-4"
                 >
-                    <Checkbox value="Bakerst">Ingen krav til arbeidserfaring</Checkbox>
-                    <Checkbox value="Bakerst">Noe arbeidserfaring (1-3 år)</Checkbox>
-                    <Checkbox value="Bakerst">Mye arbeidserfaring (4+ år)</Checkbox>
+                    <Checkbox>Ingen krav til arbeidserfaring</Checkbox>
+                    <Checkbox>Noe arbeidserfaring (1-3 år)</Checkbox>
+                    <Checkbox>Mye arbeidserfaring (4+ år)</Checkbox>
                 </CheckboxGroup>
 
                 <Select
@@ -222,9 +222,9 @@ function NewFiltersSurvey() {
                     }
                     className="mb-4"
                 >
-                    <Checkbox value="Bakerst">Direktør</Checkbox>
-                    <Checkbox value="Bakerst">Fagleder</Checkbox>
-                    <Checkbox value="Bakerst">Leder</Checkbox>
+                    <Checkbox>Direktør</Checkbox>
+                    <Checkbox>Fagleder</Checkbox>
+                    <Checkbox>Leder</Checkbox>
                 </CheckboxGroup>
 
                 <Select

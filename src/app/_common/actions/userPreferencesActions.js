@@ -33,14 +33,14 @@ export async function addClosedFilter(panelId) {
     }
     const existingCookie = await getUserPreferences();
     const closedFilters = new Set(existingCookie.closedFilters || []).add(panelId);
-    const newCookieValue = { closedFilters: [...closedFilters] };
+    const newCookieValue = { ...existingCookie, closedFilters: [...closedFilters] };
     cookies().set(USER_PREFERENCES_COOKIE_NAME, JSON.stringify(newCookieValue), COOKIE_OPTIONS);
 }
 
 export async function removeClosedFilter(panelId) {
     const existingCookie = await getUserPreferences();
     let closedFilters = (existingCookie.closedFilters || []).filter((it) => it !== panelId);
-    const newCookieValue = { closedFilters: closedFilters };
+    const newCookieValue = { ...existingCookie, closedFilters: closedFilters };
     cookies().set(USER_PREFERENCES_COOKIE_NAME, JSON.stringify(newCookieValue), COOKIE_OPTIONS);
 }
 
@@ -51,6 +51,6 @@ export async function dismissPanel(panelId) {
     }
     const existingCookie = await getUserPreferences();
     const dismissedPanels = new Set(existingCookie.dismissedPanels || []).add(panelId);
-    const newCookieValue = { dismissedPanels: [...dismissedPanels] };
+    const newCookieValue = { ...existingCookie, dismissedPanels: [...dismissedPanels] };
     cookies().set(USER_PREFERENCES_COOKIE_NAME, JSON.stringify(newCookieValue), COOKIE_OPTIONS);
 }
