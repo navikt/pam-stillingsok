@@ -20,6 +20,7 @@ import {
 } from "@navikt/ds-react";
 import { useFormState } from "react-dom";
 import { FormButtonBar } from "./FormButtonBar";
+import isBrowserAndHasNetwork from "@/app/_common/utils/isBrowserAndHasNetwork";
 
 const reportCategories = [
     { label: "Diskriminerende innhold", key: "discrimination" },
@@ -39,6 +40,7 @@ function ReportAd({ ad, submitForm }) {
     const { validationErrors } = state;
     const [fixedErrors, setFixedErrors] = useState([]);
     const [localSummary, setLocalSummary] = useState(validationErrors);
+    const [submitOffline, setSubmitOffline] = useState(false);
 
     useEffect(() => {
         if (ref.current) {
@@ -104,7 +106,16 @@ function ReportAd({ ad, submitForm }) {
                             </div>
                         </div>
                     ) : (
-                        <form action={handleSubmit}>
+                        <form
+                            action={(e) => {
+                                if (isBrowserAndHasNetwork()) {
+                                    setSubmitOffline(false);
+                                    handleSubmit(e);
+                                } else {
+                                    setSubmitOffline(true);
+                                }
+                            }}
+                        >
                             <Heading level="1" size="xlarge" className="mb-4">
                                 Rapporter annonse
                             </Heading>
@@ -167,6 +178,12 @@ function ReportAd({ ad, submitForm }) {
                             </BodyLong>
 
                             {state?.error && (
+                                <Alert variant="error" className="mb-4">
+                                    Rapportering av annonse feilet.
+                                </Alert>
+                            )}
+
+                            {submitOffline && !state?.error && (
                                 <Alert variant="error" className="mb-4">
                                     Rapportering av annonse feilet.
                                 </Alert>
