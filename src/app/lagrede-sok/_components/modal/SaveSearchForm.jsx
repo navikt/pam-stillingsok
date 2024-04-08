@@ -31,6 +31,7 @@ export const FormModes = {
 function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, defaultFormMode }) {
     const [isPending, startTransition] = useTransition();
     const [showError, setShowError] = useState(false);
+    const [showNetworkError, setShowNetworkError] = useState(false);
 
     const { user } = useContext(UserContext);
 
@@ -66,11 +67,11 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
 
     function handleFormSubmit(e) {
         if (!isBrowserAndHasNetwork()) {
-            console.log("NO NETWORK", window.navigator.onLine);
-            setShowError(true);
+            setShowNetworkError(true);
         } else if (validateForm()) {
+            setShowNetworkError(false);
             e.preventDefault();
-            console.log("NETWORK", window.navigator.onLine);
+
             let dataToBeSaved = {
                 title,
                 notifyType,
@@ -192,9 +193,9 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
                         )}
                     </>
                 )}
-                {showError && (
+                {(showError || showNetworkError) && (
                     <Alert variant="error" className="mb-4 mt-4" role="alert">
-                        Noe gikk galt ved lagring, forsøk igjen eller last siden på nytt
+                        {`${showNetworkError ? "Noe gikk galt ved lagring, sjekk nettforbindelsen din og prøv igjen." : "Noe gikk galt ved lagring, forsøk igjen eller last siden på nytt."}`}
                     </Alert>
                 )}
             </Modal.Body>
