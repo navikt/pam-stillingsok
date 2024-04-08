@@ -17,6 +17,7 @@ import { UserContext } from "@/app/_common/user/UserProvider";
 import useToggle from "@/app/_common/hooks/useToggle";
 import { isStringEmpty } from "@/app/_common/utils/utils";
 import * as actions from "@/app/_common/actions";
+import isBrowserAndHasNetwork from "@/app/_common/utils/isBrowserAndHasNetwork";
 
 export const FormModes = {
     ADD: "ADD",
@@ -65,7 +66,10 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
 
     function handleFormSubmit(e) {
         e.preventDefault();
-        if (validateForm()) {
+
+        if (!isBrowserAndHasNetwork) {
+            setShowError(true);
+        } else if (validateForm()) {
             let dataToBeSaved = {
                 title,
                 notifyType,

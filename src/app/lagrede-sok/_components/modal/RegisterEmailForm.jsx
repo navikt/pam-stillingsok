@@ -5,6 +5,7 @@ import { isValidEmail } from "@/app/_common/utils/utils";
 import { UserContext } from "@/app/_common/user/UserProvider";
 import { FetchStatus } from "@/app/_common/hooks/useFetchReducer";
 import * as actions from "@/app/_common/actions";
+import isBrowserAndHasNetwork from "@/app/_common/utils/isBrowserAndHasNetwork";
 
 function RegisterEmailForm({ onClose, onSuccess }) {
     const { user, updateUser } = useContext(UserContext);
@@ -42,7 +43,9 @@ function RegisterEmailForm({ onClose, onSuccess }) {
     async function handleFormSubmit(e) {
         e.preventDefault();
 
-        if (validateForm()) {
+        if (!isBrowserAndHasNetwork) {
+            setSaveStatus(FetchStatus.NO_NETWORK);
+        } else if (validateForm()) {
             setSaveStatus(FetchStatus.IS_FETCHING);
             const result = await actions.updateUser({ ...user, email });
             if (result.success) {
@@ -80,7 +83,13 @@ function RegisterEmailForm({ onClose, onSuccess }) {
 
                 {saveStatus === FetchStatus.FAILURE && (
                     <Alert variant="error" className="mb-4 mt-4" role="alert">
-                        Noe gikk galt ved lagring, forsøk igjen eller last siden på nytt
+                        Noe gikk galt ved lagring, forsøk igjen eller last siden på nytt.
+                    </Alert>
+                )}
+
+                {saveStatus === FetchStatus.NO_NETWORK && (
+                    <Alert variant="error" className="mb-4 mt-4" role="alert">
+                        Noe gikk galt ved lagring, sjekk nettforbindelsen din og prøv igjen.
                     </Alert>
                 )}
             </Modal.Body>

@@ -5,6 +5,7 @@ export const FetchStatus = {
     IS_FETCHING: "IS_FETCHING",
     SUCCESS: "SUCCESS",
     FAILURE: "FAILURE",
+    NO_NETWORK: "NO_NETWORK",
 };
 
 export const FetchAction = {
