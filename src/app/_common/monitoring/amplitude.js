@@ -1,6 +1,5 @@
 import * as amplitude from "@amplitude/analytics-browser";
 import { getSessionId } from "./session";
-import { JobPostingTextEnum } from "../utils/utils";
 
 const userProperties = new amplitude.Identify();
 

@@ -46,7 +46,7 @@ export default async function Page({ params }) {
         }
 
         try {
-            const response = await fetch(`${process.env.PAMADUSER_URL}/api/v1/reportposting`, {
+            await fetch(`${process.env.PAMADUSER_URL}/api/v1/reportposting`, {
                 body: JSON.stringify(reportPostingData),
                 method: "POST",
                 headers: getDefaultHeaders(),
