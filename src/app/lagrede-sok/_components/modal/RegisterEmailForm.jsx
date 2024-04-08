@@ -43,9 +43,9 @@ function RegisterEmailForm({ onClose, onSuccess }) {
     async function handleFormSubmit(e) {
         if (!isBrowserAndHasNetwork) {
             setSaveStatus(FetchStatus.NO_NETWORK);
-            console.log("NO NETWORK");
+            console.log("NO NETWORK", window.navigator.onLine);
         } else if (validateForm()) {
-            console.log("NETWORK");
+            console.log("NETWORK", window.navigator.onLine);
             e.preventDefault();
             setSaveStatus(FetchStatus.IS_FETCHING);
             const result = await actions.updateUser({ ...user, email });
