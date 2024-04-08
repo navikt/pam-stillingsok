@@ -1,6 +1,5 @@
 "use server";
 
-import { notFound } from "next/navigation";
 import { getDefaultHeaders } from "@/app/_common/utils/fetch";
 import mapAdData from "./adData";
 

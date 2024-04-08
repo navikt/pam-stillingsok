@@ -9,6 +9,7 @@ import Extent from "./Extent";
 import Sector from "./Sector";
 import EngagementType from "./Engagement";
 import WorkLanguage from "./WorkLanguage";
+import ShareYourOpinionPanel from "@/app/tilbakemelding-nye-filtre/_components/ShareYourOpinionPanel";
 
 function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggregations, locations }) {
     return (
@@ -37,6 +38,7 @@ function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggre
                         />
                     </Tabs.Panel>
                     <Tabs.Panel value="andre" className="mt-8">
+                        <ShareYourOpinionPanel />
                         <div className="mb-6">
                             <Published
                                 query={query}

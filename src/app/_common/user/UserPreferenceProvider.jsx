@@ -13,9 +13,19 @@ function UserPreferencesProvider({ children, userPreferences }) {
         actions.removeClosedFilter(panelId);
     }
 
+    function dismissPanel(panelId) {
+        actions.dismissPanel(panelId);
+    }
+
     return (
         <UserPreferencesContext.Provider
-            value={{ closedFilters: userPreferences?.closedFilters || [], addClosedFilter, removeClosedFilter }}
+            value={{
+                closedFilters: userPreferences?.closedFilters || [],
+                addClosedFilter,
+                removeClosedFilter,
+                dismissPanel,
+                dismissedPanels: userPreferences?.dismissedPanels || [],
+            }}
         >
             {children}
         </UserPreferencesContext.Provider>

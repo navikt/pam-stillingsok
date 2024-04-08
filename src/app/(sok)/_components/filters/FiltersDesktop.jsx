@@ -10,10 +10,12 @@ import Sector from "./Sector";
 import EngagementType from "./Engagement";
 import WorkLanguage from "./WorkLanguage";
 import Remote from "@/app/(sok)/_components/filters/Remote";
+import ShareYourOpinionPanel from "@/app/tilbakemelding-nye-filtre/_components/ShareYourOpinionPanel";
 
 function FiltersDesktop({ query, dispatchQuery, aggregations, locations, searchResult }) {
     return (
         <div>
+            <ShareYourOpinionPanel />
             <Accordion indent={false} headingSize="small">
                 <FilterAccordionItem title="Publisert" panelId="publisert">
                     <Published
