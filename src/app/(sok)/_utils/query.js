@@ -63,6 +63,7 @@ export function createQuery(searchParams) {
         sector: asArray(searchParams["sector[]"]) || defaultQuery.sector,
         workLanguage: asArray(searchParams["workLanguage[]"]) || defaultQuery.workLanguage,
         sort: searchParams.sort || defaultQuery.sort,
+        fields: searchParams.fields || defaultQuery.fields,
     };
 }
 
