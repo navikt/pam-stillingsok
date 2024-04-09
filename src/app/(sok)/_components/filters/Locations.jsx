@@ -57,7 +57,7 @@ function Locations({ locations, query, dispatch, updatedValues }) {
     };
 
     return (
-        <Fieldset hideLegend legend="Velg fylke, kommune, land eller hjemmekontor" className="FilterModal__fieldset">
+        <Fieldset hideLegend legend="Filtrer etter fylke, kommune eller land" className="FilterModal__fieldset">
             <div>
                 {locationValues &&
                     locationValues.map((location) => {

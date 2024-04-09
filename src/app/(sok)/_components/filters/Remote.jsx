@@ -22,6 +22,7 @@ function Remote({ initialValues, updatedValues, query, dispatch }) {
 
     function handleClick(e) {
         const { value } = e.target;
+        console.log("remote handleClick:", value);
         if (e.target.checked) {
             dispatch({ type: ADD_REMOTE, value });
             logSearchFilterAdded({ remote: value });
@@ -32,7 +33,7 @@ function Remote({ initialValues, updatedValues, query, dispatch }) {
     }
 
     return (
-        <Fieldset legend="Remote" hideLegend>
+        <Fieldset legend="Filtrer etter hjemmekontormuligheter" hideLegend>
             <div>
                 {sortedValues.map((item) => (
                     <Checkbox

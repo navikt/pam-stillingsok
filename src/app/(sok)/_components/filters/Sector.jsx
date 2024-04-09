@@ -20,7 +20,7 @@ function Sector({ initialValues, updatedValues, query, dispatch }) {
     }
 
     return (
-        <Fieldset legend="Sektor" hideLegend>
+        <Fieldset legend="Filtrer etter sektor" hideLegend>
             <div>
                 {values.map((item) => (
                     <Checkbox

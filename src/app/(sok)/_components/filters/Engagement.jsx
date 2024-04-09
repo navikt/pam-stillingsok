@@ -35,7 +35,7 @@ function Engagement({ initialValues, updatedValues, query, dispatch }) {
     }
 
     return (
-        <Fieldset legend="Ansettelsesform" hideLegend>
+        <Fieldset legend="Filtrer etter ansettelsesform" hideLegend>
             <div>
                 {values.map((item) => (
                     <Checkbox

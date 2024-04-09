@@ -24,7 +24,7 @@ function Extent({ initialValues, updatedValues, query, dispatch }) {
     }
 
     return (
-        <Fieldset legend="Heltid/deltid" hideLegend>
+        <Fieldset legend="Filtrer etter heltid/deltid" hideLegend>
             <div>
                 {values.map((item) => (
                     <Checkbox
