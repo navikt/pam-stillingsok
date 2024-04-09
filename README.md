@@ -117,24 +117,21 @@ $ npm run start:dependencies
 
 Når applikasjonen er oppe, så kan du gå inn på [http://localhost:3000/stillinger](http://localhost:3000/stillinger)
 
-### Med teststillinger fra dev-miljøet
+### Med teststillinger fra dev- og prod-miljøet
 
 Dersom du vil få inn teststillinger kan du koble deg direkte til et kjørende instans av `pam-search-api` i kubernetes.
 
 1. Koble til [naisedevice](https://docs.nais.io/explanation/naisdevice/).
 2. Kjør port-forwarding. Dette gjør du med følgende kommando:
+
+Dev:
 
 ```shell
 $ kubectl config use-context dev-gcp
 $ kubectl -n teampam port-forward deployment/pam-search-api 9000:9000
 ```
 
-### Med teststillinger fra prod-miljøet
-
-Dersom du vil få inn teststillinger kan du koble deg direkte til et kjørende instans av `pam-search-api` i kubernetes.
-
-1. Koble til [naisedevice](https://docs.nais.io/explanation/naisdevice/).
-2. Kjør port-forwarding. Dette gjør du med følgende kommando:
+Prod:
 
 ```shell
 $ kubectl -n teampam port-forward deployment/pam-search-api 9000:9000 --context prod-gcp
