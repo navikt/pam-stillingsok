@@ -129,6 +129,17 @@ $ kubectl config use-context dev-gcp
 $ kubectl -n teampam port-forward deployment/pam-search-api 9000:9000
 ```
 
+### Med teststillinger fra prod-miljøet
+
+Dersom du vil få inn teststillinger kan du koble deg direkte til et kjørende instans av `pam-search-api` i kubernetes.
+
+1. Koble til [naisedevice](https://docs.nais.io/explanation/naisdevice/).
+2. Kjør port-forwarding. Dette gjør du med følgende kommando:
+
+```shell
+$ kubectl -n teampam port-forward deployment/pam-search-api 9000:9000 --context prod-gcp
+```
+
 > [!TIP]
 > Dersom du får får feilmelding ved kjøring av kommandoene over kan du prøve å logge inn i gcloud med følgende kommando.
 >
