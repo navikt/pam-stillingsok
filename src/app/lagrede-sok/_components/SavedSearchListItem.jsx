@@ -30,12 +30,18 @@ function SavedSearchListItem({
 
     function deleteSavedSearch() {
         startTransition(async () => {
-            const { success } = await actions.deleteSavedSearchAction(savedSearch.uuid);
+            let isSuccess;
+            try {
+                const { success } = await actions.deleteSavedSearchAction(savedSearch.uuid);
+                isSuccess = success;
+            } catch (err) {
+                isSuccess = false;
+            }
             closeConfirmationModal();
-            if (!success) {
-                openErrorDialog();
-            } else {
+            if (isSuccess) {
                 removeSavedSearchFromList(savedSearch);
+            } else {
+                openErrorDialog();
             }
         });
     }

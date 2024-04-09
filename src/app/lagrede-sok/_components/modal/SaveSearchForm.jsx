@@ -77,11 +77,18 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
             if (formMode === FormModes.ADD) {
                 startTransition(async () => {
                     setShowError(false);
-                    const { success, data } = await actions.saveSavedSearchAction(dataToBeSaved);
-                    if (!success) {
-                        setShowError(true);
+                    let isSuccess;
+                    let result;
+                    try {
+                        result = await actions.saveSavedSearchAction(dataToBeSaved);
+                        isSuccess = result.success;
+                    } catch (err) {
+                        isSuccess = false;
+                    }
+                    if (isSuccess) {
+                        onSuccess(result.data);
                     } else {
-                        onSuccess(data);
+                        setShowError(true);
                     }
                 });
             } else {
@@ -98,11 +105,18 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
                 }
                 startTransition(async () => {
                     setShowError(false);
-                    const { success, data } = await actions.updateSavedSearchAction(dataToBeSaved);
-                    if (!success) {
-                        setShowError(true);
+                    let isSuccess;
+                    let result;
+                    try {
+                        result = await actions.updateSavedSearchAction(dataToBeSaved);
+                        isSuccess = result.success;
+                    } catch (err) {
+                        isSuccess = false;
+                    }
+                    if (isSuccess) {
+                        onSuccess(result.data);
                     } else {
-                        onSuccess(data);
+                        setShowError(true);
                     }
                 });
             }
