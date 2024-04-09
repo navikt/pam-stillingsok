@@ -43,7 +43,7 @@ export default function mapAdData(rawElasticSearchAdResult) {
         adNumber: getNumber(data.id),
 
         // employment details
-        engagementType: getString(properties.engagementType),
+        engagementType: getString(properties.engagementtype),
         extent: getString(properties.extent),
         jobArrangement: getString(properties.jobarrangement),
         jobPercentage: getJobPercentage(properties.jobpercentage),
