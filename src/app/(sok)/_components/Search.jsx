@@ -18,6 +18,7 @@ import LoggedInButtons from "./loggedInButtons/LoggedInButtons";
 import FiltersMobile from "./filters/FiltersMobile";
 import SearchBox from "./searchBox/SearchBox";
 import SearchPagination from "./searchResult/SearchPagination";
+import MaxResultsBox from "./searchResult/MaxResultsBox";
 
 export default function Search({ query, searchResult, aggregations, locations }) {
     const [updatedQuery, queryDispatch] = useReducer(queryReducer, query);
@@ -132,7 +133,12 @@ export default function Search({ query, searchResult, aggregations, locations })
                 <VStack gap="10">
                     <SelectedFilters query={query} queryDispatch={queryDispatch} />
                     <SearchResult searchResult={searchResult} query={updatedQuery} />
+
+                    {/* Elastic search does not support pagination above 10 000 */}
+                    {query.from + query.size === 10000 && <MaxResultsBox />}
+
                     <SearchPagination searchResult={searchResult} query={query} queryDispatch={queryDispatch} />
+
                     {query.from + SEARCH_CHUNK_SIZE >= searchResult.totalAds && <DoYouWantToSaveSearch query={query} />}
                     <Feedback query={query} />
                 </VStack>
