@@ -12,6 +12,8 @@ const myFont = interLocalFont({
     src: "../../public/font/InterVariable.ttf",
     weight: "100 900",
     display: "swap",
+    // Prevent non valid <meta name="next-size-adjust" /> to be injected
+    adjustFontFallback: false,
 });
 export default function Error({ error }) {
     useEffect(() => {
