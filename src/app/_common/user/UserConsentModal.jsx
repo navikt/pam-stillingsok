@@ -6,6 +6,7 @@ import { AuthenticationContext } from "@/app/_common/auth/contexts/Authenticatio
 import { FetchStatus } from "@/app/_common/hooks/useFetchReducer";
 import useToggle from "@/app/_common/hooks/useToggle";
 import * as actions from "@/app/_common/actions";
+import isBrowserAndHasNetwork from "@/app/_common/utils/isBrowserAndHasNetwork";
 
 function UserConsentModal({ onClose, onTermsAccepted }) {
     const { userNameAndInfo } = useContext(AuthenticationContext);
@@ -43,10 +44,14 @@ function UserConsentModal({ onClose, onTermsAccepted }) {
     }
 
     async function onAcceptTermsClick() {
-        if (checked) {
-            await createUser();
-        } else {
+        if (!isBrowserAndHasNetwork()) {
             showError();
+        } else {
+            if (checked) {
+                await createUser();
+            } else {
+                showError();
+            }
         }
     }
 
