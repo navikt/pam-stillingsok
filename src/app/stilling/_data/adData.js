@@ -109,7 +109,7 @@ function getJobPercentage(value) {
     return jobPercentage + jobPercentage.endsWith("%") ? "" : "  %";
 }
 
-function getWorktime(worktime) {
+export function getWorktime(worktime) {
     // Can be one of multiple inputs:
     // "Ukedager Søndag"
     // "Turnus"
@@ -271,9 +271,4 @@ function getEmployerLocation(value) {
     }
 
     return employerLocation.join(", ");
-}
-
-// Export for testing purposes
-if (process.env.NODE_ENV !== "production") {
-    module.exports.getWorktime = getWorktime;
 }
