@@ -18,14 +18,20 @@ function FavouritesListItem({ favourite, onFavouriteDeleted, openErrorDialog }) 
     const handleDeleteConfirmed = async () => {
         addToPending(favourite.uuid);
         setIsDeleting(true);
-        const { success } = await actions.deleteFavouriteAction(favourite.uuid);
+        let isSuccess;
+        try {
+            const result = await actions.deleteFavouriteAction(favourite.uuid);
+            isSuccess = result.success;
+        } catch (err) {
+            isSuccess = false;
+        }
         setIsDeleting(false);
         closeConfirmDeleteModal();
-        if (!success) {
-            openErrorDialog();
-        } else {
+        if (isSuccess) {
             onFavouriteDeleted(favourite.uuid);
             removeFavouriteFromLocalList(favourite);
+        } else {
+            openErrorDialog();
         }
         removeFormPending(favourite.uuid);
     };
