@@ -6,21 +6,10 @@ import "./EmploymentDetails.css";
 import joinStringWithSeperator from "@/app/_common/utils/joinStringWithSeperator";
 
 export default function EmploymentDetails({ adData }) {
-    function remoteTextDescription(remoteValue) {
-        switch (remoteValue) {
-            case "Hjemmekontor":
-                return "Kun hjemmekontor";
-            case "Hybridkontor":
-                return "Hybrid (noe hjemme, noe på arbeidsplassen)";
-            default:
-                return remoteValue;
-        }
-    }
-
     return (
         <section className="full-width">
             <Heading level="2" size="large" spacing>
-                Om stillingen
+                Om jobben
             </Heading>
 
             <dl className="dl" id="employment-details">
@@ -34,16 +23,6 @@ export default function EmploymentDetails({ adData }) {
                         </dd>
                     </>
                 )}
-                {adData.positionCount && (
-                    <>
-                        <dt>
-                            <Label as="p">Antall stillinger</Label>
-                        </dt>
-                        <dd>
-                            <BodyLong>{adData.positionCount}</BodyLong>
-                        </dd>
-                    </>
-                )}
                 {adData.startTime && (
                     <>
                         <dt>
@@ -54,73 +33,28 @@ export default function EmploymentDetails({ adData }) {
                         </dd>
                     </>
                 )}
-                {adData.remote && (
-                    <>
-                        <dt>
-                            <Label as="p">Hjemmekontor</Label>
-                        </dt>
-                        <dd>
-                            <BodyLong>{remoteTextDescription(adData.remote)}</BodyLong>
-                        </dd>
-                    </>
-                )}
                 {adData.engagementType && (
                     <>
                         <dt>
-                            <Label as="p">Ansettelsesform</Label>
+                            <Label as="p">Type ansettelse</Label>
                         </dt>
                         <dd>
-                            <BodyLong>{adData.engagementType}</BodyLong>
+                            <BodyLong>
+                                {adData.engagementType}
+                                {adData.extent ? `, ${adData.extent}` : ""}
+                            </BodyLong>
                         </dd>
                     </>
                 )}
-                {adData.jobPercentage && (
-                    <>
-                        <dt>
-                            <Label as="p">Prosent</Label>
-                        </dt>
-                        <dd>
-                            <BodyLong>{adData.jobPercentage}</BodyLong>
-                        </dd>
-                    </>
-                )}
-                {adData.extent && (
-                    <>
-                        <dt>
-                            <Label as="p">Heltid/deltid</Label>
-                        </dt>
-                        <dd>
-                            <BodyLong>{adData.extent}</BodyLong>
-                        </dd>
-                    </>
-                )}
-                {adData.sector && (
-                    <>
-                        <dt>
-                            <Label as="p">Sektor</Label>
-                        </dt>
-                        <dd>
-                            <BodyLong>{adData.sector}</BodyLong>
-                        </dd>
-                    </>
-                )}
-                {adData.workdays && (
-                    <>
-                        <dt>
-                            <Label as="p">Arbeidsdager</Label>
-                        </dt>
-                        <dd>
-                            <BodyLong>{adData.workdays}</BodyLong>
-                        </dd>
-                    </>
-                )}
-                {adData.workHours && (
+                {(adData.jobArrangement || adData.workdays || adData.workHours) && (
                     <>
                         <dt>
                             <Label as="p">Arbeidstid</Label>
                         </dt>
                         <dd>
-                            <BodyLong>{adData.workHours}</BodyLong>
+                            <BodyLong>
+                                {adData.jobArrangement} {adData.workdays} {adData.workHours}
+                            </BodyLong>
                         </dd>
                     </>
                 )}
@@ -144,6 +78,16 @@ export default function EmploymentDetails({ adData }) {
                         </dd>
                     </>
                 )}
+                {adData.positionCount && (
+                    <>
+                        <dt>
+                            <Label as="p">Antall stillinger</Label>
+                        </dt>
+                        <dd>
+                            <BodyLong>{adData.positionCount}</BodyLong>
+                        </dd>
+                    </>
+                )}
             </dl>
         </section>
     );
@@ -154,7 +98,6 @@ EmploymentDetails.propTypes = {
         jobTitle: PropTypes.string,
         positionCount: PropTypes.string,
         startTime: PropTypes.string,
-        remote: PropTypes.string,
         engagementType: PropTypes.string,
         jobPercentage: PropTypes.string,
         extent: PropTypes.string,

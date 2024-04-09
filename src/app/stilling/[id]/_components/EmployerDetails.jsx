@@ -8,33 +8,26 @@ export default function EmployerDetails({ employer }) {
     return (
         <section className="mt-16 mb-16">
             <Heading level="2" size="large" spacing>
-                Om arbeidsgiveren
+                Om bedriften
             </Heading>
-            <dl className="dl mb-4">
-                {employer.name && (
+            {employer.description && (
+                <RichText className="job-posting-text mt-4">{parse(employer.description)}</RichText>
+            )}
+            <dl className="dl mb-4" id="employment-details">
+                {employer.sector && (
                     <>
                         <dt>
-                            <Label as="p">Arbeidsgiver</Label>
+                            <Label as="p">Sektor</Label>
                         </dt>
                         <dd>
-                            <BodyLong>{employer.name}</BodyLong>
-                        </dd>
-                    </>
-                )}
-                {employer.location && (
-                    <>
-                        <dt>
-                            <Label as="p">Adresse</Label>
-                        </dt>
-                        <dd>
-                            <BodyLong>{employer.location}</BodyLong>
+                            <BodyLong>{employer.sector}</BodyLong>
                         </dd>
                     </>
                 )}
                 {employer.homepage && (
                     <>
                         <dt>
-                            <Label as="p">Hjemmeside</Label>
+                            <Label as="p">Nettsted</Label>
                         </dt>
                         <dd>
                             <BodyLong>
@@ -98,9 +91,6 @@ export default function EmployerDetails({ employer }) {
                     </>
                 )}
             </dl>
-            {employer.description && (
-                <RichText className="job-posting-text mt-4">{parse(employer.description)}</RichText>
-            )}
         </section>
     );
 }
@@ -111,6 +101,7 @@ EmployerDetails.propTypes = {
         description: PropTypes.string,
         location: PropTypes.string,
         locationList: PropTypes.array,
+        sector: PropTypes.string,
         homepage: PropTypes.shape({
             url: PropTypes.string,
             dangerouslyInvalidUrl: PropTypes.string,

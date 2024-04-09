@@ -22,7 +22,10 @@ export default function Summary({ adData }) {
                     <HStack align="center">
                         <LocationPinIcon title="Sted" fontSize="1.5rem" />
                     </HStack>
-                    <BodyLong weight="semibold">{location}</BodyLong>
+                    <BodyLong weight="semibold">
+                        {location}
+                        {adData.remote ? `, ${adData.remote}` : ""}
+                    </BodyLong>
                 </HStack>
             )}
         </section>
@@ -33,6 +36,7 @@ Summary.propTypes = {
     adData: PropTypes.shape({
         location: PropTypes.string,
         locationList: PropTypes.array,
+        remote: PropTypes.string,
         employer: PropTypes.shape({
             name: PropTypes.string,
         }),

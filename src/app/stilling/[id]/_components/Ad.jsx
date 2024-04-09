@@ -45,9 +45,9 @@ function Ad({ adData, adLayoutVariant }) {
                         )}
 
                         <Summary adData={adData} />
+                        <EmploymentDetails adData={adData} />
                         <AdText adText={adData.adText} />
                         <EmployerDetails employer={adData.employer} />
-                        <EmploymentDetails adData={adData} />
                     </div>
                     <div>
                         {annonseErAktiv && (
