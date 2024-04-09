@@ -10,6 +10,7 @@ import Sector from "./Sector";
 import EngagementType from "./Engagement";
 import WorkLanguage from "./WorkLanguage";
 import ShareYourOpinionPanel from "@/app/tilbakemelding-nye-filtre/_components/ShareYourOpinionPanel";
+import Remote from "@/app/(sok)/_components/filters/Remote";
 
 function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggregations, locations }) {
     return (
@@ -45,6 +46,17 @@ function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggre
                                 dispatch={dispatchQuery}
                                 initialValues={aggregations.published}
                                 updatedValues={searchResult && searchResult.aggregations.published}
+                            />
+                        </div>
+                        <div className="mb-6">
+                            <Heading level="2" size="small">
+                                Hjemmekontor
+                            </Heading>
+                            <Remote
+                                query={query}
+                                dispatch={dispatchQuery}
+                                initialValues={aggregations.remote}
+                                updatedValues={searchResult.aggregations.remote}
                             />
                         </div>
                         <div className="mb-6">

@@ -1,7 +1,6 @@
 import { ALLOWED_NUMBER_OF_RESULTS_PER_PAGE, SEARCH_CHUNK_SIZE } from "./query";
 
 const NOT_DEFINED = "Ikke oppgitt";
-const useRemoteFilter = true;
 
 function mapSortByValue(value) {
     switch (value) {
@@ -31,6 +30,41 @@ function filterPublished(published) {
                 },
             },
         });
+    }
+    return filters;
+}
+
+function filterRemote(remote) {
+    const filters = [];
+    if (remote && remote.length > 0) {
+        const filter = {
+            bool: {
+                should: [],
+            },
+        };
+        remote.forEach((item) => {
+            filter.bool.should.push({
+                term: {
+                    "properties.remote": item,
+                },
+            });
+        });
+
+        if (remote.includes("Ikke oppgitt")) {
+            filter.bool.should.push({
+                bool: {
+                    must_not: [
+                        {
+                            exists: {
+                                field: "properties.remote",
+                            },
+                        },
+                    ],
+                },
+            });
+        }
+
+        filters.push(filter);
     }
     return filters;
 }
@@ -85,35 +119,6 @@ function filterWorkLanguage(workLanguage) {
             }
         });
         filters.push(filter);
-    }
-    return filters;
-}
-
-function filterRemote(remote) {
-    const filters = [];
-
-    if (useRemoteFilter) {
-        if (remote && remote.length > 0) {
-            const filter = {
-                bool: {
-                    should: [],
-                },
-            };
-            remote.forEach((item) => {
-                filter.bool.should.push({
-                    term: {
-                        "properties.remote": item,
-                    },
-                });
-            });
-            filter.bool.should.push({
-                match: {
-                    adtext_no: "hjemmekontor",
-                },
-            });
-
-            filters.push(filter);
-        }
     }
     return filters;
 }
@@ -586,6 +591,7 @@ const elasticSearchRequestBody = (query) => {
                 "properties.applicationdue",
                 "properties.hasInterestform",
                 "properties.workLanguage",
+                "properties.remote",
                 "locationList.postalCode",
                 "locationList.city",
                 "locationList.address",
@@ -701,6 +707,25 @@ const elasticSearchRequestBody = (query) => {
                 aggs: {
                     values: {
                         terms: { field: "extent_facet" },
+                    },
+                },
+            },
+            remote: {
+                filter: {
+                    bool: {
+                        filter: [
+                            ...filterWorkLanguage(workLanguage),
+                            filterLocation(counties, municipals, countries, international),
+                            filterOccupation(occupationFirstLevels, occupationSecondLevels),
+                            ...filterEngagementType(engagementType),
+                            ...filterSector(sector),
+                            ...filterPublished(published),
+                        ],
+                    },
+                },
+                aggs: {
+                    values: {
+                        terms: { field: "properties.remote", missing: NOT_DEFINED },
                     },
                 },
             },
@@ -886,57 +911,6 @@ const elasticSearchRequestBody = (query) => {
             },
         },
     };
-
-    if (useRemoteFilter) {
-        template.aggs = {
-            ...template.aggs,
-            remote: {
-                filter: {
-                    bool: {
-                        filter: [
-                            ...filterExtent(extent),
-                            ...filterWorkLanguage(workLanguage),
-                            filterLocation(counties, municipals, countries, international),
-                            filterOccupation(occupationFirstLevels, occupationSecondLevels),
-                            ...filterEngagementType(engagementType),
-                            ...filterSector(sector),
-                            ...filterPublished(published),
-                        ],
-                    },
-                },
-                aggs: {
-                    values: {
-                        filters: {
-                            other_bucket_key: "ikke-hjemmekontor",
-                            filters: {
-                                hjemmekontor: {
-                                    bool: {
-                                        should: [
-                                            {
-                                                term: {
-                                                    "properties.remote": "Hjemmekontor",
-                                                },
-                                            },
-                                            {
-                                                term: {
-                                                    "properties.remote": "Hybridkontor",
-                                                },
-                                            },
-                                            {
-                                                match: {
-                                                    adtext_no: "hjemmekontor",
-                                                },
-                                            },
-                                        ],
-                                    },
-                                },
-                            },
-                        },
-                    },
-                },
-            },
-        };
-    }
 
     if (sort && sort !== "relevant") {
         template = {

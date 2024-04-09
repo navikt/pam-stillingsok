@@ -6,20 +6,16 @@ import {
     ADD_COUNTRY,
     ADD_COUNTY,
     ADD_MUNICIPAL,
-    ADD_REMOTE,
     REMOVE_COUNTRY,
     REMOVE_COUNTY,
     REMOVE_MUNICIPAL,
-    REMOVE_REMOTE,
     SET_INTERNATIONAL,
 } from "@/app/(sok)/_utils/queryReducer";
 import buildLocations from "@/app/(sok)/_components/utils/buildLocations";
-import buildHomeOfficeValues from "@/app/(sok)/_components/utils/buildHomeOfficeValues";
 import { logSearchFilterAdded, logSearchFilterRemoved } from "@/app/_common/monitoring/amplitude";
 
 function Locations({ locations, query, dispatch, updatedValues }) {
     const locationValues = buildLocations(updatedValues.aggregations, locations);
-    const homeOfficeValues = buildHomeOfficeValues(updatedValues.aggregations.remote);
 
     function handleLocationClick(value, type, checked) {
         if (type === "county") {
@@ -60,18 +56,8 @@ function Locations({ locations, query, dispatch, updatedValues }) {
         handleLocationClick(key, type, e.target.checked);
     };
 
-    const handleHomeOfficeClick = (e) => {
-        if (e.target.checked) {
-            dispatch({ type: ADD_REMOTE, value: "Hjemmekontor" });
-            dispatch({ type: ADD_REMOTE, value: "Hybridkontor" });
-        } else {
-            dispatch({ type: REMOVE_REMOTE, value: "Hjemmekontor" });
-            dispatch({ type: REMOVE_REMOTE, value: "Hybridkontor" });
-        }
-    };
-
     return (
-        <Fieldset hideLegend legend="Velg fylke, kommune, land eller hjemmekontor" className="FilterModal__fieldset">
+        <Fieldset hideLegend legend="Filtrer etter fylke, kommune eller land" className="FilterModal__fieldset">
             <div>
                 {locationValues &&
                     locationValues.map((location) => {
@@ -144,21 +130,6 @@ function Locations({ locations, query, dispatch, updatedValues }) {
                             </React.Fragment>
                         );
                     })}
-
-                <div className="mt-6">
-                    {homeOfficeValues &&
-                        homeOfficeValues.map((remote) => (
-                            <Checkbox
-                                name="remote[]"
-                                key={remote.key}
-                                value={remote.key}
-                                onChange={handleHomeOfficeClick}
-                                checked={query.remote.includes(remote.key)}
-                            >
-                                {`${remote.key} (${remote.count})`}
-                            </Checkbox>
-                        ))}
-                </div>
             </div>
         </Fieldset>
     );
@@ -169,7 +140,6 @@ Locations.propTypes = {
         aggregations: PropTypes.shape({
             internationalCountMap: PropTypes.object,
             nationalCountMap: PropTypes.object,
-            remote: PropTypes.object,
         }),
     }),
     locations: PropTypes.arrayOf(PropTypes.object),
@@ -178,7 +148,6 @@ Locations.propTypes = {
         counties: PropTypes.arrayOf(PropTypes.string),
         municipals: PropTypes.arrayOf(PropTypes.string),
         international: PropTypes.bool,
-        remote: PropTypes.arrayOf(PropTypes.string),
     }),
     dispatch: PropTypes.func.isRequired,
 };

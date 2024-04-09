@@ -18,7 +18,7 @@ function Published({ dispatch, query, initialValues, updatedValues }) {
     }
 
     return (
-        <Fieldset legend="Publisert" hideLegend>
+        <Fieldset legend="Filtrer etter når annonsen var publisert" hideLegend>
             <div>
                 {values.map((item) => (
                     <Checkbox

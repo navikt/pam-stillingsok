@@ -57,7 +57,7 @@ function Occupations({ initialValues, updatedValues, query, dispatch }) {
     }
 
     return (
-        <Fieldset hideLegend legend="Velg yrkesgruppe" className="FilterModal__fieldset">
+        <Fieldset hideLegend legend="Filtrer etter yrkesgruppe" className="FilterModal__fieldset">
             <div>
                 {values &&
                     values.map((firstLevel) => (

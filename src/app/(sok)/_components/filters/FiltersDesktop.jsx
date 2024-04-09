@@ -9,6 +9,7 @@ import Extent from "./Extent";
 import Sector from "./Sector";
 import EngagementType from "./Engagement";
 import WorkLanguage from "./WorkLanguage";
+import Remote from "@/app/(sok)/_components/filters/Remote";
 import ShareYourOpinionPanel from "@/app/tilbakemelding-nye-filtre/_components/ShareYourOpinionPanel";
 
 function FiltersDesktop({ query, dispatchQuery, aggregations, locations, searchResult }) {
@@ -30,6 +31,14 @@ function FiltersDesktop({ query, dispatchQuery, aggregations, locations, searchR
                         dispatch={dispatchQuery}
                         locations={locations}
                         updatedValues={searchResult}
+                    />
+                </FilterAccordionItem>
+                <FilterAccordionItem title="Hjemmekontor" panelId="hjemmekontor">
+                    <Remote
+                        query={query}
+                        dispatch={dispatchQuery}
+                        initialValues={aggregations.remote}
+                        updatedValues={searchResult.aggregations.remote}
                     />
                 </FilterAccordionItem>
                 <FilterAccordionItem title="Yrke" panelId="yrke">
