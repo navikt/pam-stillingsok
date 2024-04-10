@@ -15,82 +15,50 @@ import { ExternalLinkIcon } from "@navikt/aksel-icons";
 import Link from "next/link";
 import { formatDate, isValidUrl } from "@/app/_common/utils/utils";
 import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
-import FavouritesButton from "@/app/favoritter/_components/FavouritesButton";
 
-const logApplyForPosition = (adData, applyPositionBgColor) => {
+const logApplyForPosition = (adData) => {
     try {
         logAmplitudeEvent("Stilling sok-via-url", {
             title: adData.title,
             id: adData.id,
-            experimentApplyBoxColor: applyPositionBgColor,
         });
     } catch (e) {
         // ignore
     }
 };
 
-const logCopyEmailClick = (adData, applyPositionBgColor) => {
+const logCopyEmailClick = (adData) => {
     try {
         logAmplitudeEvent("Stilling copy-email", {
             title: adData.title,
             id: adData.id,
-            experimentApplyBoxColor: applyPositionBgColor,
         });
     } catch (e) {
         // ignore
     }
 };
 
-const logEmailAnchorClick = (adData, applyPositionBgColor) => {
+const logEmailAnchorClick = (adData) => {
     try {
         logAmplitudeEvent("Stilling email-anchor-click", {
             title: adData.title,
             id: adData.id,
-            experimentApplyBoxColor: applyPositionBgColor,
         });
     } catch (e) {
         // ignore
     }
 };
 
-export default function HowToApply({ adData, showFavouriteButton, adLayoutVariant }) {
+export default function HowToApply({ adData }) {
     const applicationUrl =
         (adData.applicationUrl && (adData.applicationUrl.url || adData.applicationUrl.dangerouslyInvalidUrl)) ||
         (adData.sourceUrl && (adData.sourceUrl.url || adData.sourceUrl.dangerouslyInvalidUrl));
     const isFinn = adData.source === "FINN";
     const path = "stilling";
-    const applyPositionBgColor = adLayoutVariant === "a" ? "green" : "blue";
-
-    /**
-     *  TODO: refactor denne
-     *  Blir brukt for FavouritesButton som forventer gammeldags data.
-     *  Venter med å refaktorere FavouritesButton for den blir brukt
-     *  flere steder
-     */
-    const stilling = {
-        source: adData.source,
-        reference: adData.reference,
-        title: adData.title,
-        status: adData.status,
-        locationList: adData.locationList,
-        published: adData.published,
-        expires: adData.expires,
-        properties: {
-            jobtitle: adData.jobTitle,
-            applicationdue: adData.applicationDue,
-            location: adData.location,
-            employer: adData.employer.name,
-        },
-    };
 
     if (adData.hasSuperraskSoknad === "true") {
         return (
-            <Box
-                background={applyPositionBgColor === "blue" ? "surface-alt-2-subtle" : "surface-alt-1-subtle"}
-                borderRadius="medium"
-                padding="4"
-                className="full-width mb-10"
-            >
+            <Box background="surface-alt-1-moderate" borderRadius="medium" padding="4" className="full-width mb-10">
                 <Heading level="2" size="medium" spacing>
                     Søk på jobben
                 </Heading>
@@ -114,7 +82,6 @@ export default function HowToApply({ adData, showFavouriteButton, adLayoutVarian
                             onClick={() => {
                                 logAmplitudeEvent("click superrask søknad link", {
                                     id: adData.id,
-                                    experimentApplyBoxColor: applyPositionBgColor,
                                 });
                             }}
                             href={`/${path}/${adData.id}/superrask-soknad`}
@@ -131,7 +98,7 @@ export default function HowToApply({ adData, showFavouriteButton, adLayoutVarian
                             <span>
                                 <AkselLink
                                     onClick={() => {
-                                        logEmailAnchorClick(adData, applyPositionBgColor);
+                                        logEmailAnchorClick(adData);
                                     }}
                                     href={`mailto:${adData.applicationEmail}`}
                                 >
@@ -146,7 +113,7 @@ export default function HowToApply({ adData, showFavouriteButton, adLayoutVarian
                                     size="xsmall"
                                     onActiveChange={(state) => {
                                         if (state === true) {
-                                            logCopyEmailClick(adData, applyPositionBgColor);
+                                            logCopyEmailClick(adData);
                                         }
                                     }}
                                 />
@@ -158,17 +125,11 @@ export default function HowToApply({ adData, showFavouriteButton, adLayoutVarian
                     <div>
                         <BodyLong className="mt-4">
                             Alternativt kan du{" "}
-                            <AkselLink
-                                href={applicationUrl}
-                                onClick={() => logApplyForPosition(adData, applyPositionBgColor)}
-                            >
+                            <AkselLink href={applicationUrl} onClick={() => logApplyForPosition(adData)}>
                                 sende søknad her.
                             </AkselLink>
                         </BodyLong>
                     </div>
-                )}
-                {showFavouriteButton && (
-                    <FavouritesButton className="mt-4" variant="secondary" id={adData.id} stilling={stilling} />
                 )}
             </Box>
         );
@@ -176,12 +137,7 @@ export default function HowToApply({ adData, showFavouriteButton, adLayoutVarian
 
     if (adData.applicationDue || adData.applicationEmail || applicationUrl) {
         return (
-            <Box
-                background={applyPositionBgColor === "blue" ? "surface-alt-2-subtle" : "surface-alt-1-subtle"}
-                borderRadius="medium"
-                padding="4"
-                className="full-width mb-10"
-            >
+            <Box background="surface-alt-1-moderate" borderRadius="medium" padding="4" className="full-width mb-10">
                 <Heading level="2" size="medium" spacing>
                     Søk på jobben
                 </Heading>
@@ -207,7 +163,7 @@ export default function HowToApply({ adData, showFavouriteButton, adLayoutVarian
                                         <span>
                                             <AkselLink
                                                 onClick={() => {
-                                                    logEmailAnchorClick(adData, applyPositionBgColor);
+                                                    logEmailAnchorClick(adData);
                                                 }}
                                                 href={`mailto:${adData.applicationEmail}`}
                                             >
@@ -222,7 +178,7 @@ export default function HowToApply({ adData, showFavouriteButton, adLayoutVarian
                                                 size="xsmall"
                                                 onActiveChange={(state) => {
                                                     if (state === true) {
-                                                        logCopyEmailClick(adData, applyPositionBgColor);
+                                                        logCopyEmailClick(adData);
                                                     }
                                                 }}
                                             />
@@ -250,7 +206,7 @@ export default function HowToApply({ adData, showFavouriteButton, adLayoutVarian
                             variant="primary"
                             as="a"
                             href={applicationUrl}
-                            onClick={() => logApplyForPosition(adData, applyPositionBgColor)}
+                            onClick={() => logApplyForPosition(adData)}
                             icon={<ExternalLinkIcon aria-hidden="true" />}
                             role="link"
                         >
@@ -261,9 +217,6 @@ export default function HowToApply({ adData, showFavouriteButton, adLayoutVarian
 
                 {isFinn && !adData.applicationUrl && (
                     <BodyLong className="mt-4">Søk via opprinnelig annonse på FINN.no.</BodyLong>
-                )}
-                {showFavouriteButton && (
-                    <FavouritesButton className="mt-4" variant="secondary" id={adData.id} stilling={stilling} />
                 )}
             </Box>
         );
