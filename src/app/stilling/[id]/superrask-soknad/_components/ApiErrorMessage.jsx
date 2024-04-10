@@ -2,8 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Alert, Heading } from "@navikt/ds-react";
 
-const getErrorMessage = (errorCode) => {
-    switch (errorCode) {
+const getErrorMessage = (apiErrorCode) => {
+    switch (apiErrorCode) {
         case "invalid_name":
             return "Sjekk at navnet ditt er skrevet riktig og prøv igjen.";
         case "invalid_email":
@@ -19,19 +19,19 @@ const getErrorMessage = (errorCode) => {
     }
 };
 
-function ErrorMessage({ errorCode }) {
+function ApiErrorMessage({ apiErrorCode }) {
     return (
         <Alert variant="error" className="mb-4 mt-4" role="alert">
             <Heading level="2" size="xsmall" spacing>
                 Søknaden ble ikke sendt
             </Heading>
-            {getErrorMessage(errorCode)}
+            {getErrorMessage(apiErrorCode)}
         </Alert>
     );
 }
 
-ErrorMessage.propTypes = {
-    errorCode: PropTypes.string,
+ApiErrorMessage.propTypes = {
+    apiErrorCode: PropTypes.string,
 };
 
-export default ErrorMessage;
+export default ApiErrorMessage;

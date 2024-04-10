@@ -40,7 +40,7 @@ export default async function Page({ params }) {
     const ad = await fetchAd(params.id);
     const applicationForm = await fetchApplicationForm(params.id);
 
-    async function submitApplication(formData) {
+    async function submitApplication(prevState, formData) {
         "use server";
 
         const application = parseFormData(formData, applicationForm.qualifications);
