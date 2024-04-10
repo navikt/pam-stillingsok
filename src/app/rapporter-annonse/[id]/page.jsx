@@ -22,7 +22,7 @@ function parseFormData(formData, categories, adId) {
 export default async function Page({ params }) {
     const ad = await fetchAd(params.id);
 
-    async function submitForm(formData) {
+    async function submitForm(prevState, formData) {
         "use server";
 
         const categories = formData.getAll("category");

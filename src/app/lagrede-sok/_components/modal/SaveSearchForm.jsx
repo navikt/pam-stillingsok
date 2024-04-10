@@ -151,7 +151,7 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
     }
 
     return (
-        <form onSubmit={handleFormSubmit} method="post">
+        <form onSubmit={handleFormSubmit}>
             <Modal.Body>
                 {defaultFormMode === FormModes.UPDATE_QUERY_ONLY && existingSavedSearch && (
                     <RadioGroup

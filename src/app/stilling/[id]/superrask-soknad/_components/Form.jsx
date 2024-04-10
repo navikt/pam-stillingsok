@@ -47,7 +47,7 @@ function Form({ ad, applicationForm, onSubmit, error, validationErrors, isPendin
     }
 
     return (
-        <form onSubmit={onSubmit} className="mb-16" method="post">
+        <form onSubmit={onSubmit} className="mb-16">
             <section className="mb-10">
                 <Heading level="1" size="xlarge" spacing>
                     Superrask søknad

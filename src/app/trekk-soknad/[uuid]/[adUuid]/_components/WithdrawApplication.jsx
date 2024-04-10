@@ -1,43 +1,20 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
+import { useFormState } from "react-dom";
 import PropTypes from "prop-types";
 import WithdrawApplicationSuccess from "./WithdrawApplicationSuccess";
 import WithdrawApplicationConfirmationRequired from "./WithdrawApplicationConfirmationRequired";
 
 function WithdrawApplication({ ad, withdrawApplication }) {
-    const [state, setState] = useState({ success: false, error: undefined });
-    const [isPending, setIsPending] = useState(false);
-
-    const onWithdrawApplicationClick = async (e) => {
-        let result, fetchSuccess;
-
-        setIsPending(true);
-
-        try {
-            result = await withdrawApplication();
-            fetchSuccess = true;
-        } catch (err) {
-            fetchSuccess = false;
-        }
-
-        if (fetchSuccess) {
-            setState(result);
-        } else {
-            setState({
-                success: false,
-                error: "unknown",
-            });
-        }
-        setIsPending(false);
-    };
+    const [state, formAction] = useFormState(withdrawApplication, { success: false });
 
     return (
         <div className="container-small mt-12 mb-12">
             {!state.success ? (
                 <WithdrawApplicationConfirmationRequired
-                    onWithdrawApplicationClick={onWithdrawApplicationClick}
-                    isPending={isPending}
+                    formAction={formAction}
+                    isDeleting={false}
                     hasError={state.error}
                     ad={ad}
                 />
