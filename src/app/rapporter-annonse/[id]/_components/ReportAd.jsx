@@ -8,6 +8,7 @@ import {
     BodyLong,
     BodyShort,
     Box,
+    Button,
     Checkbox,
     CheckboxGroup,
     ErrorSummary,
@@ -18,8 +19,7 @@ import {
     Textarea,
     VStack,
 } from "@navikt/ds-react";
-import { useFormState } from "react-dom";
-import { FormButtonBar } from "./FormButtonBar";
+import Link from "next/link";
 
 const reportCategories = [
     { label: "Diskriminerende innhold", key: "discrimination" },
@@ -35,7 +35,9 @@ function ReportAd({ ad, submitForm }) {
     const ref = useRef(null);
     const [description, setDescription] = useState("");
 
-    const [state, handleSubmit] = useFormState(submitForm, { validationErrors: {}, success: false });
+    const [state, setState] = useState({ validationErrors: {}, success: false, error: false });
+    const [isPending, setIsPending] = useState(false);
+
     const { validationErrors } = state;
     const [fixedErrors, setFixedErrors] = useState([]);
     const [localSummary, setLocalSummary] = useState(validationErrors);
@@ -68,6 +70,32 @@ function ReportAd({ ad, submitForm }) {
             setLocalSummary(localSummaryWithoutFixes);
         }
     }
+
+    const onSubmit = async (e) => {
+        e.preventDefault();
+
+        let result, fetchSuccess;
+        const formData = new FormData(e.target);
+
+        setIsPending(true);
+
+        try {
+            result = await submitForm(formData);
+            fetchSuccess = true;
+        } catch (err) {
+            fetchSuccess = false;
+        }
+
+        if (fetchSuccess) {
+            setState(result);
+        } else {
+            setState((prevState) => ({
+                ...prevState,
+                error: true,
+            }));
+        }
+        setIsPending(false);
+    };
 
     return (
         <>
@@ -104,7 +132,7 @@ function ReportAd({ ad, submitForm }) {
                             </div>
                         </div>
                     ) : (
-                        <form action={handleSubmit}>
+                        <form onSubmit={onSubmit} method="post">
                             <Heading level="1" size="xlarge" className="mb-4">
                                 Rapporter annonse
                             </Heading>
@@ -173,7 +201,14 @@ function ReportAd({ ad, submitForm }) {
                             )}
 
                             <HStack gap="4" className="mb-12">
-                                <FormButtonBar id={ad._id} />
+                                <Button type="submit" variant="primary" loading={isPending}>
+                                    Rapporter annonse
+                                </Button>
+                                {!isPending && (
+                                    <Button type="button" variant="secondary" as={Link} href={`/stilling/${ad._id}`}>
+                                        Avbryt
+                                    </Button>
+                                )}
                             </HStack>
                         </form>
                     )}

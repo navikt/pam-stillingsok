@@ -70,7 +70,7 @@ function RegisterEmailForm({ onClose, onSuccess }) {
     }
 
     return (
-        <form onSubmit={handleFormSubmit}>
+        <form onSubmit={handleFormSubmit} method="post">
             <Modal.Body>
                 <div role="status">
                     <BodyLong weight="semibold">
