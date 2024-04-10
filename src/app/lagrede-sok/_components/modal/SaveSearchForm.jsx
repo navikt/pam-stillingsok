@@ -65,7 +65,6 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
 
     function handleFormSubmit(e) {
         e.preventDefault();
-
         if (validateForm()) {
             let dataToBeSaved = {
                 title,
