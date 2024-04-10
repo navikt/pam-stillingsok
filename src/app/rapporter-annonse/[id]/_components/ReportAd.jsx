@@ -3,7 +3,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import {
-    Alert,
     Bleed,
     BodyLong,
     BodyShort,
@@ -19,6 +18,7 @@ import {
     VStack,
 } from "@navikt/ds-react";
 import { FormButtonBar } from "./FormButtonBar";
+import ApiErrorMessage from "@/app/_common/components/ApiErrorMessage";
 
 const reportCategories = [
     { label: "Diskriminerende innhold", key: "discrimination" },
@@ -188,11 +188,7 @@ function ReportAd({ ad, submitForm }) {
                                 skal fjernes. Ditt tips er anonymt.
                             </BodyLong>
 
-                            {state?.error && (
-                                <Alert variant="error" className="mb-4">
-                                    Rapportering av annonse feilet.
-                                </Alert>
-                            )}
+                            {state?.error && <ApiErrorMessage apiErrorCode={state.error} />}
 
                             <HStack gap="4" className="mb-12">
                                 <FormButtonBar id={ad._id} />
