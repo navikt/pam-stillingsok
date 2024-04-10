@@ -10,8 +10,6 @@ function WithdrawApplication({ ad, withdrawApplication }) {
     const [isPending, setIsPending] = useState(false);
 
     const onWithdrawApplicationClick = async (e) => {
-        e.preventDefault();
-
         let result, fetchSuccess;
 
         setIsPending(true);
@@ -24,10 +22,8 @@ function WithdrawApplication({ ad, withdrawApplication }) {
         }
 
         if (fetchSuccess) {
-            console.log(result);
             setState(result);
         } else {
-            alert();
             setState({
                 success: false,
                 error: "unknown",
