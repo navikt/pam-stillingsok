@@ -20,10 +20,16 @@ function SearchBox({ dispatch, query }) {
             suggestionsDispatch({ type: FetchAction.RESOLVE, data: cached.data });
             return;
         }
-
-        const data = await actions.getSuggestions(value, MINIMUM_LENGTH);
-        suggestionsCache = [{ value, data }, ...suggestionsCache].slice(0, CACHE_MAX_SIZE);
-        suggestionsDispatch({ type: FetchAction.RESOLVE, data });
+        let data;
+        try {
+            data = await actions.getSuggestions(value, MINIMUM_LENGTH);
+        } catch (err) {
+            // ignore fetch failed errors
+        }
+        if (data) {
+            suggestionsCache = [{ value, data }, ...suggestionsCache].slice(0, CACHE_MAX_SIZE);
+            suggestionsDispatch({ type: FetchAction.RESOLVE, data });
+        }
     }
 
     useEffect(() => {

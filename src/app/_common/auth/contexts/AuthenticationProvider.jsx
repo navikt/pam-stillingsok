@@ -45,8 +45,15 @@ function AuthenticationProvider({ children }) {
 
     const fetchIsAuthenticated = async () => {
         setAuthenticationStatus(AuthenticationStatus.IS_FETCHING);
+        let validation;
 
-        const validation = await actions.checkIfAuthenticated();
+        try {
+            validation = await actions.checkIfAuthenticated();
+        } catch (err) {
+            setAuthenticationStatus(AuthenticationStatus.FAILURE);
+            return;
+        }
+
         if (validation?.isAuthenticated) {
             setAuthenticationStatus(AuthenticationStatus.IS_AUTHENTICATED);
             setHasBeenLoggedIn(true);
@@ -64,9 +71,17 @@ function AuthenticationProvider({ children }) {
     };
 
     async function fetchUserNameAndInfo() {
-        const personalia = await actions.getPersonalia();
-        if (personalia.success) {
-            setUserNameAndInfo(personalia.data);
+        let isSuccess;
+        let result;
+        try {
+            result = await actions.getPersonalia();
+            isSuccess = result.success;
+        } catch (err) {
+            isSuccess = false;
+        }
+
+        if (isSuccess) {
+            setUserNameAndInfo(result.data);
         }
     }
 

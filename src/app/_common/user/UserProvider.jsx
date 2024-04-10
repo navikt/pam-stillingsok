@@ -25,20 +25,26 @@ function UserProvider({ children }) {
     const [forbiddenUser, setForbiddenUser] = useState(false);
 
     async function fetchUser() {
-        const user = await actions.getUser();
+        let result;
 
-        if (!user.success) {
-            if (user.statusCode === 403) {
+        try {
+            result = await actions.getUser();
+        } catch (err) {
+            openErrorDialog();
+            return;
+        }
+
+        if (result.success) {
+            updateUser(result.data);
+        } else {
+            if (result.statusCode === 403) {
                 setForbiddenUser(true);
-            } else if (user.statusCode === 404) {
+            } else if (result.statusCode === 404) {
                 setHasAcceptedTermsStatus(HasAcceptedTermsStatus.NOT_ACCEPTED);
             } else {
                 openErrorDialog();
             }
-            return;
         }
-
-        updateUser(user.data);
     }
 
     function updateUser(data) {
