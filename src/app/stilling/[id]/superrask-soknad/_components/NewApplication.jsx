@@ -1,37 +1,45 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { useFormState } from "react-dom";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import Success from "./Success";
 import Form from "./Form";
 import AdDetailsHeader from "./AdDetailsHeader";
 import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
 
-function useNetwork() {
-    const [isOnline, setNetwork] = useState(true);
-    useEffect(() => {
-        if (window) {
-            window.addEventListener("offline", () => setNetwork(window.navigator.onLine));
-            window.addEventListener("online", () => setNetwork(window.navigator.onLine));
-        }
-    });
-    return isOnline;
-}
 export default function NewApplication({ ad, applicationForm, submitApplication }) {
-    const [state, formAction] = useFormState(submitApplication, { validationErrors: {}, success: false });
-    const [submitOffline, setSubmitOffline] = useState(false);
-    const isOnline = useNetwork();
+    const [state, setState] = useState({ validationErrors: {}, success: false, error: false });
+    const [isPending, setIsPending] = useState(false);
 
-    useEffect(() => {
-        if (state && state.success) {
-            try {
-                logAmplitudeEvent("submit superrask søknad");
-            } catch (err) {
-                // ignore
-            }
+    const onSubmit = async (e) => {
+        e.preventDefault();
+
+        let result, fetchSuccess;
+        const formData = new FormData(e.target);
+
+        setIsPending(true);
+
+        try {
+            result = await submitApplication(formData);
+            fetchSuccess = true;
+        } catch (err) {
+            fetchSuccess = false;
         }
-    }, [state]);
+
+        if (fetchSuccess) {
+            setState(result);
+
+            if (result?.success) {
+                logAmplitudeEvent("submit superrask søknad");
+            }
+        } else {
+            setState((prevState) => ({
+                ...prevState,
+                error: "offline",
+            }));
+        }
+        setIsPending(false);
+    };
 
     return (
         <div className="mb-16">
@@ -43,17 +51,10 @@ export default function NewApplication({ ad, applicationForm, submitApplication 
                     <Form
                         ad={ad}
                         applicationForm={applicationForm}
-                        submitApplication={(e) => {
-                            if (isOnline) {
-                                setSubmitOffline(false);
-                                formAction(e);
-                            } else {
-                                setSubmitOffline(true);
-                            }
-                        }}
-                        submitApiError={state.error}
-                        offlineError={submitOffline}
+                        onSubmit={onSubmit}
+                        error={state.error}
                         validationErrors={state.validationErrors}
+                        isPending={isPending}
                     />
                 )}
             </div>
