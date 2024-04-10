@@ -2,7 +2,7 @@
 
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
-import { Box, Heading, HGrid, Tag } from "@navikt/ds-react";
+import { Box, Heading, Tag } from "@navikt/ds-react";
 import AdDetails from "./AdDetails";
 import AdText from "./AdText";
 import ContactPerson from "./ContactPerson";
@@ -32,39 +32,28 @@ function Ad({ adData, adLayoutVariant }) {
     return (
         <Box className="container-large" paddingBlock={{ xs: "4 12", md: "16" }}>
             <article>
-                <HGrid columns={{ xs: 1, lg: "auto 340px" }} gap="16">
-                    <div>
-                        <Heading level="1" size="xlarge" className="overflow-wrap-anywhere" spacing>
-                            {adData.title}
-                        </Heading>
+                <div className="container-medium">
+                    <Heading level="1" size="xlarge" className="overflow-wrap-anywhere" spacing>
+                        {adData.title}
+                    </Heading>
 
-                        {!annonseErAktiv && (
-                            <Tag variant="warning-moderate" className="mb-4">
-                                Stillingsannonsen er inaktiv.
-                            </Tag>
-                        )}
+                    {!annonseErAktiv && (
+                        <Tag variant="warning-moderate" className="mb-4">
+                            Stillingsannonsen er inaktiv.
+                        </Tag>
+                    )}
 
-                        <Summary adData={adData} />
-                        <EmploymentDetails adData={adData} />
-                        {annonseErAktiv && <HowToApply adData={adData} />}
-                        <AdText adText={adData.adText} />
-                        <EmployerDetails employer={adData.employer} />
-                    </div>
-                    <div>
-                        {annonseErAktiv && (
-                            <>
-                                <HowToApply adData={adData} showFavouriteButton adLayoutVariant={adLayoutVariant} />
-                                <ContactPerson
-                                    contactList={adData.contactList}
-                                    adId={adData.id}
-                                    adTitle={adData.title}
-                                />
-                                <ShareAd adData={adData} />
-                            </>
-                        )}
-                        <AdDetails adData={adData} />
-                    </div>
-                </HGrid>
+                    <Summary adData={adData} />
+                    <EmploymentDetails adData={adData} />
+                    {annonseErAktiv && <HowToApply adData={adData} />}
+                    <AdText adText={adData.adText} />
+                    {annonseErAktiv && (
+                        <ContactPerson contactList={adData.contactList} adId={adData.id} adTitle={adData.title} />
+                    )}
+                    <EmployerDetails employer={adData.employer} />
+                    {annonseErAktiv && <ShareAd adData={adData} />}
+                    <AdDetails adData={adData} />
+                </div>
             </article>
         </Box>
     );

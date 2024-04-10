@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import {
     BodyLong,
-    BodyShort,
     Box,
     Button,
     CopyButton,
@@ -10,6 +9,8 @@ import {
     HStack,
     Label,
     Link as AkselLink,
+    Stack,
+    VStack,
 } from "@navikt/ds-react";
 import { ExternalLinkIcon } from "@navikt/aksel-icons";
 import Link from "next/link";
@@ -59,38 +60,35 @@ export default function HowToApply({ adData }) {
     if (adData.hasSuperraskSoknad === "true") {
         return (
             <Box background="surface-alt-1-moderate" borderRadius="medium" padding="4" className="full-width mb-10">
-                <Heading level="2" size="medium" spacing>
-                    Søk på jobben
-                </Heading>
-                {adData.status === "ACTIVE" && (
-                    <BodyShort spacing>Vis frem deg selv og din erfaring med en superrask søknad.</BodyShort>
-                )}
-                {adData.applicationDue && (
-                    <dl className="dl">
-                        <dt>
-                            <Label as="p">Søknadsfrist</Label>
-                        </dt>
-                        <dd>
-                            <BodyLong>{formatDate(adData.applicationDue)}</BodyLong>
-                        </dd>
-                    </dl>
-                )}
-                {adData.status === "ACTIVE" && (
-                    <div>
-                        <Button
-                            as={Link}
-                            onClick={() => {
-                                logAmplitudeEvent("click superrask søknad link", {
-                                    id: adData.id,
-                                });
-                            }}
-                            href={`/${path}/${adData.id}/superrask-soknad`}
-                        >
-                            Gå til superrask søknad
-                        </Button>
-                    </div>
-                )}
-
+                <Stack
+                    gap="4"
+                    direction={{ xs: "column", sm: "row" }}
+                    justify="space-between"
+                    align={{ xs: "start", sm: "center" }}
+                >
+                    <VStack>
+                        <Heading level="2" size="medium" spacing>
+                            Søk på jobben
+                        </Heading>
+                        {/*TODO: add formating for frist*/}
+                        {adData.applicationDue && <BodyLong>{formatDate(adData.applicationDue)}</BodyLong>}
+                    </VStack>
+                    {adData.status === "ACTIVE" && (
+                        <div>
+                            <Button
+                                as={Link}
+                                onClick={() => {
+                                    logAmplitudeEvent("click superrask søknad link", {
+                                        id: adData.id,
+                                    });
+                                }}
+                                href={`/${path}/${adData.id}/superrask-soknad`}
+                            >
+                                Gå til superrask søknad
+                            </Button>
+                        </div>
+                    )}
+                </Stack>
                 {!isFinn && adData.applicationEmail && (
                     <BodyLong className="mt-4">
                         Alternativt kan du sende søknad via e-post til{" "}
@@ -122,14 +120,14 @@ export default function HowToApply({ adData }) {
                     </BodyLong>
                 )}
                 {applicationUrl && (
-                    <div>
+                    <>
                         <BodyLong className="mt-4">
                             Alternativt kan du{" "}
                             <AkselLink href={applicationUrl} onClick={() => logApplyForPosition(adData)}>
                                 sende søknad her.
                             </AkselLink>
                         </BodyLong>
-                    </div>
+                    </>
                 )}
             </Box>
         );
@@ -138,20 +136,35 @@ export default function HowToApply({ adData }) {
     if (adData.applicationDue || adData.applicationEmail || applicationUrl) {
         return (
             <Box background="surface-alt-1-moderate" borderRadius="medium" padding="4" className="full-width mb-10">
-                <Heading level="2" size="medium" spacing>
-                    Søk på jobben
-                </Heading>
-                <dl className="dl">
-                    {adData.applicationDue && (
-                        <>
-                            <dt>
-                                <Label as="p">Søknadsfrist</Label>
-                            </dt>
-                            <dd>
-                                <BodyLong>{formatDate(adData.applicationDue)}</BodyLong>
-                            </dd>
-                        </>
+                <Stack
+                    gap="4"
+                    direction={{ xs: "column", sm: "row" }}
+                    justify="space-between"
+                    align={{ xs: "start", sm: "center" }}
+                >
+                    <VStack>
+                        <Heading level="2" size="medium" spacing>
+                            Søk på jobben
+                        </Heading>
+                        {/*TODO: add formating for frist*/}
+                        {adData.applicationDue && <BodyLong>{formatDate(adData.applicationDue)}</BodyLong>}
+                    </VStack>
+                    {applicationUrl && isValidUrl(applicationUrl) && (
+                        <div>
+                            <Button
+                                variant="primary"
+                                as="a"
+                                href={applicationUrl}
+                                onClick={() => logApplyForPosition(adData)}
+                                icon={<ExternalLinkIcon aria-hidden="true" />}
+                                role="link"
+                            >
+                                Gå til søknad
+                            </Button>
+                        </div>
                     )}
+                </Stack>
+                <dl className="dl">
                     {!isFinn && adData.applicationEmail && (
                         <>
                             <dt>
@@ -199,22 +212,6 @@ export default function HowToApply({ adData }) {
                         </>
                     )}
                 </dl>
-
-                {applicationUrl && isValidUrl(applicationUrl) && (
-                    <div>
-                        <Button
-                            variant="primary"
-                            as="a"
-                            href={applicationUrl}
-                            onClick={() => logApplyForPosition(adData)}
-                            icon={<ExternalLinkIcon aria-hidden="true" />}
-                            role="link"
-                        >
-                            Gå til søknad
-                        </Button>
-                    </div>
-                )}
-
                 {isFinn && !adData.applicationUrl && (
                     <BodyLong className="mt-4">Søk via opprinnelig annonse på FINN.no.</BodyLong>
                 )}

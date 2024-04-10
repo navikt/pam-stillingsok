@@ -10,3 +10,13 @@
 .job-posting-text #arb-serEtter {
     margin-bottom: var(--a-spacing-16);
 }
+
+.report-ad-button {
+    @media (max-width: 550px) {
+        order: 99;
+    }
+}
+
+.ad-details {
+    width: 100%;
+}
