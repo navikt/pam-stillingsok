@@ -13,10 +13,9 @@ function WithdrawApplicationConfirmationRequired({ ad, submitForm, hasError }) {
         e.preventDefault();
 
         let result, fetchSuccess;
-        const formData = new FormData(e.target);
 
         try {
-            result = await submitForm(formData);
+            result = await submitForm();
             fetchSuccess = true;
         } catch (err) {
             fetchSuccess = false;
@@ -68,7 +67,7 @@ WithdrawApplicationConfirmationRequired.propTypes = {
             title: PropTypes.string,
         }),
     }),
-    formAction: PropTypes.func.isRequired,
+    submitForm: PropTypes.func.isRequired,
     hasError: PropTypes.bool,
 };
 
