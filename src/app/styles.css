@@ -27,6 +27,10 @@ strong {
     font-weight: 700;
 }
 
+.deleteme {
+    display: none;
+}
+
 #app {
     height: 100%;
 }

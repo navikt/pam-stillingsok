@@ -13,6 +13,10 @@
     background-color: var(--a-surface-alt-1-subtle);
 }
 
+.delete-me {
+    display: none;
+}
+
 .filter-modal .navds-tabs__tablist-wrapper {
     background: var(--a-surface-default);
     position: sticky;
