@@ -238,5 +238,4 @@ HowToApply.propTypes = {
         applicationDue: PropTypes.string,
         applicationEmail: PropTypes.string,
     }).isRequired,
-    adLayoutVariant: PropTypes.string,
 };

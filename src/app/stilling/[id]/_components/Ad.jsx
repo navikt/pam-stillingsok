@@ -13,14 +13,14 @@ import { logStillingVisning } from "@/app/_common/monitoring/amplitude";
 import ShareAd from "./ShareAd";
 import Summary from "./Summary";
 
-function Ad({ adData, adLayoutVariant }) {
+function Ad({ adData }) {
     /**
      * Track page view for all ads
      */
     useEffect(() => {
         if (adData && adData.id && adData.title) {
             try {
-                logStillingVisning(adData, adLayoutVariant);
+                logStillingVisning(adData);
             } catch (e) {
                 // ignore
             }
@@ -72,5 +72,4 @@ Ad.propTypes = {
             name: PropTypes.string,
         }),
     }).isRequired,
-    adLayoutVariant: PropTypes.string,
 };
