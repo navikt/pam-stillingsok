@@ -19,11 +19,11 @@ const getErrorMessage = (apiErrorCode) => {
     }
 };
 
-function ApiErrorMessage({ apiErrorCode }) {
+function ApiErrorMessage({ apiErrorCode, errorHeading = "Søknaden ble ikke sendt" }) {
     return (
         <Alert variant="error" className="mb-4 mt-4" role="alert">
             <Heading level="2" size="xsmall" spacing>
-                Søknaden ble ikke sendt
+                {errorHeading}
             </Heading>
             {getErrorMessage(apiErrorCode)}
         </Alert>
