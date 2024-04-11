@@ -17,20 +17,26 @@ function UserConsentModal({ onClose, onTermsAccepted }) {
     async function createUser() {
         setFetchStatus(FetchStatus.IS_FETCHING);
 
-        const user = await actions.createUser({ acceptedTerms: "sok_v1" });
+        let isSuccess;
+        let result;
+        try {
+            result = await actions.createUser({ acceptedTerms: "sok_v1" });
+            isSuccess = result.success;
+        } catch (err) {
+            isSuccess = false;
+        }
 
-        if (!user.success) {
+        if (isSuccess) {
+            setFetchStatus(FetchStatus.SUCCESS);
+
+            if (onTermsAccepted) {
+                onTermsAccepted();
+            }
+
+            updateUser(result.data);
+        } else {
             setFetchStatus(FetchStatus.FAILURE);
-            return;
         }
-
-        setFetchStatus(FetchStatus.SUCCESS);
-
-        if (onTermsAccepted) {
-            onTermsAccepted();
-        }
-
-        updateUser(user.data);
     }
 
     function onCheckboxClick(e) {

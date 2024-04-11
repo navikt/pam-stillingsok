@@ -6,15 +6,27 @@ export const UserPreferencesContext = React.createContext({});
 
 function UserPreferencesProvider({ children, userPreferences }) {
     function addClosedFilter(panelId) {
-        actions.addClosedFilter(panelId);
+        try {
+            actions.addClosedFilter(panelId);
+        } catch (err) {
+            // ignore fetch failed
+        }
     }
 
     function removeClosedFilter(panelId) {
-        actions.removeClosedFilter(panelId);
+        try {
+            actions.removeClosedFilter(panelId);
+        } catch (err) {
+            // ignore fetch failed
+        }
     }
 
     function dismissPanel(panelId) {
-        actions.dismissPanel(panelId);
+        try {
+            actions.dismissPanel(panelId);
+        } catch (err) {
+            // ignore fetch failed
+        }
     }
 
     return (

@@ -44,8 +44,17 @@ function RegisterEmailForm({ onClose, onSuccess }) {
 
         if (validateForm()) {
             setSaveStatus(FetchStatus.IS_FETCHING);
-            const result = await actions.updateUser({ ...user, email });
-            if (result.success) {
+            let isSuccess;
+            let result;
+
+            try {
+                result = await actions.updateUser({ ...user, email });
+                isSuccess = result.success;
+            } catch (err) {
+                isSuccess = false;
+            }
+
+            if (isSuccess) {
                 setSaveStatus(FetchStatus.SUCCESS);
                 updateUser(result.data);
                 onSuccess();
