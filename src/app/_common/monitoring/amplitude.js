@@ -42,7 +42,7 @@ export const logSearchFilterRemoved = (data) => {
     amplitude.track("Søkefilter fjernet", enrichData(data));
 };
 
-export function logStillingVisning(adData, adLayoutVariant) {
+export function logStillingVisning(adData) {
     // Todo - tror employer.location er erstattet med employer.locationList
     const employerLocation = adData.employer && adData.employer.locationList ? adData.employer.locationList[0] : null;
     let hasContactMail = false;
@@ -78,7 +78,6 @@ export function logStillingVisning(adData, adLayoutVariant) {
         hasContactInfoMail: hasContactMail,
         hasContactInfoPhone: hasContactPhone,
         jobPostingFormat: adData.jobPostingFormat,
-        adLayoutVariant: adLayoutVariant,
     });
 }
 
