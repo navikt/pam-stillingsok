@@ -59,7 +59,7 @@ function SearchPagination({ searchResult, query, queryDispatch }) {
                         from: 0,
                         size: size,
                     });
-                    actions.setResultsPerPage(size);
+                    actions.saveResultsPerPage(size);
                 }}
                 value={resultsPerPage}
                 className="inline-select"

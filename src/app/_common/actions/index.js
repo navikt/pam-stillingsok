@@ -3,7 +3,7 @@ export {
     removeClosedFilter,
     addClosedFilter,
     dismissPanel,
-    setResultsPerPage,
+    saveResultsPerPage,
 } from "./userPreferencesActions";
 export { getFavouritesAction, addFavouriteAction, deleteFavouriteAction } from "./favouritesActions";
 export { checkIfAuthenticated, checkIfUserAgreementIsAccepted } from "./authenticationActions";

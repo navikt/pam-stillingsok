@@ -69,7 +69,7 @@ export async function dismissPanel(panelId) {
     cookies().set(USER_PREFERENCES_COOKIE_NAME, JSON.stringify(newCookieValue), COOKIE_OPTIONS);
 }
 
-export async function setResultsPerPage(resultsPerPage) {
+export async function saveResultsPerPage(resultsPerPage) {
     if (!ALLOWED_RESULTS_PER_PAGE.includes(resultsPerPage)) {
         // Trying to set an invalid value
         return;
