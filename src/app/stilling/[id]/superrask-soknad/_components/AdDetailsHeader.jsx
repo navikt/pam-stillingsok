@@ -5,7 +5,7 @@ import getEmployer from "@/app/_common/utils/getEmployer";
 
 function AdDetailsHeader({ source }) {
     return (
-        <Box background="surface-alt-1-subtle" paddingBlock="4" className="mb-12">
+        <Box background="surface-alt-1-subtle" paddingBlock="4" className="mb-10">
             <div className="container-medium">
                 <Label as="p" className="mb-1">
                     {getEmployer(source)}

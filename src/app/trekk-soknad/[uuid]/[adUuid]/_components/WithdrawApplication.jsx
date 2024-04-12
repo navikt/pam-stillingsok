@@ -10,7 +10,7 @@ function WithdrawApplication({ ad, withdrawApplication }) {
     const [state, formAction] = useFormState(withdrawApplication, { success: false });
 
     return (
-        <div className="container-small mt-12 mb-12">
+        <div className="container-small mt-10 mb-24">
             {!state.success ? (
                 <WithdrawApplicationConfirmationRequired
                     submitForm={formAction}

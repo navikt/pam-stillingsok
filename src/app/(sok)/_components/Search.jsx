@@ -65,7 +65,7 @@ export default function Search({ query, searchResult, aggregations, locations })
 
     return (
         <form onSubmit={onFormSubmit} className="mb-24">
-            <Box paddingBlock={{ xs: "4", md: "12" }} paddingInline={{ xs: "4", sm: "6" }}>
+            <Box paddingBlock={{ xs: "4", md: "10" }} paddingInline={{ xs: "4", sm: "6" }}>
                 <Stack justify={{ md: "center" }}>
                     <Heading level="1" size="xlarge">
                         Søk etter din neste jobb

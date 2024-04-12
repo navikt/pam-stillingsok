@@ -34,7 +34,7 @@ export default function NewApplication({ ad, applicationForm, submitApplication 
     }, [state]);
 
     return (
-        <div className="mb-16">
+        <div className="mb-24">
             <AdDetailsHeader source={ad._source} />
             <div className="container-small">
                 {state.success ? (

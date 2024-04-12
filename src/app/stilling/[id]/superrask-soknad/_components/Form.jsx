@@ -46,7 +46,7 @@ function Form({ ad, applicationForm, submitApplication, submitApiError, offlineE
     }
 
     return (
-        <form action={submitApplication} className="mb-16">
+        <form action={submitApplication}>
             <section className="mb-10">
                 <Heading level="1" size="xlarge" spacing>
                     Superrask søknad

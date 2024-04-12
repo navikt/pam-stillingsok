@@ -33,7 +33,7 @@ function SavedSearchesList({ data, uuid }) {
     }
 
     return (
-        <section className="container-medium mt-16 mb-16">
+        <section className="container-medium mt-10 mb-24">
             <Heading level="1" size="xlarge" className="mb-12">
                 Lagrede søk
             </Heading>
