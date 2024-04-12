@@ -30,7 +30,7 @@ function Ad({ adData }) {
     const annonseErAktiv = adData.status === "ACTIVE";
 
     return (
-        <Box className="container-small" paddingBlock={{ xs: "4 12", md: "16" }}>
+        <Box className="container-small" paddingBlock={{ xs: "4 12", md: "12 24" }}>
             <article>
                 <div>
                     <Heading level="1" size="xlarge" className="overflow-wrap-anywhere" spacing>
