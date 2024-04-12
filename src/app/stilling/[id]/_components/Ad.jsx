@@ -2,7 +2,7 @@
 
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
-import { Box, Heading, HGrid, Tag } from "@navikt/ds-react";
+import { Box, Heading, Tag } from "@navikt/ds-react";
 import AdDetails from "./AdDetails";
 import AdText from "./AdText";
 import ContactPerson from "./ContactPerson";
@@ -13,14 +13,14 @@ import { logStillingVisning } from "@/app/_common/monitoring/amplitude";
 import ShareAd from "./ShareAd";
 import Summary from "./Summary";
 
-function Ad({ adData, adLayoutVariant }) {
+function Ad({ adData }) {
     /**
      * Track page view for all ads
      */
     useEffect(() => {
         if (adData && adData.id && adData.title) {
             try {
-                logStillingVisning(adData, adLayoutVariant);
+                logStillingVisning(adData);
             } catch (e) {
                 // ignore
             }
@@ -30,40 +30,28 @@ function Ad({ adData, adLayoutVariant }) {
     const annonseErAktiv = adData.status === "ACTIVE";
 
     return (
-        <Box className="container-large" paddingBlock={{ xs: "4 12", md: "16" }}>
+        <Box className="container-small" paddingBlock={{ xs: "4 12", md: "16" }}>
             <article>
-                <HGrid columns={{ xs: 1, lg: "auto 340px" }} gap="16">
-                    <div>
-                        <Heading level="1" size="xlarge" className="overflow-wrap-anywhere" spacing>
-                            {adData.title}
-                        </Heading>
-
-                        {!annonseErAktiv && (
-                            <Tag variant="warning-moderate" className="mb-4">
-                                Stillingsannonsen er inaktiv.
-                            </Tag>
-                        )}
-
-                        <Summary adData={adData} />
-                        <AdText adText={adData.adText} />
-                        <EmployerDetails employer={adData.employer} />
-                        <EmploymentDetails adData={adData} />
-                    </div>
-                    <div>
-                        {annonseErAktiv && (
-                            <>
-                                <HowToApply adData={adData} showFavouriteButton adLayoutVariant={adLayoutVariant} />
-                                <ContactPerson
-                                    contactList={adData.contactList}
-                                    adId={adData.id}
-                                    adTitle={adData.title}
-                                />
-                                <ShareAd adData={adData} />
-                            </>
-                        )}
-                        <AdDetails adData={adData} />
-                    </div>
-                </HGrid>
+                <div>
+                    <Heading level="1" size="xlarge" className="overflow-wrap-anywhere" spacing>
+                        {adData.title}
+                    </Heading>
+                    <Summary adData={adData} />
+                    {!annonseErAktiv && (
+                        <Tag variant="warning-moderate" className="mt-4">
+                            Stillingsannonsen er inaktiv.
+                        </Tag>
+                    )}
+                    <EmploymentDetails adData={adData} />
+                    {annonseErAktiv && <HowToApply adData={adData} />}
+                    <AdText adText={adData.adText} />
+                    {annonseErAktiv && (
+                        <ContactPerson contactList={adData.contactList} adId={adData.id} adTitle={adData.title} />
+                    )}
+                    <EmployerDetails employer={adData.employer} />
+                    {annonseErAktiv && <ShareAd adData={adData} />}
+                    <AdDetails adData={adData} />
+                </div>
             </article>
         </Box>
     );
@@ -82,5 +70,4 @@ Ad.propTypes = {
             name: PropTypes.string,
         }),
     }).isRequired,
-    adLayoutVariant: PropTypes.string,
 };

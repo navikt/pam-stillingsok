@@ -4,9 +4,18 @@
     max-width: 70ch;
 }
 
-.job-posting-text #arb-aapningstekst,
 .job-posting-text #arb-arbeidsoppgaver,
 .job-posting-text #arb-tilbyr,
 .job-posting-text #arb-serEtter {
     margin-bottom: var(--a-spacing-16);
+}
+
+#arb-aapningstekst p {
+    margin: 0 0 var(--a-spacing-8);
+}
+
+.report-ad-button {
+    @media (max-width: 550px) {
+        order: 99;
+    }
 }

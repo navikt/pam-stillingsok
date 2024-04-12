@@ -99,7 +99,7 @@ function FavouritesButton({ id, stilling, className, variant, useShortText = fal
         deleteFavourite(id);
     }
 
-    const saveText = useShortText ? "Lagre" : "Lagre annonse";
+    const saveText = useShortText ? "Lagre" : "Lagre som favoritt";
     const deleteText = useShortText ? "Lagret" : "Slett favoritt";
     const buttonText = isFavourite ? deleteText : saveText;
 

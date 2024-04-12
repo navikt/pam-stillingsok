@@ -1,0 +1,22 @@
+.ad-description-list dd {
+    margin: 0;
+    overflow-wrap: anywhere;
+}
+
+.ad-description-list dt {
+    margin: 0;
+    overflow-wrap: anywhere;
+}
+.ad-description-list {
+    margin: 0;
+    width: 100%;
+    display: grid;
+    gap: 1rem;
+}
+
+@media (min-width: 768px) {
+    .ad-description-list {
+        gap: 1.5rem;
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

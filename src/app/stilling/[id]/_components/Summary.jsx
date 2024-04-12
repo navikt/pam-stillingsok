@@ -8,7 +8,7 @@ export default function Summary({ adData }) {
     const location = getWorkLocation(adData.location, adData.locationList, false);
 
     return (
-        <section className="mb-12">
+        <section>
             {adData.employer && adData.employer.name && (
                 <HStack className="mb-2" gap="3" align="center" wrap={false}>
                     <HStack align="center">
@@ -22,7 +22,10 @@ export default function Summary({ adData }) {
                     <HStack align="center">
                         <LocationPinIcon title="Sted" fontSize="1.5rem" />
                     </HStack>
-                    <BodyLong weight="semibold">{location}</BodyLong>
+                    <BodyLong weight="semibold">
+                        {location}
+                        {adData.remote ? `, ${adData.remote}` : ""}
+                    </BodyLong>
                 </HStack>
             )}
         </section>
@@ -33,6 +36,7 @@ Summary.propTypes = {
     adData: PropTypes.shape({
         location: PropTypes.string,
         locationList: PropTypes.array,
+        remote: PropTypes.string,
         employer: PropTypes.shape({
             name: PropTypes.string,
         }),

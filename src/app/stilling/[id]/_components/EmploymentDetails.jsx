@@ -1,148 +1,135 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { BodyLong, Heading, Label } from "@navikt/ds-react";
+import { BodyLong, Heading, HStack, Label } from "@navikt/ds-react";
 import { formatDate } from "@/app/_common/utils/utils";
-import "./EmploymentDetails.css";
+import "./AdDescriptionList.css";
 import joinStringWithSeperator from "@/app/_common/utils/joinStringWithSeperator";
+import FavouritesButton from "@/app/favoritter/_components/FavouritesButton";
+import { RichText } from "@navikt/arbeidsplassen-react";
+import parse from "html-react-parser";
 
 export default function EmploymentDetails({ adData }) {
-    function remoteTextDescription(remoteValue) {
-        switch (remoteValue) {
-            case "Hjemmekontor":
-                return "Kun hjemmekontor";
-            case "Hybridkontor":
-                return "Hybrid (noe hjemme, noe på arbeidsplassen)";
-            default:
-                return remoteValue;
-        }
-    }
+    /**
+     *  TODO: refactor denne
+     *  Blir brukt for FavouritesButton som forventer gammeldags data.
+     *  Venter med å refaktorere FavouritesButton for den blir brukt
+     *  flere steder
+     */
+    const stilling = {
+        source: adData.source,
+        reference: adData.reference,
+        title: adData.title,
+        status: adData.status,
+        locationList: adData.locationList,
+        published: adData.published,
+        expires: adData.expires,
+        properties: {
+            jobtitle: adData.jobTitle,
+            applicationdue: adData.applicationDue,
+            location: adData.location,
+            employer: adData.employer.name,
+        },
+    };
+
+    const options = {
+        replace: ({ attribs }) => {
+            if (
+                attribs &&
+                (attribs.id === "arb-serEtter" || attribs.id === "arb-arbeidsoppgaver" || attribs.id === "arb-tilbyr")
+            ) {
+                return <></>;
+            }
+        },
+    };
 
     return (
-        <section className="full-width">
-            <Heading level="2" size="large" spacing>
-                Om stillingen
-            </Heading>
+        <section className="full-width mt-8">
+            <HStack gap="4" justify="space-between" align="center" className="mb-8">
+                <Heading level="2" size="large">
+                    Om jobben
+                </Heading>
+                <FavouritesButton variant="tertiary" id={adData.id} stilling={stilling} />
+            </HStack>
 
-            <dl className="dl" id="employment-details">
+            {adData.adText && adData.adText.includes("arb-aapningstekst") && (
+                <RichText>{parse(adData.adText, options)}</RichText>
+            )}
+
+            <dl className="ad-description-list mb-8">
                 {adData.jobTitle && (
-                    <>
+                    <div>
                         <dt>
                             <Label as="p">Stillingstittel</Label>
                         </dt>
                         <dd>
                             <BodyLong>{adData.jobTitle}</BodyLong>
                         </dd>
-                    </>
-                )}
-                {adData.positionCount && (
-                    <>
-                        <dt>
-                            <Label as="p">Antall stillinger</Label>
-                        </dt>
-                        <dd>
-                            <BodyLong>{adData.positionCount}</BodyLong>
-                        </dd>
-                    </>
+                    </div>
                 )}
                 {adData.startTime && (
-                    <>
+                    <div>
                         <dt>
                             <Label as="p">Oppstart</Label>
                         </dt>
                         <dd>
                             <BodyLong>{formatDate(adData.startTime)}</BodyLong>
                         </dd>
-                    </>
-                )}
-                {adData.remote && (
-                    <>
-                        <dt>
-                            <Label as="p">Hjemmekontor</Label>
-                        </dt>
-                        <dd>
-                            <BodyLong>{remoteTextDescription(adData.remote)}</BodyLong>
-                        </dd>
-                    </>
+                    </div>
                 )}
                 {adData.engagementType && (
-                    <>
+                    <div>
                         <dt>
-                            <Label as="p">Ansettelsesform</Label>
+                            <Label as="p">Type ansettelse</Label>
                         </dt>
                         <dd>
-                            <BodyLong>{adData.engagementType}</BodyLong>
+                            <BodyLong>
+                                {adData.engagementType}
+                                {adData.extent ? `, ${adData.extent}` : ""}
+                            </BodyLong>
                         </dd>
-                    </>
+                    </div>
                 )}
-                {adData.jobPercentage && (
-                    <>
-                        <dt>
-                            <Label as="p">Prosent</Label>
-                        </dt>
-                        <dd>
-                            <BodyLong>{adData.jobPercentage}</BodyLong>
-                        </dd>
-                    </>
-                )}
-                {adData.extent && (
-                    <>
-                        <dt>
-                            <Label as="p">Heltid/deltid</Label>
-                        </dt>
-                        <dd>
-                            <BodyLong>{adData.extent}</BodyLong>
-                        </dd>
-                    </>
-                )}
-                {adData.sector && (
-                    <>
-                        <dt>
-                            <Label as="p">Sektor</Label>
-                        </dt>
-                        <dd>
-                            <BodyLong>{adData.sector}</BodyLong>
-                        </dd>
-                    </>
-                )}
-                {adData.workdays && (
-                    <>
-                        <dt>
-                            <Label as="p">Arbeidsdager</Label>
-                        </dt>
-                        <dd>
-                            <BodyLong>{adData.workdays}</BodyLong>
-                        </dd>
-                    </>
-                )}
-                {adData.workHours && (
-                    <>
+                {(adData.jobArrangement || adData.workdays || adData.workHours) && (
+                    <div>
                         <dt>
                             <Label as="p">Arbeidstid</Label>
                         </dt>
                         <dd>
-                            <BodyLong>{adData.workHours}</BodyLong>
+                            <BodyLong>
+                                {adData.jobArrangement} {adData.workdays} {adData.workHours}
+                            </BodyLong>
                         </dd>
-                    </>
+                    </div>
                 )}
                 {adData.jobArrangement && (
-                    <>
+                    <div>
                         <dt>
                             <Label as="p">Arbeidstidsordning</Label>
                         </dt>
                         <dd>
                             <BodyLong>{adData.jobArrangement}</BodyLong>
                         </dd>
-                    </>
+                    </div>
                 )}
                 {adData.workLanguages && (
-                    <>
+                    <div>
                         <dt>
                             <Label as="p">Arbeidsspråk</Label>
                         </dt>
                         <dd>
                             <BodyLong>{joinStringWithSeperator(adData.workLanguages, "eller")}</BodyLong>
                         </dd>
-                    </>
+                    </div>
+                )}
+                {adData.positionCount && (
+                    <div>
+                        <dt>
+                            <Label as="p">Antall stillinger</Label>
+                        </dt>
+                        <dd>
+                            <BodyLong>{adData.positionCount}</BodyLong>
+                        </dd>
+                    </div>
                 )}
             </dl>
         </section>
@@ -154,7 +141,6 @@ EmploymentDetails.propTypes = {
         jobTitle: PropTypes.string,
         positionCount: PropTypes.string,
         startTime: PropTypes.string,
-        remote: PropTypes.string,
         engagementType: PropTypes.string,
         jobPercentage: PropTypes.string,
         extent: PropTypes.string,
