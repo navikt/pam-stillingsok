@@ -164,54 +164,44 @@ export default function HowToApply({ adData }) {
                         </div>
                     )}
                 </Stack>
-                <dl className="dl">
-                    {!isFinn && adData.applicationEmail && (
-                        <>
-                            <dt>
-                                <Label as="p">Send søknad til</Label>
-                            </dt>
-                            <dd>
-                                <BodyLong>
-                                    <HStack gap="2" as="span" wrap={false}>
-                                        <span>
-                                            <AkselLink
-                                                onClick={() => {
-                                                    logEmailAnchorClick(adData);
-                                                }}
-                                                href={`mailto:${adData.applicationEmail}`}
-                                            >
-                                                {adData.applicationEmail}
-                                            </AkselLink>
-                                        </span>
-                                        <span>
-                                            <CopyButton
-                                                title="Kopier e-postadresse"
-                                                copyText={`${adData.applicationEmail}`}
-                                                variant="action"
-                                                size="xsmall"
-                                                onActiveChange={(state) => {
-                                                    if (state === true) {
-                                                        logCopyEmailClick(adData);
-                                                    }
-                                                }}
-                                            />
-                                        </span>
-                                    </HStack>
-                                </BodyLong>
-                            </dd>
-                        </>
-                    )}
-                    {applicationUrl && !isValidUrl(applicationUrl) && (
-                        <>
-                            <dt>
-                                <Label as="p">Søknadslenke</Label>
-                            </dt>
-                            <dd>
-                                <BodyLong>{applicationUrl}</BodyLong>
-                            </dd>
-                        </>
-                    )}
-                </dl>
+                {!isFinn && adData.applicationEmail && (
+                    <div className="mt-4">
+                        <Label as="p">Send søknad til</Label>
+                        <BodyLong>
+                            <HStack gap="2" as="span" wrap={false}>
+                                <span>
+                                    <AkselLink
+                                        onClick={() => {
+                                            logEmailAnchorClick(adData);
+                                        }}
+                                        href={`mailto:${adData.applicationEmail}`}
+                                    >
+                                        {adData.applicationEmail}
+                                    </AkselLink>
+                                </span>
+                                <span>
+                                    <CopyButton
+                                        title="Kopier e-postadresse"
+                                        copyText={`${adData.applicationEmail}`}
+                                        variant="action"
+                                        size="xsmall"
+                                        onActiveChange={(state) => {
+                                            if (state === true) {
+                                                logCopyEmailClick(adData);
+                                            }
+                                        }}
+                                    />
+                                </span>
+                            </HStack>
+                        </BodyLong>
+                    </div>
+                )}
+                {applicationUrl && !isValidUrl(applicationUrl) && (
+                    <>
+                        <Label as="p">Søknadslenke</Label>
+                        <BodyLong>{applicationUrl}</BodyLong>
+                    </>
+                )}
                 {isFinn && !adData.applicationUrl && (
                     <BodyLong className="mt-4">Søk via opprinnelig annonse på FINN.no.</BodyLong>
                 )}

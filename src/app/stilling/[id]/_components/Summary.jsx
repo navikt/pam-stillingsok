@@ -8,7 +8,7 @@ export default function Summary({ adData }) {
     const location = getWorkLocation(adData.location, adData.locationList, false);
 
     return (
-        <section className="mb-12">
+        <section>
             {adData.employer && adData.employer.name && (
                 <HStack className="mb-2" gap="3" align="center" wrap={false}>
                     <HStack align="center">

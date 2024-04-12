@@ -5,6 +5,8 @@ import { formatDate } from "@/app/_common/utils/utils";
 import "./EmploymentDetails.css";
 import joinStringWithSeperator from "@/app/_common/utils/joinStringWithSeperator";
 import FavouritesButton from "@/app/favoritter/_components/FavouritesButton";
+import { RichText } from "@navikt/arbeidsplassen-react";
+import parse from "html-react-parser";
 
 export default function EmploymentDetails({ adData }) {
     /**
@@ -29,14 +31,29 @@ export default function EmploymentDetails({ adData }) {
         },
     };
 
+    const options = {
+        replace: ({ attribs }) => {
+            if (
+                attribs &&
+                (attribs.id === "arb-serEtter" || attribs.id === "arb-arbeidsoppgaver" || attribs.id === "arb-tilbyr")
+            ) {
+                return <></>;
+            }
+        },
+    };
+
     return (
-        <section className="full-width">
+        <section className="full-width mt-8">
             <HStack gap="4" justify="space-between" align="center">
                 <Heading level="2" size="large">
                     Om jobben
                 </Heading>
                 <FavouritesButton variant="tertiary" id={adData.id} stilling={stilling} />
             </HStack>
+
+            {adData.adText && adData.adText.includes("arb-aapningstekst") && (
+                <RichText>{parse(adData.adText, options)}</RichText>
+            )}
 
             <dl className="dl" id="employment-details">
                 {adData.jobTitle && (

@@ -32,18 +32,16 @@ function Ad({ adData }) {
     return (
         <Box className="container-large" paddingBlock={{ xs: "4 12", md: "16" }}>
             <article>
-                <div className="container-medium">
+                <div className="container-small">
                     <Heading level="1" size="xlarge" className="overflow-wrap-anywhere" spacing>
                         {adData.title}
                     </Heading>
-
+                    <Summary adData={adData} />
                     {!annonseErAktiv && (
-                        <Tag variant="warning-moderate" className="mb-4">
+                        <Tag variant="warning-moderate" className="mt-4">
                             Stillingsannonsen er inaktiv.
                         </Tag>
                     )}
-
-                    <Summary adData={adData} />
                     <EmploymentDetails adData={adData} />
                     {annonseErAktiv && <HowToApply adData={adData} />}
                     <AdText adText={adData.adText} />
