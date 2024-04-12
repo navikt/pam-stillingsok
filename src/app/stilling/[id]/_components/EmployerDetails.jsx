@@ -6,26 +6,26 @@ import { RichText } from "@navikt/arbeidsplassen-react";
 
 export default function EmployerDetails({ employer }) {
     return (
-        <section className="mt-16 mb-16">
+        <section className="mt-8 mb-8">
             <Heading level="2" size="large" spacing>
                 Om bedriften
             </Heading>
             {employer.description && (
                 <RichText className="job-posting-text mt-4">{parse(employer.description)}</RichText>
             )}
-            <dl className="dl mb-4" id="employment-details">
+            <dl className="ad-description-list">
                 {employer.sector && (
-                    <>
+                    <div>
                         <dt>
                             <Label as="p">Sektor</Label>
                         </dt>
                         <dd>
                             <BodyLong>{employer.sector}</BodyLong>
                         </dd>
-                    </>
+                    </div>
                 )}
                 {employer.homepage && (
-                    <>
+                    <div>
                         <dt>
                             <Label as="p">Nettsted</Label>
                         </dt>
@@ -38,10 +38,10 @@ export default function EmployerDetails({ employer }) {
                                 )}
                             </BodyLong>
                         </dd>
-                    </>
+                    </div>
                 )}
                 {employer.linkedinPage && (
-                    <>
+                    <div>
                         <dt>
                             <Label as="p">LinkedIn</Label>
                         </dt>
@@ -54,10 +54,10 @@ export default function EmployerDetails({ employer }) {
                                 )}
                             </BodyLong>
                         </dd>
-                    </>
+                    </div>
                 )}
                 {employer.twitterAddress && (
-                    <>
+                    <div>
                         <dt>
                             <Label as="p">Twitter</Label>
                         </dt>
@@ -72,10 +72,10 @@ export default function EmployerDetails({ employer }) {
                                 )}
                             </BodyLong>
                         </dd>
-                    </>
+                    </div>
                 )}
                 {employer.facebookPage && (
-                    <>
+                    <div>
                         <dt>
                             <Label as="p">Facebook</Label>
                         </dt>
@@ -88,7 +88,7 @@ export default function EmployerDetails({ employer }) {
                                 )}
                             </BodyLong>
                         </dd>
-                    </>
+                    </div>
                 )}
             </dl>
         </section>

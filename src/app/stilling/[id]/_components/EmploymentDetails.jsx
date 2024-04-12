@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { BodyLong, Heading, HStack, Label } from "@navikt/ds-react";
 import { formatDate } from "@/app/_common/utils/utils";
-import "./EmploymentDetails.css";
+import "./AdDescriptionList.css";
 import joinStringWithSeperator from "@/app/_common/utils/joinStringWithSeperator";
 import FavouritesButton from "@/app/favoritter/_components/FavouritesButton";
 import { RichText } from "@navikt/arbeidsplassen-react";
@@ -44,7 +44,7 @@ export default function EmploymentDetails({ adData }) {
 
     return (
         <section className="full-width mt-8">
-            <HStack gap="4" justify="space-between" align="center">
+            <HStack gap="4" justify="space-between" align="center" className="mb-8">
                 <Heading level="2" size="large">
                     Om jobben
                 </Heading>
@@ -55,29 +55,29 @@ export default function EmploymentDetails({ adData }) {
                 <RichText>{parse(adData.adText, options)}</RichText>
             )}
 
-            <dl className="dl" id="employment-details">
+            <dl className="ad-description-list mb-8">
                 {adData.jobTitle && (
-                    <>
+                    <div>
                         <dt>
                             <Label as="p">Stillingstittel</Label>
                         </dt>
                         <dd>
                             <BodyLong>{adData.jobTitle}</BodyLong>
                         </dd>
-                    </>
+                    </div>
                 )}
                 {adData.startTime && (
-                    <>
+                    <div>
                         <dt>
                             <Label as="p">Oppstart</Label>
                         </dt>
                         <dd>
                             <BodyLong>{formatDate(adData.startTime)}</BodyLong>
                         </dd>
-                    </>
+                    </div>
                 )}
                 {adData.engagementType && (
-                    <>
+                    <div>
                         <dt>
                             <Label as="p">Type ansettelse</Label>
                         </dt>
@@ -87,10 +87,10 @@ export default function EmploymentDetails({ adData }) {
                                 {adData.extent ? `, ${adData.extent}` : ""}
                             </BodyLong>
                         </dd>
-                    </>
+                    </div>
                 )}
                 {(adData.jobArrangement || adData.workdays || adData.workHours) && (
-                    <>
+                    <div>
                         <dt>
                             <Label as="p">Arbeidstid</Label>
                         </dt>
@@ -99,37 +99,37 @@ export default function EmploymentDetails({ adData }) {
                                 {adData.jobArrangement} {adData.workdays} {adData.workHours}
                             </BodyLong>
                         </dd>
-                    </>
+                    </div>
                 )}
                 {adData.jobArrangement && (
-                    <>
+                    <div>
                         <dt>
                             <Label as="p">Arbeidstidsordning</Label>
                         </dt>
                         <dd>
                             <BodyLong>{adData.jobArrangement}</BodyLong>
                         </dd>
-                    </>
+                    </div>
                 )}
                 {adData.workLanguages && (
-                    <>
+                    <div>
                         <dt>
                             <Label as="p">Arbeidsspråk</Label>
                         </dt>
                         <dd>
                             <BodyLong>{joinStringWithSeperator(adData.workLanguages, "eller")}</BodyLong>
                         </dd>
-                    </>
+                    </div>
                 )}
                 {adData.positionCount && (
-                    <>
+                    <div>
                         <dt>
                             <Label as="p">Antall stillinger</Label>
                         </dt>
                         <dd>
                             <BodyLong>{adData.positionCount}</BodyLong>
                         </dd>
-                    </>
+                    </div>
                 )}
             </dl>
         </section>

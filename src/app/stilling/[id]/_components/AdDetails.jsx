@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { BodyShort, Button, Heading, HGrid, Label, Stack } from "@navikt/ds-react";
+import { BodyShort, Button, Heading, Label, Stack } from "@navikt/ds-react";
 import Link from "next/link";
 import { formatDate } from "@/app/_common/utils/utils";
 import ShareAd from "@/app/stilling/[id]/_components/ShareAd";
@@ -27,32 +27,48 @@ export default function AdDetails({ adData }) {
                 >
                     Rapporter annonse
                 </Button>
-                <HGrid className="ad-details" gap="6" columns={{ xs: 1, sm: 2 }}>
+                <dl className="ad-description-list">
                     {adData.adNumber && (
                         <div>
-                            <Label as="span">Stillingsnummer</Label>
-                            <BodyShort spacing>{adData.adNumber}</BodyShort>
+                            <dt>
+                                <Label as="span">Stillingsnummer</Label>
+                            </dt>
+                            <dd>
+                                <BodyShort spacing>{adData.adNumber}</BodyShort>
+                            </dd>
                         </div>
                     )}
                     {adData.updated && (
                         <div>
-                            <Label as="span">Sist endret</Label>
-                            <BodyShort spacing>{formatDate(adData.updated)}</BodyShort>
+                            <dt>
+                                <Label as="span">Sist endret</Label>
+                            </dt>
+                            <dd>
+                                <BodyShort spacing>{formatDate(adData.updated)}</BodyShort>
+                            </dd>
                         </div>
                     )}
                     {adData.medium && (
                         <div>
-                            <Label as="span">Hentet fra</Label>
-                            <BodyShort spacing>{adData.medium}</BodyShort>
+                            <dt>
+                                <Label as="span">Hentet fra</Label>
+                            </dt>
+                            <dd>
+                                <BodyShort spacing>{adData.medium}</BodyShort>
+                            </dd>
                         </div>
                     )}
                     {adData.reference && (
                         <div>
-                            <Label as="span">Referanse</Label>
-                            <BodyShort spacing>{adData.reference}</BodyShort>
+                            <dt>
+                                <Label as="span">Referanse</Label>
+                            </dt>
+                            <dd>
+                                <BodyShort spacing>{adData.reference}</BodyShort>
+                            </dd>
                         </div>
                     )}
-                </HGrid>
+                </dl>
             </Stack>
         </section>
     );
