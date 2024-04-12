@@ -16,6 +16,7 @@ import { ExternalLinkIcon } from "@navikt/aksel-icons";
 import Link from "next/link";
 import { formatDate, isValidUrl } from "@/app/_common/utils/utils";
 import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
+import deadlineText from "@/app/_common/utils/deadlineText";
 
 const logApplyForPosition = (adData) => {
     try {
@@ -56,6 +57,7 @@ export default function HowToApply({ adData }) {
         (adData.sourceUrl && (adData.sourceUrl.url || adData.sourceUrl.dangerouslyInvalidUrl));
     const isFinn = adData.source === "FINN";
     const path = "stilling";
+    const deadline = adData.applicationDue ? formatDate(adData.applicationDue) : undefined;
 
     if (adData.hasSuperraskSoknad === "true") {
         return (
@@ -70,8 +72,7 @@ export default function HowToApply({ adData }) {
                         <Heading level="2" size="medium" spacing>
                             Søk på jobben
                         </Heading>
-                        {/*TODO: add formating for frist*/}
-                        {adData.applicationDue && <BodyLong>{formatDate(adData.applicationDue)}</BodyLong>}
+                        {deadline && <BodyLong>{deadlineText(deadline, new Date(), adData.applicationDue)}</BodyLong>}
                     </VStack>
                     {adData.status === "ACTIVE" && (
                         <div>
@@ -146,8 +147,7 @@ export default function HowToApply({ adData }) {
                         <Heading level="2" size="medium" spacing>
                             Søk på jobben
                         </Heading>
-                        {/*TODO: add formating for frist*/}
-                        {adData.applicationDue && <BodyLong>{formatDate(adData.applicationDue)}</BodyLong>}
+                        {deadline && <BodyLong>{deadlineText(deadline, new Date(), adData.applicationDue)}</BodyLong>}
                     </VStack>
                     {applicationUrl && isValidUrl(applicationUrl) && (
                         <div>
