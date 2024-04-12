@@ -3,7 +3,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import {
-    Alert,
     Bleed,
     BodyLong,
     BodyShort,
@@ -18,8 +17,8 @@ import {
     Textarea,
     VStack,
 } from "@navikt/ds-react";
-import { useFormState } from "react-dom";
 import { FormButtonBar } from "./FormButtonBar";
+import ApiErrorMessage from "@/app/_common/components/ApiErrorMessage";
 
 const reportCategories = [
     { label: "Diskriminerende innhold", key: "discrimination" },
@@ -35,7 +34,7 @@ function ReportAd({ ad, submitForm }) {
     const ref = useRef(null);
     const [description, setDescription] = useState("");
 
-    const [state, handleSubmit] = useFormState(submitForm, { validationErrors: {}, success: false });
+    const [state, setState] = useState({ validationErrors: {}, success: false, error: false });
     const { validationErrors } = state;
     const [fixedErrors, setFixedErrors] = useState([]);
     const [localSummary, setLocalSummary] = useState(validationErrors);
@@ -56,6 +55,29 @@ function ReportAd({ ad, submitForm }) {
             errorSummary.current.focus();
         }
     }, [localSummary, fixedErrors, errorSummary]);
+
+    const onSubmit = async (e) => {
+        e.preventDefault();
+
+        let result, fetchSuccess;
+        const formData = new FormData(e.target);
+
+        try {
+            result = await submitForm(formData);
+            fetchSuccess = true;
+        } catch (err) {
+            fetchSuccess = false;
+        }
+
+        if (fetchSuccess) {
+            setState(result);
+        } else {
+            setState((prevState) => ({
+                ...prevState,
+                error: "offline",
+            }));
+        }
+    };
 
     function setErrorAsFixed(fixed) {
         if (!fixedErrors.includes(fixed)) {
@@ -104,7 +126,7 @@ function ReportAd({ ad, submitForm }) {
                             </div>
                         </div>
                     ) : (
-                        <form action={handleSubmit}>
+                        <form onSubmit={onSubmit}>
                             <Heading level="1" size="xlarge" className="mb-4">
                                 Rapporter annonse
                             </Heading>
@@ -166,11 +188,7 @@ function ReportAd({ ad, submitForm }) {
                                 skal fjernes. Ditt tips er anonymt.
                             </BodyLong>
 
-                            {state?.error && (
-                                <Alert variant="error" className="mb-4">
-                                    Rapportering av annonse feilet.
-                                </Alert>
-                            )}
+                            {state?.error && <ApiErrorMessage apiErrorCode={state.error} />}
 
                             <HStack gap="4" className="mb-12">
                                 <FormButtonBar id={ad._id} />

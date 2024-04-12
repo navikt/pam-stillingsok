@@ -13,7 +13,7 @@ function WithdrawApplication({ ad, withdrawApplication }) {
         <div className="container-small mt-12 mb-12">
             {!state.success ? (
                 <WithdrawApplicationConfirmationRequired
-                    formAction={formAction}
+                    submitForm={formAction}
                     isDeleting={false}
                     hasError={state.error}
                     ad={ad}

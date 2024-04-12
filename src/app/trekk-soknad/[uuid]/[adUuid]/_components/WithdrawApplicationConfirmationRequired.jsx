@@ -1,11 +1,36 @@
-import React from "react";
-import { Alert, BodyLong, BodyShort, Heading, Label, Link as AkselLink } from "@navikt/ds-react";
+import React, { useState } from "react";
+import { BodyLong, BodyShort, Heading, Label, Link as AkselLink } from "@navikt/ds-react";
 import PropTypes from "prop-types";
 import Link from "next/link";
 import getEmployer from "@/app/_common/utils/getEmployer";
 import { WithdrawButton } from "./WithdrawButton";
+import ApiErrorMessage from "@/app/_common/components/ApiErrorMessage";
 
-function WithdrawApplicationConfirmationRequired({ ad, formAction, hasError }) {
+function WithdrawApplicationConfirmationRequired({ ad, submitForm, hasError }) {
+    const [state, setState] = useState({ error: hasError });
+
+    const onSubmit = async (e) => {
+        e.preventDefault();
+
+        let result, fetchSuccess;
+
+        try {
+            result = await submitForm();
+            fetchSuccess = true;
+        } catch (err) {
+            fetchSuccess = false;
+        }
+
+        if (fetchSuccess) {
+            setState(result);
+        } else {
+            setState((prevState) => ({
+                ...prevState,
+                error: "offline",
+            }));
+        }
+    };
+
     return (
         <>
             <Heading level="1" size="large" spacing>
@@ -26,12 +51,9 @@ function WithdrawApplicationConfirmationRequired({ ad, formAction, hasError }) {
                 </div>
             )}
 
-            {hasError && (
-                <Alert variant="error" className="mb-8">
-                    Det oppsto dessverre en feil og vi kunne ikke trekke søknaden din. Prøv å trekk søknaden på nytt.
-                </Alert>
-            )}
-            <form action={formAction}>
+            {state?.error && <ApiErrorMessage apiErrorCode={state.error} errorHeading="Søknaden ble ikke trukket" />}
+
+            <form onSubmit={onSubmit}>
                 <WithdrawButton />
             </form>
         </>
@@ -45,7 +67,7 @@ WithdrawApplicationConfirmationRequired.propTypes = {
             title: PropTypes.string,
         }),
     }),
-    formAction: PropTypes.func.isRequired,
+    submitForm: PropTypes.func.isRequired,
     hasError: PropTypes.bool,
 };
 
