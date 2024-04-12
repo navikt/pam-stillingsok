@@ -93,7 +93,7 @@ function ReportAd({ ad, submitForm }) {
 
     return (
         <>
-            <Bleed className="mb-12">
+            <Bleed className="mb-10">
                 <Box background="surface-alt-1-subtle" paddingBlock="4">
                     <div className="container-small">
                         <BodyShort weight="semibold">{ad._source.title}</BodyShort>
@@ -101,7 +101,7 @@ function ReportAd({ ad, submitForm }) {
                     </div>
                 </Box>
             </Bleed>
-            <div className="container-small mb-16">
+            <div className="container-small mb-24">
                 <div>
                     {state.success ? (
                         <div>

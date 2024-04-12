@@ -29,7 +29,7 @@ function NewFiltersSurvey() {
     }
 
     return (
-        <section className="mt-12 mb-24">
+        <section className="mt-10 mb-24">
             <div className="container-medium text-center">
                 <Heading size="xlarge" level="1" className="mb-10">
                     Hva tenker du om våre nye filterforslag?

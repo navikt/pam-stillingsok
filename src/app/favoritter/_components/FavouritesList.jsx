@@ -31,7 +31,7 @@ function FavouritesList({ favourites }) {
 
     return (
         <div>
-            <section className="container-medium mt-16 mb-16">
+            <section className="container-medium mt-10 mb-24">
                 <HStack gap="4" align="center" justify="space-between" className="mb-12">
                     <Heading level="1" size="xlarge">
                         Favoritter
