@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import {
     BodyLong,
+    Button,
     Checkbox,
     CheckboxGroup,
     ErrorSummary,
@@ -13,10 +14,10 @@ import {
     TextField,
 } from "@navikt/ds-react";
 import { MOTIVATION_MAX_LENGTH } from "./validateForm";
+import Link from "next/link";
 import ApiErrorMessage from "@/app/_common/components/ApiErrorMessage";
-import { FormButtonBar } from "./FormButtonBar";
 
-function Form({ ad, applicationForm, submitApplication, submitApiError, offlineError, validationErrors }) {
+function Form({ ad, applicationForm, onSubmit, error, validationErrors, isPending }) {
     const errorSummary = useRef();
     const [motivation, setMotivation] = useState("");
     const [fixedErrors, setFixedErrors] = useState([]);
@@ -46,7 +47,7 @@ function Form({ ad, applicationForm, submitApplication, submitApiError, offlineE
     }
 
     return (
-        <form action={submitApplication}>
+        <form onSubmit={onSubmit} className="mb-16">
             <section className="mb-10">
                 <Heading level="1" size="xlarge" spacing>
                     Superrask søknad
@@ -170,11 +171,18 @@ function Form({ ad, applicationForm, submitApplication, submitApiError, offlineE
                 </AkselLink>
             </BodyLong>
 
-            {submitApiError && <ApiErrorMessage apiErrorCode={submitApiError} />}
-            {offlineError && !submitApiError && <ApiErrorMessage apiErrorCode="offline" />}
+            <h1>{error}</h1>
+            {error && <ApiErrorMessage apiErrorCode={error} />}
 
             <HStack gap="4" className="mt-12">
-                <FormButtonBar id={ad._id} />
+                <Button variant="primary" type="submit" loading={isPending}>
+                    Send søknad
+                </Button>
+                {isPending && (
+                    <Button type="button" variant="secondary" as={Link} href={`/stilling/${ad._id}`}>
+                        Avbryt
+                    </Button>
+                )}
             </HStack>
         </form>
     );
@@ -195,14 +203,14 @@ Form.propTypes = {
             }),
         ),
     }).isRequired,
-    submitApplication: PropTypes.func.isRequired,
-    submitApiError: PropTypes.string,
-    offlineError: PropTypes.bool,
+    onSubmit: PropTypes.func.isRequired,
+    error: PropTypes.string,
     validationErrors: PropTypes.shape({
         email: PropTypes.string,
         telephone: PropTypes.string,
         motivation: PropTypes.string,
     }),
+    isPending: PropTypes.bool.isRequired,
 };
 
 export default Form;
