@@ -23,6 +23,7 @@ function ShareYourOpinionPanel() {
                 </Heading>
                 <Bleed marginBlock="1 0" marginInline="0 1" asChild>
                     <Button
+                        aria-label="Lukk"
                         size="small"
                         variant="tertiary-neutral"
                         onClick={dismiss}
