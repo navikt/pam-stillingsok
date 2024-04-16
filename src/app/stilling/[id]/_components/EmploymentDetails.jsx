@@ -53,7 +53,6 @@ export default function EmploymentDetails({ adData }) {
                 <FavouritesButton variant="tertiary" id={adData.id} stilling={stilling} />
             </HStack>
 
-            {console.log("AD", adData)}
             {adData.adText && adData.adText.includes("arb-aapningstekst") && (
                 <RichText>{parse(adData.adText, options)}</RichText>
             )}
