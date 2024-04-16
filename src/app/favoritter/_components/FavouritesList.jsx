@@ -9,18 +9,18 @@ import FavouritesListItem from "./FavouritesListItem";
 import NoFavourites from "./NoFavourites";
 
 function FavouritesList({ favourites }) {
-    const [localFavourites, setLocalFavourites] = useState(favourites);
     const [sortBy, setSortBy] = useState("published");
     const [locallyRemovedUuids, setLocallyRemovedUuids] = useState([]);
     const [shouldShowErrorDialog, openErrorDialog, closeErrorDialog] = useToggle();
 
     if (sortBy === "published") {
-        localFavourites.sort((a, b) => b.favouriteAd.published.localeCompare(a.favouriteAd.published));
+        favourites.sort((a, b) => b.favouriteAd.published.localeCompare(a.favouriteAd.published));
     } else if (sortBy === "expires") {
-        localFavourites.sort((a, b) => a.favouriteAd.expires.localeCompare(b.favouriteAd.expires));
+        favourites.sort((a, b) => a.favouriteAd.expires.localeCompare(b.favouriteAd.expires));
     }
 
-    setLocalFavourites(localFavourites.filter((it) => !locallyRemovedUuids.includes(it.uuid)));
+    // eslint-disable-next-line
+    favourites = favourites.filter((it) => !locallyRemovedUuids.includes(it.uuid));
 
     function onFavouriteDeleted(uuid) {
         setLocallyRemovedUuids([...locallyRemovedUuids, uuid]);
@@ -55,8 +55,8 @@ function FavouritesList({ favourites }) {
                     </Select>
                 </HStack>
                 <VStack gap="10">
-                    {localFavourites &&
-                        localFavourites.map((favourite) => (
+                    {favourites &&
+                        favourites.map((favourite) => (
                             <FavouritesListItem
                                 key={favourite.uuid}
                                 favourite={favourite}

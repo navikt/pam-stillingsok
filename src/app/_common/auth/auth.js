@@ -5,14 +5,6 @@ import { getDefaultHeaders } from "@/app/_common/utils/fetch";
 export const ADUSER_XSRF_COOKIE_NAME = "XSRF-TOKEN-ARBEIDSPLASSEN";
 const ADUSER_XSRF_HEADER_NAME = "X-XSRF-TOKEN-ARBEIDSPLASSEN";
 
-export function getDefaultAuthHeaders(oboToken) {
-    const localHeaders = getDefaultHeaders();
-
-    localHeaders.set("Authorization", `Bearer ${oboToken}`);
-
-    return localHeaders;
-}
-
 export async function getAdUserOboToken() {
     const token = getToken(headers());
 
@@ -35,6 +27,15 @@ export async function getAdUserOboToken() {
     return oboResult.token;
 }
 
+export function getDefaultAuthHeaders(oboToken) {
+    // eslint-disable-next-line
+    const headers = getDefaultHeaders();
+
+    headers.set("Authorization", `Bearer ${oboToken}`);
+
+    return headers;
+}
+
 export function getAdUserDefaultAuthHeadersWithCsrfToken(oboToken) {
     const csrfToken = cookies().get(ADUSER_XSRF_COOKIE_NAME)?.value;
 
@@ -42,10 +43,11 @@ export function getAdUserDefaultAuthHeadersWithCsrfToken(oboToken) {
         throw new Error("Failed to get CSRF token");
     }
 
-    const localHeaders = getDefaultAuthHeaders(oboToken);
+    // eslint-disable-next-line
+    const headers = getDefaultAuthHeaders(oboToken);
 
-    localHeaders.set("cookie", `${ADUSER_XSRF_COOKIE_NAME}=${csrfToken}`);
-    localHeaders.set(ADUSER_XSRF_HEADER_NAME, csrfToken);
+    headers.set("cookie", `${ADUSER_XSRF_COOKIE_NAME}=${csrfToken}`);
+    headers.set(ADUSER_XSRF_HEADER_NAME, csrfToken);
 
-    return localHeaders;
+    return headers;
 }
