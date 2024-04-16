@@ -59,23 +59,17 @@ async function fetchAllAds() {
 export default async function sitemap() {
     const ads = await fetchAllAds();
 
-    const commonSitemapEntries = [
+    const sitemapEntries = [
         {
             url: `https://arbeidsplassen.nav.no/stillinger`,
             lastModified: ads[0] ? ads[0].lastModified : "",
             priority: 1,
             changeFrequency: "daily",
         },
-        {
-            url: `https://arbeidsplassen.nav.no/stillinger?q=Sommerjobb`,
-            lastModified: ads[0] ? ads[0].lastModified : "",
-            priority: 0.7,
-            changeFrequency: "daily",
-        },
     ];
 
     return [
-        ...commonSitemapEntries,
+        ...sitemapEntries,
         ...ads.slice(0, MAX_ALLOWED_SITEMAP_URLS - commonSitemapEntries.length).map((ad) => ({
             url: `https://arbeidsplassen.nav.no/stillinger/stilling/${ad._id}`,
             lastModified: ad._source.updated,
