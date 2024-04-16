@@ -6,7 +6,8 @@ export const dynamic = "force-dynamic";
 
 function parseSearchParams(entries) {
     const searchParams = {};
-    for (const [key, value] of entries) {
+
+    entries.forEach((value, key) => {
         if (searchParams[key]) {
             if (Array.isArray(searchParams[key])) {
                 searchParams[key] = [...searchParams[key], value];
@@ -16,7 +17,7 @@ function parseSearchParams(entries) {
         } else {
             searchParams[key] = value;
         }
-    }
+    });
     return searchParams;
 }
 
@@ -24,7 +25,7 @@ function parseSearchParams(entries) {
  * Note: This endpoint is used by pam-aduser
  */
 export async function GET(request) {
-    const searchParams = parseSearchParams(request.nextUrl.searchParams.entries());
+    const searchParams = parseSearchParams(request.nextUrl.searchParams);
     const query = createQuery(searchParams);
     const body = elasticSearchRequestBody(toApiQuery(query));
     const res = await fetch(`${process.env.PAMSEARCHAPI_URL}/stillingsok/ad/_search`, {
