@@ -1,7 +1,7 @@
 import elasticSearchRequestBody from "@/app/(sok)/_utils/elasticSearchRequestBody";
 import { getDefaultHeaders } from "@/app/_common/utils/fetch";
 import simplifySearchResponse from "@/app/(sok)/_utils/simplifySearchResponse";
-import { unstable_cache } from "next/cache";
+import { unstable_cache } from "next/cache"; // eslint-disable-line
 
 /*
 Manually cached because Next.js won't cache it. We break these:
@@ -13,13 +13,6 @@ We can't use the built-in 'cache' in React either, since the route segment is dy
     "... If the segment is dynamic, the output of the request will not be cached and will be re-fetched on every request when the segment is rendered."
     https://nextjs.org/docs/app/building-your-application/data-fetching/fetching-caching-and-revalidating#fetching-data-on-the-server-with-third-party-libraries
  */
-export const fetchCachedElasticSearch = unstable_cache(
-    async (query) => fetchElasticSearch(query),
-    ["elastic-search-query"],
-    {
-        revalidate: 30,
-    },
-);
 
 async function fetchElasticSearch(query) {
     const body = elasticSearchRequestBody(query);
@@ -37,3 +30,11 @@ async function fetchElasticSearch(query) {
 
     return simplifySearchResponse(data);
 }
+
+export const fetchCachedElasticSearch = unstable_cache(
+    async (query) => fetchElasticSearch(query),
+    ["elastic-search-query"],
+    {
+        revalidate: 30,
+    },
+);

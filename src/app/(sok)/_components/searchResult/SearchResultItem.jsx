@@ -115,7 +115,6 @@ SearchResultItem.propTypes = {
         }),
         locationList: PropTypes.arrayOf(PropTypes.shape({})),
     }).isRequired,
-    shouldAutoFocus: PropTypes.bool,
     showExpired: PropTypes.bool,
     favouriteButton: PropTypes.node,
     isDebug: PropTypes.bool,

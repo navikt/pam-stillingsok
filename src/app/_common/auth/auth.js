@@ -27,6 +27,15 @@ export async function getAdUserOboToken() {
     return oboResult.token;
 }
 
+export function getDefaultAuthHeaders(oboToken) {
+    // eslint-disable-next-line
+    const headers = getDefaultHeaders();
+
+    headers.set("Authorization", `Bearer ${oboToken}`);
+
+    return headers;
+}
+
 export function getAdUserDefaultAuthHeadersWithCsrfToken(oboToken) {
     const csrfToken = cookies().get(ADUSER_XSRF_COOKIE_NAME)?.value;
 
@@ -34,18 +43,11 @@ export function getAdUserDefaultAuthHeadersWithCsrfToken(oboToken) {
         throw new Error("Failed to get CSRF token");
     }
 
+    // eslint-disable-next-line
     const headers = getDefaultAuthHeaders(oboToken);
 
     headers.set("cookie", `${ADUSER_XSRF_COOKIE_NAME}=${csrfToken}`);
     headers.set(ADUSER_XSRF_HEADER_NAME, csrfToken);
-
-    return headers;
-}
-
-export function getDefaultAuthHeaders(oboToken) {
-    const headers = getDefaultHeaders();
-
-    headers.set("Authorization", `Bearer ${oboToken}`);
 
     return headers;
 }

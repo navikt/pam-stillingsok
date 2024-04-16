@@ -21,6 +21,7 @@ export default async function Page(props) {
         return <UserConsentIsRequired />;
     }
 
+    // eslint-disable-next-line
     const sortBy = props.searchParams.sortBy || "published";
     const favourites = await actions.getFavouritesAction(sortBy);
     return <FavouritesList favourites={favourites} />;

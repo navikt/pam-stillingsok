@@ -19,6 +19,7 @@ function FavouritesList({ favourites }) {
         favourites.sort((a, b) => a.favouriteAd.expires.localeCompare(b.favouriteAd.expires));
     }
 
+    // eslint-disable-next-line
     favourites = favourites.filter((it) => !locallyRemovedUuids.includes(it.uuid));
 
     function onFavouriteDeleted(uuid) {
