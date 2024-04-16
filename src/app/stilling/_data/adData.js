@@ -97,7 +97,7 @@ function getJobPercentage(value) {
         return undefined;
     }
 
-    return jobPercentage + (jobPercentage.endsWith("%") ? "" : "%")
+    return jobPercentage + (jobPercentage.endsWith("%") ? "" : "%");
 }
 
 function getAdText(adText) {
