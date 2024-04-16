@@ -1,17 +1,24 @@
 import React from "react";
-import { Alert, Link as AkselLink, Modal } from "@navikt/ds-react";
-import Link from "next/link";
+import { BodyLong, Button, Modal } from "@navikt/ds-react";
 
-function NotFoundMessage() {
+function NotFoundMessage({ onClose }) {
     return (
-        <Modal.Body>
-            <Alert variant="warning" role="alert">
-                Det kan se ut som om du forsøker å oppdatere et lagret søk som ikke finnes lengre.{" "}
-                <AkselLink as={Link} href="/">
-                    Last siden på nytt uten det gamle søket.
-                </AkselLink>
-            </Alert>
-        </Modal.Body>
+        <>
+            <Modal.Body>
+                <BodyLong spacing>
+                    Det ser ut som om du forsøker å oppdatere et lagret søk som ikke finnes lengre. Forsøk å laste siden
+                    på nytt.
+                </BodyLong>
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant="primary" type="submit" as="a" href="/stillinger">
+                    Last siden på nytt
+                </Button>
+                <Button variant="secondary" type="submit" onClick={onClose}>
+                    Avbryt
+                </Button>
+            </Modal.Footer>
+        </>
     );
 }
 
