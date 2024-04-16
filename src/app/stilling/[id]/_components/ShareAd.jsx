@@ -15,6 +15,7 @@ export default function ShareAd({ adData }) {
             </Heading>
             <HStack gap="4">
                 <Button
+                    aria-label="Del annonse på Facebook"
                     as="a"
                     href={`https://www.facebook.com/sharer/sharer.php?u=${shareAdRedirectUrl}`}
                     rel="noopener noreferrer"
@@ -22,6 +23,7 @@ export default function ShareAd({ adData }) {
                     icon={<FacebookIcon />}
                 />
                 <Button
+                    aria-label="Del annonse på LinkedIn"
                     as="a"
                     href={`https://www.linkedin.com/shareArticle?mini=true&url=${shareAdRedirectUrl}`}
                     rel="noopener noreferrer"
@@ -29,6 +31,7 @@ export default function ShareAd({ adData }) {
                     icon={<LinkedinIcon />}
                 />
                 <Button
+                    aria-label="Del annonse på Twitter"
                     as="a"
                     href={`https://twitter.com/intent/tweet?url=${shareAdRedirectUrl}&text=${encodeURI(adData.title)}`}
                     rel="noopener noreferrer"

@@ -23,7 +23,7 @@ export async function getFavouritesAction() {
         throw new Error("Kunne ikke hente favoritter");
     }
 
-    let data = await res.json();
+    const data = await res.json();
 
     return data ? data.content : [];
 }
@@ -33,7 +33,7 @@ export async function addFavouriteAction(favouriteAd) {
     const oboToken = await getAdUserOboToken();
     const res = await fetch(ADUSER_FAVOURITES_URL, {
         method: "POST",
-        body: JSON.stringify({ favouriteAd: favouriteAd }),
+        body: JSON.stringify({ favouriteAd }),
         headers: getAdUserDefaultAuthHeadersWithCsrfToken(oboToken),
     });
 
@@ -44,11 +44,11 @@ export async function addFavouriteAction(favouriteAd) {
 
     revalidatePath("/favoritter");
 
-    return await res.json();
+    return res.json();
 }
 
 export async function deleteFavouriteAction(uuid) {
-    logger.info("DELETE favourite ", { uuid: uuid });
+    logger.info("DELETE favourite ", { uuid });
     const oboToken = await getAdUserOboToken();
     const res = await fetch(`${ADUSER_FAVOURITES_URL}/${uuid}`, {
         method: "DELETE",

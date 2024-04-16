@@ -1,9 +1,9 @@
-import Ad from "./_components/Ad";
-import { getStillingDescription, getStillingTitle } from "./_components/getMetaData";
 import { defaultOpenGraphImage } from "@/app/layout";
-import { fetchAd } from "../FetchAd";
 import { getAdData } from "@/app/stilling/_data/adDataActions";
 import { notFound } from "next/navigation";
+import Ad from "./_components/Ad";
+import { getStillingDescription, getStillingTitle } from "./_components/getMetaData";
+import { fetchAd } from "../FetchAd";
 
 export async function generateMetadata({ params }) {
     const data = await fetchAd(params.id);

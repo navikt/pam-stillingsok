@@ -2,10 +2,10 @@
 
 import React, { useState } from "react";
 import { HStack, Select, Heading, VStack } from "@navikt/ds-react";
-import FavouritesListItem from "./FavouritesListItem";
 import PropTypes from "prop-types";
 import AlertModalWithPageReload from "@/app/_common/components/modals/AlertModalWithPageReload";
 import useToggle from "@/app/_common/hooks/useToggle";
+import FavouritesListItem from "./FavouritesListItem";
 import NoFavourites from "./NoFavourites";
 
 function FavouritesList({ favourites }) {
@@ -19,6 +19,7 @@ function FavouritesList({ favourites }) {
         favourites.sort((a, b) => a.favouriteAd.expires.localeCompare(b.favouriteAd.expires));
     }
 
+    // eslint-disable-next-line
     favourites = favourites.filter((it) => !locallyRemovedUuids.includes(it.uuid));
 
     function onFavouriteDeleted(uuid) {

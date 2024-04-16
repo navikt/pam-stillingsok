@@ -48,8 +48,8 @@ export async function addClosedFilter(panelId) {
 
 export async function removeClosedFilter(panelId) {
     const existingCookie = await getUserPreferences();
-    let closedFilters = (existingCookie.closedFilters || []).filter((it) => it !== panelId);
-    const newCookieValue = { ...existingCookie, closedFilters: closedFilters };
+    const closedFilters = (existingCookie.closedFilters || []).filter((it) => it !== panelId);
+    const newCookieValue = { ...existingCookie, closedFilters };
     cookies().set(USER_PREFERENCES_COOKIE_NAME, JSON.stringify(newCookieValue), COOKIE_OPTIONS);
 }
 

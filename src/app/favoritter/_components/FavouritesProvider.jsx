@@ -36,7 +36,7 @@ function FavouritesProvider({ children }) {
     async function getFavourites() {
         try {
             const content = await actions.getFavouritesAction();
-            setFavourites(content ? content : []);
+            setFavourites(content || []);
         } catch (err) {
             openErrorDialog();
         }

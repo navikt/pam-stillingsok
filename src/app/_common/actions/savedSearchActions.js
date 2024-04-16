@@ -24,7 +24,7 @@ export async function getAllSavedSearchesAction() {
         throw new Error("Kunne ikke hente lagrede søk");
     }
 
-    let data = await res.json();
+    const data = await res.json();
     return data ? data.content : [];
 }
 
@@ -42,7 +42,7 @@ export async function getSavedSearchAction(uuid) {
         return { success: false, statusCode: res.status };
     }
 
-    let data = await res.json();
+    const data = await res.json();
     return { success: true, data };
 }
 

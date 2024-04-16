@@ -7,8 +7,8 @@ import { TrashIcon } from "@navikt/aksel-icons";
 import SearchResultItem from "@/app/(sok)/_components/searchResult/SearchResultItem";
 import useToggle from "@/app/_common/hooks/useToggle";
 import AlertModal from "@/app/_common/components/modals/AlertModal";
-import { FavouritesContext } from "./FavouritesProvider";
 import * as actions from "@/app/_common/actions";
+import { FavouritesContext } from "./FavouritesProvider";
 
 function FavouritesListItem({ favourite, onFavouriteDeleted, openErrorDialog }) {
     const [shouldShowConfirmDeleteModal, openConfirmDeleteModal, closeConfirmDeleteModal] = useToggle();

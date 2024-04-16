@@ -5,14 +5,14 @@ import { BodyLong, HStack, Loader, Modal } from "@navikt/ds-react";
 import PropTypes from "prop-types";
 import { UserContext } from "@/app/_common/user/UserProvider";
 import useToggle from "@/app/_common/hooks/useToggle";
-import SaveSearchForm from "./SaveSearchForm";
-import RegisterEmailForm from "./RegisterEmailForm";
 import { isStringEmpty } from "@/app/_common/utils/utils";
-import SuccessMessage from "./SuccessMessage";
-import ConfirmEmailMessage from "./ConfirmEmailMessage";
 import * as actions from "@/app/_common/actions";
 import NotFoundMessage from "@/app/lagrede-sok/_components/modal/NotFoundMessage";
 import AlertModalWithPageReload from "@/app/_common/components/modals/AlertModalWithPageReload";
+import SaveSearchForm from "./SaveSearchForm";
+import RegisterEmailForm from "./RegisterEmailForm";
+import SuccessMessage from "./SuccessMessage";
+import ConfirmEmailMessage from "./ConfirmEmailMessage";
 
 /**
  * This modal let user create a new or edit an existing saved search.
@@ -36,7 +36,7 @@ function SaveSearchModal({ onClose, onSaveSearchSuccess, formData, defaultFormMo
      */
     useEffect(() => {
         async function getSavedSearch(uuid) {
-            return await actions.getSavedSearchAction(uuid);
+            return actions.getSavedSearchAction(uuid);
         }
 
         if (savedSearchUuid) {
@@ -44,12 +44,10 @@ function SaveSearchModal({ onClose, onSaveSearchSuccess, formData, defaultFormMo
                 .then((savedSearch) => {
                     if (savedSearch.success) {
                         setExistingSavedSearch(savedSearch.data);
+                    } else if (savedSearch.statusCode === 404) {
+                        setShowNotFoundError(true);
                     } else {
-                        if (savedSearch.statusCode === 404) {
-                            setShowNotFoundError(true);
-                        } else {
-                            setShowError(true);
-                        }
+                        setShowError(true);
                     }
                 })
                 .catch(() => {
@@ -89,31 +87,35 @@ function SaveSearchModal({ onClose, onSaveSearchSuccess, formData, defaultFormMo
 
     return (
         <Modal onClose={onClose} header={{ heading: "Lagre søk" }} open width="medium" portal>
-            {showNotFoundError && <NotFoundMessage />}
+            {showNotFoundError ? (
+                <NotFoundMessage onClose={onClose} />
+            ) : (
+                <>
+                    {savedSearchUuid && !existingSavedSearch && (
+                        <HStack justify="center">
+                            <Loader size="xlarge" />
+                        </HStack>
+                    )}
 
-            {savedSearchUuid && !existingSavedSearch && (
-                <HStack justify="center">
-                    <Loader size="xlarge" />
-                </HStack>
+                    {shouldShowSavedSearchForm && (
+                        <SaveSearchForm
+                            existingSavedSearch={existingSavedSearch}
+                            formData={formData}
+                            defaultFormMode={defaultFormMode}
+                            onClose={onClose}
+                            onSuccess={handleSavedSearchFormSuccess}
+                        />
+                    )}
+
+                    {shouldShowRegisterEmailForm && (
+                        <RegisterEmailForm onClose={onClose} onSuccess={handleRegisterEmailSuccess} />
+                    )}
+
+                    {shouldShowSuccessMessage && <SuccessMessage onClose={onClose} />}
+
+                    {shouldShowConfirmEmailMessage && <ConfirmEmailMessage onClose={onClose} />}
+                </>
             )}
-
-            {shouldShowSavedSearchForm && (
-                <SaveSearchForm
-                    existingSavedSearch={existingSavedSearch}
-                    formData={formData}
-                    defaultFormMode={defaultFormMode}
-                    onClose={onClose}
-                    onSuccess={handleSavedSearchFormSuccess}
-                />
-            )}
-
-            {shouldShowRegisterEmailForm && (
-                <RegisterEmailForm onClose={onClose} onSuccess={handleRegisterEmailSuccess} />
-            )}
-
-            {shouldShowSuccessMessage && <SuccessMessage onClose={onClose} />}
-
-            {shouldShowConfirmEmailMessage && <ConfirmEmailMessage onClose={onClose} />}
         </Modal>
     );
 }

@@ -1,6 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Accordion, Button } from "@navikt/ds-react";
+import Remote from "@/app/(sok)/_components/filters/Remote";
+import ShareYourOpinionPanel from "@/app/tilbakemelding-nye-filtre/_components/ShareYourOpinionPanel";
 import FilterAccordionItem from "./FilterAccordionItem";
 import Published from "./Published";
 import Counties from "./Locations";
@@ -9,8 +11,6 @@ import Extent from "./Extent";
 import Sector from "./Sector";
 import EngagementType from "./Engagement";
 import WorkLanguage from "./WorkLanguage";
-import Remote from "@/app/(sok)/_components/filters/Remote";
-import ShareYourOpinionPanel from "@/app/tilbakemelding-nye-filtre/_components/ShareYourOpinionPanel";
 
 function FiltersDesktop({ query, dispatchQuery, aggregations, locations, searchResult }) {
     return (

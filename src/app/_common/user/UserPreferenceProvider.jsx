@@ -31,6 +31,7 @@ function UserPreferencesProvider({ children, userPreferences }) {
 
     return (
         <UserPreferencesContext.Provider
+            // eslint-disable-next-line
             value={{
                 closedFilters: userPreferences?.closedFilters || [],
                 addClosedFilter,

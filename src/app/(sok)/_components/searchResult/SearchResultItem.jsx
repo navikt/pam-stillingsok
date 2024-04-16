@@ -7,8 +7,8 @@ import Link from "next/link";
 import getEmployer from "@/app/_common/utils/getEmployer";
 import getWorkLocation from "@/app/_common/utils/getWorkLocation";
 import { formatDate } from "@/app/_common/utils/utils";
-import Debug from "./Debug";
 import deadlineText from "@/app/_common/utils/deadlineText";
+import Debug from "./Debug";
 
 export default function SearchResultItem({ ad, showExpired, favouriteButton, isDebug }) {
     const location = getWorkLocation(ad.properties.location, ad.locationList);
@@ -115,7 +115,6 @@ SearchResultItem.propTypes = {
         }),
         locationList: PropTypes.arrayOf(PropTypes.shape({})),
     }).isRequired,
-    shouldAutoFocus: PropTypes.bool,
     showExpired: PropTypes.bool,
     favouriteButton: PropTypes.node,
     isDebug: PropTypes.bool,

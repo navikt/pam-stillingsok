@@ -1,13 +1,13 @@
 "use server";
 
+import logger from "@/app/_common/utils/logger";
+import { cookies } from "next/headers";
 import {
     ADUSER_XSRF_COOKIE_NAME,
     getAdUserDefaultAuthHeadersWithCsrfToken,
     getAdUserOboToken,
     getDefaultAuthHeaders,
-} from "../../_common/auth/auth";
-import logger from "@/app/_common/utils/logger";
-import { cookies } from "next/headers";
+} from "../auth/auth";
 
 const ADUSER_USER_URL = `${process.env.PAMADUSER_URL}/api/v1/user`;
 
@@ -38,7 +38,7 @@ export async function getUser() {
         }
         return { success: false, statusCode: res.status };
     }
-    let data = await res.json();
+    const data = await res.json();
     return { success: true, data };
 }
 
@@ -63,7 +63,7 @@ export async function createUser(user) {
         return { success: false };
     }
 
-    let data = await res.json();
+    const data = await res.json();
     return { success: true, data };
 }
 
@@ -88,6 +88,6 @@ export async function updateUser(user) {
         return { success: false, statusCode: res.status };
     }
 
-    let data = await res.json();
+    const data = await res.json();
     return { success: true, data };
 }

@@ -2,10 +2,10 @@
 
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
 import Success from "./Success";
 import Form from "./Form";
 import AdDetailsHeader from "./AdDetailsHeader";
-import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
 
 export default function NewApplication({ ad, applicationForm, submitApplication }) {
     const [state, setState] = useState({ validationErrors: {}, success: false, error: undefined });
@@ -14,7 +14,8 @@ export default function NewApplication({ ad, applicationForm, submitApplication 
     const onSubmit = async (e) => {
         e.preventDefault();
 
-        let result, fetchSuccess;
+        let result;
+        let fetchSuccess;
         const formData = new FormData(e.target);
 
         setIsPending(true);

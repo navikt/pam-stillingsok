@@ -11,9 +11,9 @@ import "./_common/components/typeahead/Typeahead.css";
 import "./styles.css";
 import PropTypes from "prop-types";
 import interLocalFont from "next/font/local";
+import * as actions from "@/app/_common/actions";
 import App from "./App";
 import Providers from "./Providers";
-import * as actions from "@/app/_common/actions";
 
 const myFont = interLocalFont({
     variable: "--font-inter",

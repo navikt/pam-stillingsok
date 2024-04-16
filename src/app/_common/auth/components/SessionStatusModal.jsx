@@ -56,6 +56,7 @@ function SessionStatusModal({ markAsLoggedOut, setHasBeenLoggedIn, login, logout
             credentials: "include",
             referrer: process.env.NEXT_PUBLIC_CONTEXT_PATH,
         }).catch((e) => {
+            // eslint-disable-next-line
             console.error("Det oppstod en feil ved henting av session status", e.message);
         });
         if (!response) return;

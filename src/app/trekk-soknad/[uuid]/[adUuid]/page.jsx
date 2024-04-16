@@ -1,8 +1,8 @@
 import { notFound } from "next/navigation";
-import WithdrawApplication from "./_components/WithdrawApplication";
 import { getMetadataTitle } from "@/app/layout";
 import { fetchAd } from "@/app/stilling/FetchAd";
 import { getDefaultHeaders } from "@/app/_common/utils/fetch";
+import WithdrawApplication from "./_components/WithdrawApplication";
 
 export const metadata = {
     title: getMetadataTitle("Trekk søknad"),

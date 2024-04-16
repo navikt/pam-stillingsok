@@ -13,9 +13,9 @@ import {
     Textarea,
     TextField,
 } from "@navikt/ds-react";
-import { MOTIVATION_MAX_LENGTH } from "./validateForm";
 import Link from "next/link";
 import ApiErrorMessage from "@/app/_common/components/ApiErrorMessage";
+import { MOTIVATION_MAX_LENGTH } from "./validateForm";
 
 function Form({ ad, applicationForm, onSubmit, error, validationErrors, isPending }) {
     const errorSummary = useRef();

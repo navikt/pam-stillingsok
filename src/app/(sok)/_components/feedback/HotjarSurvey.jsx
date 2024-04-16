@@ -28,7 +28,7 @@ function HotjarSurvey() {
     }
 
     if (isDismissed) {
-        return;
+        return null;
     }
 
     return (
@@ -38,6 +38,7 @@ function HotjarSurvey() {
                     Hjelp oss med å forbedre opplevelsen for deg som ser etter jobber
                 </Heading>
                 <Button
+                    aria-label="Lukk"
                     size="small"
                     variant="tertiary-neutral"
                     onClick={dismiss}

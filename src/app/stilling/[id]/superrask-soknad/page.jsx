@@ -1,10 +1,10 @@
 import { notFound } from "next/navigation";
-import validateForm, { parseFormData } from "./_components/validateForm";
-import NewApplication from "./_components/NewApplication";
-import { getStillingDescription, getSuperraskTitle } from "../_components/getMetaData";
 import { defaultOpenGraphImage } from "@/app/layout";
 import { fetchAd } from "@/app/stilling/FetchAd";
 import { getDefaultHeaders } from "@/app/_common/utils/fetch";
+import validateForm, { parseFormData } from "./_components/validateForm";
+import NewApplication from "./_components/NewApplication";
+import { getStillingDescription, getSuperraskTitle } from "../_components/getMetaData";
 
 async function fetchApplicationForm(id) {
     const res = await fetch(`${process.env.INTEREST_API_URL}/application-form/${id}`, {

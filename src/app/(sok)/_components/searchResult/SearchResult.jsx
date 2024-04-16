@@ -1,10 +1,10 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { VStack } from "@navikt/ds-react";
-import { SEARCH_CHUNK_SIZE } from "../../_utils/query";
-import SearchResultItem from "./SearchResultItem";
 import FavouritesButton from "@/app/favoritter/_components/FavouritesButton";
 import { useSearchParams } from "next/navigation";
 import PropTypes from "prop-types";
+import SearchResultItem from "./SearchResultItem";
+import { SEARCH_CHUNK_SIZE } from "../../_utils/query";
 
 export default function SearchResult({ searchResult, query }) {
     const [showAdDetailsForDebugging, setShowAdDetailsForDebugging] = useState(false);
