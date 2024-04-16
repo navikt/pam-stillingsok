@@ -3,16 +3,17 @@ import PropTypes from "prop-types";
 import parse from "html-react-parser";
 import { RichText } from "@navikt/arbeidsplassen-react";
 
-export default function AdText({ adText }) {
-    const options = {
-        // eslint-disable-next-line
-        replace: ({ attribs }) => {
-            if (attribs && attribs.id === "arb-aapningstekst") {
-                return null;
-            }
-        },
-    };
+const options = {
+    replace: ({ attribs }) => {
+        if (attribs && attribs.id === "arb-aapningstekst") {
+            // eslint-disable-next-line
+            return <></>;
+        }
+        return attribs;
+    },
+};
 
+export default function AdText({ adText }) {
     if (adText) {
         if (adText.includes("arb-aapningstekst")) {
             return <RichText className="job-posting-text">{parse(adText, options)}</RichText>;
