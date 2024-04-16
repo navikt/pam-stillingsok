@@ -1,22 +1,11 @@
 const { resolve } = require("node:path");
 
-const { JAVASCRIPT_FILES } = require("@vercel/style-guide/eslint/constants");
-
 const project = resolve(__dirname, "jsconfig.json");
 
 /** @type {import('eslint').Linter.Config} */
 module.exports = {
     root: true,
-    extends: [
-        require.resolve("@vercel/style-guide/eslint/browser"),
-        require.resolve("@vercel/style-guide/eslint/react"),
-        require.resolve("@vercel/style-guide/eslint/next"),
-        require.resolve("@vercel/style-guide/eslint/node"),
-        "plugin:@next/next/recommended",
-        "airbnb",
-        "next/core-web-vitals",
-        "prettier",
-    ],
+    extends: ["plugin:@next/next/recommended", "airbnb", "next/core-web-vitals", "prettier"],
     plugins: ["react", "unused-imports", "prettier"],
     parserOptions: { project },
     settings: {
