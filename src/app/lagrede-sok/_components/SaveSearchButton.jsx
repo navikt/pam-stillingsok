@@ -3,15 +3,15 @@ import PropTypes from "prop-types";
 import { Button } from "@navikt/ds-react";
 import { FloppydiskIcon } from "@navikt/aksel-icons";
 import { useSearchParams } from "next/navigation";
-import SearchIsEmptyModal from "./modal/SearchIsEmptyModal";
-import SaveSearchModal from "./modal/SaveSearchModal";
 import { AuthenticationContext, AuthenticationStatus } from "@/app/_common/auth/contexts/AuthenticationProvider";
 import { HasAcceptedTermsStatus, UserContext } from "@/app/_common/user/UserProvider";
 import UserConsentModal from "@/app/_common/user/UserConsentModal";
 import LoginModal from "@/app/_common/auth/components/LoginModal";
 import useToggle from "@/app/_common/hooks/useToggle";
-import { FormModes } from "./modal/SaveSearchForm";
 import { toReadableQuery, toSavedSearchQuery, isSearchQueryEmpty, stringifyQuery } from "@/app/(sok)/_utils/query";
+import { FormModes } from "./modal/SaveSearchForm";
+import SaveSearchModal from "./modal/SaveSearchModal";
+import SearchIsEmptyModal from "./modal/SearchIsEmptyModal";
 
 /**
  * Displays the "Save search" button.

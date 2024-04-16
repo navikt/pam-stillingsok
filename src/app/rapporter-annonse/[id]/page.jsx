@@ -1,8 +1,8 @@
-import ReportAd from "./_components/ReportAd";
 import validateForm from "@/app/stilling/[id]/_components/validate";
 import { getMetadataTitle } from "@/app/layout";
 import { fetchAd } from "@/app/stilling/FetchAd";
 import { getDefaultHeaders } from "@/app/_common/utils/fetch";
+import ReportAd from "./_components/ReportAd";
 
 export const metadata = {
     title: getMetadataTitle("Rapporter annonse"),

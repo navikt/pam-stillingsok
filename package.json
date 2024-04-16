@@ -11,6 +11,7 @@
         "start:dependencies": "./start-docker-compose.sh",
         "prettier:format": "npx prettier -w src",
         "lint": "next lint",
+        "lint:fix": "next lint --fix",
         "prettier": "prettier --check \"**/*.+(js|jsx|ts|tsx|json|yml|yaml|md|css)\"",
         "prettier:fix": "prettier --write \"**/*.+(js|jsx|ts|tsx|json|yml|yaml|md|css)\"",
         "prepare": "husky install",

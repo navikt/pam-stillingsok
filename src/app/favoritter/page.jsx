@@ -1,8 +1,8 @@
+import * as actions from "@/app/_common/actions";
+import LoginIsRequiredPage from "@/app/_common/auth/components/LoginIsRequiredPage";
 import FavouritesList from "./_components/FavouritesList";
 import UserConsentIsRequired from "./_components/UserConsentIsRequired";
 import { getMetadataTitle } from "../layout";
-import * as actions from "@/app/_common/actions";
-import LoginIsRequiredPage from "@/app/_common/auth/components/LoginIsRequiredPage";
 
 export const metadata = {
     title: getMetadataTitle("Favoritter"),
@@ -21,7 +21,7 @@ export default async function Page(props) {
         return <UserConsentIsRequired />;
     }
 
-    let sortBy = props.searchParams.sortBy || "published";
+    const sortBy = props.searchParams.sortBy || "published";
     const favourites = await actions.getFavouritesAction(sortBy);
     return <FavouritesList favourites={favourites} />;
 }

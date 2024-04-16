@@ -17,8 +17,8 @@ import {
     Textarea,
     VStack,
 } from "@navikt/ds-react";
-import { FormButtonBar } from "./FormButtonBar";
 import ApiErrorMessage from "@/app/_common/components/ApiErrorMessage";
+import { FormButtonBar } from "./FormButtonBar";
 
 const reportCategories = [
     { label: "Diskriminerende innhold", key: "discrimination" },
@@ -59,7 +59,8 @@ function ReportAd({ ad, submitForm }) {
     const onSubmit = async (e) => {
         e.preventDefault();
 
-        let result, fetchSuccess;
+        let result;
+        let fetchSuccess;
         const formData = new FormData(e.target);
 
         try {

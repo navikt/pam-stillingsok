@@ -21,6 +21,6 @@ export async function GET(request) {
         Response.error();
     }
 
-    let data = await res.json();
+    const data = await res.json();
     return Response.json(data);
 }

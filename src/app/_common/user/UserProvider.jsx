@@ -36,14 +36,12 @@ function UserProvider({ children }) {
 
         if (result.success) {
             updateUser(result.data);
+        } else if (result.statusCode === 403) {
+            setForbiddenUser(true);
+        } else if (result.statusCode === 404) {
+            setHasAcceptedTermsStatus(HasAcceptedTermsStatus.NOT_ACCEPTED);
         } else {
-            if (result.statusCode === 403) {
-                setForbiddenUser(true);
-            } else if (result.statusCode === 404) {
-                setHasAcceptedTermsStatus(HasAcceptedTermsStatus.NOT_ACCEPTED);
-            } else {
-                openErrorDialog();
-            }
+            openErrorDialog();
         }
     }
 

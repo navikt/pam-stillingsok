@@ -8,12 +8,8 @@ import { getAdUserOboToken, getDefaultAuthHeaders } from "@/app/_common/auth/aut
 export async function checkIfAuthenticated() {
     try {
         return await validateToken(getToken(headers()))
-            .then((validation) => {
-                return { isAuthenticated: validation.ok, failure: false };
-            })
-            .catch(() => {
-                return { isAuthenticated: false, failure: true };
-            });
+            .then((validation) => ({ isAuthenticated: validation.ok, failure: false }))
+            .catch(() => ({ isAuthenticated: false, failure: true }));
     } catch (_) {
         return { isAuthenticated: false, failure: true };
     }

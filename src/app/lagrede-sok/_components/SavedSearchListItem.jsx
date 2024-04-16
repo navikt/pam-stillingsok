@@ -7,12 +7,12 @@ import Link from "next/link";
 import { ArrowsCirclepathIcon, PencilIcon, TrashIcon } from "@navikt/aksel-icons";
 import { formatDate } from "@/app/_common/utils/utils";
 import AlertModal from "@/app/_common/components/modals/AlertModal";
-import SaveSearchModal from "./modal/SaveSearchModal";
 import UserAPI from "@/app/_common/user/UserAPI";
 import useToggle from "@/app/_common/hooks/useToggle";
 import { FetchStatus } from "@/app/_common/hooks/useFetchReducer";
-import { FormModes } from "./modal/SaveSearchForm";
 import * as actions from "@/app/_common/actions";
+import { FormModes } from "./modal/SaveSearchForm";
+import SaveSearchModal from "./modal/SaveSearchModal";
 
 function SavedSearchListItem({
     savedSearch,

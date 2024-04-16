@@ -3,10 +3,10 @@
 import React, { useEffect, useState } from "react";
 import { useFormState } from "react-dom";
 import PropTypes from "prop-types";
+import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
 import Success from "./Success";
 import Form from "./Form";
 import AdDetailsHeader from "./AdDetailsHeader";
-import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
 
 function useNetwork() {
     const [isOnline, setNetwork] = useState(true);

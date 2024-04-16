@@ -23,6 +23,6 @@ export async function getPersonalia() {
         return { success: false };
     }
 
-    let data = await res.json();
-    return { success: true, data: data };
+    const data = await res.json();
+    return { success: true, data };
 }

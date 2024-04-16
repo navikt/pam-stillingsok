@@ -121,14 +121,12 @@ export default function HowToApply({ adData }) {
                     </BodyLong>
                 )}
                 {applicationUrl && (
-                    <>
-                        <BodyLong className="mt-4">
-                            Alternativt kan du{" "}
-                            <AkselLink href={applicationUrl} onClick={() => logApplyForPosition(adData)}>
-                                sende søknad her.
-                            </AkselLink>
-                        </BodyLong>
-                    </>
+                    <BodyLong className="mt-4">
+                        Alternativt kan du{" "}
+                        <AkselLink href={applicationUrl} onClick={() => logApplyForPosition(adData)}>
+                            sende søknad her.
+                        </AkselLink>
+                    </BodyLong>
                 )}
             </Box>
         );

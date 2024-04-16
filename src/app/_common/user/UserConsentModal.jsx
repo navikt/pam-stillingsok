@@ -1,11 +1,11 @@
 import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import { Alert, BodyLong, Button, ConfirmationPanel, Modal } from "@navikt/ds-react";
-import { UserContext } from "./UserProvider";
 import { AuthenticationContext } from "@/app/_common/auth/contexts/AuthenticationProvider";
 import { FetchStatus } from "@/app/_common/hooks/useFetchReducer";
 import useToggle from "@/app/_common/hooks/useToggle";
 import * as actions from "@/app/_common/actions";
+import { UserContext } from "./UserProvider";
 
 function UserConsentModal({ onClose, onTermsAccepted }) {
     const { userNameAndInfo } = useContext(AuthenticationContext);

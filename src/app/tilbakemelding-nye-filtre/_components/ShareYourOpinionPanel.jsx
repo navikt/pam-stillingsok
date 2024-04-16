@@ -12,7 +12,7 @@ function ShareYourOpinionPanel() {
     }
 
     if (dismissedPanels.includes("new-filters-survey")) {
-        return;
+        return null;
     }
 
     return (

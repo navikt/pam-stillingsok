@@ -3,8 +3,8 @@ import { BodyLong, BodyShort, Heading, Label, Link as AkselLink } from "@navikt/
 import PropTypes from "prop-types";
 import Link from "next/link";
 import getEmployer from "@/app/_common/utils/getEmployer";
-import { WithdrawButton } from "./WithdrawButton";
 import ApiErrorMessage from "@/app/_common/components/ApiErrorMessage";
+import { WithdrawButton } from "./WithdrawButton";
 
 function WithdrawApplicationConfirmationRequired({ ad, submitForm, hasError }) {
     const [state, setState] = useState({ error: hasError });
@@ -12,7 +12,8 @@ function WithdrawApplicationConfirmationRequired({ ad, submitForm, hasError }) {
     const onSubmit = async (e) => {
         e.preventDefault();
 
-        let result, fetchSuccess;
+        let result;
+        let fetchSuccess;
 
         try {
             result = await submitForm();

@@ -5,14 +5,14 @@ import { BodyLong, HStack, Loader, Modal } from "@navikt/ds-react";
 import PropTypes from "prop-types";
 import { UserContext } from "@/app/_common/user/UserProvider";
 import useToggle from "@/app/_common/hooks/useToggle";
-import SaveSearchForm from "./SaveSearchForm";
-import RegisterEmailForm from "./RegisterEmailForm";
 import { isStringEmpty } from "@/app/_common/utils/utils";
-import SuccessMessage from "./SuccessMessage";
-import ConfirmEmailMessage from "./ConfirmEmailMessage";
 import * as actions from "@/app/_common/actions";
 import NotFoundMessage from "@/app/lagrede-sok/_components/modal/NotFoundMessage";
 import AlertModalWithPageReload from "@/app/_common/components/modals/AlertModalWithPageReload";
+import SaveSearchForm from "./SaveSearchForm";
+import RegisterEmailForm from "./RegisterEmailForm";
+import SuccessMessage from "./SuccessMessage";
+import ConfirmEmailMessage from "./ConfirmEmailMessage";
 
 /**
  * This modal let user create a new or edit an existing saved search.
@@ -44,12 +44,10 @@ function SaveSearchModal({ onClose, onSaveSearchSuccess, formData, defaultFormMo
                 .then((savedSearch) => {
                     if (savedSearch.success) {
                         setExistingSavedSearch(savedSearch.data);
+                    } else if (savedSearch.statusCode === 404) {
+                        setShowNotFoundError(true);
                     } else {
-                        if (savedSearch.statusCode === 404) {
-                            setShowNotFoundError(true);
-                        } else {
-                            setShowError(true);
-                        }
+                        setShowError(true);
                     }
                 })
                 .catch(() => {
