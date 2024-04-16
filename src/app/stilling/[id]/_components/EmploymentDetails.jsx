@@ -8,6 +8,19 @@ import FavouritesButton from "@/app/favoritter/_components/FavouritesButton";
 import { RichText } from "@navikt/arbeidsplassen-react";
 import parse from "html-react-parser";
 
+const options = {
+    replace: ({ attribs }) => {
+        if (
+            attribs &&
+            (attribs.id === "arb-serEtter" || attribs.id === "arb-arbeidsoppgaver" || attribs.id === "arb-tilbyr")
+        ) {
+            // eslint-disable-next-line
+            return <></>;
+        }
+        return attribs;
+    },
+};
+
 export default function EmploymentDetails({ adData }) {
     /**
      *  TODO: refactor denne
@@ -31,20 +44,6 @@ export default function EmploymentDetails({ adData }) {
         },
     };
 
-    const options = {
-        // TODO: fix eslint errors below ?
-        // eslint-disable-next-line
-        replace: ({ attribs }) => {
-            if (
-                attribs &&
-                (attribs.id === "arb-serEtter" || attribs.id === "arb-arbeidsoppgaver" || attribs.id === "arb-tilbyr")
-            ) {
-                // eslint-disable-next-line
-                return <></>;
-            }
-        },
-    };
-
     return (
         <section className="full-width mt-8">
             <HStack gap="4" justify="space-between" align="center" className="mb-8">
@@ -54,6 +53,7 @@ export default function EmploymentDetails({ adData }) {
                 <FavouritesButton variant="tertiary" id={adData.id} stilling={stilling} />
             </HStack>
 
+            {console.log("AD", adData)}
             {adData.adText && adData.adText.includes("arb-aapningstekst") && (
                 <RichText>{parse(adData.adText, options)}</RichText>
             )}
