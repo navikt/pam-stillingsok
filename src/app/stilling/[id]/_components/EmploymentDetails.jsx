@@ -104,16 +104,6 @@ export default function EmploymentDetails({ adData }) {
                         </dd>
                     </div>
                 )}
-                {adData.jobArrangement && (
-                    <div>
-                        <dt>
-                            <Label as="p">Arbeidstidsordning</Label>
-                        </dt>
-                        <dd>
-                            <BodyLong>{adData.jobArrangement}</BodyLong>
-                        </dd>
-                    </div>
-                )}
                 {adData.workLanguages && adData.workLanguages.length > 0 && (
                     <div>
                         <dt>
