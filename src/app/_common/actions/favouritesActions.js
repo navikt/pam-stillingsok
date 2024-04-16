@@ -44,7 +44,7 @@ export async function addFavouriteAction(favouriteAd) {
 
     revalidatePath("/favoritter");
 
-    return await res.json();
+    return res.json();
 }
 
 export async function deleteFavouriteAction(uuid) {

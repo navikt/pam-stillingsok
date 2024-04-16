@@ -36,7 +36,7 @@ function SaveSearchModal({ onClose, onSaveSearchSuccess, formData, defaultFormMo
      */
     useEffect(() => {
         async function getSavedSearch(uuid) {
-            return await actions.getSavedSearchAction(uuid);
+            return actions.getSavedSearchAction(uuid);
         }
 
         if (savedSearchUuid) {

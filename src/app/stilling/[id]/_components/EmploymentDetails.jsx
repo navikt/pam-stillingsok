@@ -32,12 +32,13 @@ export default function EmploymentDetails({ adData }) {
     };
 
     const options = {
+        // eslint-disable-next-line
         replace: ({ attribs }) => {
             if (
                 attribs &&
                 (attribs.id === "arb-serEtter" || attribs.id === "arb-arbeidsoppgaver" || attribs.id === "arb-tilbyr")
             ) {
-                return <></>;
+                return null;
             }
         },
     };

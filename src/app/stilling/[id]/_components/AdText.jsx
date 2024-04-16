@@ -5,9 +5,10 @@ import { RichText } from "@navikt/arbeidsplassen-react";
 
 export default function AdText({ adText }) {
     const options = {
+        // eslint-disable-next-line
         replace: ({ attribs }) => {
             if (attribs && attribs.id === "arb-aapningstekst") {
-                return <></>;
+                return null;
             }
         },
     };
