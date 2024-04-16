@@ -5,13 +5,13 @@
  * @returns Returnerer en ny liste, hvor et gitt fasettverdi er flyttet til bunn av listen
  */
 export default function moveCriteriaToBottom(facets, facetKey) {
-    const clone = facets.concat();
+  const clone = facets.concat();
 
-    clone.forEach((item, i) => {
-        if (item.key === facetKey) {
-            clone.push(clone.splice(i, 1)[0]);
-        }
-    });
+  clone.forEach((item, i) => {
+    if (item.key === facetKey) {
+      clone.push(clone.splice(i, 1)[0]);
+    }
+  });
 
-    return clone;
+  return clone;
 }

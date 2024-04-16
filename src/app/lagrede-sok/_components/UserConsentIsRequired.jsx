@@ -1,48 +1,51 @@
-"use client";
+'use client';
 
-import React, { useState } from "react";
-import { BodyLong, Button, Heading, VStack } from "@navikt/ds-react";
-import { FigureJugglingShieldWithCheckmark } from "@navikt/arbeidsplassen-react";
-import UserConsentModal from "@/app/_common/user/UserConsentModal";
-import { useRouter } from "next/navigation";
+import { FigureJugglingShieldWithCheckmark } from '@navikt/arbeidsplassen-react';
+import {
+  BodyLong, Button, Heading, VStack,
+} from '@navikt/ds-react';
+import { useRouter } from 'next/navigation';
+import React, { useState } from 'react';
 
-function UserConsentIsRequired() {
-    const [showTermsModal, setShowTermModal] = useState(false);
-    const router = useRouter();
+import UserConsentModal from '@/app/_common/user/UserConsentModal';
 
-    return (
-        <section className="container-small mt-16 mb-16">
-            <VStack align="center">
-                <FigureJugglingShieldWithCheckmark className="mb-8" />
-                <Heading level="1" size="large" className="text-center" spacing>
-                    Du må samtykke for å kunne ta i bruk lagrede søk
-                </Heading>
-                <BodyLong className="text-center" spacing>
-                    Med lagrede søk kan du velge å motta e-postvarsler når det kommer nye treff, eller for å raskere
-                    søke neste gang.
-                </BodyLong>
-                <Button
-                    variant="primary"
-                    onClick={() => {
-                        setShowTermModal(true);
-                    }}
-                >
-                    Se samtykke
-                </Button>
-            </VStack>
+const UserConsentIsRequired = () => {
+  const [showTermsModal, setShowTermModal] = useState(false);
+  const router = useRouter();
 
-            {showTermsModal && (
-                <UserConsentModal
-                    onTermsAccepted={() => {
-                        router.refresh();
-                    }}
-                    onClose={() => {
-                        setShowTermModal(false);
-                    }}
-                />
-            )}
-        </section>
-    );
-}
+  return (
+    <section className="container-small mt-16 mb-16">
+      <VStack align="center">
+        <FigureJugglingShieldWithCheckmark className="mb-8" />
+        <Heading spacing className="text-center" level="1" size="large">
+          Du må samtykke for å kunne ta i bruk lagrede søk
+        </Heading>
+        <BodyLong spacing className="text-center">
+          Med lagrede søk kan du velge å motta e-postvarsler når det kommer nye treff, eller for å raskere
+          søke neste gang.
+        </BodyLong>
+        <Button
+          variant="primary"
+          onClick={() => {
+            setShowTermModal(true);
+          }}
+        >
+          Se samtykke
+        </Button>
+      </VStack>
+
+      {showTermsModal ? (
+        <UserConsentModal
+          onClose={() => {
+            setShowTermModal(false);
+          }}
+          onTermsAccepted={() => {
+            router.refresh();
+          }}
+        />
+      ) : null}
+    </section>
+  );
+};
 
 export default UserConsentIsRequired;

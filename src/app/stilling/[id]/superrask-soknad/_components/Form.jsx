@@ -1,208 +1,212 @@
-import React, { useEffect, useRef, useState } from "react";
-import PropTypes from "prop-types";
 import {
-    BodyLong,
-    Checkbox,
-    CheckboxGroup,
-    ErrorSummary,
-    Heading,
-    HStack,
-    Link as AkselLink,
-    ReadMore,
-    Textarea,
-    TextField,
-} from "@navikt/ds-react";
-import ApiErrorMessage from "@/app/_common/components/ApiErrorMessage";
-import { MOTIVATION_MAX_LENGTH } from "./validateForm";
-import { FormButtonBar } from "./FormButtonBar";
+  Link as AkselLink,
+  BodyLong,
+  Checkbox,
+  CheckboxGroup,
+  ErrorSummary,
+  HStack,
+  Heading,
+  ReadMore,
+  TextField,
+  Textarea,
+} from '@navikt/ds-react';
+import PropTypes from 'prop-types';
+import React, { useEffect, useRef, useState } from 'react';
 
-function Form({ ad, applicationForm, submitApplication, submitApiError, offlineError, validationErrors }) {
-    const errorSummary = useRef();
-    const [motivation, setMotivation] = useState("");
-    const [fixedErrors, setFixedErrors] = useState([]);
-    const [localSummary, setLocalSummary] = useState(validationErrors);
+import ApiErrorMessage from '@/app/_common/components/ApiErrorMessage';
 
-    useEffect(() => {
-        setFixedErrors([]);
-        setLocalSummary(validationErrors);
-    }, [validationErrors]);
+import { FormButtonBar } from './FormButtonBar';
+import { MOTIVATION_MAX_LENGTH } from './validateForm';
 
-    useEffect(() => {
-        if (fixedErrors.length === 0 && Object.keys(localSummary).length > 0) {
-            errorSummary.current.focus();
-        }
-    }, [localSummary, fixedErrors, errorSummary]);
+const Form = ({
+  ad, applicationForm, submitApplication, submitApiError, offlineError, validationErrors,
+}) => {
+  const errorSummary = useRef();
+  const [motivation, setMotivation] = useState('');
+  const [fixedErrors, setFixedErrors] = useState([]);
+  const [localSummary, setLocalSummary] = useState(validationErrors);
 
-    function setErrorAsFixed(fixed) {
-        if (!fixedErrors.includes(fixed)) {
-            setFixedErrors((prevState) => [...prevState, fixed]);
+  useEffect(() => {
+    setFixedErrors([]);
+    setLocalSummary(validationErrors);
+  }, [validationErrors]);
 
-            const localSummaryWithoutFixes = {
-                ...localSummary,
-            };
-            delete localSummaryWithoutFixes[fixed];
-            setLocalSummary(localSummaryWithoutFixes);
-        }
+  useEffect(() => {
+    if (fixedErrors.length === 0 && Object.keys(localSummary).length > 0) {
+      errorSummary.current.focus();
     }
+  }, [localSummary, fixedErrors, errorSummary]);
 
-    return (
-        <form action={submitApplication}>
-            <section className="mb-10">
-                <Heading level="1" size="xlarge" spacing>
-                    Superrask søknad
-                </Heading>
-                <BodyLong spacing>
-                    Ingen CV eller langt søknadsbrev, kun tre raske steg. Du får beskjed på e-post med en gang bedriften
-                    har vurdert søknaden din.
-                </BodyLong>
-                {Object.entries(localSummary).length > 0 && (
-                    <ErrorSummary ref={errorSummary} heading="Skjemaet inneholder feil">
-                        {Object.entries(localSummary).map(([key, value]) => (
-                            <ErrorSummary.Item key={key} href={`#new-application-${key}`}>
-                                {value}
-                            </ErrorSummary.Item>
-                        ))}
-                    </ErrorSummary>
-                )}
-            </section>
+  function setErrorAsFixed(fixed) {
+    if (!fixedErrors.includes(fixed)) {
+      setFixedErrors((prevState) => [...prevState, fixed]);
 
-            {applicationForm.qualifications && applicationForm.qualifications.length > 0 && (
-                <section className="mb-10">
-                    <Heading level="2" size="medium" spacing>
-                        Bedriftens ønskede kvalifikasjoner
-                    </Heading>
-                    <BodyLong className="mb-8">
-                        Husk at du kan være rett person for jobben selv om du ikke treffer på alle kvalifikasjoner.
-                    </BodyLong>
+      const localSummaryWithoutFixes = {
+        ...localSummary,
+      };
+      delete localSummaryWithoutFixes[fixed];
+      setLocalSummary(localSummaryWithoutFixes);
+    }
+  }
 
-                    {applicationForm.qualifications && applicationForm.qualifications.length > 0 && (
-                        <CheckboxGroup legend="Huk av for kvalifikasjonene du oppfyller">
-                            {applicationForm.qualifications.map((it) => (
-                                <Checkbox key={it.id} value={it.label} name="qualification">
-                                    {it.label}
-                                </Checkbox>
-                            ))}
-                        </CheckboxGroup>
-                    )}
-                </section>
-            )}
+  return (
+    <form action={submitApplication}>
+      <section className="mb-10">
+        <Heading spacing level="1" size="xlarge">
+          Superrask søknad
+        </Heading>
+        <BodyLong spacing>
+          Ingen CV eller langt søknadsbrev, kun tre raske steg. Du får beskjed på e-post med en gang bedriften
+          har vurdert søknaden din.
+        </BodyLong>
+        {Object.entries(localSummary).length > 0 && (
+        <ErrorSummary ref={errorSummary} heading="Skjemaet inneholder feil">
+          {Object.entries(localSummary).map(([key, value]) => (
+            <ErrorSummary.Item key={key} href={`#new-application-${key}`}>
+              {value}
+            </ErrorSummary.Item>
+          ))}
+        </ErrorSummary>
+        )}
+      </section>
 
-            <section className="mb-10">
-                <Heading level="2" size="medium" spacing>
-                    Hvorfor du er den rette for jobben
-                </Heading>
-                <ReadMore header="Hvordan skrive en god begrunnelse?" className="mb-4">
-                    <BodyLong className="mb-4">
-                        Vis hvorfor du er et trygt valg for denne jobben. Fortell om arbeidserfaring, praksisplasser,
-                        utdanning, frivillig arbeid, verv eller annen relevant erfaring.
-                    </BodyLong>
-                    <BodyLong>
-                        Tenk gjerne litt utradisjonelt og husk at personlige egenskaper kan være avgjørende.
-                    </BodyLong>
-                </ReadMore>
-                <Textarea
-                    id="new-application-motivation"
-                    label="Skriv en begrunnelse"
-                    name="motivation"
-                    value={motivation}
-                    onChange={(e) => {
-                        setMotivation(e.target.value);
-                        setErrorAsFixed("motivation");
-                    }}
-                    maxLength={MOTIVATION_MAX_LENGTH}
-                    error={!fixedErrors.includes("motivation") && validationErrors.motivation}
-                />
-            </section>
+      {applicationForm.qualifications && applicationForm.qualifications.length > 0 ? (
+        <section className="mb-10">
+          <Heading spacing level="2" size="medium">
+            Bedriftens ønskede kvalifikasjoner
+          </Heading>
+          <BodyLong className="mb-8">
+            Husk at du kan være rett person for jobben selv om du ikke treffer på alle kvalifikasjoner.
+          </BodyLong>
 
-            <section className="mb-10">
-                <Heading level="2" size="medium" spacing>
-                    Din kontaktinformasjon
-                </Heading>
-                <BodyLong className="mb-4">Vær nøye med å oppgi riktig informasjon.</BodyLong>
+          {applicationForm.qualifications && applicationForm.qualifications.length > 0 ? (
+            <CheckboxGroup legend="Huk av for kvalifikasjonene du oppfyller">
+              {applicationForm.qualifications.map((it) => (
+                <Checkbox key={it.id} name="qualification" value={it.label}>
+                  {it.label}
+                </Checkbox>
+              ))}
+            </CheckboxGroup>
+          ) : null}
+        </section>
+      ) : null}
 
-                <TextField
-                    label="Navn"
-                    id="new-application-name"
-                    auto-complete="name"
-                    name="fullName"
-                    className="mb-4"
-                />
+      <section className="mb-10">
+        <Heading spacing level="2" size="medium">
+          Hvorfor du er den rette for jobben
+        </Heading>
+        <ReadMore className="mb-4" header="Hvordan skrive en god begrunnelse?">
+          <BodyLong className="mb-4">
+            Vis hvorfor du er et trygt valg for denne jobben. Fortell om arbeidserfaring, praksisplasser,
+            utdanning, frivillig arbeid, verv eller annen relevant erfaring.
+          </BodyLong>
+          <BodyLong>
+            Tenk gjerne litt utradisjonelt og husk at personlige egenskaper kan være avgjørende.
+          </BodyLong>
+        </ReadMore>
+        <Textarea
+          error={!fixedErrors.includes('motivation') && validationErrors.motivation}
+          id="new-application-motivation"
+          label="Skriv en begrunnelse"
+          maxLength={MOTIVATION_MAX_LENGTH}
+          name="motivation"
+          value={motivation}
+          onChange={(e) => {
+            setMotivation(e.target.value);
+            setErrorAsFixed('motivation');
+          }}
+        />
+      </section>
 
-                <TextField
-                    label="E-post"
-                    description="Må fylles ut"
-                    type="text"
-                    name="email"
-                    auto-complete="email"
-                    aria-required="true"
-                    id="new-application-email"
-                    onChange={() => {
-                        setErrorAsFixed("email");
-                    }}
-                    error={!fixedErrors.includes("email") && validationErrors.email}
-                    className="mb-4"
-                />
+      <section className="mb-10">
+        <Heading spacing level="2" size="medium">
+          Din kontaktinformasjon
+        </Heading>
+        <BodyLong className="mb-4">Vær nøye med å oppgi riktig informasjon.</BodyLong>
 
-                <TextField
-                    label="Telefonnummer"
-                    description="Må fylles ut"
-                    id="new-application-telephone"
-                    type="tel"
-                    name="telephone"
-                    auto-complete="tel"
-                    aria-required="true"
-                    onChange={() => {
-                        setErrorAsFixed("telephone");
-                    }}
-                    error={!fixedErrors.includes("telephone") && validationErrors.telephone}
-                />
-            </section>
+        <TextField
+          auto-complete="name"
+          className="mb-4"
+          id="new-application-name"
+          label="Navn"
+          name="fullName"
+        />
 
-            <BodyLong spacing>
-                Når du har sendt søknaden, kan bedriften se begrunnelsen din og hvilke kvalifikasjoner du har huket av,
-                samt navnet ditt dersom du har oppgitt det. Hvis bedriften ønsker å kontakte deg, får de også se
-                kontaktinformasjonen din.
-            </BodyLong>
-            <BodyLong spacing>Du kan når som helst trekke tilbake søknaden din.</BodyLong>
-            <BodyLong spacing>
-                <AkselLink target="_blank" rel="noopener noreferrer" href="/personvern-superrask-soknad">
-                    Les om hvordan vi behandler dine data (åpner i ny fane)
-                </AkselLink>
-            </BodyLong>
+        <TextField
+          aria-required="true"
+          auto-complete="email"
+          className="mb-4"
+          description="Må fylles ut"
+          error={!fixedErrors.includes('email') && validationErrors.email}
+          id="new-application-email"
+          label="E-post"
+          name="email"
+          type="text"
+          onChange={() => {
+            setErrorAsFixed('email');
+          }}
+        />
 
-            {submitApiError && <ApiErrorMessage apiErrorCode={submitApiError} />}
-            {offlineError && !submitApiError && <ApiErrorMessage apiErrorCode="offline" />}
+        <TextField
+          aria-required="true"
+          auto-complete="tel"
+          description="Må fylles ut"
+          error={!fixedErrors.includes('telephone') && validationErrors.telephone}
+          id="new-application-telephone"
+          label="Telefonnummer"
+          name="telephone"
+          type="tel"
+          onChange={() => {
+            setErrorAsFixed('telephone');
+          }}
+        />
+      </section>
 
-            <HStack gap="4" className="mt-12">
-                <FormButtonBar id={ad._id} />
-            </HStack>
-        </form>
-    );
-}
+      <BodyLong spacing>
+        Når du har sendt søknaden, kan bedriften se begrunnelsen din og hvilke kvalifikasjoner du har huket av,
+        samt navnet ditt dersom du har oppgitt det. Hvis bedriften ønsker å kontakte deg, får de også se
+        kontaktinformasjonen din.
+      </BodyLong>
+      <BodyLong spacing>Du kan når som helst trekke tilbake søknaden din.</BodyLong>
+      <BodyLong spacing>
+        <AkselLink href="/personvern-superrask-soknad" rel="noopener noreferrer" target="_blank">
+          Les om hvordan vi behandler dine data (åpner i ny fane)
+        </AkselLink>
+      </BodyLong>
+
+      {submitApiError ? <ApiErrorMessage apiErrorCode={submitApiError} /> : null}
+      {offlineError && !submitApiError ? <ApiErrorMessage apiErrorCode="offline" /> : null}
+
+      <HStack className="mt-12" gap="4">
+        <FormButtonBar id={ad._id} />
+      </HStack>
+    </form>
+  );
+};
 
 Form.propTypes = {
-    ad: PropTypes.shape({
-        _id: PropTypes.string,
-        _source: PropTypes.shape({
-            title: PropTypes.string,
-        }),
-    }).isRequired,
-    applicationForm: PropTypes.shape({
-        qualifications: PropTypes.arrayOf(
-            PropTypes.shape({
-                id: PropTypes.string,
-                label: PropTypes.string,
-            }),
-        ),
-    }).isRequired,
-    submitApplication: PropTypes.func.isRequired,
-    submitApiError: PropTypes.string,
-    offlineError: PropTypes.bool,
-    validationErrors: PropTypes.shape({
-        email: PropTypes.string,
-        telephone: PropTypes.string,
-        motivation: PropTypes.string,
+  ad: PropTypes.shape({
+    _id: PropTypes.string,
+    _source: PropTypes.shape({
+      title: PropTypes.string,
     }),
+  }).isRequired,
+  applicationForm: PropTypes.shape({
+    qualifications: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.string,
+        label: PropTypes.string,
+      }),
+    ),
+  }).isRequired,
+  submitApplication: PropTypes.func.isRequired,
+  submitApiError: PropTypes.string,
+  offlineError: PropTypes.bool,
+  validationErrors: PropTypes.shape({
+    email: PropTypes.string,
+    telephone: PropTypes.string,
+    motivation: PropTypes.string,
+  }),
 };
 
 export default Form;

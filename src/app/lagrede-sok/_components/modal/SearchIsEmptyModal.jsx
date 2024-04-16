@@ -1,23 +1,22 @@
-import React from "react";
-import PropTypes from "prop-types";
-import AlertModal from "@/app/_common/components/modals/AlertModal";
+import PropTypes from 'prop-types';
+import React from 'react';
 
-function SearchIsEmptyModal({ onClose }) {
-    return (
-        <AlertModal
-            id="search-is-empty-modal"
-            onCancel={onClose}
-            title="Velg søkekriterier først"
-            cancelLabel="Lukk"
-            useOnlyCancelButton
-        >
-            Du må fylle inn søkeord eller kriterier for å kunne lagre.
-        </AlertModal>
-    );
-}
+import AlertModal from '@/app/_common/components/modals/AlertModal';
+
+const SearchIsEmptyModal = ({ onClose }) => (
+  <AlertModal
+    useOnlyCancelButton
+    cancelLabel="Lukk"
+    id="search-is-empty-modal"
+    title="Velg søkekriterier først"
+    onCancel={onClose}
+  >
+    Du må fylle inn søkeord eller kriterier for å kunne lagre.
+  </AlertModal>
+);
 
 SearchIsEmptyModal.propTypes = {
-    onClose: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
 };
 
 export default SearchIsEmptyModal;

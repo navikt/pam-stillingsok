@@ -1,36 +1,37 @@
-import { describe, expect, test } from "vitest";
-import { render, screen } from "@testing-library/react";
-import Ad from "./Ad";
+import { render, screen } from '@testing-library/react';
+import { describe, expect, test } from 'vitest';
+
+import Ad from './Ad';
 
 const activeAd = {
-    title: "Test",
-    adText: "Test test test",
-    status: "ACTIVE",
-    applicationEmail: "test@test.no",
-    employer: {
-        name: "Test company",
-    },
+  title: 'Test',
+  adText: 'Test test test',
+  status: 'ACTIVE',
+  applicationEmail: 'test@test.no',
+  employer: {
+    name: 'Test company',
+  },
 };
 
 const inactiveAd = {
-    ...activeAd,
-    status: "INACTIVE",
+  ...activeAd,
+  status: 'INACTIVE',
 };
 
-describe("Ad", () => {
-    test("should render how to apply for active ads with an application email", () => {
-        render(<Ad adData={activeAd} />);
+describe('Ad', () => {
+  test('should render how to apply for active ads with an application email', () => {
+    render(<Ad adData={activeAd} />);
 
-        const howToApply = screen.queryByText("Søk på jobben");
+    const howToApply = screen.queryByText('Søk på jobben');
 
-        expect(howToApply).toBeInTheDocument();
-    });
+    expect(howToApply).toBeInTheDocument();
+  });
 
-    test("should not render how to apply if ad is inactive", () => {
-        render(<Ad adData={inactiveAd} />);
+  test('should not render how to apply if ad is inactive', () => {
+    render(<Ad adData={inactiveAd} />);
 
-        const howToApply = screen.queryByText("Søk på jobben");
+    const howToApply = screen.queryByText('Søk på jobben');
 
-        expect(howToApply).not.toBeInTheDocument();
-    });
+    expect(howToApply).not.toBeInTheDocument();
+  });
 });

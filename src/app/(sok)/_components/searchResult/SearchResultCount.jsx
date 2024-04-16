@@ -1,32 +1,33 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { BodyShort } from "@navikt/ds-react";
-import { formatNumber } from "@/app/_common/utils/utils";
+import { BodyShort } from '@navikt/ds-react';
+import PropTypes from 'prop-types';
+import React from 'react';
 
-function SearchResultCount({ searchResult }) {
-    if (searchResult) {
-        const annonserWord = searchResult.totalAds === 1 ? "annonse" : "annonser";
-        const stillingerWord = searchResult.totalPositions === 1 ? "stilling" : "stillinger";
+import { formatNumber } from '@/app/_common/utils/utils';
 
-        return (
-            <BodyShort role="status">
-                {searchResult.totalAds === 0
-                    ? "Ingen treff"
-                    : `${formatNumber(searchResult.totalPositions)} ${stillingerWord} i ${formatNumber(
-                          searchResult.totalAds,
-                      )} ${annonserWord}`}
-            </BodyShort>
-        );
-    }
+const SearchResultCount = ({ searchResult }) => {
+  if (searchResult) {
+    const annonserWord = searchResult.totalAds === 1 ? 'annonse' : 'annonser';
+    const stillingerWord = searchResult.totalPositions === 1 ? 'stilling' : 'stillinger';
 
-    return <div />;
-}
+    return (
+      <BodyShort role="status">
+        {searchResult.totalAds === 0
+          ? 'Ingen treff'
+          : `${formatNumber(searchResult.totalPositions)} ${stillingerWord} i ${formatNumber(
+            searchResult.totalAds,
+          )} ${annonserWord}`}
+      </BodyShort>
+    );
+  }
+
+  return <div />;
+};
 
 SearchResultCount.propTypes = {
-    searchResult: PropTypes.shape({
-        totalAds: PropTypes.number,
-        totalPositions: PropTypes.number,
-    }),
+  searchResult: PropTypes.shape({
+    totalAds: PropTypes.number,
+    totalPositions: PropTypes.number,
+  }),
 };
 
 export default SearchResultCount;

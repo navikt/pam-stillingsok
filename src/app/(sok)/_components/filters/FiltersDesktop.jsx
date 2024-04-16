@@ -1,116 +1,118 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { Accordion, Button } from "@navikt/ds-react";
-import Remote from "@/app/(sok)/_components/filters/Remote";
-import ShareYourOpinionPanel from "@/app/tilbakemelding-nye-filtre/_components/ShareYourOpinionPanel";
-import FilterAccordionItem from "./FilterAccordionItem";
-import Published from "./Published";
-import Counties from "./Locations";
-import Occupations from "./Occupations";
-import Extent from "./Extent";
-import Sector from "./Sector";
-import EngagementType from "./Engagement";
-import WorkLanguage from "./WorkLanguage";
+import { Accordion, Button } from '@navikt/ds-react';
+import PropTypes from 'prop-types';
+import React from 'react';
 
-function FiltersDesktop({ query, dispatchQuery, aggregations, locations, searchResult }) {
-    return (
-        <div>
-            <ShareYourOpinionPanel />
-            <Accordion indent={false} headingSize="small">
-                <FilterAccordionItem title="Publisert" panelId="publisert">
-                    <Published
-                        query={query}
-                        dispatch={dispatchQuery}
-                        initialValues={aggregations.published}
-                        updatedValues={searchResult.aggregations.published}
-                    />
-                </FilterAccordionItem>
-                <FilterAccordionItem title="Sted" panelId="sted">
-                    <Counties
-                        query={query}
-                        dispatch={dispatchQuery}
-                        locations={locations}
-                        updatedValues={searchResult}
-                    />
-                </FilterAccordionItem>
-                <FilterAccordionItem title="Hjemmekontor" panelId="hjemmekontor">
-                    <Remote
-                        query={query}
-                        dispatch={dispatchQuery}
-                        initialValues={aggregations.remote}
-                        updatedValues={searchResult.aggregations.remote}
-                    />
-                </FilterAccordionItem>
-                <FilterAccordionItem title="Yrke" panelId="yrke">
-                    <Occupations
-                        query={query}
-                        dispatch={dispatchQuery}
-                        initialValues={aggregations.occupationFirstLevels}
-                        updatedValues={searchResult.aggregations.occupationFirstLevels}
-                    />
-                </FilterAccordionItem>
-                <FilterAccordionItem title="Heltid/deltid" panelId="extent">
-                    <Extent
-                        query={query}
-                        dispatch={dispatchQuery}
-                        initialValues={aggregations.extent}
-                        updatedValues={searchResult.aggregations.extent}
-                    />
-                </FilterAccordionItem>
-                <FilterAccordionItem title="Sektor" panelId="sector">
-                    <Sector
-                        query={query}
-                        dispatch={dispatchQuery}
-                        initialValues={aggregations.sector}
-                        updatedValues={searchResult.aggregations.sector}
-                    />
-                </FilterAccordionItem>
-                <FilterAccordionItem title="Ansettelsesform" panelId="engagementType">
-                    <EngagementType
-                        query={query}
-                        dispatch={dispatchQuery}
-                        initialValues={aggregations.engagementTypes}
-                        updatedValues={searchResult.aggregations.engagementTypes}
-                    />
-                </FilterAccordionItem>
-                <FilterAccordionItem title="Arbeidsspråk" panelId="workLanguage">
-                    <WorkLanguage
-                        query={query}
-                        dispatch={dispatchQuery}
-                        initialValues={aggregations.workLanguage}
-                        updatedValues={searchResult.aggregations.workLanguage}
-                    />
-                </FilterAccordionItem>
-            </Accordion>
-            <noscript>
-                <Button type="submit">Søk</Button>
-            </noscript>
-        </div>
-    );
-}
+import Remote from '@/app/(sok)/_components/filters/Remote';
+import ShareYourOpinionPanel from '@/app/tilbakemelding-nye-filtre/_components/ShareYourOpinionPanel';
+
+import EngagementType from './Engagement';
+import Extent from './Extent';
+import FilterAccordionItem from './FilterAccordionItem';
+import Counties from './Locations';
+import Occupations from './Occupations';
+import Published from './Published';
+import Sector from './Sector';
+import WorkLanguage from './WorkLanguage';
+
+const FiltersDesktop = ({
+  query, dispatchQuery, aggregations, locations, searchResult,
+}) => (
+  <div>
+    <ShareYourOpinionPanel />
+    <Accordion headingSize="small" indent={false}>
+      <FilterAccordionItem panelId="publisert" title="Publisert">
+        <Published
+          dispatch={dispatchQuery}
+          initialValues={aggregations.published}
+          query={query}
+          updatedValues={searchResult.aggregations.published}
+        />
+      </FilterAccordionItem>
+      <FilterAccordionItem panelId="sted" title="Sted">
+        <Counties
+          dispatch={dispatchQuery}
+          locations={locations}
+          query={query}
+          updatedValues={searchResult}
+        />
+      </FilterAccordionItem>
+      <FilterAccordionItem panelId="hjemmekontor" title="Hjemmekontor">
+        <Remote
+          dispatch={dispatchQuery}
+          initialValues={aggregations.remote}
+          query={query}
+          updatedValues={searchResult.aggregations.remote}
+        />
+      </FilterAccordionItem>
+      <FilterAccordionItem panelId="yrke" title="Yrke">
+        <Occupations
+          dispatch={dispatchQuery}
+          initialValues={aggregations.occupationFirstLevels}
+          query={query}
+          updatedValues={searchResult.aggregations.occupationFirstLevels}
+        />
+      </FilterAccordionItem>
+      <FilterAccordionItem panelId="extent" title="Heltid/deltid">
+        <Extent
+          dispatch={dispatchQuery}
+          initialValues={aggregations.extent}
+          query={query}
+          updatedValues={searchResult.aggregations.extent}
+        />
+      </FilterAccordionItem>
+      <FilterAccordionItem panelId="sector" title="Sektor">
+        <Sector
+          dispatch={dispatchQuery}
+          initialValues={aggregations.sector}
+          query={query}
+          updatedValues={searchResult.aggregations.sector}
+        />
+      </FilterAccordionItem>
+      <FilterAccordionItem panelId="engagementType" title="Ansettelsesform">
+        <EngagementType
+          dispatch={dispatchQuery}
+          initialValues={aggregations.engagementTypes}
+          query={query}
+          updatedValues={searchResult.aggregations.engagementTypes}
+        />
+      </FilterAccordionItem>
+      <FilterAccordionItem panelId="workLanguage" title="Arbeidsspråk">
+        <WorkLanguage
+          dispatch={dispatchQuery}
+          initialValues={aggregations.workLanguage}
+          query={query}
+          updatedValues={searchResult.aggregations.workLanguage}
+        />
+      </FilterAccordionItem>
+    </Accordion>
+    <noscript>
+      <Button type="submit">Søk</Button>
+    </noscript>
+  </div>
+);
 
 FiltersDesktop.propTypes = {
-    query: PropTypes.shape({}),
-    dispatchQuery: PropTypes.func,
-    locations: PropTypes.arrayOf(PropTypes.shape({})),
+  query: PropTypes.shape({}),
+  dispatchQuery: PropTypes.func,
+  locations: PropTypes.arrayOf(PropTypes.shape({})),
+  aggregations: PropTypes.shape({
+    engagementTypes: PropTypes.arrayOf(PropTypes.shape({})),
+    occupationFirstLevels: PropTypes.arrayOf(PropTypes.shape({})),
+    published: PropTypes.arrayOf(PropTypes.shape({})),
+    extent: PropTypes.arrayOf(PropTypes.shape({})),
+    sector: PropTypes.arrayOf(PropTypes.shape({})),
+    workLanguage: PropTypes.arrayOf(PropTypes.shape({})),
+  }),
+  searchResult: PropTypes.shape({
     aggregations: PropTypes.shape({
-        engagementTypes: PropTypes.arrayOf(PropTypes.shape({})),
-        occupationFirstLevels: PropTypes.arrayOf(PropTypes.shape({})),
-        published: PropTypes.arrayOf(PropTypes.shape({})),
-        extent: PropTypes.arrayOf(PropTypes.shape({})),
-        sector: PropTypes.arrayOf(PropTypes.shape({})),
-        workLanguage: PropTypes.arrayOf(PropTypes.shape({})),
+      engagementTypes: PropTypes.arrayOf(PropTypes.shape({})),
+      occupationFirstLevels: PropTypes.arrayOf(PropTypes.shape({})),
+      published: PropTypes.arrayOf(PropTypes.shape({})),
+      extent: PropTypes.arrayOf(PropTypes.shape({})),
+      sector: PropTypes.arrayOf(PropTypes.shape({})),
+      workLanguage: PropTypes.arrayOf(PropTypes.shape({})),
     }),
-    searchResult: PropTypes.shape({
-        aggregations: PropTypes.shape({
-            engagementTypes: PropTypes.arrayOf(PropTypes.shape({})),
-            occupationFirstLevels: PropTypes.arrayOf(PropTypes.shape({})),
-            published: PropTypes.arrayOf(PropTypes.shape({})),
-            extent: PropTypes.arrayOf(PropTypes.shape({})),
-            sector: PropTypes.arrayOf(PropTypes.shape({})),
-            workLanguage: PropTypes.arrayOf(PropTypes.shape({})),
-        }),
-    }),
+  }),
 };
 
 export default FiltersDesktop;

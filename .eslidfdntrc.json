@@ -6,7 +6,7 @@
         "plugin:jsx-a11y/recommended",
         "prettier"
     ],
-    "plugins": ["react", "unused-imports", "prettier"],
+    "plugins": ["@vercel/style-guide/eslint/next", "react", "unused-imports", "prettier"],
     "rules": {
         "no-underscore-dangle": "off",
         "import/prefer-default-export": "off",

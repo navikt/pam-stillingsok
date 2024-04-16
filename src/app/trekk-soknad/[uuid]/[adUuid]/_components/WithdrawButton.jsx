@@ -1,13 +1,13 @@
-import React from "react";
-import { useFormStatus } from "react-dom";
-import { Button } from "@navikt/ds-react";
+import { Button } from '@navikt/ds-react';
+import React from 'react';
+import { useFormStatus } from 'react-dom';
 
-export function WithdrawButton() {
-    const { pending } = useFormStatus();
+export const WithdrawButton = () => {
+  const { pending } = useFormStatus();
 
-    return (
-        <Button variant="primary" type="submit" loading={pending}>
-            Trekk søknad
-        </Button>
-    );
-}
+  return (
+    <Button loading={pending} type="submit" variant="primary">
+      Trekk søknad
+    </Button>
+  );
+};

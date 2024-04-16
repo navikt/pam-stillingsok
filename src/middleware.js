@@ -1,6 +1,7 @@
-import { NextResponse } from "next/server";
-import { getCallId, NAV_CALL_ID_TAG } from "@/app/_common/monitoring/callId";
-import { getSessionId, SESSION_ID_TAG } from "@/app/_common/monitoring/session";
+import { NextResponse } from 'next/server';
+
+import { NAV_CALL_ID_TAG, getCallId } from '@/app/_common/monitoring/callId';
+import { SESSION_ID_TAG, getSessionId } from '@/app/_common/monitoring/session';
 
 /*
  * Match all request paths except for the ones starting with:
@@ -12,16 +13,16 @@ import { getSessionId, SESSION_ID_TAG } from "@/app/_common/monitoring/session";
 const CSP_HEADER_MATCH = /^\/((?!api|_next\/static|favicon.ico).*)$/;
 
 function shouldAddCspHeaders(request) {
-    return new RegExp(CSP_HEADER_MATCH).exec(request.nextUrl.pathname);
+  return new RegExp(CSP_HEADER_MATCH).exec(request.nextUrl.pathname);
 }
 
 function addCspHeaders(requestHeaders, responseHeaders) {
-    const nonce = Buffer.from(crypto.randomUUID()).toString("base64");
-    const cspHeader = `
+  const nonce = Buffer.from(crypto.randomUUID()).toString('base64');
+  const cspHeader = `
             default-src 'none';
             script-src 'self' 'nonce-${nonce}' 'strict-dynamic' ${
-                process.env.NODE_ENV === "production" ? "" : `'unsafe-eval'`
-            };
+  process.env.NODE_ENV === 'production' ? '' : '\'unsafe-eval\''
+};
             style-src 'self' 'unsafe-inline' https://cdn.nav.no;
             img-src 'self';
             media-src 'none';
@@ -36,43 +37,43 @@ function addCspHeaders(requestHeaders, responseHeaders) {
             connect-src 'self' https://amplitude.nav.no https://sentry.gc.nav.no;
     `;
 
-    // Replace newline characters and spaces
-    const contentSecurityPolicyHeaderValue = cspHeader.replace(/\s{2,}/g, " ").trim();
+  // Replace newline characters and spaces
+  const contentSecurityPolicyHeaderValue = cspHeader.replace(/\s{2,}/g, ' ').trim();
 
-    requestHeaders.set("x-nonce", nonce);
-    requestHeaders.set("Content-Security-Policy", contentSecurityPolicyHeaderValue);
+  requestHeaders.set('x-nonce', nonce);
+  requestHeaders.set('Content-Security-Policy', contentSecurityPolicyHeaderValue);
 
-    responseHeaders.set("Content-Security-Policy", contentSecurityPolicyHeaderValue);
+  responseHeaders.set('Content-Security-Policy', contentSecurityPolicyHeaderValue);
 }
 
 function addCallIdHeader(requestHeaders) {
-    requestHeaders.set(NAV_CALL_ID_TAG, getCallId());
+  requestHeaders.set(NAV_CALL_ID_TAG, getCallId());
 }
 
 function addSessionIdHeader(requestHeaders) {
-    requestHeaders.set(SESSION_ID_TAG, getSessionId());
+  requestHeaders.set(SESSION_ID_TAG, getSessionId());
 }
 
 export function middleware(request) {
-    const requestHeaders = new Headers(request.headers);
-    const responseHeaders = new Headers();
+  const requestHeaders = new Headers(request.headers);
+  const responseHeaders = new Headers();
 
-    if (shouldAddCspHeaders(request)) {
-        addCspHeaders(requestHeaders, responseHeaders);
-    }
+  if (shouldAddCspHeaders(request)) {
+    addCspHeaders(requestHeaders, responseHeaders);
+  }
 
-    addCallIdHeader(requestHeaders);
-    addSessionIdHeader(requestHeaders);
+  addCallIdHeader(requestHeaders);
+  addSessionIdHeader(requestHeaders);
 
-    const response = NextResponse.next({
-        request: {
-            headers: requestHeaders,
-        },
-    });
+  const response = NextResponse.next({
+    request: {
+      headers: requestHeaders,
+    },
+  });
 
-    responseHeaders.forEach((value, key) => {
-        response.headers.set(key, value);
-    });
+  responseHeaders.forEach((value, key) => {
+    response.headers.set(key, value);
+  });
 
-    return response;
+  return response;
 }

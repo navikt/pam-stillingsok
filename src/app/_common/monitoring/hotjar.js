@@ -1,7 +1,7 @@
 export default function initHotjar() {
-    document.querySelector("body").setAttribute("data-hj-masked", "");
-    document.querySelector("html").setAttribute("data-hj-suppress", "");
-    /* eslint-disable */
+  document.querySelector('body').setAttribute('data-hj-masked', '');
+  document.querySelector('html').setAttribute('data-hj-suppress', '');
+  /* eslint-disable */
     (function (h, o, t, j, a, r) {
         h.hj =
             h.hj ||

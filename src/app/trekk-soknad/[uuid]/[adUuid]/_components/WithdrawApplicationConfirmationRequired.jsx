@@ -1,75 +1,79 @@
-import React, { useState } from "react";
-import { BodyLong, BodyShort, Heading, Label, Link as AkselLink } from "@navikt/ds-react";
-import PropTypes from "prop-types";
-import Link from "next/link";
-import getEmployer from "@/app/_common/utils/getEmployer";
-import ApiErrorMessage from "@/app/_common/components/ApiErrorMessage";
-import { WithdrawButton } from "./WithdrawButton";
+import {
+  Link as AkselLink, BodyLong, BodyShort, Heading, Label,
+} from '@navikt/ds-react';
+import Link from 'next/link';
+import PropTypes from 'prop-types';
+import React, { useState } from 'react';
 
-function WithdrawApplicationConfirmationRequired({ ad, submitForm, hasError }) {
-    const [state, setState] = useState({ error: hasError });
+import ApiErrorMessage from '@/app/_common/components/ApiErrorMessage';
+import getEmployer from '@/app/_common/utils/getEmployer';
 
-    const onSubmit = async (e) => {
-        e.preventDefault();
+import { WithdrawButton } from './WithdrawButton';
 
-        let result;
-        let fetchSuccess;
+const WithdrawApplicationConfirmationRequired = ({ ad, submitForm, hasError }) => {
+  const [state, setState] = useState({ error: hasError });
 
-        try {
-            result = await submitForm();
-            fetchSuccess = true;
-        } catch (err) {
-            fetchSuccess = false;
-        }
+  const onSubmit = async (e) => {
+    e.preventDefault();
 
-        if (fetchSuccess) {
-            setState(result);
-        } else {
-            setState((prevState) => ({
-                ...prevState,
-                error: "offline",
-            }));
-        }
-    };
+    let result;
+    let fetchSuccess;
 
-    return (
-        <>
-            <Heading level="1" size="large" spacing>
-                Bekreft at du ønsker å trekke din søknad
-            </Heading>
-            <BodyLong className="mb-8">
-                Informasjonen du har oppgitt i din søknad vil bli slettet. Dette valget kan ikke angres og du må søke på
-                nytt dersom du ønsker det.
-            </BodyLong>
-            {ad && (
-                <div className="mb-8">
-                    <BodyShort>
-                        <AkselLink as={Link} href={`/stilling/${ad._id}`}>
-                            {ad._source.title}
-                        </AkselLink>
-                    </BodyShort>
-                    <Label as="p">{getEmployer(ad._source)}</Label>
-                </div>
-            )}
+    try {
+      result = await submitForm();
+      fetchSuccess = true;
+    } catch (err) {
+      fetchSuccess = false;
+    }
 
-            {state?.error && <ApiErrorMessage apiErrorCode={state.error} errorHeading="Søknaden ble ikke trukket" />}
+    if (fetchSuccess) {
+      setState(result);
+    } else {
+      setState((prevState) => ({
+        ...prevState,
+        error: 'offline',
+      }));
+    }
+  };
 
-            <form onSubmit={onSubmit}>
-                <WithdrawButton />
-            </form>
-        </>
-    );
-}
+  return (
+    <>
+      <Heading spacing level="1" size="large">
+        Bekreft at du ønsker å trekke din søknad
+      </Heading>
+      <BodyLong className="mb-8">
+        Informasjonen du har oppgitt i din søknad vil bli slettet. Dette valget kan ikke angres og du må søke på
+        nytt dersom du ønsker det.
+      </BodyLong>
+      {ad ? (
+        <div className="mb-8">
+          <BodyShort>
+            <AkselLink as={Link} href={`/stilling/${ad._id}`}>
+              {ad._source.title}
+            </AkselLink>
+          </BodyShort>
+          <Label as="p">{getEmployer(ad._source)}</Label>
+        </div>
+      ) : null}
+
+      {state?.error ? <ApiErrorMessage apiErrorCode={state.error} errorHeading="Søknaden ble ikke trukket" /> : null}
+
+      <form onSubmit={onSubmit}>
+        <WithdrawButton />
+      </form>
+    </>
+  );
+};
 
 WithdrawApplicationConfirmationRequired.propTypes = {
-    ad: PropTypes.shape({
-        _id: PropTypes.string.isRequired,
-        _source: PropTypes.shape({
-            title: PropTypes.string,
-        }),
+  ad: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    _source: PropTypes.shape({
+      title: PropTypes.string,
     }),
-    submitForm: PropTypes.func.isRequired,
-    hasError: PropTypes.bool,
+  }),
+  submitForm: PropTypes.func.isRequired,
+  hasError: PropTypes.bool,
 };
 
 export default WithdrawApplicationConfirmationRequired;

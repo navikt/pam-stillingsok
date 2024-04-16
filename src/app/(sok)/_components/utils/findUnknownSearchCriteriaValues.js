@@ -9,18 +9,18 @@
  * @param nestedName, f.eks 'municipals'.
  */
 export default function findUnknownSearchCriteriaValues(
-    searchCriteriaFromBrowserUrl,
-    searchCriteriaFromApi,
-    nestedName,
+  searchCriteriaFromBrowserUrl,
+  searchCriteriaFromApi,
+  nestedName,
 ) {
-    return searchCriteriaFromBrowserUrl.filter((used) => {
-        const found = searchCriteriaFromApi.find((knownValue) => {
-            if (nestedName !== undefined && knownValue[nestedName]) {
-                return knownValue[nestedName].find((nested) => used === nested.key);
-            }
-            return used === knownValue.key;
-        });
-
-        return found === undefined;
+  return searchCriteriaFromBrowserUrl.filter((used) => {
+    const found = searchCriteriaFromApi.find((knownValue) => {
+      if (nestedName !== undefined && knownValue[nestedName]) {
+        return knownValue[nestedName].find((nested) => used === nested.key);
+      }
+      return used === knownValue.key;
     });
+
+    return found === undefined;
+  });
 }

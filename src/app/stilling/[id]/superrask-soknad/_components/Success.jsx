@@ -1,46 +1,50 @@
-import React, { useEffect, useRef } from "react";
-import { BodyLong, Button, Heading } from "@navikt/ds-react";
-import PropTypes from "prop-types";
-import Link from "next/link";
-import GiveFeedback from "./GiveFeedback";
+import { BodyLong, Button, Heading } from '@navikt/ds-react';
+import Link from 'next/link';
+import PropTypes from 'prop-types';
+import React, { useEffect, useRef } from 'react';
 
-function Success({ email }) {
-    const ref = useRef(null);
+import GiveFeedback from './GiveFeedback';
 
-    useEffect(() => {
-        window.scrollTo(0, 0);
-        if (ref.current) {
-            ref.current.focus();
-        }
-    }, []);
+const Success = ({ email }) => {
+  const ref = useRef(null);
 
-    return (
-        <>
-            <Heading level="1" size="large" spacing ref={ref} tabIndex={-1} aria-live="polite" role="alert">
-                Søknaden din er sendt til bedriften
-            </Heading>
-            <BodyLong spacing>
-                Du vil straks få en bekreftelse på e-posten din {email}. Ønsker du å trekke søknaden din finner du
-                informasjon om dette i e-posten.
-            </BodyLong>
-            <Heading level="2" spacing size="medium">
-                Hva skjer nå?
-            </Heading>
-            <BodyLong className="mb-8">
-                Bedriften vil vurdere søknaden din og ta kontakt dersom de syns du passer for jobben. Du får beskjed på
-                e-post så fort bedriften har gjort en vurdering.
-            </BodyLong>
-            <Button variant="secondary" as={Link} href="/">
-                Tilbake til stillingssøket
-            </Button>
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    if (ref.current) {
+      ref.current.focus();
+    }
+  }, []);
 
-            <GiveFeedback />
-        </>
-    );
-}
+  return (
+    <>
+      <Heading ref={ref} spacing aria-live="polite" level="1" role="alert" size="large" tabIndex={-1}>
+        Søknaden din er sendt til bedriften
+      </Heading>
+      <BodyLong spacing>
+        Du vil straks få en bekreftelse på e-posten din
+        {' '}
+        {email}
+        . Ønsker du å trekke søknaden din finner du
+        informasjon om dette i e-posten.
+      </BodyLong>
+      <Heading spacing level="2" size="medium">
+        Hva skjer nå?
+      </Heading>
+      <BodyLong className="mb-8">
+        Bedriften vil vurdere søknaden din og ta kontakt dersom de syns du passer for jobben. Du får beskjed på
+        e-post så fort bedriften har gjort en vurdering.
+      </BodyLong>
+      <Button as={Link} href="/" variant="secondary">
+        Tilbake til stillingssøket
+      </Button>
+
+      <GiveFeedback />
+    </>
+  );
+};
 
 Success.propTypes = {
-    email: PropTypes.string,
+  email: PropTypes.string,
 };
 
 export default Success;

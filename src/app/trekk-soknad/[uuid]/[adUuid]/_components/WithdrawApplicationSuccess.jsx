@@ -1,34 +1,35 @@
-import React, { useRef, useEffect } from "react";
-import { BodyLong, Button, Heading } from "@navikt/ds-react";
-import Link from "next/link";
-import GiveFeedback from "@/app/stilling/[id]/superrask-soknad/_components/GiveFeedback";
+import { BodyLong, Button, Heading } from '@navikt/ds-react';
+import Link from 'next/link';
+import React, { useEffect, useRef } from 'react';
 
-function WithdrawApplicationSuccess() {
-    const ref = useRef(null);
+import GiveFeedback from '@/app/stilling/[id]/superrask-soknad/_components/GiveFeedback';
 
-    useEffect(() => {
-        if (ref.current) {
-            ref.current.focus();
-        }
-    }, []);
+const WithdrawApplicationSuccess = () => {
+  const ref = useRef(null);
 
-    return (
-        <>
-            <Heading level="1" size="large" spacing ref={ref} tabIndex={-1} aria-live="polite" role="alert">
-                Din søknad er nå trukket
-            </Heading>
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.focus();
+    }
+  }, []);
 
-            <BodyLong className="mb-10">
-                Informasjonen du oppgav i din søknad er slettet. Dersom du angrer på at du trakk søknaden, kan du søke
-                på nytt.
-            </BodyLong>
-            <Button variant="secondary" as={Link} href="/">
-                Se ledige stillinger
-            </Button>
+  return (
+    <>
+      <Heading ref={ref} spacing aria-live="polite" level="1" role="alert" size="large" tabIndex={-1}>
+        Din søknad er nå trukket
+      </Heading>
 
-            <GiveFeedback />
-        </>
-    );
-}
+      <BodyLong className="mb-10">
+        Informasjonen du oppgav i din søknad er slettet. Dersom du angrer på at du trakk søknaden, kan du søke
+        på nytt.
+      </BodyLong>
+      <Button as={Link} href="/" variant="secondary">
+        Se ledige stillinger
+      </Button>
+
+      <GiveFeedback />
+    </>
+  );
+};
 
 export default WithdrawApplicationSuccess;

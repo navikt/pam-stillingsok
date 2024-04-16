@@ -1,26 +1,27 @@
-import React from "react";
-import { BodyShort, Box, Heading, HStack } from "@navikt/ds-react";
-import DetectiveIcon from "../icons/DetectiveIcon";
+import {
+  BodyShort, Box, HStack, Heading,
+} from '@navikt/ds-react';
+import React from 'react';
 
-function MaxResultsBox() {
-    return (
-        <Box padding={{ xs: "4", md: "6" }} borderRadius="small" background="surface-alt-1-subtle">
-            <HStack wrap={false} justify="center" align="center" gap="2">
-                <Box>
-                    <Heading level="3" size="small" spacing>
-                        Du har nådd maks antall annonser for ditt søk
-                    </Heading>
-                    <BodyShort spacing>
-                        Utvid søket ditt ved å prøve andre filtre eller søkeord for å oppdage flere annonser.
-                    </BodyShort>
-                </Box>
+import DetectiveIcon from '../icons/DetectiveIcon';
 
-                <Box paddingInline="4">
-                    <DetectiveIcon />
-                </Box>
-            </HStack>
-        </Box>
-    );
-}
+const MaxResultsBox = () => (
+  <Box background="surface-alt-1-subtle" borderRadius="small" padding={{ xs: '4', md: '6' }}>
+    <HStack align="center" gap="2" justify="center" wrap={false}>
+      <Box>
+        <Heading spacing level="3" size="small">
+          Du har nådd maks antall annonser for ditt søk
+        </Heading>
+        <BodyShort spacing>
+          Utvid søket ditt ved å prøve andre filtre eller søkeord for å oppdage flere annonser.
+        </BodyShort>
+      </Box>
+
+      <Box paddingInline="4">
+        <DetectiveIcon />
+      </Box>
+    </HStack>
+  </Box>
+);
 
 export default MaxResultsBox;

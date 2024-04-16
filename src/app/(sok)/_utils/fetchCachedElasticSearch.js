@@ -1,6 +1,7 @@
-import elasticSearchRequestBody from "@/app/(sok)/_utils/elasticSearchRequestBody";
-import { getDefaultHeaders } from "@/app/_common/utils/fetch";
-import simplifySearchResponse from "@/app/(sok)/_utils/simplifySearchResponse";
+import elasticSearchRequestBody from '@/app/(sok)/_utils/elasticSearchRequestBody';
+import simplifySearchResponse from '@/app/(sok)/_utils/simplifySearchResponse';
+import { getDefaultHeaders } from '@/app/_common/utils/fetch';
+
 import { unstable_cache } from "next/cache"; // eslint-disable-line
 
 /*
@@ -15,26 +16,26 @@ We can't use the built-in 'cache' in React either, since the route segment is dy
  */
 
 async function fetchElasticSearch(query) {
-    const body = elasticSearchRequestBody(query);
-    const res = await fetch(`${process.env.PAMSEARCHAPI_URL}/stillingsok/ad/_search`, {
-        method: "POST",
-        headers: getDefaultHeaders(),
-        body: JSON.stringify(body),
-    });
+  const body = elasticSearchRequestBody(query);
+  const res = await fetch(`${process.env.PAMSEARCHAPI_URL}/stillingsok/ad/_search`, {
+    method: 'POST',
+    headers: getDefaultHeaders(),
+    body: JSON.stringify(body),
+  });
 
-    if (!res.ok) {
-        throw new Error(`Failed to fetch data: ${res.status}`);
-    }
+  if (!res.ok) {
+    throw new Error(`Failed to fetch data: ${res.status}`);
+  }
 
-    const data = await res.json();
+  const data = await res.json();
 
-    return simplifySearchResponse(data);
+  return simplifySearchResponse(data);
 }
 
 export const fetchCachedElasticSearch = unstable_cache(
-    async (query) => fetchElasticSearch(query),
-    ["elastic-search-query"],
-    {
-        revalidate: 30,
-    },
+  async (query) => fetchElasticSearch(query),
+  ['elastic-search-query'],
+  {
+    revalidate: 30,
+  },
 );
