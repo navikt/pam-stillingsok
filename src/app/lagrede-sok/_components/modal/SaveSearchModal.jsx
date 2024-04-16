@@ -89,31 +89,35 @@ function SaveSearchModal({ onClose, onSaveSearchSuccess, formData, defaultFormMo
 
     return (
         <Modal onClose={onClose} header={{ heading: "Lagre søk" }} open width="medium" portal>
-            {showNotFoundError && <NotFoundMessage />}
+            {showNotFoundError ? (
+                <NotFoundMessage onClose={onClose} />
+            ) : (
+                <>
+                    {savedSearchUuid && !existingSavedSearch && (
+                        <HStack justify="center">
+                            <Loader size="xlarge" />
+                        </HStack>
+                    )}
 
-            {savedSearchUuid && !existingSavedSearch && (
-                <HStack justify="center">
-                    <Loader size="xlarge" />
-                </HStack>
+                    {shouldShowSavedSearchForm && (
+                        <SaveSearchForm
+                            existingSavedSearch={existingSavedSearch}
+                            formData={formData}
+                            defaultFormMode={defaultFormMode}
+                            onClose={onClose}
+                            onSuccess={handleSavedSearchFormSuccess}
+                        />
+                    )}
+
+                    {shouldShowRegisterEmailForm && (
+                        <RegisterEmailForm onClose={onClose} onSuccess={handleRegisterEmailSuccess} />
+                    )}
+
+                    {shouldShowSuccessMessage && <SuccessMessage onClose={onClose} />}
+
+                    {shouldShowConfirmEmailMessage && <ConfirmEmailMessage onClose={onClose} />}
+                </>
             )}
-
-            {shouldShowSavedSearchForm && (
-                <SaveSearchForm
-                    existingSavedSearch={existingSavedSearch}
-                    formData={formData}
-                    defaultFormMode={defaultFormMode}
-                    onClose={onClose}
-                    onSuccess={handleSavedSearchFormSuccess}
-                />
-            )}
-
-            {shouldShowRegisterEmailForm && (
-                <RegisterEmailForm onClose={onClose} onSuccess={handleRegisterEmailSuccess} />
-            )}
-
-            {shouldShowSuccessMessage && <SuccessMessage onClose={onClose} />}
-
-            {shouldShowConfirmEmailMessage && <ConfirmEmailMessage onClose={onClose} />}
         </Modal>
     );
 }
