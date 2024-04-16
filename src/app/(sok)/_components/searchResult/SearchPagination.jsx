@@ -1,7 +1,7 @@
 import React from "react";
 import { Hide, Pagination, Select, Show, VStack } from "@navikt/ds-react";
-import { SET_FROM_AND_SIZE } from "../../_utils/queryReducer";
 import PropTypes from "prop-types";
+import { SET_FROM_AND_SIZE } from "../../_utils/queryReducer";
 import { ALLOWED_NUMBER_OF_RESULTS_PER_PAGE, SEARCH_CHUNK_SIZE } from "../../_utils/query";
 
 function SearchPagination({ searchResult, query, queryDispatch }) {

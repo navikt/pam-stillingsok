@@ -56,7 +56,7 @@ function Debug({ ad }) {
                     <HStack gap="4" className="mb-8">
                         {ad.properties.searchtags &&
                             ad.properties.searchtags.map((tag) => (
-                                <BodyLong className="metadata" key={tag.label + "-" + tag.score}>
+                                <BodyLong className="metadata" key={`${tag.label}-${tag.score}`}>
                                     {tag.label} (score {tag.score})
                                 </BodyLong>
                             ))}

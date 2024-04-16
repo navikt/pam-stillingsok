@@ -57,15 +57,13 @@ function AuthenticationProvider({ children }) {
         if (validation?.isAuthenticated) {
             setAuthenticationStatus(AuthenticationStatus.IS_AUTHENTICATED);
             setHasBeenLoggedIn(true);
+        } else if (validation?.failure || !validation) {
+            setAuthenticationStatus(AuthenticationStatus.FAILURE);
         } else {
-            if (validation?.failure || !validation) {
-                setAuthenticationStatus(AuthenticationStatus.FAILURE);
-            } else {
-                setAuthenticationStatus(AuthenticationStatus.NOT_AUTHENTICATED);
-                if (hasBeenLoggedIn) {
-                    setHasBeenLoggedIn(false);
-                    timeoutLogout();
-                }
+            setAuthenticationStatus(AuthenticationStatus.NOT_AUTHENTICATED);
+            if (hasBeenLoggedIn) {
+                setHasBeenLoggedIn(false);
+                timeoutLogout();
             }
         }
     };

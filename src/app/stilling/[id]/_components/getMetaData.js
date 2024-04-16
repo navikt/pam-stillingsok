@@ -12,7 +12,7 @@ export function getStillingTitle(source) {
 
 export function getSuperraskTitle(source) {
     if (source && source.title) {
-        return getMetadataTitle("Superrask søknad - " + source.title);
+        return getMetadataTitle(`Superrask søknad - ${source.title}`);
     }
     return getMetadataTitle("Superrask søknad");
 }

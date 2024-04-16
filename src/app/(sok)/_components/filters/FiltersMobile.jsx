@@ -2,6 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Button, Heading, Modal, Tabs } from "@navikt/ds-react";
 import { formatNumber } from "@/app/_common/utils/utils";
+import ShareYourOpinionPanel from "@/app/tilbakemelding-nye-filtre/_components/ShareYourOpinionPanel";
+import Remote from "@/app/(sok)/_components/filters/Remote";
 import Counties from "./Locations";
 import Occupations from "./Occupations";
 import Published from "./Published";
@@ -9,8 +11,6 @@ import Extent from "./Extent";
 import Sector from "./Sector";
 import EngagementType from "./Engagement";
 import WorkLanguage from "./WorkLanguage";
-import ShareYourOpinionPanel from "@/app/tilbakemelding-nye-filtre/_components/ShareYourOpinionPanel";
-import Remote from "@/app/(sok)/_components/filters/Remote";
 
 function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggregations, locations }) {
     return (

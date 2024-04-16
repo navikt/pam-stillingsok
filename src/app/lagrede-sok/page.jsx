@@ -1,8 +1,8 @@
+import * as actions from "@/app/_common/actions";
+import LoginIsRequiredPage from "@/app/_common/auth/components/LoginIsRequiredPage";
 import SavedSearchesList from "./_components/SavedSearchesList";
 import UserConsentIsRequired from "./_components/UserConsentIsRequired";
 import { getMetadataTitle } from "../layout";
-import * as actions from "@/app/_common/actions";
-import LoginIsRequiredPage from "@/app/_common/auth/components/LoginIsRequiredPage";
 
 export const metadata = {
     title: getMetadataTitle("Lagrede søk"),

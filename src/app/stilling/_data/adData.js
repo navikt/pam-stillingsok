@@ -9,6 +9,214 @@ import DOMPurify from "isomorphic-dompurify";
 import fixLocationName from "@/app/_common/utils/fixLocationName";
 import logger from "@/app/_common/utils/logger";
 
+/**
+ *  --------------------------- Common Functions ---------------------------
+ */
+function getString(value) {
+    if (value && typeof value === "string") {
+        return value;
+    }
+    return undefined;
+}
+
+function getNumber(value) {
+    if (value && typeof value === "number") {
+        return value;
+    }
+    return undefined;
+}
+
+function getArray(arrayData) {
+    return Array.isArray(arrayData) ? arrayData : undefined;
+}
+
+function getUrl(url) {
+    try {
+        const validUrl = new URL(url);
+        if (validUrl.protocol.startsWith("http")) {
+            return { url };
+        }
+        logger.warn(`getUrl - invalid protocol: ${validUrl.protocol}`);
+        return undefined;
+    } catch (e) {
+        if (url) {
+            logger.warn(`getUrl - invalid url: ${url}`);
+            return { dangerouslyInvalidUrl: url };
+        }
+    }
+    return undefined;
+}
+
+export function removeUndefinedValues(input) {
+    const output = {};
+    Object.keys(input).forEach((prop) => {
+        const value = input[prop];
+        if (value !== undefined) {
+            output[prop] = value;
+        }
+    });
+
+    return output;
+}
+
+function getLocationListData(value) {
+    const locationList = getArray(value);
+    if (!locationList) {
+        return [];
+    }
+    return locationList.map((location) =>
+        removeUndefinedValues({
+            address: getString(location.address),
+            city: getString(location.city),
+            postalCode: getString(location.postalCode),
+            municipal: getString(location.municipal),
+            country: getString(location.country),
+        }),
+    );
+}
+
+function getJobPostingFormat(adText) {
+    if (
+        adText &&
+        adText.includes('<section id="arb-serEtter">') &&
+        adText.includes('<section id="arb-arbeidsoppgaver">') &&
+        adText.includes('<section id="arb-tilbyr">')
+    ) {
+        return JobPostingTextEnum.STRUKTURERT;
+    }
+    return JobPostingTextEnum.IKKE_STRUKTURERT;
+}
+
+function getEmail(email) {
+    return isValidEmail(email) ? email : undefined;
+}
+
+function getJobPercentage(value) {
+    const jobPercentage = getString(value);
+    if (!jobPercentage) {
+        return undefined;
+    }
+
+    return jobPercentage + jobPercentage.endsWith("%") ? "" : "  %";
+}
+
+function getAdText(adText) {
+    let processedAdText = adText;
+    if (containsEmail(adText)) {
+        try {
+            const extractedEmails = [...extractEmail(adText)];
+            let preprocessedAd = adText.replace(/&#64;/g, "@");
+            extractedEmails.forEach((it) => {
+                if (isValidEmail(it) && !mailtoInString(preprocessedAd, it)) {
+                    preprocessedAd = preprocessedAd.replace(it, `<a rel="nofollow" href="mailto:${it}">${it}</a>`);
+                }
+            });
+            processedAdText = preprocessedAd;
+        } catch (err) {
+            processedAdText = adText;
+        }
+    }
+    // TODO: double check that sanitizing doesn't remove <section> (see amplitude.js for usage)
+    return DOMPurify.sanitize(processedAdText);
+}
+
+export function getWorktime(worktime) {
+    // Can be one of multiple inputs:
+    // "Ukedager Søndag"
+    // "Turnus"
+    // ["Natt"]
+    // ["Ukedager","Søndag"]
+
+    try {
+        const jsonArray = JSON.parse(worktime);
+
+        if (!Array.isArray(jsonArray)) {
+            return "";
+        }
+
+        return jsonArray.filter((e) => typeof e === "string").join(", ");
+    } catch (e) {
+        return worktime;
+    }
+}
+
+function getContactList(value) {
+    const contactList = getArray(value);
+    if (!contactList) {
+        return undefined;
+    }
+
+    return contactList.map((contact) =>
+        removeUndefinedValues({
+            name: getString(contact.name),
+            title: getString(contact.title),
+            phone: getString(contact.phone),
+            email: getEmail(contact.email),
+        }),
+    );
+}
+
+/**
+ *  --------------------------- Employer Data ---------------------------
+ */
+
+function getEmployerName(adData) {
+    if (adData.properties.employer) {
+        return getString(adData.properties.employer);
+    }
+    if (adData.businessName) {
+        return getString(adData.businessName);
+    }
+    if (adData.employer) {
+        return getString(adData.employer.name);
+    }
+
+    return undefined;
+}
+function getEmployerLocation(value) {
+    const locationList = getArray(value);
+    if (!locationList) {
+        return undefined;
+    }
+
+    const employerLocation = [];
+    for (let i = 0; i < locationList.length; i += 1) {
+        if (locationList[i].postalCode) {
+            let address = locationList[i].address ? `${locationList[i].address}, ` : "";
+            address += `${locationList[i].postalCode} ${fixLocationName(locationList[i].city)}`;
+            employerLocation.push(address);
+        } else if (locationList[i].municipal) {
+            employerLocation.push(`${fixLocationName(locationList[i].municipal)}`);
+        } else if (locationList[i].country) {
+            employerLocation.push(`${fixLocationName(locationList[i].country)}`);
+        }
+    }
+
+    return employerLocation.join(", ");
+}
+
+function getEmployerData(adData) {
+    const employerData = {
+        name: getEmployerName(adData),
+        homepage: getUrl(adData.properties.employerhomepage), // change check in EmployerDetails.jsx
+        linkedinPage: getUrl(adData.properties.linkedinpage), // change check in EmployerDetails.jsx
+        twitterAddress: getUrl(adData.properties.twitteraddress), // change check in EmployerDetails.jsx
+        facebookPage: getUrl(adData.properties.facebookpage), // change check in EmployerDetails.jsx
+        description: DOMPurify.sanitize(adData.properties.employerdescription),
+    };
+    if (adData.employer && adData.employer.locationList) {
+        const locationList = getLocationListData(adData.employer.locationList);
+        employerData.locationList = locationList;
+        if (locationList) {
+            const location = getEmployerLocation(locationList);
+            if (location) {
+                employerData.location = location;
+            }
+        }
+    }
+    return removeUndefinedValues(employerData);
+}
+
 export default function mapAdData(rawElasticSearchAdResult) {
     if (!rawElasticSearchAdResult || !rawElasticSearchAdResult._source) {
         return undefined;
@@ -62,213 +270,4 @@ export default function mapAdData(rawElasticSearchAdResult) {
         employer: getEmployerData(data),
         contactList: getContactList(data.contactList),
     });
-}
-
-export function removeUndefinedValues(input) {
-    const output = {};
-    Object.keys(input).forEach((prop) => {
-        const value = input[prop];
-        if (value !== undefined) {
-            output[prop] = value;
-        }
-    });
-
-    return output;
-}
-
-function getAdText(adText) {
-    let processedAdText = adText;
-    if (containsEmail(adText)) {
-        try {
-            const extractedEmails = [...extractEmail(adText)];
-            let preprocessedAd = adText.replace(/&#64;/g, "@");
-            extractedEmails.forEach((it) => {
-                if (isValidEmail(it) && !mailtoInString(preprocessedAd, it)) {
-                    preprocessedAd = preprocessedAd.replace(it, `<a rel="nofollow" href="mailto:${it}">${it}</a>`);
-                }
-            });
-            processedAdText = preprocessedAd;
-        } catch (err) {
-            processedAdText = adText;
-        }
-    }
-    // TODO: double check that sanitizing doesn't remove <section> (see amplitude.js for usage)
-    return DOMPurify.sanitize(processedAdText);
-}
-
-function getEmail(email) {
-    return isValidEmail(email) ? email : undefined;
-}
-
-function getJobPercentage(value) {
-    const jobPercentage = getString(value);
-    if (!jobPercentage) {
-        return undefined;
-    }
-
-    return jobPercentage + jobPercentage.endsWith("%") ? "" : "  %";
-}
-
-export function getWorktime(worktime) {
-    // Can be one of multiple inputs:
-    // "Ukedager Søndag"
-    // "Turnus"
-    // ["Natt"]
-    // ["Ukedager","Søndag"]
-
-    try {
-        const jsonArray = JSON.parse(worktime);
-
-        if (!Array.isArray(jsonArray)) {
-            return "";
-        }
-
-        return jsonArray.filter((e) => typeof e === "string").join(", ");
-    } catch (e) {
-        return worktime;
-    }
-}
-
-function getContactList(value) {
-    const contactList = getArray(value);
-    if (!contactList) {
-        return undefined;
-    }
-
-    return contactList.map((contact) => {
-        return removeUndefinedValues({
-            name: getString(contact.name),
-            title: getString(contact.title),
-            phone: getString(contact.phone),
-            email: getEmail(contact.email),
-        });
-    });
-}
-
-/**
- *  --------------------------- Common Functions ---------------------------
- */
-function getString(value) {
-    if (value && typeof value === "string") {
-        return value;
-    }
-    return undefined;
-}
-
-function getNumber(value) {
-    if (value && typeof value === "number") {
-        return value;
-    }
-    return undefined;
-}
-
-function getArray(arrayData) {
-    return Array.isArray(arrayData) ? arrayData : undefined;
-}
-
-function getUrl(url) {
-    try {
-        const validUrl = new URL(url);
-        if (validUrl.protocol.startsWith("http")) {
-            return { url };
-        } else {
-            logger.warn(`getUrl - invalid protocol: ${validUrl.protocol}`);
-            return undefined;
-        }
-    } catch (e) {
-        if (url) {
-            logger.warn(`getUrl - invalid url: ${url}`);
-            return { dangerouslyInvalidUrl: url };
-        }
-    }
-    return undefined;
-}
-
-function getLocationListData(value) {
-    const locationList = getArray(value);
-    if (!locationList) {
-        return [];
-    }
-    return locationList.map((location) =>
-        removeUndefinedValues({
-            address: getString(location.address),
-            city: getString(location.city),
-            postalCode: getString(location.postalCode),
-            municipal: getString(location.municipal),
-            country: getString(location.country),
-        }),
-    );
-}
-
-function getJobPostingFormat(adText) {
-    if (
-        adText &&
-        adText.includes('<section id="arb-serEtter">') &&
-        adText.includes('<section id="arb-arbeidsoppgaver">') &&
-        adText.includes('<section id="arb-tilbyr">')
-    ) {
-        return JobPostingTextEnum.STRUKTURERT;
-    }
-    return JobPostingTextEnum.IKKE_STRUKTURERT;
-}
-
-/**
- *  --------------------------- Employer Data ---------------------------
- */
-function getEmployerData(adData) {
-    const employerData = {
-        name: getEmployerName(adData),
-        homepage: getUrl(adData.properties.employerhomepage), //change check in EmployerDetails.jsx
-        linkedinPage: getUrl(adData.properties.linkedinpage), //change check in EmployerDetails.jsx
-        twitterAddress: getUrl(adData.properties.twitteraddress), //change check in EmployerDetails.jsx
-        facebookPage: getUrl(adData.properties.facebookpage), //change check in EmployerDetails.jsx
-        description: DOMPurify.sanitize(adData.properties.employerdescription),
-    };
-    if (adData.employer && adData.employer.locationList) {
-        const locationList = getLocationListData(adData.employer.locationList);
-        employerData.locationList = locationList;
-        if (locationList) {
-            const location = getEmployerLocation(locationList);
-            if (location) {
-                employerData.location = location;
-            }
-        }
-    }
-    return removeUndefinedValues(employerData);
-}
-
-function getEmployerName(adData) {
-    if (adData.properties.employer) {
-        return getString(adData.properties.employer);
-    }
-    if (adData.businessName) {
-        return getString(adData.businessName);
-    }
-    if (adData.employer) {
-        return getString(adData.employer.name);
-    }
-
-    return undefined;
-}
-
-function getEmployerLocation(value) {
-    const locationList = getArray(value);
-    if (!locationList) {
-        return undefined;
-    }
-
-    let employerLocation = [];
-    for (let i = 0; i < locationList.length; i += 1) {
-        if (locationList[i].postalCode) {
-            let address = locationList[i].address ? `${locationList[i].address}, ` : "";
-            address += `${locationList[i].postalCode} ${fixLocationName(locationList[i].city)}`;
-            employerLocation.push(address);
-        } else if (locationList[i].municipal) {
-            employerLocation.push(`${fixLocationName(locationList[i].municipal)}`);
-        } else if (locationList[i].country) {
-            employerLocation.push(`${fixLocationName(locationList[i].country)}`);
-        }
-    }
-
-    return employerLocation.join(", ");
 }

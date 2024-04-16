@@ -3,10 +3,10 @@
 import React, { useState } from "react";
 import { Heading, VStack } from "@navikt/ds-react";
 import PropTypes from "prop-types";
-import SavedSearchListItem from "./SavedSearchListItem";
 import AlertModalWithPageReload from "@/app/_common/components/modals/AlertModalWithPageReload";
 import useToggle from "@/app/_common/hooks/useToggle";
 import NoSavedSearches from "@/app/lagrede-sok/_components/NoSavedSearches";
+import SavedSearchListItem from "./SavedSearchListItem";
 
 /**
  * Displays a list of all saved searches.

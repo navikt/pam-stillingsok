@@ -4,23 +4,6 @@ import { getDefaultHeaders } from "@/app/_common/utils/fetch";
 import capitalizeFirstLetter from "@/app/_common/utils/capitalizeFirstLetter";
 import logger from "@/app/_common/utils/logger";
 
-export async function getSuggestions(match, minLength) {
-    try {
-        const body = suggestionsTemplate(match, minLength);
-        const res = await fetch(`${process.env.PAMSEARCHAPI_URL}/stillingsok/ad/_search`, {
-            method: "POST",
-            headers: getDefaultHeaders(),
-            body: JSON.stringify(body),
-        });
-        let data = await res.json();
-        data = removeDuplicateSuggestions(data);
-        return data;
-    } catch (e) {
-        logger.error("getSuggestions error", { error: e });
-        return [];
-    }
-}
-
 function suggest(field, match) {
     return {
         prefix: match,
@@ -63,4 +46,21 @@ function removeDuplicateSuggestions(result) {
             ].sort(),
         ),
     ].slice(0, 10);
+}
+
+export async function getSuggestions(match, minLength) {
+    try {
+        const body = suggestionsTemplate(match, minLength);
+        const res = await fetch(`${process.env.PAMSEARCHAPI_URL}/stillingsok/ad/_search`, {
+            method: "POST",
+            headers: getDefaultHeaders(),
+            body: JSON.stringify(body),
+        });
+        let data = await res.json();
+        data = removeDuplicateSuggestions(data);
+        return data;
+    } catch (e) {
+        logger.error("getSuggestions error", { error: e });
+        return [];
+    }
 }

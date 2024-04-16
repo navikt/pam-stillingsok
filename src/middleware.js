@@ -2,30 +2,6 @@ import { NextResponse } from "next/server";
 import { getCallId, NAV_CALL_ID_TAG } from "@/app/_common/monitoring/callId";
 import { getSessionId, SESSION_ID_TAG } from "@/app/_common/monitoring/session";
 
-export function middleware(request) {
-    const requestHeaders = new Headers(request.headers);
-    const responseHeaders = new Headers();
-
-    if (shouldAddCspHeaders(request)) {
-        addCspHeaders(requestHeaders, responseHeaders);
-    }
-
-    addCallIdHeader(requestHeaders);
-    addSessionIdHeader(requestHeaders);
-
-    const response = NextResponse.next({
-        request: {
-            headers: requestHeaders,
-        },
-    });
-
-    responseHeaders.forEach((value, key) => {
-        response.headers.set(key, value);
-    });
-
-    return response;
-}
-
 /*
  * Match all request paths except for the ones starting with:
  * - api (API routes)
@@ -75,4 +51,28 @@ function addCallIdHeader(requestHeaders) {
 
 function addSessionIdHeader(requestHeaders) {
     requestHeaders.set(SESSION_ID_TAG, getSessionId());
+}
+
+export function middleware(request) {
+    const requestHeaders = new Headers(request.headers);
+    const responseHeaders = new Headers();
+
+    if (shouldAddCspHeaders(request)) {
+        addCspHeaders(requestHeaders, responseHeaders);
+    }
+
+    addCallIdHeader(requestHeaders);
+    addSessionIdHeader(requestHeaders);
+
+    const response = NextResponse.next({
+        request: {
+            headers: requestHeaders,
+        },
+    });
+
+    responseHeaders.forEach((value, key) => {
+        response.headers.set(key, value);
+    });
+
+    return response;
 }

@@ -12,8 +12,8 @@ import {
     Textarea,
     TextField,
 } from "@navikt/ds-react";
-import { MOTIVATION_MAX_LENGTH } from "./validateForm";
 import ApiErrorMessage from "@/app/_common/components/ApiErrorMessage";
+import { MOTIVATION_MAX_LENGTH } from "./validateForm";
 import { FormButtonBar } from "./FormButtonBar";
 
 function Form({ ad, applicationForm, submitApplication, submitApiError, offlineError, validationErrors }) {

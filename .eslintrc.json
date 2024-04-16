@@ -1,6 +1,12 @@
 {
-    "extends": ["plugin:@next/next/recommended", "next", "plugin:jsx-a11y/recommended"],
-    "plugins": ["react", "prettier", "unused-imports"],
+    "extends": [
+        "plugin:@next/next/recommended",
+        "airbnb",
+        "next/core-web-vitals",
+        "plugin:jsx-a11y/recommended",
+        "prettier"
+    ],
+    "plugins": ["react", "unused-imports", "prettier"],
     "rules": {
         "no-underscore-dangle": "off",
         "import/prefer-default-export": "off",
@@ -27,6 +33,7 @@
                 "args": "after-used",
                 "argsIgnorePattern": "^_"
             }
-        ]
+        ],
+        "singleQuote": "off"
     }
 }
