@@ -114,7 +114,7 @@ export default function EmploymentDetails({ adData }) {
                         </dd>
                     </div>
                 )}
-                {adData.workLanguages && (
+                {adData.workLanguages && adData.workLanguages.length > 0 && (
                     <div>
                         <dt>
                             <Label as="p">Arbeidsspråk</Label>
