@@ -171,7 +171,6 @@ function Form({ ad, applicationForm, onSubmit, error, validationErrors, isPendin
                 </AkselLink>
             </BodyLong>
 
-            <h1>{error}</h1>
             {error && <ApiErrorMessage apiErrorCode={error} />}
 
             <HStack gap="4" className="mt-12">
