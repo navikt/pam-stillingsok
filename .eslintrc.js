@@ -33,7 +33,6 @@ module.exports = {
         },
     },
     rules: {
-        "react-hooks/exhaustive-deps": "off",
         "no-underscore-dangle": "off",
         "import/prefer-default-export": "off",
         "react/jsx-no-bind": "off",
