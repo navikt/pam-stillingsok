@@ -5,7 +5,6 @@ import { Button } from "@navikt/ds-react";
 export function WithdrawButton() {
     const { pending } = useFormStatus();
 
-    // TODO
     return (
         <Button variant="primary" type="submit" loading={pending}>
             Trekk søknad
