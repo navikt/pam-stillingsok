@@ -28,7 +28,7 @@ function HotjarSurvey() {
     }
 
     if (isDismissed) {
-        return;
+        return null;
     }
 
     return (
