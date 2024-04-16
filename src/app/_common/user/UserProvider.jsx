@@ -24,6 +24,15 @@ function UserProvider({ children }) {
     const [hasAcceptedTermsStatus, setHasAcceptedTermsStatus] = useState(HasAcceptedTermsStatus.NOT_FETCHED);
     const [forbiddenUser, setForbiddenUser] = useState(false);
 
+    function updateUser(data) {
+        setUserResponse(data);
+        setHasAcceptedTermsStatus(HasAcceptedTermsStatus.HAS_ACCEPTED);
+    }
+
+    function logout() {
+        window.location.href = `/stillinger/oauth2/logout?redirect=${encodeURIComponent(window.location.href)}`;
+    }
+
     async function fetchUser() {
         let result;
 
@@ -43,15 +52,6 @@ function UserProvider({ children }) {
         } else {
             openErrorDialog();
         }
-    }
-
-    function updateUser(data) {
-        setUserResponse(data);
-        setHasAcceptedTermsStatus(HasAcceptedTermsStatus.HAS_ACCEPTED);
-    }
-
-    function logout() {
-        window.location.href = `/stillinger/oauth2/logout?redirect=${encodeURIComponent(window.location.href)}`;
     }
 
     // TODO: useMemo?
