@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Button, Heading, Modal, Tabs } from "@navikt/ds-react";
 import { formatNumber } from "@/app/_common/utils/utils";
-import ShareYourOpinionPanel from "@/app/tilbakemelding-nye-filtre/_components/ShareYourOpinionPanel";
 import Remote from "@/app/(sok)/_components/filters/Remote";
 import Counties from "./Locations";
 import Occupations from "./Occupations";
@@ -39,7 +38,6 @@ function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggre
                         />
                     </Tabs.Panel>
                     <Tabs.Panel value="andre" className="mt-8">
-                        <ShareYourOpinionPanel />
                         <div className="mb-6">
                             <Published
                                 query={query}

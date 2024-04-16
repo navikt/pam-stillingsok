@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Accordion, Button } from "@navikt/ds-react";
 import Remote from "@/app/(sok)/_components/filters/Remote";
-import ShareYourOpinionPanel from "@/app/tilbakemelding-nye-filtre/_components/ShareYourOpinionPanel";
 import FilterAccordionItem from "./FilterAccordionItem";
 import Published from "./Published";
 import Counties from "./Locations";
@@ -15,7 +14,6 @@ import WorkLanguage from "./WorkLanguage";
 function FiltersDesktop({ query, dispatchQuery, aggregations, locations, searchResult }) {
     return (
         <div>
-            <ShareYourOpinionPanel />
             <Accordion indent={false} headingSize="small">
                 <FilterAccordionItem title="Publisert" panelId="publisert">
                     <Published
