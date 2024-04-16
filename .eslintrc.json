@@ -1,5 +1,11 @@
 {
-    "extends": ["plugin:@next/next/recommended", "next", "plugin:jsx-a11y/recommended"],
+    "extends": [
+        "plugin:@next/next/recommended",
+        "airbnb",
+        "airbnb/hooks",
+        "next/core-web-vitals",
+        "plugin:jsx-a11y/recommended"
+    ],
     "plugins": ["react", "prettier", "unused-imports"],
     "rules": {
         "no-underscore-dangle": "off",
