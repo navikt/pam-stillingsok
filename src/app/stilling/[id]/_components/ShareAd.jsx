@@ -13,7 +13,7 @@ export default function ShareAd({ adData }) {
             <Heading level="2" size="medium" spacing>
                 Del annonsen
             </Heading>
-            <HStack gap="4">
+            <HStack gap="2">
                 <Button
                     aria-label="Del annonse på Facebook"
                     as="a"

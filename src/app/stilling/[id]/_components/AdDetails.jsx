@@ -34,7 +34,7 @@ export default function AdDetails({ adData }) {
                                 <Label as="span">Stillingsnummer</Label>
                             </dt>
                             <dd>
-                                <BodyShort spacing>{adData.adNumber}</BodyShort>
+                                <BodyShort>{adData.adNumber}</BodyShort>
                             </dd>
                         </div>
                     )}
@@ -44,7 +44,7 @@ export default function AdDetails({ adData }) {
                                 <Label as="span">Sist endret</Label>
                             </dt>
                             <dd>
-                                <BodyShort spacing>{formatDate(adData.updated)}</BodyShort>
+                                <BodyShort>{formatDate(adData.updated)}</BodyShort>
                             </dd>
                         </div>
                     )}
@@ -54,7 +54,7 @@ export default function AdDetails({ adData }) {
                                 <Label as="span">Hentet fra</Label>
                             </dt>
                             <dd>
-                                <BodyShort spacing>{adData.medium}</BodyShort>
+                                <BodyShort>{adData.medium}</BodyShort>
                             </dd>
                         </div>
                     )}
@@ -64,7 +64,7 @@ export default function AdDetails({ adData }) {
                                 <Label as="span">Referanse</Label>
                             </dt>
                             <dd>
-                                <BodyShort spacing>{adData.reference}</BodyShort>
+                                <BodyShort>{adData.reference}</BodyShort>
                             </dd>
                         </div>
                     )}
