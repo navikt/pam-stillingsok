@@ -223,7 +223,7 @@ function SelectedFilters({ query, queryDispatch }) {
                 key={`education-${value}`}
                 onClick={() => queryDispatch({ type: REMOVE_EDUCATION, value })}
             >
-                {value === "Ikke oppgitt" ? "Utdanning ikke oppgitt" : value}
+                {value === "Ingen" ? "Utdanning ikke krav" : value}
             </Chips.Removable>
         )),
     );

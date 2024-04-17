@@ -1,6 +1,7 @@
 import { ALLOWED_NUMBER_OF_RESULTS_PER_PAGE, SEARCH_CHUNK_SIZE } from "./query";
 
 const NOT_DEFINED = "Ikke oppgitt";
+const NOT_DEFINED_EDUCATION = "Ingen krav";
 
 function mapSortByValue(value) {
     switch (value) {
@@ -132,7 +133,7 @@ function filterEducation(education) {
             },
         };
         education.forEach((item) => {
-            if (item === NOT_DEFINED) {
+            if (item === NOT_DEFINED_EDUCATION) {
                 filter.bool.should.push({
                     bool: {
                         must_not: [
