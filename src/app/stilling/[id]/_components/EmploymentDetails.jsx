@@ -8,6 +8,19 @@ import FavouritesButton from "@/app/favoritter/_components/FavouritesButton";
 import { RichText } from "@navikt/arbeidsplassen-react";
 import parse from "html-react-parser";
 
+const options = {
+    replace: ({ attribs }) => {
+        if (
+            attribs &&
+            (attribs.id === "arb-serEtter" || attribs.id === "arb-arbeidsoppgaver" || attribs.id === "arb-tilbyr")
+        ) {
+            // eslint-disable-next-line
+            return <></>;
+        }
+        return attribs;
+    },
+};
+
 export default function EmploymentDetails({ adData }) {
     /**
      *  TODO: refactor denne
@@ -28,20 +41,6 @@ export default function EmploymentDetails({ adData }) {
             applicationdue: adData.applicationDue,
             location: adData.location,
             employer: adData.employer.name,
-        },
-    };
-
-    const options = {
-        // TODO: fix eslint errors below ?
-        // eslint-disable-next-line
-        replace: ({ attribs }) => {
-            if (
-                attribs &&
-                (attribs.id === "arb-serEtter" || attribs.id === "arb-arbeidsoppgaver" || attribs.id === "arb-tilbyr")
-            ) {
-                // eslint-disable-next-line
-                return <></>;
-            }
         },
     };
 
