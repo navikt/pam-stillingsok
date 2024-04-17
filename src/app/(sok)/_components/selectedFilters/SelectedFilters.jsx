@@ -8,6 +8,7 @@ import {
     REMOVE_COUNTY,
     REMOVE_ENGAGEMENT_TYPE,
     REMOVE_EXTENT,
+    REMOVE_EDUCATION,
     REMOVE_WORKLANGUAGE,
     REMOVE_MUNICIPAL,
     REMOVE_OCCUPATION_FIRST_LEVEL,
@@ -215,6 +216,18 @@ function SelectedFilters({ query, queryDispatch }) {
         )),
     );
 
+    chips.push(
+        ...query.education.map((value) => (
+            <Chips.Removable
+                variant="neutral"
+                key={`education-${value}`}
+                onClick={() => queryDispatch({ type: REMOVE_EDUCATION, value })}
+            >
+                {value === "Ikke oppgitt" ? "Utdanning ikke oppgitt" : value}
+            </Chips.Removable>
+        )),
+    );
+
     if (query.remote.length > 0) {
         chips.push(
             ...query.remote.map((value) => (
@@ -281,6 +294,7 @@ SelectedFilters.propTypes = {
         sector: PropTypes.arrayOf(PropTypes.string),
         engagementType: PropTypes.arrayOf(PropTypes.string),
         extent: PropTypes.arrayOf(PropTypes.string),
+        education: PropTypes.arrayOf(PropTypes.string),
         workLanguage: PropTypes.arrayOf(PropTypes.string),
         remote: PropTypes.arrayOf(PropTypes.string),
     }),
