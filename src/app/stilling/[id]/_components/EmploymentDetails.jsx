@@ -87,7 +87,7 @@ export default function EmploymentDetails({ adData }) {
                         <dd>
                             <BodyLong>
                                 {adData.engagementType}
-                                {adData.extent ? `, ${adData.extent}` : ""}
+                                {adData.extent ? `, ${adData.extent.toLowerCase()}` : ""}
                                 {adData.jobPercentage ? ` ${adData.jobPercentage}` : ""}
                             </BodyLong>
                         </dd>
