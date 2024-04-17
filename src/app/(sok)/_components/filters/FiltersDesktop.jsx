@@ -87,8 +87,6 @@ function FiltersDesktop({ query, dispatchQuery, aggregations, locations, searchR
                         initialValues={aggregations.education}
                         updatedValues={searchResult.aggregations.education}
                     />
-                    {console.log("OK", aggregations)}
-                    {console.log("QUERY", query)}
                 </FilterAccordionItem>
             </Accordion>
             <noscript>
