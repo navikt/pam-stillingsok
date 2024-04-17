@@ -7,6 +7,7 @@ import joinStringWithSeperator from "@/app/_common/utils/joinStringWithSeperator
 import FavouritesButton from "@/app/favoritter/_components/FavouritesButton";
 import { RichText } from "@navikt/arbeidsplassen-react";
 import parse from "html-react-parser";
+import { joinArbeidstider } from "@/app/stilling/[id]/_components/joinArbeidstider";
 
 const options = {
     replace: ({ attribs }) => {
@@ -99,7 +100,7 @@ export default function EmploymentDetails({ adData }) {
                         </dt>
                         <dd>
                             <BodyLong>
-                                {adData.jobArrangement} {adData.workdays} {adData.workHours}
+                                {joinArbeidstider(adData.jobArrangement, adData.workHours, adData.workdays)}
                             </BodyLong>
                         </dd>
                     </div>
