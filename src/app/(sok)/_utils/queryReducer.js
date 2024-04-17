@@ -16,6 +16,8 @@ export const ADD_EXTENT = "ADD_EXTENT";
 export const REMOVE_EXTENT = "REMOVE_EXTENT";
 export const ADD_WORKLANGUAGE = "ADD_WORKLANGUAGE";
 export const REMOVE_WORKLANGUAGE = "REMOVE_WORKLANGUAGE";
+export const ADD_EDUCATION = "ADD_EDUCATION";
+export const REMOVE_EDUCATION = "REMOVE_EDUCATION";
 export const ADD_REMOTE = "ADD_REMOTE";
 export const REMOVE_REMOTE = "REMOVE_REMOTE";
 export const ADD_SECTOR = "ADD_SECTOR";
@@ -161,6 +163,20 @@ export default function queryReducer(state, action) {
             return {
                 ...queryState,
                 workLanguage: queryState.workLanguage.filter((obj) => obj !== action.value),
+            };
+
+        case ADD_EDUCATION:
+            if (queryState.education.includes(action.value)) {
+                return queryState;
+            }
+            return {
+                ...queryState,
+                education: [...queryState.education, action.value],
+            };
+        case REMOVE_EDUCATION:
+            return {
+                ...queryState,
+                education: queryState.education.filter((obj) => obj !== action.value),
             };
         case ADD_REMOTE:
             if (queryState.remote.includes(action.value)) {

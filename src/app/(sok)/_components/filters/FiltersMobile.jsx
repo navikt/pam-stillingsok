@@ -10,6 +10,7 @@ import Extent from "./Extent";
 import Sector from "./Sector";
 import EngagementType from "./Engagement";
 import WorkLanguage from "./WorkLanguage";
+import Education from "./Education";
 
 function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggregations, locations }) {
     return (
@@ -99,6 +100,18 @@ function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggre
                                 dispatch={dispatchQuery}
                                 initialValues={aggregations.workLanguage}
                                 updatedValues={searchResult && searchResult.aggregations.workLanguage}
+                            />
+                        </div>
+
+                        <div className="mb-6">
+                            <Heading level="2" size="small">
+                                Utdanning
+                            </Heading>
+                            <Education
+                                query={query}
+                                dispatch={dispatchQuery}
+                                initialValues={aggregations.education}
+                                updatedValues={searchResult && searchResult.aggregations.education}
                             />
                         </div>
                     </Tabs.Panel>
