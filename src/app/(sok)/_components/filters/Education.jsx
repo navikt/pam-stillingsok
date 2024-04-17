@@ -7,7 +7,7 @@ import { logSearchFilterAdded, logSearchFilterRemoved } from "@/app/_common/moni
 import moveCriteriaToBottom from "@/app/(sok)/_components/utils/moveFacetToBottom";
 
 function Education({ initialValues, updatedValues, query, dispatch }) {
-    const sortedValues = moveCriteriaToBottom(initialValues, "Ikke oppgitt");
+    const sortedValues = moveCriteriaToBottom(initialValues, "Ingen krav");
     const values = mergeCount(sortedValues, updatedValues);
 
     function handleClick(e) {
