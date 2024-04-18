@@ -4,10 +4,10 @@ import { Checkbox, Fieldset } from "@navikt/ds-react";
 import { ADD_EDUCATION, REMOVE_EDUCATION } from "@/app/(sok)/_utils/queryReducer";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
 import { logSearchFilterAdded, logSearchFilterRemoved } from "@/app/_common/monitoring/amplitude";
-import moveCriteriaToBottom from "@/app/(sok)/_components/utils/moveFacetToBottom";
+import sortEducationValues from "@/app/(sok)/_components/utils/sortEducationValues";
 
 function Education({ initialValues, updatedValues, query, dispatch }) {
-    const sortedValues = moveCriteriaToBottom(initialValues, "Ikke oppgitt");
+    const sortedValues = sortEducationValues(initialValues);
     const values = mergeCount(sortedValues, updatedValues);
 
     function handleClick(e) {
