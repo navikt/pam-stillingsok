@@ -28,7 +28,6 @@ function SearchResultHeader({ searchResult, query, queryDispatch }) {
                             Søkeresultat
                         </Heading>
                         <BodyShort role="status">
-                            {console.log("RESULTST", searchResult)}
                             {searchResult.totalAds === 0
                                 ? "Ingen treff"
                                 : `${formatNumber(searchResult.totalPositions)} ${stillingerWord} i ${formatNumber(
