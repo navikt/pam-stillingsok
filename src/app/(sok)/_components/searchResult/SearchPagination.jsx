@@ -1,9 +1,9 @@
 import React from "react";
 import { Hide, Pagination, Select, Show, VStack } from "@navikt/ds-react";
 import PropTypes from "prop-types";
+import * as actions from "@/app/_common/actions";
 import { SET_FROM_AND_SIZE } from "../../_utils/queryReducer";
 import { ALLOWED_NUMBER_OF_RESULTS_PER_PAGE, SEARCH_CHUNK_SIZE } from "../../_utils/query";
-import * as actions from "@/app/_common/actions";
 
 function SearchPagination({ searchResult, query, queryDispatch }) {
     const resultsPerPage = query.size || SEARCH_CHUNK_SIZE;
@@ -53,11 +53,11 @@ function SearchPagination({ searchResult, query, queryDispatch }) {
             <Select
                 label="Antall treff per side"
                 onChange={(e) => {
-                    let size = parseInt(e.target.value, 10);
+                    const size = parseInt(e.target.value, 10);
                     queryDispatch({
                         type: SET_FROM_AND_SIZE,
                         from: 0,
-                        size: size,
+                        size,
                     });
                     actions.saveResultsPerPage(size);
                 }}
