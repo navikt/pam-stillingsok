@@ -1,7 +1,7 @@
 import React from 'react';
 
-const DetectiveIcon = () => (
-  <svg
+function DetectiveIcon() {
+  return <svg
     aria-hidden="true"
     fill="none"
     height="107"
@@ -87,6 +87,6 @@ const DetectiveIcon = () => (
       </linearGradient>
     </defs>
   </svg>
-);
+}
 
 export default DetectiveIcon;

@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-const MessengerIcon = () => (
-  <svg
+function MessengerIcon() {
+  return <svg
     aria-hidden="true"
     height="24px"
     role="img"
@@ -16,6 +16,6 @@ const MessengerIcon = () => (
       fillRule="evenodd"
     />
   </svg>
-);
+}
 
 export default MessengerIcon;

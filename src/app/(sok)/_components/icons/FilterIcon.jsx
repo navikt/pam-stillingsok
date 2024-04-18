@@ -1,7 +1,7 @@
 import React from 'react';
 
-const FilterIcon = () => (
-  <svg
+function FilterIcon() {
+  return <svg
     aria-hidden="true"
     fill="none"
     height="24"
@@ -26,6 +26,6 @@ const FilterIcon = () => (
       fill="currentColor"
     />
   </svg>
-);
+}
 
 export default FilterIcon;

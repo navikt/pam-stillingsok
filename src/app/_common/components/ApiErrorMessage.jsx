@@ -19,14 +19,14 @@ const getErrorMessage = (apiErrorCode) => {
   }
 };
 
-const ApiErrorMessage = ({ apiErrorCode, errorHeading = 'Søknaden ble ikke sendt' }) => (
-  <Alert className="mb-4 mt-4" role="alert" variant="error">
+function ApiErrorMessage({ apiErrorCode, errorHeading = 'Søknaden ble ikke sendt' }) {
+  return <Alert className="mb-4 mt-4" role="alert" variant="error">
     <Heading spacing level="2" size="xsmall">
       {errorHeading}
     </Heading>
     {getErrorMessage(apiErrorCode)}
   </Alert>
-);
+}
 
 ApiErrorMessage.propTypes = {
   apiErrorCode: PropTypes.string,

@@ -3,8 +3,8 @@ import {
 } from '@navikt/ds-react';
 import React from 'react';
 
-const GiveFeedback = () => (
-  <Box background="surface-alt-3-subtle" borderRadius="small" className="mt-12" padding={{ xs: '4', md: '6' }}>
+function GiveFeedback() {
+  return <Box background="surface-alt-3-subtle" borderRadius="small" className="mt-12" padding={{ xs: '4', md: '6' }}>
     <Heading spacing level="2" size="medium">
       Hvordan kan vi forbedre denne tjenesten for deg?
     </Heading>
@@ -18,6 +18,6 @@ const GiveFeedback = () => (
       </AkselLink>
     </BodyLong>
   </Box>
-);
+}
 
 export default GiveFeedback;

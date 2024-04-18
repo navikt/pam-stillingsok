@@ -7,7 +7,7 @@ import { useFormState } from 'react-dom';
 import WithdrawApplicationConfirmationRequired from './WithdrawApplicationConfirmationRequired';
 import WithdrawApplicationSuccess from './WithdrawApplicationSuccess';
 
-const WithdrawApplication = ({ ad, withdrawApplication }) => {
+function WithdrawApplication({ ad, withdrawApplication }) {
   const [state, formAction] = useFormState(withdrawApplication, { success: false });
 
   return (
@@ -24,7 +24,7 @@ const WithdrawApplication = ({ ad, withdrawApplication }) => {
       )}
     </div>
   );
-};
+}
 
 WithdrawApplication.propTypes = {
   withdrawApplication: PropTypes.func.isRequired,

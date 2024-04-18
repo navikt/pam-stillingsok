@@ -4,7 +4,7 @@ import React, { useEffect, useRef } from 'react';
 
 import GiveFeedback from '@/app/stilling/[id]/superrask-soknad/_components/GiveFeedback';
 
-const WithdrawApplicationSuccess = () => {
+function WithdrawApplicationSuccess() {
   const ref = useRef(null);
 
   useEffect(() => {
@@ -30,6 +30,6 @@ const WithdrawApplicationSuccess = () => {
       <GiveFeedback />
     </>
   );
-};
+}
 
 export default WithdrawApplicationSuccess;

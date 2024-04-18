@@ -16,10 +16,10 @@ import Published from './Published';
 import Sector from './Sector';
 import WorkLanguage from './WorkLanguage';
 
-const FiltersMobile = ({
+function FiltersMobile({
   onCloseClick, searchResult, query, dispatchQuery, aggregations, locations,
-}) => (
-  <Modal open className="filter-modal" header={{ heading: 'Filtre' }} width="100%" onClose={onCloseClick}>
+}) {
+  return <Modal open className="filter-modal" header={{ heading: 'Filtre' }} width="100%" onClose={onCloseClick}>
     <Modal.Body>
       <Tabs defaultValue="sted">
         <Tabs.List>
@@ -119,7 +119,7 @@ const FiltersMobile = ({
       </Button>
     </Modal.Footer>
   </Modal>
-);
+}
 
 FiltersMobile.propTypes = {
   onCloseClick: PropTypes.func.isRequired,

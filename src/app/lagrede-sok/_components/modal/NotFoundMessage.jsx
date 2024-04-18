@@ -2,8 +2,8 @@ import { Link as AkselLink, Alert, Modal } from '@navikt/ds-react';
 import Link from 'next/link';
 import React from 'react';
 
-const NotFoundMessage = () => (
-  <Modal.Body>
+function NotFoundMessage() {
+  return <Modal.Body>
     <Alert role="alert" variant="warning">
       Det kan se ut som om du forsøker å oppdatere et lagret søk som ikke finnes lengre.
       {' '}
@@ -12,6 +12,6 @@ const NotFoundMessage = () => (
       </AkselLink>
     </Alert>
   </Modal.Body>
-);
+}
 
 export default NotFoundMessage;

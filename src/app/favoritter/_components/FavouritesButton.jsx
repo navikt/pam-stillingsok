@@ -22,9 +22,9 @@ import { FavouritesContext } from './FavouritesProvider';
  * If user click button, this view will ensure that user is logged in
  * and has accepted usage terms before it save a favourite
  */
-const FavouritesButton = ({
+function FavouritesButton({
   id, stilling, className, variant, useShortText = false, hideText = false,
-}) => {
+}) {
   const {
     pendingFavourites,
     favourites,
@@ -131,7 +131,7 @@ const FavouritesButton = ({
       ) : null}
     </>
   );
-};
+}
 
 FavouritesButton.propTypes = {
   id: PropTypes.string.isRequired,

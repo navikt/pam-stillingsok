@@ -4,7 +4,7 @@ import React from 'react';
 
 import { SET_SORTING } from '@/app/(sok)/_utils/queryReducer';
 
-const Sorting = ({ query, dispatch }) => {
+function Sorting({ query, dispatch }) {
   function handleChange(e) {
     const { value } = e.target;
     dispatch({ type: SET_SORTING, value });
@@ -28,7 +28,7 @@ const Sorting = ({ query, dispatch }) => {
       </option>
     </Select>
   );
-};
+}
 
 Sorting.propTypes = {
   query: PropTypes.shape({

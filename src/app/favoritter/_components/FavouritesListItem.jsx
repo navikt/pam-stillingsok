@@ -12,7 +12,7 @@ import useToggle from '@/app/_common/hooks/useToggle';
 
 import { FavouritesContext } from './FavouritesProvider';
 
-const FavouritesListItem = ({ favourite, onFavouriteDeleted, openErrorDialog }) => {
+function FavouritesListItem({ favourite, onFavouriteDeleted, openErrorDialog }) {
   const [shouldShowConfirmDeleteModal, openConfirmDeleteModal, closeConfirmDeleteModal] = useToggle();
   const { addToPending, removeFormPending, removeFavouriteFromLocalList } = useContext(FavouritesContext);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -76,7 +76,7 @@ const FavouritesListItem = ({ favourite, onFavouriteDeleted, openErrorDialog }) 
       ) : null}
     </>
   );
-};
+}
 
 FavouritesListItem.propTypes = {
   favourite: PropTypes.shape({

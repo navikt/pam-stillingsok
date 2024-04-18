@@ -17,9 +17,9 @@ import {
 import { logSearchFilterAdded, logSearchFilterRemoved } from '@/app/_common/monitoring/amplitude';
 import fixLocationName from '@/app/_common/utils/fixLocationName';
 
-const Locations = ({
+function Locations({
   locations, query, dispatch, updatedValues,
-}) => {
+}) {
   const locationValues = buildLocations(updatedValues.aggregations, locations);
 
   function handleLocationClick(value, type, checked) {
@@ -132,7 +132,7 @@ const Locations = ({
       </div>
     </Fieldset>
   );
-};
+}
 
 Locations.propTypes = {
   updatedValues: PropTypes.shape({

@@ -7,7 +7,7 @@ import React from 'react';
 import Sorting from '@/app/(sok)/_components/searchResult/Sorting';
 import { formatNumber } from '@/app/_common/utils/utils';
 
-const SearchResultHeader = ({ searchResult, query, queryDispatch }) => {
+function SearchResultHeader({ searchResult, query, queryDispatch }) {
   const annonserWord = searchResult.totalAds === 1 ? 'annonse' : 'annonser';
   const stillingerWord = searchResult.totalPositions === 1 ? 'stilling' : 'stillinger';
 
@@ -43,7 +43,7 @@ const SearchResultHeader = ({ searchResult, query, queryDispatch }) => {
       </HGrid>
     </Box>
   );
-};
+}
 
 SearchResultHeader.propTypes = {
   searchResult: PropTypes.shape({

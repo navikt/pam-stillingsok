@@ -15,7 +15,7 @@ import HowToApply from './HowToApply';
 import ShareAd from './ShareAd';
 import Summary from './Summary';
 
-const Ad = ({ adData }) => {
+function Ad({ adData }) {
   /**
      * Track page view for all ads
      */
@@ -51,7 +51,7 @@ const Ad = ({ adData }) => {
       <AdDetails adData={adData} />
     </Box>
   );
-};
+}
 
 export default Ad;
 

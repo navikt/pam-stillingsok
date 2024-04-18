@@ -9,7 +9,7 @@ import { FetchAction, useFetchReducer } from '@/app/_common/hooks/useFetchReduce
 let suggestionsCache = [];
 const CACHE_MAX_SIZE = 50;
 
-const SearchBox = ({ dispatch, query }) => {
+function SearchBox({ dispatch, query }) {
   const [value, setValue] = useState(query.q);
   const initialRender = useRef(true);
   const [suggestionsResponse, suggestionsDispatch] = useFetchReducer([]);
@@ -97,7 +97,7 @@ const SearchBox = ({ dispatch, query }) => {
       />
     </section>
   );
-};
+}
 
 SearchBox.propTypes = {
   query: PropTypes.shape({

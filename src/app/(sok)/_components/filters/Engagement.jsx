@@ -20,9 +20,9 @@ export function editedItemKey(key) {
   return key === 'Annet' ? 'Ikke oppgitt' : key;
 }
 
-const Engagement = ({
+function Engagement({
   initialValues, updatedValues, query, dispatch,
-}) => {
+}) {
   const sortedValues = moveCriteriaToBottom(initialValues, 'Annet');
   const values = mergeCount(sortedValues, updatedValues);
 
@@ -54,7 +54,7 @@ const Engagement = ({
       </div>
     </Fieldset>
   );
-};
+}
 
 Engagement.propTypes = {
   initialValues: PropTypes.arrayOf(

@@ -23,9 +23,9 @@ import SuccessMessage from './SuccessMessage';
  * If user subscribes to email notifications, this modal will show
  * a second step and ask user to register email address.
  */
-const SaveSearchModal = ({
+function SaveSearchModal({
   onClose, onSaveSearchSuccess, formData, defaultFormMode, savedSearchUuid,
-}) => {
+}) {
   const { user } = useContext(UserContext);
 
   const [shouldShowSavedSearchForm, showSavedSearchForm, hideSavedSearchForm] = useToggle(true);
@@ -118,7 +118,7 @@ const SaveSearchModal = ({
       {shouldShowConfirmEmailMessage ? <ConfirmEmailMessage onClose={onClose} /> : null}
     </Modal>
   );
-};
+}
 
 SaveSearchModal.propTypes = {
   onClose: PropTypes.func,

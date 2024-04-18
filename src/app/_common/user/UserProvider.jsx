@@ -19,7 +19,7 @@ export const HasAcceptedTermsStatus = {
   HAS_ACCEPTED: 'HAS_ACCEPTED',
 };
 
-const UserProvider = ({ children }) => {
+function UserProvider({ children }) {
   const { authenticationStatus } = useContext(AuthenticationContext);
   const [userResponse, setUserResponse] = useState();
   const [shouldShowErrorDialog, openErrorDialog, closeErrorDialog] = useToggle(false);
@@ -122,7 +122,7 @@ const UserProvider = ({ children }) => {
       ) : null}
     </UserContext.Provider>
   );
-};
+}
 
 UserProvider.propTypes = {
   children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,

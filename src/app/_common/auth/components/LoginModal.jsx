@@ -6,8 +6,8 @@ import {
 import PropTypes from 'prop-types';
 import React from 'react';
 
-const LoginModal = ({ onLoginClick, onCloseClick }) => (
-  <Modal
+function LoginModal({ onLoginClick, onCloseClick }) {
+  return <Modal
     open
     header={{ heading: 'Du må logge inn først' }}
     role="alertdialog"
@@ -44,7 +44,7 @@ const LoginModal = ({ onLoginClick, onCloseClick }) => (
       ) : null}
     </Modal.Footer>
   </Modal>
-);
+}
 
 LoginModal.propTypes = {
   onCloseClick: PropTypes.func.isRequired,

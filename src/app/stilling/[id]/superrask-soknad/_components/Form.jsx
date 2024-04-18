@@ -18,9 +18,9 @@ import ApiErrorMessage from '@/app/_common/components/ApiErrorMessage';
 import { FormButtonBar } from './FormButtonBar';
 import { MOTIVATION_MAX_LENGTH } from './validateForm';
 
-const Form = ({
+function Form({
   ad, applicationForm, submitApplication, submitApiError, offlineError, validationErrors,
-}) => {
+}) {
   const errorSummary = useRef();
   const [motivation, setMotivation] = useState('');
   const [fixedErrors, setFixedErrors] = useState([]);
@@ -182,7 +182,7 @@ const Form = ({
       </HStack>
     </form>
   );
-};
+}
 
 Form.propTypes = {
   ad: PropTypes.shape({

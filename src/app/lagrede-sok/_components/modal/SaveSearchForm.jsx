@@ -30,9 +30,9 @@ export const FormModes = {
 /**
  * Form for creating or updating a saved search.
  */
-const SaveSearchForm = ({
+function SaveSearchForm({
   existingSavedSearch, onClose, onSuccess, formData, defaultFormMode,
-}) => {
+}) {
   const [isPending, startTransition] = useTransition();
   const [showError, setShowError] = useState(false);
 
@@ -224,7 +224,7 @@ const SaveSearchForm = ({
       </Modal.Footer>
     </form>
   );
-};
+}
 
 SaveSearchForm.propTypes = {
   existingSavedSearch: PropTypes.shape({

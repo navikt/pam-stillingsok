@@ -12,7 +12,7 @@ import useToggle from '@/app/_common/hooks/useToggle';
 import FavouritesListItem from './FavouritesListItem';
 import NoFavourites from './NoFavourites';
 
-const FavouritesList = ({ favourites }) => {
+function FavouritesList({ favourites }) {
   const [sortBy, setSortBy] = useState('published');
   const [locallyRemovedUuids, setLocallyRemovedUuids] = useState([]);
   const [shouldShowErrorDialog, openErrorDialog, closeErrorDialog] = useToggle();
@@ -77,7 +77,7 @@ const FavouritesList = ({ favourites }) => {
       </section>
     </div>
   );
-};
+}
 
 FavouritesList.propTypes = {
   favourites: PropTypes.arrayOf(PropTypes.object).isRequired,

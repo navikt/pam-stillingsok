@@ -5,8 +5,8 @@ import {
 import Link from 'next/link';
 import React from 'react';
 
-const NoSavedSearches = () => (
-  <section className="container-small mt-16 mb-16">
+function NoSavedSearches() {
+  return <section className="container-small mt-16 mb-16">
     <VStack align="center">
       <FigureWithMagnifier className="mb-8" />
       <Heading spacing className="text-center" level="1" size="large">
@@ -24,6 +24,6 @@ const NoSavedSearches = () => (
       </Button>
     </VStack>
   </section>
-);
+}
 
 export default NoSavedSearches;

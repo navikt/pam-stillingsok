@@ -6,9 +6,9 @@ import moveCriteriaToBottom from '@/app/(sok)/_components/utils/moveFacetToBotto
 import { ADD_REMOTE, REMOVE_REMOTE } from '@/app/(sok)/_utils/queryReducer';
 import { logSearchFilterAdded, logSearchFilterRemoved } from '@/app/_common/monitoring/amplitude';
 
-const Remote = ({
+function Remote({
   initialValues, updatedValues, query, dispatch,
-}) => {
+}) {
   const values = mergeCount(initialValues, updatedValues);
   const sortedValues = moveCriteriaToBottom(values, 'Ikke oppgitt');
 
@@ -52,6 +52,6 @@ const Remote = ({
       </div>
     </Fieldset>
   );
-};
+}
 
 export default Remote;

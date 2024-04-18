@@ -6,9 +6,9 @@ import mergeCount from '@/app/(sok)/_components/utils/mergeCount';
 import { ADD_EXTENT, REMOVE_EXTENT } from '@/app/(sok)/_utils/queryReducer';
 import { logSearchFilterAdded, logSearchFilterRemoved } from '@/app/_common/monitoring/amplitude';
 
-const Extent = ({
+function Extent({
   initialValues, updatedValues, query, dispatch,
-}) => {
+}) {
   const values = mergeCount(initialValues, updatedValues);
 
   function handleClick(e) {
@@ -43,7 +43,7 @@ const Extent = ({
       </div>
     </Fieldset>
   );
-};
+}
 
 Extent.propTypes = {
   initialValues: PropTypes.arrayOf(

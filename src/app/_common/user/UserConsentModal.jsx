@@ -11,7 +11,7 @@ import useToggle from '@/app/_common/hooks/useToggle';
 
 import { UserContext } from './UserProvider';
 
-const UserConsentModal = ({ onClose, onTermsAccepted }) => {
+function UserConsentModal({ onClose, onTermsAccepted }) {
   const { userNameAndInfo } = useContext(AuthenticationContext);
   const { updateUser } = useContext(UserContext);
   const [shouldShowError, showError, hideError] = useToggle();
@@ -121,7 +121,7 @@ const UserConsentModal = ({ onClose, onTermsAccepted }) => {
       )}
     </Modal>
   );
-};
+}
 
 UserConsentModal.propTypes = {
   onClose: PropTypes.func.isRequired,

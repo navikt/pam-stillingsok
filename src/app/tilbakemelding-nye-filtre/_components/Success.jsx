@@ -4,7 +4,7 @@ import {
 import Link from 'next/link';
 import React, { useEffect, useRef } from 'react';
 
-const Success = () => {
+function Success() {
   const ref = useRef();
 
   useEffect(() => {
@@ -39,6 +39,6 @@ const Success = () => {
       </Button>
     </div>
   );
-};
+}
 
 export default Success;

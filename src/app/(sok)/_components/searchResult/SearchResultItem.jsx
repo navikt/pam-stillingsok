@@ -128,11 +128,11 @@ SearchResultItem.propTypes = {
   isDebug: PropTypes.bool,
 };
 
-const LinkToAd = ({ children, stilling }) => (
-  <AkselLink as={Link} href={`/stilling/${stilling.uuid}`}>
+function LinkToAd({ children, stilling }) {
+  return <AkselLink as={Link} href={`/stilling/${stilling.uuid}`}>
     {children}
   </AkselLink>
-);
+}
 
 LinkToAd.propTypes = {
   children: PropTypes.node,

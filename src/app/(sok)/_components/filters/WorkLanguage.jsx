@@ -7,9 +7,9 @@ import moveCriteriaToBottom from '@/app/(sok)/_components/utils/moveFacetToBotto
 import { ADD_WORKLANGUAGE, REMOVE_WORKLANGUAGE } from '@/app/(sok)/_utils/queryReducer';
 import { logSearchFilterAdded, logSearchFilterRemoved } from '@/app/_common/monitoring/amplitude';
 
-const WorkLanguage = ({
+function WorkLanguage({
   initialValues, updatedValues, query, dispatch,
-}) => {
+}) {
   const sortedValues = moveCriteriaToBottom(initialValues, 'Ikke oppgitt');
   const values = mergeCount(sortedValues, updatedValues);
 
@@ -41,7 +41,7 @@ const WorkLanguage = ({
       </div>
     </Fieldset>
   );
-};
+}
 
 WorkLanguage.propTypes = {
   initialValues: PropTypes.arrayOf(

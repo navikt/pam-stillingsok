@@ -14,10 +14,10 @@ import Published from './Published';
 import Sector from './Sector';
 import WorkLanguage from './WorkLanguage';
 
-const FiltersDesktop = ({
+function FiltersDesktop({
   query, dispatchQuery, aggregations, locations, searchResult,
-}) => (
-  <div>
+}) {
+  return <div>
     <ShareYourOpinionPanel />
     <Accordion headingSize="small" indent={false}>
       <FilterAccordionItem panelId="publisert" title="Publisert">
@@ -89,7 +89,7 @@ const FiltersDesktop = ({
       <Button type="submit">Søk</Button>
     </noscript>
   </div>
-);
+}
 
 FiltersDesktop.propTypes = {
   query: PropTypes.shape({}),

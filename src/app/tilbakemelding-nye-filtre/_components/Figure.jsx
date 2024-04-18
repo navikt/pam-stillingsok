@@ -1,7 +1,7 @@
 import React from 'react';
 
-const Figure = () => (
-  <svg
+function Figure() {
+  return <svg
     aria-hidden="true"
     fill="none"
     height="181"
@@ -123,6 +123,6 @@ const Figure = () => (
       </clipPath>
     </defs>
   </svg>
-);
+}
 
 export default Figure;

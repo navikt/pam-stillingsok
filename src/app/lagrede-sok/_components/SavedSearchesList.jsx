@@ -16,7 +16,7 @@ import SavedSearchListItem from './SavedSearchListItem';
  * when clicking a link in a received notification email,
  * this view will auto open the edit modal for the saved search with that uuid
  */
-const SavedSearchesList = ({ data, uuid }) => {
+function SavedSearchesList({ data, uuid }) {
   const [localSavedSearchesList, setLocalSavedSearchesList] = useState(data);
   const [shouldShowErrorModal, openErrorDialog, closeErrorDialog] = useToggle();
 
@@ -62,7 +62,7 @@ const SavedSearchesList = ({ data, uuid }) => {
       ) : null}
     </section>
   );
-};
+}
 
 SavedSearchesList.propTypes = {
   data: PropTypes.arrayOf(PropTypes.shape({})).isRequired,

@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-const FacebookIcon = () => (
-  <svg
+function FacebookIcon() {
+  return <svg
     aria-label="Del på Facebook"
     fill="none"
     height="24"
@@ -17,6 +17,6 @@ const FacebookIcon = () => (
       fillRule="evenodd"
     />
   </svg>
-);
+}
 
 export default FacebookIcon;

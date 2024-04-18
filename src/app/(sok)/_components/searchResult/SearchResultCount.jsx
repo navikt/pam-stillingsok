@@ -4,7 +4,7 @@ import React from 'react';
 
 import { formatNumber } from '@/app/_common/utils/utils';
 
-const SearchResultCount = ({ searchResult }) => {
+function SearchResultCount({ searchResult }) {
   if (searchResult) {
     const annonserWord = searchResult.totalAds === 1 ? 'annonse' : 'annonser';
     const stillingerWord = searchResult.totalPositions === 1 ? 'stilling' : 'stillinger';
@@ -21,7 +21,7 @@ const SearchResultCount = ({ searchResult }) => {
   }
 
   return <div />;
-};
+}
 
 SearchResultCount.propTypes = {
   searchResult: PropTypes.shape({

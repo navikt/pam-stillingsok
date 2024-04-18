@@ -9,7 +9,7 @@ import React, { useState } from 'react';
 
 import UserConsentModal from '../../_common/user/UserConsentModal';
 
-const UserConsentIsRequired = () => {
+function UserConsentIsRequired() {
   const [showTermsModal, setShowTermModal] = useState(false);
   const router = useRouter();
 
@@ -47,6 +47,6 @@ const UserConsentIsRequired = () => {
       ) : null}
     </section>
   );
-};
+}
 
 export default UserConsentIsRequired;

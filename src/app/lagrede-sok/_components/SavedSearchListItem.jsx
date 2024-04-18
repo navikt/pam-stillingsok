@@ -18,13 +18,13 @@ import { formatDate } from '@/app/_common/utils/utils';
 import { FormModes } from './modal/SaveSearchForm';
 import SaveSearchModal from './modal/SaveSearchModal';
 
-const SavedSearchListItem = ({
+function SavedSearchListItem({
   savedSearch,
   removeSavedSearchFromList,
   replaceSavedSearchInList,
   autoOpenModal,
   openErrorDialog,
-}) => {
+}) {
   const [isPending, startTransition] = useTransition();
 
   const [shouldShowSavedSearchModal, openSavedSearchModal, closeSavedSearchModal] = useToggle(autoOpenModal);
@@ -166,7 +166,7 @@ const SavedSearchListItem = ({
       ) : null}
     </article>
   );
-};
+}
 
 SavedSearchListItem.propTypes = {
   savedSearch: PropTypes.shape({

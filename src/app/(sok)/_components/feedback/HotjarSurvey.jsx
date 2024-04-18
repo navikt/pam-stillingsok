@@ -4,7 +4,7 @@ import {
 } from '@navikt/ds-react';
 import React, { useEffect, useState } from 'react';
 
-const HotjarSurvey = () => {
+function HotjarSurvey() {
   const [isDismissed, setIsDismissed] = useState(true);
 
   useEffect(() => {
@@ -58,6 +58,6 @@ const HotjarSurvey = () => {
       </BodyLong>
     </Box>
   );
-};
+}
 
 export default HotjarSurvey;

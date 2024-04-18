@@ -6,9 +6,9 @@ import mergeCount from '@/app/(sok)/_components/utils/mergeCount';
 import { ADD_SECTOR, REMOVE_SECTOR } from '@/app/(sok)/_utils/queryReducer';
 import { logSearchFilterAdded, logSearchFilterRemoved } from '@/app/_common/monitoring/amplitude';
 
-const Sector = ({
+function Sector({
   initialValues, updatedValues, query, dispatch,
-}) => {
+}) {
   const values = mergeCount(initialValues, updatedValues);
 
   function handleClick(e) {
@@ -39,7 +39,7 @@ const Sector = ({
       </div>
     </Fieldset>
   );
-};
+}
 
 Sector.propTypes = {
   initialValues: PropTypes.arrayOf(PropTypes.shape({})),

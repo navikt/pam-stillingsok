@@ -5,9 +5,9 @@ import {
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 
-const SessionStatusModal = ({
+function SessionStatusModal({
   markAsLoggedOut, setHasBeenLoggedIn, login, logout, timeoutLogout, hasBeenLoggedIn,
-}) => {
+}) {
   const [isSessionExpiring, setIsSessionExpiring] = useState(null);
   const [isSessionTimingOut, setIsSessionTimingOut] = useState(null);
   const [isTimeoutModalOpen, setIsTimeoutModalOpen] = useState(false);
@@ -147,7 +147,7 @@ const SessionStatusModal = ({
       </Modal.Footer>
     </Modal>
   );
-};
+}
 
 SessionStatusModal.propTypes = {
   markAsLoggedOut: PropTypes.func.isRequired,

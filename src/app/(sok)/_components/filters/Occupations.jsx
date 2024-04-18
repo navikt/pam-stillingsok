@@ -14,9 +14,9 @@ import { logSearchFilterAdded, logSearchFilterRemoved } from '@/app/_common/moni
 
 const OCCUPATION_LEVEL_OTHER = 'Uoppgitt/ ikke identifiserbare';
 
-const Occupations = ({
+function Occupations({
   initialValues, updatedValues, query, dispatch,
-}) => {
+}) {
   const sortedValues = moveCriteriaToBottom(initialValues, OCCUPATION_LEVEL_OTHER);
   const values = mergeCount(sortedValues, updatedValues, 'occupationSecondLevels');
 
@@ -99,7 +99,7 @@ const Occupations = ({
       </div>
     </Fieldset>
   );
-};
+}
 
 Occupations.propTypes = {
   initialValues: PropTypes.arrayOf(

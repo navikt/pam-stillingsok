@@ -5,8 +5,8 @@ import {
 import Link from 'next/link';
 import React from 'react';
 
-const NoFavourites = () => (
-  <section className="container-small mt-16 mb-16">
+function NoFavourites() {
+  return <section className="container-small mt-16 mb-16">
     <VStack align="center">
       <FigureHoldingAHeart className="mb-8" />
       <Heading spacing className="text-center" level="1" size="large">
@@ -24,6 +24,6 @@ const NoFavourites = () => (
       </Button>
     </VStack>
   </section>
-);
+}
 
 export default NoFavourites;

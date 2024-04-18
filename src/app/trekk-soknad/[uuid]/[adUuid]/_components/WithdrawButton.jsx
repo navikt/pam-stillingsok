@@ -2,7 +2,7 @@ import { Button } from '@navikt/ds-react';
 import React from 'react';
 import { useFormStatus } from 'react-dom';
 
-export const WithdrawButton = () => {
+export function WithdrawButton() {
   const { pending } = useFormStatus();
 
   return (
@@ -10,4 +10,4 @@ export const WithdrawButton = () => {
       Trekk søknad
     </Button>
   );
-};
+}

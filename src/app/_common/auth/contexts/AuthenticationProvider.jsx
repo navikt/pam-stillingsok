@@ -20,7 +20,7 @@ export const AuthenticationStatus = {
   FAILURE: 'FAILURE',
 };
 
-const AuthenticationProvider = ({ children }) => {
+function AuthenticationProvider({ children }) {
   const [authenticationStatus, setAuthenticationStatus] = useState(AuthenticationStatus.NOT_FETCHED);
   const [userNameAndInfo, setUserNameAndInfo] = useState(false);
   const [hasBeenLoggedIn, setHasBeenLoggedIn] = useState(false);
@@ -111,7 +111,7 @@ const AuthenticationProvider = ({ children }) => {
       {children}
     </AuthenticationContext.Provider>
   );
-};
+}
 
 AuthenticationProvider.propTypes = {
   children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,

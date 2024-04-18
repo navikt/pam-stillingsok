@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-const LinkedinIcon = () => (
-  <svg
+function LinkedinIcon() {
+  return <svg
     aria-label="Del på LinkedIn"
     fill="none"
     height="24"
@@ -29,6 +29,6 @@ const LinkedinIcon = () => (
       fillRule="evenodd"
     />
   </svg>
-);
+}
 
 export default LinkedinIcon;

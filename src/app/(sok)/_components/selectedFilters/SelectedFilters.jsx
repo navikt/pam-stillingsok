@@ -24,7 +24,7 @@ import {
 } from '../../_utils/queryReducer';
 import { editedItemKey } from '../filters/Engagement';
 
-const SelectedFilters = ({ query, queryDispatch }) => {
+function SelectedFilters({ query, queryDispatch }) {
   const MAX_CHIPS = 10;
   const [showAll, setShowAll] = useState(false);
 
@@ -266,7 +266,7 @@ const SelectedFilters = ({ query, queryDispatch }) => {
       <SaveSearchButton query={query} />
     </HStack>
   );
-};
+}
 
 SelectedFilters.propTypes = {
   query: PropTypes.shape({

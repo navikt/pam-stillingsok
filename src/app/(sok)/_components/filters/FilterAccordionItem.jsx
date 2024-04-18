@@ -6,7 +6,7 @@ import React, { useContext, useState } from 'react';
 
 import { UserPreferencesContext } from '@/app/_common/user/UserPreferenceProvider';
 
-const FilterAccordionItem = ({ title, children, panelId }) => {
+function FilterAccordionItem({ title, children, panelId }) {
   const { closedFilters, addClosedFilter, removeClosedFilter } = useContext(UserPreferencesContext);
   const [isOpen, setIsOpen] = useState(!closedFilters.includes(panelId));
 
@@ -27,7 +27,7 @@ const FilterAccordionItem = ({ title, children, panelId }) => {
       </Accordion.Item>
     </section>
   );
-};
+}
 
 FilterAccordionItem.propTypes = {
   panelId: PropTypes.string.isRequired,

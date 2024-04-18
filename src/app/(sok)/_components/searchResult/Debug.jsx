@@ -4,8 +4,8 @@ import {
 import PropTypes from 'prop-types';
 import React from 'react';
 
-const Debug = ({ ad }) => (
-  <ReadMore className="mt-2 monospace" header={`score: ${ad.score.toFixed(2)}`}>
+function Debug({ ad }) {
+  return <ReadMore className="mt-2 monospace" header={`score: ${ad.score.toFixed(2)}`}>
     {ad.medium !== '' && (
     <>
       <Heading spacing level="4" size="xsmall">
@@ -83,7 +83,7 @@ const Debug = ({ ad }) => (
       </>
     ) : null}
   </ReadMore>
-);
+}
 
 Debug.propTypes = {
   ad: PropTypes.shape({

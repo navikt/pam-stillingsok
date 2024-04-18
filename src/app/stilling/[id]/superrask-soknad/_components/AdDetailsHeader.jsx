@@ -4,8 +4,8 @@ import React from 'react';
 
 import getEmployer from '@/app/_common/utils/getEmployer';
 
-const AdDetailsHeader = ({ source }) => (
-  <Box background="surface-alt-1-subtle" className="mb-10" paddingBlock="4">
+function AdDetailsHeader({ source }) {
+  return <Box background="surface-alt-1-subtle" className="mb-10" paddingBlock="4">
     <div className="container-medium">
       <Label as="p" className="mb-1">
         {getEmployer(source)}
@@ -13,7 +13,7 @@ const AdDetailsHeader = ({ source }) => (
       <BodyShort>{source.title}</BodyShort>
     </div>
   </Box>
-);
+}
 
 AdDetailsHeader.propTypes = {
   source: PropTypes.shape({

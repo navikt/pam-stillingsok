@@ -8,7 +8,7 @@ import React, { useState } from 'react';
 
 import logAmplitudeEvent from '@/app/_common/monitoring/amplitude';
 
-const Feedback = ({ query }) => {
+function Feedback({ query }) {
   const [hasGivenRating, setHasGiverRating] = useState(false);
 
   const onRatingClick = (text) => {
@@ -61,7 +61,7 @@ const Feedback = ({ query }) => {
       </VStack>
     </Panel>
   );
-};
+}
 
 Feedback.propTypes = {
   query: PropTypes.shape({

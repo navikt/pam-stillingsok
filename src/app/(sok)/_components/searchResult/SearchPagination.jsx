@@ -7,7 +7,7 @@ import React from 'react';
 import { ALLOWED_NUMBER_OF_RESULTS_PER_PAGE, SEARCH_CHUNK_SIZE } from '../../_utils/query';
 import { SET_FROM_AND_SIZE } from '../../_utils/queryReducer';
 
-const SearchPagination = ({ searchResult, query, queryDispatch }) => {
+function SearchPagination({ searchResult, query, queryDispatch }) {
   const resultsPerPage = query.size || SEARCH_CHUNK_SIZE;
 
   // Elastic search does not allow pagination above 10 000 results.
@@ -72,7 +72,7 @@ const SearchPagination = ({ searchResult, query, queryDispatch }) => {
       </Select>
     </VStack>
   );
-};
+}
 
 SearchPagination.propTypes = {
   searchResult: PropTypes.shape({

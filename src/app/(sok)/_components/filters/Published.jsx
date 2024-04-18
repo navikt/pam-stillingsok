@@ -6,9 +6,9 @@ import mergeCount from '@/app/(sok)/_components/utils/mergeCount';
 import { PublishedLabelsEnum } from '@/app/(sok)/_utils/query';
 import { SET_PUBLISHED } from '@/app/(sok)/_utils/queryReducer';
 
-const Published = ({
+function Published({
   dispatch, query, initialValues, updatedValues,
-}) => {
+}) {
   const values = mergeCount(initialValues, updatedValues);
 
   function handleClick(e) {
@@ -37,7 +37,7 @@ const Published = ({
       </div>
     </Fieldset>
   );
-};
+}
 
 Published.propTypes = {
   initialValues: PropTypes.arrayOf(

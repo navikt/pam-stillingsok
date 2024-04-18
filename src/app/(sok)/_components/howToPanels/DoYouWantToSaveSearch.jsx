@@ -6,8 +6,8 @@ import React from 'react';
 
 import SaveSearchButton from '@/app/lagrede-sok/_components/SaveSearchButton';
 
-const DoYouWantToSaveSearch = ({ query }) => (
-  <Box background="surface-alt-2-subtle" borderRadius="small" padding={{ xs: '4', md: '6' }}>
+function DoYouWantToSaveSearch({ query }) {
+  return <Box background="surface-alt-2-subtle" borderRadius="small" padding={{ xs: '4', md: '6' }}>
     <VStack align="center">
       <Heading spacing className="text-center" level="3" size="small">
         Varsel ved nye treff?
@@ -18,7 +18,7 @@ const DoYouWantToSaveSearch = ({ query }) => (
       <SaveSearchButton query={query} />
     </VStack>
   </Box>
-);
+}
 
 DoYouWantToSaveSearch.propTypes = {
   query: PropTypes.shape({}),

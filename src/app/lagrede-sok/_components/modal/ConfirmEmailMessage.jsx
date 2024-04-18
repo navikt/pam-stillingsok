@@ -2,7 +2,7 @@ import { BodyLong, Button, Modal } from '@navikt/ds-react';
 import PropTypes from 'prop-types';
 import React, { useEffect, useRef } from 'react';
 
-const ConfirmEmailMessage = ({ onClose }) => {
+function ConfirmEmailMessage({ onClose }) {
   const buttonRef = useRef(null);
 
   useEffect(() => {
@@ -25,7 +25,7 @@ const ConfirmEmailMessage = ({ onClose }) => {
       </Modal.Footer>
     </>
   );
-};
+}
 
 ConfirmEmailMessage.propTypes = {
   onClose: PropTypes.func.isRequired,

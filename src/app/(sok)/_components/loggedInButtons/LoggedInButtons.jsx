@@ -10,7 +10,7 @@ import useToggle from '@/app/_common/hooks/useToggle';
 import UserConsentModal from '@/app/_common/user/UserConsentModal';
 import { HasAcceptedTermsStatus, UserContext } from '@/app/_common/user/UserProvider';
 
-const LoggedInButtons = () => {
+function LoggedInButtons() {
   const { authenticationStatus, loginAndRedirect } = useContext(AuthenticationContext);
   const { hasAcceptedTermsStatus } = useContext(UserContext);
   const [shouldShowTermsModal, openTermsModal, closeTermsModal] = useToggle();
@@ -96,6 +96,6 @@ const LoggedInButtons = () => {
       ) : null}
     </>
   );
-};
+}
 
 export default LoggedInButtons;

@@ -31,7 +31,7 @@ const reportCategories = [
   { label: 'Annet', key: 'other' },
 ];
 
-const ReportAd = ({ ad, submitForm }) => {
+function ReportAd({ ad, submitForm }) {
   const errorSummary = useRef();
   const ref = useRef(null);
   const [description, setDescription] = useState('');
@@ -227,7 +227,7 @@ const ReportAd = ({ ad, submitForm }) => {
       </div>
     </>
   );
-};
+}
 
 ReportAd.propTypes = {
   ad: PropTypes.shape({

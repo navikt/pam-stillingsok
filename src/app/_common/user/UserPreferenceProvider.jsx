@@ -5,7 +5,7 @@ import * as actions from '@/app/_common/actions';
 
 export const UserPreferencesContext = React.createContext({});
 
-const UserPreferencesProvider = ({ children, userPreferences }) => {
+function UserPreferencesProvider({ children, userPreferences }) {
   function addClosedFilter(panelId) {
     try {
       actions.addClosedFilter(panelId);
@@ -44,7 +44,7 @@ const UserPreferencesProvider = ({ children, userPreferences }) => {
       {children}
     </UserPreferencesContext.Provider>
   );
-};
+}
 
 UserPreferencesProvider.propTypes = {
   children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,

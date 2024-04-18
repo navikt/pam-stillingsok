@@ -10,7 +10,7 @@ import React, { useContext } from 'react';
 
 import { AuthenticationContext } from '@/app/_common/auth/contexts/AuthenticationProvider';
 
-const LoginIsRequiredPage = ({ redirect = '/stillinger' }) => {
+function LoginIsRequiredPage({ redirect = '/stillinger' }) {
   const { loginAndRedirect } = useContext(AuthenticationContext);
 
   const onLogin = () => {
@@ -38,7 +38,7 @@ const LoginIsRequiredPage = ({ redirect = '/stillinger' }) => {
       </VStack>
     </section>
   );
-};
+}
 
 LoginIsRequiredPage.propTypes = {
   redirect: PropTypes.string,

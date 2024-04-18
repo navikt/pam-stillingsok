@@ -11,7 +11,7 @@ import { FetchStatus } from '@/app/_common/hooks/useFetchReducer';
 import { UserContext } from '@/app/_common/user/UserProvider';
 import { isValidEmail } from '@/app/_common/utils/utils';
 
-const RegisterEmailForm = ({ onClose, onSuccess }) => {
+function RegisterEmailForm({ onClose, onSuccess }) {
   const { user, updateUser } = useContext(UserContext);
   const [email, setEmail] = useState('');
   const [saveStatus, setSaveStatus] = useState(FetchStatus.NOT_FETCHED);
@@ -113,7 +113,7 @@ const RegisterEmailForm = ({ onClose, onSuccess }) => {
       </Modal.Footer>
     </form>
   );
-};
+}
 
 RegisterEmailForm.propTypes = {
   onClose: PropTypes.func.isRequired,

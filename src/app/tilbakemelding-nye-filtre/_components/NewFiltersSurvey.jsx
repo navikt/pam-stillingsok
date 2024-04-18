@@ -9,7 +9,7 @@ import logAmplitudeEvent from '@/app/_common/monitoring/amplitude';
 import Figure from '@/app/tilbakemelding-nye-filtre/_components/Figure';
 import Success from '@/app/tilbakemelding-nye-filtre/_components/Success';
 
-const NewFiltersSurvey = () => {
+function NewFiltersSurvey() {
   const [answers, setAnswers] = useState({
     'Answer: Published': '',
     'Answer: Education': '',
@@ -253,6 +253,6 @@ const NewFiltersSurvey = () => {
       </div>
     </section>
   );
-};
+}
 
 export default NewFiltersSurvey;

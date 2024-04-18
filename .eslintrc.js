@@ -5,7 +5,17 @@ const project = resolve(__dirname, "jsconfig.json");
 /** @type {import('eslint').Linter.Config} */
 module.exports = {
     root: true,
-    extends: ["plugin:@next/next/recommended", "airbnb", "next/core-web-vitals", "prettier"],
+    extends: [
+        require.resolve("@vercel/style-guide/eslint/browser"),
+        require.resolve("@vercel/style-guide/eslint/react"),
+        require.resolve("@vercel/style-guide/eslint/next"),
+        require.resolve("@vercel/style-guide/eslint/node"),
+        require.resolve("@vercel/style-guide/eslint/typescript"),
+        "plugin:@next/next/recommended",
+        "airbnb",
+        "next/core-web-vitals",
+        "prettier",
+    ],
     plugins: ["react", "unused-imports", "prettier"],
     parserOptions: { project },
     settings: {
@@ -42,22 +52,7 @@ module.exports = {
         },
     },
     rules: {
-        "react/function-component-definition": [
-            "warn",
-            {
-                namedComponents: "arrow-function",
-                unnamedComponents: "arrow-function",
-            },
-        ],
-        "react/jsx-sort-props": [
-            "warn",
-            {
-                callbacksLast: true,
-                shorthandFirst: true,
-                multiline: "last",
-                reservedFirst: true,
-            },
-        ],
+        "unicorn/filename-case": "off",
         // sort import statements
         "import/order": [
             "warn",

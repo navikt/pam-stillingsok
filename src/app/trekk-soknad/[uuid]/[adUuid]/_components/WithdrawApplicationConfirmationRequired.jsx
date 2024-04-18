@@ -10,7 +10,7 @@ import getEmployer from '@/app/_common/utils/getEmployer';
 
 import { WithdrawButton } from './WithdrawButton';
 
-const WithdrawApplicationConfirmationRequired = ({ ad, submitForm, hasError }) => {
+function WithdrawApplicationConfirmationRequired({ ad, submitForm, hasError }) {
   const [state, setState] = useState({ error: hasError });
 
   const onSubmit = async (e) => {
@@ -63,7 +63,7 @@ const WithdrawApplicationConfirmationRequired = ({ ad, submitForm, hasError }) =
       </form>
     </>
   );
-};
+}
 
 WithdrawApplicationConfirmationRequired.propTypes = {
   ad: PropTypes.shape({

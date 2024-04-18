@@ -2,7 +2,7 @@ import { BodyLong, Button, Modal } from '@navikt/ds-react';
 import PropTypes from 'prop-types';
 import React, { useEffect, useRef } from 'react';
 
-const SuccessMessage = ({ onClose }) => {
+function SuccessMessage({ onClose }) {
   const buttonRef = useRef(null);
 
   useEffect(() => {
@@ -23,7 +23,7 @@ const SuccessMessage = ({ onClose }) => {
       </Modal.Footer>
     </>
   );
-};
+}
 
 SuccessMessage.propTypes = {
   onClose: PropTypes.func.isRequired,

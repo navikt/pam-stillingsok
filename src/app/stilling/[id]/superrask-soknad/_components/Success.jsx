@@ -5,7 +5,7 @@ import React, { useEffect, useRef } from 'react';
 
 import GiveFeedback from './GiveFeedback';
 
-const Success = ({ email }) => {
+function Success({ email }) {
   const ref = useRef(null);
 
   useEffect(() => {
@@ -41,7 +41,7 @@ const Success = ({ email }) => {
       <GiveFeedback />
     </>
   );
-};
+}
 
 Success.propTypes = {
   email: PropTypes.string,

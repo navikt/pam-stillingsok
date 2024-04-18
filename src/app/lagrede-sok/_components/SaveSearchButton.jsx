@@ -27,7 +27,7 @@ import SearchIsEmptyModal from './modal/SearchIsEmptyModal';
  * - has checked one or more search criteria
  * - has accepted terms
  */
-const SaveSearchButton = ({ query }) => {
+function SaveSearchButton({ query }) {
   const { authenticationStatus, login } = useContext(AuthenticationContext);
   const { hasAcceptedTermsStatus } = useContext(UserContext);
   const [shouldShowTermsModal, openTermsModal, closeTermsModal] = useToggle();
@@ -86,7 +86,7 @@ const SaveSearchButton = ({ query }) => {
       ) : null}
     </>
   );
-};
+}
 
 SaveSearchButton.propTypes = {
   query: PropTypes.shape({}),

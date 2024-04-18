@@ -5,8 +5,8 @@ import React from 'react';
 
 import DetectiveIcon from '../icons/DetectiveIcon';
 
-const MaxResultsBox = () => (
-  <Box background="surface-alt-1-subtle" borderRadius="small" padding={{ xs: '4', md: '6' }}>
+function MaxResultsBox() {
+  return <Box background="surface-alt-1-subtle" borderRadius="small" padding={{ xs: '4', md: '6' }}>
     <HStack align="center" gap="2" justify="center" wrap={false}>
       <Box>
         <Heading spacing level="3" size="small">
@@ -22,6 +22,6 @@ const MaxResultsBox = () => (
       </Box>
     </HStack>
   </Box>
-);
+}
 
 export default MaxResultsBox;

@@ -7,7 +7,7 @@ import React, { useContext } from 'react';
 
 import { UserPreferencesContext } from '@/app/_common/user/UserPreferenceProvider';
 
-const ShareYourOpinionPanel = () => {
+function ShareYourOpinionPanel() {
   const { dismissPanel, dismissedPanels } = useContext(UserPreferencesContext);
 
   function dismiss() {
@@ -44,6 +44,6 @@ const ShareYourOpinionPanel = () => {
       </BodyLong>
     </Box>
   );
-};
+}
 
 export default ShareYourOpinionPanel;

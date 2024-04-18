@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { useFormStatus } from 'react-dom';
 
-export const FormButtonBar = ({ id }) => {
+export function FormButtonBar({ id }) {
   const { pending } = useFormStatus();
   return (
     <>
@@ -18,7 +18,7 @@ export const FormButtonBar = ({ id }) => {
       )}
     </>
   );
-};
+}
 FormButtonBar.propTypes = {
   id: PropTypes.string.isRequired,
 };

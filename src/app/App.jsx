@@ -13,7 +13,7 @@ import googleTranslateWorkaround from './_common/utils/googleTranslateWorkaround
 
 // Todo: Gå igjennom alle fetch-kall i koden og se om referrer er satt riktig. Nå er den satt referrer: CONTEXT_PATH, men ikke sikker på hva som er rett her
 
-const App = ({ children, amplitudeToken }) => {
+function App({ children, amplitudeToken }) {
   const { authenticationStatus, login, logout } = useContext(AuthenticationContext);
 
   useEffect(() => {
@@ -53,7 +53,7 @@ const App = ({ children, amplitudeToken }) => {
       <Footer />
     </div>
   );
-};
+}
 
 App.propTypes = {
   children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,

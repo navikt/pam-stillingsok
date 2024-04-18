@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-const TwitterIcon = () => (
-  <svg
+function TwitterIcon() {
+  return <svg
     aria-label="Del på Twitter"
     fill="none"
     height="24"
@@ -24,6 +24,6 @@ const TwitterIcon = () => (
       </clipPath>
     </defs>
   </svg>
-);
+}
 
 export default TwitterIcon;
