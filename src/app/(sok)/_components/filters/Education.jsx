@@ -7,7 +7,7 @@ import { logSearchFilterAdded, logSearchFilterRemoved } from "@/app/_common/moni
 import moveCriteriaToBottom from "@/app/(sok)/_components/utils/moveFacetToBottom";
 
 function Education({ initialValues, updatedValues, query, dispatch }) {
-    const sortedValues = moveCriteriaToBottom(initialValues, "Ingen krav");
+    const sortedValues = moveCriteriaToBottom(initialValues, "Ikke oppgitt");
     const values = mergeCount(sortedValues, updatedValues);
 
     function handleClick(e) {
@@ -21,6 +21,19 @@ function Education({ initialValues, updatedValues, query, dispatch }) {
         }
     }
 
+    const updateViewName = (key) => {
+        switch (key) {
+            case "Ingen krav":
+                return "Ingen krav til utdanning";
+            case "Master":
+                return "Master eller tilsvarende";
+            case "Videregående":
+                return "Videregående skole";
+            default:
+                return key;
+        }
+    };
+
     return (
         <Fieldset legend="Filtrer på utdanning" hideLegend>
             <div>
@@ -32,7 +45,7 @@ function Education({ initialValues, updatedValues, query, dispatch }) {
                         onChange={handleClick}
                         checked={query.education.includes(item.key)}
                     >
-                        {`${item.key} (${item.count})`}
+                        {`${updateViewName(item.key)} (${item.count})`}
                     </Checkbox>
                 ))}
             </div>
