@@ -67,6 +67,21 @@ export default async function Page({ params }) {
                 headers: getDefaultHeaders(),
             });
 
+            // Custom errors based on http response code
+            if (response.status === 409) {
+                return {
+                    ...defaultState,
+                    error: "conflict",
+                };
+            }
+
+            if (response.status === 403) {
+                return {
+                    ...defaultState,
+                    error: "forbidden",
+                };
+            }
+
             if (response.status !== 200) {
                 const errorJson = await response.json();
                 return {
