@@ -15,6 +15,7 @@ const ALLOWED_PANELID_VALUES = [
     "hjemmekontor",
 ];
 const ALLOWED_DISMISSED_PANELS = ["new-filters-survey"];
+const ALLOWED_RESULTS_PER_PAGE = [25, 100];
 const COOKIE_OPTIONS = { secure: true, httpOnly: true };
 
 export async function getUserPreferences() {
@@ -28,7 +29,11 @@ export async function getUserPreferences() {
         const dismissedPanels = (parsedCookie.dismissedPanels || []).filter((it) =>
             ALLOWED_DISMISSED_PANELS.includes(it),
         );
-        return { closedFilters, dismissedPanels };
+        const resultsPerPage =
+            parsedCookie.resultsPerPage && ALLOWED_RESULTS_PER_PAGE.includes(parsedCookie.resultsPerPage)
+                ? parsedCookie.resultsPerPage
+                : undefined;
+        return { closedFilters, dismissedPanels, resultsPerPage };
     } catch (e) {
         logger.info(`Kunne ikke parse '${USER_PREFERENCES_COOKIE_NAME}' cookie`);
         return {};
@@ -61,5 +66,15 @@ export async function dismissPanel(panelId) {
     const existingCookie = await getUserPreferences();
     const dismissedPanels = new Set(existingCookie.dismissedPanels || []).add(panelId);
     const newCookieValue = { ...existingCookie, dismissedPanels: [...dismissedPanels] };
+    cookies().set(USER_PREFERENCES_COOKIE_NAME, JSON.stringify(newCookieValue), COOKIE_OPTIONS);
+}
+
+export async function saveResultsPerPage(resultsPerPage) {
+    if (!ALLOWED_RESULTS_PER_PAGE.includes(resultsPerPage)) {
+        // Trying to set an invalid value
+        return;
+    }
+    const existingCookie = await getUserPreferences();
+    const newCookieValue = { ...existingCookie, resultsPerPage };
     cookies().set(USER_PREFERENCES_COOKIE_NAME, JSON.stringify(newCookieValue), COOKIE_OPTIONS);
 }

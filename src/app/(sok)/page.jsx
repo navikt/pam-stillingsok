@@ -2,6 +2,7 @@ import Search from "@/app/(sok)/_components/Search";
 import { defaultMetadataDescription, defaultOpenGraphImage, getMetadataTitle } from "@/app/layout";
 import { createQuery, defaultQuery, toApiQuery, toBrowserQuery, toReadableQuery } from "@/app/(sok)/_utils/query";
 import { fetchCachedElasticSearch } from "@/app/(sok)/_utils/fetchCachedElasticSearch";
+import * as actions from "@/app/_common/actions";
 
 export async function generateMetadata({ searchParams }) {
     const query = createQuery(searchParams);
@@ -56,6 +57,11 @@ async function fetchLocations() {
 }
 
 export default async function Page({ searchParams }) {
+    const userPreferences = await actions.getUserPreferences();
+    if (userPreferences.resultsPerPage) {
+        searchParams.size = userPreferences.resultsPerPage;
+    }
+
     const initialQuery = createQuery(searchParams);
 
     const shouldDoExtraCallIfUserHasSearchParams = Object.keys(toBrowserQuery(initialQuery)).length > 0;
