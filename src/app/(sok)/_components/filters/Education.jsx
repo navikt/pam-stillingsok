@@ -22,7 +22,7 @@ function Education({ initialValues, updatedValues, query, dispatch }) {
     }
 
     return (
-        <Fieldset legend="Filtrer etter utdanning" hideLegend>
+        <Fieldset legend="Filtrer på utdanning" hideLegend>
             <div>
                 {values.map((item) => (
                     <Checkbox
