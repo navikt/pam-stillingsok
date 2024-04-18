@@ -14,6 +14,10 @@ const getErrorMessage = (apiErrorCode) => {
             return "Sjekk at begrunnelsen din ikke inneholder noen lenker eller er lenger enn 800 tegn.";
         case "offline":
             return "Sjekk nettforbindelsen din og prøv igjen.";
+        case "forbidden":
+            return "Du har nådd grensen for antall søknader som kan sendes på 10 minutter. Ta en kort pause og prøv igjen om noen minutter.";
+        case "conflict":
+            return "Du har allerede sendt en identisk søknad til denne arbeidsgiveren. Oppdater søknaden med ny informasjon før du sender den på nytt.";
         default:
             return "Det oppsto dessverre en feil. Prøv å sende inn søknaden igjen.";
     }
