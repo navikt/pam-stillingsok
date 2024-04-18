@@ -1,7 +1,6 @@
 import { ALLOWED_NUMBER_OF_RESULTS_PER_PAGE, SEARCH_CHUNK_SIZE } from "./query";
 
 const NOT_DEFINED = "Ikke oppgitt";
-const NOT_DEFINED_EDUCATION = "Ingen krav";
 
 function mapSortByValue(value) {
     switch (value) {
@@ -133,13 +132,13 @@ function filterEducation(education) {
             },
         };
         education.forEach((item) => {
-            if (item === NOT_DEFINED_EDUCATION) {
+            if (item === NOT_DEFINED) {
                 filter.bool.should.push({
                     bool: {
                         must_not: [
                             {
                                 exists: {
-                                    field: "education_facet",
+                                    field: "properties.education",
                                 },
                             },
                         ],
@@ -810,7 +809,7 @@ const elasticSearchRequestBody = (query) => {
                 },
                 aggs: {
                     values: {
-                        terms: { field: "education_facet", missing: NOT_DEFINED },
+                        terms: { field: "properties.education", missing: NOT_DEFINED },
                     },
                 },
             },
