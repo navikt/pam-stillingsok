@@ -41,6 +41,7 @@ module.exports = {
         "react/react-in-jsx-scope": "off",
         "react/jsx-props-no-spreading": "off",
         "react/forbid-prop-types": "off",
+        "object-shorthand": "off",
         // defaultProps rule to be deprecated on function components
         // https://github.com/reactjs/rfcs/pull/107
         "react/require-default-props": [
