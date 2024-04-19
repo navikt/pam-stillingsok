@@ -1,16 +1,10 @@
 /**
- * Sorter publisert basert på egen array
+ * Sorter verdier alfabetisk
  */
 export default function sortValuesByFirstLetter(facets) {
-    let clone = facets;
+    const clone = facets;
 
-    console.log("INSIDE", facets);
-    clone = clone.sort((a, b) => {
-        console.log("inside", a.key < b.key);
+    clone.sort((a, b) => a.key.localeCompare(b.key, "no"));
 
-        return 1;
-    });
-
-    console.log("SORTED", clone);
     return clone;
 }
