@@ -6,6 +6,8 @@ export const ALLOWED_NUMBER_OF_RESULTS_PER_PAGE = [SEARCH_CHUNK_SIZE, SEARCH_CHU
 
 export const PublishedLabelsEnum = {
     "now/d": "Nye i dag",
+    "now-3d": "Nye siste 3 døgn",
+    "now-7d": "Nye siste uka",
 };
 
 function asArray(value) {

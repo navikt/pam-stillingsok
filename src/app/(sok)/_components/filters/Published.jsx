@@ -4,9 +4,11 @@ import { Checkbox, Fieldset } from "@navikt/ds-react";
 import { SET_PUBLISHED } from "@/app/(sok)/_utils/queryReducer";
 import { PublishedLabelsEnum } from "@/app/(sok)/_utils/query";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
+import sortPublishedValues from "@/app/(sok)/_components/utils/sortPublishedValues";
 
 function Published({ dispatch, query, initialValues, updatedValues }) {
-    const values = mergeCount(initialValues, updatedValues);
+    const sortedValues = sortPublishedValues(initialValues);
+    const values = mergeCount(sortedValues, updatedValues);
 
     function handleClick(e) {
         const { value } = e.target;

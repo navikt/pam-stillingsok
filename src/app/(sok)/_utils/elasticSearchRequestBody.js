@@ -704,6 +704,14 @@ const elasticSearchRequestBody = (query) => {
                                     key: "now/d",
                                     from: "now/d",
                                 },
+                                {
+                                    key: "now-3d",
+                                    from: "now-3d",
+                                },
+                                {
+                                    key: "now-7d",
+                                    from: "now-7d",
+                                },
                             ],
                         },
                     },
