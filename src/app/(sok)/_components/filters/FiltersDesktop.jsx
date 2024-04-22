@@ -10,7 +10,6 @@ import Extent from "./Extent";
 import Sector from "./Sector";
 import EngagementType from "./Engagement";
 import WorkLanguage from "./WorkLanguage";
-import Education from "./Education";
 
 function FiltersDesktop({ query, dispatchQuery, aggregations, locations, searchResult }) {
     return (
@@ -80,6 +79,8 @@ function FiltersDesktop({ query, dispatchQuery, aggregations, locations, searchR
                         updatedValues={searchResult.aggregations.workLanguage}
                     />
                 </FilterAccordionItem>
+
+                {/* TODO: COMMENT IN WHEN FILTER IS READY BACKEND
                 <FilterAccordionItem title="Utdanning" panelId="education">
                     <Education
                         query={query}
@@ -87,7 +88,7 @@ function FiltersDesktop({ query, dispatchQuery, aggregations, locations, searchR
                         initialValues={aggregations.education}
                         updatedValues={searchResult.aggregations.education}
                     />
-                </FilterAccordionItem>
+                </FilterAccordionItem> */}
             </Accordion>
             <noscript>
                 <Button type="submit">Søk</Button>
