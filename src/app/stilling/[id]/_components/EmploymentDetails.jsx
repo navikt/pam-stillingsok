@@ -7,6 +7,7 @@ import joinStringWithSeperator from "@/app/_common/utils/joinStringWithSeperator
 import FavouritesButton from "@/app/favoritter/_components/FavouritesButton";
 import { RichText } from "@navikt/arbeidsplassen-react";
 import parse from "html-react-parser";
+import { joinArbeidstider } from "@/app/stilling/[id]/_components/joinArbeidstider";
 
 const options = {
     replace: ({ attribs }) => {
@@ -86,7 +87,8 @@ export default function EmploymentDetails({ adData }) {
                         <dd>
                             <BodyLong>
                                 {adData.engagementType}
-                                {adData.extent ? `, ${adData.extent}` : ""}
+                                {adData.extent ? `, ${adData.extent.toLowerCase()}` : ""}
+                                {adData.jobPercentage ? ` ${adData.jobPercentage}` : ""}
                             </BodyLong>
                         </dd>
                     </div>
@@ -98,22 +100,12 @@ export default function EmploymentDetails({ adData }) {
                         </dt>
                         <dd>
                             <BodyLong>
-                                {adData.jobArrangement} {adData.workdays} {adData.workHours}
+                                {joinArbeidstider(adData.jobArrangement, adData.workHours, adData.workdays)}
                             </BodyLong>
                         </dd>
                     </div>
                 )}
-                {adData.jobArrangement && (
-                    <div>
-                        <dt>
-                            <Label as="p">Arbeidstidsordning</Label>
-                        </dt>
-                        <dd>
-                            <BodyLong>{adData.jobArrangement}</BodyLong>
-                        </dd>
-                    </div>
-                )}
-                {adData.workLanguages && (
+                {adData.workLanguages && adData.workLanguages.length > 0 && (
                     <div>
                         <dt>
                             <Label as="p">Arbeidsspråk</Label>

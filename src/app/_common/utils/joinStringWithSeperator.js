@@ -1,4 +1,4 @@
-const joinStringWithSeparator = (strings, separator = "og", useLowerCase = true) => {
+const joinStringWithSeparator = (strings, separator = "og", useLowerCase = true, separatorSpace = true) => {
     if (strings.length === 1) {
         return strings[0];
     }
@@ -6,7 +6,11 @@ const joinStringWithSeparator = (strings, separator = "og", useLowerCase = true)
     for (let i = 0; i < strings.length; i += 1) {
         // Add "separator" before the last string
         if (i === strings.length - 1) {
-            result += ` ${separator} `;
+            if (separatorSpace) {
+                result += ` ${separator} `;
+            } else {
+                result += `${separator}`;
+            }
         }
 
         if (!useLowerCase || i === 0) {
