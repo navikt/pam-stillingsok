@@ -20,12 +20,7 @@ describe("test formatWorkdaysString", () => {
     });
 });
 
-const arbeidstider = "Dagtid, Natt, Kveld";
-
 describe("test formatWorkTimeString", () => {
-    test("should return Hele døgnet when all options are chosen", () => {
-        expect(formatWorkTimeString(arbeidstider)).equal("Hele døgnet");
-    });
     test("should return the chosen days", () => {
         expect(formatWorkTimeString("Natt, Dagtid")).equal("Natt og dagtid");
     });
@@ -44,6 +39,8 @@ describe("test joinArbeidstider", () => {
         expect(joinArbeidstider("Skift", undefined, "Ukedager")).equal("Skift, ukedager");
     });
     test("should return string with formatted worktime", () => {
-        expect(joinArbeidstider("Skift", "Dagtid, Natt", arbeidsdager)).equal("Skift, dagtid og natt, alle dager");
+        expect(joinArbeidstider("Skift", "Dagtid, Natt, Kveld", arbeidsdager)).equal(
+            "Skift, dagtid, natt og kveld, alle dager",
+        );
     });
 });

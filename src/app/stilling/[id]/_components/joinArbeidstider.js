@@ -17,10 +17,6 @@ export function formatWorkTimeString(workTime) {
         return null;
     }
 
-    const timeOfDay = ["dagtid", "kveld", "natt"];
-    if (timeOfDay.every((t) => workTime.toLowerCase().includes(t))) {
-        return "Hele døgnet";
-    }
     return `${joinStringWithSeparator(workTime.split(", "))}`;
 }
 
