@@ -138,7 +138,7 @@ function filterEducation(education) {
                         must_not: [
                             {
                                 exists: {
-                                    field: "properties.education",
+                                    field: "education_facet",
                                 },
                             },
                         ],
@@ -817,7 +817,7 @@ const elasticSearchRequestBody = (query) => {
                 },
                 aggs: {
                     values: {
-                        terms: { field: "properties.education", missing: NOT_DEFINED },
+                        terms: { field: "education_facet", missing: NOT_DEFINED },
                     },
                 },
             },
