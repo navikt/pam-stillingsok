@@ -79,6 +79,16 @@ function FiltersDesktop({ query, dispatchQuery, aggregations, locations, searchR
                         updatedValues={searchResult.aggregations.workLanguage}
                     />
                 </FilterAccordionItem>
+
+                {/* TODO: COMMENT IN WHEN FILTER IS READY BACKEND
+                <FilterAccordionItem title="Utdanning" panelId="education">
+                    <Education
+                        query={query}
+                        dispatch={dispatchQuery}
+                        initialValues={aggregations.education}
+                        updatedValues={searchResult.aggregations.education}
+                    />
+                </FilterAccordionItem> */}
             </Accordion>
             <noscript>
                 <Button type="submit">Søk</Button>

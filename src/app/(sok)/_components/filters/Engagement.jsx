@@ -4,6 +4,7 @@ import { Checkbox, Fieldset } from "@navikt/ds-react";
 import { ADD_ENGAGEMENT_TYPE, REMOVE_ENGAGEMENT_TYPE } from "@/app/(sok)/_utils/queryReducer";
 import moveCriteriaToBottom from "@/app/(sok)/_components/utils/moveFacetToBottom";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
+import sortValuesByFirstLetter from "@/app/(sok)/_components/utils/sortValuesByFirstLetter";
 import { logSearchFilterAdded, logSearchFilterRemoved } from "@/app/_common/monitoring/amplitude";
 
 /**
@@ -20,7 +21,8 @@ export function editedItemKey(key) {
 }
 
 function Engagement({ initialValues, updatedValues, query, dispatch }) {
-    const sortedValues = moveCriteriaToBottom(initialValues, "Annet");
+    const sortedValuesByFirstLetter = sortValuesByFirstLetter(initialValues);
+    const sortedValues = moveCriteriaToBottom(sortedValuesByFirstLetter, "Annet");
     const values = mergeCount(sortedValues, updatedValues);
 
     function handleClick(e) {

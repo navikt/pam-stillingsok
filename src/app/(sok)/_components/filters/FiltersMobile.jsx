@@ -101,6 +101,19 @@ function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggre
                                 updatedValues={searchResult && searchResult.aggregations.workLanguage}
                             />
                         </div>
+
+                        {/* TODO: COMMENT IN WHEN FILTER IS READY BACKEND
+                        <div className="mb-6">
+                            <Heading level="2" size="small">
+                                Utdanning
+                            </Heading>
+                            <Education
+                                query={query}
+                                dispatch={dispatchQuery}
+                                initialValues={aggregations.education}
+                                updatedValues={searchResult && searchResult.aggregations.education}
+                            />
+                        </div> */}
                     </Tabs.Panel>
                 </Tabs>
             </Modal.Body>

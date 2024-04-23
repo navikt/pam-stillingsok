@@ -11,6 +11,7 @@ const ALLOWED_PANELID_VALUES = [
     "extent",
     "sector",
     "engagementType",
+    "education",
     "workLanguage",
     "hjemmekontor",
 ];

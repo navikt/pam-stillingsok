@@ -6,6 +6,8 @@ export const ALLOWED_NUMBER_OF_RESULTS_PER_PAGE = [SEARCH_CHUNK_SIZE, SEARCH_CHU
 
 export const PublishedLabelsEnum = {
     "now/d": "Nye i dag",
+    "now-3d": "Nye siste 3 døgn",
+    "now-7d": "Nye siste uka",
 };
 
 function asArray(value) {
@@ -25,6 +27,7 @@ export const defaultQuery = {
     size: SEARCH_CHUNK_SIZE,
     counties: [],
     countries: [],
+    education: [],
     engagementType: [],
     extent: [],
     remote: [],
@@ -61,6 +64,7 @@ export function createQuery(searchParams) {
         extent: asArray(searchParams["extent[]"]) || defaultQuery.extent,
         engagementType: asArray(searchParams["engagementType[]"]) || defaultQuery.engagementType,
         sector: asArray(searchParams["sector[]"]) || defaultQuery.sector,
+        education: asArray(searchParams["education[]"]) || defaultQuery.education,
         workLanguage: asArray(searchParams["workLanguage[]"]) || defaultQuery.workLanguage,
         sort: searchParams.sort || defaultQuery.sort,
         fields: searchParams.fields || defaultQuery.fields,

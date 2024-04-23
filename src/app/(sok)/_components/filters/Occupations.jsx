@@ -9,12 +9,22 @@ import {
 } from "@/app/(sok)/_utils/queryReducer";
 import moveCriteriaToBottom from "@/app/(sok)/_components/utils/moveFacetToBottom";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
+import sortValuesByFirstLetter from "@/app/(sok)/_components/utils/sortValuesByFirstLetter";
 import { logSearchFilterAdded, logSearchFilterRemoved } from "@/app/_common/monitoring/amplitude";
 
 const OCCUPATION_LEVEL_OTHER = "Uoppgitt/ ikke identifiserbare";
 
 function Occupations({ initialValues, updatedValues, query, dispatch }) {
-    const sortedValues = moveCriteriaToBottom(initialValues, OCCUPATION_LEVEL_OTHER);
+    const withSortedSecondLevelOccupations = initialValues.map((item) => {
+        const secondLevel = sortValuesByFirstLetter(item.occupationSecondLevels);
+        return {
+            secondLevel,
+            ...item,
+        };
+    });
+
+    const sortedByLetterFirstLevelOccupations = sortValuesByFirstLetter(withSortedSecondLevelOccupations);
+    const sortedValues = moveCriteriaToBottom(sortedByLetterFirstLevelOccupations, OCCUPATION_LEVEL_OTHER);
     const values = mergeCount(sortedValues, updatedValues, "occupationSecondLevels");
 
     function handleFirstLevelClick(e) {

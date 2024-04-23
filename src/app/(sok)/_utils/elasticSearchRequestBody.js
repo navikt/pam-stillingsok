@@ -123,6 +123,40 @@ function filterWorkLanguage(workLanguage) {
     return filters;
 }
 
+function filterEducation(education) {
+    const filters = [];
+    if (education && education.length > 0) {
+        const filter = {
+            bool: {
+                should: [],
+            },
+        };
+        education.forEach((item) => {
+            if (item === NOT_DEFINED) {
+                filter.bool.should.push({
+                    bool: {
+                        must_not: [
+                            {
+                                exists: {
+                                    field: "properties.education",
+                                },
+                            },
+                        ],
+                    },
+                });
+            } else {
+                filter.bool.should.push({
+                    term: {
+                        education_facet: item,
+                    },
+                });
+            }
+        });
+        filters.push(filter);
+    }
+    return filters;
+}
+
 function filterEngagementType(engagementTypes) {
     const filters = [];
     if (engagementTypes && engagementTypes.length > 0) {
@@ -534,6 +568,7 @@ const elasticSearchRequestBody = (query) => {
         size,
         counties,
         countries,
+        education,
         municipals,
         extent,
         workLanguage,
@@ -571,6 +606,7 @@ const elasticSearchRequestBody = (query) => {
             bool: {
                 filter: [
                     ...filterExtent(extent),
+                    ...filterEducation(education),
                     ...filterWorkLanguage(workLanguage),
                     ...filterRemote(remote),
                     filterLocation(counties, municipals, countries, international),
@@ -590,6 +626,7 @@ const elasticSearchRequestBody = (query) => {
                 "properties.location",
                 "properties.applicationdue",
                 "properties.hasInterestform",
+                "properties.education",
                 "properties.workLanguage",
                 "properties.remote",
                 "locationList.postalCode",
@@ -622,6 +659,7 @@ const elasticSearchRequestBody = (query) => {
                     bool: {
                         filter: [
                             ...filterExtent(extent),
+                            ...filterEducation(education),
                             ...filterWorkLanguage(workLanguage),
                             ...filterRemote(remote),
                             filterLocation(counties, municipals, countries, international),
@@ -646,6 +684,7 @@ const elasticSearchRequestBody = (query) => {
                     bool: {
                         filter: [
                             ...filterExtent(extent),
+                            ...filterEducation(education),
                             ...filterWorkLanguage(workLanguage),
                             ...filterRemote(remote),
                             filterLocation(counties, municipals, countries, international),
@@ -665,6 +704,14 @@ const elasticSearchRequestBody = (query) => {
                                     key: "now/d",
                                     from: "now/d",
                                 },
+                                {
+                                    key: "now-3d",
+                                    from: "now-3d",
+                                },
+                                {
+                                    key: "now-7d",
+                                    from: "now-7d",
+                                },
                             ],
                         },
                     },
@@ -675,6 +722,7 @@ const elasticSearchRequestBody = (query) => {
                     bool: {
                         filter: [
                             ...filterExtent(extent),
+                            ...filterEducation(education),
                             ...filterWorkLanguage(workLanguage),
                             ...filterRemote(remote),
                             filterLocation(counties, municipals, countries, international),
@@ -695,6 +743,7 @@ const elasticSearchRequestBody = (query) => {
                     bool: {
                         filter: [
                             ...filterRemote(remote),
+                            ...filterEducation(education),
                             ...filterWorkLanguage(workLanguage),
                             filterLocation(counties, municipals, countries, international),
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
@@ -714,6 +763,7 @@ const elasticSearchRequestBody = (query) => {
                 filter: {
                     bool: {
                         filter: [
+                            ...filterEducation(education),
                             ...filterWorkLanguage(workLanguage),
                             filterLocation(counties, municipals, countries, international),
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
@@ -735,6 +785,7 @@ const elasticSearchRequestBody = (query) => {
                         filter: [
                             ...filterExtent(extent),
                             ...filterRemote(remote),
+                            ...filterEducation(education),
                             filterLocation(counties, municipals, countries, international),
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
                             ...filterEngagementType(engagementType),
@@ -749,11 +800,33 @@ const elasticSearchRequestBody = (query) => {
                     },
                 },
             },
+            education: {
+                filter: {
+                    bool: {
+                        filter: [
+                            ...filterExtent(extent),
+                            ...filterRemote(remote),
+                            ...filterWorkLanguage(workLanguage),
+                            filterLocation(counties, municipals, countries, international),
+                            filterOccupation(occupationFirstLevels, occupationSecondLevels),
+                            ...filterEngagementType(engagementType),
+                            ...filterSector(sector),
+                            ...filterPublished(published),
+                        ],
+                    },
+                },
+                aggs: {
+                    values: {
+                        terms: { field: "properties.education", missing: NOT_DEFINED },
+                    },
+                },
+            },
             engagementType: {
                 filter: {
                     bool: {
                         filter: [
                             ...filterExtent(extent),
+                            ...filterEducation(education),
                             ...filterWorkLanguage(workLanguage),
                             ...filterRemote(remote),
                             filterLocation(counties, municipals, countries, international),
@@ -774,6 +847,7 @@ const elasticSearchRequestBody = (query) => {
                     bool: {
                         filter: [
                             ...filterExtent(extent),
+                            ...filterEducation(education),
                             ...filterWorkLanguage(workLanguage),
                             ...filterRemote(remote),
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
@@ -821,6 +895,7 @@ const elasticSearchRequestBody = (query) => {
                     bool: {
                         filter: [
                             ...filterExtent(extent),
+                            ...filterEducation(education),
                             ...filterWorkLanguage(workLanguage),
                             ...filterRemote(remote),
                             filterLocation(counties, municipals, countries, international),
@@ -867,6 +942,7 @@ const elasticSearchRequestBody = (query) => {
                     bool: {
                         filter: [
                             ...filterExtent(extent),
+                            ...filterEducation(education),
                             ...filterWorkLanguage(workLanguage),
                             ...filterRemote(remote),
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
