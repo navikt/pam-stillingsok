@@ -173,6 +173,15 @@ function getEmployerName(adData) {
 
     return undefined;
 }
+
+function getEmployerId(adData) {
+    if (adData.employer) {
+        return getString(adData.employer.orgnr);
+    }
+
+    return undefined;
+}
+
 function getEmployerLocation(value) {
     const locationList = getArray(value);
     if (!locationList) {
@@ -198,6 +207,7 @@ function getEmployerLocation(value) {
 function getEmployerData(adData) {
     const employerData = {
         name: getEmployerName(adData),
+        orgnr: getEmployerId(adData),
         homepage: getUrl(adData.properties.employerhomepage), // change check in EmployerDetails.jsx
         linkedinPage: getUrl(adData.properties.linkedinpage), // change check in EmployerDetails.jsx
         twitterAddress: getUrl(adData.properties.twitteraddress), // change check in EmployerDetails.jsx

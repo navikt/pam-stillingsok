@@ -1,12 +1,13 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
 import { Box, Button, Heading, Tag, Link } from "@navikt/ds-react";
 import { logStillingVisning } from "@/app/_common/monitoring/amplitude";
 import ActionBar from "@/app/_common/components/ActionBar";
 import { PencilIcon } from "@navikt/aksel-icons";
+import { useRouter } from "next/navigation";
 import AdDetails from "./AdDetails";
 import AdText from "./AdText";
 import ContactPerson from "./ContactPerson";
@@ -16,7 +17,35 @@ import HowToApply from "./HowToApply";
 import ShareAd from "./ShareAd";
 import Summary from "./Summary";
 
-function Ad({ adData }) {
+function Ad({ adData, organizationNumber }) {
+    const isAdminOfCurrentAd = adData.employer.orgnr === organizationNumber;
+    const [copyAdResponseStatus, setCopyAdResponseStatus] = useState("not-fetched");
+    const router = useRouter();
+
+    const copyAd = async () => {
+        setCopyAdResponseStatus("pending");
+        try {
+            const copy = await fetch(`${process.env.STILLINGSREGISTRERING_URL}/api/stillinger/UUID/${adData.id}/copy`, {
+                credentials: "include",
+                body: "",
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+            // const copy = fetch(`${process.env.STILLINGSREGISTRERING_URL}/api/stillinger/UUID/${jobPosting.uuid}/copy`);
+            if (copy.status === 200) {
+                setCopyAdResponseStatus("success");
+                router.push(`/rediger/${copy.uuid}`);
+            } else {
+                throw Error(copy.status);
+            }
+        } catch (e) {
+            console.log("CATCH", e);
+            setCopyAdResponseStatus("error");
+        }
+    };
+
     /**
      * Track page view for all ads
      */
@@ -34,7 +63,38 @@ function Ad({ adData }) {
 
     return (
         <Box as="article" className="container-small" paddingBlock={{ xs: "4 12", md: "10 24" }}>
-            <ActionBar
+            {isAdminOfCurrentAd && (
+                <ActionBar
+                    background="surface-success-subtle"
+                    buttons={[
+                        <Button
+                            as={Link}
+                            key={`edit-${adData.id}`}
+                            role="link"
+                            href={`${process.env.STILLINGSREGISTRERING_URL}/rediger/${adData.id}`}
+                            variant="tertiary"
+                            icon={<PencilIcon aria-hidden="true" />}
+                        >
+                            Endre
+                        </Button>,
+                        <Button
+                            key={`copy-${adData.id}`}
+                            href={`${process.env.STILLINGSREGISTRERING_URL}/rediger/${adData.id}`}
+                            variant="tertiary"
+                            icon={<PencilIcon aria-hidden="true" />}
+                            onClick={() => {
+                                copyAd();
+                            }}
+                            loading={copyAdResponseStatus === "pending"}
+                        >
+                            Kopier som ny
+                        </Button>,
+                    ]}
+                    title="Dette er din annonse"
+                    titleIcon="briefcase"
+                />
+            )}
+            {/* <ActionBar
                 background="surface-success-subtle"
                 buttons={[
                     <Button
@@ -47,10 +107,21 @@ function Ad({ adData }) {
                     >
                         Endre
                     </Button>,
+                    <Button
+                        key={`copy-${adData.id}`}
+                        href={`${process.env.STILLINGSREGISTRERING_URL}/rediger/${adData.id}`}
+                        variant="tertiary"
+                        icon={<PencilIcon aria-hidden="true" />}
+                        onClick={() => {
+                            copyAd();
+                        }}
+                    >
+                        Kopier som ny
+                    </Button>,
                 ]}
                 title="Dette er din annonse"
                 titleIcon="briefcase"
-            />
+            /> */}
             <Heading level="1" size="xlarge" className="overflow-wrap-anywhere" spacing>
                 {adData.title}
             </Heading>
@@ -83,6 +154,7 @@ Ad.propTypes = {
         title: PropTypes.string,
         adText: PropTypes.string,
         employer: PropTypes.shape({
+            id: PropTypes.string,
             name: PropTypes.string,
         }),
     }).isRequired,

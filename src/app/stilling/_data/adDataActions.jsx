@@ -11,6 +11,7 @@ const sourceIncludes = [
     "contactList.phone",
     "contactList.title",
     "employer.name",
+    "employer.orgnr",
     "employer.locationList.postalCode",
     "employer.locationList.city",
     "employer.locationList.address",
