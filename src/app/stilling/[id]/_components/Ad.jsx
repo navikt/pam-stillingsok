@@ -42,7 +42,10 @@ function Ad({ adData, organizationNumber }) {
             if (copy.status === 200) {
                 console.log("success");
                 setCopyAdResponseStatus("success");
-                redirectId = copy.uuid;
+                const result = await copy.json();
+
+                console.log("AWAIT", result);
+                redirectId = result.uuid;
             } else {
                 console.log("ELSE", copy);
                 throw Error("error");
