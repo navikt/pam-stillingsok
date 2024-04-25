@@ -30,7 +30,6 @@ function Ad({ adData, organizationNumber }) {
                 `${process.env.STILLINGSREGISTRERING_PATH}/api/stillinger/UUID/${adData.id}/copy`,
                 {
                     credentials: "include",
-                    body: "",
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
