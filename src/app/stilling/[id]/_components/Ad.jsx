@@ -7,7 +7,7 @@ import { Box, Button, Heading, Tag, Link } from "@navikt/ds-react";
 import { logStillingVisning } from "@/app/_common/monitoring/amplitude";
 import ActionBar from "@/app/_common/components/ActionBar";
 import { PencilIcon } from "@navikt/aksel-icons";
-import { useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 import AdDetails from "./AdDetails";
 import AdText from "./AdText";
 import ContactPerson from "./ContactPerson";
@@ -20,7 +20,6 @@ import Summary from "./Summary";
 function Ad({ adData, organizationNumber }) {
     const isAdminOfCurrentAd = adData.employer.orgnr === organizationNumber;
     const [copyAdResponseStatus, setCopyAdResponseStatus] = useState("not-fetched");
-    const router = useRouter();
 
     const copyAd = async () => {
         setCopyAdResponseStatus("pending");
@@ -36,7 +35,7 @@ function Ad({ adData, organizationNumber }) {
             // const copy = fetch(`${process.env.STILLINGSREGISTRERING_URL}/api/stillinger/UUID/${jobPosting.uuid}/copy`);
             if (copy.status === 200) {
                 setCopyAdResponseStatus("success");
-                router.push(`/rediger/${copy.uuid}`);
+                redirect(`/rediger/${copy.uuid}`);
             } else {
                 throw Error(copy.status);
             }
