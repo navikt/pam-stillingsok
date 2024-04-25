@@ -1,13 +1,13 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import PropTypes from "prop-types";
 
 import { Box, Button, Heading, Tag, Link } from "@navikt/ds-react";
 import { logStillingVisning } from "@/app/_common/monitoring/amplitude";
 import ActionBar from "@/app/_common/components/ActionBar";
 import { PencilIcon } from "@navikt/aksel-icons";
-import { redirect } from "next/navigation";
 import AdDetails from "./AdDetails";
 import AdText from "./AdText";
 import ContactPerson from "./ContactPerson";
@@ -20,6 +20,7 @@ import Summary from "./Summary";
 function Ad({ adData, organizationNumber }) {
     const isAdminOfCurrentAd = adData.employer.orgnr === organizationNumber;
     const [copyAdResponseStatus, setCopyAdResponseStatus] = useState("not-fetched");
+    const router = useRouter();
 
     const copyAd = async () => {
         let redirectId = "";
@@ -55,7 +56,7 @@ function Ad({ adData, organizationNumber }) {
         // Need to redirect outside try catch, bug in nextjs ?
         if (redirectId !== "") {
             console.log("REDIRECT");
-            redirect(`/rediger/${redirectId}`);
+            router.push(`/rediger/${redirectId}`);
         }
     };
 

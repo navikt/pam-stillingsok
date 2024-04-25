@@ -8,6 +8,9 @@ module.exports = {
     extends: ["plugin:@next/next/recommended", "airbnb", "next/core-web-vitals", "prettier"],
     plugins: ["react", "unused-imports", "prettier"],
     parserOptions: { project },
+    globals: {
+        vi: true,
+    },
     settings: {
         /**
          * enable MUI Joy components to be checked

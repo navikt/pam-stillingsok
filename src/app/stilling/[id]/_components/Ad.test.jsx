@@ -17,6 +17,26 @@ const inactiveAd = {
     status: "INACTIVE",
 };
 
+// Mock router
+vi.mock("next/navigation", async (importOriginal) => {
+    const actual = await importOriginal;
+    const { useRouter } = (await vi.importActual) < typeof import("next-router-mock") > "next-router-mock";
+    const usePathname = vi.fn().mockImplementation(() => {
+        const router = useRouter();
+        return router.pathname;
+    });
+    const useSearchParams = vi.fn().mockImplementation(() => {
+        const router = useRouter();
+        return new URLSearchParams(router.query?.toString());
+    });
+    return {
+        ...actual,
+        useRouter: vi.fn().mockImplementation(useRouter),
+        usePathname,
+        useSearchParams,
+    };
+});
+
 describe("Ad", () => {
     test("should render how to apply for active ads with an application email", () => {
         render(<Ad adData={activeAd} />);
