@@ -10,6 +10,9 @@ const nextConfig = {
     eslint: {
         ignoreDuringBuilds: true,
     },
+    env: {
+        STILLINGSREGISTRERING_PATH: "/stillingsregistrering",
+    },
 };
 
 const { PHASE_DEVELOPMENT_SERVER } = require("next/constants");

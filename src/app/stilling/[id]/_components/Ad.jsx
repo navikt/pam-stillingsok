@@ -24,15 +24,18 @@ function Ad({ adData, organizationNumber }) {
     const copyAd = async () => {
         setCopyAdResponseStatus("pending");
         try {
-            const copy = await fetch(`${process.env.STILLINGSREGISTRERING_URL}/api/stillinger/UUID/${adData.id}/copy`, {
-                credentials: "include",
-                body: "",
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
+            const copy = await fetch(
+                `${process.env.STILLINGSREGISTRERING_PATH}/api/stillinger/UUID/${adData.id}/copy`,
+                {
+                    credentials: "include",
+                    body: "",
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
                 },
-            });
-            // const copy = fetch(`${process.env.STILLINGSREGISTRERING_URL}/api/stillinger/UUID/${jobPosting.uuid}/copy`);
+            );
+
             if (copy.status === 200) {
                 setCopyAdResponseStatus("success");
                 redirect(`/rediger/${copy.uuid}`);
@@ -70,7 +73,7 @@ function Ad({ adData, organizationNumber }) {
                             as={Link}
                             key={`edit-${adData.id}`}
                             role="link"
-                            href={`${process.env.STILLINGSREGISTRERING_URL}/rediger/${adData.id}`}
+                            href={`${process.env.STILLINGSREGISTRERING_PATH}/rediger/${adData.id}`}
                             variant="tertiary"
                             icon={<PencilIcon aria-hidden="true" />}
                         >
@@ -78,7 +81,6 @@ function Ad({ adData, organizationNumber }) {
                         </Button>,
                         <Button
                             key={`copy-${adData.id}`}
-                            href={`${process.env.STILLINGSREGISTRERING_URL}/rediger/${adData.id}`}
                             variant="tertiary"
                             icon={<PencilIcon aria-hidden="true" />}
                             onClick={() => {
@@ -100,7 +102,7 @@ function Ad({ adData, organizationNumber }) {
                         as={Link}
                         key={`edit-${adData.id}`}
                         role="link"
-                        href={`${process.env.STILLINGSREGISTRERING_URL}/rediger/${adData.id}`}
+                        href={`${process.env.STILLINGSREGISTRERING_PATH}/rediger/${adData.id}`}
                         variant="tertiary"
                         icon={<PencilIcon aria-hidden="true" />}
                     >
@@ -108,7 +110,7 @@ function Ad({ adData, organizationNumber }) {
                     </Button>,
                     <Button
                         key={`copy-${adData.id}`}
-                        href={`${process.env.STILLINGSREGISTRERING_URL}/rediger/${adData.id}`}
+                        href={`${process.env.STILLINGSREGISTRERING_PATH}/rediger/${adData.id}`}
                         variant="tertiary"
                         icon={<PencilIcon aria-hidden="true" />}
                         onClick={() => {
