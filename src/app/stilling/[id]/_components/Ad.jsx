@@ -7,7 +7,6 @@ import { Box, Button, Heading, Tag, Link } from "@navikt/ds-react";
 import { logStillingVisning } from "@/app/_common/monitoring/amplitude";
 import ActionBar from "@/app/_common/components/ActionBar";
 import { PencilIcon } from "@navikt/aksel-icons";
-import { redirect } from "next/navigation";
 import AdDetails from "./AdDetails";
 import AdText from "./AdText";
 import ContactPerson from "./ContactPerson";
@@ -22,6 +21,7 @@ function Ad({ adData, organizationNumber }) {
     const [copyAdResponseStatus, setCopyAdResponseStatus] = useState("not-fetched");
 
     const copyAd = async () => {
+        let redirect = "";
         setCopyAdResponseStatus("pending");
         try {
             const copy = await fetch(
@@ -38,13 +38,18 @@ function Ad({ adData, organizationNumber }) {
 
             if (copy.status === 200) {
                 setCopyAdResponseStatus("success");
-                redirect(`/rediger/${copy.uuid}`);
+                redirect = copy.uuid;
             } else {
                 throw Error(copy.status);
             }
         } catch (e) {
             console.log("CATCH", e);
             setCopyAdResponseStatus("error");
+        }
+
+        // Need to redirect outside try catch, bug in nextjs ?
+        if (redirect !== "") {
+            redirect(`/rediger/${redirect}`);
         }
     };
 
