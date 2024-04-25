@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
 import { Box, Button, Heading, Tag, Link } from "@navikt/ds-react";
 import { logStillingVisning } from "@/app/_common/monitoring/amplitude";
 import ActionBar from "@/app/_common/components/ActionBar";
-import { PencilIcon } from "@navikt/aksel-icons";
+import { ClipboardIcon, PencilIcon } from "@navikt/aksel-icons";
 import AdDetails from "./AdDetails";
 import AdText from "./AdText";
 import ContactPerson from "./ContactPerson";
@@ -23,7 +23,6 @@ function Ad({ adData, organizationNumber }) {
     const router = useRouter();
 
     const copyAd = async () => {
-        let redirectId = "";
         setCopyAdResponseStatus("pending");
         try {
             const copy = await fetch(
@@ -37,28 +36,16 @@ function Ad({ adData, organizationNumber }) {
                 },
             );
 
-            console.log("DONE COPY", copy);
-
             if (copy.status === 200) {
-                console.log("success");
                 setCopyAdResponseStatus("success");
                 const result = await copy.json();
-
-                console.log("AWAIT", result);
-                redirectId = result.uuid;
+                const redirectId = result.uuid;
+                router.push(`${process.env.STILLINGSREGISTRERING_PATH}/rediger/${redirectId}`);
             } else {
-                console.log("ELSE", copy);
                 throw Error("error");
             }
         } catch (e) {
-            console.log("CATCH", e);
             setCopyAdResponseStatus("error");
-        }
-
-        // Need to redirect outside try catch, bug in nextjs ?
-        if (redirectId !== "") {
-            console.log("REDIRECT");
-            router.push(`/rediger/${redirectId}`);
         }
     };
 
@@ -96,7 +83,7 @@ function Ad({ adData, organizationNumber }) {
                         <Button
                             key={`copy-${adData.id}`}
                             variant="tertiary"
-                            icon={<PencilIcon aria-hidden="true" />}
+                            icon={<ClipboardIcon aria-hidden="true" />}
                             onClick={() => {
                                 copyAd();
                             }}
