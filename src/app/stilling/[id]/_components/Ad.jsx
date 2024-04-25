@@ -36,11 +36,15 @@ function Ad({ adData, organizationNumber }) {
                 },
             );
 
+            console.log("DONE COPY", copy);
+
             if (copy.status === 200) {
+                console.log("success");
                 setCopyAdResponseStatus("success");
                 redirect = copy.uuid;
             } else {
-                throw Error(copy.status);
+                console.log("ELSE", copy);
+                throw Error("error");
             }
         } catch (e) {
             console.log("CATCH", e);
@@ -49,6 +53,7 @@ function Ad({ adData, organizationNumber }) {
 
         // Need to redirect outside try catch, bug in nextjs ?
         if (redirect !== "") {
+            console.log("REDIRECT");
             redirect(`/rediger/${redirect}`);
         }
     };
