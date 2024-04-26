@@ -8,6 +8,7 @@ import { Box, Button, Heading, Tag, Link } from "@navikt/ds-react";
 import { logStillingVisning } from "@/app/_common/monitoring/amplitude";
 import ActionBar from "@/app/_common/components/ActionBar";
 import { BulletListIcon, ClipboardIcon, PauseIcon, PencilIcon } from "@navikt/aksel-icons";
+import AlertModal from "@/app/_common/components/modals/AlertModal";
 import AdDetails from "./AdDetails";
 import AdText from "./AdText";
 import ContactPerson from "./ContactPerson";
@@ -16,7 +17,6 @@ import EmploymentDetails from "./EmploymentDetails";
 import HowToApply from "./HowToApply";
 import ShareAd from "./ShareAd";
 import Summary from "./Summary";
-import AlertModal from "@/app/_common/components/modals/AlertModal";
 
 function Ad({ adData, organizationNumber }) {
     const isAdminOfCurrentAd = adData.employer.orgnr === organizationNumber;
@@ -24,6 +24,10 @@ function Ad({ adData, organizationNumber }) {
     const [copyAdResponseStatus, setCopyAdResponseStatus] = useState("not-fetched");
     const [stopAdResponseStatus, setStopAdResponseStatus] = useState("not-fetched");
     const router = useRouter();
+
+    // TODO: REMOVE
+    console.log("admin", isAdminOfCurrentAd);
+    console.log("stop", stopAdResponseStatus);
 
     const copyAd = async () => {
         setCopyAdResponseStatus("pending");
@@ -55,7 +59,14 @@ function Ad({ adData, organizationNumber }) {
     const stopAd = async () => {
         setStopAdResponseStatus("pending");
         try {
-            // const stoppedJopPosting = await DELETE(`${EndpointEnum.ANNONSE_UUID}${jobPosting.uuid}/publiser`);
+            const stoppedJopPosting = await fetch(
+                `${process.env.STILLINGSREGISTRERING_PATH}/api/stillinger/UUID/${adData.id}/publiser`,
+                {
+                    credentials: "include",
+                    method: "DELETE",
+                },
+            );
+            console.log("STOPPED POSTING", stoppedJopPosting);
             setStopAdResponseStatus("success");
             setIsConfirmStopAdModalOpen(false);
             // setJobPosting(stoppedJopPosting);
@@ -78,6 +89,8 @@ function Ad({ adData, organizationNumber }) {
     }, [adData]);
 
     const annonseErAktiv = adData.status === "ACTIVE";
+
+    console.log("ADSTATUS", adData.status);
 
     return (
         <Box as="article">
