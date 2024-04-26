@@ -8,6 +8,7 @@ export default function AlertModal({
     children,
     confirmLabel = "Fortsett",
     cancelLabel = "Avbryt",
+    label,
     onConfirm,
     onCancel,
     spinner = false,
@@ -22,7 +23,7 @@ export default function AlertModal({
             role="alertdialog"
             open
             onClose={onCancel}
-            header={{ heading: title }}
+            header={{ label: label, heading: title }}
             aria-describedby={`${id}-message`}
             width={width}
         >
@@ -56,6 +57,7 @@ AlertModal.propTypes = {
     children: PropTypes.oneOfType([PropTypes.string, PropTypes.node, PropTypes.arrayOf(PropTypes.node)]).isRequired,
     confirmLabel: PropTypes.string,
     cancelLabel: PropTypes.string,
+    label: PropTypes.string,
     onConfirm: PropTypes.func,
     onCancel: PropTypes.func.isRequired,
     spinner: PropTypes.bool,

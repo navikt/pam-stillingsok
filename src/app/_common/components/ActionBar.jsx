@@ -15,7 +15,7 @@ function ActionBar({ background, buttons, title, titleIcon }) {
     return (
         <Bleed marginInline="full" className="mb-8">
             <Box background={`${background || "surface-warning-subtle"}`} paddingBlock="4">
-                <div className="container-small">
+                <div className="container-large">
                     <HStack gap={{ xs: "3", md: "3" }} align="center" justify="space-between">
                         <div>
                             <HStack gap="3" align="center">
