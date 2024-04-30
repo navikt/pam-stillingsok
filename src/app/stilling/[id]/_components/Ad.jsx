@@ -20,7 +20,7 @@ import Summary from "./Summary";
 
 function Ad({ adData, organizationNumber }) {
     const isAdminOfCurrentAd = adData.employer.orgnr === organizationNumber;
-    // const [isUnpublished, setIsUnpublished] = useState(adData);
+    const [isUnpublished, setIsUnpublished] = useState(adData.status !== "ACTIVE");
     const [isConfirmStopAdModalOpen, setIsConfirmStopAdModalOpen] = useState(false);
     const [copyAdResponseStatus, setCopyAdResponseStatus] = useState("not-fetched");
     const [stopAdResponseStatus, setStopAdResponseStatus] = useState("not-fetched");
@@ -63,19 +63,20 @@ function Ad({ adData, organizationNumber }) {
     const stopAd = async () => {
         setStopAdResponseStatus("pending");
         try {
-            // const deleteAdData = await fetch(
-            //     `${HOST}${process.env.STILLINGSREGISTRERING_PATH}/api/stillinger/UUID/${adData.id}/publiser`,
-            //     {
-            //         credentials: "include",
-            //         method: "DELETE",
-            //     },
-            // );
+            const deleteAdData = await fetch(
+                `${HOST}${process.env.STILLINGSREGISTRERING_PATH}/api/stillinger/UUID/${adData.id}/publiser`,
+                {
+                    credentials: "include",
+                    method: "DELETE",
+                },
+            );
 
-            // if (deleteAdData.status === 200) {
-            setIsConfirmStopAdModalOpen(false);
-            // } else {
-            //     throw Error("error");
-            // }
+            if (deleteAdData.status === 200) {
+                setIsConfirmStopAdModalOpen(false);
+                setIsUnpublished(true);
+            } else {
+                throw Error("error");
+            }
         } catch (e) {
             setStopAdResponseStatus("error");
         }
@@ -101,7 +102,7 @@ function Ad({ adData, organizationNumber }) {
     return (
         <Box as="article">
             {/* TODO: SET PROPER VALUE */}
-            {true && (
+            {isAdminOfCurrentAd && !isUnpublished && (
                 <ActionBar
                     background="surface-success-subtle"
                     buttons={[
@@ -126,6 +127,38 @@ function Ad({ adData, organizationNumber }) {
                         >
                             Avpubliser
                         </Button>,
+                        <Button
+                            key={`copy-${adData.id}`}
+                            variant="tertiary"
+                            icon={<ClipboardIcon aria-hidden="true" />}
+                            onClick={() => {
+                                copyAd();
+                            }}
+                            loading={copyAdResponseStatus === "pending"}
+                        >
+                            Kopier som ny
+                        </Button>,
+                        <Button
+                            as={Link}
+                            className="no-underline"
+                            key={`own-list-${adData.id}`}
+                            variant="tertiary"
+                            role="link"
+                            icon={<BulletListIcon aria-hidden="true" />}
+                            href={`${process.env.STILLINGSREGISTRERING_PATH}/stillingsannonser`}
+                        >
+                            Gå til dine stillinger
+                        </Button>,
+                    ]}
+                    title="Dette er din annonse"
+                    titleIcon="briefcase"
+                />
+            )}
+
+            {isAdminOfCurrentAd && isUnpublished && (
+                <ActionBar
+                    background="surface-success-subtle"
+                    buttons={[
                         <Button
                             key={`copy-${adData.id}`}
                             variant="tertiary"
