@@ -19,8 +19,8 @@ import ShareAd from "./ShareAd";
 import Summary from "./Summary";
 
 function Ad({ adData, organizationNumber }) {
-    const [currentAdData, setCurrentAdData] = useState(adData);
     const isAdminOfCurrentAd = adData.employer.orgnr === organizationNumber;
+    // const [isUnpublished, setIsUnpublished] = useState(adData);
     const [isConfirmStopAdModalOpen, setIsConfirmStopAdModalOpen] = useState(false);
     const [copyAdResponseStatus, setCopyAdResponseStatus] = useState("not-fetched");
     const [stopAdResponseStatus, setStopAdResponseStatus] = useState("not-fetched");
@@ -29,6 +29,7 @@ function Ad({ adData, organizationNumber }) {
     const HOST = typeof window !== "undefined" && window.location.origin ? window.location.origin : "";
 
     // TODO: REMOVE
+    console.log("ADDATA", adData);
     console.log("admin", isAdminOfCurrentAd);
     console.log("stop", stopAdResponseStatus);
 
@@ -62,23 +63,19 @@ function Ad({ adData, organizationNumber }) {
     const stopAd = async () => {
         setStopAdResponseStatus("pending");
         try {
-            const deleteAdData = await fetch(
-                `${HOST}${process.env.STILLINGSREGISTRERING_PATH}/api/stillinger/UUID/${adData.id}/publiser`,
-                {
-                    credentials: "include",
-                    method: "DELETE",
-                },
-            );
+            // const deleteAdData = await fetch(
+            //     `${HOST}${process.env.STILLINGSREGISTRERING_PATH}/api/stillinger/UUID/${adData.id}/publiser`,
+            //     {
+            //         credentials: "include",
+            //         method: "DELETE",
+            //     },
+            // );
 
-            if (deleteAdData.status === 200) {
-                const result = await deleteAdData.json();
-                console.log("STOPPED POSTING", result);
-                setStopAdResponseStatus("success");
-                setIsConfirmStopAdModalOpen(false);
-                setCurrentAdData(result);
-            } else {
-                throw Error("error");
-            }
+            // if (deleteAdData.status === 200) {
+            setIsConfirmStopAdModalOpen(false);
+            // } else {
+            //     throw Error("error");
+            // }
         } catch (e) {
             setStopAdResponseStatus("error");
         }
@@ -88,18 +85,18 @@ function Ad({ adData, organizationNumber }) {
      * Track page view for all ads
      */
     useEffect(() => {
-        if (currentAdData && currentAdData.id && currentAdData.title) {
+        if (adData && adData.id && adData.title) {
             try {
-                logStillingVisning(currentAdData);
+                logStillingVisning(adData);
             } catch (e) {
                 // ignore
             }
         }
-    }, [currentAdData]);
+    }, [adData]);
 
-    const annonseErAktiv = currentAdData.status === "ACTIVE";
+    const annonseErAktiv = adData.status === "ACTIVE";
 
-    console.log("ADSTATUS", currentAdData.status);
+    console.log("ADSTATUS", adData.status);
 
     return (
         <Box as="article">
@@ -111,16 +108,16 @@ function Ad({ adData, organizationNumber }) {
                         <Button
                             as={Link}
                             className="no-underline"
-                            key={`edit-${currentAdData.id}`}
+                            key={`edit-${adData.id}`}
                             role="link"
-                            href={`${process.env.STILLINGSREGISTRERING_PATH}/rediger/${currentAdData.id}`}
+                            href={`${process.env.STILLINGSREGISTRERING_PATH}/rediger/${adData.id}`}
                             variant="tertiary"
                             icon={<PencilIcon aria-hidden="true" />}
                         >
                             Endre
                         </Button>,
                         <Button
-                            key={`unpublish-${currentAdData.id}`}
+                            key={`unpublish-${adData.id}`}
                             variant="tertiary"
                             icon={<PauseIcon aria-hidden="true" />}
                             onClick={() => {
@@ -130,7 +127,7 @@ function Ad({ adData, organizationNumber }) {
                             Avpubliser
                         </Button>,
                         <Button
-                            key={`copy-${currentAdData.id}`}
+                            key={`copy-${adData.id}`}
                             variant="tertiary"
                             icon={<ClipboardIcon aria-hidden="true" />}
                             onClick={() => {
@@ -143,7 +140,7 @@ function Ad({ adData, organizationNumber }) {
                         <Button
                             as={Link}
                             className="no-underline"
-                            key={`own-list-${currentAdData.id}`}
+                            key={`own-list-${adData.id}`}
                             variant="tertiary"
                             role="link"
                             icon={<BulletListIcon aria-hidden="true" />}
@@ -158,34 +155,30 @@ function Ad({ adData, organizationNumber }) {
             )}
             <Box className="container-small" paddingBlock={{ xs: "4 12", md: "10 24" }}>
                 <Heading level="1" size="xlarge" className="overflow-wrap-anywhere" spacing>
-                    {currentAdData.title}
+                    {adData.title}
                 </Heading>
-                <Summary adData={currentAdData} />
+                <Summary adData={adData} />
                 {!annonseErAktiv && (
                     <Tag variant="warning-moderate" className="mt-4">
                         Stillingsannonsen er inaktiv.
                     </Tag>
                 )}
-                <EmploymentDetails adData={currentAdData} />
-                {annonseErAktiv && <HowToApply adData={currentAdData} />}
-                <AdText adText={currentAdData.adText} />
+                <EmploymentDetails adData={adData} />
+                {annonseErAktiv && <HowToApply adData={adData} />}
+                <AdText adText={adData.adText} />
                 {annonseErAktiv && (
-                    <ContactPerson
-                        contactList={currentAdData.contactList}
-                        adId={currentAdData.id}
-                        adTitle={currentAdData.title}
-                    />
+                    <ContactPerson contactList={adData.contactList} adId={adData.id} adTitle={adData.title} />
                 )}
-                <EmployerDetails employer={currentAdData.employer} />
-                {annonseErAktiv && <ShareAd adData={currentAdData} />}
-                <AdDetails adData={currentAdData} />
+                <EmployerDetails employer={adData.employer} />
+                {annonseErAktiv && <ShareAd adData={adData} />}
+                <AdDetails adData={adData} />
 
                 {isConfirmStopAdModalOpen && (
                     <AlertModal
                         cancelLabel="Avbryt"
                         confirmLabel="Avpubliser annonsen"
                         id="id"
-                        label={currentAdData.title}
+                        label={adData.title}
                         title="Bekreft at du ønsker å avpublisere annonsen"
                         onConfirm={() => {
                             stopAd();
