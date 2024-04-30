@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import PropTypes from "prop-types";
 
-import { Box, Button, Heading, Tag, Link } from "@navikt/ds-react";
+import { Box, Button, Heading, Link, Tag } from "@navikt/ds-react";
 import { logStillingVisning } from "@/app/_common/monitoring/amplitude";
 import ActionBar from "@/app/_common/components/ActionBar";
 import { BulletListIcon, ClipboardIcon, PauseIcon, PencilIcon } from "@navikt/aksel-icons";
@@ -19,11 +19,14 @@ import ShareAd from "./ShareAd";
 import Summary from "./Summary";
 
 function Ad({ adData, organizationNumber }) {
+    const [currentAdData, setCurrentAdData] = useState(adData);
     const isAdminOfCurrentAd = adData.employer.orgnr === organizationNumber;
     const [isConfirmStopAdModalOpen, setIsConfirmStopAdModalOpen] = useState(false);
     const [copyAdResponseStatus, setCopyAdResponseStatus] = useState("not-fetched");
     const [stopAdResponseStatus, setStopAdResponseStatus] = useState("not-fetched");
     const router = useRouter();
+
+    const HOST = typeof window !== "undefined" && window.location.origin ? window.location.origin : "";
 
     // TODO: REMOVE
     console.log("admin", isAdminOfCurrentAd);
@@ -33,7 +36,7 @@ function Ad({ adData, organizationNumber }) {
         setCopyAdResponseStatus("pending");
         try {
             const copy = await fetch(
-                `${process.env.STILLINGSREGISTRERING_PATH}/api/stillinger/UUID/${adData.id}/copy`,
+                `${HOST}${process.env.STILLINGSREGISTRERING_PATH}/api/stillinger/UUID/${adData.id}/copy`,
                 {
                     credentials: "include",
                     method: "POST",
@@ -47,7 +50,7 @@ function Ad({ adData, organizationNumber }) {
                 setCopyAdResponseStatus("success");
                 const result = await copy.json();
                 const redirectId = result.uuid;
-                router.push(`${process.env.STILLINGSREGISTRERING_PATH}/rediger/${redirectId}`);
+                router.push(`${HOST}${process.env.STILLINGSREGISTRERING_PATH}/rediger/${redirectId}`);
             } else {
                 throw Error("error");
             }
@@ -59,17 +62,17 @@ function Ad({ adData, organizationNumber }) {
     const stopAd = async () => {
         setStopAdResponseStatus("pending");
         try {
-            const stoppedJopPosting = await fetch(
-                `${process.env.STILLINGSREGISTRERING_PATH}/api/stillinger/UUID/${adData.id}/publiser`,
+            const deleteAdData = await fetch(
+                `${HOST}${process.env.STILLINGSREGISTRERING_PATH}/api/stillinger/UUID/${adData.id}/publiser`,
                 {
                     credentials: "include",
                     method: "DELETE",
                 },
             );
-            console.log("STOPPED POSTING", stoppedJopPosting);
+            console.log("STOPPED POSTING", deleteAdData);
             setStopAdResponseStatus("success");
             setIsConfirmStopAdModalOpen(false);
-            // setJobPosting(stoppedJopPosting);
+            setCurrentAdData(deleteAdData);
         } catch (e) {
             setStopAdResponseStatus("error");
         }
@@ -79,38 +82,39 @@ function Ad({ adData, organizationNumber }) {
      * Track page view for all ads
      */
     useEffect(() => {
-        if (adData && adData.id && adData.title) {
+        if (currentAdData && currentAdData.id && currentAdData.title) {
             try {
-                logStillingVisning(adData);
+                logStillingVisning(currentAdData);
             } catch (e) {
                 // ignore
             }
         }
-    }, [adData]);
+    }, [currentAdData]);
 
-    const annonseErAktiv = adData.status === "ACTIVE";
+    const annonseErAktiv = currentAdData.status === "ACTIVE";
 
-    console.log("ADSTATUS", adData.status);
+    console.log("ADSTATUS", currentAdData.status);
 
     return (
         <Box as="article">
             {/* TODO: SET PROPER VALUE */}
-            {true && (
+            {isAdminOfCurrentAd && (
                 <ActionBar
                     background="surface-success-subtle"
                     buttons={[
                         <Button
                             as={Link}
-                            key={`edit-${adData.id}`}
+                            className="no-underline"
+                            key={`edit-${currentAdData.id}`}
                             role="link"
-                            href={`${process.env.STILLINGSREGISTRERING_PATH}/rediger/${adData.id}`}
+                            href={`${process.env.STILLINGSREGISTRERING_PATH}/rediger/${currentAdData.id}`}
                             variant="tertiary"
                             icon={<PencilIcon aria-hidden="true" />}
                         >
                             Endre
                         </Button>,
                         <Button
-                            key={`unpublish-${adData.id}`}
+                            key={`unpublish-${currentAdData.id}`}
                             variant="tertiary"
                             icon={<PauseIcon aria-hidden="true" />}
                             onClick={() => {
@@ -120,7 +124,7 @@ function Ad({ adData, organizationNumber }) {
                             Avpubliser
                         </Button>,
                         <Button
-                            key={`copy-${adData.id}`}
+                            key={`copy-${currentAdData.id}`}
                             variant="tertiary"
                             icon={<ClipboardIcon aria-hidden="true" />}
                             onClick={() => {
@@ -131,12 +135,13 @@ function Ad({ adData, organizationNumber }) {
                             Kopier som ny
                         </Button>,
                         <Button
-                            key={`own-list-${adData.id}`}
+                            as={Link}
+                            className="no-underline"
+                            key={`own-list-${currentAdData.id}`}
                             variant="tertiary"
                             role="link"
                             icon={<BulletListIcon aria-hidden="true" />}
                             href={`${process.env.STILLINGSREGISTRERING_PATH}/stillingsannonser`}
-                            loading={copyAdResponseStatus === "pending"}
                         >
                             Gå til dine stillinger
                         </Button>,
@@ -147,30 +152,34 @@ function Ad({ adData, organizationNumber }) {
             )}
             <Box className="container-small" paddingBlock={{ xs: "4 12", md: "10 24" }}>
                 <Heading level="1" size="xlarge" className="overflow-wrap-anywhere" spacing>
-                    {adData.title}
+                    {currentAdData.title}
                 </Heading>
-                <Summary adData={adData} />
+                <Summary adData={currentAdData} />
                 {!annonseErAktiv && (
                     <Tag variant="warning-moderate" className="mt-4">
                         Stillingsannonsen er inaktiv.
                     </Tag>
                 )}
-                <EmploymentDetails adData={adData} />
-                {annonseErAktiv && <HowToApply adData={adData} />}
-                <AdText adText={adData.adText} />
+                <EmploymentDetails adData={currentAdData} />
+                {annonseErAktiv && <HowToApply adData={currentAdData} />}
+                <AdText adText={currentAdData.adText} />
                 {annonseErAktiv && (
-                    <ContactPerson contactList={adData.contactList} adId={adData.id} adTitle={adData.title} />
+                    <ContactPerson
+                        contactList={currentAdData.contactList}
+                        adId={currentAdData.id}
+                        adTitle={currentAdData.title}
+                    />
                 )}
-                <EmployerDetails employer={adData.employer} />
-                {annonseErAktiv && <ShareAd adData={adData} />}
-                <AdDetails adData={adData} />
+                <EmployerDetails employer={currentAdData.employer} />
+                {annonseErAktiv && <ShareAd adData={currentAdData} />}
+                <AdDetails adData={currentAdData} />
 
                 {isConfirmStopAdModalOpen && (
                     <AlertModal
                         cancelLabel="Avbryt"
                         confirmLabel="Avpubliser annonsen"
                         id="id"
-                        label={adData.title}
+                        label={currentAdData.title}
                         title="Bekreft at du ønsker å avpublisere annonsen"
                         onConfirm={() => {
                             stopAd();

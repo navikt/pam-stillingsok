@@ -82,3 +82,9 @@ strong {
 .display-inline {
     display: inline;
 }
+
+.no-underline,
+.no-underline:focus,
+no-underline:hover {
+    text-decoration: none;
+}
