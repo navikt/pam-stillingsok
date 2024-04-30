@@ -69,10 +69,16 @@ function Ad({ adData, organizationNumber }) {
                     method: "DELETE",
                 },
             );
-            console.log("STOPPED POSTING", deleteAdData);
-            setStopAdResponseStatus("success");
-            setIsConfirmStopAdModalOpen(false);
-            setCurrentAdData(deleteAdData);
+
+            if (deleteAdData.status === 200) {
+                const result = await deleteAdData.json();
+                console.log("STOPPED POSTING", result);
+                setStopAdResponseStatus("success");
+                setIsConfirmStopAdModalOpen(false);
+                setCurrentAdData(result);
+            } else {
+                throw Error("error");
+            }
         } catch (e) {
             setStopAdResponseStatus("error");
         }
@@ -98,7 +104,7 @@ function Ad({ adData, organizationNumber }) {
     return (
         <Box as="article">
             {/* TODO: SET PROPER VALUE */}
-            {isAdminOfCurrentAd && (
+            {true && (
                 <ActionBar
                     background="surface-success-subtle"
                     buttons={[
