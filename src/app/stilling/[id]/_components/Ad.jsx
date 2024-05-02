@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import PropTypes from "prop-types";
 
-import { Box, Button, Heading, Link, Tag } from "@navikt/ds-react";
+import { Alert, Bleed, Box, Button, Heading, Link, Tag } from "@navikt/ds-react";
 import { logStillingVisning } from "@/app/_common/monitoring/amplitude";
 import ActionBar from "@/app/_common/components/ActionBar";
 import { BulletListIcon, ClipboardIcon, PauseIcon, PencilIcon } from "@navikt/aksel-icons";
@@ -27,11 +27,6 @@ function Ad({ adData, organizationNumber }) {
     const router = useRouter();
 
     const HOST = typeof window !== "undefined" && window.location.origin ? window.location.origin : "";
-
-    // TODO: REMOVE
-    console.log("ADDATA", adData);
-    console.log("admin", isAdminOfCurrentAd);
-    console.log("stop", stopAdResponseStatus);
 
     const copyAd = async () => {
         setCopyAdResponseStatus("pending");
@@ -97,11 +92,8 @@ function Ad({ adData, organizationNumber }) {
 
     const annonseErAktiv = adData.status === "ACTIVE";
 
-    console.log("ADSTATUS", adData.status);
-
     return (
         <Box as="article">
-            {/* TODO: SET PROPER VALUE */}
             {isAdminOfCurrentAd && !isUnpublished && (
                 <ActionBar
                     background="surface-success-subtle"
@@ -186,7 +178,26 @@ function Ad({ adData, organizationNumber }) {
                     titleIcon="briefcase"
                 />
             )}
-            <Box className="container-small" paddingBlock={{ xs: "4 12", md: "10 24" }}>
+            {copyAdResponseStatus === "error" && (
+                <Bleed marginInline="full">
+                    <Alert
+                        variant="error"
+                        className="container-large"
+                        role="alert"
+                        closeButton
+                        onClose={() => {
+                            setCopyAdResponseStatus("not-fetched");
+                        }}
+                    >
+                        <Heading level="2" size="xsmall" spacing>
+                            Det oppstod en feil ved kopiering av annonse
+                        </Heading>
+                        Vennligst prøv igjen.
+                    </Alert>
+                </Bleed>
+            )}
+
+            <Box className="container-small mt-8" paddingBlock={{ xs: "4 12", md: "10 24" }}>
                 <Heading level="1" size="xlarge" className="overflow-wrap-anywhere" spacing>
                     {adData.title}
                 </Heading>
@@ -210,14 +221,18 @@ function Ad({ adData, organizationNumber }) {
                     <AlertModal
                         cancelLabel="Avbryt"
                         confirmLabel="Avpubliser annonsen"
+                        error={stopAdResponseStatus === "error"}
+                        errorText="Forsøk å avpublisere på en gang til, eller last inn nettsiden på nytt."
                         id="id"
                         label={adData.title}
                         title="Bekreft at du ønsker å avpublisere annonsen"
+                        spinner={stopAdResponseStatus === "pending"}
                         onConfirm={() => {
                             stopAd();
                         }}
                         onCancel={() => {
                             setIsConfirmStopAdModalOpen(false);
+                            setStopAdResponseStatus("not-fetched");
                         }}
                     >
                         Annonsen vil ikke lenger være synlig i søket og jobbsøkere kan ikke søke på stillingen. Du kan
