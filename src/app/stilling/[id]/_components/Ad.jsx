@@ -190,9 +190,9 @@ function Ad({ adData, organizationNumber }) {
                         }}
                     >
                         <Heading level="2" size="xsmall" spacing>
-                            Det oppstod en feil ved kopiering av annonse
+                            Det oppstod en feil ved kopiering av annonsen
                         </Heading>
-                        Vennligst prøv igjen.
+                        Vennligst prøv igjen eller last nettsiden på nytt.
                     </Alert>
                 </Bleed>
             )}
@@ -222,7 +222,8 @@ function Ad({ adData, organizationNumber }) {
                         cancelLabel="Avbryt"
                         confirmLabel="Avpubliser annonsen"
                         error={stopAdResponseStatus === "error"}
-                        errorText="Forsøk å avpublisere på en gang til, eller last inn nettsiden på nytt."
+                        errorHeading="Det oppstod en feil ved avpublisering av annonse"
+                        errorText="Vennligst prøv igjen eller last nettsiden på nytt."
                         id="id"
                         label={adData.title}
                         title="Bekreft at du ønsker å avpublisere annonsen"

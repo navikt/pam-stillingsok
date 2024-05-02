@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React, { useRef } from "react";
-import { Alert, BodyLong, Button, Modal } from "@navikt/ds-react";
+import { Alert, BodyLong, Button, Heading, Modal } from "@navikt/ds-react";
 
 export default function AlertModal({
     id,
@@ -9,6 +9,7 @@ export default function AlertModal({
     confirmLabel = "Fortsett",
     cancelLabel = "Avbryt",
     error = false,
+    errorHeading = "Det oppstod en feil",
     errorText = "Forsøk igjen eller last siden på nytt.",
     label,
     onConfirm,
@@ -33,6 +34,9 @@ export default function AlertModal({
                 <BodyLong id={`${id}-message`}>{children}</BodyLong>
                 {error && (
                     <Alert variant="error" role="alert" className="mt-4">
+                        <Heading level="2" size="xsmall" spacing>
+                            {errorHeading}
+                        </Heading>
                         {errorText}
                     </Alert>
                 )}
@@ -65,6 +69,7 @@ AlertModal.propTypes = {
     confirmLabel: PropTypes.string,
     cancelLabel: PropTypes.string,
     error: PropTypes.bool,
+    errorHeading: PropTypes.string,
     errorText: PropTypes.string,
     label: PropTypes.string,
     onConfirm: PropTypes.func,
