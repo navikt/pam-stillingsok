@@ -88,3 +88,7 @@ strong {
 no-underline:hover {
     text-decoration: none;
 }
+
+.full-width-alert-box {
+    background-color: var(--ac-alert-error-bg, var(--a-surface-danger-subtle));
+}

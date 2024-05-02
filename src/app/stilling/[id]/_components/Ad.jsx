@@ -180,20 +180,25 @@ function Ad({ adData, organizationNumber }) {
             )}
             {copyAdResponseStatus === "error" && (
                 <Bleed marginInline="full">
-                    <Alert
-                        variant="error"
-                        className="container-large"
-                        role="alert"
-                        closeButton
-                        onClose={() => {
-                            setCopyAdResponseStatus("not-fetched");
-                        }}
-                    >
-                        <Heading level="2" size="xsmall" spacing>
-                            Det oppstod en feil ved kopiering av annonsen
-                        </Heading>
-                        Vennligst prøv igjen eller last nettsiden på nytt.
-                    </Alert>
+                    <Box className="full-width-alert-box">
+                        <Alert
+                            variant="error"
+                            className="container-large"
+                            fullWidth
+                            role="alert"
+                            closeButton
+                            onClose={() => {
+                                setCopyAdResponseStatus("not-fetched");
+                            }}
+                        >
+                            <div>
+                                <Heading level="2" size="xsmall" spacing>
+                                    Det oppstod en feil ved kopiering av annonsen
+                                </Heading>
+                                Vennligst prøv igjen eller last nettsiden på nytt.
+                            </div>
+                        </Alert>
+                    </Box>
                 </Bleed>
             )}
 
