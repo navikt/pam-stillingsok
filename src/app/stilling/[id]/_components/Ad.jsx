@@ -202,7 +202,7 @@ function Ad({ adData, organizationNumber }) {
                 </Bleed>
             )}
 
-            <Box className="container-small mt-8" paddingBlock={{ xs: "4 12", md: "10 24" }}>
+            <Box className="container-small" paddingBlock={{ xs: "4 12", md: "10 24" }}>
                 <Heading level="1" size="xlarge" className="overflow-wrap-anywhere" spacing>
                     {adData.title}
                 </Heading>
