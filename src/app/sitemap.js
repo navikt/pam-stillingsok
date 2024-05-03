@@ -6,10 +6,19 @@ export default async function sitemap() {
 
     const ads = await getAds();
 
-    return ads.map((ad) => ({
+    const adEntries = ads.map((ad) => ({
         url: `https://arbeidsplassen.nav.no/stillinger/${ad.uuid}`,
         lastModified: ad.updated ? ad.updated.split("T")[0] : "",
-        changeFrequency: "daily",
+        changeFrequency: "weekly",
         priority: 0.9,
     }));
+
+    const searchUrlEntry = {
+        url: `https://arbeidsplassen.nav.no/stillinger`,
+        lastModified: new Date().toISOString().split("T")[0],
+        priority: 1,
+        changeFrequency: "hourly",
+    };
+
+    return [searchUrlEntry].concat(adEntries);
 }
