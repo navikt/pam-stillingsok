@@ -1,6 +1,6 @@
 export default async function sitemap() {
     async function getAds() {
-        const response = await fetch(`${process.env.PAMSEARCHAPI_URL}/scroll/ad`);
+        const response = await fetch(`${process.env.PAMSEARCHAPI_URL}/scroll/ad`, { next: { revalidate: 7200 } });
         return response.json();
     }
 
