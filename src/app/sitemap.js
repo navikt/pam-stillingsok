@@ -1,6 +1,10 @@
+const TWO_HOURS_IN_SECONDS = 7200;
+
 export default async function sitemap() {
     async function getAds() {
-        const response = await fetch(`${process.env.PAMSEARCHAPI_URL}/scroll/ad`, { next: { revalidate: 7200 } });
+        const response = await fetch(`${process.env.PAMSEARCHAPI_URL}/scroll/ad`, {
+            next: { revalidate: TWO_HOURS_IN_SECONDS },
+        });
         return response.json();
     }
 
