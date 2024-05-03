@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import SessionStatusModal from "@/app/_common/auth/components/SessionStatusModal";
 import * as actions from "@/app/_common/actions";
+import { cookies } from "next/headers";
 
 export const AuthenticationContext = React.createContext({
     userNameAndInfo: undefined,
@@ -28,6 +29,7 @@ function AuthenticationProvider({ children }) {
         window.location.href = `/stillinger/oauth2/logout?redirect=${encodeURIComponent("/utlogget?timeout=true")}`;
     };
     const markAsLoggedOut = () => {
+        cookies().delete("organizationNumber");
         setAuthenticationStatus(AuthenticationStatus.NOT_AUTHENTICATED);
     };
 
@@ -40,6 +42,7 @@ function AuthenticationProvider({ children }) {
     }
 
     function logout() {
+        cookies().delete("organizationNumber");
         window.location.href = `/stillinger/oauth2/logout?redirect=${encodeURIComponent("/utlogget")}`;
     }
 
