@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 const TWO_HOURS_IN_SECONDS = 7200;
 
 export default async function sitemap() {
