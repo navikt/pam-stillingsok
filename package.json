@@ -30,6 +30,7 @@
         "@navikt/oasis": "^3.2.2",
         "@neshca/cache-handler": "^1.0.6",
         "@sentry/nextjs": "^7.105.0",
+        "browser-cookies": "^1.2.0",
         "date-fns": "^3.3.1",
         "html-react-parser": "^5.1.8",
         "isomorphic-dompurify": "^2.4.0",
