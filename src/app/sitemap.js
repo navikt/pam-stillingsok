@@ -8,7 +8,7 @@ export default async function sitemap() {
 
     return ads.map((ad) => ({
         url: `https://arbeidsplassen.nav.no/stillinger/${ad.uuid}`,
-        lastModified: ad.updated,
+        lastModified: ad.updated ? ad.updated.split("T")[0] : "",
         changeFrequency: "daily",
         priority: 0.9,
     }));
