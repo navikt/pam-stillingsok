@@ -22,10 +22,10 @@ spec:
     path: /stillinger/api/internal/isReady
   resources:
     limits:
-      cpu: 2000m
-      memory: 512Mi
+      cpu: 4000m
+      memory: 1024Mi
     requests:
-      cpu: 750m
+      cpu: 1000m
       memory: 256Mi
   observability:
     logging:
