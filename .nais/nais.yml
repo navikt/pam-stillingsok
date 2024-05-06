@@ -32,6 +32,9 @@ spec:
       destinations:
         - id: loki
         - id: elastic
+    autoInstrumentation:
+      enabled: true
+      runtime: sdk
   vault:
     enabled: false
   idporten:

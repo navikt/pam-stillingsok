@@ -4,6 +4,7 @@ const nextConfig = {
     cacheHandler: process.env.NODE_ENV === "production" ? require.resolve("./cache-handler.mjs") : undefined,
     experimental: {
         optimizePackageImports: ["@navikt/ds-react", "@navikt/aksel-icons"],
+        instrumentationHook: true,
     },
     assetPrefix: process.env.ASSET_PREFIX || undefined,
     output: "standalone",
