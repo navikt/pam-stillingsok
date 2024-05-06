@@ -34,7 +34,7 @@ spec:
         - id: elastic
     autoInstrumentation:
       enabled: true
-      runtime: sdk
+      runtime: nodejs
   vault:
     enabled: false
   idporten:
