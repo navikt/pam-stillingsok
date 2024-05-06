@@ -1,9 +1,19 @@
 import { defaultOpenGraphImage } from "@/app/layout";
 import { getAdData } from "@/app/stilling/_data/adDataActions";
 import { notFound } from "next/navigation";
+import { cookies } from "next/headers";
 import Ad from "./_components/Ad";
 import { getStillingDescription, getStillingTitle } from "./_components/getMetaData";
 import { fetchAd } from "../FetchAd";
+
+const getOrgCookie = () => {
+    try {
+        const orgNr = cookies().get("organizationNumber").value;
+        return orgNr;
+    } catch (err) {
+        return undefined;
+    }
+};
 
 export async function generateMetadata({ params }) {
     const data = await fetchAd(params.id);
@@ -26,6 +36,9 @@ export async function generateMetadata({ params }) {
 
 export default async function Page({ params }) {
     const result = await getAdData(params.id);
+
+    const organizationNumber = getOrgCookie();
+
     if (!result.ok) {
         if (result.status === 404) {
             notFound();
@@ -34,5 +47,5 @@ export default async function Page({ params }) {
         }
     }
 
-    return <Ad adData={result.data} />;
+    return <Ad adData={result.data} organizationNumber={organizationNumber} />;
 }

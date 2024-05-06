@@ -79,6 +79,6 @@ ShareAd.propTypes = {
         updated: PropTypes.string,
         medium: PropTypes.string,
         reference: PropTypes.string,
-        adNumber: PropTypes.string,
+        adNumber: PropTypes.number,
     }).isRequired,
 };
