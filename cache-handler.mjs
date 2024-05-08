@@ -11,6 +11,7 @@ CacheHandler.onCreation(async () => {
             url: process.env.REDIS_URI_CACHE ?? 'redis://localhost:6379',
             username: process.env.REDIS_USERNAME_CACHE ?? '',
             password: process.env.REDIS_PASSWORD_CACHE ?? '',
+            disableOfflineQueue: true,
         });
 
         client.on('error', err => console.log('Redis Client Error', err));
