@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { Checkbox, Fieldset } from "@navikt/ds-react";
+import { BodyShort, Checkbox, Fieldset } from "@navikt/ds-react";
 import { ADD_WORKLANGUAGE, REMOVE_WORKLANGUAGE } from "@/app/(sok)/_utils/queryReducer";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
 import { logSearchFilterAdded, logSearchFilterRemoved } from "@/app/_common/monitoring/amplitude";
@@ -22,7 +22,15 @@ function WorkLanguage({ initialValues, updatedValues, query, dispatch }) {
     }
 
     return (
-        <Fieldset legend="Filtrer etter arbeidsspråk" hideLegend>
+        <Fieldset
+            className="mt-4"
+            legend={
+                <>
+                    <BodyShort visuallyHidden>Filtrer etter </BodyShort>
+                    <span className="capitalize">arbeidsspråk</span>
+                </>
+            }
+        >
             <div>
                 {values.map((item) => (
                     <Checkbox

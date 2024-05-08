@@ -26,7 +26,7 @@ export async function getUserPreferences() {
     const existingCookie = cookies().get(USER_PREFERENCES_COOKIE_NAME) || {};
     try {
         const parsedCookie = JSON.parse(existingCookie.value);
-        const closedFilters = (parsedCookie.closedFilters || []).filter((it) => ALLOWED_PANELID_VALUES.includes(it));
+        const openFilters = (parsedCookie.openFilters || []).filter((it) => ALLOWED_PANELID_VALUES.includes(it));
         const dismissedPanels = (parsedCookie.dismissedPanels || []).filter((it) =>
             ALLOWED_DISMISSED_PANELS.includes(it),
         );
@@ -34,28 +34,43 @@ export async function getUserPreferences() {
             parsedCookie.resultsPerPage && ALLOWED_RESULTS_PER_PAGE.includes(parsedCookie.resultsPerPage)
                 ? parsedCookie.resultsPerPage
                 : undefined;
-        return { closedFilters, dismissedPanels, resultsPerPage };
+
+        const publishedJobFilterOpen = parsedCookie.publishedJobFilterOpen === true;
+
+        return { openFilters, dismissedPanels, resultsPerPage, publishedJobFilterOpen };
     } catch (e) {
         logger.info(`Kunne ikke parse '${USER_PREFERENCES_COOKIE_NAME}' cookie`);
         return {};
     }
 }
 
-export async function addClosedFilter(panelId) {
+export async function addOpenFilter(panelId) {
     if (!ALLOWED_PANELID_VALUES.includes(panelId)) {
         // Trying to set an invalid value
         return;
     }
     const existingCookie = await getUserPreferences();
-    const closedFilters = new Set(existingCookie.closedFilters || []).add(panelId);
-    const newCookieValue = { ...existingCookie, closedFilters: [...closedFilters] };
+    const openFilters = new Set(existingCookie.openFilters || []).add(panelId);
+    const newCookieValue = { ...existingCookie, openFilters: [...openFilters] };
     cookies().set(USER_PREFERENCES_COOKIE_NAME, JSON.stringify(newCookieValue), COOKIE_OPTIONS);
 }
 
-export async function removeClosedFilter(panelId) {
+export async function removeOpenFilter(panelId) {
     const existingCookie = await getUserPreferences();
-    const closedFilters = (existingCookie.closedFilters || []).filter((it) => it !== panelId);
-    const newCookieValue = { ...existingCookie, closedFilters };
+    const openFilters = (existingCookie.openFilters || []).filter((it) => it !== panelId);
+    const newCookieValue = { ...existingCookie, openFilters };
+    cookies().set(USER_PREFERENCES_COOKIE_NAME, JSON.stringify(newCookieValue), COOKIE_OPTIONS);
+}
+
+export async function addPublishedJobFilterOpen() {
+    const existingCookie = await getUserPreferences();
+    const newCookieValue = { ...existingCookie, publishedJobFilterOpen: true };
+    cookies().set(USER_PREFERENCES_COOKIE_NAME, JSON.stringify(newCookieValue), COOKIE_OPTIONS);
+}
+
+export async function removePublishedJobFilterOpen() {
+    const existingCookie = await getUserPreferences();
+    const newCookieValue = { ...existingCookie, publishedJobFilterOpen: false };
     cookies().set(USER_PREFERENCES_COOKIE_NAME, JSON.stringify(newCookieValue), COOKIE_OPTIONS);
 }
 

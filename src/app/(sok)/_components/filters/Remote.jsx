@@ -1,5 +1,5 @@
 import React from "react";
-import { Checkbox, Fieldset } from "@navikt/ds-react";
+import { BodyShort, Checkbox, Fieldset } from "@navikt/ds-react";
 import { ADD_REMOTE, REMOVE_REMOTE } from "@/app/(sok)/_utils/queryReducer";
 import moveCriteriaToBottom from "@/app/(sok)/_components/utils/moveFacetToBottom";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
@@ -32,7 +32,15 @@ function Remote({ initialValues, updatedValues, query, dispatch }) {
     }
 
     return (
-        <Fieldset legend="Filtrer etter hjemmekontormuligheter" hideLegend>
+        <Fieldset
+            className="mt-4"
+            legend={
+                <>
+                    <BodyShort visuallyHidden>Filtrer etter </BodyShort>
+                    <span className="capitalize">hjemmekontor</span>
+                </>
+            }
+        >
             <div>
                 {sortedValues.map((item) => (
                     <Checkbox

@@ -6,16 +6,44 @@ import { Accordion } from "@navikt/ds-react";
 import { UserPreferencesContext } from "@/app/_common/user/UserPreferenceProvider";
 
 function FilterAccordionItem({ title, children, panelId }) {
-    const { closedFilters, addClosedFilter, removeClosedFilter } = useContext(UserPreferencesContext);
-    const [isOpen, setIsOpen] = useState(!closedFilters.includes(panelId));
+    const {
+        publishedJobFilterOpen,
+        addPublishedJobFilterOpen,
+        removePublishedJobFilterOpen,
+        openFilters,
+        addOpenFilter,
+        removeOpenFilter,
+    } = useContext(UserPreferencesContext);
+    const [isOpen, setIsOpen] = useState(openFilters.includes(panelId));
+    const [isPublishedJobFilterOpen, setIsPublishedJobFilterOpen] = useState(publishedJobFilterOpen);
 
     function onPanelClick() {
-        if (isOpen) {
-            addClosedFilter(panelId);
+        if (!isOpen) {
+            addOpenFilter(panelId);
         } else {
-            removeClosedFilter(panelId);
+            removeOpenFilter(panelId);
         }
         setIsOpen(!isOpen);
+    }
+
+    function onPanelPublishClick() {
+        if (!isPublishedJobFilterOpen) {
+            addPublishedJobFilterOpen();
+        } else {
+            removePublishedJobFilterOpen();
+        }
+        setIsPublishedJobFilterOpen(!isPublishedJobFilterOpen);
+    }
+
+    if (panelId === "publisert") {
+        return (
+            <section aria-label={`${title}, søkefilter`}>
+                <Accordion.Item open={isPublishedJobFilterOpen}>
+                    <Accordion.Header onClick={onPanelPublishClick}>{title}</Accordion.Header>
+                    <Accordion.Content>{children}</Accordion.Content>
+                </Accordion.Item>
+            </section>
+        );
     }
 
     return (

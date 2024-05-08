@@ -23,15 +23,13 @@ function FiltersDesktop({ query, dispatchQuery, aggregations, locations, searchR
                         updatedValues={searchResult.aggregations.published}
                     />
                 </FilterAccordionItem>
-                <FilterAccordionItem title="Sted" panelId="sted">
+                <FilterAccordionItem title="Sted og hjemmekontor" panelId="sted">
                     <Counties
                         query={query}
                         dispatch={dispatchQuery}
                         locations={locations}
                         updatedValues={searchResult}
                     />
-                </FilterAccordionItem>
-                <FilterAccordionItem title="Hjemmekontor" panelId="hjemmekontor">
                     <Remote
                         query={query}
                         dispatch={dispatchQuery}
@@ -39,23 +37,13 @@ function FiltersDesktop({ query, dispatchQuery, aggregations, locations, searchR
                         updatedValues={searchResult.aggregations.remote}
                     />
                 </FilterAccordionItem>
-                <FilterAccordionItem title="Yrke" panelId="yrke">
+                <FilterAccordionItem title="Yrke og sektor" panelId="yrke">
                     <Occupations
                         query={query}
                         dispatch={dispatchQuery}
                         initialValues={aggregations.occupationFirstLevels}
                         updatedValues={searchResult.aggregations.occupationFirstLevels}
                     />
-                </FilterAccordionItem>
-                <FilterAccordionItem title="Heltid/deltid" panelId="extent">
-                    <Extent
-                        query={query}
-                        dispatch={dispatchQuery}
-                        initialValues={aggregations.extent}
-                        updatedValues={searchResult.aggregations.extent}
-                    />
-                </FilterAccordionItem>
-                <FilterAccordionItem title="Sektor" panelId="sector">
                     <Sector
                         query={query}
                         dispatch={dispatchQuery}
@@ -63,14 +51,7 @@ function FiltersDesktop({ query, dispatchQuery, aggregations, locations, searchR
                         updatedValues={searchResult.aggregations.sector}
                     />
                 </FilterAccordionItem>
-                <FilterAccordionItem title="Ansettelsesform" panelId="engagementType">
-                    <EngagementType
-                        query={query}
-                        dispatch={dispatchQuery}
-                        initialValues={aggregations.engagementTypes}
-                        updatedValues={searchResult.aggregations.engagementTypes}
-                    />
-                </FilterAccordionItem>
+
                 <FilterAccordionItem title="Arbeidsspråk" panelId="workLanguage">
                     <WorkLanguage
                         query={query}
@@ -79,7 +60,20 @@ function FiltersDesktop({ query, dispatchQuery, aggregations, locations, searchR
                         updatedValues={searchResult.aggregations.workLanguage}
                     />
                 </FilterAccordionItem>
-
+                <FilterAccordionItem title="Omfang og ansettelsesform" panelId="extent">
+                    <Extent
+                        query={query}
+                        dispatch={dispatchQuery}
+                        initialValues={aggregations.extent}
+                        updatedValues={searchResult.aggregations.extent}
+                    />
+                    <EngagementType
+                        query={query}
+                        dispatch={dispatchQuery}
+                        initialValues={aggregations.engagementTypes}
+                        updatedValues={searchResult.aggregations.engagementTypes}
+                    />
+                </FilterAccordionItem>
                 {/* TODO: COMMENT IN WHEN FILTER IS READY BACKEND
                 <FilterAccordionItem title="Utdanning" panelId="education">
                     <Education
