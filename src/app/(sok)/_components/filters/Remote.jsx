@@ -38,7 +38,9 @@ function Remote({ initialValues, updatedValues, query, dispatch }) {
             className="mt-4"
             legend={
                 <>
-                    <BodyShort visuallyHidden>Filtrer etter </BodyShort>
+                    <BodyShort as="span" visuallyHidden>
+                        Filtrer etter{" "}
+                    </BodyShort>
                     <span className="capitalize">hjemmekontor</span>
                 </>
             }

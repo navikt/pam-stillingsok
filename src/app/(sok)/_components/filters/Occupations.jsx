@@ -70,7 +70,9 @@ function Occupations({ initialValues, updatedValues, query, dispatch }) {
         <Fieldset
             legend={
                 <>
-                    <BodyShort visuallyHidden>Filtrer etter </BodyShort>
+                    <BodyShort as="span" visuallyHidden>
+                        Filtrer etter{" "}
+                    </BodyShort>
                     <span className="capitalize">yrke</span>
                 </>
             }
