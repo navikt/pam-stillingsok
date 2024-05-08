@@ -92,3 +92,7 @@ no-underline:hover {
 .full-width-alert-box {
     background-color: var(--ac-alert-error-bg, var(--a-surface-danger-subtle));
 }
+
+.capitalize {
+    text-transform: capitalize;
+}

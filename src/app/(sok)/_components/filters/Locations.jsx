@@ -57,7 +57,17 @@ function Locations({ locations, query, dispatch, updatedValues }) {
     };
 
     return (
-        <Fieldset hideLegend legend="Filtrer etter fylke, kommune eller land" className="FilterModal__fieldset">
+        <Fieldset
+            legend={
+                <>
+                    <BodyShort as="span" visuallyHidden>
+                        Filtrer etter{" "}
+                    </BodyShort>
+                    <span className="capitalize">sted</span>
+                </>
+            }
+            className="FilterModal__fieldset"
+        >
             <div>
                 {locationValues &&
                     locationValues.map((location) => (

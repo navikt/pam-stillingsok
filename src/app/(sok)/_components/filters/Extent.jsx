@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { Checkbox, Fieldset } from "@navikt/ds-react";
+import { BodyShort, Checkbox, Fieldset } from "@navikt/ds-react";
 import { ADD_EXTENT, REMOVE_EXTENT } from "@/app/(sok)/_utils/queryReducer";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
 import { logSearchFilterAdded, logSearchFilterRemoved } from "@/app/_common/monitoring/amplitude";
@@ -24,7 +24,16 @@ function Extent({ initialValues, updatedValues, query, dispatch }) {
     }
 
     return (
-        <Fieldset legend="Filtrer etter heltid/deltid" hideLegend>
+        <Fieldset
+            legend={
+                <>
+                    <BodyShort as="span" visuallyHidden>
+                        Filtrer etter{" "}
+                    </BodyShort>
+                    <span className="capitalize">omfang</span>
+                </>
+            }
+        >
             <div>
                 {values.map((item) => (
                     <Checkbox

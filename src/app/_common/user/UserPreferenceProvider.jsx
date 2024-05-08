@@ -5,17 +5,33 @@ import * as actions from "@/app/_common/actions";
 export const UserPreferencesContext = React.createContext({});
 
 function UserPreferencesProvider({ children, userPreferences }) {
-    function addClosedFilter(panelId) {
+    function addOpenFilter(panelId) {
         try {
-            actions.addClosedFilter(panelId);
+            actions.addOpenFilter(panelId);
         } catch (err) {
             // ignore fetch failed
         }
     }
 
-    function removeClosedFilter(panelId) {
+    function removeOpenFilter(panelId) {
         try {
-            actions.removeClosedFilter(panelId);
+            actions.removeOpenFilter(panelId);
+        } catch (err) {
+            // ignore fetch failed
+        }
+    }
+
+    function addPublishedJobFilterOpen() {
+        try {
+            actions.addPublishedJobFilterOpen();
+        } catch (err) {
+            // ignore fetch failed
+        }
+    }
+
+    function removePublishedJobFilterOpen() {
+        try {
+            actions.removePublishedJobFilterOpen();
         } catch (err) {
             // ignore fetch failed
         }
@@ -33,10 +49,16 @@ function UserPreferencesProvider({ children, userPreferences }) {
         <UserPreferencesContext.Provider
             // eslint-disable-next-line
             value={{
-                closedFilters: userPreferences?.closedFilters || [],
-                addClosedFilter,
-                removeClosedFilter,
+                openFilters: userPreferences?.openFilters || [],
+                publishedJobFilterOpen: !!(
+                    userPreferences?.publishedJobFilterOpen === undefined ||
+                    userPreferences?.publishedJobFilterOpen === true
+                ),
+                addOpenFilter,
+                removeOpenFilter,
                 dismissPanel,
+                addPublishedJobFilterOpen,
+                removePublishedJobFilterOpen,
                 dismissedPanels: userPreferences?.dismissedPanels || [],
             }}
         >

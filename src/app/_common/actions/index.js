@@ -1,7 +1,9 @@
 export {
     getUserPreferences,
-    removeClosedFilter,
-    addClosedFilter,
+    removeOpenFilter,
+    addOpenFilter,
+    addPublishedJobFilterOpen,
+    removePublishedJobFilterOpen,
     dismissPanel,
     saveResultsPerPage,
 } from "./userPreferencesActions";

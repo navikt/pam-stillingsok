@@ -1,12 +1,16 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { Checkbox, Fieldset } from "@navikt/ds-react";
+import { BodyShort, Checkbox, Fieldset } from "@navikt/ds-react";
 import { ADD_SECTOR, REMOVE_SECTOR } from "@/app/(sok)/_utils/queryReducer";
+import moveCriteriaToBottom from "@/app/(sok)/_components/utils/moveFacetToBottom";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
+import sortValuesByFirstLetter from "@/app/(sok)/_components/utils/sortValuesByFirstLetter";
 import { logSearchFilterAdded, logSearchFilterRemoved } from "@/app/_common/monitoring/amplitude";
 
 function Sector({ initialValues, updatedValues, query, dispatch }) {
-    const values = mergeCount(initialValues, updatedValues);
+    const sortedValuesByFirstLetter = sortValuesByFirstLetter(initialValues);
+    const sortedValues = moveCriteriaToBottom(sortedValuesByFirstLetter, "Ikke oppgitt");
+    const values = mergeCount(sortedValues, updatedValues);
 
     function handleClick(e) {
         const { value } = e.target;
@@ -20,7 +24,17 @@ function Sector({ initialValues, updatedValues, query, dispatch }) {
     }
 
     return (
-        <Fieldset legend="Filtrer etter sektor" hideLegend>
+        <Fieldset
+            className="mt-4"
+            legend={
+                <>
+                    <BodyShort as="span" visuallyHidden>
+                        Filtrer etter{" "}
+                    </BodyShort>
+                    <span className="capitalize">sektor</span>
+                </>
+            }
+        >
             <div>
                 {values.map((item) => (
                     <Checkbox

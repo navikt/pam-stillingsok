@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { Box, Checkbox, Fieldset } from "@navikt/ds-react";
+import { BodyShort, Box, Checkbox, Fieldset } from "@navikt/ds-react";
 import {
     ADD_OCCUPATION_FIRST_LEVEL,
     ADD_OCCUPATION_SECOND_LEVEL,
@@ -67,7 +67,17 @@ function Occupations({ initialValues, updatedValues, query, dispatch }) {
     }
 
     return (
-        <Fieldset hideLegend legend="Filtrer etter yrkesgruppe" className="FilterModal__fieldset">
+        <Fieldset
+            legend={
+                <>
+                    <BodyShort as="span" visuallyHidden>
+                        Filtrer etter{" "}
+                    </BodyShort>
+                    <span className="capitalize">yrke</span>
+                </>
+            }
+            className="FilterModal__fieldset"
+        >
             <div>
                 {values &&
                     values.map((firstLevel) => (
