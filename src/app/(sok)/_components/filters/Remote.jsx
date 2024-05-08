@@ -3,16 +3,18 @@ import { BodyShort, Checkbox, Fieldset } from "@navikt/ds-react";
 import { ADD_REMOTE, REMOVE_REMOTE } from "@/app/(sok)/_utils/queryReducer";
 import moveCriteriaToBottom from "@/app/(sok)/_components/utils/moveFacetToBottom";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
+import sortRemoteValues from "@/app/(sok)/_components/utils/sortRemoteValues";
 import { logSearchFilterAdded, logSearchFilterRemoved } from "@/app/_common/monitoring/amplitude";
 
 function Remote({ initialValues, updatedValues, query, dispatch }) {
-    const values = mergeCount(initialValues, updatedValues);
-    const sortedValues = moveCriteriaToBottom(values, "Ikke oppgitt");
+    const sortedValuesByFirstLetter = sortRemoteValues(initialValues);
+    const sortedValues = moveCriteriaToBottom(sortedValuesByFirstLetter, "Ikke oppgitt");
+    const values = mergeCount(sortedValues, updatedValues);
 
     function labelForRemote(label) {
         switch (label) {
             case "Hybridkontor":
-                return "Hybrid";
+                return "Hybridkontor";
             case "Hjemmekontor":
                 return "Kun hjemmekontor";
             default:
@@ -42,7 +44,7 @@ function Remote({ initialValues, updatedValues, query, dispatch }) {
             }
         >
             <div>
-                {sortedValues.map((item) => (
+                {values.map((item) => (
                     <Checkbox
                         name="remote[]"
                         key={item.key}

@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { Checkbox, Fieldset } from "@navikt/ds-react";
+import { BodyShort, Checkbox, Fieldset } from "@navikt/ds-react";
 import { ADD_ENGAGEMENT_TYPE, REMOVE_ENGAGEMENT_TYPE } from "@/app/(sok)/_utils/queryReducer";
 import moveCriteriaToBottom from "@/app/(sok)/_components/utils/moveFacetToBottom";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
@@ -37,7 +37,15 @@ function Engagement({ initialValues, updatedValues, query, dispatch }) {
     }
 
     return (
-        <Fieldset legend="Filtrer etter ansettelsesform" hideLegend>
+        <Fieldset
+            className="mt-4"
+            legend={
+                <>
+                    <BodyShort visuallyHidden>Filtrer etter </BodyShort>
+                    <span className="capitalize">ansettelsesform</span>
+                </>
+            }
+        >
             <div>
                 {values.map((item) => (
                     <Checkbox

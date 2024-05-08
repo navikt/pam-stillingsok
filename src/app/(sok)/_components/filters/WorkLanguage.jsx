@@ -23,7 +23,6 @@ function WorkLanguage({ initialValues, updatedValues, query, dispatch }) {
 
     return (
         <Fieldset
-            className="mt-4"
             legend={
                 <>
                     <BodyShort visuallyHidden>Filtrer etter </BodyShort>
