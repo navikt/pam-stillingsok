@@ -96,3 +96,11 @@ no-underline:hover {
 .capitalize {
     text-transform: capitalize;
 }
+
+.hidden {
+    display: none;
+}
+
+.flex-direction-column {
+    flex-direction: column;
+}
