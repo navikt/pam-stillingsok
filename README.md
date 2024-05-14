@@ -5,7 +5,7 @@ Frontend-applikasjon for visning av stillinger på [arbeidsplassen.nav.no](https
 Applikasjonen har ansvar for søk og filtrering av stillinger, lagring av favorittstillinger og lagring av søk slik at
 brukere kan få daglige oppdateringer pr. e-post.
 
-Applikasjonen henter stillinger fra en dokumentdatabase (ElasticSearch) gjennom
+Applikasjonen henter stillinger fra en dokumentdatabase (OpenSearch) gjennom
 [pam-search-api](https://github.com/navikt/pam-search-api). Lagrede søk og stillingsfavoritter, samt utsending av
 e-poster skjer gjennom applikasjonen [pam-aduser](https://github.com/navikt/pam-aduser).
 Navnet til innlogget bruker hentes fra [pam-aduser](https://github.com/navikt/pam-aduser).
@@ -124,8 +124,7 @@ Dersom du vil få inn teststillinger kan du koble deg direkte til et kjørende i
 Dev:
 
 ```shell
-$ kubectl config use-context dev-gcp
-$ kubectl -n teampam port-forward deployment/pam-search-api 9000:9000
+$ kubectl -n teampam port-forward deployment/pam-search-api 9000:9000 --context dev-gcp
 ```
 
 Prod:
