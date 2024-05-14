@@ -13,7 +13,7 @@ export default async function sitemap() {
     const ads = await getAds();
 
     const adEntries = ads.map((ad) => ({
-        url: `https://arbeidsplassen.nav.no/stillinger/${ad.uuid}`,
+        url: `https://arbeidsplassen.nav.no/stillinger/stilling/${ad.uuid}`,
         lastModified: ad.updated ? ad.updated.split("T")[0] : "",
         changeFrequency: "weekly",
         priority: 0.9,
