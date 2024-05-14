@@ -4,6 +4,7 @@ import { SET_SEARCH_STRING } from "@/app/(sok)/_utils/queryReducer";
 import Typeahead from "@/app/_common/components/typeahead/Typeahead";
 import { FetchAction, useFetchReducer } from "@/app/_common/hooks/useFetchReducer";
 import * as actions from "@/app/_common/actions";
+import ComboBox from "@/app/(sok)/_components/searchBox/ComboBox";
 
 let suggestionsCache = [];
 const CACHE_MAX_SIZE = 50;
@@ -66,7 +67,7 @@ function SearchBox({ dispatch, query }) {
         if (found) {
             fields = "occupation";
         }
-
+        console.log("search");
         dispatch({ type: SET_SEARCH_STRING, value, fields });
     }
 
@@ -94,6 +95,7 @@ function SearchBox({ dispatch, query }) {
                 value={value || ""}
                 onSearchButtonClick={handleSearchButtonClick}
             />
+            <ComboBox q={query.q} dispatch={dispatch} />
         </section>
     );
 }
