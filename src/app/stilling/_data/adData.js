@@ -91,6 +91,14 @@ function getEmail(email) {
     return isValidEmail(email) ? email : undefined;
 }
 
+function getExtent(extent) {
+    let result = getString(extent);
+    if (!result) {
+        result = getArray(extent);
+    }
+    return result;
+}
+
 function getJobPercentage(value) {
     const jobPercentage = getString(value);
     if (!jobPercentage) {
@@ -262,7 +270,7 @@ export default function mapAdData(rawElasticSearchAdResult) {
 
         // employment details
         engagementType: getString(properties.engagementtype),
-        extent: getString(properties.extent),
+        extent: getExtent(properties.extent),
         jobArrangement: getString(properties.jobarrangement),
         jobPercentage: getJobPercentage(properties.jobpercentage),
         jobTitle: getString(properties.jobtitle),
