@@ -45,6 +45,20 @@ export default function EmploymentDetails({ adData }) {
         },
     };
 
+    const getExtent = (extent, jobpercentage) => {
+        if (extent) {
+            let result = "";
+            if (extent.includes("Deltid")) {
+                result = jobpercentage ? `deltid ${jobpercentage}` : "deltid";
+            }
+            if (extent.includes("Heltid")) {
+                result = result ? `${result} og heltid 100%` : "heltid 100%";
+            }
+            return result ? `, ${result}` : "";
+        }
+        return "";
+    };
+
     return (
         <section className="full-width mt-8">
             <HStack gap="4" justify="space-between" align="center" className="mb-8">
@@ -87,8 +101,7 @@ export default function EmploymentDetails({ adData }) {
                         <dd>
                             <BodyLong>
                                 {adData.engagementType}
-                                {adData.extent ? `, ${adData.extent.toLowerCase()}` : ""}
-                                {adData.jobPercentage ? ` ${adData.jobPercentage}` : ""}
+                                {getExtent(adData.extent, adData.jobPercentage)}
                             </BodyLong>
                         </dd>
                     </div>
@@ -137,7 +150,7 @@ EmploymentDetails.propTypes = {
         startTime: PropTypes.string,
         engagementType: PropTypes.string,
         jobPercentage: PropTypes.string,
-        extent: PropTypes.string,
+        extent: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
         workdays: PropTypes.string,
         workHours: PropTypes.string,
         jobArrangement: PropTypes.string,
