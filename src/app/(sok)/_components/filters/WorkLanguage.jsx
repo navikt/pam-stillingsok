@@ -6,7 +6,7 @@ import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
 import { logSearchFilterAdded, logSearchFilterRemoved } from "@/app/_common/monitoring/amplitude";
 import moveCriteriaToBottom from "@/app/(sok)/_components/utils/moveFacetToBottom";
 
-function WorkLanguage({ initialValues, updatedValues, query, dispatch }) {
+function WorkLanguage({ initialValues, updatedValues, query, dispatch, hideLegend = false }) {
     const sortedValues = moveCriteriaToBottom(initialValues, "Ikke oppgitt");
     const values = mergeCount(sortedValues, updatedValues);
 
@@ -23,6 +23,7 @@ function WorkLanguage({ initialValues, updatedValues, query, dispatch }) {
 
     return (
         <Fieldset
+            hideLegend={hideLegend}
             legend={
                 <>
                     <BodyShort as="span" visuallyHidden>

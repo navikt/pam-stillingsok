@@ -104,3 +104,7 @@ no-underline:hover {
 .flex-direction-column {
     flex-direction: column;
 }
+
+.flex-1 {
+    flex: 1;
+}

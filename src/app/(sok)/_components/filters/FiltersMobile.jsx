@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { Button, HGrid, Modal } from "@navikt/ds-react";
+import { Button, HStack, Modal } from "@navikt/ds-react";
 import { ChevronRightIcon, ChevronLeftIcon } from "@navikt/aksel-icons";
 import { formatNumber } from "@/app/_common/utils/utils";
 import Remote from "@/app/(sok)/_components/filters/Remote";
@@ -139,6 +139,7 @@ function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggre
 
                     {selectedTab === "Arbeidsspråk" && (
                         <WorkLanguage
+                            hideLegend
                             query={query}
                             dispatch={dispatchQuery}
                             initialValues={aggregations.workLanguage}
@@ -154,14 +155,6 @@ function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggre
                                     dispatch={dispatchQuery}
                                     initialValues={aggregations.extent}
                                     updatedValues={searchResult && searchResult.aggregations.extent}
-                                />
-                            </div>
-                            <div className="mb-6">
-                                <Sector
-                                    query={query}
-                                    dispatch={dispatchQuery}
-                                    initialValues={aggregations.sector}
-                                    updatedValues={searchResult && searchResult.aggregations.sector}
                                 />
                             </div>
                             <div className="mb-6">
@@ -186,22 +179,18 @@ function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggre
                 </div>
             </Modal.Body>
             <Modal.Footer>
-                <HGrid columns={2}>
-                    <div>
-                        {selectedTab !== "" && (
-                            <Button icon={<ChevronLeftIcon aria-hidden />} variant="tertiary" onClick={changeView}>
-                                Tilbake
-                            </Button>
-                        )}
-                    </div>
-                    <div>
-                        <Button variant="primary" onClick={onCloseClick}>
-                            {searchResult && searchResult.totalAds
-                                ? `Vis ${formatNumber(searchResult.totalAds)} treff`
-                                : "Vis treff"}
+                <HStack wrap justify="space-between" gap="1" className="full-width">
+                    {selectedTab !== "" && (
+                        <Button icon={<ChevronLeftIcon aria-hidden />} variant="tertiary" onClick={changeView}>
+                            Tilbake
                         </Button>
-                    </div>
-                </HGrid>
+                    )}
+                    <Button variant="primary" onClick={onCloseClick} className="flex-1">
+                        {searchResult && searchResult.totalAds
+                            ? `Vis ${formatNumber(searchResult.totalAds)} treff`
+                            : "Vis treff"}
+                    </Button>
+                </HStack>
             </Modal.Footer>
         </Modal>
     );
