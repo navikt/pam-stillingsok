@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { Button, Heading, Modal } from "@navikt/ds-react";
+import { Button, Modal } from "@navikt/ds-react";
 import { ChevronRightIcon } from "@navikt/aksel-icons";
 import { formatNumber } from "@/app/_common/utils/utils";
 import Remote from "@/app/(sok)/_components/filters/Remote";
@@ -109,17 +109,12 @@ function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggre
                                 updatedValues={searchResult}
                             />
                         </div>
-                        <div className="mb-6">
-                            <Heading level="2" size="small">
-                                Hjemmekontor
-                            </Heading>
-                            <Remote
-                                query={query}
-                                dispatch={dispatchQuery}
-                                initialValues={aggregations.remote}
-                                updatedValues={searchResult.aggregations.remote}
-                            />
-                        </div>
+                        <Remote
+                            query={query}
+                            dispatch={dispatchQuery}
+                            initialValues={aggregations.remote}
+                            updatedValues={searchResult.aggregations.remote}
+                        />
                     </>
                 )}
 
@@ -143,34 +138,25 @@ function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggre
                 )}
 
                 {selectedTab === "Arbeidsspråk" && (
-                    <>
-                        <Heading level="2" size="small">
-                            Arbeidsspråk
-                        </Heading>
-                        <WorkLanguage
-                            query={query}
-                            dispatch={dispatchQuery}
-                            initialValues={aggregations.workLanguage}
-                            updatedValues={searchResult && searchResult.aggregations.workLanguage}
-                        />
-                    </>
+                    <WorkLanguage
+                        query={query}
+                        dispatch={dispatchQuery}
+                        initialValues={aggregations.workLanguage}
+                        updatedValues={searchResult && searchResult.aggregations.workLanguage}
+                    />
                 )}
 
                 {selectedTab === "Omfang og ansettelsesform" && (
-                    <div>
-                        <Heading level="2" size="small">
-                            Heltid/deltid
-                        </Heading>
-                        <Extent
-                            query={query}
-                            dispatch={dispatchQuery}
-                            initialValues={aggregations.extent}
-                            updatedValues={searchResult && searchResult.aggregations.extent}
-                        />
+                    <>
                         <div className="mb-6">
-                            <Heading level="2" size="small">
-                                Sektor
-                            </Heading>
+                            <Extent
+                                query={query}
+                                dispatch={dispatchQuery}
+                                initialValues={aggregations.extent}
+                                updatedValues={searchResult && searchResult.aggregations.extent}
+                            />
+                        </div>
+                        <div className="mb-6">
                             <Sector
                                 query={query}
                                 dispatch={dispatchQuery}
@@ -179,9 +165,6 @@ function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggre
                             />
                         </div>
                         <div className="mb-6">
-                            <Heading level="2" size="small">
-                                Ansettelsesform
-                            </Heading>
                             <EngagementType
                                 query={query}
                                 dispatch={dispatchQuery}
@@ -191,18 +174,14 @@ function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggre
                         </div>
 
                         {/* TODO: COMMENT IN WHEN FILTER IS READY BACKEND
-                        <div className="mb-6">
-                            <Heading level="2" size="small">
-                                Utdanning
-                            </Heading>
                             <Education
                                 query={query}
                                 dispatch={dispatchQuery}
                                 initialValues={aggregations.education}
                                 updatedValues={searchResult && searchResult.aggregations.education}
                             />
-                        </div> */}
-                    </div>
+                       */}
+                    </>
                 )}
             </Modal.Body>
             <Modal.Footer>
