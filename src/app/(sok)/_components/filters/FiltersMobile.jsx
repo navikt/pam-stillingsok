@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { Button, Heading, Modal, Tabs } from "@navikt/ds-react";
+import { Button, Heading, Modal } from "@navikt/ds-react";
+import { ChevronRightIcon } from "@navikt/aksel-icons";
 import { formatNumber } from "@/app/_common/utils/utils";
 import Remote from "@/app/(sok)/_components/filters/Remote";
 import Counties from "./Locations";
@@ -10,6 +11,14 @@ import Extent from "./Extent";
 import Sector from "./Sector";
 import EngagementType from "./Engagement";
 import WorkLanguage from "./WorkLanguage";
+
+function FilterMenuButton({ children, onClick }) {
+    return (
+        <button type="button" onClick={onClick} className="filter-menu-button">
+            {children} <ChevronRightIcon fontSize="1.5rem" aria-hidden="true" />
+        </button>
+    );
+}
 
 function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggregations, locations }) {
     const [selectedTab, setSelectedTab] = useState("");
@@ -42,113 +51,146 @@ function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggre
             width="100%"
         >
             <Modal.Body>
-                <Tabs defaultValue={selectedTab} value={selectedTab} onChange={setSelectedFilter}>
-                    <Tabs.List className={`flex-direction-column ${selectedTab !== "" ? "hidden" : ""}`}>
-                        <Tabs.Tab value="Publisert" label="Publisert" />
-                        <Tabs.Tab value="Sted og hjemmekontor" label="Sted og hjemmekontor" />
-                        <Tabs.Tab value="Yrke og sektor" label="Yrke og sektor" />
-                        <Tabs.Tab value="Arbeidsspråk" label="Arbeidsspråk" />
-                        <Tabs.Tab value="Omfang og ansettelsesform" label="Omfang og ansettelsesform" />
-                    </Tabs.List>
+                {selectedTab === "" && (
+                    <nav aria-label="Velg filter">
+                        <FilterMenuButton
+                            onClick={() => {
+                                setSelectedFilter("Publisert");
+                            }}
+                        >
+                            Publisert
+                        </FilterMenuButton>
+                        <FilterMenuButton
+                            onClick={() => {
+                                setSelectedFilter("Sted og hjemmekontor");
+                            }}
+                        >
+                            Sted og hjemmekontor
+                        </FilterMenuButton>
+                        <FilterMenuButton
+                            onClick={() => {
+                                setSelectedFilter("Yrke og sektor");
+                            }}
+                        >
+                            Yrke og sektor
+                        </FilterMenuButton>
+                        <FilterMenuButton
+                            onClick={() => {
+                                setSelectedFilter("Arbeidsspråk");
+                            }}
+                        >
+                            Arbeidsspråk
+                        </FilterMenuButton>
+                        <FilterMenuButton
+                            onClick={() => {
+                                setSelectedFilter("Omfang og ansettelsesform");
+                            }}
+                        >
+                            Omfang og ansettelsesform
+                        </FilterMenuButton>
+                    </nav>
+                )}
 
-                    {selectedTab === "Publisert" && (
-                        <Tabs.Panel value="Publisert" className="mt-8">
-                            <div className="mb-6">
-                                <Published
-                                    query={query}
-                                    dispatch={dispatchQuery}
-                                    initialValues={aggregations.published}
-                                    updatedValues={searchResult && searchResult.aggregations.published}
-                                />
-                            </div>
-                        </Tabs.Panel>
-                    )}
-                    {selectedTab === "Sted og hjemmekontor" && (
-                        <Tabs.Panel value="Sted og hjemmekontor" className="mt-8">
+                {selectedTab === "Publisert" && (
+                    <Published
+                        query={query}
+                        dispatch={dispatchQuery}
+                        initialValues={aggregations.published}
+                        updatedValues={searchResult && searchResult.aggregations.published}
+                    />
+                )}
+                {selectedTab === "Sted og hjemmekontor" && (
+                    <>
+                        <div className="mb-6">
                             <Counties
                                 query={query}
                                 dispatch={dispatchQuery}
                                 locations={locations}
                                 updatedValues={searchResult}
                             />
-                            <div className="mb-6">
-                                <Heading level="2" size="small">
-                                    Hjemmekontor
-                                </Heading>
-                                <Remote
-                                    query={query}
-                                    dispatch={dispatchQuery}
-                                    initialValues={aggregations.remote}
-                                    updatedValues={searchResult.aggregations.remote}
-                                />
-                            </div>
-                        </Tabs.Panel>
-                    )}
+                        </div>
+                        <div className="mb-6">
+                            <Heading level="2" size="small">
+                                Hjemmekontor
+                            </Heading>
+                            <Remote
+                                query={query}
+                                dispatch={dispatchQuery}
+                                initialValues={aggregations.remote}
+                                updatedValues={searchResult.aggregations.remote}
+                            />
+                        </div>
+                    </>
+                )}
 
-                    {selectedTab === "Yrke og sektor" && (
-                        <Tabs.Panel value="Yrke og sektor" className="mt-8">
+                {selectedTab === "Yrke og sektor" && (
+                    <>
+                        <div className="mb-6">
                             <Occupations
                                 query={query}
                                 dispatch={dispatchQuery}
                                 initialValues={aggregations.occupationFirstLevels}
                                 updatedValues={searchResult && searchResult.aggregations.occupationFirstLevels}
                             />
-                        </Tabs.Panel>
-                    )}
+                        </div>
+                        <Sector
+                            query={query}
+                            dispatch={dispatchQuery}
+                            initialValues={aggregations.sector}
+                            updatedValues={searchResult.aggregations.sector}
+                        />
+                    </>
+                )}
 
-                    {selectedTab === "Arbeidsspråk" && (
-                        <Tabs.Panel value="Arbeidsspråk">
-                            <div className="mb-6">
-                                <Heading level="2" size="small">
-                                    Arbeidsspråk
-                                </Heading>
-                                <WorkLanguage
-                                    query={query}
-                                    dispatch={dispatchQuery}
-                                    initialValues={aggregations.workLanguage}
-                                    updatedValues={searchResult && searchResult.aggregations.workLanguage}
-                                />
-                            </div>
-                        </Tabs.Panel>
-                    )}
+                {selectedTab === "Arbeidsspråk" && (
+                    <>
+                        <Heading level="2" size="small">
+                            Arbeidsspråk
+                        </Heading>
+                        <WorkLanguage
+                            query={query}
+                            dispatch={dispatchQuery}
+                            initialValues={aggregations.workLanguage}
+                            updatedValues={searchResult && searchResult.aggregations.workLanguage}
+                        />
+                    </>
+                )}
 
-                    {selectedTab === "Omfang og ansettelsesform" && (
-                        <Tabs.Panel value="Omfang og ansettelsesform" className="mt-8">
-                            <div className="mb-6">
-                                <Heading level="2" size="small">
-                                    Heltid/deltid
-                                </Heading>
-                                <Extent
-                                    query={query}
-                                    dispatch={dispatchQuery}
-                                    initialValues={aggregations.extent}
-                                    updatedValues={searchResult && searchResult.aggregations.extent}
-                                />
-                            </div>
-                            <div className="mb-6">
-                                <Heading level="2" size="small">
-                                    Sektor
-                                </Heading>
-                                <Sector
-                                    query={query}
-                                    dispatch={dispatchQuery}
-                                    initialValues={aggregations.sector}
-                                    updatedValues={searchResult && searchResult.aggregations.sector}
-                                />
-                            </div>
-                            <div className="mb-6">
-                                <Heading level="2" size="small">
-                                    Ansettelsesform
-                                </Heading>
-                                <EngagementType
-                                    query={query}
-                                    dispatch={dispatchQuery}
-                                    initialValues={aggregations.engagementTypes}
-                                    updatedValues={searchResult && searchResult.aggregations.engagementTypes}
-                                />
-                            </div>
+                {selectedTab === "Omfang og ansettelsesform" && (
+                    <div>
+                        <Heading level="2" size="small">
+                            Heltid/deltid
+                        </Heading>
+                        <Extent
+                            query={query}
+                            dispatch={dispatchQuery}
+                            initialValues={aggregations.extent}
+                            updatedValues={searchResult && searchResult.aggregations.extent}
+                        />
+                        <div className="mb-6">
+                            <Heading level="2" size="small">
+                                Sektor
+                            </Heading>
+                            <Sector
+                                query={query}
+                                dispatch={dispatchQuery}
+                                initialValues={aggregations.sector}
+                                updatedValues={searchResult && searchResult.aggregations.sector}
+                            />
+                        </div>
+                        <div className="mb-6">
+                            <Heading level="2" size="small">
+                                Ansettelsesform
+                            </Heading>
+                            <EngagementType
+                                query={query}
+                                dispatch={dispatchQuery}
+                                initialValues={aggregations.engagementTypes}
+                                updatedValues={searchResult && searchResult.aggregations.engagementTypes}
+                            />
+                        </div>
 
-                            {/* TODO: COMMENT IN WHEN FILTER IS READY BACKEND
+                        {/* TODO: COMMENT IN WHEN FILTER IS READY BACKEND
                         <div className="mb-6">
                             <Heading level="2" size="small">
                                 Utdanning
@@ -160,9 +202,8 @@ function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggre
                                 updatedValues={searchResult && searchResult.aggregations.education}
                             />
                         </div> */}
-                        </Tabs.Panel>
-                    )}
-                </Tabs>
+                    </div>
+                )}
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="primary" onClick={onCloseClick}>
