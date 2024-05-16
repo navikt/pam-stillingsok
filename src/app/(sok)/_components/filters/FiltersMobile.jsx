@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { Button, HStack, Modal } from "@navikt/ds-react";
+import { Button, Heading, HStack, Label, Modal } from "@navikt/ds-react";
 import { ChevronRightIcon, ChevronLeftIcon } from "@navikt/aksel-icons";
 import { formatNumber } from "@/app/_common/utils/utils";
 import Remote from "@/app/(sok)/_components/filters/Remote";
@@ -22,12 +22,10 @@ function FilterMenuButton({ children, onClick }) {
 
 function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggregations, locations }) {
     const [selectedTab, setSelectedTab] = useState("");
-    const [modalHeading, setModalHeading] = useState({ heading: "Filtre" });
 
     const changeView = () => {
         if (selectedTab !== "") {
             setSelectedTab("");
-            setModalHeading({ heading: "Filtre" });
             return false;
         }
         return true;
@@ -35,21 +33,26 @@ function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggre
 
     const setSelectedFilter = (value) => {
         setSelectedTab(value);
-        setModalHeading({
-            label: "Filtre",
-            heading: value,
-        });
     };
 
     return (
-        <Modal
-            className="filter-modal flex"
-            header={modalHeading}
-            open
-            onBeforeClose={changeView}
-            onClose={onCloseClick}
-            width="100%"
-        >
+        <Modal className="filter-modal flex" open onBeforeClose={changeView} onClose={onCloseClick} width="100%">
+            <Modal.Header>
+                {selectedTab === "" ? (
+                    <Heading level="1" size="medium">
+                        Filtre
+                    </Heading>
+                ) : (
+                    <>
+                        <Label textColor="subtle" size="small" spacing>
+                            Filtre
+                        </Label>
+                        <Heading level="1" size="small">
+                            {selectedTab}
+                        </Heading>
+                    </>
+                )}
+            </Modal.Header>
             <Modal.Body className="filter-modal-body flex-grow">
                 {selectedTab === "" && (
                     <nav aria-label="Velg filter" className="mt-2">
