@@ -12,14 +12,6 @@ import Sector from "./Sector";
 import EngagementType from "./Engagement";
 import WorkLanguage from "./WorkLanguage";
 
-function FilterMenuButton({ children, onClick }) {
-    return (
-        <button type="button" onClick={onClick} className="filter-menu-button">
-            {children} <ChevronRightIcon fontSize="1.5rem" aria-hidden="true" />
-        </button>
-    );
-}
-
 function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggregations, locations }) {
     const [selectedFilter, setSelectedFilter] = useState("");
     const headingRef = useRef();
@@ -66,14 +58,16 @@ function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggre
                             "Arbeidsspråk",
                             "Omfang og ansettelsesform",
                         ].map((filter) => (
-                            <FilterMenuButton
+                            <button
                                 key={filter}
+                                type="button"
                                 onClick={() => {
                                     setSelectedFilter(filter);
                                 }}
+                                className="filter-menu-button"
                             >
-                                {filter}
-                            </FilterMenuButton>
+                                {filter} <ChevronRightIcon fontSize="1.5rem" aria-hidden="true" />
+                            </button>
                         ))}
                     </nav>
                 )}
