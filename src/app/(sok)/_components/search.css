@@ -9,6 +9,10 @@
     }
 }
 
+.filter-modal-body {
+    border-top: 1px solid var(--a-border-divider);
+}
+
 .filter-modal .navds-modal__footer {
     background-color: var(--a-surface-alt-1-subtle);
 }
