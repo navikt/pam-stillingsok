@@ -62,7 +62,7 @@ function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggre
             </Modal.Header>
             <Modal.Body className="filter-modal-body flex-grow">
                 {selectedTab === "" && (
-                    <nav aria-label="Velg filter" className="mt-2">
+                    <nav aria-label="Velg filter" className="mt-1">
                         <FilterMenuButton
                             onClick={() => {
                                 setSelectedFilter("Publisert");
