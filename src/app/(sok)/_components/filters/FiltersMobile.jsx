@@ -21,87 +21,64 @@ function FilterMenuButton({ children, onClick }) {
 }
 
 function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggregations, locations }) {
-    const [selectedTab, setSelectedTab] = useState("");
+    const [selectedFilter, setSelectedFilter] = useState("");
     const headingRef = useRef();
 
     const changeView = () => {
-        if (selectedTab !== "") {
-            setSelectedTab("");
+        if (selectedFilter !== "") {
+            setSelectedFilter("");
             return false;
         }
         return true;
-    };
-
-    const setSelectedFilter = (value) => {
-        setSelectedTab(value);
     };
 
     useEffect(() => {
         if (headingRef.current) {
             headingRef.current.focus();
         }
-    }, [selectedTab]);
+    }, [selectedFilter]);
 
     return (
         <Modal className="filter-modal flex" open onBeforeClose={changeView} onClose={onCloseClick} width="100%">
             <Modal.Header>
-                {selectedTab !== "" && (
+                {selectedFilter !== "" && (
                     <Label textColor="subtle" size="small" spacing>
                         Filtre
                     </Label>
                 )}
                 <Heading
                     level="1"
-                    size={selectedTab === "" ? "medium" : "small"}
+                    size={selectedFilter === "" ? "medium" : "small"}
                     ref={headingRef}
                     tabIndex={-1}
                     className="no-focus-outline"
                 >
-                    {selectedTab === "" ? "Filtre" : selectedTab}
+                    {selectedFilter === "" ? "Filtre" : selectedFilter}
                 </Heading>
             </Modal.Header>
             <Modal.Body className="filter-modal-body flex-grow">
-                {selectedTab === "" && (
-                    <nav aria-label="Velg filter" className="mt-1">
-                        <FilterMenuButton
-                            onClick={() => {
-                                setSelectedFilter("Publisert");
-                            }}
-                        >
-                            Publisert
-                        </FilterMenuButton>
-                        <FilterMenuButton
-                            onClick={() => {
-                                setSelectedFilter("Sted og hjemmekontor");
-                            }}
-                        >
-                            Sted og hjemmekontor
-                        </FilterMenuButton>
-                        <FilterMenuButton
-                            onClick={() => {
-                                setSelectedFilter("Yrke og sektor");
-                            }}
-                        >
-                            Yrke og sektor
-                        </FilterMenuButton>
-                        <FilterMenuButton
-                            onClick={() => {
-                                setSelectedFilter("Arbeidsspråk");
-                            }}
-                        >
-                            Arbeidsspråk
-                        </FilterMenuButton>
-                        <FilterMenuButton
-                            onClick={() => {
-                                setSelectedFilter("Omfang og ansettelsesform");
-                            }}
-                        >
-                            Omfang og ansettelsesform
-                        </FilterMenuButton>
+                {selectedFilter === "" && (
+                    <nav aria-label="Velg filter">
+                        {[
+                            "Publisert",
+                            "Sted og hjemmekontor",
+                            "Yrke og sektor",
+                            "Arbeidsspråk",
+                            "Omfang og ansettelsesform",
+                        ].map((filter) => (
+                            <FilterMenuButton
+                                key={filter}
+                                onClick={() => {
+                                    setSelectedFilter(filter);
+                                }}
+                            >
+                                {filter}
+                            </FilterMenuButton>
+                        ))}
                     </nav>
                 )}
                 <div className="mt-4">
-                    {selectedTab === "Publisert" && (
+                    {selectedFilter === "Publisert" && (
                         <Published
                             query={query}
                             dispatch={dispatchQuery}
@@ -109,7 +86,8 @@ function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggre
                             updatedValues={searchResult && searchResult.aggregations.published}
                         />
                     )}
-                    {selectedTab === "Sted og hjemmekontor" && (
+
+                    {selectedFilter === "Sted og hjemmekontor" && (
                         <>
                             <div className="mb-6">
                                 <Counties
@@ -128,7 +106,7 @@ function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggre
                         </>
                     )}
 
-                    {selectedTab === "Yrke og sektor" && (
+                    {selectedFilter === "Yrke og sektor" && (
                         <>
                             <div className="mb-6">
                                 <Occupations
@@ -147,7 +125,7 @@ function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggre
                         </>
                     )}
 
-                    {selectedTab === "Arbeidsspråk" && (
+                    {selectedFilter === "Arbeidsspråk" && (
                         <WorkLanguage
                             hideLegend
                             query={query}
@@ -157,7 +135,7 @@ function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggre
                         />
                     )}
 
-                    {selectedTab === "Omfang og ansettelsesform" && (
+                    {selectedFilter === "Omfang og ansettelsesform" && (
                         <>
                             <div className="mb-6">
                                 <Extent
@@ -188,7 +166,7 @@ function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggre
             </Modal.Body>
             <Modal.Footer>
                 <HStack wrap justify="space-between" gap="2" className="full-width">
-                    {selectedTab !== "" && (
+                    {selectedFilter !== "" && (
                         <Button icon={<ChevronLeftIcon aria-hidden />} variant="tertiary" onClick={changeView}>
                             Tilbake
                         </Button>
