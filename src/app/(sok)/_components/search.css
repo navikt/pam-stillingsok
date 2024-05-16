@@ -41,3 +41,7 @@
 .filter-menu-button:focus-visible {
     outline: 3px solid var(--a-border-focus);
 }
+
+.filter-menu-button:hover {
+    cursor: pointer;
+}

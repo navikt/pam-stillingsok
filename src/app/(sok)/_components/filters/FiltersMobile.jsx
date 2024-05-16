@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { Button, Modal } from "@navikt/ds-react";
-import { ChevronRightIcon } from "@navikt/aksel-icons";
+import { Button, HGrid, Modal } from "@navikt/ds-react";
+import { ChevronRightIcon, ChevronLeftIcon } from "@navikt/aksel-icons";
 import { formatNumber } from "@/app/_common/utils/utils";
 import Remote from "@/app/(sok)/_components/filters/Remote";
 import Counties from "./Locations";
@@ -52,7 +52,7 @@ function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggre
         >
             <Modal.Body>
                 {selectedTab === "" && (
-                    <nav aria-label="Velg filter">
+                    <nav aria-label="Velg filter" className="mt-2">
                         <FilterMenuButton
                             onClick={() => {
                                 setSelectedFilter("Publisert");
@@ -185,12 +185,22 @@ function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggre
                 )}
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="primary" onClick={onCloseClick}>
-                    {searchResult && searchResult.totalAds
-                        ? `Vis ${formatNumber(searchResult.totalAds)} treff`
-                        : "Vis treff"}
-                </Button>
-                {selectedTab !== "" && <Button onClick={changeView}>Tilbake</Button>}
+                <HGrid columns={2}>
+                    <div>
+                        {selectedTab !== "" && (
+                            <Button icon={<ChevronLeftIcon aria-hidden />} variant="tertiary" onClick={changeView}>
+                                Tilbake
+                            </Button>
+                        )}
+                    </div>
+                    <div>
+                        <Button variant="primary" onClick={onCloseClick}>
+                            {searchResult && searchResult.totalAds
+                                ? `Vis ${formatNumber(searchResult.totalAds)} treff`
+                                : "Vis treff"}
+                        </Button>
+                    </div>
+                </HGrid>
             </Modal.Footer>
         </Modal>
     );
