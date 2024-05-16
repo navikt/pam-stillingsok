@@ -32,7 +32,7 @@ function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggre
 
     return (
         <Modal className="filter-modal flex" open onBeforeClose={changeView} onClose={onCloseClick} width="100%">
-            <Modal.Header>
+            <Modal.Header className="filter-modal-header">
                 {selectedFilter !== "" && (
                     <Label textColor="subtle" size="small" spacing>
                         Filtre
@@ -158,7 +158,7 @@ function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggre
                     )}
                 </div>
             </Modal.Body>
-            <Modal.Footer>
+            <Modal.Footer className="filter-modal-footer">
                 <HStack wrap justify="space-between" gap="2" className="full-width">
                     {selectedFilter !== "" && (
                         <Button icon={<ChevronLeftIcon aria-hidden />} variant="tertiary" onClick={changeView}>
