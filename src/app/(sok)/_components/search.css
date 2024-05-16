@@ -1,3 +1,7 @@
+.filter-modal {
+    height: 100%;
+}
+
 @media (max-width: 479px) {
     .filter-modal {
         border-radius: var(--a-border-radius-xlarge) var(--a-border-radius-xlarge) 0 0;

@@ -43,14 +43,14 @@ function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggre
 
     return (
         <Modal
-            className="filter-modal"
+            className="filter-modal flex"
             header={modalHeading}
             open
             onBeforeClose={changeView}
             onClose={onCloseClick}
             width="100%"
         >
-            <Modal.Body className="filter-modal-body">
+            <Modal.Body className="filter-modal-body flex-grow">
                 {selectedTab === "" && (
                     <nav aria-label="Velg filter" className="mt-2">
                         <FilterMenuButton
