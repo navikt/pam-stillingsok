@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { Button, Heading, HStack, Label, Modal } from "@navikt/ds-react";
 import { ChevronRightIcon, ChevronLeftIcon } from "@navikt/aksel-icons";
@@ -22,6 +22,7 @@ function FilterMenuButton({ children, onClick }) {
 
 function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggregations, locations }) {
     const [selectedTab, setSelectedTab] = useState("");
+    const headingRef = useRef();
 
     const changeView = () => {
         if (selectedTab !== "") {
@@ -35,23 +36,23 @@ function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggre
         setSelectedTab(value);
     };
 
+    useEffect(() => {
+        if (headingRef.current) {
+            headingRef.current.focus();
+        }
+    }, [selectedTab]);
+
     return (
         <Modal className="filter-modal flex" open onBeforeClose={changeView} onClose={onCloseClick} width="100%">
             <Modal.Header>
-                {selectedTab === "" ? (
-                    <Heading level="1" size="medium">
+                {selectedTab !== "" && (
+                    <Label textColor="subtle" size="small" spacing>
                         Filtre
-                    </Heading>
-                ) : (
-                    <>
-                        <Label textColor="subtle" size="small" spacing>
-                            Filtre
-                        </Label>
-                        <Heading level="1" size="small">
-                            {selectedTab}
-                        </Heading>
-                    </>
+                    </Label>
                 )}
+                <Heading level="1" size="medium" ref={headingRef} tabIndex={-1} className="no-focus-outline">
+                    {selectedTab === "" ? "Filtre" : selectedTab}
+                </Heading>
             </Modal.Header>
             <Modal.Body className="filter-modal-body flex-grow">
                 {selectedTab === "" && (
@@ -160,14 +161,12 @@ function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggre
                                     updatedValues={searchResult && searchResult.aggregations.extent}
                                 />
                             </div>
-                            <div className="mb-6">
-                                <EngagementType
-                                    query={query}
-                                    dispatch={dispatchQuery}
-                                    initialValues={aggregations.engagementTypes}
-                                    updatedValues={searchResult && searchResult.aggregations.engagementTypes}
-                                />
-                            </div>
+                            <EngagementType
+                                query={query}
+                                dispatch={dispatchQuery}
+                                initialValues={aggregations.engagementTypes}
+                                updatedValues={searchResult && searchResult.aggregations.engagementTypes}
+                            />
 
                             {/* TODO: COMMENT IN WHEN FILTER IS READY BACKEND
                             <Education
