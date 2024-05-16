@@ -19,7 +19,7 @@ import ShareAd from "./ShareAd";
 import Summary from "./Summary";
 
 function Ad({ adData, organizationNumber }) {
-    const isAdminOfCurrentAd = adData.employer.orgnr === organizationNumber;
+    const isAdminOfCurrentAd = adData.employer.orgnr === organizationNumber && organizationNumber !== undefined;
     const [isUnpublished, setIsUnpublished] = useState(adData.status !== "ACTIVE");
     const [isConfirmStopAdModalOpen, setIsConfirmStopAdModalOpen] = useState(false);
     const [copyAdResponseStatus, setCopyAdResponseStatus] = useState("not-fetched");
