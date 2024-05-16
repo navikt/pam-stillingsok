@@ -50,7 +50,13 @@ function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggre
                         Filtre
                     </Label>
                 )}
-                <Heading level="1" size="medium" ref={headingRef} tabIndex={-1} className="no-focus-outline">
+                <Heading
+                    level="1"
+                    size={selectedTab === "" ? "medium" : "small"}
+                    ref={headingRef}
+                    tabIndex={-1}
+                    className="no-focus-outline"
+                >
                     {selectedTab === "" ? "Filtre" : selectedTab}
                 </Heading>
             </Modal.Header>
@@ -181,13 +187,13 @@ function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggre
                 </div>
             </Modal.Body>
             <Modal.Footer>
-                <HStack wrap justify="space-between" gap="1" className="full-width">
+                <HStack wrap justify="space-between" gap="2" className="full-width">
                     {selectedTab !== "" && (
                         <Button icon={<ChevronLeftIcon aria-hidden />} variant="tertiary" onClick={changeView}>
                             Tilbake
                         </Button>
                     )}
-                    <Button variant="primary" onClick={onCloseClick} className="flex-1">
+                    <Button variant="primary" onClick={onCloseClick} className="flex-grow white-space-nowrap">
                         {searchResult && searchResult.totalAds
                             ? `Vis ${formatNumber(searchResult.totalAds)} treff`
                             : "Vis treff"}

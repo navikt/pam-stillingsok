@@ -109,10 +109,10 @@ no-underline:hover {
     flex: 1;
 }
 
-.flex {
-    display: flex;
-}
-
 .flex-grow {
     flex-grow: 1;
+}
+
+.white-space-nowrap {
+    white-space: nowrap;
 }
