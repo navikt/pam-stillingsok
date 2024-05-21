@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import { Button, Heading, Modal, Tabs } from "@navikt/ds-react";
+import { Button, Heading, HStack, Label, Modal } from "@navikt/ds-react";
+import { ChevronRightIcon, ChevronLeftIcon } from "@navikt/aksel-icons";
 import { formatNumber } from "@/app/_common/utils/utils";
 import Remote from "@/app/(sok)/_components/filters/Remote";
 import Counties from "./Locations";
@@ -12,117 +13,164 @@ import EngagementType from "./Engagement";
 import WorkLanguage from "./WorkLanguage";
 
 function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggregations, locations }) {
+    const [selectedFilter, setSelectedFilter] = useState("");
+    const headingRef = useRef();
+
+    const changeView = () => {
+        if (selectedFilter !== "") {
+            setSelectedFilter("");
+            return false;
+        }
+        return true;
+    };
+
+    useEffect(() => {
+        if (headingRef.current) {
+            headingRef.current.focus();
+        }
+    }, [selectedFilter]);
+
     return (
-        <Modal className="filter-modal" header={{ heading: "Filtre" }} open onClose={onCloseClick} width="100%">
-            <Modal.Body>
-                <Tabs defaultValue="sted">
-                    <Tabs.List>
-                        <Tabs.Tab value="sted" label="Sted" />
-                        <Tabs.Tab value="yrke" label="Yrke" />
-                        <Tabs.Tab value="andre" label="Andre filtre" />
-                    </Tabs.List>
-                    <Tabs.Panel value="sted" className="mt-8">
-                        <Counties
+        <Modal className="filter-modal flex" open onBeforeClose={changeView} onClose={onCloseClick} width="100%">
+            <Modal.Header className="filter-modal-header">
+                {selectedFilter !== "" && (
+                    <Label textColor="subtle" size="small" spacing>
+                        Filtre
+                    </Label>
+                )}
+                <Heading
+                    level="1"
+                    size={selectedFilter === "" ? "medium" : "small"}
+                    ref={headingRef}
+                    tabIndex={-1}
+                    className="no-focus-outline"
+                >
+                    {selectedFilter === "" ? "Filtre" : selectedFilter}
+                </Heading>
+            </Modal.Header>
+            <Modal.Body className="filter-modal-body flex-grow">
+                {selectedFilter === "" && (
+                    <nav aria-label="Velg filter">
+                        {[
+                            "Publisert",
+                            "Sted og hjemmekontor",
+                            "Yrke og sektor",
+                            "Arbeidsspråk",
+                            "Omfang og ansettelsesform",
+                        ].map((filter) => (
+                            <button
+                                key={filter}
+                                type="button"
+                                onClick={() => {
+                                    setSelectedFilter(filter);
+                                }}
+                                className="filter-menu-button"
+                            >
+                                {filter} <ChevronRightIcon fontSize="1.5rem" aria-hidden="true" />
+                            </button>
+                        ))}
+                    </nav>
+                )}
+                <div className="mt-4">
+                    {selectedFilter === "Publisert" && (
+                        <Published
                             query={query}
                             dispatch={dispatchQuery}
-                            locations={locations}
-                            updatedValues={searchResult}
+                            initialValues={aggregations.published}
+                            updatedValues={searchResult && searchResult.aggregations.published}
                         />
-                    </Tabs.Panel>
-                    <Tabs.Panel value="yrke" className="mt-8">
-                        <Occupations
-                            query={query}
-                            dispatch={dispatchQuery}
-                            initialValues={aggregations.occupationFirstLevels}
-                            updatedValues={searchResult && searchResult.aggregations.occupationFirstLevels}
-                        />
-                    </Tabs.Panel>
-                    <Tabs.Panel value="andre" className="mt-8">
-                        <div className="mb-6">
-                            <Published
-                                query={query}
-                                dispatch={dispatchQuery}
-                                initialValues={aggregations.published}
-                                updatedValues={searchResult && searchResult.aggregations.published}
-                            />
-                        </div>
-                        <div className="mb-6">
-                            <Heading level="2" size="small">
-                                Hjemmekontor
-                            </Heading>
+                    )}
+
+                    {selectedFilter === "Sted og hjemmekontor" && (
+                        <>
+                            <div className="mb-6">
+                                <Counties
+                                    query={query}
+                                    dispatch={dispatchQuery}
+                                    locations={locations}
+                                    updatedValues={searchResult}
+                                />
+                            </div>
                             <Remote
                                 query={query}
                                 dispatch={dispatchQuery}
                                 initialValues={aggregations.remote}
                                 updatedValues={searchResult.aggregations.remote}
                             />
-                        </div>
-                        <div className="mb-6">
-                            <Heading level="2" size="small">
-                                Heltid/deltid
-                            </Heading>
-                            <Extent
-                                query={query}
-                                dispatch={dispatchQuery}
-                                initialValues={aggregations.extent}
-                                updatedValues={searchResult && searchResult.aggregations.extent}
-                            />
-                        </div>
-                        <div className="mb-6">
-                            <Heading level="2" size="small">
-                                Sektor
-                            </Heading>
+                        </>
+                    )}
+
+                    {selectedFilter === "Yrke og sektor" && (
+                        <>
+                            <div className="mb-6">
+                                <Occupations
+                                    query={query}
+                                    dispatch={dispatchQuery}
+                                    initialValues={aggregations.occupationFirstLevels}
+                                    updatedValues={searchResult && searchResult.aggregations.occupationFirstLevels}
+                                />
+                            </div>
                             <Sector
                                 query={query}
                                 dispatch={dispatchQuery}
                                 initialValues={aggregations.sector}
-                                updatedValues={searchResult && searchResult.aggregations.sector}
+                                updatedValues={searchResult.aggregations.sector}
                             />
-                        </div>
-                        <div className="mb-6">
-                            <Heading level="2" size="small">
-                                Ansettelsesform
-                            </Heading>
+                        </>
+                    )}
+
+                    {selectedFilter === "Arbeidsspråk" && (
+                        <WorkLanguage
+                            hideLegend
+                            query={query}
+                            dispatch={dispatchQuery}
+                            initialValues={aggregations.workLanguage}
+                            updatedValues={searchResult && searchResult.aggregations.workLanguage}
+                        />
+                    )}
+
+                    {selectedFilter === "Omfang og ansettelsesform" && (
+                        <>
+                            <div className="mb-6">
+                                <Extent
+                                    query={query}
+                                    dispatch={dispatchQuery}
+                                    initialValues={aggregations.extent}
+                                    updatedValues={searchResult && searchResult.aggregations.extent}
+                                />
+                            </div>
                             <EngagementType
                                 query={query}
                                 dispatch={dispatchQuery}
                                 initialValues={aggregations.engagementTypes}
                                 updatedValues={searchResult && searchResult.aggregations.engagementTypes}
                             />
-                        </div>
-                        <div className="mb-6">
-                            <Heading level="2" size="small">
-                                Arbeidsspråk
-                            </Heading>
-                            <WorkLanguage
-                                query={query}
-                                dispatch={dispatchQuery}
-                                initialValues={aggregations.workLanguage}
-                                updatedValues={searchResult && searchResult.aggregations.workLanguage}
-                            />
-                        </div>
 
-                        {/* TODO: COMMENT IN WHEN FILTER IS READY BACKEND
-                        <div className="mb-6">
-                            <Heading level="2" size="small">
-                                Utdanning
-                            </Heading>
+                            {/* TODO: COMMENT IN WHEN FILTER IS READY BACKEND
                             <Education
                                 query={query}
                                 dispatch={dispatchQuery}
                                 initialValues={aggregations.education}
                                 updatedValues={searchResult && searchResult.aggregations.education}
                             />
-                        </div> */}
-                    </Tabs.Panel>
-                </Tabs>
+                       */}
+                        </>
+                    )}
+                </div>
             </Modal.Body>
-            <Modal.Footer>
-                <Button variant="primary" onClick={onCloseClick}>
-                    {searchResult && searchResult.totalAds
-                        ? `Vis ${formatNumber(searchResult.totalAds)} treff`
-                        : "Vis treff"}
-                </Button>
+            <Modal.Footer className="filter-modal-footer">
+                <HStack wrap justify="space-between" gap="2" className="full-width">
+                    {selectedFilter !== "" && (
+                        <Button icon={<ChevronLeftIcon aria-hidden />} variant="tertiary" onClick={changeView}>
+                            Tilbake
+                        </Button>
+                    )}
+                    <Button variant="primary" onClick={onCloseClick} className="flex-grow white-space-nowrap">
+                        {searchResult && searchResult.totalAds
+                            ? `Vis ${formatNumber(searchResult.totalAds)} treff`
+                            : "Vis treff"}
+                    </Button>
+                </HStack>
             </Modal.Footer>
         </Modal>
     );
