@@ -7,7 +7,6 @@ import {
     toApiQuery,
     toBrowserQuery,
     toReadableQuery,
-    toSavedSearchQuery,
 } from "@/app/(sok)/_utils/query";
 import { fetchCachedElasticSearch } from "@/app/(sok)/_utils/fetchCachedElasticSearch";
 import * as actions from "@/app/_common/actions";
@@ -71,9 +70,13 @@ export default async function Page({ searchParams }) {
     if (containsOldOccupations(searchParams)) {
         const newSearchParams = rewriteOccupationSearchParams(searchParams);
 
-        // Create a new "saved search" url (does the same steps as done when a user saves a search)
-        const newBrowserQuery = stringifyQuery(toSavedSearchQuery(createQuery(newSearchParams)));
-        redirect(newBrowserQuery);
+        // Keep the saved parameter (it's removed in createQuery)
+        const newQuery = {
+            ...createQuery(newSearchParams),
+            saved: searchParams.saved,
+        };
+
+        redirect(stringifyQuery(toBrowserQuery(newQuery)));
     }
 
     const userPreferences = await actions.getUserPreferences();
