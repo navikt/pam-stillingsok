@@ -51,9 +51,6 @@ make install
 
 Når applikasjonen er oppe, så kan du gå inn på [http://localhost:3000/stillinger](http://localhost:3000/stillinger)
 
-Hvis du ønsker å teste innlogget flyt, så må pam-aduser også kjøre. Denne kan startes i [pam-aduser](http://github.com/navikt/pam-aduser)
-med å kjøre `no.nav.pam.aduser.Application` som en Spring Boot applikasjon, f.eks. fra IntelliJ med Spring-profilen _dev_ satt.
-
 > [!TIP]
 > Gå igjennom login-flyten ved å trykke login. Bruk testbruker `04010100653`
 
@@ -68,6 +65,9 @@ Hvis du ikke har det, klone det og legg i samma mappe som `pam-stillingsok`:
 ```shell
 git clone git@github.com:navikt/pam-docker-compose-shared.git ../pam-docker-compose-shared
 ```
+
+> [!TIP]
+> Dersom det er problemer med kjøring lokalt, kan du prøve en `git pull` på repoet som skal ligge `../pam-docker-compose-shared` ett nivå under.
 
 [//]: # "Docker compose setupen benytter seg av de bygde images for `pam-stillingsregistrering-api` og `pam-interesse-api`."
 
@@ -158,6 +158,8 @@ Lyst til å teste i dev-miljøet? `feature/**` branches pushes automatisk til de
 ## Bruk av innloggede tjenester
 
 For å kunne bruke innloggede tjenester (dvs. favoritter og lagrede søk), må du først kjøre `pam-aduser`.
+
+> [!TIP] > `pam-aduser` startes automatisk av `npm run start:dependencies`
 
 ## Teknisk dokumentasjon
 
