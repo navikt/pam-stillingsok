@@ -159,7 +159,8 @@ Lyst til å teste i dev-miljøet? `feature/**` branches pushes automatisk til de
 
 For å kunne bruke innloggede tjenester (dvs. favoritter og lagrede søk), må du først kjøre `pam-aduser`.
 
-> [!TIP] > `pam-aduser` startes automatisk av `npm run start:dependencies`
+> [!TIP]
+> Tjenesten `pam-aduser` startes automatisk av `npm run start:dependencies`
 
 ## Teknisk dokumentasjon
 
