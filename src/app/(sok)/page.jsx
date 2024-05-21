@@ -67,13 +67,14 @@ async function fetchLocations() {
 
 export default async function Page({ searchParams }) {
     // After changing occupations, users might still access a search with their old occupations due to saved searches and bookmarks
-    if (containsOldOccupations(searchParams)) {
+    if (containsOldOccupations(searchParams) && !searchParams.newOccupations) {
         const newSearchParams = rewriteOccupationSearchParams(searchParams);
 
         // Keep the saved parameter (it's removed in createQuery)
         const newQuery = {
             ...createQuery(newSearchParams),
             saved: searchParams.saved,
+            newOccupations: true,
         };
 
         redirect(stringifyQuery(toBrowserQuery(newQuery)));
