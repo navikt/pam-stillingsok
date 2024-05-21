@@ -1,8 +1,18 @@
 import Search from "@/app/(sok)/_components/Search";
 import { defaultMetadataDescription, defaultOpenGraphImage, getMetadataTitle } from "@/app/layout";
-import { createQuery, defaultQuery, toApiQuery, toBrowserQuery, toReadableQuery } from "@/app/(sok)/_utils/query";
+import {
+    createQuery,
+    defaultQuery,
+    stringifyQuery,
+    toApiQuery,
+    toBrowserQuery,
+    toReadableQuery,
+    toSavedSearchQuery,
+} from "@/app/(sok)/_utils/query";
 import { fetchCachedElasticSearch } from "@/app/(sok)/_utils/fetchCachedElasticSearch";
 import * as actions from "@/app/_common/actions";
+import { containsOldOccupations, rewriteOccupationSearchParams } from "@/app/(sok)/_utils/occupationChanges";
+import { redirect } from "next/navigation";
 
 export async function generateMetadata({ searchParams }) {
     const query = createQuery(searchParams);
@@ -57,6 +67,15 @@ async function fetchLocations() {
 }
 
 export default async function Page({ searchParams }) {
+    // After changing occupations, users might still access a search with their old occupations due to saved searches and bookmarks
+    if (containsOldOccupations(searchParams)) {
+        const newSearchParams = rewriteOccupationSearchParams(searchParams);
+
+        // Create a new "saved search" url (does the same steps as done when a user saves a search)
+        const newBrowserQuery = stringifyQuery(toSavedSearchQuery(createQuery(newSearchParams)));
+        redirect(newBrowserQuery);
+    }
+
     const userPreferences = await actions.getUserPreferences();
     const _searchParams = searchParams;
     if (userPreferences.resultsPerPage) {
