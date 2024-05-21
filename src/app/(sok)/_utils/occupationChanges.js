@@ -4,7 +4,7 @@
 // Key = Old occupation
 // Values = New occupation/s
 const changedSearchParams = {
-    "Utdanning.Forskningsarbeid": ["Utdanning.Forskningsarbeid", "Bygg og anlegg;Andre ingeniører"],
+    "Utdanning.Forskningsarbeid": ["Utdanning.Forskningsarbeid", "Bygg og anlegg.Andre ingeniører"],
     "Utdanning.SFO, barne- og fritidsleder": [
         "Helse og sosial.Miljøarbeidere",
         "Helse og sosial.Ledere av omsorgstjenetser for barn",
@@ -35,7 +35,7 @@ const changedSearchParams = {
     "Kultur og kreative yrker.Journalistikk og litteratur": [
         "Kultur og kreative yrker.Journalistikk, kommunikasjon og litteratur",
     ],
-    "Kultur og kreative yrker;Museum, bibliotek": ["Kultur og kreative yrker.Museum, bibliotek, arkiv"],
+    "Kultur og kreative yrker.Museum, bibliotek": ["Kultur og kreative yrker.Museum, bibliotek, arkiv"],
     "Utdanning.Barnehage": ["Utdanning.Førskolelærer", "Utdanning.Barnehage- og skolefritidsassistenter"],
 };
 
