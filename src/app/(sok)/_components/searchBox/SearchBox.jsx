@@ -67,7 +67,6 @@ function SearchBox({ dispatch, query }) {
         if (found) {
             fields = "occupation";
         }
-        console.log("search");
         dispatch({ type: SET_SEARCH_STRING, value, fields });
     }
 
@@ -95,7 +94,7 @@ function SearchBox({ dispatch, query }) {
                 value={value || ""}
                 onSearchButtonClick={handleSearchButtonClick}
             />
-            <ComboBox q={query.q} dispatch={dispatch} />
+            <ComboBox dispatch={dispatch} query={query} />
         </section>
     );
 }
