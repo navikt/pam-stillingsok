@@ -1,0 +1,44 @@
+apiVersion: "monitoring.coreos.com/v1"
+kind: "PrometheusRule"
+metadata:
+  name: "stillingsok-alerts"
+  namespace: "teampam"
+  labels:
+    team: "teampam"
+spec:
+  groups:
+  - name: "teampam stillingsok alerts"
+    rules:
+    - alert: "pam-stillingsok er nede"
+      expr: kube_deployment_status_replicas_available{deployment="pam-stillingsok"} == 0
+      for: 2m
+      annotations:
+        consequence: "App {{ $labels.deployment }} er nede i namespace {{ $labels.namespace }}"
+        action: "kubectl describe pod {{ $labels.deployment }} -n {{ $labels.namespace }}` for events, og `kubectl logs {{ $labels.deployment }} -n {{ $labels.namespace }}` for logger"
+      labels:
+        namespace: "teampam"
+        severity: critical
+    - alert: "Mye feil i loggene"
+      expr: (100 * sum(rate(log_messages_errors{app="pam-stillingsok"}[3m])) / sum(rate(log_messages_total{app="pam-stillingsok"}[3m]))) > 1
+      for: 3m
+      annotations:
+        action: "Sjekk loggene til pam-stillingsok i teampam for å se hvorfor det er så mye feil"
+      labels:
+        namespace: "teampam"
+        severity: warning
+    - alert: Høy andel HTTP serverfeil (5xx responser)
+      expr: (100 * (sum by (service) (rate(nginx_ingress_controller_requests{status=~"5.*", status!~"503", namespace="teampam", service="pam-stillingsok"}[3m])) / sum by (service) (rate(nginx_ingress_controller_requests{namespace="teampam", service="pam-stillingsok"}[3m])))) > 1
+      for: 3m
+      annotations:
+        action: "Sjekk loggene for å se hvorfor {{ $labels.service }} returnerer HTTP feilresponser"
+      labels:
+        namespace: "teampam"
+        severity: critical
+    - alert: Høy andel HTTP klientfeil (4xx responser)
+      expr: (100 * (sum by (service) (rate(nginx_ingress_controller_requests{status=~"4.*", status!~"404", namespace="teampam", service="pam-stillingsok"}[3m])) / sum by (service) (rate(nginx_ingress_controller_requests{namespace="teampam", service="pam-stillingsok"}[3m])))) > 25
+      for: 3m
+      annotations:
+        action: "Sjekk loggene for å se hvorfor {{ $labels.service }} returnerer HTTP feilresponser"
+      labels:
+        namespace: "teampam"
+        severity: warning
