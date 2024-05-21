@@ -66,9 +66,6 @@ Hvis du ikke har det, klone det og legg i samma mappe som `pam-stillingsok`:
 git clone git@github.com:navikt/pam-docker-compose-shared.git ../pam-docker-compose-shared
 ```
 
-> [!TIP]
-> Dersom det er problemer med kjøring lokalt, kan du prøve en `git pull` på repoet som skal ligge `../pam-docker-compose-shared` ett nivå under.
-
 [//]: # "Docker compose setupen benytter seg av de bygde images for `pam-stillingsregistrering-api` og `pam-interesse-api`."
 
 #### Autentiser Docker repo
