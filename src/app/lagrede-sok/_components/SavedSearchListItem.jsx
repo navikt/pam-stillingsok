@@ -107,7 +107,7 @@ function SavedSearchListItem({
                 <Button variant="tertiary" icon={<TrashIcon aria-hidden="true" />} onClick={openConfirmationModal}>
                     Slett
                 </Button>
-                {true && (
+                {isEmailNotificationExpired && (
                     <Button
                         variant="tertiary"
                         onClick={reactivateEmailNotification}
