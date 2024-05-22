@@ -422,96 +422,96 @@ function mainQueryConjunctionTuning(q, searchFields) {
                 },
             },
         };
-    } else {
-        matchFields = [
-            "category_name_no^2",
-            "title_no^1",
-            "keywords_no^0.8",
-            "searchtags_no^0.3",
-            "geography_all_no^0.2",
-            "adtext_no^0.2",
-            "employerdescription_no^0.1",
-        ];
+    }
 
-        return {
-            bool: {
-                must: {
-                    bool: {
-                        should: [
-                            {
-                                multi_match: {
-                                    query: q,
-                                    type: "cross_fields",
-                                    fields: matchFields,
-                                    operator: "and",
-                                    tie_breaker: 0.3,
-                                    analyzer: "norwegian",
-                                    zero_terms_query: "all",
-                                },
-                            },
-                            {
-                                match_phrase: {
-                                    employername: {
-                                        query: q,
-                                        slop: 0,
-                                        boost: 2,
-                                    },
-                                },
-                            },
-                            {
-                                match: {
-                                    id: {
-                                        query: q,
-                                        operator: "and",
-                                        boost: 1,
-                                    },
-                                },
-                            },
-                        ],
-                    },
-                },
-                should: [
-                    {
-                        match_phrase: {
-                            title: {
+    matchFields = [
+        "category_name_no^2",
+        "title_no^1",
+        "keywords_no^0.8",
+        "searchtags_no^0.3",
+        "geography_all_no^0.2",
+        "adtext_no^0.2",
+        "employerdescription_no^0.1",
+    ];
+
+    return {
+        bool: {
+            must: {
+                bool: {
+                    should: [
+                        {
+                            multi_match: {
                                 query: q,
-                                slop: 2,
+                                type: "cross_fields",
+                                fields: matchFields,
+                                operator: "and",
+                                tie_breaker: 0.3,
+                                analyzer: "norwegian",
+                                zero_terms_query: "all",
                             },
                         },
-                    },
-                    {
-                        constant_score: {
-                            filter: {
-                                match: {
-                                    "location.municipal": {
-                                        query: q,
-                                    },
+                        {
+                            match_phrase: {
+                                employername: {
+                                    query: q,
+                                    slop: 0,
+                                    boost: 2,
                                 },
                             },
-                            boost: 3,
                         },
-                    },
-                    {
-                        constant_score: {
-                            filter: {
-                                match: {
-                                    "location.county": {
-                                        query: q,
-                                    },
+                        {
+                            match: {
+                                id: {
+                                    query: q,
+                                    operator: "and",
+                                    boost: 1,
                                 },
                             },
-                            boost: 3,
                         },
-                    },
-                ],
-                filter: {
-                    term: {
-                        status: "ACTIVE",
-                    },
+                    ],
                 },
             },
-        };
-    }
+            should: [
+                {
+                    match_phrase: {
+                        title: {
+                            query: q,
+                            slop: 2,
+                        },
+                    },
+                },
+                {
+                    constant_score: {
+                        filter: {
+                            match: {
+                                "location.municipal": {
+                                    query: q,
+                                },
+                            },
+                        },
+                        boost: 3,
+                    },
+                },
+                {
+                    constant_score: {
+                        filter: {
+                            match: {
+                                "location.county": {
+                                    query: q,
+                                },
+                            },
+                        },
+                        boost: 3,
+                    },
+                },
+            ],
+            filter: {
+                term: {
+                    status: "ACTIVE",
+                },
+            },
+        },
+    };
 }
 
 /* Generate main matching query object with classic/original OR match relevance model */
