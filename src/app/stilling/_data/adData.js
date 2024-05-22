@@ -40,7 +40,6 @@ function getUrl(url) {
         return undefined;
     } catch (e) {
         if (url) {
-            logger.warn(`getUrl - invalid url: ${url}`);
             return { dangerouslyInvalidUrl: url };
         }
     }

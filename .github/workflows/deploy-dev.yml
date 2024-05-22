@@ -6,6 +6,8 @@ on:
       - '.gitignore'
       - 'LICENCE'
       - 'CODEOWNERS'
+      - '.github/workflows/alerts.yml'
+      - '.nais/alerts.yml'
     branches:
       - '**'
 
