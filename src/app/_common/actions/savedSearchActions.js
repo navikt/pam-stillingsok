@@ -117,3 +117,29 @@ export async function deleteSavedSearchAction(uuid) {
 
     return { success: true };
 }
+
+export async function restartSavedSearchAction(uuid, savedSearch) {
+    logger.info("RESTART saved search", { uuid });
+
+    const oboToken = await getAdUserOboToken();
+
+    const res = await fetch(`${SAVED_SEARCH_URL}/${uuid}`, {
+        method: "PUT",
+        headers: getAdUserDefaultAuthHeadersWithCsrfToken(oboToken),
+        body: JSON.stringify(savedSearch),
+    });
+
+    if (!res.ok) {
+        logger.error(`PUT saved search failed. ${res.status} ${res.statusText}`);
+        return { success: false };
+    }
+
+    revalidatePath("/lagrede-sok");
+
+    const data = await res.json();
+
+    return {
+        success: true,
+        data,
+    };
+}

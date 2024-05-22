@@ -7,7 +7,6 @@ import Link from "next/link";
 import { ArrowsCirclepathIcon, PencilIcon, TrashIcon } from "@navikt/aksel-icons";
 import { formatDate } from "@/app/_common/utils/utils";
 import AlertModal from "@/app/_common/components/modals/AlertModal";
-import UserAPI from "@/app/_common/user/UserAPI";
 import useToggle from "@/app/_common/hooks/useToggle";
 import { FetchStatus } from "@/app/_common/hooks/useFetchReducer";
 import * as actions from "@/app/_common/actions";
@@ -46,20 +45,24 @@ function SavedSearchListItem({
         });
     }
 
-    function reactivateEmailNotification() {
+    async function reactivateEmailNotification() {
         setRestartEmailNotificationStatus(FetchStatus.IS_FETCHING);
 
-        UserAPI.put(`api/v1/savedsearches/${savedSearch.uuid}`, {
-            ...savedSearch,
-            status: "ACTIVE",
-        })
-            .then((response) => {
-                setRestartEmailNotificationStatus(FetchStatus.SUCCESS);
-                replaceSavedSearchInList(response);
-            })
-            .catch(() => {
-                setRestartEmailNotificationStatus(FetchStatus.FAILURE);
-            });
+        let isSuccess;
+        let result;
+        try {
+            result = await actions.restartSavedSearchAction(savedSearch.uuid, savedSearch);
+            isSuccess = result.success;
+        } catch (err) {
+            isSuccess = false;
+        }
+
+        if (isSuccess) {
+            setRestartEmailNotificationStatus(FetchStatus.SUCCESS);
+            replaceSavedSearchInList(result.data);
+        } else {
+            setRestartEmailNotificationStatus(FetchStatus.FAILURE);
+        }
     }
 
     function handleSavedSearchUpdated(updatedData) {
