@@ -51,7 +51,11 @@ function SavedSearchListItem({
         let isSuccess;
         let result;
         try {
-            result = await actions.restartSavedSearchAction(savedSearch.uuid, savedSearch);
+            const updatedSavedSearch = {
+                ...savedSearch,
+                status: "ACTIVE",
+            };
+            result = await actions.restartSavedSearchAction(savedSearch.uuid, updatedSavedSearch);
             isSuccess = result.success;
         } catch (err) {
             isSuccess = false;
