@@ -1,7 +1,8 @@
-// eslint-disable-next-line
+/* eslint-disable */
+// Only used for running tests
 import { expect } from "vitest";
-// eslint-disable-next-line
 import axe from "axe-core";
+/* eslint-enable */
 import config from "@/app/_common/config/axe-config";
 
 const runAxeTest = async (container) => {
