@@ -50,10 +50,10 @@ describe("Ad", () => {
     test("should not render how to apply if ad is inactive", async () => {
         const { container } = render(<Ad adData={inactiveAd} />);
 
+        await runAxeTest(container);
+
         const howToApply = screen.queryByText("Søk på jobben");
 
         expect(howToApply).not.toBeInTheDocument();
-
-        await runAxeTest(container);
     });
 });

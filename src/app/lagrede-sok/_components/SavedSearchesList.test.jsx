@@ -23,10 +23,10 @@ describe("Saved search", () => {
     test("render saved search", async () => {
         const { container } = render(<SavedSearchesList data={savedSearch} />);
 
+        await runAxeTest(container);
+
         const heading = screen.queryByText("Lagrede søk");
 
         expect(heading).toBeInTheDocument();
-
-        await runAxeTest(container);
     });
 });
