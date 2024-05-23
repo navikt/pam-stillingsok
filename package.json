@@ -20,6 +20,7 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "@axe-core/react": "^4.9.1",
         "@amplitude/analytics-browser": "^2.5.2",
         "@navikt/aksel-icons": "^6.1.1",
         "@navikt/arbeidsplassen-css": "^8.2.10",
@@ -49,6 +50,7 @@
         "@testing-library/react": "^14.2.2",
         "@types/node": "20.11.25",
         "@vitejs/plugin-react": "^4.2.1",
+        "axe-core": "^4.9.1",
         "eslint-config-airbnb": "^19.0.4",
         "eslint-config-next": "^14.2.1",
         "eslint-config-prettier": "^9.1.0",
