@@ -394,18 +394,46 @@ function mainQueryConjunctionTuning(q, searchFields) {
     let matchFields;
 
     if (searchFields === "occupation") {
-        matchFields = ["category_name_no^2", "title_no^1", "searchtags_no^0.3"];
-    } else {
-        matchFields = [
-            "category_name_no^2",
-            "title_no^1",
-            "keywords_no^0.8",
-            "searchtags_no^0.3",
-            "geography_all_no^0.2",
-            "adtext_no^0.2",
-            "employerdescription_no^0.1",
-        ];
+        matchFields = ["category_name_no^2", "searchtags_no^0.3"];
+
+        return {
+            bool: {
+                must: {
+                    bool: {
+                        should: [
+                            {
+                                multi_match: {
+                                    query: q,
+                                    type: "cross_fields",
+                                    fields: matchFields,
+                                    operator: "and",
+                                    tie_breaker: 0.3,
+                                    analyzer: "norwegian",
+                                    zero_terms_query: "all",
+                                },
+                            },
+                        ],
+                    },
+                },
+                filter: {
+                    term: {
+                        status: "ACTIVE",
+                    },
+                },
+            },
+        };
     }
+
+    matchFields = [
+        "category_name_no^2",
+        "title_no^1",
+        "keywords_no^0.8",
+        "searchtags_no^0.3",
+        "geography_all_no^0.2",
+        "adtext_no^0.2",
+        "employerdescription_no^0.1",
+    ];
+
     return {
         bool: {
             must: {
