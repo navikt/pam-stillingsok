@@ -1,5 +1,7 @@
 import { describe, expect, test } from "vitest";
 import { render, screen } from "@testing-library/react";
+import axe from "axe-core";
+import config from "@/app/_common/config/axe-config";
 import Ad from "./Ad";
 
 const activeAd = {
@@ -38,6 +40,8 @@ vi.mock("next/navigation", async (importOriginal) => {
 });
 
 describe("Ad", () => {
+    axe.configure(config);
+
     test("should render how to apply for active ads with an application email", () => {
         render(<Ad adData={activeAd} />);
 
@@ -46,11 +50,17 @@ describe("Ad", () => {
         expect(howToApply).toBeInTheDocument();
     });
 
-    test("should not render how to apply if ad is inactive", () => {
-        render(<Ad adData={inactiveAd} />);
+    test("should not render how to apply if ad is inactive", async () => {
+        const { container } = render(<Ad adData={inactiveAd} />);
 
         const howToApply = screen.queryByText("Søk på jobben");
 
         expect(howToApply).not.toBeInTheDocument();
+
+        const results = await axe.run(container);
+        if (results.violations.length !== 0) {
+            console.log("AXE ERRORS: ", results.violations);
+        }
+        expect(results.violations.length).toBe(0);
     });
 });

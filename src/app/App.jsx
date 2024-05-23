@@ -8,6 +8,7 @@ import { getSessionId } from "@/app/_common/monitoring/session";
 import { AuthenticationContext, AuthenticationStatus } from "./_common/auth/contexts/AuthenticationProvider";
 import { initAmplitude } from "./_common/monitoring/amplitude";
 import googleTranslateWorkaround from "./_common/utils/googleTranslateWorkaround";
+import Axe from "./Axe";
 
 // Todo: Gå igjennom alle fetch-kall i koden og se om referrer er satt riktig. Nå er den satt referrer: CONTEXT_PATH, men ikke sikker på hva som er rett her
 
@@ -39,6 +40,7 @@ function App({ children, amplitudeToken }) {
         <div id="app">
             <SkipLink href="#main-content" />
             <div className="arb-push-footer-down">
+                <Axe />
                 <Header
                     variant="person"
                     active="ledige-stillinger"
