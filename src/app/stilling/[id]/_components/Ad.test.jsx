@@ -1,7 +1,6 @@
 import { describe, expect, test } from "vitest";
 import { render, screen } from "@testing-library/react";
-import axe from "axe-core";
-import config from "@/app/_common/config/axe-config";
+import runAxeTest from "@/app/_common/utils/runAxeTest";
 import Ad from "./Ad";
 
 const activeAd = {
@@ -40,8 +39,6 @@ vi.mock("next/navigation", async (importOriginal) => {
 });
 
 describe("Ad", () => {
-    axe.configure(config);
-
     test("should render how to apply for active ads with an application email", () => {
         render(<Ad adData={activeAd} />);
 
@@ -57,10 +54,6 @@ describe("Ad", () => {
 
         expect(howToApply).not.toBeInTheDocument();
 
-        const results = await axe.run(container);
-        if (results.violations.length !== 0) {
-            console.log("AXE ERRORS: ", results.violations);
-        }
-        expect(results.violations.length).toBe(0);
+        await runAxeTest(container);
     });
 });

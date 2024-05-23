@@ -75,7 +75,7 @@ function SavedSearchListItem({
 
     return (
         <article>
-            <Heading level="3" size="small" spacing>
+            <Heading level="2" size="small" spacing>
                 <AkselLink as={Link} href={`/${savedSearch.searchQuery}&saved=${savedSearch.uuid}`}>
                     {savedSearch.title}
                 </AkselLink>
