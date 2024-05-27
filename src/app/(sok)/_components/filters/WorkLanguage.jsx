@@ -25,12 +25,9 @@ function WorkLanguage({ initialValues, updatedValues, query, dispatch, hideLegen
         <Fieldset
             hideLegend={hideLegend}
             legend={
-                <>
-                    <BodyShort as="span" visuallyHidden>
-                        Filtrer etter{" "}
-                    </BodyShort>
-                    <span className="capitalize">arbeidsspråk</span>
-                </>
+                <BodyShort as="span" visuallyHidden>
+                    Filtrer etter arbeidsspråk
+                </BodyShort>
             }
         >
             <div>
