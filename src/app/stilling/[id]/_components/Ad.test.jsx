@@ -1,5 +1,6 @@
 import { describe, expect, test } from "vitest";
 import { render, screen } from "@testing-library/react";
+import runAxeTest from "@/app/_common/utils/runAxeTest";
 import Ad from "./Ad";
 
 const activeAd = {
@@ -46,8 +47,10 @@ describe("Ad", () => {
         expect(howToApply).toBeInTheDocument();
     });
 
-    test("should not render how to apply if ad is inactive", () => {
-        render(<Ad adData={inactiveAd} />);
+    test("should not render how to apply if ad is inactive", async () => {
+        const { container } = render(<Ad adData={inactiveAd} />);
+
+        await runAxeTest(container);
 
         const howToApply = screen.queryByText("Søk på jobben");
 
