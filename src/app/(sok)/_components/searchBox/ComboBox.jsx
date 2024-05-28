@@ -6,28 +6,40 @@ import fixLocationName from "@/app/_common/utils/fixLocationName";
 import { PublishedLabelsEnum } from "@/app/(sok)/_utils/query";
 
 function ComboBox({ query, dispatch }) {
-    const [value, setValue] = useState("");
-    const mockPersistUserAddedValues = (option, isSelected) => {
-        console.log("custom option", { option, isSelected });
-    };
-    // TODO handle t1 t1, aka double of same value, gives error
     function getQueryOptions(queryObject) {
         const searchTerm = queryObject.q && queryObject.q.trim();
-        const searchTerms = searchTerm ? searchTerm.split(" ").map((val) => ({ label: val, value: `q-${val}` })) : [];
+        const searchTerms = searchTerm ? searchTerm.split(" ") : [];
         return [
             ...searchTerms,
-            ...queryObject.municipals.map((municipals) => fixLocationName(municipals.split(".")[1])),
-            ...queryObject.counties.map((counties) => fixLocationName(counties)),
-            ...queryObject.countries.map((countries) => fixLocationName(countries)),
-            ...queryObject.occupationSecondLevels.map((occupation) => occupation.split(".")[1]),
-            ...(queryObject.published ? [PublishedLabelsEnum[queryObject.published]] : []),
-            ...queryObject.occupationFirstLevels,
-            ...queryObject.extent,
-            ...queryObject.engagementType,
-            ...queryObject.sector,
-            ...queryObject.education,
-            ...queryObject.workLanguage,
-            ...queryObject.remote,
+            ...queryObject.municipals.map((municipals) => ({
+                label: fixLocationName(municipals.split(".")[1]),
+                value: `municipals-${municipals}`,
+            })),
+            ...queryObject.counties.map((counties) => ({
+                label: fixLocationName(counties),
+                value: `counties-${counties}`,
+            })),
+            ...queryObject.countries.map((countries) => ({
+                label: fixLocationName(countries),
+                value: `counties-${countries}`,
+            })),
+            ...queryObject.occupationSecondLevels.map((occupation) => ({
+                label: occupation.split(".")[1],
+                value: `occupationSecondLevels-${occupation}`,
+            })),
+            ...(queryObject.published
+                ? [{ label: PublishedLabelsEnum[queryObject.published], value: `published-${queryObject.published}` }]
+                : []),
+            ...queryObject.occupationFirstLevels.map((occupation) => ({
+                label: occupation,
+                value: `occupationFirstLevels-${occupation}`,
+            })),
+            ...queryObject.extent.map((item) => ({ label: item, value: `extent-${item}` })),
+            ...queryObject.engagementType.map((item) => ({ label: item, value: `engagementType-${item}` })),
+            ...queryObject.sector.map((item) => ({ label: item, value: `sector-${item}` })),
+            ...queryObject.education.map((item) => ({ label: item, value: `education-${item}` })),
+            ...queryObject.workLanguage.map((item) => ({ label: item, value: `workLanguage-${item}` })),
+            ...queryObject.remote.map((item) => ({ label: item, value: `remote-${item}` })),
         ];
     }
 
@@ -40,68 +52,34 @@ function ComboBox({ query, dispatch }) {
         setSelectedOptions(newInitialSelectedOptions);
     }, [query]);
 
-    const initialOptions = useMemo(
-        () => [
-            { label: "Hjelpemidler", value: "HJE" },
-            { label: "Oppfølging", value: "OPP" },
-            { label: "Sykepenger", value: "SYK" },
-            { label: "Sykemelding", value: "SYM" },
-            { label: "Foreldre- og svangerskapspenger", value: "FOR" },
-            { label: "Arbeidsavklaringspenger", value: "AAP" },
-            { label: "Uføretrygd", value: "UFO" },
-            { label: "Pensjon", value: "PEN" },
-            { label: "Barnetrygd", value: "BAR" },
-            { label: "Kontantstøtte", value: "KON" },
-            { label: "Bostøtte", value: "BOS" },
-            { label: "Barnebidrag", value: "BBI" },
-            { label: "Bidragsforskudd", value: "BIF" },
-            { label: "Grunn- og hjelpestønad", value: "GRU" },
-        ],
-        [],
-    );
-
-    const filteredOptions = useMemo(
-        () => initialOptions.filter((option) => option && option.value.includes(value)),
-        [value, initialOptions],
-    );
-
-    // TODO: add "job" search term
-    // TODO: add toggle functions for query [] and filters[]
     const onToggleSelected = (option, isSelected, isCustomOption) => {
         if (isSelected) {
-            // setSelectedOptions([...selectedOptions, { label: option, value: `q-${option}` }]);
-            if (option) {
-                dispatch({
-                    type: SET_SEARCH_STRING,
-                    value: [...selectedOptions.map((opt) => opt.label), option].join(" "),
-                });
-            }
-        } else if (option) {
-            const selected = selectedOptions.filter((o) => o.value !== option);
-            // setSelectedOptions(selected);
-            dispatch({ type: SET_SEARCH_STRING, value: selected.map((val) => val.label).join(" ") });
+            setSelectedOptions([...selectedOptions, option]);
+        } else {
+            setSelectedOptions(selectedOptions.filter((o) => o !== option));
         }
         if (isCustomOption) {
-            mockPersistUserAddedValues(option, isSelected);
+            if (isSelected) {
+                dispatch({
+                    type: SET_SEARCH_STRING,
+                    value: [...selectedOptions.filter((opt) => !opt.value), option].join(" "),
+                });
+            } else {
+                const selected = selectedOptions.filter((o) => o !== option);
+                dispatch({ type: SET_SEARCH_STRING, value: selected.filter((opt) => !opt.value).join(" ") });
+            }
         }
     };
-
     // TODO: add clearButton && clearButtonLabel="Fjern alle"
     return (
-        <>
-            {/* {console.log(getQueryQ(query))} */}
-            <Combobox
-                allowNewValues
-                label="Ko-ko-kombobox"
-                filteredOptions={filteredOptions}
-                isMultiSelect
-                onChange={(event) => setValue(event?.target.value || "")}
-                onToggleSelected={onToggleSelected}
-                selectedOptions={selectedOptions}
-                options={initialOptions}
-                value={value}
-            />
-        </>
+        <Combobox
+            allowNewValues
+            label="Ko-ko-kombobox"
+            isMultiSelect
+            onToggleSelected={onToggleSelected}
+            selectedOptions={selectedOptions}
+            options={[]}
+        />
     );
 }
 
@@ -122,7 +100,6 @@ ComboBox.propTypes = {
         workLanguage: PropTypes.arrayOf(PropTypes.string),
         remote: PropTypes.arrayOf(PropTypes.string),
     }),
-    // q: PropTypes.string.isRequired,
     dispatch: PropTypes.func.isRequired,
 };
 
