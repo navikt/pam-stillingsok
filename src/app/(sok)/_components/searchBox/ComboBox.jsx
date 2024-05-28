@@ -1,11 +1,27 @@
 import { UNSAFE_Combobox as Combobox } from "@navikt/ds-react";
 import React, { useEffect, useMemo, useState } from "react";
 import PropTypes from "prop-types";
-import { SET_SEARCH_STRING } from "@/app/(sok)/_utils/queryReducer";
+import {
+    REMOVE_COUNTRY,
+    REMOVE_COUNTY,
+    REMOVE_EDUCATION,
+    REMOVE_ENGAGEMENT_TYPE,
+    REMOVE_EXTENT,
+    REMOVE_MUNICIPAL,
+    REMOVE_OCCUPATION_FIRST_LEVEL,
+    REMOVE_OCCUPATION_SECOND_LEVEL,
+    REMOVE_REMOTE,
+    REMOVE_SECTOR,
+    REMOVE_WORKLANGUAGE,
+    SET_PUBLISHED,
+    SET_SEARCH_STRING,
+} from "@/app/(sok)/_utils/queryReducer";
 import fixLocationName from "@/app/_common/utils/fixLocationName";
 import { PublishedLabelsEnum } from "@/app/(sok)/_utils/query";
 
-function ComboBox({ query, dispatch }) {
+function ComboBox({ query, queryDispatch }) {
+    // TODO: extract ie. "counties-"
+    // TODO: Utland
     function getQueryOptions(queryObject) {
         const searchTerm = queryObject.q && queryObject.q.trim();
         const searchTerms = searchTerm ? searchTerm.split(" ") : [];
@@ -21,7 +37,7 @@ function ComboBox({ query, dispatch }) {
             })),
             ...queryObject.countries.map((countries) => ({
                 label: fixLocationName(countries),
-                value: `counties-${countries}`,
+                value: `countries-${countries}`,
             })),
             ...queryObject.occupationSecondLevels.map((occupation) => ({
                 label: occupation.split(".")[1],
@@ -52,21 +68,55 @@ function ComboBox({ query, dispatch }) {
         setSelectedOptions(newInitialSelectedOptions);
     }, [query]);
 
+    const removeFilter = (option) => {
+        switch (option.split("-")[0]) {
+            case "municipals":
+                return REMOVE_MUNICIPAL;
+            case "counties":
+                return REMOVE_COUNTY;
+            case "countries":
+                return REMOVE_COUNTRY;
+            case "occupationFirstLevels":
+                return REMOVE_OCCUPATION_FIRST_LEVEL;
+            case "occupationSecondLevels":
+                return REMOVE_OCCUPATION_SECOND_LEVEL;
+            case "engagementType":
+                return REMOVE_ENGAGEMENT_TYPE;
+            case "extent":
+                return REMOVE_EXTENT;
+            case "workLanguage":
+                return REMOVE_WORKLANGUAGE;
+            case "education":
+                return REMOVE_EDUCATION;
+            case "remote":
+                return REMOVE_REMOTE;
+            case "sector":
+                return REMOVE_SECTOR;
+            default:
+                return "";
+        }
+    };
+
     const onToggleSelected = (option, isSelected, isCustomOption) => {
         if (isSelected) {
             setSelectedOptions([...selectedOptions, option]);
         } else {
             setSelectedOptions(selectedOptions.filter((o) => o !== option));
+            if (option.includes("published-")) {
+                queryDispatch({ type: SET_PUBLISHED, value: undefined });
+            } else {
+                queryDispatch({ type: removeFilter(option), value: option.split("-")[1] });
+            }
         }
         if (isCustomOption) {
             if (isSelected) {
-                dispatch({
+                queryDispatch({
                     type: SET_SEARCH_STRING,
                     value: [...selectedOptions.filter((opt) => !opt.value), option].join(" "),
                 });
             } else {
                 const selected = selectedOptions.filter((o) => o !== option);
-                dispatch({ type: SET_SEARCH_STRING, value: selected.filter((opt) => !opt.value).join(" ") });
+                queryDispatch({ type: SET_SEARCH_STRING, value: selected.filter((opt) => !opt.value).join(" ") });
             }
         }
     };
@@ -100,7 +150,7 @@ ComboBox.propTypes = {
         workLanguage: PropTypes.arrayOf(PropTypes.string),
         remote: PropTypes.arrayOf(PropTypes.string),
     }),
-    dispatch: PropTypes.func.isRequired,
+    queryDispatch: PropTypes.func.isRequired,
 };
 
 export default ComboBox;
