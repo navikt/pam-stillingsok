@@ -94,7 +94,7 @@ function SearchBox({ dispatch, query }) {
                 value={value || ""}
                 onSearchButtonClick={handleSearchButtonClick}
             />
-            <ComboBox dispatch={dispatch} query={query} />
+            <ComboBox queryDispatch={dispatch} query={query} />
         </section>
     );
 }
