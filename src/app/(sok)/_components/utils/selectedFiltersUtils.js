@@ -29,7 +29,7 @@ export function removeCountry(queryDispatch, query, value) {
     }
 }
 
-export function removeOccupation(queryDispatch, query, value) {
+export function removeOccupationSecondLevel(queryDispatch, query, value) {
     // Fjern yrket fra filter
     queryDispatch({ type: REMOVE_OCCUPATION_SECOND_LEVEL, value });
 
