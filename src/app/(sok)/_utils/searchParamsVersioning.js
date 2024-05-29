@@ -1,9 +1,8 @@
 import { containsOldOccupations, rewriteOccupationSearchParams } from "@/app/(sok)/_utils/occupationChanges";
 
 export const VERSION_QUERY_PARAM = "v";
-
+export const CURRENT_VERSION = 1;
 const FIRST_VERSION = 0;
-const CURRENT_VERSION = 1;
 
 // Returns new search params if the searchParams have been migrated.
 export function migrateSearchParams(searchParams) {
