@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Accordion, Button } from "@navikt/ds-react";
 import Remote from "@/app/(sok)/_components/filters/Remote";
+import Education from "@/app/(sok)/_components/filters/Education";
 import FilterAccordionItem from "./FilterAccordionItem";
 import Published from "./Published";
 import Counties from "./Locations";
@@ -51,6 +52,14 @@ function FiltersDesktop({ query, dispatchQuery, aggregations, locations, searchR
                         updatedValues={searchResult.aggregations.sector}
                     />
                 </FilterAccordionItem>
+                <FilterAccordionItem title="Utdanning" panelId="education">
+                    <Education
+                        query={query}
+                        dispatch={dispatchQuery}
+                        initialValues={aggregations.education}
+                        updatedValues={searchResult.aggregations.education}
+                    />
+                </FilterAccordionItem>
 
                 <FilterAccordionItem title="Arbeidsspråk" panelId="workLanguage">
                     <WorkLanguage
@@ -74,15 +83,6 @@ function FiltersDesktop({ query, dispatchQuery, aggregations, locations, searchR
                         updatedValues={searchResult.aggregations.engagementTypes}
                     />
                 </FilterAccordionItem>
-                {/* TODO: COMMENT IN WHEN FILTER IS READY BACKEND
-                <FilterAccordionItem title="Utdanning" panelId="education">
-                    <Education
-                        query={query}
-                        dispatch={dispatchQuery}
-                        initialValues={aggregations.education}
-                        updatedValues={searchResult.aggregations.education}
-                    />
-                </FilterAccordionItem> */}
             </Accordion>
             <noscript>
                 <Button type="submit">Søk</Button>
