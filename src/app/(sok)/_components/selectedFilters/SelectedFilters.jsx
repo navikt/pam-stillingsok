@@ -3,7 +3,11 @@ import PropTypes from "prop-types";
 import { Button, Chips, HStack } from "@navikt/ds-react";
 import { TrashIcon } from "@navikt/aksel-icons";
 import fixLocationName from "@/app/_common/utils/fixLocationName";
-import { removeCountry, removeMunicipal, removeOccupation } from "@/app/(sok)/_components/utils/selectedFiltersUtils";
+import {
+    removeCountry,
+    removeMunicipal,
+    removeOccupationSecondLevel,
+} from "@/app/(sok)/_components/utils/selectedFiltersUtils";
 import {
     REMOVE_COUNTY,
     REMOVE_ENGAGEMENT_TYPE,
@@ -107,7 +111,7 @@ function SelectedFilters({ query, queryDispatch }) {
             <Chips.Removable
                 variant="neutral"
                 key={`occupationSecondLevels-${value}`}
-                onClick={() => removeOccupation(queryDispatch, query, value)}
+                onClick={() => removeOccupationSecondLevel(queryDispatch, query, value)}
             >
                 {value.split(".")[1]}
             </Chips.Removable>

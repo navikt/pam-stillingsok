@@ -18,6 +18,11 @@ import {
 } from "@/app/(sok)/_utils/queryReducer";
 import fixLocationName from "@/app/_common/utils/fixLocationName";
 import { PublishedLabelsEnum } from "@/app/(sok)/_utils/query";
+import {
+    removeCountry,
+    removeMunicipal,
+    removeOccupationSecondLevel,
+} from "@/app/(sok)/_components/utils/selectedFiltersUtils";
 
 function ComboBox({ query, queryDispatch }) {
     // TODO: extract ie. "counties-"
@@ -68,7 +73,7 @@ function ComboBox({ query, queryDispatch }) {
         setSelectedOptions(newInitialSelectedOptions);
     }, [query]);
 
-    const removeFilter = (option) => {
+    const typeOfFilter = (option) => {
         switch (option.split("-")[0]) {
             case "municipals":
                 return REMOVE_MUNICIPAL;
@@ -80,6 +85,8 @@ function ComboBox({ query, queryDispatch }) {
                 return REMOVE_OCCUPATION_FIRST_LEVEL;
             case "occupationSecondLevels":
                 return REMOVE_OCCUPATION_SECOND_LEVEL;
+            case "published":
+                return SET_PUBLISHED;
             case "engagementType":
                 return REMOVE_ENGAGEMENT_TYPE;
             case "extent":
@@ -102,10 +109,19 @@ function ComboBox({ query, queryDispatch }) {
             setSelectedOptions([...selectedOptions, option]);
         } else {
             setSelectedOptions(selectedOptions.filter((o) => o !== option));
-            if (option.includes("published-")) {
-                queryDispatch({ type: SET_PUBLISHED, value: undefined });
+
+            const filterToRemove = typeOfFilter(option);
+            const optionValue = option.split("-")[1];
+            if (filterToRemove === SET_PUBLISHED) {
+                queryDispatch({ type: filterToRemove, value: undefined });
+            } else if (filterToRemove === REMOVE_MUNICIPAL) {
+                removeMunicipal(queryDispatch, query, optionValue);
+            } else if (filterToRemove === REMOVE_COUNTRY) {
+                removeCountry(queryDispatch, query, optionValue);
+            } else if (filterToRemove === REMOVE_OCCUPATION_SECOND_LEVEL) {
+                removeOccupationSecondLevel(queryDispatch, query, optionValue);
             } else {
-                queryDispatch({ type: removeFilter(option), value: option.split("-")[1] });
+                queryDispatch({ type: filterToRemove, value: optionValue[1] });
             }
         }
         if (isCustomOption) {
@@ -121,6 +137,7 @@ function ComboBox({ query, queryDispatch }) {
         }
     };
     // TODO: add clearButton && clearButtonLabel="Fjern alle"
+    // TODO: yrkes fritekst
     return (
         <Combobox
             allowNewValues
