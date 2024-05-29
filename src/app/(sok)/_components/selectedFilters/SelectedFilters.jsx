@@ -3,16 +3,14 @@ import PropTypes from "prop-types";
 import { Button, Chips, HStack } from "@navikt/ds-react";
 import { TrashIcon } from "@navikt/aksel-icons";
 import fixLocationName from "@/app/_common/utils/fixLocationName";
+import { removeCountry, removeMunicipal, removeOccupation } from "@/app/(sok)/_components/utils/selectedFiltersUtils";
 import {
-    REMOVE_COUNTRY,
     REMOVE_COUNTY,
     REMOVE_ENGAGEMENT_TYPE,
     REMOVE_EXTENT,
     REMOVE_EDUCATION,
     REMOVE_WORKLANGUAGE,
-    REMOVE_MUNICIPAL,
     REMOVE_OCCUPATION_FIRST_LEVEL,
-    REMOVE_OCCUPATION_SECOND_LEVEL,
     REMOVE_REMOTE,
     REMOVE_SECTOR,
     SET_INTERNATIONAL,
@@ -26,42 +24,6 @@ import { editedItemKey } from "../filters/Engagement";
 function SelectedFilters({ query, queryDispatch }) {
     const MAX_CHIPS = 10;
     const [showAll, setShowAll] = useState(false);
-
-    const removeMunicipal = (value) => {
-        // Fjern kommunen fra filter
-        queryDispatch({ type: REMOVE_MUNICIPAL, value });
-
-        // Hvis dette var den siste valgte kommune i samme fylke, så skal fylket også fjernes
-        const county = value.split(".")[0];
-        const remainingMunicipalsInCounty = query.municipals.filter((municipal) => municipal.startsWith(`${county}.`));
-        if (remainingMunicipalsInCounty.length === 1) {
-            queryDispatch({ type: REMOVE_COUNTY, value: county });
-        }
-    };
-
-    const removeCountry = (value) => {
-        // Fjern land fra filter
-        queryDispatch({ type: REMOVE_COUNTRY, value });
-
-        // Hvis dette var den siste landet, så skal "Utland" også fjernes
-        if (query.countries.length === 1) {
-            queryDispatch({ type: SET_INTERNATIONAL, value: false });
-        }
-    };
-
-    const removeOccupation = (value) => {
-        // Fjern yrket fra filter
-        queryDispatch({ type: REMOVE_OCCUPATION_SECOND_LEVEL, value });
-
-        // Hvis dette var det siste yrket i samme yrkeskategori, så skal yrkeskategorien også fjernes
-        const firstLevel = value.split(".")[0];
-        const remainingOccupationsInCategory = query.occupationSecondLevels.filter((secondLevel) =>
-            secondLevel.startsWith(`${firstLevel}.`),
-        );
-        if (remainingOccupationsInCategory.length === 1) {
-            queryDispatch({ type: REMOVE_OCCUPATION_FIRST_LEVEL, value: firstLevel });
-        }
-    };
 
     // Ikke vis fylke hvis bruker har valgt en eller flere kommuner i dette fylket
     const counties = query.counties.filter((county) => {
@@ -92,7 +54,11 @@ function SelectedFilters({ query, queryDispatch }) {
 
     chips.push(
         ...query.municipals.map((value) => (
-            <Chips.Removable variant="neutral" key={`municipals-${value}`} onClick={() => removeMunicipal(value)}>
+            <Chips.Removable
+                variant="neutral"
+                key={`municipals-${value}`}
+                onClick={() => removeMunicipal(queryDispatch, query, value)}
+            >
                 {fixLocationName(value.split(".")[1])}
             </Chips.Removable>
         )),
@@ -126,7 +92,11 @@ function SelectedFilters({ query, queryDispatch }) {
 
     chips.push(
         ...query.countries.map((value) => (
-            <Chips.Removable variant="neutral" key={`countries-${value}`} onClick={() => removeCountry(value)}>
+            <Chips.Removable
+                variant="neutral"
+                key={`countries-${value}`}
+                onClick={() => removeCountry(queryDispatch, query, value)}
+            >
                 {fixLocationName(value)}
             </Chips.Removable>
         )),
@@ -137,7 +107,7 @@ function SelectedFilters({ query, queryDispatch }) {
             <Chips.Removable
                 variant="neutral"
                 key={`occupationSecondLevels-${value}`}
-                onClick={() => removeOccupation(value)}
+                onClick={() => removeOccupation(queryDispatch, query, value)}
             >
                 {value.split(".")[1]}
             </Chips.Removable>
