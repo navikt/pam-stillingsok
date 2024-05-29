@@ -19,6 +19,8 @@ import {
 import fixLocationName from "@/app/_common/utils/fixLocationName";
 import { PublishedLabelsEnum } from "@/app/(sok)/_utils/query";
 import {
+    filterCounties,
+    filterOccupationFirstLevels,
     removeCountry,
     removeMunicipal,
     removeOccupationSecondLevel,
@@ -36,9 +38,9 @@ function ComboBox({ query, queryDispatch }) {
                 label: fixLocationName(municipals.split(".")[1]),
                 value: `municipals-${municipals}`,
             })),
-            ...queryObject.counties.map((counties) => ({
-                label: fixLocationName(counties),
-                value: `counties-${counties}`,
+            ...filterCounties(queryObject).map((c) => ({
+                label: fixLocationName(c),
+                value: `counties-${c}`,
             })),
             ...queryObject.countries.map((countries) => ({
                 label: fixLocationName(countries),
@@ -48,13 +50,13 @@ function ComboBox({ query, queryDispatch }) {
                 label: occupation.split(".")[1],
                 value: `occupationSecondLevels-${occupation}`,
             })),
-            ...(queryObject.published
-                ? [{ label: PublishedLabelsEnum[queryObject.published], value: `published-${queryObject.published}` }]
-                : []),
-            ...queryObject.occupationFirstLevels.map((occupation) => ({
+            ...filterOccupationFirstLevels(queryObject).map((occupation) => ({
                 label: occupation,
                 value: `occupationFirstLevels-${occupation}`,
             })),
+            ...(queryObject.published
+                ? [{ label: PublishedLabelsEnum[queryObject.published], value: `published-${queryObject.published}` }]
+                : []),
             ...queryObject.extent.map((item) => ({ label: item, value: `extent-${item}` })),
             ...queryObject.engagementType.map((item) => ({ label: item, value: `engagementType-${item}` })),
             ...queryObject.sector.map((item) => ({ label: item, value: `sector-${item}` })),
