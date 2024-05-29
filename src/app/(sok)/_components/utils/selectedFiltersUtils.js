@@ -7,6 +7,22 @@ import {
     SET_INTERNATIONAL,
 } from "@/app/(sok)/_utils/queryReducer";
 
+// Ikke vis fylke hvis bruker har valgt en eller flere kommuner i dette fylket
+export function filterCounties(query) {
+    return query.counties.filter((county) => {
+        const found = query.municipals.find((obj) => obj.startsWith(`${county}.`));
+        return !found;
+    });
+}
+
+// Ikke vis yrkeskategori hvis bruker har valgt et eller flere yrker i denne kategorien
+export function filterOccupationFirstLevels(query) {
+    return query.occupationFirstLevels.filter((firstLevel) => {
+        const found = query.occupationSecondLevels.find((obj) => obj.startsWith(`${firstLevel}.`));
+        return !found;
+    });
+}
+
 export function removeMunicipal(queryDispatch, query, value) {
     // Fjern kommunen fra filter
     queryDispatch({ type: REMOVE_MUNICIPAL, value });

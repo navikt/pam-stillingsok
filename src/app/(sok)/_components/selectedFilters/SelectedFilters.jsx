@@ -4,6 +4,8 @@ import { Button, Chips, HStack } from "@navikt/ds-react";
 import { TrashIcon } from "@navikt/aksel-icons";
 import fixLocationName from "@/app/_common/utils/fixLocationName";
 import {
+    filterCounties,
+    filterOccupationFirstLevels,
     removeCountry,
     removeMunicipal,
     removeOccupationSecondLevel,
@@ -28,18 +30,6 @@ import { editedItemKey } from "../filters/Engagement";
 function SelectedFilters({ query, queryDispatch }) {
     const MAX_CHIPS = 10;
     const [showAll, setShowAll] = useState(false);
-
-    // Ikke vis fylke hvis bruker har valgt en eller flere kommuner i dette fylket
-    const counties = query.counties.filter((county) => {
-        const found = query.municipals.find((obj) => obj.startsWith(`${county}.`));
-        return !found;
-    });
-
-    // Ikke vis yrkeskategori hvis bruker har valgt et eller flere yrker i denne kategorien
-    const occupationFirstLevels = query.occupationFirstLevels.filter((firstLevel) => {
-        const found = query.occupationSecondLevels.find((obj) => obj.startsWith(`${firstLevel}.`));
-        return !found;
-    });
 
     // Opprett chips for alle filter
     const chips = [];
@@ -69,7 +59,7 @@ function SelectedFilters({ query, queryDispatch }) {
     );
 
     chips.push(
-        ...counties.map((value) => (
+        ...filterCounties(query).map((value) => (
             <Chips.Removable
                 variant="neutral"
                 key={`counties-${value}`}
@@ -119,7 +109,7 @@ function SelectedFilters({ query, queryDispatch }) {
     );
 
     chips.push(
-        ...occupationFirstLevels.map((value) => (
+        ...filterOccupationFirstLevels(query).map((value) => (
             <Chips.Removable
                 variant="neutral"
                 key={`occupationFirstLevels-${value}`}
