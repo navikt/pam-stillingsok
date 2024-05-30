@@ -29,7 +29,7 @@ function Remote({ initialValues, updatedValues, query, dispatch }) {
         } else {
             dispatch({ type: REMOVE_REMOTE, value });
         }
-        logFilterChanged({ name: "Hjemmekontor", value, checked });
+        logFilterChanged({ name: "Hjemmekontor", value: labelForRemote(value), checked });
     }
 
     return (
