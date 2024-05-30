@@ -44,7 +44,7 @@ function Occupations({ initialValues, updatedValues, query, dispatch }) {
         } else {
             dispatch({ type: REMOVE_OCCUPATION_SECOND_LEVEL, value });
         }
-        logFilterChanged({ name: "occupation", value, checked, level: 2 });
+        logFilterChanged({ name: "occupation", value: value.split(".")[1], checked, level: 2 });
     }
 
     /**
