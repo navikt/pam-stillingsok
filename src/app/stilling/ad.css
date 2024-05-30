@@ -13,9 +13,3 @@
 #arb-aapningstekst p {
     margin: 0 0 var(--a-spacing-8);
 }
-
-.report-ad-button {
-    @media (max-width: 550px) {
-        order: 99;
-    }
-}
