@@ -27,9 +27,9 @@ import {
     removeOccupationSecondLevel,
 } from "@/app/(sok)/_components/utils/selectedFiltersUtils";
 import { editedItemKey } from "@/app/(sok)/_components/filters/Engagement";
+import { FilterEnum } from "@/app/(sok)/_components/searchBox/FilterEnum";
 
 function ComboBox({ query, queryDispatch }) {
-    // TODO: extract ie. "counties-"
     function getQueryOptions(queryObject) {
         const searchTerm = queryObject.q && queryObject.q.trim();
         const searchTerms = searchTerm ? searchTerm.split(" ") : [];
@@ -37,51 +37,56 @@ function ComboBox({ query, queryDispatch }) {
             ...searchTerms,
             ...queryObject.municipals.map((municipals) => ({
                 label: fixLocationName(municipals.split(".")[1]),
-                value: `municipals-${municipals}`,
+                value: `${FilterEnum.MUNICIPALS}-${municipals}`,
             })),
             ...filterCounties(queryObject).map((c) => ({
                 label: fixLocationName(c),
-                value: `counties-${c}`,
+                value: `${FilterEnum.COUNTIES}-${c}`,
             })),
-            ...(queryObject.international && queryObject.countries.length === 0
-                ? [{ label: "Utland", value: "international-utland" }]
-                : []),
             ...queryObject.countries.map((countries) => ({
                 label: fixLocationName(countries),
-                value: `countries-${countries}`,
+                value: `${FilterEnum.COUNTRIES}-${countries}`,
             })),
+            ...(queryObject.international && queryObject.countries.length === 0
+                ? [{ label: "Utland", value: `${FilterEnum.INTERNATIONAL}-utland` }]
+                : []),
             ...queryObject.occupationSecondLevels.map((occupation) => ({
                 label: occupation.split(".")[1],
-                value: `occupationSecondLevels-${occupation}`,
+                value: `${FilterEnum.OCCUPATION_SECOND_LEVELS}-${occupation}`,
             })),
             ...filterOccupationFirstLevels(queryObject).map((occupation) => ({
                 label: occupation,
-                value: `occupationFirstLevels-${occupation}`,
+                value: `${FilterEnum.OCCUPATION_FIRST_LEVELS}-${occupation}`,
             })),
             ...(queryObject.published
-                ? [{ label: PublishedLabelsEnum[queryObject.published], value: `published-${queryObject.published}` }]
+                ? [
+                      {
+                          label: PublishedLabelsEnum[queryObject.published],
+                          value: `${FilterEnum.PUBLISHED}-${queryObject.published}`,
+                      },
+                  ]
                 : []),
-            ...queryObject.extent.map((item) => ({ label: item, value: `extent-${item}` })),
-            ...queryObject.engagementType.map((item) =>
-                editedItemKey(item) === "Ikke oppgitt"
-                    ? { label: "Ansettelsesform ikke oppgitt", value: `engagementType-${item}` }
-                    : { label: item, value: `engagementType-${item}` },
-            ),
             ...queryObject.sector.map((item) =>
                 item === "Ikke oppgitt"
-                    ? { label: "Sektor ikke oppgitt", value: `sector-${item}` }
-                    : { label: item, value: `sector-${item}` },
+                    ? { label: "Sektor ikke oppgitt", value: `${FilterEnum.SECTOR}-${item}` }
+                    : { label: item, value: `${FilterEnum.SECTOR}-${item}` },
             ),
-            ...queryObject.education.map((item) => ({ label: item, value: `education-${item}` })),
+            ...queryObject.engagementType.map((item) =>
+                editedItemKey(item) === "Ikke oppgitt"
+                    ? { label: "Ansettelsesform ikke oppgitt", value: `${FilterEnum.ENGAGEMENT_TYPE}-${item}` }
+                    : { label: item, value: `${FilterEnum.ENGAGEMENT_TYPE}-${item}` },
+            ),
+            ...queryObject.extent.map((item) => ({ label: item, value: `${FilterEnum.EXTENT}-${item}` })),
+            ...queryObject.education.map((item) => ({ label: item, value: `${FilterEnum.EDUCATION}-${item}` })),
             ...queryObject.workLanguage.map((item) =>
                 item === "Ikke oppgitt"
-                    ? { label: "Arbeidsspråk ikke oppgitt", value: `workLanguage-${item}` }
-                    : { label: item, value: `workLanguage-${item}` },
+                    ? { label: "Arbeidsspråk ikke oppgitt", value: `${FilterEnum.WORK_LANGUAGE}-${item}` }
+                    : { label: item, value: `${FilterEnum.WORK_LANGUAGE}-${item}` },
             ),
             ...queryObject.remote.map((item) =>
                 item === "Ikke oppgitt"
-                    ? { label: "Hjemmekontor ikke oppgitt", value: `remote-${item}` }
-                    : { label: item, value: `remote-${item}` },
+                    ? { label: "Hjemmekontor ikke oppgitt", value: `${FilterEnum.REMOTE}-${item}` }
+                    : { label: item, value: `${FilterEnum.REMOTE}-${item}` },
             ),
         ];
     }
@@ -97,31 +102,31 @@ function ComboBox({ query, queryDispatch }) {
 
     const typeOfFilter = (option) => {
         switch (option.split("-")[0]) {
-            case "municipals":
+            case FilterEnum.MUNICIPALS:
                 return REMOVE_MUNICIPAL;
-            case "counties":
+            case FilterEnum.COUNTIES:
                 return REMOVE_COUNTY;
-            case "international":
+            case FilterEnum.INTERNATIONAL:
                 return SET_INTERNATIONAL;
-            case "countries":
+            case FilterEnum.COUNTRIES:
                 return REMOVE_COUNTRY;
-            case "occupationFirstLevels":
+            case FilterEnum.OCCUPATION_FIRST_LEVELS:
                 return REMOVE_OCCUPATION_FIRST_LEVEL;
-            case "occupationSecondLevels":
+            case FilterEnum.OCCUPATION_SECOND_LEVELS:
                 return REMOVE_OCCUPATION_SECOND_LEVEL;
-            case "published":
+            case FilterEnum.PUBLISHED:
                 return SET_PUBLISHED;
-            case "engagementType":
+            case FilterEnum.ENGAGEMENT_TYPE:
                 return REMOVE_ENGAGEMENT_TYPE;
-            case "extent":
+            case FilterEnum.EXTENT:
                 return REMOVE_EXTENT;
-            case "workLanguage":
+            case FilterEnum.WORK_LANGUAGE:
                 return REMOVE_WORKLANGUAGE;
-            case "education":
+            case FilterEnum.EDUCATION:
                 return REMOVE_EDUCATION;
-            case "remote":
+            case FilterEnum.REMOTE:
                 return REMOVE_REMOTE;
-            case "sector":
+            case FilterEnum.SECTOR:
                 return REMOVE_SECTOR;
             default:
                 return "";
