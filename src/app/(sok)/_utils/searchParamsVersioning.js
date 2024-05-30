@@ -1,4 +1,4 @@
-import { containsOldOccupations, rewriteOccupationSearchParams } from "@/app/(sok)/_utils/occupationChanges";
+import { migrateToV1 } from "@/app/(sok)/_utils/versioning/version01";
 
 export const VERSION_QUERY_PARAM = "v";
 export const CURRENT_VERSION = 1;
@@ -13,9 +13,14 @@ export function migrateSearchParams(searchParams) {
         return undefined;
     }
 
+    let newVersion = 0;
+
     if (version < 1) {
         newSearchParams = migrateToV1(newSearchParams);
+        newVersion = 1;
     }
+
+    newSearchParams[VERSION_QUERY_PARAM] = newVersion;
 
     return newSearchParams;
 }
@@ -32,18 +37,4 @@ function getCurrentVersion(searchParams) {
 
 function hasNoSearchParams(searchParams) {
     return Object.keys(searchParams).length === 0;
-}
-
-function migrateToV1(searchParams) {
-    let newSearchParams = searchParams;
-
-    // V1 changes some occupations to new ones.
-    // After changing, users might still access a search with their old occupations due to saved searches and bookmarks.
-    if (containsOldOccupations(searchParams)) {
-        newSearchParams = rewriteOccupationSearchParams(newSearchParams);
-    }
-
-    newSearchParams[VERSION_QUERY_PARAM] = 1;
-
-    return newSearchParams;
 }
