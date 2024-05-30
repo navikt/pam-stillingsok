@@ -12,7 +12,7 @@ import {
     SET_INTERNATIONAL,
 } from "@/app/(sok)/_utils/queryReducer";
 import buildLocations from "@/app/(sok)/_components/utils/buildLocations";
-import { logSearchFilterAdded, logSearchFilterRemoved } from "@/app/_common/monitoring/amplitude";
+import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
 
 function Locations({ locations, query, dispatch, updatedValues }) {
     const locationValues = buildLocations(updatedValues.aggregations, locations);
@@ -20,28 +20,25 @@ function Locations({ locations, query, dispatch, updatedValues }) {
     function handleLocationClick(value, type, checked) {
         if (type === "county") {
             if (checked) {
-                logSearchFilterAdded({ sted: value });
                 dispatch({ type: ADD_COUNTY, value });
             } else {
                 dispatch({ type: REMOVE_COUNTY, value });
-                logSearchFilterRemoved({ sted: value });
             }
+            logFilterChanged({ name: "location", value, checked, level: "county" });
         } else if (type === "municipal") {
             if (checked) {
                 dispatch({ type: ADD_MUNICIPAL, value });
-                logSearchFilterAdded({ sted: value });
             } else {
                 dispatch({ type: REMOVE_MUNICIPAL, value });
-                logSearchFilterRemoved({ sted: value });
             }
+            logFilterChanged({ name: "location", value, checked, level: "municipal" });
         } else if (type === "country") {
             if (checked) {
                 dispatch({ type: ADD_COUNTRY, value });
-                logSearchFilterAdded({ sted: value });
             } else {
                 dispatch({ type: REMOVE_COUNTRY, value });
-                logSearchFilterRemoved({ sted: value });
             }
+            logFilterChanged({ name: "location", value, checked, level: "country" });
         } else if (type === "international") {
             if (query.international) {
                 query.countries.forEach((c) => {

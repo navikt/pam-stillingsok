@@ -34,12 +34,8 @@ const logAmplitudeEvent = (event, data) => {
     amplitude.track(event, enrichData(data));
 };
 
-export const logSearchFilterAdded = (data) => {
-    amplitude.track("Søkefilter lagt til", enrichData(data));
-};
-
-export const logSearchFilterRemoved = (data) => {
-    amplitude.track("Søkefilter fjernet", enrichData(data));
+export const logFilterChanged = (data) => {
+    amplitude.track("Filter Changed", enrichData(data));
 };
 
 export function logStillingVisning(adData) {

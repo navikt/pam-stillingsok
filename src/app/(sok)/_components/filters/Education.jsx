@@ -3,7 +3,7 @@ import React from "react";
 import { Checkbox, Fieldset } from "@navikt/ds-react";
 import { ADD_EDUCATION, REMOVE_EDUCATION } from "@/app/(sok)/_utils/queryReducer";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
-import { logSearchFilterAdded, logSearchFilterRemoved } from "@/app/_common/monitoring/amplitude";
+import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
 import moveCriteriaToBottom from "@/app/(sok)/_components/utils/moveFacetToBottom";
 import sortEducationValues from "@/app/(sok)/_components/utils/sortEducationValues";
 
@@ -13,14 +13,13 @@ function Education({ initialValues, updatedValues, query, dispatch }) {
     const values = mergeCount(sortedValues, updatedValues);
 
     function handleClick(e) {
-        const { value } = e.target;
-        if (e.target.checked) {
+        const { value, checked } = e.target;
+        if (checked) {
             dispatch({ type: ADD_EDUCATION, value });
-            logSearchFilterAdded({ education: value });
         } else {
             dispatch({ type: REMOVE_EDUCATION, value });
-            logSearchFilterRemoved({ education: value });
         }
+        logFilterChanged({ name: "education", value, checked });
     }
 
     const updateViewName = (key) => {
