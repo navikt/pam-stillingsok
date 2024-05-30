@@ -1,0 +1,15 @@
+export const FilterEnum = {
+    MUNICIPALS: "municipals",
+    COUNTIES: "counties",
+    COUNTRIES: "countries",
+    INTERNATIONAL: "international",
+    OCCUPATION_SECOND_LEVELS: "occupationSecondLevels",
+    OCCUPATION_FIRST_LEVELS: "occupationFirstLevels",
+    PUBLISHED: "published",
+    SECTOR: "sector",
+    ENGAGEMENT_TYPE: "engagementType",
+    EXTENT: "extent",
+    EDUCATION: "education",
+    WORK_LANGUAGE: "workLanguage",
+    REMOTE: "remote",
+};
