@@ -26,6 +26,7 @@ import {
     removeMunicipal,
     removeOccupationSecondLevel,
 } from "@/app/(sok)/_components/utils/selectedFiltersUtils";
+import { editedItemKey } from "@/app/(sok)/_components/filters/Engagement";
 
 function ComboBox({ query, queryDispatch }) {
     // TODO: extract ie. "counties-"
@@ -61,11 +62,27 @@ function ComboBox({ query, queryDispatch }) {
                 ? [{ label: PublishedLabelsEnum[queryObject.published], value: `published-${queryObject.published}` }]
                 : []),
             ...queryObject.extent.map((item) => ({ label: item, value: `extent-${item}` })),
-            ...queryObject.engagementType.map((item) => ({ label: item, value: `engagementType-${item}` })),
-            ...queryObject.sector.map((item) => ({ label: item, value: `sector-${item}` })),
+            ...queryObject.engagementType.map((item) =>
+                editedItemKey(item) === "Ikke oppgitt"
+                    ? { label: "Ansettelsesform ikke oppgitt", value: `engagementType-${item}` }
+                    : { label: item, value: `engagementType-${item}` },
+            ),
+            ...queryObject.sector.map((item) =>
+                item === "Ikke oppgitt"
+                    ? { label: "Sektor ikke oppgitt", value: `sector-${item}` }
+                    : { label: item, value: `sector-${item}` },
+            ),
             ...queryObject.education.map((item) => ({ label: item, value: `education-${item}` })),
-            ...queryObject.workLanguage.map((item) => ({ label: item, value: `workLanguage-${item}` })),
-            ...queryObject.remote.map((item) => ({ label: item, value: `remote-${item}` })),
+            ...queryObject.workLanguage.map((item) =>
+                item === "Ikke oppgitt"
+                    ? { label: "Arbeidsspråk ikke oppgitt", value: `workLanguage-${item}` }
+                    : { label: item, value: `workLanguage-${item}` },
+            ),
+            ...queryObject.remote.map((item) =>
+                item === "Ikke oppgitt"
+                    ? { label: "Hjemmekontor ikke oppgitt", value: `remote-${item}` }
+                    : { label: item, value: `remote-${item}` },
+            ),
         ];
     }
 
