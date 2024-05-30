@@ -118,7 +118,7 @@ function ComboBox({ query, queryDispatch }) {
             setSelectedOptions(selectedOptions.filter((o) => o !== option));
 
             const filterToRemove = typeOfFilter(option);
-            const optionValue = option.split("-")[1];
+            const optionValue = option.slice(option.indexOf("-") + 1);
             if (filterToRemove === SET_INTERNATIONAL) {
                 queryDispatch({ type: filterToRemove, value: false });
             } else if (filterToRemove === SET_PUBLISHED) {
@@ -130,7 +130,7 @@ function ComboBox({ query, queryDispatch }) {
             } else if (filterToRemove === REMOVE_OCCUPATION_SECOND_LEVEL) {
                 removeOccupationSecondLevel(queryDispatch, query, optionValue);
             } else {
-                queryDispatch({ type: filterToRemove, value: optionValue[1] });
+                queryDispatch({ type: filterToRemove, value: optionValue });
             }
         }
         if (isCustomOption) {
