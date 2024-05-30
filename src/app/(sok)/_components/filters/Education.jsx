@@ -19,7 +19,7 @@ function Education({ initialValues, updatedValues, query, dispatch }) {
         } else {
             dispatch({ type: REMOVE_EDUCATION, value });
         }
-        logFilterChanged({ name: "education", value, checked });
+        logFilterChanged({ name: "Utdanningsnivå", value, checked });
     }
 
     const updateViewName = (key) => {

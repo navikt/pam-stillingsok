@@ -17,7 +17,7 @@ function WorkLanguage({ initialValues, updatedValues, query, dispatch, hideLegen
         } else {
             dispatch({ type: REMOVE_WORKLANGUAGE, value });
         }
-        logFilterChanged({ name: "workLanguage", value, checked });
+        logFilterChanged({ name: "Arbeidsspråk", value, checked });
     }
 
     return (

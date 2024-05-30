@@ -34,7 +34,7 @@ function Occupations({ initialValues, updatedValues, query, dispatch }) {
         } else {
             dispatch({ type: REMOVE_OCCUPATION_FIRST_LEVEL, value });
         }
-        logFilterChanged({ name: "occupation", value, checked, level: 1 });
+        logFilterChanged({ name: "Yrke", value, checked, level: "Yrkesnivå 1" });
     }
 
     function handleSecondLevelClick(e) {
@@ -44,7 +44,7 @@ function Occupations({ initialValues, updatedValues, query, dispatch }) {
         } else {
             dispatch({ type: REMOVE_OCCUPATION_SECOND_LEVEL, value });
         }
-        logFilterChanged({ name: "occupation", value: value.split(".")[1], checked, level: 2 });
+        logFilterChanged({ name: "Yrke", value: value.split(".")[1], checked, level: "Yrkesnivå 2" });
     }
 
     /**

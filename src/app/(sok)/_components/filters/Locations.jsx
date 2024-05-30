@@ -24,21 +24,21 @@ function Locations({ locations, query, dispatch, updatedValues }) {
             } else {
                 dispatch({ type: REMOVE_COUNTY, value });
             }
-            logFilterChanged({ name: "location", value: fixLocationName(value), checked, level: "county" });
+            logFilterChanged({ name: "Sted", value: fixLocationName(value), checked, level: "Fylke" });
         } else if (type === "municipal") {
             if (checked) {
                 dispatch({ type: ADD_MUNICIPAL, value });
             } else {
                 dispatch({ type: REMOVE_MUNICIPAL, value });
             }
-            logFilterChanged({ name: "location", value: fixLocationName(value, true), checked, level: "municipal" });
+            logFilterChanged({ name: "Sted", value: fixLocationName(value, true), checked, level: "Kommune" });
         } else if (type === "country") {
             if (checked) {
                 dispatch({ type: ADD_COUNTRY, value });
             } else {
                 dispatch({ type: REMOVE_COUNTRY, value });
             }
-            logFilterChanged({ name: "location", value: fixLocationName(value), checked, level: "country" });
+            logFilterChanged({ name: "Sted", value: fixLocationName(value), checked, level: "Land" });
         } else if (type === "international") {
             if (query.international) {
                 query.countries.forEach((c) => {

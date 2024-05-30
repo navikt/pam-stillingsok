@@ -19,7 +19,7 @@ function Sector({ initialValues, updatedValues, query, dispatch }) {
         } else {
             dispatch({ type: REMOVE_SECTOR, value });
         }
-        logFilterChanged({ name: "sector", value, checked });
+        logFilterChanged({ name: "Sektor", value, checked });
     }
 
     return (
