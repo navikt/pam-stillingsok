@@ -155,16 +155,15 @@ function ComboBox({ query, queryDispatch }) {
                 queryDispatch({ type: filterToRemove, value: optionValue });
             }
         }
-        if (isCustomOption) {
-            if (isSelected) {
-                queryDispatch({
-                    type: SET_SEARCH_STRING,
-                    value: [...selectedOptions.filter((opt) => !opt.value), option].join(" "),
-                });
-            } else {
-                const selected = selectedOptions.filter((o) => o !== option);
-                queryDispatch({ type: SET_SEARCH_STRING, value: selected.filter((opt) => !opt.value).join(" ") });
-            }
+
+        if (isCustomOption && isSelected) {
+            queryDispatch({
+                type: SET_SEARCH_STRING,
+                value: [...selectedOptions.filter((opt) => !opt.value), option].join(" "),
+            });
+        } else if (query.q.includes(option) && !isSelected) {
+            const selected = selectedOptions.filter((o) => o !== option);
+            queryDispatch({ type: SET_SEARCH_STRING, value: selected.filter((opt) => !opt.value).join(" ") });
         }
     };
     // TODO: add clearButton && clearButtonLabel="Fjern alle"
