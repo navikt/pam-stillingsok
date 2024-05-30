@@ -5,7 +5,7 @@ import { ADD_SECTOR, REMOVE_SECTOR } from "@/app/(sok)/_utils/queryReducer";
 import moveCriteriaToBottom from "@/app/(sok)/_components/utils/moveFacetToBottom";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
 import sortValuesByFirstLetter from "@/app/(sok)/_components/utils/sortValuesByFirstLetter";
-import { logSearchFilterAdded, logSearchFilterRemoved } from "@/app/_common/monitoring/amplitude";
+import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
 
 function Sector({ initialValues, updatedValues, query, dispatch }) {
     const sortedValuesByFirstLetter = sortValuesByFirstLetter(initialValues);
@@ -13,14 +13,13 @@ function Sector({ initialValues, updatedValues, query, dispatch }) {
     const values = mergeCount(sortedValues, updatedValues);
 
     function handleClick(e) {
-        const { value } = e.target;
-        if (e.target.checked) {
+        const { value, checked } = e.target;
+        if (checked) {
             dispatch({ type: ADD_SECTOR, value });
-            logSearchFilterAdded({ sektor: value });
         } else {
             dispatch({ type: REMOVE_SECTOR, value });
-            logSearchFilterRemoved({ sektor: value });
         }
+        logFilterChanged({ name: "sector", value, checked });
     }
 
     return (

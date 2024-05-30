@@ -5,7 +5,7 @@ import { ADD_ENGAGEMENT_TYPE, REMOVE_ENGAGEMENT_TYPE } from "@/app/(sok)/_utils/
 import moveCriteriaToBottom from "@/app/(sok)/_components/utils/moveFacetToBottom";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
 import sortValuesByFirstLetter from "@/app/(sok)/_components/utils/sortValuesByFirstLetter";
-import { logSearchFilterAdded, logSearchFilterRemoved } from "@/app/_common/monitoring/amplitude";
+import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
 
 /**
  * This ensures that 'Annet' is displayed as 'Ikke oppgitt' in the search filters.
@@ -26,14 +26,13 @@ function Engagement({ initialValues, updatedValues, query, dispatch }) {
     const values = mergeCount(sortedValues, updatedValues);
 
     function handleClick(e) {
-        const { value } = e.target;
-        if (e.target.checked) {
+        const { value, checked } = e.target;
+        if (checked) {
             dispatch({ type: ADD_ENGAGEMENT_TYPE, value });
-            logSearchFilterAdded({ ansettelsesform: value });
         } else {
             dispatch({ type: REMOVE_ENGAGEMENT_TYPE, value });
-            logSearchFilterRemoved({ ansettelsesform: value });
         }
+        logFilterChanged({ name: "engagementType", value, checked });
     }
 
     return (

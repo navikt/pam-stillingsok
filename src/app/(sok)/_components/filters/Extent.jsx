@@ -3,20 +3,19 @@ import React from "react";
 import { BodyShort, Checkbox, Fieldset } from "@navikt/ds-react";
 import { ADD_EXTENT, REMOVE_EXTENT } from "@/app/(sok)/_utils/queryReducer";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
-import { logSearchFilterAdded, logSearchFilterRemoved } from "@/app/_common/monitoring/amplitude";
+import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
 
 function Extent({ initialValues, updatedValues, query, dispatch }) {
     const values = mergeCount(initialValues, updatedValues);
 
     function handleClick(e) {
-        const { value } = e.target;
-        if (e.target.checked) {
+        const { value, checked } = e.target;
+        if (checked) {
             dispatch({ type: ADD_EXTENT, value });
-            logSearchFilterAdded({ extent: value });
         } else {
             dispatch({ type: REMOVE_EXTENT, value });
-            logSearchFilterRemoved({ extent: value });
         }
+        logFilterChanged({ name: "extent", value, checked });
     }
 
     function labelForExtent(item) {
