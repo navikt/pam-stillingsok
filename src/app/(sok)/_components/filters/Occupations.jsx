@@ -10,7 +10,7 @@ import {
 import moveCriteriaToBottom from "@/app/(sok)/_components/utils/moveFacetToBottom";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
 import sortValuesByFirstLetter from "@/app/(sok)/_components/utils/sortValuesByFirstLetter";
-import { logSearchFilterAdded, logSearchFilterRemoved } from "@/app/_common/monitoring/amplitude";
+import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
 
 const OCCUPATION_LEVEL_OTHER = "Uoppgitt/ ikke identifiserbare";
 
@@ -28,25 +28,23 @@ function Occupations({ initialValues, updatedValues, query, dispatch }) {
     const values = mergeCount(sortedValues, updatedValues, "occupationSecondLevels");
 
     function handleFirstLevelClick(e) {
-        const { value } = e.target;
-        if (e.target.checked) {
+        const { value, checked } = e.target;
+        if (checked) {
             dispatch({ type: ADD_OCCUPATION_FIRST_LEVEL, value });
-            logSearchFilterAdded({ yrke: value });
         } else {
             dispatch({ type: REMOVE_OCCUPATION_FIRST_LEVEL, value });
-            logSearchFilterRemoved({ yrke: value });
         }
+        logFilterChanged({ name: "occupation", value, checked, level: 1 });
     }
 
     function handleSecondLevelClick(e) {
-        const { value } = e.target;
-        if (e.target.checked) {
+        const { value, checked } = e.target;
+        if (checked) {
             dispatch({ type: ADD_OCCUPATION_SECOND_LEVEL, value });
-            logSearchFilterAdded({ yrke: value });
         } else {
             dispatch({ type: REMOVE_OCCUPATION_SECOND_LEVEL, value });
-            logSearchFilterRemoved({ yrke: value });
         }
+        logFilterChanged({ name: "occupation", value, checked, level: 2 });
     }
 
     /**

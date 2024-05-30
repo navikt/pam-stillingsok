@@ -4,7 +4,7 @@ import { ADD_REMOTE, REMOVE_REMOTE } from "@/app/(sok)/_utils/queryReducer";
 import moveCriteriaToBottom from "@/app/(sok)/_components/utils/moveFacetToBottom";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
 import sortRemoteValues from "@/app/(sok)/_components/utils/sortRemoteValues";
-import { logSearchFilterAdded, logSearchFilterRemoved } from "@/app/_common/monitoring/amplitude";
+import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
 
 function Remote({ initialValues, updatedValues, query, dispatch }) {
     const sortedValuesByFirstLetter = sortRemoteValues(initialValues);
@@ -23,14 +23,13 @@ function Remote({ initialValues, updatedValues, query, dispatch }) {
     }
 
     function handleClick(e) {
-        const { value } = e.target;
-        if (e.target.checked) {
+        const { value, checked } = e.target;
+        if (checked) {
             dispatch({ type: ADD_REMOTE, value });
-            logSearchFilterAdded({ remote: value });
         } else {
             dispatch({ type: REMOVE_REMOTE, value });
-            logSearchFilterRemoved({ remote: value });
         }
+        logFilterChanged({ name: "remote", value, checked });
     }
 
     return (

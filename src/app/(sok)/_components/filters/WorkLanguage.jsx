@@ -3,7 +3,7 @@ import React from "react";
 import { BodyShort, Checkbox, Fieldset } from "@navikt/ds-react";
 import { ADD_WORKLANGUAGE, REMOVE_WORKLANGUAGE } from "@/app/(sok)/_utils/queryReducer";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
-import { logSearchFilterAdded, logSearchFilterRemoved } from "@/app/_common/monitoring/amplitude";
+import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
 import moveCriteriaToBottom from "@/app/(sok)/_components/utils/moveFacetToBottom";
 
 function WorkLanguage({ initialValues, updatedValues, query, dispatch, hideLegend = false }) {
@@ -11,14 +11,13 @@ function WorkLanguage({ initialValues, updatedValues, query, dispatch, hideLegen
     const values = mergeCount(sortedValues, updatedValues);
 
     function handleClick(e) {
-        const { value } = e.target;
-        if (e.target.checked) {
+        const { value, checked } = e.target;
+        if (checked) {
             dispatch({ type: ADD_WORKLANGUAGE, value });
-            logSearchFilterAdded({ arbeidsspraak: value });
         } else {
             dispatch({ type: REMOVE_WORKLANGUAGE, value });
-            logSearchFilterRemoved({ arbeidsspraak: value });
         }
+        logFilterChanged({ name: "workLanguage", value, checked });
     }
 
     return (
