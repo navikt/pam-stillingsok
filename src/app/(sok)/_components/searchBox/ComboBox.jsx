@@ -13,6 +13,7 @@ import {
     REMOVE_REMOTE,
     REMOVE_SECTOR,
     REMOVE_WORKLANGUAGE,
+    SET_INTERNATIONAL,
     SET_PUBLISHED,
     SET_SEARCH_STRING,
 } from "@/app/(sok)/_utils/queryReducer";
@@ -28,7 +29,6 @@ import {
 
 function ComboBox({ query, queryDispatch }) {
     // TODO: extract ie. "counties-"
-    // TODO: Utland
     function getQueryOptions(queryObject) {
         const searchTerm = queryObject.q && queryObject.q.trim();
         const searchTerms = searchTerm ? searchTerm.split(" ") : [];
@@ -42,6 +42,9 @@ function ComboBox({ query, queryDispatch }) {
                 label: fixLocationName(c),
                 value: `counties-${c}`,
             })),
+            ...(queryObject.international && queryObject.countries.length === 0
+                ? [{ label: "Utland", value: "international-utland" }]
+                : []),
             ...queryObject.countries.map((countries) => ({
                 label: fixLocationName(countries),
                 value: `countries-${countries}`,
@@ -81,6 +84,8 @@ function ComboBox({ query, queryDispatch }) {
                 return REMOVE_MUNICIPAL;
             case "counties":
                 return REMOVE_COUNTY;
+            case "international":
+                return SET_INTERNATIONAL;
             case "countries":
                 return REMOVE_COUNTRY;
             case "occupationFirstLevels":
@@ -114,7 +119,9 @@ function ComboBox({ query, queryDispatch }) {
 
             const filterToRemove = typeOfFilter(option);
             const optionValue = option.split("-")[1];
-            if (filterToRemove === SET_PUBLISHED) {
+            if (filterToRemove === SET_INTERNATIONAL) {
+                queryDispatch({ type: filterToRemove, value: false });
+            } else if (filterToRemove === SET_PUBLISHED) {
                 queryDispatch({ type: filterToRemove, value: undefined });
             } else if (filterToRemove === REMOVE_MUNICIPAL) {
                 removeMunicipal(queryDispatch, query, optionValue);
