@@ -18,7 +18,7 @@ function Published({ dispatch, query, initialValues, updatedValues }) {
         } else {
             dispatch({ type: SET_PUBLISHED, undefined });
         }
-        logFilterChanged({ name: "published", value, checked });
+        logFilterChanged({ name: "Publisert", value, checked });
     }
 
     return (

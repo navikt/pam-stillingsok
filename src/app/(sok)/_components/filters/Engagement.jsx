@@ -32,7 +32,7 @@ function Engagement({ initialValues, updatedValues, query, dispatch }) {
         } else {
             dispatch({ type: REMOVE_ENGAGEMENT_TYPE, value });
         }
-        logFilterChanged({ name: "engagementType", value, checked });
+        logFilterChanged({ name: "Ansettelsesform", value, checked });
     }
 
     return (

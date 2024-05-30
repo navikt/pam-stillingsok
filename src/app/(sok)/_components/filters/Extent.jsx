@@ -15,7 +15,7 @@ function Extent({ initialValues, updatedValues, query, dispatch }) {
         } else {
             dispatch({ type: REMOVE_EXTENT, value });
         }
-        logFilterChanged({ name: "extent", value, checked });
+        logFilterChanged({ name: "Omfang", value, checked });
     }
 
     function labelForExtent(item) {
