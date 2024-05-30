@@ -1,5 +1,5 @@
 import { UNSAFE_Combobox as Combobox } from "@navikt/ds-react";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import {
     REMOVE_COUNTRY,
@@ -28,8 +28,47 @@ import {
 } from "@/app/(sok)/_components/utils/selectedFiltersUtils";
 import { editedItemKey } from "@/app/(sok)/_components/filters/Engagement";
 import { FilterEnum } from "@/app/(sok)/_components/searchBox/FilterEnum";
+import { FetchAction, useFetchReducer } from "@/app/_common/hooks/useFetchReducer";
+import * as actions from "@/app/_common/actions";
+
+let suggestionsCache = [];
+const CACHE_MAX_SIZE = 50;
+const MINIMUM_LENGTH = 1;
 
 function ComboBox({ query, queryDispatch }) {
+    const [value, setValue] = useState("");
+    const [suggestionsResponse, suggestionsDispatch] = useFetchReducer([]);
+    const initialRender = useRef(true);
+    async function fetchSuggestions() {
+        const cached = suggestionsCache.find((c) => c.value === value);
+        if (cached) {
+            suggestionsDispatch({ type: FetchAction.RESOLVE, data: cached.data });
+            return;
+        }
+        let data;
+        try {
+            data = await actions.getSuggestions(value, MINIMUM_LENGTH);
+        } catch (err) {
+            // ignore fetch failed errors
+        }
+        if (data) {
+            suggestionsCache = [{ value, data }, ...suggestionsCache].slice(0, CACHE_MAX_SIZE);
+            suggestionsDispatch({ type: FetchAction.RESOLVE, data });
+        }
+    }
+
+    const allSuggestions = [...suggestionsResponse.data];
+
+    useEffect(() => {
+        if (initialRender.current) {
+            initialRender.current = false;
+        } else if (value && value.length >= MINIMUM_LENGTH) {
+            fetchSuggestions(value);
+        } else {
+            suggestionsDispatch({ type: FetchAction.SET_DATA, data: [] });
+        }
+    }, [value]);
+
     function getQueryOptions(queryObject) {
         const searchTerm = queryObject.q && queryObject.q.trim();
         const searchTerms = searchTerm ? searchTerm.split(" ") : [];
@@ -136,6 +175,10 @@ function ComboBox({ query, queryDispatch }) {
     const onToggleSelected = (option, isSelected, isCustomOption) => {
         if (isSelected) {
             setSelectedOptions([...selectedOptions, option]);
+            const found = allSuggestions.find((o) => o.toLowerCase() === option.toLowerCase());
+            if (found) {
+                queryDispatch({ type: SET_SEARCH_STRING, value: option, fields: "occupation" });
+            }
         } else {
             setSelectedOptions(selectedOptions.filter((o) => o !== option));
 
@@ -167,7 +210,6 @@ function ComboBox({ query, queryDispatch }) {
         }
     };
     // TODO: add clearButton && clearButtonLabel="Fjern alle"
-    // TODO: yrkes fritekst
     return (
         <Combobox
             allowNewValues
@@ -175,7 +217,9 @@ function ComboBox({ query, queryDispatch }) {
             isMultiSelect
             onToggleSelected={onToggleSelected}
             selectedOptions={selectedOptions}
-            options={[]}
+            options={value && value.length > 0 ? allSuggestions : []}
+            onChange={(event) => setValue(event?.target.value || "")}
+            value={value}
         />
     );
 }
