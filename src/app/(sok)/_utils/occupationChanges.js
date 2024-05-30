@@ -1,45 +1,19 @@
 /* eslint-disable no-restricted-syntax */
 
-// Format: Key : [Values]
+// changeOccupations is supposed to be in the format: Key:[Values]
 // Key = Old occupation
 // Values = New occupation/s
-const changedSearchParams = {
-    "Utdanning.Forskningsarbeid": ["Utdanning.Forskningsarbeid", "Bygg og anlegg.Andre ingeniører"],
-    "Utdanning.SFO, barne- og fritidsleder": [
-        "Helse og sosial.Miljøarbeidere",
-        "Helse og sosial.Ledere av omsorgstjenetser for barn",
-    ],
-    "Helse og sosial.Helse": [
-        "Helse og sosial.Vernepleier",
-        "Helse og sosial.Helse- og miljørådgivere",
-        "Helse og sosial.Helsesekretær",
-        "Helse og sosial.Andre helseyrker",
-        "Helse og sosial.Helsefagarbeider",
-        "Helse og sosial.Andre helseyrker",
-    ],
-    "Helse og sosial.Psykologer og terapeuter": [
-        "Helse og sosial.Fysioterapeut",
-        "Helse og sosial.Ernæringsfysiolog",
-        "Helse og sosial.Audiografer og logopeder",
-        "Helse og sosial.Ergoterapeut",
-        "Helse og sosial.Kiropraktor og osteopat",
-        "Helse og sosial.Psykolog",
-        "Helse og sosial.Radiograf og audiograf",
-        "Helse og sosial.Alternativ medisin",
-    ],
-    "Helse og sosial.Sosial": [
-        "Helse og sosial.Rådgivere innen sosiale fagfelt",
-        "Helse og sosial.Hjemmehjelper og personlig assistent",
-    ],
-    "Natur og miljø.Matproduksjon og næringsmiddelarbeid": ["Kontor og økonomi.Personal, arbeidsmiljø og rekruttering"],
-    "Kultur og kreative yrker.Journalistikk og litteratur": [
-        "Kultur og kreative yrker.Journalistikk, kommunikasjon og litteratur",
-    ],
-    "Kultur og kreative yrker.Museum, bibliotek": ["Kultur og kreative yrker.Museum, bibliotek, arkiv"],
-    "Utdanning.Barnehage": ["Utdanning.Førskolelærer", "Utdanning.Barnehage- og skolefritidsassistenter"],
-};
+function assertChangedOccupationsCorrectFormat(changedOccupations) {
+    for (const occupation in changedOccupations) {
+        if (!Array.isArray(changedOccupations[occupation])) {
+            throw new Error(`New occupations for ${occupation} must be an array`);
+        }
+    }
+}
 
-export function containsOldOccupations(searchParams, changedOccupations = changedSearchParams) {
+export function containsOldOccupations(searchParams, changedOccupations) {
+    assertChangedOccupationsCorrectFormat(changedOccupations);
+
     const firstLevels = getOccupationFirstLevels(searchParams);
     const secondLevels = getOccupationSecondLevels(searchParams);
 
@@ -56,7 +30,9 @@ export function containsOldOccupations(searchParams, changedOccupations = change
     return false;
 }
 
-export function rewriteOccupationSearchParams(searchParams, changedOccupations = changedSearchParams) {
+export function rewriteOccupationSearchParams(searchParams, changedOccupations) {
+    assertChangedOccupationsCorrectFormat(changedOccupations);
+
     const initialSecondLevels = getOccupationSecondLevels(searchParams);
     const onlyInFirstLevel = getOccupationsOnlyInFirstLevel(searchParams);
 
