@@ -48,3 +48,9 @@
 .filter-menu-button:hover {
     cursor: pointer;
 }
+
+.SearchContainer {
+    background-color: var(--a-surface-alt-1-subtle);
+    border-radius: var(--a-border-radius-large);
+    padding: var(--a-spacing-6) var(--a-spacing-12);
+}
