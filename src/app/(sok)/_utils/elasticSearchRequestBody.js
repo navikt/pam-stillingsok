@@ -71,7 +71,7 @@ function filterRemote(remote) {
 
 function filterJanzzOccupation(occupation) {
     const filters = [];
-    if (occupation && occupation.length > 0 && occupation[0].length > 0) {
+    if (occupation && occupation.length > 0) {
         const filter = {
             bool: {
                 should: [],
