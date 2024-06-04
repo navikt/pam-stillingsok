@@ -18,6 +18,7 @@ import {
     SET_INTERNATIONAL,
     SET_PUBLISHED,
     SET_SEARCH_STRING,
+    REMOVE_OCCUPATION,
 } from "../../_utils/queryReducer";
 import { PublishedLabelsEnum } from "../../_utils/query";
 import SaveSearchButton from "../../../lagrede-sok/_components/SaveSearchButton";
@@ -167,6 +168,18 @@ function SelectedFilters({ query, queryDispatch }) {
             </Chips.Removable>,
         );
     }
+
+    chips.push(
+        ...query.occupations.map((value) => (
+            <Chips.Removable
+                variant="neutral"
+                key={`occupations-${value}`}
+                onClick={() => queryDispatch({ type: REMOVE_OCCUPATION, value })}
+            >
+                {value}
+            </Chips.Removable>
+        )),
+    );
 
     chips.push(
         ...query.sector.map((value) => (

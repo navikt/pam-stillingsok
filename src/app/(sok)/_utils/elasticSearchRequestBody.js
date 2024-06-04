@@ -69,6 +69,31 @@ function filterRemote(remote) {
     return filters;
 }
 
+function filterJanzzOccupation(occupation) {
+    const filters = [];
+    if (occupation && occupation.length > 0 && occupation[0].length > 0) {
+        const filter = {
+            bool: {
+                should: [],
+            },
+        };
+        occupation.forEach((item) => {
+            filter.bool.should.push({
+                term: {
+                    category_styrk08_facet: item,
+                },
+            });
+            filter.bool.should.push({
+                term: {
+                    searchtags_facet: item,
+                },
+            });
+        });
+        filters.push(filter);
+    }
+    return filters;
+}
+
 function filterExtent(extent) {
     const filters = [];
     if (extent && extent.length > 0) {
@@ -390,41 +415,8 @@ function filterSector(sector) {
 }
 
 /* Experimental alternative relevance model with AND-logic and using cross-fields matching. */
-function mainQueryConjunctionTuning(q, searchFields) {
-    let matchFields;
-
-    if (searchFields === "occupation") {
-        matchFields = ["category_name_no^2", "searchtags_no^0.3"];
-
-        return {
-            bool: {
-                must: {
-                    bool: {
-                        should: [
-                            {
-                                multi_match: {
-                                    query: q,
-                                    type: "cross_fields",
-                                    fields: matchFields,
-                                    operator: "and",
-                                    tie_breaker: 0.3,
-                                    analyzer: "norwegian",
-                                    zero_terms_query: "all",
-                                },
-                            },
-                        ],
-                    },
-                },
-                filter: {
-                    term: {
-                        status: "ACTIVE",
-                    },
-                },
-            },
-        };
-    }
-
-    matchFields = [
+function mainQueryConjunctionTuning(q) {
+    const matchFields = [
         "category_name_no^2",
         "title_no^1",
         "keywords_no^0.8",
@@ -604,10 +596,10 @@ const elasticSearchRequestBody = (query) => {
         engagementType,
         sector,
         published,
+        occupations,
         occupationFirstLevels,
         occupationSecondLevels,
         international,
-        fields,
         operator,
     } = query;
     let { sort, q } = query;
@@ -629,10 +621,11 @@ const elasticSearchRequestBody = (query) => {
         from: from || 0,
         size: size && ALLOWED_NUMBER_OF_RESULTS_PER_PAGE.includes(size) ? size : SEARCH_CHUNK_SIZE,
         track_total_hits: true,
-        query: mainQueryTemplateFunc(q, fields),
+        query: mainQueryTemplateFunc(q),
         post_filter: {
             bool: {
                 filter: [
+                    ...filterJanzzOccupation(occupations),
                     ...filterExtent(extent),
                     ...filterEducation(education),
                     ...filterWorkLanguage(workLanguage),
@@ -686,6 +679,7 @@ const elasticSearchRequestBody = (query) => {
                 filter: {
                     bool: {
                         filter: [
+                            ...filterJanzzOccupation(occupations),
                             ...filterExtent(extent),
                             ...filterEducation(education),
                             ...filterWorkLanguage(workLanguage),
@@ -711,6 +705,7 @@ const elasticSearchRequestBody = (query) => {
                 filter: {
                     bool: {
                         filter: [
+                            ...filterJanzzOccupation(occupations),
                             ...filterExtent(extent),
                             ...filterEducation(education),
                             ...filterWorkLanguage(workLanguage),
@@ -749,6 +744,7 @@ const elasticSearchRequestBody = (query) => {
                 filter: {
                     bool: {
                         filter: [
+                            ...filterJanzzOccupation(occupations),
                             ...filterExtent(extent),
                             ...filterEducation(education),
                             ...filterWorkLanguage(workLanguage),
@@ -770,6 +766,7 @@ const elasticSearchRequestBody = (query) => {
                 filter: {
                     bool: {
                         filter: [
+                            ...filterJanzzOccupation(occupations),
                             ...filterRemote(remote),
                             ...filterEducation(education),
                             ...filterWorkLanguage(workLanguage),
@@ -791,6 +788,7 @@ const elasticSearchRequestBody = (query) => {
                 filter: {
                     bool: {
                         filter: [
+                            ...filterJanzzOccupation(occupations),
                             ...filterEducation(education),
                             ...filterWorkLanguage(workLanguage),
                             filterLocation(counties, municipals, countries, international),
@@ -811,6 +809,7 @@ const elasticSearchRequestBody = (query) => {
                 filter: {
                     bool: {
                         filter: [
+                            ...filterJanzzOccupation(occupations),
                             ...filterExtent(extent),
                             ...filterRemote(remote),
                             ...filterEducation(education),
@@ -832,6 +831,7 @@ const elasticSearchRequestBody = (query) => {
                 filter: {
                     bool: {
                         filter: [
+                            ...filterJanzzOccupation(occupations),
                             ...filterExtent(extent),
                             ...filterRemote(remote),
                             ...filterWorkLanguage(workLanguage),
@@ -853,6 +853,7 @@ const elasticSearchRequestBody = (query) => {
                 filter: {
                     bool: {
                         filter: [
+                            ...filterJanzzOccupation(occupations),
                             ...filterExtent(extent),
                             ...filterEducation(education),
                             ...filterWorkLanguage(workLanguage),
@@ -874,6 +875,7 @@ const elasticSearchRequestBody = (query) => {
                 filter: {
                     bool: {
                         filter: [
+                            ...filterJanzzOccupation(occupations),
                             ...filterExtent(extent),
                             ...filterEducation(education),
                             ...filterWorkLanguage(workLanguage),
@@ -922,6 +924,7 @@ const elasticSearchRequestBody = (query) => {
                 filter: {
                     bool: {
                         filter: [
+                            ...filterJanzzOccupation(occupations),
                             ...filterExtent(extent),
                             ...filterEducation(education),
                             ...filterWorkLanguage(workLanguage),
@@ -969,6 +972,7 @@ const elasticSearchRequestBody = (query) => {
                 filter: {
                     bool: {
                         filter: [
+                            ...filterJanzzOccupation(occupations),
                             ...filterExtent(extent),
                             ...filterEducation(education),
                             ...filterWorkLanguage(workLanguage),

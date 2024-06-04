@@ -6,6 +6,8 @@ export const ADD_COUNTY = "ADD_COUNTY";
 export const REMOVE_COUNTY = "REMOVE_COUNTY";
 export const ADD_COUNTRY = "ADD_COUNTRY";
 export const REMOVE_COUNTRY = "REMOVE_COUNTRY";
+export const ADD_OCCUPATION = "ADD_OCCUPATION";
+export const REMOVE_OCCUPATION = "REMOVE_OCCUPATION";
 export const ADD_OCCUPATION_FIRST_LEVEL = "ADD_OCCUPATION_FIRST_LEVEL";
 export const REMOVE_OCCUPATION_FIRST_LEVEL = "REMOVE_OCCUPATION_FIRST_LEVEL";
 export const ADD_OCCUPATION_SECOND_LEVEL = "ADD_OCCUPATION_SECOND_LEVEL";
@@ -29,11 +31,8 @@ export const SET_INTERNATIONAL = "SET_INTERNATIONAL";
 export const RESET = "RESET";
 export const SET_FROM_AND_SIZE = "SET_FROM_AND_SIZE";
 
-function getSort(previousSort, searchString, searchFields) {
+function getSort(previousSort, searchString) {
     if (previousSort !== "expires") {
-        if (searchFields === "occupation") {
-            return "published";
-        }
         if (searchString) {
             return "relevant";
         }
@@ -95,6 +94,19 @@ export default function queryReducer(state, action) {
             return {
                 ...queryState,
                 countries: queryState.countries.filter((obj) => obj !== action.value),
+            };
+        case ADD_OCCUPATION:
+            if (queryState.occupations.includes(action.value)) {
+                return queryState;
+            }
+            return {
+                ...queryState,
+                occupations: [...queryState.occupations, action.value],
+            };
+        case REMOVE_OCCUPATION:
+            return {
+                ...queryState,
+                occupations: queryState.occupations.filter((obj) => obj !== action.value),
             };
         case ADD_OCCUPATION_FIRST_LEVEL:
             if (queryState.occupationFirstLevels.includes(action.value)) {
@@ -213,8 +225,7 @@ export default function queryReducer(state, action) {
             return {
                 ...queryState,
                 q: action.value,
-                fields: action.fields,
-                sort: getSort(queryState.sort, action.value, action.fields),
+                sort: getSort(queryState.sort, action.value),
             };
         case SET_SORTING:
             return {

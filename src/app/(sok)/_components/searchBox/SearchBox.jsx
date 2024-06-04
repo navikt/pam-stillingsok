@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import { SET_SEARCH_STRING } from "@/app/(sok)/_utils/queryReducer";
+import { ADD_OCCUPATION, SET_SEARCH_STRING } from "@/app/(sok)/_utils/queryReducer";
 import Typeahead from "@/app/_common/components/typeahead/Typeahead";
 import { FetchAction, useFetchReducer } from "@/app/_common/hooks/useFetchReducer";
 import * as actions from "@/app/_common/actions";
@@ -51,23 +51,21 @@ function SearchBox({ dispatch, query }) {
     }
 
     function handleTypeAheadSuggestionSelected(newValue, shouldSearchInWholeAd) {
-        let fields;
         setValue(newValue);
         if (!shouldSearchInWholeAd) {
-            fields = "occupation";
+            dispatch({ type: ADD_OCCUPATION, value: newValue });
+        } else {
+            dispatch({ type: SET_SEARCH_STRING, value: newValue });
         }
-
-        dispatch({ type: SET_SEARCH_STRING, value: newValue, fields });
     }
 
     function handleSearchButtonClick() {
         const found = suggestionsResponse.data.find((it) => it.toLowerCase() === value.toLowerCase());
-        let fields;
         if (found) {
-            fields = "occupation";
+            dispatch({ type: ADD_OCCUPATION, value });
+        } else {
+            dispatch({ type: SET_SEARCH_STRING, value });
         }
-
-        dispatch({ type: SET_SEARCH_STRING, value, fields });
     }
 
     function onClear() {

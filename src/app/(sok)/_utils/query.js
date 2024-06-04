@@ -22,7 +22,6 @@ function asArray(value) {
 
 export const defaultQuery = {
     q: "",
-    fields: undefined,
     from: 0,
     size: SEARCH_CHUNK_SIZE,
     counties: [],
@@ -32,6 +31,7 @@ export const defaultQuery = {
     extent: [],
     remote: [],
     municipals: [],
+    occupations: [],
     occupationFirstLevels: [],
     occupationSecondLevels: [],
     published: undefined,
@@ -57,6 +57,7 @@ export function createQuery(searchParams) {
         countries: asArray(searchParams["countries[]"]) || defaultQuery.countries,
         international: searchParams.international === "true",
         remote: asArray(searchParams["remote[]"]) || defaultQuery.remote,
+        occupations: asArray(searchParams["occupations[]"]) || defaultQuery.occupations,
         occupationFirstLevels: asArray(searchParams["occupationFirstLevels[]"]) || defaultQuery.occupationFirstLevels,
         occupationSecondLevels:
             asArray(searchParams["occupationSecondLevels[]"]) || defaultQuery.occupationSecondLevels,
@@ -67,7 +68,6 @@ export function createQuery(searchParams) {
         education: asArray(searchParams["education[]"]) || defaultQuery.education,
         workLanguage: asArray(searchParams["workLanguage[]"]) || defaultQuery.workLanguage,
         sort: searchParams.sort || defaultQuery.sort,
-        fields: searchParams.fields || defaultQuery.fields,
     };
 }
 
