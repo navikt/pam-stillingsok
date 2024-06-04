@@ -1,5 +1,6 @@
 import capitalizeFirstLetter from "@/app/_common/utils/capitalizeFirstLetter";
 import fixLocationName from "@/app/_common/utils/fixLocationName";
+import { CURRENT_VERSION, VERSION_QUERY_PARAM } from "@/app/(sok)/_utils/searchParamsVersioning";
 
 export const SEARCH_CHUNK_SIZE = 25;
 export const ALLOWED_NUMBER_OF_RESULTS_PER_PAGE = [SEARCH_CHUNK_SIZE, SEARCH_CHUNK_SIZE * 4];
@@ -40,6 +41,7 @@ export const defaultQuery = {
     international: false,
     workLanguage: [],
     match: undefined,
+    v: CURRENT_VERSION,
 };
 
 // eslint-disable-next-line import/prefer-default-export
@@ -68,6 +70,7 @@ export function createQuery(searchParams) {
         education: asArray(searchParams["education[]"]) || defaultQuery.education,
         workLanguage: asArray(searchParams["workLanguage[]"]) || defaultQuery.workLanguage,
         sort: searchParams.sort || defaultQuery.sort,
+        v: searchParams.v || defaultQuery.v,
     };
 }
 
@@ -88,6 +91,12 @@ export function removeUnwantedOrEmptySearchParameters(query) {
             newObj[prop] = value;
         }
     });
+
+    // If no other properties, remove the version property
+    // We don't want the url to show /stillinger?v=1
+    if (Object.keys(newObj).length === 1 && Object.hasOwn(newObj, VERSION_QUERY_PARAM)) {
+        return {};
+    }
 
     return newObj;
 }

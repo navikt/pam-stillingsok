@@ -1,3 +1,4 @@
+import { CURRENT_VERSION, VERSION_QUERY_PARAM } from "@/app/(sok)/_utils/searchParamsVersioning";
 import { defaultQuery } from "./query";
 
 export const ADD_MUNICIPAL = "ADD_MUNICIPAL";
@@ -48,6 +49,10 @@ export default function queryReducer(state, action) {
         from: 0,
         paginate: undefined,
     };
+
+    if (!Object.hasOwn(queryState, VERSION_QUERY_PARAM)) {
+        queryState.v = CURRENT_VERSION;
+    }
 
     switch (action.type) {
         case SET_INTERNATIONAL:

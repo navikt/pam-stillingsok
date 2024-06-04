@@ -1,8 +1,17 @@
 import Search from "@/app/(sok)/_components/Search";
 import { defaultMetadataDescription, defaultOpenGraphImage, getMetadataTitle } from "@/app/layout";
-import { createQuery, defaultQuery, toApiQuery, toBrowserQuery, toReadableQuery } from "@/app/(sok)/_utils/query";
+import {
+    createQuery,
+    defaultQuery,
+    stringifyQuery,
+    toApiQuery,
+    toBrowserQuery,
+    toReadableQuery,
+} from "@/app/(sok)/_utils/query";
 import { fetchCachedElasticSearch } from "@/app/(sok)/_utils/fetchCachedElasticSearch";
 import * as actions from "@/app/_common/actions";
+import { redirect } from "next/navigation";
+import { migrateSearchParams } from "@/app/(sok)/_utils/searchParamsVersioning";
 
 export async function generateMetadata({ searchParams }) {
     const query = createQuery(searchParams);
@@ -57,6 +66,16 @@ async function fetchLocations() {
 }
 
 export default async function Page({ searchParams }) {
+    const newSearchParams = migrateSearchParams(searchParams);
+
+    if (newSearchParams !== undefined) {
+        const newQuery = {
+            ...createQuery(newSearchParams),
+            saved: newSearchParams.saved,
+        };
+        redirect(stringifyQuery(toBrowserQuery(newQuery)));
+    }
+
     const userPreferences = await actions.getUserPreferences();
     const _searchParams = searchParams;
     if (userPreferences.resultsPerPage) {
