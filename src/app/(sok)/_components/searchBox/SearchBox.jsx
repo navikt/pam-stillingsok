@@ -8,7 +8,7 @@ let suggestionsCache = [];
 const CACHE_MAX_SIZE = 50;
 const MINIMUM_LENGTH = 1;
 
-function SearchBox({ dispatch, query }) {
+function SearchBox({ dispatch, query, aggregations }) {
     const [value, setValue] = useState("");
     const [suggestionsResponse, suggestionsDispatch] = useFetchReducer([]);
     const initialRender = useRef(true);
@@ -54,6 +54,7 @@ function SearchBox({ dispatch, query }) {
                 onChange={handleComboBoxValueChange}
                 value={value}
                 allSuggestions={allSuggestions}
+                aggregations={aggregations}
             />
         </section>
     );

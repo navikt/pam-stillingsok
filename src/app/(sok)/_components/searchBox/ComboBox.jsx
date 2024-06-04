@@ -2,6 +2,17 @@ import { UNSAFE_Combobox as Combobox } from "@navikt/ds-react";
 import React, { useEffect, useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import {
+    ADD_COUNTRY,
+    ADD_COUNTY,
+    ADD_EDUCATION,
+    ADD_ENGAGEMENT_TYPE,
+    ADD_EXTENT,
+    ADD_MUNICIPAL,
+    ADD_OCCUPATION_FIRST_LEVEL,
+    ADD_OCCUPATION_SECOND_LEVEL,
+    ADD_REMOTE,
+    ADD_SECTOR,
+    ADD_WORKLANGUAGE,
     REMOVE_COUNTRY,
     REMOVE_COUNTY,
     REMOVE_EDUCATION,
@@ -29,7 +40,7 @@ import {
 import { editedItemKey } from "@/app/(sok)/_components/filters/Engagement";
 import { FilterEnum } from "@/app/(sok)/_components/searchBox/FilterEnum";
 
-function ComboBox({ query, queryDispatch, onChange, value, allSuggestions }) {
+function ComboBox({ query, queryDispatch, onChange, value, allSuggestions, aggregations }) {
     function getQueryOptions(queryObject) {
         const searchTerm = queryObject.q && queryObject.q.trim();
         const searchTerms = searchTerm ? searchTerm.split(" ") : [];
@@ -100,50 +111,61 @@ function ComboBox({ query, queryDispatch, onChange, value, allSuggestions }) {
         setSelectedOptions(newInitialSelectedOptions);
     }, [query]);
 
-    const typeOfFilter = (option) => {
-        switch (option.split("-")[0]) {
-            case FilterEnum.MUNICIPALS:
-                return REMOVE_MUNICIPAL;
-            case FilterEnum.COUNTIES:
-                return REMOVE_COUNTY;
-            case FilterEnum.INTERNATIONAL:
-                return SET_INTERNATIONAL;
-            case FilterEnum.COUNTRIES:
-                return REMOVE_COUNTRY;
-            case FilterEnum.OCCUPATION_FIRST_LEVELS:
-                return REMOVE_OCCUPATION_FIRST_LEVEL;
-            case FilterEnum.OCCUPATION_SECOND_LEVELS:
-                return REMOVE_OCCUPATION_SECOND_LEVEL;
-            case FilterEnum.PUBLISHED:
-                return SET_PUBLISHED;
-            case FilterEnum.ENGAGEMENT_TYPE:
-                return REMOVE_ENGAGEMENT_TYPE;
-            case FilterEnum.EXTENT:
-                return REMOVE_EXTENT;
-            case FilterEnum.WORK_LANGUAGE:
-                return REMOVE_WORKLANGUAGE;
-            case FilterEnum.EDUCATION:
-                return REMOVE_EDUCATION;
-            case FilterEnum.REMOTE:
-                return REMOVE_REMOTE;
-            case FilterEnum.SECTOR:
-                return REMOVE_SECTOR;
-            default:
-                return "";
-        }
+    const filterActions = {
+        [FilterEnum.MUNICIPALS]: { true: ADD_MUNICIPAL, false: REMOVE_MUNICIPAL },
+        [FilterEnum.COUNTIES]: { true: ADD_COUNTY, false: REMOVE_COUNTY },
+        [FilterEnum.INTERNATIONAL]: { true: SET_INTERNATIONAL, false: SET_INTERNATIONAL },
+        [FilterEnum.COUNTRIES]: { true: ADD_COUNTRY, false: REMOVE_COUNTRY },
+        [FilterEnum.OCCUPATION_FIRST_LEVELS]: {
+            true: ADD_OCCUPATION_FIRST_LEVEL,
+            false: REMOVE_OCCUPATION_FIRST_LEVEL,
+        },
+        [FilterEnum.OCCUPATION_SECOND_LEVELS]: {
+            true: ADD_OCCUPATION_SECOND_LEVEL,
+            false: REMOVE_OCCUPATION_SECOND_LEVEL,
+        },
+        [FilterEnum.PUBLISHED]: { true: SET_PUBLISHED, false: SET_PUBLISHED },
+        [FilterEnum.ENGAGEMENT_TYPE]: { true: ADD_ENGAGEMENT_TYPE, false: REMOVE_ENGAGEMENT_TYPE },
+        [FilterEnum.EXTENT]: { true: ADD_EXTENT, false: REMOVE_EXTENT },
+        [FilterEnum.WORK_LANGUAGE]: { true: ADD_WORKLANGUAGE, false: REMOVE_WORKLANGUAGE },
+        [FilterEnum.EDUCATION]: { true: ADD_EDUCATION, false: REMOVE_EDUCATION },
+        [FilterEnum.REMOTE]: { true: ADD_REMOTE, false: REMOVE_REMOTE },
+        [FilterEnum.SECTOR]: { true: ADD_SECTOR, false: REMOVE_SECTOR },
+    };
+
+    const typeOfFilter = (option, toAdd) => {
+        const filterValue = option.split("-")[0];
+        return filterActions[filterValue][toAdd];
     };
 
     const onToggleSelected = (option, isSelected, isCustomOption) => {
-        if (isSelected) {
+        if (isCustomOption && isSelected) {
+            queryDispatch({
+                type: SET_SEARCH_STRING,
+                value: [...selectedOptions.filter((opt) => !opt.value), option].join(" "),
+            });
+        } else if (query.q.includes(option) && !isSelected) {
+            const selected = selectedOptions.filter((o) => o !== option);
+            queryDispatch({ type: SET_SEARCH_STRING, value: selected.filter((opt) => !opt.value).join(" ") });
+        }
+
+        if (isSelected && !isCustomOption) {
             setSelectedOptions([...selectedOptions, option]);
+
             const found = allSuggestions.find((o) => o.toLowerCase() === option.toLowerCase());
             if (found) {
                 queryDispatch({ type: SET_SEARCH_STRING, value: option, fields: "occupation" });
             }
-        } else {
+
+            const filterToAdd = typeOfFilter(option, true);
+            const optionValue = option.slice(option.indexOf("-") + 1);
+            if (filterToAdd === ADD_REMOTE) {
+                queryDispatch({ type: filterToAdd, value: optionValue });
+            }
+        } else if (!isSelected) {
             setSelectedOptions(selectedOptions.filter((o) => o !== option));
 
-            const filterToRemove = typeOfFilter(option);
+            const filterToRemove = typeOfFilter(option, false);
             const optionValue = option.slice(option.indexOf("-") + 1);
             if (filterToRemove === SET_INTERNATIONAL) {
                 queryDispatch({ type: filterToRemove, value: false });
@@ -159,30 +181,32 @@ function ComboBox({ query, queryDispatch, onChange, value, allSuggestions }) {
                 queryDispatch({ type: filterToRemove, value: optionValue });
             }
         }
-
-        if (isCustomOption && isSelected) {
-            queryDispatch({
-                type: SET_SEARCH_STRING,
-                value: [...selectedOptions.filter((opt) => !opt.value), option].join(" "),
-            });
-        } else if (query.q.includes(option) && !isSelected) {
-            const selected = selectedOptions.filter((o) => o !== option);
-            queryDispatch({ type: SET_SEARCH_STRING, value: selected.filter((opt) => !opt.value).join(" ") });
-        }
     };
     // TODO: add clearButton && clearButtonLabel="Fjern alle"
     // TODO: add sidebar filters to combobox options
+    // TODO: show label in selectedOptions
+    const remoteList = aggregations.remote.map((item) =>
+        item.key === "Ikke oppgitt"
+            ? { label: "Hjemmekontor ikke oppgitt", value: `${FilterEnum.REMOTE}-${item.key}` }
+            : { label: item.key, value: `${FilterEnum.REMOTE}-${item.key}` },
+    );
+
+    const optionsList = [...allSuggestions, ...remoteList];
+
     return (
-        <Combobox
-            allowNewValues
-            label="Legg til sted, yrker og andre søkeord"
-            isMultiSelect
-            onToggleSelected={onToggleSelected}
-            selectedOptions={selectedOptions}
-            options={value && value.length > 0 ? allSuggestions : []}
-            onChange={onChange}
-            value={value}
-        />
+        <>
+            {/* {console.log(optionsList)} */}
+            <Combobox
+                allowNewValues
+                label="Legg til sted, yrker og andre søkeord"
+                isMultiSelect
+                onToggleSelected={onToggleSelected}
+                selectedOptions={selectedOptions}
+                options={value && value.length > 0 ? optionsList : []}
+                onChange={onChange}
+                value={value}
+            />
+        </>
     );
 }
 
@@ -207,6 +231,7 @@ ComboBox.propTypes = {
     onChange: PropTypes.func.isRequired,
     value: PropTypes.string,
     allSuggestions: PropTypes.arrayOf(PropTypes.string),
+    aggregations: PropTypes.shape({}),
 };
 
 export default ComboBox;

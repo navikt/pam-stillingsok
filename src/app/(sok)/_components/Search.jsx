@@ -76,7 +76,7 @@ export default function Search({ query, searchResult, aggregations, locations })
             </Box>
 
             <div className="SearchContainer container-small">
-                <SearchBox query={updatedQuery} dispatch={queryDispatch} />
+                <SearchBox query={updatedQuery} dispatch={queryDispatch} aggregations={aggregations} />
                 <Button
                     type="button"
                     variant="tertiary"
