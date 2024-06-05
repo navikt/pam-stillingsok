@@ -63,7 +63,6 @@ export function createQuery(searchParams) {
         occupationSecondLevels:
             asArray(searchParams["occupationSecondLevels[]"]) || defaultQuery.occupationSecondLevels,
         published: asArray(searchParams["published[]"]) || defaultQuery.occupationFirstLevels,
-        // published: searchParams.published || defaultQuery.published,
         extent: asArray(searchParams["extent[]"]) || defaultQuery.extent,
         engagementType: asArray(searchParams["engagementType[]"]) || defaultQuery.engagementType,
         sector: asArray(searchParams["sector[]"]) || defaultQuery.sector,
