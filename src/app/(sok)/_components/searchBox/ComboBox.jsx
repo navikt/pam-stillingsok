@@ -39,8 +39,9 @@ import {
 } from "@/app/(sok)/_components/utils/selectedFiltersUtils";
 import { editedItemKey } from "@/app/(sok)/_components/filters/Engagement";
 import { FilterEnum } from "@/app/(sok)/_components/searchBox/FilterEnum";
+import buildLocations from "@/app/(sok)/_components/utils/buildLocations";
 
-function ComboBox({ query, queryDispatch, onChange, value, allSuggestions, aggregations }) {
+function ComboBox({ query, queryDispatch, onChange, value, allSuggestions, aggregations, locations }) {
     function getQueryOptions(queryObject) {
         const searchTerm = queryObject.q && queryObject.q.trim();
         const searchTerms = searchTerm ? searchTerm.split(" ") : [];
@@ -183,9 +184,7 @@ function ComboBox({ query, queryDispatch, onChange, value, allSuggestions, aggre
             }
 
             const filterToAdd = typeOfFilter(option, true);
-            if (filterToAdd === ADD_REMOTE) {
-                queryDispatch({ type: filterToAdd, value: optionValue });
-            }
+            queryDispatch({ type: filterToAdd, value: optionValue });
         } else {
             setSelectedOptions(selectedOptions.filter((o) => o !== option));
 
@@ -205,17 +204,54 @@ function ComboBox({ query, queryDispatch, onChange, value, allSuggestions, aggre
     // TODO: add clearButton && clearButtonLabel="Fjern alle"
     // TODO: add sidebar filters to combobox options
     // TODO: show label in selectedOptions
+    // TODO: checking off municipal, doesn't mark county, same for Utland, country
+    const locationList = buildLocations(aggregations, locations);
+
+    const municipalList = locationList
+        .map((location) => location.subLocations)
+        .flat()
+        .filter((subLocation) => subLocation.type === "municipal")
+        .map((municipal) => ({
+            label: fixLocationName(municipal.key.split(".")[1]),
+            value: `${FilterEnum.MUNICIPALS}-${municipal.key}`,
+        }));
+
+    const countyList = locationList
+        .filter((location) => location.type === "county")
+        .map((county) => ({
+            label: fixLocationName(county.key),
+            value: `${FilterEnum.COUNTIES}-${county.key}`,
+        }));
+
+    const countryList = locationList
+        .filter((location) => location.type === "international")
+        .map((location) => location.subLocations)
+        .flat()
+        .map((country) => ({
+            label: fixLocationName(country.key),
+            value: `${FilterEnum.COUNTRIES}-${country.key}`,
+        }));
+
+    // international
+    // occupationSecondLevels
+    // occupationFirstLevels
+    // published
+    // sector
+    // engagementType
+    // extent
+    // education
+    // workLanguage
     const remoteList = aggregations.remote.map((item) =>
         item.key === "Ikke oppgitt"
             ? { label: "Hjemmekontor ikke oppgitt", value: `${FilterEnum.REMOTE}-${item.key}` }
             : { label: item.key, value: `${FilterEnum.REMOTE}-${item.key}` },
     );
 
-    const optionsList = [...allSuggestions, ...remoteList];
+    const optionsList = [...allSuggestions, ...remoteList, ...municipalList, ...countyList, ...countryList];
 
     return (
         <>
-            {/* {console.log(optionsList)} */}
+            {/* {console.log(countryList)} */}
             <Combobox
                 allowNewValues
                 label="Legg til sted, yrker og andre søkeord"
@@ -252,6 +288,7 @@ ComboBox.propTypes = {
     value: PropTypes.string,
     allSuggestions: PropTypes.arrayOf(PropTypes.string),
     aggregations: PropTypes.shape({}),
+    locations: PropTypes.arrayOf(PropTypes.shape({})),
 };
 
 export default ComboBox;

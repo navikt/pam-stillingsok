@@ -8,7 +8,7 @@ let suggestionsCache = [];
 const CACHE_MAX_SIZE = 50;
 const MINIMUM_LENGTH = 1;
 
-function SearchBox({ dispatch, query, aggregations }) {
+function SearchBox({ dispatch, query, aggregations, locations }) {
     const [value, setValue] = useState("");
     const [suggestionsResponse, suggestionsDispatch] = useFetchReducer([]);
     const initialRender = useRef(true);
@@ -55,6 +55,7 @@ function SearchBox({ dispatch, query, aggregations }) {
                 value={value}
                 allSuggestions={allSuggestions}
                 aggregations={aggregations}
+                locations={locations}
             />
         </section>
     );
@@ -65,6 +66,7 @@ SearchBox.propTypes = {
         q: PropTypes.string,
     }).isRequired,
     dispatch: PropTypes.func.isRequired,
+    locations: PropTypes.arrayOf(PropTypes.shape({})),
 };
 
 export default SearchBox;
