@@ -161,6 +161,38 @@ export default function HowToApply({ adData }) {
                             </Button>
                         </div>
                     )}
+                    {!isFinn && adData.applicationEmail && !applicationUrl && (
+                        <div class="text-align-right">
+                            <Label as="p">Send søknad til</Label>
+                            <BodyLong>
+                                <HStack gap="2" as="span" wrap={false}>
+                                    <span>
+                                        <AkselLink
+                                            onClick={() => {
+                                                logEmailAnchorClick(adData);
+                                            }}
+                                            href={`mailto:${adData.applicationEmail}`}
+                                        >
+                                            {adData.applicationEmail}
+                                        </AkselLink>
+                                    </span>
+                                    <span>
+                                        <CopyButton
+                                            title="Kopier e-postadresse"
+                                            copyText={`${adData.applicationEmail}`}
+                                            variant="action"
+                                            size="xsmall"
+                                            onActiveChange={(state) => {
+                                                if (state === true) {
+                                                    logCopyEmailClick(adData);
+                                                }
+                                            }}
+                                        />
+                                    </span>
+                                </HStack>
+                            </BodyLong>
+                        </div>
+                    )}
                 </Stack>
                 {!isFinn && adData.applicationEmail && applicationUrl && (
                     <BodyLong className="mt-4">
@@ -192,38 +224,7 @@ export default function HowToApply({ adData }) {
                         </HStack>
                     </BodyLong>
                 )}
-                {!isFinn && adData.applicationEmail && !applicationUrl && (
-                    <div className="mt-4">
-                        <Label as="p">Send søknad til</Label>
-                        <BodyLong>
-                            <HStack gap="2" as="span" wrap={false}>
-                                <span>
-                                    <AkselLink
-                                        onClick={() => {
-                                            logEmailAnchorClick(adData);
-                                        }}
-                                        href={`mailto:${adData.applicationEmail}`}
-                                    >
-                                        {adData.applicationEmail}
-                                    </AkselLink>
-                                </span>
-                                <span>
-                                    <CopyButton
-                                        title="Kopier e-postadresse"
-                                        copyText={`${adData.applicationEmail}`}
-                                        variant="action"
-                                        size="xsmall"
-                                        onActiveChange={(state) => {
-                                            if (state === true) {
-                                                logCopyEmailClick(adData);
-                                            }
-                                        }}
-                                    />
-                                </span>
-                            </HStack>
-                        </BodyLong>
-                    </div>
-                )}
+
                 {applicationUrl && !isValidUrl(applicationUrl) && (
                     <>
                         <Label as="p">Søknadslenke</Label>
