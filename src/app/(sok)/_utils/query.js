@@ -35,7 +35,7 @@ export const defaultQuery = {
     municipals: [],
     occupationFirstLevels: [],
     occupationSecondLevels: [],
-    published: undefined,
+    published: [],
     sector: [],
     sort: "",
     international: false,
@@ -62,7 +62,7 @@ export function createQuery(searchParams) {
         occupationFirstLevels: asArray(searchParams["occupationFirstLevels[]"]) || defaultQuery.occupationFirstLevels,
         occupationSecondLevels:
             asArray(searchParams["occupationSecondLevels[]"]) || defaultQuery.occupationSecondLevels,
-        published: searchParams.published || defaultQuery.published,
+        published: asArray(searchParams["published[]"]) || defaultQuery.occupationFirstLevels,
         extent: asArray(searchParams["extent[]"]) || defaultQuery.extent,
         engagementType: asArray(searchParams["engagementType[]"]) || defaultQuery.engagementType,
         sector: asArray(searchParams["sector[]"]) || defaultQuery.sector,

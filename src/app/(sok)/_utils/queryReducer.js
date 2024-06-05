@@ -23,7 +23,8 @@ export const ADD_REMOTE = "ADD_REMOTE";
 export const REMOVE_REMOTE = "REMOVE_REMOTE";
 export const ADD_SECTOR = "ADD_SECTOR";
 export const REMOVE_SECTOR = "REMOVE_SECTOR";
-export const SET_PUBLISHED = "SET_PUBLISHED";
+export const ADD_PUBLISHED = "ADD_PUBLISHED";
+export const REMOVE_PUBLISHED = "REMOVE_PUBLISHED";
 export const SET_SEARCH_STRING = "SET_SEARCH_STRING";
 export const SET_SORTING = "SET_SORTING";
 export const SET_INTERNATIONAL = "SET_INTERNATIONAL";
@@ -209,10 +210,21 @@ export default function queryReducer(state, action) {
                 ...queryState,
                 sector: queryState.sector.filter((obj) => obj !== action.value),
             };
-        case SET_PUBLISHED:
+
+        case ADD_PUBLISHED:
+            if (queryState.published.includes(action.value)) {
+                return queryState;
+            }
+
             return {
                 ...queryState,
-                published: action.value,
+                published: [...queryState.published, action.value],
+            };
+
+        case REMOVE_PUBLISHED:
+            return {
+                ...queryState,
+                published: queryState.published.filter((obj) => obj !== action.value),
             };
         case SET_SEARCH_STRING:
             return {
