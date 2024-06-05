@@ -133,55 +133,75 @@ function ComboBox({ query, queryDispatch, onChange, value, allSuggestions, aggre
         [FilterEnum.SECTOR]: { true: ADD_SECTOR, false: REMOVE_SECTOR },
     };
 
+    const handleFreeTextSearchOption = (option, isSelected) => {
+        if (isSelected) {
+            const newSelectedOptions = [...selectedOptions.filter((opt) => !opt.value), option];
+            queryDispatch({
+                type: SET_SEARCH_STRING,
+                value: newSelectedOptions.join(" "),
+            });
+        } else {
+            const selected = selectedOptions.filter((o) => o !== option);
+            queryDispatch({ type: SET_SEARCH_STRING, value: selected.filter((opt) => !opt.value).join(" ") });
+        }
+    };
+
+    const handleFilterRemoval = (filterToRemove, optionValue) => {
+        if (filterToRemove === SET_INTERNATIONAL) {
+            queryDispatch({ type: filterToRemove, value: false });
+        } else if (filterToRemove === SET_PUBLISHED) {
+            queryDispatch({ type: filterToRemove, value: undefined });
+        } else if (filterToRemove === REMOVE_MUNICIPAL) {
+            removeMunicipal(queryDispatch, query, optionValue);
+        } else if (filterToRemove === REMOVE_COUNTRY) {
+            removeCountry(queryDispatch, query, optionValue);
+        } else if (filterToRemove === REMOVE_OCCUPATION_SECOND_LEVEL) {
+            removeOccupationSecondLevel(queryDispatch, query, optionValue);
+        } else {
+            queryDispatch({ type: filterToRemove, value: optionValue });
+        }
+    };
+
+    const handleOccupation = (option) => {
+        queryDispatch({ type: SET_SEARCH_STRING, value: option, fields: "occupation" });
+    };
+
     const typeOfFilter = (option, toAdd) => {
         const filterValue = option.split("-")[0];
         return filterActions[filterValue][toAdd];
     };
 
-    const onToggleSelected = (option, isSelected, isCustomOption) => {
-        if (isCustomOption && isSelected) {
-            queryDispatch({
-                type: SET_SEARCH_STRING,
-                value: [...selectedOptions.filter((opt) => !opt.value), option].join(" "),
-            });
-        } else if (query.q.includes(option) && !isSelected) {
-            const selected = selectedOptions.filter((o) => o !== option);
-            queryDispatch({ type: SET_SEARCH_STRING, value: selected.filter((opt) => !opt.value).join(" ") });
-        }
-
-        if (isSelected && !isCustomOption) {
+    const handleFilterOption = (option, isSelected) => {
+        const optionValue = option.slice(option.indexOf("-") + 1);
+        if (isSelected) {
             setSelectedOptions([...selectedOptions, option]);
 
             const found = allSuggestions.find((o) => o.toLowerCase() === option.toLowerCase());
             if (found) {
-                queryDispatch({ type: SET_SEARCH_STRING, value: option, fields: "occupation" });
+                handleOccupation(option);
+                return;
             }
 
             const filterToAdd = typeOfFilter(option, true);
-            const optionValue = option.slice(option.indexOf("-") + 1);
             if (filterToAdd === ADD_REMOTE) {
                 queryDispatch({ type: filterToAdd, value: optionValue });
             }
-        } else if (!isSelected) {
+        } else {
             setSelectedOptions(selectedOptions.filter((o) => o !== option));
 
             const filterToRemove = typeOfFilter(option, false);
-            const optionValue = option.slice(option.indexOf("-") + 1);
-            if (filterToRemove === SET_INTERNATIONAL) {
-                queryDispatch({ type: filterToRemove, value: false });
-            } else if (filterToRemove === SET_PUBLISHED) {
-                queryDispatch({ type: filterToRemove, value: undefined });
-            } else if (filterToRemove === REMOVE_MUNICIPAL) {
-                removeMunicipal(queryDispatch, query, optionValue);
-            } else if (filterToRemove === REMOVE_COUNTRY) {
-                removeCountry(queryDispatch, query, optionValue);
-            } else if (filterToRemove === REMOVE_OCCUPATION_SECOND_LEVEL) {
-                removeOccupationSecondLevel(queryDispatch, query, optionValue);
-            } else {
-                queryDispatch({ type: filterToRemove, value: optionValue });
-            }
+            handleFilterRemoval(filterToRemove, optionValue);
         }
     };
+
+    const onToggleSelected = (option, isSelected, isCustomOption) => {
+        if (isCustomOption || query.q.includes(option)) {
+            handleFreeTextSearchOption(option, isSelected);
+        } else {
+            handleFilterOption(option, isSelected);
+        }
+    };
+
     // TODO: add clearButton && clearButtonLabel="Fjern alle"
     // TODO: add sidebar filters to combobox options
     // TODO: show label in selectedOptions
