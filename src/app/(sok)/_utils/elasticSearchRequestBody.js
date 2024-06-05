@@ -19,13 +19,37 @@ function mapSortByOrder(value) {
     return "desc";
 }
 
+function filterLargestPublishedFilter(publishedArray) {
+    let largestValue = "";
+
+    if (!publishedArray) {
+        return largestValue;
+    }
+
+    if (publishedArray.includes("now/d")) {
+        largestValue = "now/d";
+    }
+
+    if (publishedArray.includes("now-3d")) {
+        largestValue = "now-3d";
+    }
+
+    if (publishedArray.includes("now-7d")) {
+        largestValue = "now-7d";
+    }
+
+    return largestValue;
+}
+
 function filterPublished(published) {
+    // Only use largest published value as filter
+    const largestPublished = filterLargestPublishedFilter(published);
     const filters = [];
     if (published) {
         filters.push({
             range: {
                 published: {
-                    gte: published,
+                    gte: largestPublished,
                     time_zone: "CET",
                 },
             },
