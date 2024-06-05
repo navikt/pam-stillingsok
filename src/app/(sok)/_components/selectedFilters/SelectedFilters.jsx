@@ -159,7 +159,7 @@ function SelectedFilters({ query, queryDispatch }) {
     chips.push(
         ...query.published.map((value) => (
             <Chips.Removable
-                key="published-filter"
+                key={`published-filter-${value}`}
                 variant="neutral"
                 onClick={() => queryDispatch({ type: REMOVE_PUBLISHED, value })}
             >
