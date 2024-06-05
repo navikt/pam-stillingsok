@@ -4,6 +4,7 @@ import { Button, Heading, HStack, Label, Modal } from "@navikt/ds-react";
 import { ChevronRightIcon, ChevronLeftIcon } from "@navikt/aksel-icons";
 import { formatNumber } from "@/app/_common/utils/utils";
 import Remote from "@/app/(sok)/_components/filters/Remote";
+import Education from "@/app/(sok)/_components/filters/Education";
 import Counties from "./Locations";
 import Occupations from "./Occupations";
 import Published from "./Published";
@@ -55,6 +56,7 @@ function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggre
                             "Publisert",
                             "Sted og hjemmekontor",
                             "Yrke og sektor",
+                            "Utdanning",
                             "Arbeidsspråk",
                             "Omfang og ansettelsesform",
                         ].map((filter) => (
@@ -117,6 +119,14 @@ function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggre
                                 updatedValues={searchResult.aggregations.sector}
                             />
                         </>
+                    )}
+                    {selectedFilter === "Utdanning" && (
+                        <Education
+                            query={query}
+                            dispatch={dispatchQuery}
+                            initialValues={aggregations.education}
+                            updatedValues={searchResult.aggregations.education}
+                        />
                     )}
 
                     {selectedFilter === "Arbeidsspråk" && (

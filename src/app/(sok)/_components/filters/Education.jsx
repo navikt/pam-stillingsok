@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { Checkbox, Fieldset } from "@navikt/ds-react";
+import { Alert, Checkbox, Fieldset } from "@navikt/ds-react";
 import { ADD_EDUCATION, REMOVE_EDUCATION } from "@/app/(sok)/_utils/queryReducer";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
 import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
@@ -44,6 +44,10 @@ function Education({ initialValues, updatedValues, query, dispatch }) {
     return (
         <Fieldset legend="Filtrer på utdanning" hideLegend>
             <div>
+                <Alert variant="info">
+                    Vi tester ut et nytt filter og jobber med å gjøre det mer nøyaktig. Har du noen tips? Bruk lenken
+                    for tilbakemelding nederst på siden.
+                </Alert>
                 {values.map((item) => (
                     <Checkbox
                         name="education[]"
