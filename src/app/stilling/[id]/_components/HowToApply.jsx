@@ -162,7 +162,7 @@ export default function HowToApply({ adData }) {
                         </div>
                     )}
                     {!isFinn && adData.applicationEmail && !applicationUrl && (
-                        <div class="text-align-right">
+                        <div className="text-align-right">
                             <Label as="p">Send søknad til</Label>
                             <BodyLong>
                                 <HStack gap="2" as="span" wrap={false}>
