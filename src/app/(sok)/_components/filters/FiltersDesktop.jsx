@@ -22,6 +22,7 @@ function FiltersDesktop({ query, dispatchQuery, aggregations, locations, searchR
                         dispatch={dispatchQuery}
                         initialValues={aggregations.published}
                         updatedValues={searchResult.aggregations.published}
+                        publishedTotalCount={searchResult.aggregations.publishedTotalCount}
                     />
                 </FilterAccordionItem>
                 <FilterAccordionItem title="Sted og hjemmekontor" panelId="sted">

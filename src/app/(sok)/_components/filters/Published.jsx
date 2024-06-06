@@ -7,7 +7,7 @@ import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
 import sortPublishedValues from "@/app/(sok)/_components/utils/sortPublishedValues";
 import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
 
-function Published({ dispatch, query, initialValues, updatedValues }) {
+function Published({ dispatch, query, initialValues, updatedValues, publishedTotalCount }) {
     const sortedValues = sortPublishedValues(initialValues);
     const values = mergeCount(sortedValues, updatedValues);
 
@@ -33,7 +33,7 @@ function Published({ dispatch, query, initialValues, updatedValues }) {
                     {`${PublishedLabelsEnum[item.key]} (${item.count})`}
                 </Radio>
             ))}
-            <Radio value="">Vis alle</Radio>
+            <Radio value="">Vis alle ({publishedTotalCount})</Radio>
         </RadioGroup>
     );
 }
