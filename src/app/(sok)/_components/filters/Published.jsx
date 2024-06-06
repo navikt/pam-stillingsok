@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { Checkbox, Fieldset } from "@navikt/ds-react";
+import { Radio, RadioGroup } from "@navikt/ds-react";
 import { SET_PUBLISHED } from "@/app/(sok)/_utils/queryReducer";
 import { PublishedLabelsEnum } from "@/app/(sok)/_utils/query";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
@@ -11,32 +11,30 @@ function Published({ dispatch, query, initialValues, updatedValues }) {
     const sortedValues = sortPublishedValues(initialValues);
     const values = mergeCount(sortedValues, updatedValues);
 
-    function handleClick(e) {
-        const { value, checked } = e.target;
-        if (checked) {
+    function handleClick(value) {
+        if (value) {
             dispatch({ type: SET_PUBLISHED, value });
         } else {
-            dispatch({ type: SET_PUBLISHED, undefined });
+            dispatch({ type: SET_PUBLISHED, value: "" });
         }
-        logFilterChanged({ name: "Publisert", value: PublishedLabelsEnum[value], checked });
+        logFilterChanged({ name: "Publisert", value: PublishedLabelsEnum[value] });
     }
 
     return (
-        <Fieldset legend="Filtrer etter når annonsen var publisert" hideLegend>
-            <div>
-                {values.map((item) => (
-                    <Checkbox
-                        name="published"
-                        key={item.key}
-                        value={item.key}
-                        onChange={handleClick}
-                        checked={query.published === item.key}
-                    >
-                        {`${PublishedLabelsEnum[item.key]} (${item.count})`}
-                    </Checkbox>
-                ))}
-            </div>
-        </Fieldset>
+        <RadioGroup
+            name="published"
+            onChange={handleClick}
+            legend="Filtrer etter når annonsen var publisert"
+            hideLegend
+            value={query.published || ""}
+        >
+            <Radio value="">Vis alle</Radio>
+            {values.map((item) => (
+                <Radio key={item.key} value={item.key}>
+                    {`${PublishedLabelsEnum[item.key]} (${item.count})`}
+                </Radio>
+            ))}
+        </RadioGroup>
     );
 }
 
