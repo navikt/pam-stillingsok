@@ -28,12 +28,12 @@ function Published({ dispatch, query, initialValues, updatedValues }) {
             hideLegend
             value={query.published || ""}
         >
-            <Radio value="">Vis alle</Radio>
             {values.map((item) => (
                 <Radio key={item.key} value={item.key}>
                     {`${PublishedLabelsEnum[item.key]} (${item.count})`}
                 </Radio>
             ))}
+            <Radio value="">Vis alle</Radio>
         </RadioGroup>
     );
 }
