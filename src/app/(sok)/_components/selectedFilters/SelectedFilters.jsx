@@ -3,12 +3,14 @@ import PropTypes from "prop-types";
 import { Button, Chips, HStack } from "@navikt/ds-react";
 import { TrashIcon } from "@navikt/aksel-icons";
 import fixLocationName from "@/app/_common/utils/fixLocationName";
+import { labelForNeedDriversLicense } from "@/app/(sok)/_components/filters/DriversLicense";
 import {
     REMOVE_COUNTRY,
     REMOVE_COUNTY,
     REMOVE_ENGAGEMENT_TYPE,
     REMOVE_EXTENT,
     REMOVE_EDUCATION,
+    REMOVE_NEEDDRIVERSLICENSE,
     REMOVE_WORKLANGUAGE,
     REMOVE_MUNICIPAL,
     REMOVE_OCCUPATION_FIRST_LEVEL,
@@ -228,6 +230,18 @@ function SelectedFilters({ query, queryDispatch }) {
         )),
     );
 
+    chips.push(
+        ...query.needDriversLicense.map((value) => (
+            <Chips.Removable
+                variant="neutral"
+                key={`needDriversLicense-${value}`}
+                onClick={() => queryDispatch({ type: REMOVE_NEEDDRIVERSLICENSE, value })}
+            >
+                {labelForNeedDriversLicense(value)}
+            </Chips.Removable>
+        )),
+    );
+
     if (query.remote.length > 0) {
         chips.push(
             ...query.remote.map((value) => (
@@ -288,6 +302,7 @@ SelectedFilters.propTypes = {
         counties: PropTypes.arrayOf(PropTypes.string),
         countries: PropTypes.arrayOf(PropTypes.string),
         international: PropTypes.bool,
+        needDriversLicense: PropTypes.arrayOf(PropTypes.string),
         occupationFirstLevels: PropTypes.arrayOf(PropTypes.string),
         occupationSecondLevels: PropTypes.arrayOf(PropTypes.string),
         published: PropTypes.string,

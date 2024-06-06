@@ -33,6 +33,7 @@ const sourceIncludes = [
     "properties.applicationurl",
     "properties.education",
     "properties.employer",
+    "properties.needDriversLicense",
     "properties.employerdescription",
     "properties.employerhomepage",
     "properties.engagementtype",

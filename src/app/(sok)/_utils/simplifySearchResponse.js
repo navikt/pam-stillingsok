@@ -54,6 +54,10 @@ export default function simplifySearchResponse(response) {
                         count: secondLevel.root_doc_count.doc_count,
                     })),
                 })),
+            needDriversLicense: response.aggregations.needDriversLicense.values.buckets.map((item) => ({
+                key: item.key,
+                count: item.doc_count,
+            })),
             extent: response.aggregations.extent.values.buckets.map((item) => ({
                 key: item.key,
                 count: item.doc_count,

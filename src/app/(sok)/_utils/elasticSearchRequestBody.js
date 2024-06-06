@@ -157,6 +157,41 @@ function filterEducation(education) {
     return filters;
 }
 
+function filterNeedDriversLicense(needDriversLicense) {
+    const filters = [];
+    if (needDriversLicense && needDriversLicense.length > 0) {
+        const filter = {
+            bool: {
+                should: [],
+            },
+        };
+        needDriversLicense.forEach((item) => {
+            filter.bool.should.push({
+                term: {
+                    needDriversLicense_facet: item,
+                },
+            });
+        });
+
+        if (needDriversLicense.includes("Ikke oppgitt")) {
+            filter.bool.should.push({
+                bool: {
+                    must_not: [
+                        {
+                            exists: {
+                                field: "needDriversLicense_facet",
+                            },
+                        },
+                    ],
+                },
+            });
+        }
+
+        filters.push(filter);
+    }
+    return filters;
+}
+
 function filterEngagementType(engagementTypes) {
     const filters = [];
     if (engagementTypes && engagementTypes.length > 0) {
@@ -598,6 +633,7 @@ const elasticSearchRequestBody = (query) => {
         countries,
         education,
         municipals,
+        needDriversLicense,
         extent,
         workLanguage,
         remote,
@@ -633,6 +669,7 @@ const elasticSearchRequestBody = (query) => {
         post_filter: {
             bool: {
                 filter: [
+                    ...filterNeedDriversLicense(needDriversLicense),
                     ...filterExtent(extent),
                     ...filterEducation(education),
                     ...filterWorkLanguage(workLanguage),
@@ -654,6 +691,7 @@ const elasticSearchRequestBody = (query) => {
                 "properties.location",
                 "properties.applicationdue",
                 "properties.hasInterestform",
+                "properties.needDriversLicense",
                 "properties.education",
                 "properties.workLanguage",
                 "properties.remote",
@@ -686,6 +724,7 @@ const elasticSearchRequestBody = (query) => {
                 filter: {
                     bool: {
                         filter: [
+                            ...filterNeedDriversLicense(needDriversLicense),
                             ...filterExtent(extent),
                             ...filterEducation(education),
                             ...filterWorkLanguage(workLanguage),
@@ -711,6 +750,7 @@ const elasticSearchRequestBody = (query) => {
                 filter: {
                     bool: {
                         filter: [
+                            ...filterNeedDriversLicense(needDriversLicense),
                             ...filterExtent(extent),
                             ...filterEducation(education),
                             ...filterWorkLanguage(workLanguage),
@@ -749,6 +789,7 @@ const elasticSearchRequestBody = (query) => {
                 filter: {
                     bool: {
                         filter: [
+                            ...filterNeedDriversLicense(needDriversLicense),
                             ...filterExtent(extent),
                             ...filterEducation(education),
                             ...filterWorkLanguage(workLanguage),
@@ -770,6 +811,7 @@ const elasticSearchRequestBody = (query) => {
                 filter: {
                     bool: {
                         filter: [
+                            ...filterNeedDriversLicense(needDriversLicense),
                             ...filterRemote(remote),
                             ...filterEducation(education),
                             ...filterWorkLanguage(workLanguage),
@@ -791,6 +833,7 @@ const elasticSearchRequestBody = (query) => {
                 filter: {
                     bool: {
                         filter: [
+                            ...filterNeedDriversLicense(needDriversLicense),
                             ...filterEducation(education),
                             ...filterWorkLanguage(workLanguage),
                             filterLocation(counties, municipals, countries, international),
@@ -811,6 +854,7 @@ const elasticSearchRequestBody = (query) => {
                 filter: {
                     bool: {
                         filter: [
+                            ...filterNeedDriversLicense(needDriversLicense),
                             ...filterExtent(extent),
                             ...filterRemote(remote),
                             ...filterEducation(education),
@@ -832,6 +876,7 @@ const elasticSearchRequestBody = (query) => {
                 filter: {
                     bool: {
                         filter: [
+                            ...filterNeedDriversLicense(needDriversLicense),
                             ...filterExtent(extent),
                             ...filterRemote(remote),
                             ...filterWorkLanguage(workLanguage),
@@ -849,10 +894,33 @@ const elasticSearchRequestBody = (query) => {
                     },
                 },
             },
+            needDriversLicense: {
+                filter: {
+                    bool: {
+                        filter: [
+                            ...filterExtent(extent),
+                            ...filterEducation(education),
+                            ...filterRemote(remote),
+                            ...filterWorkLanguage(workLanguage),
+                            filterLocation(counties, municipals, countries, international),
+                            filterOccupation(occupationFirstLevels, occupationSecondLevels),
+                            ...filterEngagementType(engagementType),
+                            ...filterSector(sector),
+                            ...filterPublished(published),
+                        ],
+                    },
+                },
+                aggs: {
+                    values: {
+                        terms: { field: "needDriversLicense_facet", missing: NOT_DEFINED },
+                    },
+                },
+            },
             engagementType: {
                 filter: {
                     bool: {
                         filter: [
+                            ...filterNeedDriversLicense(needDriversLicense),
                             ...filterExtent(extent),
                             ...filterEducation(education),
                             ...filterWorkLanguage(workLanguage),
@@ -874,6 +942,7 @@ const elasticSearchRequestBody = (query) => {
                 filter: {
                     bool: {
                         filter: [
+                            ...filterNeedDriversLicense(needDriversLicense),
                             ...filterExtent(extent),
                             ...filterEducation(education),
                             ...filterWorkLanguage(workLanguage),
@@ -922,6 +991,7 @@ const elasticSearchRequestBody = (query) => {
                 filter: {
                     bool: {
                         filter: [
+                            ...filterNeedDriversLicense(needDriversLicense),
                             ...filterExtent(extent),
                             ...filterEducation(education),
                             ...filterWorkLanguage(workLanguage),
@@ -969,6 +1039,7 @@ const elasticSearchRequestBody = (query) => {
                 filter: {
                     bool: {
                         filter: [
+                            ...filterNeedDriversLicense(needDriversLicense),
                             ...filterExtent(extent),
                             ...filterEducation(education),
                             ...filterWorkLanguage(workLanguage),

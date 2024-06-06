@@ -28,6 +28,7 @@ export const defaultQuery = {
     size: SEARCH_CHUNK_SIZE,
     counties: [],
     countries: [],
+    needDriversLicense: [],
     education: [],
     engagementType: [],
     extent: [],
@@ -63,6 +64,7 @@ export function createQuery(searchParams) {
         occupationSecondLevels:
             asArray(searchParams["occupationSecondLevels[]"]) || defaultQuery.occupationSecondLevels,
         published: searchParams.published || defaultQuery.published,
+        needDriversLicense: asArray(searchParams["needDriversLicense[]"]) || defaultQuery.needDriversLicense,
         extent: asArray(searchParams["extent[]"]) || defaultQuery.extent,
         engagementType: asArray(searchParams["engagementType[]"]) || defaultQuery.engagementType,
         sector: asArray(searchParams["sector[]"]) || defaultQuery.sector,
