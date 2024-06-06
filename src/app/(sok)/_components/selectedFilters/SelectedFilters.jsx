@@ -16,7 +16,7 @@ import {
     REMOVE_REMOTE,
     REMOVE_SECTOR,
     SET_INTERNATIONAL,
-    REMOVE_PUBLISHED,
+    SET_PUBLISHED,
     SET_SEARCH_STRING,
 } from "../../_utils/queryReducer";
 import { PublishedLabelsEnum } from "../../_utils/query";
@@ -156,17 +156,17 @@ function SelectedFilters({ query, queryDispatch }) {
         )),
     );
 
-    chips.push(
-        ...query.published.map((value) => (
+    if (query.published) {
+        chips.push(
             <Chips.Removable
-                key={`published-filter-${value}`}
+                key="published-filter"
                 variant="neutral"
-                onClick={() => queryDispatch({ type: REMOVE_PUBLISHED, value })}
+                onClick={() => queryDispatch({ type: SET_PUBLISHED, undefined })}
             >
-                {PublishedLabelsEnum[value]}
-            </Chips.Removable>
-        )),
-    );
+                {PublishedLabelsEnum[query.published]}
+            </Chips.Removable>,
+        );
+    }
 
     chips.push(
         ...query.sector.map((value) => (
@@ -290,7 +290,7 @@ SelectedFilters.propTypes = {
         international: PropTypes.bool,
         occupationFirstLevels: PropTypes.arrayOf(PropTypes.string),
         occupationSecondLevels: PropTypes.arrayOf(PropTypes.string),
-        published: PropTypes.arrayOf(PropTypes.string),
+        published: PropTypes.string,
         sector: PropTypes.arrayOf(PropTypes.string),
         engagementType: PropTypes.arrayOf(PropTypes.string),
         extent: PropTypes.arrayOf(PropTypes.string),
