@@ -4,6 +4,7 @@ import { Button, Chips, HStack } from "@navikt/ds-react";
 import { TrashIcon } from "@navikt/aksel-icons";
 import fixLocationName from "@/app/_common/utils/fixLocationName";
 import { labelForNeedDriversLicense } from "@/app/(sok)/_components/filters/DriversLicense";
+import { labelForEducation } from "@/app/(sok)/_components/filters/Education";
 import {
     REMOVE_COUNTRY,
     REMOVE_COUNTY,
@@ -153,7 +154,7 @@ function SelectedFilters({ query, queryDispatch }) {
                 key={`occupationFirstLevels-${value}`}
                 onClick={() => queryDispatch({ type: REMOVE_OCCUPATION_FIRST_LEVEL, value })}
             >
-                {value}
+                {value === "Uoppgitt/ ikke identifiserbare" ? "Yrke ikke oppgitt" : value}
             </Chips.Removable>
         )),
     );
@@ -219,27 +220,35 @@ function SelectedFilters({ query, queryDispatch }) {
     );
 
     chips.push(
-        ...query.education.map((value) => (
-            <Chips.Removable
-                variant="neutral"
-                key={`education-${value}`}
-                onClick={() => queryDispatch({ type: REMOVE_EDUCATION, value })}
-            >
-                {value === "Ingen" ? "Utdanning ikke krav" : value}
-            </Chips.Removable>
-        )),
+        ...query.education.map((value) => {
+            const labelForEducationValue = labelForEducation(value);
+            return (
+                <Chips.Removable
+                    variant="neutral"
+                    key={`education-${value}`}
+                    onClick={() => queryDispatch({ type: REMOVE_EDUCATION, value })}
+                >
+                    {labelForEducationValue === "Ikke oppgitt" ? "Utdanning ikke oppgitt" : labelForEducationValue}
+                </Chips.Removable>
+            );
+        }),
     );
 
     chips.push(
-        ...query.needDriversLicense.map((value) => (
-            <Chips.Removable
-                variant="neutral"
-                key={`needDriversLicense-${value}`}
-                onClick={() => queryDispatch({ type: REMOVE_NEEDDRIVERSLICENSE, value })}
-            >
-                {labelForNeedDriversLicense(value)}
-            </Chips.Removable>
-        )),
+        ...query.needDriversLicense.map((value) => {
+            const labelForNeedDriversLicenseValue = labelForNeedDriversLicense(value);
+            return (
+                <Chips.Removable
+                    variant="neutral"
+                    key={`needDriversLicense-${value}`}
+                    onClick={() => queryDispatch({ type: REMOVE_NEEDDRIVERSLICENSE, value })}
+                >
+                    {labelForNeedDriversLicenseValue === "Ikke oppgitt"
+                        ? "Førerkort ikke oppgitt"
+                        : labelForNeedDriversLicenseValue}
+                </Chips.Removable>
+            );
+        }),
     );
 
     if (query.remote.length > 0) {

@@ -22,25 +22,6 @@ function Education({ initialValues, updatedValues, query, dispatch }) {
         logFilterChanged({ name: "Utdanningsnivå", value, checked });
     }
 
-    const updateViewName = (key) => {
-        switch (key) {
-            case "Ingen krav":
-                return "Ingen krav til utdanning";
-            case "Master":
-                return "Master eller tilsvarende";
-            case "Videregående":
-                return "Videregående skole";
-            case "Fagbrev":
-                return "Fag- eller svennebrev";
-            case "Fagskole":
-                return "Fagskole eller tilsvarende";
-            case "Bachelor":
-                return "Bachelor eller tilsvarende";
-            default:
-                return key;
-        }
-    };
-
     return (
         <Fieldset
             className="mb-4"
@@ -62,13 +43,32 @@ function Education({ initialValues, updatedValues, query, dispatch }) {
                         onChange={handleClick}
                         checked={query.education.includes(item.key)}
                     >
-                        {`${updateViewName(item.key)} (${item.count})`}
+                        {`${labelForEducation(item.key)} (${item.count})`}
                     </Checkbox>
                 ))}
             </div>
         </Fieldset>
     );
 }
+
+export const labelForEducation = (key) => {
+    switch (key) {
+        case "Ingen krav":
+            return "Ingen krav til utdanning";
+        case "Master":
+            return "Master eller tilsvarende";
+        case "Videregående":
+            return "Videregående skole";
+        case "Fagbrev":
+            return "Fag- eller svennebrev";
+        case "Fagskole":
+            return "Fagskole eller tilsvarende";
+        case "Bachelor":
+            return "Bachelor eller tilsvarende";
+        default:
+            return key;
+    }
+};
 
 Education.propTypes = {
     initialValues: PropTypes.arrayOf(
