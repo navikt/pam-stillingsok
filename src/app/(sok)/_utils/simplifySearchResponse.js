@@ -74,6 +74,7 @@ export default function simplifySearchResponse(response) {
                 key: item.key,
                 count: item.doc_count,
             })),
+            publishedTotalCount: response.aggregations.published.doc_count,
             published: response.aggregations.published.range.buckets.map((item) => ({
                 key: item.key,
                 count: item.doc_count,

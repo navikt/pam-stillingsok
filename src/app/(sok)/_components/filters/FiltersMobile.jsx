@@ -81,6 +81,7 @@ function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggre
                             dispatch={dispatchQuery}
                             initialValues={aggregations.published}
                             updatedValues={searchResult && searchResult.aggregations.published}
+                            publishedTotalCount={searchResult.aggregations.publishedTotalCount}
                         />
                     )}
 
@@ -214,7 +215,7 @@ FiltersMobile.propTypes = {
     }),
     locations: PropTypes.arrayOf(PropTypes.shape({})),
     searchResult: PropTypes.shape({
-        totalAds: PropTypes.string,
+        totalAds: PropTypes.number,
         aggregations: PropTypes.shape({
             engagementTypes: PropTypes.arrayOf(PropTypes.shape({})),
             occupationFirstLevels: PropTypes.arrayOf(PropTypes.shape({})),
