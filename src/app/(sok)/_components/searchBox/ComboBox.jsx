@@ -40,6 +40,7 @@ import {
 import { editedItemKey } from "@/app/(sok)/_components/filters/Engagement";
 import { FilterEnum } from "@/app/(sok)/_components/searchBox/FilterEnum";
 import buildLocations from "@/app/(sok)/_components/utils/buildLocations";
+import sortValuesByFirstLetter from "@/app/(sok)/_components/utils/sortValuesByFirstLetter";
 
 function ComboBox({ query, queryDispatch, onChange, value, allSuggestions, aggregations, locations }) {
     function getQueryOptions(queryObject) {
@@ -232,12 +233,34 @@ function ComboBox({ query, queryDispatch, onChange, value, allSuggestions, aggre
             value: `${FilterEnum.COUNTRIES}-${country.key}`,
         }));
 
-    // international
-    // occupationSecondLevels
-    // occupationFirstLevels
+    const withSortedSecondLevelOccupations = aggregations.occupationFirstLevels.map((item) => {
+        const secondLevel = sortValuesByFirstLetter(item.occupationSecondLevels);
+        return {
+            secondLevel,
+            ...item,
+        };
+    });
+    const sortedByLetterFirstLevelOccupationsList = sortValuesByFirstLetter(withSortedSecondLevelOccupations).map(
+        (occupation) => ({
+            label: occupation.key,
+            value: `${FilterEnum.OCCUPATION_FIRST_LEVELS}-${occupation.key}`,
+        }),
+    );
+    // secondlevel occupations
+
     // published
     // sector
-    // engagementType
+    const sectorList = aggregations.sector.map((item) =>
+        item.key === "Ikke oppgitt"
+            ? { label: "Sektor ikke oppgitt", value: `${FilterEnum.SECTOR}-${item.key}` }
+            : { label: item.key, value: `${FilterEnum.SECTOR}-${item.key}` },
+    );
+
+    const engagementTypeList = aggregations.engagementTypes.map((item) =>
+        editedItemKey(item.key) === "Ikke oppgitt"
+            ? { label: "Ansettelsesform ikke oppgitt", value: `${FilterEnum.ENGAGEMENT_TYPE}-${item.key}` }
+            : { label: item.key, value: `${FilterEnum.ENGAGEMENT_TYPE}-${item.key}` },
+    );
     // extent
     // education
     // workLanguage
@@ -247,11 +270,20 @@ function ComboBox({ query, queryDispatch, onChange, value, allSuggestions, aggre
             : { label: item.key, value: `${FilterEnum.REMOTE}-${item.key}` },
     );
 
-    const optionsList = [...allSuggestions, ...remoteList, ...municipalList, ...countyList, ...countryList];
+    const optionsList = [
+        ...allSuggestions,
+        ...remoteList,
+        ...municipalList,
+        ...countyList,
+        ...countryList,
+        ...sortedByLetterFirstLevelOccupationsList,
+        ...sectorList,
+        ...engagementTypeList,
+    ];
 
     return (
         <>
-            {/* {console.log(countryList)} */}
+            {/* {console.log(withSortedSecondLevelOccupations)} */}
             <Combobox
                 allowNewValues
                 label="Legg til sted, yrker og andre søkeord"
