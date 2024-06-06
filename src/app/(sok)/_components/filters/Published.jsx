@@ -15,7 +15,7 @@ function Published({ dispatch, query, initialValues, updatedValues }) {
         if (value) {
             dispatch({ type: SET_PUBLISHED, value });
         } else {
-            dispatch({ type: SET_PUBLISHED, value: "" });
+            dispatch({ type: SET_PUBLISHED, value: undefined });
         }
         logFilterChanged({ name: "Publisert", value: PublishedLabelsEnum[value] });
     }
