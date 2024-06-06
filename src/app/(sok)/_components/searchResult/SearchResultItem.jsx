@@ -122,7 +122,7 @@ SearchResultItem.propTypes = {
 
 function LinkToAd({ children, stilling }) {
     return (
-        <AkselLink as={Link} href={`/stilling/${stilling.uuid}`}>
+        <AkselLink className="purple-when-visited" as={Link} href={`/stilling/${stilling.uuid}`}>
             {children}
         </AkselLink>
     );

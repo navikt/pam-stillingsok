@@ -120,3 +120,7 @@ no-underline:hover {
 .text-align-right {
     text-align: right;
 }
+
+.purple-when-visited:visited {
+    color: var(--a-purple-500);
+}
