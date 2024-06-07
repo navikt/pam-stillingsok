@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { FetchAction, useFetchReducer } from "@/app/_common/hooks/useFetchReducer";
 import * as actions from "@/app/_common/actions";
 import ComboBox from "@/app/(sok)/_components/searchBox/ComboBox";
+import ComboboxOptions from "@/app/(sok)/_components/searchBox/ComboboxOptions";
 
 let suggestionsCache = [];
 const CACHE_MAX_SIZE = 50;
@@ -46,6 +47,8 @@ function SearchBox({ dispatch, query, aggregations, locations }) {
         setValue(event?.target?.value || "");
     }
 
+    const options = ComboboxOptions({ aggregations, locations, allSuggestions });
+
     return (
         <section aria-label="Søkeord" className="mb-4">
             <ComboBox
@@ -54,8 +57,7 @@ function SearchBox({ dispatch, query, aggregations, locations }) {
                 onChange={handleComboBoxValueChange}
                 value={value}
                 allSuggestions={allSuggestions}
-                aggregations={aggregations}
-                locations={locations}
+                options={options}
             />
         </section>
     );
