@@ -54,20 +54,19 @@ export function createQuery(searchParams) {
                 : defaultQuery.size,
         q: searchParams.q || defaultQuery.q,
         match: searchParams.match || defaultQuery.match,
-        municipals: asArray(searchParams["municipals[]"]) || defaultQuery.municipals,
-        counties: asArray(searchParams["counties[]"]) || defaultQuery.counties,
-        countries: asArray(searchParams["countries[]"]) || defaultQuery.countries,
+        municipals: asArray(searchParams.municipal) || defaultQuery.municipals,
+        counties: asArray(searchParams.county) || defaultQuery.counties,
+        countries: asArray(searchParams.country) || defaultQuery.countries,
         international: searchParams.international === "true",
-        remote: asArray(searchParams["remote[]"]) || defaultQuery.remote,
-        occupationFirstLevels: asArray(searchParams["occupationFirstLevels[]"]) || defaultQuery.occupationFirstLevels,
-        occupationSecondLevels:
-            asArray(searchParams["occupationSecondLevels[]"]) || defaultQuery.occupationSecondLevels,
+        remote: asArray(searchParams.remote) || defaultQuery.remote,
+        occupationFirstLevels: asArray(searchParams.occupationLevel1) || defaultQuery.occupationFirstLevels,
+        occupationSecondLevels: asArray(searchParams.occupationLevel2) || defaultQuery.occupationSecondLevels,
         published: searchParams.published || defaultQuery.published,
-        extent: asArray(searchParams["extent[]"]) || defaultQuery.extent,
-        engagementType: asArray(searchParams["engagementType[]"]) || defaultQuery.engagementType,
-        sector: asArray(searchParams["sector[]"]) || defaultQuery.sector,
-        education: asArray(searchParams["education[]"]) || defaultQuery.education,
-        workLanguage: asArray(searchParams["workLanguage[]"]) || defaultQuery.workLanguage,
+        extent: asArray(searchParams.extent) || defaultQuery.extent,
+        engagementType: asArray(searchParams.engagementType) || defaultQuery.engagementType,
+        sector: asArray(searchParams.sector) || defaultQuery.sector,
+        education: asArray(searchParams.education) || defaultQuery.education,
+        workLanguage: asArray(searchParams.workLanguage) || defaultQuery.workLanguage,
         sort: searchParams.sort || defaultQuery.sort,
         fields: searchParams.fields || defaultQuery.fields,
         v: searchParams.v || defaultQuery.v,
@@ -218,18 +217,36 @@ export function isSearchQueryEmpty(query) {
     return Object.keys(queryWithoutEmptyProperties).length === 0;
 }
 
+function getKeyName(key) {
+    switch (key) {
+        case "municipals":
+            return "municipal";
+        case "counties":
+            return "county";
+        case "countries":
+            return "country";
+        case "occupationFirstLevels":
+            return "occupationLevel1";
+        case "occupationSecondLevels":
+            return "occupationLevel2";
+        default:
+            return key;
+    }
+}
+
 /**
  * Takes a query object, f.ex {"q":"javascript","counties":["OSLO"]},
- * and returns an encoded query string, f.ex "?q=javascript&counties[]=OSLO".
+ * and returns an encoded query string, f.ex "?q=javascript&counties=OSLO".
  */
 export function stringifyQuery(query = {}) {
     const string = Object.keys(query)
         .map((key) => {
             const value = query[key];
+            const keyName = getKeyName(key);
             if (Array.isArray(value)) {
-                return value.map((val) => `${encodeURIComponent(key)}[]=${encodeURIComponent(val)}`).join("&");
+                return value.map((val) => `${encodeURIComponent(keyName)}=${encodeURIComponent(val)}`).join("&");
             }
-            return `${encodeURIComponent(key)}=${encodeURIComponent(query[key])}`;
+            return `${encodeURIComponent(keyName)}=${encodeURIComponent(query[key])}`;
         })
         .filter((elem) => elem !== "")
         .join("&");
