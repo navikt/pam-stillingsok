@@ -1,11 +1,11 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { BodyShort, Checkbox, Fieldset } from "@navikt/ds-react";
+import { BodyShort, Checkbox, CheckboxGroup } from "@navikt/ds-react";
 import { ADD_NEEDDRIVERSLICENSE, REMOVE_NEEDDRIVERSLICENSE } from "@/app/(sok)/_utils/queryReducer";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
 import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
 
-function DriversLicense({ initialValues, updatedValues, query, dispatch }) {
+function DriversLicense({ initialValues, updatedValues, dispatch }) {
     const sortedValues = sortDriverLicenseValues(initialValues);
     const values = mergeCount(sortedValues, updatedValues);
 
@@ -16,11 +16,12 @@ function DriversLicense({ initialValues, updatedValues, query, dispatch }) {
         } else {
             dispatch({ type: REMOVE_NEEDDRIVERSLICENSE, value });
         }
-        logFilterChanged({ name: "Utdanningsnivå", value, checked });
+        logFilterChanged({ name: "Førerkort", value, checked });
     }
 
     return (
-        <Fieldset
+        <CheckboxGroup
+            name="needDriversLicense[]"
             legend={
                 <>
                     <BodyShort as="span" visuallyHidden>
@@ -30,20 +31,12 @@ function DriversLicense({ initialValues, updatedValues, query, dispatch }) {
                 </>
             }
         >
-            <div>
-                {values.map((item) => (
-                    <Checkbox
-                        name="needDriversLicense[]"
-                        key={item.key}
-                        value={item.key}
-                        onChange={handleClick}
-                        checked={query.needDriversLicense.includes(item.key)}
-                    >
-                        {`${labelForNeedDriversLicense(item.key)} (${item.count})`}
-                    </Checkbox>
-                ))}
-            </div>
-        </Fieldset>
+            {values.map((item) => (
+                <Checkbox key={item.key} value={item.key} onChange={handleClick}>
+                    {`${labelForNeedDriversLicense(item.key)} (${item.count})`}
+                </Checkbox>
+            ))}
+        </CheckboxGroup>
     );
 }
 
@@ -55,9 +48,6 @@ DriversLicense.propTypes = {
         }),
     ).isRequired,
     updatedValues: PropTypes.arrayOf(PropTypes.shape({})),
-    query: PropTypes.shape({
-        needDriversLicense: PropTypes.arrayOf(PropTypes.string),
-    }).isRequired,
     dispatch: PropTypes.func.isRequired,
 };
 
