@@ -1,5 +1,5 @@
 export function migrateToV2(searchParams) {
-    return {
+    const result = {
         ...searchParams,
         occupationLevel1: searchParams["occupationFirstLevels[]"],
         occupationLevel2: searchParams["occupationSecondLevels[]"],
@@ -13,4 +13,17 @@ export function migrateToV2(searchParams) {
         workLanguage: searchParams["workLanguage[]"],
         remote: searchParams["remote[]"],
     };
+    result.delete("occupationFirstLevels[]");
+    result.delete("occupationSecondLevels[]");
+    result.delete("municipals[]");
+    result.delete("counties[]");
+    result.delete("countries[]");
+    result.delete("extent[]");
+    result.delete("engagementType[]");
+    result.delete("sector[]");
+    result.delete("education[]");
+    result.delete("workLanguage[]");
+    result.delete("remote[]");
+
+    return result;
 }
