@@ -13,17 +13,17 @@ export function migrateToV2(searchParams) {
         workLanguage: searchParams["workLanguage[]"],
         remote: searchParams["remote[]"],
     };
-    result.delete("occupationFirstLevels[]");
-    result.delete("occupationSecondLevels[]");
-    result.delete("municipals[]");
-    result.delete("counties[]");
-    result.delete("countries[]");
-    result.delete("extent[]");
-    result.delete("engagementType[]");
-    result.delete("sector[]");
-    result.delete("education[]");
-    result.delete("workLanguage[]");
-    result.delete("remote[]");
+    delete result["occupationFirstLevels[]"];
+    delete result["occupationSecondLevels[]"];
+    delete result["municipals[]"];
+    delete result["counties[]"];
+    delete result["countries[]"];
+    delete result["extent[]"];
+    delete result["engagementType[]"];
+    delete result["sector[]"];
+    delete result["education[]"];
+    delete result["workLanguage[]"];
+    delete result["remote[]"];
 
     return result;
 }
