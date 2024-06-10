@@ -5,7 +5,7 @@ import { ADD_NEEDDRIVERSLICENSE, REMOVE_NEEDDRIVERSLICENSE } from "@/app/(sok)/_
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
 import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
 
-function DriversLicense({ initialValues, updatedValues, dispatch }) {
+function DriversLicense({ initialValues, updatedValues, query, dispatch }) {
     const sortedValues = sortDriverLicenseValues(initialValues);
     const values = mergeCount(sortedValues, updatedValues);
 
@@ -22,6 +22,7 @@ function DriversLicense({ initialValues, updatedValues, dispatch }) {
     return (
         <CheckboxGroup
             name="needDriversLicense[]"
+            defaultValue={query.needDriversLicense}
             legend={
                 <>
                     <BodyShort as="span" visuallyHidden>
