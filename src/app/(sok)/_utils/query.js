@@ -23,7 +23,6 @@ function asArray(value) {
 
 export const defaultQuery = {
     q: "",
-    fields: undefined,
     from: 0,
     size: SEARCH_CHUNK_SIZE,
     counties: [],
@@ -34,6 +33,7 @@ export const defaultQuery = {
     extent: [],
     remote: [],
     municipals: [],
+    occupations: [],
     occupationFirstLevels: [],
     occupationSecondLevels: [],
     published: undefined,
@@ -60,6 +60,7 @@ export function createQuery(searchParams) {
         countries: asArray(searchParams.country) || defaultQuery.countries,
         international: searchParams.international === "true",
         remote: asArray(searchParams.remote) || defaultQuery.remote,
+        occupations: asArray(searchParams.occupation) || defaultQuery.occupations,
         occupationFirstLevels: asArray(searchParams.occupationLevel1) || defaultQuery.occupationFirstLevels,
         occupationSecondLevels: asArray(searchParams.occupationLevel2) || defaultQuery.occupationSecondLevels,
         published: searchParams.published || defaultQuery.published,
@@ -70,7 +71,6 @@ export function createQuery(searchParams) {
         education: asArray(searchParams.education) || defaultQuery.education,
         workLanguage: asArray(searchParams.workLanguage) || defaultQuery.workLanguage,
         sort: searchParams.sort || defaultQuery.sort,
-        fields: searchParams.fields || defaultQuery.fields,
         v: searchParams.v || defaultQuery.v,
     };
 }
@@ -227,6 +227,8 @@ function getKeyName(key) {
             return "county";
         case "countries":
             return "country";
+        case "occupations":
+            return "occupation";
         case "occupationFirstLevels":
             return "occupationLevel1";
         case "occupationSecondLevels":
