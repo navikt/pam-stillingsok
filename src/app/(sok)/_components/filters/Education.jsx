@@ -25,7 +25,7 @@ function Education({ initialValues, updatedValues, query, dispatch }) {
     return (
         <CheckboxGroup
             className="mb-4"
-            defaultValue={query.education}
+            value={query.education}
             legend={
                 <>
                     <BodyShort as="span" visuallyHidden>

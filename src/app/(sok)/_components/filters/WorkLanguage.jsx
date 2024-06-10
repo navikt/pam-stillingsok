@@ -22,7 +22,7 @@ function WorkLanguage({ initialValues, updatedValues, query, dispatch, hideLegen
 
     return (
         <CheckboxGroup
-            defaultValue={query.workLanguage}
+            value={query.workLanguage}
             hideLegend={hideLegend}
             legend={
                 <BodyShort as="span" visuallyHidden>

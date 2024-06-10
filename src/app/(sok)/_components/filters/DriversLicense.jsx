@@ -21,7 +21,7 @@ function DriversLicense({ initialValues, updatedValues, query, dispatch }) {
 
     return (
         <CheckboxGroup
-            defaultValue={query.needDriversLicense}
+            value={query.needDriversLicense}
             legend={
                 <>
                     <BodyShort as="span" visuallyHidden>

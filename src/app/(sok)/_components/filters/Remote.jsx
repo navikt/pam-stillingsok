@@ -35,7 +35,7 @@ function Remote({ initialValues, updatedValues, query, dispatch }) {
     return (
         <CheckboxGroup
             className="mt-4"
-            defaultValue={query.remote}
+            value={query.remote}
             legend={
                 <>
                     <BodyShort as="span" visuallyHidden>

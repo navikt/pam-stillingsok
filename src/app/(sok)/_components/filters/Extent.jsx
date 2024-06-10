@@ -24,7 +24,7 @@ function Extent({ initialValues, updatedValues, query, dispatch }) {
 
     return (
         <CheckboxGroup
-            defaultValue={query.extent}
+            value={query.extent}
             legend={
                 <>
                     <BodyShort as="span" visuallyHidden>

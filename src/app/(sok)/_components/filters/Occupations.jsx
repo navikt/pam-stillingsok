@@ -66,7 +66,7 @@ function Occupations({ initialValues, updatedValues, query, dispatch }) {
 
     return (
         <CheckboxGroup
-            defaultValue={query.occupationFirstLevels}
+            value={query.occupationFirstLevels}
             legend={
                 <>
                     <BodyShort as="span" visuallyHidden>

@@ -38,7 +38,7 @@ function Engagement({ initialValues, updatedValues, query, dispatch }) {
     return (
         <CheckboxGroup
             className="mt-4"
-            defaultValue={query.engagementType}
+            value={query.engagementType}
             legend={
                 <>
                     <BodyShort as="span" visuallyHidden>

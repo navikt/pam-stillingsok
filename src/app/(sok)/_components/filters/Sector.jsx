@@ -25,7 +25,7 @@ function Sector({ initialValues, updatedValues, query, dispatch }) {
     return (
         <CheckboxGroup
             className="mt-4"
-            defaultValue={query.sector}
+            value={query.sector}
             legend={
                 <>
                     <BodyShort as="span" visuallyHidden>
