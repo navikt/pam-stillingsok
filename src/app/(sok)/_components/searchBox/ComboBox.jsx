@@ -2,6 +2,9 @@ import { UNSAFE_Combobox as Combobox } from "@navikt/ds-react";
 import React, { useEffect, useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import {
+    ADD_COUNTRY,
+    ADD_MUNICIPAL,
+    ADD_OCCUPATION_SECOND_LEVEL,
     REMOVE_COUNTRY,
     REMOVE_MUNICIPAL,
     REMOVE_OCCUPATION_SECOND_LEVEL,
@@ -10,6 +13,9 @@ import {
     SET_SEARCH_STRING,
 } from "@/app/(sok)/_utils/queryReducer";
 import {
+    addCountry,
+    addMunicipal,
+    addOccupationSecondLevel,
     removeCountry,
     removeMunicipal,
     removeOccupationSecondLevel,
@@ -55,6 +61,18 @@ function ComboBox({ query, queryDispatch, onChange, value, allSuggestions, optio
         }
     };
 
+    const handleFilterAddition = (filterToAdd, optionValue) => {
+        if (filterToAdd === ADD_MUNICIPAL) {
+            addMunicipal(queryDispatch, query, optionValue);
+        } else if (filterToAdd === ADD_COUNTRY) {
+            addCountry(queryDispatch, query, optionValue);
+        } else if (filterToAdd === ADD_OCCUPATION_SECOND_LEVEL) {
+            addOccupationSecondLevel(queryDispatch, query, optionValue);
+        } else {
+            queryDispatch({ type: filterToAdd, value: optionValue });
+        }
+    };
+
     const handleFilterOption = (option, isSelected) => {
         const optionValue = option.slice(option.indexOf("-") + 1);
         const optionCategory = option.split("-")[0];
@@ -68,7 +86,7 @@ function ComboBox({ query, queryDispatch, onChange, value, allSuggestions, optio
             }
 
             const optionToAdd = filterAction[optionCategory].true;
-            queryDispatch({ type: optionToAdd, value: optionValue });
+            handleFilterAddition(optionToAdd, optionValue);
         } else {
             setSelectedOptions(selectedOptions.filter((o) => o !== option));
 
@@ -93,19 +111,16 @@ function ComboBox({ query, queryDispatch, onChange, value, allSuggestions, optio
 
     // TODO: add clearButton && clearButtonLabel="Fjern alle"
     return (
-        <>
-            {/* {console.log(withSortedSecondLevelOccupations)} */}
-            <Combobox
-                allowNewValues
-                label="Legg til sted, yrker og andre søkeord"
-                isMultiSelect
-                onToggleSelected={onToggleSelected}
-                selectedOptions={selectedOptions}
-                options={value && value.length > 0 ? optionLi : []}
-                onChange={onChange}
-                value={value}
-            />
-        </>
+        <Combobox
+            allowNewValues
+            label="Legg til sted, yrker og andre søkeord"
+            isMultiSelect
+            onToggleSelected={onToggleSelected}
+            selectedOptions={selectedOptions}
+            options={value && value.length > 0 ? optionLi : []}
+            onChange={onChange}
+            value={value}
+        />
     );
 }
 

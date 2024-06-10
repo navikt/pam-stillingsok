@@ -1,4 +1,9 @@
 import {
+    ADD_COUNTRY,
+    ADD_COUNTY,
+    ADD_MUNICIPAL,
+    ADD_OCCUPATION_FIRST_LEVEL,
+    ADD_OCCUPATION_SECOND_LEVEL,
     REMOVE_COUNTRY,
     REMOVE_COUNTY,
     REMOVE_MUNICIPAL,
@@ -7,20 +12,15 @@ import {
     SET_INTERNATIONAL,
 } from "@/app/(sok)/_utils/queryReducer";
 
-// Ikke vis fylke hvis bruker har valgt en eller flere kommuner i dette fylket
-export function filterCounties(query) {
-    return query.counties.filter((county) => {
-        const found = query.municipals.find((obj) => obj.startsWith(`${county}.`));
-        return !found;
-    });
-}
+export function addMunicipal(queryDispatch, query, value) {
+    // Legg til kommunen i filter
+    queryDispatch({ type: ADD_MUNICIPAL, value });
 
-// Ikke vis yrkeskategori hvis bruker har valgt et eller flere yrker i denne kategorien
-export function filterOccupationFirstLevels(query) {
-    return query.occupationFirstLevels.filter((firstLevel) => {
-        const found = query.occupationSecondLevels.find((obj) => obj.startsWith(`${firstLevel}.`));
-        return !found;
-    });
+    // Hvis fylket ikke allerede er valgt, så legg til dette også
+    const county = value.split(".")[0];
+    if (!query.counties.includes(county)) {
+        queryDispatch({ type: ADD_COUNTY, value: county });
+    }
 }
 
 export function removeMunicipal(queryDispatch, query, value) {
@@ -35,6 +35,22 @@ export function removeMunicipal(queryDispatch, query, value) {
     }
 }
 
+// Ikke vis fylke hvis bruker har valgt en eller flere kommuner i dette fylket
+export function filterCounties(query) {
+    return query.counties.filter((county) => {
+        const found = query.municipals.find((obj) => obj.startsWith(`${county}.`));
+        return !found;
+    });
+}
+
+export function addCountry(queryDispatch, query, value) {
+    // Legg til land i filter
+    queryDispatch({ type: ADD_COUNTRY, value });
+
+    // Hvis "Utland" ikke allerede er valgt, så legg til denne også
+    queryDispatch({ type: SET_INTERNATIONAL, value: true });
+}
+
 export function removeCountry(queryDispatch, query, value) {
     // Fjern land fra filter
     queryDispatch({ type: REMOVE_COUNTRY, value });
@@ -42,6 +58,25 @@ export function removeCountry(queryDispatch, query, value) {
     // Hvis dette var den siste landet, så skal "Utland" også fjernes
     if (query.countries.length === 1) {
         queryDispatch({ type: SET_INTERNATIONAL, value: false });
+    }
+}
+
+// Ikke vis yrkeskategori hvis bruker har valgt et eller flere yrker i denne kategorien
+export function filterOccupationFirstLevels(query) {
+    return query.occupationFirstLevels.filter((firstLevel) => {
+        const found = query.occupationSecondLevels.find((obj) => obj.startsWith(`${firstLevel}.`));
+        return !found;
+    });
+}
+
+export function addOccupationSecondLevel(queryDispatch, query, value) {
+    // Legg til yrket i filter
+    queryDispatch({ type: ADD_OCCUPATION_SECOND_LEVEL, value });
+
+    // Hvis yrkeskategorien ikke allerede er valgt, så legg til denne også
+    const firstLevel = value.split(".")[0];
+    if (!query.occupationFirstLevels.includes(firstLevel)) {
+        queryDispatch({ type: ADD_OCCUPATION_FIRST_LEVEL, value: firstLevel });
     }
 }
 

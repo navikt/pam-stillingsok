@@ -7,8 +7,6 @@ import { FilterEnum } from "@/app/(sok)/_components/searchBox/optionUtils";
 import { PublishedLabelsEnum } from "@/app/(sok)/_utils/query";
 
 function ComboboxOptions({ aggregations, locations, allSuggestions }) {
-    // TODO: checking off municipal, doesn't mark county, same for Utland, country
-    // TODO: same for second level occupations and first
     const locationList = buildLocations(aggregations, locations);
 
     const municipalList = locationList
