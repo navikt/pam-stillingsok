@@ -21,19 +21,18 @@ function DriversLicense({ initialValues, updatedValues, query, dispatch }) {
 
     return (
         <CheckboxGroup
-            name="needDriversLicense[]"
-            defaultValue={query.needDriversLicense}
+            value={query.needDriversLicense}
             legend={
                 <>
                     <BodyShort as="span" visuallyHidden>
                         Filtrer etter{" "}
                     </BodyShort>
-                    <span className="capitalize">Førerkort</span>
+                    <span className="capitalize">førerkort</span>
                 </>
             }
         >
             {values.map((item) => (
-                <Checkbox key={item.key} value={item.key} onChange={handleClick}>
+                <Checkbox name="needDriversLicense[]" key={item.key} value={item.key} onChange={handleClick}>
                     {`${labelForNeedDriversLicense(item.key)} (${item.count})`}
                 </Checkbox>
             ))}
