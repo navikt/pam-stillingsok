@@ -85,6 +85,12 @@ function ComboBox({ query, queryDispatch, onChange, value, allSuggestions, optio
         }
     };
 
+    // TODO: fix "Encountered two children with the same key,", temporarily sat label as "label [value]" as label is used in key giving eg. Oslo municipality and Oslo county the same key
+    const optionLi = options.map((o) => ({
+        label: `${o.label} [${o.value}]`,
+        value: o.value,
+    }));
+
     // TODO: add clearButton && clearButtonLabel="Fjern alle"
     return (
         <>
@@ -95,7 +101,7 @@ function ComboBox({ query, queryDispatch, onChange, value, allSuggestions, optio
                 isMultiSelect
                 onToggleSelected={onToggleSelected}
                 selectedOptions={selectedOptions}
-                options={value && value.length > 0 ? options : []}
+                options={value && value.length > 0 ? optionLi : []}
                 onChange={onChange}
                 value={value}
             />
