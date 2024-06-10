@@ -107,7 +107,8 @@ export default function queryReducer(state, action) {
                 ...queryState,
                 q: "",
                 sort: "",
-                occupations: [...queryState.occupations, action.value],
+                // occupations: [...queryState.occupations, action.value],
+                occupations: [action.value],
             };
         case REMOVE_OCCUPATION:
             return {
