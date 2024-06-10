@@ -4,6 +4,7 @@ import fixLocationName from "@/app/_common/utils/fixLocationName";
 import buildLocations from "@/app/(sok)/_components/utils/buildLocations";
 import PropTypes from "prop-types";
 import { FilterEnum } from "@/app/(sok)/_components/searchBox/optionUtils";
+import { PublishedLabelsEnum } from "@/app/(sok)/_utils/query";
 
 function ComboboxOptions({ aggregations, locations, allSuggestions }) {
     // TODO: add sidebar filters to combobox options
@@ -50,8 +51,11 @@ function ComboboxOptions({ aggregations, locations, allSuggestions }) {
     );
     // secondlevel occupations
 
-    // published
-    // sector
+    const publishedList = aggregations.published.map((item) => ({
+        label: PublishedLabelsEnum[item.key],
+        value: `${FilterEnum.PUBLISHED}-${item.key}`,
+    }));
+
     const sectorList = aggregations.sector.map((item) =>
         item.key === "Ikke oppgitt"
             ? { label: "Sektor ikke oppgitt", value: `${FilterEnum.SECTOR}-${item.key}` }
@@ -63,9 +67,22 @@ function ComboboxOptions({ aggregations, locations, allSuggestions }) {
             ? { label: "Ansettelsesform ikke oppgitt", value: `${FilterEnum.ENGAGEMENT_TYPE}-${item.key}` }
             : { label: item.key, value: `${FilterEnum.ENGAGEMENT_TYPE}-${item.key}` },
     );
-    // extent
-    // education
-    // workLanguage
+    const extentList = aggregations.extent.map((item) => ({
+        label: item.key,
+        value: `${FilterEnum.EXTENT}-${item.key}`,
+    }));
+
+    const educationList = aggregations.education.map((item) => ({
+        label: item.key,
+        value: `${FilterEnum.EDUCATION}-${item.key}`,
+    }));
+
+    const workLanguageList = aggregations.workLanguage.map((item) =>
+        item.key === "Ikke oppgitt"
+            ? { label: "Arbeidsspråk ikke oppgitt", value: `${FilterEnum.WORK_LANGUAGE}-${item.key}` }
+            : { label: item.key, value: `${FilterEnum.WORK_LANGUAGE}-${item.key}` },
+    );
+
     const remoteList = aggregations.remote.map((item) =>
         item.key === "Ikke oppgitt"
             ? { label: "Hjemmekontor ikke oppgitt", value: `${FilterEnum.REMOTE}-${item.key}` }
@@ -78,14 +95,18 @@ function ComboboxOptions({ aggregations, locations, allSuggestions }) {
     }));
 
     return [
-        ...occupationSuggestionList,
-        ...remoteList,
         ...municipalList,
         ...countyList,
         ...countryList,
         ...sortedByLetterFirstLevelOccupationsList,
+        ...publishedList,
         ...sectorList,
         ...engagementTypeList,
+        ...extentList,
+        ...educationList,
+        ...workLanguageList,
+        ...remoteList,
+        ...occupationSuggestionList,
     ];
 }
 
