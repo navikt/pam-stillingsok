@@ -7,8 +7,8 @@ import { FilterEnum } from "@/app/(sok)/_components/searchBox/optionUtils";
 import { PublishedLabelsEnum } from "@/app/(sok)/_utils/query";
 
 function ComboboxOptions({ aggregations, locations, allSuggestions }) {
-    // TODO: add sidebar filters to combobox options
     // TODO: checking off municipal, doesn't mark county, same for Utland, country
+    // TODO: same for second level occupations and first
     const locationList = buildLocations(aggregations, locations);
 
     const municipalList = locationList
@@ -49,7 +49,14 @@ function ComboboxOptions({ aggregations, locations, allSuggestions }) {
             value: `${FilterEnum.OCCUPATION_FIRST_LEVELS}-${occupation.key}`,
         }),
     );
-    // secondlevel occupations
+
+    const secondLevelOccupationsList = withSortedSecondLevelOccupations
+        .map((item) => item.secondLevel)
+        .flat()
+        .map((secondLevel) => ({
+            label: secondLevel.key.split(".")[1],
+            value: `${FilterEnum.OCCUPATION_SECOND_LEVELS}-${secondLevel.key}`,
+        }));
 
     const publishedList = aggregations.published.map((item) => ({
         label: PublishedLabelsEnum[item.key],
@@ -99,6 +106,7 @@ function ComboboxOptions({ aggregations, locations, allSuggestions }) {
         ...countyList,
         ...countryList,
         ...sortedByLetterFirstLevelOccupationsList,
+        ...secondLevelOccupationsList,
         ...publishedList,
         ...sectorList,
         ...engagementTypeList,
