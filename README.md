@@ -66,6 +66,14 @@ Hvis du ikke har det, klone det og legg i samma mappe som `pam-stillingsok`:
 git clone git@github.com:navikt/pam-docker-compose-shared.git ../pam-docker-compose-shared
 ```
 
+> [!TIP]
+> Får du feil når du kjører `/start-docker-compose.sh` kan det hende du må oppdatere `pam-aduser` imaget i `docker-compose.yml`
+> For å liste opp de siste 10 versjonene (docker tagsen)
+>
+> ```shell
+> gcloud container images list-tags europe-north1-docker.pkg.dev/nais-management-233d/teampam/pam-aduser --sort-by=~tags --filter="tags:* AND NOT tags:sha256*" --limit=10 --format="value(tags)" | cut -d "," -f2
+> ```
+
 [//]: # "Docker compose setupen benytter seg av de bygde images for `pam-stillingsregistrering-api` og `pam-interesse-api`."
 
 #### Autentiser Docker repo

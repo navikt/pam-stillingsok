@@ -41,7 +41,7 @@ services:
 
   pam-aduser:
     platform: linux/amd64
-    image: europe-north1-docker.pkg.dev/nais-management-233d/teampam/pam-aduser:24.057.095949
+    image: europe-north1-docker.pkg.dev/nais-management-233d/teampam/pam-aduser:24.131.095048
     ports:
       - "9017:9017"
     extra_hosts:
