@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { BodyShort, Box, Checkbox, Fieldset } from "@navikt/ds-react";
+import { BodyShort, Box, Checkbox, CheckboxGroup } from "@navikt/ds-react";
 import {
     ADD_OCCUPATION_FIRST_LEVEL,
     ADD_OCCUPATION_SECOND_LEVEL,
@@ -65,7 +65,8 @@ function Occupations({ initialValues, updatedValues, query, dispatch }) {
     }
 
     return (
-        <Fieldset
+        <CheckboxGroup
+            defaultValue={query.occupationFirstLevels}
             legend={
                 <>
                     <BodyShort as="span" visuallyHidden>
@@ -76,45 +77,45 @@ function Occupations({ initialValues, updatedValues, query, dispatch }) {
             }
             className="FilterModal__fieldset"
         >
-            <div>
-                {values &&
-                    values.map((firstLevel) => (
-                        <React.Fragment key={firstLevel.key}>
-                            <Checkbox
-                                name="occupationFirstLevels[]"
-                                label={`${firstLevel.key} (${firstLevel.count})`}
-                                value={firstLevel.key}
-                                onChange={handleFirstLevelClick}
-                                checked={query.occupationFirstLevels.includes(firstLevel.key)}
-                            >
-                                {`${firstLevel.key} (${firstLevel.count})`}
-                            </Checkbox>
-                            {query.occupationFirstLevels &&
-                                query.occupationFirstLevels.includes(firstLevel.key) &&
-                                firstLevel.key !== OCCUPATION_LEVEL_OTHER && (
-                                    <Fieldset hideLegend legend={`Yrker innen ${firstLevel.key}`}>
-                                        <Box paddingInline="8 0">
-                                            {firstLevel.occupationSecondLevels &&
-                                                firstLevel.occupationSecondLevels.map((secondLevel) => (
-                                                    <Checkbox
-                                                        name="occupationSecondLevels[]"
-                                                        key={editedSecondLevelItemKey(secondLevel.key)}
-                                                        value={secondLevel.key}
-                                                        onChange={handleSecondLevelClick}
-                                                        checked={query.occupationSecondLevels.includes(secondLevel.key)}
-                                                    >
-                                                        {`${editedSecondLevelItemKey(secondLevel.label)} (${
-                                                            secondLevel.count
-                                                        })`}
-                                                    </Checkbox>
-                                                ))}
-                                        </Box>
-                                    </Fieldset>
-                                )}
-                        </React.Fragment>
-                    ))}
-            </div>
-        </Fieldset>
+            {values &&
+                values.map((firstLevel) => (
+                    <React.Fragment key={firstLevel.key}>
+                        <Checkbox
+                            name="occupationFirstLevels[]"
+                            label={`${firstLevel.key} (${firstLevel.count})`}
+                            value={firstLevel.key}
+                            onChange={handleFirstLevelClick}
+                        >
+                            {`${firstLevel.key} (${firstLevel.count})`}
+                        </Checkbox>
+                        {query.occupationFirstLevels &&
+                            query.occupationFirstLevels.includes(firstLevel.key) &&
+                            firstLevel.key !== OCCUPATION_LEVEL_OTHER && (
+                                <CheckboxGroup
+                                    defaultValue={query.occupationSecondLevels}
+                                    hideLegend
+                                    legend={`Yrker innen ${firstLevel.key}`}
+                                >
+                                    <Box paddingInline="8 0">
+                                        {firstLevel.occupationSecondLevels &&
+                                            firstLevel.occupationSecondLevels.map((secondLevel) => (
+                                                <Checkbox
+                                                    name="occupationSecondLevels[]"
+                                                    key={editedSecondLevelItemKey(secondLevel.key)}
+                                                    value={secondLevel.key}
+                                                    onChange={handleSecondLevelClick}
+                                                >
+                                                    {`${editedSecondLevelItemKey(secondLevel.label)} (${
+                                                        secondLevel.count
+                                                    })`}
+                                                </Checkbox>
+                                            ))}
+                                    </Box>
+                                </CheckboxGroup>
+                            )}
+                    </React.Fragment>
+                ))}
+        </CheckboxGroup>
     );
 }
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { BodyShort, Checkbox, Fieldset } from "@navikt/ds-react";
+import { BodyShort, Checkbox, CheckboxGroup } from "@navikt/ds-react";
 import { ADD_REMOTE, REMOVE_REMOTE } from "@/app/(sok)/_utils/queryReducer";
 import moveCriteriaToBottom from "@/app/(sok)/_components/utils/moveFacetToBottom";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
@@ -33,8 +33,9 @@ function Remote({ initialValues, updatedValues, query, dispatch }) {
     }
 
     return (
-        <Fieldset
+        <CheckboxGroup
             className="mt-4"
+            defaultValue={query.remote}
             legend={
                 <>
                     <BodyShort as="span" visuallyHidden>
@@ -44,20 +45,12 @@ function Remote({ initialValues, updatedValues, query, dispatch }) {
                 </>
             }
         >
-            <div>
-                {values.map((item) => (
-                    <Checkbox
-                        name="remote[]"
-                        key={item.key}
-                        value={item.key}
-                        onChange={handleClick}
-                        checked={query.remote.includes(item.key)}
-                    >
-                        {`${labelForRemote(item.key)} (${item.count})`}
-                    </Checkbox>
-                ))}
-            </div>
-        </Fieldset>
+            {values.map((item) => (
+                <Checkbox name="remote[]" key={item.key} value={item.key} onChange={handleClick}>
+                    {`${labelForRemote(item.key)} (${item.count})`}
+                </Checkbox>
+            ))}
+        </CheckboxGroup>
     );
 }
 

@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { BodyShort, Checkbox, Fieldset } from "@navikt/ds-react";
+import { BodyShort, Checkbox, CheckboxGroup } from "@navikt/ds-react";
 import { ADD_EXTENT, REMOVE_EXTENT } from "@/app/(sok)/_utils/queryReducer";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
 import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
@@ -23,7 +23,8 @@ function Extent({ initialValues, updatedValues, query, dispatch }) {
     }
 
     return (
-        <Fieldset
+        <CheckboxGroup
+            defaultValue={query.extent}
             legend={
                 <>
                     <BodyShort as="span" visuallyHidden>
@@ -33,20 +34,12 @@ function Extent({ initialValues, updatedValues, query, dispatch }) {
                 </>
             }
         >
-            <div>
-                {values.map((item) => (
-                    <Checkbox
-                        name="extent[]"
-                        key={item.key}
-                        value={item.key}
-                        onChange={handleClick}
-                        checked={query.extent.includes(item.key)}
-                    >
-                        {`${labelForExtent(item)} (${item.count})`}
-                    </Checkbox>
-                ))}
-            </div>
-        </Fieldset>
+            {values.map((item) => (
+                <Checkbox name="extent[]" key={item.key} value={item.key} onChange={handleClick}>
+                    {`${labelForExtent(item)} (${item.count})`}
+                </Checkbox>
+            ))}
+        </CheckboxGroup>
     );
 }
 

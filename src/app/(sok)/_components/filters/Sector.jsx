@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { BodyShort, Checkbox, Fieldset } from "@navikt/ds-react";
+import { BodyShort, Checkbox, CheckboxGroup } from "@navikt/ds-react";
 import { ADD_SECTOR, REMOVE_SECTOR } from "@/app/(sok)/_utils/queryReducer";
 import moveCriteriaToBottom from "@/app/(sok)/_components/utils/moveFacetToBottom";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
@@ -23,8 +23,9 @@ function Sector({ initialValues, updatedValues, query, dispatch }) {
     }
 
     return (
-        <Fieldset
+        <CheckboxGroup
             className="mt-4"
+            defaultValue={query.sector}
             legend={
                 <>
                     <BodyShort as="span" visuallyHidden>
@@ -34,20 +35,12 @@ function Sector({ initialValues, updatedValues, query, dispatch }) {
                 </>
             }
         >
-            <div>
-                {values.map((item) => (
-                    <Checkbox
-                        name="sector[]"
-                        key={item.key}
-                        value={item.key}
-                        onChange={handleClick}
-                        checked={query.sector.includes(item.key)}
-                    >
-                        {`${item.key} (${item.count})`}
-                    </Checkbox>
-                ))}
-            </div>
-        </Fieldset>
+            {values.map((item) => (
+                <Checkbox name="sector[]" key={item.key} value={item.key} onChange={handleClick}>
+                    {`${item.key} (${item.count})`}
+                </Checkbox>
+            ))}
+        </CheckboxGroup>
     );
 }
 
