@@ -1,8 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Accordion, Button } from "@navikt/ds-react";
+import { Accordion, Alert, Button } from "@navikt/ds-react";
 import Remote from "@/app/(sok)/_components/filters/Remote";
 import Education from "@/app/(sok)/_components/filters/Education";
+import DriversLicense from "@/app/(sok)/_components/filters/DriversLicense";
 import FilterAccordionItem from "./FilterAccordionItem";
 import Published from "./Published";
 import Counties from "./Locations";
@@ -53,15 +54,24 @@ function FiltersDesktop({ query, dispatchQuery, aggregations, locations, searchR
                         updatedValues={searchResult.aggregations.sector}
                     />
                 </FilterAccordionItem>
-                <FilterAccordionItem title="Utdanning" panelId="education">
+                <FilterAccordionItem title="Utdanning og førerkort" panelId="education">
+                    <Alert variant="info" className="mb-6">
+                        Vi tester ut nye filtre og jobber med å gjøre dem mer nøyaktige. Har du noen tips? Bruk lenken
+                        for tilbakemelding nederst på siden.
+                    </Alert>
                     <Education
                         query={query}
                         dispatch={dispatchQuery}
                         initialValues={aggregations.education}
                         updatedValues={searchResult.aggregations.education}
                     />
+                    <DriversLicense
+                        query={query}
+                        dispatch={dispatchQuery}
+                        initialValues={aggregations.needDriversLicense}
+                        updatedValues={searchResult.aggregations.needDriversLicense}
+                    />
                 </FilterAccordionItem>
-
                 <FilterAccordionItem title="Arbeidsspråk" panelId="workLanguage">
                     <WorkLanguage
                         query={query}
@@ -97,6 +107,7 @@ FiltersDesktop.propTypes = {
     dispatchQuery: PropTypes.func,
     locations: PropTypes.arrayOf(PropTypes.shape({})),
     aggregations: PropTypes.shape({
+        needDriversLicense: PropTypes.arrayOf(PropTypes.shape({})),
         engagementTypes: PropTypes.arrayOf(PropTypes.shape({})),
         occupationFirstLevels: PropTypes.arrayOf(PropTypes.shape({})),
         published: PropTypes.arrayOf(PropTypes.shape({})),
@@ -106,6 +117,7 @@ FiltersDesktop.propTypes = {
     }),
     searchResult: PropTypes.shape({
         aggregations: PropTypes.shape({
+            needDriversLicense: PropTypes.arrayOf(PropTypes.shape({})),
             engagementTypes: PropTypes.arrayOf(PropTypes.shape({})),
             occupationFirstLevels: PropTypes.arrayOf(PropTypes.shape({})),
             published: PropTypes.arrayOf(PropTypes.shape({})),
