@@ -10,7 +10,6 @@ import queryReducer from "../_utils/queryReducer";
 import { isSearchQueryEmpty, SEARCH_CHUNK_SIZE, stringifyQuery, toBrowserQuery } from "../_utils/query";
 import SearchResult from "./searchResult/SearchResult";
 import DoYouWantToSaveSearch from "./howToPanels/DoYouWantToSaveSearch";
-import SelectedFilters from "./selectedFilters/SelectedFilters";
 import Feedback from "./feedback/Feedback";
 import FiltersDesktop from "./filters/FiltersDesktop";
 import SearchResultHeader from "./searchResultHeader/SearchResultHeader";
@@ -151,7 +150,6 @@ export default function Search({ query, searchResult, aggregations, locations })
                 </Show>
 
                 <VStack gap="10">
-                    <SelectedFilters query={query} queryDispatch={queryDispatch} />
                     <SearchResult searchResult={searchResult} query={updatedQuery} />
 
                     {/* Elastic search does not support pagination above 10 000 */}
