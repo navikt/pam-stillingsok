@@ -16,11 +16,12 @@ import {
     addCountry,
     addMunicipal,
     addOccupationSecondLevel,
+    getFilter,
+    getQueryOptions,
     removeCountry,
     removeMunicipal,
     removeOccupationSecondLevel,
-} from "@/app/(sok)/_components/utils/selectedFiltersUtils";
-import { filterAction, getQueryOptions } from "@/app/(sok)/_components/searchBox/optionUtils";
+} from "@/app/(sok)/_components/combobox/comboboxUtils";
 
 function ComboBox({ query, queryDispatch, onChange, value, allSuggestions, options }) {
     const initialSelectedOptions = useMemo(() => getQueryOptions(query), [query]);
@@ -75,7 +76,7 @@ function ComboBox({ query, queryDispatch, onChange, value, allSuggestions, optio
 
     const handleFilterOption = (option, isSelected) => {
         const optionValue = option.slice(option.indexOf("-") + 1);
-        const optionCategory = option.split("-")[0];
+        const filter = option.split("-")[0];
 
         if (isSelected) {
             setSelectedOptions([...selectedOptions, option]);
@@ -85,12 +86,12 @@ function ComboBox({ query, queryDispatch, onChange, value, allSuggestions, optio
                 return;
             }
 
-            const optionToAdd = filterAction[optionCategory].true;
+            const optionToAdd = getFilter[filter].add;
             handleFilterAddition(optionToAdd, optionValue);
         } else {
             setSelectedOptions(selectedOptions.filter((o) => o !== option));
 
-            const optionToRemove = filterAction[optionCategory].false;
+            const optionToRemove = getFilter[filter].remove;
             handleFilterRemoval(optionToRemove, optionValue);
         }
     };
@@ -109,7 +110,6 @@ function ComboBox({ query, queryDispatch, onChange, value, allSuggestions, optio
         value: o.value,
     }));
 
-    // TODO: add clearButton && clearButtonLabel="Fjern alle"
     return (
         <Combobox
             allowNewValues

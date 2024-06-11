@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { FetchAction, useFetchReducer } from "@/app/_common/hooks/useFetchReducer";
 import * as actions from "@/app/_common/actions";
-import ComboBox from "@/app/(sok)/_components/searchBox/ComboBox";
-import ComboboxOptions from "@/app/(sok)/_components/searchBox/ComboboxOptions";
+import ComboBox from "@/app/(sok)/_components/combobox/ComboBox";
+import { getComboboxOptions } from "@/app/(sok)/_components/combobox/comboboxUtils";
 
 let suggestionsCache = [];
 const CACHE_MAX_SIZE = 50;
@@ -47,8 +47,6 @@ function SearchBox({ dispatch, query, aggregations, locations }) {
         setValue(event?.target?.value || "");
     }
 
-    const options = ComboboxOptions({ aggregations, locations, allSuggestions });
-
     return (
         <section aria-label="Søkeord" className="mb-4">
             <ComboBox
@@ -57,7 +55,7 @@ function SearchBox({ dispatch, query, aggregations, locations }) {
                 onChange={handleComboBoxValueChange}
                 value={value}
                 allSuggestions={allSuggestions}
-                options={options}
+                options={getComboboxOptions(aggregations, locations, allSuggestions)}
             />
         </section>
     );

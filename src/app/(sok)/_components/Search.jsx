@@ -81,6 +81,7 @@ export default function Search({ query, searchResult, aggregations, locations })
                     aggregations={aggregations}
                     locations={locations}
                 />
+                <SaveSearchButton query={query} />
                 <Button
                     type="button"
                     variant="tertiary"
@@ -91,7 +92,6 @@ export default function Search({ query, searchResult, aggregations, locations })
                 >
                     Fjern alle
                 </Button>
-                <SaveSearchButton query={query} />
                 <Box>
                     <HStack gap="2" justify={{ xs: "start", md: "center" }} align={{ xs: "start", md: "center" }}>
                         <Show below="lg">
