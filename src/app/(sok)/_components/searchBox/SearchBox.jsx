@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import { SET_SEARCH_STRING } from "@/app/(sok)/_utils/queryReducer";
+import { ADD_OCCUPATION, SET_SEARCH_STRING } from "@/app/(sok)/_utils/queryReducer";
 import Typeahead from "@/app/_common/components/typeahead/Typeahead";
 import { FetchAction, useFetchReducer } from "@/app/_common/hooks/useFetchReducer";
 import * as actions from "@/app/_common/actions";
@@ -8,8 +8,19 @@ import * as actions from "@/app/_common/actions";
 let suggestionsCache = [];
 const CACHE_MAX_SIZE = 50;
 
+function getSearchBoxValue(query) {
+    let initialValue = "";
+    if (query.q) {
+        initialValue = query.q;
+    } else if (query.occupations[0]) {
+        // eslint-disable-next-line prefer-destructuring
+        initialValue = query.occupations[0];
+    }
+    return initialValue;
+}
+
 function SearchBox({ dispatch, query }) {
-    const [value, setValue] = useState(query.q);
+    const [value, setValue] = useState(getSearchBoxValue(query));
     const initialRender = useRef(true);
     const [suggestionsResponse, suggestionsDispatch] = useFetchReducer([]);
     const MINIMUM_LENGTH = 1;
@@ -33,8 +44,8 @@ function SearchBox({ dispatch, query }) {
     }
 
     useEffect(() => {
-        setValue(query.q);
-    }, [query.q]);
+        setValue(getSearchBoxValue(query));
+    }, [query.q, query.occupations]);
 
     useEffect(() => {
         if (initialRender.current) {
@@ -51,23 +62,21 @@ function SearchBox({ dispatch, query }) {
     }
 
     function handleTypeAheadSuggestionSelected(newValue, shouldSearchInWholeAd) {
-        let fields;
         setValue(newValue);
         if (!shouldSearchInWholeAd) {
-            fields = "occupation";
+            dispatch({ type: ADD_OCCUPATION, value: newValue });
+        } else {
+            dispatch({ type: SET_SEARCH_STRING, value: newValue });
         }
-
-        dispatch({ type: SET_SEARCH_STRING, value: newValue, fields });
     }
 
     function handleSearchButtonClick() {
         const found = suggestionsResponse.data.find((it) => it.toLowerCase() === value.toLowerCase());
-        let fields;
         if (found) {
-            fields = "occupation";
+            dispatch({ type: ADD_OCCUPATION, value });
+        } else {
+            dispatch({ type: SET_SEARCH_STRING, value });
         }
-
-        dispatch({ type: SET_SEARCH_STRING, value, fields });
     }
 
     function onClear() {
