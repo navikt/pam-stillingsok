@@ -1,6 +1,9 @@
 version: 2
 
 registries:
+  npmjs:
+    type: npm-registry
+    url: https://registry.npmjs.org
   npm-github:
     type: npm-registry
     url: https://npm.pkg.github.com
@@ -12,7 +15,8 @@ updates:
     schedule:
       interval: daily
       time: '03:00'
-    registries: '*'
+    registries:
+      - npm-github
     groups:
       aksel-dependencies:
         applies-to: version-updates
@@ -23,6 +27,15 @@ updates:
         applies-to: version-updates
         patterns:
           - '@navikt/arbeidsplassen*'
+
+  - package-ecosystem: npm
+    directory: '/'
+    schedule:
+      interval: daily
+      time: '03:00'
+    registries:
+      - npmjs
+    groups:
       other-dependencies:
         applies-to: security-updates
         patterns:
