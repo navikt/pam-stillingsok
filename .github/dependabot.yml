@@ -1,7 +1,7 @@
 version: 2
 
 registries:
-  npmjs:
+  npm-npmjs:
     type: npm-registry
     url: https://registry.npmjs.org
   npm-github:
@@ -34,7 +34,7 @@ updates:
       interval: daily
       time: '03:00'
     registries:
-      - npmjs
+      - npm-npmjs
     groups:
       other-dependencies:
         applies-to: security-updates
