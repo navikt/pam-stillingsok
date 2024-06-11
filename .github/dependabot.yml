@@ -15,9 +15,15 @@ updates:
     registries: '*'
     groups:
       aksel-dependencies:
+        applies-to: version-updates
         patterns:
           - '@navikt/aksel*'
           - '@navikt/ds*'
       arbeidsplassen-dependencies:
+        applies-to: version-updates
         patterns:
           - '@navikt/arbeidsplassen*'
+      other-dependencies:
+        applies-to: security-updates
+        patterns:
+          - '*'
