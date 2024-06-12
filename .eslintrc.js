@@ -21,7 +21,6 @@ module.exports = {
                 CheckboxGroup: "fieldset",
                 Checkbox: "input",
                 Chips: "ul",
-                CopyButton: "button",
                 Heading: "h",
                 Icon: "svg",
                 IconButton: "button",
