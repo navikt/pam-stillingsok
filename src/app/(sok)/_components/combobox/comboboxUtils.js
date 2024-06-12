@@ -10,6 +10,7 @@ import {
     ADD_ENGAGEMENT_TYPE,
     ADD_EXTENT,
     ADD_MUNICIPAL,
+    ADD_NEEDDRIVERSLICENSE,
     ADD_OCCUPATION,
     ADD_OCCUPATION_FIRST_LEVEL,
     ADD_OCCUPATION_SECOND_LEVEL,
@@ -22,6 +23,7 @@ import {
     REMOVE_ENGAGEMENT_TYPE,
     REMOVE_EXTENT,
     REMOVE_MUNICIPAL,
+    REMOVE_NEEDDRIVERSLICENSE,
     REMOVE_OCCUPATION,
     REMOVE_OCCUPATION_FIRST_LEVEL,
     REMOVE_OCCUPATION_SECOND_LEVEL,
@@ -31,6 +33,7 @@ import {
     SET_INTERNATIONAL,
     SET_PUBLISHED,
 } from "@/app/(sok)/_utils/queryReducer";
+import { labelForNeedDriversLicense } from "@/app/(sok)/_components/filters/DriversLicense";
 
 const MUNICIPAL = "municipal";
 const COUNTY = "county";
@@ -46,6 +49,7 @@ const EXTENT = "extent";
 const EDUCATION = "education";
 const WORK_LANGUAGE = "workLanguage";
 const REMOTE = "remote";
+const NEED_DRIVERS_LICENSE = "needDriversLicense";
 
 export function getComboboxOptions(aggregations, locations, allSuggestions) {
     const locationList = buildLocations(aggregations, locations);
@@ -118,10 +122,17 @@ export function getComboboxOptions(aggregations, locations, allSuggestions) {
         value: `${EXTENT}-${item.key}`,
     }));
 
-    const educationList = aggregations.education.map((item) => ({
-        label: item.key,
-        value: `${EDUCATION}-${item.key}`,
-    }));
+    const educationList = aggregations.education.map((item) =>
+        item.key === "Ikke oppgitt"
+            ? {
+                  label: "Utdanning ikke oppgitt",
+                  value: `${EDUCATION}-${item.key}`,
+              }
+            : {
+                  label: item.key,
+                  value: `${EDUCATION}-${item.key}`,
+              },
+    );
 
     const workLanguageList = aggregations.workLanguage.map((item) =>
         item.key === "Ikke oppgitt"
@@ -140,6 +151,15 @@ export function getComboboxOptions(aggregations, locations, allSuggestions) {
         value: `${OCCUPATION}-${suggestion}`,
     }));
 
+    const needDriversLicenseList = aggregations.needDriversLicense.map((licence) =>
+        licence.key === "Ikke oppgitt"
+            ? { label: "Førerkort ikke oppgitt", value: `${NEED_DRIVERS_LICENSE}-${licence.key}` }
+            : {
+                  label: labelForNeedDriversLicense(licence.key),
+                  value: `${NEED_DRIVERS_LICENSE}-${licence.key}`,
+              },
+    );
+
     return [
         ...municipalList,
         ...countyList,
@@ -154,6 +174,7 @@ export function getComboboxOptions(aggregations, locations, allSuggestions) {
         ...workLanguageList,
         ...remoteList,
         ...occupationSuggestionList,
+        ...needDriversLicenseList,
     ];
 }
 
@@ -175,6 +196,7 @@ export const getFilter = {
     [EXTENT]: { add: ADD_EXTENT, remove: REMOVE_EXTENT },
     [WORK_LANGUAGE]: { add: ADD_WORKLANGUAGE, remove: REMOVE_WORKLANGUAGE },
     [EDUCATION]: { add: ADD_EDUCATION, remove: REMOVE_EDUCATION },
+    [NEED_DRIVERS_LICENSE]: { add: ADD_NEEDDRIVERSLICENSE, remove: REMOVE_NEEDDRIVERSLICENSE },
     [REMOTE]: { add: ADD_REMOTE, remove: REMOVE_REMOTE },
     [SECTOR]: { add: ADD_SECTOR, remove: REMOVE_SECTOR },
     [OCCUPATION]: { add: ADD_OCCUPATION, remove: REMOVE_OCCUPATION },
@@ -309,7 +331,17 @@ export function getQueryOptions(queryObject) {
                 : { label: item, value: `${ENGAGEMENT_TYPE}-${item}` },
         ),
         ...queryObject.extent.map((item) => ({ label: item, value: `${EXTENT}-${item}` })),
-        ...queryObject.education.map((item) => ({ label: item, value: `${EDUCATION}-${item}` })),
+        ...queryObject.education.map((item) =>
+            item === "Ikke oppgitt"
+                ? {
+                      label: "Utdanning ikke oppgitt",
+                      value: `${EDUCATION}-${item}`,
+                  }
+                : {
+                      label: item,
+                      value: `${EDUCATION}-${item}`,
+                  },
+        ),
         ...queryObject.workLanguage.map((item) =>
             item === "Ikke oppgitt"
                 ? { label: "Arbeidsspråk ikke oppgitt", value: `${WORK_LANGUAGE}-${item}` }
@@ -324,5 +356,13 @@ export function getQueryOptions(queryObject) {
             label: occupation,
             value: `${OCCUPATION}-${occupation}`,
         })),
+        ...queryObject.needDriversLicense.map((licence) =>
+            licence === "Ikke oppgitt"
+                ? { label: "Førerkort ikke oppgitt", value: `${NEED_DRIVERS_LICENSE}-${licence}` }
+                : {
+                      label: labelForNeedDriversLicense(licence),
+                      value: `${NEED_DRIVERS_LICENSE}-${licence}`,
+                  },
+        ),
     ];
 }
