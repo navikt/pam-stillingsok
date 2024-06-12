@@ -9,6 +9,7 @@ const query = {
     countries: [],
     international: false,
     remote: ["Ikke oppgitt"],
+    occupations: [],
     occupationFirstLevels: ["Uoppgitt/ ikke identifiserbare"],
     occupationSecondLevels: [],
     extent: ["Heltid"],
