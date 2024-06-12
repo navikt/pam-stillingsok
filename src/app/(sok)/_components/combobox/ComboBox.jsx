@@ -80,11 +80,6 @@ function ComboBox({ query, queryDispatch, onChange, value, options }) {
 
         if (isSelected) {
             setSelectedOptions([...selectedOptions, option]);
-            // const found = allSuggestions.find((o) => o.toLowerCase() === optionValue.toLowerCase());
-            // if (found) {
-            //     queryDispatch({ type: ADD_OCCUPATION, optionValue });
-            //     return;
-            // }
 
             const optionToAdd = getFilter[filter].add;
             handleFilterAddition(optionToAdd, optionValue);
@@ -119,7 +114,6 @@ function ComboBox({ query, queryDispatch, onChange, value, options }) {
             selectedOptions={selectedOptions}
             options={value && value.length > 0 ? optionLi : []}
             onChange={onChange}
-            // value={value}
         />
     );
 }

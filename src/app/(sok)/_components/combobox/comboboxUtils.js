@@ -282,9 +282,9 @@ export function getQueryOptions(queryObject) {
         ...(queryObject.international && queryObject.countries.length === 0
             ? [{ label: "Utland", value: `${INTERNATIONAL}-utland` }]
             : []),
-        ...filterOccupationFirstLevels(queryObject).map((occupation) => ({
-            label: occupation,
-            value: `${OCCUPATION_FIRST_LEVEL}-${occupation}`,
+        ...queryObject.occupationSecondLevels.map((occupation) => ({
+            label: occupation.split(".")[1],
+            value: `${OCCUPATION_SECOND_LEVEL}-${occupation}`,
         })),
         ...filterOccupationFirstLevels(queryObject).map((occupation) => ({
             label: occupation,

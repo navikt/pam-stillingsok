@@ -22,7 +22,6 @@ function getSearchBoxValue(query) {
 
 function SearchBox({ dispatch, query, aggregations, locations }) {
     const [value, setValue] = useState(getSearchBoxValue(query));
-    // const [value, setValue] = useState("");
     const initialRender = useRef(true);
     const [suggestionsResponse, suggestionsDispatch] = useFetchReducer([]);
 
@@ -58,38 +57,7 @@ function SearchBox({ dispatch, query, aggregations, locations }) {
         }
     }, [value]);
 
-    // function handleTypeAheadValueChange(newValue) {
-    //     setValue(newValue);
-    // }
-    //
-    // function handleTypeAheadSuggestionSelected(newValue, shouldSearchInWholeAd) {
-    //     setValue(newValue);
-    //     if (!shouldSearchInWholeAd) {
-    //         dispatch({ type: ADD_OCCUPATION, value: newValue });
-    //     } else {
-    //         dispatch({ type: SET_SEARCH_STRING, value: newValue });
-    //     }
-    // }
-    //
-    // function handleSearchButtonClick() {
-    //     const found = suggestionsResponse.data.find((it) => it.toLowerCase() === value.toLowerCase());
-    //     if (found) {
-    //         dispatch({ type: ADD_OCCUPATION, value });
-    //     } else {
-    //         dispatch({ type: SET_SEARCH_STRING, value });
-    //     }
-    // }
-    //
-    // function onClear() {
-    //     dispatch({ type: SET_SEARCH_STRING, value: "" });
-    // }
-
-    // Add the current value as last suggestion entry,
-    // This will show a typeahead suggestion like this: "Søk på {value} i hele annonsen"
     const allSuggestions = [...suggestionsResponse.data];
-    // if (suggestionsResponse.data.length > 0 && value && value.length > 0) {
-    //     allSuggestions.push(value);
-    // }
 
     function handleComboBoxValueChange(event) {
         setValue(event?.target?.value || "");
