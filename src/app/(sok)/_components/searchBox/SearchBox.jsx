@@ -1,12 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import { ADD_OCCUPATION, SET_SEARCH_STRING } from "@/app/(sok)/_utils/queryReducer";
-import Typeahead from "@/app/_common/components/typeahead/Typeahead";
 import { FetchAction, useFetchReducer } from "@/app/_common/hooks/useFetchReducer";
 import * as actions from "@/app/_common/actions";
+import ComboBox from "@/app/(sok)/_components/combobox/ComboBox";
+import { getComboboxOptions } from "@/app/(sok)/_components/combobox/comboboxUtils";
 
 let suggestionsCache = [];
 const CACHE_MAX_SIZE = 50;
+const MINIMUM_LENGTH = 1;
 
 function getSearchBoxValue(query) {
     let initialValue = "";
@@ -19,11 +20,10 @@ function getSearchBoxValue(query) {
     return initialValue;
 }
 
-function SearchBox({ dispatch, query }) {
+function SearchBox({ dispatch, query, aggregations, locations }) {
     const [value, setValue] = useState(getSearchBoxValue(query));
     const initialRender = useRef(true);
     const [suggestionsResponse, suggestionsDispatch] = useFetchReducer([]);
-    const MINIMUM_LENGTH = 1;
 
     async function fetchSuggestions() {
         const cached = suggestionsCache.find((c) => c.value === value);
@@ -57,51 +57,20 @@ function SearchBox({ dispatch, query }) {
         }
     }, [value]);
 
-    function handleTypeAheadValueChange(newValue) {
-        setValue(newValue);
-    }
-
-    function handleTypeAheadSuggestionSelected(newValue, shouldSearchInWholeAd) {
-        setValue(newValue);
-        if (!shouldSearchInWholeAd) {
-            dispatch({ type: ADD_OCCUPATION, value: newValue });
-        } else {
-            dispatch({ type: SET_SEARCH_STRING, value: newValue });
-        }
-    }
-
-    function handleSearchButtonClick() {
-        const found = suggestionsResponse.data.find((it) => it.toLowerCase() === value.toLowerCase());
-        if (found) {
-            dispatch({ type: ADD_OCCUPATION, value });
-        } else {
-            dispatch({ type: SET_SEARCH_STRING, value });
-        }
-    }
-
-    function onClear() {
-        dispatch({ type: SET_SEARCH_STRING, value: "" });
-    }
-
-    // Add the current value as last suggestion entry,
-    // This will show a typeahead suggestion like this: "Søk på {value} i hele annonsen"
     const allSuggestions = [...suggestionsResponse.data];
-    if (suggestionsResponse.data.length > 0 && value && value.length > 0) {
-        allSuggestions.push(value);
+
+    function handleComboBoxValueChange(event) {
+        setValue(event?.target?.value || "");
     }
 
     return (
         <section aria-label="Søkeord" className="mb-4">
-            <Typeahead
-                onClear={onClear}
-                id="search-form-fritekst-input"
-                name="q"
-                autoComplete="off"
-                onSelect={handleTypeAheadSuggestionSelected}
-                onChange={handleTypeAheadValueChange}
-                suggestions={value && value.length > 0 ? allSuggestions : []}
-                value={value || ""}
-                onSearchButtonClick={handleSearchButtonClick}
+            <ComboBox
+                queryDispatch={dispatch}
+                query={query}
+                onChange={handleComboBoxValueChange}
+                value={value}
+                options={getComboboxOptions(aggregations, locations, allSuggestions)}
             />
         </section>
     );
@@ -112,6 +81,7 @@ SearchBox.propTypes = {
         q: PropTypes.string,
     }).isRequired,
     dispatch: PropTypes.func.isRequired,
+    locations: PropTypes.arrayOf(PropTypes.shape({})),
 };
 
 export default SearchBox;

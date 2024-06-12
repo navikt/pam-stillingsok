@@ -4,11 +4,12 @@ import React, { useEffect, useReducer, useState } from "react";
 import PropTypes from "prop-types";
 import { Box, Button, Heading, HGrid, Hide, HStack, Show, Stack, VStack } from "@navikt/ds-react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { TrashIcon } from "@navikt/aksel-icons";
+import SaveSearchButton from "@/app/lagrede-sok/_components/SaveSearchButton";
 import queryReducer from "../_utils/queryReducer";
 import { isSearchQueryEmpty, SEARCH_CHUNK_SIZE, stringifyQuery, toBrowserQuery } from "../_utils/query";
 import SearchResult from "./searchResult/SearchResult";
 import DoYouWantToSaveSearch from "./howToPanels/DoYouWantToSaveSearch";
-import SelectedFilters from "./selectedFilters/SelectedFilters";
 import Feedback from "./feedback/Feedback";
 import FiltersDesktop from "./filters/FiltersDesktop";
 import SearchResultHeader from "./searchResultHeader/SearchResultHeader";
@@ -73,9 +74,25 @@ export default function Search({ query, searchResult, aggregations, locations })
                 </Stack>
             </Box>
 
-            <div className="container-small">
-                <SearchBox query={updatedQuery} dispatch={queryDispatch} />
-                <Box paddingBlock={{ xs: "0 4", md: "0 12" }}>
+            <div className="SearchContainer container-small">
+                <SearchBox
+                    query={updatedQuery}
+                    dispatch={queryDispatch}
+                    aggregations={aggregations}
+                    locations={locations}
+                />
+                <SaveSearchButton query={query} />
+                <Button
+                    type="button"
+                    variant="tertiary"
+                    onClick={() => {
+                        queryDispatch({ type: "RESET" });
+                    }}
+                    icon={<TrashIcon aria-hidden="true" />}
+                >
+                    Fjern alle
+                </Button>
+                <Box>
                     <HStack gap="2" justify={{ xs: "start", md: "center" }} align={{ xs: "start", md: "center" }}>
                         <Show below="lg">
                             <Button
@@ -89,11 +106,13 @@ export default function Search({ query, searchResult, aggregations, locations })
                                 Velg sted, yrke og andre filtre
                             </Button>
                         </Show>
-
-                        <LoggedInButtons />
                     </HStack>
                 </Box>
             </div>
+
+            <Box paddingBlock={{ xs: "6", md: "6" }} className="text-center">
+                <LoggedInButtons />
+            </Box>
 
             <SearchResultHeader
                 isFiltersVisible={isFiltersVisible}
@@ -131,7 +150,6 @@ export default function Search({ query, searchResult, aggregations, locations })
                 </Show>
 
                 <VStack gap="10">
-                    <SelectedFilters query={query} queryDispatch={queryDispatch} />
                     <SearchResult searchResult={searchResult} query={updatedQuery} />
 
                     {/* Elastic search does not support pagination above 10 000 */}
