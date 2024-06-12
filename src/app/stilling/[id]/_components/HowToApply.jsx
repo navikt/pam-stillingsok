@@ -157,7 +157,7 @@ export default function HowToApply({ adData }) {
                                 icon={<ExternalLinkIcon aria-hidden="true" />}
                                 role="link"
                             >
-                                Gå til søknadsdfsf
+                                Gå til søknad
                             </Button>
                         </div>
                     )}
