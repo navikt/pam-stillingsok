@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { Checkbox, Fieldset } from "@navikt/ds-react";
+import { BodyShort, Checkbox, CheckboxGroup } from "@navikt/ds-react";
 import { ADD_EDUCATION, REMOVE_EDUCATION } from "@/app/(sok)/_utils/queryReducer";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
 import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
@@ -22,43 +22,46 @@ function Education({ initialValues, updatedValues, query, dispatch }) {
         logFilterChanged({ name: "Utdanningsnivå", value, checked });
     }
 
-    const updateViewName = (key) => {
-        switch (key) {
-            case "Ingen krav":
-                return "Ingen krav til utdanning";
-            case "Master":
-                return "Master eller tilsvarende";
-            case "Videregående":
-                return "Videregående skole";
-            case "Fagbrev":
-                return "Fag- eller svennebrev";
-            case "Fagskole":
-                return "Fagskole eller tilsvarende";
-            case "Bachelor":
-                return "Bachelor eller tilsvarende";
-            default:
-                return key;
-        }
-    };
-
     return (
-        <Fieldset legend="Filtrer på utdanning" hideLegend>
-            <div>
-                {values.map((item) => (
-                    <Checkbox
-                        name="education[]"
-                        key={item.key}
-                        value={item.key}
-                        onChange={handleClick}
-                        checked={query.education.includes(item.key)}
-                    >
-                        {`${updateViewName(item.key)} (${item.count})`}
-                    </Checkbox>
-                ))}
-            </div>
-        </Fieldset>
+        <CheckboxGroup
+            className="mb-4"
+            value={query.education}
+            legend={
+                <>
+                    <BodyShort as="span" visuallyHidden>
+                        Filtrer etter{" "}
+                    </BodyShort>
+                    <span className="capitalize">utdanning</span>
+                </>
+            }
+        >
+            {values.map((item) => (
+                <Checkbox key={item.key} name="education[]" value={item.key} onChange={handleClick}>
+                    {`${labelForEducation(item.key)} (${item.count})`}
+                </Checkbox>
+            ))}
+        </CheckboxGroup>
     );
 }
+
+export const labelForEducation = (key) => {
+    switch (key) {
+        case "Ingen krav":
+            return "Ingen krav til utdanning";
+        case "Master":
+            return "Master eller tilsvarende";
+        case "Videregående":
+            return "Videregående skole";
+        case "Fagbrev":
+            return "Fag- eller svennebrev";
+        case "Fagskole":
+            return "Fagskole eller tilsvarende";
+        case "Bachelor":
+            return "Bachelor eller tilsvarende";
+        default:
+            return key;
+    }
+};
 
 Education.propTypes = {
     initialValues: PropTypes.arrayOf(

@@ -10,6 +10,7 @@ import {
     ADD_ENGAGEMENT_TYPE,
     ADD_EXTENT,
     ADD_MUNICIPAL,
+    ADD_OCCUPATION,
     ADD_OCCUPATION_FIRST_LEVEL,
     ADD_OCCUPATION_SECOND_LEVEL,
     ADD_REMOTE,
@@ -21,6 +22,7 @@ import {
     REMOVE_ENGAGEMENT_TYPE,
     REMOVE_EXTENT,
     REMOVE_MUNICIPAL,
+    REMOVE_OCCUPATION,
     REMOVE_OCCUPATION_FIRST_LEVEL,
     REMOVE_OCCUPATION_SECOND_LEVEL,
     REMOVE_REMOTE,
@@ -175,6 +177,7 @@ export const getFilter = {
     [EDUCATION]: { add: ADD_EDUCATION, remove: REMOVE_EDUCATION },
     [REMOTE]: { add: ADD_REMOTE, remove: REMOVE_REMOTE },
     [SECTOR]: { add: ADD_SECTOR, remove: REMOVE_SECTOR },
+    [OCCUPATION]: { add: ADD_OCCUPATION, remove: REMOVE_OCCUPATION },
 };
 
 export function addMunicipal(queryDispatch, query, value) {
@@ -279,9 +282,9 @@ export function getQueryOptions(queryObject) {
         ...(queryObject.international && queryObject.countries.length === 0
             ? [{ label: "Utland", value: `${INTERNATIONAL}-utland` }]
             : []),
-        ...queryObject.occupationSecondLevels.map((occupation) => ({
-            label: occupation.split(".")[1],
-            value: `${OCCUPATION_SECOND_LEVEL}-${occupation}`,
+        ...filterOccupationFirstLevels(queryObject).map((occupation) => ({
+            label: occupation,
+            value: `${OCCUPATION_FIRST_LEVEL}-${occupation}`,
         })),
         ...filterOccupationFirstLevels(queryObject).map((occupation) => ({
             label: occupation,
@@ -317,5 +320,9 @@ export function getQueryOptions(queryObject) {
                 ? { label: "Hjemmekontor ikke oppgitt", value: `${REMOTE}-${item}` }
                 : { label: item, value: `${REMOTE}-${item}` },
         ),
+        ...queryObject.occupations.map((occupation) => ({
+            label: occupation,
+            value: `${OCCUPATION}-${occupation}`,
+        })),
     ];
 }

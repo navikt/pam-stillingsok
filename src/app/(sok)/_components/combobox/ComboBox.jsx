@@ -23,7 +23,7 @@ import {
     removeOccupationSecondLevel,
 } from "@/app/(sok)/_components/combobox/comboboxUtils";
 
-function ComboBox({ query, queryDispatch, onChange, value, allSuggestions, options }) {
+function ComboBox({ query, queryDispatch, onChange, value, options }) {
     const initialSelectedOptions = useMemo(() => getQueryOptions(query), [query]);
 
     const [selectedOptions, setSelectedOptions] = useState(initialSelectedOptions);
@@ -80,11 +80,11 @@ function ComboBox({ query, queryDispatch, onChange, value, allSuggestions, optio
 
         if (isSelected) {
             setSelectedOptions([...selectedOptions, option]);
-            const found = allSuggestions.find((o) => o.toLowerCase() === optionValue.toLowerCase());
-            if (found) {
-                queryDispatch({ type: SET_SEARCH_STRING, value: optionValue, fields: "occupation" });
-                return;
-            }
+            // const found = allSuggestions.find((o) => o.toLowerCase() === optionValue.toLowerCase());
+            // if (found) {
+            //     queryDispatch({ type: ADD_OCCUPATION, optionValue });
+            //     return;
+            // }
 
             const optionToAdd = getFilter[filter].add;
             handleFilterAddition(optionToAdd, optionValue);
@@ -119,7 +119,7 @@ function ComboBox({ query, queryDispatch, onChange, value, allSuggestions, optio
             selectedOptions={selectedOptions}
             options={value && value.length > 0 ? optionLi : []}
             onChange={onChange}
-            value={value}
+            // value={value}
         />
     );
 }
@@ -144,7 +144,6 @@ ComboBox.propTypes = {
     queryDispatch: PropTypes.func.isRequired,
     onChange: PropTypes.func.isRequired,
     value: PropTypes.string,
-    allSuggestions: PropTypes.arrayOf(PropTypes.string),
     options: PropTypes.arrayOf(PropTypes.shape({})),
 };
 

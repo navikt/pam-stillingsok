@@ -157,6 +157,41 @@ function filterEducation(education) {
     return filters;
 }
 
+function filterNeedDriversLicense(needDriversLicense) {
+    const filters = [];
+    if (needDriversLicense && needDriversLicense.length > 0) {
+        const filter = {
+            bool: {
+                should: [],
+            },
+        };
+        needDriversLicense.forEach((item) => {
+            filter.bool.should.push({
+                term: {
+                    needDriversLicense_facet: item,
+                },
+            });
+        });
+
+        if (needDriversLicense.includes("Ikke oppgitt")) {
+            filter.bool.should.push({
+                bool: {
+                    must_not: [
+                        {
+                            exists: {
+                                field: "needDriversLicense_facet",
+                            },
+                        },
+                    ],
+                },
+            });
+        }
+
+        filters.push(filter);
+    }
+    return filters;
+}
+
 function filterEngagementType(engagementTypes) {
     const filters = [];
     if (engagementTypes && engagementTypes.length > 0) {
@@ -359,6 +394,31 @@ function filterLocation(counties, municipals, countries, international = false) 
     return filter;
 }
 
+function filterJanzzOccupation(occupation) {
+    const filters = [];
+    if (occupation && occupation.length > 0) {
+        const filter = {
+            bool: {
+                should: [],
+            },
+        };
+        occupation.forEach((item) => {
+            filter.bool.should.push({
+                term: {
+                    category_styrk08_facet: item,
+                },
+            });
+            filter.bool.should.push({
+                term: {
+                    searchtags_facet: item,
+                },
+            });
+        });
+        filters.push(filter);
+    }
+    return filters;
+}
+
 function filterOccupation(occupationFirstLevels, occupationSecondLevels = []) {
     return filterNestedFacets(
         occupationFirstLevels,
@@ -390,41 +450,8 @@ function filterSector(sector) {
 }
 
 /* Experimental alternative relevance model with AND-logic and using cross-fields matching. */
-function mainQueryConjunctionTuning(q, searchFields) {
-    let matchFields;
-
-    if (searchFields === "occupation") {
-        matchFields = ["category_name_no^2", "searchtags_no^0.3"];
-
-        return {
-            bool: {
-                must: {
-                    bool: {
-                        should: [
-                            {
-                                multi_match: {
-                                    query: q,
-                                    type: "cross_fields",
-                                    fields: matchFields,
-                                    operator: "and",
-                                    tie_breaker: 0.3,
-                                    analyzer: "norwegian",
-                                    zero_terms_query: "all",
-                                },
-                            },
-                        ],
-                    },
-                },
-                filter: {
-                    term: {
-                        status: "ACTIVE",
-                    },
-                },
-            },
-        };
-    }
-
-    matchFields = [
+function mainQueryConjunctionTuning(q) {
+    const matchFields = [
         "category_name_no^2",
         "title_no^1",
         "keywords_no^0.8",
@@ -598,16 +625,17 @@ const elasticSearchRequestBody = (query) => {
         countries,
         education,
         municipals,
+        needDriversLicense,
         extent,
         workLanguage,
         remote,
         engagementType,
         sector,
         published,
+        occupations,
         occupationFirstLevels,
         occupationSecondLevels,
         international,
-        fields,
         operator,
     } = query;
     let { sort, q } = query;
@@ -629,10 +657,12 @@ const elasticSearchRequestBody = (query) => {
         from: from || 0,
         size: size && ALLOWED_NUMBER_OF_RESULTS_PER_PAGE.includes(size) ? size : SEARCH_CHUNK_SIZE,
         track_total_hits: true,
-        query: mainQueryTemplateFunc(q, fields),
+        query: mainQueryTemplateFunc(q),
         post_filter: {
             bool: {
                 filter: [
+                    ...filterJanzzOccupation(occupations),
+                    ...filterNeedDriversLicense(needDriversLicense),
                     ...filterExtent(extent),
                     ...filterEducation(education),
                     ...filterWorkLanguage(workLanguage),
@@ -654,6 +684,7 @@ const elasticSearchRequestBody = (query) => {
                 "properties.location",
                 "properties.applicationdue",
                 "properties.hasInterestform",
+                "properties.needDriversLicense",
                 "properties.education",
                 "properties.workLanguage",
                 "properties.remote",
@@ -686,6 +717,8 @@ const elasticSearchRequestBody = (query) => {
                 filter: {
                     bool: {
                         filter: [
+                            ...filterJanzzOccupation(occupations),
+                            ...filterNeedDriversLicense(needDriversLicense),
                             ...filterExtent(extent),
                             ...filterEducation(education),
                             ...filterWorkLanguage(workLanguage),
@@ -711,6 +744,8 @@ const elasticSearchRequestBody = (query) => {
                 filter: {
                     bool: {
                         filter: [
+                            ...filterJanzzOccupation(occupations),
+                            ...filterNeedDriversLicense(needDriversLicense),
                             ...filterExtent(extent),
                             ...filterEducation(education),
                             ...filterWorkLanguage(workLanguage),
@@ -749,6 +784,8 @@ const elasticSearchRequestBody = (query) => {
                 filter: {
                     bool: {
                         filter: [
+                            ...filterJanzzOccupation(occupations),
+                            ...filterNeedDriversLicense(needDriversLicense),
                             ...filterExtent(extent),
                             ...filterEducation(education),
                             ...filterWorkLanguage(workLanguage),
@@ -770,6 +807,8 @@ const elasticSearchRequestBody = (query) => {
                 filter: {
                     bool: {
                         filter: [
+                            ...filterJanzzOccupation(occupations),
+                            ...filterNeedDriversLicense(needDriversLicense),
                             ...filterRemote(remote),
                             ...filterEducation(education),
                             ...filterWorkLanguage(workLanguage),
@@ -791,6 +830,8 @@ const elasticSearchRequestBody = (query) => {
                 filter: {
                     bool: {
                         filter: [
+                            ...filterJanzzOccupation(occupations),
+                            ...filterNeedDriversLicense(needDriversLicense),
                             ...filterEducation(education),
                             ...filterWorkLanguage(workLanguage),
                             filterLocation(counties, municipals, countries, international),
@@ -811,6 +852,8 @@ const elasticSearchRequestBody = (query) => {
                 filter: {
                     bool: {
                         filter: [
+                            ...filterJanzzOccupation(occupations),
+                            ...filterNeedDriversLicense(needDriversLicense),
                             ...filterExtent(extent),
                             ...filterRemote(remote),
                             ...filterEducation(education),
@@ -832,6 +875,8 @@ const elasticSearchRequestBody = (query) => {
                 filter: {
                     bool: {
                         filter: [
+                            ...filterJanzzOccupation(occupations),
+                            ...filterNeedDriversLicense(needDriversLicense),
                             ...filterExtent(extent),
                             ...filterRemote(remote),
                             ...filterWorkLanguage(workLanguage),
@@ -849,10 +894,35 @@ const elasticSearchRequestBody = (query) => {
                     },
                 },
             },
+            needDriversLicense: {
+                filter: {
+                    bool: {
+                        filter: [
+                            ...filterJanzzOccupation(occupations),
+                            ...filterExtent(extent),
+                            ...filterEducation(education),
+                            ...filterRemote(remote),
+                            ...filterWorkLanguage(workLanguage),
+                            filterLocation(counties, municipals, countries, international),
+                            filterOccupation(occupationFirstLevels, occupationSecondLevels),
+                            ...filterEngagementType(engagementType),
+                            ...filterSector(sector),
+                            ...filterPublished(published),
+                        ],
+                    },
+                },
+                aggs: {
+                    values: {
+                        terms: { field: "needDriversLicense_facet", missing: NOT_DEFINED },
+                    },
+                },
+            },
             engagementType: {
                 filter: {
                     bool: {
                         filter: [
+                            ...filterJanzzOccupation(occupations),
+                            ...filterNeedDriversLicense(needDriversLicense),
                             ...filterExtent(extent),
                             ...filterEducation(education),
                             ...filterWorkLanguage(workLanguage),
@@ -874,6 +944,8 @@ const elasticSearchRequestBody = (query) => {
                 filter: {
                     bool: {
                         filter: [
+                            ...filterJanzzOccupation(occupations),
+                            ...filterNeedDriversLicense(needDriversLicense),
                             ...filterExtent(extent),
                             ...filterEducation(education),
                             ...filterWorkLanguage(workLanguage),
@@ -922,6 +994,8 @@ const elasticSearchRequestBody = (query) => {
                 filter: {
                     bool: {
                         filter: [
+                            ...filterJanzzOccupation(occupations),
+                            ...filterNeedDriversLicense(needDriversLicense),
                             ...filterExtent(extent),
                             ...filterEducation(education),
                             ...filterWorkLanguage(workLanguage),
@@ -969,6 +1043,8 @@ const elasticSearchRequestBody = (query) => {
                 filter: {
                     bool: {
                         filter: [
+                            ...filterJanzzOccupation(occupations),
+                            ...filterNeedDriversLicense(needDriversLicense),
                             ...filterExtent(extent),
                             ...filterEducation(education),
                             ...filterWorkLanguage(workLanguage),

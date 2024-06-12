@@ -76,7 +76,7 @@ function Locations({ locations, query, dispatch, updatedValues }) {
                                     onChange={handleCheckboxClick(location.key, location.type)}
                                     checked={query.international === true}
                                 >
-                                    Utland
+                                    Utland ({updatedValues.aggregations.totalInternational})
                                 </Checkbox>
                             ) : (
                                 <Checkbox

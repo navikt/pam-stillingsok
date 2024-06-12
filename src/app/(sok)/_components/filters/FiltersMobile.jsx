@@ -1,9 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import { Button, Heading, HStack, Label, Modal } from "@navikt/ds-react";
+import { Alert, Button, Heading, HStack, Label, Modal } from "@navikt/ds-react";
 import { ChevronRightIcon, ChevronLeftIcon } from "@navikt/aksel-icons";
 import { formatNumber } from "@/app/_common/utils/utils";
 import Remote from "@/app/(sok)/_components/filters/Remote";
+import Education from "@/app/(sok)/_components/filters/Education";
+import DriversLicense from "@/app/(sok)/_components/filters/DriversLicense";
 import Counties from "./Locations";
 import Occupations from "./Occupations";
 import Published from "./Published";
@@ -55,6 +57,7 @@ function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggre
                             "Publisert",
                             "Sted og hjemmekontor",
                             "Yrke og sektor",
+                            "Utdanning og førerkort",
                             "Arbeidsspråk",
                             "Omfang og ansettelsesform",
                         ].map((filter) => (
@@ -78,6 +81,7 @@ function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggre
                             dispatch={dispatchQuery}
                             initialValues={aggregations.published}
                             updatedValues={searchResult && searchResult.aggregations.published}
+                            publishedTotalCount={searchResult.aggregations.publishedTotalCount}
                         />
                     )}
 
@@ -115,6 +119,26 @@ function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggre
                                 dispatch={dispatchQuery}
                                 initialValues={aggregations.sector}
                                 updatedValues={searchResult.aggregations.sector}
+                            />
+                        </>
+                    )}
+                    {selectedFilter === "Utdanning og førerkort" && (
+                        <>
+                            <Alert variant="info" className="mb-4">
+                                Vi tester ut et nytt filter og jobber med å gjøre det mer nøyaktig. Har du noen tips?
+                                Bruk lenken for tilbakemelding nederst på siden.
+                            </Alert>
+                            <Education
+                                query={query}
+                                dispatch={dispatchQuery}
+                                initialValues={aggregations.education}
+                                updatedValues={searchResult.aggregations.education}
+                            />
+                            <DriversLicense
+                                query={query}
+                                dispatch={dispatchQuery}
+                                initialValues={aggregations.needDriversLicense}
+                                updatedValues={searchResult.aggregations.needDriversLicense}
                             />
                         </>
                     )}
@@ -182,6 +206,7 @@ FiltersMobile.propTypes = {
     dispatchQuery: PropTypes.func,
     aggregations: PropTypes.shape({
         engagementTypes: PropTypes.arrayOf(PropTypes.shape({})),
+        needDriversLicense: PropTypes.arrayOf(PropTypes.shape({})),
         occupationFirstLevels: PropTypes.arrayOf(PropTypes.shape({})),
         published: PropTypes.arrayOf(PropTypes.shape({})),
         extent: PropTypes.arrayOf(PropTypes.shape({})),
@@ -190,7 +215,7 @@ FiltersMobile.propTypes = {
     }),
     locations: PropTypes.arrayOf(PropTypes.shape({})),
     searchResult: PropTypes.shape({
-        totalAds: PropTypes.string,
+        totalAds: PropTypes.number,
         aggregations: PropTypes.shape({
             engagementTypes: PropTypes.arrayOf(PropTypes.shape({})),
             occupationFirstLevels: PropTypes.arrayOf(PropTypes.shape({})),

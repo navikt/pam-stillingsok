@@ -9,10 +9,23 @@ let suggestionsCache = [];
 const CACHE_MAX_SIZE = 50;
 const MINIMUM_LENGTH = 1;
 
+function getSearchBoxValue(query) {
+    let initialValue = "";
+    if (query.q) {
+        initialValue = query.q;
+    } else if (query.occupations[0]) {
+        // eslint-disable-next-line prefer-destructuring
+        initialValue = query.occupations[0];
+    }
+    return initialValue;
+}
+
 function SearchBox({ dispatch, query, aggregations, locations }) {
-    const [value, setValue] = useState("");
-    const [suggestionsResponse, suggestionsDispatch] = useFetchReducer([]);
+    const [value, setValue] = useState(getSearchBoxValue(query));
+    // const [value, setValue] = useState("");
     const initialRender = useRef(true);
+    const [suggestionsResponse, suggestionsDispatch] = useFetchReducer([]);
+
     async function fetchSuggestions() {
         const cached = suggestionsCache.find((c) => c.value === value);
         if (cached) {
@@ -31,7 +44,9 @@ function SearchBox({ dispatch, query, aggregations, locations }) {
         }
     }
 
-    const allSuggestions = [...suggestionsResponse.data];
+    useEffect(() => {
+        setValue(getSearchBoxValue(query));
+    }, [query.q, query.occupations]);
 
     useEffect(() => {
         if (initialRender.current) {
@@ -42,6 +57,39 @@ function SearchBox({ dispatch, query, aggregations, locations }) {
             suggestionsDispatch({ type: FetchAction.SET_DATA, data: [] });
         }
     }, [value]);
+
+    // function handleTypeAheadValueChange(newValue) {
+    //     setValue(newValue);
+    // }
+    //
+    // function handleTypeAheadSuggestionSelected(newValue, shouldSearchInWholeAd) {
+    //     setValue(newValue);
+    //     if (!shouldSearchInWholeAd) {
+    //         dispatch({ type: ADD_OCCUPATION, value: newValue });
+    //     } else {
+    //         dispatch({ type: SET_SEARCH_STRING, value: newValue });
+    //     }
+    // }
+    //
+    // function handleSearchButtonClick() {
+    //     const found = suggestionsResponse.data.find((it) => it.toLowerCase() === value.toLowerCase());
+    //     if (found) {
+    //         dispatch({ type: ADD_OCCUPATION, value });
+    //     } else {
+    //         dispatch({ type: SET_SEARCH_STRING, value });
+    //     }
+    // }
+    //
+    // function onClear() {
+    //     dispatch({ type: SET_SEARCH_STRING, value: "" });
+    // }
+
+    // Add the current value as last suggestion entry,
+    // This will show a typeahead suggestion like this: "Søk på {value} i hele annonsen"
+    const allSuggestions = [...suggestionsResponse.data];
+    // if (suggestionsResponse.data.length > 0 && value && value.length > 0) {
+    //     allSuggestions.push(value);
+    // }
 
     function handleComboBoxValueChange(event) {
         setValue(event?.target?.value || "");
@@ -54,7 +102,6 @@ function SearchBox({ dispatch, query, aggregations, locations }) {
                 query={query}
                 onChange={handleComboBoxValueChange}
                 value={value}
-                allSuggestions={allSuggestions}
                 options={getComboboxOptions(aggregations, locations, allSuggestions)}
             />
         </section>
