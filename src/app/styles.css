@@ -121,10 +121,6 @@ no-underline:hover {
     text-align: right;
 }
 
-.purple-when-visited:visited {
-    color: var(--a-purple-500);
-}
-
-.purple-when-visited:visited:focus {
-    color: var(--a-surface-default);
+.purple-when-visited:visited:not(:focus) {
+    color: var(--a-text-visited);
 }
