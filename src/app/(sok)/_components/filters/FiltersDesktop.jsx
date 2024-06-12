@@ -4,6 +4,7 @@ import { Accordion, Alert, Button } from "@navikt/ds-react";
 import Remote from "@/app/(sok)/_components/filters/Remote";
 import Education from "@/app/(sok)/_components/filters/Education";
 import DriversLicense from "@/app/(sok)/_components/filters/DriversLicense";
+import Experience from "@/app/(sok)/_components/filters/Experience";
 import FilterAccordionItem from "./FilterAccordionItem";
 import Published from "./Published";
 import Counties from "./Locations";
@@ -70,6 +71,14 @@ function FiltersDesktop({ query, dispatchQuery, aggregations, locations, searchR
                         dispatch={dispatchQuery}
                         initialValues={aggregations.needDriversLicense}
                         updatedValues={searchResult.aggregations.needDriversLicense}
+                    />
+                </FilterAccordionItem>
+                <FilterAccordionItem title="Erfaring" panelId="experience">
+                    <Experience
+                        query={query}
+                        dispatch={dispatchQuery}
+                        initialValues={aggregations.experience}
+                        updatedValues={searchResult.aggregations.experience}
                     />
                 </FilterAccordionItem>
                 <FilterAccordionItem title="Arbeidsspråk" panelId="workLanguage">

@@ -58,6 +58,10 @@ export default function simplifySearchResponse(response) {
                 key: item.key,
                 count: item.doc_count,
             })),
+            experience: response.aggregations.experience.values.buckets.map((item) => ({
+                key: item.key,
+                count: item.doc_count,
+            })),
             extent: response.aggregations.extent.values.buckets.map((item) => ({
                 key: item.key,
                 count: item.doc_count,
