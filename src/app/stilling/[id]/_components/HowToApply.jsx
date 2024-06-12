@@ -151,7 +151,7 @@ export default function HowToApply({ adData }) {
                         <div>
                             <Button
                                 variant="primary"
-                                as="a"
+                                as={Link}
                                 href={applicationUrl}
                                 onClick={() => logApplyForPosition(adData)}
                                 icon={<ExternalLinkIcon aria-hidden="true" />}
