@@ -1,10 +1,10 @@
 "use server";
 
 import { getDefaultHeaders } from "@/app/_common/utils/fetch";
-import capitalizeFirstLetter from "@/app/_common/utils/capitalizeFirstLetter";
 import logger from "@/app/_common/utils/logger";
 import { incrementSuggestionRequests, suggestionDurationHistogram } from "@/metrics";
 
+/**
 function suggest(field, match) {
     return {
         prefix: match,
@@ -30,10 +30,12 @@ const suggestionsTemplate = (match, minLength) => ({
     },
     _source: false,
 });
+ */
 
 /**
  * Use new Set to remove duplicates across category_suggest and searchtags_suggest
  */
+/**
 function removeDuplicateSuggestions(result) {
     return [
         ...new Set(
@@ -48,16 +50,19 @@ function removeDuplicateSuggestions(result) {
         ),
     ].slice(0, 10);
 }
+*/
 
-export async function getSuggestions(match, minLength) {
+function extractSuggestions(resp) {
+    return [...new Set([...resp.map((it) => it.label)])];
+}
+
+export async function getSuggestions(match) {
     try {
         const measureSuggestionDuration = suggestionDurationHistogram.startTimer();
 
-        const body = suggestionsTemplate(match, minLength);
-        const res = await fetch(`${process.env.PAMSEARCHAPI_URL}/stillingsok/ad/_search`, {
-            method: "POST",
+        const res = await fetch(`${process.env.PAMONTOLOGI_URL}/rest/typeahead/stilling?q=${match}`, {
+            method: "GET",
             headers: getDefaultHeaders(),
-            body: JSON.stringify(body),
         });
 
         measureSuggestionDuration();
@@ -65,8 +70,8 @@ export async function getSuggestions(match, minLength) {
         incrementSuggestionRequests(res.ok);
 
         let data = await res.json();
-        data = removeDuplicateSuggestions(data);
 
+        data = extractSuggestions(data);
         return data;
     } catch (e) {
         logger.error("getSuggestions error", { error: e });

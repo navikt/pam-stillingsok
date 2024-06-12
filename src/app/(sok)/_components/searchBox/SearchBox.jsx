@@ -33,7 +33,7 @@ function SearchBox({ dispatch, query }) {
         }
         let data;
         try {
-            data = await actions.getSuggestions(value, MINIMUM_LENGTH);
+            data = await actions.getSuggestions(value);
         } catch (err) {
             // ignore fetch failed errors
         }
