@@ -65,6 +65,7 @@ spec:
       rules:
         - application: pam-search-api
         - application: pam-aduser
+        - application: pam-ontologi
       external:
         - host: {{ arbeidsplassen_domain }}
         - host: amplitude.nav.no
