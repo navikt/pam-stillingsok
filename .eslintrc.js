@@ -1,3 +1,4 @@
+const { CheckboxGroup, Checkbox, RadioGroup, CopyButton, BodyShort, Tooltip } = require("@navikt/ds-react");
 const { resolve } = require("node:path");
 
 const project = resolve(__dirname, "jsconfig.json");
@@ -12,14 +13,17 @@ module.exports = {
         vi: true,
     },
     settings: {
-        /**
-         * enable MUI Joy components to be checked
-         * @see {@link https://github.com/jsx-eslint/eslint-plugin-jsx-a11y?tab=readme-ov-file#configurations}
-         */
         "jsx-a11y": {
-            polymorphicPropName: "component",
+            polymorphicPropName: "as",
             components: {
+                BodyLong: "p",
+                BodyShort: "p",
                 Button: "button",
+                CheckboxGroup: "fieldset",
+                Checkbox: "input",
+                Chips: "ul",
+                CopyButton: "button",
+                Heading: "h",
                 Icon: "svg",
                 IconButton: "button",
                 Image: "img",
@@ -27,11 +31,15 @@ module.exports = {
                 Link: "a",
                 List: "ul",
                 ListItem: "li",
-                ListItemButton: "button",
-                ListDivider: "li",
                 NextImage: "img",
                 NextLink: "a",
+                Pagination: "nav",
+                RadioGroup: "fieldset",
+                Radio: "input",
+                Select: "select",
+                TextField: "input",
                 Textarea: "textarea",
+                Tooltip: "button",
             },
         },
     },
