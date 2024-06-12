@@ -124,3 +124,7 @@ no-underline:hover {
 .purple-when-visited:visited {
     color: var(--a-purple-500);
 }
+
+.purple-when-visited:visited:focus {
+    color: var(--a-surface-default);
+}
