@@ -1,4 +1,3 @@
-const { CheckboxGroup, Checkbox, RadioGroup, CopyButton, BodyShort, Tooltip } = require("@navikt/ds-react");
 const { resolve } = require("node:path");
 
 const project = resolve(__dirname, "jsconfig.json");
