@@ -5,6 +5,7 @@ import { TrashIcon } from "@navikt/aksel-icons";
 import fixLocationName from "@/app/_common/utils/fixLocationName";
 import { labelForNeedDriversLicense } from "@/app/(sok)/_components/filters/DriversLicense";
 import { labelForEducation } from "@/app/(sok)/_components/filters/Education";
+import { labelForExperience } from "@/app/(sok)/_components/filters/Experience";
 import {
     REMOVE_COUNTRY,
     REMOVE_COUNTY,
@@ -22,6 +23,7 @@ import {
     SET_PUBLISHED,
     SET_SEARCH_STRING,
     REMOVE_OCCUPATION,
+    REMOVE_EXPERIENCE,
 } from "../../_utils/queryReducer";
 import { PublishedLabelsEnum } from "../../_utils/query";
 import SaveSearchButton from "../../../lagrede-sok/_components/SaveSearchButton";
@@ -259,6 +261,21 @@ function SelectedFilters({ query, queryDispatch }) {
                     {labelForNeedDriversLicenseValue === "Ikke oppgitt"
                         ? "Førerkort ikke oppgitt"
                         : labelForNeedDriversLicenseValue}
+                </Chips.Removable>
+            );
+        }),
+    );
+
+    chips.push(
+        ...query.experience.map((value) => {
+            const label = labelForExperience(value);
+            return (
+                <Chips.Removable
+                    variant="neutral"
+                    key={`experience-${value}`}
+                    onClick={() => queryDispatch({ type: REMOVE_EXPERIENCE, value })}
+                >
+                    {label === "Ikke oppgitt" ? "Erfaring ikke oppgitt" : label}
                 </Chips.Removable>
             );
         }),
