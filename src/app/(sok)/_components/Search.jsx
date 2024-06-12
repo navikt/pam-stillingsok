@@ -10,7 +10,6 @@ import queryReducer from "../_utils/queryReducer";
 import { isSearchQueryEmpty, SEARCH_CHUNK_SIZE, stringifyQuery, toBrowserQuery } from "../_utils/query";
 import SearchResult from "./searchResult/SearchResult";
 import DoYouWantToSaveSearch from "./howToPanels/DoYouWantToSaveSearch";
-import SelectedFilters from "./selectedFilters/SelectedFilters";
 import Feedback from "./feedback/Feedback";
 import FiltersDesktop from "./filters/FiltersDesktop";
 import SearchResultHeader from "./searchResultHeader/SearchResultHeader";
@@ -76,7 +75,13 @@ export default function Search({ query, searchResult, aggregations, locations })
             </Box>
 
             <div className="SearchContainer container-small">
-                <SearchBox query={updatedQuery} dispatch={queryDispatch} />
+                <SearchBox
+                    query={updatedQuery}
+                    dispatch={queryDispatch}
+                    aggregations={aggregations}
+                    locations={locations}
+                />
+                <SaveSearchButton query={query} />
                 <Button
                     type="button"
                     variant="tertiary"
@@ -87,7 +92,6 @@ export default function Search({ query, searchResult, aggregations, locations })
                 >
                     Fjern alle
                 </Button>
-                <SaveSearchButton query={query} />
                 <Box>
                     <HStack gap="2" justify={{ xs: "start", md: "center" }} align={{ xs: "start", md: "center" }}>
                         <Show below="lg">
@@ -146,7 +150,6 @@ export default function Search({ query, searchResult, aggregations, locations })
                 </Show>
 
                 <VStack gap="10">
-                    <SelectedFilters query={query} queryDispatch={queryDispatch} />
                     <SearchResult searchResult={searchResult} query={updatedQuery} />
 
                     {/* Elastic search does not support pagination above 10 000 */}

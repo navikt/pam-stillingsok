@@ -2,13 +2,14 @@ import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { FetchAction, useFetchReducer } from "@/app/_common/hooks/useFetchReducer";
 import * as actions from "@/app/_common/actions";
-import ComboBox from "@/app/(sok)/_components/searchBox/ComboBox";
+import ComboBox from "@/app/(sok)/_components/combobox/ComboBox";
+import { getComboboxOptions } from "@/app/(sok)/_components/combobox/comboboxUtils";
 
 let suggestionsCache = [];
 const CACHE_MAX_SIZE = 50;
 const MINIMUM_LENGTH = 1;
 
-function SearchBox({ dispatch, query }) {
+function SearchBox({ dispatch, query, aggregations, locations }) {
     const [value, setValue] = useState("");
     const [suggestionsResponse, suggestionsDispatch] = useFetchReducer([]);
     const initialRender = useRef(true);
@@ -54,6 +55,7 @@ function SearchBox({ dispatch, query }) {
                 onChange={handleComboBoxValueChange}
                 value={value}
                 allSuggestions={allSuggestions}
+                options={getComboboxOptions(aggregations, locations, allSuggestions)}
             />
         </section>
     );
@@ -64,6 +66,7 @@ SearchBox.propTypes = {
         q: PropTypes.string,
     }).isRequired,
     dispatch: PropTypes.func.isRequired,
+    locations: PropTypes.arrayOf(PropTypes.shape({})),
 };
 
 export default SearchBox;
