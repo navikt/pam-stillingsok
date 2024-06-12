@@ -74,7 +74,7 @@ export async function getSuggestions(match) {
         data = extractSuggestions(data);
         return data;
     } catch (e) {
-        logger.error("getSuggestions error", { error: e });
+        logger.error(`getSuggestions error: ${e}`, { error: e });
         incrementSuggestionRequests(false);
         return [];
     }
