@@ -69,7 +69,6 @@ function SearchBox({ dispatch, query, aggregations, locations }) {
                 queryDispatch={dispatch}
                 query={query}
                 onChange={handleComboBoxValueChange}
-                value={value}
                 options={getComboboxOptions(aggregations, locations, allSuggestions)}
             />
         </section>

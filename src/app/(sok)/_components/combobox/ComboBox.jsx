@@ -23,7 +23,7 @@ import {
     removeOccupationSecondLevel,
 } from "@/app/(sok)/_components/combobox/comboboxUtils";
 
-function ComboBox({ query, queryDispatch, onChange, value, options }) {
+function ComboBox({ query, queryDispatch, onChange, options }) {
     const initialSelectedOptions = useMemo(() => getQueryOptions(query), [query]);
 
     const [selectedOptions, setSelectedOptions] = useState(initialSelectedOptions);
@@ -112,7 +112,7 @@ function ComboBox({ query, queryDispatch, onChange, value, options }) {
             isMultiSelect
             onToggleSelected={onToggleSelected}
             selectedOptions={selectedOptions}
-            options={value && value.length > 0 ? optionLi : []}
+            options={optionLi}
             onChange={onChange}
         />
     );
@@ -137,7 +137,6 @@ ComboBox.propTypes = {
     }),
     queryDispatch: PropTypes.func.isRequired,
     onChange: PropTypes.func.isRequired,
-    value: PropTypes.string,
     options: PropTypes.arrayOf(PropTypes.shape({})),
 };
 
