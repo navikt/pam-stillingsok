@@ -2,6 +2,7 @@ import React from "react";
 import { Hide, Pagination, Select, Show, VStack } from "@navikt/ds-react";
 import PropTypes from "prop-types";
 import * as actions from "@/app/_common/actions";
+import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
 import { SET_FROM_AND_SIZE } from "../../_utils/queryReducer";
 import { ALLOWED_NUMBER_OF_RESULTS_PER_PAGE, SEARCH_CHUNK_SIZE } from "../../_utils/query";
 
@@ -59,6 +60,7 @@ function SearchPagination({ searchResult, query, queryDispatch }) {
                         from: 0,
                         size,
                     });
+                    logAmplitudeEvent("Page size Changed", { size });
                     actions.saveResultsPerPage(size);
                 }}
                 value={resultsPerPage}

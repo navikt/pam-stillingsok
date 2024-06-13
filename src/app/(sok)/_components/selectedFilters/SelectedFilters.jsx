@@ -303,7 +303,11 @@ function SelectedFilters({ query, queryDispatch }) {
         <HStack gap="2" align="center">
             {chips.length > MAX_CHIPS ? (
                 <>
-                    {showAll ? chips : chips.slice(0, MAX_CHIPS)}
+                    {showAll ? (
+                        <Chips aria-label="Liste med valgte søkefiltre">{chips}</Chips>
+                    ) : (
+                        <Chips aria-label="Liste med valgte søkefiltre">{chips.slice(0, MAX_CHIPS)}</Chips>
+                    )}
                     {!showAll && (
                         <Button
                             size="small"
@@ -317,7 +321,7 @@ function SelectedFilters({ query, queryDispatch }) {
                     )}
                 </>
             ) : (
-                chips
+                <Chips aria-label="Liste med valgte søkefiltre">{chips}</Chips>
             )}
             <Button
                 type="button"
