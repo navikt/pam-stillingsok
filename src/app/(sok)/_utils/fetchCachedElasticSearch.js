@@ -2,6 +2,7 @@ import elasticSearchRequestBody from "@/app/(sok)/_utils/elasticSearchRequestBod
 import { getDefaultHeaders } from "@/app/_common/utils/fetch";
 import simplifySearchResponse from "@/app/(sok)/_utils/simplifySearchResponse";
 import { unstable_cache } from "next/cache"; // eslint-disable-line
+import { incrementElasticSearchRequests } from "@/metrics";
 
 /*
 Manually cached because Next.js won't cache it. We break these:
@@ -21,6 +22,8 @@ async function fetchElasticSearch(query) {
         headers: getDefaultHeaders(),
         body: JSON.stringify(body),
     });
+
+    incrementElasticSearchRequests(res.ok);
 
     if (!res.ok) {
         throw new Error(`Failed to fetch data: ${res.status}`);
