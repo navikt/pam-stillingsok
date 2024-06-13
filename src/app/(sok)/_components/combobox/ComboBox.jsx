@@ -16,6 +16,7 @@ import {
     addCountry,
     addMunicipal,
     addOccupationSecondLevel,
+    findLabelForFilter,
     getFilter,
     getQueryOptions,
     removeCountry,
@@ -99,9 +100,8 @@ function ComboBox({ query, queryDispatch, onChange, options }) {
         }
     };
 
-    // TODO: fix "Encountered two children with the same key,", temporarily sat label as "label [value]" as label is used in key giving eg. Oslo municipality and Oslo county the same key
     const optionLi = options.map((o) => ({
-        label: `${o.label} [${o.value}]`,
+        label: `${o.label} ${findLabelForFilter(o.value.split("-")[0])}`,
         value: o.value,
     }));
 

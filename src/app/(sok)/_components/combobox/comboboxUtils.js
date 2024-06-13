@@ -51,6 +51,35 @@ const WORK_LANGUAGE = "workLanguage";
 const REMOTE = "remote";
 const NEED_DRIVERS_LICENSE = "needDriversLicense";
 
+export const findLabelForFilter = (value) => {
+    switch (value) {
+        case MUNICIPAL:
+            return "(Kommune)";
+        case COUNTY:
+            return "(Fylke)";
+        case COUNTRY:
+            return "(Land)";
+        case OCCUPATION_FIRST_LEVEL:
+            return "(Yrkesgruppe)";
+        case OCCUPATION:
+            return "(Yrke)";
+        case SECTOR:
+            return "(Sektor)";
+        case ENGAGEMENT_TYPE:
+            return "(Ansettelsesform)";
+        case EXTENT:
+            return "(Omfang)";
+        case EDUCATION:
+            return "(Utdanning)";
+        case WORK_LANGUAGE:
+            return "(Arbeidsspråk)";
+        case NEED_DRIVERS_LICENSE:
+            return "(Førerkort)";
+        default:
+            return "";
+    }
+};
+
 export function getComboboxOptions(aggregations, locations, allSuggestions) {
     const locationList = buildLocations(aggregations, locations);
 
