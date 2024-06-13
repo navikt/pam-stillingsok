@@ -19,6 +19,14 @@ const suggestionRequests =
           })
         : register.getSingleMetric("suggestion_requests");
 
+export const suggestionDurationHistogram =
+    register.getSingleMetric("suggestion_duration_seconds") === undefined
+        ? new client.Histogram({
+              name: "suggestion_duration_seconds",
+              help: "Duration of calls for suggestions",
+          })
+        : register.getSingleMetric("suggestion_duration_seconds");
+
 const elasticSearchRequests =
     register.getSingleMetric("elastic_search_requests") === undefined
         ? new client.Counter({
@@ -27,6 +35,14 @@ const elasticSearchRequests =
               labelNames: ["result"],
           })
         : register.getSingleMetric("elastic_search_requests");
+
+export const elasticSearchDurationHistogram =
+    register.getSingleMetric("elastic_search_duration_seconds") === undefined
+        ? new client.Histogram({
+              name: "elastic_search_duration_seconds",
+              help: "Duration of calls to elastic search",
+          })
+        : register.getSingleMetric("elastic_search_duration_seconds");
 
 export function incrementAdUserRequests(operation, success) {
     adUserRequests.inc({

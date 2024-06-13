@@ -3,7 +3,7 @@
 import { getDefaultHeaders } from "@/app/_common/utils/fetch";
 import capitalizeFirstLetter from "@/app/_common/utils/capitalizeFirstLetter";
 import logger from "@/app/_common/utils/logger";
-import { incrementSuggestionRequests } from "@/metrics";
+import { incrementSuggestionRequests, suggestionDurationHistogram } from "@/metrics";
 
 function suggest(field, match) {
     return {
@@ -51,16 +51,21 @@ function removeDuplicateSuggestions(result) {
 
 export async function getSuggestions(match, minLength) {
     try {
+        const measureSuggestionDuration = suggestionDurationHistogram.startTimer();
+
         const body = suggestionsTemplate(match, minLength);
         const res = await fetch(`${process.env.PAMSEARCHAPI_URL}/stillingsok/ad/_search`, {
             method: "POST",
             headers: getDefaultHeaders(),
             body: JSON.stringify(body),
         });
-        let data = await res.json();
-        data = removeDuplicateSuggestions(data);
+
+        measureSuggestionDuration();
 
         incrementSuggestionRequests(res.ok);
+
+        let data = await res.json();
+        data = removeDuplicateSuggestions(data);
 
         return data;
     } catch (e) {

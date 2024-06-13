@@ -2,7 +2,7 @@ import elasticSearchRequestBody from "@/app/(sok)/_utils/elasticSearchRequestBod
 import { getDefaultHeaders } from "@/app/_common/utils/fetch";
 import simplifySearchResponse from "@/app/(sok)/_utils/simplifySearchResponse";
 import { unstable_cache } from "next/cache"; // eslint-disable-line
-import { incrementElasticSearchRequests } from "@/metrics";
+import { elasticSearchDurationHistogram, incrementElasticSearchRequests } from "@/metrics";
 
 /*
 Manually cached because Next.js won't cache it. We break these:
@@ -16,12 +16,16 @@ We can't use the built-in 'cache' in React either, since the route segment is dy
  */
 
 async function fetchElasticSearch(query) {
+    const measureSearchDuration = elasticSearchDurationHistogram.startTimer();
+
     const body = elasticSearchRequestBody(query);
     const res = await fetch(`${process.env.PAMSEARCHAPI_URL}/stillingsok/ad/_search`, {
         method: "POST",
         headers: getDefaultHeaders(),
         body: JSON.stringify(body),
     });
+
+    measureSearchDuration();
 
     incrementElasticSearchRequests(res.ok);
 
