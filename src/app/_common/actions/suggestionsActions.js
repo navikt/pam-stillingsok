@@ -3,6 +3,7 @@
 import { getDefaultHeaders } from "@/app/_common/utils/fetch";
 import capitalizeFirstLetter from "@/app/_common/utils/capitalizeFirstLetter";
 import logger from "@/app/_common/utils/logger";
+import { incrementSuggestionRequests } from "@/metrics";
 
 function suggest(field, match) {
     return {
@@ -58,9 +59,13 @@ export async function getSuggestions(match, minLength) {
         });
         let data = await res.json();
         data = removeDuplicateSuggestions(data);
+
+        incrementSuggestionRequests(res.ok);
+
         return data;
     } catch (e) {
         logger.error("getSuggestions error", { error: e });
+        incrementSuggestionRequests(false);
         return [];
     }
 }
