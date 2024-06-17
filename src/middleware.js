@@ -53,6 +53,27 @@ function addSessionIdHeader(requestHeaders) {
     requestHeaders.set(SESSION_ID_TAG, getSessionId());
 }
 
+const PUBLIC_FILE = /\.(.*)$/;
+
+// Due to limitations in the edge runtime, we can't use the prom-client library to track metrics directly here.
+// See this issue: https://github.com/siimon/prom-client/issues/584
+// It's also not possible to switch to a different runtime.
+// See this discussion: https://github.com/vercel/next.js/discussions/46722
+function collectNumberOfRequestsMetric(request, requestHeaders) {
+    // Don't track requests to js, css, images, etc.
+    if (PUBLIC_FILE.test(request.nextUrl.pathname)) {
+        return;
+    }
+
+    // Sometimes, there are multiple requests for the same page, but we only want to track the first one
+    if (requestHeaders.get("next-action") === null) {
+        fetch(`http://localhost:${process.env.PORT}/stillinger/api/internal/metrics`, {
+            method: "POST",
+            body: JSON.stringify({ method: request.method, path: request.nextUrl.pathname }),
+        });
+    }
+}
+
 export function middleware(request) {
     const requestHeaders = new Headers(request.headers);
     const responseHeaders = new Headers();
@@ -73,6 +94,8 @@ export function middleware(request) {
     responseHeaders.forEach((value, key) => {
         response.headers.set(key, value);
     });
+
+    collectNumberOfRequestsMetric(request, requestHeaders);
 
     return response;
 }

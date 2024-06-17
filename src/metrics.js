@@ -1,6 +1,15 @@
 import { register } from "prom-client";
 import * as client from "prom-client";
 
+export const httpRequests =
+    register.getSingleMetric("http_requests") === undefined
+        ? new client.Counter({
+              name: "http_requests",
+              help: "Total number of incoming HTTP requests",
+              labelNames: ["method", "path"],
+          })
+        : register.getSingleMetric("http_requests");
+
 const adUserRequests =
     register.getSingleMetric("aduser_requests") === undefined
         ? new client.Counter({
