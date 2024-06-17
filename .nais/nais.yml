@@ -31,6 +31,9 @@ spec:
     requests:
       cpu: 1000m
       memory: 256Mi
+  prometheus:
+    enabled: true
+    path: /stillinger/api/internal/prometheus
   observability:
     logging:
       destinations:
