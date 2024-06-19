@@ -34,9 +34,9 @@ spec:
       labels:
         namespace: "teampam"
         severity: critical
-    - alert: Høy andel HTTP serverfeil (503 responser), er stillingsok nede?
+    - alert: Høy andel HTTP serverfeil (503 responser), er stillingsok nede eller er det bare scraping?
       expr: sum(rate(nginx_ingress_controller_requests{host="arbeidsplassen.nav.no", path="/stillinger(/.*)?", status=~"503"}[5m])) > 12
-      for: 3m
+      for: 10m
       annotations:
         action: "Sjekk loggene for å se hvorfor {{ $labels.service }} returnerer HTTP feilresponser"
       labels:
