@@ -2,51 +2,58 @@ import React from "react";
 import PropTypes from "prop-types";
 import { BodyShort, Box, Checkbox, Fieldset } from "@navikt/ds-react";
 import fixLocationName from "@/app/_common/utils/fixLocationName";
-import {
-    ADD_COUNTRY,
-    ADD_COUNTY,
-    ADD_MUNICIPAL,
-    REMOVE_COUNTRY,
-    REMOVE_COUNTY,
-    REMOVE_MUNICIPAL,
-    SET_INTERNATIONAL,
-} from "@/app/(sok)/_utils/queryReducer";
 import buildLocations from "@/app/(sok)/_components/utils/buildLocations";
 import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
+import { useSearchParams } from "next/navigation";
+import { SearchQueryParams } from "@/app/(sok)/_utils/constants";
+import useSearchRouter from "@/app/(sok)/_utils/useSearchRouter";
 
-function Locations({ locations, query, dispatch, updatedValues }) {
+function Locations({ locations, updatedValues }) {
     const locationValues = buildLocations(updatedValues.aggregations, locations);
+    const router = useSearchRouter();
+    const searchParams = useSearchParams();
 
     function handleLocationClick(value, type, checked) {
-        if (type === "county") {
+        const newSearchParams = new URLSearchParams(searchParams);
+        if (type === SearchQueryParams.COUNTY) {
             if (checked) {
-                dispatch({ type: ADD_COUNTY, value });
+                newSearchParams.append(SearchQueryParams.COUNTY, value);
             } else {
-                dispatch({ type: REMOVE_COUNTY, value });
-            }
-            logFilterChanged({ name: "Sted", value: fixLocationName(value), checked, level: "Fylke" });
-        } else if (type === "municipal") {
-            if (checked) {
-                dispatch({ type: ADD_MUNICIPAL, value });
-            } else {
-                dispatch({ type: REMOVE_MUNICIPAL, value });
-            }
-            logFilterChanged({ name: "Sted", value: fixLocationName(value, true), checked, level: "Kommune" });
-        } else if (type === "country") {
-            if (checked) {
-                dispatch({ type: ADD_COUNTRY, value });
-            } else {
-                dispatch({ type: REMOVE_COUNTRY, value });
-            }
-            logFilterChanged({ name: "Sted", value: fixLocationName(value), checked, level: "Land" });
-        } else if (type === "international") {
-            if (query.international) {
-                query.countries.forEach((c) => {
-                    dispatch({ type: REMOVE_COUNTRY, value: c });
+                newSearchParams.delete(SearchQueryParams.COUNTY, value);
+
+                // Remove all checked municipals on level 2, when county is unchecked
+                newSearchParams.getAll(SearchQueryParams.MUNICIPAL).forEach((obj) => {
+                    if (obj.startsWith(`${value}.`)) newSearchParams.delete(SearchQueryParams.MUNICIPAL, obj);
                 });
             }
-            dispatch({ type: SET_INTERNATIONAL, value: !query.international });
+            logFilterChanged({ name: "Sted", value: fixLocationName(value), checked, level: "Fylke" });
+        } else if (type === SearchQueryParams.MUNICIPAL) {
+            if (checked) {
+                newSearchParams.append(SearchQueryParams.MUNICIPAL, value);
+            } else {
+                newSearchParams.delete(SearchQueryParams.MUNICIPAL, value);
+            }
+            logFilterChanged({ name: "Sted", value: fixLocationName(value, true), checked, level: "Kommune" });
+        } else if (type === SearchQueryParams.COUNTRY) {
+            if (checked) {
+                newSearchParams.append(SearchQueryParams.COUNTRY, value);
+            } else {
+                newSearchParams.delete(SearchQueryParams.COUNTRY, value);
+            }
+            logFilterChanged({ name: "Sted", value: fixLocationName(value), checked, level: "Land" });
+        } else if (type === SearchQueryParams.INTERNATIONAL) {
+            if (checked) {
+                newSearchParams.set(SearchQueryParams.INTERNATIONAL, checked);
+            } else {
+                newSearchParams.delete(SearchQueryParams.INTERNATIONAL);
+
+                // Remove all checked countries when 'Utland' is unchecked
+                newSearchParams.getAll(SearchQueryParams.COUNTRY).forEach((c) => {
+                    newSearchParams.delete(SearchQueryParams.COUNTRY, c);
+                });
+            }
         }
+        router.replace(newSearchParams, { scroll: false });
     }
 
     const handleCheckboxClick = (key, type) => (e) => {
@@ -71,26 +78,27 @@ function Locations({ locations, query, dispatch, updatedValues }) {
                         <React.Fragment key={location.key}>
                             {location.key === "UTLAND" ? (
                                 <Checkbox
-                                    name="international"
+                                    name={SearchQueryParams.INTERNATIONAL}
                                     value="true"
                                     onChange={handleCheckboxClick(location.key, location.type)}
-                                    checked={query.international === true}
+                                    checked={searchParams.get(SearchQueryParams.INTERNATIONAL) === "true"}
                                 >
                                     Utland ({updatedValues.aggregations.totalInternational})
                                 </Checkbox>
                             ) : (
                                 <Checkbox
-                                    name="counties[]"
+                                    name={SearchQueryParams.COUNTY}
                                     value={location.key}
                                     onChange={handleCheckboxClick(location.key, location.type)}
-                                    checked={query.counties.includes(location.key)}
+                                    checked={searchParams.getAll(SearchQueryParams.COUNTY).includes(location.key)}
                                 >
                                     <span translate="no">{`${fixLocationName(location.key)} (${location.count})`}</span>
                                 </Checkbox>
                             )}
 
-                            {(query.counties.includes(location.key) ||
-                                (location.key === "UTLAND" && query.international === true)) &&
+                            {(searchParams.getAll(SearchQueryParams.COUNTY).includes(location.key) ||
+                                (location.key === "UTLAND" &&
+                                    searchParams.get(SearchQueryParams.INTERNATIONAL) === "true")) &&
                                 location.key !== "OSLO" &&
                                 location.key !== "SVALBARD" && (
                                     <Box paddingInline="8 0">
@@ -101,8 +109,8 @@ function Locations({ locations, query, dispatch, updatedValues }) {
                                                         <Checkbox
                                                             name={
                                                                 location.key === "UTLAND"
-                                                                    ? "countries[]"
-                                                                    : "municipals[]"
+                                                                    ? SearchQueryParams.COUNTRY
+                                                                    : SearchQueryParams.MUNICIPAL
                                                             }
                                                             key={subLocation.key}
                                                             value={subLocation.key}
@@ -111,8 +119,12 @@ function Locations({ locations, query, dispatch, updatedValues }) {
                                                                 subLocation.type,
                                                             )}
                                                             checked={
-                                                                query.municipals.includes(subLocation.key) ||
-                                                                query.countries.includes(subLocation.key)
+                                                                searchParams
+                                                                    .getAll(SearchQueryParams.MUNICIPAL)
+                                                                    .includes(subLocation.key) ||
+                                                                searchParams
+                                                                    .getAll(SearchQueryParams.COUNTRY)
+                                                                    .includes(subLocation.key)
                                                             }
                                                         >
                                                             <BodyShort
@@ -146,13 +158,6 @@ Locations.propTypes = {
         }),
     }),
     locations: PropTypes.arrayOf(PropTypes.object),
-    query: PropTypes.shape({
-        countries: PropTypes.arrayOf(PropTypes.string),
-        counties: PropTypes.arrayOf(PropTypes.string),
-        municipals: PropTypes.arrayOf(PropTypes.string),
-        international: PropTypes.bool,
-    }),
-    dispatch: PropTypes.func.isRequired,
 };
 
 export default Locations;

@@ -1,32 +1,43 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { Radio, RadioGroup } from "@navikt/ds-react";
-import { SET_PUBLISHED } from "@/app/(sok)/_utils/queryReducer";
-import { PublishedLabelsEnum } from "@/app/(sok)/_utils/query";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
 import sortPublishedValues from "@/app/(sok)/_components/utils/sortPublishedValues";
 import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
+import { useSearchParams } from "next/navigation";
+import { SearchQueryParams } from "@/app/(sok)/_utils/constants";
+import useSearchRouter from "@/app/(sok)/_utils/useSearchRouter";
 
-function Published({ dispatch, query, initialValues, updatedValues, publishedTotalCount }) {
+export const PublishedLabelsEnum = {
+    "now/d": "Nye i dag",
+    "now-3d": "Nye siste 3 døgn",
+    "now-7d": "Nye siste uka",
+};
+
+function Published({ initialValues, updatedValues, publishedTotalCount }) {
     const sortedValues = sortPublishedValues(initialValues);
     const values = mergeCount(sortedValues, updatedValues);
+    const router = useSearchRouter();
+    const searchParams = useSearchParams();
 
     function handleClick(value) {
+        const newSearchParams = new URLSearchParams(searchParams);
         if (value) {
-            dispatch({ type: SET_PUBLISHED, value });
+            newSearchParams.set(SearchQueryParams.PUBLISHED, value);
         } else {
-            dispatch({ type: SET_PUBLISHED, value: undefined });
+            newSearchParams.delete(SearchQueryParams.PUBLISHED);
         }
+        router.replace(newSearchParams, { scroll: false });
         logFilterChanged({ name: "Publisert", value: PublishedLabelsEnum[value] });
     }
 
     return (
         <RadioGroup
-            name="published"
+            name={SearchQueryParams.PUBLISHED}
             onChange={handleClick}
             legend="Filtrer etter når annonsen var publisert"
             hideLegend
-            value={query.published || ""}
+            value={searchParams.get(SearchQueryParams.PUBLISHED) || ""}
         >
             {values.map((item) => (
                 <Radio key={item.key} value={item.key}>
@@ -51,10 +62,6 @@ Published.propTypes = {
             count: PropTypes.number,
         }),
     ),
-    query: PropTypes.shape({
-        published: PropTypes.string,
-    }).isRequired,
-    dispatch: PropTypes.func.isRequired,
 };
 
 export default Published;

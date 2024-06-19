@@ -1,31 +1,37 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { BodyShort, Checkbox, CheckboxGroup } from "@navikt/ds-react";
-import { ADD_EDUCATION, REMOVE_EDUCATION } from "@/app/(sok)/_utils/queryReducer";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
 import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
 import moveCriteriaToBottom from "@/app/(sok)/_components/utils/moveFacetToBottom";
 import sortEducationValues from "@/app/(sok)/_components/utils/sortEducationValues";
+import { useSearchParams } from "next/navigation";
+import { SearchQueryParams } from "@/app/(sok)/_utils/constants";
+import useSearchRouter from "@/app/(sok)/_utils/useSearchRouter";
 
-function Education({ initialValues, updatedValues, query, dispatch }) {
+function Education({ initialValues, updatedValues }) {
     const sortedValuesByEducation = sortEducationValues(initialValues);
     const sortedValues = moveCriteriaToBottom(sortedValuesByEducation, "Ikke oppgitt");
     const values = mergeCount(sortedValues, updatedValues);
+    const router = useSearchRouter();
+    const searchParams = useSearchParams();
 
     function handleClick(e) {
         const { value, checked } = e.target;
+        const newSearchParams = new URLSearchParams(searchParams);
         if (checked) {
-            dispatch({ type: ADD_EDUCATION, value });
+            newSearchParams.append(SearchQueryParams.EDUCATION, value);
         } else {
-            dispatch({ type: REMOVE_EDUCATION, value });
+            newSearchParams.delete(SearchQueryParams.EDUCATION, value);
         }
+        router.replace(newSearchParams, { scroll: false });
         logFilterChanged({ name: "Utdanningsnivå", value, checked });
     }
 
     return (
         <CheckboxGroup
             className="mb-4"
-            value={query.education}
+            value={searchParams.getAll(SearchQueryParams.EDUCATION)}
             legend={
                 <>
                     <BodyShort as="span" visuallyHidden>
@@ -36,7 +42,7 @@ function Education({ initialValues, updatedValues, query, dispatch }) {
             }
         >
             {values.map((item) => (
-                <Checkbox key={item.key} name="education[]" value={item.key} onChange={handleClick}>
+                <Checkbox key={item.key} name={SearchQueryParams.EDUCATION} value={item.key} onChange={handleClick}>
                     {`${labelForEducation(item.key)} (${item.count})`}
                 </Checkbox>
             ))}
@@ -71,10 +77,6 @@ Education.propTypes = {
         }),
     ).isRequired,
     updatedValues: PropTypes.arrayOf(PropTypes.shape({})),
-    query: PropTypes.shape({
-        education: PropTypes.arrayOf(PropTypes.string),
-    }).isRequired,
-    dispatch: PropTypes.func.isRequired,
 };
 
 export default Education;

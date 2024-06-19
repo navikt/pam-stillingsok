@@ -1,19 +1,21 @@
 import React, { useState } from "react";
 import { BodyLong, Heading, Panel, Link as AkselLink, HStack, VStack } from "@navikt/ds-react";
 import { FaceSmileIcon, FaceFrownIcon } from "@navikt/aksel-icons";
-import PropTypes from "prop-types";
 import { FeedbackButton } from "@navikt/arbeidsplassen-react";
 import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
+import { useSearchParams } from "next/navigation";
+import { SearchQueryParams } from "@/app/(sok)/_utils/constants";
 
-function Feedback({ query }) {
+function Feedback() {
     const [hasGivenRating, setHasGiverRating] = useState(false);
+    const searchParams = useSearchParams();
 
     const onRatingClick = (text) => {
         try {
             logAmplitudeEvent("rate search result relevance", {
                 rating: text,
-                hasSearchString: query.q && query.q.length > 0,
-                hasSearchFields: query.fields && query.fields.length > 0,
+                hasSearchString: searchParams.has(SearchQueryParams.Q),
+                hasSearchFields: searchParams.has(SearchQueryParams.OCCUPATION),
             });
         } catch (err) {
             // ignore
@@ -59,12 +61,5 @@ function Feedback({ query }) {
         </Panel>
     );
 }
-
-Feedback.propTypes = {
-    query: PropTypes.shape({
-        q: PropTypes.string,
-        fields: PropTypes.string,
-    }).isRequired,
-};
 
 export default Feedback;

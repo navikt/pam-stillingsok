@@ -1,27 +1,33 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { BodyShort, Checkbox, CheckboxGroup } from "@navikt/ds-react";
-import { ADD_NEEDDRIVERSLICENSE, REMOVE_NEEDDRIVERSLICENSE } from "@/app/(sok)/_utils/queryReducer";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
 import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
+import { useSearchParams } from "next/navigation";
+import { SearchQueryParams } from "@/app/(sok)/_utils/constants";
+import useSearchRouter from "@/app/(sok)/_utils/useSearchRouter";
 
-function DriversLicense({ initialValues, updatedValues, query, dispatch }) {
+function DriversLicense({ initialValues, updatedValues }) {
     const sortedValues = sortDriverLicenseValues(initialValues);
     const values = mergeCount(sortedValues, updatedValues);
+    const router = useSearchRouter();
+    const searchParams = useSearchParams();
 
     function handleClick(e) {
         const { value, checked } = e.target;
+        const newSearchParams = new URLSearchParams(searchParams);
         if (checked) {
-            dispatch({ type: ADD_NEEDDRIVERSLICENSE, value });
+            newSearchParams.append(SearchQueryParams.NEED_DRIVERS_LICENSE, value);
         } else {
-            dispatch({ type: REMOVE_NEEDDRIVERSLICENSE, value });
+            newSearchParams.delete(SearchQueryParams.NEED_DRIVERS_LICENSE, value);
         }
+        router.replace(newSearchParams, { scroll: false });
         logFilterChanged({ name: "Førerkort", value, checked });
     }
 
     return (
         <CheckboxGroup
-            value={query.needDriversLicense}
+            value={searchParams.getAll(SearchQueryParams.NEED_DRIVERS_LICENSE)}
             legend={
                 <>
                     <BodyShort as="span" visuallyHidden>
@@ -32,7 +38,12 @@ function DriversLicense({ initialValues, updatedValues, query, dispatch }) {
             }
         >
             {values.map((item) => (
-                <Checkbox name="needDriversLicense[]" key={item.key} value={item.key} onChange={handleClick}>
+                <Checkbox
+                    name={SearchQueryParams.NEED_DRIVERS_LICENSE}
+                    key={item.key}
+                    value={item.key}
+                    onChange={handleClick}
+                >
                     {`${labelForNeedDriversLicense(item.key)} (${item.count})`}
                 </Checkbox>
             ))}
@@ -48,7 +59,6 @@ DriversLicense.propTypes = {
         }),
     ).isRequired,
     updatedValues: PropTypes.arrayOf(PropTypes.shape({})),
-    dispatch: PropTypes.func.isRequired,
 };
 
 export const labelForNeedDriversLicense = (key) => {

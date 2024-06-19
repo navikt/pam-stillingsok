@@ -1,9 +1,8 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { BodyShort, Box, Heading, VStack } from "@navikt/ds-react";
 import SaveSearchButton from "@/app/lagrede-sok/_components/SaveSearchButton";
 
-function DoYouWantToSaveSearch({ query }) {
+function DoYouWantToSaveSearch() {
     return (
         <Box padding={{ xs: "4", md: "6" }} borderRadius="small" background="surface-alt-2-subtle">
             <VStack align="center">
@@ -13,14 +12,10 @@ function DoYouWantToSaveSearch({ query }) {
                 <BodyShort className="text-center" spacing>
                     Lagre søket og motta e-post ved nye treff.
                 </BodyShort>
-                <SaveSearchButton query={query} />
+                <SaveSearchButton />
             </VStack>
         </Box>
     );
 }
-
-DoYouWantToSaveSearch.propTypes = {
-    query: PropTypes.shape({}),
-};
 
 export default DoYouWantToSaveSearch;

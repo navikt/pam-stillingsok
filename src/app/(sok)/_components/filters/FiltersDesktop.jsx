@@ -13,46 +13,27 @@ import Sector from "./Sector";
 import EngagementType from "./Engagement";
 import WorkLanguage from "./WorkLanguage";
 
-function FiltersDesktop({ query, dispatchQuery, aggregations, locations, searchResult }) {
+function FiltersDesktop({ aggregations, locations, searchResult }) {
     return (
         <div>
             <Accordion indent={false} headingSize="small">
                 <FilterAccordionItem title="Publisert" panelId="publisert">
                     <Published
-                        query={query}
-                        dispatch={dispatchQuery}
                         initialValues={aggregations.published}
                         updatedValues={searchResult.aggregations.published}
                         publishedTotalCount={searchResult.aggregations.publishedTotalCount}
                     />
                 </FilterAccordionItem>
                 <FilterAccordionItem title="Sted og hjemmekontor" panelId="sted">
-                    <Counties
-                        query={query}
-                        dispatch={dispatchQuery}
-                        locations={locations}
-                        updatedValues={searchResult}
-                    />
-                    <Remote
-                        query={query}
-                        dispatch={dispatchQuery}
-                        initialValues={aggregations.remote}
-                        updatedValues={searchResult.aggregations.remote}
-                    />
+                    <Counties locations={locations} updatedValues={searchResult} />
+                    <Remote initialValues={aggregations.remote} updatedValues={searchResult.aggregations.remote} />
                 </FilterAccordionItem>
                 <FilterAccordionItem title="Yrke og sektor" panelId="yrke">
                     <Occupations
-                        query={query}
-                        dispatch={dispatchQuery}
                         initialValues={aggregations.occupationFirstLevels}
                         updatedValues={searchResult.aggregations.occupationFirstLevels}
                     />
-                    <Sector
-                        query={query}
-                        dispatch={dispatchQuery}
-                        initialValues={aggregations.sector}
-                        updatedValues={searchResult.aggregations.sector}
-                    />
+                    <Sector initialValues={aggregations.sector} updatedValues={searchResult.aggregations.sector} />
                 </FilterAccordionItem>
                 <FilterAccordionItem title="Utdanning og førerkort" panelId="education">
                     <Alert variant="info" className="mb-6">
@@ -60,36 +41,23 @@ function FiltersDesktop({ query, dispatchQuery, aggregations, locations, searchR
                         for tilbakemelding nederst på siden.
                     </Alert>
                     <Education
-                        query={query}
-                        dispatch={dispatchQuery}
                         initialValues={aggregations.education}
                         updatedValues={searchResult.aggregations.education}
                     />
                     <DriversLicense
-                        query={query}
-                        dispatch={dispatchQuery}
                         initialValues={aggregations.needDriversLicense}
                         updatedValues={searchResult.aggregations.needDriversLicense}
                     />
                 </FilterAccordionItem>
                 <FilterAccordionItem title="Arbeidsspråk" panelId="workLanguage">
                     <WorkLanguage
-                        query={query}
-                        dispatch={dispatchQuery}
                         initialValues={aggregations.workLanguage}
                         updatedValues={searchResult.aggregations.workLanguage}
                     />
                 </FilterAccordionItem>
                 <FilterAccordionItem title="Omfang og ansettelsesform" panelId="extent">
-                    <Extent
-                        query={query}
-                        dispatch={dispatchQuery}
-                        initialValues={aggregations.extent}
-                        updatedValues={searchResult.aggregations.extent}
-                    />
+                    <Extent initialValues={aggregations.extent} updatedValues={searchResult.aggregations.extent} />
                     <EngagementType
-                        query={query}
-                        dispatch={dispatchQuery}
                         initialValues={aggregations.engagementTypes}
                         updatedValues={searchResult.aggregations.engagementTypes}
                     />
@@ -103,8 +71,6 @@ function FiltersDesktop({ query, dispatchQuery, aggregations, locations, searchR
 }
 
 FiltersDesktop.propTypes = {
-    query: PropTypes.shape({}),
-    dispatchQuery: PropTypes.func,
     locations: PropTypes.arrayOf(PropTypes.shape({})),
     aggregations: PropTypes.shape({
         needDriversLicense: PropTypes.arrayOf(PropTypes.shape({})),

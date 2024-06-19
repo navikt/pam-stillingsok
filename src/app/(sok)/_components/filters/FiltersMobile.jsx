@@ -14,7 +14,7 @@ import Sector from "./Sector";
 import EngagementType from "./Engagement";
 import WorkLanguage from "./WorkLanguage";
 
-function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggregations, locations }) {
+function FiltersMobile({ onCloseClick, searchResult, aggregations, locations }) {
     const [selectedFilter, setSelectedFilter] = useState("");
     const headingRef = useRef();
 
@@ -77,8 +77,6 @@ function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggre
                 <div className="mt-4">
                     {selectedFilter === "Publisert" && (
                         <Published
-                            query={query}
-                            dispatch={dispatchQuery}
                             initialValues={aggregations.published}
                             updatedValues={searchResult && searchResult.aggregations.published}
                             publishedTotalCount={searchResult.aggregations.publishedTotalCount}
@@ -88,16 +86,9 @@ function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggre
                     {selectedFilter === "Sted og hjemmekontor" && (
                         <>
                             <div className="mb-6">
-                                <Counties
-                                    query={query}
-                                    dispatch={dispatchQuery}
-                                    locations={locations}
-                                    updatedValues={searchResult}
-                                />
+                                <Counties locations={locations} updatedValues={searchResult} />
                             </div>
                             <Remote
-                                query={query}
-                                dispatch={dispatchQuery}
                                 initialValues={aggregations.remote}
                                 updatedValues={searchResult.aggregations.remote}
                             />
@@ -108,15 +99,11 @@ function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggre
                         <>
                             <div className="mb-6">
                                 <Occupations
-                                    query={query}
-                                    dispatch={dispatchQuery}
                                     initialValues={aggregations.occupationFirstLevels}
                                     updatedValues={searchResult && searchResult.aggregations.occupationFirstLevels}
                                 />
                             </div>
                             <Sector
-                                query={query}
-                                dispatch={dispatchQuery}
                                 initialValues={aggregations.sector}
                                 updatedValues={searchResult.aggregations.sector}
                             />
@@ -129,14 +116,10 @@ function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggre
                                 Bruk lenken for tilbakemelding nederst på siden.
                             </Alert>
                             <Education
-                                query={query}
-                                dispatch={dispatchQuery}
                                 initialValues={aggregations.education}
                                 updatedValues={searchResult.aggregations.education}
                             />
                             <DriversLicense
-                                query={query}
-                                dispatch={dispatchQuery}
                                 initialValues={aggregations.needDriversLicense}
                                 updatedValues={searchResult.aggregations.needDriversLicense}
                             />
@@ -146,8 +129,6 @@ function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggre
                     {selectedFilter === "Arbeidsspråk" && (
                         <WorkLanguage
                             hideLegend
-                            query={query}
-                            dispatch={dispatchQuery}
                             initialValues={aggregations.workLanguage}
                             updatedValues={searchResult && searchResult.aggregations.workLanguage}
                         />
@@ -157,23 +138,17 @@ function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggre
                         <>
                             <div className="mb-6">
                                 <Extent
-                                    query={query}
-                                    dispatch={dispatchQuery}
                                     initialValues={aggregations.extent}
                                     updatedValues={searchResult && searchResult.aggregations.extent}
                                 />
                             </div>
                             <EngagementType
-                                query={query}
-                                dispatch={dispatchQuery}
                                 initialValues={aggregations.engagementTypes}
                                 updatedValues={searchResult && searchResult.aggregations.engagementTypes}
                             />
 
                             {/* TODO: COMMENT IN WHEN FILTER IS READY BACKEND
                             <Education
-                                query={query}
-                                dispatch={dispatchQuery}
                                 initialValues={aggregations.education}
                                 updatedValues={searchResult && searchResult.aggregations.education}
                             />
@@ -202,8 +177,6 @@ function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggre
 
 FiltersMobile.propTypes = {
     onCloseClick: PropTypes.func.isRequired,
-    query: PropTypes.shape({}),
-    dispatchQuery: PropTypes.func,
     aggregations: PropTypes.shape({
         engagementTypes: PropTypes.arrayOf(PropTypes.shape({})),
         needDriversLicense: PropTypes.arrayOf(PropTypes.shape({})),

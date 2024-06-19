@@ -1,24 +1,20 @@
+import { Suspense } from "react";
 import Search from "@/app/(sok)/_components/Search";
 import { defaultMetadataDescription, defaultOpenGraphImage, getMetadataTitle } from "@/app/layout";
-import {
-    createQuery,
-    defaultQuery,
-    stringifyQuery,
-    toApiQuery,
-    toBrowserQuery,
-    toReadableQuery,
-} from "@/app/(sok)/_utils/query";
 import { fetchCachedElasticSearch } from "@/app/(sok)/_utils/fetchCachedElasticSearch";
 import * as actions from "@/app/_common/actions";
 import { redirect } from "next/navigation";
 import { migrateSearchParams } from "@/app/(sok)/_utils/searchParamsVersioning";
+import toReadableQuery from "@/app/(sok)/_utils/toReadableQuery";
+import toApiQuery, { defaultApiQuery } from "@/app/(sok)/_utils/toApiQuery";
+import { SearchQueryParams, SEARCH_RESULTS_PER_PAGE } from "@/app/(sok)/_utils/constants";
+import searchParamsToURLSearchParams from "@/app/(sok)/_utils/searchParamsToURLSearchParams";
 
 export async function generateMetadata({ searchParams }) {
-    const query = createQuery(searchParams);
-    const readableQuery = toReadableQuery(query);
+    const readableQuery = toReadableQuery(searchParamsToURLSearchParams(searchParams));
     let pageTitle;
     if (readableQuery) {
-        pageTitle = getMetadataTitle(["Ledige stillinger", toReadableQuery(query)].join(" - "));
+        pageTitle = getMetadataTitle(["Ledige stillinger", readableQuery].join(" - "));
     } else {
         pageTitle = getMetadataTitle("Ledige stillinger");
     }
@@ -66,38 +62,36 @@ async function fetchLocations() {
 }
 
 export default async function Page({ searchParams }) {
-    const newSearchParams = migrateSearchParams(searchParams);
+    const migratedSearchParams = migrateSearchParams(searchParams);
+    const searchParamsClone = migratedSearchParams || searchParams;
 
-    if (newSearchParams !== undefined) {
-        const newQuery = {
-            ...createQuery(newSearchParams),
-            saved: newSearchParams.saved,
-        };
-        redirect(stringifyQuery(toBrowserQuery(newQuery)));
+    if (migratedSearchParams !== undefined) {
+        const urlSearchParams = searchParamsToURLSearchParams(migratedSearchParams);
+        redirect(`?${urlSearchParams.toString()}`);
     }
 
-    const userPreferences = await actions.getUserPreferences();
-    const _searchParams = searchParams;
-    if (userPreferences.resultsPerPage) {
-        _searchParams.size = userPreferences.resultsPerPage;
+    if (!searchParamsClone[SearchQueryParams.SIZE]) {
+        const { resultsPerPage } = await actions.getUserPreferences();
+        searchParamsClone[SearchQueryParams.SIZE] = resultsPerPage || SEARCH_RESULTS_PER_PAGE;
     }
 
-    const initialQuery = createQuery(_searchParams);
+    const apiQuery = toApiQuery(searchParamsClone);
+    const shouldDoExtraCallIfUserHasSearchParams = Object.keys(searchParamsClone).length > 0;
+    const fetchCalls = [fetchCachedElasticSearch(defaultApiQuery), fetchLocations()];
 
-    const shouldDoExtraCallIfUserHasSearchParams = Object.keys(toBrowserQuery(initialQuery)).length > 0;
-    const fetchCalls = [fetchCachedElasticSearch(toApiQuery(defaultQuery)), fetchLocations()];
     if (shouldDoExtraCallIfUserHasSearchParams) {
-        fetchCalls.push(fetchCachedElasticSearch(toApiQuery(initialQuery)));
+        fetchCalls.push(fetchCachedElasticSearch(apiQuery));
     }
 
     const [globalSearchResult, locations, searchResult] = await Promise.all(fetchCalls);
 
     return (
-        <Search
-            searchResult={shouldDoExtraCallIfUserHasSearchParams ? searchResult : globalSearchResult}
-            aggregations={globalSearchResult.aggregations}
-            locations={locations}
-            query={initialQuery}
-        />
+        <Suspense fallback={<div>laster...</div>}>
+            <Search
+                searchResult={shouldDoExtraCallIfUserHasSearchParams ? searchResult : globalSearchResult}
+                aggregations={globalSearchResult.aggregations}
+                locations={locations}
+            />
+        </Suspense>
     );
 }
