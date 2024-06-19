@@ -47,7 +47,7 @@ spec:
       expr: sum(rate(elastic_search_duration_seconds_sum{app="pam-stillingsok"}[3m])) > 0.5
       for: 3m
       annotations:
-        action: "Sjekk loggene for å se hvorfor pam-search-api er treg"
+        action: "Sjekk loggene for å se hvorfor søket er tregt"
       labels:
         namespace: "teampam"
         severity: critical
@@ -56,7 +56,7 @@ spec:
       expr: sum(rate(suggestion_duration_seconds_sum{app="pam-stillingsok"}[3m])) > 0.2
       for: 3m
       annotations:
-        action: "Sjekk loggene for å se hvorfor pam-search-api er treg"
+        action: "Sjekk loggene for å se hvorfor søkforslag er tregt"
       labels:
         namespace: "teampam"
         severity: critical
@@ -65,7 +65,7 @@ spec:
       expr: (100 * (sum(rate(aduser_requests{app="pam-stillingsok", result="failure"}[3m]))) / (sum(rate(aduser_requests{app="pam-stillingsok"}[3m])))) > 1
       for: 3m
       annotations:
-        action: "Sjekk loggene for å se hvorfor så mange kall fra pam-stillingsok til pam-aduser feiler"
+        action: "Sjekk loggene for å se hvorfor så mange kall til pam-aduser feiler"
       labels:
         namespace: "teampam"
         severity: critical
@@ -74,7 +74,7 @@ spec:
       expr: (100 * (sum(rate(elastic_search_requests{app="pam-stillingsok", result="failure"}[3m]))) / (sum(rate(elastic_search_requests{app="pam-stillingsok"}[3m])))) > 1
       for: 3m
       annotations:
-        action: "Sjekk loggene for å se hvorfor så mange kall fra pam-stillingsok til elastic search feiler"
+        action: "Sjekk loggene for å se hvorfor så mange kall til elastic search feiler"
       labels:
         namespace: "teampam"
         severity: critical
@@ -83,7 +83,7 @@ spec:
       expr: (100 * (sum(rate(suggestion_requests{app="pam-stillingsok", result="failure"}[3m]))) / (sum(rate(suggestion_requests{app="pam-stillingsok"}[3m])))) > 1
       for: 3m
       annotations:
-        action: "Sjekk loggene for å se hvorfor så mange kall fra pam-stillingsok til elastic search suggestions feiler"
+        action: "Sjekk loggene for å se hvorfor så mange kall til elastic search suggestions feiler"
       labels:
         namespace: "teampam"
         severity: critical
