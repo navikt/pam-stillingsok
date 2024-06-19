@@ -1,4 +1,3 @@
-import { Suspense } from "react";
 import Search from "@/app/(sok)/_components/Search";
 import { defaultMetadataDescription, defaultOpenGraphImage, getMetadataTitle } from "@/app/layout";
 import { fetchCachedElasticSearch } from "@/app/(sok)/_utils/fetchCachedElasticSearch";
@@ -86,12 +85,10 @@ export default async function Page({ searchParams }) {
     const [globalSearchResult, locations, searchResult] = await Promise.all(fetchCalls);
 
     return (
-        <Suspense fallback={<div>laster...</div>}>
-            <Search
-                searchResult={shouldDoExtraCallIfUserHasSearchParams ? searchResult : globalSearchResult}
-                aggregations={globalSearchResult.aggregations}
-                locations={locations}
-            />
-        </Suspense>
+        <Search
+            searchResult={shouldDoExtraCallIfUserHasSearchParams ? searchResult : globalSearchResult}
+            aggregations={globalSearchResult.aggregations}
+            locations={locations}
+        />
     );
 }
