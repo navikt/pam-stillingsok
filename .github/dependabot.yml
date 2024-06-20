@@ -16,9 +16,6 @@ updates:
       - npm-github
     allow:
       - dependency-name: "@navikt/*"
-    ignore:
-      - dependency-name: "*"
-        update-types: ["version-update:semver-minor", "version-update:semver-patch"]
     groups:
       aksel-dependencies:
         patterns:
