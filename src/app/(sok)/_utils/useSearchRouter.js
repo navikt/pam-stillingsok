@@ -24,8 +24,8 @@ function resetFrom(urlSearchParams, options) {
 }
 
 export function setDefaultParameters(urlSearchParams, options) {
-    let newUrlSearchParams = setUrlParamsVersion(urlSearchParams);
-    newUrlSearchParams = resetFrom(newUrlSearchParams, options);
+    let newUrlSearchParams = resetFrom(urlSearchParams, options);
+    newUrlSearchParams = setUrlParamsVersion(newUrlSearchParams);
     return newUrlSearchParams;
 }
 
