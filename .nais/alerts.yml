@@ -9,15 +9,6 @@ spec:
   groups:
   - name: "teampam stillingsok alerts"
     rules:
-    - alert: "[pam-stillingsok] er nede"
-      expr: kube_deployment_status_replicas_available{deployment="pam-stillingsok"} == 0
-      for: 2m
-      annotations:
-        consequence: "App {{ $labels.deployment }} er nede i namespace {{ $labels.namespace }}"
-        action: "kubectl describe pod {{ $labels.deployment }} -n {{ $labels.namespace }}` for events, og `kubectl logs {{ $labels.deployment }} -n {{ $labels.namespace }}` for logger"
-      labels:
-        namespace: "teampam"
-        severity: critical
     - alert: "[pam-stillingsok] Mye feil i loggene"
       expr: (100 * sum(rate(log_messages_errors{app="pam-stillingsok"}[3m])) / sum(rate(log_messages_total{app="pam-stillingsok"}[3m]))) > 1
       for: 3m
