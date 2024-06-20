@@ -17,19 +17,21 @@ spec:
       labels:
         namespace: "teampam"
         severity: warning
+
     - alert: [pam-stillingsok] Høy andel HTTP serverfeil (5xx responser)
       expr: (100 * (sum by (service) (rate(nginx_ingress_controller_requests{status=~"5.*", status!~"503", namespace="teampam", service="pam-stillingsok"}[3m])) / sum by (service) (rate(nginx_ingress_controller_requests{namespace="teampam", service="pam-stillingsok"}[3m])))) > 1
       for: 3m
       annotations:
-        action: "Sjekk loggene for å se hvorfor {{ $labels.service }} returnerer HTTP feilresponser"
+        action: "Sjekk loggene for å se hvorfor {{ $labels.service }} returnerer HTTP feilresponser @hubba-devs"
       labels:
         namespace: "teampam"
         severity: critical
+
     - alert: [pam-stillingsok] Høy andel HTTP serverfeil (503 responser), er søket nede eller er det bare scraping?
       expr: sum(rate(nginx_ingress_controller_requests{host="arbeidsplassen.nav.no", path="/stillinger(/.*)?", status=~"503"}[5m])) > 12
       for: 10m
       annotations:
-        action: "Sjekk loggene for å se hvorfor {{ $labels.service }} returnerer HTTP feilresponser"
+        action: "Sjekk loggene for å se hvorfor {{ $labels.service }} returnerer HTTP feilresponser @hubba-devs"
       labels:
         namespace: "teampam"
         severity: critical
@@ -41,7 +43,7 @@ spec:
         action: "Sjekk loggene for å se hvorfor søket er tregt"
       labels:
         namespace: "teampam"
-        severity: critical
+        severity: warning
 
     - alert: [pam-stillingsok] Elastic search suggestions virker treg (over 200 ms gjennomsnittlig responstid)
       expr: sum(rate(suggestion_duration_seconds_sum{app="pam-stillingsok"}[3m])) > 0.2
@@ -50,13 +52,13 @@ spec:
         action: "Sjekk loggene for å se hvorfor søkforslag er tregt"
       labels:
         namespace: "teampam"
-        severity: critical
+        severity: warning
 
     - alert: [pam-stillingsok] Ingen kall til elastic search på lang tid, er søket nede?
       expr: sum(rate(elastic_search_requests{app="pam-stillingsok"}[3m])) == 0
       for: 10m
       annotations:
-        action: "Sjekk loggene for å se om det er noe feil"
+        action: "Sjekk loggene for å se om det er noe feil  @hubba-devs"
       labels:
         namespace: "teampam"
         severity: critical
@@ -65,7 +67,7 @@ spec:
       expr: (100 * (sum(rate(aduser_requests{app="pam-stillingsok", result="failure"}[3m]))) / (sum(rate(aduser_requests{app="pam-stillingsok"}[3m])))) > 1
       for: 3m
       annotations:
-        action: "Sjekk loggene for å se hvorfor så mange kall til pam-aduser feiler"
+        action: "Sjekk loggene for å se hvorfor så mange kall til pam-aduser feiler @hubba-devs"
       labels:
         namespace: "teampam"
         severity: critical
@@ -74,7 +76,7 @@ spec:
       expr: (100 * (sum(rate(elastic_search_requests{app="pam-stillingsok", result="failure"}[3m]))) / (sum(rate(elastic_search_requests{app="pam-stillingsok"}[3m])))) > 1
       for: 3m
       annotations:
-        action: "Sjekk loggene for å se hvorfor så mange kall til elastic search feiler"
+        action: "Sjekk loggene for å se hvorfor så mange kall til elastic search feiler @hubba-devs"
       labels:
         namespace: "teampam"
         severity: critical
@@ -83,7 +85,7 @@ spec:
       expr: (100 * (sum(rate(suggestion_requests{app="pam-stillingsok", result="failure"}[3m]))) / (sum(rate(suggestion_requests{app="pam-stillingsok"}[3m])))) > 1
       for: 3m
       annotations:
-        action: "Sjekk loggene for å se hvorfor så mange kall til elastic search suggestions feiler"
+        action: "Sjekk loggene for å se hvorfor så mange kall til elastic search suggestions feiler @hubba-devs"
       labels:
         namespace: "teampam"
         severity: critical
