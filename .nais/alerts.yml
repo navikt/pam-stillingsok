@@ -61,6 +61,15 @@ spec:
         namespace: "teampam"
         severity: critical
 
+    - alert: [pam-stillingsok] Ingen kall til elastic search på lang tid, er søket nede?
+      expr: sum(rate(elastic_search_requests{app="pam-stillingsok"}[3m])) == 0
+      for: 10m
+      annotations:
+        action: "Sjekk loggene for å se om det er noe feil"
+      labels:
+        namespace: "teampam"
+        severity: critical
+
     - alert: [pam-stillingsok] Kall til pam-aduser feiler
       expr: (100 * (sum(rate(aduser_requests{app="pam-stillingsok", result="failure"}[3m]))) / (sum(rate(aduser_requests{app="pam-stillingsok"}[3m])))) > 1
       for: 3m
