@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import Sorting from "@/app/(sok)/_components/searchResult/Sorting";
 import { formatNumber } from "@/app/_common/utils/utils";
 
-function SearchResultHeader({ searchResult, query, queryDispatch }) {
+function SearchResultHeader({ searchResult }) {
     const annonserWord = searchResult.totalAds === 1 ? "annonse" : "annonser";
     const stillingerWord = searchResult.totalPositions === 1 ? "stilling" : "stillinger";
 
@@ -35,7 +35,7 @@ function SearchResultHeader({ searchResult, query, queryDispatch }) {
                                   )} ${annonserWord}`}
                         </BodyShort>
                     </div>
-                    <Sorting dispatch={queryDispatch} query={query} />
+                    <Sorting />
                 </Stack>
             </HGrid>
         </Box>
@@ -47,8 +47,6 @@ SearchResultHeader.propTypes = {
         totalAds: PropTypes.number,
         totalPositions: PropTypes.number,
     }),
-    queryDispatch: PropTypes.func.isRequired,
-    query: PropTypes.shape({}),
 };
 
 export default SearchResultHeader;

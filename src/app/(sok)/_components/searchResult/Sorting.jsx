@@ -1,18 +1,24 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { Select } from "@navikt/ds-react";
-import { SET_SORTING } from "@/app/(sok)/_utils/queryReducer";
+import { useSearchParams } from "next/navigation";
+import { SearchQueryParams } from "@/app/(sok)/_utils/constants";
+import useSearchRouter from "@/app/(sok)/_utils/useSearchRouter";
 
-function Sorting({ query, dispatch }) {
+function Sorting() {
+    const searchParams = useSearchParams();
+    const router = useSearchRouter();
+
     function handleChange(e) {
         const { value } = e.target;
-        dispatch({ type: SET_SORTING, value });
+        const newSearchParams = new URLSearchParams(searchParams);
+        newSearchParams.set(SearchQueryParams.SORT, value);
+        router.replace(newSearchParams, { scroll: false });
     }
 
     return (
         <Select
             onChange={handleChange}
-            value={query.sort || "published"}
+            value={searchParams.get(SearchQueryParams.SORT) || "published"}
             label="Sorter etter"
             className="inline-select"
         >
@@ -28,12 +34,5 @@ function Sorting({ query, dispatch }) {
         </Select>
     );
 }
-
-Sorting.propTypes = {
-    query: PropTypes.shape({
-        sort: PropTypes.string.isRequired,
-    }).isRequired,
-    dispatch: PropTypes.func.isRequired,
-};
 
 export default Sorting;

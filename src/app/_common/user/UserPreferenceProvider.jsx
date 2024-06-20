@@ -49,6 +49,7 @@ function UserPreferencesProvider({ children, userPreferences }) {
         <UserPreferencesContext.Provider
             // eslint-disable-next-line
             value={{
+                resultsPerPage: userPreferences?.resultsPerPage,
                 openFilters: userPreferences?.openFilters || [],
                 publishedJobFilterOpen: !!(
                     userPreferences?.publishedJobFilterOpen === undefined ||

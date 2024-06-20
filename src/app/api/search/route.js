@@ -1,7 +1,7 @@
 import elasticSearchRequestBody from "@/app/(sok)/_utils/elasticSearchRequestBody";
-import { createQuery, toApiQuery } from "@/app/(sok)/_utils/query";
 import { getDefaultHeaders } from "@/app/_common/utils/fetch";
 import { migrateSearchParams } from "@/app/(sok)/_utils/searchParamsVersioning";
+import toApiQuery from "@/app/(sok)/_utils/toApiQuery";
 
 export const dynamic = "force-dynamic";
 
@@ -28,8 +28,9 @@ function parseSearchParams(entries) {
 export async function GET(request) {
     const searchParams = parseSearchParams(request.nextUrl.searchParams);
     const migratedSearchParams = migrateSearchParams(searchParams);
-    const query = createQuery(migratedSearchParams || searchParams);
-    const body = elasticSearchRequestBody(toApiQuery(query));
+    const apiQuery = toApiQuery(migratedSearchParams || searchParams);
+
+    const body = elasticSearchRequestBody(apiQuery);
     const res = await fetch(`${process.env.PAMSEARCHAPI_URL}/stillingsok/ad/_search`, {
         method: "POST",
         headers: getDefaultHeaders(),

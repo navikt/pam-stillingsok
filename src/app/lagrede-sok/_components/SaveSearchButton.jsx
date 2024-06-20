@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import PropTypes from "prop-types";
 import { Button } from "@navikt/ds-react";
 import { FloppydiskIcon } from "@navikt/aksel-icons";
 import { useSearchParams } from "next/navigation";
@@ -8,7 +7,8 @@ import { HasAcceptedTermsStatus, UserContext } from "@/app/_common/user/UserProv
 import UserConsentModal from "@/app/_common/user/UserConsentModal";
 import LoginModal from "@/app/_common/auth/components/LoginModal";
 import useToggle from "@/app/_common/hooks/useToggle";
-import { toReadableQuery, toSavedSearchQuery, isSearchQueryEmpty, stringifyQuery } from "@/app/(sok)/_utils/query";
+import toReadableQuery from "@/app/(sok)/_utils/toReadableQuery";
+import toSavedSearch from "@/app/(sok)/_utils/toSavedSearch";
 import { FormModes } from "./modal/SaveSearchForm";
 import SaveSearchModal from "./modal/SaveSearchModal";
 import SearchIsEmptyModal from "./modal/SearchIsEmptyModal";
@@ -23,7 +23,7 @@ import SearchIsEmptyModal from "./modal/SearchIsEmptyModal";
  * - has checked one or more search criteria
  * - has accepted terms
  */
-function SaveSearchButton({ query }) {
+function SaveSearchButton() {
     const { authenticationStatus, login } = useContext(AuthenticationContext);
     const { hasAcceptedTermsStatus } = useContext(UserContext);
     const [shouldShowTermsModal, openTermsModal, closeTermsModal] = useToggle();
@@ -33,11 +33,12 @@ function SaveSearchButton({ query }) {
 
     const searchParams = useSearchParams();
     const savedSearchUuid = searchParams.get("saved");
+    const savedSearchUrl = toSavedSearch(searchParams);
 
     function handleClick() {
         if (authenticationStatus === AuthenticationStatus.NOT_AUTHENTICATED) {
             openLoginModal();
-        } else if (isSearchQueryEmpty(toSavedSearchQuery(query))) {
+        } else if (savedSearchUrl.size === 0) {
             openQueryIsEmptyModal();
         } else if (hasAcceptedTermsStatus === HasAcceptedTermsStatus.NOT_ACCEPTED) {
             openTermsModal();
@@ -54,7 +55,7 @@ function SaveSearchButton({ query }) {
         openSaveSearchModal();
     }
 
-    const title = toReadableQuery(query);
+    const title = toReadableQuery(savedSearchUrl);
     const shortenedTitle = title.length > 80 ? `${title.substring(0, 77)}...` : title;
 
     return (
@@ -75,7 +76,7 @@ function SaveSearchButton({ query }) {
                 <SaveSearchModal
                     formData={{
                         title: shortenedTitle,
-                        searchQuery: stringifyQuery(toSavedSearchQuery(query)),
+                        searchQuery: `?${savedSearchUrl.toString()}`,
                     }}
                     onClose={closeSaveSearchModal}
                     defaultFormMode={savedSearchUuid ? FormModes.UPDATE_QUERY_ONLY : FormModes.ADD}
@@ -85,9 +86,5 @@ function SaveSearchButton({ query }) {
         </>
     );
 }
-
-SaveSearchButton.propTypes = {
-    query: PropTypes.shape({}),
-};
 
 export default SaveSearchButton;

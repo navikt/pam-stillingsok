@@ -1,28 +1,34 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { BodyShort, Checkbox, CheckboxGroup } from "@navikt/ds-react";
-import { ADD_WORKLANGUAGE, REMOVE_WORKLANGUAGE } from "@/app/(sok)/_utils/queryReducer";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
 import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
 import moveCriteriaToBottom from "@/app/(sok)/_components/utils/moveFacetToBottom";
+import { useSearchParams } from "next/navigation";
+import { SearchQueryParams } from "@/app/(sok)/_utils/constants";
+import useSearchRouter from "@/app/(sok)/_utils/useSearchRouter";
 
-function WorkLanguage({ initialValues, updatedValues, query, dispatch, hideLegend = false }) {
+function WorkLanguage({ initialValues, updatedValues, hideLegend = false }) {
     const sortedValues = moveCriteriaToBottom(initialValues, "Ikke oppgitt");
     const values = mergeCount(sortedValues, updatedValues);
+    const searchParams = useSearchParams();
+    const router = useSearchRouter();
 
     function handleClick(e) {
         const { value, checked } = e.target;
+        const newSearchParams = new URLSearchParams(searchParams);
         if (checked) {
-            dispatch({ type: ADD_WORKLANGUAGE, value });
+            newSearchParams.append(SearchQueryParams.WORK_LANGUAGE, value);
         } else {
-            dispatch({ type: REMOVE_WORKLANGUAGE, value });
+            newSearchParams.delete(SearchQueryParams.WORK_LANGUAGE, value);
         }
+        router.replace(newSearchParams, { scroll: false });
         logFilterChanged({ name: "Arbeidsspråk", value, checked });
     }
 
     return (
         <CheckboxGroup
-            value={query.workLanguage}
+            value={searchParams.getAll(SearchQueryParams.WORK_LANGUAGE)}
             hideLegend={hideLegend}
             legend={
                 <BodyShort as="span" visuallyHidden>
@@ -31,7 +37,7 @@ function WorkLanguage({ initialValues, updatedValues, query, dispatch, hideLegen
             }
         >
             {values.map((item) => (
-                <Checkbox name="workLanguage[]" key={item.key} value={item.key} onChange={handleClick}>
+                <Checkbox name={SearchQueryParams.WORK_LANGUAGE} key={item.key} value={item.key} onChange={handleClick}>
                     {`${item.key} (${item.count})`}
                 </Checkbox>
             ))}
@@ -47,10 +53,6 @@ WorkLanguage.propTypes = {
         }),
     ).isRequired,
     updatedValues: PropTypes.arrayOf(PropTypes.shape({})),
-    query: PropTypes.shape({
-        workLanguage: PropTypes.arrayOf(PropTypes.string),
-    }).isRequired,
-    dispatch: PropTypes.func.isRequired,
 };
 
 export default WorkLanguage;

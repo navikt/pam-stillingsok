@@ -1,282 +1,221 @@
+/* eslint-disable react/no-array-index-key */
 import React, { useState } from "react";
-import PropTypes from "prop-types";
 import { Button, Chips, HStack } from "@navikt/ds-react";
 import { TrashIcon } from "@navikt/aksel-icons";
-import fixLocationName from "@/app/_common/utils/fixLocationName";
-import { labelForNeedDriversLicense } from "@/app/(sok)/_components/filters/DriversLicense";
+import { editedItemKey } from "@/app/(sok)/_components/filters/Engagement";
 import { labelForEducation } from "@/app/(sok)/_components/filters/Education";
-import {
-    REMOVE_COUNTRY,
-    REMOVE_COUNTY,
-    REMOVE_ENGAGEMENT_TYPE,
-    REMOVE_EXTENT,
-    REMOVE_EDUCATION,
-    REMOVE_NEEDDRIVERSLICENSE,
-    REMOVE_WORKLANGUAGE,
-    REMOVE_MUNICIPAL,
-    REMOVE_OCCUPATION_FIRST_LEVEL,
-    REMOVE_OCCUPATION_SECOND_LEVEL,
-    REMOVE_REMOTE,
-    REMOVE_SECTOR,
-    SET_INTERNATIONAL,
-    SET_PUBLISHED,
-    SET_SEARCH_STRING,
-    REMOVE_OCCUPATION,
-} from "../../_utils/queryReducer";
-import { PublishedLabelsEnum } from "../../_utils/query";
-import SaveSearchButton from "../../../lagrede-sok/_components/SaveSearchButton";
-import { editedItemKey } from "../filters/Engagement";
+import { labelForNeedDriversLicense } from "@/app/(sok)/_components/filters/DriversLicense";
+import fixLocationName from "@/app/_common/utils/fixLocationName";
+import SaveSearchButton from "@/app/lagrede-sok/_components/SaveSearchButton";
+import { PublishedLabelsEnum } from "@/app/(sok)/_components/filters/Published";
+import { useSearchParams } from "next/navigation";
+import { SearchQueryParams } from "@/app/(sok)/_utils/constants";
+import useSearchRouter from "@/app/(sok)/_utils/useSearchRouter";
 
-function SelectedFilters({ query, queryDispatch }) {
+function SelectedFilters() {
     const MAX_CHIPS = 10;
     const [showAll, setShowAll] = useState(false);
+    const searchParams = useSearchParams();
+    const router = useSearchRouter();
 
     const removeMunicipal = (value) => {
-        // Fjern kommunen fra filter
-        queryDispatch({ type: REMOVE_MUNICIPAL, value });
+        const newSearchParams = new URLSearchParams(searchParams);
+        newSearchParams.delete(SearchQueryParams.MUNICIPAL, value);
 
         // Hvis dette var den siste valgte kommune i samme fylke, så skal fylket også fjernes
         const county = value.split(".")[0];
-        const remainingMunicipalsInCounty = query.municipals.filter((municipal) => municipal.startsWith(`${county}.`));
-        if (remainingMunicipalsInCounty.length === 1) {
-            queryDispatch({ type: REMOVE_COUNTY, value: county });
+        const remainingMunicipalsInCounty = newSearchParams
+            .getAll(SearchQueryParams.MUNICIPAL)
+            .filter((municipal) => municipal.startsWith(`${county}.`));
+        if (remainingMunicipalsInCounty.length === 0) {
+            newSearchParams.delete(SearchQueryParams.COUNTY, county);
         }
+        router.replace(newSearchParams, { scroll: false });
     };
 
     const removeCountry = (value) => {
-        // Fjern land fra filter
-        queryDispatch({ type: REMOVE_COUNTRY, value });
+        const newSearchParams = new URLSearchParams(searchParams);
+        newSearchParams.delete(SearchQueryParams.COUNTRY, value);
 
         // Hvis dette var den siste landet, så skal "Utland" også fjernes
-        if (query.countries.length === 1) {
-            queryDispatch({ type: SET_INTERNATIONAL, value: false });
+        if (newSearchParams.getAll(SearchQueryParams.COUNTRY).length === 1) {
+            newSearchParams.delete(SearchQueryParams.INTERNATIONAL);
         }
+        router.replace(newSearchParams, { scroll: false });
     };
 
     const removeOccupation = (value) => {
-        // Fjern yrket fra filter
-        queryDispatch({ type: REMOVE_OCCUPATION_SECOND_LEVEL, value });
+        const newSearchParams = new URLSearchParams(searchParams);
+        newSearchParams.delete(SearchQueryParams.OCCUPATION_LEVEL_2, value);
 
         // Hvis dette var det siste yrket i samme yrkeskategori, så skal yrkeskategorien også fjernes
         const firstLevel = value.split(".")[0];
-        const remainingOccupationsInCategory = query.occupationSecondLevels.filter((secondLevel) =>
-            secondLevel.startsWith(`${firstLevel}.`),
-        );
-        if (remainingOccupationsInCategory.length === 1) {
-            queryDispatch({ type: REMOVE_OCCUPATION_FIRST_LEVEL, value: firstLevel });
+        const remainingOccupationsInCategory = newSearchParams
+            .getAll(SearchQueryParams.OCCUPATION_LEVEL_2)
+            .filter((secondLevel) => secondLevel.startsWith(`${firstLevel}.`));
+        if (remainingOccupationsInCategory.length === 0) {
+            newSearchParams.delete(SearchQueryParams.OCCUPATION_LEVEL_1, firstLevel);
         }
+        router.replace(newSearchParams, { scroll: false });
     };
 
-    // Ikke vis fylke hvis bruker har valgt en eller flere kommuner i dette fylket
-    const counties = query.counties.filter((county) => {
-        const found = query.municipals.find((obj) => obj.startsWith(`${county}.`));
-        return !found;
-    });
+    const removeSearchString = () => {
+        const newSearchParams = new URLSearchParams(searchParams);
+        newSearchParams.delete(SearchQueryParams.SORT);
+        newSearchParams.delete(SearchQueryParams.OCCUPATION);
+        newSearchParams.delete(SearchQueryParams.Q);
+        router.replace(newSearchParams, { scroll: false });
+    };
 
-    // Ikke vis yrkeskategori hvis bruker har valgt et eller flere yrker i denne kategorien
-    const occupationFirstLevels = query.occupationFirstLevels.filter((firstLevel) => {
-        const found = query.occupationSecondLevels.find((obj) => obj.startsWith(`${firstLevel}.`));
-        return !found;
-    });
+    const remove = (name, value) => {
+        const newSearchParams = new URLSearchParams(searchParams);
+        newSearchParams.delete(name, value);
+        router.replace(newSearchParams, { scroll: false });
+    };
 
-    // Opprett chips for alle filter
+    const clear = () => {
+        const newSearchParams = new URLSearchParams();
+        router.replace(newSearchParams, { scroll: false });
+    };
+
     const chips = [];
 
-    if (query.q) {
-        chips.push(
-            <Chips.Removable
-                key={`q-${query.q}`}
-                variant="neutral"
-                onClick={() => queryDispatch({ type: SET_SEARCH_STRING, value: "" })}
-            >
-                {query.q}
-            </Chips.Removable>,
-        );
-    }
-
-    chips.push(
-        ...query.occupations.map((value) => (
-            <Chips.Removable
-                variant="neutral"
-                key={`occupations-${value}`}
-                onClick={() => queryDispatch({ type: REMOVE_OCCUPATION, value })}
-            >
-                {value}
-            </Chips.Removable>
-        )),
-    );
-
-    chips.push(
-        ...query.municipals.map((value) => (
-            <Chips.Removable variant="neutral" key={`municipals-${value}`} onClick={() => removeMunicipal(value)}>
-                {fixLocationName(value.split(".")[1])}
-            </Chips.Removable>
-        )),
-    );
-
-    chips.push(
-        ...counties.map((value) => (
-            <Chips.Removable
-                variant="neutral"
-                key={`counties-${value}`}
-                onClick={() => queryDispatch({ type: REMOVE_COUNTY, value })}
-            >
-                {fixLocationName(value)}
-            </Chips.Removable>
-        )),
-    );
-
-    if (query.international && query.countries.length === 0) {
-        chips.push(
-            <Chips.Removable
-                variant="neutral"
-                key="utland-filter"
-                onClick={() => {
-                    queryDispatch({ type: SET_INTERNATIONAL, value: false });
-                }}
-            >
-                Utland
-            </Chips.Removable>,
-        );
-    }
-
-    chips.push(
-        ...query.countries.map((value) => (
-            <Chips.Removable variant="neutral" key={`countries-${value}`} onClick={() => removeCountry(value)}>
-                {fixLocationName(value)}
-            </Chips.Removable>
-        )),
-    );
-
-    chips.push(
-        ...query.occupationSecondLevels.map((value) => (
-            <Chips.Removable
-                variant="neutral"
-                key={`occupationSecondLevels-${value}`}
-                onClick={() => removeOccupation(value)}
-            >
-                {value.split(".")[1]}
-            </Chips.Removable>
-        )),
-    );
-
-    chips.push(
-        ...occupationFirstLevels.map((value) => (
-            <Chips.Removable
-                variant="neutral"
-                key={`occupationFirstLevels-${value}`}
-                onClick={() => queryDispatch({ type: REMOVE_OCCUPATION_FIRST_LEVEL, value })}
-            >
-                {value === "Uoppgitt/ ikke identifiserbare" ? "Yrke ikke oppgitt" : value}
-            </Chips.Removable>
-        )),
-    );
-
-    if (query.published) {
-        chips.push(
-            <Chips.Removable
-                key="published-filter"
-                variant="neutral"
-                onClick={() => queryDispatch({ type: SET_PUBLISHED, undefined })}
-            >
-                {PublishedLabelsEnum[query.published]}
-            </Chips.Removable>,
-        );
-    }
-
-    chips.push(
-        ...query.sector.map((value) => (
-            <Chips.Removable
-                variant="neutral"
-                key={`sector-${value}`}
-                onClick={() => queryDispatch({ type: REMOVE_SECTOR, value })}
-            >
-                {value === "Ikke oppgitt" ? "Sektor ikke oppgitt" : value}
-            </Chips.Removable>
-        )),
-    );
-
-    chips.push(
-        ...query.engagementType.map((value) => (
-            <Chips.Removable
-                variant="neutral"
-                key={`engagementType-${value}`}
-                onClick={() => queryDispatch({ type: REMOVE_ENGAGEMENT_TYPE, value })}
-            >
-                {editedItemKey(value) === "Ikke oppgitt" ? "Ansettelsesform ikke oppgitt" : value}
-            </Chips.Removable>
-        )),
-    );
-
-    chips.push(
-        ...query.extent.map((value) => (
-            <Chips.Removable
-                variant="neutral"
-                key={`extent-${value}`}
-                onClick={() => queryDispatch({ type: REMOVE_EXTENT, value })}
-            >
-                {value}
-            </Chips.Removable>
-        )),
-    );
-
-    chips.push(
-        ...query.workLanguage.map((value) => (
-            <Chips.Removable
-                variant="neutral"
-                key={`workLanguage-${value}`}
-                onClick={() => queryDispatch({ type: REMOVE_WORKLANGUAGE, value })}
-            >
-                {value === "Ikke oppgitt" ? "Arbeidsspråk ikke oppgitt" : value}
-            </Chips.Removable>
-        )),
-    );
-
-    chips.push(
-        ...query.education.map((value) => {
-            const labelForEducationValue = labelForEducation(value);
-            return (
-                <Chips.Removable
-                    variant="neutral"
-                    key={`education-${value}`}
-                    onClick={() => queryDispatch({ type: REMOVE_EDUCATION, value })}
-                >
-                    {labelForEducationValue === "Ikke oppgitt" ? "Utdanning ikke oppgitt" : labelForEducationValue}
-                </Chips.Removable>
+    searchParams.forEach((value, name) => {
+        if (name === SearchQueryParams.Q) {
+            chips.push(
+                <Chips.Removable variant="neutral" key={`${name}-${value}`} onClick={removeSearchString}>
+                    {searchParams.get(SearchQueryParams.Q)}
+                </Chips.Removable>,
             );
-        }),
-    );
-
-    chips.push(
-        ...query.needDriversLicense.map((value) => {
+        }
+        if (name === SearchQueryParams.OCCUPATION) {
+            chips.push(
+                <Chips.Removable variant="neutral" key={`${name}-${value}`} onClick={() => remove(name, value)}>
+                    {value}
+                </Chips.Removable>,
+            );
+        }
+        if (name === SearchQueryParams.COUNTY) {
+            // Ikke vis fylke hvis bruker har valgt et eller flere kommuner i dette fylket
+            const found = searchParams.getAll(SearchQueryParams.MUNICIPAL).find((obj) => obj.startsWith(`${value}.`));
+            if (!found) {
+                chips.push(
+                    <Chips.Removable variant="neutral" key={`${name}-${value}`} onClick={() => remove(name, value)}>
+                        {fixLocationName(value)}
+                    </Chips.Removable>,
+                );
+            }
+        }
+        if (name === SearchQueryParams.MUNICIPAL) {
+            chips.push(
+                <Chips.Removable variant="neutral" key={`${name}-${value}`} onClick={() => removeMunicipal(value)}>
+                    {fixLocationName(value.split(".")[1])}
+                </Chips.Removable>,
+            );
+        }
+        if (name === SearchQueryParams.INTERNATIONAL) {
+            if (!searchParams.has(SearchQueryParams.COUNTRY)) {
+                chips.push(
+                    <Chips.Removable
+                        variant="neutral"
+                        key="utland-filter"
+                        onClick={() => {
+                            remove(SearchQueryParams.INTERNATIONAL);
+                        }}
+                    >
+                        Utland
+                    </Chips.Removable>,
+                );
+            }
+        }
+        if (name === SearchQueryParams.COUNTRY) {
+            chips.push(
+                <Chips.Removable variant="neutral" key={`${name}-${value}`} onClick={() => removeCountry(value)}>
+                    {fixLocationName(value)}
+                </Chips.Removable>,
+            );
+        }
+        if (name === SearchQueryParams.OCCUPATION_LEVEL_1) {
+            // Ikke vis yrkeskategori hvis bruker har valgt et eller flere yrker i denne kategorien
+            const found = searchParams
+                .getAll(SearchQueryParams.OCCUPATION_LEVEL_2)
+                .find((obj) => obj.startsWith(`${value}.`));
+            if (!found) {
+                chips.push(
+                    <Chips.Removable variant="neutral" key={`${name}-${value}`} onClick={() => remove(name, value)}>
+                        {value}
+                    </Chips.Removable>,
+                );
+            }
+        }
+        if (name === SearchQueryParams.OCCUPATION_LEVEL_2) {
+            chips.push(
+                <Chips.Removable variant="neutral" key={`${name}-${value}`} onClick={() => removeOccupation(value)}>
+                    {value.split(".")[1]}
+                </Chips.Removable>,
+            );
+        }
+        if (name === SearchQueryParams.PUBLISHED) {
+            chips.push(
+                <Chips.Removable variant="neutral" key={`${name}-${value}`} onClick={() => remove(name)}>
+                    {PublishedLabelsEnum[value]}
+                </Chips.Removable>,
+            );
+        }
+        if (name === SearchQueryParams.SECTOR) {
+            chips.push(
+                <Chips.Removable variant="neutral" key={`${name}-${value}`} onClick={() => remove(name, value)}>
+                    {value === "Ikke oppgitt" ? "Sektor ikke oppgitt" : value}
+                </Chips.Removable>,
+            );
+        }
+        if (name === SearchQueryParams.ENGAGEMENT_TYPE) {
+            chips.push(
+                <Chips.Removable variant="neutral" key={`${name}-${value}`} onClick={() => remove(name, value)}>
+                    {editedItemKey(value) === "Ikke oppgitt" ? "Ansettelsesform ikke oppgitt" : value}
+                </Chips.Removable>,
+            );
+        }
+        if (name === SearchQueryParams.EXTENT) {
+            chips.push(
+                <Chips.Removable variant="neutral" key={`${name}-${value}`} onClick={() => remove(name, value)}>
+                    {value}
+                </Chips.Removable>,
+            );
+        }
+        if (name === SearchQueryParams.WORK_LANGUAGE) {
+            chips.push(
+                <Chips.Removable variant="neutral" key={`${name}-${value}`} onClick={() => remove(name, value)}>
+                    {value === "Ikke oppgitt" ? "Arbeidsspråk ikke oppgitt" : value}
+                </Chips.Removable>,
+            );
+        }
+        if (name === SearchQueryParams.EDUCATION) {
+            const labelForEducationValue = labelForEducation(value);
+            chips.push(
+                <Chips.Removable variant="neutral" key={`${name}-${value}`} onClick={() => remove(name, value)}>
+                    {labelForEducationValue === "Ikke oppgitt" ? "Utdanning ikke oppgitt" : labelForEducationValue}
+                </Chips.Removable>,
+            );
+        }
+        if (name === SearchQueryParams.NEED_DRIVERS_LICENSE) {
             const labelForNeedDriversLicenseValue = labelForNeedDriversLicense(value);
-            return (
-                <Chips.Removable
-                    variant="neutral"
-                    key={`needDriversLicense-${value}`}
-                    onClick={() => queryDispatch({ type: REMOVE_NEEDDRIVERSLICENSE, value })}
-                >
+            chips.push(
+                <Chips.Removable variant="neutral" key={`${name}-${value}`} onClick={() => remove(name, value)}>
                     {labelForNeedDriversLicenseValue === "Ikke oppgitt"
                         ? "Førerkort ikke oppgitt"
                         : labelForNeedDriversLicenseValue}
-                </Chips.Removable>
+                </Chips.Removable>,
             );
-        }),
-    );
-
-    if (query.remote.length > 0) {
-        chips.push(
-            ...query.remote.map((value) => (
-                <Chips.Removable
-                    variant="neutral"
-                    key={`remote-filter-${value}`}
-                    onClick={() => queryDispatch({ type: REMOVE_REMOTE, value })}
-                >
+        }
+        if (name === SearchQueryParams.REMOTE) {
+            chips.push(
+                <Chips.Removable variant="neutral" key={`${name}-${value}`} onClick={() => remove(name, value)}>
                     {value === "Ikke oppgitt" ? "Hjemmekontor ikke oppgitt" : value}
-                </Chips.Removable>
-            )),
-        );
-    }
+                </Chips.Removable>,
+            );
+        }
+    });
 
     if (chips.length === 0) {
         return null;
@@ -310,36 +249,15 @@ function SelectedFilters({ query, queryDispatch }) {
                 type="button"
                 variant="tertiary"
                 onClick={() => {
-                    queryDispatch({ type: "RESET" });
+                    clear();
                 }}
                 icon={<TrashIcon aria-hidden="true" />}
             >
                 Fjern alle
             </Button>
-            <SaveSearchButton query={query} />
+            <SaveSearchButton />
         </HStack>
     );
 }
-
-SelectedFilters.propTypes = {
-    query: PropTypes.shape({
-        q: PropTypes.string,
-        municipals: PropTypes.arrayOf(PropTypes.string),
-        counties: PropTypes.arrayOf(PropTypes.string),
-        countries: PropTypes.arrayOf(PropTypes.string),
-        international: PropTypes.bool,
-        needDriversLicense: PropTypes.arrayOf(PropTypes.string),
-        occupationFirstLevels: PropTypes.arrayOf(PropTypes.string),
-        occupationSecondLevels: PropTypes.arrayOf(PropTypes.string),
-        published: PropTypes.string,
-        sector: PropTypes.arrayOf(PropTypes.string),
-        engagementType: PropTypes.arrayOf(PropTypes.string),
-        extent: PropTypes.arrayOf(PropTypes.string),
-        education: PropTypes.arrayOf(PropTypes.string),
-        workLanguage: PropTypes.arrayOf(PropTypes.string),
-        remote: PropTypes.arrayOf(PropTypes.string),
-    }),
-    queryDispatch: PropTypes.func.isRequired,
-};
 
 export default SelectedFilters;

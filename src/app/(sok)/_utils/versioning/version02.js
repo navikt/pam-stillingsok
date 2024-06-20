@@ -1,29 +1,95 @@
 export function migrateToV2(searchParams) {
-    const result = {
+    let newSearchParams = {
         ...searchParams,
-        occupationLevel1: searchParams["occupationFirstLevels[]"],
-        occupationLevel2: searchParams["occupationSecondLevels[]"],
-        municipal: searchParams["municipals[]"],
-        county: searchParams["counties[]"],
-        country: searchParams["countries[]"],
-        extent: searchParams["extent[]"],
-        engagementType: searchParams["engagementType[]"],
-        sector: searchParams["sector[]"],
-        education: searchParams["education[]"],
-        workLanguage: searchParams["workLanguage[]"],
-        remote: searchParams["remote[]"],
     };
-    delete result["occupationFirstLevels[]"];
-    delete result["occupationSecondLevels[]"];
-    delete result["municipals[]"];
-    delete result["counties[]"];
-    delete result["countries[]"];
-    delete result["extent[]"];
-    delete result["engagementType[]"];
-    delete result["sector[]"];
-    delete result["education[]"];
-    delete result["workLanguage[]"];
-    delete result["remote[]"];
 
-    return result;
+    if (newSearchParams["occupationFirstLevels[]"]) {
+        newSearchParams = {
+            ...newSearchParams,
+            occupationLevel1: newSearchParams["occupationFirstLevels[]"],
+        };
+        delete newSearchParams["occupationFirstLevels[]"];
+    }
+
+    if (newSearchParams["occupationSecondLevels[]"]) {
+        newSearchParams = {
+            ...newSearchParams,
+            occupationLevel2: newSearchParams["occupationSecondLevels[]"],
+        };
+        delete newSearchParams["occupationSecondLevels[]"];
+    }
+
+    if (newSearchParams["municipals[]"]) {
+        newSearchParams = {
+            ...newSearchParams,
+            municipal: newSearchParams["municipals[]"],
+        };
+        delete newSearchParams["municipals[]"];
+    }
+
+    if (newSearchParams["counties[]"]) {
+        newSearchParams = {
+            ...newSearchParams,
+            county: newSearchParams["counties[]"],
+        };
+        delete newSearchParams["counties[]"];
+    }
+
+    if (newSearchParams["countries[]"]) {
+        newSearchParams = {
+            ...newSearchParams,
+            country: newSearchParams["countries[]"],
+        };
+        delete newSearchParams["countries[]"];
+    }
+
+    if (newSearchParams["extent[]"]) {
+        newSearchParams = {
+            ...newSearchParams,
+            extent: newSearchParams["extent[]"],
+        };
+        delete newSearchParams["extent[]"];
+    }
+
+    if (newSearchParams["engagementType[]"]) {
+        newSearchParams = {
+            ...newSearchParams,
+            engagementType: newSearchParams["engagementType[]"],
+        };
+        delete newSearchParams["engagementType[]"];
+    }
+
+    if (newSearchParams["sector[]"]) {
+        newSearchParams = {
+            ...newSearchParams,
+            sector: newSearchParams["sector[]"],
+        };
+        delete newSearchParams["sector[]"];
+    }
+
+    if (newSearchParams["education[]"]) {
+        newSearchParams = {
+            ...newSearchParams,
+            education: newSearchParams["education[]"],
+        };
+        delete newSearchParams["education[]"];
+    }
+
+    if (newSearchParams["workLanguage[]"]) {
+        newSearchParams = {
+            ...newSearchParams,
+            workLanguage: newSearchParams["workLanguage[]"],
+        };
+        delete newSearchParams["workLanguage[]"];
+    }
+
+    if (newSearchParams["remote[]"]) {
+        newSearchParams = {
+            ...newSearchParams,
+            remote: newSearchParams["remote[]"],
+        };
+        delete newSearchParams["remote[]"];
+    }
+
+    return newSearchParams;
 }

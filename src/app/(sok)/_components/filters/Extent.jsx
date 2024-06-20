@@ -1,20 +1,26 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { BodyShort, Checkbox, CheckboxGroup } from "@navikt/ds-react";
-import { ADD_EXTENT, REMOVE_EXTENT } from "@/app/(sok)/_utils/queryReducer";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
 import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
+import { useSearchParams } from "next/navigation";
+import { SearchQueryParams } from "@/app/(sok)/_utils/constants";
+import useSearchRouter from "@/app/(sok)/_utils/useSearchRouter";
 
-function Extent({ initialValues, updatedValues, query, dispatch }) {
+function Extent({ initialValues, updatedValues }) {
     const values = mergeCount(initialValues, updatedValues);
+    const router = useSearchRouter();
+    const searchParams = useSearchParams();
 
     function handleClick(e) {
         const { value, checked } = e.target;
+        const newSearchParams = new URLSearchParams(searchParams);
         if (checked) {
-            dispatch({ type: ADD_EXTENT, value });
+            newSearchParams.append(SearchQueryParams.EXTENT, value);
         } else {
-            dispatch({ type: REMOVE_EXTENT, value });
+            newSearchParams.delete(SearchQueryParams.EXTENT, value);
         }
+        router.replace(newSearchParams, { scroll: false });
         logFilterChanged({ name: "Omfang", value, checked });
     }
 
@@ -24,7 +30,7 @@ function Extent({ initialValues, updatedValues, query, dispatch }) {
 
     return (
         <CheckboxGroup
-            value={query.extent}
+            value={searchParams.getAll(SearchQueryParams.EXTENT)}
             legend={
                 <>
                     <BodyShort as="span" visuallyHidden>
@@ -35,7 +41,7 @@ function Extent({ initialValues, updatedValues, query, dispatch }) {
             }
         >
             {values.map((item) => (
-                <Checkbox name="extent[]" key={item.key} value={item.key} onChange={handleClick}>
+                <Checkbox name={SearchQueryParams.EXTENT} key={item.key} value={item.key} onChange={handleClick}>
                     {`${labelForExtent(item)} (${item.count})`}
                 </Checkbox>
             ))}
@@ -51,10 +57,6 @@ Extent.propTypes = {
         }),
     ).isRequired,
     updatedValues: PropTypes.arrayOf(PropTypes.shape({})),
-    query: PropTypes.shape({
-        extent: PropTypes.arrayOf(PropTypes.string),
-    }).isRequired,
-    dispatch: PropTypes.func.isRequired,
 };
 
 export default Extent;

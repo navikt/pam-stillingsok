@@ -1,26 +1,29 @@
 import React, { useEffect, useRef, useState } from "react";
-import PropTypes from "prop-types";
-import { ADD_OCCUPATION, SET_SEARCH_STRING } from "@/app/(sok)/_utils/queryReducer";
 import Typeahead from "@/app/_common/components/typeahead/Typeahead";
 import { FetchAction, useFetchReducer } from "@/app/_common/hooks/useFetchReducer";
 import * as actions from "@/app/_common/actions";
+import { useSearchParams } from "next/navigation";
+import { SearchQueryParams } from "@/app/(sok)/_utils/constants";
+import useSearchRouter from "@/app/(sok)/_utils/useSearchRouter";
 
 let suggestionsCache = [];
 const CACHE_MAX_SIZE = 50;
 
-function getSearchBoxValue(query) {
+function getSearchBoxValue(searchParams) {
     let initialValue = "";
-    if (query.q) {
-        initialValue = query.q;
-    } else if (query.occupations[0]) {
+    if (searchParams.has(SearchQueryParams.Q)) {
+        initialValue = searchParams.get(SearchQueryParams.Q);
+    } else if (searchParams.has(SearchQueryParams.OCCUPATION)) {
         // eslint-disable-next-line prefer-destructuring
-        initialValue = query.occupations[0];
+        initialValue = searchParams.get(SearchQueryParams.OCCUPATION);
     }
     return initialValue;
 }
 
-function SearchBox({ dispatch, query }) {
-    const [value, setValue] = useState(getSearchBoxValue(query));
+function SearchBox() {
+    const searchParams = useSearchParams();
+    const router = useSearchRouter();
+    const [value, setValue] = useState(getSearchBoxValue(searchParams));
     const initialRender = useRef(true);
     const [suggestionsResponse, suggestionsDispatch] = useFetchReducer([]);
     const MINIMUM_LENGTH = 1;
@@ -44,8 +47,8 @@ function SearchBox({ dispatch, query }) {
     }
 
     useEffect(() => {
-        setValue(getSearchBoxValue(query));
-    }, [query.q, query.occupations]);
+        setValue(getSearchBoxValue(searchParams));
+    }, [searchParams]);
 
     useEffect(() => {
         if (initialRender.current) {
@@ -63,24 +66,51 @@ function SearchBox({ dispatch, query }) {
 
     function handleTypeAheadSuggestionSelected(newValue, shouldSearchInWholeAd) {
         setValue(newValue);
-        if (!shouldSearchInWholeAd) {
-            dispatch({ type: ADD_OCCUPATION, value: newValue });
+        const newSearchParams = new URLSearchParams(searchParams);
+        if (shouldSearchInWholeAd) {
+            newSearchParams.delete(SearchQueryParams.OCCUPATION);
+            newSearchParams.set(SearchQueryParams.Q, newValue);
         } else {
-            dispatch({ type: SET_SEARCH_STRING, value: newValue });
+            newSearchParams.delete(SearchQueryParams.Q);
+            newSearchParams.set(SearchQueryParams.OCCUPATION, newValue);
         }
+
+        if (newSearchParams.get(SearchQueryParams.SORT) !== "expires") {
+            if (!shouldSearchInWholeAd) {
+                newSearchParams.set(SearchQueryParams.SORT, "published");
+            } else if (newValue) {
+                newSearchParams.set(SearchQueryParams.SORT, "relevant");
+            } else {
+                newSearchParams.delete(SearchQueryParams.SORT);
+            }
+        }
+        router.replace(newSearchParams, { scroll: false });
     }
 
     function handleSearchButtonClick() {
-        const found = suggestionsResponse.data.find((it) => it.toLowerCase() === value.toLowerCase());
-        if (found) {
-            dispatch({ type: ADD_OCCUPATION, value });
+        const isOccupationSuggestion = suggestionsResponse.data.find((it) => it.toLowerCase() === value.toLowerCase());
+        const newSearchParams = new URLSearchParams(searchParams);
+
+        if (!value) {
+            newSearchParams.delete(SearchQueryParams.OCCUPATION);
+            newSearchParams.delete(SearchQueryParams.Q);
+        } else if (isOccupationSuggestion) {
+            newSearchParams.delete(SearchQueryParams.Q);
+            newSearchParams.set(SearchQueryParams.OCCUPATION, value);
+            newSearchParams.set(SearchQueryParams.SORT, "published");
         } else {
-            dispatch({ type: SET_SEARCH_STRING, value });
+            newSearchParams.delete(SearchQueryParams.OCCUPATION);
+            newSearchParams.set(SearchQueryParams.Q, value);
+            newSearchParams.set(SearchQueryParams.SORT, "relevant");
         }
+        router.replace(newSearchParams, { scroll: false });
     }
 
     function onClear() {
-        dispatch({ type: SET_SEARCH_STRING, value: "" });
+        const newSearchParams = new URLSearchParams(searchParams);
+        newSearchParams.delete(SearchQueryParams.Q);
+        newSearchParams.delete(SearchQueryParams.OCCUPATION);
+        router.replace(newSearchParams, { scroll: false });
     }
 
     // Add the current value as last suggestion entry,
@@ -106,12 +136,5 @@ function SearchBox({ dispatch, query }) {
         </section>
     );
 }
-
-SearchBox.propTypes = {
-    query: PropTypes.shape({
-        q: PropTypes.string,
-    }).isRequired,
-    dispatch: PropTypes.func.isRequired,
-};
 
 export default SearchBox;

@@ -1,16 +1,13 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { BodyShort, Box, Checkbox, CheckboxGroup } from "@navikt/ds-react";
-import {
-    ADD_OCCUPATION_FIRST_LEVEL,
-    ADD_OCCUPATION_SECOND_LEVEL,
-    REMOVE_OCCUPATION_FIRST_LEVEL,
-    REMOVE_OCCUPATION_SECOND_LEVEL,
-} from "@/app/(sok)/_utils/queryReducer";
 import moveCriteriaToBottom from "@/app/(sok)/_components/utils/moveFacetToBottom";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
 import sortValuesByFirstLetter from "@/app/(sok)/_components/utils/sortValuesByFirstLetter";
 import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
+import { useSearchParams } from "next/navigation";
+import { SearchQueryParams } from "@/app/(sok)/_utils/constants";
+import useSearchRouter from "@/app/(sok)/_utils/useSearchRouter";
 
 export function editedItemKey(key) {
     return key === "Uoppgitt/ ikke identifiserbare" ? "Ikke oppgitt" : key;
@@ -18,7 +15,7 @@ export function editedItemKey(key) {
 
 const OCCUPATION_LEVEL_OTHER = "Uoppgitt/ ikke identifiserbare";
 
-function Occupations({ initialValues, updatedValues, query, dispatch }) {
+function Occupations({ initialValues, updatedValues }) {
     const withSortedSecondLevelOccupations = initialValues.map((item) => {
         const secondLevel = sortValuesByFirstLetter(item.occupationSecondLevels);
         return {
@@ -30,24 +27,37 @@ function Occupations({ initialValues, updatedValues, query, dispatch }) {
     const sortedByLetterFirstLevelOccupations = sortValuesByFirstLetter(withSortedSecondLevelOccupations);
     const sortedValues = moveCriteriaToBottom(sortedByLetterFirstLevelOccupations, OCCUPATION_LEVEL_OTHER);
     const values = mergeCount(sortedValues, updatedValues, "occupationSecondLevels");
+    const router = useSearchRouter();
+    const searchParams = useSearchParams();
 
     function handleFirstLevelClick(e) {
         const { value, checked } = e.target;
+        const newSearchParams = new URLSearchParams(searchParams);
         if (checked) {
-            dispatch({ type: ADD_OCCUPATION_FIRST_LEVEL, value });
+            newSearchParams.append(SearchQueryParams.OCCUPATION_LEVEL_1, value);
         } else {
-            dispatch({ type: REMOVE_OCCUPATION_FIRST_LEVEL, value });
+            newSearchParams.delete(SearchQueryParams.OCCUPATION_LEVEL_1, value);
+
+            // Remove all checked occupations on level 2, when level 1 is unchecked
+            newSearchParams.getAll(SearchQueryParams.OCCUPATION_LEVEL_2).forEach((obj) => {
+                if (obj.startsWith(`${value}.`)) newSearchParams.delete(SearchQueryParams.OCCUPATION_LEVEL_2, obj);
+            });
         }
+        router.replace(newSearchParams, { scroll: false });
+
         logFilterChanged({ name: "Yrke", value, checked, level: "Yrkesnivå 1" });
     }
 
     function handleSecondLevelClick(e) {
         const { value, checked } = e.target;
+        const newSearchParams = new URLSearchParams(searchParams);
         if (checked) {
-            dispatch({ type: ADD_OCCUPATION_SECOND_LEVEL, value });
+            newSearchParams.append(SearchQueryParams.OCCUPATION_LEVEL_2, value);
         } else {
-            dispatch({ type: REMOVE_OCCUPATION_SECOND_LEVEL, value });
+            newSearchParams.delete(SearchQueryParams.OCCUPATION_LEVEL_2, value);
         }
+        router.replace(newSearchParams, { scroll: false });
+
         logFilterChanged({ name: "Yrke", value: value.split(".")[1], checked, level: "Yrkesnivå 2" });
     }
 
@@ -70,7 +80,7 @@ function Occupations({ initialValues, updatedValues, query, dispatch }) {
 
     return (
         <CheckboxGroup
-            value={query.occupationFirstLevels}
+            value={searchParams.getAll(SearchQueryParams.OCCUPATION_LEVEL_1)}
             legend={
                 <>
                     <BodyShort as="span" visuallyHidden>
@@ -85,18 +95,17 @@ function Occupations({ initialValues, updatedValues, query, dispatch }) {
                 values.map((firstLevel) => (
                     <React.Fragment key={firstLevel.key}>
                         <Checkbox
-                            name="occupationFirstLevels[]"
+                            name={SearchQueryParams.OCCUPATION_LEVEL_1}
                             label={`${firstLevel.key} (${firstLevel.count})`}
                             value={firstLevel.key}
                             onChange={handleFirstLevelClick}
                         >
                             {`${editedItemKey(firstLevel.key)} (${firstLevel.count})`}
                         </Checkbox>
-                        {query.occupationFirstLevels &&
-                            query.occupationFirstLevels.includes(firstLevel.key) &&
+                        {searchParams.getAll(SearchQueryParams.OCCUPATION_LEVEL_1).includes(firstLevel.key) &&
                             firstLevel.key !== OCCUPATION_LEVEL_OTHER && (
                                 <CheckboxGroup
-                                    defaultValue={query.occupationSecondLevels}
+                                    value={searchParams.getAll(SearchQueryParams.OCCUPATION_LEVEL_2)}
                                     hideLegend
                                     legend={`Yrker innen ${firstLevel.key}`}
                                 >
@@ -104,7 +113,7 @@ function Occupations({ initialValues, updatedValues, query, dispatch }) {
                                         {firstLevel.occupationSecondLevels &&
                                             firstLevel.occupationSecondLevels.map((secondLevel) => (
                                                 <Checkbox
-                                                    name="occupationSecondLevels[]"
+                                                    name={SearchQueryParams.OCCUPATION_LEVEL_2}
                                                     key={editedSecondLevelItemKey(secondLevel.key)}
                                                     value={secondLevel.key}
                                                     onChange={handleSecondLevelClick}
@@ -137,11 +146,6 @@ Occupations.propTypes = {
         }),
     ).isRequired,
     updatedValues: PropTypes.arrayOf(PropTypes.shape({})),
-    query: PropTypes.shape({
-        occupationFirstLevels: PropTypes.arrayOf(PropTypes.string),
-        occupationSecondLevels: PropTypes.arrayOf(PropTypes.string),
-    }).isRequired,
-    dispatch: PropTypes.func.isRequired,
 };
 
 export default Occupations;
