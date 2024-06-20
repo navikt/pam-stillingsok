@@ -46,7 +46,7 @@ function SearchPagination({ searchResult, setFocusTopOfSearchResult }) {
         } else {
             newSearchParams.set(SearchQueryParams.FROM, newFrom);
         }
-        router.push(newSearchParams);
+        router.push(newSearchParams, { resetFrom: false });
         setFocusTopOfSearchResult();
     };
 
