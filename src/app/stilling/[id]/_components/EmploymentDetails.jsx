@@ -22,6 +22,13 @@ const options = {
     },
 };
 
+const ExtentEnum = {
+    HELTID: "Heltid",
+    DELTID: "Deltid",
+    HELTID_OG_DELTID: "Heltid_og_Deltid",
+    UKJENT: "Ukjent",
+};
+
 export default function EmploymentDetails({ adData }) {
     /**
      *  TODO: refactor denne
@@ -46,15 +53,17 @@ export default function EmploymentDetails({ adData }) {
     };
 
     const getExtent = (extent, jobpercentage) => {
+        console.info("getExtent: ", extent);
         if (extent) {
             let result = "";
-            if (extent.includes("Deltid")) {
-                result = jobpercentage ? `deltid ${jobpercentage}` : "deltid";
+            if (extent === ExtentEnum.HELTID_OG_DELTID) {
+                result = `, heltid 100% og deltid ${jobpercentage}`;
+            } else if (extent === ExtentEnum.DELTID) {
+                result = `, deltid ${jobpercentage}`;
+            } else {
+                result = `, heltid 100%`;
             }
-            if (extent.includes("Heltid")) {
-                result = result ? `${result} og heltid 100%` : "heltid 100%";
-            }
-            return result ? `, ${result}` : "";
+            return result;
         }
         return "";
     };
