@@ -24,6 +24,7 @@ export default function AdDetails({ adData }) {
                     href={`/rapporter-annonse/${adData.id}`}
                     variant="tertiary"
                     icon={<ExclamationmarkTriangleIcon aria-hidden />}
+                    prefetch={false}
                 >
                     Rapporter annonse
                 </Button>
