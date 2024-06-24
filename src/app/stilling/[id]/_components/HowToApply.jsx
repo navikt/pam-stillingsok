@@ -84,6 +84,7 @@ export default function HowToApply({ adData }) {
                                     });
                                 }}
                                 href={`/${path}/${adData.id}/superrask-soknad`}
+                                prefetch={false}
                             >
                                 Gå til superrask søknad
                             </Button>
