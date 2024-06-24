@@ -64,7 +64,7 @@ spec:
         severity: critical
 
     - alert: "[pam-stillingsok] Kall til pam-aduser feiler"
-      expr: (100 * (sum(rate(aduser_requests{app="pam-stillingsok", result="failure"}[3m]))) / (sum(rate(aduser_requests{app="pam-stillingsok"}[3m])))) > 1
+      expr: (100 * (sum(rate(aduser_requests{app="pam-stillingsok", result="failure"}[3m]))) / (sum(rate(aduser_requests{app="pam-stillingsok"}[3m])))) > 5
       for: 3m
       annotations:
         action: "Sjekk loggene for å se hvorfor så mange kall til pam-aduser feiler @hubba-devs"
@@ -73,7 +73,7 @@ spec:
         severity: critical
 
     - alert: "[pam-stillingsok] Kall til elastic search feiler"
-      expr: (100 * (sum(rate(elastic_search_requests{app="pam-stillingsok", result="failure"}[3m]))) / (sum(rate(elastic_search_requests{app="pam-stillingsok"}[3m])))) > 1
+      expr: (100 * (sum(rate(elastic_search_requests{app="pam-stillingsok", result="failure"}[3m]))) / (sum(rate(elastic_search_requests{app="pam-stillingsok"}[3m])))) > 5
       for: 3m
       annotations:
         action: "Sjekk loggene for å se hvorfor så mange kall til elastic search feiler @hubba-devs"
@@ -82,7 +82,7 @@ spec:
         severity: critical
 
     - alert: "[pam-stillingsok] Kall til elastic search suggestions feiler"
-      expr: (100 * (sum(rate(suggestion_requests{app="pam-stillingsok", result="failure"}[3m]))) / (sum(rate(suggestion_requests{app="pam-stillingsok"}[3m])))) > 1
+      expr: (100 * (sum(rate(suggestion_requests{app="pam-stillingsok", result="failure"}[3m]))) / (sum(rate(suggestion_requests{app="pam-stillingsok"}[3m])))) > 5
       for: 3m
       annotations:
         action: "Sjekk loggene for å se hvorfor så mange kall til elastic search suggestions feiler @hubba-devs"
