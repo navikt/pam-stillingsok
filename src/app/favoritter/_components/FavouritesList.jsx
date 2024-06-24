@@ -5,25 +5,27 @@ import { HStack, Select, Heading, VStack } from "@navikt/ds-react";
 import PropTypes from "prop-types";
 import AlertModalWithPageReload from "@/app/_common/components/modals/AlertModalWithPageReload";
 import useToggle from "@/app/_common/hooks/useToggle";
+import { useRouter, useSearchParams } from "next/navigation";
 import FavouritesListItem from "./FavouritesListItem";
 import NoFavourites from "./NoFavourites";
 
 function FavouritesList({ favourites }) {
-    const [sortBy, setSortBy] = useState("published");
+    const searchParams = useSearchParams();
+    const router = useRouter();
     const [locallyRemovedUuids, setLocallyRemovedUuids] = useState([]);
     const [shouldShowErrorDialog, openErrorDialog, closeErrorDialog] = useToggle();
-
-    if (sortBy === "published") {
-        favourites.sort((a, b) => b.favouriteAd.published.localeCompare(a.favouriteAd.published));
-    } else if (sortBy === "expires") {
-        favourites.sort((a, b) => a.favouriteAd.expires.localeCompare(b.favouriteAd.expires));
-    }
 
     // eslint-disable-next-line
     favourites = favourites.filter((it) => !locallyRemovedUuids.includes(it.uuid));
 
     function onFavouriteDeleted(uuid) {
         setLocallyRemovedUuids([...locallyRemovedUuids, uuid]);
+    }
+
+    function onSortChange(e) {
+        const newSearchParams = new URLSearchParams(searchParams);
+        newSearchParams.set("sort", e.target.value);
+        router.replace(`/favoritter?${newSearchParams.toString()}`);
     }
 
     if (favourites.length === 0) {
@@ -38,10 +40,8 @@ function FavouritesList({ favourites }) {
                         Favoritter
                     </Heading>
                     <Select
-                        onChange={(e) => {
-                            setSortBy(e.target.value);
-                        }}
-                        value={sortBy}
+                        onChange={onSortChange}
+                        value={searchParams.get("sort") || "published"}
                         name="sortBy"
                         label="Sorter etter"
                         className="inline-select"

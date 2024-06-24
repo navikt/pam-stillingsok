@@ -10,7 +10,7 @@ export const metadata = {
         "Har du ikke tid til å lese annonsen akkurat nå, eller lyst til å søke senere når du kommer hjem? Med favoritter finner du raskt tilbake til annonsen.",
 };
 
-export default async function Page(props) {
+export default async function Page({ searchParams }) {
     const authenticated = await actions.checkIfAuthenticated();
     if (!authenticated.isAuthenticated) {
         return <LoginIsRequiredPage redirect="/stillinger/favoritter" />;
@@ -21,8 +21,11 @@ export default async function Page(props) {
         return <UserConsentIsRequired />;
     }
 
-    // eslint-disable-next-line
-    const sortBy = props.searchParams.sortBy || "published";
-    const favourites = await actions.getFavouritesAction(sortBy);
+    const favourites = await actions.getFavouritesAction();
+    if (searchParams.sort === "expires") {
+        favourites.sort((a, b) => a.favouriteAd.expires.localeCompare(b.favouriteAd.expires));
+    } else {
+        favourites.sort((a, b) => b.favouriteAd.published.localeCompare(a.favouriteAd.published));
+    }
     return <FavouritesList favourites={favourites} />;
 }
