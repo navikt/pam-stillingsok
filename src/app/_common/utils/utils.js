@@ -131,3 +131,10 @@ export const JobPostingTextEnum = {
     STRUKTURERT: "strukturert",
     IKKE_STRUKTURERT: "ikkeStrukturert",
 };
+
+export const ExtentEnum = {
+    HELTID: "Heltid",
+    DELTID: "Deltid",
+    HELTID_OG_DELTID: "Heltid_og_Deltid",
+    UKJENT: "Ukjent",
+};

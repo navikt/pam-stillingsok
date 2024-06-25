@@ -53,7 +53,6 @@ export default function EmploymentDetails({ adData }) {
     };
 
     const getExtent = (extent, jobpercentage) => {
-        console.info("getExtent: ", extent);
         if (extent) {
             let result = "";
             if (extent === ExtentEnum.HELTID_OG_DELTID) {
@@ -110,7 +109,10 @@ export default function EmploymentDetails({ adData }) {
                         <dd>
                             <BodyLong>
                                 {adData.engagementType}
-                                {getExtent(adData.extent, adData.jobPercentage)}
+                                {getExtent(
+                                    adData.extent,
+                                    adData.jobPercentageRange ? adData.jobPercentageRange : adData.jobPercentage,
+                                )}
                             </BodyLong>
                         </dd>
                     </div>
