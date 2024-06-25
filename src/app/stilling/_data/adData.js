@@ -90,6 +90,14 @@ function getEmail(email) {
     return isValidEmail(email) ? email : undefined;
 }
 
+function getExtent(extent) {
+    let result = getString(extent);
+    if (!result) {
+        result = getArray(extent);
+    }
+    return result;
+}
+
 function getJobPercentage(value) {
     const jobPercentage = getString(value);
     if (!jobPercentage) {
@@ -97,6 +105,15 @@ function getJobPercentage(value) {
     }
 
     return jobPercentage + (jobPercentage.endsWith("%") ? "" : "%");
+}
+
+function getJobPercentageRange(value) {
+    const jobPercentageRange = getString(value);
+    if (!jobPercentageRange) {
+        return undefined;
+    }
+
+    return jobPercentageRange + (jobPercentageRange.endsWith("%") ? "" : "%");
 }
 
 function getAdText(adText) {
@@ -261,9 +278,10 @@ export default function mapAdData(rawElasticSearchAdResult) {
 
         // employment details
         engagementType: getString(properties.engagementtype),
-        extent: getString(properties.extent),
+        extent: getExtent(properties.extent),
         jobArrangement: getString(properties.jobarrangement),
         jobPercentage: getJobPercentage(properties.jobpercentage),
+        jobPercentageRange: getJobPercentageRange(properties.jobpercentagerange),
         jobTitle: getString(properties.jobtitle),
         positionCount: getString(properties.positioncount),
         remote: getString(properties.remote),

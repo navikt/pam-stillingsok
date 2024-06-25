@@ -18,10 +18,6 @@ function Extent({ initialValues, updatedValues, query, dispatch }) {
         logFilterChanged({ name: "Omfang", value, checked });
     }
 
-    function labelForExtent(item) {
-        return item.key === "Heltid" ? `${item.key} eller ikke oppgitt` : `${item.key}`;
-    }
-
     return (
         <CheckboxGroup
             value={query.extent}
@@ -36,7 +32,7 @@ function Extent({ initialValues, updatedValues, query, dispatch }) {
         >
             {values.map((item) => (
                 <Checkbox name="extent[]" key={item.key} value={item.key} onChange={handleClick}>
-                    {`${labelForExtent(item)} (${item.count})`}
+                    {`${item.key} (${item.count})`}
                 </Checkbox>
             ))}
         </CheckboxGroup>

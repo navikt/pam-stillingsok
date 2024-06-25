@@ -22,6 +22,13 @@ const options = {
     },
 };
 
+const ExtentEnum = {
+    HELTID: "Heltid",
+    DELTID: "Deltid",
+    HELTID_OG_DELTID: "Heltid_og_Deltid",
+    UKJENT: "Ukjent",
+};
+
 export default function EmploymentDetails({ adData }) {
     /**
      *  TODO: refactor denne
@@ -43,6 +50,21 @@ export default function EmploymentDetails({ adData }) {
             location: adData.location,
             employer: adData.employer.name,
         },
+    };
+
+    const getExtent = (extent, jobpercentage) => {
+        if (extent) {
+            let result = "";
+            if (extent === ExtentEnum.HELTID_OG_DELTID) {
+                result = `, heltid 100% og deltid ${jobpercentage}`;
+            } else if (extent === ExtentEnum.DELTID) {
+                result = `, deltid ${jobpercentage}`;
+            } else {
+                result = `, heltid 100%`;
+            }
+            return result;
+        }
+        return "";
     };
 
     return (
@@ -87,8 +109,10 @@ export default function EmploymentDetails({ adData }) {
                         <dd>
                             <BodyLong>
                                 {adData.engagementType}
-                                {adData.extent ? `, ${adData.extent.toLowerCase()}` : ""}
-                                {adData.jobPercentage ? ` ${adData.jobPercentage}` : ""}
+                                {getExtent(
+                                    adData.extent,
+                                    adData.jobPercentageRange ? adData.jobPercentageRange : adData.jobPercentage,
+                                )}
                             </BodyLong>
                         </dd>
                     </div>
@@ -137,7 +161,7 @@ EmploymentDetails.propTypes = {
         startTime: PropTypes.string,
         engagementType: PropTypes.string,
         jobPercentage: PropTypes.string,
-        extent: PropTypes.string,
+        extent: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
         workdays: PropTypes.string,
         workHours: PropTypes.string,
         jobArrangement: PropTypes.string,
