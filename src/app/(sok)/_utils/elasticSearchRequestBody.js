@@ -914,7 +914,7 @@ const elasticSearchRequestBody = (query) => {
                 },
                 aggs: {
                     values: {
-                        terms: { field: "workLanguage_facet", missing: NOT_DEFINED },
+                        terms: { field: "worklanguage_facet", missing: NOT_DEFINED },
                     },
                 },
             },
