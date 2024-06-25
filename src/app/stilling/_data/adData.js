@@ -107,6 +107,15 @@ function getJobPercentage(value) {
     return jobPercentage + (jobPercentage.endsWith("%") ? "" : "%");
 }
 
+function getJobPercentageRange(value) {
+    const jobPercentageRange = getString(value);
+    if (!jobPercentageRange) {
+        return undefined;
+    }
+
+    return jobPercentageRange + (jobPercentageRange.endsWith("%") ? "" : "%");
+}
+
 function getAdText(adText) {
     let processedAdText = adText;
     if (containsEmail(adText)) {
@@ -272,6 +281,7 @@ export default function mapAdData(rawElasticSearchAdResult) {
         extent: getExtent(properties.extent),
         jobArrangement: getString(properties.jobarrangement),
         jobPercentage: getJobPercentage(properties.jobpercentage),
+        jobPercentageRange: getJobPercentageRange(properties.jobpercentagerange),
         jobTitle: getString(properties.jobtitle),
         positionCount: getString(properties.positioncount),
         remote: getString(properties.remote),
