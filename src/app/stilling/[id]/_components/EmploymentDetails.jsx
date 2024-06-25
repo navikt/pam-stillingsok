@@ -69,7 +69,7 @@ export default function EmploymentDetails({ adData }) {
             } else if (extent === ExtentEnum.DELTID) {
                 result = `, deltid ${jobpercentage}`;
             } else {
-                result = `, heltid 100%`;
+                result = "";
             }
             return result;
         }
