@@ -52,7 +52,16 @@ export default function EmploymentDetails({ adData }) {
         },
     };
 
-    const getExtent = (extent, jobpercentage) => {
+    const getExtent = (data) => {
+        const { extent } = data;
+
+        let jobpercentage = "";
+        if (data.jobPercentageRange) {
+            jobpercentage = data.jobPercentageRange;
+        } else if (data.jobPercentage) {
+            jobpercentage = data.jobPercentage;
+        }
+
         if (extent) {
             let result = "";
             if (extent === ExtentEnum.HELTID_OG_DELTID) {
@@ -109,10 +118,7 @@ export default function EmploymentDetails({ adData }) {
                         <dd>
                             <BodyLong>
                                 {adData.engagementType}
-                                {getExtent(
-                                    adData.extent,
-                                    adData.jobPercentageRange ? adData.jobPercentageRange : adData.jobPercentage,
-                                )}
+                                {getExtent(adData)}
                             </BodyLong>
                         </dd>
                     </div>
