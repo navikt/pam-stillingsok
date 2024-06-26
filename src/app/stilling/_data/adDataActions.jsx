@@ -43,6 +43,7 @@ const sourceIncludes = [
     "properties.hasInterestform",
     "properties.jobarrangement",
     "properties.jobpercentage",
+    "properties.jobpercentagerange",
     "properties.jobtitle",
     "properties.linkedinpage",
     "properties.location",
