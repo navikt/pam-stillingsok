@@ -17,6 +17,6 @@ export {
     deleteSavedSearchAction,
     restartSavedSearchAction,
 } from "./savedSearchActions";
-export { getSuggestions } from "./suggestionsActions";
+export { getSuggestions, getSuggestionsJanzz } from "./suggestionsActions";
 export { getPersonalia } from "./personaliaActions";
 export { getUser, createUser, updateUser } from "./userActions";

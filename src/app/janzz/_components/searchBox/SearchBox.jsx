@@ -26,6 +26,7 @@ function SearchBox({ dispatch, query }) {
     const MINIMUM_LENGTH = 1;
 
     async function fetchSuggestions() {
+        console.info("fetchSuggestionsJanzz");
         const cached = suggestionsCache.find((c) => c.value === value);
         if (cached) {
             suggestionsDispatch({ type: FetchAction.RESOLVE, data: cached.data });
@@ -33,7 +34,7 @@ function SearchBox({ dispatch, query }) {
         }
         let data;
         try {
-            data = await actions.getSuggestions(value, MINIMUM_LENGTH);
+            data = await actions.getSuggestionsJanzz(value);
         } catch (err) {
             // ignore fetch failed errors
         }
