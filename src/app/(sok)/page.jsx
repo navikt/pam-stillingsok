@@ -77,12 +77,12 @@ export default async function Page({ searchParams }) {
     }
 
     const userPreferences = await actions.getUserPreferences();
-    const _searchParams = searchParams;
+    const modifiedSearchParams = searchParams;
     if (userPreferences.resultsPerPage) {
-        _searchParams.size = userPreferences.resultsPerPage;
+        modifiedSearchParams.size = userPreferences.resultsPerPage;
     }
 
-    const initialQuery = createQuery(_searchParams);
+    const initialQuery = createQuery(modifiedSearchParams);
 
     const shouldDoExtraCallIfUserHasSearchParams = Object.keys(toBrowserQuery(initialQuery)).length > 0;
     const fetchCalls = [fetchCachedElasticSearch(toApiQuery(defaultQuery)), fetchLocations()];
