@@ -5,7 +5,7 @@ const project = resolve(__dirname, "jsconfig.json");
 /** @type {import('eslint').Linter.Config} */
 module.exports = {
     root: true,
-    extends: ["plugin:@next/next/recommended", "airbnb", "next/core-web-vitals", "prettier"],
+    extends: ["plugin:@next/next/recommended", "airbnb", "airbnb-typescript", "next/core-web-vitals", "prettier"],
     plugins: ["react", "unused-imports", "prettier"],
     parserOptions: { project },
     globals: {
