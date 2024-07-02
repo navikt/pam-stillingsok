@@ -5,7 +5,15 @@ import { Heading } from "@navikt/ds-react";
 import { RichText } from "@navikt/arbeidsplassen-react";
 
 const options = {
-    replace: ({ attribs }) => {
+    replace: ({ attribs, tagName, children }) => {
+        // Adjust h2 to Aksel h2.
+        if (tagName === "h2") {
+            return (
+                <Heading level="2" size="medium" spacing>
+                    {domToReact(children)}
+                </Heading>
+            );
+        }
         if (attribs && attribs.id === "arb-aapningstekst") {
             // eslint-disable-next-line
             return <></>;
