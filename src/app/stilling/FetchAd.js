@@ -27,6 +27,7 @@ const sourceIncludes = [
     "locationList.country",
     "medium",
     "properties.adtext",
+    "properties.adtextFormat",
     "properties.address",
     "properties.applicationdue",
     "properties.applicationemail",

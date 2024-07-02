@@ -1,10 +1,4 @@
-import {
-    containsEmail,
-    extractEmail,
-    isValidEmail,
-    JobPostingTextEnum,
-    mailtoInString,
-} from "@/app/_common/utils/utils";
+import { containsEmail, extractEmail, isValidEmail, mailtoInString } from "@/app/_common/utils/utils";
 import DOMPurify from "isomorphic-dompurify";
 import fixLocationName from "@/app/_common/utils/fixLocationName";
 import logger from "@/app/_common/utils/logger";
@@ -72,18 +66,6 @@ function getLocationListData(value) {
             country: getString(location.country),
         }),
     );
-}
-
-function getJobPostingFormat(adText) {
-    if (
-        adText &&
-        adText.includes('<section id="arb-serEtter">') &&
-        adText.includes('<section id="arb-arbeidsoppgaver">') &&
-        adText.includes('<section id="arb-tilbyr">')
-    ) {
-        return JobPostingTextEnum.STRUKTURERT;
-    }
-    return JobPostingTextEnum.IKKE_STRUKTURERT;
 }
 
 function getEmail(email) {
@@ -273,7 +255,7 @@ export default function mapAdData(rawElasticSearchAdResult) {
         applicationUrl: getUrl(properties.applicationurl),
         sourceUrl: getUrl(properties.sourceurl),
         hasSuperraskSoknad: getString(properties.hasInterestform),
-        jobPostingFormat: getJobPostingFormat(properties.adText),
+        jobPostingFormat: getString(properties.adtextFormat),
         adNumber: getNumber(data.id),
 
         // employment details
