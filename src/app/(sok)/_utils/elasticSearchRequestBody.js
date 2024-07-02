@@ -704,6 +704,7 @@ const elasticSearchRequestBody = (query) => {
             includes: [
                 "employer.name",
                 "businessName",
+                "properties.adtextFormat",
                 "properties.employer",
                 "properties.jobtitle",
                 "properties.location",
