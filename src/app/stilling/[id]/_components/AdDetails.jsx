@@ -15,7 +15,7 @@ export default function AdDetails({ adData }) {
                 align={{ xs: "start", sm: "center" }}
                 justify="space-between"
             >
-                <Heading level="2" size="large">
+                <Heading level="2" size="medium">
                     Annonsedata
                 </Heading>
                 <Button
