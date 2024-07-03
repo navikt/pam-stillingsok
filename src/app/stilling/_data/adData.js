@@ -206,6 +206,7 @@ function getEmployerData(adData) {
     const employerData = {
         name: getEmployerName(adData),
         orgnr: getEmployerId(adData),
+        sector: getString(adData.properties.sector),
         homepage: getUrl(adData.properties.employerhomepage), // change check in EmployerDetails.jsx
         linkedinPage: getUrl(adData.properties.linkedinpage), // change check in EmployerDetails.jsx
         twitterAddress: getUrl(adData.properties.twitteraddress), // change check in EmployerDetails.jsx
@@ -267,7 +268,6 @@ export default function mapAdData(rawElasticSearchAdResult) {
         jobTitle: getString(properties.jobtitle),
         positionCount: getString(properties.positioncount),
         remote: getString(properties.remote),
-        sector: getString(properties.sector),
         startTime: getString(properties.starttime),
         workdays: getWorktime(properties.workday),
         workHours: getWorktime(properties.workhours),
