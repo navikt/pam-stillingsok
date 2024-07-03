@@ -23,7 +23,7 @@
         "@amplitude/analytics-browser": "^2.5.2",
         "@axe-core/react": "^4.9.1",
         "@navikt/aksel-icons": "^6.1.1",
-        "@navikt/arbeidsplassen-css": "^8.2.10",
+        "@navikt/arbeidsplassen-css": "^8.2.12",
         "@navikt/arbeidsplassen-react": "^8.2.16",
         "@navikt/arbeidsplassen-theme": "^6.0.4",
         "@navikt/ds-css": "^6.1.1",

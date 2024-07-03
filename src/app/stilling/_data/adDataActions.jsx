@@ -31,6 +31,7 @@ const sourceIncludes = [
     "medium",
     "properties.adtext",
     "properties.address",
+    "properties.adtextFormat",
     "properties.applicationdue",
     "properties.applicationemail",
     "properties.applicationurl",
