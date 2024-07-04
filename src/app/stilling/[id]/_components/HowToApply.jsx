@@ -144,7 +144,7 @@ export default function HowToApply({ adData }) {
                     align={{ xs: "start", sm: "center" }}
                 >
                     <VStack>
-                        <Heading level="2" size="small" className="mb-1">
+                        <Heading level="2" size="small" className="mb-1 no-wrap">
                             Søk på jobben
                         </Heading>
                         {deadline && <BodyLong>{deadlineText(deadline, new Date(), adData.applicationDue)}</BodyLong>}

@@ -150,3 +150,7 @@ no-underline:hover {
 .align-self-normal {
     align-self: normal;
 }
+
+.no-wrap {
+    text-wrap: nowrap;
+}
