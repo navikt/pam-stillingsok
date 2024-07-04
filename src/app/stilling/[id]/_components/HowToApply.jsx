@@ -137,13 +137,14 @@ export default function HowToApply({ adData }) {
         return (
             <Box background="surface-alt-1-moderate" borderRadius="medium" padding="4" className="full-width mb-10">
                 <Stack
+                    wrap={false}
                     gap="4"
                     direction={{ xs: "column", sm: "row" }}
                     justify="space-between"
                     align={{ xs: "start", sm: "center" }}
                 >
                     <VStack>
-                        <Heading level="2" size="small" className="mb-1">
+                        <Heading level="2" size="small" className="mb-1 no-wrap">
                             Søk på jobben
                         </Heading>
                         {deadline && <BodyLong>{deadlineText(deadline, new Date(), adData.applicationDue)}</BodyLong>}
@@ -163,18 +164,21 @@ export default function HowToApply({ adData }) {
                         </div>
                     )}
                     {!isFinn && adData.applicationEmail && !applicationUrl && (
-                        <div className="text-align-right">
-                            <Label as="p">Send søknad til</Label>
+                        <div className="max-width-100 text-align-right overflow-hidden align-self-normal">
+                            <Label as="p" className="lh-1-75 mb-1 text-left-small">
+                                Send søknad til
+                            </Label>
                             <BodyLong>
-                                <HStack gap="2" as="span" wrap={false}>
-                                    <span>
+                                <HStack gap="2" as="span" wrap={false} className="overflow-hidden">
+                                    <span className="overflow-hidden text-overflow-ellipsis">
                                         <AkselLink
+                                            className="display-inline"
                                             onClick={() => {
                                                 logEmailAnchorClick(adData);
                                             }}
                                             href={`mailto:${adData.applicationEmail}`}
                                         >
-                                            {adData.applicationEmail}
+                                            {adData.applicationEmail}sdafasdfsadfsadfasdfa
                                         </AkselLink>
                                     </span>
                                     <span>
