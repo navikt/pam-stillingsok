@@ -143,7 +143,7 @@ export default function HowToApply({ adData }) {
                     justify="space-between"
                     align={{ xs: "start", sm: "center" }}
                 >
-                    <VStack>
+                    <VStack className="flex-shrink-0">
                         <Heading level="2" size="small" className="mb-1">
                             Søk på jobben
                         </Heading>
@@ -164,8 +164,8 @@ export default function HowToApply({ adData }) {
                         </div>
                     )}
                     {!isFinn && adData.applicationEmail && !applicationUrl && (
-                        <div className="max-width-100 text-align-right">
-                            <Label as="p" className="mb-1 text-left-small">
+                        <div className="max-width-100 text-align-right overflow-hidden">
+                            <Label as="p" className="lh-1-75 mb-1 text-left-small">
                                 Send søknad til
                             </Label>
                             <BodyLong>
@@ -178,7 +178,9 @@ export default function HowToApply({ adData }) {
                                             }}
                                             href={`mailto:${adData.applicationEmail}`}
                                         >
-                                            {adData.applicationEmail}
+                                            <BodyLong as="span">
+                                                {adData.applicationEmail}sdafasdfsadfsadfasdfa
+                                            </BodyLong>
                                         </AkselLink>
                                     </span>
                                     <span>

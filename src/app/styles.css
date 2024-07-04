@@ -142,3 +142,11 @@ no-underline:hover {
 .purple-when-visited:visited:not(:focus) {
     color: var(--a-text-visited);
 }
+
+.lh-1-75 {
+    line-height: 1.75rem;
+}
+
+.flex-shrink-0 {
+    flex-shrink: 0;
+}
