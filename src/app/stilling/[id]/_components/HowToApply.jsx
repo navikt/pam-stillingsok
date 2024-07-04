@@ -144,7 +144,7 @@ export default function HowToApply({ adData }) {
                     align={{ xs: "start", sm: "center" }}
                 >
                     <VStack>
-                        <Heading level="2" size="small" className="mb-1 no-wrap">
+                        <Heading level="2" size="small" className="mb-1 flex-shrink-0">
                             Søk på jobben
                         </Heading>
                         {deadline && <BodyLong>{deadlineText(deadline, new Date(), adData.applicationDue)}</BodyLong>}
@@ -178,7 +178,7 @@ export default function HowToApply({ adData }) {
                                             }}
                                             href={`mailto:${adData.applicationEmail}`}
                                         >
-                                            {adData.applicationEmail}sdafasdfsadfsadfasdfa
+                                            {adData.applicationEmail}
                                         </AkselLink>
                                     </span>
                                     <span>

@@ -151,6 +151,6 @@ no-underline:hover {
     align-self: normal;
 }
 
-.no-wrap {
-    text-wrap: nowrap;
+.flex-shrink-0 {
+    flex-shrink: 0;
 }
