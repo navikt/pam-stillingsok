@@ -147,6 +147,6 @@ no-underline:hover {
     line-height: 1.75rem;
 }
 
-.flex-shrink-0 {
-    flex-shrink: 0;
+.align-self-normal {
+    align-self: normal;
 }
