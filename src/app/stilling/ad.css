@@ -13,3 +13,11 @@
 #arb-aapningstekst p {
     margin: 0 0 var(--a-spacing-8);
 }
+
+.about-company .job-posting-text *:last-child {
+    margin-bottom: 0;
+}
+
+.about-company .ad-description-list {
+    margin: var(--a-spacing-7) 0 0;
+}

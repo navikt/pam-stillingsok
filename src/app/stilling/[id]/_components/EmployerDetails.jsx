@@ -6,7 +6,7 @@ import { RichText } from "@navikt/arbeidsplassen-react";
 
 export default function EmployerDetails({ employer }) {
     return (
-        <section className="mt-8 mb-8">
+        <section className="mt-8 mb-8 about-company">
             <Heading level="2" size="large" spacing>
                 Om bedriften
             </Heading>
