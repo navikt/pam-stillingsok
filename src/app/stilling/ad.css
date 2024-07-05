@@ -19,5 +19,5 @@
 }
 
 .about-company .ad-description-list {
-    margin: var(--a-spacing-7) 0 0;
+    margin-top: var(--a-spacing-7);
 }
