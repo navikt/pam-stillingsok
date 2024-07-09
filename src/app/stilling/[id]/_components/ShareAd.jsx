@@ -9,7 +9,7 @@ export default function ShareAd({ adData }) {
     const shareAdRedirectUrl = `https://arbeidsplassen.nav.no/stillinger/stilling/${adData.id}`;
 
     return (
-        <section className="full-width mb-10">
+        <section className="full-width mb-8">
             <Heading level="2" size="medium" spacing>
                 Del annonsen
             </Heading>

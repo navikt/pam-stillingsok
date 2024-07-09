@@ -78,7 +78,7 @@ export default function EmploymentDetails({ adData }) {
 
     return (
         <section className="full-width mt-8">
-            <HStack gap="4" justify="space-between" align="center" className="mb-8">
+            <HStack gap="4" justify="space-between" align="center" className="mb-4">
                 <Heading level="2" size="large">
                     Om jobben
                 </Heading>

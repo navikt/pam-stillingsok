@@ -7,7 +7,7 @@
 .job-posting-text #arb-arbeidsoppgaver,
 .job-posting-text #arb-tilbyr,
 .job-posting-text #arb-serEtter {
-    margin-bottom: var(--a-spacing-16);
+    margin-bottom: var(--a-spacing-8);
 }
 
 #arb-aapningstekst p {
