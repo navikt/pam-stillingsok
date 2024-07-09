@@ -10,7 +10,7 @@ export default function AdDetails({ adData }) {
     return (
         <section className="full-width">
             <Stack
-                gap="5"
+                gap="4"
                 direction={{ xs: "column", sm: "row" }}
                 align={{ xs: "start", sm: "center" }}
                 justify="space-between"
