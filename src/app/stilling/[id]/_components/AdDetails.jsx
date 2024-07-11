@@ -10,12 +10,12 @@ export default function AdDetails({ adData }) {
     return (
         <section className="full-width">
             <Stack
-                gap="5"
+                gap="4"
                 direction={{ xs: "column", sm: "row" }}
                 align={{ xs: "start", sm: "center" }}
                 justify="space-between"
             >
-                <Heading level="2" size="large">
+                <Heading level="2" size="medium">
                     Annonsedata
                 </Heading>
                 <Button
@@ -24,6 +24,7 @@ export default function AdDetails({ adData }) {
                     href={`/rapporter-annonse/${adData.id}`}
                     variant="tertiary"
                     icon={<ExclamationmarkTriangleIcon aria-hidden />}
+                    prefetch={false}
                 >
                     Rapporter annonse
                 </Button>

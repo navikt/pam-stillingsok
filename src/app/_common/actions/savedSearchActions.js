@@ -7,6 +7,7 @@ import {
     getDefaultAuthHeaders,
 } from "@/app/_common/auth/auth";
 import { revalidatePath } from "next/cache";
+import { incrementAdUserRequests } from "@/metrics";
 
 const SAVED_SEARCH_URL = `${process.env.PAMADUSER_URL}/api/v1/savedsearches`;
 
@@ -18,6 +19,8 @@ export async function getAllSavedSearchesAction() {
         method: "GET",
         headers: getDefaultAuthHeaders(oboToken),
     });
+
+    incrementAdUserRequests("get_saved_searches", res.ok);
 
     if (!res.ok) {
         logger.error(`GET saved search failed. ${res.status} ${res.statusText}`);
@@ -37,6 +40,8 @@ export async function getSavedSearchAction(uuid) {
         headers: getDefaultAuthHeaders(oboToken),
     });
 
+    incrementAdUserRequests("get_saved_search", res.ok);
+
     if (!res.ok) {
         logger.error(`GET favourites failed. ${res.status} ${res.statusText}`);
         return { success: false, statusCode: res.status };
@@ -55,6 +60,8 @@ export async function saveSavedSearchAction(savedSearch) {
         body: JSON.stringify(savedSearch),
         headers: getAdUserDefaultAuthHeadersWithCsrfToken(oboToken),
     });
+
+    incrementAdUserRequests("create_saved_search", res.ok);
 
     if (!res.ok) {
         logger.error(`POST saved search failed. ${res.status} ${res.statusText}`);
@@ -82,6 +89,8 @@ export async function updateSavedSearchAction(savedSearch) {
         headers: getAdUserDefaultAuthHeadersWithCsrfToken(oboToken),
     });
 
+    incrementAdUserRequests("update_saved_search", res.ok);
+
     if (!res.ok) {
         logger.error(`PUT saved search failed. ${res.status} ${res.statusText}`);
         return { success: false };
@@ -108,6 +117,8 @@ export async function deleteSavedSearchAction(uuid) {
         headers: getAdUserDefaultAuthHeadersWithCsrfToken(oboToken),
     });
 
+    incrementAdUserRequests("delete_saved_search", res.ok);
+
     if (!res.ok) {
         logger.error(`PUT saved search failed. ${res.status} ${res.statusText}`);
         return { success: false };
@@ -128,6 +139,8 @@ export async function restartSavedSearchAction(uuid, savedSearch) {
         headers: getAdUserDefaultAuthHeadersWithCsrfToken(oboToken),
         body: JSON.stringify(savedSearch),
     });
+
+    incrementAdUserRequests("restart_saved_search", res.ok);
 
     if (!res.ok) {
         logger.error(`PUT saved search failed. ${res.status} ${res.statusText}`);

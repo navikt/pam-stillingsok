@@ -62,9 +62,9 @@ export default function simplifySearchResponse(response) {
                 key: item.key,
                 count: item.doc_count,
             })),
-            extent: response.aggregations.extent.values.buckets.map((item) => ({
-                key: item.key,
-                count: item.doc_count,
+            extent: Object.entries(response.aggregations.extent.values.buckets).map(([key, value]) => ({
+                key,
+                count: value.doc_count,
             })),
             education: response.aggregations.education.values.buckets.map((item) => ({
                 key: item.key,

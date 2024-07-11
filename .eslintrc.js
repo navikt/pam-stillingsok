@@ -5,8 +5,17 @@ const project = resolve(__dirname, "jsconfig.json");
 /** @type {import('eslint').Linter.Config} */
 module.exports = {
     root: true,
-    extends: ["plugin:@next/next/recommended", "airbnb", "next/core-web-vitals", "prettier"],
-    plugins: ["react", "unused-imports", "prettier"],
+    extends: [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@next/next/recommended",
+        "airbnb",
+        "airbnb-typescript",
+        "next/core-web-vitals",
+        "prettier",
+    ],
+    parser: "@typescript-eslint/parser",
+    plugins: ["@typescript-eslint", "react", "unused-imports", "prettier"],
     parserOptions: { project },
     globals: {
         vi: true,
@@ -52,6 +61,7 @@ module.exports = {
         "react/forbid-prop-types": "off",
         "object-shorthand": "off",
         "no-use-before-define": "off",
+        "@typescript-eslint/no-use-before-define": "off",
         // defaultProps rule to be deprecated on function components
         // https://github.com/reactjs/rfcs/pull/107
         "react/require-default-props": [

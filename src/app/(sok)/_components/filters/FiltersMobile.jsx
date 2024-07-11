@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import { Alert, Button, Heading, HStack, Label, Modal } from "@navikt/ds-react";
+import { Alert, Button, Heading, HStack, Label, Modal, Link as AkselLink } from "@navikt/ds-react";
 import { ChevronRightIcon, ChevronLeftIcon } from "@navikt/aksel-icons";
 import { formatNumber } from "@/app/_common/utils/utils";
 import Remote from "@/app/(sok)/_components/filters/Remote";
@@ -125,8 +125,10 @@ function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggre
                     {selectedFilter === "Utdanning og førerkort" && (
                         <>
                             <Alert variant="info" className="mb-4">
-                                Vi tester ut et nytt filter og jobber med å gjøre det mer nøyaktig. Har du noen tips?
-                                Bruk lenken for tilbakemelding nederst på siden.
+                                Vi tester ut et nytt filter og jobber med å gjøre det mer nøyaktig. Har du noen tips?{" "}
+                                <AkselLink href="https://surveys.hotjar.com/8eedca7e-3fae-4852-8d96-4c9c80424cdc">
+                                    Skriv en kort tilbakemelding
+                                </AkselLink>
                             </Alert>
                             <Education
                                 query={query}

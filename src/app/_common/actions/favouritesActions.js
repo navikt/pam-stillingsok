@@ -7,6 +7,7 @@ import {
 } from "@/app/_common/auth/auth";
 import logger from "@/app/_common/utils/logger";
 import { revalidatePath } from "next/cache";
+import { incrementAdUserRequests } from "@/metrics";
 
 const ADUSER_FAVOURITES_URL = `${process.env.PAMADUSER_URL}/api/v1/userfavouriteads`;
 
@@ -17,6 +18,8 @@ export async function getFavouritesAction() {
         method: "GET",
         headers: getDefaultAuthHeaders(oboToken),
     });
+
+    incrementAdUserRequests("get_favourites", res.ok);
 
     if (!res.ok) {
         logger.error(`GET favourites from aduser failed. ${res.status} ${res.statusText}`);
@@ -37,6 +40,8 @@ export async function addFavouriteAction(favouriteAd) {
         headers: getAdUserDefaultAuthHeadersWithCsrfToken(oboToken),
     });
 
+    incrementAdUserRequests("create_favourite", res.ok);
+
     if (!res.ok) {
         logger.error(`POST favourite to aduser failed. ${res.status} ${res.statusText}`);
         throw new Error();
@@ -54,6 +59,8 @@ export async function deleteFavouriteAction(uuid) {
         method: "DELETE",
         headers: getAdUserDefaultAuthHeadersWithCsrfToken(oboToken),
     });
+
+    incrementAdUserRequests("delete_favourite", res.ok);
 
     if (!res.ok) {
         logger.error(`DELETE favourite from aduser failed. ${res.status} ${res.statusText}`);

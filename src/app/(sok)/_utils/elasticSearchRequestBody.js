@@ -1,3 +1,4 @@
+import { ExtentEnum } from "@/app/_common/utils/utils";
 import { ALLOWED_NUMBER_OF_RESULTS_PER_PAGE, SEARCH_CHUNK_SIZE } from "./query";
 
 const NOT_DEFINED = "Ikke oppgitt";
@@ -78,11 +79,35 @@ function filterExtent(extent) {
             },
         };
         extent.forEach((item) => {
-            filter.bool.should.push({
-                term: {
-                    extent_facet: item,
-                },
-            });
+            if (item === ExtentEnum.HELTID) {
+                filter.bool.should.push({
+                    term: {
+                        extent_facet: ExtentEnum.HELTID,
+                    },
+                });
+                filter.bool.should.push({
+                    term: {
+                        extent_facet: ExtentEnum.HELTID_OG_DELTID,
+                    },
+                });
+            } else if (item === ExtentEnum.DELTID) {
+                filter.bool.should.push({
+                    term: {
+                        extent_facet: ExtentEnum.DELTID,
+                    },
+                });
+                filter.bool.should.push({
+                    term: {
+                        extent_facet: ExtentEnum.HELTID_OG_DELTID,
+                    },
+                });
+            } else {
+                filter.bool.should.push({
+                    term: {
+                        extent_facet: ExtentEnum.UKJENT,
+                    },
+                });
+            }
         });
         filters.push(filter);
     }
@@ -716,6 +741,7 @@ const elasticSearchRequestBody = (query) => {
             includes: [
                 "employer.name",
                 "businessName",
+                "properties.adtextFormat",
                 "properties.employer",
                 "properties.jobtitle",
                 "properties.location",
@@ -864,7 +890,29 @@ const elasticSearchRequestBody = (query) => {
                 },
                 aggs: {
                     values: {
-                        terms: { field: "extent_facet" },
+                        filters: {
+                            filters: {
+                                Heltid: {
+                                    bool: {
+                                        should: [
+                                            { term: { extent_facet: "Heltid" } },
+                                            { term: { extent_facet: "Heltid_and_Deltid" } },
+                                        ],
+                                    },
+                                },
+                                Deltid: {
+                                    bool: {
+                                        should: [
+                                            { term: { extent_facet: "Deltid" } },
+                                            { term: { extent_facet: "Heltid_and_Deltid" } },
+                                        ],
+                                    },
+                                },
+                                "Ikke oppgitt": {
+                                    term: { extent_facet: "Ukjent" },
+                                },
+                            },
+                        },
                     },
                 },
             },

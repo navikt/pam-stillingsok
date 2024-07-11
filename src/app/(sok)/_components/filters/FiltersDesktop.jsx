@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Accordion, Alert, Button } from "@navikt/ds-react";
+import { Accordion, Alert, Button, Link as AkselLink } from "@navikt/ds-react";
 import Remote from "@/app/(sok)/_components/filters/Remote";
 import Education from "@/app/(sok)/_components/filters/Education";
 import DriversLicense from "@/app/(sok)/_components/filters/DriversLicense";
@@ -57,8 +57,10 @@ function FiltersDesktop({ query, dispatchQuery, aggregations, locations, searchR
                 </FilterAccordionItem>
                 <FilterAccordionItem title="Utdanning og førerkort" panelId="education">
                     <Alert variant="info" className="mb-6">
-                        Vi tester ut nye filtre og jobber med å gjøre dem mer nøyaktige. Har du noen tips? Bruk lenken
-                        for tilbakemelding nederst på siden.
+                        Vi tester ut nye filtre og jobber med å gjøre dem mer nøyaktige. Har du noen tips?
+                        <AkselLink href="https://surveys.hotjar.com/8eedca7e-3fae-4852-8d96-4c9c80424cdc">
+                            Skriv en kort tilbakemelding
+                        </AkselLink>
                     </Alert>
                     <Education
                         query={query}
