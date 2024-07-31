@@ -12,6 +12,9 @@ import { fetchCachedElasticSearch } from "@/app/(sok)/_utils/fetchCachedElasticS
 import * as actions from "@/app/_common/actions";
 import { redirect } from "next/navigation";
 import { migrateSearchParams } from "@/app/(sok)/_utils/searchParamsVersioning";
+import NotFoundPage from "@/app/_common/components/NotFoundPage";
+
+const MAX_QUERY_SIZE = 10000;
 
 export async function generateMetadata({ searchParams }) {
     const query = createQuery(searchParams);
@@ -66,6 +69,17 @@ async function fetchLocations() {
 }
 
 export default async function Page({ searchParams }) {
+    if (searchParams.from) {
+        const size = searchParams.size ? searchParams.size : 25;
+        if (Number(searchParams.from) + Number(size) > MAX_QUERY_SIZE) {
+            return (
+                <NotFoundPage
+                    title="Du har nådd maks antall annonser for ditt søk"
+                    text="Utvid søket ditt ved å prøve andre filtre eller søkeord for å oppdage flere annonser."
+                />
+            );
+        }
+    }
     const newSearchParams = migrateSearchParams(searchParams);
 
     if (newSearchParams !== undefined) {
