@@ -12,7 +12,10 @@ import { fetchCachedElasticSearch } from "@/app/(sok)/_utils/fetchCachedElasticS
 import * as actions from "@/app/_common/actions";
 import { redirect } from "next/navigation";
 import { migrateSearchParams } from "@/app/(sok)/_utils/searchParamsVersioning";
-import NotFoundPage from "@/app/_common/components/NotFoundPage";
+import { Button, VStack } from "@navikt/ds-react";
+import Link from "next/link";
+import React from "react";
+import MaxQuerySizeExceeded from "@/app/_common/components/MaxQuerySizeExceeded";
 
 const MAX_QUERY_SIZE = 10000;
 
@@ -73,10 +76,15 @@ export default async function Page({ searchParams }) {
         const size = searchParams.size ? searchParams.size : 25;
         if (Number(searchParams.from) + Number(size) > MAX_QUERY_SIZE) {
             return (
-                <NotFoundPage
-                    title="Du har nådd maks antall annonser for ditt søk"
-                    text="Utvid søket ditt ved å prøve andre filtre eller søkeord for å oppdage flere annonser."
-                />
+                <VStack align="center">
+                    <MaxQuerySizeExceeded
+                        title="Du har nådd maks antall annonser for ditt søk"
+                        text="Utvid søket ditt ved å prøve andre filtre eller søkeord for å oppdage flere annonser."
+                    />
+                    <Button variant="primary" as={Link} role="link" href="/">
+                        Gå til søket
+                    </Button>
+                </VStack>
             );
         }
     }
