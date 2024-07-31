@@ -77,10 +77,7 @@ export default async function Page({ searchParams }) {
         if (Number(searchParams.from) + Number(size) > MAX_QUERY_SIZE) {
             return (
                 <VStack align="center">
-                    <MaxQuerySizeExceeded
-                        title="Du har nådd maks antall annonser for ditt søk"
-                        text="Utvid søket ditt ved å prøve andre filtre eller søkeord for å oppdage flere annonser."
-                    />
+                    <MaxQuerySizeExceeded />
                     <Button variant="primary" as={Link} role="link" href="/">
                         Gå til søket
                     </Button>

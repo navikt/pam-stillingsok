@@ -1,18 +1,15 @@
 "use client";
 
 import React from "react";
-import PropTypes from "prop-types";
 import { NotFound } from "@navikt/arbeidsplassen-react";
 
-export default function MaxQuerySizeExceeded({ title, text }) {
+export default function MaxQuerySizeExceeded() {
     return (
         <div className="container-large mt-12 mb-12">
-            <NotFound title={title} text={text} />
+            <NotFound
+                title="Du har nådd maks antall annonser for ditt søk"
+                text="Utvid søket ditt ved å prøve andre filtre eller søkeord for å oppdage flere annonser."
+            />
         </div>
     );
 }
-
-MaxQuerySizeExceeded.propTypes = {
-    title: PropTypes.string,
-    text: PropTypes.string,
-};
