@@ -48,7 +48,7 @@ export async function GET(request) {
         }
 
         const data = await res.json();
-        return new NextResponse(JSON.stringify(data), { status: res.status });
+        return Response.json(data);
     } catch (error) {
         if (error.name === "TimeoutError") {
             logger.warn("Det tok for lang tid å vente på svar, avbryter:", error);
