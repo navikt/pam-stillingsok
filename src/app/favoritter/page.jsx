@@ -1,5 +1,7 @@
 import * as actions from "@/app/_common/actions";
 import LoginIsRequiredPage from "@/app/_common/auth/components/LoginIsRequiredPage";
+import { getUserPreferences } from "@/app/_common/actions";
+import { SortByEnum } from "@/app/_common/utils/utils";
 import FavouritesList from "./_components/FavouritesList";
 import UserConsentIsRequired from "./_components/UserConsentIsRequired";
 import { getMetadataTitle } from "../layout";
@@ -12,6 +14,8 @@ export const metadata = {
 
 export default async function Page(props) {
     const authenticated = await actions.checkIfAuthenticated();
+    const userPreferences = await getUserPreferences();
+
     if (!authenticated.isAuthenticated) {
         return <LoginIsRequiredPage redirect="/stillinger/favoritter" />;
     }
@@ -22,7 +26,7 @@ export default async function Page(props) {
     }
 
     // eslint-disable-next-line
-    const sortBy = props.searchParams.sortBy || "published";
-    const favourites = await actions.getFavouritesAction(sortBy);
-    return <FavouritesList favourites={favourites} />;
+    const sortPreference = props.searchParams.sortBy || userPreferences.favouritesSortBy || SortByEnum.FAVOURITE_DATE;
+    const favourites = await actions.getFavouritesAction();
+    return <FavouritesList favourites={favourites} sortPreference={sortPreference} />;
 }

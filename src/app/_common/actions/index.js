@@ -6,6 +6,7 @@ export {
     removePublishedJobFilterOpen,
     dismissPanel,
     saveResultsPerPage,
+    setUserPreference,
 } from "./userPreferencesActions";
 export { getFavouritesAction, addFavouriteAction, deleteFavouriteAction } from "./favouritesActions";
 export { checkIfAuthenticated, checkIfUserAgreementIsAccepted } from "./authenticationActions";
