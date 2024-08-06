@@ -20,7 +20,7 @@ function FavouritesList({ favourites, sortPreference }) {
     } else if (sortBy === SortByEnum.EXPIRES) {
         favourites.sort((a, b) => a.favouriteAd.expires.localeCompare(b.favouriteAd.expires));
     } else if (sortBy === SortByEnum.FAVOURITE_DATE) {
-        favourites.sort((a, b) => a.created.localeCompare(b.created));
+        favourites.sort((a, b) => b.created.localeCompare(a.created));
     }
 
     // eslint-disable-next-line
@@ -43,11 +43,10 @@ function FavouritesList({ favourites, sortPreference }) {
                     </Heading>
                     <Select
                         onChange={(e) => {
-                            actions
-                                .setUserPreference("favouritesSortBy", e.target.value)
-                                .then(() => setSortBy(e.target.value));
+                            actions.setUserPreference("favouritesSortBy", e.target.value);
+                            setSortBy(e.target.value);
                         }}
-                        value={sortPreference || sortBy}
+                        value={sortBy}
                         name="sortBy"
                         label="Sorter etter"
                         className="inline-select"
