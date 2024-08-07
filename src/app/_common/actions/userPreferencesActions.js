@@ -2,6 +2,7 @@
 
 import { cookies } from "next/headers";
 import logger from "@/app/_common/utils/logger";
+import { SortByEnum } from "@/app/_common/utils/utils";
 
 const USER_PREFERENCES_COOKIE_NAME = "userPreferences";
 const ALLOWED_PANELID_VALUES = [
@@ -18,6 +19,9 @@ const ALLOWED_PANELID_VALUES = [
 const ALLOWED_DISMISSED_PANELS = ["new-filters-survey"];
 const ALLOWED_RESULTS_PER_PAGE = [25, 100];
 const COOKIE_OPTIONS = { secure: true, httpOnly: true };
+const VALID_PREFERENCE_OPTION = {
+    favouritesSortBy: SortByEnum,
+};
 
 export async function getUserPreferences() {
     if (!cookies().has(USER_PREFERENCES_COOKIE_NAME)) {
@@ -34,10 +38,20 @@ export async function getUserPreferences() {
             parsedCookie.resultsPerPage && ALLOWED_RESULTS_PER_PAGE.includes(parsedCookie.resultsPerPage)
                 ? parsedCookie.resultsPerPage
                 : undefined;
+        const favouritesSortPreference =
+            parsedCookie.favouritesSortBy && SortByEnum.validate(parsedCookie.favouritesSortBy)
+                ? parsedCookie.favouritesSortBy
+                : undefined;
 
         const publishedJobFilterOpen = parsedCookie.publishedJobFilterOpen === true;
 
-        return { openFilters, dismissedPanels, resultsPerPage, publishedJobFilterOpen };
+        return {
+            openFilters,
+            dismissedPanels,
+            resultsPerPage,
+            publishedJobFilterOpen,
+            favouritesSortBy: favouritesSortPreference,
+        };
     } catch (e) {
         logger.info(`Kunne ikke parse '${USER_PREFERENCES_COOKIE_NAME}' cookie`);
         return {};
@@ -92,5 +106,18 @@ export async function saveResultsPerPage(resultsPerPage) {
     }
     const existingCookie = await getUserPreferences();
     const newCookieValue = { ...existingCookie, resultsPerPage };
+    cookies().set(USER_PREFERENCES_COOKIE_NAME, JSON.stringify(newCookieValue), COOKIE_OPTIONS);
+}
+
+export async function setUserPreference(property, value) {
+    const propertyType = VALID_PREFERENCE_OPTION[property];
+    if (!propertyType) {
+        logger.warn(`Invalid cookie property ${property}`);
+        return;
+    }
+
+    propertyType.validate(value);
+    const existingCookie = await getUserPreferences();
+    const newCookieValue = { ...existingCookie, [property]: value };
     cookies().set(USER_PREFERENCES_COOKIE_NAME, JSON.stringify(newCookieValue), COOKIE_OPTIONS);
 }
