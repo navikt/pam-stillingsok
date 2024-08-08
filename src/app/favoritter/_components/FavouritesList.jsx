@@ -54,11 +54,11 @@ function FavouritesList({ favourites, sortPreference }) {
                         <option key={SortByEnum.FAVOURITE_DATE} value={SortByEnum.FAVOURITE_DATE}>
                             Sist lagt til
                         </option>
-                        <option key={SortByEnum.PUBLISHED} value={SortByEnum.PUBLISHED}>
-                            Vis nyeste øverst
-                        </option>
                         <option key={SortByEnum.EXPIRES} value={SortByEnum.EXPIRES}>
                             Søknadsfrist
+                        </option>
+                        <option key={SortByEnum.PUBLISHED} value={SortByEnum.PUBLISHED}>
+                            Publiseringsdato
                         </option>
                     </Select>
                 </HStack>
