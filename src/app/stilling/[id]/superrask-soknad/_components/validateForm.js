@@ -7,7 +7,7 @@ export function parseFormData(formData, qualifications) {
         name: formData.get("fullName"),
         telephone: formData.get("telephone"),
         email: formData.get("email"),
-        motivation: formData.get("motivation"),
+        motivation: formData.get("motivation").replace(/\r\n/g, "\n"),
         qualifications: qualifications.map((it) => ({
             ...it,
             checked: formData.getAll("qualification").includes(it.label),
@@ -18,7 +18,7 @@ export function parseFormData(formData, qualifications) {
 export function validateMotivationText(motivationText) {
     if (motivationText.length > MOTIVATION_MAX_LENGTH) {
         return `Du har brukt ${
-            motivationText.replace(/\r\n/g, "\n").length - MOTIVATION_MAX_LENGTH
+            motivationText.length - MOTIVATION_MAX_LENGTH
         } tegn for mye i din begrunnelse. Begrunnelsen kan ikke være lengre enn ${MOTIVATION_MAX_LENGTH} tegn`;
     }
     return undefined;
