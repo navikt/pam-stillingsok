@@ -142,3 +142,13 @@ export const ExtentEnum = {
     HELTID_OG_DELTID: "Heltid_og_Deltid",
     UKJENT: "Ukjent",
 };
+
+export const SortByEnum = Object.freeze({
+    FAVOURITE_DATE: "favourite_date",
+    PUBLISHED: "published",
+    EXPIRES: "expires",
+
+    validate(value) {
+        return Object.values(SortByEnum).includes(value);
+    },
+});

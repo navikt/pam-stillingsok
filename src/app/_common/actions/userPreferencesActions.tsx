@@ -2,6 +2,7 @@
 
 import { cookies } from "next/headers";
 import logger from "@/app/_common/utils/logger";
+import { SortByEnum } from "@/app/_common/utils/utils";
 import { RequestCookie } from "next/dist/compiled/@edge-runtime/cookies";
 
 const USER_PREFERENCES_COOKIE_NAME = "userPreferences";
@@ -25,6 +26,7 @@ export interface UserPreferences {
     dismissedPanels?: Array<string>;
     resultsPerPage?: number;
     publishedJobFilterOpen?: boolean;
+    favouritesSortBy?: string;
 }
 
 export async function getUserPreferences(): Promise<UserPreferences> {
@@ -42,10 +44,20 @@ export async function getUserPreferences(): Promise<UserPreferences> {
             parsedCookie.resultsPerPage && ALLOWED_RESULTS_PER_PAGE.includes(parsedCookie.resultsPerPage)
                 ? parsedCookie.resultsPerPage
                 : undefined;
+        const favouritesSortPreference =
+            parsedCookie.favouritesSortBy && SortByEnum.validate(parsedCookie.favouritesSortBy)
+                ? parsedCookie.favouritesSortBy
+                : undefined;
 
         const publishedJobFilterOpen = parsedCookie.publishedJobFilterOpen === true;
 
-        return { openFilters, dismissedPanels, resultsPerPage, publishedJobFilterOpen };
+        return {
+            openFilters,
+            dismissedPanels,
+            resultsPerPage,
+            publishedJobFilterOpen,
+            favouritesSortBy: favouritesSortPreference,
+        };
     } catch (e) {
         logger.info(`Kunne ikke parse '${USER_PREFERENCES_COOKIE_NAME}' cookie`);
         return {} as UserPreferences;
@@ -100,5 +112,16 @@ export async function saveResultsPerPage(resultsPerPage: number): Promise<void> 
     }
     const existingCookie = await getUserPreferences();
     const newCookieValue = { ...existingCookie, resultsPerPage };
+    cookies().set(USER_PREFERENCES_COOKIE_NAME, JSON.stringify(newCookieValue), COOKIE_OPTIONS);
+}
+
+export async function setUserPreference(property: string, value: string) {
+    if (!SortByEnum.validate(property)) {
+        logger.warn(`Invalid cookie property ${property}`);
+        return;
+    }
+
+    const existingCookie = await getUserPreferences();
+    const newCookieValue = { ...existingCookie, [property]: value };
     cookies().set(USER_PREFERENCES_COOKIE_NAME, JSON.stringify(newCookieValue), COOKIE_OPTIONS);
 }
