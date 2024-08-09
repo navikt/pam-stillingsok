@@ -20,6 +20,9 @@ const ALLOWED_PANELID_VALUES = [
 const ALLOWED_DISMISSED_PANELS: string[] = ["new-filters-survey"];
 const ALLOWED_RESULTS_PER_PAGE: number[] = [25, 100];
 const COOKIE_OPTIONS: { secure: boolean; httpOnly: boolean } = { secure: true, httpOnly: true };
+const VALID_PREFERENCE_OPTION = {
+    favouritesSortBy: SortByEnum,
+};
 
 export interface UserPreferences {
     openFilters?: Array<string>;
@@ -115,13 +118,17 @@ export async function saveResultsPerPage(resultsPerPage: number): Promise<void> 
     cookies().set(USER_PREFERENCES_COOKIE_NAME, JSON.stringify(newCookieValue), COOKIE_OPTIONS);
 }
 
-export async function setUserPreference(property: string, value: string) {
-    if (!SortByEnum.validate(property)) {
-        logger.warn(`Invalid cookie property ${property}`);
+export async function setUserPreference(propertyName: string, value: string) {
+    if (!(propertyName in VALID_PREFERENCE_OPTION)) {
+        logger.warn(`Invalid cookie property name ${propertyName}`);
+    }
+
+    if (!SortByEnum.validate(value)) {
+        logger.warn(`Invalid cookie property value ${value}`);
         return;
     }
 
     const existingCookie = await getUserPreferences();
-    const newCookieValue = { ...existingCookie, [property]: value };
+    const newCookieValue = { ...existingCookie, [propertyName]: value };
     cookies().set(USER_PREFERENCES_COOKIE_NAME, JSON.stringify(newCookieValue), COOKIE_OPTIONS);
 }
