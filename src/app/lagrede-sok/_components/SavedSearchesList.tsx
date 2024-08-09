@@ -2,11 +2,16 @@
 
 import React, { useState } from "react";
 import { Heading, VStack } from "@navikt/ds-react";
-import PropTypes from "prop-types";
 import AlertModalWithPageReload from "@/app/_common/components/modals/AlertModalWithPageReload";
 import useToggle from "@/app/_common/hooks/useToggle";
 import NoSavedSearches from "@/app/lagrede-sok/_components/NoSavedSearches";
+import { SavedSearch } from "@/app/_common/actions/savedSearchActions";
 import SavedSearchListItem from "./SavedSearchListItem";
+
+interface SavedSearchListProps {
+    data: SavedSearch[];
+    uuid?: string;
+}
 
 /**
  * Displays a list of all saved searches.
@@ -14,17 +19,17 @@ import SavedSearchListItem from "./SavedSearchListItem";
  * when clicking a link in a received notification email,
  * this view will auto open the edit modal for the saved search with that uuid
  */
-function SavedSearchesList({ data, uuid }) {
+function SavedSearchesList({ data, uuid }: SavedSearchListProps) {
     const [localSavedSearchesList, setLocalSavedSearchesList] = useState(data);
     const [shouldShowErrorModal, openErrorDialog, closeErrorDialog] = useToggle();
 
-    function updateSavedSearchInList(updated) {
+    function updateSavedSearchInList(updated: SavedSearch) {
         setLocalSavedSearchesList(
             localSavedSearchesList.map((old) => (old.id === updated.id ? { ...updated, uuid: old.uuid } : old)),
         );
     }
 
-    function removeSavedSearchFromList(removed) {
+    function removeSavedSearchFromList(removed: SavedSearch) {
         setLocalSavedSearchesList(localSavedSearchesList.filter((it) => it.uuid !== removed.uuid));
     }
 
@@ -61,10 +66,5 @@ function SavedSearchesList({ data, uuid }) {
         </section>
     );
 }
-
-SavedSearchesList.propTypes = {
-    data: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-    uuid: PropTypes.string,
-};
 
 export default SavedSearchesList;

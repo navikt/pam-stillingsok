@@ -1,17 +1,21 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
-import PropTypes from "prop-types";
+import React, { ChangeEvent, FormEvent, MutableRefObject, useContext, useEffect, useRef, useState } from "react";
 import { Alert, BodyLong, Button, TextField, Modal } from "@navikt/ds-react";
 import { isValidEmail } from "@/app/_common/utils/utils";
 import { UserContext } from "@/app/_common/user/UserProvider";
 import { FetchStatus } from "@/app/_common/hooks/useFetchReducer";
 import * as actions from "@/app/_common/actions";
 
-function RegisterEmailForm({ onClose, onSuccess }) {
+interface RegisterEmailFormProps {
+    onClose: () => void;
+    onSuccess: () => void;
+}
+
+function RegisterEmailForm({ onClose, onSuccess }: RegisterEmailFormProps) {
     const { user, updateUser } = useContext(UserContext);
     const [email, setEmail] = useState("");
     const [saveStatus, setSaveStatus] = useState(FetchStatus.NOT_FETCHED);
-    const [emailValidationError, setEmailValidationError] = useState(undefined);
-    const emailRef = useRef();
+    const [emailValidationError, setEmailValidationError] = useState<string | undefined>(undefined);
+    const emailRef = useRef<HTMLInputElement>();
 
     useEffect(() => {
         if (emailRef.current) {
@@ -34,12 +38,12 @@ function RegisterEmailForm({ onClose, onSuccess }) {
             setEmailValidationError(undefined);
         }
         if (!isValid) {
-            emailRef.current.focus();
+            emailRef?.current?.focus();
         }
         return isValid;
     }
 
-    async function handleFormSubmit(e) {
+    async function handleFormSubmit(e: FormEvent) {
         e.preventDefault();
 
         if (validateForm()) {
@@ -56,7 +60,7 @@ function RegisterEmailForm({ onClose, onSuccess }) {
 
             if (isSuccess) {
                 setSaveStatus(FetchStatus.SUCCESS);
-                updateUser(result.data);
+                updateUser(result!.data);
                 onSuccess();
             } else {
                 setSaveStatus(FetchStatus.FAILURE);
@@ -64,7 +68,7 @@ function RegisterEmailForm({ onClose, onSuccess }) {
         }
     }
 
-    function handleEmailChange(e) {
+    function handleEmailChange(e: ChangeEvent<HTMLInputElement>) {
         setEmail(e.target.value);
         setEmailValidationError(undefined);
     }
@@ -83,7 +87,7 @@ function RegisterEmailForm({ onClose, onSuccess }) {
                     label="Skriv inn e-postadressen din"
                     value={email || ""}
                     onChange={handleEmailChange}
-                    ref={emailRef}
+                    ref={emailRef as MutableRefObject<HTMLInputElement>}
                     error={emailValidationError}
                 />
 
@@ -109,10 +113,5 @@ function RegisterEmailForm({ onClose, onSuccess }) {
         </form>
     );
 }
-
-RegisterEmailForm.propTypes = {
-    onClose: PropTypes.func.isRequired,
-    onSuccess: PropTypes.func.isRequired,
-};
 
 export default RegisterEmailForm;

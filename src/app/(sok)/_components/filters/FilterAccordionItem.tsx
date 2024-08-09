@@ -1,11 +1,16 @@
 "use client";
 
-import PropTypes from "prop-types";
 import React, { useContext, useState } from "react";
 import { Accordion } from "@navikt/ds-react";
 import { UserPreferencesContext } from "@/app/_common/user/UserPreferenceProvider";
 
-function FilterAccordionItem({ title, children, panelId }) {
+export interface FilterAccordionProps {
+    children: React.ReactNode;
+    title: string;
+    panelId: string;
+}
+
+function FilterAccordionItem({ title, children, panelId }: FilterAccordionProps) {
     const {
         publishedJobFilterOpen,
         addPublishedJobFilterOpen,
@@ -55,11 +60,5 @@ function FilterAccordionItem({ title, children, panelId }) {
         </section>
     );
 }
-
-FilterAccordionItem.propTypes = {
-    panelId: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    children: PropTypes.oneOfType([PropTypes.node, PropTypes.arrayOf(PropTypes.node)]).isRequired,
-};
 
 export default FilterAccordionItem;
