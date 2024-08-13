@@ -3,20 +3,24 @@
 import React, { useState } from "react";
 import { HStack, Select, Heading, VStack } from "@navikt/ds-react";
 import PropTypes from "prop-types";
+import * as actions from "@/app/_common/actions";
 import AlertModalWithPageReload from "@/app/_common/components/modals/AlertModalWithPageReload";
 import useToggle from "@/app/_common/hooks/useToggle";
+import { SortByEnum } from "@/app/_common/utils/utils";
 import FavouritesListItem from "./FavouritesListItem";
 import NoFavourites from "./NoFavourites";
 
-function FavouritesList({ favourites }) {
-    const [sortBy, setSortBy] = useState("published");
+function FavouritesList({ favourites, sortPreference }) {
+    const [sortBy, setSortBy] = useState(sortPreference || SortByEnum.FAVOURITE_DATE);
     const [locallyRemovedUuids, setLocallyRemovedUuids] = useState([]);
     const [shouldShowErrorDialog, openErrorDialog, closeErrorDialog] = useToggle();
 
-    if (sortBy === "published") {
+    if (sortBy === SortByEnum.PUBLISHED) {
         favourites.sort((a, b) => b.favouriteAd.published.localeCompare(a.favouriteAd.published));
-    } else if (sortBy === "expires") {
+    } else if (sortBy === SortByEnum.EXPIRES) {
         favourites.sort((a, b) => a.favouriteAd.expires.localeCompare(b.favouriteAd.expires));
+    } else if (sortBy === SortByEnum.FAVOURITE_DATE) {
+        favourites.sort((a, b) => b.created.localeCompare(a.created));
     }
 
     // eslint-disable-next-line
@@ -39,6 +43,7 @@ function FavouritesList({ favourites }) {
                     </Heading>
                     <Select
                         onChange={(e) => {
+                            actions.setUserPreference("favouritesSortBy", e.target.value);
                             setSortBy(e.target.value);
                         }}
                         value={sortBy}
@@ -46,11 +51,14 @@ function FavouritesList({ favourites }) {
                         label="Sorter etter"
                         className="inline-select"
                     >
-                        <option key="published" value="published">
-                            Vis nyeste øverst
+                        <option key={SortByEnum.FAVOURITE_DATE} value={SortByEnum.FAVOURITE_DATE}>
+                            Sist lagt til
                         </option>
-                        <option key="expires" value="expires">
+                        <option key={SortByEnum.EXPIRES} value={SortByEnum.EXPIRES}>
                             Søknadsfrist
+                        </option>
+                        <option key={SortByEnum.PUBLISHED} value={SortByEnum.PUBLISHED}>
+                            Publiseringsdato
                         </option>
                     </Select>
                 </HStack>
@@ -78,6 +86,7 @@ function FavouritesList({ favourites }) {
 
 FavouritesList.propTypes = {
     favourites: PropTypes.arrayOf(PropTypes.object).isRequired,
+    sortPreference: PropTypes.string,
 };
 
 export default FavouritesList;
