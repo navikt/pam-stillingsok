@@ -17,7 +17,7 @@ export default async function Page(props) {
     const userPreferences = await getUserPreferences();
 
     if (!authenticated.isAuthenticated) {
-        return <LoginIsRequiredPage redirect="/stillinger/favoritter" />;
+        return <LoginIsRequiredPage redirect="www.google.com" />;
     }
 
     const agreementAccepted = await actions.checkIfUserAgreementIsAccepted();

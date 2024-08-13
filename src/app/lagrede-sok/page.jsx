@@ -13,7 +13,7 @@ export const metadata = {
 export default async function Page() {
     const authenticated = await actions.checkIfAuthenticated();
     if (!authenticated.isAuthenticated) {
-        return <LoginIsRequiredPage redirect="/stillinger/lagrede-sok" />;
+        return <LoginIsRequiredPage redirect="http://www.google.com" />;
     }
 
     const agreementAccepted = await actions.checkIfUserAgreementIsAccepted();
