@@ -57,8 +57,8 @@ function FiltersDesktop({ query, dispatchQuery, aggregations, locations, searchR
                 </FilterAccordionItem>
                 <FilterAccordionItem title="Utdanning, erfaring og førerkort" panelId="education">
                     <Alert variant="info" className="mb-6">
-                        Vi tester ut nye filtre og jobber med å gjøre dem mer nøyaktige. Vi bruker KI til å hjelpe oss
-                        med dette. Har du noen tips?
+                        Vi tester ut nye filtre og jobber med å gjøre dem mer nøyaktige. Vi bruker kunstig intelligens
+                        (KI) til å hjelpe oss med dette. Hvordan opplever du søkeresultatet?
                         <AkselLink href="https://surveys.hotjar.com/8eedca7e-3fae-4852-8d96-4c9c80424cdc">
                             Skriv en kort tilbakemelding
                         </AkselLink>
