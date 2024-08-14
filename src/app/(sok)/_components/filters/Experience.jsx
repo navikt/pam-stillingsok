@@ -24,9 +24,12 @@ function Experience({ initialValues, updatedValues, query, dispatch }) {
             className="mb-4"
             value={query.experience}
             legend={
-                <BodyShort as="span" visuallyHidden>
-                    Filtrer etter erfaring
-                </BodyShort>
+                <>
+                    <BodyShort as="span" visuallyHidden>
+                        Filtrer etter erfaring
+                    </BodyShort>
+                    <span className="capitalize">Erfaring</span>
+                </>
             }
         >
             {values.map((item) => (

@@ -55,9 +55,10 @@ function FiltersDesktop({ query, dispatchQuery, aggregations, locations, searchR
                         updatedValues={searchResult.aggregations.sector}
                     />
                 </FilterAccordionItem>
-                <FilterAccordionItem title="Utdanning og førerkort" panelId="education">
+                <FilterAccordionItem title="Utdanning, erfaring og førerkort" panelId="education">
                     <Alert variant="info" className="mb-6">
-                        Vi tester ut nye filtre og jobber med å gjøre dem mer nøyaktige. Har du noen tips?
+                        Vi tester ut nye filtre og jobber med å gjøre dem mer nøyaktige. Vi bruker KI til å hjelpe oss
+                        med dette. Har du noen tips?
                         <AkselLink href="https://surveys.hotjar.com/8eedca7e-3fae-4852-8d96-4c9c80424cdc">
                             Skriv en kort tilbakemelding
                         </AkselLink>
@@ -68,19 +69,17 @@ function FiltersDesktop({ query, dispatchQuery, aggregations, locations, searchR
                         initialValues={aggregations.education}
                         updatedValues={searchResult.aggregations.education}
                     />
-                    <DriversLicense
-                        query={query}
-                        dispatch={dispatchQuery}
-                        initialValues={aggregations.needDriversLicense}
-                        updatedValues={searchResult.aggregations.needDriversLicense}
-                    />
-                </FilterAccordionItem>
-                <FilterAccordionItem title="Erfaring" panelId="experience">
                     <Experience
                         query={query}
                         dispatch={dispatchQuery}
                         initialValues={aggregations.experience}
                         updatedValues={searchResult.aggregations.experience}
+                    />
+                    <DriversLicense
+                        query={query}
+                        dispatch={dispatchQuery}
+                        initialValues={aggregations.needDriversLicense}
+                        updatedValues={searchResult.aggregations.needDriversLicense}
                     />
                 </FilterAccordionItem>
                 <FilterAccordionItem title="Arbeidsspråk" panelId="workLanguage">
