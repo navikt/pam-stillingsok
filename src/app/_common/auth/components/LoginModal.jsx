@@ -10,14 +10,12 @@ function LoginModal({ onLoginClick, onCloseClick }) {
             width="small"
             role="alertdialog"
             open
-            header={{ heading: "Du må logge inn først" }}
+            header={{ heading: "Logg inn for å fortsette" }}
             onClose={onCloseClick}
         >
             <Modal.Body>
                 <VStack gap="6">
-                    <BodyLong>
-                        Du bruker BankID for å logge inn på <span translate="no">arbeidsplassen.no</span>
-                    </BodyLong>
+                    <BodyLong>Vi sender deg videre etter du har logget inn.</BodyLong>
                     <HStack justify="center">
                         <FigureWithKey />
                     </HStack>

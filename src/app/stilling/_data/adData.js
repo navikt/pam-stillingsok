@@ -1,10 +1,4 @@
-import {
-    containsEmail,
-    extractEmail,
-    isValidEmail,
-    JobPostingTextEnum,
-    mailtoInString,
-} from "@/app/_common/utils/utils";
+import { containsEmail, extractEmail, isValidEmail, mailtoInString } from "@/app/_common/utils/utils";
 import DOMPurify from "isomorphic-dompurify";
 import fixLocationName from "@/app/_common/utils/fixLocationName";
 import logger from "@/app/_common/utils/logger";
@@ -74,20 +68,16 @@ function getLocationListData(value) {
     );
 }
 
-function getJobPostingFormat(adText) {
-    if (
-        adText &&
-        adText.includes('<section id="arb-serEtter">') &&
-        adText.includes('<section id="arb-arbeidsoppgaver">') &&
-        adText.includes('<section id="arb-tilbyr">')
-    ) {
-        return JobPostingTextEnum.STRUKTURERT;
-    }
-    return JobPostingTextEnum.IKKE_STRUKTURERT;
-}
-
 function getEmail(email) {
     return isValidEmail(email) ? email : undefined;
+}
+
+function getExtent(extent) {
+    let result = getString(extent);
+    if (!result) {
+        result = getArray(extent);
+    }
+    return result;
 }
 
 function getJobPercentage(value) {
@@ -97,6 +87,15 @@ function getJobPercentage(value) {
     }
 
     return jobPercentage + (jobPercentage.endsWith("%") ? "" : "%");
+}
+
+function getJobPercentageRange(value) {
+    const jobPercentageRange = getString(value);
+    if (!jobPercentageRange) {
+        return undefined;
+    }
+
+    return jobPercentageRange + (jobPercentageRange.endsWith("%") ? "" : "%");
 }
 
 function getAdText(adText) {
@@ -207,6 +206,7 @@ function getEmployerData(adData) {
     const employerData = {
         name: getEmployerName(adData),
         orgnr: getEmployerId(adData),
+        sector: getString(adData.properties.sector),
         homepage: getUrl(adData.properties.employerhomepage), // change check in EmployerDetails.jsx
         linkedinPage: getUrl(adData.properties.linkedinpage), // change check in EmployerDetails.jsx
         twitterAddress: getUrl(adData.properties.twitteraddress), // change check in EmployerDetails.jsx
@@ -256,18 +256,18 @@ export default function mapAdData(rawElasticSearchAdResult) {
         applicationUrl: getUrl(properties.applicationurl),
         sourceUrl: getUrl(properties.sourceurl),
         hasSuperraskSoknad: getString(properties.hasInterestform),
-        jobPostingFormat: getJobPostingFormat(properties.adText),
+        jobPostingFormat: getString(properties.adtextFormat),
         adNumber: getNumber(data.id),
 
         // employment details
         engagementType: getString(properties.engagementtype),
-        extent: getString(properties.extent),
+        extent: getExtent(properties.extent),
         jobArrangement: getString(properties.jobarrangement),
         jobPercentage: getJobPercentage(properties.jobpercentage),
+        jobPercentageRange: getJobPercentageRange(properties.jobpercentagerange),
         jobTitle: getString(properties.jobtitle),
         positionCount: getString(properties.positioncount),
         remote: getString(properties.remote),
-        sector: getString(properties.sector),
         startTime: getString(properties.starttime),
         workdays: getWorktime(properties.workday),
         workHours: getWorktime(properties.workhours),

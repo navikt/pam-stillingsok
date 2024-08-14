@@ -91,11 +91,15 @@ export function isValidEmail(input) {
 
 export function containsEmail(input) {
     // Regex from https://emailregex.com
-    const preprocessedInput = input.replace(/&#64;/, "@");
-    const pattern =
-        /(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/;
+    try {
+        const preprocessedInput = input.replace(/&#64;/, "@");
+        const pattern =
+            /(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/;
 
-    return pattern.test(preprocessedInput);
+        return pattern.test(preprocessedInput);
+    } catch (e) {
+        return input;
+    }
 }
 
 export function extractEmail(input) {
@@ -131,3 +135,20 @@ export const JobPostingTextEnum = {
     STRUKTURERT: "strukturert",
     IKKE_STRUKTURERT: "ikkeStrukturert",
 };
+
+export const ExtentEnum = {
+    HELTID: "Heltid",
+    DELTID: "Deltid",
+    HELTID_OG_DELTID: "Heltid_og_Deltid",
+    UKJENT: "Ukjent",
+};
+
+export const SortByEnum = Object.freeze({
+    FAVOURITE_DATE: "favourite_date",
+    PUBLISHED: "published",
+    EXPIRES: "expires",
+
+    validate(value) {
+        return Object.values(SortByEnum).includes(value);
+    },
+});

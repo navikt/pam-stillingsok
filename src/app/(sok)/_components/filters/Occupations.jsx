@@ -12,6 +12,10 @@ import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
 import sortValuesByFirstLetter from "@/app/(sok)/_components/utils/sortValuesByFirstLetter";
 import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
 
+export function editedItemKey(key) {
+    return key === "Uoppgitt/ ikke identifiserbare" ? "Ikke oppgitt" : key;
+}
+
 const OCCUPATION_LEVEL_OTHER = "Uoppgitt/ ikke identifiserbare";
 
 function Occupations({ initialValues, updatedValues, query, dispatch }) {
@@ -86,7 +90,7 @@ function Occupations({ initialValues, updatedValues, query, dispatch }) {
                             value={firstLevel.key}
                             onChange={handleFirstLevelClick}
                         >
-                            {`${firstLevel.key} (${firstLevel.count})`}
+                            {`${editedItemKey(firstLevel.key)} (${firstLevel.count})`}
                         </Checkbox>
                         {query.occupationFirstLevels &&
                             query.occupationFirstLevels.includes(firstLevel.key) &&

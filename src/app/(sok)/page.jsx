@@ -12,6 +12,12 @@ import { fetchCachedElasticSearch } from "@/app/(sok)/_utils/fetchCachedElasticS
 import * as actions from "@/app/_common/actions";
 import { redirect } from "next/navigation";
 import { migrateSearchParams } from "@/app/(sok)/_utils/searchParamsVersioning";
+import { Button, VStack } from "@navikt/ds-react";
+import Link from "next/link";
+import React from "react";
+import MaxQuerySizeExceeded from "@/app/_common/components/MaxQuerySizeExceeded";
+
+const MAX_QUERY_SIZE = 10000;
 
 export async function generateMetadata({ searchParams }) {
     const query = createQuery(searchParams);
@@ -66,6 +72,19 @@ async function fetchLocations() {
 }
 
 export default async function Page({ searchParams }) {
+    if (searchParams.from) {
+        const size = searchParams.size ? searchParams.size : 25;
+        if (Number(searchParams.from) + Number(size) > MAX_QUERY_SIZE) {
+            return (
+                <VStack align="center">
+                    <MaxQuerySizeExceeded />
+                    <Button variant="primary" as={Link} role="link" href="/">
+                        Gå til søket
+                    </Button>
+                </VStack>
+            );
+        }
+    }
     const newSearchParams = migrateSearchParams(searchParams);
 
     if (newSearchParams !== undefined) {
@@ -77,12 +96,12 @@ export default async function Page({ searchParams }) {
     }
 
     const userPreferences = await actions.getUserPreferences();
-    const _searchParams = searchParams;
+    const modifiedSearchParams = searchParams;
     if (userPreferences.resultsPerPage) {
-        _searchParams.size = userPreferences.resultsPerPage;
+        modifiedSearchParams.size = userPreferences.resultsPerPage;
     }
 
-    const initialQuery = createQuery(_searchParams);
+    const initialQuery = createQuery(modifiedSearchParams);
 
     const shouldDoExtraCallIfUserHasSearchParams = Object.keys(toBrowserQuery(initialQuery)).length > 0;
     const fetchCalls = [fetchCachedElasticSearch(toApiQuery(defaultQuery)), fetchLocations()];

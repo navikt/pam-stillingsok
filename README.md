@@ -32,25 +32,6 @@ Mer informasjon om autentisering: https://docs.github.com/en/packages/working-wi
 
 ### Wonderwall
 
-[Wonderwall](https://github.com/nais/wonderwall) brukes for å håndtere login med ID-porten.
-Lokalt brukes også wonderwall, men her kjører vi mot en OIDC-provider i Docker.
-
-#### Go
-
-Go er nødvendig for å bygge wonderwall binaries. Wonderwall brukes for lokal OIDC-flyt.
-
-```shell
-brew install go
-```
-
-Installer Wonderwall:
-
-```shell
-make install
-```
-
-Når applikasjonen er oppe, så kan du gå inn på [http://localhost:3000/stillinger](http://localhost:3000/stillinger)
-
 > [!TIP]
 > Gå igjennom login-flyten ved å trykke login. Bruk testbruker `04010100653`
 

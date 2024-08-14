@@ -121,6 +121,36 @@ no-underline:hover {
     text-align: right;
 }
 
-.purple-when-visited:visited {
-    color: var(--a-purple-500);
+.max-width-100 {
+    max-width: 100%;
+}
+
+.overflow-hidden {
+    overflow: hidden;
+}
+
+.text-overflow-ellipsis {
+    text-overflow: ellipsis;
+}
+
+@media (max-width: 479px) {
+    .text-left-small {
+        text-align: left;
+    }
+}
+
+.purple-when-visited:visited:not(:focus) {
+    color: var(--a-text-visited);
+}
+
+.lh-1-75 {
+    line-height: 1.75rem;
+}
+
+.align-self-normal {
+    align-self: normal;
+}
+
+.flex-shrink-0 {
+    flex-shrink: 0;
 }

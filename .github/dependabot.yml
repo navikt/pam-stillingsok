@@ -14,28 +14,13 @@ updates:
       time: '03:00'
     registries:
       - npm-github
+    allow:
+      - dependency-name: "@navikt/*"
     groups:
       aksel-dependencies:
-        applies-to: version-updates
         patterns:
           - '@navikt/aksel*'
           - '@navikt/ds*'
       arbeidsplassen-dependencies:
-        applies-to: version-updates
         patterns:
           - '@navikt/arbeidsplassen*'
-
-  - package-ecosystem: npm
-    directory: '/'
-    schedule:
-      interval: daily
-      time: '03:00'
-    registries: '*'
-    groups:
-      other-dependencies:
-        applies-to: security-updates
-        patterns:
-          - '*'
-    # Makes it possible to have another config. for the same dir.
-    # https://github.com/dependabot/dependabot-core/issues/1778#issuecomment-1988140219
-    target-branch: master
