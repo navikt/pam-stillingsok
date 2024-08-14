@@ -10,7 +10,6 @@ const ALLOWED_PANELID_VALUES = [
     "sted",
     "yrke",
     "extent",
-    "experience",
     "sector",
     "engagementType",
     "education",
