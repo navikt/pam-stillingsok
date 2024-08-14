@@ -35,6 +35,31 @@ function filterPublished(published) {
     return filters;
 }
 
+function filterPostCodes(postCodes) {
+    console.log("Filter post codes: ", postCodes);
+
+    const filter = {
+        nested: {
+            path: "locationList",
+            query: {
+                bool: {
+                    should: [],
+                },
+            },
+        },
+    };
+
+    if (Array.isArray(postCodes)) {
+        filter.nested.query.bool.should.push({
+            terms: {
+                "locationList.postalCode": postCodes,
+            },
+        });
+    }
+
+    return filter;
+}
+
 function filterRemote(remote) {
     const filters = [];
     if (remote && remote.length > 0) {
@@ -662,6 +687,7 @@ const elasticSearchRequestBody = (query) => {
         occupationSecondLevels,
         international,
         operator,
+        postCodes,
     } = query;
     let { sort, q } = query;
 
@@ -697,6 +723,7 @@ const elasticSearchRequestBody = (query) => {
                     ...filterEngagementType(engagementType),
                     ...filterSector(sector),
                     ...filterPublished(published),
+                    filterPostCodes(postCodes),
                 ],
             },
         },
@@ -754,6 +781,7 @@ const elasticSearchRequestBody = (query) => {
                             ...filterEngagementType(engagementType),
                             ...filterSector(sector),
                             ...filterPublished(published),
+                            filterPostCodes(postCodes),
                         ],
                     },
                 },
@@ -780,6 +808,7 @@ const elasticSearchRequestBody = (query) => {
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
                             ...filterEngagementType(engagementType),
                             ...filterSector(sector),
+                            filterPostCodes(postCodes),
                         ],
                     },
                 },
@@ -820,6 +849,7 @@ const elasticSearchRequestBody = (query) => {
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
                             ...filterEngagementType(engagementType),
                             ...filterPublished(published),
+                            filterPostCodes(postCodes),
                         ],
                     },
                 },
@@ -843,6 +873,7 @@ const elasticSearchRequestBody = (query) => {
                             ...filterEngagementType(engagementType),
                             ...filterSector(sector),
                             ...filterPublished(published),
+                            filterPostCodes(postCodes),
                         ],
                     },
                 },
@@ -887,6 +918,7 @@ const elasticSearchRequestBody = (query) => {
                             ...filterEngagementType(engagementType),
                             ...filterSector(sector),
                             ...filterPublished(published),
+                            filterPostCodes(postCodes),
                         ],
                     },
                 },
@@ -910,6 +942,7 @@ const elasticSearchRequestBody = (query) => {
                             ...filterEngagementType(engagementType),
                             ...filterSector(sector),
                             ...filterPublished(published),
+                            filterPostCodes(postCodes),
                         ],
                     },
                 },
@@ -933,6 +966,7 @@ const elasticSearchRequestBody = (query) => {
                             ...filterEngagementType(engagementType),
                             ...filterSector(sector),
                             ...filterPublished(published),
+                            filterPostCodes(postCodes),
                         ],
                     },
                 },
@@ -956,6 +990,7 @@ const elasticSearchRequestBody = (query) => {
                             ...filterEngagementType(engagementType),
                             ...filterSector(sector),
                             ...filterPublished(published),
+                            filterPostCodes(postCodes),
                         ],
                     },
                 },
@@ -979,6 +1014,7 @@ const elasticSearchRequestBody = (query) => {
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
                             ...filterSector(sector),
                             ...filterPublished(published),
+                            filterPostCodes(postCodes),
                         ],
                     },
                 },
@@ -1002,6 +1038,7 @@ const elasticSearchRequestBody = (query) => {
                             ...filterEngagementType(engagementType),
                             ...filterSector(sector),
                             ...filterPublished(published),
+                            filterPostCodes(postCodes),
                         ],
                     },
                 },
@@ -1052,6 +1089,7 @@ const elasticSearchRequestBody = (query) => {
                             ...filterEngagementType(engagementType),
                             ...filterSector(sector),
                             ...filterPublished(published),
+                            filterPostCodes(postCodes),
                         ],
                     },
                 },
@@ -1101,6 +1139,7 @@ const elasticSearchRequestBody = (query) => {
                             ...filterEngagementType(engagementType),
                             ...filterSector(sector),
                             ...filterPublished(published),
+                            filterPostCodes(postCodes),
                             {
                                 nested: {
                                     path: "locationList",
