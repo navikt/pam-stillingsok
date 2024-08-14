@@ -36,8 +36,6 @@ function filterPublished(published) {
 }
 
 function filterPostCodes(postCodes) {
-    console.log("Filter post codes: ", postCodes);
-
     const filter = {
         nested: {
             path: "locationList",

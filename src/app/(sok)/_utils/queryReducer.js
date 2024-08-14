@@ -1,6 +1,10 @@
 import { CURRENT_VERSION, VERSION_QUERY_PARAM } from "@/app/(sok)/_utils/searchParamsVersioning";
 import { defaultQuery } from "./query";
 
+export const ADD_POSTCODE = "ADD_POSTCODE";
+export const REMOVE_POSTCODE = "REMOVE_POSTCODE";
+export const ADD_DISTANCE = "ADD_DISTANCE";
+export const REMOVE_DISTANCE = "REMOVE_DISTANCE";
 export const ADD_MUNICIPAL = "ADD_MUNICIPAL";
 export const REMOVE_MUNICIPAL = "REMOVE_MUNICIPAL";
 export const ADD_COUNTY = "ADD_COUNTY";
@@ -58,6 +62,26 @@ export default function queryReducer(state, action) {
             return {
                 ...queryState,
                 international: action.value,
+            };
+        case ADD_POSTCODE:
+            return {
+                ...queryState,
+                postcode: action.value,
+            };
+        case REMOVE_POSTCODE:
+            return {
+                ...queryState,
+                postcode: undefined,
+            };
+        case ADD_DISTANCE:
+            return {
+                ...queryState,
+                distance: action.value,
+            };
+        case REMOVE_DISTANCE:
+            return {
+                ...queryState,
+                distance: undefined,
             };
         case ADD_COUNTY:
             if (queryState.counties.includes(action.value)) {
