@@ -4,6 +4,7 @@ import { Accordion, Alert, Button, Link as AkselLink } from "@navikt/ds-react";
 import Remote from "@/app/(sok)/_components/filters/Remote";
 import Education from "@/app/(sok)/_components/filters/Education";
 import DriversLicense from "@/app/(sok)/_components/filters/DriversLicense";
+import DrivingDistance from "@/app/(sok)/_components/filters/DrivingDistance";
 import FilterAccordionItem from "./FilterAccordionItem";
 import Published from "./Published";
 import Counties from "./Locations";
@@ -26,7 +27,8 @@ function FiltersDesktop({ query, dispatchQuery, aggregations, locations, searchR
                         publishedTotalCount={searchResult.aggregations.publishedTotalCount}
                     />
                 </FilterAccordionItem>
-                <FilterAccordionItem title="Sted og hjemmekontor" panelId="sted">
+                <FilterAccordionItem title="Område og hjemmekontor" panelId="sted">
+                    <DrivingDistance query={query} dispatch={dispatchQuery} />
                     <Counties
                         query={query}
                         dispatch={dispatchQuery}

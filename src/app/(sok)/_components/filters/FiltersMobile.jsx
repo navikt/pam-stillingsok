@@ -6,6 +6,7 @@ import { formatNumber } from "@/app/_common/utils/utils";
 import Remote from "@/app/(sok)/_components/filters/Remote";
 import Education from "@/app/(sok)/_components/filters/Education";
 import DriversLicense from "@/app/(sok)/_components/filters/DriversLicense";
+import DrivingDistance from "@/app/(sok)/_components/filters/DrivingDistance";
 import Counties from "./Locations";
 import Occupations from "./Occupations";
 import Published from "./Published";
@@ -87,6 +88,9 @@ function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggre
 
                     {selectedFilter === "Sted og hjemmekontor" && (
                         <>
+                            <div className="mb-6">
+                                <DrivingDistance query={query} dispatch={dispatchQuery} />
+                            </div>
                             <div className="mb-6">
                                 <Counties
                                     query={query}
