@@ -1,11 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import { Alert, Button, Heading, HStack, Label, Modal, Link as AkselLink } from "@navikt/ds-react";
+import { Alert, Button, Heading, HStack, Label, Modal } from "@navikt/ds-react";
 import { ChevronRightIcon, ChevronLeftIcon } from "@navikt/aksel-icons";
 import { formatNumber } from "@/app/_common/utils/utils";
 import Remote from "@/app/(sok)/_components/filters/Remote";
 import Education from "@/app/(sok)/_components/filters/Education";
 import DriversLicense from "@/app/(sok)/_components/filters/DriversLicense";
+import NewFiltersMessage from "@/app/(sok)/_components/filters/NewFiltersMessage";
+import Experience from "@/app/(sok)/_components/filters/Experience";
 import Counties from "./Locations";
 import Occupations from "./Occupations";
 import Published from "./Published";
@@ -57,7 +59,7 @@ function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggre
                             "Publisert",
                             "Sted og hjemmekontor",
                             "Yrke og sektor",
-                            "Utdanning og førerkort",
+                            "Utdanning, erfaring og førerkort",
                             "Arbeidsspråk",
                             "Omfang og ansettelsesform",
                         ].map((filter) => (
@@ -122,19 +124,22 @@ function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggre
                             />
                         </>
                     )}
-                    {selectedFilter === "Utdanning og førerkort" && (
+                    {selectedFilter === "Utdanning, erfaring og førerkort" && (
                         <>
                             <Alert variant="info" className="mb-4">
-                                Vi tester ut et nytt filter og jobber med å gjøre det mer nøyaktig. Har du noen tips?{" "}
-                                <AkselLink href="https://surveys.hotjar.com/8eedca7e-3fae-4852-8d96-4c9c80424cdc">
-                                    Skriv en kort tilbakemelding
-                                </AkselLink>
+                                <NewFiltersMessage />
                             </Alert>
                             <Education
                                 query={query}
                                 dispatch={dispatchQuery}
                                 initialValues={aggregations.education}
                                 updatedValues={searchResult.aggregations.education}
+                            />
+                            <Experience
+                                query={query}
+                                dispatch={dispatchQuery}
+                                initialValues={aggregations.experience}
+                                updatedValues={searchResult.aggregations.experience}
                             />
                             <DriversLicense
                                 query={query}
