@@ -97,36 +97,38 @@ function Locations({ locations, query, dispatch, updatedValues }) {
                                         <Fieldset hideLegend legend={`Områder i ${fixLocationName(location.key)}`}>
                                             <div>
                                                 {location.subLocations &&
-                                                    location.subLocations.map((subLocation) => (
-                                                        <Checkbox
-                                                            name={
-                                                                location.key === "UTLAND"
-                                                                    ? "countries[]"
-                                                                    : "municipals[]"
-                                                            }
-                                                            key={subLocation.key}
-                                                            value={subLocation.key}
-                                                            onChange={handleCheckboxClick(
-                                                                subLocation.key,
-                                                                subLocation.type,
-                                                            )}
-                                                            checked={
-                                                                query.municipals.includes(subLocation.key) ||
-                                                                query.countries.includes(subLocation.key)
-                                                            }
-                                                        >
-                                                            <BodyShort
-                                                                textColor={
-                                                                    subLocation.count === 0 ? "subtle" : "default"
+                                                    location.subLocations
+                                                        .sort((a, b) => a.key.localeCompare(b.key))
+                                                        .map((subLocation) => (
+                                                            <Checkbox
+                                                                name={
+                                                                    location.key === "UTLAND"
+                                                                        ? "countries[]"
+                                                                        : "municipals[]"
                                                                 }
-                                                                translate="no"
+                                                                key={subLocation.key}
+                                                                value={subLocation.key}
+                                                                onChange={handleCheckboxClick(
+                                                                    subLocation.key,
+                                                                    subLocation.type,
+                                                                )}
+                                                                checked={
+                                                                    query.municipals.includes(subLocation.key) ||
+                                                                    query.countries.includes(subLocation.key)
+                                                                }
                                                             >
-                                                                {`${fixLocationName(subLocation.key, true)} (${
-                                                                    subLocation.count
-                                                                })`}
-                                                            </BodyShort>
-                                                        </Checkbox>
-                                                    ))}
+                                                                <BodyShort
+                                                                    textColor={
+                                                                        subLocation.count === 0 ? "subtle" : "default"
+                                                                    }
+                                                                    translate="no"
+                                                                >
+                                                                    {`${fixLocationName(subLocation.key, true)} (${
+                                                                        subLocation.count
+                                                                    })`}
+                                                                </BodyShort>
+                                                            </Checkbox>
+                                                        ))}
                                             </div>
                                         </Fieldset>
                                     </Box>
