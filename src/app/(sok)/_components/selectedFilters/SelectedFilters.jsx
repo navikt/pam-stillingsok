@@ -22,6 +22,8 @@ import {
     SET_PUBLISHED,
     SET_SEARCH_STRING,
     REMOVE_OCCUPATION,
+    REMOVE_POSTCODE,
+    REMOVE_DISTANCE,
 } from "../../_utils/queryReducer";
 import { PublishedLabelsEnum } from "../../_utils/query";
 import SaveSearchButton from "../../../lagrede-sok/_components/SaveSearchButton";
@@ -67,6 +69,11 @@ function SelectedFilters({ query, queryDispatch }) {
         }
     };
 
+    const removeDistance = () => {
+        queryDispatch({ type: REMOVE_POSTCODE });
+        queryDispatch({ type: REMOVE_DISTANCE });
+    };
+
     // Ikke vis fylke hvis bruker har valgt en eller flere kommuner i dette fylket
     const counties = query.counties.filter((county) => {
         const found = query.municipals.find((obj) => obj.startsWith(`${county}.`));
@@ -90,6 +97,18 @@ function SelectedFilters({ query, queryDispatch }) {
                 onClick={() => queryDispatch({ type: SET_SEARCH_STRING, value: "" })}
             >
                 {query.q}
+            </Chips.Removable>,
+        );
+    }
+
+    if (query.postcode && query.distance) {
+        chips.push(
+            <Chips.Removable
+                key={`distance-filter-${query.distance}`}
+                variant="neutral"
+                onClick={() => removeDistance()}
+            >
+                {`Innen ${query.distance} km fra ${query.postcode}`}
             </Chips.Removable>,
         );
     }
