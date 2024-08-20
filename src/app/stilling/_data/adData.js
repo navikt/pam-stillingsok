@@ -61,6 +61,7 @@ function getLocationListData(value) {
         removeUndefinedValues({
             address: getString(location.address),
             city: getString(location.city),
+            county: getString(location.county),
             postalCode: getString(location.postalCode),
             municipal: getString(location.municipal),
             country: getString(location.country),
