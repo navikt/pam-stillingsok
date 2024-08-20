@@ -12,17 +12,17 @@ import {
     SET_PUBLISHED,
     SET_SEARCH_STRING,
 } from "@/app/(sok)/_utils/queryReducer";
+import { getQueryOptions } from "@/app/(sok)/_components/searchBox/searchBoxOption";
 import {
-    addCountry,
-    addMunicipal,
-    addOccupationSecondLevel,
+    addCountryFilter,
+    addMunicipalFilter,
+    addOccupationSecondLevelFilter,
     findLabelForFilter,
     getFilter,
-    getQueryOptions,
-    removeCountry,
-    removeMunicipal,
-    removeOccupationSecondLevel,
-} from "@/app/(sok)/_components/searchBox/searchBoxUtils";
+    removeCountryFilter,
+    removeMunicipalFilter,
+    removeOccupationSecondLevelFilter,
+} from "@/app/(sok)/_components/searchBox/searchBoxFilter";
 
 function SearchCombobox({ query, queryDispatch, onChange, options }) {
     const initialSelectedOptions = useMemo(() => getQueryOptions(query), [query]);
@@ -53,11 +53,11 @@ function SearchCombobox({ query, queryDispatch, onChange, options }) {
         } else if (filterToRemove === SET_PUBLISHED) {
             queryDispatch({ type: filterToRemove, value: undefined });
         } else if (filterToRemove === REMOVE_MUNICIPAL) {
-            removeMunicipal(queryDispatch, query, optionValue);
+            removeMunicipalFilter(queryDispatch, query, optionValue);
         } else if (filterToRemove === REMOVE_COUNTRY) {
-            removeCountry(queryDispatch, query, optionValue);
+            removeCountryFilter(queryDispatch, query, optionValue);
         } else if (filterToRemove === REMOVE_OCCUPATION_SECOND_LEVEL) {
-            removeOccupationSecondLevel(queryDispatch, query, optionValue);
+            removeOccupationSecondLevelFilter(queryDispatch, query, optionValue);
         } else {
             queryDispatch({ type: filterToRemove, value: optionValue });
         }
@@ -65,11 +65,11 @@ function SearchCombobox({ query, queryDispatch, onChange, options }) {
 
     const handleFilterAddition = (filterToAdd, optionValue) => {
         if (filterToAdd === ADD_MUNICIPAL) {
-            addMunicipal(queryDispatch, query, optionValue);
+            addMunicipalFilter(queryDispatch, query, optionValue);
         } else if (filterToAdd === ADD_COUNTRY) {
-            addCountry(queryDispatch, query, optionValue);
+            addCountryFilter(queryDispatch, optionValue);
         } else if (filterToAdd === ADD_OCCUPATION_SECOND_LEVEL) {
-            addOccupationSecondLevel(queryDispatch, query, optionValue);
+            addOccupationSecondLevelFilter(queryDispatch, query, optionValue);
         } else {
             queryDispatch({ type: filterToAdd, value: optionValue });
         }

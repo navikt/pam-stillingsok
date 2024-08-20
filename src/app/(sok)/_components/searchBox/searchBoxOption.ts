@@ -3,92 +3,36 @@ import sortValuesByFirstLetter from "@/app/(sok)/_components/utils/sortValuesByF
 import fixLocationName from "@/app/_common/utils/fixLocationName";
 import buildLocations from "@/app/(sok)/_components/utils/buildLocations";
 import { PublishedLabelsEnum } from "@/app/(sok)/_utils/query";
-import {
-    ADD_COUNTRY,
-    ADD_COUNTY,
-    ADD_EDUCATION,
-    ADD_ENGAGEMENT_TYPE,
-    ADD_EXPERIENCE,
-    ADD_EXTENT,
-    ADD_MUNICIPAL,
-    ADD_NEEDDRIVERSLICENSE,
-    ADD_OCCUPATION,
-    ADD_OCCUPATION_FIRST_LEVEL,
-    ADD_OCCUPATION_SECOND_LEVEL,
-    ADD_REMOTE,
-    ADD_SECTOR,
-    ADD_WORKLANGUAGE,
-    REMOVE_COUNTRY,
-    REMOVE_COUNTY,
-    REMOVE_EDUCATION,
-    REMOVE_ENGAGEMENT_TYPE,
-    REMOVE_EXPERIENCE,
-    REMOVE_EXTENT,
-    REMOVE_MUNICIPAL,
-    REMOVE_NEEDDRIVERSLICENSE,
-    REMOVE_OCCUPATION,
-    REMOVE_OCCUPATION_FIRST_LEVEL,
-    REMOVE_OCCUPATION_SECOND_LEVEL,
-    REMOVE_REMOTE,
-    REMOVE_SECTOR,
-    REMOVE_WORKLANGUAGE,
-    SET_INTERNATIONAL,
-    SET_PUBLISHED,
-} from "@/app/(sok)/_utils/queryReducer";
 import { labelForNeedDriversLicense } from "@/app/(sok)/_components/filters/DriversLicense";
 import { labelForExperience } from "@/app/(sok)/_components/filters/Experience";
 import { labelForEducation } from "@/app/(sok)/_components/filters/Education";
+import { ComboboxOption } from "@navikt/ds-react/cjs/form/combobox/types";
 
-const MUNICIPAL = "municipal";
-const COUNTY = "county";
-const COUNTRY = "country";
-const INTERNATIONAL = "international";
-const OCCUPATION_SECOND_LEVEL = "occupationSecondLevel";
-const OCCUPATION_FIRST_LEVEL = "occupationFirstLevel";
-const OCCUPATION = "occupation";
-const PUBLISHED = "published";
-const SECTOR = "sector";
-const ENGAGEMENT_TYPE = "engagementType";
-const EXTENT = "extent";
-const EDUCATION = "education";
-const WORK_LANGUAGE = "workLanguage";
-const REMOTE = "remote";
-const NEED_DRIVERS_LICENSE = "needDriversLicense";
-const EXPERIENCE = "experience";
+export const MUNICIPAL = "municipal";
+export const COUNTY = "county";
+export const COUNTRY = "country";
+export const INTERNATIONAL = "international";
+export const OCCUPATION_SECOND_LEVEL = "occupationSecondLevel";
+export const OCCUPATION_FIRST_LEVEL = "occupationFirstLevel";
+export const OCCUPATION = "occupation";
+export const PUBLISHED = "published";
+export const SECTOR = "sector";
+export const ENGAGEMENT_TYPE = "engagementType";
+export const EXTENT = "extent";
+export const EDUCATION = "education";
+export const WORK_LANGUAGE = "workLanguage";
+export const REMOTE = "remote";
+export const NEED_DRIVERS_LICENSE = "needDriversLicense";
+export const EXPERIENCE = "experience";
 
-export const findLabelForFilter = (value) => {
-    switch (value) {
-        case MUNICIPAL:
-            return "(Kommune)";
-        case COUNTY:
-            return "(Fylke)";
-        case COUNTRY:
-            return "(Land)";
-        case OCCUPATION_FIRST_LEVEL:
-            return "(Yrkesgruppe)";
-        case OCCUPATION:
-            return "(Yrke)";
-        case SECTOR:
-            return "(Sektor)";
-        case ENGAGEMENT_TYPE:
-            return "(Ansettelsesform)";
-        case EXTENT:
-            return "(Omfang)";
-        case EDUCATION:
-            return "(Utdanning)";
-        case WORK_LANGUAGE:
-            return "(Arbeidsspråk)";
-        case NEED_DRIVERS_LICENSE:
-            return "(Førerkort)";
-        default:
-            return "";
-    }
-};
-
-export function getSearchBoxOptions(aggregations, locations, allSuggestions) {
+export function getSearchBoxOptions(
+    aggregations: Aggregations,
+    locations: Location[],
+    allSuggestions: string[],
+): SuggestionList[] {
     const locationList = buildLocations(aggregations, locations);
 
-    const municipalList = locationList
+    const municipalList: ComboboxOption[] = locationList
         .map((location) => location.subLocations)
         .flat()
         .filter((subLocation) => subLocation.type === MUNICIPAL)
@@ -97,14 +41,14 @@ export function getSearchBoxOptions(aggregations, locations, allSuggestions) {
             value: `${MUNICIPAL}-${municipal.key}`,
         }));
 
-    const countyList = locationList
+    const countyList: ComboboxOption[] = locationList
         .filter((location) => location.type === COUNTY)
         .map((county) => ({
             label: fixLocationName(county.key),
             value: `${COUNTY}-${county.key}`,
         }));
 
-    const countryList = locationList
+    const countryList: ComboboxOption[] = locationList
         .filter((location) => location.type === INTERNATIONAL)
         .map((location) => location.subLocations)
         .flat()
@@ -121,13 +65,13 @@ export function getSearchBoxOptions(aggregations, locations, allSuggestions) {
         };
     });
     const sortedByLetterFirstLevelOccupationsList = sortValuesByFirstLetter(withSortedSecondLevelOccupations).map(
-        (occupation) => ({
+        (occupation: { key: string }): ComboboxOption => ({
             label: occupation.key,
             value: `${OCCUPATION_FIRST_LEVEL}-${occupation.key}`,
         }),
     );
 
-    const secondLevelOccupationsList = withSortedSecondLevelOccupations
+    const secondLevelOccupationsList: ComboboxOption[] = withSortedSecondLevelOccupations
         .map((item) => item.secondLevel)
         .flat()
         .map((secondLevel) => ({
@@ -135,28 +79,28 @@ export function getSearchBoxOptions(aggregations, locations, allSuggestions) {
             value: `${OCCUPATION_SECOND_LEVEL}-${secondLevel.key}`,
         }));
 
-    const publishedList = aggregations.published.map((item) => ({
+    const publishedList: ComboboxOption[] = aggregations.published.map((item) => ({
         label: PublishedLabelsEnum[item.key],
         value: `${PUBLISHED}-${item.key}`,
     }));
 
-    const sectorList = aggregations.sector.map((item) =>
+    const sectorList: ComboboxOption[] = aggregations.sector.map((item) =>
         item.key === "Ikke oppgitt"
             ? { label: "Sektor ikke oppgitt", value: `${SECTOR}-${item.key}` }
             : { label: item.key, value: `${SECTOR}-${item.key}` },
     );
 
-    const engagementTypeList = aggregations.engagementTypes.map((item) =>
+    const engagementTypeList: ComboboxOption[] = aggregations.engagementTypes.map((item) =>
         editedItemKey(item.key) === "Ikke oppgitt"
             ? { label: "Ansettelsesform ikke oppgitt", value: `${ENGAGEMENT_TYPE}-${item.key}` }
             : { label: item.key, value: `${ENGAGEMENT_TYPE}-${item.key}` },
     );
-    const extentList = aggregations.extent.map((item) => ({
+    const extentList: ComboboxOption[] = aggregations.extent.map((item) => ({
         label: item.key,
         value: `${EXTENT}-${item.key}`,
     }));
 
-    const educationList = aggregations.education.map((item) =>
+    const educationList: ComboboxOption[] = aggregations.education.map((item) =>
         item.key === "Ikke oppgitt"
             ? {
                   label: "Utdanning ikke oppgitt",
@@ -168,24 +112,24 @@ export function getSearchBoxOptions(aggregations, locations, allSuggestions) {
               },
     );
 
-    const workLanguageList = aggregations.workLanguage.map((item) =>
+    const workLanguageList: ComboboxOption[] = aggregations.workLanguage.map((item) =>
         item.key === "Ikke oppgitt"
             ? { label: "Arbeidsspråk ikke oppgitt", value: `${WORK_LANGUAGE}-${item.key}` }
             : { label: item.key, value: `${WORK_LANGUAGE}-${item.key}` },
     );
 
-    const remoteList = aggregations.remote.map((item) =>
+    const remoteList: ComboboxOption[] = aggregations.remote.map((item) =>
         item.key === "Ikke oppgitt"
             ? { label: "Hjemmekontor ikke oppgitt", value: `${REMOTE}-${item.key}` }
             : { label: item.key, value: `${REMOTE}-${item.key}` },
     );
 
-    const occupationSuggestionList = allSuggestions.map((suggestion) => ({
+    const occupationSuggestionList: ComboboxOption[] = allSuggestions.map((suggestion) => ({
         label: suggestion,
         value: `${OCCUPATION}-${suggestion}`,
     }));
 
-    const needDriversLicenseList = aggregations.needDriversLicense.map((licence) =>
+    const needDriversLicenseList: ComboboxOption[] = aggregations.needDriversLicense.map((licence) =>
         licence.key === "Ikke oppgitt"
             ? { label: "Førerkort ikke oppgitt", value: `${NEED_DRIVERS_LICENSE}-${licence.key}` }
             : {
@@ -194,7 +138,7 @@ export function getSearchBoxOptions(aggregations, locations, allSuggestions) {
               },
     );
 
-    const experienceList = aggregations.experience.map((experience) =>
+    const experienceList: ComboboxOption[] = aggregations.experience.map((experience) =>
         experience.key === "Ikke oppgitt"
             ? { label: "Erfaring ikke oppgitt", value: `${EXPERIENCE}-${experience.key}` }
             : {
@@ -222,114 +166,23 @@ export function getSearchBoxOptions(aggregations, locations, allSuggestions) {
     ];
 }
 
-export const getFilter = {
-    [MUNICIPAL]: { add: ADD_MUNICIPAL, remove: REMOVE_MUNICIPAL },
-    [COUNTY]: { add: ADD_COUNTY, remove: REMOVE_COUNTY },
-    [INTERNATIONAL]: { add: SET_INTERNATIONAL, remove: SET_INTERNATIONAL },
-    [COUNTRY]: { add: ADD_COUNTRY, remove: REMOVE_COUNTRY },
-    [OCCUPATION_FIRST_LEVEL]: {
-        add: ADD_OCCUPATION_FIRST_LEVEL,
-        remove: REMOVE_OCCUPATION_FIRST_LEVEL,
-    },
-    [OCCUPATION_SECOND_LEVEL]: {
-        add: ADD_OCCUPATION_SECOND_LEVEL,
-        remove: REMOVE_OCCUPATION_SECOND_LEVEL,
-    },
-    [PUBLISHED]: { add: SET_PUBLISHED, remove: SET_PUBLISHED },
-    [ENGAGEMENT_TYPE]: { add: ADD_ENGAGEMENT_TYPE, remove: REMOVE_ENGAGEMENT_TYPE },
-    [EXTENT]: { add: ADD_EXTENT, remove: REMOVE_EXTENT },
-    [WORK_LANGUAGE]: { add: ADD_WORKLANGUAGE, remove: REMOVE_WORKLANGUAGE },
-    [EDUCATION]: { add: ADD_EDUCATION, remove: REMOVE_EDUCATION },
-    [NEED_DRIVERS_LICENSE]: { add: ADD_NEEDDRIVERSLICENSE, remove: REMOVE_NEEDDRIVERSLICENSE },
-    [REMOTE]: { add: ADD_REMOTE, remove: REMOVE_REMOTE },
-    [SECTOR]: { add: ADD_SECTOR, remove: REMOVE_SECTOR },
-    [OCCUPATION]: { add: ADD_OCCUPATION, remove: REMOVE_OCCUPATION },
-    [EXPERIENCE]: { add: ADD_EXPERIENCE, remove: REMOVE_EXPERIENCE },
-};
-
-export function addMunicipal(queryDispatch, query, value) {
-    // Legg til kommunen i filter
-    queryDispatch({ type: ADD_MUNICIPAL, value });
-
-    // Hvis fylket ikke allerede er valgt, så legg til dette også
-    const county = value.split(".")[0];
-    if (!query.counties.includes(county)) {
-        queryDispatch({ type: ADD_COUNTY, value: county });
-    }
-}
-
-export function removeMunicipal(queryDispatch, query, value) {
-    // Fjern kommunen fra filter
-    queryDispatch({ type: REMOVE_MUNICIPAL, value });
-
-    // Hvis dette var den siste valgte kommune i samme fylke, så skal fylket også fjernes
-    const county = value.split(".")[0];
-    const remainingMunicipalsInCounty = query.municipals.filter((municipal) => municipal.startsWith(`${county}.`));
-    if (remainingMunicipalsInCounty.length === 1) {
-        queryDispatch({ type: REMOVE_COUNTY, value: county });
-    }
-}
-
-// Ikke vis fylke hvis bruker har valgt en eller flere kommuner i dette fylket
-export function filterCounties(query) {
-    return query.counties.filter((county) => {
-        const found = query.municipals.find((obj) => obj.startsWith(`${county}.`));
-        return !found;
-    });
-}
-
-export function addCountry(queryDispatch, query, value) {
-    // Legg til land i filter
-    queryDispatch({ type: ADD_COUNTRY, value });
-
-    // Hvis "Utland" ikke allerede er valgt, så legg til denne også
-    queryDispatch({ type: SET_INTERNATIONAL, value: true });
-}
-
-export function removeCountry(queryDispatch, query, value) {
-    // Fjern land fra filter
-    queryDispatch({ type: REMOVE_COUNTRY, value });
-
-    // Hvis dette var den siste landet, så skal "Utland" også fjernes
-    if (query.countries.length === 1) {
-        queryDispatch({ type: SET_INTERNATIONAL, value: false });
-    }
-}
-
 // Ikke vis yrkeskategori hvis bruker har valgt et eller flere yrker i denne kategorien
-export function filterOccupationFirstLevels(query) {
+export function filterOccupationFirstLevels(query: Query) {
     return query.occupationFirstLevels.filter((firstLevel) => {
         const found = query.occupationSecondLevels.find((obj) => obj.startsWith(`${firstLevel}.`));
         return !found;
     });
 }
 
-export function addOccupationSecondLevel(queryDispatch, query, value) {
-    // Legg til yrket i filter
-    queryDispatch({ type: ADD_OCCUPATION_SECOND_LEVEL, value });
-
-    // Hvis yrkeskategorien ikke allerede er valgt, så legg til denne også
-    const firstLevel = value.split(".")[0];
-    if (!query.occupationFirstLevels.includes(firstLevel)) {
-        queryDispatch({ type: ADD_OCCUPATION_FIRST_LEVEL, value: firstLevel });
-    }
+// Ikke vis fylke hvis bruker har valgt en eller flere kommuner i dette fylket
+export function filterCounties(query: Query) {
+    return query.counties.filter((county) => {
+        const found = query.municipals.find((obj) => obj.startsWith(`${county}.`));
+        return !found;
+    });
 }
 
-export function removeOccupationSecondLevel(queryDispatch, query, value) {
-    // Fjern yrket fra filter
-    queryDispatch({ type: REMOVE_OCCUPATION_SECOND_LEVEL, value });
-
-    // Hvis dette var det siste yrket i samme yrkeskategori, så skal yrkeskategorien også fjernes
-    const firstLevel = value.split(".")[0];
-    const remainingOccupationsInCategory = query.occupationSecondLevels.filter((secondLevel) =>
-        secondLevel.startsWith(`${firstLevel}.`),
-    );
-    if (remainingOccupationsInCategory.length === 1) {
-        queryDispatch({ type: REMOVE_OCCUPATION_FIRST_LEVEL, value: firstLevel });
-    }
-}
-
-export function getQueryOptions(queryObject) {
+export function getQueryOptions(queryObject: Query) {
     const searchTerm = queryObject.q && queryObject.q.trim();
     const searchTerms = searchTerm ? searchTerm.split(" ") : [];
     return [
@@ -418,4 +271,52 @@ export function getQueryOptions(queryObject) {
                   },
         ),
     ];
+}
+
+interface Aggregations {
+    occupationFirstLevels: { key: string; occupationSecondLevels: { key: string }[] }[];
+    published: { key: string }[];
+    sector: { key: string }[];
+    engagementTypes: { key: string }[];
+    extent: { key: string }[];
+    education: { key: string }[];
+    workLanguage: { key: string }[];
+    remote: { key: string }[];
+    needDriversLicense: { key: string }[];
+    experience: { key: string }[];
+}
+
+interface Location {
+    type: string;
+    key: string;
+    subLocations: Location[];
+}
+
+interface SuggestionList {
+    label: string;
+    value: string;
+}
+
+export interface Query {
+    from: number;
+    size: number;
+    q: string;
+    municipals?: string[];
+    counties?: string[];
+    countries?: string[];
+    international: boolean;
+    occupationFirstLevels?: string[];
+    occupationSecondLevels?: string[];
+    occupations?: string[];
+    published?: string;
+    sector?: string[];
+    engagementType?: string[];
+    extent?: string[];
+    education?: string[];
+    workLanguage?: string[];
+    remote?: string[];
+    needDriversLicense?: string[];
+    experience?: string[];
+    sort: string;
+    v: string;
 }
