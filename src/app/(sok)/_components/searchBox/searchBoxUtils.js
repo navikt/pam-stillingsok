@@ -8,6 +8,7 @@ import {
     ADD_COUNTY,
     ADD_EDUCATION,
     ADD_ENGAGEMENT_TYPE,
+    ADD_EXPERIENCE,
     ADD_EXTENT,
     ADD_MUNICIPAL,
     ADD_NEEDDRIVERSLICENSE,
@@ -21,6 +22,7 @@ import {
     REMOVE_COUNTY,
     REMOVE_EDUCATION,
     REMOVE_ENGAGEMENT_TYPE,
+    REMOVE_EXPERIENCE,
     REMOVE_EXTENT,
     REMOVE_MUNICIPAL,
     REMOVE_NEEDDRIVERSLICENSE,
@@ -50,6 +52,7 @@ const EDUCATION = "education";
 const WORK_LANGUAGE = "workLanguage";
 const REMOTE = "remote";
 const NEED_DRIVERS_LICENSE = "needDriversLicense";
+const EXPERIENCE = "experience";
 
 export const findLabelForFilter = (value) => {
     switch (value) {
@@ -189,6 +192,15 @@ export function getSearchBoxOptions(aggregations, locations, allSuggestions) {
               },
     );
 
+    const experienceList = aggregations.experience.map((experience) =>
+        experience.key === "Ikke oppgitt"
+            ? { label: "Erfaring ikke oppgitt", value: `${EXPERIENCE}-${experience.key}` }
+            : {
+                  label: experience.key,
+                  value: `${EXPERIENCE}-${experience.key}`,
+              },
+    );
+
     return [
         ...municipalList,
         ...countyList,
@@ -204,6 +216,7 @@ export function getSearchBoxOptions(aggregations, locations, allSuggestions) {
         ...remoteList,
         ...occupationSuggestionList,
         ...needDriversLicenseList,
+        ...experienceList,
     ];
 }
 
@@ -229,6 +242,7 @@ export const getFilter = {
     [REMOTE]: { add: ADD_REMOTE, remove: REMOVE_REMOTE },
     [SECTOR]: { add: ADD_SECTOR, remove: REMOVE_SECTOR },
     [OCCUPATION]: { add: ADD_OCCUPATION, remove: REMOVE_OCCUPATION },
+    [EXPERIENCE]: { add: ADD_EXPERIENCE, remove: REMOVE_EXPERIENCE },
 };
 
 export function addMunicipal(queryDispatch, query, value) {
@@ -391,6 +405,14 @@ export function getQueryOptions(queryObject) {
                 : {
                       label: labelForNeedDriversLicense(licence),
                       value: `${NEED_DRIVERS_LICENSE}-${licence}`,
+                  },
+        ),
+        ...queryObject.experience.map((experience) =>
+            experience === "Ikke oppgitt"
+                ? { label: "Erfaring ikke oppgitt", value: `${EXPERIENCE}-${experience}` }
+                : {
+                      label: experience,
+                      value: `${EXPERIENCE}-${experience}`,
                   },
         ),
     ];
