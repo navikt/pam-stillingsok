@@ -59,8 +59,8 @@ function SearchBox({ dispatch, query, aggregations, locations }) {
 
     const allSuggestions = [...suggestionsResponse.data];
 
-    function handleComboBoxValueChange(event) {
-        setValue(event?.target?.value || "");
+    function handleComboBoxValueChange(newValue) {
+        setValue(newValue);
     }
 
     return (
