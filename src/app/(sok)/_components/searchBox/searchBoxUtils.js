@@ -36,6 +36,8 @@ import {
     SET_PUBLISHED,
 } from "@/app/(sok)/_utils/queryReducer";
 import { labelForNeedDriversLicense } from "@/app/(sok)/_components/filters/DriversLicense";
+import { labelForExperience } from "@/app/(sok)/_components/filters/Experience";
+import { labelForEducation } from "@/app/(sok)/_components/filters/Education";
 
 const MUNICIPAL = "municipal";
 const COUNTY = "county";
@@ -161,7 +163,7 @@ export function getSearchBoxOptions(aggregations, locations, allSuggestions) {
                   value: `${EDUCATION}-${item.key}`,
               }
             : {
-                  label: item.key,
+                  label: labelForEducation(item.key),
                   value: `${EDUCATION}-${item.key}`,
               },
     );
@@ -196,7 +198,7 @@ export function getSearchBoxOptions(aggregations, locations, allSuggestions) {
         experience.key === "Ikke oppgitt"
             ? { label: "Erfaring ikke oppgitt", value: `${EXPERIENCE}-${experience.key}` }
             : {
-                  label: experience.key,
+                  label: labelForExperience(experience.key),
                   value: `${EXPERIENCE}-${experience.key}`,
               },
     );
@@ -381,7 +383,7 @@ export function getQueryOptions(queryObject) {
                       value: `${EDUCATION}-${item}`,
                   }
                 : {
-                      label: item,
+                      label: labelForEducation(item),
                       value: `${EDUCATION}-${item}`,
                   },
         ),
@@ -411,7 +413,7 @@ export function getQueryOptions(queryObject) {
             experience === "Ikke oppgitt"
                 ? { label: "Erfaring ikke oppgitt", value: `${EXPERIENCE}-${experience}` }
                 : {
-                      label: experience,
+                      label: labelForExperience(experience),
                       value: `${EXPERIENCE}-${experience}`,
                   },
         ),
