@@ -15,7 +15,7 @@ import Sector from "./Sector";
 import EngagementType from "./Engagement";
 import WorkLanguage from "./WorkLanguage";
 
-function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggregations, locations }) {
+function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggregations, locations, postcodes }) {
     const [selectedFilter, setSelectedFilter] = useState("");
     const headingRef = useRef();
 
@@ -89,7 +89,7 @@ function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggre
                     {selectedFilter === "Sted og hjemmekontor" && (
                         <>
                             <div className="mb-6">
-                                <DrivingDistance query={query} dispatch={dispatchQuery} />
+                                <DrivingDistance query={query} dispatch={dispatchQuery} postcodes={postcodes} />
                             </div>
                             <div className="mb-6">
                                 <Counties

@@ -14,7 +14,7 @@ import Sector from "./Sector";
 import EngagementType from "./Engagement";
 import WorkLanguage from "./WorkLanguage";
 
-function FiltersDesktop({ query, dispatchQuery, aggregations, locations, searchResult }) {
+function FiltersDesktop({ query, dispatchQuery, aggregations, locations, postcodes, searchResult }) {
     return (
         <div>
             <Accordion indent={false} headingSize="small">
@@ -28,7 +28,7 @@ function FiltersDesktop({ query, dispatchQuery, aggregations, locations, searchR
                     />
                 </FilterAccordionItem>
                 <FilterAccordionItem title="Område og hjemmekontor" panelId="sted">
-                    <DrivingDistance query={query} dispatch={dispatchQuery} />
+                    <DrivingDistance query={query} dispatch={dispatchQuery} postcodes={postcodes} />
                     <Counties
                         query={query}
                         dispatch={dispatchQuery}

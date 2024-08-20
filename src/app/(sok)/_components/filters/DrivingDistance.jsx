@@ -2,21 +2,14 @@ import React, { useEffect, useState } from "react";
 import { Select, UNSAFE_Combobox } from "@navikt/ds-react";
 import { ADD_DISTANCE, ADD_POSTCODE, REMOVE_DISTANCE, REMOVE_POSTCODE } from "@/app/(sok)/_utils/queryReducer";
 
-function DrivingDistance({ query, dispatch }) {
+function DrivingDistance({ query, dispatch, postcodes }) {
     const [selectedPostcode, setSelectedPostcode] = useState((query.postcode && [query.postcode]) || []);
     const [filteredPostcodeOptions, setFilteredPostcodeOptions] = useState([]);
 
-    const allPostcodeOptions = [
-        { value: "0010", label: "0010 Oslo" },
-        { value: "0015", label: "0015 Oslo 2" },
-        { value: "0030", label: "0030 Idk" },
-        { value: "1000", label: "1000 Hej" },
-        { value: "2000", label: "2000 Hej hej" },
-    ];
-
-    for (let i = 31; i < 100; i += 1) {
-        allPostcodeOptions.push({ value: `00${i}`, label: `00${i} Oslo 11` });
-    }
+    const allPostcodeOptions = postcodes.map((data) => ({
+        value: data.postcode,
+        label: `${data.postcode} ${data.city}`,
+    }));
 
     useEffect(() => {
         if (!query.postcode) {

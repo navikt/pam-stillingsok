@@ -71,6 +71,23 @@ async function fetchLocations() {
     ];
 }
 
+async function fetchPostcodes() {
+    const res = await fetch(`${process.env.PAM_GEOGRAFI_API_URL}/postdata?sort=asc`, { next: { revalidate: 3600 } });
+
+    if (!res.ok) {
+        throw new Error("Failed to fetch postcode data");
+    }
+
+    const data = await res.json();
+
+    return data.map((d) => ({
+        postcode: d.postkode,
+        city: d.by,
+        municipality: d.kommune.navn,
+        county: d.fylke.navn,
+    }));
+}
+
 export default async function Page({ searchParams }) {
     if (searchParams.from) {
         const size = searchParams.size ? searchParams.size : 25;
@@ -104,18 +121,21 @@ export default async function Page({ searchParams }) {
     const initialQuery = createQuery(modifiedSearchParams);
 
     const shouldDoExtraCallIfUserHasSearchParams = Object.keys(toBrowserQuery(initialQuery)).length > 0;
-    const fetchCalls = [fetchCachedElasticSearch(toApiQuery(defaultQuery)), fetchLocations()];
+    const fetchCalls = [fetchCachedElasticSearch(toApiQuery(defaultQuery)), fetchLocations(), fetchPostcodes()];
     if (shouldDoExtraCallIfUserHasSearchParams) {
         fetchCalls.push(fetchCachedElasticSearch(toApiQuery(initialQuery)));
     }
 
-    const [globalSearchResult, locations, searchResult] = await Promise.all(fetchCalls);
+    const [globalSearchResult, locations, postcodes, searchResult] = await Promise.all(fetchCalls);
+
+    console.log("Postnummer:", postcodes.length);
 
     return (
         <Search
             searchResult={shouldDoExtraCallIfUserHasSearchParams ? searchResult : globalSearchResult}
             aggregations={globalSearchResult.aggregations}
             locations={locations}
+            postcodes={postcodes}
             query={initialQuery}
         />
     );
