@@ -22,9 +22,9 @@ import {
     removeCountry,
     removeMunicipal,
     removeOccupationSecondLevel,
-} from "@/app/(sok)/_components/combobox/comboboxUtils";
+} from "@/app/(sok)/_components/searchBox/searchBoxUtils";
 
-function ComboBox({ query, queryDispatch, onChange, options }) {
+function SearchCombobox({ query, queryDispatch, onChange, options }) {
     const initialSelectedOptions = useMemo(() => getQueryOptions(query), [query]);
 
     const [selectedOptions, setSelectedOptions] = useState(initialSelectedOptions);
@@ -118,7 +118,7 @@ function ComboBox({ query, queryDispatch, onChange, options }) {
     );
 }
 
-ComboBox.propTypes = {
+SearchCombobox.propTypes = {
     query: PropTypes.shape({
         q: PropTypes.string,
         municipals: PropTypes.arrayOf(PropTypes.string),
@@ -140,4 +140,4 @@ ComboBox.propTypes = {
     options: PropTypes.arrayOf(PropTypes.shape({})),
 };
 
-export default ComboBox;
+export default SearchCombobox;

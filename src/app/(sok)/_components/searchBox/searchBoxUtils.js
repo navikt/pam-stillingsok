@@ -80,7 +80,7 @@ export const findLabelForFilter = (value) => {
     }
 };
 
-export function getComboboxOptions(aggregations, locations, allSuggestions) {
+export function getSearchBoxOptions(aggregations, locations, allSuggestions) {
     const locationList = buildLocations(aggregations, locations);
 
     const municipalList = locationList

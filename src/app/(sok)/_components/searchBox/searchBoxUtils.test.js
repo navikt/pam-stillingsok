@@ -1,4 +1,4 @@
-import { getQueryOptions } from "@/app/(sok)/_components/combobox/comboboxUtils";
+import { getQueryOptions } from "@/app/(sok)/_components/searchBox/searchBoxUtils";
 
 const query = {
     from: 0,
@@ -22,7 +22,7 @@ const query = {
     v: "1",
 };
 
-describe("comboboxUtils", () => {
+describe("searchBoxUtils", () => {
     test("getQueryOptions should not contain label Ikke oppgitt", () => {
         const queryOptions = getQueryOptions(query);
         const hasIkkeOppgitt = queryOptions.some((option) => option.label === "Ikke oppgitt");
