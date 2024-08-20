@@ -114,7 +114,17 @@ export function toApiQuery(query) {
         ...query,
         sort: query.sort === "" ? "published" : query.sort,
     };
-    return removeUnwantedOrEmptySearchParameters(apiSearchQuery);
+
+    const newQuery = removeUnwantedOrEmptySearchParameters(apiSearchQuery);
+
+    // Postcode and distance are only relevant to search for if both are set
+    // Should NOT be moved to the removeUnwantedOrEmptySearchParameters function, as it also will remove it from the URL query params
+    if (!(newQuery.postcode && newQuery.postcode.length === 4 && newQuery.distance)) {
+        delete newQuery.postcode;
+        delete newQuery.distance;
+    }
+
+    return newQuery;
 }
 
 /**
