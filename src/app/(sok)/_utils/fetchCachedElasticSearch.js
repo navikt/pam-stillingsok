@@ -16,9 +16,18 @@ We can't use the built-in 'cache' in React either, since the route segment is dy
  */
 
 async function fetchElasticSearch(query) {
+    const elasticSearchQuery = query;
+    const shouldLookupLocationsWithinDrivingDistance = elasticSearchQuery.postcode && elasticSearchQuery.distance;
+
+    if (shouldLookupLocationsWithinDrivingDistance) {
+        elasticSearchQuery.withinDrivingDistance = await fetchLocationsWithinDrivingDistance(
+            elasticSearchQuery.postcode,
+            elasticSearchQuery.distance,
+        );
+    }
     const measureSearchDuration = elasticSearchDurationHistogram.startTimer();
 
-    const body = elasticSearchRequestBody(query);
+    const body = elasticSearchRequestBody(elasticSearchQuery);
     const res = await fetch(`${process.env.PAMSEARCHAPI_URL}/stillingsok/ad/_search`, {
         method: "POST",
         headers: getDefaultHeaders(),
@@ -38,10 +47,28 @@ async function fetchElasticSearch(query) {
     return simplifySearchResponse(data);
 }
 
+async function fetchLocationsWithinDrivingDistance(referencePostCode, distance) {
+    const res = await fetch(
+        `${process.env.PAM_GEOGRAFI_API_URL}/innen-avstand/${referencePostCode}?avstand=${distance}`,
+    );
+
+    if (!res.ok) {
+        throw new Error(`Failed to fetch within distance data: ${res.status} ${res.statusText}`);
+    }
+
+    const data = await res.json();
+
+    return {
+        postcodes: data.postnummer,
+        municipals: data.kommuner,
+        counties: data.fylker,
+    };
+}
+
 export const fetchCachedElasticSearch = unstable_cache(
     async (query) => fetchElasticSearch(query),
     ["elastic-search-query"],
     {
-        revalidate: 30,
+        revalidate: 1,
     },
 );
