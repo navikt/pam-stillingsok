@@ -35,7 +35,7 @@ function filterPublished(published) {
     return filters;
 }
 
-function filterPostCodes(postCodes) {
+function filterWithinDrivingDistance(withinDrivingDistance) {
     const filter = {
         nested: {
             path: "locationList",
@@ -47,10 +47,71 @@ function filterPostCodes(postCodes) {
         },
     };
 
-    if (Array.isArray(postCodes)) {
+    if (!withinDrivingDistance) {
+        return filter;
+    }
+
+    const { postcodes, municipals, counties } = withinDrivingDistance;
+
+    if (Array.isArray(postcodes)) {
         filter.nested.query.bool.should.push({
             terms: {
-                "locationList.postalCode": postCodes,
+                "locationList.postalCode": postcodes,
+            },
+        });
+    }
+
+    if (Array.isArray(municipals)) {
+        filter.nested.query.bool.should.push({
+            bool: {
+                must: [
+                    {
+                        bool: {
+                            must_not: {
+                                exists: {
+                                    field: "locationList.postalCode",
+                                },
+                            },
+                        },
+                    },
+                    {
+                        terms: {
+                            "locationList.municipal.keyword": municipals,
+                        },
+                    },
+                ],
+            },
+        });
+    }
+
+    if (Array.isArray(counties)) {
+        filter.nested.query.bool.should.push({
+            bool: {
+                must: [
+                    {
+                        bool: {
+                            must_not: {
+                                exists: {
+                                    field: "locationList.postalCode",
+                                },
+                            },
+                        },
+                    },
+                    {
+                        bool: {
+                            must_not: {
+                                exists: {
+                                    field: "locationList.municipal",
+                                },
+                            },
+                        },
+                    },
+                    {
+                        terms: {
+                            "locationList.county.keyword": counties,
+                        },
+                    },
+                ],
             },
         });
     }
@@ -685,7 +746,7 @@ const elasticSearchRequestBody = (query) => {
         occupationSecondLevels,
         international,
         operator,
-        postCodes,
+        withinDrivingDistance,
     } = query;
     let { sort, q } = query;
 
@@ -721,7 +782,7 @@ const elasticSearchRequestBody = (query) => {
                     ...filterEngagementType(engagementType),
                     ...filterSector(sector),
                     ...filterPublished(published),
-                    filterPostCodes(postCodes),
+                    filterWithinDrivingDistance(withinDrivingDistance),
                 ],
             },
         },
@@ -779,7 +840,7 @@ const elasticSearchRequestBody = (query) => {
                             ...filterEngagementType(engagementType),
                             ...filterSector(sector),
                             ...filterPublished(published),
-                            filterPostCodes(postCodes),
+                            filterWithinDrivingDistance(withinDrivingDistance),
                         ],
                     },
                 },
@@ -806,7 +867,7 @@ const elasticSearchRequestBody = (query) => {
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
                             ...filterEngagementType(engagementType),
                             ...filterSector(sector),
-                            filterPostCodes(postCodes),
+                            filterWithinDrivingDistance(withinDrivingDistance),
                         ],
                     },
                 },
@@ -847,7 +908,7 @@ const elasticSearchRequestBody = (query) => {
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
                             ...filterEngagementType(engagementType),
                             ...filterPublished(published),
-                            filterPostCodes(postCodes),
+                            filterWithinDrivingDistance(withinDrivingDistance),
                         ],
                     },
                 },
@@ -871,7 +932,7 @@ const elasticSearchRequestBody = (query) => {
                             ...filterEngagementType(engagementType),
                             ...filterSector(sector),
                             ...filterPublished(published),
-                            filterPostCodes(postCodes),
+                            filterWithinDrivingDistance(withinDrivingDistance),
                         ],
                     },
                 },
@@ -916,7 +977,7 @@ const elasticSearchRequestBody = (query) => {
                             ...filterEngagementType(engagementType),
                             ...filterSector(sector),
                             ...filterPublished(published),
-                            filterPostCodes(postCodes),
+                            filterWithinDrivingDistance(withinDrivingDistance),
                         ],
                     },
                 },
@@ -940,7 +1001,7 @@ const elasticSearchRequestBody = (query) => {
                             ...filterEngagementType(engagementType),
                             ...filterSector(sector),
                             ...filterPublished(published),
-                            filterPostCodes(postCodes),
+                            filterWithinDrivingDistance(withinDrivingDistance),
                         ],
                     },
                 },
@@ -964,7 +1025,7 @@ const elasticSearchRequestBody = (query) => {
                             ...filterEngagementType(engagementType),
                             ...filterSector(sector),
                             ...filterPublished(published),
-                            filterPostCodes(postCodes),
+                            filterWithinDrivingDistance(withinDrivingDistance),
                         ],
                     },
                 },
@@ -988,7 +1049,7 @@ const elasticSearchRequestBody = (query) => {
                             ...filterEngagementType(engagementType),
                             ...filterSector(sector),
                             ...filterPublished(published),
-                            filterPostCodes(postCodes),
+                            filterWithinDrivingDistance(withinDrivingDistance),
                         ],
                     },
                 },
@@ -1012,7 +1073,7 @@ const elasticSearchRequestBody = (query) => {
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
                             ...filterSector(sector),
                             ...filterPublished(published),
-                            filterPostCodes(postCodes),
+                            filterWithinDrivingDistance(withinDrivingDistance),
                         ],
                     },
                 },
@@ -1036,7 +1097,7 @@ const elasticSearchRequestBody = (query) => {
                             ...filterEngagementType(engagementType),
                             ...filterSector(sector),
                             ...filterPublished(published),
-                            filterPostCodes(postCodes),
+                            filterWithinDrivingDistance(withinDrivingDistance),
                         ],
                     },
                 },
@@ -1087,7 +1148,7 @@ const elasticSearchRequestBody = (query) => {
                             ...filterEngagementType(engagementType),
                             ...filterSector(sector),
                             ...filterPublished(published),
-                            filterPostCodes(postCodes),
+                            filterWithinDrivingDistance(withinDrivingDistance),
                         ],
                     },
                 },
@@ -1137,7 +1198,7 @@ const elasticSearchRequestBody = (query) => {
                             ...filterEngagementType(engagementType),
                             ...filterSector(sector),
                             ...filterPublished(published),
-                            filterPostCodes(postCodes),
+                            filterWithinDrivingDistance(withinDrivingDistance),
                             {
                                 nested: {
                                     path: "locationList",
