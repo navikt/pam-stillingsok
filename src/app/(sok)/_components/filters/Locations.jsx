@@ -98,7 +98,7 @@ function Locations({ locations, query, dispatch, updatedValues }) {
                                             <div>
                                                 {location.subLocations &&
                                                     location.subLocations
-                                                        .sort((a, b) => a.key.localeCompare(b.key))
+                                                        .sort((a, b) => a.key.localeCompare(b.key, "no"))
                                                         .map((subLocation) => (
                                                             <Checkbox
                                                                 name={
