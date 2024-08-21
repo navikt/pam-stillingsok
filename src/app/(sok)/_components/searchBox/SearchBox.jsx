@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { FetchAction, useFetchReducer } from "@/app/_common/hooks/useFetchReducer";
 import * as actions from "@/app/_common/actions";
 import SearchCombobox from "@/app/(sok)/_components/searchBox/SearchCombobox";
-import { getSearchBoxOptions } from "@/app/(sok)/_components/searchBox/searchBoxOption";
+import { getSearchBoxOptions } from "@/app/(sok)/_components/searchBox/buildSearchBoxOptions";
 
 let suggestionsCache = [];
 const CACHE_MAX_SIZE = 50;

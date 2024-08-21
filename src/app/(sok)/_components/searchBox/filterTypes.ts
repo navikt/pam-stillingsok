@@ -1,0 +1,16 @@
+export const MUNICIPAL = "municipal";
+export const COUNTY = "county";
+export const COUNTRY = "country";
+export const INTERNATIONAL = "international";
+export const OCCUPATION_SECOND_LEVEL = "occupationSecondLevel";
+export const OCCUPATION_FIRST_LEVEL = "occupationFirstLevel";
+export const OCCUPATION = "occupation";
+export const PUBLISHED = "published";
+export const SECTOR = "sector";
+export const ENGAGEMENT_TYPE = "engagementType";
+export const EXTENT = "extent";
+export const EDUCATION = "education";
+export const WORK_LANGUAGE = "workLanguage";
+export const REMOTE = "remote";
+export const NEED_DRIVERS_LICENSE = "needDriversLicense";
+export const EXPERIENCE = "experience";

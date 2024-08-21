@@ -22,15 +22,14 @@ import {
     removeMunicipalFilter,
     removeOccupationSecondLevelFilter,
 } from "@/app/(sok)/_components/searchBox/searchBoxFilter";
-import { getQuerySelectedOptions } from "@/app/(sok)/_components/searchBox/selectedOptions";
+import { buildSelectedOptions } from "@/app/(sok)/_components/searchBox/buildSelectedOptions";
 
 function SearchCombobox({ query, queryDispatch, onChange, options }) {
-    const initialSelectedOptions = useMemo(() => getQuerySelectedOptions(query), [query]);
-
+    const initialSelectedOptions = useMemo(() => buildSelectedOptions(query), [query]);
     const [selectedOptions, setSelectedOptions] = useState(initialSelectedOptions);
 
     useEffect(() => {
-        const newInitialSelectedOptions = getQuerySelectedOptions(query);
+        const newInitialSelectedOptions = buildSelectedOptions(query);
         setSelectedOptions(newInitialSelectedOptions);
     }, [query]);
 
@@ -100,7 +99,7 @@ function SearchCombobox({ query, queryDispatch, onChange, options }) {
         }
     };
 
-    const optionLi = options.map((o) => ({
+    const optionList = options.map((o) => ({
         label: `${o.label} ${findLabelForFilter(o.value.split("-")[0])}`,
         value: o.value,
     }));
@@ -112,7 +111,7 @@ function SearchCombobox({ query, queryDispatch, onChange, options }) {
             isMultiSelect
             onToggleSelected={onToggleSelected}
             selectedOptions={selectedOptions}
-            options={optionLi}
+            options={optionList}
             onChange={onChange}
         />
     );

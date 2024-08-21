@@ -30,6 +30,8 @@ import {
     SET_INTERNATIONAL,
     SET_PUBLISHED,
 } from "@/app/(sok)/_utils/queryReducer";
+import { Query } from "@/app/(sok)/_components/searchBox/buildSearchBoxOptions";
+import { Dispatch } from "react";
 import {
     COUNTRY,
     COUNTY,
@@ -44,12 +46,10 @@ import {
     OCCUPATION_FIRST_LEVEL,
     OCCUPATION_SECOND_LEVEL,
     PUBLISHED,
-    Query,
     REMOTE,
     SECTOR,
     WORK_LANGUAGE,
-} from "@/app/(sok)/_components/searchBox/searchBoxOption";
-import { Dispatch } from "react";
+} from "@/app/(sok)/_components/searchBox/filterTypes";
 
 export const findLabelForFilter = (value: string) => {
     switch (value) {
