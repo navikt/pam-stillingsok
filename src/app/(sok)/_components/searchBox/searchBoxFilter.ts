@@ -105,30 +105,30 @@ export const getFilter = {
     [EXPERIENCE]: { add: ADD_EXPERIENCE, remove: REMOVE_EXPERIENCE },
 };
 
-export function addMunicipalFilter(queryDispatch: Dispatch<QueryDispatch>, query: Query, value: string) {
+export function addMunicipalFilter(queryDispatch: Dispatch<Action>, query: Query, value: string) {
     // Legg til kommunen i filter
     queryDispatch({ type: "ADD_MUNICIPAL", value });
 
     // Hvis fylket ikke allerede er valgt, så legg til dette også
     const county = value.split(".")[0];
-    if (!query.counties.includes(county)) {
+    if (!query.counties?.includes(county)) {
         queryDispatch({ type: "ADD_COUNTY", value: county });
     }
 }
 
-export function removeMunicipalFilter(queryDispatch: Dispatch<QueryDispatch>, query: Query, value: string) {
+export function removeMunicipalFilter(queryDispatch: Dispatch<Action>, query: Query, value: string) {
     // Fjern kommunen fra filter
     queryDispatch({ type: REMOVE_MUNICIPAL, value });
 
     // Hvis dette var den siste valgte kommune i samme fylke, så skal fylket også fjernes
     const county = value.split(".")[0];
-    const remainingMunicipalsInCounty = query.municipals.filter((municipal) => municipal.startsWith(`${county}.`));
-    if (remainingMunicipalsInCounty.length === 1) {
+    const remainingMunicipalsInCounty = query.municipals?.filter((municipal) => municipal.startsWith(`${county}.`));
+    if (remainingMunicipalsInCounty && remainingMunicipalsInCounty.length === 1) {
         queryDispatch({ type: REMOVE_COUNTY, value: county });
     }
 }
 
-export function addCountryFilter(queryDispatch: Dispatch<QueryDispatch>, value: string) {
+export function addCountryFilter(queryDispatch: Dispatch<Action>, value: string) {
     // Legg til land i filter
     queryDispatch({ type: ADD_COUNTRY, value });
 
@@ -136,43 +136,42 @@ export function addCountryFilter(queryDispatch: Dispatch<QueryDispatch>, value: 
     queryDispatch({ type: SET_INTERNATIONAL, value: true });
 }
 
-export function removeCountryFilter(queryDispatch: Dispatch<QueryDispatch>, query: Query, value: string) {
+export function removeCountryFilter(queryDispatch: Dispatch<Action>, query: Query, value: string) {
     // Fjern land fra filter
     queryDispatch({ type: REMOVE_COUNTRY, value });
 
     // Hvis dette var den siste landet, så skal "Utland" også fjernes
-    if (query.countries.length === 1) {
+    if (query.countries?.length === 1) {
         queryDispatch({ type: SET_INTERNATIONAL, value: false });
     }
 }
 
-export function addOccupationSecondLevelFilter(queryDispatch: Dispatch<QueryDispatch>, query: Query, value: string) {
+export function addOccupationSecondLevelFilter(queryDispatch: Dispatch<Action>, query: Query, value: string) {
     // Legg til yrket i filter
     queryDispatch({ type: ADD_OCCUPATION_SECOND_LEVEL, value });
 
     // Hvis yrkeskategorien ikke allerede er valgt, så legg til denne også
     const firstLevel = value.split(".")[0];
-    if (!query.occupationFirstLevels.includes(firstLevel)) {
+    if (!query.occupationFirstLevels?.includes(firstLevel)) {
         queryDispatch({ type: ADD_OCCUPATION_FIRST_LEVEL, value: firstLevel });
     }
 }
 
-export function removeOccupationSecondLevelFilter(queryDispatch: Dispatch<QueryDispatch>, query: Query, value: string) {
+export function removeOccupationSecondLevelFilter(queryDispatch: Dispatch<Action>, query: Query, value: string) {
     // Fjern yrket fra filter
     queryDispatch({ type: REMOVE_OCCUPATION_SECOND_LEVEL, value });
 
     // Hvis dette var det siste yrket i samme yrkeskategori, så skal yrkeskategorien også fjernes
     const firstLevel = value.split(".")[0];
-    const remainingOccupationsInCategory = query.occupationSecondLevels.filter((secondLevel) =>
+    const remainingOccupationsInCategory = query.occupationSecondLevels?.filter((secondLevel) =>
         secondLevel.startsWith(`${firstLevel}.`),
     );
-    if (remainingOccupationsInCategory.length === 1) {
+    if (remainingOccupationsInCategory && remainingOccupationsInCategory.length === 1) {
         queryDispatch({ type: REMOVE_OCCUPATION_FIRST_LEVEL, value: firstLevel });
     }
 }
 
-// TODO: ikke sikker denne er helt riktig, men funker?
-interface QueryDispatch {
+interface Action {
     type: string;
     value: string | boolean;
 }

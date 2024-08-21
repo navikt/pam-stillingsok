@@ -97,7 +97,7 @@ function getSecondLevelOccupationsOptions(aggregations: Aggregations) {
 function getPublishedOptions(aggregations: Aggregations) {
     return aggregations.published.map(
         (item): ComboboxOption => ({
-            label: PublishedLabelsEnum[item.key],
+            label: PublishedLabelsEnum[item.key as keyof typeof PublishedLabelsEnum],
             value: `${PUBLISHED}-${item.key}`,
         }),
     );

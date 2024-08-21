@@ -26,8 +26,10 @@ const query: Query = {
 
 describe("selectedOptions", () => {
     test("getQuerySelectedOptions should not contain label Ikke oppgitt", () => {
-        const queryOptions = buildSelectedOptions(query);
-        const hasIkkeOppgitt = queryOptions.some((option: ComboboxOption) => option.label === "Ikke oppgitt");
+        const queryOptions = buildSelectedOptions(query).filter(
+            (item): item is ComboboxOption => typeof item !== "string",
+        );
+        const hasIkkeOppgitt = queryOptions.some((option) => option.label === "Ikke oppgitt");
         expect(hasIkkeOppgitt).toBe(false);
     });
 });
