@@ -1,5 +1,6 @@
-import { getQueryOptions, Query } from "@/app/(sok)/_components/searchBox/searchBoxOption";
+import { Query } from "@/app/(sok)/_components/searchBox/searchBoxOptions";
 import { ComboboxOption } from "@navikt/ds-react/cjs/form/combobox/types";
+import { getQuerySelectedOptions } from "@/app/(sok)/_components/searchBox/selectedOptions";
 
 const query: Query = {
     from: 0,
@@ -23,9 +24,9 @@ const query: Query = {
     v: "1",
 };
 
-describe("searchBoxOption", () => {
-    test("getQueryOptions should not contain label Ikke oppgitt", () => {
-        const queryOptions = getQueryOptions(query);
+describe("selectedOptions", () => {
+    test("getQuerySelectedOptions should not contain label Ikke oppgitt", () => {
+        const queryOptions = getQuerySelectedOptions(query);
         const hasIkkeOppgitt = queryOptions.some((option: ComboboxOption) => option.label === "Ikke oppgitt");
         expect(hasIkkeOppgitt).toBe(false);
     });

@@ -12,7 +12,6 @@ import {
     SET_PUBLISHED,
     SET_SEARCH_STRING,
 } from "@/app/(sok)/_utils/queryReducer";
-import { getQueryOptions } from "@/app/(sok)/_components/searchBox/searchBoxOption";
 import {
     addCountryFilter,
     addMunicipalFilter,
@@ -23,14 +22,15 @@ import {
     removeMunicipalFilter,
     removeOccupationSecondLevelFilter,
 } from "@/app/(sok)/_components/searchBox/searchBoxFilter";
+import { getQuerySelectedOptions } from "@/app/(sok)/_components/searchBox/selectedOptions";
 
 function SearchCombobox({ query, queryDispatch, onChange, options }) {
-    const initialSelectedOptions = useMemo(() => getQueryOptions(query), [query]);
+    const initialSelectedOptions = useMemo(() => getQuerySelectedOptions(query), [query]);
 
     const [selectedOptions, setSelectedOptions] = useState(initialSelectedOptions);
 
     useEffect(() => {
-        const newInitialSelectedOptions = getQueryOptions(query);
+        const newInitialSelectedOptions = getQuerySelectedOptions(query);
         setSelectedOptions(newInitialSelectedOptions);
     }, [query]);
 
