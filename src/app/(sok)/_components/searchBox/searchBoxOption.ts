@@ -182,7 +182,7 @@ export function filterCounties(query: Query) {
     });
 }
 
-export function getQueryOptions(queryObject: Query) {
+export function getSelectedQueryOptions(queryObject: Query) {
     const searchTerm = queryObject.q && queryObject.q.trim();
     const searchTerms = searchTerm ? searchTerm.split(" ") : [];
     return [
