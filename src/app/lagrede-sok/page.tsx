@@ -1,8 +1,8 @@
-import * as actions from "@/app/_common/actions";
 import LoginIsRequiredPage from "@/app/_common/auth/components/LoginIsRequiredPage";
 import SavedSearchesList from "./_components/SavedSearchesList";
 import UserConsentIsRequired from "./_components/UserConsentIsRequired";
 import { getMetadataTitle } from "../layout";
+import { checkIfAuthenticated, checkIfUserAgreementIsAccepted, getAllSavedSearchesAction } from "../_common/actions";
 
 export const metadata = {
     title: getMetadataTitle("Lagrede søk"),
@@ -11,15 +11,15 @@ export const metadata = {
 };
 
 export default async function Page() {
-    const authenticated = await actions.checkIfAuthenticated();
+    const authenticated = await checkIfAuthenticated();
     if (!authenticated.isAuthenticated) {
         return <LoginIsRequiredPage redirect="/stillinger/lagrede-sok" />;
     }
 
-    const agreementAccepted = await actions.checkIfUserAgreementIsAccepted();
+    const agreementAccepted = await checkIfUserAgreementIsAccepted();
     if (!agreementAccepted.userAgreementAccepted) {
         return <UserConsentIsRequired />;
     }
 
-    return <SavedSearchesList data={await actions.getAllSavedSearchesAction()} />;
+    return <SavedSearchesList data={await getAllSavedSearchesAction()} />;
 }

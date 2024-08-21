@@ -1,9 +1,12 @@
-import React, { useEffect, useRef } from "react";
-import PropTypes from "prop-types";
+import React, { MutableRefObject, useEffect, useRef } from "react";
 import { BodyLong, Button, Modal } from "@navikt/ds-react";
 
-function SuccessMessage({ onClose }) {
-    const buttonRef = useRef(null);
+interface SuccessMessageProps {
+    onClose: () => void;
+}
+
+function SuccessMessage({ onClose }: SuccessMessageProps) {
+    const buttonRef: MutableRefObject<HTMLButtonElement | null> = useRef(null);
 
     useEffect(() => {
         if (buttonRef.current) {
@@ -24,9 +27,5 @@ function SuccessMessage({ onClose }) {
         </>
     );
 }
-
-SuccessMessage.propTypes = {
-    onClose: PropTypes.func.isRequired,
-};
 
 export default SuccessMessage;
