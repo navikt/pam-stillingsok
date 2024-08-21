@@ -2,31 +2,45 @@
 
 import React, { useContext, useEffect, useState } from "react";
 import { BodyLong, HStack, Loader, Modal } from "@navikt/ds-react";
-import PropTypes from "prop-types";
 import { UserContext } from "@/app/_common/user/UserProvider";
 import useToggle from "@/app/_common/hooks/useToggle";
 import { isStringEmpty } from "@/app/_common/utils/utils";
 import * as actions from "@/app/_common/actions";
 import NotFoundMessage from "@/app/lagrede-sok/_components/modal/NotFoundMessage";
 import AlertModalWithPageReload from "@/app/_common/components/modals/AlertModalWithPageReload";
-import SaveSearchForm from "./SaveSearchForm";
+import { SavedSearch } from "@/app/_common/actions/savedSearchActions";
+import SaveSearchForm, { SaveSearchFormData } from "./SaveSearchForm";
 import RegisterEmailForm from "./RegisterEmailForm";
 import SuccessMessage from "./SuccessMessage";
 import ConfirmEmailMessage from "./ConfirmEmailMessage";
+
+interface SaveSearchModalProps {
+    onClose: () => void;
+    onSaveSearchSuccess?: (response: SavedSearch) => void;
+    formData: SaveSearchFormData;
+    defaultFormMode?: string;
+    savedSearchUuid?: string | null;
+}
 
 /**
  * This modal let user create a new or edit an existing saved search.
  * If user subscribes to email notifications, this modal will show
  * a second step and ask user to register email address.
  */
-function SaveSearchModal({ onClose, onSaveSearchSuccess, formData, defaultFormMode, savedSearchUuid }) {
+function SaveSearchModal({
+    onClose,
+    onSaveSearchSuccess,
+    formData,
+    defaultFormMode,
+    savedSearchUuid,
+}: SaveSearchModalProps) {
     const { user } = useContext(UserContext);
 
     const [shouldShowSavedSearchForm, showSavedSearchForm, hideSavedSearchForm] = useToggle(true);
     const [shouldShowRegisterEmailForm, showRegisterEmailForm, hideRegisterEmailForm] = useToggle(false);
     const [shouldShowSuccessMessage, showSuccessMessage] = useToggle(false);
     const [shouldShowConfirmEmailMessage, showConfirmEmailMessage] = useToggle(false);
-    const [existingSavedSearch, setExistingSavedSearch] = useState();
+    const [existingSavedSearch, setExistingSavedSearch] = useState<SavedSearch>();
     const [showError, setShowError] = useState(false);
     const [showNotFoundError, setShowNotFoundError] = useState(false);
 
@@ -35,7 +49,7 @@ function SaveSearchModal({ onClose, onSaveSearchSuccess, formData, defaultFormMo
      * Otherwise, just show the save search form right away
      */
     useEffect(() => {
-        async function getSavedSearch(uuid) {
+        async function getSavedSearch(uuid: string) {
             return actions.getSavedSearchAction(uuid);
         }
 
@@ -58,14 +72,14 @@ function SaveSearchModal({ onClose, onSaveSearchSuccess, formData, defaultFormMo
         }
     }, [savedSearchUuid]);
 
-    function handleSavedSearchFormSuccess(response) {
+    function handleSavedSearchFormSuccess(response: SavedSearch) {
         if (onSaveSearchSuccess) {
             onSaveSearchSuccess(response);
         }
 
         hideSavedSearchForm();
 
-        if (response.notifyType === "EMAIL" && isStringEmpty(user.email)) {
+        if (response.notifyType === "EMAIL" && isStringEmpty(user?.email)) {
             showRegisterEmailForm();
         } else {
             showSuccessMessage();
@@ -119,13 +133,5 @@ function SaveSearchModal({ onClose, onSaveSearchSuccess, formData, defaultFormMo
         </Modal>
     );
 }
-
-SaveSearchModal.propTypes = {
-    onClose: PropTypes.func,
-    onSaveSearchSuccess: PropTypes.func,
-    formData: PropTypes.shape({}),
-    defaultFormMode: PropTypes.string,
-    savedSearchUuid: PropTypes.string,
-};
 
 export default SaveSearchModal;

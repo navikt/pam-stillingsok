@@ -43,7 +43,7 @@ function FavouritesList({ favourites, sortPreference }) {
                     </Heading>
                     <Select
                         onChange={(e) => {
-                            actions.setUserPreference("favouritesSortBy", e.target.value);
+                            actions.setUserPreference("favouritesSortBy", e.target.value).then();
                             setSortBy(e.target.value);
                         }}
                         value={sortBy}

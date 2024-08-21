@@ -176,15 +176,6 @@ function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggre
                                 initialValues={aggregations.engagementTypes}
                                 updatedValues={searchResult && searchResult.aggregations.engagementTypes}
                             />
-
-                            {/* TODO: COMMENT IN WHEN FILTER IS READY BACKEND
-                            <Education
-                                query={query}
-                                dispatch={dispatchQuery}
-                                initialValues={aggregations.education}
-                                updatedValues={searchResult && searchResult.aggregations.education}
-                            />
-                       */}
                         </>
                     )}
                 </div>

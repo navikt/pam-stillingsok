@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useContext, useRef, useState, useTransition } from "react";
+import React, { FormEvent, MutableRefObject, useContext, useRef, useState, useTransition } from "react";
 import {
     Alert,
     BodyLong,
@@ -12,11 +12,11 @@ import {
     Link as AkselLink,
     Modal,
 } from "@navikt/ds-react";
-import PropTypes from "prop-types";
-import { UserContext } from "@/app/_common/user/UserProvider";
+import { UserContext, UserContextProps } from "@/app/_common/user/UserProvider";
 import useToggle from "@/app/_common/hooks/useToggle";
 import { isStringEmpty } from "@/app/_common/utils/utils";
 import * as actions from "@/app/_common/actions";
+import { SavedSearch } from "@/app/_common/actions/savedSearchActions";
 
 export const FormModes = {
     ADD: "ADD",
@@ -24,14 +24,29 @@ export const FormModes = {
     UPDATE_QUERY_ONLY: "UPDATE_QUERY_ONLY",
 };
 
+interface SaveSearchFormProps {
+    existingSavedSearch: SavedSearch | undefined;
+    onClose: () => void;
+    onSuccess: (response: SavedSearch) => void;
+    formData: SaveSearchFormData;
+    defaultFormMode?: string;
+}
+
+export interface SaveSearchFormData {
+    searchQuery?: string;
+    duration?: number;
+    notifyType?: string;
+    title?: string;
+}
+
 /**
  * Form for creating or updating a saved search.
  */
-function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, defaultFormMode }) {
+function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, defaultFormMode }: SaveSearchFormProps) {
     const [isPending, startTransition] = useTransition();
     const [showError, setShowError] = useState(false);
 
-    const { user } = useContext(UserContext);
+    const { user } = useContext<UserContextProps>(UserContext);
 
     // Form modes
     const [formMode, setFormMode] = useState(defaultFormMode);
@@ -43,14 +58,14 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
     const [duration, setDuration] = useState(formData.duration ? formData.duration : 30);
 
     // Validation
-    const [titleValidationError, setTitleValidationError] = useState(undefined);
+    const [titleValidationError, setTitleValidationError] = useState<string | undefined>(undefined);
 
-    const titleRef = useRef();
+    const titleRef = useRef<HTMLInputElement>();
 
     function validateForm() {
         let isValid = true;
 
-        if (title.trim().length === 0) {
+        if (title?.trim().length === 0) {
             isValid = false;
             setTitleValidationError("Tittel mangler");
             if (titleRef.current) {
@@ -63,10 +78,10 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
         return isValid;
     }
 
-    function handleFormSubmit(e) {
+    function handleFormSubmit(e: FormEvent) {
         e.preventDefault();
         if (validateForm()) {
-            let dataToBeSaved = {
+            let dataToBeSaved: SavedSearch = {
                 title,
                 notifyType,
                 duration: notifyType === "NONE" ? 0 : duration,
@@ -86,7 +101,7 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
                         isSuccess = false;
                     }
                     if (isSuccess) {
-                        onSuccess(result.data);
+                        onSuccess(result!.data!);
                     } else {
                         setShowError(true);
                     }
@@ -114,7 +129,7 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
                         isSuccess = false;
                     }
                     if (isSuccess) {
-                        onSuccess(result.data);
+                        onSuccess(result!.data!);
                     } else {
                         setShowError(true);
                     }
@@ -123,7 +138,7 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
         }
     }
 
-    function handleFormModeChange(value) {
+    function handleFormModeChange(value: string) {
         if (value === FormModes.ADD) {
             showForm();
         } else {
@@ -132,12 +147,12 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
         setFormMode(value);
     }
 
-    function handleTitleChange(e) {
+    function handleTitleChange(e: React.ChangeEvent<HTMLInputElement>) {
         setTitle(e.target.value);
-        setTitleValidationError(false);
+        setTitleValidationError(undefined);
     }
 
-    function handleSubscribeChange(e) {
+    function handleSubscribeChange(e: React.ChangeEvent<HTMLInputElement>) {
         if (e.target.checked) {
             setNotifyType("EMAIL");
         } else {
@@ -145,8 +160,8 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
         }
     }
 
-    function handleDurationChange(value) {
-        setDuration(value, 10);
+    function handleDurationChange(value: number) {
+        setDuration(value);
     }
 
     return (
@@ -173,7 +188,7 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
                             onChange={handleTitleChange}
                             value={title}
                             error={titleValidationError}
-                            ref={titleRef}
+                            ref={titleRef as MutableRefObject<HTMLInputElement>}
                         />
                         <Checkbox className="mb-6" onChange={handleSubscribeChange} checked={notifyType === "EMAIL"}>
                             Ja, jeg ønsker å motta e-post med varsel om nye treff
@@ -190,7 +205,7 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
                                     <Radio value={60}>60 dager</Radio>
                                     <Radio value={90}>90 dager</Radio>
                                 </RadioGroup>
-                                {!isStringEmpty(user.email) && (
+                                {!isStringEmpty(user?.email) && (
                                     <BodyLong>
                                         Varsel sendes på e-post. Gå til{" "}
                                         <AkselLink href="/min-side/innstillinger">samtykker og innstillinger</AkselLink>{" "}
@@ -218,21 +233,5 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
         </form>
     );
 }
-
-SaveSearchForm.propTypes = {
-    existingSavedSearch: PropTypes.shape({
-        uuid: PropTypes.string,
-        title: PropTypes.string,
-    }),
-    onClose: PropTypes.func,
-    onSuccess: PropTypes.func,
-    formData: PropTypes.shape({
-        searchQuery: PropTypes.string,
-        duration: PropTypes.number,
-        notifyType: PropTypes.string,
-        title: PropTypes.string,
-    }),
-    defaultFormMode: PropTypes.string,
-};
 
 export default SaveSearchForm;

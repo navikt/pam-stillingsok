@@ -3,7 +3,7 @@
         "lib": ["dom", "dom.iterable", "esnext"],
         "allowJs": true,
         "skipLibCheck": true,
-        "strict": false,
+        "strict": true,
         "noEmit": true,
         "incremental": true,
         "esModuleInterop": true,
@@ -20,6 +20,7 @@
         "paths": {
             "@/*": ["./src/*"]
         },
+        "types": ["@testing-library/jest-dom"],
         "types": ["vitest/globals"]
     },
     "include": ["next-env.d.ts", ".next/types/**/*.ts", "**/*.ts", "**/*.tsx"],
