@@ -67,8 +67,8 @@ module.exports = {
         "react/jsx-pascal-case": [
             2,
             {
-                ignore: ["UNSAFE_Combobox"]
-            }
+                ignore: ["UNSAFE_Combobox"],
+            },
         ],
         "react/require-default-props": [
             "error",
