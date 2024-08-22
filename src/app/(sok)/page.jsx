@@ -16,6 +16,7 @@ import { Button, VStack } from "@navikt/ds-react";
 import Link from "next/link";
 import React from "react";
 import MaxQuerySizeExceeded from "@/app/_common/components/MaxQuerySizeExceeded";
+import { getDefaultHeaders } from "@/app/_common/utils/fetch";
 
 const MAX_QUERY_SIZE = 10000;
 
@@ -72,7 +73,10 @@ async function fetchLocations() {
 }
 
 async function fetchPostcodes() {
-    const res = await fetch(`${process.env.PAM_GEOGRAFI_API_URL}/postdata?sort=asc`, { next: { revalidate: 3600 } });
+    const res = await fetch(`${process.env.PAM_GEOGRAFI_API_URL}/postdata?sort=asc`, {
+        headers: getDefaultHeaders(),
+        next: { revalidate: 3600 },
+    });
 
     if (!res.ok) {
         throw new Error("Failed to fetch postcode data");

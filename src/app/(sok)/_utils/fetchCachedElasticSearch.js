@@ -50,6 +50,9 @@ async function fetchElasticSearch(query) {
 async function fetchLocationsWithinDrivingDistance(referencePostCode, distance) {
     const res = await fetch(
         `${process.env.PAM_GEOGRAFI_API_URL}/innen-avstand/${referencePostCode}?avstand=${distance}`,
+        {
+            headers: getDefaultHeaders(),
+        },
     );
 
     if (!res.ok) {
