@@ -23,9 +23,11 @@ function DrivingDistance({ query, dispatch, postcodes }) {
                 setSelectedPostcode([]);
             }
         }
-
-        filterPostcodes(null);
     }, [query.postcode]);
+
+    useEffect(() => {
+        filterPostcodes();
+    }, [selectedPostcode]);
 
     function filterPostcodes(value) {
         let filteredOptions = allPostcodeOptions;
@@ -35,7 +37,18 @@ function DrivingDistance({ query, dispatch, postcodes }) {
         }
 
         // Limit the shown options, since thousands of options will crash the browser
-        setFilteredPostcodeOptions(filteredOptions.slice(0, 25));
+        filteredOptions = filteredOptions.slice(0, 25);
+
+        // Make sure the selected postcode is always shown, and that it's only shown once
+        if (
+            selectedPostcode.length > 0 &&
+            selectedPostcode[0].value &&
+            !filteredOptions.some((option) => option.value === selectedPostcode[0].value)
+        ) {
+            filteredOptions.unshift(selectedPostcode[0]);
+        }
+
+        setFilteredPostcodeOptions(filteredOptions);
     }
 
     function handlePostCodeChange(option, isSelected) {

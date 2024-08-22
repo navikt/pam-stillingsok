@@ -132,8 +132,6 @@ export default async function Page({ searchParams }) {
 
     const [globalSearchResult, locations, postcodes, searchResult] = await Promise.all(fetchCalls);
 
-    console.log("Postnummer:", postcodes.length);
-
     return (
         <Search
             searchResult={shouldDoExtraCallIfUserHasSearchParams ? searchResult : globalSearchResult}
