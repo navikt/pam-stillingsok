@@ -199,7 +199,7 @@ export function getSearchBoxOptions(
     aggregations: Aggregations,
     locations: LocationList[],
     allSuggestions: string[],
-): SuggestionList[] {
+): ComboboxOption[] {
     const locationList = buildLocations(aggregations, locations);
 
     return [
@@ -241,32 +241,27 @@ interface LocationList {
     subLocations: LocationList[];
 }
 
-interface SuggestionList {
-    label: string;
-    value: string;
-}
-
 // TODO: move to SearchBox
 export interface Query {
+    q: string;
     from: number;
     size: number;
-    q: string;
-    municipals?: string[];
-    counties?: string[];
-    countries?: string[];
+    municipals: string[];
+    counties: string[];
+    countries: string[];
     international: boolean;
-    occupationFirstLevels?: string[];
-    occupationSecondLevels?: string[];
-    occupations?: string[];
+    occupationFirstLevels: string[];
+    occupationSecondLevels: string[];
+    occupations: string[];
     published?: string;
-    sector?: string[];
-    engagementType?: string[];
-    extent?: string[];
-    education?: string[];
-    workLanguage?: string[];
-    remote?: string[];
-    needDriversLicense?: string[];
-    experience?: string[];
+    sector: string[];
+    engagementType: string[];
+    extent: string[];
+    education: string[];
+    workLanguage: string[];
+    remote: string[];
+    needDriversLicense: string[];
+    experience: string[];
     sort: string;
-    v: string;
+    v: number;
 }

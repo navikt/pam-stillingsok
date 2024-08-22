@@ -27,22 +27,18 @@ import {
 
 // Ikke vis yrkeskategori hvis bruker har valgt et eller flere yrker i denne kategorien
 function filterOccupationFirstLevels(query: Query) {
-    return (
-        query.occupationFirstLevels?.filter((firstLevel) => {
-            const found = query.occupationSecondLevels?.find((obj) => obj.startsWith(`${firstLevel}.`));
-            return !found;
-        }) ?? []
-    );
+    return query.occupationFirstLevels.filter((firstLevel) => {
+        const found = query.occupationSecondLevels.find((obj) => obj.startsWith(`${firstLevel}.`));
+        return !found;
+    });
 }
 
 // Ikke vis fylke hvis bruker har valgt en eller flere kommuner i dette fylket
 function filterCounties(query: Query) {
-    return (
-        query.counties?.filter((county) => {
-            const found = query.municipals?.find((obj) => obj.startsWith(`${county}.`));
-            return !found;
-        }) ?? []
-    );
+    return query.counties.filter((county) => {
+        const found = query.municipals.find((obj) => obj.startsWith(`${county}.`));
+        return !found;
+    });
 }
 
 export function buildSelectedOptions(queryObject: Query): (string | ComboboxOption)[] {
@@ -51,33 +47,33 @@ export function buildSelectedOptions(queryObject: Query): (string | ComboboxOpti
 
     return [
         ...searchTerms,
-        ...(queryObject.municipals?.map(
+        ...queryObject.municipals.map(
             (municipal): ComboboxOption => ({
                 label: fixLocationName(municipal.split(".")[1]),
                 value: `${MUNICIPAL}-${municipal}`,
             }),
-        ) ?? []),
+        ),
         ...filterCounties(queryObject).map(
             (county): ComboboxOption => ({
                 label: fixLocationName(county),
                 value: `${COUNTY}-${county}`,
             }),
         ),
-        ...(queryObject.countries?.map(
+        ...queryObject.countries.map(
             (country): ComboboxOption => ({
                 label: fixLocationName(country),
                 value: `${COUNTRY}-${country}`,
             }),
-        ) ?? []),
-        ...(queryObject.international && queryObject.countries?.length === 0
+        ),
+        ...(queryObject.international && queryObject.countries.length === 0
             ? [{ label: "Utland", value: `${INTERNATIONAL}-utland` }]
             : []),
-        ...(queryObject.occupationSecondLevels?.map(
+        ...queryObject.occupationSecondLevels.map(
             (occupation): ComboboxOption => ({
                 label: occupation.split(".")[1],
                 value: `${OCCUPATION_SECOND_LEVEL}-${occupation}`,
             }),
-        ) ?? []),
+        ),
         ...filterOccupationFirstLevels(queryObject).map(
             (occupation): ComboboxOption => ({
                 label: occupation,
@@ -92,20 +88,20 @@ export function buildSelectedOptions(queryObject: Query): (string | ComboboxOpti
                   },
               ]
             : []),
-        ...(queryObject.sector?.map(
+        ...queryObject.sector.map(
             (sector): ComboboxOption =>
                 sector === "Ikke oppgitt"
                     ? { label: "Sektor ikke oppgitt", value: `${SECTOR}-${sector}` }
                     : { label: sector, value: `${SECTOR}-${sector}` },
-        ) ?? []),
-        ...(queryObject.engagementType?.map((engagement) =>
+        ),
+        ...queryObject.engagementType.map((engagement) =>
             editedItemKey(engagement) === "Ikke oppgitt"
                 ? { label: "Ansettelsesform ikke oppgitt", value: `${ENGAGEMENT_TYPE}-${engagement}` }
                 : { label: engagement, value: `${ENGAGEMENT_TYPE}-${engagement}` },
-        ) ?? []),
-        ...(queryObject.extent?.map((extent): ComboboxOption => ({ label: extent, value: `${EXTENT}-${extent}` })) ||
+        ),
+        ...(queryObject.extent.map((extent): ComboboxOption => ({ label: extent, value: `${EXTENT}-${extent}` })) ||
             []),
-        ...(queryObject.education?.map(
+        ...queryObject.education.map(
             (education): ComboboxOption =>
                 education === "Ikke oppgitt"
                     ? {
@@ -116,26 +112,26 @@ export function buildSelectedOptions(queryObject: Query): (string | ComboboxOpti
                           label: labelForEducation(education),
                           value: `${EDUCATION}-${education}`,
                       },
-        ) ?? []),
-        ...(queryObject.workLanguage?.map(
+        ),
+        ...queryObject.workLanguage.map(
             (language): ComboboxOption =>
                 language === "Ikke oppgitt"
                     ? { label: "Arbeidsspråk ikke oppgitt", value: `${WORK_LANGUAGE}-${language}` }
                     : { label: language, value: `${WORK_LANGUAGE}-${language}` },
-        ) ?? []),
-        ...(queryObject.remote?.map(
+        ),
+        ...queryObject.remote.map(
             (remote): ComboboxOption =>
                 remote === "Ikke oppgitt"
                     ? { label: "Hjemmekontor ikke oppgitt", value: `${REMOTE}-${remote}` }
                     : { label: remote, value: `${REMOTE}-${remote}` },
-        ) ?? []),
-        ...(queryObject.occupations?.map(
+        ),
+        ...queryObject.occupations.map(
             (occupation): ComboboxOption => ({
                 label: occupation,
                 value: `${OCCUPATION}-${occupation}`,
             }),
-        ) ?? []),
-        ...(queryObject.needDriversLicense?.map(
+        ),
+        ...queryObject.needDriversLicense.map(
             (driverLicense): ComboboxOption =>
                 driverLicense === "Ikke oppgitt"
                     ? { label: "Førerkort ikke oppgitt", value: `${NEED_DRIVERS_LICENSE}-${driverLicense}` }
@@ -143,8 +139,8 @@ export function buildSelectedOptions(queryObject: Query): (string | ComboboxOpti
                           label: labelForNeedDriversLicense(driverLicense),
                           value: `${NEED_DRIVERS_LICENSE}-${driverLicense}`,
                       },
-        ) ?? []),
-        ...(queryObject.experience?.map(
+        ),
+        ...queryObject.experience.map(
             (experience): ComboboxOption =>
                 experience === "Ikke oppgitt"
                     ? { label: "Erfaring ikke oppgitt", value: `${EXPERIENCE}-${experience}` }
@@ -152,6 +148,6 @@ export function buildSelectedOptions(queryObject: Query): (string | ComboboxOpti
                           label: labelForExperience(experience),
                           value: `${EXPERIENCE}-${experience}`,
                       },
-        ) ?? []),
+        ),
     ];
 }

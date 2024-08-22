@@ -20,8 +20,9 @@ const query: Query = {
     sector: ["Ikke oppgitt"],
     education: ["Ikke oppgitt"],
     workLanguage: ["Ikke oppgitt"],
+    experience: [],
     sort: "",
-    v: "1",
+    v: 1,
 };
 
 describe("selectedOptions", () => {
