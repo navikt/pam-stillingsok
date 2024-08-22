@@ -63,7 +63,7 @@ function Locations({ locations, query, dispatch, updatedValues }) {
                     <span className="capitalize">sted</span>
                 </>
             }
-            className="FilterModal__fieldset"
+            className="FilterModal__fieldset mt-4"
         >
             <div>
                 {locationValues &&

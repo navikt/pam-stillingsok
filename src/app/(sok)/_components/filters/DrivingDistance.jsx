@@ -66,6 +66,7 @@ function DrivingDistance({ query, dispatch, postcodes }) {
                 shouldAutocomplete
             />
             <Select
+                className="mt-4"
                 onChange={(e) => handleDistanceChange(e.target.value)}
                 value={query.distance || ""}
                 label="Maks kjøreavstand"
