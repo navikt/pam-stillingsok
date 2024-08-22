@@ -20,6 +20,7 @@ function DrivingDistance({ query, dispatch, postcodes }) {
             if (postcodeOption) {
                 setSelectedPostcode([postcodeOption]);
             } else {
+                // Hei
                 setSelectedPostcode([]);
             }
         }
