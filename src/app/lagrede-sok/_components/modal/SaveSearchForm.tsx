@@ -81,9 +81,13 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
     function handleFormSubmit(e: FormEvent) {
         e.preventDefault();
         if (validateForm()) {
+            const newExpiresDate = new Date();
+            newExpiresDate.setDate(new Date().getDate() + duration);
+
             let dataToBeSaved: SavedSearch = {
                 title,
                 notifyType,
+                expires: newExpiresDate.toISOString(),
                 duration: notifyType === "NONE" ? 0 : duration,
                 status: notifyType === "NONE" ? "INACTIVE" : "ACTIVE",
                 searchQuery: formData.searchQuery,
