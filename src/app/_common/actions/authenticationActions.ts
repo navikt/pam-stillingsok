@@ -5,9 +5,14 @@ import { headers } from "next/headers";
 import logger from "@/app/_common/utils/logger";
 import { getAdUserOboToken, getDefaultAuthHeaders } from "@/app/_common/auth/auth";
 
-export async function checkIfAuthenticated() {
+interface Authentication {
+    isAuthenticated: boolean;
+    failure: boolean;
+}
+
+export async function checkIfAuthenticated(): Promise<Authentication> {
     try {
-        return await validateToken(getToken(headers()))
+        return await validateToken(<string>getToken(headers()))
             .then((validation) => ({ isAuthenticated: validation.ok, failure: false }))
             .catch(() => ({ isAuthenticated: false, failure: true }));
     } catch (_) {
@@ -15,12 +20,17 @@ export async function checkIfAuthenticated() {
     }
 }
 
-export async function checkIfUserAgreementIsAccepted() {
+interface UserAgreement {
+    userAgreementAccepted: boolean;
+    failure: boolean;
+}
+
+export async function checkIfUserAgreementIsAccepted(): Promise<UserAgreement> {
     let oboToken;
     try {
         oboToken = await getAdUserOboToken();
     } catch (e) {
-        return new Response(null, { status: 401 });
+        return { userAgreementAccepted: false, failure: true };
     }
 
     const res = await fetch(`${process.env.PAMADUSER_URL}/api/v1/user`, {
@@ -30,8 +40,8 @@ export async function checkIfUserAgreementIsAccepted() {
 
     if (!res.ok) {
         logger.info("User agreement not accepted");
-        return { userAgreementAccepted: false };
+        return { userAgreementAccepted: false, failure: false };
     }
 
-    return { userAgreementAccepted: true };
+    return { userAgreementAccepted: true, failure: false };
 }

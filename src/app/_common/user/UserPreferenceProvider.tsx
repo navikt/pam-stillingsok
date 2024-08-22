@@ -2,20 +2,38 @@ import React from "react";
 import PropTypes from "prop-types";
 import * as actions from "@/app/_common/actions";
 
-export const UserPreferencesContext = React.createContext({});
+export const UserPreferencesContext: React.Context<UserPreferencesActions> = React.createContext(
+    {} as UserPreferencesActions,
+);
 
-function UserPreferencesProvider({ children, userPreferences }) {
-    function addOpenFilter(panelId) {
+export type UserPreferencesActions = {
+    openFilters: string[];
+    publishedJobFilterOpen: boolean;
+    dismissedPanels: string[];
+    addOpenFilter: (panelId: string) => void;
+    removeOpenFilter: (panelId: string) => void;
+    addPublishedJobFilterOpen: () => void;
+    removePublishedJobFilterOpen: () => void;
+    dismissPanel: (panelId: string) => void;
+};
+
+interface UserPreferencesProviderProps {
+    children: React.ReactNode;
+    userPreferences: UserPreferencesActions;
+}
+
+function UserPreferencesProvider({ children, userPreferences }: UserPreferencesProviderProps) {
+    function addOpenFilter(panelId: string): void {
         try {
-            actions.addOpenFilter(panelId);
+            actions.addOpenFilter(panelId).then();
         } catch (err) {
             // ignore fetch failed
         }
     }
 
-    function removeOpenFilter(panelId) {
+    function removeOpenFilter(panelId: string) {
         try {
-            actions.removeOpenFilter(panelId);
+            actions.removeOpenFilter(panelId).then();
         } catch (err) {
             // ignore fetch failed
         }
@@ -23,7 +41,7 @@ function UserPreferencesProvider({ children, userPreferences }) {
 
     function addPublishedJobFilterOpen() {
         try {
-            actions.addPublishedJobFilterOpen();
+            actions.addPublishedJobFilterOpen().then();
         } catch (err) {
             // ignore fetch failed
         }
@@ -31,15 +49,15 @@ function UserPreferencesProvider({ children, userPreferences }) {
 
     function removePublishedJobFilterOpen() {
         try {
-            actions.removePublishedJobFilterOpen();
+            actions.removePublishedJobFilterOpen().then();
         } catch (err) {
             // ignore fetch failed
         }
     }
 
-    function dismissPanel(panelId) {
+    function dismissPanel(panelId: string): void {
         try {
-            actions.dismissPanel(panelId);
+            actions.dismissPanel(panelId).then();
         } catch (err) {
             // ignore fetch failed
         }

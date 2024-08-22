@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
-import PropTypes from "prop-types";
 import { BodyLong, Button, HStack, Modal } from "@navikt/ds-react";
+// @ts-expect-error TODO: Add typeinfo for arbeidsplassen-react
 import { WorriedFigure } from "@navikt/arbeidsplassen-react";
 import { AuthenticationContext, AuthenticationStatus } from "@/app/_common/auth/contexts/AuthenticationProvider";
 import useToggle from "@/app/_common/hooks/useToggle";
@@ -8,7 +8,7 @@ import AlertModalWithPageReload from "@/app/_common/components/modals/AlertModal
 import { setAuthenticatedStatus } from "@/app/_common/monitoring/amplitude";
 import * as actions from "@/app/_common/actions";
 
-export const UserContext = React.createContext({});
+export const UserContext: React.Context<UserContextProps> = React.createContext({} as UserContextProps);
 
 export const HasAcceptedTermsStatus = {
     NOT_FETCHED: "NO_FETCHED",
@@ -16,15 +16,33 @@ export const HasAcceptedTermsStatus = {
     HAS_ACCEPTED: "HAS_ACCEPTED",
 };
 
-function UserProvider({ children }) {
+export interface UserContextProps {
+    user?: User;
+    updateUser: (data: User) => void;
+    hasAcceptedTermsStatus?: string;
+}
+
+export interface User {
+    id: string;
+    uuid: string;
+    email?: string;
+    name?: string;
+    verifiedEmail?: boolean;
+}
+
+interface UserProviderProps {
+    children: React.ReactNode;
+}
+
+function UserProvider({ children }: UserProviderProps) {
     const { authenticationStatus } = useContext(AuthenticationContext);
-    const [userResponse, setUserResponse] = useState();
+    const [userResponse, setUserResponse] = useState<User>();
     const [shouldShowErrorDialog, openErrorDialog, closeErrorDialog] = useToggle(false);
 
     const [hasAcceptedTermsStatus, setHasAcceptedTermsStatus] = useState(HasAcceptedTermsStatus.NOT_FETCHED);
     const [forbiddenUser, setForbiddenUser] = useState(false);
 
-    function updateUser(data) {
+    function updateUser(data: User) {
         setUserResponse(data);
         setHasAcceptedTermsStatus(HasAcceptedTermsStatus.HAS_ACCEPTED);
     }
@@ -33,7 +51,7 @@ function UserProvider({ children }) {
         window.location.href = `/stillinger/oauth2/logout?redirect=${encodeURIComponent(window.location.href)}`;
     }
 
-    async function fetchUser() {
+    async function fetchUser(): Promise<User | undefined> {
         let result;
 
         try {
@@ -56,7 +74,7 @@ function UserProvider({ children }) {
 
     // TODO: useMemo?
     // eslint-disable-next-line
-    const userContextValues = {
+    const userContextValues: UserContextProps = {
         user: userResponse,
         updateUser,
         hasAcceptedTermsStatus,
@@ -64,7 +82,7 @@ function UserProvider({ children }) {
 
     useEffect(() => {
         if (authenticationStatus === AuthenticationStatus.IS_AUTHENTICATED) {
-            fetchUser();
+            fetchUser().then();
         }
     }, [authenticationStatus]);
 
@@ -120,9 +138,5 @@ function UserProvider({ children }) {
         </UserContext.Provider>
     );
 }
-
-UserProvider.propTypes = {
-    children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
-};
 
 export default UserProvider;

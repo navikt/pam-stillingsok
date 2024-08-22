@@ -11,7 +11,19 @@ import { incrementAdUserRequests } from "@/metrics";
 
 const SAVED_SEARCH_URL = `${process.env.PAMADUSER_URL}/api/v1/savedsearches`;
 
-export async function getAllSavedSearchesAction() {
+export interface SavedSearch {
+    id?: number;
+    uuid?: string;
+    title?: string;
+    status?: string;
+    searchQuery?: string;
+    updated?: string;
+    expires?: string;
+    notifyType?: string;
+    duration?: number;
+}
+
+export async function getAllSavedSearchesAction(): Promise<SavedSearch[]> {
     logger.info("GET saved search");
 
     const oboToken = await getAdUserOboToken();
@@ -31,7 +43,7 @@ export async function getAllSavedSearchesAction() {
     return data ? data.content : [];
 }
 
-export async function getSavedSearchAction(uuid) {
+export async function getSavedSearchAction(uuid: string) {
     logger.info("GET saved search");
 
     const oboToken = await getAdUserOboToken();
@@ -51,7 +63,10 @@ export async function getSavedSearchAction(uuid) {
     return { success: true, data };
 }
 
-export async function saveSavedSearchAction(savedSearch) {
+export async function saveSavedSearchAction(savedSearch: SavedSearch): Promise<{
+    success: boolean;
+    data?: SavedSearch;
+}> {
     logger.info("POST saved search");
 
     const oboToken = await getAdUserOboToken();
@@ -74,12 +89,14 @@ export async function saveSavedSearchAction(savedSearch) {
         success: true,
         data: {
             ...savedSearch,
-            uuid: new Date().getTime(),
         },
     };
 }
 
-export async function updateSavedSearchAction(savedSearch) {
+export async function updateSavedSearchAction(savedSearch: SavedSearch): Promise<{
+    success: boolean;
+    data?: SavedSearch;
+}> {
     logger.info("PUT SavedSearchAction", { uuid: savedSearch.uuid });
 
     const oboToken = await getAdUserOboToken();
@@ -102,12 +119,11 @@ export async function updateSavedSearchAction(savedSearch) {
         success: true,
         data: {
             ...savedSearch,
-            uuid: new Date().getTime(),
         },
     };
 }
 
-export async function deleteSavedSearchAction(uuid) {
+export async function deleteSavedSearchAction(uuid: string): Promise<{ success: boolean }> {
     logger.info("DELETE saved search", { uuid });
 
     const oboToken = await getAdUserOboToken();
@@ -129,7 +145,13 @@ export async function deleteSavedSearchAction(uuid) {
     return { success: true };
 }
 
-export async function restartSavedSearchAction(uuid, savedSearch) {
+export async function restartSavedSearchAction(
+    uuid: string,
+    savedSearch: SavedSearch,
+): Promise<{
+    success: boolean;
+    data?: SavedSearch;
+}> {
     logger.info("RESTART saved search", { uuid });
 
     const oboToken = await getAdUserOboToken();

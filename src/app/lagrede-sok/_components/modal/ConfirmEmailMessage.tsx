@@ -1,9 +1,12 @@
 import React, { useEffect, useRef } from "react";
-import PropTypes from "prop-types";
 import { BodyLong, Button, Modal } from "@navikt/ds-react";
 
-function ConfirmEmailMessage({ onClose }) {
-    const buttonRef = useRef(null);
+interface ConfirmEmailMessageProps {
+    onClose: () => void;
+}
+
+function ConfirmEmailMessage({ onClose }: ConfirmEmailMessageProps) {
+    const buttonRef = useRef<HTMLButtonElement>(null);
 
     useEffect(() => {
         if (buttonRef.current) {
@@ -26,9 +29,5 @@ function ConfirmEmailMessage({ onClose }) {
         </>
     );
 }
-
-ConfirmEmailMessage.propTypes = {
-    onClose: PropTypes.func.isRequired,
-};
 
 export default ConfirmEmailMessage;

@@ -27,6 +27,8 @@ export const ADD_EDUCATION = "ADD_EDUCATION";
 export const REMOVE_EDUCATION = "REMOVE_EDUCATION";
 export const ADD_NEEDDRIVERSLICENSE = "ADD_DRIVERSLICENSE";
 export const REMOVE_NEEDDRIVERSLICENSE = "REMOVE_DRIVERSLICENSE";
+export const ADD_EXPERIENCE = "ADD_EXPERIENCE";
+export const REMOVE_EXPERIENCE = "REMOVE_EXPERIENCE";
 export const ADD_REMOTE = "ADD_REMOTE";
 export const REMOVE_REMOTE = "REMOVE_REMOTE";
 export const ADD_SECTOR = "ADD_SECTOR";
@@ -233,6 +235,19 @@ export default function queryReducer(state, action) {
             return {
                 ...queryState,
                 needDriversLicense: queryState.needDriversLicense.filter((obj) => obj !== action.value),
+            };
+        case ADD_EXPERIENCE:
+            if (queryState.experience.includes(action.value)) {
+                return queryState;
+            }
+            return {
+                ...queryState,
+                experience: [...queryState.experience, action.value],
+            };
+        case REMOVE_EXPERIENCE:
+            return {
+                ...queryState,
+                experience: queryState.experience.filter((obj) => obj !== action.value),
             };
         case ADD_REMOTE:
             if (queryState.remote.includes(action.value)) {

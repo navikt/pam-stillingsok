@@ -1,8 +1,11 @@
 import React from "react";
-import PropTypes from "prop-types";
 import AlertModal from "@/app/_common/components/modals/AlertModal";
 
-function SearchIsEmptyModal({ onClose }) {
+interface SearchIsEmptyModalProps {
+    onClose: () => void;
+}
+
+function SearchIsEmptyModal({ onClose }: SearchIsEmptyModalProps) {
     return (
         <AlertModal
             id="search-is-empty-modal"
@@ -15,9 +18,5 @@ function SearchIsEmptyModal({ onClose }) {
         </AlertModal>
     );
 }
-
-SearchIsEmptyModal.propTypes = {
-    onClose: PropTypes.func.isRequired,
-};
 
 export default SearchIsEmptyModal;

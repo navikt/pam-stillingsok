@@ -1,18 +1,18 @@
 "use client";
 
 import React from "react";
-import PropTypes from "prop-types";
+// @ts-expect-error TODO: Add typeinfo for arbeidsplassen-react
 import { NotFound } from "@navikt/arbeidsplassen-react";
 
-export default function NotFoundPage({ title, text }) {
+interface NotFoundPageProps {
+    title?: string;
+    text?: string;
+}
+
+export default function NotFoundPage({ title, text }: NotFoundPageProps) {
     return (
         <div className="container-large mt-12 mb-24">
             <NotFound title={title} text={text} />
         </div>
     );
 }
-
-NotFoundPage.propTypes = {
-    title: PropTypes.string,
-    text: PropTypes.string,
-};

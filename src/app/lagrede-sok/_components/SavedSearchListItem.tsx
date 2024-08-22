@@ -1,6 +1,5 @@
 "use client";
 
-import PropTypes from "prop-types";
 import React, { useState, useTransition } from "react";
 import { Alert, Link as AkselLink, BodyShort, Heading, Tag, Button, HStack } from "@navikt/ds-react";
 import Link from "next/link";
@@ -10,8 +9,17 @@ import AlertModal from "@/app/_common/components/modals/AlertModal";
 import useToggle from "@/app/_common/hooks/useToggle";
 import { FetchStatus } from "@/app/_common/hooks/useFetchReducer";
 import * as actions from "@/app/_common/actions";
-import { FormModes } from "./modal/SaveSearchForm";
+import { SavedSearch } from "@/app/_common/actions/savedSearchActions";
+import { FormModes, SaveSearchFormData } from "./modal/SaveSearchForm";
 import SaveSearchModal from "./modal/SaveSearchModal";
+
+interface SavedSearchListItemProps {
+    savedSearch: SavedSearch;
+    removeSavedSearchFromList: (savedSearch: SavedSearch) => void;
+    replaceSavedSearchInList: (updatedData: SavedSearch) => void;
+    autoOpenModal: boolean;
+    openErrorDialog: () => void;
+}
 
 function SavedSearchListItem({
     savedSearch,
@@ -19,7 +27,7 @@ function SavedSearchListItem({
     replaceSavedSearchInList,
     autoOpenModal,
     openErrorDialog,
-}) {
+}: SavedSearchListItemProps) {
     const [isPending, startTransition] = useTransition();
 
     const [shouldShowSavedSearchModal, openSavedSearchModal, closeSavedSearchModal] = useToggle(autoOpenModal);
@@ -31,7 +39,7 @@ function SavedSearchListItem({
         startTransition(async () => {
             let isSuccess;
             try {
-                const { success } = await actions.deleteSavedSearchAction(savedSearch.uuid);
+                const { success } = await actions.deleteSavedSearchAction(savedSearch!.uuid!);
                 isSuccess = success;
             } catch (err) {
                 isSuccess = false;
@@ -55,7 +63,7 @@ function SavedSearchListItem({
                 ...savedSearch,
                 status: "ACTIVE",
             };
-            result = await actions.restartSavedSearchAction(savedSearch.uuid, updatedSavedSearch);
+            result = await actions.restartSavedSearchAction(savedSearch!.uuid!, updatedSavedSearch);
             isSuccess = result.success;
         } catch (err) {
             isSuccess = false;
@@ -63,13 +71,13 @@ function SavedSearchListItem({
 
         if (isSuccess) {
             setRestartEmailNotificationStatus(FetchStatus.SUCCESS);
-            replaceSavedSearchInList(result.data);
+            replaceSavedSearchInList(result!.data!);
         } else {
             setRestartEmailNotificationStatus(FetchStatus.FAILURE);
         }
     }
 
-    function handleSavedSearchUpdated(updatedData) {
+    function handleSavedSearchUpdated(updatedData: SavedSearch) {
         replaceSavedSearchInList(updatedData);
     }
 
@@ -148,30 +156,12 @@ function SavedSearchListItem({
                     onSaveSearchSuccess={handleSavedSearchUpdated}
                     onClose={closeSavedSearchModal}
                     savedSearchUuid={savedSearch.uuid}
-                    formData={savedSearch}
+                    formData={savedSearch as SaveSearchFormData}
                     defaultFormMode={FormModes.UPDATE}
                 />
             )}
         </article>
     );
 }
-
-SavedSearchListItem.propTypes = {
-    savedSearch: PropTypes.shape({
-        uuid: PropTypes.string,
-        title: PropTypes.string,
-        notifyType: PropTypes.string,
-        duration: PropTypes.number,
-        updated: PropTypes.string,
-        searchQuery: PropTypes.string,
-        expired: PropTypes.string,
-        status: PropTypes.string,
-        expires: PropTypes.string,
-    }).isRequired,
-    removeSavedSearchFromList: PropTypes.func.isRequired,
-    replaceSavedSearchInList: PropTypes.func.isRequired,
-    autoOpenModal: PropTypes.bool.isRequired,
-    openErrorDialog: PropTypes.func.isRequired,
-};
 
 export default SavedSearchListItem;

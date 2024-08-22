@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import PropTypes from "prop-types";
 import { Button } from "@navikt/ds-react";
 import { FloppydiskIcon } from "@navikt/aksel-icons";
 import { useSearchParams } from "next/navigation";
@@ -13,6 +12,12 @@ import { FormModes } from "./modal/SaveSearchForm";
 import SaveSearchModal from "./modal/SaveSearchModal";
 import SearchIsEmptyModal from "./modal/SearchIsEmptyModal";
 
+interface SaveSearchButtonProps {
+    query: {
+        q?: string;
+    };
+}
+
 /**
  * Displays the "Save search" button.
  * If user click the button, this view will open a modal where
@@ -23,7 +28,7 @@ import SearchIsEmptyModal from "./modal/SearchIsEmptyModal";
  * - has checked one or more search criteria
  * - has accepted terms
  */
-function SaveSearchButton({ query }) {
+function SaveSearchButton({ query }: SaveSearchButtonProps) {
     const { authenticationStatus, login } = useContext(AuthenticationContext);
     const { hasAcceptedTermsStatus } = useContext(UserContext);
     const [shouldShowTermsModal, openTermsModal, closeTermsModal] = useToggle();
@@ -85,9 +90,5 @@ function SaveSearchButton({ query }) {
         </>
     );
 }
-
-SaveSearchButton.propTypes = {
-    query: PropTypes.shape({}),
-};
 
 export default SaveSearchButton;
