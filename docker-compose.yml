@@ -39,7 +39,7 @@ services:
 
   pam-aduser:
     platform: linux/amd64
-    image: europe-north1-docker.pkg.dev/nais-management-233d/teampam/pam-aduser:24.131.095048
+    image: europe-north1-docker.pkg.dev/nais-management-233d/teampam/pam-aduser:24.225.140137
     ports:
       - "9017:9017"
     extra_hosts:
@@ -58,6 +58,7 @@ services:
     - PAMADUSER_ARBEIDSPLASSEN_COOKIE_SECURE=false
     - TOKEN_X_WELL_KNOWN_URL=http://host.docker.internal:8237/tokenx/.well-known/openid-configuration
     - TOKEN_X_CLIENT_ID=local-token-x-client-id
+    - TOKEN_X_PRIVATE_JWK={"kty":"RSA","kid":"dummy","use":"sig","n":"dummy","e":"dummy","d":"dummy","p":"dummy","q":"dummy","dp":"dummy","dq":"dummy","qi":"dummy"}
     - DB_HOST=postgres
     - DB_PORT=5432
     - DB_DATABASE=pam-aduser
