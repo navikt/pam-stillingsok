@@ -6,10 +6,9 @@ import { formatNumber } from "@/app/_common/utils/utils";
 import Remote from "@/app/(sok)/_components/filters/Remote";
 import Education from "@/app/(sok)/_components/filters/Education";
 import DriversLicense from "@/app/(sok)/_components/filters/DriversLicense";
-import DrivingDistance from "@/app/(sok)/_components/filters/DrivingDistance";
 import NewFiltersMessage from "@/app/(sok)/_components/filters/NewFiltersMessage";
 import Experience from "@/app/(sok)/_components/filters/Experience";
-import Counties from "./Locations";
+import DistanceOrLocation from "@/app/(sok)/_components/filters/DistanceOrLocation";
 import Occupations from "./Occupations";
 import Published from "./Published";
 import Extent from "./Extent";
@@ -90,25 +89,13 @@ function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggre
                     )}
 
                     {selectedFilter === "Avstsand eller sted" && (
-                        <>
-                            <div className="mb-6">
-                                <DrivingDistance query={query} dispatch={dispatchQuery} postcodes={postcodes} />
-                            </div>
-                            <div className="mb-6">
-                                <Counties
-                                    query={query}
-                                    dispatch={dispatchQuery}
-                                    locations={locations}
-                                    updatedValues={searchResult}
-                                />
-                            </div>
-                            <Remote
-                                query={query}
-                                dispatch={dispatchQuery}
-                                initialValues={aggregations.remote}
-                                updatedValues={searchResult.aggregations.remote}
-                            />
-                        </>
+                        <DistanceOrLocation
+                            query={query}
+                            dispatch={dispatchQuery}
+                            postcodes={postcodes}
+                            locations={locations}
+                            searchResult={searchResult}
+                        />
                     )}
 
                     {selectedFilter === "Yrke og sektor" && (

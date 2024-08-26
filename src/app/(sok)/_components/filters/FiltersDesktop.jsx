@@ -4,12 +4,11 @@ import { Accordion, Alert, Button } from "@navikt/ds-react";
 import Remote from "@/app/(sok)/_components/filters/Remote";
 import Education from "@/app/(sok)/_components/filters/Education";
 import DriversLicense from "@/app/(sok)/_components/filters/DriversLicense";
-import DrivingDistance from "@/app/(sok)/_components/filters/DrivingDistance";
 import Experience from "@/app/(sok)/_components/filters/Experience";
 import NewFiltersMessage from "@/app/(sok)/_components/filters/NewFiltersMessage";
+import DistanceOrLocation from "@/app/(sok)/_components/filters/DistanceOrLocation";
 import FilterAccordionItem from "./FilterAccordionItem";
 import Published from "./Published";
-import Counties from "./Locations";
 import Occupations from "./Occupations";
 import Extent from "./Extent";
 import Sector from "./Sector";
@@ -30,12 +29,12 @@ function FiltersDesktop({ query, dispatchQuery, aggregations, locations, postcod
                     />
                 </FilterAccordionItem>
                 <FilterAccordionItem title="Avstand eller sted" panelId="sted">
-                    <DrivingDistance query={query} dispatch={dispatchQuery} postcodes={postcodes} />
-                    <Counties
+                    <DistanceOrLocation
                         query={query}
                         dispatch={dispatchQuery}
+                        postcodes={postcodes}
                         locations={locations}
-                        updatedValues={searchResult}
+                        searchResult={searchResult}
                     />
                 </FilterAccordionItem>
                 <FilterAccordionItem title="Yrke og sektor" panelId="yrke">
