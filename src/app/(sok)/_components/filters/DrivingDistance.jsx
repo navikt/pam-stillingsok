@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Select, UNSAFE_Combobox } from "@navikt/ds-react";
+import { BodyShort, Fieldset, Select, UNSAFE_Combobox } from "@navikt/ds-react";
 import { ADD_DISTANCE, ADD_POSTCODE, REMOVE_DISTANCE, REMOVE_POSTCODE } from "@/app/(sok)/_utils/queryReducer";
 
 function DrivingDistance({ query, dispatch, postcodes }) {
@@ -68,7 +68,14 @@ function DrivingDistance({ query, dispatch, postcodes }) {
     }
 
     return (
-        <div>
+        <Fieldset
+            legend={
+                <BodyShort as="span" visuallyHidden>
+                    Filtrer etter avstand eller sted
+                </BodyShort>
+            }
+            className="FilterModal__fieldset"
+        >
             <UNSAFE_Combobox
                 label="Fra postnummer"
                 options={allPostcodeOptions}
@@ -93,7 +100,7 @@ function DrivingDistance({ query, dispatch, postcodes }) {
                     </option>
                 ))}
             </Select>
-        </div>
+        </Fieldset>
     );
 }
 
