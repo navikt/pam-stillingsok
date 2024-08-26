@@ -74,7 +74,7 @@ function DrivingDistance({ query, dispatch, postcodes }) {
                     Filtrer etter avstand eller sted
                 </BodyShort>
             }
-            className="FilterModal__fieldset"
+            className="FilterModal__fieldset mt-2"
         >
             <UNSAFE_Combobox
                 label="Fra postnummer"
