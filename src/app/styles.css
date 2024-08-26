@@ -83,6 +83,10 @@ strong {
     display: inline;
 }
 
+.display-inline-block {
+    display: inline-block;
+}
+
 .no-underline,
 .no-underline:focus,
 no-underline:hover {

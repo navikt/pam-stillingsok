@@ -85,21 +85,22 @@ function DrivingDistance({ query, dispatch, postcodes }) {
                 selectedOptions={selectedPostcode}
                 shouldAutocomplete
             />
-            <Select
-                className="mt-4"
-                onChange={(e) => handleDistanceChange(e.target.value)}
-                value={query.distance || ""}
-                label="Maks kjøreavstand"
-            >
-                <option key="0" value="">
-                    Velg avstand
-                </option>
-                {[1, 3, 5, 7, 10, 20, 30, 50, 75, 100, 150].map((km) => (
-                    <option key={km} value={km}>
-                        {km} kilometer
+            <div className="display-inline-block mt-4">
+                <Select
+                    onChange={(e) => handleDistanceChange(e.target.value)}
+                    value={query.distance || ""}
+                    label="Maks kjøreavstand"
+                >
+                    <option key="0" value="">
+                        Velg avstand
                     </option>
-                ))}
-            </Select>
+                    {[1, 3, 5, 7, 10, 20, 30, 50, 75, 100, 150].map((km) => (
+                        <option key={km} value={km}>
+                            {km} kilometer
+                        </option>
+                    ))}
+                </Select>
+            </div>
         </Fieldset>
     );
 }
