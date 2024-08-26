@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { BodyShort, Fieldset, Select, UNSAFE_Combobox } from "@navikt/ds-react";
+import { BodyShort, Button, Fieldset, Select, UNSAFE_Combobox } from "@navikt/ds-react";
 import { ADD_DISTANCE, ADD_POSTCODE, REMOVE_DISTANCE, REMOVE_POSTCODE } from "@/app/(sok)/_utils/queryReducer";
+import { TrashIcon } from "@navikt/aksel-icons";
 
 function DrivingDistance({ query, dispatch, postcodes }) {
     const [selectedPostcode, setSelectedPostcode] = useState((query.postcode && [query.postcode]) || []);
@@ -67,6 +68,11 @@ function DrivingDistance({ query, dispatch, postcodes }) {
         }
     }
 
+    function resetDistanceFilters() {
+        dispatch({ type: REMOVE_POSTCODE });
+        dispatch({ type: REMOVE_DISTANCE });
+    }
+
     return (
         <Fieldset
             legend={
@@ -101,6 +107,15 @@ function DrivingDistance({ query, dispatch, postcodes }) {
                     ))}
                 </Select>
             </div>
+            <Button
+                type="button"
+                variant="tertiary"
+                onClick={resetDistanceFilters}
+                icon={<TrashIcon aria-hidden="true" />}
+                className="mt-4"
+            >
+                Nullstill avstandsfiltre
+            </Button>
         </Fieldset>
     );
 }
