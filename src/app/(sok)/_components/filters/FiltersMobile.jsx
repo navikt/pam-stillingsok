@@ -58,11 +58,12 @@ function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggre
                     <nav aria-label="Velg filter">
                         {[
                             "Publisert",
-                            "Sted og hjemmekontor",
+                            "Avstsand eller sted",
                             "Yrke og sektor",
                             "Utdanning, erfaring og førerkort",
                             "Arbeidsspråk",
                             "Omfang og ansettelsesform",
+                            "Hjemmekontor",
                         ].map((filter) => (
                             <button
                                 key={filter}
@@ -88,7 +89,7 @@ function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggre
                         />
                     )}
 
-                    {selectedFilter === "Sted og hjemmekontor" && (
+                    {selectedFilter === "Avstsand eller sted" && (
                         <>
                             <div className="mb-6">
                                 <DrivingDistance query={query} dispatch={dispatchQuery} postcodes={postcodes} />
@@ -181,6 +182,15 @@ function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggre
                                 updatedValues={searchResult && searchResult.aggregations.engagementTypes}
                             />
                         </>
+                    )}
+
+                    {selectedFilter === "Hjemmekontor" && (
+                        <Remote
+                            query={query}
+                            dispatch={dispatchQuery}
+                            initialValues={aggregations.remote}
+                            updatedValues={searchResult.aggregations.remote}
+                        />
                     )}
                 </div>
             </Modal.Body>

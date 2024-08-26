@@ -29,19 +29,13 @@ function FiltersDesktop({ query, dispatchQuery, aggregations, locations, postcod
                         publishedTotalCount={searchResult.aggregations.publishedTotalCount}
                     />
                 </FilterAccordionItem>
-                <FilterAccordionItem title="Område og hjemmekontor" panelId="sted">
+                <FilterAccordionItem title="Avstand eller sted" panelId="sted">
                     <DrivingDistance query={query} dispatch={dispatchQuery} postcodes={postcodes} />
                     <Counties
                         query={query}
                         dispatch={dispatchQuery}
                         locations={locations}
                         updatedValues={searchResult}
-                    />
-                    <Remote
-                        query={query}
-                        dispatch={dispatchQuery}
-                        initialValues={aggregations.remote}
-                        updatedValues={searchResult.aggregations.remote}
                     />
                 </FilterAccordionItem>
                 <FilterAccordionItem title="Yrke og sektor" panelId="yrke">
@@ -101,6 +95,14 @@ function FiltersDesktop({ query, dispatchQuery, aggregations, locations, postcod
                         dispatch={dispatchQuery}
                         initialValues={aggregations.engagementTypes}
                         updatedValues={searchResult.aggregations.engagementTypes}
+                    />
+                </FilterAccordionItem>
+                <FilterAccordionItem title="Hjemmekontor" panelId="hjemmekontor">
+                    <Remote
+                        query={query}
+                        dispatch={dispatchQuery}
+                        initialValues={aggregations.remote}
+                        updatedValues={searchResult.aggregations.remote}
                     />
                 </FilterAccordionItem>
             </Accordion>
