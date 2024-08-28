@@ -3,6 +3,7 @@ import { getDefaultHeaders } from "@/app/_common/utils/fetch";
 import simplifySearchResponse from "@/app/(sok)/_utils/simplifySearchResponse";
 import { unstable_cache } from "next/cache"; // eslint-disable-line
 import { elasticSearchDurationHistogram, incrementElasticSearchRequests } from "@/metrics";
+import { fetchLocationsWithinDrivingDistance } from "@/app/(sok)/_utils/fetchLocationsWithinDrivingDistance";
 
 /*
 Manually cached because Next.js won't cache it. We break these:
@@ -45,27 +46,6 @@ async function fetchElasticSearch(query) {
     const data = await res.json();
 
     return simplifySearchResponse(data);
-}
-
-async function fetchLocationsWithinDrivingDistance(referencePostCode, distance) {
-    const res = await fetch(
-        `${process.env.PAM_GEOGRAFI_API_URL}/innen-avstand/${referencePostCode}?avstand=${distance}`,
-        {
-            headers: getDefaultHeaders(),
-        },
-    );
-
-    if (!res.ok) {
-        throw new Error(`Failed to fetch within distance data: ${res.status} ${res.statusText}`);
-    }
-
-    const data = await res.json();
-
-    return {
-        postcodes: data.postnummer,
-        municipals: data.kommuner,
-        counties: data.fylker,
-    };
 }
 
 export const fetchCachedElasticSearch = unstable_cache(
