@@ -16,7 +16,7 @@ import { Button, VStack } from "@navikt/ds-react";
 import Link from "next/link";
 import React from "react";
 import MaxQuerySizeExceeded from "@/app/_common/components/MaxQuerySizeExceeded";
-import { getDefaultHeaders } from "@/app/_common/utils/fetch";
+import { fetchPostcodes } from "@/app/(sok)/_utils/fetchPostcodes";
 
 const MAX_QUERY_SIZE = 10000;
 
@@ -70,26 +70,6 @@ async function fetchLocations() {
             code: 999,
         },
     ];
-}
-
-async function fetchPostcodes() {
-    const res = await fetch(`${process.env.PAM_GEOGRAFI_API_URL}/postdata?sort=asc`, {
-        headers: getDefaultHeaders(),
-        next: { revalidate: 3600 },
-    });
-
-    if (!res.ok) {
-        throw new Error("Failed to fetch postcode data");
-    }
-
-    const data = await res.json();
-
-    return data.map((d) => ({
-        postcode: d.postkode,
-        city: d.by,
-        municipality: d.kommune.navn,
-        county: d.fylke.navn,
-    }));
 }
 
 export default async function Page({ searchParams }) {
