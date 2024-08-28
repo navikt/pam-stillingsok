@@ -1,11 +1,32 @@
-import React, { useEffect, useState } from "react";
+import React, { Dispatch, ReactElement, useEffect, useState } from "react";
 import { BodyShort, Button, Fieldset, Select, UNSAFE_Combobox } from "@navikt/ds-react";
 import { ADD_DISTANCE, ADD_POSTCODE, REMOVE_DISTANCE, REMOVE_POSTCODE } from "@/app/(sok)/_utils/queryReducer";
 import { TrashIcon } from "@navikt/aksel-icons";
+import { Postcode } from "@/app/(sok)/_utils/fetchPostcodes";
+import { ComboboxOption } from "@navikt/ds-react/esm/form/combobox/types";
 
-function DrivingDistance({ query, dispatch, postcodes }) {
-    const [selectedPostcode, setSelectedPostcode] = useState((query.postcode && [query.postcode]) || []);
-    const [filteredPostcodeOptions, setFilteredPostcodeOptions] = useState([]);
+// TODO: Replace when TS query interface has been merged
+interface DrivingDistanceQueryProps {
+    postcode: string | null;
+    distance: number | null;
+}
+
+export interface DispatchProps {
+    type: string;
+    value?: string | number;
+}
+
+interface DrivingDistanceProps {
+    query: DrivingDistanceQueryProps;
+    dispatch: Dispatch<DispatchProps>;
+    postcodes: Postcode[];
+}
+
+function DrivingDistance({ query, dispatch, postcodes }: DrivingDistanceProps): ReactElement {
+    const [selectedPostcode, setSelectedPostcode] = useState<ComboboxOption[] | string[]>(
+        (query.postcode && [query.postcode]) || [],
+    );
+    const [filteredPostcodeOptions, setFilteredPostcodeOptions] = useState<ComboboxOption[]>([]);
 
     const allPostcodeOptions = postcodes.map((data) => ({
         value: data.postcode,
@@ -30,7 +51,7 @@ function DrivingDistance({ query, dispatch, postcodes }) {
         filterPostcodes();
     }, [selectedPostcode]);
 
-    function filterPostcodes(value) {
+    function filterPostcodes(value: string | undefined = undefined) {
         let filteredOptions = allPostcodeOptions;
 
         if (value) {
@@ -38,21 +59,24 @@ function DrivingDistance({ query, dispatch, postcodes }) {
         }
 
         // Limit the shown options, since thousands of options will crash the browser
-        filteredOptions = filteredOptions.slice(0, 25);
+        filteredOptions = filteredOptions.slice(0, 100);
 
         // Make sure the selected postcode is always shown, and that it's only shown once
-        if (
-            selectedPostcode.length > 0 &&
-            selectedPostcode[0].value &&
-            !filteredOptions.some((option) => option.value === selectedPostcode[0].value)
-        ) {
-            filteredOptions.unshift(selectedPostcode[0]);
+        if (selectedPostcode.length > 0) {
+            const selectedPostcodeOption = selectedPostcode[0] as ComboboxOption;
+
+            if (
+                selectedPostcodeOption.value &&
+                !filteredOptions.some((option) => option.value === selectedPostcodeOption.value)
+            ) {
+                filteredOptions.unshift(selectedPostcodeOption);
+            }
         }
 
         setFilteredPostcodeOptions(filteredOptions);
     }
 
-    function handlePostCodeChange(option, isSelected) {
+    function handlePostCodeChange(option: string, isSelected: boolean) {
         if (isSelected) {
             dispatch({ type: ADD_POSTCODE, value: option });
         } else {
@@ -60,7 +84,7 @@ function DrivingDistance({ query, dispatch, postcodes }) {
         }
     }
 
-    function handleDistanceChange(value) {
+    function handleDistanceChange(value: string | null) {
         if (value === null || value === undefined || value === "") {
             dispatch({ type: REMOVE_DISTANCE });
         } else {
