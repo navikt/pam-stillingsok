@@ -66,7 +66,7 @@ function DrivingDistance({ query, dispatch, postcodes }: DrivingDistanceProps): 
             }
         }
 
-        // Limit the shown options, since thousands of options will crash the browser
+        // Limit the shown options, since thousands of options will crash the browser a
         filteredOptions = filteredOptions.slice(0, 100);
 
         // Make sure the selected postcode is always shown, and that it's only shown once
