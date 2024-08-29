@@ -113,7 +113,7 @@ function DrivingDistance({ query, dispatch, postcodes }: DrivingDistanceProps): 
             className="FilterModal__fieldset mt-2"
         >
             <UNSAFE_Combobox
-                label="Fra postnummer"
+                label="Fra postnummer eller sted"
                 options={allPostcodeOptions}
                 filteredOptions={filteredPostcodeOptions}
                 onToggleSelected={handlePostCodeChange}
