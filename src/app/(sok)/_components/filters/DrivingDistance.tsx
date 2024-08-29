@@ -27,6 +27,7 @@ function DrivingDistance({ query, dispatch, postcodes }: DrivingDistanceProps): 
         (query.postcode && [query.postcode]) || [],
     );
     const [filteredPostcodeOptions, setFilteredPostcodeOptions] = useState<ComboboxOption[]>([]);
+    const showResetFilterButton = selectedPostcode.length > 0 || query.postcode || query.distance;
 
     const allPostcodeOptions = postcodes.map((data) => ({
         value: data.postcode,
@@ -57,7 +58,7 @@ function DrivingDistance({ query, dispatch, postcodes }: DrivingDistanceProps): 
         if (value) {
             const cleanValue = value.toUpperCase().trim();
 
-            if (Number.isNaN(cleanValue)) {
+            if (Number.isNaN(Number(cleanValue))) {
                 filteredOptions = allPostcodeOptions.filter((option) => option.label.includes(cleanValue));
             } else {
                 filteredOptions = allPostcodeOptions.filter((option) => option.value.startsWith(cleanValue));
@@ -137,15 +138,17 @@ function DrivingDistance({ query, dispatch, postcodes }: DrivingDistanceProps): 
                     ))}
                 </Select>
             </div>
-            <Button
-                type="button"
-                variant="tertiary"
-                onClick={resetDistanceFilters}
-                icon={<TrashIcon aria-hidden="true" />}
-                className="mt-4"
-            >
-                Nullstill avstandsfiltre
-            </Button>
+            {showResetFilterButton && (
+                <Button
+                    type="button"
+                    variant="tertiary"
+                    onClick={resetDistanceFilters}
+                    icon={<TrashIcon aria-hidden="true" />}
+                    className="mt-4"
+                >
+                    Nullstill avstandsfiltre
+                </Button>
+            )}
         </Fieldset>
     );
 }
