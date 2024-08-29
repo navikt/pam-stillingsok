@@ -8,6 +8,8 @@ import "@navikt/arbeidsplassen-theme";
 import "./(sok)/_components/search.css";
 import "./stilling/ad.css";
 import "./_common/components/typeahead/Typeahead.css";
+import "./(forside)/artikler-og-forside.css";
+import "./(forside)/_components/ukraine-page.css";
 import "./styles.css";
 import PropTypes from "prop-types";
 import interLocalFont from "next/font/local";
@@ -22,7 +24,7 @@ const myFont = interLocalFont({
     display: "swap",
 });
 
-export const getMetadataTitle = (title = "Ledige stillinger") => `${title} - arbeidsplassen.no`;
+export const getMetadataTitle = (title) => `${title} - arbeidsplassen.no`;
 export const defaultMetadataDescription =
     "Finn din neste jobb i en av Norges største samlinger av stillinger. Her finner du jobber fra alle bransjer i markedet";
 export const defaultOpenGraphImage = {
@@ -32,15 +34,12 @@ export const defaultOpenGraphImage = {
 };
 
 export const metadata = {
-    title: getMetadataTitle("Ledige stillinger"),
+    title: getMetadataTitle("Arbeidsplassen"),
     description: defaultMetadataDescription,
     openGraph: {
-        title: getMetadataTitle("Ledige stillinger"),
+        title: getMetadataTitle("Arbeidsplassen"),
         description: defaultMetadataDescription,
         images: [defaultOpenGraphImage],
-    },
-    icons: {
-        icon: `/favicon.png`,
     },
     formatDetection: {
         telephone: false,

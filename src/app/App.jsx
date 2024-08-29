@@ -4,7 +4,9 @@ import React, { useContext, useEffect } from "react";
 import { Footer, Header, SkipLink } from "@navikt/arbeidsplassen-react";
 import * as Sentry from "@sentry/nextjs";
 import PropTypes from "prop-types";
+import { usePathname } from "next/navigation";
 import { getSessionId } from "@/app/_common/monitoring/session";
+import companyPaths from "@/app/(artikler)/isCompanyPage";
 import { AuthenticationContext, AuthenticationStatus } from "./_common/auth/contexts/AuthenticationProvider";
 import { initAmplitude } from "./_common/monitoring/amplitude";
 import googleTranslateWorkaround from "./_common/utils/googleTranslateWorkaround";
@@ -14,6 +16,7 @@ import Axe from "./Axe";
 
 function App({ children, amplitudeToken }) {
     const { authenticationStatus, login, logout } = useContext(AuthenticationContext);
+    const pathname = usePathname();
 
     useEffect(() => {
         googleTranslateWorkaround();
@@ -42,12 +45,13 @@ function App({ children, amplitudeToken }) {
             <div className="arb-push-footer-down">
                 <Axe />
                 <Header
-                    variant="person"
-                    active="ledige-stillinger"
+                    variant={companyPaths.includes(pathname) ? "company" : "person"}
+                    active={pathname.startsWith("/stillinger") ? "ledige-stillinger" : undefined}
                     authenticationStatus={authStatus}
                     onLogin={login}
                     onLogout={logout}
                 />
+                test
                 <main id="main-content">{children}</main>
             </div>
             <Footer />

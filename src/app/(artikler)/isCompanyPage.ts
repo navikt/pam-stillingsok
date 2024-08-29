@@ -1,0 +1,26 @@
+const companyPaths = [
+    "/bedrift",
+    "/arbeidsgivertjenester",
+    "/enklere-a-skrive-gode-kvalifikasjoner",
+    "/hvordan-fa-tilgang",
+    "/introduksjon-til-ny-side-for-annonser",
+    "/nyttige-artikler-for-bedrifter",
+    "/overforing-av-stillingsannonser",
+    "/rekruttere-flyktninger",
+    "/retningslinjer-stillingsannonser",
+    "/skikkelig-bra-stillingsannonse",
+    "/slik-fungerer-superrask-soknad",
+    "/sommerjobb",
+    "/sporreundersokelse-bedrift",
+    "/superrask-soknad-bedrift",
+    "/tilgang-som-arbeidsgiver",
+    "/tilgangsstyring-i-store-virksomheter",
+    "/vilkar",
+    "/vilkar-api",
+    "/vilkar-api-gammel",
+    "/vilkar-og-retningslinjer",
+    "/vilkar-stillingsannonser",
+    "/vilkar-superrask-soknad",
+];
+
+export default companyPaths;

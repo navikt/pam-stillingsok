@@ -1,10 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    basePath: "/stillinger",
     cacheHandler: process.env.NODE_ENV === "production" ? require.resolve("./cache-handler.mjs") : undefined,
     experimental: {
         optimizePackageImports: ["@navikt/ds-react", "@navikt/aksel-icons"],
         instrumentationHook: true,
+        esmExternals: "loose", // todo do not merge to master
     },
     assetPrefix: process.env.ASSET_PREFIX || undefined,
     output: "standalone",
