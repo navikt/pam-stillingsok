@@ -4,6 +4,7 @@ import { ADD_DISTANCE, ADD_POSTCODE, REMOVE_DISTANCE, REMOVE_POSTCODE } from "@/
 import { TrashIcon } from "@navikt/aksel-icons";
 import { Postcode } from "@/app/(sok)/_utils/fetchPostcodes";
 import { ComboboxOption } from "@navikt/ds-react/esm/form/combobox/types";
+import "./DrivingDistance.css";
 
 // TODO: Replace when TS query interface has been merged
 interface DrivingDistanceQueryProps {
@@ -115,6 +116,7 @@ function DrivingDistance({ query, dispatch, postcodes }: DrivingDistanceProps): 
         >
             <UNSAFE_Combobox
                 label="Fra postnummer eller sted"
+                className="Combobox"
                 options={allPostcodeOptions}
                 filteredOptions={filteredPostcodeOptions}
                 onToggleSelected={handlePostCodeChange}
