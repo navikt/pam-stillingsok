@@ -18,7 +18,7 @@ export default function Home() {
                     </BodyLong>
 
                     <div className="mb-16">
-                        <Button variant="primary" as="a" href="/stillinger" role="link">
+                        <Button variant="primary" as="a" href="/stillinger">
                             Søk etter din neste jobb
                         </Button>
                     </div>

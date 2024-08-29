@@ -16,7 +16,7 @@ export default function Bedrift() {
                     </BodyLong>
 
                     <div className="mb-16">
-                        <Button variant="primary" as="a" href="/stillingsregistrering" role="link">
+                        <Button variant="primary" as="a" href="/stillingsregistrering">
                             Gå til min bedriftsside
                         </Button>
                     </div>

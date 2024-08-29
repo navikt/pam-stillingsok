@@ -12,7 +12,7 @@ export default function VerifisertEpost() {
                 <BodyLong className="mb-8 text-center">
                     Du vil nå kunne motta e-postvarsler på dine lagrede søk.
                 </BodyLong>
-                <Button variant="primary" as="a" href="/stillinger" role="link">
+                <Button variant="primary" as="a" href="/stillinger">
                     Gå til ledige stillinger
                 </Button>
             </VStack>
