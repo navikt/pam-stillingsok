@@ -52,7 +52,7 @@ export const metadata = {
 
 export default async function RootLayout({ children }) {
     return (
-        <html lang="no">
+        <html lang="no" className="s">
             <body data-theme="arbeidsplassen" className={myFont.className}>
                 <Providers userPreferences={await actions.getUserPreferences()}>
                     <App amplitudeToken={process.env.AMPLITUDE_TOKEN}>{children}</App>
