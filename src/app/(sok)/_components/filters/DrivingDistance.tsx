@@ -55,7 +55,13 @@ function DrivingDistance({ query, dispatch, postcodes }: DrivingDistanceProps): 
         let filteredOptions = allPostcodeOptions;
 
         if (value) {
-            filteredOptions = allPostcodeOptions.filter((option) => option.value.startsWith(value));
+            const cleanValue = value.toUpperCase().trim();
+
+            if (Number.isNaN(cleanValue)) {
+                filteredOptions = allPostcodeOptions.filter((option) => option.label.includes(cleanValue));
+            } else {
+                filteredOptions = allPostcodeOptions.filter((option) => option.value.startsWith(cleanValue));
+            }
         }
 
         // Limit the shown options, since thousands of options will crash the browser
