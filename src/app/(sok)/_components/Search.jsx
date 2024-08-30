@@ -81,17 +81,21 @@ export default function Search({ query, searchResult, aggregations, locations })
                     aggregations={aggregations}
                     locations={locations}
                 />
-                <SaveSearchButton query={query} />
-                <Button
-                    type="button"
-                    variant="tertiary"
-                    onClick={() => {
-                        queryDispatch({ type: "RESET" });
-                    }}
-                    icon={<TrashIcon aria-hidden="true" />}
-                >
-                    Nullstill søk
-                </Button>
+                {searchParams.size > 0 && (
+                    <>
+                        <SaveSearchButton query={query} />
+                        <Button
+                            type="button"
+                            variant="tertiary"
+                            onClick={() => {
+                                queryDispatch({ type: "RESET" });
+                            }}
+                            icon={<TrashIcon aria-hidden="true" />}
+                        >
+                            Nullstill søk
+                        </Button>
+                    </>
+                )}
             </div>
 
             <Box paddingBlock={{ xs: "6", md: "6" }} className="text-center">
