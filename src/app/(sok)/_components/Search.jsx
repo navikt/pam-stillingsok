@@ -2,7 +2,7 @@
 
 import React, { useEffect, useReducer, useState } from "react";
 import PropTypes from "prop-types";
-import { Box, Button, Heading, HGrid, Hide, HStack, Show, Stack, VStack } from "@navikt/ds-react";
+import { Box, Button, Heading, HGrid, Hide, Show, Stack, VStack } from "@navikt/ds-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { TrashIcon } from "@navikt/aksel-icons";
 import SaveSearchButton from "@/app/lagrede-sok/_components/SaveSearchButton";
@@ -90,28 +90,24 @@ export default function Search({ query, searchResult, aggregations, locations })
                     }}
                     icon={<TrashIcon aria-hidden="true" />}
                 >
-                    Fjern alle
+                    Nullstill søk
                 </Button>
-                <Box>
-                    <HStack gap="2" justify={{ xs: "start", md: "center" }} align={{ xs: "start", md: "center" }}>
-                        <Show below="lg">
-                            <Button
-                                variant="tertiary"
-                                onClick={() => {
-                                    setIsFiltersVisible(!isFiltersVisible);
-                                }}
-                                icon={<FilterIcon />}
-                                aria-expanded={isFiltersVisible}
-                            >
-                                Velg sted, yrke og andre filtre
-                            </Button>
-                        </Show>
-                    </HStack>
-                </Box>
             </div>
 
             <Box paddingBlock={{ xs: "6", md: "6" }} className="text-center">
                 <LoggedInButtons />
+                <Show below="lg">
+                    <Button
+                        variant="tertiary"
+                        onClick={() => {
+                            setIsFiltersVisible(!isFiltersVisible);
+                        }}
+                        icon={<FilterIcon />}
+                        aria-expanded={isFiltersVisible}
+                    >
+                        Velg sted, yrke og andre filtre
+                    </Button>
+                </Show>
             </Box>
 
             <SearchResultHeader
