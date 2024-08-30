@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Button } from "@navikt/ds-react";
+import { Button, ButtonProps } from "@navikt/ds-react";
 import { FloppydiskIcon } from "@navikt/aksel-icons";
 import { useSearchParams } from "next/navigation";
 import { AuthenticationContext, AuthenticationStatus } from "@/app/_common/auth/contexts/AuthenticationProvider";
@@ -12,7 +12,7 @@ import { FormModes } from "./modal/SaveSearchForm";
 import SaveSearchModal from "./modal/SaveSearchModal";
 import SearchIsEmptyModal from "./modal/SearchIsEmptyModal";
 
-interface SaveSearchButtonProps {
+interface SaveSearchButtonProps extends ButtonProps {
     query: {
         q?: string;
     };
@@ -28,7 +28,7 @@ interface SaveSearchButtonProps {
  * - has checked one or more search criteria
  * - has accepted terms
  */
-function SaveSearchButton({ query }: SaveSearchButtonProps) {
+function SaveSearchButton({ query, size }: SaveSearchButtonProps) {
     const { authenticationStatus, login } = useContext(AuthenticationContext);
     const { hasAcceptedTermsStatus } = useContext(UserContext);
     const [shouldShowTermsModal, openTermsModal, closeTermsModal] = useToggle();
@@ -64,7 +64,13 @@ function SaveSearchButton({ query }: SaveSearchButtonProps) {
 
     return (
         <>
-            <Button variant="tertiary" icon={<FloppydiskIcon aria-hidden="true" />} type="button" onClick={handleClick}>
+            <Button
+                variant="tertiary"
+                size={size}
+                icon={<FloppydiskIcon aria-hidden="true" />}
+                type="button"
+                onClick={handleClick}
+            >
                 Lagre søk
             </Button>
 

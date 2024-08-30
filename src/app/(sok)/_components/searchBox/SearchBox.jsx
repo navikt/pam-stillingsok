@@ -64,7 +64,7 @@ function SearchBox({ dispatch, query, aggregations, locations }) {
     }
 
     return (
-        <section aria-label="Søkeord" className="mb-4">
+        <section aria-label="Søk etter stilling" className="mb-4">
             <SearchCombobox
                 queryDispatch={dispatch}
                 query={query}

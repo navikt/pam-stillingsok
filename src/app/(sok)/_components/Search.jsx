@@ -83,7 +83,7 @@ export default function Search({ query, searchResult, aggregations, locations })
                 />
                 {searchParams.size > 0 && (
                     <>
-                        <SaveSearchButton query={query} />
+                        <SaveSearchButton query={query} size="small" />
                         <Button
                             type="button"
                             variant="tertiary"
@@ -91,6 +91,7 @@ export default function Search({ query, searchResult, aggregations, locations })
                                 queryDispatch({ type: "RESET" });
                             }}
                             icon={<TrashIcon aria-hidden="true" />}
+                            size="small"
                         >
                             Nullstill søk
                         </Button>
