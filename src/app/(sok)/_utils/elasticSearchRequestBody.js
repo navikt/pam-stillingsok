@@ -1201,6 +1201,7 @@ const elasticSearchRequestBody = (query) => {
                             values: {
                                 terms: {
                                     field: "locationList.country.keyword",
+                                    exclude: "NORGE",
                                     size: 50,
                                     order: {
                                         _key: "asc",
