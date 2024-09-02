@@ -28,7 +28,7 @@ function DistanceOrLocation({
     return (
         <>
             <ToggleGroup defaultValue={selectedOption} onChange={setSelectedOption} fill>
-                <ToggleGroup.Item value="distance" label="Avstand" />
+                <ToggleGroup.Item value="distance" label="Reisevei" />
                 <ToggleGroup.Item value="location" label="Sted" />
             </ToggleGroup>
             {selectedOption === "distance" && (

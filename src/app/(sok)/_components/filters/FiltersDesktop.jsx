@@ -28,7 +28,7 @@ function FiltersDesktop({ query, dispatchQuery, aggregations, locations, postcod
                         publishedTotalCount={searchResult.aggregations.publishedTotalCount}
                     />
                 </FilterAccordionItem>
-                <FilterAccordionItem title="Avstand eller sted" panelId="sted">
+                <FilterAccordionItem title="Sted" panelId="sted">
                     <DistanceOrLocation
                         query={query}
                         dispatch={dispatchQuery}

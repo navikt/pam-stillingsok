@@ -57,7 +57,7 @@ function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggre
                     <nav aria-label="Velg filter">
                         {[
                             "Publisert",
-                            "Avstand eller sted",
+                            "Sted",
                             "Yrke og sektor",
                             "Utdanning, erfaring og førerkort",
                             "Arbeidsspråk",
@@ -88,7 +88,7 @@ function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggre
                         />
                     )}
 
-                    {selectedFilter === "Avstand eller sted" && (
+                    {selectedFilter === "Sted" && (
                         <DistanceOrLocation
                             query={query}
                             dispatch={dispatchQuery}

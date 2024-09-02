@@ -109,13 +109,13 @@ function DrivingDistance({ query, dispatch, postcodes }: DrivingDistanceProps): 
         <Fieldset
             legend={
                 <BodyShort as="span" visuallyHidden>
-                    Filtrer etter avstand eller sted
+                    Filtrer etter sted
                 </BodyShort>
             }
             className="FilterModal__fieldset mt-2"
         >
             <UNSAFE_Combobox
-                label="Fra postnummer eller sted"
+                label="Fra sted eller postnummer"
                 className="Combobox"
                 options={allPostcodeOptions}
                 filteredOptions={filteredPostcodeOptions}
@@ -124,21 +124,24 @@ function DrivingDistance({ query, dispatch, postcodes }: DrivingDistanceProps): 
                 selectedOptions={selectedPostcode}
                 shouldAutocomplete
             />
-            <div className="display-inline-block mt-4">
-                <Select
-                    onChange={(e) => handleDistanceChange(e.target.value)}
-                    value={query.distance || ""}
-                    label="Maks kjøreavstand"
-                >
-                    <option key="0" value="">
-                        Velg avstand
-                    </option>
-                    {[1, 3, 5, 7, 10, 20, 30, 50, 75, 100, 150].map((km) => (
-                        <option key={km} value={km}>
-                            {km} kilometer
+            <div className="mt-4">
+                <div className="display-inline-blocks">
+                    <Select
+                        size="medium"
+                        onChange={(e) => handleDistanceChange(e.target.value)}
+                        value={query.distance || ""}
+                        label="Maks reiseavstand"
+                    >
+                        <option key="0" value="">
+                            Velg avstand
                         </option>
-                    ))}
-                </Select>
+                        {[1, 3, 5, 7, 10, 20, 30, 50, 75, 100, 150].map((km) => (
+                            <option key={km} value={km}>
+                                {km} kilometer
+                            </option>
+                        ))}
+                    </Select>
+                </div>
             </div>
             {showResetFilterButton && (
                 <Button
@@ -148,7 +151,7 @@ function DrivingDistance({ query, dispatch, postcodes }: DrivingDistanceProps): 
                     icon={<TrashIcon aria-hidden="true" />}
                     className="mt-4"
                 >
-                    Nullstill avstandsfiltre
+                    Nullstill reisevei
                 </Button>
             )}
         </Fieldset>
