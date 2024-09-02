@@ -1,6 +1,6 @@
 "use client";
 
-import React, { FormEvent, MutableRefObject, useContext, useRef, useState, useTransition } from "react";
+import React, { FormEvent, MutableRefObject, ReactElement, useContext, useRef, useState, useTransition } from "react";
 import {
     Alert,
     BodyLong,
@@ -42,7 +42,13 @@ export interface SaveSearchFormData {
 /**
  * Form for creating or updating a saved search.
  */
-function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, defaultFormMode }: SaveSearchFormProps) {
+function SaveSearchForm({
+    existingSavedSearch,
+    onClose,
+    onSuccess,
+    formData,
+    defaultFormMode,
+}: SaveSearchFormProps): ReactElement {
     const [isPending, startTransition] = useTransition();
     const [showError, setShowError] = useState(false);
 
@@ -62,7 +68,7 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
 
     const titleRef = useRef<HTMLInputElement>();
 
-    function validateForm() {
+    function validateForm(): boolean {
         let isValid = true;
 
         if (title?.trim().length === 0) {
@@ -78,7 +84,7 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
         return isValid;
     }
 
-    function handleFormSubmit(e: FormEvent) {
+    function handleFormSubmit(e: FormEvent): void {
         e.preventDefault();
         if (validateForm()) {
             const newExpiresDate = new Date();
@@ -142,7 +148,7 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
         }
     }
 
-    function handleFormModeChange(value: string) {
+    function handleFormModeChange(value: string): void {
         if (value === FormModes.ADD) {
             showForm();
         } else {
@@ -151,12 +157,12 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
         setFormMode(value);
     }
 
-    function handleTitleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    function handleTitleChange(e: React.ChangeEvent<HTMLInputElement>): void {
         setTitle(e.target.value);
         setTitleValidationError(undefined);
     }
 
-    function handleSubscribeChange(e: React.ChangeEvent<HTMLInputElement>) {
+    function handleSubscribeChange(e: React.ChangeEvent<HTMLInputElement>): void {
         if (e.target.checked) {
             setNotifyType("EMAIL");
         } else {
@@ -164,7 +170,7 @@ function SaveSearchForm({ existingSavedSearch, onClose, onSuccess, formData, def
         }
     }
 
-    function handleDurationChange(value: number) {
+    function handleDurationChange(value: number): void {
         setDuration(value);
     }
 

@@ -1,4 +1,13 @@
-import React, { ChangeEvent, FormEvent, MutableRefObject, useContext, useEffect, useRef, useState } from "react";
+import React, {
+    ChangeEvent,
+    FormEvent,
+    MutableRefObject,
+    ReactElement,
+    useContext,
+    useEffect,
+    useRef,
+    useState,
+} from "react";
 import { Alert, BodyLong, Button, TextField, Modal } from "@navikt/ds-react";
 import { isValidEmail } from "@/app/_common/utils/utils";
 import { UserContext } from "@/app/_common/user/UserProvider";
@@ -10,7 +19,7 @@ interface RegisterEmailFormProps {
     onSuccess: () => void;
 }
 
-function RegisterEmailForm({ onClose, onSuccess }: RegisterEmailFormProps) {
+function RegisterEmailForm({ onClose, onSuccess }: RegisterEmailFormProps): ReactElement {
     const { user, updateUser } = useContext(UserContext);
     const [email, setEmail] = useState("");
     const [saveStatus, setSaveStatus] = useState(FetchStatus.NOT_FETCHED);
@@ -23,7 +32,7 @@ function RegisterEmailForm({ onClose, onSuccess }: RegisterEmailFormProps) {
         }
     }, []);
 
-    function validateForm() {
+    function validateForm(): boolean {
         let isValid = true;
 
         if (email && email.length > 0 && !isValidEmail(email)) {
@@ -43,7 +52,7 @@ function RegisterEmailForm({ onClose, onSuccess }: RegisterEmailFormProps) {
         return isValid;
     }
 
-    async function handleFormSubmit(e: FormEvent) {
+    async function handleFormSubmit(e: FormEvent): Promise<void> {
         e.preventDefault();
 
         if (validateForm()) {
@@ -68,7 +77,7 @@ function RegisterEmailForm({ onClose, onSuccess }: RegisterEmailFormProps) {
         }
     }
 
-    function handleEmailChange(e: ChangeEvent<HTMLInputElement>) {
+    function handleEmailChange(e: ChangeEvent<HTMLInputElement>): void {
         setEmail(e.target.value);
         setEmailValidationError(undefined);
     }

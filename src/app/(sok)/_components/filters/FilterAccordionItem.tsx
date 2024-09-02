@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useContext, useState } from "react";
+import React, { ReactElement, useContext, useState } from "react";
 import { Accordion } from "@navikt/ds-react";
 import { UserPreferencesContext } from "@/app/_common/user/UserPreferenceProvider";
 
@@ -10,7 +10,7 @@ export interface FilterAccordionProps {
     panelId: string;
 }
 
-function FilterAccordionItem({ title, children, panelId }: FilterAccordionProps) {
+function FilterAccordionItem({ title, children, panelId }: FilterAccordionProps): ReactElement {
     const {
         publishedJobFilterOpen,
         addPublishedJobFilterOpen,
@@ -22,7 +22,7 @@ function FilterAccordionItem({ title, children, panelId }: FilterAccordionProps)
     const [isOpen, setIsOpen] = useState(openFilters.includes(panelId));
     const [isPublishedJobFilterOpen, setIsPublishedJobFilterOpen] = useState(publishedJobFilterOpen);
 
-    function onPanelClick() {
+    function onPanelClick(): void {
         if (!isOpen) {
             addOpenFilter(panelId);
         } else {
@@ -31,7 +31,7 @@ function FilterAccordionItem({ title, children, panelId }: FilterAccordionProps)
         setIsOpen(!isOpen);
     }
 
-    function onPanelPublishClick() {
+    function onPanelPublishClick(): void {
         if (!isPublishedJobFilterOpen) {
             addPublishedJobFilterOpen();
         } else {

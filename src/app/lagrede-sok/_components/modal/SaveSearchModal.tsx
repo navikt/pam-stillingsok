@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useContext, useEffect, useState } from "react";
+import React, { ReactElement, useContext, useEffect, useState } from "react";
 import { BodyLong, HStack, Loader, Modal } from "@navikt/ds-react";
 import { UserContext } from "@/app/_common/user/UserProvider";
 import useToggle from "@/app/_common/hooks/useToggle";
@@ -8,7 +8,7 @@ import { isStringEmpty } from "@/app/_common/utils/utils";
 import * as actions from "@/app/_common/actions";
 import NotFoundMessage from "@/app/lagrede-sok/_components/modal/NotFoundMessage";
 import AlertModalWithPageReload from "@/app/_common/components/modals/AlertModalWithPageReload";
-import { SavedSearch } from "@/app/_common/actions/savedSearchActions";
+import { GetSavedSearchResponse, SavedSearch } from "@/app/_common/actions/savedSearchActions";
 import SaveSearchForm, { SaveSearchFormData } from "./SaveSearchForm";
 import RegisterEmailForm from "./RegisterEmailForm";
 import SuccessMessage from "./SuccessMessage";
@@ -33,7 +33,7 @@ function SaveSearchModal({
     formData,
     defaultFormMode,
     savedSearchUuid,
-}: SaveSearchModalProps) {
+}: SaveSearchModalProps): ReactElement {
     const { user } = useContext(UserContext);
 
     const [shouldShowSavedSearchForm, showSavedSearchForm, hideSavedSearchForm] = useToggle(true);
@@ -49,7 +49,7 @@ function SaveSearchModal({
      * Otherwise, just show the save search form right away
      */
     useEffect(() => {
-        async function getSavedSearch(uuid: string) {
+        async function getSavedSearch(uuid: string): Promise<GetSavedSearchResponse> {
             return actions.getSavedSearchAction(uuid);
         }
 
@@ -72,7 +72,7 @@ function SaveSearchModal({
         }
     }, [savedSearchUuid]);
 
-    function handleSavedSearchFormSuccess(response: SavedSearch) {
+    function handleSavedSearchFormSuccess(response: SavedSearch): void {
         if (onSaveSearchSuccess) {
             onSaveSearchSuccess(response);
         }
@@ -86,7 +86,7 @@ function SaveSearchModal({
         }
     }
 
-    function handleRegisterEmailSuccess() {
+    function handleRegisterEmailSuccess(): void {
         hideRegisterEmailForm();
         showConfirmEmailMessage();
     }

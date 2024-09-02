@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { ReactElement, useContext, useEffect, useState } from "react";
 import { BodyLong, Button, HStack, Modal } from "@navikt/ds-react";
 // @ts-expect-error TODO: Add typeinfo for arbeidsplassen-react
 import { WorriedFigure } from "@navikt/arbeidsplassen-react";
@@ -34,7 +34,7 @@ interface UserProviderProps {
     children: React.ReactNode;
 }
 
-function UserProvider({ children }: UserProviderProps) {
+function UserProvider({ children }: UserProviderProps): ReactElement {
     const { authenticationStatus } = useContext(AuthenticationContext);
     const [userResponse, setUserResponse] = useState<User>();
     const [shouldShowErrorDialog, openErrorDialog, closeErrorDialog] = useToggle(false);
@@ -42,12 +42,12 @@ function UserProvider({ children }: UserProviderProps) {
     const [hasAcceptedTermsStatus, setHasAcceptedTermsStatus] = useState(HasAcceptedTermsStatus.NOT_FETCHED);
     const [forbiddenUser, setForbiddenUser] = useState(false);
 
-    function updateUser(data: User) {
+    function updateUser(data: User): void {
         setUserResponse(data);
         setHasAcceptedTermsStatus(HasAcceptedTermsStatus.HAS_ACCEPTED);
     }
 
-    function logout() {
+    function logout(): void {
         window.location.href = `/stillinger/oauth2/logout?redirect=${encodeURIComponent(window.location.href)}`;
     }
 

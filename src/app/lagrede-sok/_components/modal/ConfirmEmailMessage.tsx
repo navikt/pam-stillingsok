@@ -1,11 +1,11 @@
-import React, { useEffect, useRef } from "react";
+import React, { ReactElement, useEffect, useRef } from "react";
 import { BodyLong, Button, Modal } from "@navikt/ds-react";
 
 interface ConfirmEmailMessageProps {
     onClose: () => void;
 }
 
-function ConfirmEmailMessage({ onClose }: ConfirmEmailMessageProps) {
+function ConfirmEmailMessage({ onClose }: ConfirmEmailMessageProps): ReactElement {
     const buttonRef = useRef<HTMLButtonElement>(null);
 
     useEffect(() => {
