@@ -16,7 +16,7 @@ import { Button, VStack } from "@navikt/ds-react";
 import Link from "next/link";
 import React from "react";
 import MaxQuerySizeExceeded from "@/app/_common/components/MaxQuerySizeExceeded";
-import { fetchPostcodes } from "@/app/(sok)/_utils/fetchPostcodes";
+import { fetchCachedPostcodes } from "@/app/(sok)/_utils/fetchPostcodes";
 
 const MAX_QUERY_SIZE = 10000;
 
@@ -105,7 +105,7 @@ export default async function Page({ searchParams }) {
     const initialQuery = createQuery(modifiedSearchParams);
 
     const shouldDoExtraCallIfUserHasSearchParams = Object.keys(toBrowserQuery(initialQuery)).length > 0;
-    const fetchCalls = [fetchCachedElasticSearch(toApiQuery(defaultQuery)), fetchLocations(), fetchPostcodes()];
+    const fetchCalls = [fetchCachedElasticSearch(toApiQuery(defaultQuery)), fetchLocations(), fetchCachedPostcodes()];
     if (shouldDoExtraCallIfUserHasSearchParams) {
         fetchCalls.push(fetchCachedElasticSearch(toApiQuery(initialQuery)));
     }

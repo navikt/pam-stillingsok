@@ -52,6 +52,6 @@ export const fetchCachedElasticSearch = unstable_cache(
     async (query) => fetchElasticSearch(query),
     ["elastic-search-query"],
     {
-        revalidate: 1,
+        revalidate: 60,
     },
 );

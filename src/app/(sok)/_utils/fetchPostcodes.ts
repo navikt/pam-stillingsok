@@ -1,4 +1,5 @@
 import { getDefaultHeaders } from "@/app/_common/utils/fetch";
+import { unstable_cache } from "next/cache";
 
 export interface Postcode {
     postcode: string;
@@ -12,10 +13,9 @@ interface PostdataDto {
     // fylke: FylkeDTO
 }
 
-export async function fetchPostcodes(): Promise<Postcode[]> {
+async function fetchPostcodes(): Promise<Postcode[]> {
     const res = await fetch(`${process.env.PAM_GEOGRAFI_API_URL}/postdata?sort=asc`, {
         headers: getDefaultHeaders(),
-        next: { revalidate: 3600 },
     });
 
     if (!res.ok) {
@@ -29,3 +29,7 @@ export async function fetchPostcodes(): Promise<Postcode[]> {
         city: postdata.by,
     }));
 }
+
+export const fetchCachedPostcodes = unstable_cache(async () => fetchPostcodes(), ["postcodes-query"], {
+    revalidate: 3600,
+});
