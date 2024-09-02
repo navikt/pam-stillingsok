@@ -35,6 +35,90 @@ function filterPublished(published) {
     return filters;
 }
 
+function filterWithinDrivingDistance(withinDrivingDistance) {
+    const filter = {
+        nested: {
+            path: "locationList",
+            query: {
+                bool: {
+                    should: [],
+                },
+            },
+        },
+    };
+
+    if (!withinDrivingDistance) {
+        return filter;
+    }
+
+    const { postcodes, municipals, counties } = withinDrivingDistance;
+
+    if (Array.isArray(postcodes)) {
+        filter.nested.query.bool.should.push({
+            terms: {
+                "locationList.postalCode": postcodes,
+            },
+        });
+    }
+
+    if (Array.isArray(municipals)) {
+        filter.nested.query.bool.should.push({
+            bool: {
+                must: [
+                    {
+                        bool: {
+                            must_not: {
+                                exists: {
+                                    field: "locationList.postalCode",
+                                },
+                            },
+                        },
+                    },
+                    {
+                        terms: {
+                            "locationList.municipal.keyword": municipals,
+                        },
+                    },
+                ],
+            },
+        });
+    }
+
+    if (Array.isArray(counties)) {
+        filter.nested.query.bool.should.push({
+            bool: {
+                must: [
+                    {
+                        bool: {
+                            must_not: {
+                                exists: {
+                                    field: "locationList.postalCode",
+                                },
+                            },
+                        },
+                    },
+                    {
+                        bool: {
+                            must_not: {
+                                exists: {
+                                    field: "locationList.municipal",
+                                },
+                            },
+                        },
+                    },
+                    {
+                        terms: {
+                            "locationList.county.keyword": counties,
+                        },
+                    },
+                ],
+            },
+        });
+    }
+
+    return filter;
+}
+
 function filterRemote(remote) {
     const filters = [];
     if (remote && remote.length > 0) {
@@ -698,6 +782,7 @@ const elasticSearchRequestBody = (query) => {
         occupationSecondLevels,
         international,
         operator,
+        withinDrivingDistance,
     } = query;
     let { sort, q } = query;
 
@@ -734,6 +819,7 @@ const elasticSearchRequestBody = (query) => {
                     ...filterEngagementType(engagementType),
                     ...filterSector(sector),
                     ...filterPublished(published),
+                    filterWithinDrivingDistance(withinDrivingDistance),
                 ],
             },
         },
@@ -793,6 +879,7 @@ const elasticSearchRequestBody = (query) => {
                             ...filterEngagementType(engagementType),
                             ...filterSector(sector),
                             ...filterPublished(published),
+                            filterWithinDrivingDistance(withinDrivingDistance),
                         ],
                     },
                 },
@@ -820,6 +907,7 @@ const elasticSearchRequestBody = (query) => {
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
                             ...filterEngagementType(engagementType),
                             ...filterSector(sector),
+                            filterWithinDrivingDistance(withinDrivingDistance),
                         ],
                     },
                 },
@@ -861,6 +949,7 @@ const elasticSearchRequestBody = (query) => {
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
                             ...filterEngagementType(engagementType),
                             ...filterPublished(published),
+                            filterWithinDrivingDistance(withinDrivingDistance),
                         ],
                     },
                 },
@@ -885,6 +974,7 @@ const elasticSearchRequestBody = (query) => {
                             ...filterEngagementType(engagementType),
                             ...filterSector(sector),
                             ...filterPublished(published),
+                            filterWithinDrivingDistance(withinDrivingDistance),
                         ],
                     },
                 },
@@ -930,6 +1020,7 @@ const elasticSearchRequestBody = (query) => {
                             ...filterEngagementType(engagementType),
                             ...filterSector(sector),
                             ...filterPublished(published),
+                            filterWithinDrivingDistance(withinDrivingDistance),
                         ],
                     },
                 },
@@ -954,6 +1045,7 @@ const elasticSearchRequestBody = (query) => {
                             ...filterEngagementType(engagementType),
                             ...filterSector(sector),
                             ...filterPublished(published),
+                            filterWithinDrivingDistance(withinDrivingDistance),
                         ],
                     },
                 },
@@ -978,6 +1070,7 @@ const elasticSearchRequestBody = (query) => {
                             ...filterEngagementType(engagementType),
                             ...filterSector(sector),
                             ...filterPublished(published),
+                            filterWithinDrivingDistance(withinDrivingDistance),
                         ],
                     },
                 },
@@ -1002,6 +1095,7 @@ const elasticSearchRequestBody = (query) => {
                             ...filterEngagementType(engagementType),
                             ...filterSector(sector),
                             ...filterPublished(published),
+                            filterWithinDrivingDistance(withinDrivingDistance),
                         ],
                     },
                 },
@@ -1050,6 +1144,7 @@ const elasticSearchRequestBody = (query) => {
                             filterOccupation(occupationFirstLevels, occupationSecondLevels),
                             ...filterSector(sector),
                             ...filterPublished(published),
+                            filterWithinDrivingDistance(withinDrivingDistance),
                         ],
                     },
                 },
@@ -1074,6 +1169,7 @@ const elasticSearchRequestBody = (query) => {
                             ...filterEngagementType(engagementType),
                             ...filterSector(sector),
                             ...filterPublished(published),
+                            filterWithinDrivingDistance(withinDrivingDistance),
                         ],
                     },
                 },
@@ -1125,6 +1221,7 @@ const elasticSearchRequestBody = (query) => {
                             ...filterEngagementType(engagementType),
                             ...filterSector(sector),
                             ...filterPublished(published),
+                            filterWithinDrivingDistance(withinDrivingDistance),
                         ],
                     },
                 },
@@ -1175,6 +1272,7 @@ const elasticSearchRequestBody = (query) => {
                             ...filterEngagementType(engagementType),
                             ...filterSector(sector),
                             ...filterPublished(published),
+                            filterWithinDrivingDistance(withinDrivingDistance),
                             {
                                 nested: {
                                     path: "locationList",

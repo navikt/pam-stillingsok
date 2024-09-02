@@ -20,7 +20,7 @@ import SearchBox from "./searchBox/SearchBox";
 import SearchPagination from "./searchResult/SearchPagination";
 import MaxResultsBox from "./searchResult/MaxResultsBox";
 
-export default function Search({ query, searchResult, aggregations, locations }) {
+export default function Search({ query, searchResult, aggregations, locations, postcodes }) {
     const [updatedQuery, queryDispatch] = useReducer(queryReducer, query);
     const [isFiltersVisible, setIsFiltersVisible] = useState(false);
     const [initialRenderDone, setInitialRenderDone] = useState(false);
@@ -113,6 +113,7 @@ export default function Search({ query, searchResult, aggregations, locations })
                         dispatchQuery={queryDispatch}
                         aggregations={aggregations}
                         locations={locations}
+                        postcodes={postcodes}
                         searchResult={searchResult}
                     />
                 </Hide>
@@ -124,6 +125,7 @@ export default function Search({ query, searchResult, aggregations, locations })
                             dispatchQuery={queryDispatch}
                             aggregations={aggregations}
                             locations={locations}
+                            postcodes={postcodes}
                             onCloseClick={() => setIsFiltersVisible(false)}
                             searchResult={searchResult}
                         />

@@ -37,6 +37,8 @@ export const defaultQuery = {
     occupations: [],
     occupationFirstLevels: [],
     occupationSecondLevels: [],
+    postcode: undefined,
+    distance: undefined,
     published: undefined,
     sector: [],
     sort: "",
@@ -64,6 +66,8 @@ export function createQuery(searchParams) {
         occupations: asArray(searchParams.occupation) || defaultQuery.occupations,
         occupationFirstLevels: asArray(searchParams.occupationLevel1) || defaultQuery.occupationFirstLevels,
         occupationSecondLevels: asArray(searchParams.occupationLevel2) || defaultQuery.occupationSecondLevels,
+        postcode: searchParams.postcode || defaultQuery.postcode,
+        distance: searchParams.distance || defaultQuery.distance,
         published: searchParams.published || defaultQuery.published,
         needDriversLicense: asArray(searchParams.needDriversLicense) || defaultQuery.needDriversLicense,
         experience: asArray(searchParams.experience) || defaultQuery.experience,
@@ -112,7 +116,17 @@ export function toApiQuery(query) {
         ...query,
         sort: query.sort === "" ? "published" : query.sort,
     };
-    return removeUnwantedOrEmptySearchParameters(apiSearchQuery);
+
+    const newQuery = removeUnwantedOrEmptySearchParameters(apiSearchQuery);
+
+    // Postcode and distance are only relevant to search for if both are set
+    // Should NOT be moved to the removeUnwantedOrEmptySearchParameters function, as it also will remove it from the URL query params
+    if (!(newQuery.postcode && newQuery.postcode.length === 4 && newQuery.distance)) {
+        delete newQuery.postcode;
+        delete newQuery.distance;
+    }
+
+    return newQuery;
 }
 
 /**

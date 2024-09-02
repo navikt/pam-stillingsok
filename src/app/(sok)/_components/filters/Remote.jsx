@@ -34,15 +34,11 @@ function Remote({ initialValues, updatedValues, query, dispatch }) {
 
     return (
         <CheckboxGroup
-            className="mt-4"
             value={query.remote}
             legend={
-                <>
-                    <BodyShort as="span" visuallyHidden>
-                        Filtrer etter{" "}
-                    </BodyShort>
-                    <span className="capitalize">hjemmekontor</span>
-                </>
+                <BodyShort as="span" visuallyHidden>
+                    Filtrer etter hjemmekontor
+                </BodyShort>
             }
         >
             {values.map((item) => (
