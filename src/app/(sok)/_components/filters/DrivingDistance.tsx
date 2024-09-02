@@ -125,7 +125,7 @@ function DrivingDistance({ query, dispatch, postcodes }: DrivingDistanceProps): 
                 shouldAutocomplete
             />
             <div className="mt-4">
-                <div className="display-inline-blocks">
+                <div className="display-inline-block">
                     <Select
                         size="medium"
                         onChange={(e) => handleDistanceChange(e.target.value)}
