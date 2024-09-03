@@ -87,7 +87,10 @@ export default function DebugAd({ adData }) {
             <Heading level="2" size="large" spacing>
                 Har annonsen kommet i feil kategori?
             </Heading>
-            <BodyLong spacing>Gi en tommel ned på de kategoriene som ikke stemmer.</BodyLong>
+            <BodyLong spacing>
+                Gi en tommel opp eller ned så får vi oversikt over hvor stor andel som stemmer, og så kan vi se detaljer
+                om de som har kommet i feil kategori.
+            </BodyLong>
             <VStack gap="6">
                 <DebugAdGroup
                     adUuid={adData.id}
