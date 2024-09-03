@@ -5,6 +5,7 @@ import { TrashIcon } from "@navikt/aksel-icons";
 import { Postcode } from "@/app/(sok)/_utils/fetchPostcodes";
 import { ComboboxOption } from "@navikt/ds-react/esm/form/combobox/types";
 import "./DrivingDistance.css";
+import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
 
 // TODO: Replace when TS query interface has been merged
 interface DrivingDistanceQueryProps {
@@ -90,14 +91,27 @@ function DrivingDistance({ query, dispatch, postcodes }: DrivingDistanceProps): 
         } else {
             dispatch({ type: REMOVE_POSTCODE });
         }
+        logFilterChanged({
+            name: "reisevei",
+            value: option || (selectedPostcode[0] as ComboboxOption).value,
+            level: "postkod",
+            checked: isSelected && !!query.distance,
+        });
     }
 
-    function handleDistanceChange(value: string | null) {
-        if (value === null || value === undefined || value === "") {
+    function handleDistanceChange(value: string | undefined) {
+        const hasNoValue = value === undefined || value === "";
+        if (hasNoValue) {
             dispatch({ type: REMOVE_DISTANCE });
         } else {
             dispatch({ type: ADD_DISTANCE, value });
         }
+        logFilterChanged({
+            name: "reisevei",
+            value: value || query.distance,
+            level: "avstand",
+            checked: !hasNoValue && selectedPostcode.length > 0,
+        });
     }
 
     function resetDistanceFilters() {
