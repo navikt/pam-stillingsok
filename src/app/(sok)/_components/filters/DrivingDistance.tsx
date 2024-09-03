@@ -94,7 +94,7 @@ function DrivingDistance({ query, dispatch, postcodes }: DrivingDistanceProps): 
         logFilterChanged({
             name: "reisevei",
             value: option || (selectedPostcode[0] as ComboboxOption).value,
-            level: "postkod",
+            level: "postnummer",
             checked: isSelected && !!query.distance,
         });
     }
