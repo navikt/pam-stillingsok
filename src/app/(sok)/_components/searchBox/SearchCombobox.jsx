@@ -24,25 +24,33 @@ import {
 } from "@/app/(sok)/_components/searchBox/searchBoxFilter";
 import { buildSelectedOptions } from "@/app/(sok)/_components/searchBox/buildSelectedOptions";
 
-function SearchCombobox({ query, queryDispatch, onChange, options }) {
+function SearchCombobox({ query, queryDispatch, onChange, options, value }) {
     const initialSelectedOptions = useMemo(() => buildSelectedOptions(query), [query]);
     const [selectedOptions, setSelectedOptions] = useState(initialSelectedOptions);
+
+    const optionList = options.map((o) => ({
+        label: `${o.label} ${findLabelForFilter(o.value.split("-")[0])}`,
+        value: o.value,
+    }));
+
+    const [filterOptions, setFilterOptions] = useState(optionList);
 
     useEffect(() => {
         const newInitialSelectedOptions = buildSelectedOptions(query);
         setSelectedOptions(newInitialSelectedOptions);
+        if (query.q) {
+            setFilterOptions([...optionList, { label: query.q, value: query.q }]);
+        }
     }, [query]);
 
     const handleFreeTextSearchOption = (option, isSelected) => {
         if (isSelected) {
-            const newSelectedOptions = [...selectedOptions.filter((opt) => !opt.value), option];
             queryDispatch({
                 type: SET_SEARCH_STRING,
-                value: newSelectedOptions.join(" "),
+                value: option,
             });
         } else {
-            const selected = selectedOptions.filter((o) => o !== option);
-            queryDispatch({ type: SET_SEARCH_STRING, value: selected.filter((opt) => !opt.value).join(" ") });
+            queryDispatch({ type: SET_SEARCH_STRING, value: "" });
         }
     };
 
@@ -99,10 +107,10 @@ function SearchCombobox({ query, queryDispatch, onChange, options }) {
         }
     };
 
-    const optionList = options.map((o) => ({
-        label: `${o.label} ${findLabelForFilter(o.value.split("-")[0])}`,
-        value: o.value,
-    }));
+    const onFilteredOptions = useMemo(
+        () => filterOptions.filter((opt) => opt.label.toLowerCase().includes(value.toLowerCase())),
+        [value],
+    );
 
     return (
         <Combobox
@@ -113,6 +121,7 @@ function SearchCombobox({ query, queryDispatch, onChange, options }) {
             selectedOptions={selectedOptions}
             options={optionList}
             onChange={onChange}
+            filteredOptions={onFilteredOptions}
         />
     );
 }

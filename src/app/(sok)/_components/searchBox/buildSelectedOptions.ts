@@ -41,12 +41,11 @@ function filterCounties(query: Query) {
     });
 }
 
-export function buildSelectedOptions(queryObject: Query): (string | ComboboxOption)[] {
+export function buildSelectedOptions(queryObject: Query): ComboboxOption[] {
     const searchTerm = queryObject.q && queryObject.q.trim();
-    const searchTerms = searchTerm ? searchTerm.split(" ") : [];
 
     return [
-        ...searchTerms,
+        ...(searchTerm ? [{ label: searchTerm, value: searchTerm }] : []),
         ...queryObject.municipals.map(
             (municipal): ComboboxOption => ({
                 label: fixLocationName(municipal.split(".")[1]),
