@@ -92,9 +92,9 @@ function DrivingDistance({ query, dispatch, postcodes }: DrivingDistanceProps): 
             dispatch({ type: REMOVE_POSTCODE });
         }
         logFilterChanged({
-            name: "reisevei",
+            name: "Reisevei",
             value: option || (selectedPostcode[0] as ComboboxOption).value,
-            level: "postnummer",
+            level: "Postnummer",
             checked: isSelected && !!query.distance,
         });
     }
@@ -107,9 +107,9 @@ function DrivingDistance({ query, dispatch, postcodes }: DrivingDistanceProps): 
             dispatch({ type: ADD_DISTANCE, value });
         }
         logFilterChanged({
-            name: "reisevei",
+            name: "Reisevei",
             value: value || query.distance,
-            level: "avstand",
+            level: "Avstand",
             checked: !hasNoValue && selectedPostcode.length > 0,
         });
     }
