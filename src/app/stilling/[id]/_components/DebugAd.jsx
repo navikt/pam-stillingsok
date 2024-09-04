@@ -1,45 +1,40 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { BodyLong, BodyShort, Box, Button, Heading, HStack, VStack } from "@navikt/ds-react";
+import { BodyShort, Box, Button, Heading, HStack, VStack } from "@navikt/ds-react";
 import { labelForNeedDriversLicense } from "@/app/(sok)/_components/filters/DriversLicense";
 import { labelForExperience } from "@/app/(sok)/_components/filters/Experience";
 import { labelForEducation } from "@/app/(sok)/_components/filters/Education";
-import { CheckmarkIcon, ThumbDownIcon, ThumbUpIcon, XMarkIcon } from "@navikt/aksel-icons";
+import { CheckmarkIcon, ExclamationmarkTriangleIcon, ThumbUpIcon, XMarkIcon } from "@navikt/aksel-icons";
 import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
 import { useRouter } from "next/navigation";
 
-function DebugAdItem({ value, vote }) {
+function DebugAdItem({ value, vote, showButton }) {
     return (
         <Box
-            background={value.isChecked ? "surface-alt-1" : "surface-subtle"}
-            paddingInline="0 4"
-            borderRadius="medium"
+            background={value.isChecked ? "surface-alt-1" : "surface-alt-1-subtle"}
+            paddingInline="4 0"
+            borderRadius="full"
         >
-            <HStack align="center" gap="2">
-                <HStack>
+            <HStack align="center" gap="1" justify="space-between">
+                {value.isChecked && <CheckmarkIcon />}
+                <BodyShort className="flex-1" textColor={!value.isChecked && "subtle"}>
+                    {value.isChecked ? <strong>{value.label}</strong> : <strike>{value.label}</strike>}
+                </BodyShort>
+                {showButton ? (
                     <Button
-                        aria-label="Stem opp"
-                        variant="tertiary-neutral"
-                        onClick={() => {
-                            vote(value, "Vote up");
-                        }}
-                        icon={<ThumbUpIcon fontSize="1rem" />}
-                    />
-                    <Button
+                        size="small"
                         variant="tertiary-neutral"
                         aria-label="Stem ned"
                         onClick={() => {
-                            vote(value, "Vote down");
+                            vote(value, value.isChecked ? "Feil" : "Mangler");
                         }}
-                        icon={<ThumbDownIcon fontSize="1rem" />}
-                    />
-                </HStack>
-                <HStack align="center" gap="1">
-                    <BodyShort className="flex-1" size="small" textColor={!value.isChecked && "subtle"}>
-                        {value.isChecked ? <strong>{value.label}</strong> : <strike>{value.label}</strike>}
-                    </BodyShort>
-                    {value.isChecked && <CheckmarkIcon fontSize="1.25rem" />}
-                </HStack>
+                        icon={<ExclamationmarkTriangleIcon fontSize="1rem" />}
+                    >
+                        {value.isChecked ? "Feil" : "Mangler"}
+                    </Button>
+                ) : (
+                    <Box height="36px" />
+                )}
             </HStack>
         </Box>
     );
@@ -47,33 +42,81 @@ function DebugAdItem({ value, vote }) {
 
 function DebugAdGroup({ category, values, adUuid }) {
     const [valuesToBeVoted, setValuesToBeVoted] = useState(values);
+    const [showReportButtons, setShowReportButtons] = useState(true);
+    const [showSubReportButtons, setShowSubReportButtons] = useState(false);
 
     const vote = (value, reason) => {
         setValuesToBeVoted((prevState) => prevState.filter((it) => it.label !== value.label));
-        logAmplitudeEvent("Report AI category", {
+        logAmplitudeEvent("Reported AI category value", {
             category,
-            label: value.label,
-            checked: value.isChecked,
+            value: value.label,
             reason,
             adUuid,
         });
     };
 
-    if (!valuesToBeVoted || valuesToBeVoted.length === 0) {
+    if (!values || values.length === 0) {
         return null;
     }
 
     return (
-        <div>
-            <Heading size="xsmall" level="3" className="mb-1">
-                {category}
-            </Heading>
+        <Box borderWidth="0 0 1 0" borderColor="border-subtle" padding="4 4 6 4">
+            <HStack align="center" justify="space-between" className="mb-4">
+                <Heading size="small" level="3">
+                    {category}
+                </Heading>
+                <HStack>
+                    {showReportButtons ? (
+                        <>
+                            <Button
+                                variant="tertiary-neutral"
+                                size="small"
+                                icon={<ThumbUpIcon fontSize="1rem" />}
+                                onClick={() => {
+                                    logAmplitudeEvent("Reported AI categorization", {
+                                        category,
+                                        reason: "Ingen feil",
+                                        adUuid,
+                                    });
+                                    setShowSubReportButtons(false);
+                                    setShowReportButtons(false);
+                                }}
+                            >
+                                Alt er riktig
+                            </Button>
+                            <Button
+                                variant="tertiary-neutral"
+                                size="small"
+                                icon={<ExclamationmarkTriangleIcon fontSize="1rem" />}
+                                onClick={() => {
+                                    logAmplitudeEvent("Reported AI categorization", {
+                                        category,
+                                        reason: "En eller flere feil",
+                                        adUuid,
+                                    });
+                                    setShowSubReportButtons(true);
+                                    setShowReportButtons(false);
+                                }}
+                            >
+                                Har feil
+                            </Button>
+                        </>
+                    ) : (
+                        <Box height="36px" />
+                    )}
+                </HStack>
+            </HStack>
             <VStack gap="1">
-                {valuesToBeVoted.map((value) => (
-                    <DebugAdItem key={value.label} value={value} vote={vote} />
+                {values.map((value) => (
+                    <DebugAdItem
+                        key={value.label}
+                        value={value}
+                        vote={vote}
+                        showButton={showSubReportButtons && valuesToBeVoted.includes(value)}
+                    />
                 ))}
             </VStack>
-        </div>
+        </Box>
     );
 }
 
@@ -123,30 +166,34 @@ export default function DebugAd({ adData }) {
         isChecked: adData?.education?.includes(it) || false,
     }));
 
-    const driverLicenseValues = ["true", "false"].map((it) => ({
+    const driverLicenseValues = adData?.needDriversLicense.map((it) => ({
         label: labelForNeedDriversLicense(it),
-        isChecked: adData?.needDriversLicense?.includes(it) || false,
+        isChecked: true,
     }));
 
     return (
         <Box className="debugAd">
-            <HStack align="center" justify="space-between">
-                <Heading level="2" size="medium">
-                    KI-kategorier
-                </Heading>
-                <Button aria-label="Lukk" variant="tertiary-neutral" icon={<XMarkIcon />} onClick={hideDebugPanel} />
-            </HStack>
+            <Box padding="4 4 0 4">
+                <HStack align="center" justify="space-between">
+                    <Heading level="2" size="medium">
+                        KI-kategorier
+                    </Heading>
+                    <Button
+                        aria-label="Lukk"
+                        variant="tertiary-neutral"
+                        icon={<XMarkIcon />}
+                        onClick={hideDebugPanel}
+                    />
+                </HStack>
+            </Box>
 
-            <BodyLong spacing size="small">
-                For best statistikk, gi tommel opp/ned både på tildelte kategorier (grønne) og ikke-tildelte kategorier
-                (utsteket)
-            </BodyLong>
-            <VStack gap="4">
-                <DebugAdGroup adUuid={adData.id} category="Erfaring" values={experienceValues} />
-                <DebugAdGroup adUuid={adData.id} category="Utdanning" values={educationValues} />
-                <DebugAdGroup adUuid={adData.id} category="Førerkort" values={driverLicenseValues} />
+            <DebugAdGroup adUuid={adData.id} category="Erfaring" values={experienceValues} />
+            <DebugAdGroup adUuid={adData.id} category="Utdanning" values={educationValues} />
+            <DebugAdGroup adUuid={adData.id} category="Førerkort" values={driverLicenseValues} />
+
+            <Box padding="0 4">
                 <Button
-                    className="mt-8"
+                    className="mt-8 full-width"
                     variant="secondary-neutral"
                     onClick={() => {
                         router.back();
@@ -154,7 +201,7 @@ export default function DebugAd({ adData }) {
                 >
                     Gå tilbake
                 </Button>
-            </VStack>
+            </Box>
         </Box>
     );
 }

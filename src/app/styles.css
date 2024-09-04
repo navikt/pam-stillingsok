@@ -164,9 +164,8 @@ no-underline:hover {
     position: fixed;
     top: 0;
     right: 0;
-    background-color: var(--a-surface-subtle);
-    border-left: 2px solid var(--a-border-divider);
-    padding: 1rem;
-    width: 375px;
+    background-color: white;
+    border-left: 1px solid var(--a-border-divider);
+    width: 400px;
     height: 100vh;
 }
