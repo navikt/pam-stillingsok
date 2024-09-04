@@ -51,7 +51,7 @@ import {
     WORK_LANGUAGE,
 } from "@/app/(sok)/_components/searchBox/filterTypes";
 
-export const findLabelForFilter = (value: string) => {
+export const findLabelForFilter = (value: string): string => {
     switch (value) {
         case MUNICIPAL:
             return "(Kommune)";
@@ -105,7 +105,7 @@ export const getFilter = {
     [EXPERIENCE]: { add: ADD_EXPERIENCE, remove: REMOVE_EXPERIENCE },
 };
 
-export function addMunicipalFilter(queryDispatch: Dispatch<Action>, query: Query, value: string) {
+export function addMunicipalFilter(queryDispatch: Dispatch<Action>, query: Query, value: string): void {
     // Legg til kommunen i filter
     queryDispatch({ type: "ADD_MUNICIPAL", value });
 
@@ -116,7 +116,7 @@ export function addMunicipalFilter(queryDispatch: Dispatch<Action>, query: Query
     }
 }
 
-export function removeMunicipalFilter(queryDispatch: Dispatch<Action>, query: Query, value: string) {
+export function removeMunicipalFilter(queryDispatch: Dispatch<Action>, query: Query, value: string): void {
     // Fjern kommunen fra filter
     queryDispatch({ type: REMOVE_MUNICIPAL, value });
 
@@ -128,7 +128,7 @@ export function removeMunicipalFilter(queryDispatch: Dispatch<Action>, query: Qu
     }
 }
 
-export function addCountryFilter(queryDispatch: Dispatch<Action>, value: string) {
+export function addCountryFilter(queryDispatch: Dispatch<Action>, value: string): void {
     // Legg til land i filter
     queryDispatch({ type: ADD_COUNTRY, value });
 
@@ -136,7 +136,7 @@ export function addCountryFilter(queryDispatch: Dispatch<Action>, value: string)
     queryDispatch({ type: SET_INTERNATIONAL, value: true });
 }
 
-export function removeCountryFilter(queryDispatch: Dispatch<Action>, query: Query, value: string) {
+export function removeCountryFilter(queryDispatch: Dispatch<Action>, query: Query, value: string): void {
     // Fjern land fra filter
     queryDispatch({ type: REMOVE_COUNTRY, value });
 
@@ -146,7 +146,7 @@ export function removeCountryFilter(queryDispatch: Dispatch<Action>, query: Quer
     }
 }
 
-export function addOccupationSecondLevelFilter(queryDispatch: Dispatch<Action>, query: Query, value: string) {
+export function addOccupationSecondLevelFilter(queryDispatch: Dispatch<Action>, query: Query, value: string): void {
     // Legg til yrket i filter
     queryDispatch({ type: ADD_OCCUPATION_SECOND_LEVEL, value });
 
@@ -157,7 +157,7 @@ export function addOccupationSecondLevelFilter(queryDispatch: Dispatch<Action>, 
     }
 }
 
-export function removeOccupationSecondLevelFilter(queryDispatch: Dispatch<Action>, query: Query, value: string) {
+export function removeOccupationSecondLevelFilter(queryDispatch: Dispatch<Action>, query: Query, value: string): void {
     // Fjern yrket fra filter
     queryDispatch({ type: REMOVE_OCCUPATION_SECOND_LEVEL, value });
 
