@@ -9,7 +9,11 @@ import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
 
 function DebugAdItem({ value, vote }) {
     return (
-        <Box background={value.isChecked ? "surface-alt-1" : "surface-subtle"} paddingInline="0 4">
+        <Box
+            background={value.isChecked ? "surface-alt-1" : "surface-subtle"}
+            paddingInline="0 4"
+            borderRadius="medium"
+        >
             <HStack align="center" gap="2">
                 <HStack>
                     <Button
@@ -126,7 +130,8 @@ export default function DebugAd({ adData }) {
             </HStack>
 
             <BodyLong spacing size="small">
-                Gi tommel opp/ned både på tildelte kategorier (grønne) og ikke-tildelte kategorier (utsteket)
+                For best statistikk, gi tommel opp/ned både på tildelte kategorier (grønne) og ikke-tildelte kategorier
+                (utsteket)
             </BodyLong>
             <VStack gap="6">
                 <DebugAdGroup adUuid={adData.id} category="Erfaring" values={experienceValues} />
