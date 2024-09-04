@@ -167,6 +167,6 @@ no-underline:hover {
     background-color: var(--a-surface-subtle);
     border-left: 2px solid var(--a-border-divider);
     padding: 1rem;
-    width: 360px;
+    width: 375px;
     height: 100vh;
 }
