@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import PropTypes from "prop-types";
 import * as actions from "@/app/_common/actions";
 
@@ -22,7 +22,7 @@ interface UserPreferencesProviderProps {
     userPreferences: UserPreferencesActions;
 }
 
-function UserPreferencesProvider({ children, userPreferences }: UserPreferencesProviderProps) {
+function UserPreferencesProvider({ children, userPreferences }: UserPreferencesProviderProps): ReactElement {
     function addOpenFilter(panelId: string): void {
         try {
             actions.addOpenFilter(panelId).then();
@@ -31,7 +31,7 @@ function UserPreferencesProvider({ children, userPreferences }: UserPreferencesP
         }
     }
 
-    function removeOpenFilter(panelId: string) {
+    function removeOpenFilter(panelId: string): void {
         try {
             actions.removeOpenFilter(panelId).then();
         } catch (err) {
@@ -39,7 +39,7 @@ function UserPreferencesProvider({ children, userPreferences }: UserPreferencesP
         }
     }
 
-    function addPublishedJobFilterOpen() {
+    function addPublishedJobFilterOpen(): void {
         try {
             actions.addPublishedJobFilterOpen().then();
         } catch (err) {
@@ -47,7 +47,7 @@ function UserPreferencesProvider({ children, userPreferences }: UserPreferencesP
         }
     }
 
-    function removePublishedJobFilterOpen() {
+    function removePublishedJobFilterOpen(): void {
         try {
             actions.removePublishedJobFilterOpen().then();
         } catch (err) {

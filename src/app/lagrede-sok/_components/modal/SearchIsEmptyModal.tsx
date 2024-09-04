@@ -1,11 +1,11 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import AlertModal from "@/app/_common/components/modals/AlertModal";
 
 interface SearchIsEmptyModalProps {
     onClose: () => void;
 }
 
-function SearchIsEmptyModal({ onClose }: SearchIsEmptyModalProps) {
+function SearchIsEmptyModal({ onClose }: SearchIsEmptyModalProps): ReactElement {
     return (
         <AlertModal
             id="search-is-empty-modal"

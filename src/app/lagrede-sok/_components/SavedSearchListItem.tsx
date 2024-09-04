@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useTransition } from "react";
+import React, { ReactElement, useState, useTransition } from "react";
 import { Alert, Link as AkselLink, BodyShort, Heading, Tag, Button, HStack } from "@navikt/ds-react";
 import Link from "next/link";
 import { ArrowsCirclepathIcon, PencilIcon, TrashIcon } from "@navikt/aksel-icons";
@@ -27,7 +27,7 @@ function SavedSearchListItem({
     replaceSavedSearchInList,
     autoOpenModal,
     openErrorDialog,
-}: SavedSearchListItemProps) {
+}: SavedSearchListItemProps): ReactElement {
     const [isPending, startTransition] = useTransition();
 
     const [shouldShowSavedSearchModal, openSavedSearchModal, closeSavedSearchModal] = useToggle(autoOpenModal);
@@ -35,7 +35,7 @@ function SavedSearchListItem({
     const [restartEmailNotificationStatus, setRestartEmailNotificationStatus] = useState(FetchStatus.NOT_FETCHED);
     const isEmailNotificationExpired = savedSearch.status === "INACTIVE" && savedSearch.notifyType === "EMAIL";
 
-    function deleteSavedSearch() {
+    function deleteSavedSearch(): void {
         startTransition(async () => {
             let isSuccess;
             try {
@@ -53,7 +53,7 @@ function SavedSearchListItem({
         });
     }
 
-    async function reactivateEmailNotification() {
+    async function reactivateEmailNotification(): Promise<void> {
         setRestartEmailNotificationStatus(FetchStatus.IS_FETCHING);
 
         let isSuccess;
@@ -77,7 +77,7 @@ function SavedSearchListItem({
         }
     }
 
-    function handleSavedSearchUpdated(updatedData: SavedSearch) {
+    function handleSavedSearchUpdated(updatedData: SavedSearch): void {
         replaceSavedSearchInList(updatedData);
     }
 

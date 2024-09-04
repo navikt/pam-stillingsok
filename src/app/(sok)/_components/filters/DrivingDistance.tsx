@@ -54,7 +54,7 @@ function DrivingDistance({ query, dispatch, postcodes }: DrivingDistanceProps): 
         filterPostcodes();
     }, [selectedPostcode]);
 
-    function filterPostcodes(value: string | undefined = undefined) {
+    function filterPostcodes(value: string | undefined = undefined): void {
         let filteredOptions = allPostcodeOptions;
 
         if (value) {
@@ -85,7 +85,7 @@ function DrivingDistance({ query, dispatch, postcodes }: DrivingDistanceProps): 
         setFilteredPostcodeOptions(filteredOptions);
     }
 
-    function handlePostCodeChange(option: string, isSelected: boolean) {
+    function handlePostCodeChange(option: string, isSelected: boolean): void {
         if (isSelected) {
             dispatch({ type: ADD_POSTCODE, value: option });
         } else {
@@ -99,7 +99,7 @@ function DrivingDistance({ query, dispatch, postcodes }: DrivingDistanceProps): 
         });
     }
 
-    function handleDistanceChange(value: string | undefined) {
+    function handleDistanceChange(value: string | undefined): void {
         const hasNoValue = value === undefined || value === "";
         if (hasNoValue) {
             dispatch({ type: REMOVE_DISTANCE });
@@ -114,7 +114,7 @@ function DrivingDistance({ query, dispatch, postcodes }: DrivingDistanceProps): 
         });
     }
 
-    function resetDistanceFilters() {
+    function resetDistanceFilters(): void {
         dispatch({ type: REMOVE_POSTCODE });
         dispatch({ type: REMOVE_DISTANCE });
     }
