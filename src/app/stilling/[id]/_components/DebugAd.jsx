@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { BodyLong, Box, Heading, HStack, Tag, VStack } from "@navikt/ds-react";
+import { BodyLong, BodyShort, Box, Button, Heading, HStack, VStack } from "@navikt/ds-react";
 import { labelForNeedDriversLicense } from "@/app/(sok)/_components/filters/DriversLicense";
 import { labelForExperience } from "@/app/(sok)/_components/filters/Experience";
 import { labelForEducation } from "@/app/(sok)/_components/filters/Education";
-import { ThumbDownIcon, ThumbUpIcon } from "@navikt/aksel-icons";
+import { CheckmarkIcon, ThumbDownIcon, ThumbUpIcon, XMarkIcon } from "@navikt/aksel-icons";
 import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
 
 function vote(category, value, reason, adUuid) {
@@ -13,35 +13,50 @@ function vote(category, value, reason, adUuid) {
 
 function DebugAdItem({ category, value, adUuid }) {
     const [hasVoted, setHasVoted] = useState(false);
-
+    if (hasVoted) {
+        return null;
+    }
     return (
-        <Tag variant="neutral-moderate">
-            <HStack align="center" gap="4">
-                {value}
-                <HStack gap="2">
-                    {!hasVoted && (
-                        <>
-                            <ThumbUpIcon
-                                title="Stem opp"
-                                fontSize="1.25rem"
-                                onClick={() => {
-                                    setHasVoted(true);
-                                    vote(category, value, "Vote up", adUuid);
-                                }}
-                            />
-                            <ThumbDownIcon
-                                title="Stem ned"
-                                fontSize="1.25rem"
-                                onClick={() => {
-                                    setHasVoted(true);
-                                    vote(category, value, "Vote down", adUuid);
-                                }}
-                            />
-                        </>
-                    )}
+        <Box background={value.isChecked ? "surface-alt-1" : "surface-subtle"} paddingInline="0 4">
+            <HStack align="center" gap="2">
+                {!hasVoted && (
+                    <HStack>
+                        <Button
+                            aria-label="Stem opp"
+                            variant="tertiary-neutral"
+                            icon={
+                                <ThumbUpIcon
+                                    fontSize="1rem"
+                                    onClick={() => {
+                                        setHasVoted(true);
+                                        vote(category, value.label, "Vote up", adUuid);
+                                    }}
+                                />
+                            }
+                        />
+                        <Button
+                            variant="tertiary-neutral"
+                            aria-label="Stem ned"
+                            icon={
+                                <ThumbDownIcon
+                                    fontSize="1rem"
+                                    onClick={() => {
+                                        setHasVoted(true);
+                                        vote(category, value.label, "Vote down", adUuid);
+                                    }}
+                                />
+                            }
+                        />
+                    </HStack>
+                )}
+                <HStack align="center" gap="1">
+                    <BodyShort className="flex-1" size="small" textColor={!value.isChecked && "subtle"}>
+                        {value.isChecked ? <strong>{value.label}</strong> : <strike>{value.label}</strike>}
+                    </BodyShort>
+                    {value.isChecked && <CheckmarkIcon fontSize="1.25rem" />}
                 </HStack>
             </HStack>
-        </Tag>
+        </Box>
     );
 }
 
@@ -55,11 +70,11 @@ function DebugAdGroup({ category, values, adUuid }) {
             <Heading size="xsmall" level="3" spacing>
                 {category}
             </Heading>
-            <HStack gap="4">
+            <VStack gap="2">
                 {values.map((value) => (
                     <DebugAdItem key={value} category={category} value={value} adUuid={adUuid} />
                 ))}
-            </HStack>
+            </VStack>
         </div>
     );
 }
@@ -78,47 +93,52 @@ export default function DebugAd({ adData }) {
         }
     }, []);
 
+    const hideDebugPanel = () => {
+        try {
+            localStorage.setItem("isDebug", "false");
+        } catch (err) {
+            // ignore
+        }
+        setShowDebugPanel(false);
+    };
+
     if (!showDebugPanel) {
         return null;
     }
 
+    const experienceValues = ["Ingen", "Noe", "Mye"].map((it) => ({
+        label: labelForExperience(it),
+        isChecked: adData?.experience?.includes(it),
+    }));
+
+    const educationValues = ["Videregående", "Fagbrev", "Fagskole", "Bachelor", "Master", "Forskningsgrad"].map(
+        (it) => ({
+            label: labelForEducation(it),
+            isChecked: adData?.education?.includes(it),
+        }),
+    );
+
+    const driverLicenseValues = ["true", "false"].map((it) => ({
+        label: labelForNeedDriversLicense(it),
+        isChecked: adData?.needDriversLicense?.includes(it),
+    }));
+
     return (
-        <Box className="full-width mt-16">
-            <Heading level="2" size="large" spacing>
-                Har annonsen kommet i feil kategori?
-            </Heading>
-            <BodyLong spacing>
-                Gi en tommel opp eller ned så får vi oversikt over hvor stor andel som stemmer, og så kan vi se detaljer
-                om de som har kommet i feil kategori.
+        <Box className="debugAd">
+            <HStack align="center" justify="space-between">
+                <Heading level="2" size="medium">
+                    KI-kategorier
+                </Heading>
+                <Button aria-label="Lukk" variant="tertiary-neutral" icon={<XMarkIcon />} onClick={hideDebugPanel} />
+            </HStack>
+
+            <BodyLong spacing size="small">
+                Gi tommel opp/ned både på tildelte kategorier (grønne) og ikke-tildelte kategorier (utsteket)
             </BodyLong>
             <VStack gap="6">
-                <DebugAdGroup
-                    adUuid={adData.id}
-                    category="Yrke"
-                    values={adData.categoryList?.map(
-                        (category) => `${category.name} (${category.categoryType.toLowerCase()})`,
-                    )}
-                />
-                <DebugAdGroup
-                    adUuid={adData.id}
-                    category="Lignende yrker"
-                    values={adData?.searchtags?.map((tag) => tag.label)}
-                />
-                <DebugAdGroup
-                    adUuid={adData.id}
-                    category="Erfaring"
-                    values={adData?.experience?.map((experience) => labelForExperience(experience))}
-                />
-                <DebugAdGroup
-                    adUuid={adData.id}
-                    category="Utdanning"
-                    values={adData?.education?.map((education) => labelForEducation(education))}
-                />
-                <DebugAdGroup
-                    adUuid={adData.id}
-                    category="Førerkort"
-                    values={adData?.needDriversLicense?.map((item) => labelForNeedDriversLicense(item))}
-                />
+                <DebugAdGroup adUuid={adData.id} category="Erfaring" values={experienceValues} />
+                <DebugAdGroup adUuid={adData.id} category="Utdanning" values={educationValues} />
+                <DebugAdGroup adUuid={adData.id} category="Førerkort" values={driverLicenseValues} />
             </VStack>
         </Box>
     );

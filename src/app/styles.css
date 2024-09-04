@@ -158,3 +158,15 @@ no-underline:hover {
 .flex-shrink-0 {
     flex-shrink: 0;
 }
+
+.debugAd {
+    overflow-y: scroll;
+    position: fixed;
+    top: 0;
+    right: 0;
+    background-color: var(--a-surface-subtle);
+    border-left: 2px solid var(--a-border-divider);
+    padding: 1rem;
+    width: 360px;
+    height: 100vh;
+}
