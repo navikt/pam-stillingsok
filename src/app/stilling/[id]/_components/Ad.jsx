@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 
 import { Box, Heading, Tag } from "@navikt/ds-react";
 import { logStillingVisning } from "@/app/_common/monitoring/amplitude";
+import DebugAd from "@/app/stilling/[id]/_components/DebugAd";
 import AdDetails from "./AdDetails";
 import AdText from "./AdText";
 import ContactPerson from "./ContactPerson";
@@ -54,6 +55,8 @@ function Ad({ adData, organizationNumber }) {
                 <EmployerDetails employer={adData.employer} />
                 {annonseErAktiv && <ShareAd adData={adData} />}
                 <AdDetails adData={adData} />
+
+                <DebugAd adData={adData} />
             </Box>
         </Box>
     );

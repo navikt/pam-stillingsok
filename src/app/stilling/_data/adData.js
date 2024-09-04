@@ -279,5 +279,12 @@ export default function mapAdData(rawElasticSearchAdResult) {
         // Employer
         employer: getEmployerData(data),
         contactList: getContactList(data.contactList),
+
+        // For debugging
+        categoryList: getArray(data.categoryList),
+        searchtags: getArray(properties.searchtags),
+        education: getArray(properties.education),
+        experience: getArray(properties.experience),
+        needDriversLicense: getArray(properties.needDriversLicense),
     });
 }
