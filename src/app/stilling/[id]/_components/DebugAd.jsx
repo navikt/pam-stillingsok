@@ -108,12 +108,18 @@ export default function DebugAd({ adData }) {
         isChecked: adData?.experience?.includes(it) || false,
     }));
 
-    const educationValues = ["Videregående", "Fagbrev", "Fagskole", "Bachelor", "Master", "Forskningsgrad"].map(
-        (it) => ({
-            label: labelForEducation(it),
-            isChecked: adData?.education?.includes(it) || false,
-        }),
-    );
+    const educationValues = [
+        "Ingen krav",
+        "Videregående",
+        "Fagbrev",
+        "Fagskole",
+        "Bachelor",
+        "Master",
+        "Forskningsgrad",
+    ].map((it) => ({
+        label: labelForEducation(it),
+        isChecked: adData?.education?.includes(it) || false,
+    }));
 
     const driverLicenseValues = ["true", "false"].map((it) => ({
         label: labelForNeedDriversLicense(it),
