@@ -6,6 +6,7 @@ import { labelForExperience } from "@/app/(sok)/_components/filters/Experience";
 import { labelForEducation } from "@/app/(sok)/_components/filters/Education";
 import { CheckmarkIcon, ThumbDownIcon, ThumbUpIcon, XMarkIcon } from "@navikt/aksel-icons";
 import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
+import { useRouter } from "next/navigation";
 
 function DebugAdItem({ value, vote }) {
     return (
@@ -64,10 +65,10 @@ function DebugAdGroup({ category, values, adUuid }) {
 
     return (
         <div>
-            <Heading size="xsmall" level="3" spacing>
+            <Heading size="xsmall" level="3" className="mb-1">
                 {category}
             </Heading>
-            <VStack gap="2">
+            <VStack gap="1">
                 {valuesToBeVoted.map((value) => (
                     <DebugAdItem key={value.label} value={value} vote={vote} />
                 ))}
@@ -78,6 +79,7 @@ function DebugAdGroup({ category, values, adUuid }) {
 
 export default function DebugAd({ adData }) {
     const [showDebugPanel, setShowDebugPanel] = useState(false);
+    const router = useRouter();
 
     useEffect(() => {
         try {
@@ -139,10 +141,19 @@ export default function DebugAd({ adData }) {
                 For best statistikk, gi tommel opp/ned både på tildelte kategorier (grønne) og ikke-tildelte kategorier
                 (utsteket)
             </BodyLong>
-            <VStack gap="6">
+            <VStack gap="4">
                 <DebugAdGroup adUuid={adData.id} category="Erfaring" values={experienceValues} />
                 <DebugAdGroup adUuid={adData.id} category="Utdanning" values={educationValues} />
                 <DebugAdGroup adUuid={adData.id} category="Førerkort" values={driverLicenseValues} />
+                <Button
+                    className="mt-8"
+                    variant="secondary-neutral"
+                    onClick={() => {
+                        router.back();
+                    }}
+                >
+                    Gå tilbake
+                </Button>
             </VStack>
         </Box>
     );
