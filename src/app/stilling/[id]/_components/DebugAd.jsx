@@ -7,40 +7,28 @@ import { labelForEducation } from "@/app/(sok)/_components/filters/Education";
 import { CheckmarkIcon, ThumbDownIcon, ThumbUpIcon, XMarkIcon } from "@navikt/aksel-icons";
 import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
 
-function vote(category, value, reason, adUuid) {
-    logAmplitudeEvent("Report AI category", { category, value, reason, adUuid });
-}
-
-function DebugAdItem({ category, value, adUuid }) {
-    const [hasVoted, setHasVoted] = useState(false);
-    if (hasVoted) {
-        return null;
-    }
+function DebugAdItem({ value, vote }) {
     return (
         <Box background={value.isChecked ? "surface-alt-1" : "surface-subtle"} paddingInline="0 4">
             <HStack align="center" gap="2">
-                {!hasVoted && (
-                    <HStack>
-                        <Button
-                            aria-label="Stem opp"
-                            variant="tertiary-neutral"
-                            onClick={() => {
-                                setHasVoted(true);
-                                vote(category, value.label, "Vote up", adUuid);
-                            }}
-                            icon={<ThumbUpIcon fontSize="1rem" />}
-                        />
-                        <Button
-                            variant="tertiary-neutral"
-                            aria-label="Stem ned"
-                            onClick={() => {
-                                setHasVoted(true);
-                                vote(category, value.label, "Vote down", adUuid);
-                            }}
-                            icon={<ThumbDownIcon fontSize="1rem" />}
-                        />
-                    </HStack>
-                )}
+                <HStack>
+                    <Button
+                        aria-label="Stem opp"
+                        variant="tertiary-neutral"
+                        onClick={() => {
+                            vote(value, "Vote up");
+                        }}
+                        icon={<ThumbUpIcon fontSize="1rem" />}
+                    />
+                    <Button
+                        variant="tertiary-neutral"
+                        aria-label="Stem ned"
+                        onClick={() => {
+                            vote(value, "Vote down");
+                        }}
+                        icon={<ThumbDownIcon fontSize="1rem" />}
+                    />
+                </HStack>
                 <HStack align="center" gap="1">
                     <BodyShort className="flex-1" size="small" textColor={!value.isChecked && "subtle"}>
                         {value.isChecked ? <strong>{value.label}</strong> : <strike>{value.label}</strike>}
@@ -53,7 +41,20 @@ function DebugAdItem({ category, value, adUuid }) {
 }
 
 function DebugAdGroup({ category, values, adUuid }) {
-    if (!values) {
+    const [valuesToBeVoted, setValuesToBeVoted] = useState(values);
+
+    const vote = (value, reason) => {
+        setValuesToBeVoted((prevState) => prevState.filter((it) => it.label !== value.label));
+        logAmplitudeEvent("Report AI category", {
+            category,
+            label: value.label,
+            checked: value.isChecked,
+            reason,
+            adUuid,
+        });
+    };
+
+    if (!valuesToBeVoted || valuesToBeVoted.length === 0) {
         return null;
     }
 
@@ -63,8 +64,8 @@ function DebugAdGroup({ category, values, adUuid }) {
                 {category}
             </Heading>
             <VStack gap="2">
-                {values.map((value) => (
-                    <DebugAdItem key={value} category={category} value={value} adUuid={adUuid} />
+                {valuesToBeVoted.map((value) => (
+                    <DebugAdItem key={value.label} value={value} vote={vote} />
                 ))}
             </VStack>
         </div>
@@ -100,19 +101,19 @@ export default function DebugAd({ adData }) {
 
     const experienceValues = ["Ingen", "Noe", "Mye"].map((it) => ({
         label: labelForExperience(it),
-        isChecked: adData?.experience?.includes(it),
+        isChecked: adData?.experience?.includes(it) || false,
     }));
 
     const educationValues = ["Videregående", "Fagbrev", "Fagskole", "Bachelor", "Master", "Forskningsgrad"].map(
         (it) => ({
             label: labelForEducation(it),
-            isChecked: adData?.education?.includes(it),
+            isChecked: adData?.education?.includes(it) || false,
         }),
     );
 
     const driverLicenseValues = ["true", "false"].map((it) => ({
         label: labelForNeedDriversLicense(it),
-        isChecked: adData?.needDriversLicense?.includes(it),
+        isChecked: adData?.needDriversLicense?.includes(it) || false,
     }));
 
     return (
