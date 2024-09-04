@@ -2,11 +2,12 @@
 
 import React, { useEffect, useReducer, useState } from "react";
 import PropTypes from "prop-types";
-import { Box, Button, Heading, HGrid, Hide, Show, Stack, VStack } from "@navikt/ds-react";
+import { BodyShort, Box, Button, Heading, HGrid, Hide, HStack, Show, Stack, VStack } from "@navikt/ds-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { TrashIcon } from "@navikt/aksel-icons";
 import SaveSearchButton from "@/app/lagrede-sok/_components/SaveSearchButton";
-import queryReducer from "../_utils/queryReducer";
+import fixLocationName from "@/app/_common/utils/fixLocationName";
+import queryReducer, { REMOVE_DISTANCE, REMOVE_POSTCODE } from "../_utils/queryReducer";
 import { isSearchQueryEmpty, SEARCH_CHUNK_SIZE, stringifyQuery, toBrowserQuery } from "../_utils/query";
 import SearchResult from "./searchResult/SearchResult";
 import DoYouWantToSaveSearch from "./howToPanels/DoYouWantToSaveSearch";
@@ -64,6 +65,12 @@ export default function Search({ query, searchResult, aggregations, locations, p
         e.preventDefault();
     }
 
+    const drivingDistanceFilterActive = query.postcode && query.postcode.length === 4 && query.distance > 0;
+    const onlyPostcodeOrDistanceFilterActive =
+        searchParams.size === 2 && (searchParams.has("postcode") || searchParams.has("distance"));
+    const showSaveAndResetButton = searchParams.size > 0 && !onlyPostcodeOrDistanceFilterActive;
+    const chosenPostcodeCity = drivingDistanceFilterActive && postcodes.find((p) => p.postcode === query.postcode).city;
+
     return (
         <form onSubmit={onFormSubmit} className="mb-24">
             <Box paddingBlock={{ xs: "4", md: "10" }} paddingInline={{ xs: "4", sm: "6" }}>
@@ -81,8 +88,30 @@ export default function Search({ query, searchResult, aggregations, locations, p
                     aggregations={aggregations}
                     locations={locations}
                 />
-                {searchParams.size > 0 && (
-                    <>
+                {drivingDistanceFilterActive && (
+                    <HStack align="center" wrap={false} gap="2">
+                        <HStack gap="2">
+                            <BodyShort weight="semibold">Reisevei:</BodyShort>
+                            <BodyShort>
+                                Innen {query.distance} km fra {query.postcode} {fixLocationName(chosenPostcodeCity)}
+                            </BodyShort>
+                        </HStack>
+                        <Button
+                            type="button"
+                            variant="tertiary"
+                            onClick={() => {
+                                queryDispatch({ type: REMOVE_POSTCODE });
+                                queryDispatch({ type: REMOVE_DISTANCE });
+                            }}
+                            icon={<TrashIcon aria-hidden="true" />}
+                            size="small"
+                        >
+                            Fjern
+                        </Button>
+                    </HStack>
+                )}
+                {showSaveAndResetButton && (
+                    <div className="mt-3">
                         <SaveSearchButton query={query} size="small" />
                         <Button
                             type="button"
@@ -95,7 +124,7 @@ export default function Search({ query, searchResult, aggregations, locations, p
                         >
                             Nullstill søk
                         </Button>
-                    </>
+                    </div>
                 )}
             </div>
 
