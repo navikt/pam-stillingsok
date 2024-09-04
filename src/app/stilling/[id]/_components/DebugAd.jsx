@@ -24,28 +24,20 @@ function DebugAdItem({ category, value, adUuid }) {
                         <Button
                             aria-label="Stem opp"
                             variant="tertiary-neutral"
-                            icon={
-                                <ThumbUpIcon
-                                    fontSize="1rem"
-                                    onClick={() => {
-                                        setHasVoted(true);
-                                        vote(category, value.label, "Vote up", adUuid);
-                                    }}
-                                />
-                            }
+                            onClick={() => {
+                                setHasVoted(true);
+                                vote(category, value.label, "Vote up", adUuid);
+                            }}
+                            icon={<ThumbUpIcon fontSize="1rem" />}
                         />
                         <Button
                             variant="tertiary-neutral"
                             aria-label="Stem ned"
-                            icon={
-                                <ThumbDownIcon
-                                    fontSize="1rem"
-                                    onClick={() => {
-                                        setHasVoted(true);
-                                        vote(category, value.label, "Vote down", adUuid);
-                                    }}
-                                />
-                            }
+                            onClick={() => {
+                                setHasVoted(true);
+                                vote(category, value.label, "Vote down", adUuid);
+                            }}
+                            icon={<ThumbDownIcon fontSize="1rem" />}
                         />
                     </HStack>
                 )}
