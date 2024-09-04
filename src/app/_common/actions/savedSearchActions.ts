@@ -8,6 +8,7 @@ import {
 } from "@/app/_common/auth/auth";
 import { revalidatePath } from "next/cache";
 import { incrementAdUserRequests } from "@/metrics";
+import { ActionResponse } from "@/app/_common/actions/types";
 
 const SAVED_SEARCH_URL = `${process.env.PAMADUSER_URL}/api/v1/savedsearches`;
 
@@ -21,6 +22,10 @@ export interface SavedSearch {
     expires?: string;
     notifyType?: string;
     duration?: number;
+}
+
+export interface GetSavedSearchResponse extends ActionResponse<SavedSearch> {
+    statusCode?: number;
 }
 
 export async function getAllSavedSearchesAction(): Promise<SavedSearch[]> {
@@ -43,7 +48,7 @@ export async function getAllSavedSearchesAction(): Promise<SavedSearch[]> {
     return data ? data.content : [];
 }
 
-export async function getSavedSearchAction(uuid: string) {
+export async function getSavedSearchAction(uuid: string): Promise<GetSavedSearchResponse> {
     logger.info("GET saved search");
 
     const oboToken = await getAdUserOboToken();
@@ -63,10 +68,7 @@ export async function getSavedSearchAction(uuid: string) {
     return { success: true, data };
 }
 
-export async function saveSavedSearchAction(savedSearch: SavedSearch): Promise<{
-    success: boolean;
-    data?: SavedSearch;
-}> {
+export async function saveSavedSearchAction(savedSearch: SavedSearch): Promise<ActionResponse<SavedSearch>> {
     logger.info("POST saved search");
 
     const oboToken = await getAdUserOboToken();
@@ -93,10 +95,7 @@ export async function saveSavedSearchAction(savedSearch: SavedSearch): Promise<{
     };
 }
 
-export async function updateSavedSearchAction(savedSearch: SavedSearch): Promise<{
-    success: boolean;
-    data?: SavedSearch;
-}> {
+export async function updateSavedSearchAction(savedSearch: SavedSearch): Promise<ActionResponse<SavedSearch>> {
     logger.info("PUT SavedSearchAction", { uuid: savedSearch.uuid });
 
     const oboToken = await getAdUserOboToken();
@@ -123,7 +122,7 @@ export async function updateSavedSearchAction(savedSearch: SavedSearch): Promise
     };
 }
 
-export async function deleteSavedSearchAction(uuid: string): Promise<{ success: boolean }> {
+export async function deleteSavedSearchAction(uuid: string): Promise<ActionResponse<SavedSearch>> {
     logger.info("DELETE saved search", { uuid });
 
     const oboToken = await getAdUserOboToken();
@@ -148,10 +147,7 @@ export async function deleteSavedSearchAction(uuid: string): Promise<{ success: 
 export async function restartSavedSearchAction(
     uuid: string,
     savedSearch: SavedSearch,
-): Promise<{
-    success: boolean;
-    data?: SavedSearch;
-}> {
+): Promise<ActionResponse<SavedSearch>> {
     logger.info("RESTART saved search", { uuid });
 
     const oboToken = await getAdUserOboToken();

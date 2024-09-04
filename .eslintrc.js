@@ -64,6 +64,12 @@ module.exports = {
         "@typescript-eslint/no-use-before-define": "off",
         // defaultProps rule to be deprecated on function components
         // https://github.com/reactjs/rfcs/pull/107
+        "react/jsx-pascal-case": [
+            2,
+            {
+                ignore: ["UNSAFE_Combobox"],
+            },
+        ],
         "react/require-default-props": [
             "error",
             {
@@ -82,4 +88,13 @@ module.exports = {
         ],
         singleQuote: "off",
     },
+    overrides: [
+        {
+            // enable the rule specifically for TypeScript files
+            files: ["*.ts", "*.mts", "*.cts", "*.tsx"],
+            rules: {
+                "@typescript-eslint/explicit-function-return-type": "error",
+            },
+        },
+    ],
 };

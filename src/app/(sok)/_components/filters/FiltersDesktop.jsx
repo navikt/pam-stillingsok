@@ -6,16 +6,16 @@ import Education from "@/app/(sok)/_components/filters/Education";
 import DriversLicense from "@/app/(sok)/_components/filters/DriversLicense";
 import Experience from "@/app/(sok)/_components/filters/Experience";
 import NewFiltersMessage from "@/app/(sok)/_components/filters/NewFiltersMessage";
+import DistanceOrLocation from "@/app/(sok)/_components/filters/DistanceOrLocation";
 import FilterAccordionItem from "./FilterAccordionItem";
 import Published from "./Published";
-import Counties from "./Locations";
 import Occupations from "./Occupations";
 import Extent from "./Extent";
 import Sector from "./Sector";
 import EngagementType from "./Engagement";
 import WorkLanguage from "./WorkLanguage";
 
-function FiltersDesktop({ query, dispatchQuery, aggregations, locations, searchResult }) {
+function FiltersDesktop({ query, dispatchQuery, aggregations, locations, postcodes, searchResult }) {
     return (
         <div>
             <Accordion indent={false} headingSize="small">
@@ -28,18 +28,13 @@ function FiltersDesktop({ query, dispatchQuery, aggregations, locations, searchR
                         publishedTotalCount={searchResult.aggregations.publishedTotalCount}
                     />
                 </FilterAccordionItem>
-                <FilterAccordionItem title="Sted og hjemmekontor" panelId="sted">
-                    <Counties
+                <FilterAccordionItem title="Sted" panelId="sted">
+                    <DistanceOrLocation
                         query={query}
                         dispatch={dispatchQuery}
+                        postcodes={postcodes}
                         locations={locations}
-                        updatedValues={searchResult}
-                    />
-                    <Remote
-                        query={query}
-                        dispatch={dispatchQuery}
-                        initialValues={aggregations.remote}
-                        updatedValues={searchResult.aggregations.remote}
+                        searchResult={searchResult}
                     />
                 </FilterAccordionItem>
                 <FilterAccordionItem title="Yrke og sektor" panelId="yrke">
@@ -99,6 +94,14 @@ function FiltersDesktop({ query, dispatchQuery, aggregations, locations, searchR
                         dispatch={dispatchQuery}
                         initialValues={aggregations.engagementTypes}
                         updatedValues={searchResult.aggregations.engagementTypes}
+                    />
+                </FilterAccordionItem>
+                <FilterAccordionItem title="Hjemmekontor" panelId="hjemmekontor">
+                    <Remote
+                        query={query}
+                        dispatch={dispatchQuery}
+                        initialValues={aggregations.remote}
+                        updatedValues={searchResult.aggregations.remote}
                     />
                 </FilterAccordionItem>
             </Accordion>

@@ -8,7 +8,7 @@ import Education from "@/app/(sok)/_components/filters/Education";
 import DriversLicense from "@/app/(sok)/_components/filters/DriversLicense";
 import NewFiltersMessage from "@/app/(sok)/_components/filters/NewFiltersMessage";
 import Experience from "@/app/(sok)/_components/filters/Experience";
-import Counties from "./Locations";
+import DistanceOrLocation from "@/app/(sok)/_components/filters/DistanceOrLocation";
 import Occupations from "./Occupations";
 import Published from "./Published";
 import Extent from "./Extent";
@@ -16,7 +16,7 @@ import Sector from "./Sector";
 import EngagementType from "./Engagement";
 import WorkLanguage from "./WorkLanguage";
 
-function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggregations, locations }) {
+function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggregations, locations, postcodes }) {
     const [selectedFilter, setSelectedFilter] = useState("");
     const headingRef = useRef();
 
@@ -57,11 +57,12 @@ function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggre
                     <nav aria-label="Velg filter">
                         {[
                             "Publisert",
-                            "Sted og hjemmekontor",
+                            "Sted",
                             "Yrke og sektor",
                             "Utdanning, erfaring og førerkort",
                             "Arbeidsspråk",
                             "Omfang og ansettelsesform",
+                            "Hjemmekontor",
                         ].map((filter) => (
                             <button
                                 key={filter}
@@ -87,23 +88,14 @@ function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggre
                         />
                     )}
 
-                    {selectedFilter === "Sted og hjemmekontor" && (
-                        <>
-                            <div className="mb-6">
-                                <Counties
-                                    query={query}
-                                    dispatch={dispatchQuery}
-                                    locations={locations}
-                                    updatedValues={searchResult}
-                                />
-                            </div>
-                            <Remote
-                                query={query}
-                                dispatch={dispatchQuery}
-                                initialValues={aggregations.remote}
-                                updatedValues={searchResult.aggregations.remote}
-                            />
-                        </>
+                    {selectedFilter === "Sted" && (
+                        <DistanceOrLocation
+                            query={query}
+                            dispatch={dispatchQuery}
+                            postcodes={postcodes}
+                            locations={locations}
+                            searchResult={searchResult}
+                        />
                     )}
 
                     {selectedFilter === "Yrke og sektor" && (
@@ -177,6 +169,15 @@ function FiltersMobile({ onCloseClick, searchResult, query, dispatchQuery, aggre
                                 updatedValues={searchResult && searchResult.aggregations.engagementTypes}
                             />
                         </>
+                    )}
+
+                    {selectedFilter === "Hjemmekontor" && (
+                        <Remote
+                            query={query}
+                            dispatch={dispatchQuery}
+                            initialValues={aggregations.remote}
+                            updatedValues={searchResult.aggregations.remote}
+                        />
                     )}
                 </div>
             </Modal.Body>

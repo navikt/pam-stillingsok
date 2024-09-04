@@ -3,6 +3,7 @@ import { getDefaultHeaders } from "@/app/_common/utils/fetch";
 import simplifySearchResponse from "@/app/(sok)/_utils/simplifySearchResponse";
 import { unstable_cache } from "next/cache"; // eslint-disable-line
 import { elasticSearchDurationHistogram, incrementElasticSearchRequests } from "@/metrics";
+import { fetchLocationsWithinDrivingDistance } from "@/app/(sok)/_utils/fetchLocationsWithinDrivingDistance";
 
 /*
 Manually cached because Next.js won't cache it. We break these:
@@ -16,9 +17,18 @@ We can't use the built-in 'cache' in React either, since the route segment is dy
  */
 
 async function fetchElasticSearch(query) {
+    const elasticSearchQuery = query;
+    const shouldLookupLocationsWithinDrivingDistance = elasticSearchQuery.postcode && elasticSearchQuery.distance;
+
+    if (shouldLookupLocationsWithinDrivingDistance) {
+        elasticSearchQuery.withinDrivingDistance = await fetchLocationsWithinDrivingDistance(
+            elasticSearchQuery.postcode,
+            elasticSearchQuery.distance,
+        );
+    }
     const measureSearchDuration = elasticSearchDurationHistogram.startTimer();
 
-    const body = elasticSearchRequestBody(query);
+    const body = elasticSearchRequestBody(elasticSearchQuery);
     const res = await fetch(`${process.env.PAMSEARCHAPI_URL}/stillingsok/ad/_search`, {
         method: "POST",
         headers: getDefaultHeaders(),
@@ -42,6 +52,6 @@ export const fetchCachedElasticSearch = unstable_cache(
     async (query) => fetchElasticSearch(query),
     ["elastic-search-query"],
     {
-        revalidate: 30,
+        revalidate: 60,
     },
 );

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { ReactElement, useContext } from "react";
 import { Button, ButtonProps } from "@navikt/ds-react";
 import { FloppydiskIcon } from "@navikt/aksel-icons";
 import { useSearchParams } from "next/navigation";
@@ -28,7 +28,7 @@ interface SaveSearchButtonProps extends ButtonProps {
  * - has checked one or more search criteria
  * - has accepted terms
  */
-function SaveSearchButton({ query, size }: SaveSearchButtonProps) {
+function SaveSearchButton({ query, size }: SaveSearchButtonProps): ReactElement {
     const { authenticationStatus, login } = useContext(AuthenticationContext);
     const { hasAcceptedTermsStatus } = useContext(UserContext);
     const [shouldShowTermsModal, openTermsModal, closeTermsModal] = useToggle();
@@ -39,7 +39,7 @@ function SaveSearchButton({ query, size }: SaveSearchButtonProps) {
     const searchParams = useSearchParams();
     const savedSearchUuid = searchParams.get("saved");
 
-    function handleClick() {
+    function handleClick(): void {
         if (authenticationStatus === AuthenticationStatus.NOT_AUTHENTICATED) {
             openLoginModal();
         } else if (isSearchQueryEmpty(toSavedSearchQuery(query))) {
@@ -54,7 +54,7 @@ function SaveSearchButton({ query, size }: SaveSearchButtonProps) {
         }
     }
 
-    function handleTermsAccepted() {
+    function handleTermsAccepted(): void {
         closeTermsModal();
         openSaveSearchModal();
     }

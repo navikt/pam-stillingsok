@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { ReactElement, useState } from "react";
 import { Heading, VStack } from "@navikt/ds-react";
 import AlertModalWithPageReload from "@/app/_common/components/modals/AlertModalWithPageReload";
 import useToggle from "@/app/_common/hooks/useToggle";
@@ -19,17 +19,17 @@ interface SavedSearchListProps {
  * when clicking a link in a received notification email,
  * this view will auto open the edit modal for the saved search with that uuid
  */
-function SavedSearchesList({ data, uuid }: SavedSearchListProps) {
+function SavedSearchesList({ data, uuid }: SavedSearchListProps): ReactElement {
     const [localSavedSearchesList, setLocalSavedSearchesList] = useState(data);
     const [shouldShowErrorModal, openErrorDialog, closeErrorDialog] = useToggle();
 
-    function updateSavedSearchInList(updated: SavedSearch) {
+    function updateSavedSearchInList(updated: SavedSearch): void {
         setLocalSavedSearchesList(
             localSavedSearchesList.map((old) => (old.id === updated.id ? { ...updated, uuid: old.uuid } : old)),
         );
     }
 
-    function removeSavedSearchFromList(removed: SavedSearch) {
+    function removeSavedSearchFromList(removed: SavedSearch): void {
         setLocalSavedSearchesList(localSavedSearchesList.filter((it) => it.uuid !== removed.uuid));
     }
 

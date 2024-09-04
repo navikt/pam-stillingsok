@@ -1,3 +1,4 @@
+import { ReactElement } from "react";
 import LoginIsRequiredPage from "@/app/_common/auth/components/LoginIsRequiredPage";
 import SavedSearchesList from "./_components/SavedSearchesList";
 import UserConsentIsRequired from "./_components/UserConsentIsRequired";
@@ -10,7 +11,7 @@ export const metadata = {
         "Med lagrede søk kan du velge å motta e-postvarsler når det kommer nye treff, eller for å raskere søke neste gang.",
 };
 
-export default async function Page() {
+export default async function Page(): Promise<ReactElement> {
     const authenticated = await checkIfAuthenticated();
     if (!authenticated.isAuthenticated) {
         return <LoginIsRequiredPage redirect="/stillinger/lagrede-sok" />;

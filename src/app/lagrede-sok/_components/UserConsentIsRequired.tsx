@@ -1,13 +1,13 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { ReactElement, useState } from "react";
 import { BodyLong, Button, Heading, VStack } from "@navikt/ds-react";
 // @ts-expect-error TODO: Add typeinfo for arbeidsplassen-react
 import { FigureJugglingShieldWithCheckmark } from "@navikt/arbeidsplassen-react";
 import UserConsentModal from "@/app/_common/user/UserConsentModal";
 import { useRouter } from "next/navigation";
 
-function UserConsentIsRequired() {
+function UserConsentIsRequired(): ReactElement {
     const [showTermsModal, setShowTermModal] = useState(false);
     const router = useRouter();
 

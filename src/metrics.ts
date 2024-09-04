@@ -53,20 +53,20 @@ export const elasticSearchDurationHistogram: Histogram =
           })
         : (register.getSingleMetric("elastic_search_duration_seconds") as Histogram);
 
-export function incrementAdUserRequests(operation: string, success: boolean) {
+export function incrementAdUserRequests(operation: string, success: boolean): void {
     adUserRequests.inc({
         operation: operation,
         result: success ? "success" : "failure",
     });
 }
 
-export function incrementSuggestionRequests(success: boolean) {
+export function incrementSuggestionRequests(success: boolean): void {
     suggestionRequests.inc({
         result: success ? "success" : "failure",
     });
 }
 
-export function incrementElasticSearchRequests(success: boolean) {
+export function incrementElasticSearchRequests(success: boolean): void {
     elasticSearchRequests.inc({
         result: success ? "success" : "failure",
     });
