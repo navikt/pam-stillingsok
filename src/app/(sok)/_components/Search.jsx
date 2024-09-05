@@ -123,7 +123,7 @@ export default function Search({ query, searchResult, aggregations, locations, p
                         </Button>
                     </HStack>
                 )}
-                <HStack className="mt-3" gap="2" columns="2" align="center">
+                <HStack className="mt-3" gap="2" columns="2" align="baseline">
                     <div>
                         {showSaveAndResetButton && (
                             <>
@@ -144,7 +144,7 @@ export default function Search({ query, searchResult, aggregations, locations, p
                     </div>
                     <BodyShort>
                         <AkselLink href="/slik-bruker-du-det-nye-soket">
-                            <InformationSquareIcon />
+                            <InformationSquareIcon className="link-icon" />
                             Slik bruker du det nye søket for best resultat
                         </AkselLink>
                     </BodyShort>
