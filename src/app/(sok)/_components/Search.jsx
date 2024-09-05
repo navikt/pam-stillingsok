@@ -144,8 +144,10 @@ export default function Search({ query, searchResult, aggregations, locations, p
                     </div>
                     <BodyShort>
                         <AkselLink href="/slik-bruker-du-det-nye-soket">
-                            <InformationSquareIcon className="link-icon" />
-                            Slik bruker du det nye søket for best resultat
+                            <span className="link-icon">
+                                <InformationSquareIcon aria-hidden="true" />
+                            </span>
+                            <span>Slik bruker du det nye søket for best resultat</span>
                         </AkselLink>
                     </BodyShort>
                 </HStack>

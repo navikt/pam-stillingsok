@@ -160,5 +160,8 @@ no-underline:hover {
 }
 
 .link-icon {
+    align-self: baseline;
+    display: flex;
     font-size: 1.25rem;
+    margin-top: 2px;
 }
