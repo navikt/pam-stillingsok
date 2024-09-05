@@ -2,9 +2,21 @@
 
 import React, { useEffect, useReducer, useState } from "react";
 import PropTypes from "prop-types";
-import { BodyShort, Box, Button, Heading, HGrid, Hide, HStack, Show, Stack, VStack } from "@navikt/ds-react";
+import {
+    BodyShort,
+    Box,
+    Button,
+    Heading,
+    HGrid,
+    Hide,
+    HStack,
+    Link as AkselLink,
+    Show,
+    Stack,
+    VStack,
+} from "@navikt/ds-react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { TrashIcon } from "@navikt/aksel-icons";
+import { InformationSquareIcon, TrashIcon } from "@navikt/aksel-icons";
 import SaveSearchButton from "@/app/lagrede-sok/_components/SaveSearchButton";
 import fixLocationName from "@/app/_common/utils/fixLocationName";
 import queryReducer, { REMOVE_DISTANCE, REMOVE_POSTCODE } from "../_utils/queryReducer";
@@ -88,6 +100,7 @@ export default function Search({ query, searchResult, aggregations, locations, p
                     aggregations={aggregations}
                     locations={locations}
                 />
+
                 {drivingDistanceFilterActive && (
                     <HStack align="center" wrap={false} gap="2">
                         <HStack gap="2">
@@ -110,22 +123,32 @@ export default function Search({ query, searchResult, aggregations, locations, p
                         </Button>
                     </HStack>
                 )}
-                {showSaveAndResetButton && (
-                    <div className="mt-3">
-                        <SaveSearchButton query={query} size="small" />
-                        <Button
-                            type="button"
-                            variant="tertiary"
-                            onClick={() => {
-                                queryDispatch({ type: "RESET" });
-                            }}
-                            icon={<TrashIcon aria-hidden="true" />}
-                            size="small"
-                        >
-                            Nullstill søk
-                        </Button>
+                <HStack className="mt-3" gap="2" columns="2" align="center">
+                    <div>
+                        {showSaveAndResetButton && (
+                            <>
+                                <SaveSearchButton query={query} size="small" />
+                                <Button
+                                    type="button"
+                                    variant="tertiary"
+                                    onClick={() => {
+                                        queryDispatch({ type: "RESET" });
+                                    }}
+                                    icon={<TrashIcon aria-hidden="true" />}
+                                    size="small"
+                                >
+                                    Nullstill søk
+                                </Button>
+                            </>
+                        )}
                     </div>
-                )}
+                    <BodyShort>
+                        <AkselLink href="/slik-bruker-du-det-nye-soket">
+                            <InformationSquareIcon />
+                            Slik bruker du det nye søket for best resultat
+                        </AkselLink>
+                    </BodyShort>
+                </HStack>
             </div>
 
             <Box paddingBlock={{ xs: "6", md: "6" }} className="text-center">
