@@ -81,8 +81,8 @@ function SearchCombobox({ query, queryDispatch, onChange, options }) {
             const optionToAdd = getFilter[filter].add;
             handleFilterAddition(optionToAdd, optionValue);
         } else {
-            const fragements = option.split("-")[0];
-            const optionToRemove = fragements.length === 2 ? getFilter[option.split("-")[0]].remove : undefined;
+            const fragements = option.split("-");
+            const optionToRemove = fragements.length === 2 ? getFilter[fragements[0]].remove : undefined;
             if (optionToRemove) {
                 handleFilterRemoval(optionToRemove, optionValue);
             } else {
