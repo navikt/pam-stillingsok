@@ -1,71 +1,128 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { BodyLong, Box, Heading, HStack, Tag, VStack } from "@navikt/ds-react";
+import { BodyShort, Box, Button, Heading, HStack, VStack } from "@navikt/ds-react";
 import { labelForNeedDriversLicense } from "@/app/(sok)/_components/filters/DriversLicense";
 import { labelForExperience } from "@/app/(sok)/_components/filters/Experience";
 import { labelForEducation } from "@/app/(sok)/_components/filters/Education";
-import { ThumbDownIcon, ThumbUpIcon } from "@navikt/aksel-icons";
+import { CheckmarkIcon, ExclamationmarkTriangleIcon, ThumbUpIcon, XMarkIcon } from "@navikt/aksel-icons";
 import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
+import { useRouter } from "next/navigation";
 
-function vote(category, value, reason, adUuid) {
-    logAmplitudeEvent("Report AI category", { category, value, reason, adUuid });
-}
-
-function DebugAdItem({ category, value, adUuid }) {
-    const [hasVoted, setHasVoted] = useState(false);
-
+function DebugAdItem({ value, vote, showButton }) {
     return (
-        <Tag variant="neutral-moderate">
-            <HStack align="center" gap="4">
-                {value}
-                <HStack gap="2">
-                    {!hasVoted && (
-                        <>
-                            <ThumbUpIcon
-                                title="Stem opp"
-                                fontSize="1.25rem"
-                                onClick={() => {
-                                    setHasVoted(true);
-                                    vote(category, value, "Vote up", adUuid);
-                                }}
-                            />
-                            <ThumbDownIcon
-                                title="Stem ned"
-                                fontSize="1.25rem"
-                                onClick={() => {
-                                    setHasVoted(true);
-                                    vote(category, value, "Vote down", adUuid);
-                                }}
-                            />
-                        </>
-                    )}
-                </HStack>
+        <Box
+            background={value.isChecked ? "surface-alt-1" : "surface-alt-1-subtle"}
+            paddingInline="4 0"
+            borderRadius="full"
+        >
+            <HStack align="center" gap="1" justify="space-between">
+                {value.isChecked && <CheckmarkIcon />}
+                <BodyShort className="flex-1" textColor={!value.isChecked && "subtle"}>
+                    {value.isChecked ? <strong>{value.label}</strong> : <strike>{value.label}</strike>}
+                </BodyShort>
+                {showButton ? (
+                    <Button
+                        size="small"
+                        variant="tertiary-neutral"
+                        aria-label="Stem ned"
+                        onClick={() => {
+                            vote(value, value.isChecked ? "Feil" : "Mangler");
+                        }}
+                        icon={<ExclamationmarkTriangleIcon fontSize="1rem" />}
+                    >
+                        {value.isChecked ? "Feil" : "Mangler"}
+                    </Button>
+                ) : (
+                    <Box height="36px" />
+                )}
             </HStack>
-        </Tag>
+        </Box>
     );
 }
 
 function DebugAdGroup({ category, values, adUuid }) {
-    if (!values) {
+    const [valuesToBeVoted, setValuesToBeVoted] = useState(values);
+    const [showReportButtons, setShowReportButtons] = useState(true);
+    const [showSubReportButtons, setShowSubReportButtons] = useState(false);
+
+    const vote = (value, reason) => {
+        setValuesToBeVoted((prevState) => prevState.filter((it) => it.label !== value.label));
+        logAmplitudeEvent("Reported AI category value", {
+            category,
+            value: value.label,
+            reason,
+            adUuid,
+        });
+    };
+
+    if (!values || values.length === 0) {
         return null;
     }
 
     return (
-        <div>
-            <Heading size="xsmall" level="3" spacing>
-                {category}
-            </Heading>
-            <HStack gap="4">
-                {values.map((value) => (
-                    <DebugAdItem key={value} category={category} value={value} adUuid={adUuid} />
-                ))}
+        <Box borderWidth="0 0 1 0" borderColor="border-subtle" padding="4 4 6 4">
+            <HStack align="center" justify="space-between" className="mb-4">
+                <Heading size="small" level="3">
+                    {category}
+                </Heading>
+                <HStack>
+                    {showReportButtons ? (
+                        <>
+                            <Button
+                                variant="tertiary-neutral"
+                                size="small"
+                                icon={<ThumbUpIcon fontSize="1rem" />}
+                                onClick={() => {
+                                    logAmplitudeEvent("Reported AI categorization", {
+                                        category,
+                                        reason: "Ingen feil",
+                                        adUuid,
+                                    });
+                                    setShowSubReportButtons(false);
+                                    setShowReportButtons(false);
+                                }}
+                            >
+                                Alt er riktig
+                            </Button>
+                            <Button
+                                variant="tertiary-neutral"
+                                size="small"
+                                icon={<ExclamationmarkTriangleIcon fontSize="1rem" />}
+                                onClick={() => {
+                                    logAmplitudeEvent("Reported AI categorization", {
+                                        category,
+                                        reason: "En eller flere feil",
+                                        adUuid,
+                                    });
+                                    setShowSubReportButtons(true);
+                                    setShowReportButtons(false);
+                                }}
+                            >
+                                Har feil
+                            </Button>
+                        </>
+                    ) : (
+                        <Box height="36px" />
+                    )}
+                </HStack>
             </HStack>
-        </div>
+            <VStack gap="1">
+                {values.map((value) => (
+                    <DebugAdItem
+                        key={value.label}
+                        value={value}
+                        vote={vote}
+                        showButton={showSubReportButtons && valuesToBeVoted.includes(value)}
+                    />
+                ))}
+            </VStack>
+        </Box>
     );
 }
 
 export default function DebugAd({ adData }) {
     const [showDebugPanel, setShowDebugPanel] = useState(false);
+    const router = useRouter();
 
     useEffect(() => {
         try {
@@ -78,48 +135,73 @@ export default function DebugAd({ adData }) {
         }
     }, []);
 
+    const hideDebugPanel = () => {
+        try {
+            localStorage.setItem("isDebug", "false");
+        } catch (err) {
+            // ignore
+        }
+        setShowDebugPanel(false);
+    };
+
     if (!showDebugPanel) {
         return null;
     }
 
+    const experienceValues = ["Ingen", "Noe", "Mye"].map((it) => ({
+        label: labelForExperience(it),
+        isChecked: adData?.experience?.includes(it) || false,
+    }));
+
+    const educationValues = [
+        "Ingen krav",
+        "Videregående",
+        "Fagbrev",
+        "Fagskole",
+        "Bachelor",
+        "Master",
+        "Forskningsgrad",
+    ].map((it) => ({
+        label: labelForEducation(it),
+        isChecked: adData?.education?.includes(it) || false,
+    }));
+
+    const driverLicenseValues = adData?.needDriversLicense.map((it) => ({
+        label: labelForNeedDriversLicense(it),
+        isChecked: true,
+    }));
+
     return (
-        <Box className="full-width mt-16">
-            <Heading level="2" size="large" spacing>
-                Har annonsen kommet i feil kategori?
-            </Heading>
-            <BodyLong spacing>
-                Gi en tommel opp eller ned så får vi oversikt over hvor stor andel som stemmer, og så kan vi se detaljer
-                om de som har kommet i feil kategori.
-            </BodyLong>
-            <VStack gap="6">
-                <DebugAdGroup
-                    adUuid={adData.id}
-                    category="Yrke"
-                    values={adData.categoryList?.map(
-                        (category) => `${category.name} (${category.categoryType.toLowerCase()})`,
-                    )}
-                />
-                <DebugAdGroup
-                    adUuid={adData.id}
-                    category="Lignende yrker"
-                    values={adData?.searchtags?.map((tag) => tag.label)}
-                />
-                <DebugAdGroup
-                    adUuid={adData.id}
-                    category="Erfaring"
-                    values={adData?.experience?.map((experience) => labelForExperience(experience))}
-                />
-                <DebugAdGroup
-                    adUuid={adData.id}
-                    category="Utdanning"
-                    values={adData?.education?.map((education) => labelForEducation(education))}
-                />
-                <DebugAdGroup
-                    adUuid={adData.id}
-                    category="Førerkort"
-                    values={adData?.needDriversLicense?.map((item) => labelForNeedDriversLicense(item))}
-                />
-            </VStack>
+        <Box className="debugAd">
+            <Box padding="4 4 0 4">
+                <HStack align="center" justify="space-between">
+                    <Heading level="2" size="medium">
+                        KI-kategorier
+                    </Heading>
+                    <Button
+                        aria-label="Lukk"
+                        variant="tertiary-neutral"
+                        icon={<XMarkIcon />}
+                        onClick={hideDebugPanel}
+                    />
+                </HStack>
+            </Box>
+
+            <DebugAdGroup adUuid={adData.id} category="Erfaring" values={experienceValues} />
+            <DebugAdGroup adUuid={adData.id} category="Utdanning" values={educationValues} />
+            <DebugAdGroup adUuid={adData.id} category="Førerkort" values={driverLicenseValues} />
+
+            <Box padding="0 4">
+                <Button
+                    className="mt-8 full-width"
+                    variant="secondary-neutral"
+                    onClick={() => {
+                        router.back();
+                    }}
+                >
+                    Gå tilbake
+                </Button>
+            </Box>
         </Box>
     );
 }
