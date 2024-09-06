@@ -118,7 +118,7 @@ export async function saveResultsPerPage(resultsPerPage: number): Promise<void> 
     cookies().set(USER_PREFERENCES_COOKIE_NAME, JSON.stringify(newCookieValue), COOKIE_OPTIONS);
 }
 
-export async function setUserPreference(propertyName: string, value: string): void {
+export async function setUserPreference(propertyName: string, value: string): Promise<void> {
     if (!(propertyName in VALID_PREFERENCE_OPTION)) {
         logger.warn(`Invalid cookie property name ${propertyName}`);
     }
