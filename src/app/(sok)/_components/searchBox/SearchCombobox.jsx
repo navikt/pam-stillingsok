@@ -75,14 +75,19 @@ function SearchCombobox({ query, queryDispatch, onChange, options }) {
 
     const handleFilterOption = (option, isSelected) => {
         const optionValue = option.slice(option.indexOf("-") + 1);
-        const filter = option.split("-")[0];
 
         if (isSelected) {
+            const filter = option.split("-")[0];
             const optionToAdd = getFilter[filter].add;
             handleFilterAddition(optionToAdd, optionValue);
         } else {
-            const optionToRemove = getFilter[filter].remove;
-            handleFilterRemoval(optionToRemove, optionValue);
+            const fragements = option.split("-")[0];
+            const optionToRemove = fragements.length === 2 ? getFilter[option.split("-")[0]].remove : undefined;
+            if (optionToRemove) {
+                handleFilterRemoval(optionToRemove, optionValue);
+            } else {
+                handleFreeTextSearchOption(optionValue, false);
+            }
         }
     };
 
