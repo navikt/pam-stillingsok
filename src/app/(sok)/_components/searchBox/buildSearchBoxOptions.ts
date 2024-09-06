@@ -26,7 +26,7 @@ import {
     WORK_LANGUAGE,
 } from "@/app/(sok)/_components/searchBox/filterTypes";
 
-function getMunicipalOptions(locationList: LocationList[]) {
+function getMunicipalOptions(locationList: LocationList[]): ComboboxOption[] {
     return locationList
         .map((location) => location.subLocations)
         .flat()
@@ -39,7 +39,7 @@ function getMunicipalOptions(locationList: LocationList[]) {
         );
 }
 
-function getCountyOptions(locationList: LocationList[]) {
+function getCountyOptions(locationList: LocationList[]): ComboboxOption[] {
     return locationList
         .filter((location) => location.type === COUNTY)
         .map(
@@ -50,7 +50,7 @@ function getCountyOptions(locationList: LocationList[]) {
         );
 }
 
-function getCountryOptions(locationList: LocationList[]) {
+function getCountryOptions(locationList: LocationList[]): ComboboxOption[] {
     return locationList
         .filter((location) => location.type === INTERNATIONAL)
         .map((location) => location.subLocations)
@@ -63,6 +63,7 @@ function getCountryOptions(locationList: LocationList[]) {
         );
 }
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 function withSortedSecondLevelOccupations(aggregations: Aggregations) {
     return aggregations.occupationFirstLevels.map((item) => {
         const secondLevel = sortValuesByFirstLetter(item.occupationSecondLevels);
@@ -73,7 +74,7 @@ function withSortedSecondLevelOccupations(aggregations: Aggregations) {
     });
 }
 
-function getFirstLevelOccupationsOptions(aggregations: Aggregations) {
+function getFirstLevelOccupationsOptions(aggregations: Aggregations): ComboboxOption[] {
     return sortValuesByFirstLetter(withSortedSecondLevelOccupations(aggregations)).map(
         (occupation: { key: string }): ComboboxOption => ({
             label: occupation.key,
@@ -82,7 +83,7 @@ function getFirstLevelOccupationsOptions(aggregations: Aggregations) {
     );
 }
 
-function getSecondLevelOccupationsOptions(aggregations: Aggregations) {
+function getSecondLevelOccupationsOptions(aggregations: Aggregations): ComboboxOption[] {
     return withSortedSecondLevelOccupations(aggregations)
         .map((item) => item.secondLevel)
         .flat()
@@ -94,7 +95,7 @@ function getSecondLevelOccupationsOptions(aggregations: Aggregations) {
         );
 }
 
-function getPublishedOptions(aggregations: Aggregations) {
+function getPublishedOptions(aggregations: Aggregations): ComboboxOption[] {
     return aggregations.published.map(
         (item): ComboboxOption => ({
             label: PublishedLabelsEnum[item.key as keyof typeof PublishedLabelsEnum],
@@ -103,7 +104,7 @@ function getPublishedOptions(aggregations: Aggregations) {
     );
 }
 
-function getSectorOptions(aggregations: Aggregations) {
+function getSectorOptions(aggregations: Aggregations): ComboboxOption[] {
     return aggregations.sector.map(
         (item): ComboboxOption =>
             item.key === "Ikke oppgitt"
@@ -112,7 +113,7 @@ function getSectorOptions(aggregations: Aggregations) {
     );
 }
 
-function getEngagementTypeOptions(aggregations: Aggregations) {
+function getEngagementTypeOptions(aggregations: Aggregations): ComboboxOption[] {
     return aggregations.engagementTypes.map(
         (item): ComboboxOption =>
             editedItemKey(item.key) === "Ikke oppgitt"
@@ -121,7 +122,7 @@ function getEngagementTypeOptions(aggregations: Aggregations) {
     );
 }
 
-function getExtentOptions(aggregations: Aggregations) {
+function getExtentOptions(aggregations: Aggregations): ComboboxOption[] {
     return aggregations.extent.map(
         (item): ComboboxOption => ({
             label: item.key,
@@ -129,7 +130,7 @@ function getExtentOptions(aggregations: Aggregations) {
         }),
     );
 }
-function getEducationOptions(aggregations: Aggregations) {
+function getEducationOptions(aggregations: Aggregations): ComboboxOption[] {
     return aggregations.education.map(
         (item): ComboboxOption =>
             item.key === "Ikke oppgitt"
@@ -144,7 +145,7 @@ function getEducationOptions(aggregations: Aggregations) {
     );
 }
 
-function getWorkLanguageOptions(aggregations: Aggregations) {
+function getWorkLanguageOptions(aggregations: Aggregations): ComboboxOption[] {
     return aggregations.workLanguage.map(
         (item): ComboboxOption =>
             item.key === "Ikke oppgitt"
@@ -153,7 +154,7 @@ function getWorkLanguageOptions(aggregations: Aggregations) {
     );
 }
 
-function getRemoteOptions(aggregations: Aggregations) {
+function getRemoteOptions(aggregations: Aggregations): ComboboxOption[] {
     return aggregations.remote.map(
         (item): ComboboxOption =>
             item.key === "Ikke oppgitt"
@@ -162,7 +163,7 @@ function getRemoteOptions(aggregations: Aggregations) {
     );
 }
 
-function getOccupationSuggestionOptions(allSuggestions: string[]) {
+function getOccupationSuggestionOptions(allSuggestions: string[]): ComboboxOption[] {
     return allSuggestions.map(
         (suggestion): ComboboxOption => ({
             label: suggestion,
@@ -171,7 +172,7 @@ function getOccupationSuggestionOptions(allSuggestions: string[]) {
     );
 }
 
-function getDriversLicenseOptions(aggregations: Aggregations) {
+function getDriversLicenseOptions(aggregations: Aggregations): ComboboxOption[] {
     return aggregations.needDriversLicense.map(
         (licence): ComboboxOption =>
             licence.key === "Ikke oppgitt"
@@ -183,7 +184,7 @@ function getDriversLicenseOptions(aggregations: Aggregations) {
     );
 }
 
-function getExperienceOptions(aggregations: Aggregations) {
+function getExperienceOptions(aggregations: Aggregations): ComboboxOption[] {
     return aggregations.experience.map(
         (experience): ComboboxOption =>
             experience.key === "Ikke oppgitt"

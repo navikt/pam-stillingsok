@@ -26,7 +26,7 @@ import {
 } from "@/app/(sok)/_components/searchBox/filterTypes";
 
 // Ikke vis yrkeskategori hvis bruker har valgt et eller flere yrker i denne kategorien
-function filterOccupationFirstLevels(query: Query) {
+function filterOccupationFirstLevels(query: Query): string[] {
     return query.occupationFirstLevels.filter((firstLevel) => {
         const found = query.occupationSecondLevels.find((obj) => obj.startsWith(`${firstLevel}.`));
         return !found;
@@ -34,7 +34,7 @@ function filterOccupationFirstLevels(query: Query) {
 }
 
 // Ikke vis fylke hvis bruker har valgt en eller flere kommuner i dette fylket
-function filterCounties(query: Query) {
+function filterCounties(query: Query): string[] {
     return query.counties.filter((county) => {
         const found = query.municipals.find((obj) => obj.startsWith(`${county}.`));
         return !found;
