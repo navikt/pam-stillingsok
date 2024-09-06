@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { FetchAction, useFetchReducer } from "@/app/_common/hooks/useFetchReducer";
 import * as actions from "@/app/_common/actions";
@@ -9,23 +9,10 @@ let suggestionsCache = [];
 const CACHE_MAX_SIZE = 50;
 const MINIMUM_LENGTH = 1;
 
-function getSearchBoxValue(query) {
-    let initialValue = "";
-    if (query.q) {
-        initialValue = query.q;
-    } else if (query.occupations[0]) {
-        // eslint-disable-next-line prefer-destructuring
-        initialValue = query.occupations[0];
-    }
-    return initialValue;
-}
-
 function SearchBox({ dispatch, query, aggregations, locations }) {
-    const [value, setValue] = useState(getSearchBoxValue(query));
-    const initialRender = useRef(true);
     const [suggestionsResponse, suggestionsDispatch] = useFetchReducer([]);
 
-    async function fetchSuggestions() {
+    async function fetchSuggestions(value) {
         const cached = suggestionsCache.find((c) => c.value === value);
         if (cached) {
             suggestionsDispatch({ type: FetchAction.RESOLVE, data: cached.data });
@@ -43,25 +30,13 @@ function SearchBox({ dispatch, query, aggregations, locations }) {
         }
     }
 
-    useEffect(() => {
-        setValue(getSearchBoxValue(query));
-    }, [query.q, query.occupations]);
-
-    useEffect(() => {
-        if (initialRender.current) {
-            initialRender.current = false;
-        } else if (value && value.length >= MINIMUM_LENGTH) {
+    function handleValueChange(value) {
+        if (value && value.length >= MINIMUM_LENGTH) {
             fetchSuggestions(value);
-        } else {
-            suggestionsDispatch({ type: FetchAction.SET_DATA, data: [] });
         }
-    }, [value]);
+    }
 
     const allSuggestions = [...suggestionsResponse.data];
-
-    function handleValueChange(newValue) {
-        setValue(newValue);
-    }
 
     return (
         <section aria-label="Søk etter stilling" className="mb-4">
@@ -69,7 +44,6 @@ function SearchBox({ dispatch, query, aggregations, locations }) {
                 queryDispatch={dispatch}
                 query={query}
                 onChange={handleValueChange}
-                value={value}
                 options={getSearchBoxOptions(aggregations, locations, allSuggestions)}
             />
         </section>

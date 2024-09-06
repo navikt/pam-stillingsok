@@ -594,7 +594,7 @@ function filterSector(sector) {
 }
 
 /* Experimental alternative relevance model with AND-logic and using cross-fields matching. */
-function mainQueryConjunctionTuning(q) {
+function mainQueryConjunctionTuning(qAsArray) {
     const matchFields = [
         "category_name_no^2",
         "title_no^1",
@@ -604,7 +604,7 @@ function mainQueryConjunctionTuning(q) {
         "adtext_no^0.2",
         "employerdescription_no^0.1",
     ];
-
+    const q = qAsArray.join(" ");
     return {
         bool: {
             must: {
@@ -787,11 +787,11 @@ const elasticSearchRequestBody = (query) => {
     let { sort, q } = query;
 
     // To ensure consistent search results across multiple shards in elasticsearch when query is blank
-    if (!q || q.trim().length === 0) {
+    if (!q || q.length === 0) {
         if (sort !== "expires") {
             sort = "published";
         }
-        q = "";
+        q = [];
     }
     // Resolve if and-operator should be used (experimental)
     let mainQueryTemplateFunc = mainQueryConjunctionTuning;

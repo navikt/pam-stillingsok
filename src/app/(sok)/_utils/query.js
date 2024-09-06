@@ -1,4 +1,3 @@
-import capitalizeFirstLetter from "@/app/_common/utils/capitalizeFirstLetter";
 import fixLocationName from "@/app/_common/utils/fixLocationName";
 import { CURRENT_VERSION, VERSION_QUERY_PARAM } from "@/app/(sok)/_utils/searchParamsVersioning";
 
@@ -22,7 +21,7 @@ function asArray(value) {
 }
 
 export const defaultQuery = {
-    q: "",
+    q: [],
     from: 0,
     size: SEARCH_CHUNK_SIZE,
     counties: [],
@@ -56,7 +55,7 @@ export function createQuery(searchParams) {
             searchParams.size && ALLOWED_NUMBER_OF_RESULTS_PER_PAGE.includes(parseInt(searchParams.size, 10))
                 ? parseInt(searchParams.size, 10)
                 : defaultQuery.size,
-        q: searchParams.q || defaultQuery.q,
+        q: asArray(searchParams.q) || defaultQuery.q,
         match: searchParams.match || defaultQuery.match,
         municipals: asArray(searchParams.municipal) || defaultQuery.municipals,
         counties: asArray(searchParams.county) || defaultQuery.counties,
@@ -186,7 +185,7 @@ export function toReadableQuery(query) {
         return !found;
     });
 
-    if (query.q) occupation.push(capitalizeFirstLetter(query.q));
+    if (query.q) occupation.push(query.q.join(", "));
     if (query.published) occupation.push(PublishedLabelsEnum[query.published]);
 
     // occupation
