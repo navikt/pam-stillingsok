@@ -93,7 +93,12 @@ export default function Search({ query, searchResult, aggregations, locations, p
                 </Stack>
             </Box>
 
-            <div className="SearchContainer container-small">
+            <Box
+                padding={{ xs: "6 4", md: "6 12" }}
+                background="surface-alt-1-subtle"
+                borderRadius={{ md: "large" }}
+                className="SearchContainer"
+            >
                 <SearchBox
                     query={updatedQuery}
                     dispatch={queryDispatch}
@@ -151,7 +156,7 @@ export default function Search({ query, searchResult, aggregations, locations, p
                         </AkselLink>
                     </BodyShort>
                 </HStack>
-            </div>
+            </Box>
 
             <Box paddingBlock={{ xs: "6", md: "6" }} className="text-center">
                 <LoggedInButtons />
