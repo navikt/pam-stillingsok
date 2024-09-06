@@ -158,3 +158,10 @@ no-underline:hover {
 .flex-shrink-0 {
     flex-shrink: 0;
 }
+
+.link-icon {
+    align-self: baseline;
+    display: flex;
+    font-size: 1.25rem;
+    margin-top: 2px;
+}
