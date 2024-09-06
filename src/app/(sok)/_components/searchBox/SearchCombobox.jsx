@@ -82,7 +82,7 @@ function SearchCombobox({ query, queryDispatch, onChange, options }) {
             handleFilterAddition(optionToAdd, optionValue);
         } else {
             const fragements = option.split("-");
-            const optionToRemove = fragements.length === 2 ? getFilter[fragements[0]].remove : undefined;
+            const optionToRemove = fragements.length > 1 ? getFilter[fragements[0]].remove : undefined;
             if (optionToRemove) {
                 handleFilterRemoval(optionToRemove, optionValue);
             } else {
