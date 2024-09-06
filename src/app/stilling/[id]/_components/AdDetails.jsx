@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { BodyShort, Button, Heading, Label, Stack } from "@navikt/ds-react";
 import Link from "next/link";
-import { formatDate } from "@/app/_common/utils/utils";
+import { formatDate, mediumDisplayName } from "@/app/_common/utils/utils";
 import ShareAd from "@/app/stilling/[id]/_components/ShareAd";
 import { ExclamationmarkTriangleIcon } from "@navikt/aksel-icons";
 
@@ -55,7 +55,7 @@ export default function AdDetails({ adData }) {
                                 <Label as="span">Hentet fra</Label>
                             </dt>
                             <dd>
-                                <BodyShort>{adData.medium}</BodyShort>
+                                <BodyShort>{mediumDisplayName(adData.medium)}</BodyShort>
                             </dd>
                         </div>
                     )}
