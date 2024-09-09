@@ -15,7 +15,6 @@ import SearchIsEmptyModal from "./modal/SearchIsEmptyModal";
 
 interface SaveSearchButtonProps extends ButtonProps {}
 
-// todo burde vi ta vekk ?published også ved lagring, sjekk hva som var før?
 export function toSavedSearch(urlSearchParams: URLSearchParams): URLSearchParams {
     const savedSearchUrlSearchParams = new URLSearchParams();
     urlSearchParams.forEach((value: string, key: string) => {
