@@ -1,28 +1,30 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { BodyShort, Checkbox, CheckboxGroup } from "@navikt/ds-react";
-import { ADD_WORKLANGUAGE, REMOVE_WORKLANGUAGE } from "@/app/(sok)/_utils/queryReducer";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
 import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
 import moveCriteriaToBottom from "@/app/(sok)/_components/utils/moveFacetToBottom";
+import { WORK_LANGUAGE } from "@/app/(sok)/_components/searchParamNames";
+import useSearchQuery from "@/app/(sok)/_components/SearchStateProvider";
 
-function WorkLanguage({ initialValues, updatedValues, query, dispatch, hideLegend = false }) {
+function WorkLanguage({ initialValues, updatedValues, hideLegend = false }) {
     const sortedValues = moveCriteriaToBottom(initialValues, "Ikke oppgitt");
     const values = mergeCount(sortedValues, updatedValues);
+    const searchQuery = useSearchQuery();
 
     function handleClick(e) {
         const { value, checked } = e.target;
         if (checked) {
-            dispatch({ type: ADD_WORKLANGUAGE, value });
+            searchQuery.append(WORK_LANGUAGE, value);
         } else {
-            dispatch({ type: REMOVE_WORKLANGUAGE, value });
+            searchQuery.remove(WORK_LANGUAGE, value);
         }
         logFilterChanged({ name: "Arbeidsspråk", value, checked });
     }
 
     return (
         <CheckboxGroup
-            value={query.workLanguage}
+            value={searchQuery.getAll(WORK_LANGUAGE)}
             hideLegend={hideLegend}
             legend={
                 <BodyShort as="span" visuallyHidden>
@@ -47,10 +49,6 @@ WorkLanguage.propTypes = {
         }),
     ).isRequired,
     updatedValues: PropTypes.arrayOf(PropTypes.shape({})),
-    query: PropTypes.shape({
-        workLanguage: PropTypes.arrayOf(PropTypes.string),
-    }).isRequired,
-    dispatch: PropTypes.func.isRequired,
 };
 
 export default WorkLanguage;

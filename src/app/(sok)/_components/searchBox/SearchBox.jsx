@@ -9,7 +9,7 @@ let suggestionsCache = [];
 const CACHE_MAX_SIZE = 50;
 const MINIMUM_LENGTH = 1;
 
-function SearchBox({ dispatch, query, aggregations, locations }) {
+function SearchBox({ aggregations, locations }) {
     const [suggestionsResponse, suggestionsDispatch] = useFetchReducer([]);
 
     async function fetchSuggestions(value) {
@@ -41,8 +41,6 @@ function SearchBox({ dispatch, query, aggregations, locations }) {
     return (
         <section aria-label="Søk etter stilling" className="mb-4">
             <SearchCombobox
-                queryDispatch={dispatch}
-                query={query}
                 onChange={handleValueChange}
                 options={getSearchBoxOptions(aggregations, locations, allSuggestions)}
             />
@@ -51,10 +49,6 @@ function SearchBox({ dispatch, query, aggregations, locations }) {
 }
 
 SearchBox.propTypes = {
-    query: PropTypes.shape({
-        q: PropTypes.string,
-    }).isRequired,
-    dispatch: PropTypes.func.isRequired,
     locations: PropTypes.arrayOf(PropTypes.shape({})),
 };
 

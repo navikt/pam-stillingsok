@@ -1,26 +1,28 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { BodyShort, Checkbox, CheckboxGroup } from "@navikt/ds-react";
-import { ADD_EXTENT, REMOVE_EXTENT } from "@/app/(sok)/_utils/queryReducer";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
 import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
+import { EXTENT } from "@/app/(sok)/_components/searchParamNames";
+import useSearchQuery from "@/app/(sok)/_components/SearchStateProvider";
 
-function Extent({ initialValues, updatedValues, query, dispatch }) {
+function Extent({ initialValues, updatedValues }) {
     const values = mergeCount(initialValues, updatedValues);
+    const searchQuery = useSearchQuery();
 
     function handleClick(e) {
         const { value, checked } = e.target;
         if (checked) {
-            dispatch({ type: ADD_EXTENT, value });
+            searchQuery.append(EXTENT, value);
         } else {
-            dispatch({ type: REMOVE_EXTENT, value });
+            searchQuery.remove(EXTENT, value);
         }
         logFilterChanged({ name: "Omfang", value, checked });
     }
 
     return (
         <CheckboxGroup
-            value={query.extent}
+            value={searchQuery.getAll(EXTENT)}
             legend={
                 <>
                     <BodyShort as="span" visuallyHidden>
@@ -47,10 +49,6 @@ Extent.propTypes = {
         }),
     ).isRequired,
     updatedValues: PropTypes.arrayOf(PropTypes.shape({})),
-    query: PropTypes.shape({
-        extent: PropTypes.arrayOf(PropTypes.string),
-    }).isRequired,
-    dispatch: PropTypes.func.isRequired,
 };
 
 export default Extent;

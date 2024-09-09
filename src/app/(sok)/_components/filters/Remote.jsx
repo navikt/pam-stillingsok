@@ -1,15 +1,17 @@
 import React from "react";
 import { BodyShort, Checkbox, CheckboxGroup } from "@navikt/ds-react";
-import { ADD_REMOTE, REMOVE_REMOTE } from "@/app/(sok)/_utils/queryReducer";
 import moveCriteriaToBottom from "@/app/(sok)/_components/utils/moveFacetToBottom";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
 import sortRemoteValues from "@/app/(sok)/_components/utils/sortRemoteValues";
 import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
+import { REMOTE } from "@/app/(sok)/_components/searchParamNames";
+import useSearchQuery from "@/app/(sok)/_components/SearchStateProvider";
 
-function Remote({ initialValues, updatedValues, query, dispatch }) {
+function Remote({ initialValues, updatedValues }) {
     const sortedValuesByFirstLetter = sortRemoteValues(initialValues);
     const sortedValues = moveCriteriaToBottom(sortedValuesByFirstLetter, "Ikke oppgitt");
     const values = mergeCount(sortedValues, updatedValues);
+    const searchQuery = useSearchQuery();
 
     function labelForRemote(label) {
         switch (label) {
@@ -25,16 +27,16 @@ function Remote({ initialValues, updatedValues, query, dispatch }) {
     function handleClick(e) {
         const { value, checked } = e.target;
         if (checked) {
-            dispatch({ type: ADD_REMOTE, value });
+            searchQuery.append(REMOTE, value);
         } else {
-            dispatch({ type: REMOVE_REMOTE, value });
+            searchQuery.remove(REMOTE, value);
         }
         logFilterChanged({ name: "Hjemmekontor", value: labelForRemote(value), checked });
     }
 
     return (
         <CheckboxGroup
-            value={query.remote}
+            value={searchQuery.getAll(REMOTE)}
             legend={
                 <BodyShort as="span" visuallyHidden>
                     Filtrer etter hjemmekontor

@@ -1,23 +1,25 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { BodyShort, Checkbox, CheckboxGroup } from "@navikt/ds-react";
-import { ADD_SECTOR, REMOVE_SECTOR } from "@/app/(sok)/_utils/queryReducer";
 import moveCriteriaToBottom from "@/app/(sok)/_components/utils/moveFacetToBottom";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
 import sortValuesByFirstLetter from "@/app/(sok)/_components/utils/sortValuesByFirstLetter";
 import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
+import { SECTOR } from "@/app/(sok)/_components/searchParamNames";
+import useSearchQuery from "@/app/(sok)/_components/SearchStateProvider";
 
-function Sector({ initialValues, updatedValues, query, dispatch }) {
+function Sector({ initialValues, updatedValues }) {
     const sortedValuesByFirstLetter = sortValuesByFirstLetter(initialValues);
     const sortedValues = moveCriteriaToBottom(sortedValuesByFirstLetter, "Ikke oppgitt");
     const values = mergeCount(sortedValues, updatedValues);
+    const searchQuery = useSearchQuery();
 
     function handleClick(e) {
         const { value, checked } = e.target;
         if (checked) {
-            dispatch({ type: ADD_SECTOR, value });
+            searchQuery.append(SECTOR, value);
         } else {
-            dispatch({ type: REMOVE_SECTOR, value });
+            searchQuery.remove(SECTOR, value);
         }
         logFilterChanged({ name: "Sektor", value, checked });
     }
@@ -25,7 +27,7 @@ function Sector({ initialValues, updatedValues, query, dispatch }) {
     return (
         <CheckboxGroup
             className="mt-4"
-            value={query.sector}
+            value={searchQuery.getAll(SECTOR)}
             legend={
                 <>
                     <BodyShort as="span" visuallyHidden>
@@ -47,16 +49,6 @@ function Sector({ initialValues, updatedValues, query, dispatch }) {
 Sector.propTypes = {
     initialValues: PropTypes.arrayOf(PropTypes.shape({})),
     updatedValues: PropTypes.arrayOf(PropTypes.shape({})),
-    sector: PropTypes.arrayOf(
-        PropTypes.shape({
-            key: PropTypes.string,
-            count: PropTypes.number,
-        }),
-    ),
-    query: PropTypes.shape({
-        sector: PropTypes.arrayOf(PropTypes.string),
-    }).isRequired,
-    dispatch: PropTypes.func.isRequired,
 };
 
 export default Sector;

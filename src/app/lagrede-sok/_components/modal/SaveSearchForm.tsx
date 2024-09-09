@@ -71,7 +71,7 @@ function SaveSearchForm({
     function validateForm(): boolean {
         let isValid = true;
 
-        if (title?.trim().length === 0) {
+        if (formMode === FormModes.ADD && title?.trim().length === 0) {
             isValid = false;
             setTitleValidationError("Tittel mangler");
             if (titleRef.current) {

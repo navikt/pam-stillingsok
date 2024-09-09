@@ -1,14 +1,11 @@
-import DrivingDistance, { DispatchProps } from "@/app/(sok)/_components/filters/DrivingDistance";
+import DrivingDistance from "@/app/(sok)/_components/filters/DrivingDistance";
 import { ToggleGroup } from "@navikt/ds-react";
-import React, { Dispatch, ReactElement, useState } from "react";
+import React, { ReactElement, useState } from "react";
 import { Postcode } from "@/app/(sok)/_utils/fetchPostcodes";
 import Counties from "./Locations";
 
 // TODO: Fix disable no-explicit-any when new search field branch is merged
 interface DistanceOrLocationProps {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    query: any;
-    dispatch: Dispatch<DispatchProps>;
     postcodes: Postcode[];
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     locations: any;
@@ -16,13 +13,7 @@ interface DistanceOrLocationProps {
     searchResult: any;
 }
 
-function DistanceOrLocation({
-    query,
-    dispatch,
-    postcodes,
-    locations,
-    searchResult,
-}: DistanceOrLocationProps): ReactElement {
+function DistanceOrLocation({ postcodes, locations, searchResult }: DistanceOrLocationProps): ReactElement {
     const [selectedOption, setSelectedOption] = useState("distance");
 
     return (
@@ -31,12 +22,8 @@ function DistanceOrLocation({
                 <ToggleGroup.Item value="distance" label="Reisevei" />
                 <ToggleGroup.Item value="location" label="Sted" />
             </ToggleGroup>
-            {selectedOption === "distance" && (
-                <DrivingDistance query={query} dispatch={dispatch} postcodes={postcodes} />
-            )}
-            {selectedOption === "location" && (
-                <Counties query={query} dispatch={dispatch} locations={locations} updatedValues={searchResult} />
-            )}
+            {selectedOption === "distance" && <DrivingDistance postcodes={postcodes} />}
+            {selectedOption === "location" && <Counties locations={locations} updatedValues={searchResult} />}
         </>
     );
 }

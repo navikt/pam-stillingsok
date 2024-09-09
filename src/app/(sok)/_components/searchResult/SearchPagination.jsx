@@ -3,24 +3,32 @@ import { Hide, Pagination, Select, Show, VStack } from "@navikt/ds-react";
 import PropTypes from "prop-types";
 import * as actions from "@/app/_common/actions";
 import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
-import { SET_FROM_AND_SIZE } from "../../_utils/queryReducer";
+import useSearchQuery from "@/app/(sok)/_components/SearchStateProvider";
+import { FROM, SIZE } from "@/app/(sok)/_components/searchParamNames";
 import { ALLOWED_NUMBER_OF_RESULTS_PER_PAGE, SEARCH_CHUNK_SIZE } from "../../_utils/query";
 
-function SearchPagination({ searchResult, query, queryDispatch }) {
-    const resultsPerPage = query.size || SEARCH_CHUNK_SIZE;
+function SearchPagination({ searchResult }) {
+    const searchQuery = useSearchQuery();
+    const resultsPerPage = searchQuery.get(SIZE) || SEARCH_CHUNK_SIZE;
 
     // Elastic search does not allow pagination above 10 000 results.
     const totalPages = Math.ceil(
         searchResult.totalAds < 10000 ? searchResult.totalAds / resultsPerPage : 9999 / resultsPerPage,
     );
-    const page = query.from ? Math.floor(query.from / resultsPerPage) + 1 : 1;
+    const page = searchQuery.has(FROM) ? Math.floor(searchQuery.get(FROM) / resultsPerPage) + 1 : 1;
 
     const onPageChange = (x) => {
-        queryDispatch({
-            type: SET_FROM_AND_SIZE,
-            from: x * resultsPerPage - resultsPerPage,
-            size: resultsPerPage,
-        });
+        const from = x * resultsPerPage - resultsPerPage;
+        searchQuery.setPaginate(true);
+        if (from > 0) {
+            searchQuery.set(FROM, `${from}`);
+        } else {
+            searchQuery.remove(FROM);
+        }
+
+        if (resultsPerPage !== SEARCH_CHUNK_SIZE) {
+            searchQuery.set(SIZE, resultsPerPage);
+        }
     };
 
     if (totalPages === 0) {
@@ -54,12 +62,9 @@ function SearchPagination({ searchResult, query, queryDispatch }) {
             <Select
                 label="Antall treff per side"
                 onChange={(e) => {
-                    const size = parseInt(e.target.value, 10);
-                    queryDispatch({
-                        type: SET_FROM_AND_SIZE,
-                        from: 0,
-                        size,
-                    });
+                    const size = e.target.value;
+                    searchQuery.remove(FROM);
+                    searchQuery.set(SIZE, size);
                     logAmplitudeEvent("Page size Changed", { size });
                     actions.saveResultsPerPage(size);
                 }}
@@ -80,10 +85,6 @@ SearchPagination.propTypes = {
     searchResult: PropTypes.shape({
         ads: PropTypes.arrayOf(PropTypes.shape({})),
     }),
-    query: PropTypes.shape({
-        from: PropTypes.number,
-    }),
-    queryDispatch: PropTypes.func.isRequired,
 };
 
 export default SearchPagination;

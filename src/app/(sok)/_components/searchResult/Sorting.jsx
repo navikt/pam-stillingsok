@@ -1,18 +1,19 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { Select } from "@navikt/ds-react";
-import { SET_SORTING } from "@/app/(sok)/_utils/queryReducer";
+import useSearchQuery from "@/app/(sok)/_components/SearchStateProvider";
+import { SORT } from "@/app/(sok)/_components/searchParamNames";
 
-function Sorting({ query, dispatch }) {
+function Sorting() {
+    const searchQuery = useSearchQuery();
     function handleChange(e) {
         const { value } = e.target;
-        dispatch({ type: SET_SORTING, value });
+        searchQuery.set(SORT, value);
     }
 
     return (
         <Select
             onChange={handleChange}
-            value={query.sort || "published"}
+            value={searchQuery.get(SORT) || "published"}
             label="Sorter etter"
             className="inline-select"
         >
@@ -28,12 +29,5 @@ function Sorting({ query, dispatch }) {
         </Select>
     );
 }
-
-Sorting.propTypes = {
-    query: PropTypes.shape({
-        sort: PropTypes.string.isRequired,
-    }).isRequired,
-    dispatch: PropTypes.func.isRequired,
-};
 
 export default Sorting;

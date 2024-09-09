@@ -7,15 +7,22 @@ import { HasAcceptedTermsStatus, UserContext } from "@/app/_common/user/UserProv
 import UserConsentModal from "@/app/_common/user/UserConsentModal";
 import LoginModal from "@/app/_common/auth/components/LoginModal";
 import useToggle from "@/app/_common/hooks/useToggle";
-import { toReadableQuery, toSavedSearchQuery, isSearchQueryEmpty, stringifyQuery } from "@/app/(sok)/_utils/query";
+import useSearchQuery from "@/app/(sok)/_components/SearchStateProvider";
+import { AllowedSavedSearchParams } from "@/app/(sok)/_components/searchParamNames";
 import { FormModes } from "./modal/SaveSearchForm";
 import SaveSearchModal from "./modal/SaveSearchModal";
 import SearchIsEmptyModal from "./modal/SearchIsEmptyModal";
 
-interface SaveSearchButtonProps extends ButtonProps {
-    query: {
-        q?: string;
-    };
+interface SaveSearchButtonProps extends ButtonProps {}
+
+export function toSavedSearch(urlSearchParams: URLSearchParams): URLSearchParams {
+    const savedSearchUrlSearchParams = new URLSearchParams();
+    urlSearchParams.forEach((value: string, key: string) => {
+        if (AllowedSavedSearchParams.includes(key)) {
+            savedSearchUrlSearchParams.append(key, value);
+        }
+    });
+    return savedSearchUrlSearchParams;
 }
 
 /**
@@ -28,7 +35,9 @@ interface SaveSearchButtonProps extends ButtonProps {
  * - has checked one or more search criteria
  * - has accepted terms
  */
-function SaveSearchButton({ query, size }: SaveSearchButtonProps): ReactElement {
+function SaveSearchButton({ size }: SaveSearchButtonProps): ReactElement {
+    const searchState = useSearchQuery();
+
     const { authenticationStatus, login } = useContext(AuthenticationContext);
     const { hasAcceptedTermsStatus } = useContext(UserContext);
     const [shouldShowTermsModal, openTermsModal, closeTermsModal] = useToggle();
@@ -42,7 +51,7 @@ function SaveSearchButton({ query, size }: SaveSearchButtonProps): ReactElement 
     function handleClick(): void {
         if (authenticationStatus === AuthenticationStatus.NOT_AUTHENTICATED) {
             openLoginModal();
-        } else if (isSearchQueryEmpty(toSavedSearchQuery(query))) {
+        } else if (toSavedSearch(searchState.urlSearchParams).size === 0) {
             openQueryIsEmptyModal();
         } else if (hasAcceptedTermsStatus === HasAcceptedTermsStatus.NOT_ACCEPTED) {
             openTermsModal();
@@ -58,9 +67,6 @@ function SaveSearchButton({ query, size }: SaveSearchButtonProps): ReactElement 
         closeTermsModal();
         openSaveSearchModal();
     }
-
-    const title = toReadableQuery(query);
-    const shortenedTitle = title.length > 80 ? `${title.substring(0, 77)}...` : title;
 
     return (
         <>
@@ -85,8 +91,8 @@ function SaveSearchButton({ query, size }: SaveSearchButtonProps): ReactElement 
             {shouldShowSaveSearchModal && (
                 <SaveSearchModal
                     formData={{
-                        title: shortenedTitle,
-                        searchQuery: stringifyQuery(toSavedSearchQuery(query)),
+                        title: "",
+                        searchQuery: `?${toSavedSearch(searchState.urlSearchParams).toString()}`,
                     }}
                     onClose={closeSaveSearchModal}
                     defaultFormMode={savedSearchUuid ? FormModes.UPDATE_QUERY_ONLY : FormModes.ADD}

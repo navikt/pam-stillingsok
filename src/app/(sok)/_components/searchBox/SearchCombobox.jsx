@@ -1,93 +1,114 @@
 import { UNSAFE_Combobox as Combobox } from "@navikt/ds-react";
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import PropTypes from "prop-types";
-import {
-    ADD_COUNTRY,
-    ADD_MUNICIPAL,
-    ADD_OCCUPATION_SECOND_LEVEL,
-    REMOVE_COUNTRY,
-    REMOVE_MUNICIPAL,
-    REMOVE_OCCUPATION_SECOND_LEVEL,
-    SET_INTERNATIONAL,
-    SET_PUBLISHED,
-    ADD_SEARCH_STRING,
-    REMOVE_SEARCH_STRING,
-} from "@/app/(sok)/_utils/queryReducer";
-import {
-    addCountryFilter,
-    addMunicipalFilter,
-    addOccupationSecondLevelFilter,
-    findLabelForFilter,
-    getFilter,
-    removeCountryFilter,
-    removeMunicipalFilter,
-    removeOccupationSecondLevelFilter,
-} from "@/app/(sok)/_components/searchBox/searchBoxFilter";
+import { findLabelForFilter } from "@/app/(sok)/_components/searchBox/searchBoxFilter";
 import { buildSelectedOptions } from "@/app/(sok)/_components/searchBox/buildSelectedOptions";
+import useSearchQuery from "@/app/(sok)/_components/SearchStateProvider";
+import {
+    COUNTRY,
+    COUNTY,
+    INTERNATIONAL,
+    MUNICIPAL,
+    OCCUPATION_FIRST_LEVEL,
+    OCCUPATION_SECOND_LEVEL,
+    PUBLISHED,
+    SEARCH_STRING,
+} from "@/app/(sok)/_components/searchParamNames";
 
-function SearchCombobox({ query, queryDispatch, onChange, options }) {
-    const selectedOptions = useMemo(() => buildSelectedOptions(query), [query]);
-    const [isOpen, setIsOpen] = useState(false);
+function SearchCombobox({ onChange, options }) {
+    const searchQuery = useSearchQuery();
+    const selectedOptions = useMemo(
+        () => buildSelectedOptions(searchQuery.urlSearchParams),
+        [searchQuery.urlSearchParams],
+    );
 
     const optionList = options.map((o) => ({
         label: `${o.label} ${findLabelForFilter(o.value.split("-")[0])}`,
         value: o.value,
     }));
 
-    const handleFreeTextSearchOption = (option, isSelected) => {
+    const handleFreeTextSearchOption = (value, isSelected) => {
         if (isSelected) {
-            queryDispatch({
-                type: ADD_SEARCH_STRING,
-                value: option,
-            });
+            searchQuery.append(SEARCH_STRING, value);
         } else {
-            queryDispatch({ type: REMOVE_SEARCH_STRING, value: option });
+            searchQuery.remove(SEARCH_STRING, value);
         }
     };
 
-    const handleFilterRemoval = (filterToRemove, optionValue) => {
-        if (filterToRemove === SET_INTERNATIONAL) {
-            queryDispatch({ type: filterToRemove, value: false });
-        } else if (filterToRemove === SET_PUBLISHED) {
-            queryDispatch({ type: filterToRemove, value: undefined });
-        } else if (filterToRemove === REMOVE_MUNICIPAL) {
-            removeMunicipalFilter(queryDispatch, query, optionValue);
-        } else if (filterToRemove === REMOVE_COUNTRY) {
-            removeCountryFilter(queryDispatch, query, optionValue);
-        } else if (filterToRemove === REMOVE_OCCUPATION_SECOND_LEVEL) {
-            removeOccupationSecondLevelFilter(queryDispatch, query, optionValue);
+    const handleFilterRemoval = (key, value) => {
+        if (key === INTERNATIONAL) {
+            searchQuery.remove(key);
+        } else if (key === MUNICIPAL) {
+            searchQuery.remove(MUNICIPAL, value);
+
+            // Hvis dette var den siste valgte kommune i samme fylke, så skal fylket også fjernes
+            const county = value.split(".")[0];
+            const remainingMunicipalsInCounty = searchQuery
+                .getAll(MUNICIPAL)
+                .filter((municipal) => municipal.startsWith(`${county}.`));
+            if (remainingMunicipalsInCounty && remainingMunicipalsInCounty.length === 1) {
+                searchQuery.remove(COUNTY, county);
+            }
+        } else if (key === COUNTRY) {
+            searchQuery.remove(COUNTRY, value);
+            // Hvis dette var den siste landet, så skal "Utland" også fjernes
+            if (searchQuery.getAll(COUNTRY).length === 1) {
+                searchQuery.remove(INTERNATIONAL);
+            }
+        } else if (key === OCCUPATION_SECOND_LEVEL) {
+            searchQuery.remove(OCCUPATION_SECOND_LEVEL, value);
+
+            // Hvis dette var det siste yrket i samme yrkeskategori, så skal yrkeskategorien også fjernes
+            const firstLevel = value.split(".")[0];
+            const remainingOccupationsInCategory = searchQuery
+                .getAll(OCCUPATION_SECOND_LEVEL)
+                ?.filter((secondLevel) => secondLevel.startsWith(`${firstLevel}.`));
+            if (remainingOccupationsInCategory && remainingOccupationsInCategory.length === 1) {
+                searchQuery.remove(OCCUPATION_FIRST_LEVEL, firstLevel);
+            }
         } else {
-            queryDispatch({ type: filterToRemove, value: optionValue });
+            searchQuery.remove(key, value);
         }
     };
 
-    const handleFilterAddition = (filterToAdd, optionValue) => {
-        if (filterToAdd === ADD_MUNICIPAL) {
-            addMunicipalFilter(queryDispatch, query, optionValue);
-        } else if (filterToAdd === ADD_COUNTRY) {
-            addCountryFilter(queryDispatch, optionValue);
-        } else if (filterToAdd === ADD_OCCUPATION_SECOND_LEVEL) {
-            addOccupationSecondLevelFilter(queryDispatch, query, optionValue);
+    function handleFilterAddition(key, value) {
+        if (key === PUBLISHED) {
+            searchQuery.set(key, value);
+        } else if (key === MUNICIPAL) {
+            searchQuery.append(MUNICIPAL, value);
+
+            // Hvis fylket ikke allerede er valgt, så legg til dette også
+            const county = value.split(".")[0];
+            if (!searchQuery.has(COUNTY, county)) {
+                searchQuery.append(COUNTY, county);
+            }
+        } else if (key === COUNTRY) {
+            searchQuery.append(COUNTRY, value);
+            searchQuery.set(INTERNATIONAL, "true");
+        } else if (key === OCCUPATION_SECOND_LEVEL) {
+            searchQuery.append(OCCUPATION_SECOND_LEVEL, value);
+
+            // Hvis yrkeskategorien ikke allerede er valgt, så legg til denne også
+            const firstLevel = value.split(".")[0];
+            if (!searchQuery.has(OCCUPATION_FIRST_LEVEL, firstLevel)) {
+                searchQuery.append(OCCUPATION_FIRST_LEVEL, firstLevel);
+            }
         } else {
-            queryDispatch({ type: filterToAdd, value: optionValue });
+            searchQuery.append(key, value);
         }
-    };
+    }
 
     const handleFilterOption = (option, isSelected) => {
-        const optionValue = option.slice(option.indexOf("-") + 1);
+        const value = option.slice(option.indexOf("-") + 1);
+        const fragements = option.split("-");
+        const key = fragements.length > 1 ? fragements[0] : undefined;
 
         if (isSelected) {
-            const filter = option.split("-")[0];
-            const optionToAdd = getFilter[filter].add;
-            handleFilterAddition(optionToAdd, optionValue);
+            handleFilterAddition(key, value);
+        } else if (key) {
+            handleFilterRemoval(key, value);
         } else {
-            const fragements = option.split("-");
-            const optionToRemove = fragements.length > 1 ? getFilter[fragements[0]].remove : undefined;
-            if (optionToRemove) {
-                handleFilterRemoval(optionToRemove, optionValue);
-            } else {
-                handleFreeTextSearchOption(optionValue, false);
-            }
+            handleFreeTextSearchOption(value, false);
         }
     };
 
@@ -101,39 +122,18 @@ function SearchCombobox({ query, queryDispatch, onChange, options }) {
 
     return (
         <Combobox
-            isListOpen={isOpen}
             allowNewValues
             label="Legg til sted, yrker og andre søkeord"
             isMultiSelect
             onToggleSelected={onToggleSelected}
             selectedOptions={selectedOptions}
             options={optionList}
-            onChange={(value) => {
-                setIsOpen(value.length > 0);
-                onChange(value);
-            }}
+            onChange={onChange}
         />
     );
 }
 
 SearchCombobox.propTypes = {
-    query: PropTypes.shape({
-        q: PropTypes.string,
-        municipals: PropTypes.arrayOf(PropTypes.string),
-        counties: PropTypes.arrayOf(PropTypes.string),
-        countries: PropTypes.arrayOf(PropTypes.string),
-        international: PropTypes.bool,
-        occupationFirstLevels: PropTypes.arrayOf(PropTypes.string),
-        occupationSecondLevels: PropTypes.arrayOf(PropTypes.string),
-        published: PropTypes.string,
-        sector: PropTypes.arrayOf(PropTypes.string),
-        engagementType: PropTypes.arrayOf(PropTypes.string),
-        extent: PropTypes.arrayOf(PropTypes.string),
-        education: PropTypes.arrayOf(PropTypes.string),
-        workLanguage: PropTypes.arrayOf(PropTypes.string),
-        remote: PropTypes.arrayOf(PropTypes.string),
-    }),
-    queryDispatch: PropTypes.func.isRequired,
     onChange: PropTypes.func.isRequired,
     options: PropTypes.arrayOf(PropTypes.shape({})),
 };

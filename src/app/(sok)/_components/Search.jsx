@@ -1,6 +1,4 @@
-"use client";
-
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import {
     BodyShort,
@@ -15,12 +13,12 @@ import {
     Stack,
     VStack,
 } from "@navikt/ds-react";
-import { useRouter, useSearchParams } from "next/navigation";
 import { InformationSquareIcon, TrashIcon } from "@navikt/aksel-icons";
 import SaveSearchButton from "@/app/lagrede-sok/_components/SaveSearchButton";
 import fixLocationName from "@/app/_common/utils/fixLocationName";
-import queryReducer, { REMOVE_DISTANCE, REMOVE_POSTCODE } from "../_utils/queryReducer";
-import { isSearchQueryEmpty, SEARCH_CHUNK_SIZE, stringifyQuery, toBrowserQuery } from "../_utils/query";
+import useSearchQuery from "@/app/(sok)/_components/SearchStateProvider";
+import { DISTANCE, FROM, POSTCODE, SIZE } from "@/app/(sok)/_components/searchParamNames";
+import { SEARCH_CHUNK_SIZE } from "../_utils/query";
 import SearchResult from "./searchResult/SearchResult";
 import DoYouWantToSaveSearch from "./howToPanels/DoYouWantToSaveSearch";
 import Feedback from "./feedback/Feedback";
@@ -34,40 +32,9 @@ import SearchBox from "./searchBox/SearchBox";
 import SearchPagination from "./searchResult/SearchPagination";
 import MaxResultsBox from "./searchResult/MaxResultsBox";
 
-export default function Search({ query, searchResult, aggregations, locations, postcodes }) {
-    const [updatedQuery, queryDispatch] = useReducer(queryReducer, query);
+export default function Search({ searchResult, aggregations, locations, postcodes }) {
+    const searchQuery = useSearchQuery();
     const [isFiltersVisible, setIsFiltersVisible] = useState(false);
-    const [initialRenderDone, setInitialRenderDone] = useState(false);
-    const router = useRouter();
-    const searchParams = useSearchParams();
-    const savedSearchUuid = searchParams.get("saved");
-
-    /**
-     * Perform a search when user changes search criteria
-     */
-    useEffect(() => {
-        if (initialRenderDone) {
-            const browserQuery = toBrowserQuery(updatedQuery);
-
-            // Keep saved search uuid in browser url, as long as there are some search criteria.
-            // This uuid is used when user update an existing saved search
-            if (!isSearchQueryEmpty(browserQuery) && savedSearchUuid) {
-                browserQuery.saved = savedSearchUuid;
-            }
-
-            logAmplitudeEvent("Stillinger - Utførte søk");
-
-            if (updatedQuery.paginate) {
-                router.push(`/${stringifyQuery(browserQuery)}`);
-            } else {
-                router.replace(`/${stringifyQuery(browserQuery)}`, { scroll: false });
-            }
-        } else {
-            // Skip search first time query change, since that
-            // will just reload the search result we already got
-            setInitialRenderDone(true);
-        }
-    }, [updatedQuery]);
 
     useEffect(() => {
         logAmplitudeEvent("Stillinger - Utførte søk");
@@ -77,11 +44,15 @@ export default function Search({ query, searchResult, aggregations, locations, p
         e.preventDefault();
     }
 
-    const drivingDistanceFilterActive = query.postcode && query.postcode.length === 4 && query.distance > 0;
+    const drivingDistanceFilterActive =
+        searchQuery.has(POSTCODE) && searchQuery.get(POSTCODE).length === 4 && searchQuery.get(DISTANCE) > 0;
     const onlyPostcodeOrDistanceFilterActive =
-        searchParams.size === 2 && (searchParams.has("postcode") || searchParams.has("distance"));
-    const showSaveAndResetButton = searchParams.size > 0 && !onlyPostcodeOrDistanceFilterActive;
-    const chosenPostcodeCity = drivingDistanceFilterActive && postcodes.find((p) => p.postcode === query.postcode).city;
+        searchQuery.size === 2 && (searchQuery.has(POSTCODE) || searchQuery.has(DISTANCE));
+    const showSaveAndResetButton = searchQuery.size > 0 && !onlyPostcodeOrDistanceFilterActive;
+    const chosenPostcodeCity =
+        drivingDistanceFilterActive && postcodes.find((p) => p.postcode === searchQuery.get(POSTCODE)).city;
+    const from = searchQuery.get(FROM) || 0;
+    const size = searchQuery.get(SIZE) || SEARCH_CHUNK_SIZE;
 
     return (
         <form onSubmit={onFormSubmit} className="mb-24">
@@ -99,27 +70,23 @@ export default function Search({ query, searchResult, aggregations, locations, p
                 borderRadius={{ md: "large" }}
                 className="SearchContainer"
             >
-                <SearchBox
-                    query={updatedQuery}
-                    dispatch={queryDispatch}
-                    aggregations={aggregations}
-                    locations={locations}
-                />
+                <SearchBox aggregations={aggregations} locations={locations} />
 
                 {drivingDistanceFilterActive && (
                     <HStack align="center" wrap={false} gap="2">
                         <HStack gap="2">
                             <BodyShort weight="semibold">Reisevei:</BodyShort>
                             <BodyShort>
-                                Innen {query.distance} km fra {query.postcode} {fixLocationName(chosenPostcodeCity)}
+                                Innen {searchQuery.get(DISTANCE)} km fra {searchQuery.get(POSTCODE)}{" "}
+                                {fixLocationName(chosenPostcodeCity)}
                             </BodyShort>
                         </HStack>
                         <Button
                             type="button"
                             variant="tertiary"
                             onClick={() => {
-                                queryDispatch({ type: REMOVE_POSTCODE });
-                                queryDispatch({ type: REMOVE_DISTANCE });
+                                searchQuery.remove(POSTCODE);
+                                searchQuery.remove(DISTANCE);
                             }}
                             icon={<TrashIcon aria-hidden="true" />}
                             size="small"
@@ -128,16 +95,16 @@ export default function Search({ query, searchResult, aggregations, locations, p
                         </Button>
                     </HStack>
                 )}
-                <HStack className="mt-3" gap="2" columns="2" align="baseline">
+                <HStack minHeight="36px" className="mt-3" gap="2" columns="2" align="baseline">
                     <div>
                         {showSaveAndResetButton && (
                             <>
-                                <SaveSearchButton query={query} size="small" />
+                                <SaveSearchButton size="small" />
                                 <Button
                                     type="button"
                                     variant="tertiary"
                                     onClick={() => {
-                                        queryDispatch({ type: "RESET" });
+                                        searchQuery.reset();
                                     }}
                                     icon={<TrashIcon aria-hidden="true" />}
                                     size="small"
@@ -174,12 +141,7 @@ export default function Search({ query, searchResult, aggregations, locations, p
                 </Show>
             </Box>
 
-            <SearchResultHeader
-                isFiltersVisible={isFiltersVisible}
-                searchResult={searchResult}
-                query={updatedQuery}
-                queryDispatch={queryDispatch}
-            />
+            <SearchResultHeader isFiltersVisible={isFiltersVisible} searchResult={searchResult} />
 
             <HGrid
                 columns={{ xs: 1, lg: "220px auto", xl: "370px auto" }}
@@ -188,8 +150,6 @@ export default function Search({ query, searchResult, aggregations, locations, p
             >
                 <Hide below="lg">
                     <FiltersDesktop
-                        query={updatedQuery}
-                        dispatchQuery={queryDispatch}
                         aggregations={aggregations}
                         locations={locations}
                         postcodes={postcodes}
@@ -200,8 +160,6 @@ export default function Search({ query, searchResult, aggregations, locations, p
                 <Show below="lg">
                     {isFiltersVisible && (
                         <FiltersMobile
-                            query={updatedQuery}
-                            dispatchQuery={queryDispatch}
                             aggregations={aggregations}
                             locations={locations}
                             postcodes={postcodes}
@@ -212,15 +170,15 @@ export default function Search({ query, searchResult, aggregations, locations, p
                 </Show>
 
                 <VStack gap="10">
-                    <SearchResult searchResult={searchResult} query={updatedQuery} />
+                    <SearchResult searchResult={searchResult} />
 
                     {/* Elastic search does not support pagination above 10 000 */}
-                    {query.from + query.size === 10000 && <MaxResultsBox />}
+                    {from + size === 10000 && <MaxResultsBox />}
 
-                    <SearchPagination searchResult={searchResult} query={query} queryDispatch={queryDispatch} />
+                    <SearchPagination searchResult={searchResult} />
 
-                    {query.from + SEARCH_CHUNK_SIZE >= searchResult.totalAds && <DoYouWantToSaveSearch query={query} />}
-                    <Feedback query={query} />
+                    {from + SEARCH_CHUNK_SIZE >= searchResult.totalAds && <DoYouWantToSaveSearch />}
+                    <Feedback />
                 </VStack>
             </HGrid>
         </form>
@@ -233,5 +191,4 @@ Search.propTypes = {
     searchResult: PropTypes.shape({
         ads: PropTypes.arrayOf(PropTypes.shape({})),
     }),
-    query: PropTypes.shape({}),
 };

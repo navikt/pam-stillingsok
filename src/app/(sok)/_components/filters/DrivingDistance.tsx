@@ -1,35 +1,22 @@
-import React, { Dispatch, ReactElement, useEffect, useState } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import { BodyShort, Button, Fieldset, Select, UNSAFE_Combobox } from "@navikt/ds-react";
-import { ADD_DISTANCE, ADD_POSTCODE, REMOVE_DISTANCE, REMOVE_POSTCODE } from "@/app/(sok)/_utils/queryReducer";
 import { TrashIcon } from "@navikt/aksel-icons";
 import { Postcode } from "@/app/(sok)/_utils/fetchPostcodes";
 import { ComboboxOption } from "@navikt/ds-react/esm/form/combobox/types";
 import "./DrivingDistance.css";
 import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
-
-// TODO: Replace when TS query interface has been merged
-interface DrivingDistanceQueryProps {
-    postcode: string | null;
-    distance: number | null;
-}
-
-export interface DispatchProps {
-    type: string;
-    value?: string | number;
-}
+import useSearchQuery from "@/app/(sok)/_components/SearchStateProvider";
+import { DISTANCE, POSTCODE } from "@/app/(sok)/_components/searchParamNames";
 
 interface DrivingDistanceProps {
-    query: DrivingDistanceQueryProps;
-    dispatch: Dispatch<DispatchProps>;
     postcodes: Postcode[];
 }
 
-function DrivingDistance({ query, dispatch, postcodes }: DrivingDistanceProps): ReactElement {
-    const [selectedPostcode, setSelectedPostcode] = useState<ComboboxOption[] | string[]>(
-        (query.postcode && [query.postcode]) || [],
-    );
+function DrivingDistance({ postcodes }: DrivingDistanceProps): ReactElement {
+    const searchQuery = useSearchQuery();
+    const [selectedPostcode, setSelectedPostcode] = useState<ComboboxOption[] | string[]>(searchQuery.getAll(POSTCODE));
     const [filteredPostcodeOptions, setFilteredPostcodeOptions] = useState<ComboboxOption[]>([]);
-    const showResetFilterButton = selectedPostcode.length > 0 || query.postcode || query.distance;
+    const showResetFilterButton = selectedPostcode.length > 0 || searchQuery.has(POSTCODE) || searchQuery.has(DISTANCE);
 
     const allPostcodeOptions = postcodes.map((data) => ({
         value: data.postcode,
@@ -37,10 +24,10 @@ function DrivingDistance({ query, dispatch, postcodes }: DrivingDistanceProps): 
     }));
 
     useEffect(() => {
-        if (!query.postcode) {
+        if (!searchQuery.has(POSTCODE)) {
             setSelectedPostcode([]);
         } else {
-            const postcodeOption = allPostcodeOptions.find((postcode) => postcode.value === query.postcode);
+            const postcodeOption = allPostcodeOptions.find((postcode) => postcode.value === searchQuery.get(POSTCODE));
 
             if (postcodeOption) {
                 setSelectedPostcode([postcodeOption]);
@@ -48,7 +35,7 @@ function DrivingDistance({ query, dispatch, postcodes }: DrivingDistanceProps): 
                 setSelectedPostcode([]);
             }
         }
-    }, [query.postcode]);
+    }, [searchQuery.urlSearchParams]);
 
     useEffect(() => {
         filterPostcodes();
@@ -87,36 +74,36 @@ function DrivingDistance({ query, dispatch, postcodes }: DrivingDistanceProps): 
 
     function handlePostCodeChange(option: string, isSelected: boolean): void {
         if (isSelected) {
-            dispatch({ type: ADD_POSTCODE, value: option });
+            searchQuery.append(POSTCODE, option);
         } else {
-            dispatch({ type: REMOVE_POSTCODE });
+            searchQuery.remove(POSTCODE);
         }
         logFilterChanged({
             name: "Reisevei",
             value: option || (selectedPostcode[0] as ComboboxOption).value,
             level: "Postnummer",
-            checked: isSelected && !!query.distance,
+            checked: isSelected && !!searchQuery.get(DISTANCE),
         });
     }
 
     function handleDistanceChange(value: string | undefined): void {
         const hasNoValue = value === undefined || value === "";
         if (hasNoValue) {
-            dispatch({ type: REMOVE_DISTANCE });
+            searchQuery.remove(DISTANCE);
         } else {
-            dispatch({ type: ADD_DISTANCE, value });
+            searchQuery.append(DISTANCE, value);
         }
         logFilterChanged({
             name: "Reisevei",
-            value: value || query.distance,
+            value: value || searchQuery.get(DISTANCE),
             level: "Avstand",
             checked: !hasNoValue && selectedPostcode.length > 0,
         });
     }
 
     function resetDistanceFilters(): void {
-        dispatch({ type: REMOVE_POSTCODE });
-        dispatch({ type: REMOVE_DISTANCE });
+        searchQuery.remove(POSTCODE);
+        searchQuery.remove(DISTANCE);
     }
 
     return (
@@ -143,7 +130,7 @@ function DrivingDistance({ query, dispatch, postcodes }: DrivingDistanceProps): 
                     <Select
                         size="medium"
                         onChange={(e) => handleDistanceChange(e.target.value)}
-                        value={query.distance || ""}
+                        value={searchQuery.get(DISTANCE) || ""}
                         label="Maks reiseavstand"
                     >
                         <option key="0" value="">

@@ -2,7 +2,6 @@ import { editedItemKey } from "@/app/(sok)/_components/filters/Engagement";
 import sortValuesByFirstLetter from "@/app/(sok)/_components/utils/sortValuesByFirstLetter";
 import fixLocationName from "@/app/_common/utils/fixLocationName";
 import buildLocations from "@/app/(sok)/_components/utils/buildLocations";
-import { PublishedLabelsEnum } from "@/app/(sok)/_utils/query";
 import { labelForNeedDriversLicense } from "@/app/(sok)/_components/filters/DriversLicense";
 import { labelForExperience } from "@/app/(sok)/_components/filters/Experience";
 import { labelForEducation } from "@/app/(sok)/_components/filters/Education";
@@ -24,7 +23,8 @@ import {
     REMOTE,
     SECTOR,
     WORK_LANGUAGE,
-} from "@/app/(sok)/_components/searchBox/filterTypes";
+} from "@/app/(sok)/_components/searchParamNames";
+import { PublishedLabelsEnum } from "@/app/(sok)/_components/filters/Published";
 
 function getMunicipalOptions(locationList: LocationList[]): ComboboxOption[] {
     return locationList
@@ -240,29 +240,4 @@ interface LocationList {
     key: string;
     count: number;
     subLocations: LocationList[];
-}
-
-// TODO: move to SearchBox
-export interface Query {
-    q: string[];
-    from: number;
-    size: number;
-    municipals: string[];
-    counties: string[];
-    countries: string[];
-    international: boolean;
-    occupationFirstLevels: string[];
-    occupationSecondLevels: string[];
-    occupations: string[];
-    published?: string;
-    sector: string[];
-    engagementType: string[];
-    extent: string[];
-    education: string[];
-    workLanguage: string[];
-    remote: string[];
-    needDriversLicense: string[];
-    experience: string[];
-    sort: string;
-    v: number;
 }

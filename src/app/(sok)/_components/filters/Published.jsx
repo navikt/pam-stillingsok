@@ -1,21 +1,28 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { Radio, RadioGroup } from "@navikt/ds-react";
-import { SET_PUBLISHED } from "@/app/(sok)/_utils/queryReducer";
-import { PublishedLabelsEnum } from "@/app/(sok)/_utils/query";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
 import sortPublishedValues from "@/app/(sok)/_components/utils/sortPublishedValues";
 import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
+import { PUBLISHED } from "@/app/(sok)/_components/searchParamNames";
+import useSearchQuery from "@/app/(sok)/_components/SearchStateProvider";
 
-function Published({ dispatch, query, initialValues, updatedValues, publishedTotalCount }) {
+export const PublishedLabelsEnum = {
+    "now/d": "Nye i dag",
+    "now-3d": "Nye siste 3 døgn",
+    "now-7d": "Nye siste uka",
+};
+
+function Published({ initialValues, updatedValues, publishedTotalCount }) {
     const sortedValues = sortPublishedValues(initialValues);
     const values = mergeCount(sortedValues, updatedValues);
+    const searchQuery = useSearchQuery();
 
     function handleClick(value) {
         if (value) {
-            dispatch({ type: SET_PUBLISHED, value });
+            searchQuery.set(PUBLISHED, value);
         } else {
-            dispatch({ type: SET_PUBLISHED, value: undefined });
+            searchQuery.remove(PUBLISHED);
         }
         logFilterChanged({ name: "Publisert", value: PublishedLabelsEnum[value] });
     }
@@ -26,7 +33,7 @@ function Published({ dispatch, query, initialValues, updatedValues, publishedTot
             onChange={handleClick}
             legend="Filtrer etter når annonsen var publisert"
             hideLegend
-            value={query.published || ""}
+            value={searchQuery.get(PUBLISHED) || ""}
         >
             {values.map((item) => (
                 <Radio key={item.key} value={item.key}>
@@ -51,10 +58,6 @@ Published.propTypes = {
             count: PropTypes.number,
         }),
     ),
-    query: PropTypes.shape({
-        published: PropTypes.string,
-    }).isRequired,
-    dispatch: PropTypes.func.isRequired,
 };
 
 export default Published;

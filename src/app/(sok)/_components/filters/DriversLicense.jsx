@@ -1,27 +1,29 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { BodyShort, Checkbox, CheckboxGroup } from "@navikt/ds-react";
-import { ADD_NEEDDRIVERSLICENSE, REMOVE_NEEDDRIVERSLICENSE } from "@/app/(sok)/_utils/queryReducer";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
 import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
+import { NEED_DRIVERS_LICENSE } from "@/app/(sok)/_components/searchParamNames";
+import useSearchQuery from "@/app/(sok)/_components/SearchStateProvider";
 
-function DriversLicense({ initialValues, updatedValues, query, dispatch }) {
+function DriversLicense({ initialValues, updatedValues }) {
     const sortedValues = sortDriverLicenseValues(initialValues);
     const values = mergeCount(sortedValues, updatedValues);
+    const searchQuery = useSearchQuery();
 
     function handleClick(e) {
         const { value, checked } = e.target;
         if (checked) {
-            dispatch({ type: ADD_NEEDDRIVERSLICENSE, value });
+            searchQuery.append(NEED_DRIVERS_LICENSE, value);
         } else {
-            dispatch({ type: REMOVE_NEEDDRIVERSLICENSE, value });
+            searchQuery.remove(NEED_DRIVERS_LICENSE, value);
         }
         logFilterChanged({ name: "Førerkort", value, checked });
     }
 
     return (
         <CheckboxGroup
-            value={query.needDriversLicense}
+            value={searchQuery.getAll(NEED_DRIVERS_LICENSE)}
             legend={
                 <>
                     <BodyShort as="span" visuallyHidden>
@@ -48,7 +50,6 @@ DriversLicense.propTypes = {
         }),
     ).isRequired,
     updatedValues: PropTypes.arrayOf(PropTypes.shape({})),
-    dispatch: PropTypes.func.isRequired,
 };
 
 export const labelForNeedDriversLicense = (key) => {
