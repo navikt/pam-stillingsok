@@ -3,6 +3,12 @@ import { Select } from "@navikt/ds-react";
 import useSearchQuery from "@/app/(sok)/_components/SearchStateProvider";
 import { SORT } from "@/app/(sok)/_components/searchParamNames";
 
+export const SortByValues = {
+    RELEVANT: "relevant",
+    PUBLISHED: "published",
+    EXPIRES: "expires",
+};
+
 function Sorting() {
     const searchQuery = useSearchQuery();
     function handleChange(e) {
@@ -13,19 +19,13 @@ function Sorting() {
     return (
         <Select
             onChange={handleChange}
-            value={searchQuery.get(SORT) || "published"}
+            value={searchQuery.get(SORT) || SortByValues.PUBLISHED}
             label="Sorter etter"
             className="inline-select"
         >
-            <option key="published" value="published">
-                Nyeste øverst
-            </option>
-            <option key="relevant" value="relevant">
-                Mest relevant
-            </option>
-            <option key="expires" value="expires">
-                Søknadsfrist
-            </option>
+            <option value={SortByValues.PUBLISHED}>Nyeste øverst</option>
+            <option value={SortByValues.RELEVANT}>Mest relevant</option>
+            <option value={SortByValues.EXPIRES}>Søknadsfrist</option>
         </Select>
     );
 }

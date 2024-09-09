@@ -13,7 +13,9 @@ import {
     OCCUPATION_SECOND_LEVEL,
     PUBLISHED,
     SEARCH_STRING,
+    SORT,
 } from "@/app/(sok)/_components/searchParamNames";
+import { SortByValues } from "@/app/(sok)/_components/searchResult/Sorting";
 
 function SearchCombobox({ onChange, options }) {
     const searchQuery = useSearchQuery();
@@ -30,6 +32,9 @@ function SearchCombobox({ onChange, options }) {
     const handleFreeTextSearchOption = (value, isSelected) => {
         if (isSelected) {
             searchQuery.append(SEARCH_STRING, value);
+            if (searchQuery.get(SORT) !== SortByValues.EXPIRES) {
+                searchQuery.set(SORT, SortByValues.RELEVANT);
+            }
         } else {
             searchQuery.remove(SEARCH_STRING, value);
         }
