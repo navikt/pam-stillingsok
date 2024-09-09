@@ -6,7 +6,7 @@ import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
 import moveCriteriaToBottom from "@/app/(sok)/_components/utils/moveFacetToBottom";
 import sortEducationValues from "@/app/(sok)/_components/utils/sortEducationValues";
 import { EDUCATION } from "@/app/(sok)/_components/searchParamNames";
-import useSearchQuery from "@/app/(sok)/_components/SearchStateProvider";
+import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
 
 function Education({ initialValues, updatedValues }) {
     const sortedValuesByEducation = sortEducationValues(initialValues);

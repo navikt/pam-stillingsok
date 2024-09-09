@@ -6,7 +6,7 @@ import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
 import sortValuesByFirstLetter from "@/app/(sok)/_components/utils/sortValuesByFirstLetter";
 import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
 import { SECTOR } from "@/app/(sok)/_components/searchParamNames";
-import useSearchQuery from "@/app/(sok)/_components/SearchStateProvider";
+import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
 
 function Sector({ initialValues, updatedValues }) {
     const sortedValuesByFirstLetter = sortValuesByFirstLetter(initialValues);

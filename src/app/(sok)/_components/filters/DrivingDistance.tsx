@@ -5,7 +5,7 @@ import { Postcode } from "@/app/(sok)/_utils/fetchPostcodes";
 import { ComboboxOption } from "@navikt/ds-react/esm/form/combobox/types";
 import "./DrivingDistance.css";
 import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
-import useSearchQuery from "@/app/(sok)/_components/SearchStateProvider";
+import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
 import { DISTANCE, POSTCODE } from "@/app/(sok)/_components/searchParamNames";
 
 interface DrivingDistanceProps {

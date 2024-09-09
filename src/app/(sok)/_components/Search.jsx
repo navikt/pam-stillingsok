@@ -16,7 +16,7 @@ import {
 import { InformationSquareIcon, TrashIcon } from "@navikt/aksel-icons";
 import SaveSearchButton from "@/app/lagrede-sok/_components/SaveSearchButton";
 import fixLocationName from "@/app/_common/utils/fixLocationName";
-import useSearchQuery from "@/app/(sok)/_components/SearchStateProvider";
+import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
 import { DISTANCE, FROM, POSTCODE, SIZE } from "@/app/(sok)/_components/searchParamNames";
 import { SEARCH_CHUNK_SIZE } from "../_utils/query";
 import SearchResult from "./searchResult/SearchResult";

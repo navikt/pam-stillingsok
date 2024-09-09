@@ -5,7 +5,7 @@ import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
 import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
 import moveCriteriaToBottom from "@/app/(sok)/_components/utils/moveFacetToBottom";
 import { WORK_LANGUAGE } from "@/app/(sok)/_components/searchParamNames";
-import useSearchQuery from "@/app/(sok)/_components/SearchStateProvider";
+import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
 
 function WorkLanguage({ initialValues, updatedValues, hideLegend = false }) {
     const sortedValues = moveCriteriaToBottom(initialValues, "Ikke oppgitt");

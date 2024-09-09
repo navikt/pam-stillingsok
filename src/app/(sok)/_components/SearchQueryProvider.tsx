@@ -4,9 +4,9 @@ import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
 import { CURRENT_VERSION, VERSION_QUERY_PARAM } from "@/app/(sok)/_utils/searchParamsVersioning";
 import { FROM, SIZE } from "@/app/(sok)/_components/searchParamNames";
 
-export const SearchStateContext: React.Context<SearchStateActions> = React.createContext({} as SearchStateActions);
+export const SearchQueryContext: React.Context<SearchQueryActions> = React.createContext({} as SearchQueryActions);
 
-export type SearchStateActions = {
+export type SearchQueryActions = {
     get: (key: string) => string | null;
     getAll: (key: string) => string[];
     has: (key: string, value?: string) => boolean;
@@ -21,11 +21,11 @@ export type SearchStateActions = {
     paginate: boolean;
 };
 
-interface SearchStateProviderProps {
+interface SearchQueryProviderProps {
     children: React.ReactNode;
 }
 
-export function SearchStateProvider({ children }: SearchStateProviderProps): ReactElement {
+export function SearchQueryProvider({ children }: SearchQueryProviderProps): ReactElement {
     const initialSearchParams = useSearchParams();
     const [urlSearchParams, setUrlSearchParams] = useState(new URLSearchParams(initialSearchParams));
     const [paginate, setPaginate] = useState(false);
@@ -120,7 +120,7 @@ export function SearchStateProvider({ children }: SearchStateProviderProps): Rea
     }
 
     return (
-        <SearchStateContext.Provider
+        <SearchQueryContext.Provider
             // eslint-disable-next-line
             value={{
                 get,
@@ -138,12 +138,12 @@ export function SearchStateProvider({ children }: SearchStateProviderProps): Rea
             }}
         >
             {children}
-        </SearchStateContext.Provider>
+        </SearchQueryContext.Provider>
     );
 }
 
-const useSearchQuery = (): SearchStateActions => {
-    const context = React.useContext(SearchStateContext);
+const useSearchQuery = (): SearchQueryActions => {
+    const context = React.useContext(SearchQueryContext);
     return context;
 };
 

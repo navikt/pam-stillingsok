@@ -7,7 +7,7 @@ import { HasAcceptedTermsStatus, UserContext } from "@/app/_common/user/UserProv
 import UserConsentModal from "@/app/_common/user/UserConsentModal";
 import LoginModal from "@/app/_common/auth/components/LoginModal";
 import useToggle from "@/app/_common/hooks/useToggle";
-import useSearchQuery from "@/app/(sok)/_components/SearchStateProvider";
+import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
 import { AllowedSavedSearchParams } from "@/app/(sok)/_components/searchParamNames";
 import { FormModes } from "./modal/SaveSearchForm";
 import SaveSearchModal from "./modal/SaveSearchModal";

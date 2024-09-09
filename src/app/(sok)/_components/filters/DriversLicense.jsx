@@ -4,7 +4,7 @@ import { BodyShort, Checkbox, CheckboxGroup } from "@navikt/ds-react";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
 import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
 import { NEED_DRIVERS_LICENSE } from "@/app/(sok)/_components/searchParamNames";
-import useSearchQuery from "@/app/(sok)/_components/SearchStateProvider";
+import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
 
 function DriversLicense({ initialValues, updatedValues }) {
     const sortedValues = sortDriverLicenseValues(initialValues);

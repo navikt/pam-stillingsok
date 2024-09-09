@@ -2,7 +2,7 @@ import { UNSAFE_Combobox as Combobox } from "@navikt/ds-react";
 import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import { buildSelectedOptions } from "@/app/(sok)/_components/searchBox/buildSelectedOptions";
-import useSearchQuery from "@/app/(sok)/_components/SearchStateProvider";
+import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
 import {
     COUNTRY,
     COUNTY,

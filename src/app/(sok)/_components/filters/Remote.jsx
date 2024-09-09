@@ -5,7 +5,7 @@ import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
 import sortRemoteValues from "@/app/(sok)/_components/utils/sortRemoteValues";
 import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
 import { REMOTE } from "@/app/(sok)/_components/searchParamNames";
-import useSearchQuery from "@/app/(sok)/_components/SearchStateProvider";
+import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
 
 function Remote({ initialValues, updatedValues }) {
     const sortedValuesByFirstLetter = sortRemoteValues(initialValues);

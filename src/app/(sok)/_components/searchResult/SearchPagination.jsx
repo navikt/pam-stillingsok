@@ -3,7 +3,7 @@ import { Hide, Pagination, Select, Show, VStack } from "@navikt/ds-react";
 import PropTypes from "prop-types";
 import * as actions from "@/app/_common/actions";
 import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
-import useSearchQuery from "@/app/(sok)/_components/SearchStateProvider";
+import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
 import { FROM, SIZE } from "@/app/(sok)/_components/searchParamNames";
 import { ALLOWED_NUMBER_OF_RESULTS_PER_PAGE, SEARCH_CHUNK_SIZE } from "../../_utils/query";
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { Select } from "@navikt/ds-react";
-import useSearchQuery from "@/app/(sok)/_components/SearchStateProvider";
+import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
 import { SORT } from "@/app/(sok)/_components/searchParamNames";
 
 export const SortByValues = {

@@ -3,18 +3,18 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Search from "@/app/(sok)/_components/Search";
-import { SearchStateProvider } from "@/app/(sok)/_components/SearchStateProvider";
+import { SearchQueryProvider } from "@/app/(sok)/_components/SearchQueryProvider";
 
 export default function SearchWrapper({ searchResult, aggregations, locations, postcodes }) {
     return (
-        <SearchStateProvider>
+        <SearchQueryProvider>
             <Search
                 searchResult={searchResult}
                 locations={locations}
                 aggregations={aggregations}
                 postcodes={postcodes}
             />
-        </SearchStateProvider>
+        </SearchQueryProvider>
     );
 }
 

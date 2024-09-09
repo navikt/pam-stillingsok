@@ -3,7 +3,7 @@ import { BodyLong, Heading, HStack, Link as AkselLink, Panel, VStack } from "@na
 import { FaceFrownIcon, FaceSmileIcon } from "@navikt/aksel-icons";
 import { FeedbackButton } from "@navikt/arbeidsplassen-react";
 import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
-import useSearchQuery from "@/app/(sok)/_components/SearchStateProvider";
+import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
 import { SEARCH_STRING } from "@/app/(sok)/_components/searchParamNames";
 
 function Feedback() {

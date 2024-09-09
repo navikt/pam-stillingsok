@@ -5,7 +5,7 @@ import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
 import sortPublishedValues from "@/app/(sok)/_components/utils/sortPublishedValues";
 import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
 import { PUBLISHED } from "@/app/(sok)/_components/searchParamNames";
-import useSearchQuery from "@/app/(sok)/_components/SearchStateProvider";
+import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
 
 export const PublishedLabelsEnum = {
     "now/d": "Nye i dag",
