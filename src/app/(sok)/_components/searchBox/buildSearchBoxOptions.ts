@@ -139,7 +139,7 @@ function getEducationOptions(aggregations: Aggregations): ComboboxOption[] {
         (item): ComboboxOption =>
             item.key === "Ikke oppgitt"
                 ? {
-                      label: "Utdanning ikke oppgitt",
+                      label: "Krav til utdanning ikke oppgitt",
                       value: `${EDUCATION}-${item.key}`,
                   }
                 : {
