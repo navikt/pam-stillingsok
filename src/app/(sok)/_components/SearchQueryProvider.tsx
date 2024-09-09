@@ -29,7 +29,7 @@ export function SearchQueryProvider({ children }: SearchQueryProviderProps): Rea
     const initialSearchParams = useSearchParams();
     const [urlSearchParams, setUrlSearchParams] = useState(new URLSearchParams(initialSearchParams));
     const [paginate, setPaginate] = useState(false);
-    const [numberOfChanges, setNumberOfChanges] = useState(0);
+    const [hasChangesIndex, setHasChangesIndex] = useState(0);
     const router = useRouter();
 
     useEffect(() => {
@@ -37,7 +37,7 @@ export function SearchQueryProvider({ children }: SearchQueryProviderProps): Rea
     }, [initialSearchParams]);
 
     useEffect(() => {
-        if (numberOfChanges > 0) {
+        if (hasChangesIndex > 0) {
             logAmplitudeEvent("Stillinger - Utførte søk");
 
             // Add version parameter to url if necessary
@@ -55,10 +55,10 @@ export function SearchQueryProvider({ children }: SearchQueryProviderProps): Rea
                 router.replace(`/?${newUrlSearchParams.toString()}`, { scroll: false });
             }
         }
-    }, [numberOfChanges]);
+    }, [hasChangesIndex]);
 
     function syncUrl(): void {
-        setNumberOfChanges((prevState) => prevState + 1);
+        setHasChangesIndex((prevState) => prevState + 1);
     }
 
     function getAll(key: string): string[] {
