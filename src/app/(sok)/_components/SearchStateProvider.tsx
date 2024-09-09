@@ -38,26 +38,26 @@ export function SearchStateProvider({ children }: SearchStateProviderProps): Rea
     useEffect(() => {
         if (numberOfChanges > 0) {
             logAmplitudeEvent("Stillinger - Utførte søk");
+
+            // Add version parameter to url if necessary
+            const newUrlSearchParams = new URLSearchParams(urlSearchParams);
+            if (newUrlSearchParams.has(VERSION_QUERY_PARAM) && newUrlSearchParams.size === 1) {
+                newUrlSearchParams.delete(VERSION_QUERY_PARAM);
+            } else if (!newUrlSearchParams.has(VERSION_QUERY_PARAM) && newUrlSearchParams.size > 0) {
+                newUrlSearchParams.set(VERSION_QUERY_PARAM, `${CURRENT_VERSION}`);
+            }
+
             if (paginate) {
                 setPaginate(false);
-                router.push(`/?${urlSearchParams.toString()}`);
+                router.push(`/?${newUrlSearchParams.toString()}`);
             } else {
-                router.replace(`/?${urlSearchParams.toString()}`, { scroll: false });
+                router.replace(`/?${newUrlSearchParams.toString()}`, { scroll: false });
             }
         }
     }, [numberOfChanges]);
 
     function syncUrl(): void {
         setNumberOfChanges((prevState) => prevState + 1);
-
-        // Add version parameter to url if necessary
-        const newUrlSearchParams = new URLSearchParams(urlSearchParams);
-        if (newUrlSearchParams.has(VERSION_QUERY_PARAM) && newUrlSearchParams.size === 1) {
-            newUrlSearchParams.delete(VERSION_QUERY_PARAM);
-        } else if (!newUrlSearchParams.has(VERSION_QUERY_PARAM) && newUrlSearchParams.size > 0) {
-            newUrlSearchParams.set(VERSION_QUERY_PARAM, `${CURRENT_VERSION}`);
-        }
-        setUrlSearchParams(newUrlSearchParams);
     }
 
     function getAll(key: string): string[] {
@@ -86,6 +86,7 @@ export function SearchStateProvider({ children }: SearchStateProviderProps): Rea
     }
 
     function append(key: string, value: string): void {
+        console.log(key, value);
         setUrlSearchParams((previous) => {
             const newUrlSearchParams = new URLSearchParams(previous);
             newUrlSearchParams.append(key, value);
