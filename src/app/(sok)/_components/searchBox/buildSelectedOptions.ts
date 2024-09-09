@@ -24,6 +24,7 @@ import {
     WORK_LANGUAGE,
 } from "@/app/(sok)/_components/searchParamNames";
 import { PublishedLabelsEnum } from "@/app/(sok)/_components/filters/Published";
+import { editedItemKey as editedOccupation } from "@/app/(sok)/_components/filters/Occupations";
 
 function buildOption(key: string, value: string): ComboboxOption | undefined {
     switch (key) {
@@ -55,10 +56,12 @@ function buildOption(key: string, value: string): ComboboxOption | undefined {
                 value: `${OCCUPATION_SECOND_LEVEL}-${value}`,
             };
         case OCCUPATION_FIRST_LEVEL:
-            return {
-                label: value,
-                value: `${OCCUPATION_FIRST_LEVEL}-${value}`,
-            };
+            return editedOccupation(value) === "Ikke oppgitt"
+                ? { label: "Yrke ikke oppgitt", value: `${OCCUPATION_FIRST_LEVEL}-${value}` }
+                : {
+                      label: value,
+                      value: `${OCCUPATION_FIRST_LEVEL}-${value}`,
+                  };
         case PUBLISHED:
             return {
                 label: PublishedLabelsEnum[value as keyof typeof PublishedLabelsEnum],
@@ -73,7 +76,9 @@ function buildOption(key: string, value: string): ComboboxOption | undefined {
                 ? { label: "Ansettelsesform ikke oppgitt", value: `${ENGAGEMENT_TYPE}-${value}` }
                 : { label: value, value: `${ENGAGEMENT_TYPE}-${value}` };
         case EXTENT:
-            return { label: value, value: `${EXTENT}-${value}` };
+            return value === "Ikke oppgitt"
+                ? { label: "Omfang ikke oppgitt", value: `${EXTENT}-${value}` }
+                : { label: value, value: `${EXTENT}-${value}` };
         case EDUCATION:
             return value === "Ikke oppgitt"
                 ? {

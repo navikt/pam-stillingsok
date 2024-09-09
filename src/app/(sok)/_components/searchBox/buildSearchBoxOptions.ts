@@ -1,4 +1,5 @@
 import { editedItemKey } from "@/app/(sok)/_components/filters/Engagement";
+import { editedItemKey as editedOccupation } from "@/app/(sok)/_components/filters/Occupations";
 import sortValuesByFirstLetter from "@/app/(sok)/_components/utils/sortValuesByFirstLetter";
 import fixLocationName from "@/app/_common/utils/fixLocationName";
 import buildLocations from "@/app/(sok)/_components/utils/buildLocations";
@@ -97,10 +98,13 @@ function withSortedSecondLevelOccupations(aggregations: Aggregations) {
 
 function getFirstLevelOccupationsOptions(aggregations: Aggregations): ComboboxOption[] {
     return sortValuesByFirstLetter(withSortedSecondLevelOccupations(aggregations)).map(
-        (occupation: { key: string }): ComboboxOption => ({
-            label: occupation.key,
-            value: `${OCCUPATION_FIRST_LEVEL}-${occupation.key}`,
-        }),
+        (occupation: { key: string }): ComboboxOption =>
+            editedOccupation(occupation.key) === "Ikke oppgitt"
+                ? { label: "Yrke ikke oppgitt", value: `${OCCUPATION_FIRST_LEVEL}-${occupation.key}` }
+                : {
+                      label: occupation.key,
+                      value: `${OCCUPATION_FIRST_LEVEL}-${occupation.key}`,
+                  },
     );
 }
 
@@ -148,10 +152,13 @@ function getEngagementTypeOptions(aggregations: Aggregations): ComboboxOption[] 
 function getExtentOptions(aggregations: Aggregations): ComboboxOption[] {
     return aggregations.extent
         .map(
-            (item): ComboboxOption => ({
-                label: item.key,
-                value: `${EXTENT}-${item.key}`,
-            }),
+            (item): ComboboxOption =>
+                item.key === "Ikke oppgitt"
+                    ? { label: "Omfang ikke oppgitt", value: `${EXTENT}-${item.key}` }
+                    : {
+                          label: item.key,
+                          value: `${EXTENT}-${item.key}`,
+                      },
         )
         .filter((option) => !promotedValues.includes(option.value));
 }
