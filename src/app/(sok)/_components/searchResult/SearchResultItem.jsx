@@ -124,7 +124,7 @@ function LinkToAd({ children, stilling }) {
     return (
         <AkselLink
             onClick={() => {
-                if (window) {
+                if (typeof window !== "undefined") {
                     window.history.push("/stillinger", {
                         state: {
                             history: [window.location.href],
