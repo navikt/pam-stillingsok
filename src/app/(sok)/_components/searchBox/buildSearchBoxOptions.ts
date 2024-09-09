@@ -173,12 +173,14 @@ function getEducationOptions(aggregations: Aggregations): ComboboxOption[] {
 }
 
 function getWorkLanguageOptions(aggregations: Aggregations): ComboboxOption[] {
-    return aggregations.workLanguage.map(
-        (item): ComboboxOption =>
-            item.key === "Ikke oppgitt"
-                ? { label: "Arbeidsspråk ikke oppgitt", value: `${WORK_LANGUAGE}-${item.key}` }
-                : { label: item.key, value: `${WORK_LANGUAGE}-${item.key}` },
-    );
+    return aggregations.workLanguage
+        .map(
+            (item): ComboboxOption =>
+                item.key === "Ikke oppgitt"
+                    ? { label: "Arbeidsspråk ikke oppgitt", value: `${WORK_LANGUAGE}-${item.key}` }
+                    : { label: item.key, value: `${WORK_LANGUAGE}-${item.key}` },
+        )
+        .filter((option) => !promotedValues.includes(option.value));
 }
 
 function getRemoteOptions(aggregations: Aggregations): ComboboxOption[] {
