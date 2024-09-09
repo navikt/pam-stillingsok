@@ -1,8 +1,8 @@
 import React, { ReactElement, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
-import { CURRENT_VERSION, VERSION_QUERY_PARAM } from "@/app/(sok)/_utils/searchParamsVersioning";
-import { FROM, SIZE } from "@/app/(sok)/_components/searchParamNames";
+import { CURRENT_VERSION } from "@/app/(sok)/_utils/searchParamsVersioning";
+import { FROM, SIZE, URL_VERSION } from "@/app/(sok)/_components/searchParamNames";
 
 export const SearchQueryContext: React.Context<SearchQueryActions> = React.createContext({} as SearchQueryActions);
 
@@ -40,19 +40,11 @@ export function SearchQueryProvider({ children }: SearchQueryProviderProps): Rea
         if (hasChangesIndex > 0) {
             logAmplitudeEvent("Stillinger - Utførte søk");
 
-            // Add version parameter to url if necessary
-            const newUrlSearchParams = new URLSearchParams(urlSearchParams);
-            if (newUrlSearchParams.has(VERSION_QUERY_PARAM) && newUrlSearchParams.size === 1) {
-                newUrlSearchParams.delete(VERSION_QUERY_PARAM);
-            } else if (!newUrlSearchParams.has(VERSION_QUERY_PARAM) && newUrlSearchParams.size > 0) {
-                newUrlSearchParams.set(VERSION_QUERY_PARAM, `${CURRENT_VERSION}`);
-            }
-
             if (paginate) {
                 setPaginate(false);
-                router.push(`/?${newUrlSearchParams.toString()}`);
+                router.push(`/?${urlSearchParams.toString()}`);
             } else {
-                router.replace(`/?${newUrlSearchParams.toString()}`, { scroll: false });
+                router.replace(`/?${urlSearchParams.toString()}`, { scroll: false });
             }
         }
     }, [hasChangesIndex]);
@@ -81,7 +73,7 @@ export function SearchQueryProvider({ children }: SearchQueryProviderProps): Rea
         setUrlSearchParams((previous) => {
             const newUrlSearchParams = new URLSearchParams(previous);
             newUrlSearchParams.set(key, value);
-            return resetFromAndSize(newUrlSearchParams, key);
+            return setDefaultValues(newUrlSearchParams, key);
         });
         syncUrl();
     }
@@ -90,7 +82,7 @@ export function SearchQueryProvider({ children }: SearchQueryProviderProps): Rea
         setUrlSearchParams((previous) => {
             const newUrlSearchParams = new URLSearchParams(previous);
             newUrlSearchParams.append(key, value);
-            return resetFromAndSize(newUrlSearchParams, key);
+            return setDefaultValues(newUrlSearchParams, key);
         });
         syncUrl();
     }
@@ -99,7 +91,7 @@ export function SearchQueryProvider({ children }: SearchQueryProviderProps): Rea
         setUrlSearchParams((previous) => {
             const newUrlSearchParams = new URLSearchParams(previous);
             newUrlSearchParams.delete(key, value);
-            return resetFromAndSize(newUrlSearchParams, key);
+            return setDefaultValues(newUrlSearchParams, key);
         });
         syncUrl();
     }
@@ -109,13 +101,20 @@ export function SearchQueryProvider({ children }: SearchQueryProviderProps): Rea
         syncUrl();
     }
 
-    function resetFromAndSize(previousUrlSearchParams: URLSearchParams, key: string): URLSearchParams {
+    function setDefaultValues(previousUrlSearchParams: URLSearchParams, key: string): URLSearchParams {
         if (key === FROM || key === SIZE) {
             return previousUrlSearchParams;
         }
         const newUrlSearchParams = new URLSearchParams(previousUrlSearchParams);
         newUrlSearchParams.delete(FROM);
         newUrlSearchParams.delete(SIZE);
+
+        if (newUrlSearchParams.has(URL_VERSION) && newUrlSearchParams.size === 1) {
+            newUrlSearchParams.delete(URL_VERSION);
+        } else if (!newUrlSearchParams.has(URL_VERSION) && newUrlSearchParams.size > 0) {
+            newUrlSearchParams.set(URL_VERSION, `${CURRENT_VERSION}`);
+        }
+
         return newUrlSearchParams;
     }
 

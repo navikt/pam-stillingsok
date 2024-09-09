@@ -19,7 +19,7 @@ export const SEARCH_STRING = "q";
 export const SECTOR = "sector";
 export const SIZE = "size";
 export const SORT = "sort";
-export const VERSION = "v";
+export const URL_VERSION = "v";
 export const WORK_LANGUAGE = "workLanguage";
 
 // IMPORTANT: Remember to add search param names that is related to search into AllowedSavedSearchParams.
@@ -44,6 +44,6 @@ export const AllowedSavedSearchParams = [
     REMOTE,
     SEARCH_STRING,
     SECTOR,
-    VERSION,
+    URL_VERSION,
     WORK_LANGUAGE,
 ];

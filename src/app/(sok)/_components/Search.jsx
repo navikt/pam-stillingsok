@@ -1,23 +1,8 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import {
-    BodyShort,
-    Box,
-    Button,
-    Heading,
-    HGrid,
-    Hide,
-    HStack,
-    Link as AkselLink,
-    Show,
-    Stack,
-    VStack,
-} from "@navikt/ds-react";
-import { InformationSquareIcon, TrashIcon } from "@navikt/aksel-icons";
-import SaveSearchButton from "@/app/lagrede-sok/_components/SaveSearchButton";
-import fixLocationName from "@/app/_common/utils/fixLocationName";
+import { Box, Button, Heading, HGrid, Hide, Show, Stack, VStack } from "@navikt/ds-react";
 import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
-import { DISTANCE, FROM, POSTCODE, SIZE } from "@/app/(sok)/_components/searchParamNames";
+import { FROM, SIZE } from "@/app/(sok)/_components/searchParamNames";
 import { SEARCH_CHUNK_SIZE } from "../_utils/query";
 import SearchResult from "./searchResult/SearchResult";
 import DoYouWantToSaveSearch from "./howToPanels/DoYouWantToSaveSearch";
@@ -44,13 +29,6 @@ export default function Search({ searchResult, aggregations, locations, postcode
         e.preventDefault();
     }
 
-    const drivingDistanceFilterActive =
-        searchQuery.has(POSTCODE) && searchQuery.get(POSTCODE).length === 4 && searchQuery.get(DISTANCE) > 0;
-    const onlyPostcodeOrDistanceFilterActive =
-        searchQuery.size === 2 && (searchQuery.has(POSTCODE) || searchQuery.has(DISTANCE));
-    const showSaveAndResetButton = searchQuery.size > 0 && !onlyPostcodeOrDistanceFilterActive;
-    const chosenPostcodeCity =
-        drivingDistanceFilterActive && postcodes.find((p) => p.postcode === searchQuery.get(POSTCODE)).city;
     const from = searchQuery.get(FROM) || 0;
     const size = searchQuery.get(SIZE) || SEARCH_CHUNK_SIZE;
 
@@ -64,66 +42,7 @@ export default function Search({ searchResult, aggregations, locations, postcode
                 </Stack>
             </Box>
 
-            <Box
-                padding={{ xs: "6 4", md: "6 12" }}
-                background="surface-alt-1-subtle"
-                borderRadius={{ md: "large" }}
-                className="SearchContainer"
-            >
-                <SearchBox aggregations={aggregations} locations={locations} />
-
-                {drivingDistanceFilterActive && (
-                    <HStack align="center" wrap={false} gap="2">
-                        <HStack gap="2">
-                            <BodyShort weight="semibold">Reisevei:</BodyShort>
-                            <BodyShort>
-                                Innen {searchQuery.get(DISTANCE)} km fra {searchQuery.get(POSTCODE)}{" "}
-                                {fixLocationName(chosenPostcodeCity)}
-                            </BodyShort>
-                        </HStack>
-                        <Button
-                            type="button"
-                            variant="tertiary"
-                            onClick={() => {
-                                searchQuery.remove(POSTCODE);
-                                searchQuery.remove(DISTANCE);
-                            }}
-                            icon={<TrashIcon aria-hidden="true" />}
-                            size="small"
-                        >
-                            Fjern
-                        </Button>
-                    </HStack>
-                )}
-                <HStack minHeight="36px" className="mt-3" gap="2" columns="2" align="baseline">
-                    <div>
-                        {showSaveAndResetButton && (
-                            <>
-                                <SaveSearchButton size="small" />
-                                <Button
-                                    type="button"
-                                    variant="tertiary"
-                                    onClick={() => {
-                                        searchQuery.reset();
-                                    }}
-                                    icon={<TrashIcon aria-hidden="true" />}
-                                    size="small"
-                                >
-                                    Nullstill søk
-                                </Button>
-                            </>
-                        )}
-                    </div>
-                    <BodyShort>
-                        <AkselLink href="/slik-bruker-du-det-nye-soket">
-                            <span className="link-icon">
-                                <InformationSquareIcon aria-hidden="true" />
-                            </span>
-                            <span>Slik bruker du det nye søket for best resultat</span>
-                        </AkselLink>
-                    </BodyShort>
-                </HStack>
-            </Box>
+            <SearchBox aggregations={aggregations} locations={locations} postcodes={postcodes} />
 
             <Box paddingBlock={{ xs: "6", md: "6" }} className="text-center">
                 <LoggedInButtons />

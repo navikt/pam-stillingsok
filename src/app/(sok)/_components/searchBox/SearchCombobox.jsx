@@ -1,6 +1,5 @@
 import { UNSAFE_Combobox as Combobox } from "@navikt/ds-react";
 import React, { useMemo } from "react";
-import PropTypes from "prop-types";
 import { buildSelectedOptions } from "@/app/(sok)/_components/searchBox/buildSelectedOptions";
 import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
 import {
@@ -15,9 +14,23 @@ import {
     SORT,
 } from "@/app/(sok)/_components/searchParamNames";
 import { SortByValues } from "@/app/(sok)/_components/searchResult/Sorting";
+import { FetchAction, useFetchReducer } from "@/app/_common/hooks/useFetchReducer";
+import * as actions from "@/app/_common/actions";
+import { getSearchBoxOptions } from "@/app/(sok)/_components/searchBox/buildSearchBoxOptions";
 
-function SearchCombobox({ onChange, options }) {
+let suggestionsCache = [];
+const CACHE_MAX_SIZE = 50;
+const MINIMUM_LENGTH = 1;
+
+function SearchCombobox({ aggregations, locations }) {
     const searchQuery = useSearchQuery();
+    const [suggestionsResponse, suggestionsDispatch] = useFetchReducer([]);
+
+    const options = useMemo(
+        () => getSearchBoxOptions(aggregations, locations, [...suggestionsResponse.data]),
+        [aggregations, locations, suggestionsResponse.data],
+    );
+
     const selectedOptions = useMemo(
         () => buildSelectedOptions(searchQuery.urlSearchParams),
         [searchQuery.urlSearchParams],
@@ -27,6 +40,30 @@ function SearchCombobox({ onChange, options }) {
         label: o.label,
         value: o.value,
     }));
+
+    async function fetchSuggestions(value) {
+        const cached = suggestionsCache.find((c) => c.value === value);
+        if (cached) {
+            suggestionsDispatch({ type: FetchAction.RESOLVE, data: cached.data });
+            return;
+        }
+        let data;
+        try {
+            data = await actions.getSuggestions(value, MINIMUM_LENGTH);
+        } catch (err) {
+            // ignore fetch failed errors
+        }
+        if (data) {
+            suggestionsCache = [{ value, data }, ...suggestionsCache].slice(0, CACHE_MAX_SIZE);
+            suggestionsDispatch({ type: FetchAction.RESOLVE, data });
+        }
+    }
+
+    function handleValueChange(value) {
+        if (value && value.length >= MINIMUM_LENGTH) {
+            fetchSuggestions(value);
+        }
+    }
 
     const handleFreeTextSearchOption = (value, isSelected) => {
         if (isSelected) {
@@ -132,14 +169,9 @@ function SearchCombobox({ onChange, options }) {
             onToggleSelected={onToggleSelected}
             selectedOptions={selectedOptions}
             options={optionList}
-            onChange={onChange}
+            onChange={handleValueChange}
         />
     );
 }
-
-SearchCombobox.propTypes = {
-    onChange: PropTypes.func.isRequired,
-    options: PropTypes.arrayOf(PropTypes.shape({})),
-};
 
 export default SearchCombobox;
