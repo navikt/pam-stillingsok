@@ -69,7 +69,6 @@ export function SearchStateProvider({ children }: SearchStateProviderProps): Rea
     }
 
     function has(key: string, value?: string): boolean {
-        // @ts-expect-error URLSearchParam supports value
         return urlSearchParams.has(key, value);
     }
 
@@ -98,7 +97,6 @@ export function SearchStateProvider({ children }: SearchStateProviderProps): Rea
     function remove(key: string, value?: string): void {
         setUrlSearchParams((previous) => {
             const newUrlSearchParams = new URLSearchParams(previous);
-            // @ts-expect-error  URLSearchParam supports value
             newUrlSearchParams.delete(key, value);
             return newUrlSearchParams;
         });
