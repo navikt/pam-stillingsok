@@ -2,6 +2,7 @@ import React, { ReactElement, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
 import { CURRENT_VERSION, VERSION_QUERY_PARAM } from "@/app/(sok)/_utils/searchParamsVersioning";
+import { FROM, SIZE } from "@/app/(sok)/_components/searchParamNames";
 
 export const SearchStateContext: React.Context<SearchStateActions> = React.createContext({} as SearchStateActions);
 
@@ -80,7 +81,7 @@ export function SearchStateProvider({ children }: SearchStateProviderProps): Rea
         setUrlSearchParams((previous) => {
             const newUrlSearchParams = new URLSearchParams(previous);
             newUrlSearchParams.set(key, value);
-            return newUrlSearchParams;
+            return resetFromAndSize(newUrlSearchParams, key);
         });
         syncUrl();
     }
@@ -89,7 +90,7 @@ export function SearchStateProvider({ children }: SearchStateProviderProps): Rea
         setUrlSearchParams((previous) => {
             const newUrlSearchParams = new URLSearchParams(previous);
             newUrlSearchParams.append(key, value);
-            return newUrlSearchParams;
+            return resetFromAndSize(newUrlSearchParams, key);
         });
         syncUrl();
     }
@@ -98,7 +99,7 @@ export function SearchStateProvider({ children }: SearchStateProviderProps): Rea
         setUrlSearchParams((previous) => {
             const newUrlSearchParams = new URLSearchParams(previous);
             newUrlSearchParams.delete(key, value);
-            return newUrlSearchParams;
+            return resetFromAndSize(newUrlSearchParams, key);
         });
         syncUrl();
     }
@@ -106,6 +107,16 @@ export function SearchStateProvider({ children }: SearchStateProviderProps): Rea
     function reset(): void {
         setUrlSearchParams(new URLSearchParams());
         syncUrl();
+    }
+
+    function resetFromAndSize(previousUrlSearchParams: URLSearchParams, key: string): URLSearchParams {
+        if (key === FROM || key === SIZE) {
+            return previousUrlSearchParams;
+        }
+        const newUrlSearchParams = new URLSearchParams(previousUrlSearchParams);
+        newUrlSearchParams.delete(FROM);
+        newUrlSearchParams.delete(SIZE);
+        return newUrlSearchParams;
     }
 
     return (
