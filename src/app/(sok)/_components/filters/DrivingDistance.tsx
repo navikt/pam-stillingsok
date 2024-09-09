@@ -74,7 +74,7 @@ function DrivingDistance({ postcodes }: DrivingDistanceProps): ReactElement {
 
     function handlePostCodeChange(option: string, isSelected: boolean): void {
         if (isSelected) {
-            searchQuery.append(POSTCODE, option);
+            searchQuery.set(POSTCODE, option);
         } else {
             searchQuery.remove(POSTCODE);
         }
@@ -91,7 +91,7 @@ function DrivingDistance({ postcodes }: DrivingDistanceProps): ReactElement {
         if (hasNoValue) {
             searchQuery.remove(DISTANCE);
         } else {
-            searchQuery.append(DISTANCE, value);
+            searchQuery.set(DISTANCE, value);
         }
         logFilterChanged({
             name: "Reisevei",
