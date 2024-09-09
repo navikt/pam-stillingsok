@@ -124,12 +124,13 @@ function LinkToAd({ children, stilling }) {
     return (
         <AkselLink
             onClick={() => {
-                // eslint-disable-next-line
-                history.push("/stillinger", {
-                    state: {
-                        history: [window.location.href],
-                    },
-                });
+                if (window) {
+                    window.history.push("/stillinger", {
+                        state: {
+                            history: [window.location.href],
+                        },
+                    });
+                }
             }}
             className="purple-when-visited"
             as={Link}
