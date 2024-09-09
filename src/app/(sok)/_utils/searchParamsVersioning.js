@@ -1,10 +1,9 @@
 import { migrateToV1 } from "@/app/(sok)/_utils/versioning/version01";
 import { migrateToV2 } from "@/app/(sok)/_utils/versioning/version02";
 import { migrateToV3 } from "@/app/(sok)/_utils/versioning/version03";
-import { migrateToV4 } from "@/app/(sok)/_utils/versioning/version04";
 
 export const VERSION_QUERY_PARAM = "v";
-export const CURRENT_VERSION = 4;
+export const CURRENT_VERSION = 3;
 const FIRST_VERSION = 0;
 
 // Returns new search params if the searchParams have been migrated.
@@ -31,11 +30,6 @@ export function migrateSearchParams(searchParams) {
     if (version < 3) {
         newSearchParams = migrateToV3(newSearchParams);
         newVersion = 3;
-    }
-
-    if (version < 4) {
-        newSearchParams = migrateToV4(newSearchParams);
-        newVersion = 4;
     }
 
     newSearchParams[VERSION_QUERY_PARAM] = newVersion;
