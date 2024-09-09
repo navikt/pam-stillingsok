@@ -26,6 +26,21 @@ import {
 } from "@/app/(sok)/_components/searchParamNames";
 import { PublishedLabelsEnum } from "@/app/(sok)/_components/filters/Published";
 
+const promotedOptions: ComboboxOption[] = [
+    { label: "Butikkmedarbeider", value: `${OCCUPATION}-Butikkmedarbeider` },
+    { label: fixLocationName("TRØNDELAG.TRONDHEIM", true), value: `${MUNICIPAL}-TRØNDELAG.TRONDHEIM` },
+    { label: fixLocationName("VESTLAND.BERGEN", true), value: `${MUNICIPAL}-VESTLAND.BERGEN` },
+    { label: "Deltid", value: `${EXTENT}-Deltid` },
+    { label: labelForEducation("Ingen krav"), value: `${EDUCATION}-Ingen krav` },
+    { label: "Engelsk", value: `${WORK_LANGUAGE}-Engelsk` },
+    {
+        label: PublishedLabelsEnum["now/d" as keyof typeof PublishedLabelsEnum],
+        value: `${PUBLISHED}-${"now/d"}`,
+    },
+];
+
+const promotedValues = promotedOptions.map((option) => option.value);
+
 function getMunicipalOptions(locationList: LocationList[]): ComboboxOption[] {
     return locationList
         .map((location) => location.subLocations)
@@ -40,7 +55,8 @@ function getMunicipalOptions(locationList: LocationList[]): ComboboxOption[] {
                 label: fixLocationName(municipal.key.split(".")[1]),
                 value: `${MUNICIPAL}-${municipal.key}`,
             }),
-        );
+        )
+        .filter((option) => !promotedValues.includes(option.value));
 }
 
 function getCountyOptions(locationList: LocationList[]): ComboboxOption[] {
@@ -51,7 +67,8 @@ function getCountyOptions(locationList: LocationList[]): ComboboxOption[] {
                 label: fixLocationName(county.key),
                 value: `${COUNTY}-${county.key}`,
             }),
-        );
+        )
+        .filter((option) => !promotedValues.includes(option.value));
 }
 
 function getCountryOptions(locationList: LocationList[]): ComboboxOption[] {
@@ -100,12 +117,14 @@ function getSecondLevelOccupationsOptions(aggregations: Aggregations): ComboboxO
 }
 
 function getPublishedOptions(aggregations: Aggregations): ComboboxOption[] {
-    return aggregations.published.map(
-        (item): ComboboxOption => ({
-            label: PublishedLabelsEnum[item.key as keyof typeof PublishedLabelsEnum],
-            value: `${PUBLISHED}-${item.key}`,
-        }),
-    );
+    return aggregations.published
+        .map(
+            (item): ComboboxOption => ({
+                label: PublishedLabelsEnum[item.key as keyof typeof PublishedLabelsEnum],
+                value: `${PUBLISHED}-${item.key}`,
+            }),
+        )
+        .filter((option) => !promotedValues.includes(option.value));
 }
 
 function getSectorOptions(aggregations: Aggregations): ComboboxOption[] {
@@ -127,26 +146,30 @@ function getEngagementTypeOptions(aggregations: Aggregations): ComboboxOption[] 
 }
 
 function getExtentOptions(aggregations: Aggregations): ComboboxOption[] {
-    return aggregations.extent.map(
-        (item): ComboboxOption => ({
-            label: item.key,
-            value: `${EXTENT}-${item.key}`,
-        }),
-    );
+    return aggregations.extent
+        .map(
+            (item): ComboboxOption => ({
+                label: item.key,
+                value: `${EXTENT}-${item.key}`,
+            }),
+        )
+        .filter((option) => !promotedValues.includes(option.value));
 }
 function getEducationOptions(aggregations: Aggregations): ComboboxOption[] {
-    return aggregations.education.map(
-        (item): ComboboxOption =>
-            item.key === "Ikke oppgitt"
-                ? {
-                      label: "Krav til utdanning ikke oppgitt",
-                      value: `${EDUCATION}-${item.key}`,
-                  }
-                : {
-                      label: labelForEducation(item.key),
-                      value: `${EDUCATION}-${item.key}`,
-                  },
-    );
+    return aggregations.education
+        .map(
+            (item): ComboboxOption =>
+                item.key === "Ikke oppgitt"
+                    ? {
+                          label: "Krav til utdanning ikke oppgitt",
+                          value: `${EDUCATION}-${item.key}`,
+                      }
+                    : {
+                          label: labelForEducation(item.key),
+                          value: `${EDUCATION}-${item.key}`,
+                      },
+        )
+        .filter((option) => !promotedValues.includes(option.value));
 }
 
 function getWorkLanguageOptions(aggregations: Aggregations): ComboboxOption[] {
@@ -168,12 +191,14 @@ function getRemoteOptions(aggregations: Aggregations): ComboboxOption[] {
 }
 
 function getOccupationSuggestionOptions(allSuggestions: string[]): ComboboxOption[] {
-    return allSuggestions.map(
-        (suggestion): ComboboxOption => ({
-            label: suggestion,
-            value: `${OCCUPATION}-${suggestion}`,
-        }),
-    );
+    return allSuggestions
+        .map(
+            (suggestion): ComboboxOption => ({
+                label: suggestion,
+                value: `${OCCUPATION}-${suggestion}`,
+            }),
+        )
+        .filter((option) => !promotedValues.includes(option.value));
 }
 
 function getDriversLicenseOptions(aggregations: Aggregations): ComboboxOption[] {
@@ -208,6 +233,7 @@ export function getSearchBoxOptions(
     const locationList = buildLocations(aggregations, locations);
 
     return [
+        ...promotedOptions,
         ...getMunicipalOptions(locationList),
         ...getCountyOptions(locationList),
         ...getCountryOptions(locationList),
