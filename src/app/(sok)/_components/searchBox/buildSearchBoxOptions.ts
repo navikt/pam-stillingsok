@@ -30,7 +30,11 @@ function getMunicipalOptions(locationList: LocationList[]): ComboboxOption[] {
     return locationList
         .map((location) => location.subLocations)
         .flat()
-        .filter((subLocation) => subLocation.type === MUNICIPAL)
+        .filter(
+            (subLocation) =>
+                subLocation.type === MUNICIPAL &&
+                !["OSLO", "SVALBARD", "JAN MAYEN"].includes(subLocation.key.split(".")[1]),
+        )
         .map(
             (municipal): ComboboxOption => ({
                 label: fixLocationName(municipal.key.split(".")[1]),

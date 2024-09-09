@@ -1,7 +1,6 @@
 import { UNSAFE_Combobox as Combobox } from "@navikt/ds-react";
 import React, { useMemo } from "react";
 import PropTypes from "prop-types";
-import { findLabelForFilter } from "@/app/(sok)/_components/searchBox/searchBoxFilter";
 import { buildSelectedOptions } from "@/app/(sok)/_components/searchBox/buildSelectedOptions";
 import useSearchQuery from "@/app/(sok)/_components/SearchStateProvider";
 import {
@@ -25,7 +24,7 @@ function SearchCombobox({ onChange, options }) {
     );
 
     const optionList = options.map((o) => ({
-        label: `${o.label} ${findLabelForFilter(o.value.split("-")[0])}`,
+        label: o.label,
         value: o.value,
     }));
 
