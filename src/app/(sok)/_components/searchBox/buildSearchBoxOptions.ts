@@ -236,8 +236,8 @@ export function getSearchBoxOptions(
 
     return [
         ...promotedOptions,
-        ...getMunicipalOptions(locationList),
         ...getCountyOptions(locationList),
+        ...getMunicipalOptions(locationList),
         ...getCountryOptions(locationList),
         ...getFirstLevelOccupationsOptions(aggregations),
         ...getSecondLevelOccupationsOptions(aggregations),
