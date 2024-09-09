@@ -86,7 +86,6 @@ export function SearchStateProvider({ children }: SearchStateProviderProps): Rea
     }
 
     function append(key: string, value: string): void {
-        console.log(key, value);
         setUrlSearchParams((previous) => {
             const newUrlSearchParams = new URLSearchParams(previous);
             newUrlSearchParams.append(key, value);
