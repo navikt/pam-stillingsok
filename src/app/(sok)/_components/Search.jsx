@@ -29,8 +29,8 @@ export default function Search({ searchResult, aggregations, locations, postcode
         e.preventDefault();
     }
 
-    const from = searchQuery.get(FROM) || 0;
-    const size = searchQuery.get(SIZE) || SEARCH_CHUNK_SIZE;
+    const from = searchQuery.has(FROM) ? parseInt(searchQuery.get(FROM), 10) : 0;
+    const size = searchQuery.has(SIZE) ? parseInt(searchQuery.get(SIZE), 10) : SEARCH_CHUNK_SIZE;
 
     return (
         <form onSubmit={onFormSubmit} className="mb-24">

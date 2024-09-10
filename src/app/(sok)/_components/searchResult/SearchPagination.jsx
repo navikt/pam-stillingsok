@@ -9,13 +9,13 @@ import { ALLOWED_NUMBER_OF_RESULTS_PER_PAGE, SEARCH_CHUNK_SIZE } from "../../_ut
 
 function SearchPagination({ searchResult }) {
     const searchQuery = useSearchQuery();
-    const resultsPerPage = searchQuery.get(SIZE) || SEARCH_CHUNK_SIZE;
+    const resultsPerPage = searchQuery.has(SIZE) ? parseInt(searchQuery.get(SIZE), 10) : SEARCH_CHUNK_SIZE;
 
     // Elastic search does not allow pagination above 10 000 results.
     const totalPages = Math.ceil(
         searchResult.totalAds < 10000 ? searchResult.totalAds / resultsPerPage : 9999 / resultsPerPage,
     );
-    const page = searchQuery.has(FROM) ? Math.floor(searchQuery.get(FROM) / resultsPerPage) + 1 : 1;
+    const page = searchQuery.has(FROM) ? Math.floor(parseInt(searchQuery.get(FROM), 10) / resultsPerPage) + 1 : 1;
 
     const onPageChange = (x) => {
         const from = x * resultsPerPage - resultsPerPage;
