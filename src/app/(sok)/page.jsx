@@ -1,5 +1,12 @@
 import { defaultMetadataDescription, defaultOpenGraphImage, getMetadataTitle } from "@/app/layout";
-import { createQuery, defaultQuery, stringifyQuery, toApiQuery, toBrowserQuery } from "@/app/(sok)/_utils/query";
+import {
+    createQuery,
+    defaultQuery,
+    SEARCH_CHUNK_SIZE,
+    stringifyQuery,
+    toApiQuery,
+    toBrowserQuery,
+} from "@/app/(sok)/_utils/query";
 import { fetchCachedElasticSearch } from "@/app/(sok)/_utils/fetchCachedElasticSearch";
 import * as actions from "@/app/_common/actions";
 import { redirect } from "next/navigation";
@@ -84,8 +91,10 @@ export default async function Page({ searchParams }) {
 
     const userPreferences = await actions.getUserPreferences();
     const modifiedSearchParams = searchParams;
+    let size = SEARCH_CHUNK_SIZE;
     if (userPreferences.resultsPerPage) {
         modifiedSearchParams.size = userPreferences.resultsPerPage;
+        size = userPreferences.resultsPerPage;
     }
 
     const initialQuery = createQuery(modifiedSearchParams);
@@ -104,6 +113,7 @@ export default async function Page({ searchParams }) {
             aggregations={globalSearchResult.aggregations}
             locations={locations}
             postcodes={postcodes}
+            size={size}
         />
     );
 }

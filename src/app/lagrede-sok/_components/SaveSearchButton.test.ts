@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { FROM, SEARCH_STRING, SECTOR, SIZE, SORT, URL_VERSION } from "@/app/(sok)/_components/searchParamNames";
+import { FROM, SEARCH_STRING, SECTOR, SORT, URL_VERSION } from "@/app/(sok)/_components/searchParamNames";
 import { toSavedSearch } from "@/app/lagrede-sok/_components/SaveSearchButton";
 
 describe("test toSavedSearch", () => {
@@ -8,7 +8,6 @@ describe("test toSavedSearch", () => {
         input.append(SEARCH_STRING, "react");
         input.append(SECTOR, "privat");
         input.append(FROM, "bar"); // should not be included
-        input.append(SIZE, "bar"); // should not be included
         input.append(SORT, "bar"); // should not be included
         input.append("foo", "bar"); // should not be included
 

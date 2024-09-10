@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Box, Button, Heading, HGrid, Hide, Show, Stack, VStack } from "@navikt/ds-react";
 import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
-import { FROM, SIZE } from "@/app/(sok)/_components/searchParamNames";
+import { FROM } from "@/app/(sok)/_components/searchParamNames";
 import { SEARCH_CHUNK_SIZE } from "../_utils/query";
 import SearchResult from "./searchResult/SearchResult";
 import DoYouWantToSaveSearch from "./howToPanels/DoYouWantToSaveSearch";
@@ -17,7 +17,7 @@ import SearchBox from "./searchBox/SearchBox";
 import SearchPagination from "./searchResult/SearchPagination";
 import MaxResultsBox from "./searchResult/MaxResultsBox";
 
-export default function Search({ searchResult, aggregations, locations, postcodes }) {
+export default function Search({ searchResult, aggregations, locations, postcodes, size }) {
     const searchQuery = useSearchQuery();
     const [isFiltersVisible, setIsFiltersVisible] = useState(false);
 
@@ -30,7 +30,6 @@ export default function Search({ searchResult, aggregations, locations, postcode
     }
 
     const from = searchQuery.has(FROM) ? parseInt(searchQuery.get(FROM), 10) : 0;
-    const size = searchQuery.has(SIZE) ? parseInt(searchQuery.get(SIZE), 10) : SEARCH_CHUNK_SIZE;
 
     return (
         <form onSubmit={onFormSubmit} className="mb-24">
@@ -94,7 +93,7 @@ export default function Search({ searchResult, aggregations, locations, postcode
                     {/* Elastic search does not support pagination above 10 000 */}
                     {from + size === 10000 && <MaxResultsBox />}
 
-                    <SearchPagination searchResult={searchResult} />
+                    <SearchPagination searchResult={searchResult} size={size} />
 
                     {from + SEARCH_CHUNK_SIZE >= searchResult.totalAds && <DoYouWantToSaveSearch />}
                     <Feedback />

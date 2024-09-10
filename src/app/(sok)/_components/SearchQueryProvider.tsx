@@ -2,7 +2,7 @@ import React, { ReactElement, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
 import { CURRENT_VERSION } from "@/app/(sok)/_utils/searchParamsVersioning";
-import { FROM, SIZE, URL_VERSION } from "@/app/(sok)/_components/searchParamNames";
+import { FROM, URL_VERSION } from "@/app/(sok)/_components/searchParamNames";
 
 export const SearchQueryContext: React.Context<SearchQueryActions> = React.createContext({} as SearchQueryActions);
 
@@ -104,9 +104,8 @@ export function SearchQueryProvider({ children }: SearchQueryProviderProps): Rea
     function setDefaultValues(previousUrlSearchParams: URLSearchParams, key: string): URLSearchParams {
         const newUrlSearchParams = new URLSearchParams(previousUrlSearchParams);
 
-        if (key !== FROM && key !== SIZE) {
+        if (key !== FROM) {
             newUrlSearchParams.delete(FROM);
-            newUrlSearchParams.delete(SIZE);
         }
 
         if (newUrlSearchParams.has(URL_VERSION) && newUrlSearchParams.size === 1) {

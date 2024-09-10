@@ -17,7 +17,6 @@ export const POSTCODE = "postcode";
 export const REMOTE = "remote";
 export const SEARCH_STRING = "q";
 export const SECTOR = "sector";
-export const SIZE = "size";
 export const SORT = "sort";
 export const URL_VERSION = "v";
 export const WORK_LANGUAGE = "workLanguage";
