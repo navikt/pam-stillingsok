@@ -605,22 +605,13 @@ function mainQueryConjunctionTuning(qAsArray) {
         "employerdescription_no^0.1",
     ];
     const q = qAsArray.join(" ");
+
     return {
         bool: {
             must: {
                 bool: {
                     should: [
-                        {
-                            multi_match: {
-                                query: q,
-                                type: "cross_fields",
-                                fields: matchFields,
-                                operator: "and",
-                                tie_breaker: 0.3,
-                                analyzer: "norwegian",
-                                zero_terms_query: "all",
-                            },
-                        },
+                        ...createBaseFreeTextSearch(qAsArray, matchFields),
                         {
                             match_phrase: {
                                 employername: {
@@ -683,6 +674,22 @@ function mainQueryConjunctionTuning(qAsArray) {
             },
         },
     };
+}
+
+function createBaseFreeTextSearch(qAsArray, fields) {
+    const queries = qAsArray.length > 0 ? qAsArray : [""];
+
+    return queries.map((q) => ({
+        multi_match: {
+            query: q,
+            type: "cross_fields",
+            fields: fields,
+            operator: "and",
+            tie_breaker: 0.3,
+            analyzer: "norwegian",
+            zero_terms_query: "all",
+        },
+    }));
 }
 
 /* Generate main matching query object with classic/original OR match relevance model */
