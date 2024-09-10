@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { VStack } from "@navikt/ds-react";
 import FavouritesButton from "@/app/favoritter/_components/FavouritesButton";
 import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
@@ -32,10 +32,10 @@ export default function SearchResult({ searchResult }) {
     /**
      * Set focus to top of result list when user paginate to next search result section
      */
-    useLayoutEffect(() => {
+    useEffect(() => {
         if (searchQuery.paginate && searchResultRef.current) {
             searchResultRef.current.focus({
-                preventScroll: false,
+                preventScroll: true,
             });
         }
     }, [searchQuery.paginate]);
