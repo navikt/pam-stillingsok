@@ -23,14 +23,10 @@ export default function Search({ searchResult, aggregations, locations, postcode
         logAmplitudeEvent("Stillinger - Utførte søk");
     }, []);
 
-    function onFormSubmit(e) {
-        e.preventDefault();
-    }
-
     const from = searchQuery.has(FROM) ? parseInt(searchQuery.get(FROM), 10) : 0;
 
     return (
-        <form onSubmit={onFormSubmit} className="mb-24">
+        <div className="mb-24">
             <SearchBox aggregations={aggregations} locations={locations} postcodes={postcodes} />
 
             <SearchResultHeader
@@ -77,7 +73,7 @@ export default function Search({ searchResult, aggregations, locations, postcode
                     <Feedback />
                 </VStack>
             </HGrid>
-        </form>
+        </div>
     );
 }
 

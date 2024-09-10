@@ -41,6 +41,7 @@ function SearchResultHeader({ searchResult, isFiltersVisible, setIsFiltersVisibl
 
                             <Show below="lg">
                                 <Button
+                                    type="button"
                                     variant="secondary"
                                     onClick={() => {
                                         setIsFiltersVisible(!isFiltersVisible);
