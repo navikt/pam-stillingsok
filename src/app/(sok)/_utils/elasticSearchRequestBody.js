@@ -611,16 +611,8 @@ function mainQueryConjunctionTuning(qAsArray) {
             must: {
                 bool: {
                     should: [
-                        ...createBaseFreeTextSearch(qAsArray, matchFields),
-                        {
-                            match_phrase: {
-                                employername: {
-                                    query: q,
-                                    slop: 0,
-                                    boost: 2,
-                                },
-                            },
-                        },
+                        ...baseFreeTextSearchMatch(qAsArray, matchFields),
+                        ...employerFreeTextSearchMatch(qAsArray),
                         {
                             match: {
                                 id: {
@@ -676,7 +668,7 @@ function mainQueryConjunctionTuning(qAsArray) {
     };
 }
 
-function createBaseFreeTextSearch(qAsArray, fields) {
+function baseFreeTextSearchMatch(qAsArray, fields) {
     const queries = qAsArray.length > 0 ? qAsArray : [""];
 
     return queries.map((q) => ({
@@ -688,6 +680,20 @@ function createBaseFreeTextSearch(qAsArray, fields) {
             tie_breaker: 0.3,
             analyzer: "norwegian",
             zero_terms_query: "all",
+        },
+    }));
+}
+
+function employerFreeTextSearchMatch(qAsArray) {
+    const queries = qAsArray.length > 0 ? qAsArray : [""];
+
+    return queries.map((q) => ({
+        match_phrase: {
+            employername: {
+                query: q,
+                slop: 0,
+                boost: 2,
+            },
         },
     }));
 }
