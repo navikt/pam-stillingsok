@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { Box, Button, Heading, HGrid, Hide, Show, Stack, VStack } from "@navikt/ds-react";
+import { HGrid, Hide, Show, VStack } from "@navikt/ds-react";
 import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
 import { FROM } from "@/app/(sok)/_components/searchParamNames";
 import { SEARCH_CHUNK_SIZE } from "../_utils/query";
@@ -9,9 +9,7 @@ import DoYouWantToSaveSearch from "./howToPanels/DoYouWantToSaveSearch";
 import Feedback from "./feedback/Feedback";
 import FiltersDesktop from "./filters/FiltersDesktop";
 import SearchResultHeader from "./searchResultHeader/SearchResultHeader";
-import FilterIcon from "./icons/FilterIcon";
 import logAmplitudeEvent from "../../_common/monitoring/amplitude";
-import LoggedInButtons from "./loggedInButtons/LoggedInButtons";
 import FiltersMobile from "./filters/FiltersMobile";
 import SearchBox from "./searchBox/SearchBox";
 import SearchPagination from "./searchResult/SearchPagination";
@@ -33,38 +31,18 @@ export default function Search({ searchResult, aggregations, locations, postcode
 
     return (
         <form onSubmit={onFormSubmit} className="mb-24">
-            <Box paddingBlock={{ xs: "4", md: "10" }} paddingInline={{ xs: "4", sm: "6" }}>
-                <Stack justify={{ md: "center" }}>
-                    <Heading level="1" size="xlarge">
-                        Søk etter din neste jobb
-                    </Heading>
-                </Stack>
-            </Box>
-
             <SearchBox aggregations={aggregations} locations={locations} postcodes={postcodes} />
 
-            <Box paddingBlock={{ xs: "6", md: "6" }} className="text-center">
-                <LoggedInButtons />
-                <Show below="lg">
-                    <Button
-                        variant="tertiary"
-                        onClick={() => {
-                            setIsFiltersVisible(!isFiltersVisible);
-                        }}
-                        icon={<FilterIcon />}
-                        aria-expanded={isFiltersVisible}
-                    >
-                        Velg sted, yrke og andre filtre
-                    </Button>
-                </Show>
-            </Box>
-
-            <SearchResultHeader isFiltersVisible={isFiltersVisible} searchResult={searchResult} />
+            <SearchResultHeader
+                setIsFiltersVisible={setIsFiltersVisible}
+                isFiltersVisible={isFiltersVisible}
+                searchResult={searchResult}
+            />
 
             <HGrid
                 columns={{ xs: 1, lg: "220px auto", xl: "370px auto" }}
                 gap={{ xs: "0", lg: "6", xl: "12" }}
-                className="container-large mt-8"
+                className="container-large mt-6"
             >
                 <Hide below="lg">
                     <FiltersDesktop

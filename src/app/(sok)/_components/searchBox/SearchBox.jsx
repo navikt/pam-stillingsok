@@ -1,12 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 import SearchCombobox from "@/app/(sok)/_components/searchBox/SearchCombobox";
-import { BodyShort, Box, Button, HStack, Link as AkselLink } from "@navikt/ds-react";
+import { BodyShort, Box, Button, Heading, HStack, Link as AkselLink, VStack } from "@navikt/ds-react";
 import { DISTANCE, POSTCODE, URL_VERSION } from "@/app/(sok)/_components/searchParamNames";
 import fixLocationName from "@/app/_common/utils/fixLocationName";
-import { InformationSquareIcon, TrashIcon } from "@navikt/aksel-icons";
+import { CarIcon, TrashIcon } from "@navikt/aksel-icons";
 import SaveSearchButton, { toSavedSearch } from "@/app/lagrede-sok/_components/SaveSearchButton";
 import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
+import LoggedInButtons from "@/app/(sok)/_components/loggedInButtons/LoggedInButtons";
 
 function SearchBox({ aggregations, locations, postcodes }) {
     const searchQuery = useSearchQuery();
@@ -22,66 +23,73 @@ function SearchBox({ aggregations, locations, postcodes }) {
         drivingDistanceFilterActive && postcodes.find((p) => p.postcode === searchQuery.get(POSTCODE)).city;
 
     return (
-        <Box
-            padding={{ xs: "6 4", md: "6 12" }}
-            background="surface-alt-1-subtle"
-            borderRadius={{ md: "large" }}
-            className="SearchContainer"
-        >
-            <section aria-label="Søk etter stilling" className="mb-4">
-                <SearchCombobox aggregations={aggregations} locations={locations} />
-            </section>
-            {drivingDistanceFilterActive && (
-                <HStack align="center" wrap={false} gap="2">
-                    <HStack gap="2">
-                        <BodyShort weight="semibold">Reisevei:</BodyShort>
-                        <BodyShort>
-                            Innen {searchQuery.get(DISTANCE)} km fra {searchQuery.get(POSTCODE)}{" "}
-                            {fixLocationName(chosenPostcodeCity)}
-                        </BodyShort>
-                    </HStack>
-                    <Button
-                        type="button"
-                        variant="tertiary"
-                        onClick={() => {
-                            searchQuery.remove(POSTCODE);
-                            searchQuery.remove(DISTANCE);
-                        }}
-                        icon={<TrashIcon aria-hidden="true" />}
-                        size="small"
-                    >
-                        Fjern
-                    </Button>
+        <Box paddingBlock={{ xs: "0 6", lg: "10 12" }}>
+            <Box
+                padding={{ xs: "4", md: "6 8" }}
+                background="surface-alt-1-subtle"
+                borderRadius={{ lg: "large" }}
+                maxWidth={{ lg: "800px" }}
+                className="SearchContainer"
+            >
+                <HStack justify="space-between" align="center" className="mb-1">
+                    <Heading level="1" size="large">
+                        Søk etter jobb
+                    </Heading>
+                    <LoggedInButtons />
                 </HStack>
-            )}
-            <HStack minHeight="36px" className="mt-3" gap="2" columns="2" align="baseline">
-                <div>
-                    {showSaveAndResetButton && (
-                        <>
-                            <SaveSearchButton size="small" />
+
+                <BodyShort className="mb-4">
+                    <AkselLink href="/slik-bruker-du-det-nye-soket">Slik bruker du søket for best resultat</AkselLink>
+                </BodyShort>
+
+                <VStack gap="3">
+                    <SearchCombobox aggregations={aggregations} locations={locations} />
+
+                    {drivingDistanceFilterActive && (
+                        <HStack align="center" wrap={false} gap="1">
+                            <HStack wrap={false} align="center" gap="2">
+                                <CarIcon aria-label="Reisevei" fontSize="1.5rem" />
+                                <BodyShort>
+                                    Innen {searchQuery.get(DISTANCE)} km fra {searchQuery.get(POSTCODE)}{" "}
+                                    {fixLocationName(chosenPostcodeCity)}
+                                </BodyShort>
+                            </HStack>
+
                             <Button
                                 type="button"
                                 variant="tertiary"
                                 onClick={() => {
-                                    searchQuery.reset();
+                                    searchQuery.remove(POSTCODE);
+                                    searchQuery.remove(DISTANCE);
                                 }}
                                 icon={<TrashIcon aria-hidden="true" />}
                                 size="small"
                             >
-                                Nullstill søk
+                                Fjern
                             </Button>
-                        </>
+                        </HStack>
                     )}
-                </div>
-                <BodyShort>
-                    <AkselLink href="/slik-bruker-du-det-nye-soket">
-                        <span className="link-icon">
-                            <InformationSquareIcon aria-hidden="true" />
-                        </span>
-                        <span>Slik bruker du det nye søket for best resultat</span>
-                    </AkselLink>
-                </BodyShort>
-            </HStack>
+
+                    {showSaveAndResetButton && (
+                        <HStack gap="2" columns="2" align="center" justify="end">
+                            <>
+                                <SaveSearchButton size="small" />
+                                <Button
+                                    type="button"
+                                    variant="tertiary"
+                                    onClick={() => {
+                                        searchQuery.reset();
+                                    }}
+                                    icon={<TrashIcon aria-hidden="true" />}
+                                    size="small"
+                                >
+                                    Nullstill søk
+                                </Button>
+                            </>
+                        </HStack>
+                    )}
+                </VStack>
+            </Box>
         </Box>
     );
 }

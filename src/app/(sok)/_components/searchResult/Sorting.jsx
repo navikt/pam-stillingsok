@@ -21,7 +21,7 @@ function Sorting() {
             onChange={handleChange}
             value={searchQuery.get(SORT) || SortByValues.PUBLISHED}
             label="Sorter etter"
-            className="inline-select"
+            className="inline-select hide-label-sm"
         >
             <option value={SortByValues.PUBLISHED}>Nyeste øverst</option>
             <option value={SortByValues.RELEVANT}>Mest relevant</option>

@@ -45,6 +45,12 @@ strong {
     margin-bottom: 0 !important;
 }
 
+@media (max-width: 767px) {
+    .hide-label-sm label {
+        display: none;
+    }
+}
+
 .full-width {
     width: 100%;
 }
@@ -175,4 +181,10 @@ no-underline:hover {
     border-left: 1px solid var(--a-border-divider);
     width: 400px;
     height: 100vh;
+}
+
+@media (min-width: 1024px) {
+    .bg-alt-1-subtle-on-lg {
+        background-color: var(--a-surface-alt-1-subtle);
+    }
 }
