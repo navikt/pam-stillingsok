@@ -1,6 +1,7 @@
 import React from "react";
 import { Hide, Pagination, Select, Show, VStack } from "@navikt/ds-react";
 import PropTypes from "prop-types";
+import { useSearchParams } from "next/navigation";
 import * as actions from "@/app/_common/actions";
 import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
 import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
@@ -9,13 +10,14 @@ import { ALLOWED_NUMBER_OF_RESULTS_PER_PAGE, SEARCH_CHUNK_SIZE } from "../../_ut
 
 function SearchPagination({ searchResult }) {
     const searchQuery = useSearchQuery();
-    const resultsPerPage = searchQuery.has(SIZE) ? parseInt(searchQuery.get(SIZE), 10) : SEARCH_CHUNK_SIZE;
+    const searchParams = useSearchParams();
+    const resultsPerPage = searchParams.has(SIZE) ? parseInt(searchParams.get(SIZE), 10) : SEARCH_CHUNK_SIZE;
 
     // Elastic search does not allow pagination above 10 000 results.
     const totalPages = Math.ceil(
         searchResult.totalAds < 10000 ? searchResult.totalAds / resultsPerPage : 9999 / resultsPerPage,
     );
-    const page = searchQuery.has(FROM) ? Math.floor(parseInt(searchQuery.get(FROM), 10) / resultsPerPage) + 1 : 1;
+    const page = searchParams.has(FROM) ? Math.floor(parseInt(searchParams.get(FROM), 10) / resultsPerPage) + 1 : 1;
 
     const onPageChange = (x) => {
         const from = x * resultsPerPage - resultsPerPage;
@@ -27,7 +29,7 @@ function SearchPagination({ searchResult }) {
         }
 
         if (resultsPerPage !== SEARCH_CHUNK_SIZE) {
-            searchQuery.set(SIZE, resultsPerPage);
+            searchQuery.set(SIZE, `${resultsPerPage}`);
         }
     };
 
