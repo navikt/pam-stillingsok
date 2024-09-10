@@ -102,12 +102,12 @@ export function SearchQueryProvider({ children }: SearchQueryProviderProps): Rea
     }
 
     function setDefaultValues(previousUrlSearchParams: URLSearchParams, key: string): URLSearchParams {
-        if (key === FROM || key === SIZE) {
-            return previousUrlSearchParams;
-        }
         const newUrlSearchParams = new URLSearchParams(previousUrlSearchParams);
-        newUrlSearchParams.delete(FROM);
-        newUrlSearchParams.delete(SIZE);
+
+        if (key !== FROM && key !== SIZE) {
+            newUrlSearchParams.delete(FROM);
+            newUrlSearchParams.delete(SIZE);
+        }
 
         if (newUrlSearchParams.has(URL_VERSION) && newUrlSearchParams.size === 1) {
             newUrlSearchParams.delete(URL_VERSION);
