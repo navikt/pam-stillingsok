@@ -26,10 +26,14 @@ function SearchResultHeader({ searchResult, isFiltersVisible, setIsFiltersVisibl
                     <HStack gap="2" wrap={false} justify="space-between" align="center" className="full-width">
                         <div>
                             <Heading level="2" size="small" role="status" className="white-space-nowrap">
-                                {searchResult.totalAds > 0 ? `${formatNumber(15183)} treff` : "Ingen treff"}
+                                {searchResult.totalAds > 0
+                                    ? `${formatNumber(searchResult.totalAds)} treff`
+                                    : "Ingen treff"}
                             </Heading>
                             <BodyShort className="white-space-nowrap">
-                                {searchResult.totalAds > 0 ? `${formatNumber(31232)} ${stillingerWord}` : ""}
+                                {searchResult.totalAds > 0
+                                    ? `${formatNumber(searchResult.totalPositions)} ${stillingerWord}`
+                                    : ""}
                             </BodyShort>
                         </div>
                         <HStack gap="2" align="center" wrap={false}>
