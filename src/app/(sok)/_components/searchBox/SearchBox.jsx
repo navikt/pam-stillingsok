@@ -33,7 +33,7 @@ function SearchBox({ aggregations, locations, postcodes }) {
             >
                 <HStack justify="space-between" align="center" className="mb-1">
                     <Heading level="1" size="large">
-                        Søk etter jobb
+                        Søk etter jobber
                     </Heading>
                     <LoggedInButtons />
                 </HStack>
