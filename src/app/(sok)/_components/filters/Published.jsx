@@ -22,7 +22,6 @@ function Published({ dispatch, query, initialValues, updatedValues, publishedTot
 
     return (
         <RadioGroup
-            name="published"
             onChange={handleClick}
             legend="Filtrer etter når annonsen var publisert"
             hideLegend
