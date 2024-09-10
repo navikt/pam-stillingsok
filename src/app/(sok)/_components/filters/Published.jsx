@@ -29,7 +29,6 @@ function Published({ initialValues, updatedValues, publishedTotalCount }) {
 
     return (
         <RadioGroup
-            name="published"
             onChange={handleClick}
             legend="Filtrer etter når annonsen var publisert"
             hideLegend
