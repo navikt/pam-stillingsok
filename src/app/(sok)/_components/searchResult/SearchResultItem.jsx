@@ -122,7 +122,21 @@ SearchResultItem.propTypes = {
 
 function LinkToAd({ children, stilling }) {
     return (
-        <AkselLink className="purple-when-visited" as={Link} href={`/stilling/${stilling.uuid}`} prefetch={false}>
+        <AkselLink
+            onClick={() => {
+                if (typeof window !== "undefined") {
+                    window.history.push("/stillinger", {
+                        state: {
+                            history: [window.location.href],
+                        },
+                    });
+                }
+            }}
+            className="purple-when-visited"
+            as={Link}
+            href={`/stilling/${stilling.uuid}`}
+            prefetch={false}
+        >
             {children}
         </AkselLink>
     );

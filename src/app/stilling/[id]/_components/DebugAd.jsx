@@ -107,7 +107,7 @@ function DebugAdGroup({ category, values, adUuid }) {
                 </HStack>
             </HStack>
             <VStack gap="1">
-                {values.map((value) => (
+                {values?.map((value) => (
                     <DebugAdItem
                         key={value.label}
                         value={value}
@@ -166,7 +166,7 @@ export default function DebugAd({ adData }) {
         isChecked: adData?.education?.includes(it) || false,
     }));
 
-    const driverLicenseValues = adData?.needDriversLicense.map((it) => ({
+    const driverLicenseValues = adData?.needDriversLicense?.map((it) => ({
         label: labelForNeedDriversLicense(it),
         isChecked: true,
     }));

@@ -1,6 +1,7 @@
 import React from "react";
 import { BodyLong, Heading, HStack, ReadMore } from "@navikt/ds-react";
 import PropTypes from "prop-types";
+import { mediumDisplayName } from "@/app/_common/utils/utils";
 
 function Debug({ ad }) {
     return (
@@ -11,7 +12,7 @@ function Debug({ ad }) {
                         ad.medium
                     </Heading>
                     <HStack gap="4" className="mb-8">
-                        <BodyLong className="metadata">{ad.medium}</BodyLong>
+                        <BodyLong className="metadata">{mediumDisplayName(ad.medium)}</BodyLong>
                     </HStack>
                 </>
             )}
