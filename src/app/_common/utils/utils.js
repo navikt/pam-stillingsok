@@ -131,6 +131,11 @@ export function extractParam(param, nullValue) {
     return value;
 }
 
+export const mediumDisplayName = (medium) => {
+    if (medium === "EURES") return "NKSE";
+    return medium;
+};
+
 export const JobPostingTextEnum = {
     STRUKTURERT: "strukturert",
     IKKE_STRUKTURERT: "ikkeStrukturert",
