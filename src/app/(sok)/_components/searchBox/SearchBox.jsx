@@ -133,7 +133,7 @@ function SearchBox({ dispatch, query, aggregations, locations, postcodes }) {
                     {showSaveAndResetButton && (
                         <HStack gap="2" columns="2" align="center" justify="end">
                             <>
-                                <SaveSearchButton size="small" />
+                                <SaveSearchButton size="small" query={query} />
                                 <Button
                                     type="button"
                                     variant="tertiary"
