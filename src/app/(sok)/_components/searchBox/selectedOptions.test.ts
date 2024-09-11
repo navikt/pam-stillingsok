@@ -5,7 +5,7 @@ import { buildSelectedOptions } from "@/app/(sok)/_components/searchBox/buildSel
 const query: Query = {
     from: 0,
     size: 25,
-    q: "",
+    q: [],
     municipals: [],
     counties: [],
     countries: [],

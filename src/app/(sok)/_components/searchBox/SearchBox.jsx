@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { useSearchParams } from "next/navigation";
 import SearchCombobox from "@/app/(sok)/_components/searchBox/SearchCombobox";
@@ -16,20 +16,7 @@ let suggestionsCache = [];
 const CACHE_MAX_SIZE = 50;
 const MINIMUM_LENGTH = 1;
 
-function getSearchBoxValue(query) {
-    let initialValue = "";
-    if (query.q) {
-        initialValue = query.q;
-    } else if (query.occupations[0]) {
-        // eslint-disable-next-line prefer-destructuring
-        initialValue = query.occupations[0];
-    }
-    return initialValue;
-}
-
 function SearchBox({ dispatch, query, aggregations, locations, postcodes }) {
-    const [value, setValue] = useState(getSearchBoxValue(query));
-    const initialRender = useRef(true);
     const [suggestionsResponse, suggestionsDispatch] = useFetchReducer([]);
     const searchParams = useSearchParams();
 
@@ -39,7 +26,7 @@ function SearchBox({ dispatch, query, aggregations, locations, postcodes }) {
     const showSaveAndResetButton = searchParams.size > 0 && !onlyPostcodeOrDistanceFilterActive;
     const chosenPostcodeCity = drivingDistanceFilterActive && postcodes.find((p) => p.postcode === query.postcode).city;
 
-    async function fetchSuggestions() {
+    async function fetchSuggestions(value) {
         const cached = suggestionsCache.find((c) => c.value === value);
         if (cached) {
             suggestionsDispatch({ type: FetchAction.RESOLVE, data: cached.data });
@@ -57,25 +44,13 @@ function SearchBox({ dispatch, query, aggregations, locations, postcodes }) {
         }
     }
 
-    useEffect(() => {
-        setValue(getSearchBoxValue(query));
-    }, [query.q, query.occupations]);
-
-    useEffect(() => {
-        if (initialRender.current) {
-            initialRender.current = false;
-        } else if (value && value.length >= MINIMUM_LENGTH) {
+    function handleValueChange(value) {
+        if (value && value.length >= MINIMUM_LENGTH) {
             fetchSuggestions(value);
-        } else {
-            suggestionsDispatch({ type: FetchAction.SET_DATA, data: [] });
         }
-    }, [value]);
+    }
 
     const allSuggestions = [...suggestionsResponse.data];
-
-    function handleValueChange(newValue) {
-        setValue(newValue);
-    }
 
     return (
         <Box paddingBlock={{ xs: "0 6", lg: "10 12" }}>
@@ -102,7 +77,6 @@ function SearchBox({ dispatch, query, aggregations, locations, postcodes }) {
                         queryDispatch={dispatch}
                         query={query}
                         onChange={handleValueChange}
-                        value={value}
                         options={getSearchBoxOptions(aggregations, locations, allSuggestions)}
                     />
 

@@ -42,10 +42,13 @@ function filterCounties(query: Query): string[] {
 }
 
 export function buildSelectedOptions(queryObject: Query): ComboboxOption[] {
-    const searchTerm = queryObject.q && queryObject.q.trim();
-
     return [
-        ...(searchTerm ? [{ label: searchTerm, value: searchTerm }] : []),
+        ...queryObject.q.map(
+            (searchTerm): ComboboxOption => ({
+                label: searchTerm,
+                value: searchTerm,
+            }),
+        ),
         ...queryObject.municipals.map(
             (municipal): ComboboxOption => ({
                 label: fixLocationName(municipal.split(".")[1]),
