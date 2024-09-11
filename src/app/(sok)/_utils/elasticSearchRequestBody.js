@@ -603,7 +603,6 @@ function mainQueryTemplateFunc(qAsArray) {
         "adtext_no^0.2",
         "employerdescription_no^0.1",
     ];
-    const q = qAsArray.join(" ").trim();
 
     return {
         bool: {
@@ -615,7 +614,7 @@ function mainQueryTemplateFunc(qAsArray) {
                         {
                             match: {
                                 id: {
-                                    query: q,
+                                    query: qAsArray.join(" ").trim(),
                                     operator: "and",
                                     boost: 1,
                                 },
