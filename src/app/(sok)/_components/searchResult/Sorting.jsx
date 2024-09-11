@@ -14,7 +14,7 @@ function Sorting({ query, dispatch }) {
             onChange={handleChange}
             value={query.sort || "published"}
             label="Sorter etter"
-            className="inline-select"
+            className="inline-select hide-label-sm"
         >
             <option key="published" value="published">
                 Nyeste øverst
