@@ -626,14 +626,7 @@ function mainQueryConjunctionTuning(qAsArray) {
                 },
             },
             should: [
-                {
-                    match_phrase: {
-                        title: {
-                            query: q,
-                            slop: 2,
-                        },
-                    },
-                },
+                ...titleFreeTextSearchMatch(qAsArray),
                 {
                     constant_score: {
                         filter: {
@@ -693,6 +686,19 @@ function employerFreeTextSearchMatch(qAsArray) {
                 query: q,
                 slop: 0,
                 boost: 2,
+            },
+        },
+    }));
+}
+
+function titleFreeTextSearchMatch(qAsArray) {
+    const queries = qAsArray.length > 0 ? qAsArray : [""];
+
+    return queries.map((q) => ({
+        match_phrase: {
+            title: {
+                query: q,
+                slop: 2,
             },
         },
     }));
