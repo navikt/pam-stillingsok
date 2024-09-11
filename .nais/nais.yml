@@ -26,7 +26,7 @@ spec:
     path: /stillinger/api/internal/isReady
   resources:
     requests:
-      cpu: 1000m
+      cpu: 2000m
       memory: 256Mi
   prometheus:
     enabled: true
