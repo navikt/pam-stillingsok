@@ -1,17 +1,17 @@
 import { UNSAFE_Combobox as Combobox } from "@navikt/ds-react";
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import {
     ADD_COUNTRY,
     ADD_MUNICIPAL,
     ADD_OCCUPATION_SECOND_LEVEL,
+    ADD_SEARCH_STRING,
     REMOVE_COUNTRY,
     REMOVE_MUNICIPAL,
     REMOVE_OCCUPATION_SECOND_LEVEL,
+    REMOVE_SEARCH_STRING,
     SET_INTERNATIONAL,
     SET_PUBLISHED,
-    ADD_SEARCH_STRING,
-    REMOVE_SEARCH_STRING,
 } from "@/app/(sok)/_utils/queryReducer";
 import {
     addCountryFilter,
@@ -27,7 +27,6 @@ import { buildSelectedOptions } from "@/app/(sok)/_components/searchBox/buildSel
 
 function SearchCombobox({ query, queryDispatch, onChange, options }) {
     const selectedOptions = useMemo(() => buildSelectedOptions(query), [query]);
-    const [isOpen, setIsOpen] = useState(false);
 
     const optionList = options.map((o) => ({
         label: `${o.label} ${findLabelForFilter(o.value.split("-")[0])}`,
@@ -101,17 +100,13 @@ function SearchCombobox({ query, queryDispatch, onChange, options }) {
 
     return (
         <Combobox
-            isListOpen={isOpen}
             allowNewValues
             label="Legg til sted, yrker og andre søkeord"
             isMultiSelect
             onToggleSelected={onToggleSelected}
             selectedOptions={selectedOptions}
             options={optionList}
-            onChange={(value) => {
-                setIsOpen(value.length > 0);
-                onChange(value);
-            }}
+            onChange={onChange}
         />
     );
 }
