@@ -625,33 +625,7 @@ function mainQueryConjunctionTuning(qAsArray) {
                     ],
                 },
             },
-            should: [
-                ...titleFreeTextSearchMatch(qAsArray),
-                {
-                    constant_score: {
-                        filter: {
-                            match: {
-                                "location.municipal": {
-                                    query: q,
-                                },
-                            },
-                        },
-                        boost: 3,
-                    },
-                },
-                {
-                    constant_score: {
-                        filter: {
-                            match: {
-                                "location.county": {
-                                    query: q,
-                                },
-                            },
-                        },
-                        boost: 3,
-                    },
-                },
-            ],
+            should: [...titleFreeTextSearchMatch(qAsArray)],
             filter: {
                 term: {
                     status: "ACTIVE",
