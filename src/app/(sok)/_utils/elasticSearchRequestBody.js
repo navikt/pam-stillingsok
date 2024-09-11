@@ -605,14 +605,15 @@ function mainQueryConjunctionTuning(qAsArray) {
         "employerdescription_no^0.1",
     ];
     const q = qAsArray.join(" ");
+    const queries = qAsArray.length > 0 ? qAsArray : [""];
 
     return {
         bool: {
             must: {
                 bool: {
                     should: [
-                        ...baseFreeTextSearchMatch(qAsArray, matchFields),
-                        ...employerFreeTextSearchMatch(qAsArray),
+                        ...baseFreeTextSearchMatch(queries, matchFields),
+                        ...employerFreeTextSearchMatch(queries),
                         {
                             match: {
                                 id: {
@@ -625,7 +626,7 @@ function mainQueryConjunctionTuning(qAsArray) {
                     ],
                 },
             },
-            should: [...titleFreeTextSearchMatch(qAsArray)],
+            should: [...titleFreeTextSearchMatch(queries)],
             filter: {
                 term: {
                     status: "ACTIVE",
@@ -635,9 +636,7 @@ function mainQueryConjunctionTuning(qAsArray) {
     };
 }
 
-function baseFreeTextSearchMatch(qAsArray, fields) {
-    const queries = qAsArray.length > 0 ? qAsArray : [""];
-
+function baseFreeTextSearchMatch(queries, fields) {
     return queries.map((q) => ({
         multi_match: {
             query: q,
@@ -651,9 +650,7 @@ function baseFreeTextSearchMatch(qAsArray, fields) {
     }));
 }
 
-function employerFreeTextSearchMatch(qAsArray) {
-    const queries = qAsArray.length > 0 ? qAsArray : [""];
-
+function employerFreeTextSearchMatch(queries) {
     return queries.map((q) => ({
         match_phrase: {
             employername: {
@@ -665,9 +662,7 @@ function employerFreeTextSearchMatch(qAsArray) {
     }));
 }
 
-function titleFreeTextSearchMatch(qAsArray) {
-    const queries = qAsArray.length > 0 ? qAsArray : [""];
-
+function titleFreeTextSearchMatch(queries) {
     return queries.map((q) => ({
         match_phrase: {
             title: {
