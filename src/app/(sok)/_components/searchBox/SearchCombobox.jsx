@@ -11,9 +11,7 @@ import {
     OCCUPATION_SECOND_LEVEL,
     PUBLISHED,
     SEARCH_STRING,
-    SORT,
 } from "@/app/(sok)/_components/searchParamNames";
-import { SortByValues } from "@/app/(sok)/_components/searchResult/Sorting";
 import { FetchAction, useFetchReducer } from "@/app/_common/hooks/useFetchReducer";
 import * as actions from "@/app/_common/actions";
 import { getSearchBoxOptions } from "@/app/(sok)/_components/searchBox/buildSearchBoxOptions";
@@ -68,9 +66,6 @@ function SearchCombobox({ aggregations, locations }) {
     const handleFreeTextSearchOption = (value, isSelected) => {
         if (isSelected) {
             searchQuery.append(SEARCH_STRING, value);
-            if (searchQuery.get(SORT) !== SortByValues.EXPIRES) {
-                searchQuery.set(SORT, SortByValues.RELEVANT);
-            }
         } else {
             searchQuery.remove(SEARCH_STRING, value);
         }

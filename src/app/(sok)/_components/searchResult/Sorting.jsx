@@ -9,22 +9,28 @@ export const SortByValues = {
     EXPIRES: "expires",
 };
 
+const DEFAULT_SORT = SortByValues.RELEVANT;
+
 function Sorting() {
     const searchQuery = useSearchQuery();
     function handleChange(e) {
         const { value } = e.target;
-        searchQuery.set(SORT, value);
+        if (value === DEFAULT_SORT) {
+            searchQuery.remove(SORT);
+        } else {
+            searchQuery.set(SORT, value);
+        }
     }
 
     return (
         <Select
             onChange={handleChange}
-            value={searchQuery.get(SORT) || SortByValues.PUBLISHED}
+            value={searchQuery.get(SORT) || SortByValues.RELEVANT}
             label="Sorter etter"
             className="inline-select hide-label-sm"
         >
-            <option value={SortByValues.PUBLISHED}>Nyeste øverst</option>
             <option value={SortByValues.RELEVANT}>Mest relevant</option>
+            <option value={SortByValues.PUBLISHED}>Nyeste øverst</option>
             <option value={SortByValues.EXPIRES}>Søknadsfrist</option>
         </Select>
     );
