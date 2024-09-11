@@ -593,8 +593,7 @@ function filterSector(sector) {
     return filters;
 }
 
-/* Experimental alternative relevance model with AND-logic and using cross-fields matching. */
-function mainQueryConjunctionTuning(qAsArray) {
+function mainQueryTemplateFunc(qAsArray) {
     const matchFields = [
         "category_name_no^2",
         "title_no^1",
@@ -604,16 +603,15 @@ function mainQueryConjunctionTuning(qAsArray) {
         "adtext_no^0.2",
         "employerdescription_no^0.1",
     ];
-    const q = qAsArray.join(" ");
-    const queries = qAsArray.length > 0 ? qAsArray : [""];
+    const q = qAsArray.join(" ").trim();
 
     return {
         bool: {
             must: {
                 bool: {
                     should: [
-                        ...baseFreeTextSearchMatch(queries, matchFields),
-                        ...employerFreeTextSearchMatch(queries),
+                        ...baseFreeTextSearchMatch(qAsArray, matchFields),
+                        ...employerFreeTextSearchMatch(qAsArray),
                         {
                             match: {
                                 id: {
@@ -626,7 +624,7 @@ function mainQueryConjunctionTuning(qAsArray) {
                     ],
                 },
             },
-            should: [...titleFreeTextSearchMatch(queries)],
+            should: [...titleFreeTextSearchMatch(qAsArray)],
             filter: {
                 term: {
                     status: "ACTIVE",
@@ -673,82 +671,6 @@ function titleFreeTextSearchMatch(queries) {
     }));
 }
 
-/* Generate main matching query object with classic/original OR match relevance model */
-function mainQueryDisjunctionTuning(q) {
-    return {
-        bool: {
-            must: {
-                multi_match: {
-                    query: q,
-                    type: "best_fields",
-                    fields: [
-                        "category_no^2",
-                        "title_no^1",
-                        "keywords_no^0.8",
-                        "id^1",
-                        "employername^0.9",
-                        "searchtags_no^0.4",
-                        "geography_all_no^0.2",
-                        "adtext_no^0.2",
-                        "employerdescription_no^0.1",
-                    ],
-                    tie_breaker: 0.3,
-                    minimum_should_match: 1,
-                    zero_terms_query: "all",
-                },
-            },
-            should: [
-                {
-                    match_phrase: {
-                        title: {
-                            query: q,
-                            slop: 2,
-                        },
-                    },
-                },
-                {
-                    match_phrase: {
-                        employername: {
-                            query: q,
-                            slop: 0,
-                            boost: 1,
-                        },
-                    },
-                },
-                {
-                    constant_score: {
-                        filter: {
-                            match: {
-                                "location.municipal": {
-                                    query: q,
-                                },
-                            },
-                        },
-                        boost: 3,
-                    },
-                },
-                {
-                    constant_score: {
-                        filter: {
-                            match: {
-                                "location.county": {
-                                    query: q,
-                                },
-                            },
-                        },
-                        boost: 3,
-                    },
-                },
-            ],
-            filter: {
-                term: {
-                    status: "ACTIVE",
-                },
-            },
-        },
-    };
-}
-
 const elasticSearchRequestBody = (query) => {
     const {
         from,
@@ -769,7 +691,6 @@ const elasticSearchRequestBody = (query) => {
         occupationFirstLevels,
         occupationSecondLevels,
         international,
-        operator,
         withinDrivingDistance,
     } = query;
     let { sort, q } = query;
@@ -779,12 +700,7 @@ const elasticSearchRequestBody = (query) => {
         if (sort !== "expires") {
             sort = "published";
         }
-        q = [];
-    }
-    // Resolve if and-operator should be used (experimental)
-    let mainQueryTemplateFunc = mainQueryConjunctionTuning;
-    if (operator === "or") {
-        mainQueryTemplateFunc = mainQueryDisjunctionTuning;
+        q = [""];
     }
 
     let template = {
