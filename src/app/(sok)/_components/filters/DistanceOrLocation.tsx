@@ -1,5 +1,6 @@
 import DrivingDistance, { DispatchProps } from "@/app/(sok)/_components/filters/DrivingDistance";
 import { ToggleGroup } from "@navikt/ds-react";
+import { CarIcon, LocationPinIcon } from "@navikt/aksel-icons";
 import React, { Dispatch, ReactElement, useState } from "react";
 import { Postcode } from "@/app/(sok)/_utils/fetchPostcodes";
 import Counties from "./Locations";
@@ -28,8 +29,16 @@ function DistanceOrLocation({
     return (
         <>
             <ToggleGroup defaultValue={selectedOption} onChange={setSelectedOption} fill>
-                <ToggleGroup.Item value="distance" label="Reisevei" />
-                <ToggleGroup.Item value="location" label="Sted" />
+                <ToggleGroup.Item
+                    value="distance"
+                    icon={<CarIcon aria-hidden className="hide-on-md-only" />}
+                    label="Reisevei"
+                />
+                <ToggleGroup.Item
+                    value="location"
+                    icon={<LocationPinIcon aria-hidden className="hide-on-md-only" />}
+                    label="Sted"
+                />
             </ToggleGroup>
             {selectedOption === "distance" && (
                 <DrivingDistance query={query} dispatch={dispatch} postcodes={postcodes} />
