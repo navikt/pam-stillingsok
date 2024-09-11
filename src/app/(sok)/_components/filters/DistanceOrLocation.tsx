@@ -20,8 +20,16 @@ function DistanceOrLocation({ postcodes, locations, searchResult }: DistanceOrLo
     return (
         <>
             <ToggleGroup defaultValue={selectedOption} onChange={setSelectedOption} fill>
-                <ToggleGroup.Item value="distance" icon={<CarIcon aria-hidden />} label="Reisevei" />
-                <ToggleGroup.Item value="location" icon={<LocationPinIcon aria-hidden />} label="Sted" />
+                <ToggleGroup.Item
+                    value="distance"
+                    icon={<CarIcon aria-hidden className="hide-on-md-only" />}
+                    label="Reisevei"
+                />
+                <ToggleGroup.Item
+                    value="location"
+                    icon={<LocationPinIcon aria-hidden className="hide-on-md-only" />}
+                    label="Sted"
+                />
             </ToggleGroup>
             {selectedOption === "distance" && <DrivingDistance postcodes={postcodes} />}
             {selectedOption === "location" && <Counties locations={locations} updatedValues={searchResult} />}

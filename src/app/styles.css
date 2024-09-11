@@ -188,3 +188,9 @@ no-underline:hover {
         background-color: var(--a-surface-alt-1-subtle);
     }
 }
+
+@media (min-width: 1024px) and (max-width: 1279px) {
+    .hide-on-md-only {
+        display: none;
+    }
+}
