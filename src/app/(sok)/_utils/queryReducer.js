@@ -41,13 +41,6 @@ export const SET_INTERNATIONAL = "SET_INTERNATIONAL";
 export const RESET = "RESET";
 export const SET_FROM_AND_SIZE = "SET_FROM_AND_SIZE";
 
-function getSort(previousSort, searchString) {
-    if (searchString) {
-        return "relevant";
-    }
-    return "";
-}
-
 export default function queryReducer(state, action) {
     // Reset pagination when user add or remove a search criteria
     const queryState = {
@@ -282,7 +275,6 @@ export default function queryReducer(state, action) {
             return {
                 ...queryState,
                 q: [...queryState.q, action.value],
-                sort: getSort(queryState.sort, action.value),
             };
         case REMOVE_SEARCH_STRING:
             return {
