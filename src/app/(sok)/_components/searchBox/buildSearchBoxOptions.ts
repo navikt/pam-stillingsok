@@ -244,7 +244,7 @@ interface LocationList {
 
 // TODO: move to SearchBox
 export interface Query {
-    q: string;
+    q: string[];
     from: number;
     size: number;
     municipals: string[];

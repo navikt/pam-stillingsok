@@ -1,5 +1,5 @@
 import { UNSAFE_Combobox as Combobox } from "@navikt/ds-react";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import {
     ADD_COUNTRY,
@@ -10,7 +10,8 @@ import {
     REMOVE_OCCUPATION_SECOND_LEVEL,
     SET_INTERNATIONAL,
     SET_PUBLISHED,
-    SET_SEARCH_STRING,
+    ADD_SEARCH_STRING,
+    REMOVE_SEARCH_STRING,
 } from "@/app/(sok)/_utils/queryReducer";
 import {
     addCountryFilter,
@@ -24,33 +25,23 @@ import {
 } from "@/app/(sok)/_components/searchBox/searchBoxFilter";
 import { buildSelectedOptions } from "@/app/(sok)/_components/searchBox/buildSelectedOptions";
 
-function SearchCombobox({ query, queryDispatch, onChange, options, value }) {
-    const initialSelectedOptions = useMemo(() => buildSelectedOptions(query), [query]);
-    const [selectedOptions, setSelectedOptions] = useState(initialSelectedOptions);
+function SearchCombobox({ query, queryDispatch, onChange, options }) {
+    const selectedOptions = useMemo(() => buildSelectedOptions(query), [query]);
+    const [isOpen, setIsOpen] = useState(false);
 
     const optionList = options.map((o) => ({
         label: `${o.label} ${findLabelForFilter(o.value.split("-")[0])}`,
         value: o.value,
     }));
 
-    const [filterOptions, setFilterOptions] = useState(optionList);
-
-    useEffect(() => {
-        const newInitialSelectedOptions = buildSelectedOptions(query);
-        setSelectedOptions(newInitialSelectedOptions);
-        if (query.q) {
-            setFilterOptions([...optionList, { label: query.q, value: query.q }]);
-        }
-    }, [query]);
-
     const handleFreeTextSearchOption = (option, isSelected) => {
         if (isSelected) {
             queryDispatch({
-                type: SET_SEARCH_STRING,
+                type: ADD_SEARCH_STRING,
                 value: option,
             });
         } else {
-            queryDispatch({ type: SET_SEARCH_STRING, value: "" });
+            queryDispatch({ type: REMOVE_SEARCH_STRING, value: option });
         }
     };
 
@@ -84,44 +75,43 @@ function SearchCombobox({ query, queryDispatch, onChange, options, value }) {
 
     const handleFilterOption = (option, isSelected) => {
         const optionValue = option.slice(option.indexOf("-") + 1);
-        const filter = option.split("-")[0];
 
         if (isSelected) {
-            setSelectedOptions([...selectedOptions, option]);
-
+            const filter = option.split("-")[0];
             const optionToAdd = getFilter[filter].add;
             handleFilterAddition(optionToAdd, optionValue);
         } else {
-            setSelectedOptions(selectedOptions.filter((o) => o !== option));
-
-            const optionToRemove = getFilter[filter].remove;
-            handleFilterRemoval(optionToRemove, optionValue);
+            const fragements = option.split("-");
+            const optionToRemove = fragements.length > 1 ? getFilter[fragements[0]].remove : undefined;
+            if (optionToRemove) {
+                handleFilterRemoval(optionToRemove, optionValue);
+            } else {
+                handleFreeTextSearchOption(optionValue, false);
+            }
         }
     };
 
     const onToggleSelected = (option, isSelected, isCustomOption) => {
-        if (isCustomOption || query.q.includes(option)) {
+        if (isCustomOption) {
             handleFreeTextSearchOption(option, isSelected);
         } else {
             handleFilterOption(option, isSelected);
         }
     };
 
-    const onFilteredOptions = useMemo(
-        () => filterOptions.filter((opt) => opt.label.toLowerCase().includes(value.toLowerCase())),
-        [value],
-    );
-
     return (
         <Combobox
+            isListOpen={isOpen}
             allowNewValues
             label="Legg til sted, yrker og andre søkeord"
             isMultiSelect
             onToggleSelected={onToggleSelected}
             selectedOptions={selectedOptions}
             options={optionList}
-            onChange={onChange}
-            filteredOptions={onFilteredOptions}
+            onChange={(value) => {
+                setIsOpen(value.length > 0);
+                onChange(value);
+            }}
         />
     );
 }

@@ -593,8 +593,7 @@ function filterSector(sector) {
     return filters;
 }
 
-/* Experimental alternative relevance model with AND-logic and using cross-fields matching. */
-function mainQueryConjunctionTuning(q) {
+function mainQueryTemplateFunc(qAsArray) {
     const matchFields = [
         "category_name_no^2",
         "title_no^1",
@@ -610,30 +609,12 @@ function mainQueryConjunctionTuning(q) {
             must: {
                 bool: {
                     should: [
-                        {
-                            multi_match: {
-                                query: q,
-                                type: "cross_fields",
-                                fields: matchFields,
-                                operator: "and",
-                                tie_breaker: 0.3,
-                                analyzer: "norwegian",
-                                zero_terms_query: "all",
-                            },
-                        },
-                        {
-                            match_phrase: {
-                                employername: {
-                                    query: q,
-                                    slop: 0,
-                                    boost: 2,
-                                },
-                            },
-                        },
+                        ...baseFreeTextSearchMatch(qAsArray, matchFields),
+                        ...employerFreeTextSearchMatch(qAsArray),
                         {
                             match: {
                                 id: {
-                                    query: q,
+                                    query: qAsArray.join(" ").trim(),
                                     operator: "and",
                                     boost: 1,
                                 },
@@ -642,40 +623,7 @@ function mainQueryConjunctionTuning(q) {
                     ],
                 },
             },
-            should: [
-                {
-                    match_phrase: {
-                        title: {
-                            query: q,
-                            slop: 2,
-                        },
-                    },
-                },
-                {
-                    constant_score: {
-                        filter: {
-                            match: {
-                                "location.municipal": {
-                                    query: q,
-                                },
-                            },
-                        },
-                        boost: 3,
-                    },
-                },
-                {
-                    constant_score: {
-                        filter: {
-                            match: {
-                                "location.county": {
-                                    query: q,
-                                },
-                            },
-                        },
-                        boost: 3,
-                    },
-                },
-            ],
+            should: [...titleFreeTextSearchMatch(qAsArray)],
             filter: {
                 term: {
                     status: "ACTIVE",
@@ -685,80 +633,41 @@ function mainQueryConjunctionTuning(q) {
     };
 }
 
-/* Generate main matching query object with classic/original OR match relevance model */
-function mainQueryDisjunctionTuning(q) {
-    return {
-        bool: {
-            must: {
-                multi_match: {
-                    query: q,
-                    type: "best_fields",
-                    fields: [
-                        "category_no^2",
-                        "title_no^1",
-                        "keywords_no^0.8",
-                        "id^1",
-                        "employername^0.9",
-                        "searchtags_no^0.4",
-                        "geography_all_no^0.2",
-                        "adtext_no^0.2",
-                        "employerdescription_no^0.1",
-                    ],
-                    tie_breaker: 0.3,
-                    minimum_should_match: 1,
-                    zero_terms_query: "all",
-                },
-            },
-            should: [
-                {
-                    match_phrase: {
-                        title: {
-                            query: q,
-                            slop: 2,
-                        },
-                    },
-                },
-                {
-                    match_phrase: {
-                        employername: {
-                            query: q,
-                            slop: 0,
-                            boost: 1,
-                        },
-                    },
-                },
-                {
-                    constant_score: {
-                        filter: {
-                            match: {
-                                "location.municipal": {
-                                    query: q,
-                                },
-                            },
-                        },
-                        boost: 3,
-                    },
-                },
-                {
-                    constant_score: {
-                        filter: {
-                            match: {
-                                "location.county": {
-                                    query: q,
-                                },
-                            },
-                        },
-                        boost: 3,
-                    },
-                },
-            ],
-            filter: {
-                term: {
-                    status: "ACTIVE",
-                },
+function baseFreeTextSearchMatch(queries, fields) {
+    return queries.map((q) => ({
+        multi_match: {
+            query: q,
+            type: "cross_fields",
+            fields: fields,
+            operator: "and",
+            tie_breaker: 0.3,
+            analyzer: "norwegian",
+            zero_terms_query: "all",
+        },
+    }));
+}
+
+function employerFreeTextSearchMatch(queries) {
+    return queries.map((q) => ({
+        match_phrase: {
+            employername: {
+                query: q,
+                slop: 0,
+                boost: 2,
             },
         },
-    };
+    }));
+}
+
+function titleFreeTextSearchMatch(queries) {
+    return queries.map((q) => ({
+        match_phrase: {
+            title: {
+                query: q,
+                slop: 2,
+            },
+        },
+    }));
 }
 
 const elasticSearchRequestBody = (query) => {
@@ -781,22 +690,16 @@ const elasticSearchRequestBody = (query) => {
         occupationFirstLevels,
         occupationSecondLevels,
         international,
-        operator,
         withinDrivingDistance,
     } = query;
     let { sort, q } = query;
 
     // To ensure consistent search results across multiple shards in elasticsearch when query is blank
-    if (!q || q.trim().length === 0) {
+    if (!q || q.length === 0) {
         if (sort !== "expires") {
             sort = "published";
         }
-        q = "";
-    }
-    // Resolve if and-operator should be used (experimental)
-    let mainQueryTemplateFunc = mainQueryConjunctionTuning;
-    if (operator === "or") {
-        mainQueryTemplateFunc = mainQueryDisjunctionTuning;
+        q = [""];
     }
 
     let template = {

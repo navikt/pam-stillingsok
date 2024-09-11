@@ -34,7 +34,8 @@ export const REMOVE_REMOTE = "REMOVE_REMOTE";
 export const ADD_SECTOR = "ADD_SECTOR";
 export const REMOVE_SECTOR = "REMOVE_SECTOR";
 export const SET_PUBLISHED = "SET_PUBLISHED";
-export const SET_SEARCH_STRING = "SET_SEARCH_STRING";
+export const ADD_SEARCH_STRING = "SET_SEARCH_STRING";
+export const REMOVE_SEARCH_STRING = "REMOVE_SEARCH_STRING";
 export const SET_SORTING = "SET_SORTING";
 export const SET_INTERNATIONAL = "SET_INTERNATIONAL";
 export const RESET = "RESET";
@@ -131,8 +132,6 @@ export default function queryReducer(state, action) {
             }
             return {
                 ...queryState,
-                q: "",
-                sort: "",
                 occupations: [...queryState.occupations, action.value],
             };
         case REMOVE_OCCUPATION:
@@ -279,12 +278,16 @@ export default function queryReducer(state, action) {
                 ...queryState,
                 published: action.value,
             };
-        case SET_SEARCH_STRING:
+        case ADD_SEARCH_STRING:
             return {
                 ...queryState,
-                q: action.value,
-                occupations: [],
+                q: [...queryState.q, action.value],
                 sort: getSort(queryState.sort, action.value),
+            };
+        case REMOVE_SEARCH_STRING:
+            return {
+                ...queryState,
+                q: queryState.q.filter((obj) => obj !== action.value),
             };
         case SET_SORTING:
             return {
