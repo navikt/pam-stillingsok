@@ -2,11 +2,13 @@ import { CacheHandler } from '@neshca/cache-handler';
 import createLruHandler from '@neshca/cache-handler/local-lru';
 import createRedisHandler from '@neshca/cache-handler/redis-strings';
 import { createClient } from 'redis';
-import winston from "winston";
+import winston, { format } from 'winston';
 
 const logger = winston.createLogger({
-    format: winston.format.json(),
+    level: "info",
+    format: winston.format.combine(format.errors({ stack: true }), winston.format.json()),
     transports: [new winston.transports.Console()],
+    exceptionHandlers: [new winston.transports.Console()],
 });
 
 CacheHandler.onCreation(async () => {
