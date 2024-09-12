@@ -23,6 +23,6 @@ jobs:
       - name: Deploy Redis
         uses: nais/deploy/actions/deploy@v2
         env:
-          CLUSTER: dev-gcp
+          CLUSTER: prod-gcp
           RESOURCE: .nais/redis.yml
           VARS: .nais/prod.yml
