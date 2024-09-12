@@ -1,0 +1,11 @@
+apiVersion: aiven.io/v1alpha1
+kind: Redis
+metadata:
+  labels:
+    app: pam-stillingsok
+    team: teampam
+  name: pam-stillingsok-redis
+  namespace: teampam
+spec:
+  plan: startup-4
+  project: nav-dev
