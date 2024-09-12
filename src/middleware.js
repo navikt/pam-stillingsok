@@ -59,6 +59,7 @@ const PUBLIC_FILE = /\.(.*)$/;
 // See this issue: https://github.com/siimon/prom-client/issues/584
 // It's also not possible to switch to a different runtime.
 // See this discussion: https://github.com/vercel/next.js/discussions/46722
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function collectNumberOfRequestsMetric(request, requestHeaders) {
     // Don't track requests to js, css, images, etc.
     if (PUBLIC_FILE.test(request.nextUrl.pathname)) {
@@ -95,7 +96,7 @@ export function middleware(request) {
         response.headers.set(key, value);
     });
 
-    collectNumberOfRequestsMetric(request, requestHeaders);
+    // collectNumberOfRequestsMetric(request, requestHeaders);
 
     return response;
 }
