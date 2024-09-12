@@ -16,8 +16,8 @@ spec:
   port: 3000
   replicas:
     min: 2
-    max: 5
-    cpuThresholdPercentage: 75
+    max: 6
+    cpuThresholdPercentage: 60
   liveness:
     initialDelay: 10
     path: /stillinger/api/internal/isAlive
@@ -26,8 +26,8 @@ spec:
     path: /stillinger/api/internal/isReady
   resources:
     requests:
-      cpu: 2000m
-      memory: 1024Mi
+      cpu: 1000m
+      memory: 512Mi
     limits:
       memory: 2048Mi
   prometheus:
