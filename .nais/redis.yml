@@ -4,7 +4,7 @@ metadata:
   labels:
     app: pam-stillingsok
     team: teampam
-  name: pam-stillingsok-redis
+  name: redis-teampam-stillingsok
   namespace: teampam
 spec:
   plan: startup-4
