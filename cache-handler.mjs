@@ -16,11 +16,15 @@ CacheHandler.onCreation(async () => {
 
     try {
         client = createClient({
-            url: process.env.REDIS_URI_CACHE ?? 'redis://localhost:6379',
-            username: process.env.REDIS_USERNAME_CACHE ?? '',
-            password: process.env.REDIS_PASSWORD_CACHE ?? '',
+            username: process.env.REDIS_USER ?? '',
+            password: process.env.REDIS_PASSWORD ?? '',
             disableOfflineQueue: true,
             pingInterval: 1000*60, // 30 seconds
+            socket: {
+                host: process.env.REDIS_HOST ?? 'localhost',
+                port: parseInt(process.env.REDIS_PORT ?? '6379', 10),
+                tls: true,
+            },
         });
 
         client.on('error', err => logger.error('Redis Client Error', err));
