@@ -16,9 +16,9 @@ CacheHandler.onCreation(async () => {
 
     try {
         client = createClient({
-            url: process.env.REDIS_URI_CACHE ?? 'redis://localhost:6379',
-            username: process.env.REDIS_USERNAME_CACHE ?? '',
-            password: process.env.REDIS_PASSWORD_CACHE ?? '',
+            url: process.env.REDIS_URI_STILLINGSOK ?? 'redis://localhost:6379',
+            username: process.env.REDIS_USERNAME_STILLINGSOK ?? '',
+            password: process.env.REDIS_PASSWORD_STILLINGSOK ?? '',
             disableOfflineQueue: true,
             pingInterval: 1000*60, // 30 seconds
         });
