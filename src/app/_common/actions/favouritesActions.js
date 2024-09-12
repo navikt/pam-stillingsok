@@ -44,7 +44,7 @@ export async function addFavouriteAction(favouriteAd) {
 
     if (!res.ok) {
         logger.error(`POST favourite to aduser failed. ${res.status} ${res.statusText}`);
-        throw new Error();
+        throw new Error("Failed to add favourite");
     }
 
     revalidatePath("/favoritter");
