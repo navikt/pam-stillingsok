@@ -73,5 +73,5 @@ spec:
         - host: amplitude.nav.no
         - host: sentry.gc.nav.no
   redis:
-    - instance: cache
+    - instance: {{ redis.instance }}
       access: readwrite

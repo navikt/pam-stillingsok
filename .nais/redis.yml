@@ -4,8 +4,8 @@ metadata:
   labels:
     app: pam-stillingsok
     team: teampam
-  name: redis-teampam-stillingsok
+  name: redis-teampam-{{ redis.instance }}
   namespace: teampam
 spec:
-  plan: startup-4
-  project: nav-dev
+  plan: {{ redis.plan }}
+  project: {{ redis.project }}
