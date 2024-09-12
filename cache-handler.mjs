@@ -20,6 +20,7 @@ CacheHandler.onCreation(async () => {
             username: process.env.REDIS_USERNAME_CACHE ?? '',
             password: process.env.REDIS_PASSWORD_CACHE ?? '',
             disableOfflineQueue: true,
+            pingInterval: 1000*60, // 30 seconds
         });
 
         client.on('error', err => logger.error('Redis Client Error', err));
