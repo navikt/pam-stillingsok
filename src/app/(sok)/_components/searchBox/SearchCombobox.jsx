@@ -100,6 +100,7 @@ function SearchCombobox({ query, queryDispatch, onChange, options }) {
 
     return (
         <Combobox
+            shouldAutocomplete
             allowNewValues
             label="Legg til sted, yrker og andre søkeord"
             isMultiSelect
@@ -113,7 +114,7 @@ function SearchCombobox({ query, queryDispatch, onChange, options }) {
 
 SearchCombobox.propTypes = {
     query: PropTypes.shape({
-        q: PropTypes.string,
+        q: PropTypes.arrayOf(PropTypes.string),
         municipals: PropTypes.arrayOf(PropTypes.string),
         counties: PropTypes.arrayOf(PropTypes.string),
         countries: PropTypes.arrayOf(PropTypes.string),
