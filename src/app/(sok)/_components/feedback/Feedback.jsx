@@ -62,7 +62,7 @@ function Feedback({ query }) {
 
 Feedback.propTypes = {
     query: PropTypes.shape({
-        q: PropTypes.string,
+        q: PropTypes.arrayOf(PropTypes.string),
         fields: PropTypes.string,
     }).isRequired,
 };

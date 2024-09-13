@@ -130,7 +130,7 @@ function SearchBox({ dispatch, query, aggregations, locations, postcodes }) {
 
 SearchBox.propTypes = {
     query: PropTypes.shape({
-        q: PropTypes.string,
+        q: PropTypes.arrayOf(PropTypes.string),
     }).isRequired,
     dispatch: PropTypes.func.isRequired,
     locations: PropTypes.arrayOf(PropTypes.shape({})),
