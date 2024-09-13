@@ -100,6 +100,7 @@ function SearchCombobox({ query, queryDispatch, onChange, options }) {
 
     return (
         <Combobox
+            shouldAutocomplete
             allowNewValues
             label="Legg til sted, yrker og andre søkeord"
             isMultiSelect
