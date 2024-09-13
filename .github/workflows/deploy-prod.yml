@@ -12,3 +12,17 @@ jobs:
     with:
       NAIS_RESOURCE: .nais/nais.yml
       NAIS_VARS: .nais/prod.yml
+  deploy-redis:
+    name: Deploy redis
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: "write"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Deploy Redis
+        uses: nais/deploy/actions/deploy@v2
+        env:
+          CLUSTER: prod-gcp
+          RESOURCE: .nais/redis.yml
+          VARS: .nais/prod.yml
