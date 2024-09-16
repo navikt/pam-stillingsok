@@ -24,3 +24,17 @@ jobs:
     secrets: inherit
     with:
       SKIP_DRAFT_RELEASE: ${{ github.ref_name != 'master' }}
+  deploy-redis:
+    name: Deploy redis
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: "write"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Deploy Redis
+        uses: nais/deploy/actions/deploy@v2
+        env:
+          CLUSTER: dev-gcp
+          RESOURCE: .nais/redis.yml
+          VARS: .nais/dev.yml

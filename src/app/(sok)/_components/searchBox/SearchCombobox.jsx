@@ -158,6 +158,7 @@ function SearchCombobox({ aggregations, locations }) {
 
     return (
         <Combobox
+            shouldAutocomplete
             allowNewValues
             label="Legg til sted, yrker og andre søkeord"
             isMultiSelect

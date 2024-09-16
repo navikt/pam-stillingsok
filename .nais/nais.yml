@@ -16,8 +16,8 @@ spec:
   port: 3000
   replicas:
     min: 2
-    max: 5
-    cpuThresholdPercentage: 75
+    max: 6
+    cpuThresholdPercentage: 60
   liveness:
     initialDelay: 10
     path: /stillinger/api/internal/isAlive
@@ -27,7 +27,9 @@ spec:
   resources:
     requests:
       cpu: 1000m
-      memory: 256Mi
+      memory: 512Mi
+    limits:
+      memory: 2048Mi
   prometheus:
     enabled: true
     path: /stillinger/api/internal/prometheus
@@ -71,5 +73,5 @@ spec:
         - host: amplitude.nav.no
         - host: sentry.gc.nav.no
   redis:
-    - instance: cache
+    - instance: {{ redis.instance }}
       access: readwrite
