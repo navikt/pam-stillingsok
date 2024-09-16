@@ -30,6 +30,7 @@ export interface UserPreferences {
     resultsPerPage?: number;
     publishedJobFilterOpen?: boolean;
     favouritesSortBy?: string;
+    locationOrDistance?: string;
 }
 
 export async function getUserPreferences(): Promise<UserPreferences> {
@@ -54,12 +55,15 @@ export async function getUserPreferences(): Promise<UserPreferences> {
 
         const publishedJobFilterOpen = parsedCookie.publishedJobFilterOpen === true;
 
+        const { locationOrDistance } = parsedCookie;
+
         return {
             openFilters,
             dismissedPanels,
             resultsPerPage,
             publishedJobFilterOpen,
             favouritesSortBy: favouritesSortPreference,
+            locationOrDistance,
         };
     } catch (e) {
         logger.info(`Kunne ikke parse '${USER_PREFERENCES_COOKIE_NAME}' cookie`);
@@ -115,6 +119,12 @@ export async function saveResultsPerPage(resultsPerPage: number): Promise<void> 
     }
     const existingCookie = await getUserPreferences();
     const newCookieValue = { ...existingCookie, resultsPerPage };
+    cookies().set(USER_PREFERENCES_COOKIE_NAME, JSON.stringify(newCookieValue), COOKIE_OPTIONS);
+}
+
+export async function saveLocationOrDistance(locationOrDistance: string): Promise<void> {
+    const existingCookie = await getUserPreferences();
+    const newCookieValue = { ...existingCookie, locationOrDistance };
     cookies().set(USER_PREFERENCES_COOKIE_NAME, JSON.stringify(newCookieValue), COOKIE_OPTIONS);
 }
 
