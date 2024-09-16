@@ -14,7 +14,7 @@ import {
 } from "@/app/(sok)/_components/searchParamNames";
 import { FetchAction, useFetchReducer } from "@/app/_common/hooks/useFetchReducer";
 import * as actions from "@/app/_common/actions";
-import { getSearchBoxOptions } from "@/app/(sok)/_components/searchBox/buildSearchBoxOptions";
+import { findLabelForFilter, getSearchBoxOptions } from "@/app/(sok)/_components/searchBox/buildSearchBoxOptions";
 
 let suggestionsCache = [];
 const CACHE_MAX_SIZE = 50;
@@ -35,7 +35,7 @@ function SearchCombobox({ aggregations, locations }) {
     );
 
     const optionList = options.map((o) => ({
-        label: o.label,
+        label: `${o.label} ${findLabelForFilter(o.value.split("-")[0])}`,
         value: o.value,
     }));
 

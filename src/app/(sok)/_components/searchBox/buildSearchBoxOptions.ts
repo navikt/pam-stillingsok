@@ -261,6 +261,37 @@ export function getSearchBoxOptions(
     ];
 }
 
+export const findLabelForFilter = (value: string): string => {
+    switch (value) {
+        case MUNICIPAL:
+            return "(Kommune)";
+        case COUNTY:
+            return "(Fylke)";
+        case COUNTRY:
+            return "(Land)";
+        case OCCUPATION_FIRST_LEVEL:
+            return "(Yrkesgruppe nivå 2)";
+        case OCCUPATION_SECOND_LEVEL:
+            return "(Yrkesgruppe)";
+        case OCCUPATION:
+            return "(Yrke)";
+        case SECTOR:
+            return "(Sektor)";
+        case ENGAGEMENT_TYPE:
+            return "(Ansettelsesform)";
+        case EXTENT:
+            return "(Omfang)";
+        case EDUCATION:
+            return "(Krav om utdanning)";
+        case WORK_LANGUAGE:
+            return "(Arbeidsspråk)";
+        case NEED_DRIVERS_LICENSE:
+            return "(Førerkort)";
+        default:
+            return "";
+    }
+};
+
 interface Aggregations {
     occupationFirstLevels: { key: string; occupationSecondLevels: { key: string }[] }[];
     published: { key: string }[];
