@@ -25,10 +25,12 @@ function SearchResultHeader({ searchResult, isFiltersVisible, setIsFiltersVisibl
                 >
                     <HStack gap="2" wrap={false} justify="space-between" align="center" className="full-width">
                         <div>
-                            <Heading level="2" size="small" role="status" className="white-space-nowrap">
-                                {searchResult.totalAds > 0
-                                    ? `${formatNumber(searchResult.totalAds)} treff`
-                                    : "Ingen treff"}
+                            <Heading level="2" size="small" className="white-space-nowrap">
+                                <span role="status">
+                                    {searchResult.totalAds > 0
+                                        ? `${formatNumber(searchResult.totalAds)} treff`
+                                        : "Ingen treff"}
+                                </span>
                             </Heading>
                             <BodyShort className="white-space-nowrap">
                                 {searchResult.totalAds > 0
