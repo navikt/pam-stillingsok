@@ -15,6 +15,7 @@ import {
 import { FetchAction, useFetchReducer } from "@/app/_common/hooks/useFetchReducer";
 import * as actions from "@/app/_common/actions";
 import { findLabelForFilter, getSearchBoxOptions } from "@/app/(sok)/_components/searchBox/buildSearchBoxOptions";
+import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
 
 let suggestionsCache = [];
 const CACHE_MAX_SIZE = 50;
@@ -34,10 +35,12 @@ function SearchCombobox({ aggregations, locations }) {
         [searchQuery.urlSearchParams],
     );
 
-    const optionList = options.map((o) => ({
-        label: `${o.label} ${findLabelForFilter(o.value.split("-")[0])}`,
-        value: o.value,
-    }));
+    const optionList = options.map((o) => {
+        const filterLabel = findLabelForFilter(o.value.split("-")[0]);
+        return filterLabel
+            ? { label: `${o.label} ${filterLabel}`, value: o.value }
+            : { label: o.label, value: o.value };
+    });
 
     async function fetchSuggestions(value) {
         const cached = suggestionsCache.find((c) => c.value === value);
@@ -105,6 +108,7 @@ function SearchCombobox({ aggregations, locations }) {
         } else {
             searchQuery.remove(key, value);
         }
+        logFilterChanged({ name: key, value, checked: false, source: "Søkefelt" });
     };
 
     function handleFilterAddition(key, value) {
@@ -132,6 +136,7 @@ function SearchCombobox({ aggregations, locations }) {
         } else {
             searchQuery.append(key, value);
         }
+        logFilterChanged({ name: key, value, checked: true, source: "Søkefelt" });
     }
 
     const handleFilterOption = (option, isSelected) => {
