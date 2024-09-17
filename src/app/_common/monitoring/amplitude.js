@@ -35,7 +35,11 @@ const logAmplitudeEvent = (event, data) => {
 };
 
 export const logFilterChanged = (data) => {
-    amplitude.track("Filter Changed", enrichData({ ...data, source: "Sidebar" }));
+    if (data && data.source) {
+        amplitude.track("Filter Changed", enrichData(data));
+    } else {
+        amplitude.track("Filter Changed", enrichData({ ...data, source: "Sidebar" }));
+    }
 };
 
 export function logStillingVisning(adData) {
