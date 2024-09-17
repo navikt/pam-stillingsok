@@ -287,8 +287,6 @@ export const findLabelForFilter = (value: string): string => {
             return "(Arbeidsspråk)";
         case NEED_DRIVERS_LICENSE:
             return "(Førerkort)";
-        case PUBLISHED:
-            return "(Publisert)";
         default:
             return "";
     }
