@@ -17,6 +17,7 @@ const ALLOWED_PANELID_VALUES = [
     "workLanguage",
     "hjemmekontor",
 ];
+const ALLOWED_DISTANCE_OR_LOCATION_VALUES = ["location", "distance"];
 const ALLOWED_DISMISSED_PANELS: string[] = ["new-filters-survey"];
 const ALLOWED_RESULTS_PER_PAGE: number[] = [25, 100];
 const COOKIE_OPTIONS: { secure: boolean; httpOnly: boolean } = { secure: true, httpOnly: true };
@@ -30,6 +31,7 @@ export interface UserPreferences {
     resultsPerPage?: number;
     publishedJobFilterOpen?: boolean;
     favouritesSortBy?: string;
+    locationOrDistance?: string;
 }
 
 export async function getUserPreferences(): Promise<UserPreferences> {
@@ -54,12 +56,19 @@ export async function getUserPreferences(): Promise<UserPreferences> {
 
         const publishedJobFilterOpen = parsedCookie.publishedJobFilterOpen === true;
 
+        const locationOrDistance =
+            parsedCookie.locationOrDistance &&
+            ALLOWED_DISTANCE_OR_LOCATION_VALUES.includes(parsedCookie.locationOrDistance)
+                ? parsedCookie.locationOrDistance
+                : undefined;
+
         return {
             openFilters,
             dismissedPanels,
             resultsPerPage,
             publishedJobFilterOpen,
             favouritesSortBy: favouritesSortPreference,
+            locationOrDistance,
         };
     } catch (e) {
         logger.info(`Kunne ikke parse '${USER_PREFERENCES_COOKIE_NAME}' cookie`);
@@ -115,6 +124,17 @@ export async function saveResultsPerPage(resultsPerPage: number): Promise<void> 
     }
     const existingCookie = await getUserPreferences();
     const newCookieValue = { ...existingCookie, resultsPerPage };
+    cookies().set(USER_PREFERENCES_COOKIE_NAME, JSON.stringify(newCookieValue), COOKIE_OPTIONS);
+}
+
+export async function saveLocationOrDistance(locationOrDistance: string): Promise<void> {
+    if (!ALLOWED_DISTANCE_OR_LOCATION_VALUES.includes(locationOrDistance)) {
+        // Trying to set an invalid value
+        return;
+    }
+
+    const existingCookie = await getUserPreferences();
+    const newCookieValue = { ...existingCookie, locationOrDistance };
     cookies().set(USER_PREFERENCES_COOKIE_NAME, JSON.stringify(newCookieValue), COOKIE_OPTIONS);
 }
 
