@@ -15,6 +15,7 @@ import {
 import { FetchAction, useFetchReducer } from "@/app/_common/hooks/useFetchReducer";
 import * as actions from "@/app/_common/actions";
 import { findLabelForFilter, getSearchBoxOptions } from "@/app/(sok)/_components/searchBox/buildSearchBoxOptions";
+import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
 
 let suggestionsCache = [];
 const CACHE_MAX_SIZE = 50;
@@ -105,6 +106,7 @@ function SearchCombobox({ aggregations, locations }) {
         } else {
             searchQuery.remove(key, value);
         }
+        logFilterChanged({ name: key, value, checked: false, source: "søkefelt" });
     };
 
     function handleFilterAddition(key, value) {
@@ -132,6 +134,7 @@ function SearchCombobox({ aggregations, locations }) {
         } else {
             searchQuery.append(key, value);
         }
+        logFilterChanged({ name: key, value, checked: true, source: "søkefelt" });
     }
 
     const handleFilterOption = (option, isSelected) => {
