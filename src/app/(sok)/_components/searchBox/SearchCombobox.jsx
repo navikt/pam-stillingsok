@@ -35,10 +35,12 @@ function SearchCombobox({ aggregations, locations }) {
         [searchQuery.urlSearchParams],
     );
 
-    const optionList = options.map((o) => ({
-        label: `${o.label} ${findLabelForFilter(o.value.split("-")[0])}`,
-        value: o.value,
-    }));
+    const optionList = options.map((o) => {
+        const filterLabel = findLabelForFilter(o.value.split("-")[0]);
+        return filterLabel
+            ? { label: `${o.label} ${filterLabel}`, value: o.value }
+            : { label: o.label, value: o.value };
+    });
 
     async function fetchSuggestions(value) {
         const cached = suggestionsCache.find((c) => c.value === value);
