@@ -41,7 +41,7 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, isD
                         </BodyShort>
                     )}
                     <HStack gap="2" wrap={false} align="center" justify="space-between">
-                        <Heading level="3" size="small" className="overflow-wrap-anywhere">
+                        <Heading level="2" size="small" className="overflow-wrap-anywhere">
                             <LinkToAd stilling={ad} employer={employer}>
                                 {ad.title}
                             </LinkToAd>
