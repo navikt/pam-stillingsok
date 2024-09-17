@@ -91,10 +91,10 @@ export default async function Page({ searchParams }) {
 
     const userPreferences = await actions.getUserPreferences();
     const modifiedSearchParams = searchParams;
-    let size = SEARCH_CHUNK_SIZE;
+    let resultsPerPage = SEARCH_CHUNK_SIZE;
     if (userPreferences.resultsPerPage) {
         modifiedSearchParams.size = userPreferences.resultsPerPage;
-        size = userPreferences.resultsPerPage;
+        resultsPerPage = userPreferences.resultsPerPage;
     }
 
     const initialQuery = createQuery(modifiedSearchParams);
@@ -113,7 +113,7 @@ export default async function Page({ searchParams }) {
             aggregations={globalSearchResult.aggregations}
             locations={locations}
             postcodes={postcodes}
-            size={size}
+            resultsPerPage={resultsPerPage}
         />
     );
 }

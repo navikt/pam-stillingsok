@@ -8,16 +8,18 @@ import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
 import { FROM } from "@/app/(sok)/_components/searchParamNames";
 import { ALLOWED_NUMBER_OF_RESULTS_PER_PAGE } from "../../_utils/query";
 
-function SearchPagination({ searchResult, size }) {
+function SearchPagination({ searchResult, resultsPerPage }) {
     const searchQuery = useSearchQuery();
     const searchParams = useSearchParams();
 
     // Elastic search does not allow pagination above 10 000 results.
-    const totalPages = Math.ceil(searchResult.totalAds < 10000 ? searchResult.totalAds / size : 9999 / size);
-    const page = searchParams.has(FROM) ? Math.floor(parseInt(searchParams.get(FROM), 10) / size) + 1 : 1;
+    const totalPages = Math.ceil(
+        searchResult.totalAds < 10000 ? searchResult.totalAds / resultsPerPage : 9999 / resultsPerPage,
+    );
+    const page = searchParams.has(FROM) ? Math.floor(parseInt(searchParams.get(FROM), 10) / resultsPerPage) + 1 : 1;
 
     const onPageChange = (x) => {
-        const from = x * size - size;
+        const from = x * resultsPerPage - resultsPerPage;
         searchQuery.setPaginate(true);
         if (from > 0) {
             searchQuery.set(FROM, `${from}`);
@@ -63,7 +65,7 @@ function SearchPagination({ searchResult, size }) {
                     logAmplitudeEvent("Page size Changed", { size: newSize });
                     actions.saveResultsPerPage(newSize);
                 }}
-                value={size}
+                value={resultsPerPage}
                 className="inline-select"
             >
                 {ALLOWED_NUMBER_OF_RESULTS_PER_PAGE.map((item) => (
