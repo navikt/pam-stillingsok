@@ -59,12 +59,8 @@ export default function Search({ query, searchResult, aggregations, locations, p
         logAmplitudeEvent("Stillinger - Utførte søk");
     }, []);
 
-    function onFormSubmit(e) {
-        e.preventDefault();
-    }
-
     return (
-        <form onSubmit={onFormSubmit} className="mb-24">
+        <div className="mb-24">
             <Box paddingBlock={{ xs: "4", md: "10" }} paddingInline={{ xs: "4", sm: "6" }}>
                 <Stack justify={{ md: "center" }}>
                     <Heading level="1" size="xlarge">
@@ -146,7 +142,7 @@ export default function Search({ query, searchResult, aggregations, locations, p
                     {searchResult?.ads?.length > 0 && <Feedback query={query} />}
                 </VStack>
             </HGrid>
-        </form>
+        </div>
     );
 }
 
