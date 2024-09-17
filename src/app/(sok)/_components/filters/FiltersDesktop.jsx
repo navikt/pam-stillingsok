@@ -29,7 +29,7 @@ function FiltersDesktop({ aggregations, locations, postcodes, searchResult }) {
                 <FilterAccordionItem title="Sted" panelId="sted">
                     <DistanceOrLocation postcodes={postcodes} locations={locations} searchResult={searchResult} />
                 </FilterAccordionItem>
-                <FilterAccordionItem title="Yrke og sektor" panelId="yrke">
+                <FilterAccordionItem title="Yrkeskategori og sektor" panelId="yrke">
                     <Occupations
                         initialValues={aggregations.occupationFirstLevels}
                         updatedValues={searchResult.aggregations.occupationFirstLevels}

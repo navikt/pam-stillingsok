@@ -58,7 +58,7 @@ function FiltersMobile({ onCloseClick, searchResult, aggregations, locations, po
                         {[
                             "Publisert",
                             "Sted",
-                            "Yrke og sektor",
+                            "Yrkeskategori og sektor",
                             "Utdanning, erfaring og førerkort",
                             "Arbeidsspråk",
                             "Omfang og ansettelsesform",
@@ -90,7 +90,7 @@ function FiltersMobile({ onCloseClick, searchResult, aggregations, locations, po
                         <DistanceOrLocation postcodes={postcodes} locations={locations} searchResult={searchResult} />
                     )}
 
-                    {selectedFilter === "Yrke og sektor" && (
+                    {selectedFilter === "Yrkeskategori og sektor" && (
                         <>
                             <div className="mb-6">
                                 <Occupations
