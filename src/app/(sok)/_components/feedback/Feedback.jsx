@@ -6,7 +6,7 @@ import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
 import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
 import { SEARCH_STRING } from "@/app/(sok)/_components/searchParamNames";
 
-function Feedback() {
+function Feedback({ searchResult }) {
     const [hasGivenRating, setHasGiverRating] = useState(false);
     const searchQuery = useSearchQuery();
 
@@ -21,6 +21,10 @@ function Feedback() {
         }
         setHasGiverRating(true);
     };
+
+    if (searchResult?.ads?.length === 0) {
+        return null;
+    }
 
     return (
         <Panel className="text-center" id="feedback-panel">
