@@ -106,7 +106,7 @@ function SearchCombobox({ aggregations, locations }) {
         } else {
             searchQuery.remove(key, value);
         }
-        logFilterChanged({ name: key, value, checked: false, source: "søkefelt" });
+        logFilterChanged({ name: key, value, checked: false, source: "Søkefelt" });
     };
 
     function handleFilterAddition(key, value) {
@@ -134,7 +134,7 @@ function SearchCombobox({ aggregations, locations }) {
         } else {
             searchQuery.append(key, value);
         }
-        logFilterChanged({ name: key, value, checked: true, source: "søkefelt" });
+        logFilterChanged({ name: key, value, checked: true, source: "Søkefelt" });
     }
 
     const handleFilterOption = (option, isSelected) => {

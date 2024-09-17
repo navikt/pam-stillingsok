@@ -31,11 +31,11 @@ export function initAmplitude(amplitudeToken) {
 const enrichData = (data) => ({ ...data, navSessionId: getSessionId() });
 
 const logAmplitudeEvent = (event, data) => {
-    amplitude.track(event, enrichData({ ...data, source: "sidebar" }));
+    amplitude.track(event, enrichData(data));
 };
 
 export const logFilterChanged = (data) => {
-    amplitude.track("Filter Changed", enrichData(data));
+    amplitude.track("Filter Changed", enrichData({ ...data, source: "Sidebar" }));
 };
 
 export function logStillingVisning(adData) {
