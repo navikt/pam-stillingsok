@@ -270,9 +270,9 @@ export const findLabelForFilter = (value: string): string => {
         case COUNTRY:
             return "(Land)";
         case OCCUPATION_FIRST_LEVEL:
-            return "(Yrkesgruppe nivå 2)";
+            return "(Kategori)";
         case OCCUPATION_SECOND_LEVEL:
-            return "(Yrkesgruppe)";
+            return "(Kategori)";
         case OCCUPATION:
             return "(Yrke)";
         case SECTOR:
