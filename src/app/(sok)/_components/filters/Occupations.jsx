@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { BodyShort, Box, Checkbox, CheckboxGroup } from "@navikt/ds-react";
+import { BodyShort, Box, Checkbox, CheckboxGroup, ReadMore } from "@navikt/ds-react";
 import moveCriteriaToBottom from "@/app/(sok)/_components/utils/moveFacetToBottom";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
 import sortValuesByFirstLetter from "@/app/(sok)/_components/utils/sortValuesByFirstLetter";
@@ -78,8 +78,14 @@ function Occupations({ initialValues, updatedValues }) {
                     <BodyShort as="span" visuallyHidden>
                         Filtrer etter{" "}
                     </BodyShort>
-                    <span className="capitalize">yrke</span>
+                    <span className="capitalize">yrkeskategorier</span>
                 </>
+            }
+            description={
+                <ReadMore header="Hva er yrkeskategorier?">
+                    Yrkeskategorier er brede grupper av relaterte stillinger. Leter du etter en spesifikk
+                    stillingstittel? Bruk søkefeltet.
+                </ReadMore>
             }
             className="FilterModal__fieldset"
         >
