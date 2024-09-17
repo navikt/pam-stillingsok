@@ -1,81 +1,55 @@
 import React from "react";
-import { BodyLong, Heading, HStack, ReadMore } from "@navikt/ds-react";
+import { BodyShort, Box, HStack, VStack } from "@navikt/ds-react";
 import PropTypes from "prop-types";
-import { mediumDisplayName } from "@/app/_common/utils/utils";
+
+function GroupTitle({ children }) {
+    return (
+        <Box padding="05 0" borderRadius="small">
+            <BodyShort weight="semibold" textColor="subtle" size="small">
+                {children}:
+            </BodyShort>
+        </Box>
+    );
+}
+
+function GroupItem({ children }) {
+    return (
+        <Box background="surface-neutral-subtle" padding="05 1" borderRadius="small">
+            <BodyShort textColor="subtle" size="small">
+                {children}
+            </BodyShort>
+        </Box>
+    );
+}
 
 function Debug({ ad }) {
     return (
-        <ReadMore header={`score: ${ad.score.toFixed(2)}`} className="mt-2 monospace">
-            {ad.medium !== "" && (
-                <>
-                    <Heading level="4" size="xsmall" spacing>
-                        ad.medium
-                    </Heading>
-                    <HStack gap="4" className="mb-8">
-                        <BodyLong className="metadata">{mediumDisplayName(ad.medium)}</BodyLong>
-                    </HStack>
-                </>
+        <VStack gap="2" className="mt-2">
+            {ad.categoryList?.length > 0 && (
+                <HStack gap="2">
+                    <GroupTitle>Yrke</GroupTitle>
+                    {ad.categoryList &&
+                        ad.categoryList.map((category) => (
+                            <GroupItem key={category.id}>
+                                {category.name}{" "}
+                                {category.categoryType !== "JANZZ" ? `(${category.categoryType.toUpperCase()})` : ""}
+                            </GroupItem>
+                        ))}
+                </HStack>
             )}
-            {ad.occupationList && ad.occupationList.length > 0 && (
-                <>
-                    <Heading level="4" size="xsmall" spacing>
-                        ad.occupationList
-                    </Heading>
-                    <HStack gap="4" className="mb-8">
-                        {ad.occupationList &&
-                            ad.occupationList.map((occupation) => (
-                                <BodyLong className="metadata" key={`${occupation.level1}-${occupation.level2}`}>
-                                    {occupation.level1}: {occupation.level2}
-                                </BodyLong>
-                            ))}
-                    </HStack>
-                </>
+            {ad.properties?.searchtags?.length > 0 && (
+                <HStack gap="2">
+                    <GroupTitle>Synonymer</GroupTitle>
+                    {ad.properties.searchtags &&
+                        ad.properties.searchtags.map((tag) => <GroupItem key={tag.label}>{tag.label}</GroupItem>)}
+                </HStack>
             )}
 
-            {ad.categoryList && ad.categoryList.length > 0 && (
-                <>
-                    <Heading level="4" size="xsmall" spacing>
-                        ad.categoryList
-                    </Heading>
-                    <HStack gap="4" className="mb-8">
-                        {ad.categoryList &&
-                            ad.categoryList.map((category) => (
-                                <BodyLong className="metadata" key={category.id}>
-                                    {category.name} ({category.categoryType})
-                                </BodyLong>
-                            ))}
-                    </HStack>
-                </>
-            )}
-
-            {ad.properties.searchtags && ad.properties.searchtags.length > 0 && (
-                <>
-                    <Heading level="4" size="xsmall" spacing>
-                        ad.properties.searchtags
-                    </Heading>
-
-                    <HStack gap="4" className="mb-8">
-                        {ad.properties.searchtags &&
-                            ad.properties.searchtags.map((tag) => (
-                                <BodyLong className="metadata" key={`${tag.label}-${tag.score}`}>
-                                    {tag.label} (score {tag.score})
-                                </BodyLong>
-                            ))}
-                    </HStack>
-                </>
-            )}
-
-            {ad.properties.keywords && (
-                <>
-                    <Heading level="4" size="xsmall" spacing>
-                        ad.properties.keywords
-                    </Heading>
-                    <HStack gap="4" className="mb-8">
-                        {ad.properties.keywords && <BodyLong className="metadata">{ad.properties.keywords}</BodyLong>}
-                    </HStack>
-                </>
-            )}
-        </ReadMore>
+            <HStack gap="2">
+                <GroupTitle>Score</GroupTitle>
+                <GroupItem>{ad.score?.toFixed(2)}</GroupItem>
+            </HStack>
+        </VStack>
     );
 }
 

@@ -15,6 +15,7 @@ export type UserPreferencesActions = {
     addPublishedJobFilterOpen: () => void;
     removePublishedJobFilterOpen: () => void;
     dismissPanel: (panelId: string) => void;
+    locationOrDistance: string;
 };
 
 interface UserPreferencesProviderProps {
@@ -77,6 +78,7 @@ function UserPreferencesProvider({ children, userPreferences }: UserPreferencesP
                 dismissPanel,
                 addPublishedJobFilterOpen,
                 removePublishedJobFilterOpen,
+                locationOrDistance: userPreferences?.locationOrDistance,
                 dismissedPanels: userPreferences?.dismissedPanels || [],
             }}
         >

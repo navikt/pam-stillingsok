@@ -113,7 +113,8 @@ export default function Search({ query, searchResult, aggregations, locations, p
                     <SearchPagination searchResult={searchResult} query={query} queryDispatch={queryDispatch} />
 
                     {query.from + SEARCH_CHUNK_SIZE >= searchResult.totalAds && <DoYouWantToSaveSearch query={query} />}
-                    <Feedback query={query} />
+
+                    {searchResult?.ads?.length > 0 && <Feedback query={query} />}
                 </VStack>
             </HGrid>
         </div>
