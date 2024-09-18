@@ -1,21 +1,17 @@
 import React from "react";
 import { BodyShort, Box, HStack, VStack } from "@navikt/ds-react";
 import PropTypes from "prop-types";
+import { useSearchParams } from "next/navigation";
+import { SEARCH_STRING } from "@/app/(sok)/_components/searchParamNames";
 
-function GroupTitle({ children }) {
+function GroupItem({ children, highlight }) {
     return (
-        <Box padding="05 0" borderRadius="small">
-            <BodyShort weight="semibold" textColor="subtle" size="small">
-                {children}:
-            </BodyShort>
-        </Box>
-    );
-}
-
-function GroupItem({ children }) {
-    return (
-        <Box background="surface-neutral-subtle" padding="05 1" borderRadius="small">
-            <BodyShort textColor="subtle" size="small">
+        <Box
+            background={highlight ? "surface-success-subtle" : "surface-neutral-subtle"}
+            padding="05 2"
+            borderRadius="small"
+        >
+            <BodyShort size="small" weight={highlight && "semibold"}>
                 {children}
             </BodyShort>
         </Box>
@@ -23,31 +19,40 @@ function GroupItem({ children }) {
 }
 
 function Debug({ ad }) {
-    return (
-        <VStack gap="2" className="mt-2">
-            {ad.categoryList?.length > 0 && (
-                <HStack gap="2">
-                    <GroupTitle>Yrke</GroupTitle>
-                    {ad.categoryList &&
-                        ad.categoryList.map((category) => (
-                            <GroupItem key={category.id}>
-                                {category.name}{" "}
-                                {category.categoryType !== "JANZZ" ? `(${category.categoryType.toUpperCase()})` : ""}
-                            </GroupItem>
-                        ))}
-                </HStack>
-            )}
-            {ad.properties?.searchtags?.length > 0 && (
-                <HStack gap="2">
-                    <GroupTitle>Synonymer</GroupTitle>
-                    {ad.properties.searchtags &&
-                        ad.properties.searchtags.map((tag) => <GroupItem key={tag.label}>{tag.label}</GroupItem>)}
-                </HStack>
-            )}
+    const searchParams = useSearchParams();
+    const janzzCategories = ad.categoryList?.filter((it) => it.categoryType === "JANZZ") || [];
+    const otherCategories = ad.categoryList?.filter((it) => it.categoryType !== "JANZZ") || [];
+    const synonyms =
+        ad.properties?.searchtags
+            ?.filter((synonym) => {
+                const isDuplicate = janzzCategories.some((janzz) => synonym.label === janzz.name);
+                return !isDuplicate;
+            })
+            .sort((a, b) => a.label.localeCompare(b.label, "no")) || [];
 
+    return (
+        <VStack gap="4">
+            {searchParams.has(SEARCH_STRING) && (
+                <HStack gap="2">
+                    <BodyShort size="small">score {ad.score?.toFixed(2)}</BodyShort>
+                </HStack>
+            )}
             <HStack gap="2">
-                <GroupTitle>Score</GroupTitle>
-                <GroupItem>{ad.score?.toFixed(2)}</GroupItem>
+                {janzzCategories.map((category) => (
+                    <GroupItem highlight key={category.id}>
+                        {category.name}
+                    </GroupItem>
+                ))}
+
+                {synonyms.map((tag) => (
+                    <GroupItem key={tag.label}>{tag.label}</GroupItem>
+                ))}
+
+                {otherCategories.map((category) => (
+                    <GroupItem key={category.id}>
+                        {category.name} ({category.categoryType?.toUpperCase()})
+                    </GroupItem>
+                ))}
             </HStack>
         </VStack>
     );

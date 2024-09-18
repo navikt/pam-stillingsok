@@ -5,12 +5,21 @@ import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
 import {
     COUNTRY,
     COUNTY,
+    EDUCATION,
+    ENGAGEMENT_TYPE,
+    EXPERIENCE,
+    EXTENT,
     INTERNATIONAL,
     MUNICIPAL,
+    NEED_DRIVERS_LICENSE,
+    OCCUPATION,
     OCCUPATION_FIRST_LEVEL,
     OCCUPATION_SECOND_LEVEL,
     PUBLISHED,
+    REMOTE,
     SEARCH_STRING,
+    SECTOR,
+    WORK_LANGUAGE,
 } from "@/app/(sok)/_components/searchParamNames";
 import { FetchAction, useFetchReducer } from "@/app/_common/hooks/useFetchReducer";
 import * as actions from "@/app/_common/actions";
@@ -20,6 +29,60 @@ import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
 let suggestionsCache = [];
 const CACHE_MAX_SIZE = 50;
 const MINIMUM_LENGTH = 1;
+
+const AMPLITUDE_KEY_MAPPING = {
+    [COUNTY]: {
+        name: "Sted",
+        level: "Fylke",
+    },
+
+    [COUNTRY]: {
+        name: "Sted",
+        level: "Land",
+    },
+    [ENGAGEMENT_TYPE]: {
+        name: "Ansettelsesform",
+    },
+    [EDUCATION]: {
+        name: "Utdanningsnivå",
+    },
+    [EXPERIENCE]: {
+        name: "Erfaring",
+    },
+    [EXTENT]: {
+        name: "Omfang",
+    },
+    [MUNICIPAL]: {
+        name: "Sted",
+        level: "Kommune",
+    },
+    [NEED_DRIVERS_LICENSE]: {
+        name: "Førerkort",
+    },
+    [OCCUPATION]: {
+        name: "Yrke",
+    },
+    [OCCUPATION_FIRST_LEVEL]: {
+        name: "Yrkeskategori",
+        level: "Yrkesnivå 1",
+    },
+    [OCCUPATION_SECOND_LEVEL]: {
+        name: "Yrkeskategori",
+        level: "Yrkesnivå 2",
+    },
+    [PUBLISHED]: {
+        name: "Publisert",
+    },
+    [REMOTE]: {
+        name: "Hjemmekontor",
+    },
+    [SECTOR]: {
+        name: "Sektor",
+    },
+    [WORK_LANGUAGE]: {
+        name: "Arbeidsspråk",
+    },
+};
 
 function SearchCombobox({ aggregations, locations }) {
     const searchQuery = useSearchQuery();
@@ -108,7 +171,12 @@ function SearchCombobox({ aggregations, locations }) {
         } else {
             searchQuery.remove(key, value);
         }
-        logFilterChanged({ name: key, value, checked: false, source: "Søkefelt" });
+        // håndter "value" for Yrkesnivå 2
+        const ampValue =
+            AMPLITUDE_KEY_MAPPING[key] && AMPLITUDE_KEY_MAPPING[key].level === "Yrkesnivå 2"
+                ? value.split(".")[1]
+                : value;
+        logFilterChanged({ ...AMPLITUDE_KEY_MAPPING[key], value: ampValue, checked: false, source: "Søkefelt" });
     };
 
     function handleFilterAddition(key, value) {
@@ -136,7 +204,12 @@ function SearchCombobox({ aggregations, locations }) {
         } else {
             searchQuery.append(key, value);
         }
-        logFilterChanged({ name: key, value, checked: true, source: "Søkefelt" });
+        // håndter "value" for Yrkesnivå 2
+        const ampValue =
+            AMPLITUDE_KEY_MAPPING[key] && AMPLITUDE_KEY_MAPPING[key].level === "Yrkesnivå 2"
+                ? value.split(".")[1]
+                : value;
+        logFilterChanged({ ...AMPLITUDE_KEY_MAPPING[key], value: ampValue, checked: true, source: "Søkefelt" });
     }
 
     const handleFilterOption = (option, isSelected) => {
