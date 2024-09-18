@@ -29,10 +29,10 @@ import { PublishedLabelsEnum } from "@/app/(sok)/_components/filters/Published";
 
 const promotedOptions: ComboboxOption[] = [
     { label: "Butikkmedarbeider", value: `${OCCUPATION}-Butikkmedarbeider` },
-    { label: fixLocationName("TRØNDELAG.TRONDHEIM", true), value: `${MUNICIPAL}-TRØNDELAG.TRONDHEIM` },
-    { label: fixLocationName("VESTLAND.BERGEN", true), value: `${MUNICIPAL}-VESTLAND.BERGEN` },
     { label: "Deltid", value: `${EXTENT}-Deltid` },
     { label: labelForEducation("Ingen krav"), value: `${EDUCATION}-Ingen krav` },
+    { label: labelForExperience("Ingen"), value: `${EXPERIENCE}-Ingen` },
+    { label: labelForNeedDriversLicense("false"), value: `${NEED_DRIVERS_LICENSE}-false` },
     { label: "Engelsk", value: `${WORK_LANGUAGE}-Engelsk` },
     {
         label: PublishedLabelsEnum["now/d" as keyof typeof PublishedLabelsEnum],
@@ -211,27 +211,31 @@ function getOccupationSuggestionOptions(allSuggestions: string[]): ComboboxOptio
 }
 
 function getDriversLicenseOptions(aggregations: Aggregations): ComboboxOption[] {
-    return aggregations.needDriversLicense.map(
-        (licence): ComboboxOption =>
-            licence.key === "Ikke oppgitt"
-                ? { label: "Førerkort ikke oppgitt", value: `${NEED_DRIVERS_LICENSE}-${licence.key}` }
-                : {
-                      label: labelForNeedDriversLicense(licence.key),
-                      value: `${NEED_DRIVERS_LICENSE}-${licence.key}`,
-                  },
-    );
+    return aggregations.needDriversLicense
+        .map(
+            (licence): ComboboxOption =>
+                licence.key === "Ikke oppgitt"
+                    ? { label: "Førerkort ikke oppgitt", value: `${NEED_DRIVERS_LICENSE}-${licence.key}` }
+                    : {
+                          label: labelForNeedDriversLicense(licence.key),
+                          value: `${NEED_DRIVERS_LICENSE}-${licence.key}`,
+                      },
+        )
+        .filter((option) => !promotedValues.includes(option.value));
 }
 
 function getExperienceOptions(aggregations: Aggregations): ComboboxOption[] {
-    return aggregations.experience.map(
-        (experience): ComboboxOption =>
-            experience.key === "Ikke oppgitt"
-                ? { label: "Erfaring ikke oppgitt", value: `${EXPERIENCE}-${experience.key}` }
-                : {
-                      label: labelForExperience(experience.key),
-                      value: `${EXPERIENCE}-${experience.key}`,
-                  },
-    );
+    return aggregations.experience
+        .map(
+            (experience): ComboboxOption =>
+                experience.key === "Ikke oppgitt"
+                    ? { label: "Erfaring ikke oppgitt", value: `${EXPERIENCE}-${experience.key}` }
+                    : {
+                          label: labelForExperience(experience.key),
+                          value: `${EXPERIENCE}-${experience.key}`,
+                      },
+        )
+        .filter((option) => !promotedValues.includes(option.value));
 }
 
 export function getSearchBoxOptions(
@@ -287,6 +291,8 @@ export const findLabelForFilter = (value: string): string => {
             return "(Arbeidsspråk)";
         case NEED_DRIVERS_LICENSE:
             return "(Førerkort)";
+        case EXPERIENCE:
+            return "(Arbeidserfaring)";
         default:
             return "";
     }
