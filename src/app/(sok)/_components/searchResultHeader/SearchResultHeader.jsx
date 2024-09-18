@@ -1,15 +1,15 @@
 import React from "react";
-import { BodyShort, Box, Heading, HGrid, Stack } from "@navikt/ds-react";
+import { BodyShort, Box, Button, Heading, HGrid, HStack, Show, Stack } from "@navikt/ds-react";
 import PropTypes from "prop-types";
 import Sorting from "@/app/(sok)/_components/searchResult/Sorting";
 import { formatNumber } from "@/app/_common/utils/utils";
+import FilterIcon from "@/app/(sok)/_components/icons/FilterIcon";
 
-function SearchResultHeader({ searchResult, query, queryDispatch }) {
-    const annonserWord = searchResult.totalAds === 1 ? "annonse" : "annonser";
+function SearchResultHeader({ searchResult, isFiltersVisible, setIsFiltersVisible }) {
     const stillingerWord = searchResult.totalPositions === 1 ? "stilling" : "stillinger";
 
     return (
-        <Box background="surface-alt-1-subtle" paddingBlock="4">
+        <Box className="bg-alt-1-subtle-on-lg" paddingBlock={{ lg: "4" }}>
             <HGrid
                 columns={{ xs: 1, lg: "220px auto", xl: "370px auto" }}
                 gap={{ xs: "0", lg: "6", xl: "12" }}
@@ -23,19 +23,38 @@ function SearchResultHeader({ searchResult, query, queryDispatch }) {
                     gap="4 8"
                     wrap={false}
                 >
-                    <div>
-                        <Heading level="2" size="small" className="mb-1">
-                            Søkeresultat
-                        </Heading>
-                        <BodyShort role="status">
-                            {searchResult.totalAds === 0
-                                ? "Ingen treff"
-                                : `${formatNumber(searchResult.totalPositions)} ${stillingerWord} i ${formatNumber(
-                                      searchResult.totalAds,
-                                  )} ${annonserWord}`}
-                        </BodyShort>
-                    </div>
-                    <Sorting dispatch={queryDispatch} query={query} />
+                    <HStack gap="2" wrap={false} justify="space-between" align="center" className="full-width">
+                        <div>
+                            <Heading level="2" size="small" className="white-space-nowrap" aria-live="polite">
+                                <span>
+                                    {searchResult.totalAds > 0
+                                        ? `${formatNumber(searchResult.totalAds)} treff`
+                                        : "Ingen treff"}
+                                </span>
+                            </Heading>
+                            <BodyShort className="white-space-nowrap">
+                                {searchResult.totalAds > 0
+                                    ? `${formatNumber(searchResult.totalPositions)} ${stillingerWord}`
+                                    : ""}
+                            </BodyShort>
+                        </div>
+                        <HStack gap="2" align="center" wrap={false}>
+                            <Sorting />
+
+                            <Show below="lg">
+                                <Button
+                                    type="button"
+                                    variant="secondary"
+                                    onClick={() => {
+                                        setIsFiltersVisible(!isFiltersVisible);
+                                    }}
+                                    icon={<FilterIcon />}
+                                    aria-expanded={isFiltersVisible}
+                                    aria-label="Velg sted, yrke og andre filtre"
+                                />
+                            </Show>
+                        </HStack>
+                    </HStack>
                 </Stack>
             </HGrid>
         </Box>
@@ -47,8 +66,6 @@ SearchResultHeader.propTypes = {
         totalAds: PropTypes.number,
         totalPositions: PropTypes.number,
     }),
-    queryDispatch: PropTypes.func.isRequired,
-    query: PropTypes.shape({}),
 };
 
 export default SearchResultHeader;

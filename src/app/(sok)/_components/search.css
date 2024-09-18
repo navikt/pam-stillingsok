@@ -48,3 +48,7 @@
 .filter-menu-button:hover {
     cursor: pointer;
 }
+
+.SearchContainer {
+    margin: 0 auto;
+}

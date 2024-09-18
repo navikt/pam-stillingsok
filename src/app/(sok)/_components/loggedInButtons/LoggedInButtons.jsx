@@ -1,13 +1,45 @@
 import React, { useContext } from "react";
-import { Button } from "@navikt/ds-react";
+import { Button, Hide, HStack, Show } from "@navikt/ds-react";
 import Link from "next/link";
-import { ClockIcon, HeartIcon } from "@navikt/aksel-icons";
+import { ClockDashedIcon, HeartIcon } from "@navikt/aksel-icons";
 import { useRouter } from "next/navigation";
 import useToggle from "@/app/_common/hooks/useToggle";
 import { AuthenticationContext, AuthenticationStatus } from "@/app/_common/auth/contexts/AuthenticationProvider";
 import { HasAcceptedTermsStatus, UserContext } from "@/app/_common/user/UserProvider";
 import LoginModal from "@/app/_common/auth/components/LoginModal";
 import UserConsentModal from "@/app/_common/user/UserConsentModal";
+
+function Buttons({ showText, handleClick }) {
+    return (
+        <HStack gap="1">
+            <Button
+                as={Link}
+                role="link"
+                href="/lagrede-sok"
+                variant="tertiary"
+                onClick={(e) => {
+                    handleClick(e, "/lagrede-sok", "SAVEDSEARCH");
+                }}
+                icon={<ClockDashedIcon aria-hidden="true" />}
+            >
+                {showText && "Lagrede søk"}
+            </Button>
+
+            <Button
+                as={Link}
+                role="link"
+                href="/favoritter"
+                variant="tertiary"
+                onClick={(e) => {
+                    handleClick(e, "/favoritter", "FAVORITES");
+                }}
+                icon={<HeartIcon aria-hidden="true" />}
+            >
+                {showText && "Favoritter"}
+            </Button>
+        </HStack>
+    );
+}
 
 function LoggedInButtons() {
     const { authenticationStatus, loginAndRedirect } = useContext(AuthenticationContext);
@@ -41,32 +73,12 @@ function LoggedInButtons() {
 
     return (
         <>
-            <Button
-                as={Link}
-                role="link"
-                href="/lagrede-sok"
-                variant="tertiary"
-                onClick={(e) => {
-                    handleClick(e, "/lagrede-sok", "SAVEDSEARCH");
-                }}
-                icon={<ClockIcon aria-hidden="true" />}
-            >
-                Lagrede søk
-            </Button>
-
-            <Button
-                as={Link}
-                role="link"
-                href="/favoritter"
-                variant="tertiary"
-                onClick={(e) => {
-                    handleClick(e, "/favoritter", "FAVORITES");
-                }}
-                icon={<HeartIcon aria-hidden="true" />}
-            >
-                Favoritter
-            </Button>
-
+            <Show above="md">
+                <Buttons showText handleClick={handleClick} />
+            </Show>
+            <Hide above="md">
+                <Buttons showText={false} handleClick={handleClick} />
+            </Hide>
             {shouldShowLoginModalSavedSearch && (
                 <LoginModal
                     onLoginClick={() => {

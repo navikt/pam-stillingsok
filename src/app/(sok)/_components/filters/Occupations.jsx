@@ -1,16 +1,12 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { BodyShort, Box, Checkbox, CheckboxGroup } from "@navikt/ds-react";
-import {
-    ADD_OCCUPATION_FIRST_LEVEL,
-    ADD_OCCUPATION_SECOND_LEVEL,
-    REMOVE_OCCUPATION_FIRST_LEVEL,
-    REMOVE_OCCUPATION_SECOND_LEVEL,
-} from "@/app/(sok)/_utils/queryReducer";
+import { BodyShort, Box, Checkbox, CheckboxGroup, ReadMore } from "@navikt/ds-react";
 import moveCriteriaToBottom from "@/app/(sok)/_components/utils/moveFacetToBottom";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
 import sortValuesByFirstLetter from "@/app/(sok)/_components/utils/sortValuesByFirstLetter";
 import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
+import { OCCUPATION_FIRST_LEVEL, OCCUPATION_SECOND_LEVEL } from "@/app/(sok)/_components/searchParamNames";
+import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
 
 export function editedItemKey(key) {
     return key === "Uoppgitt/ ikke identifiserbare" ? "Ikke oppgitt" : key;
@@ -18,7 +14,7 @@ export function editedItemKey(key) {
 
 const OCCUPATION_LEVEL_OTHER = "Uoppgitt/ ikke identifiserbare";
 
-function Occupations({ initialValues, updatedValues, query, dispatch }) {
+function Occupations({ initialValues, updatedValues }) {
     const withSortedSecondLevelOccupations = initialValues.map((item) => {
         const secondLevel = sortValuesByFirstLetter(item.occupationSecondLevels);
         return {
@@ -30,13 +26,19 @@ function Occupations({ initialValues, updatedValues, query, dispatch }) {
     const sortedByLetterFirstLevelOccupations = sortValuesByFirstLetter(withSortedSecondLevelOccupations);
     const sortedValues = moveCriteriaToBottom(sortedByLetterFirstLevelOccupations, OCCUPATION_LEVEL_OTHER);
     const values = mergeCount(sortedValues, updatedValues, "occupationSecondLevels");
+    const searchQuery = useSearchQuery();
 
     function handleFirstLevelClick(e) {
         const { value, checked } = e.target;
         if (checked) {
-            dispatch({ type: ADD_OCCUPATION_FIRST_LEVEL, value });
+            searchQuery.append(OCCUPATION_FIRST_LEVEL, value);
         } else {
-            dispatch({ type: REMOVE_OCCUPATION_FIRST_LEVEL, value });
+            searchQuery.remove(OCCUPATION_FIRST_LEVEL, value);
+            searchQuery.getAll(OCCUPATION_SECOND_LEVEL).forEach((obj) => {
+                if (obj.startsWith(`${value}.`)) {
+                    searchQuery.remove(OCCUPATION_SECOND_LEVEL, obj);
+                }
+            });
         }
         logFilterChanged({ name: "Yrke", value, checked, level: "Yrkesnivå 1" });
     }
@@ -44,9 +46,9 @@ function Occupations({ initialValues, updatedValues, query, dispatch }) {
     function handleSecondLevelClick(e) {
         const { value, checked } = e.target;
         if (checked) {
-            dispatch({ type: ADD_OCCUPATION_SECOND_LEVEL, value });
+            searchQuery.append(OCCUPATION_SECOND_LEVEL, value);
         } else {
-            dispatch({ type: REMOVE_OCCUPATION_SECOND_LEVEL, value });
+            searchQuery.remove(OCCUPATION_SECOND_LEVEL, value);
         }
         logFilterChanged({ name: "Yrke", value: value.split(".")[1], checked, level: "Yrkesnivå 2" });
     }
@@ -70,14 +72,20 @@ function Occupations({ initialValues, updatedValues, query, dispatch }) {
 
     return (
         <CheckboxGroup
-            value={query.occupationFirstLevels}
+            value={searchQuery.getAll(OCCUPATION_FIRST_LEVEL)}
             legend={
                 <>
                     <BodyShort as="span" visuallyHidden>
                         Filtrer etter{" "}
                     </BodyShort>
-                    <span className="capitalize">yrke</span>
+                    <span className="capitalize">yrkeskategorier</span>
                 </>
+            }
+            description={
+                <ReadMore header="Hva er yrkeskategorier?">
+                    Yrkeskategorier er brede grupper av relaterte stillinger. Leter du etter en spesifikk
+                    stillingstittel? Bruk søkefeltet.
+                </ReadMore>
             }
             className="FilterModal__fieldset"
         >
@@ -92,11 +100,10 @@ function Occupations({ initialValues, updatedValues, query, dispatch }) {
                         >
                             {`${editedItemKey(firstLevel.key)} (${firstLevel.count})`}
                         </Checkbox>
-                        {query.occupationFirstLevels &&
-                            query.occupationFirstLevels.includes(firstLevel.key) &&
+                        {searchQuery.has(OCCUPATION_FIRST_LEVEL, firstLevel.key) &&
                             firstLevel.key !== OCCUPATION_LEVEL_OTHER && (
                                 <CheckboxGroup
-                                    defaultValue={query.occupationSecondLevels}
+                                    defaultValue={searchQuery.getAll(OCCUPATION_SECOND_LEVEL)}
                                     hideLegend
                                     legend={`Yrker innen ${firstLevel.key}`}
                                 >
@@ -137,11 +144,6 @@ Occupations.propTypes = {
         }),
     ).isRequired,
     updatedValues: PropTypes.arrayOf(PropTypes.shape({})),
-    query: PropTypes.shape({
-        occupationFirstLevels: PropTypes.arrayOf(PropTypes.string),
-        occupationSecondLevels: PropTypes.arrayOf(PropTypes.string),
-    }).isRequired,
-    dispatch: PropTypes.func.isRequired,
 };
 
 export default Occupations;

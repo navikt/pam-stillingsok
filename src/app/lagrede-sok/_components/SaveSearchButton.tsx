@@ -1,5 +1,5 @@
 import React, { ReactElement, useContext } from "react";
-import { Button } from "@navikt/ds-react";
+import { Button, ButtonProps } from "@navikt/ds-react";
 import { FloppydiskIcon } from "@navikt/aksel-icons";
 import { useSearchParams } from "next/navigation";
 import { AuthenticationContext, AuthenticationStatus } from "@/app/_common/auth/contexts/AuthenticationProvider";
@@ -7,15 +7,22 @@ import { HasAcceptedTermsStatus, UserContext } from "@/app/_common/user/UserProv
 import UserConsentModal from "@/app/_common/user/UserConsentModal";
 import LoginModal from "@/app/_common/auth/components/LoginModal";
 import useToggle from "@/app/_common/hooks/useToggle";
-import { toReadableQuery, toSavedSearchQuery, isSearchQueryEmpty, stringifyQuery } from "@/app/(sok)/_utils/query";
+import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
+import { AllowedSavedSearchParams, URL_VERSION } from "@/app/(sok)/_components/searchParamNames";
 import { FormModes } from "./modal/SaveSearchForm";
 import SaveSearchModal from "./modal/SaveSearchModal";
 import SearchIsEmptyModal from "./modal/SearchIsEmptyModal";
 
-interface SaveSearchButtonProps {
-    query: {
-        q?: string;
-    };
+interface SaveSearchButtonProps extends ButtonProps {}
+
+export function toSavedSearch(urlSearchParams: URLSearchParams): URLSearchParams {
+    const savedSearchUrlSearchParams = new URLSearchParams();
+    urlSearchParams.forEach((value: string, key: string) => {
+        if (AllowedSavedSearchParams.includes(key)) {
+            savedSearchUrlSearchParams.append(key, value);
+        }
+    });
+    return savedSearchUrlSearchParams;
 }
 
 /**
@@ -28,7 +35,9 @@ interface SaveSearchButtonProps {
  * - has checked one or more search criteria
  * - has accepted terms
  */
-function SaveSearchButton({ query }: SaveSearchButtonProps): ReactElement {
+function SaveSearchButton({ size }: SaveSearchButtonProps): ReactElement {
+    const searchQuery = useSearchQuery();
+
     const { authenticationStatus, login } = useContext(AuthenticationContext);
     const { hasAcceptedTermsStatus } = useContext(UserContext);
     const [shouldShowTermsModal, openTermsModal, closeTermsModal] = useToggle();
@@ -40,9 +49,12 @@ function SaveSearchButton({ query }: SaveSearchButtonProps): ReactElement {
     const savedSearchUuid = searchParams.get("saved");
 
     function handleClick(): void {
+        const savedSearchUrlWithoutVersion = toSavedSearch(searchQuery.urlSearchParams);
+        savedSearchUrlWithoutVersion.delete(URL_VERSION);
+
         if (authenticationStatus === AuthenticationStatus.NOT_AUTHENTICATED) {
             openLoginModal();
-        } else if (isSearchQueryEmpty(toSavedSearchQuery(query))) {
+        } else if (savedSearchUrlWithoutVersion.size === 0) {
             openQueryIsEmptyModal();
         } else if (hasAcceptedTermsStatus === HasAcceptedTermsStatus.NOT_ACCEPTED) {
             openTermsModal();
@@ -59,12 +71,15 @@ function SaveSearchButton({ query }: SaveSearchButtonProps): ReactElement {
         openSaveSearchModal();
     }
 
-    const title = toReadableQuery(query);
-    const shortenedTitle = title.length > 80 ? `${title.substring(0, 77)}...` : title;
-
     return (
         <>
-            <Button variant="tertiary" icon={<FloppydiskIcon aria-hidden="true" />} type="button" onClick={handleClick}>
+            <Button
+                variant="tertiary"
+                size={size}
+                icon={<FloppydiskIcon aria-hidden="true" />}
+                type="button"
+                onClick={handleClick}
+            >
                 Lagre søk
             </Button>
 
@@ -79,8 +94,8 @@ function SaveSearchButton({ query }: SaveSearchButtonProps): ReactElement {
             {shouldShowSaveSearchModal && (
                 <SaveSearchModal
                     formData={{
-                        title: shortenedTitle,
-                        searchQuery: stringifyQuery(toSavedSearchQuery(query)),
+                        title: "",
+                        searchQuery: `?${toSavedSearch(searchQuery.urlSearchParams).toString()}`,
                     }}
                     onClose={closeSaveSearchModal}
                     defaultFormMode={savedSearchUuid ? FormModes.UPDATE_QUERY_ONLY : FormModes.ADD}
