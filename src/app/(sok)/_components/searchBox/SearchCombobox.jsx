@@ -63,11 +63,11 @@ const AMPLITUDE_KEY_MAPPING = {
         name: "Yrke",
     },
     [OCCUPATION_FIRST_LEVEL]: {
-        name: "Yrke",
+        name: "Yrkeskategori",
         level: "Yrkesnivå 1",
     },
     [OCCUPATION_SECOND_LEVEL]: {
-        name: "Yrke",
+        name: "Yrkeskategori",
         level: "Yrkesnivå 2",
     },
     [PUBLISHED]: {
