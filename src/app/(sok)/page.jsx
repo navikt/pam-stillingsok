@@ -35,7 +35,7 @@ export async function generateMetadata() {
     };
 }
 
-export const fetchCachedLocations = unstable_cache(async () => fetchLocations(), ["locations-query"], {
+const fetchCachedLocations = unstable_cache(async () => fetchLocations(), ["locations-query"], {
     revalidate: 3600,
 });
 
