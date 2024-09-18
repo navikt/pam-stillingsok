@@ -17,6 +17,8 @@ import React from "react";
 import MaxQuerySizeExceeded from "@/app/_common/components/MaxQuerySizeExceeded";
 import { fetchCachedPostcodes } from "@/app/(sok)/_utils/fetchPostcodes";
 import SearchWrapper from "@/app/(sok)/_components/SearchWrapper";
+import { getDefaultHeaders } from "@/app/_common/utils/fetch";
+import { unstable_cache } from "next/cache";
 
 const MAX_QUERY_SIZE = 10000;
 
@@ -33,10 +35,18 @@ export async function generateMetadata() {
     };
 }
 
+const fetchCachedLocations = unstable_cache(async () => fetchLocations(), ["locations-query"], {
+    revalidate: 3600,
+});
+
 async function fetchLocations() {
     const [response1, response2] = await Promise.all([
-        fetch(`${process.env.PAMADUSER_URL}/api/v1/geography/municipals`, { next: { revalidate: 3600 } }),
-        fetch(`${process.env.PAMADUSER_URL}/api/v1/geography/counties`, { next: { revalidate: 3600 } }),
+        fetch(`${process.env.PAM_GEOGRAFI_API_URL}/kommuner`, {
+            headers: getDefaultHeaders(),
+        }),
+        fetch(`${process.env.PAM_GEOGRAFI_API_URL}/fylker`, {
+            headers: getDefaultHeaders(),
+        }),
     ]);
 
     if (!response1.ok || !response2.ok) {
@@ -48,13 +58,13 @@ async function fetchLocations() {
 
     return [
         ...counties.map((c) => ({
-            key: c.name,
-            code: c.code,
+            key: c.navn,
+            code: c.fylkesnummer,
             municipals: municipals
-                .filter((m) => m.countyCode === c.code)
+                .filter((m) => m.fylkesnummer === c.fylkesnummer)
                 .map((m) => ({
-                    key: `${c.name}.${m.name}`,
-                    code: m.code,
+                    key: `${c.navn}.${m.navn}`,
+                    code: m.fylkesnummer,
                 })),
         })),
         {
@@ -100,7 +110,11 @@ export default async function Page({ searchParams }) {
     const initialQuery = createQuery(modifiedSearchParams);
 
     const shouldDoExtraCallIfUserHasSearchParams = Object.keys(toBrowserQuery(initialQuery)).length > 0;
-    const fetchCalls = [fetchCachedElasticSearch(toApiQuery(defaultQuery)), fetchLocations(), fetchCachedPostcodes()];
+    const fetchCalls = [
+        fetchCachedElasticSearch(toApiQuery(defaultQuery)),
+        fetchCachedLocations(),
+        fetchCachedPostcodes(),
+    ];
     if (shouldDoExtraCallIfUserHasSearchParams) {
         fetchCalls.push(fetchCachedElasticSearch(toApiQuery(initialQuery)));
     }
