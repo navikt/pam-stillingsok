@@ -1,8 +1,8 @@
 import { editedItemKey } from "@/app/(sok)/_components/filters/Engagement";
+import { editedItemKey as editedOccupation } from "@/app/(sok)/_components/filters/Occupations";
 import sortValuesByFirstLetter from "@/app/(sok)/_components/utils/sortValuesByFirstLetter";
 import fixLocationName from "@/app/_common/utils/fixLocationName";
 import buildLocations from "@/app/(sok)/_components/utils/buildLocations";
-import { PublishedLabelsEnum } from "@/app/(sok)/_utils/query";
 import { labelForNeedDriversLicense } from "@/app/(sok)/_components/filters/DriversLicense";
 import { labelForExperience } from "@/app/(sok)/_components/filters/Experience";
 import { labelForEducation } from "@/app/(sok)/_components/filters/Education";
@@ -24,19 +24,40 @@ import {
     REMOTE,
     SECTOR,
     WORK_LANGUAGE,
-} from "@/app/(sok)/_components/searchBox/filterTypes";
+} from "@/app/(sok)/_components/searchParamNames";
+import { PublishedLabelsEnum } from "@/app/(sok)/_components/filters/Published";
+
+const promotedOptions: ComboboxOption[] = [
+    { label: "Butikkmedarbeider", value: `${OCCUPATION}-Butikkmedarbeider` },
+    { label: "Deltid", value: `${EXTENT}-Deltid` },
+    { label: labelForEducation("Ingen krav"), value: `${EDUCATION}-Ingen krav` },
+    { label: labelForExperience("Ingen"), value: `${EXPERIENCE}-Ingen` },
+    { label: labelForNeedDriversLicense("false"), value: `${NEED_DRIVERS_LICENSE}-false` },
+    { label: "Engelsk", value: `${WORK_LANGUAGE}-Engelsk` },
+    {
+        label: PublishedLabelsEnum["now/d" as keyof typeof PublishedLabelsEnum],
+        value: `${PUBLISHED}-${"now/d"}`,
+    },
+];
+
+const promotedValues = promotedOptions.map((option) => option.value);
 
 function getMunicipalOptions(locationList: LocationList[]): ComboboxOption[] {
     return locationList
         .map((location) => location.subLocations)
         .flat()
-        .filter((subLocation) => subLocation.type === MUNICIPAL)
+        .filter(
+            (subLocation) =>
+                subLocation.type === MUNICIPAL &&
+                !["OSLO", "SVALBARD", "JAN MAYEN"].includes(subLocation.key.split(".")[1]),
+        )
         .map(
             (municipal): ComboboxOption => ({
                 label: fixLocationName(municipal.key.split(".")[1]),
                 value: `${MUNICIPAL}-${municipal.key}`,
             }),
-        );
+        )
+        .filter((option) => !promotedValues.includes(option.value));
 }
 
 function getCountyOptions(locationList: LocationList[]): ComboboxOption[] {
@@ -47,7 +68,8 @@ function getCountyOptions(locationList: LocationList[]): ComboboxOption[] {
                 label: fixLocationName(county.key),
                 value: `${COUNTY}-${county.key}`,
             }),
-        );
+        )
+        .filter((option) => !promotedValues.includes(option.value));
 }
 
 function getCountryOptions(locationList: LocationList[]): ComboboxOption[] {
@@ -76,10 +98,13 @@ function withSortedSecondLevelOccupations(aggregations: Aggregations) {
 
 function getFirstLevelOccupationsOptions(aggregations: Aggregations): ComboboxOption[] {
     return sortValuesByFirstLetter(withSortedSecondLevelOccupations(aggregations)).map(
-        (occupation: { key: string }): ComboboxOption => ({
-            label: occupation.key,
-            value: `${OCCUPATION_FIRST_LEVEL}-${occupation.key}`,
-        }),
+        (occupation: { key: string }): ComboboxOption =>
+            editedOccupation(occupation.key) === "Ikke oppgitt"
+                ? { label: "Yrke ikke oppgitt", value: `${OCCUPATION_FIRST_LEVEL}-${occupation.key}` }
+                : {
+                      label: occupation.key,
+                      value: `${OCCUPATION_FIRST_LEVEL}-${occupation.key}`,
+                  },
     );
 }
 
@@ -96,12 +121,14 @@ function getSecondLevelOccupationsOptions(aggregations: Aggregations): ComboboxO
 }
 
 function getPublishedOptions(aggregations: Aggregations): ComboboxOption[] {
-    return aggregations.published.map(
-        (item): ComboboxOption => ({
-            label: PublishedLabelsEnum[item.key as keyof typeof PublishedLabelsEnum],
-            value: `${PUBLISHED}-${item.key}`,
-        }),
-    );
+    return aggregations.published
+        .map(
+            (item): ComboboxOption => ({
+                label: PublishedLabelsEnum[item.key as keyof typeof PublishedLabelsEnum],
+                value: `${PUBLISHED}-${item.key}`,
+            }),
+        )
+        .filter((option) => !promotedValues.includes(option.value));
 }
 
 function getSectorOptions(aggregations: Aggregations): ComboboxOption[] {
@@ -123,35 +150,44 @@ function getEngagementTypeOptions(aggregations: Aggregations): ComboboxOption[] 
 }
 
 function getExtentOptions(aggregations: Aggregations): ComboboxOption[] {
-    return aggregations.extent.map(
-        (item): ComboboxOption => ({
-            label: item.key,
-            value: `${EXTENT}-${item.key}`,
-        }),
-    );
+    return aggregations.extent
+        .map(
+            (item): ComboboxOption =>
+                item.key === "Ikke oppgitt"
+                    ? { label: "Omfang ikke oppgitt", value: `${EXTENT}-${item.key}` }
+                    : {
+                          label: item.key,
+                          value: `${EXTENT}-${item.key}`,
+                      },
+        )
+        .filter((option) => !promotedValues.includes(option.value));
 }
 function getEducationOptions(aggregations: Aggregations): ComboboxOption[] {
-    return aggregations.education.map(
-        (item): ComboboxOption =>
-            item.key === "Ikke oppgitt"
-                ? {
-                      label: "Utdanning ikke oppgitt",
-                      value: `${EDUCATION}-${item.key}`,
-                  }
-                : {
-                      label: labelForEducation(item.key),
-                      value: `${EDUCATION}-${item.key}`,
-                  },
-    );
+    return aggregations.education
+        .map(
+            (item): ComboboxOption =>
+                item.key === "Ikke oppgitt"
+                    ? {
+                          label: "Krav til utdanning ikke oppgitt",
+                          value: `${EDUCATION}-${item.key}`,
+                      }
+                    : {
+                          label: labelForEducation(item.key),
+                          value: `${EDUCATION}-${item.key}`,
+                      },
+        )
+        .filter((option) => !promotedValues.includes(option.value));
 }
 
 function getWorkLanguageOptions(aggregations: Aggregations): ComboboxOption[] {
-    return aggregations.workLanguage.map(
-        (item): ComboboxOption =>
-            item.key === "Ikke oppgitt"
-                ? { label: "Arbeidsspråk ikke oppgitt", value: `${WORK_LANGUAGE}-${item.key}` }
-                : { label: item.key, value: `${WORK_LANGUAGE}-${item.key}` },
-    );
+    return aggregations.workLanguage
+        .map(
+            (item): ComboboxOption =>
+                item.key === "Ikke oppgitt"
+                    ? { label: "Arbeidsspråk ikke oppgitt", value: `${WORK_LANGUAGE}-${item.key}` }
+                    : { label: item.key, value: `${WORK_LANGUAGE}-${item.key}` },
+        )
+        .filter((option) => !promotedValues.includes(option.value));
 }
 
 function getRemoteOptions(aggregations: Aggregations): ComboboxOption[] {
@@ -164,36 +200,42 @@ function getRemoteOptions(aggregations: Aggregations): ComboboxOption[] {
 }
 
 function getOccupationSuggestionOptions(allSuggestions: string[]): ComboboxOption[] {
-    return allSuggestions.map(
-        (suggestion): ComboboxOption => ({
-            label: suggestion,
-            value: `${OCCUPATION}-${suggestion}`,
-        }),
-    );
+    return allSuggestions
+        .map(
+            (suggestion): ComboboxOption => ({
+                label: suggestion,
+                value: `${OCCUPATION}-${suggestion}`,
+            }),
+        )
+        .filter((option) => !promotedValues.includes(option.value));
 }
 
 function getDriversLicenseOptions(aggregations: Aggregations): ComboboxOption[] {
-    return aggregations.needDriversLicense.map(
-        (licence): ComboboxOption =>
-            licence.key === "Ikke oppgitt"
-                ? { label: "Førerkort ikke oppgitt", value: `${NEED_DRIVERS_LICENSE}-${licence.key}` }
-                : {
-                      label: labelForNeedDriversLicense(licence.key),
-                      value: `${NEED_DRIVERS_LICENSE}-${licence.key}`,
-                  },
-    );
+    return aggregations.needDriversLicense
+        .map(
+            (licence): ComboboxOption =>
+                licence.key === "Ikke oppgitt"
+                    ? { label: "Førerkort ikke oppgitt", value: `${NEED_DRIVERS_LICENSE}-${licence.key}` }
+                    : {
+                          label: labelForNeedDriversLicense(licence.key),
+                          value: `${NEED_DRIVERS_LICENSE}-${licence.key}`,
+                      },
+        )
+        .filter((option) => !promotedValues.includes(option.value));
 }
 
 function getExperienceOptions(aggregations: Aggregations): ComboboxOption[] {
-    return aggregations.experience.map(
-        (experience): ComboboxOption =>
-            experience.key === "Ikke oppgitt"
-                ? { label: "Erfaring ikke oppgitt", value: `${EXPERIENCE}-${experience.key}` }
-                : {
-                      label: labelForExperience(experience.key),
-                      value: `${EXPERIENCE}-${experience.key}`,
-                  },
-    );
+    return aggregations.experience
+        .map(
+            (experience): ComboboxOption =>
+                experience.key === "Ikke oppgitt"
+                    ? { label: "Erfaring ikke oppgitt", value: `${EXPERIENCE}-${experience.key}` }
+                    : {
+                          label: labelForExperience(experience.key),
+                          value: `${EXPERIENCE}-${experience.key}`,
+                      },
+        )
+        .filter((option) => !promotedValues.includes(option.value));
 }
 
 export function getSearchBoxOptions(
@@ -204,8 +246,9 @@ export function getSearchBoxOptions(
     const locationList = buildLocations(aggregations, locations);
 
     return [
-        ...getMunicipalOptions(locationList),
+        ...promotedOptions,
         ...getCountyOptions(locationList),
+        ...getMunicipalOptions(locationList),
         ...getCountryOptions(locationList),
         ...getFirstLevelOccupationsOptions(aggregations),
         ...getSecondLevelOccupationsOptions(aggregations),
@@ -221,6 +264,39 @@ export function getSearchBoxOptions(
         ...getOccupationSuggestionOptions(allSuggestions),
     ];
 }
+
+export const findLabelForFilter = (value: string): string => {
+    switch (value) {
+        case MUNICIPAL:
+            return "(Kommune)";
+        case COUNTY:
+            return "(Fylke)";
+        case COUNTRY:
+            return "(Land)";
+        case OCCUPATION_FIRST_LEVEL:
+            return "(Kategori)";
+        case OCCUPATION_SECOND_LEVEL:
+            return "(Kategori)";
+        case OCCUPATION:
+            return "(Yrke)";
+        case SECTOR:
+            return "(Sektor)";
+        case ENGAGEMENT_TYPE:
+            return "(Ansettelsesform)";
+        case EXTENT:
+            return "(Omfang)";
+        case EDUCATION:
+            return "(Krav om utdanning)";
+        case WORK_LANGUAGE:
+            return "(Arbeidsspråk)";
+        case NEED_DRIVERS_LICENSE:
+            return "(Førerkort)";
+        case EXPERIENCE:
+            return "(Arbeidserfaring)";
+        default:
+            return "";
+    }
+};
 
 interface Aggregations {
     occupationFirstLevels: { key: string; occupationSecondLevels: { key: string }[] }[];
@@ -240,29 +316,4 @@ interface LocationList {
     key: string;
     count: number;
     subLocations: LocationList[];
-}
-
-// TODO: move to SearchBox
-export interface Query {
-    q: string[];
-    from: number;
-    size: number;
-    municipals: string[];
-    counties: string[];
-    countries: string[];
-    international: boolean;
-    occupationFirstLevels: string[];
-    occupationSecondLevels: string[];
-    occupations: string[];
-    published?: string;
-    sector: string[];
-    engagementType: string[];
-    extent: string[];
-    education: string[];
-    workLanguage: string[];
-    remote: string[];
-    needDriversLicense: string[];
-    experience: string[];
-    sort: string;
-    v: number;
 }

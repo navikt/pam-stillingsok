@@ -1,7 +1,7 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { Select } from "@navikt/ds-react";
-import { SET_SORTING } from "@/app/(sok)/_utils/queryReducer";
+import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
+import { SORT } from "@/app/(sok)/_components/searchParamNames";
 
 export const SortByValues = {
     RELEVANT: "relevant",
@@ -11,20 +11,21 @@ export const SortByValues = {
 
 const DEFAULT_SORT = SortByValues.RELEVANT;
 
-function Sorting({ query, dispatch }) {
+function Sorting() {
+    const searchQuery = useSearchQuery();
     function handleChange(e) {
         const { value } = e.target;
         if (value === DEFAULT_SORT) {
-            dispatch({ type: SET_SORTING, value: undefined });
+            searchQuery.remove(SORT);
         } else {
-            dispatch({ type: SET_SORTING, value });
+            searchQuery.set(SORT, value);
         }
     }
 
     return (
         <Select
             onChange={handleChange}
-            value={query.sort || SortByValues.RELEVANT}
+            value={searchQuery.get(SORT) || SortByValues.RELEVANT}
             label="Sorter etter"
             className="inline-select hide-label-sm"
         >
@@ -34,12 +35,5 @@ function Sorting({ query, dispatch }) {
         </Select>
     );
 }
-
-Sorting.propTypes = {
-    query: PropTypes.shape({
-        sort: PropTypes.string.isRequired,
-    }).isRequired,
-    dispatch: PropTypes.func.isRequired,
-};
 
 export default Sorting;

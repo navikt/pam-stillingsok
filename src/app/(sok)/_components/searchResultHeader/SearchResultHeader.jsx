@@ -5,7 +5,7 @@ import Sorting from "@/app/(sok)/_components/searchResult/Sorting";
 import { formatNumber } from "@/app/_common/utils/utils";
 import FilterIcon from "@/app/(sok)/_components/icons/FilterIcon";
 
-function SearchResultHeader({ searchResult, query, queryDispatch, isFiltersVisible, setIsFiltersVisible }) {
+function SearchResultHeader({ searchResult, isFiltersVisible, setIsFiltersVisible }) {
     const stillingerWord = searchResult.totalPositions === 1 ? "stilling" : "stillinger";
 
     return (
@@ -25,10 +25,12 @@ function SearchResultHeader({ searchResult, query, queryDispatch, isFiltersVisib
                 >
                     <HStack gap="2" wrap={false} justify="space-between" align="center" className="full-width">
                         <div>
-                            <Heading level="2" size="small" role="status" className="white-space-nowrap">
-                                {searchResult.totalAds > 0
-                                    ? `${formatNumber(searchResult.totalAds)} treff`
-                                    : "Ingen treff"}
+                            <Heading level="2" size="small" className="white-space-nowrap" aria-live="polite">
+                                <span>
+                                    {searchResult.totalAds > 0
+                                        ? `${formatNumber(searchResult.totalAds)} treff`
+                                        : "Ingen treff"}
+                                </span>
                             </Heading>
                             <BodyShort className="white-space-nowrap">
                                 {searchResult.totalAds > 0
@@ -37,7 +39,7 @@ function SearchResultHeader({ searchResult, query, queryDispatch, isFiltersVisib
                             </BodyShort>
                         </div>
                         <HStack gap="2" align="center" wrap={false}>
-                            <Sorting dispatch={queryDispatch} query={query} />
+                            <Sorting />
 
                             <Show below="lg">
                                 <Button
@@ -64,8 +66,6 @@ SearchResultHeader.propTypes = {
         totalAds: PropTypes.number,
         totalPositions: PropTypes.number,
     }),
-    queryDispatch: PropTypes.func.isRequired,
-    query: PropTypes.shape({}),
 };
 
 export default SearchResultHeader;

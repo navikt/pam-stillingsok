@@ -1,12 +1,11 @@
-import Search from "@/app/(sok)/_components/Search";
 import { defaultMetadataDescription, defaultOpenGraphImage, getMetadataTitle } from "@/app/layout";
 import {
     createQuery,
     defaultQuery,
+    SEARCH_CHUNK_SIZE,
     stringifyQuery,
     toApiQuery,
     toBrowserQuery,
-    toReadableQuery,
 } from "@/app/(sok)/_utils/query";
 import { fetchCachedElasticSearch } from "@/app/(sok)/_utils/fetchCachedElasticSearch";
 import * as actions from "@/app/_common/actions";
@@ -17,18 +16,12 @@ import Link from "next/link";
 import React from "react";
 import MaxQuerySizeExceeded from "@/app/_common/components/MaxQuerySizeExceeded";
 import { fetchCachedPostcodes } from "@/app/(sok)/_utils/fetchPostcodes";
+import SearchWrapper from "@/app/(sok)/_components/SearchWrapper";
 
 const MAX_QUERY_SIZE = 10000;
 
-export async function generateMetadata({ searchParams }) {
-    const query = createQuery(searchParams);
-    const readableQuery = toReadableQuery(query);
-    let pageTitle;
-    if (readableQuery) {
-        pageTitle = getMetadataTitle(["Ledige stillinger", toReadableQuery(query)].join(" - "));
-    } else {
-        pageTitle = getMetadataTitle("Ledige stillinger");
-    }
+export async function generateMetadata() {
+    const pageTitle = getMetadataTitle("Ledige stillinger");
     return {
         title: pageTitle,
         description: defaultMetadataDescription,
@@ -98,8 +91,10 @@ export default async function Page({ searchParams }) {
 
     const userPreferences = await actions.getUserPreferences();
     const modifiedSearchParams = searchParams;
+    let resultsPerPage = SEARCH_CHUNK_SIZE;
     if (userPreferences.resultsPerPage) {
         modifiedSearchParams.size = userPreferences.resultsPerPage;
+        resultsPerPage = userPreferences.resultsPerPage;
     }
 
     const initialQuery = createQuery(modifiedSearchParams);
@@ -113,12 +108,12 @@ export default async function Page({ searchParams }) {
     const [globalSearchResult, locations, postcodes, searchResult] = await Promise.all(fetchCalls);
 
     return (
-        <Search
+        <SearchWrapper
             searchResult={shouldDoExtraCallIfUserHasSearchParams ? searchResult : globalSearchResult}
             aggregations={globalSearchResult.aggregations}
             locations={locations}
             postcodes={postcodes}
-            query={initialQuery}
+            resultsPerPage={resultsPerPage}
         />
     );
 }

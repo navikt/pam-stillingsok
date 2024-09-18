@@ -1,14 +1,7 @@
-import fixLocationName from "@/app/_common/utils/fixLocationName";
 import { CURRENT_VERSION, VERSION_QUERY_PARAM } from "@/app/(sok)/_utils/searchParamsVersioning";
 
 export const SEARCH_CHUNK_SIZE = 25;
 export const ALLOWED_NUMBER_OF_RESULTS_PER_PAGE = [SEARCH_CHUNK_SIZE, SEARCH_CHUNK_SIZE * 4];
-
-export const PublishedLabelsEnum = {
-    "now/d": "Nye i dag",
-    "now-3d": "Nye siste 3 døgn",
-    "now-7d": "Nye siste uka",
-};
 
 function asArray(value) {
     if (Array.isArray(value)) {
@@ -113,7 +106,7 @@ export function removeUnwantedOrEmptySearchParameters(query) {
 export function toApiQuery(query) {
     const apiSearchQuery = {
         ...query,
-        sort: query.sort === "" ? "published" : query.sort,
+        sort: query.sort === "" ? "relevant" : query.sort,
     };
 
     const newQuery = removeUnwantedOrEmptySearchParameters(apiSearchQuery);
@@ -126,21 +119,6 @@ export function toApiQuery(query) {
     }
 
     return newQuery;
-}
-
-/**
- * Returns a search query optimized for saved searches
- */
-export function toSavedSearchQuery(query) {
-    const savedSearchQuery = {
-        ...query,
-    };
-
-    delete savedSearchQuery.from;
-    delete savedSearchQuery.size;
-    delete savedSearchQuery.sort;
-
-    return removeUnwantedOrEmptySearchParameters(savedSearchQuery);
 }
 
 /**
@@ -160,78 +138,6 @@ export function toBrowserQuery(query) {
     }
 
     return removeUnwantedOrEmptySearchParameters(browserQuery);
-}
-
-/**
- * Takes the query, and returns a readable text.
- * For example: "Utvikling i Oslo og Lillestrøm"
- * @param query
- * @returns {string}
- */
-export function toReadableQuery(query) {
-    const title = [];
-    const occupation = [];
-    let location = [];
-
-    // Ikke vis fylket hvis bruker har valgt en eller flere tilhørende kommuner
-    const counties = query.counties.filter((county) => {
-        const found = query.municipals.find((obj) => obj.startsWith(`${county}.`));
-        return !found;
-    });
-
-    // Ikke vis yrket på nivå 1 hvis bruker har valgt et relatert yrke på nivå 2
-    const occupationFirstLevels = query.occupationFirstLevels.filter((firstLevel) => {
-        const found = query.occupationSecondLevels.find((obj) => obj.startsWith(`${firstLevel}.`));
-        return !found;
-    });
-
-    if (query.q) occupation.push(query.q.join(", "));
-    if (query.published) occupation.push(PublishedLabelsEnum[query.published]);
-
-    // occupation
-    if (occupationFirstLevels.length > 0) occupation.push(occupationFirstLevels.join(", "));
-    if (query.occupationSecondLevels.length > 0)
-        occupation.push(query.occupationSecondLevels.map((o) => o.split(".")[1]).join(", "));
-    if (query.sector.length > 0) occupation.push(query.sector.join(", "));
-    if (query.extent.length > 0) occupation.push(query.extent.join(", "));
-    if (query.engagementType.length > 0) occupation.push(query.engagementType.join(", "));
-    if (query.remote.length > 0) occupation.push("Hjemmekontor");
-
-    // location
-    if (counties.length > 0) {
-        location = location.concat(counties.map((c) => fixLocationName(c)));
-    }
-    if (query.municipals.length > 0) {
-        location = location.concat(query.municipals.map((m) => fixLocationName(m.split(".")[1])));
-    }
-    if (query.countries.length > 0) {
-        location = location.concat(query.countries.map((c) => fixLocationName(c)));
-    }
-    if (query.international && query.countries.length === 0) {
-        location.push("Utland");
-    }
-
-    if (occupation.length > 0) {
-        title.push(occupation.join(", "));
-    }
-
-    if (location.length > 0) {
-        const last = location.pop();
-        if (location.length > 0) {
-            title.push([location.join(", "), last].join(" og "));
-        } else {
-            title.push(last);
-        }
-    }
-    return title.join(" i ");
-}
-
-/**
- * Check if query contains one or more criteria
- */
-export function isSearchQueryEmpty(query) {
-    const queryWithoutEmptyProperties = removeUnwantedOrEmptySearchParameters(query);
-    return Object.keys(queryWithoutEmptyProperties).length === 0;
 }
 
 function getKeyName(key) {

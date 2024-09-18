@@ -2,50 +2,49 @@ import React from "react";
 import PropTypes from "prop-types";
 import { BodyShort, Box, Checkbox, Fieldset } from "@navikt/ds-react";
 import fixLocationName from "@/app/_common/utils/fixLocationName";
-import {
-    ADD_COUNTRY,
-    ADD_COUNTY,
-    ADD_MUNICIPAL,
-    REMOVE_COUNTRY,
-    REMOVE_COUNTY,
-    REMOVE_MUNICIPAL,
-    SET_INTERNATIONAL,
-} from "@/app/(sok)/_utils/queryReducer";
 import buildLocations from "@/app/(sok)/_components/utils/buildLocations";
 import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
+import { COUNTRY, COUNTY, INTERNATIONAL, MUNICIPAL } from "@/app/(sok)/_components/searchParamNames";
+import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
 
-function Locations({ locations, query, dispatch, updatedValues }) {
+function Locations({ locations, updatedValues }) {
     const locationValues = buildLocations(updatedValues.aggregations, locations);
+    const searchQuery = useSearchQuery();
 
     function handleLocationClick(value, type, checked) {
         if (type === "county") {
             if (checked) {
-                dispatch({ type: ADD_COUNTY, value });
+                searchQuery.append(COUNTY, value);
             } else {
-                dispatch({ type: REMOVE_COUNTY, value });
+                searchQuery.remove(COUNTY, value);
             }
+            searchQuery.getAll(MUNICIPAL).forEach((obj) => {
+                if (obj.startsWith(`${value}.`)) {
+                    searchQuery.remove(MUNICIPAL, obj);
+                }
+            });
             logFilterChanged({ name: "Sted", value: fixLocationName(value), checked, level: "Fylke" });
         } else if (type === "municipal") {
             if (checked) {
-                dispatch({ type: ADD_MUNICIPAL, value });
+                searchQuery.append(MUNICIPAL, value);
             } else {
-                dispatch({ type: REMOVE_MUNICIPAL, value });
+                searchQuery.remove(MUNICIPAL, value);
             }
             logFilterChanged({ name: "Sted", value: fixLocationName(value, true), checked, level: "Kommune" });
         } else if (type === "country") {
             if (checked) {
-                dispatch({ type: ADD_COUNTRY, value });
+                searchQuery.append(COUNTRY, value);
             } else {
-                dispatch({ type: REMOVE_COUNTRY, value });
+                searchQuery.remove(COUNTRY, value);
             }
             logFilterChanged({ name: "Sted", value: fixLocationName(value), checked, level: "Land" });
         } else if (type === "international") {
-            if (query.international) {
-                query.countries.forEach((c) => {
-                    dispatch({ type: REMOVE_COUNTRY, value: c });
-                });
+            if (checked) {
+                searchQuery.set(INTERNATIONAL, "true");
+            } else {
+                searchQuery.remove(INTERNATIONAL);
+                searchQuery.remove(COUNTRY);
             }
-            dispatch({ type: SET_INTERNATIONAL, value: !query.international });
         }
     }
 
@@ -74,7 +73,7 @@ function Locations({ locations, query, dispatch, updatedValues }) {
                                     name="international"
                                     value="true"
                                     onChange={handleCheckboxClick(location.key, location.type)}
-                                    checked={query.international === true}
+                                    checked={searchQuery.get(INTERNATIONAL) === "true"}
                                 >
                                     Utland ({updatedValues.aggregations.totalInternational})
                                 </Checkbox>
@@ -83,14 +82,14 @@ function Locations({ locations, query, dispatch, updatedValues }) {
                                     name="counties[]"
                                     value={location.key}
                                     onChange={handleCheckboxClick(location.key, location.type)}
-                                    checked={query.counties.includes(location.key)}
+                                    checked={searchQuery.getAll(COUNTY).includes(location.key)}
                                 >
                                     <span translate="no">{`${fixLocationName(location.key)} (${location.count})`}</span>
                                 </Checkbox>
                             )}
 
-                            {(query.counties.includes(location.key) ||
-                                (location.key === "UTLAND" && query.international === true)) &&
+                            {(searchQuery.getAll(COUNTY).includes(location.key) ||
+                                (location.key === "UTLAND" && searchQuery.get(INTERNATIONAL) === "true")) &&
                                 location.key !== "OSLO" &&
                                 location.key !== "SVALBARD" && (
                                     <Box paddingInline="8 0">
@@ -113,8 +112,12 @@ function Locations({ locations, query, dispatch, updatedValues }) {
                                                                     subLocation.type,
                                                                 )}
                                                                 checked={
-                                                                    query.municipals.includes(subLocation.key) ||
-                                                                    query.countries.includes(subLocation.key)
+                                                                    searchQuery
+                                                                        .getAll(MUNICIPAL)
+                                                                        .includes(subLocation.key) ||
+                                                                    searchQuery
+                                                                        .getAll(COUNTRY)
+                                                                        .includes(subLocation.key)
                                                                 }
                                                             >
                                                                 <BodyShort
@@ -148,13 +151,6 @@ Locations.propTypes = {
         }),
     }),
     locations: PropTypes.arrayOf(PropTypes.object),
-    query: PropTypes.shape({
-        countries: PropTypes.arrayOf(PropTypes.string),
-        counties: PropTypes.arrayOf(PropTypes.string),
-        municipals: PropTypes.arrayOf(PropTypes.string),
-        international: PropTypes.bool,
-    }),
-    dispatch: PropTypes.func.isRequired,
 };
 
 export default Locations;

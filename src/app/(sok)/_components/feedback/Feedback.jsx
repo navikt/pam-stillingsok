@@ -1,25 +1,30 @@
 import React, { useState } from "react";
-import { BodyLong, Heading, Panel, Link as AkselLink, HStack, VStack } from "@navikt/ds-react";
-import { FaceSmileIcon, FaceFrownIcon } from "@navikt/aksel-icons";
-import PropTypes from "prop-types";
+import { BodyLong, Heading, HStack, Link as AkselLink, Panel, VStack } from "@navikt/ds-react";
+import { FaceFrownIcon, FaceSmileIcon } from "@navikt/aksel-icons";
 import { FeedbackButton } from "@navikt/arbeidsplassen-react";
 import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
+import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
+import { SEARCH_STRING } from "@/app/(sok)/_components/searchParamNames";
 
-function Feedback({ query }) {
+function Feedback({ searchResult }) {
     const [hasGivenRating, setHasGiverRating] = useState(false);
+    const searchQuery = useSearchQuery();
 
     const onRatingClick = (text) => {
         try {
             logAmplitudeEvent("rate search result relevance", {
                 rating: text,
-                hasSearchString: query.q && query.q.length > 0,
-                hasSearchFields: query.fields && query.fields.length > 0,
+                hasSearchString: searchQuery.has(SEARCH_STRING),
             });
         } catch (err) {
             // ignore
         }
         setHasGiverRating(true);
     };
+
+    if (searchResult?.ads?.length === 0) {
+        return null;
+    }
 
     return (
         <Panel className="text-center" id="feedback-panel">
@@ -59,12 +64,5 @@ function Feedback({ query }) {
         </Panel>
     );
 }
-
-Feedback.propTypes = {
-    query: PropTypes.shape({
-        q: PropTypes.arrayOf(PropTypes.string),
-        fields: PropTypes.string,
-    }).isRequired,
-};
 
 export default Feedback;
