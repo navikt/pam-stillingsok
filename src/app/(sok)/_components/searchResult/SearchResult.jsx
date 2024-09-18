@@ -16,7 +16,7 @@ export default function SearchResult({ searchResult }) {
     const searchResultRef = useRef();
 
     /**
-     *  Check if we should render ad details for debugging
+     *  Check if we should render ad details for debug
      */
     useEffect(() => {
         try {
