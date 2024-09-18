@@ -25,8 +25,8 @@ function SearchResultHeader({ searchResult, isFiltersVisible, setIsFiltersVisibl
                 >
                     <HStack gap="2" wrap={false} justify="space-between" align="center" className="full-width">
                         <div>
-                            <Heading level="2" size="small" className="white-space-nowrap">
-                                <span role="status">
+                            <Heading level="2" size="small" className="white-space-nowrap" aria-live="polite">
+                                <span>
                                     {searchResult.totalAds > 0
                                         ? `${formatNumber(searchResult.totalAds)} treff`
                                         : "Ingen treff"}
