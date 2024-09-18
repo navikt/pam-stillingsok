@@ -171,7 +171,12 @@ function SearchCombobox({ aggregations, locations }) {
         } else {
             searchQuery.remove(key, value);
         }
-        logFilterChanged({ ...AMPLITUDE_KEY_MAPPING[key], value, checked: false, source: "Søkefelt" });
+        // håndter "value" for Yrkesnivå 2
+        const ampValue =
+            AMPLITUDE_KEY_MAPPING[key] && AMPLITUDE_KEY_MAPPING[key].level === "Yrkesnivå 2"
+                ? value.split(".")[1]
+                : value;
+        logFilterChanged({ ...AMPLITUDE_KEY_MAPPING[key], value: ampValue, checked: false, source: "Søkefelt" });
     };
 
     function handleFilterAddition(key, value) {
@@ -199,7 +204,12 @@ function SearchCombobox({ aggregations, locations }) {
         } else {
             searchQuery.append(key, value);
         }
-        logFilterChanged({ ...AMPLITUDE_KEY_MAPPING[key], value, checked: true, source: "Søkefelt" });
+        // håndter "value" for Yrkesnivå 2
+        const ampValue =
+            AMPLITUDE_KEY_MAPPING[key] && AMPLITUDE_KEY_MAPPING[key].level === "Yrkesnivå 2"
+                ? value.split(".")[1]
+                : value;
+        logFilterChanged({ ...AMPLITUDE_KEY_MAPPING[key], value: ampValue, checked: true, source: "Søkefelt" });
     }
 
     const handleFilterOption = (option, isSelected) => {
