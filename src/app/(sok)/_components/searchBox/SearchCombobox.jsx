@@ -24,7 +24,7 @@ import {
 import { FetchAction, useFetchReducer } from "@/app/_common/hooks/useFetchReducer";
 import * as actions from "@/app/_common/actions";
 import { findLabelForFilter, getSearchBoxOptions } from "@/app/(sok)/_components/searchBox/buildSearchBoxOptions";
-import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
+import logAmplitudeEvent, { logFilterChanged } from "@/app/_common/monitoring/amplitude";
 
 let suggestionsCache = [];
 const CACHE_MAX_SIZE = 50;
@@ -132,8 +132,10 @@ function SearchCombobox({ aggregations, locations }) {
     const handleFreeTextSearchOption = (value, isSelected) => {
         if (isSelected) {
             searchQuery.append(SEARCH_STRING, value);
+            logAmplitudeEvent("Text search", { searchTerm: "Add" });
         } else {
             searchQuery.remove(SEARCH_STRING, value);
+            logAmplitudeEvent("Text search", { searchTerm: "Remove" });
         }
     };
 
