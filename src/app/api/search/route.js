@@ -1,9 +1,8 @@
-import elasticSearchRequestBody from "@/app/(sok)/_utils/elasticSearchRequestBody";
 import { createQuery, toApiQuery } from "@/app/(sok)/_utils/query";
-import { getDefaultHeaders } from "@/app/_common/utils/fetch";
 import { migrateSearchParams } from "@/app/(sok)/_utils/searchParamsVersioning";
 import { NextResponse } from "next/server";
 import logger from "@/app/_common/utils/logger";
+import { fetchElasticSearch } from "@/app/(sok)/_utils/fetchElasticSearch";
 
 export const dynamic = "force-dynamic";
 
@@ -30,16 +29,10 @@ function parseSearchParams(entries) {
 export async function GET(request) {
     const searchParams = parseSearchParams(request.nextUrl.searchParams);
     const migratedSearchParams = migrateSearchParams(searchParams);
-    const query = createQuery(migratedSearchParams || searchParams);
-    const body = elasticSearchRequestBody(toApiQuery(query));
+    const query = toApiQuery(createQuery(migratedSearchParams || searchParams));
 
     try {
-        const res = await fetch(`${process.env.PAMSEARCHAPI_URL}/stillingsok/ad/_search`, {
-            method: "POST",
-            headers: getDefaultHeaders(),
-            body: JSON.stringify(body),
-            signal: AbortSignal.timeout(55 * 1000),
-        });
+        const res = await fetchElasticSearch(query, { signal: AbortSignal.timeout(55 * 1000) });
 
         if (!res.ok) {
             const msg = `Kallet returnerte en feilkode, sender tilbake den samme feilkoden: ${res.status}`;
