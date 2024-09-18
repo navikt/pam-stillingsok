@@ -7,7 +7,7 @@ import {
     toApiQuery,
     toBrowserQuery,
 } from "@/app/(sok)/_utils/query";
-import { fetchElstaicSearch } from "@/app/(sok)/_utils/fetchElstaicSearch";
+import { fetchCachedSimplifiedElasticSearch } from "@/app/(sok)/_utils/fetchElasticSearch";
 import * as actions from "@/app/_common/actions";
 import { redirect } from "next/navigation";
 import { migrateSearchParams } from "@/app/(sok)/_utils/searchParamsVersioning";
@@ -110,9 +110,13 @@ export default async function Page({ searchParams }) {
     const initialQuery = createQuery(modifiedSearchParams);
 
     const shouldDoExtraCallIfUserHasSearchParams = Object.keys(toBrowserQuery(initialQuery)).length > 0;
-    const fetchCalls = [fetchElstaicSearch(toApiQuery(defaultQuery)), fetchCachedLocations(), fetchCachedPostcodes()];
+    const fetchCalls = [
+        fetchCachedSimplifiedElasticSearch(toApiQuery(defaultQuery)),
+        fetchCachedLocations(),
+        fetchCachedPostcodes(),
+    ];
     if (shouldDoExtraCallIfUserHasSearchParams) {
-        fetchCalls.push(fetchElstaicSearch(toApiQuery(initialQuery)));
+        fetchCalls.push(fetchCachedSimplifiedElasticSearch(toApiQuery(initialQuery)));
     }
 
     const [globalSearchResult, locations, postcodes, searchResult] = await Promise.all(fetchCalls);

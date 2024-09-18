@@ -43,7 +43,7 @@ export async function fetchElasticSearch(query, fetchOptions = {}) {
     return res;
 }
 
-export const fetchElstaicSearch = unstable_cache(
+export const fetchCachedSimplifiedElasticSearch = unstable_cache(
     async (query) => fetchSimplifiedElasticSearch(query),
     ["elastic-search-query"],
     {

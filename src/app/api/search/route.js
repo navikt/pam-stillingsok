@@ -2,7 +2,7 @@ import { createQuery, toApiQuery } from "@/app/(sok)/_utils/query";
 import { migrateSearchParams } from "@/app/(sok)/_utils/searchParamsVersioning";
 import { NextResponse } from "next/server";
 import logger from "@/app/_common/utils/logger";
-import { fetchElasticSearch } from "@/app/(sok)/_utils/fetchElstaicSearch";
+import { fetchElasticSearch } from "@/app/(sok)/_utils/fetchElasticSearch";
 
 export const dynamic = "force-dynamic";
 
