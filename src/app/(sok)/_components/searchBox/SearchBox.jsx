@@ -1,117 +1,101 @@
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import { ADD_OCCUPATION, SET_SEARCH_STRING } from "@/app/(sok)/_utils/queryReducer";
-import Typeahead from "@/app/_common/components/typeahead/Typeahead";
-import { FetchAction, useFetchReducer } from "@/app/_common/hooks/useFetchReducer";
-import * as actions from "@/app/_common/actions";
+import SearchCombobox from "@/app/(sok)/_components/searchBox/SearchCombobox";
+import { BodyShort, Box, Button, Heading, HStack, Link as AkselLink, VStack } from "@navikt/ds-react";
+import { DISTANCE, POSTCODE, URL_VERSION } from "@/app/(sok)/_components/searchParamNames";
+import fixLocationName from "@/app/_common/utils/fixLocationName";
+import { CarIcon, TrashIcon } from "@navikt/aksel-icons";
+import SaveSearchButton, { toSavedSearch } from "@/app/lagrede-sok/_components/SaveSearchButton";
+import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
+import LoggedInButtons from "@/app/(sok)/_components/loggedInButtons/LoggedInButtons";
 
-let suggestionsCache = [];
-const CACHE_MAX_SIZE = 50;
+function SearchBox({ aggregations, locations, postcodes }) {
+    const searchQuery = useSearchQuery();
 
-function getSearchBoxValue(query) {
-    let initialValue = "";
-    if (query.q) {
-        initialValue = query.q;
-    } else if (query.occupations[0]) {
-        // eslint-disable-next-line prefer-destructuring
-        initialValue = query.occupations[0];
-    }
-    return initialValue;
-}
-
-function SearchBox({ dispatch, query }) {
-    const [value, setValue] = useState(getSearchBoxValue(query));
-    const initialRender = useRef(true);
-    const [suggestionsResponse, suggestionsDispatch] = useFetchReducer([]);
-    const MINIMUM_LENGTH = 1;
-
-    async function fetchSuggestions() {
-        const cached = suggestionsCache.find((c) => c.value === value);
-        if (cached) {
-            suggestionsDispatch({ type: FetchAction.RESOLVE, data: cached.data });
-            return;
-        }
-        let data;
-        try {
-            data = await actions.getSuggestions(value, MINIMUM_LENGTH);
-        } catch (err) {
-            // ignore fetch failed errors
-        }
-        if (data) {
-            suggestionsCache = [{ value, data }, ...suggestionsCache].slice(0, CACHE_MAX_SIZE);
-            suggestionsDispatch({ type: FetchAction.RESOLVE, data });
-        }
-    }
-
-    useEffect(() => {
-        setValue(getSearchBoxValue(query));
-    }, [query.q, query.occupations]);
-
-    useEffect(() => {
-        if (initialRender.current) {
-            initialRender.current = false;
-        } else if (value && value.length >= MINIMUM_LENGTH) {
-            fetchSuggestions(value);
-        } else {
-            suggestionsDispatch({ type: FetchAction.SET_DATA, data: [] });
-        }
-    }, [value]);
-
-    function handleTypeAheadValueChange(newValue) {
-        setValue(newValue);
-    }
-
-    function handleTypeAheadSuggestionSelected(newValue, shouldSearchInWholeAd) {
-        setValue(newValue);
-        if (!shouldSearchInWholeAd) {
-            dispatch({ type: ADD_OCCUPATION, value: newValue });
-        } else {
-            dispatch({ type: SET_SEARCH_STRING, value: newValue });
-        }
-    }
-
-    function handleSearchButtonClick() {
-        const found = suggestionsResponse.data.find((it) => it.toLowerCase() === value.toLowerCase());
-        if (found) {
-            dispatch({ type: ADD_OCCUPATION, value });
-        } else {
-            dispatch({ type: SET_SEARCH_STRING, value });
-        }
-    }
-
-    function onClear() {
-        dispatch({ type: SET_SEARCH_STRING, value: "" });
-    }
-
-    // Add the current value as last suggestion entry,
-    // This will show a typeahead suggestion like this: "Søk på {value} i hele annonsen"
-    const allSuggestions = [...suggestionsResponse.data];
-    if (suggestionsResponse.data.length > 0 && value && value.length > 0) {
-        allSuggestions.push(value);
-    }
+    const drivingDistanceFilterActive =
+        searchQuery.has(POSTCODE) && searchQuery.get(POSTCODE).length === 4 && searchQuery.get(DISTANCE) > 0;
+    const onlyPostcodeOrDistanceFilterActive =
+        searchQuery.size === 2 && (searchQuery.has(POSTCODE) || searchQuery.has(DISTANCE));
+    const savedSearchUrlWithoutVersion = toSavedSearch(searchQuery.urlSearchParams);
+    savedSearchUrlWithoutVersion.delete(URL_VERSION);
+    const showSaveAndResetButton = savedSearchUrlWithoutVersion.size > 0 && !onlyPostcodeOrDistanceFilterActive;
+    const chosenPostcodeCity =
+        drivingDistanceFilterActive && postcodes.find((p) => p.postcode === searchQuery.get(POSTCODE)).city;
 
     return (
-        <section aria-label="Søkeord" className="mb-4">
-            <Typeahead
-                onClear={onClear}
-                id="search-form-fritekst-input"
-                name="q"
-                autoComplete="off"
-                onSelect={handleTypeAheadSuggestionSelected}
-                onChange={handleTypeAheadValueChange}
-                suggestions={value && value.length > 0 ? allSuggestions : []}
-                value={value || ""}
-                onSearchButtonClick={handleSearchButtonClick}
-            />
-        </section>
+        <Box paddingBlock={{ xs: "0 6", lg: "10 12" }}>
+            <Box
+                padding={{ xs: "4", md: "6 8" }}
+                background="surface-alt-1-subtle"
+                borderRadius={{ lg: "large" }}
+                maxWidth={{ lg: "800px" }}
+                className="SearchContainer"
+            >
+                <HStack justify="space-between" align="center" className="mb-1">
+                    <Heading level="1" size="large">
+                        Søk etter jobber
+                    </Heading>
+                    <LoggedInButtons />
+                </HStack>
+
+                <BodyShort className="mb-4">
+                    <AkselLink href="/slik-bruker-du-det-nye-soket">Slik bruker du søket for best resultat</AkselLink>
+                </BodyShort>
+
+                <VStack gap="3">
+                    <SearchCombobox aggregations={aggregations} locations={locations} />
+
+                    {drivingDistanceFilterActive && (
+                        <HStack align="center" wrap={false} gap="1">
+                            <HStack wrap={false} align="center" gap="2">
+                                <CarIcon aria-label="Reisevei" fontSize="1.5rem" />
+                                <BodyShort>
+                                    Innen {searchQuery.get(DISTANCE)} km fra {searchQuery.get(POSTCODE)}{" "}
+                                    {fixLocationName(chosenPostcodeCity)}
+                                </BodyShort>
+                            </HStack>
+
+                            <Button
+                                type="button"
+                                variant="tertiary"
+                                onClick={() => {
+                                    searchQuery.remove(POSTCODE);
+                                    searchQuery.remove(DISTANCE);
+                                }}
+                                icon={<TrashIcon aria-hidden="true" />}
+                                size="small"
+                            >
+                                Fjern
+                            </Button>
+                        </HStack>
+                    )}
+
+                    {showSaveAndResetButton && (
+                        <HStack gap="2" columns="2" align="center" justify="end">
+                            <>
+                                <SaveSearchButton size="small" />
+                                <Button
+                                    type="button"
+                                    variant="tertiary"
+                                    onClick={() => {
+                                        searchQuery.reset();
+                                    }}
+                                    icon={<TrashIcon aria-hidden="true" />}
+                                    size="small"
+                                >
+                                    Nullstill søk
+                                </Button>
+                            </>
+                        </HStack>
+                    )}
+                </VStack>
+            </Box>
+        </Box>
     );
 }
 
 SearchBox.propTypes = {
-    query: PropTypes.shape({
-        q: PropTypes.string,
-    }).isRequired,
-    dispatch: PropTypes.func.isRequired,
+    locations: PropTypes.arrayOf(PropTypes.shape({})),
 };
 
 export default SearchBox;

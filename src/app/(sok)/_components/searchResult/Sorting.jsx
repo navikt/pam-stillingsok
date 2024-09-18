@@ -1,39 +1,39 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { Select } from "@navikt/ds-react";
-import { SET_SORTING } from "@/app/(sok)/_utils/queryReducer";
+import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
+import { SORT } from "@/app/(sok)/_components/searchParamNames";
 
-function Sorting({ query, dispatch }) {
+export const SortByValues = {
+    RELEVANT: "relevant",
+    PUBLISHED: "published",
+    EXPIRES: "expires",
+};
+
+const DEFAULT_SORT = SortByValues.RELEVANT;
+
+function Sorting() {
+    const searchQuery = useSearchQuery();
     function handleChange(e) {
         const { value } = e.target;
-        dispatch({ type: SET_SORTING, value });
+        if (value === DEFAULT_SORT) {
+            searchQuery.remove(SORT);
+        } else {
+            searchQuery.set(SORT, value);
+        }
     }
 
     return (
         <Select
             onChange={handleChange}
-            value={query.sort || "published"}
+            value={searchQuery.get(SORT) || SortByValues.RELEVANT}
             label="Sorter etter"
-            className="inline-select"
+            className="inline-select hide-label-sm"
         >
-            <option key="published" value="published">
-                Nyeste øverst
-            </option>
-            <option key="relevant" value="relevant">
-                Mest relevant
-            </option>
-            <option key="expires" value="expires">
-                Søknadsfrist
-            </option>
+            <option value={SortByValues.RELEVANT}>Mest relevant</option>
+            <option value={SortByValues.PUBLISHED}>Nyeste øverst</option>
+            <option value={SortByValues.EXPIRES}>Søknadsfrist</option>
         </Select>
     );
 }
-
-Sorting.propTypes = {
-    query: PropTypes.shape({
-        sort: PropTypes.string.isRequired,
-    }).isRequired,
-    dispatch: PropTypes.func.isRequired,
-};
 
 export default Sorting;

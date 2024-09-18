@@ -1,21 +1,22 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { VStack } from "@navikt/ds-react";
 import FavouritesButton from "@/app/favoritter/_components/FavouritesButton";
-import { useSearchParams } from "next/navigation";
+import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
+import { FROM } from "@/app/(sok)/_components/searchParamNames";
 import PropTypes from "prop-types";
 import SearchResultItem from "./SearchResultItem";
 import { SEARCH_CHUNK_SIZE } from "../../_utils/query";
 
-export default function SearchResult({ searchResult, query }) {
+export default function SearchResult({ searchResult }) {
+    const searchQuery = useSearchQuery();
     const [showAdDetailsForDebugging, setShowAdDetailsForDebugging] = useState(false);
-    const resultsPerPage = query.size || SEARCH_CHUNK_SIZE;
+    const resultsPerPage = searchQuery.get(FROM) || SEARCH_CHUNK_SIZE;
     const totalPages = Math.ceil(searchResult.totalAds / resultsPerPage);
-    const page = query.from ? Math.floor(query.from / resultsPerPage) + 1 : 1;
-    const searchParams = useSearchParams();
+    const page = searchQuery.has(FROM) ? Math.floor(searchQuery.get(FROM) / resultsPerPage) + 1 : 1;
     const searchResultRef = useRef();
 
     /**
-     *  Check if we should render ad details for debugging
+     *  Check if we should render ad details for debug
      */
     useEffect(() => {
         try {
@@ -31,13 +32,13 @@ export default function SearchResult({ searchResult, query }) {
     /**
      * Set focus to top of result list when user paginate to next search result section
      */
-    useLayoutEffect(() => {
-        if (query.paginate && searchResultRef.current) {
+    useEffect(() => {
+        if (searchQuery.paginate && searchResultRef.current) {
             searchResultRef.current.focus({
-                preventScroll: false,
+                preventScroll: true,
             });
         }
-    }, [searchParams]);
+    }, [searchQuery.paginate]);
 
     if (!searchResult.ads || searchResult.ads.length === 0) {
         return null;
@@ -75,9 +76,5 @@ export default function SearchResult({ searchResult, query }) {
 SearchResult.propTypes = {
     searchResult: PropTypes.shape({
         ads: PropTypes.arrayOf(PropTypes.shape({})),
-    }),
-    query: PropTypes.shape({
-        from: PropTypes.number,
-        paginate: PropTypes.bool,
     }),
 };

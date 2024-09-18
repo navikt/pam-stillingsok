@@ -20,8 +20,12 @@
         "paths": {
             "@/*": ["./src/*"]
         },
-        "types": ["@testing-library/jest-dom"]
+        "types": ["@testing-library/jest-dom"],
+        "types": ["vitest/globals"]
     },
     "include": ["next-env.d.ts", ".next/types/**/*.ts", "**/*.ts", "**/*.tsx"],
     "exclude": ["node_modules"]
 }
+
+
+// hej

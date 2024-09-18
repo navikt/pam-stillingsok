@@ -1,11 +1,12 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { BodyShort, Checkbox, CheckboxGroup } from "@navikt/ds-react";
-import { ADD_ENGAGEMENT_TYPE, REMOVE_ENGAGEMENT_TYPE } from "@/app/(sok)/_utils/queryReducer";
 import moveCriteriaToBottom from "@/app/(sok)/_components/utils/moveFacetToBottom";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
 import sortValuesByFirstLetter from "@/app/(sok)/_components/utils/sortValuesByFirstLetter";
 import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
+import { ENGAGEMENT_TYPE } from "@/app/(sok)/_components/searchParamNames";
+import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
 
 /**
  * This ensures that 'Annet' is displayed as 'Ikke oppgitt' in the search filters.
@@ -20,17 +21,18 @@ export function editedItemKey(key) {
     return key === "Annet" ? "Ikke oppgitt" : key;
 }
 
-function Engagement({ initialValues, updatedValues, query, dispatch }) {
+function Engagement({ initialValues, updatedValues }) {
     const sortedValuesByFirstLetter = sortValuesByFirstLetter(initialValues);
     const sortedValues = moveCriteriaToBottom(sortedValuesByFirstLetter, "Annet");
     const values = mergeCount(sortedValues, updatedValues);
+    const searchQuery = useSearchQuery();
 
     function handleClick(e) {
         const { value, checked } = e.target;
         if (checked) {
-            dispatch({ type: ADD_ENGAGEMENT_TYPE, value });
+            searchQuery.append(ENGAGEMENT_TYPE, value);
         } else {
-            dispatch({ type: REMOVE_ENGAGEMENT_TYPE, value });
+            searchQuery.remove(ENGAGEMENT_TYPE, value);
         }
         logFilterChanged({ name: "Ansettelsesform", value, checked });
     }
@@ -38,7 +40,7 @@ function Engagement({ initialValues, updatedValues, query, dispatch }) {
     return (
         <CheckboxGroup
             className="mt-4"
-            value={query.engagementType}
+            value={searchQuery.getAll(ENGAGEMENT_TYPE)}
             legend={
                 <>
                     <BodyShort as="span" visuallyHidden>
@@ -65,10 +67,6 @@ Engagement.propTypes = {
         }),
     ).isRequired,
     updatedValues: PropTypes.arrayOf(PropTypes.shape({})),
-    query: PropTypes.shape({
-        engagementType: PropTypes.arrayOf(PropTypes.string),
-    }).isRequired,
-    dispatch: PropTypes.func.isRequired,
 };
 
 export default Engagement;

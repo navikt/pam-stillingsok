@@ -1,23 +1,25 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { BodyShort, Checkbox, CheckboxGroup } from "@navikt/ds-react";
-import { ADD_EDUCATION, REMOVE_EDUCATION } from "@/app/(sok)/_utils/queryReducer";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
 import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
 import moveCriteriaToBottom from "@/app/(sok)/_components/utils/moveFacetToBottom";
 import sortEducationValues from "@/app/(sok)/_components/utils/sortEducationValues";
+import { EDUCATION } from "@/app/(sok)/_components/searchParamNames";
+import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
 
-function Education({ initialValues, updatedValues, query, dispatch }) {
+function Education({ initialValues, updatedValues }) {
     const sortedValuesByEducation = sortEducationValues(initialValues);
     const sortedValues = moveCriteriaToBottom(sortedValuesByEducation, "Ikke oppgitt");
     const values = mergeCount(sortedValues, updatedValues);
+    const searchQuery = useSearchQuery();
 
     function handleClick(e) {
         const { value, checked } = e.target;
         if (checked) {
-            dispatch({ type: ADD_EDUCATION, value });
+            searchQuery.append(EDUCATION, value);
         } else {
-            dispatch({ type: REMOVE_EDUCATION, value });
+            searchQuery.remove(EDUCATION, value);
         }
         logFilterChanged({ name: "Utdanningsnivå", value, checked });
     }
@@ -25,7 +27,7 @@ function Education({ initialValues, updatedValues, query, dispatch }) {
     return (
         <CheckboxGroup
             className="mb-4"
-            value={query.education}
+            value={searchQuery.getAll(EDUCATION)}
             legend={
                 <>
                     <BodyShort as="span" visuallyHidden>
@@ -71,10 +73,6 @@ Education.propTypes = {
         }),
     ).isRequired,
     updatedValues: PropTypes.arrayOf(PropTypes.shape({})),
-    query: PropTypes.shape({
-        education: PropTypes.arrayOf(PropTypes.string),
-    }).isRequired,
-    dispatch: PropTypes.func.isRequired,
 };
 
 export default Education;
