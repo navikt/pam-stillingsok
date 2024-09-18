@@ -106,7 +106,7 @@ export function removeUnwantedOrEmptySearchParameters(query) {
 export function toApiQuery(query) {
     const apiSearchQuery = {
         ...query,
-        sort: query.sort === "" ? "published" : query.sort,
+        sort: query.sort === "" ? "relevant" : query.sort,
     };
 
     const newQuery = removeUnwantedOrEmptySearchParameters(apiSearchQuery);
