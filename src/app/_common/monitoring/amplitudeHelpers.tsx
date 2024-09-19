@@ -16,6 +16,7 @@ import {
     WORK_LANGUAGE,
 } from "@/app/(sok)/_components/searchParamNames";
 import { PublishedLabels } from "@/app/(sok)/_utils/publishedLabels";
+import fixLocationName from "@/app/_common/utils/fixLocationName";
 
 interface FilterEventData {
     name: string;
@@ -81,7 +82,17 @@ const FILTER_NAME_MAPPING: { [key: string]: FilterEventData } = {
 
 export function formatFilterEventData(inputData: FilterEventData): FilterEventData {
     // Henter riktig 'name' og 'level' eks. "occupation" blir "Yrke".
-    const data: FilterEventData = FILTER_NAME_MAPPING[inputData.name] ? FILTER_NAME_MAPPING[inputData.name] : inputData;
+    const data: FilterEventData = inputData;
+    if (inputData.name in FILTER_NAME_MAPPING) {
+        const { name, level } = FILTER_NAME_MAPPING[inputData.name];
+        data.name = name;
+        data.level = level;
+    }
+
+    // Konverterer eks. "OSLO" til "Oslo"
+    if (inputData.name === "Sted") {
+        data.value = fixLocationName(data.value, data.level === "Kommune");
+    }
 
     // Konverterer eks. "now-3d" til "Nye siste 3 døgn"
     if (inputData.name === "Publisert" && inputData.value && PublishedLabels[inputData.value]) {
