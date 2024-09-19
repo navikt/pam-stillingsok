@@ -25,7 +25,7 @@ import {
     SECTOR,
     WORK_LANGUAGE,
 } from "@/app/(sok)/_components/searchParamNames";
-import { PublishedLabelsEnum } from "@/app/(sok)/_components/filters/Published";
+import { PublishedLabels } from "@/app/(sok)/_utils/publishedLabels";
 
 const promotedOptions: ComboboxOption[] = [
     { label: "Butikkmedarbeider", value: `${OCCUPATION}-Butikkmedarbeider` },
@@ -35,7 +35,7 @@ const promotedOptions: ComboboxOption[] = [
     { label: labelForNeedDriversLicense("false"), value: `${NEED_DRIVERS_LICENSE}-false` },
     { label: "Engelsk", value: `${WORK_LANGUAGE}-Engelsk` },
     {
-        label: PublishedLabelsEnum["now/d" as keyof typeof PublishedLabelsEnum],
+        label: PublishedLabels["now/d" as keyof typeof PublishedLabels],
         value: `${PUBLISHED}-${"now/d"}`,
     },
 ];
@@ -124,7 +124,7 @@ function getPublishedOptions(aggregations: Aggregations): ComboboxOption[] {
     return aggregations.published
         .map(
             (item): ComboboxOption => ({
-                label: PublishedLabelsEnum[item.key as keyof typeof PublishedLabelsEnum],
+                label: PublishedLabels[item.key as keyof typeof PublishedLabels],
                 value: `${PUBLISHED}-${item.key}`,
             }),
         )

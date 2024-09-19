@@ -23,8 +23,8 @@ import {
     SECTOR,
     WORK_LANGUAGE,
 } from "@/app/(sok)/_components/searchParamNames";
-import { PublishedLabelsEnum } from "@/app/(sok)/_components/filters/Published";
 import { editedItemKey as editedOccupation } from "@/app/(sok)/_components/filters/Occupations";
+import { PublishedLabels } from "@/app/(sok)/_utils/publishedLabels";
 
 function buildOption(key: string, value: string): ComboboxOption | undefined {
     switch (key) {
@@ -64,7 +64,7 @@ function buildOption(key: string, value: string): ComboboxOption | undefined {
                   };
         case PUBLISHED:
             return {
-                label: PublishedLabelsEnum[value as keyof typeof PublishedLabelsEnum],
+                label: PublishedLabels[value as keyof typeof PublishedLabels],
                 value: `${PUBLISHED}-${value}`,
             };
         case SECTOR:

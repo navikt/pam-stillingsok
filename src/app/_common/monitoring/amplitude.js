@@ -1,4 +1,5 @@
 import * as amplitude from "@amplitude/analytics-browser";
+import { formatFilterEventData } from "@/app/_common/monitoring/amplitudeHelpers";
 import { getSessionId } from "./session";
 
 const userProperties = new amplitude.Identify();
@@ -35,11 +36,8 @@ const logAmplitudeEvent = (event, data) => {
 };
 
 export const logFilterChanged = (data) => {
-    if (data && data.source) {
-        amplitude.track("Filter Changed", enrichData(data));
-    } else {
-        amplitude.track("Filter Changed", enrichData({ ...data, source: "Sidebar" }));
-    }
+    const formattedData = formatFilterEventData(data);
+    amplitude.track("Filter Changed", enrichData(formattedData));
 };
 
 export function logStillingVisning(adData) {
