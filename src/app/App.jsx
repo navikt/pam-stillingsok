@@ -10,7 +10,7 @@ import { initAmplitude } from "./_common/monitoring/amplitude";
 import googleTranslateWorkaround from "./_common/utils/googleTranslateWorkaround";
 import Axe from "./Axe";
 
-// Todo: Gå igjennom alle fetch-kall i koden og se om referrer er satt riktig. Nå er den satt referrer: CONTEXT_PATH, men ikke sikker på hva som er rett her
+// Todo: Gå igjennom alle fetch-kall i koden og se om referrer er satt riktig. Nå er den satt referrer: CONTEXT_PATH, men ikke sikker på hva som er rett her.
 
 function App({ children, amplitudeToken }) {
     const { authenticationStatus, login, logout } = useContext(AuthenticationContext);
