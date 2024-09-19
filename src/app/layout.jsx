@@ -10,17 +10,10 @@ import "./stilling/ad.css";
 import "./_common/components/typeahead/Typeahead.css";
 import "./styles.css";
 import PropTypes from "prop-types";
-import interLocalFont from "next/font/local";
+import { localFont } from "@/app/_common/font/loadFont";
 import * as actions from "@/app/_common/actions";
 import App from "./App";
 import Providers from "./Providers";
-
-const myFont = interLocalFont({
-    variable: "--font-inter",
-    src: "../../public/font/InterVariable.ttf",
-    weight: "100 900",
-    display: "swap",
-});
 
 export const getMetadataTitle = (title = "Ledige stillinger") => `${title} - arbeidsplassen.no`;
 export const defaultMetadataDescription =
@@ -53,7 +46,7 @@ export const metadata = {
 export default async function RootLayout({ children }) {
     return (
         <html lang="no">
-            <body data-theme="arbeidsplassen" className={myFont.className}>
+            <body data-theme="arbeidsplassen" className={localFont.className}>
                 <Providers userPreferences={await actions.getUserPreferences()}>
                     <App amplitudeToken={process.env.AMPLITUDE_TOKEN}>{children}</App>
                 </Providers>
