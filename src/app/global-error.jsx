@@ -11,6 +11,9 @@ const myFont = interLocalFont({
     variable: "--font-inter",
     src: "../../public/font/InterVariable.ttf",
     weight: "100 900",
+    subsets: ["latin"],
+    preload: true,
+    adjustFontFallback: false,
     display: "swap",
 });
 export default function Error({ error }) {
