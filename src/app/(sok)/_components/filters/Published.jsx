@@ -6,12 +6,7 @@ import sortPublishedValues from "@/app/(sok)/_components/utils/sortPublishedValu
 import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
 import { PUBLISHED } from "@/app/(sok)/_components/searchParamNames";
 import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
-
-export const PublishedLabelsEnum = {
-    "now/d": "Nye i dag",
-    "now-3d": "Nye siste 3 døgn",
-    "now-7d": "Nye siste uka",
-};
+import { PublishedLabels } from "@/app/(sok)/_utils/publishedLabels";
 
 function Published({ initialValues, updatedValues, publishedTotalCount }) {
     const sortedValues = sortPublishedValues(initialValues);
@@ -24,7 +19,7 @@ function Published({ initialValues, updatedValues, publishedTotalCount }) {
         } else {
             searchQuery.remove(PUBLISHED);
         }
-        logFilterChanged({ name: "Publisert", value: PublishedLabelsEnum[value] });
+        logFilterChanged({ name: "Publisert", value: PublishedLabels[value] });
     }
 
     return (
@@ -36,7 +31,7 @@ function Published({ initialValues, updatedValues, publishedTotalCount }) {
         >
             {values.map((item) => (
                 <Radio key={item.key} value={item.key}>
-                    {`${PublishedLabelsEnum[item.key]} (${item.count})`}
+                    {`${PublishedLabels[item.key]} (${item.count})`}
                 </Radio>
             ))}
             <Radio value="">Vis alle ({publishedTotalCount})</Radio>
