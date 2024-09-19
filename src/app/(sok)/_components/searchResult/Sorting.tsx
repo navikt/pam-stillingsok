@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import { Select } from "@navikt/ds-react";
 import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
 import { SORT } from "@/app/(sok)/_components/searchParamNames";
@@ -11,9 +11,10 @@ export const SortByValues = {
 
 const DEFAULT_SORT = SortByValues.RELEVANT;
 
-function Sorting() {
+export default function Sorting(): ReactElement {
     const searchQuery = useSearchQuery();
-    function handleChange(e) {
+
+    function handleChange(e: React.ChangeEvent<HTMLSelectElement>): void {
         const { value } = e.target;
         if (value === DEFAULT_SORT) {
             searchQuery.remove(SORT);
@@ -35,5 +36,3 @@ function Sorting() {
         </Select>
     );
 }
-
-export default Sorting;
