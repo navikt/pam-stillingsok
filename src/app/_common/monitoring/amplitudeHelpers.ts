@@ -80,32 +80,37 @@ const FILTER_NAME_MAPPING: { [key: string]: FilterEventData } = {
     },
 };
 
+function getOccupationLevelTwoName(data: FilterEventData): string {
+    if (data.level === "Yrkesnivå 2" && data.value) {
+        return data.value.split(".")[1];
+    }
+    if (data.value) {
+        return data.value;
+    }
+    return "";
+}
+
 export function formatFilterEventData(inputData: FilterEventData): FilterEventData {
-    // Henter riktig 'name' og 'level' eks. "occupation" blir "Yrke".
     const data: FilterEventData = inputData;
+
     if (inputData.name in FILTER_NAME_MAPPING) {
         const { name, level } = FILTER_NAME_MAPPING[inputData.name];
         data.name = name;
         data.level = level;
     }
 
-    // Konverterer eks. "OSLO" til "Oslo"
     if (inputData.name === "Sted") {
         data.value = fixLocationName(data.value, data.level === "Kommune");
     }
 
-    // Konverterer eks. "now-3d" til "Nye siste 3 døgn"
-    if (inputData.name === "Publisert" && inputData.value && PublishedLabels[inputData.value]) {
-        data.value = PublishedLabels[inputData.value];
+    if (data.name === "Publisert" && data.value && PublishedLabels[data.value]) {
+        data.value = PublishedLabels[data.value];
     }
 
-    // Konverterer "Kultur og kreative yrker.Museum, bibliotek, arkiv" til "Museum, bibliotek, arkiv".
-    if (data.level === "Yrkesnivå 2" && inputData.value) {
-        // eslint-disable-next-line prefer-destructuring
-        data.value = inputData.value.split(".")[1];
+    if (data.level === "Yrkesnivå 2") {
+        data.value = getOccupationLevelTwoName(data);
     }
 
-    // Default source til "Sidebar"
     if (!inputData.source) {
         data.source = "Sidebar";
     }
