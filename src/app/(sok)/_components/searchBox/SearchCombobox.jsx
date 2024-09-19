@@ -132,10 +132,10 @@ function SearchCombobox({ aggregations, locations }) {
     const handleFreeTextSearchOption = (value, isSelected) => {
         if (isSelected) {
             searchQuery.append(SEARCH_STRING, value);
-            logAmplitudeEvent("Text search", { searchTerm: "Add" });
+            logAmplitudeEvent("Text searched", { searchTerm: "Add" });
         } else {
             searchQuery.remove(SEARCH_STRING, value);
-            logAmplitudeEvent("Text search", { searchTerm: "Remove" });
+            logAmplitudeEvent("Text searched", { searchTerm: "Remove" });
         }
     };
 
