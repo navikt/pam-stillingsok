@@ -4,18 +4,9 @@ import { BodyLong, Heading, VStack } from "@navikt/ds-react";
 import { WorriedFigure } from "@navikt/arbeidsplassen-react";
 import React, { useEffect } from "react";
 import * as Sentry from "@sentry/nextjs";
-import interLocalFont from "next/font/local";
 import App from "@/app/App";
+import { localFont } from "@/app/_common/font/loadFont";
 
-const myFont = interLocalFont({
-    variable: "--font-inter",
-    src: "../../public/font/InterVariable.ttf",
-    weight: "100 900",
-    subsets: ["latin"],
-    preload: true,
-    adjustFontFallback: false,
-    display: "swap",
-});
 export default function Error({ error }) {
     useEffect(() => {
         Sentry.captureException(error);
@@ -23,7 +14,7 @@ export default function Error({ error }) {
 
     return (
         <html lang="no">
-            <body data-theme="arbeidsplassen" className={myFont.className}>
+            <body data-theme="arbeidsplassen" className={localFont.className}>
                 <App>
                     <section className="container-small mt-16 mb-16" aria-live="assertive">
                         <VStack align="center">
