@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { ReactElement, useState } from "react";
 import { BodyLong, Heading, HStack, Link as AkselLink, Panel, VStack } from "@navikt/ds-react";
 import { FaceFrownIcon, FaceSmileIcon } from "@navikt/aksel-icons";
 import { FeedbackButton } from "@navikt/arbeidsplassen-react";
@@ -6,11 +6,11 @@ import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
 import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
 import { SEARCH_STRING } from "@/app/(sok)/_components/searchParamNames";
 
-function Feedback({ searchResult }) {
-    const [hasGivenRating, setHasGiverRating] = useState(false);
+export default function Feedback(): ReactElement {
+    const [hasGivenRating, setHasGiverRating] = useState<boolean>(false);
     const searchQuery = useSearchQuery();
 
-    const onRatingClick = (text) => {
+    const onRatingClick = (text: string): void => {
         try {
             logAmplitudeEvent("rate search result relevance", {
                 rating: text,
@@ -21,10 +21,6 @@ function Feedback({ searchResult }) {
         }
         setHasGiverRating(true);
     };
-
-    if (searchResult?.ads?.length === 0) {
-        return null;
-    }
 
     return (
         <Panel className="text-center" id="feedback-panel">
@@ -64,5 +60,3 @@ function Feedback({ searchResult }) {
         </Panel>
     );
 }
-
-export default Feedback;

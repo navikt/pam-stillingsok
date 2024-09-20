@@ -60,7 +60,7 @@ export default function Search({ searchResult, aggregations, locations, postcode
                     <MaxResultsBox resultsPerPage={resultsPerPage} />
                     <SearchPagination searchResult={searchResult} resultsPerPage={resultsPerPage} />
                     <DoYouWantToSaveSearch totalAds={searchResult.totalAds} />
-                    <Feedback searchResult={searchResult} />
+                    {searchResult?.ads?.length > 0 && <Feedback searchResult={searchResult} />}
                 </VStack>
             </HGrid>
         </div>
