@@ -1,12 +1,22 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import { BodyShort, Box, Button, Heading, HGrid, HStack, Show, Stack } from "@navikt/ds-react";
-import PropTypes from "prop-types";
 import Sorting from "@/app/(sok)/_components/searchResult/Sorting";
 import { formatNumber } from "@/app/_common/utils/utils";
 import FilterIcon from "@/app/(sok)/_components/icons/FilterIcon";
+import SearchResult from "@/app/(sok)/_types/SearchResult";
 
-function SearchResultHeader({ searchResult, isFiltersVisible, setIsFiltersVisible }) {
-    const stillingerWord = searchResult.totalPositions === 1 ? "stilling" : "stillinger";
+interface SearchResultHeaderProps {
+    searchResult: SearchResult;
+    isFiltersVisible: boolean;
+    setIsFiltersVisible: (isFiltersVisible: boolean) => void;
+}
+
+export default function SearchResultHeader({
+    searchResult,
+    isFiltersVisible,
+    setIsFiltersVisible,
+}: SearchResultHeaderProps): ReactElement {
+    const stillingerWord: string = searchResult.totalPositions === 1 ? "stilling" : "stillinger";
 
     return (
         <Box className="bg-alt-1-subtle-on-lg" paddingBlock={{ lg: "4" }}>
@@ -19,7 +29,7 @@ function SearchResultHeader({ searchResult, isFiltersVisible, setIsFiltersVisibl
                 <Stack
                     direction={{ xs: "column", md: "row" }}
                     justify={{ md: "space-between" }}
-                    align={{ sm: "flex-start", md: "center" }}
+                    align={{ sm: "start", md: "center" }}
                     gap="4 8"
                     wrap={false}
                 >
@@ -60,12 +70,3 @@ function SearchResultHeader({ searchResult, isFiltersVisible, setIsFiltersVisibl
         </Box>
     );
 }
-
-SearchResultHeader.propTypes = {
-    searchResult: PropTypes.shape({
-        totalAds: PropTypes.number,
-        totalPositions: PropTypes.number,
-    }),
-};
-
-export default SearchResultHeader;

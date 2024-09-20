@@ -5,6 +5,7 @@ import * as actions from "@/app/_common/actions";
 import { CarIcon, LocationPinIcon } from "@navikt/aksel-icons";
 import { Postcode } from "@/app/(sok)/_utils/fetchPostcodes";
 import { UserPreferencesContext } from "@/app/_common/user/UserPreferenceProvider";
+import SearchResult from "@/app/(sok)/_types/SearchResult";
 import Counties from "./Locations";
 
 // TODO: Fix disable no-explicit-any when new search field branch is merged
@@ -12,8 +13,7 @@ interface DistanceOrLocationProps {
     postcodes: Postcode[];
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     locations: any;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    searchResult: any;
+    searchResult: SearchResult;
 }
 
 function DistanceOrLocation({ postcodes, locations, searchResult }: DistanceOrLocationProps): ReactElement {

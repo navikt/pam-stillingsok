@@ -26,6 +26,7 @@ import {
     WORK_LANGUAGE,
 } from "@/app/(sok)/_components/searchParamNames";
 import { PublishedLabels } from "@/app/(sok)/_utils/publishedLabels";
+import Aggregations from "@/app/(sok)/_types/Aggregations";
 
 const promotedOptions: ComboboxOption[] = [
     { label: "Butikkmedarbeider", value: `${OCCUPATION}-Butikkmedarbeider` },
@@ -297,19 +298,6 @@ export const findLabelForFilter = (value: string): string => {
             return "";
     }
 };
-
-interface Aggregations {
-    occupationFirstLevels: { key: string; occupationSecondLevels: { key: string }[] }[];
-    published: { key: string }[];
-    sector: { key: string }[];
-    engagementTypes: { key: string }[];
-    extent: { key: string }[];
-    education: { key: string }[];
-    workLanguage: { key: string }[];
-    remote: { key: string }[];
-    needDriversLicense: { key: string }[];
-    experience: { key: string }[];
-}
 
 interface LocationList {
     type: string;
