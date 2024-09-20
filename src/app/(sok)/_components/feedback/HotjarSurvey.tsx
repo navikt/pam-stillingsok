@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, ReactElement } from "react";
 import { BodyLong, BodyShort, Box, Button, Heading, HStack, Link as AkselLink } from "@navikt/ds-react";
 import { XMarkIcon } from "@navikt/aksel-icons";
 
-function HotjarSurvey() {
-    const [isDismissed, setIsDismissed] = useState(true);
+export default function HotjarSurvey(): ReactElement | null {
+    const [isDismissed, setIsDismissed] = useState<boolean>(true);
 
     useEffect(() => {
         try {
@@ -18,7 +18,7 @@ function HotjarSurvey() {
         }
     }, []);
 
-    function dismiss() {
+    function dismiss(): void {
         setIsDismissed(true);
         try {
             sessionStorage.setItem("feedback-hotjar-dismissed", "true");
@@ -58,5 +58,3 @@ function HotjarSurvey() {
         </Box>
     );
 }
-
-export default HotjarSurvey;
