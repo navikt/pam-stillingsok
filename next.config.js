@@ -1,5 +1,9 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+    enabled: process.env.ANALYZE === 'true',
+})
+
+const nextConfig = withBundleAnalyzer({
     basePath: "/stillinger",
     cacheHandler: process.env.NODE_ENV === "production" ? require.resolve("./cache-handler.mjs") : undefined,
     experimental: {
@@ -14,7 +18,7 @@ const nextConfig = {
     env: {
         STILLINGSREGISTRERING_PATH: "/stillingsregistrering",
     },
-};
+});
 
 const { PHASE_DEVELOPMENT_SERVER } = require("next/constants");
 const { withSentryConfig } = require("@sentry/nextjs");
