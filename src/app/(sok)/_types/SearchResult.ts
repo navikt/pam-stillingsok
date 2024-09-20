@@ -1,8 +1,8 @@
-import Aggregations from "@/app/(sok)/_types/Aggregations";
+import FilterAggregations from "@/app/(sok)/_types/FilterAggregations";
 
 export default interface SearchResult {
     ads: [];
-    aggregations: Aggregations;
+    aggregations: FilterAggregations;
     totalAds: number;
     totalPositions: number;
 }

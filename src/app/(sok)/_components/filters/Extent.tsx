@@ -1,16 +1,22 @@
-import PropTypes from "prop-types";
-import React from "react";
+import React, { ReactElement } from "react";
 import { BodyShort, Checkbox, CheckboxGroup } from "@navikt/ds-react";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
 import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
 import { EXTENT } from "@/app/(sok)/_components/searchParamNames";
 import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
+import { FilterAggregation } from "@/app/(sok)/_types/FilterAggregations";
 
-function Extent({ initialValues, updatedValues }) {
-    const values = mergeCount(initialValues, updatedValues);
+interface ExtentProps {
+    initialValues: FilterAggregation[];
+    updatedValues: FilterAggregation[];
+}
+
+export default function Extent({ initialValues, updatedValues }: ExtentProps): ReactElement {
+    // @ts-expect-error mergeCount is expecting 3 arguments
+    const values: FilterAggregation[] = mergeCount(initialValues, updatedValues);
     const searchQuery = useSearchQuery();
 
-    function handleClick(e) {
+    function handleClick(e: React.ChangeEvent<HTMLInputElement>): void {
         const { value, checked } = e.target;
         if (checked) {
             searchQuery.append(EXTENT, value);
@@ -32,7 +38,7 @@ function Extent({ initialValues, updatedValues }) {
                 </>
             }
         >
-            {values.map((item) => (
+            {values.map((item: FilterAggregation) => (
                 <Checkbox name="extent[]" key={item.key} value={item.key} onChange={handleClick}>
                     {`${item.key} (${item.count})`}
                 </Checkbox>
@@ -40,15 +46,3 @@ function Extent({ initialValues, updatedValues }) {
         </CheckboxGroup>
     );
 }
-
-Extent.propTypes = {
-    initialValues: PropTypes.arrayOf(
-        PropTypes.shape({
-            key: PropTypes.string,
-            count: PropTypes.number,
-        }),
-    ).isRequired,
-    updatedValues: PropTypes.arrayOf(PropTypes.shape({})),
-};
-
-export default Extent;

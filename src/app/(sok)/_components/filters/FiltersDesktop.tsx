@@ -6,7 +6,7 @@ import DriversLicense from "@/app/(sok)/_components/filters/DriversLicense";
 import Experience from "@/app/(sok)/_components/filters/Experience";
 import NewFiltersMessage from "@/app/(sok)/_components/filters/NewFiltersMessage";
 import DistanceOrLocation from "@/app/(sok)/_components/filters/DistanceOrLocation";
-import Aggregations from "@/app/(sok)/_types/Aggregations";
+import FilterAggregations from "@/app/(sok)/_types/FilterAggregations";
 import SearchResult from "@/app/(sok)/_types/SearchResult";
 import { Postcode } from "@/app/(sok)/_utils/fetchPostcodes";
 import FilterAccordionItem from "./FilterAccordionItem";
@@ -18,7 +18,7 @@ import EngagementType from "./Engagement";
 import WorkLanguage from "./WorkLanguage";
 
 interface FiltersDesktopProps {
-    aggregations: Aggregations;
+    aggregations: FilterAggregations;
     locations: [];
     postcodes: Postcode[];
     searchResult: SearchResult;
