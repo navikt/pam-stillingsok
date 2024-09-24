@@ -1,6 +1,5 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import { Hide, Pagination, Select, Show, VStack } from "@navikt/ds-react";
-import PropTypes from "prop-types";
 import { useSearchParams } from "next/navigation";
 import * as actions from "@/app/_common/actions";
 import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
@@ -8,17 +7,20 @@ import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
 import { FROM } from "@/app/(sok)/_components/searchParamNames";
 import { ALLOWED_NUMBER_OF_RESULTS_PER_PAGE } from "../../_utils/query";
 
-function SearchPagination({ searchResult, resultsPerPage }) {
+interface SearchPaginationProps {
+    totalAds: number;
+    resultsPerPage: number;
+}
+
+export default function SearchPagination({ totalAds, resultsPerPage }: SearchPaginationProps): ReactElement {
     const searchQuery = useSearchQuery();
     const searchParams = useSearchParams();
 
     // Elastic search does not allow pagination above 10 000 results.
-    const totalPages = Math.ceil(
-        searchResult.totalAds < 10000 ? searchResult.totalAds / resultsPerPage : 9999 / resultsPerPage,
-    );
-    const page = searchParams.has(FROM) ? Math.floor(parseInt(searchParams.get(FROM), 10) / resultsPerPage) + 1 : 1;
+    const totalPages = Math.ceil(totalAds < 10000 ? totalAds / resultsPerPage : 9999 / resultsPerPage);
+    const page = searchParams.has(FROM) ? Math.floor(parseInt(searchParams.get(FROM)!, 10) / resultsPerPage) + 1 : 1;
 
-    const onPageChange = (x) => {
+    const onPageChange = (x: number): void => {
         const from = x * resultsPerPage - resultsPerPage;
         searchQuery.setPaginate(true);
         if (from > 0) {
@@ -27,10 +29,6 @@ function SearchPagination({ searchResult, resultsPerPage }) {
             searchQuery.remove(FROM);
         }
     };
-
-    if (totalPages === 0) {
-        return null;
-    }
 
     return (
         <VStack gap="10" align="center">
@@ -77,11 +75,3 @@ function SearchPagination({ searchResult, resultsPerPage }) {
         </VStack>
     );
 }
-
-SearchPagination.propTypes = {
-    searchResult: PropTypes.shape({
-        ads: PropTypes.arrayOf(PropTypes.shape({})),
-    }),
-};
-
-export default SearchPagination;

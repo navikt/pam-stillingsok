@@ -1,19 +1,23 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { ReactElement, useEffect, useRef, useState } from "react";
 import { VStack } from "@navikt/ds-react";
 import FavouritesButton from "@/app/favoritter/_components/FavouritesButton";
 import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
 import { FROM } from "@/app/(sok)/_components/searchParamNames";
-import PropTypes from "prop-types";
+import SearchResultInterface from "@/app/(sok)/_types/SearchResult";
 import SearchResultItem from "./SearchResultItem";
 import { SEARCH_CHUNK_SIZE } from "../../_utils/query";
 
-export default function SearchResult({ searchResult }) {
+interface SearchResultProps {
+    searchResult: SearchResultInterface;
+}
+
+export default function SearchResult({ searchResult }: SearchResultProps): ReactElement {
     const searchQuery = useSearchQuery();
     const [showAdDetailsForDebugging, setShowAdDetailsForDebugging] = useState(false);
-    const resultsPerPage = searchQuery.get(FROM) || SEARCH_CHUNK_SIZE;
+    const resultsPerPage = searchQuery.has(FROM) ? parseInt(searchQuery.get(FROM)!, 10) : SEARCH_CHUNK_SIZE;
     const totalPages = Math.ceil(searchResult.totalAds / resultsPerPage);
-    const page = searchQuery.has(FROM) ? Math.floor(searchQuery.get(FROM) / resultsPerPage) + 1 : 1;
-    const searchResultRef = useRef();
+    const page = searchQuery.has(FROM) ? Math.floor(parseInt(searchQuery.get(FROM)!, 10) / resultsPerPage) + 1 : 1;
+    const searchResultRef = useRef<HTMLElement>();
 
     /**
      *  Check if we should render ad details for debug
@@ -40,11 +44,8 @@ export default function SearchResult({ searchResult }) {
         }
     }, [searchQuery.paginate]);
 
-    if (!searchResult.ads || searchResult.ads.length === 0) {
-        return null;
-    }
-
     return (
+        // @ts-expect-error VStack virker med ref, selv om typescript gir valideringsfeil
         <VStack
             gap="10"
             ref={searchResultRef}
@@ -72,9 +73,3 @@ export default function SearchResult({ searchResult }) {
         </VStack>
     );
 }
-
-SearchResult.propTypes = {
-    searchResult: PropTypes.shape({
-        ads: PropTypes.arrayOf(PropTypes.shape({})),
-    }),
-};

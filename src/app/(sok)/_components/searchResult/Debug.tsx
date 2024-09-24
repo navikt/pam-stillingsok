@@ -1,24 +1,34 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import { BodyShort, Box, HStack, VStack } from "@navikt/ds-react";
-import PropTypes from "prop-types";
 import { useSearchParams } from "next/navigation";
 import { SEARCH_STRING } from "@/app/(sok)/_components/searchParamNames";
+import { SearchResultAd } from "@/app/(sok)/_types/SearchResult";
 
-function GroupItem({ children, highlight }) {
+interface GroupItemProps {
+    children: React.ReactNode;
+    highlight?: boolean;
+}
+
+function GroupItem({ children, highlight = false }: GroupItemProps): ReactElement {
     return (
         <Box
             background={highlight ? "surface-success-subtle" : "surface-neutral-subtle"}
-            padding="05 2"
+            paddingBlock="05"
+            paddingInline="2"
             borderRadius="small"
         >
-            <BodyShort size="small" weight={highlight && "semibold"}>
+            <BodyShort size="small" weight={highlight ? "semibold" : "regular"}>
                 {children}
             </BodyShort>
         </Box>
     );
 }
 
-function Debug({ ad }) {
+interface DebugProps {
+    ad: SearchResultAd;
+}
+
+export default function Debug({ ad }: DebugProps): ReactElement {
     const searchParams = useSearchParams();
     const janzzCategories = ad.categoryList?.filter((it) => it.categoryType === "JANZZ") || [];
     const otherCategories = ad.categoryList?.filter((it) => it.categoryType !== "JANZZ") || [];
@@ -66,19 +76,3 @@ function Debug({ ad }) {
         </VStack>
     );
 }
-
-Debug.propTypes = {
-    ad: PropTypes.shape({
-        medium: PropTypes.string,
-        categoryList: PropTypes.arrayOf(PropTypes.shape({ name: PropTypes.string, categoryType: PropTypes.string })),
-        occupationList: PropTypes.arrayOf(PropTypes.shape({ level1: PropTypes.string, level2: PropTypes.string })),
-        properties: PropTypes.shape({
-            keywords: PropTypes.string,
-            searchtags: PropTypes.arrayOf(PropTypes.shape({ label: PropTypes.string, score: PropTypes.number })),
-        }),
-        score: PropTypes.number,
-    }),
-    score: PropTypes.string,
-};
-
-export default Debug;

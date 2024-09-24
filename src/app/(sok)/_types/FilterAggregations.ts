@@ -11,6 +11,16 @@ export interface OccupationFilterAggregation extends FilterAggregation {
     occupationSecondLevels: OccupationSecondLevelFilterAggregation[];
 }
 
+export interface LocationFilterAggregation extends LocationAggregation {
+    subLocations: LocationAggregation[];
+}
+
+export interface LocationAggregation {
+    type: string;
+    key: string;
+    count: number;
+}
+
 export default interface FilterAggregations {
     occupationFirstLevels: OccupationFilterAggregation[];
     published: FilterAggregation[];

@@ -1,6 +1,11 @@
-import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
+import React, { ReactElement, useEffect, useState } from "react";
 import { HGrid, Hide, Show, VStack } from "@navikt/ds-react";
+import { FROM } from "@/app/(sok)/_components/searchParamNames";
+import { useSearchParams } from "next/navigation";
+import { SEARCH_CHUNK_SIZE } from "@/app/(sok)/_utils/query";
+import SearchResultInterface from "@/app/(sok)/_types/SearchResult";
+import FilterAggregations, { LocationFilterAggregation } from "@/app/(sok)/_types/FilterAggregations";
+import { Postcode } from "@/app/(sok)/_utils/fetchPostcodes";
 import SearchResult from "./searchResult/SearchResult";
 import DoYouWantToSaveSearch from "./howToPanels/DoYouWantToSaveSearch";
 import Feedback from "./feedback/Feedback";
@@ -12,12 +17,31 @@ import SearchBox from "./searchBox/SearchBox";
 import SearchPagination from "./searchResult/SearchPagination";
 import MaxResultsBox from "./searchResult/MaxResultsBox";
 
-export default function Search({ searchResult, aggregations, locations, postcodes, resultsPerPage }) {
+const ELASTIC_SEARCH_PAGINATION_LIMIT = 10000;
+
+interface SearchProps {
+    searchResult: SearchResultInterface;
+    aggregations: FilterAggregations;
+    locations: LocationFilterAggregation[];
+    postcodes: Postcode[];
+    resultsPerPage: number;
+}
+
+export default function Search({
+    searchResult,
+    aggregations,
+    locations,
+    postcodes,
+    resultsPerPage,
+}: SearchProps): ReactElement {
+    const searchParams = useSearchParams();
     const [isFiltersVisible, setIsFiltersVisible] = useState(false);
 
     useEffect(() => {
         logAmplitudeEvent("Stillinger - Utførte søk");
     }, []);
+
+    const from = searchParams.has(FROM) ? parseInt(searchParams.get(FROM)!, 10) : 0;
 
     return (
         <div className="mb-24">
@@ -56,21 +80,15 @@ export default function Search({ searchResult, aggregations, locations, postcode
                 </Show>
 
                 <VStack gap="10">
-                    <SearchResult searchResult={searchResult} />
-                    <MaxResultsBox resultsPerPage={resultsPerPage} />
-                    <SearchPagination searchResult={searchResult} resultsPerPage={resultsPerPage} />
-                    <DoYouWantToSaveSearch totalAds={searchResult.totalAds} />
-                    {searchResult?.ads?.length > 0 && <Feedback searchResult={searchResult} />}
+                    {searchResult.ads?.length > 0 && <SearchResult searchResult={searchResult} />}
+                    {from + resultsPerPage === ELASTIC_SEARCH_PAGINATION_LIMIT && <MaxResultsBox />}
+                    {searchResult.totalAds > 0 && (
+                        <SearchPagination totalAds={searchResult.totalAds} resultsPerPage={resultsPerPage} />
+                    )}
+                    {from + SEARCH_CHUNK_SIZE >= searchResult.totalAds && <DoYouWantToSaveSearch />}
+                    {searchResult.totalAds > 0 && <Feedback />}
                 </VStack>
             </HGrid>
         </div>
     );
 }
-
-Search.propTypes = {
-    aggregations: PropTypes.shape({}),
-    locations: PropTypes.arrayOf(PropTypes.shape({})),
-    searchResult: PropTypes.shape({
-        ads: PropTypes.arrayOf(PropTypes.shape({})),
-    }),
-};
