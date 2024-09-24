@@ -1,13 +1,14 @@
 "use client";
 
 import { BodyLong, Heading, VStack } from "@navikt/ds-react";
+// @ts-expect-error TODO: Add typeinfo for arbeidsplassen-react
 import { WorriedFigure } from "@navikt/arbeidsplassen-react";
-import React, { useEffect } from "react";
+import React, { ReactElement, useEffect } from "react";
 import * as Sentry from "@sentry/nextjs";
 import App from "@/app/App";
 import { localFont } from "@/app/_common/font/loadFont";
 
-export default function Error({ error }) {
+export default function GlobalError({ error }: { error: Error & { digest?: string } }): ReactElement {
     useEffect(() => {
         Sentry.captureException(error);
     }, [error]);
