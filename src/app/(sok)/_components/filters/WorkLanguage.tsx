@@ -1,18 +1,28 @@
-import PropTypes from "prop-types";
-import React from "react";
+import React, { ReactElement } from "react";
 import { BodyShort, Checkbox, CheckboxGroup } from "@navikt/ds-react";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
 import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
 import moveCriteriaToBottom from "@/app/(sok)/_components/utils/moveFacetToBottom";
 import { WORK_LANGUAGE } from "@/app/(sok)/_components/searchParamNames";
 import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
+import { FilterAggregation } from "@/app/(sok)/_types/FilterAggregations";
 
-function WorkLanguage({ initialValues, updatedValues, hideLegend = false }) {
+interface WorkLanguageProps {
+    initialValues: FilterAggregation[];
+    updatedValues: FilterAggregation[];
+    hideLegend?: boolean;
+}
+
+export default function WorkLanguage({
+    initialValues,
+    updatedValues,
+    hideLegend = false,
+}: WorkLanguageProps): ReactElement {
     const sortedValues = moveCriteriaToBottom(initialValues, "Ikke oppgitt");
     const values = mergeCount(sortedValues, updatedValues);
     const searchQuery = useSearchQuery();
 
-    function handleClick(e) {
+    function handleChange(e: React.ChangeEvent<HTMLInputElement>): void {
         const { value, checked } = e.target;
         if (checked) {
             searchQuery.append(WORK_LANGUAGE, value);
@@ -33,22 +43,10 @@ function WorkLanguage({ initialValues, updatedValues, hideLegend = false }) {
             }
         >
             {values.map((item) => (
-                <Checkbox name="workLanguage[]" key={item.key} value={item.key} onChange={handleClick}>
+                <Checkbox name="workLanguage[]" key={item.key} value={item.key} onChange={handleChange}>
                     {`${item.key} (${item.count})`}
                 </Checkbox>
             ))}
         </CheckboxGroup>
     );
 }
-
-WorkLanguage.propTypes = {
-    initialValues: PropTypes.arrayOf(
-        PropTypes.shape({
-            key: PropTypes.string,
-            count: PropTypes.number,
-        }),
-    ).isRequired,
-    updatedValues: PropTypes.arrayOf(PropTypes.shape({})),
-};
-
-export default WorkLanguage;

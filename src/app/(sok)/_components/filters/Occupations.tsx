@@ -1,20 +1,25 @@
-import PropTypes from "prop-types";
-import React from "react";
+import React, { ReactElement } from "react";
 import { BodyShort, Box, Checkbox, CheckboxGroup, ReadMore } from "@navikt/ds-react";
 import moveCriteriaToBottom from "@/app/(sok)/_components/utils/moveFacetToBottom";
-import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
+import { mergeCountOccupations } from "@/app/(sok)/_components/utils/mergeCount";
 import sortValuesByFirstLetter from "@/app/(sok)/_components/utils/sortValuesByFirstLetter";
 import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
 import { OCCUPATION_FIRST_LEVEL, OCCUPATION_SECOND_LEVEL } from "@/app/(sok)/_components/searchParamNames";
 import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
+import { OccupationFilterAggregation } from "@/app/(sok)/_types/FilterAggregations";
 
-export function editedItemKey(key) {
+export function editedItemKey(key: string): string {
     return key === "Uoppgitt/ ikke identifiserbare" ? "Ikke oppgitt" : key;
 }
 
 const OCCUPATION_LEVEL_OTHER = "Uoppgitt/ ikke identifiserbare";
 
-function Occupations({ initialValues, updatedValues }) {
+interface OccupationsProps {
+    initialValues: OccupationFilterAggregation[];
+    updatedValues: OccupationFilterAggregation[];
+}
+
+export default function Occupations({ initialValues, updatedValues }: OccupationsProps): ReactElement {
     const withSortedSecondLevelOccupations = initialValues.map((item) => {
         const secondLevel = sortValuesByFirstLetter(item.occupationSecondLevels);
         return {
@@ -25,10 +30,10 @@ function Occupations({ initialValues, updatedValues }) {
 
     const sortedByLetterFirstLevelOccupations = sortValuesByFirstLetter(withSortedSecondLevelOccupations);
     const sortedValues = moveCriteriaToBottom(sortedByLetterFirstLevelOccupations, OCCUPATION_LEVEL_OTHER);
-    const values = mergeCount(sortedValues, updatedValues, "occupationSecondLevels");
+    const values = mergeCountOccupations(sortedValues, updatedValues);
     const searchQuery = useSearchQuery();
 
-    function handleFirstLevelClick(e) {
+    function handleFirstLevelChange(e: React.ChangeEvent<HTMLInputElement>): void {
         const { value, checked } = e.target;
         if (checked) {
             searchQuery.append(OCCUPATION_FIRST_LEVEL, value);
@@ -43,7 +48,7 @@ function Occupations({ initialValues, updatedValues }) {
         logFilterChanged({ name: "Yrkeskategori", value, checked, level: "Yrkesnivå 1" });
     }
 
-    function handleSecondLevelClick(e) {
+    function handleSecondLevelChange(e: React.ChangeEvent<HTMLInputElement>): void {
         const { value, checked } = e.target;
         if (checked) {
             searchQuery.append(OCCUPATION_SECOND_LEVEL, value);
@@ -66,7 +71,7 @@ function Occupations({ initialValues, updatedValues }) {
      * @param key
      * @returns {string|*}
      */
-    function editedSecondLevelItemKey(key) {
+    function editedSecondLevelItemKey(key: string): string {
         return key === "Tannhelse/-pleie" ? "Tannlege og tannpleier" : key;
     }
 
@@ -94,9 +99,8 @@ function Occupations({ initialValues, updatedValues }) {
                     <React.Fragment key={firstLevel.key}>
                         <Checkbox
                             name="occupationFirstLevels[]"
-                            label={`${firstLevel.key} (${firstLevel.count})`}
                             value={firstLevel.key}
-                            onChange={handleFirstLevelClick}
+                            onChange={handleFirstLevelChange}
                         >
                             {`${editedItemKey(firstLevel.key)} (${firstLevel.count})`}
                         </Checkbox>
@@ -114,7 +118,7 @@ function Occupations({ initialValues, updatedValues }) {
                                                     name="occupationSecondLevels[]"
                                                     key={editedSecondLevelItemKey(secondLevel.key)}
                                                     value={secondLevel.key}
-                                                    onChange={handleSecondLevelClick}
+                                                    onChange={handleSecondLevelChange}
                                                 >
                                                     {`${editedSecondLevelItemKey(secondLevel.label)} (${
                                                         secondLevel.count
@@ -129,21 +133,3 @@ function Occupations({ initialValues, updatedValues }) {
         </CheckboxGroup>
     );
 }
-
-Occupations.propTypes = {
-    initialValues: PropTypes.arrayOf(
-        PropTypes.shape({
-            key: PropTypes.string,
-            count: PropTypes.number,
-            occupationSecondLevels: PropTypes.arrayOf(
-                PropTypes.shape({
-                    key: PropTypes.string,
-                    count: PropTypes.number,
-                }),
-            ),
-        }),
-    ).isRequired,
-    updatedValues: PropTypes.arrayOf(PropTypes.shape({})),
-};
-
-export default Occupations;

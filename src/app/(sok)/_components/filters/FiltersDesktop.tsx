@@ -1,5 +1,4 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { ReactElement } from "react";
 import { Accordion, Alert, Button } from "@navikt/ds-react";
 import Remote from "@/app/(sok)/_components/filters/Remote";
 import Education from "@/app/(sok)/_components/filters/Education";
@@ -7,6 +6,9 @@ import DriversLicense from "@/app/(sok)/_components/filters/DriversLicense";
 import Experience from "@/app/(sok)/_components/filters/Experience";
 import NewFiltersMessage from "@/app/(sok)/_components/filters/NewFiltersMessage";
 import DistanceOrLocation from "@/app/(sok)/_components/filters/DistanceOrLocation";
+import FilterAggregations from "@/app/(sok)/_types/FilterAggregations";
+import SearchResult from "@/app/(sok)/_types/SearchResult";
+import { Postcode } from "@/app/(sok)/_utils/fetchPostcodes";
 import FilterAccordionItem from "./FilterAccordionItem";
 import Published from "./Published";
 import Occupations from "./Occupations";
@@ -15,7 +17,19 @@ import Sector from "./Sector";
 import EngagementType from "./Engagement";
 import WorkLanguage from "./WorkLanguage";
 
-function FiltersDesktop({ aggregations, locations, postcodes, searchResult }) {
+interface FiltersDesktopProps {
+    aggregations: FilterAggregations;
+    locations: [];
+    postcodes: Postcode[];
+    searchResult: SearchResult;
+}
+
+export default function FiltersDesktop({
+    aggregations,
+    locations,
+    postcodes,
+    searchResult,
+}: FiltersDesktopProps): ReactElement {
     return (
         <div>
             <Accordion indent={false} headingSize="small">
@@ -76,29 +90,3 @@ function FiltersDesktop({ aggregations, locations, postcodes, searchResult }) {
         </div>
     );
 }
-
-FiltersDesktop.propTypes = {
-    locations: PropTypes.arrayOf(PropTypes.shape({})),
-    aggregations: PropTypes.shape({
-        needDriversLicense: PropTypes.arrayOf(PropTypes.shape({})),
-        engagementTypes: PropTypes.arrayOf(PropTypes.shape({})),
-        occupationFirstLevels: PropTypes.arrayOf(PropTypes.shape({})),
-        published: PropTypes.arrayOf(PropTypes.shape({})),
-        extent: PropTypes.arrayOf(PropTypes.shape({})),
-        sector: PropTypes.arrayOf(PropTypes.shape({})),
-        workLanguage: PropTypes.arrayOf(PropTypes.shape({})),
-    }),
-    searchResult: PropTypes.shape({
-        aggregations: PropTypes.shape({
-            needDriversLicense: PropTypes.arrayOf(PropTypes.shape({})),
-            engagementTypes: PropTypes.arrayOf(PropTypes.shape({})),
-            occupationFirstLevels: PropTypes.arrayOf(PropTypes.shape({})),
-            published: PropTypes.arrayOf(PropTypes.shape({})),
-            extent: PropTypes.arrayOf(PropTypes.shape({})),
-            sector: PropTypes.arrayOf(PropTypes.shape({})),
-            workLanguage: PropTypes.arrayOf(PropTypes.shape({})),
-        }),
-    }),
-};
-
-export default FiltersDesktop;

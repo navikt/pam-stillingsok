@@ -1,16 +1,21 @@
-import PropTypes from "prop-types";
-import React from "react";
+import React, { ReactElement } from "react";
 import { BodyShort, Checkbox, CheckboxGroup } from "@navikt/ds-react";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
 import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
 import { EXTENT } from "@/app/(sok)/_components/searchParamNames";
 import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
+import { FilterAggregation } from "@/app/(sok)/_types/FilterAggregations";
 
-function Extent({ initialValues, updatedValues }) {
+interface ExtentProps {
+    initialValues: FilterAggregation[];
+    updatedValues: FilterAggregation[];
+}
+
+export default function Extent({ initialValues, updatedValues }: ExtentProps): ReactElement {
     const values = mergeCount(initialValues, updatedValues);
     const searchQuery = useSearchQuery();
 
-    function handleClick(e) {
+    function handleChange(e: React.ChangeEvent<HTMLInputElement>): void {
         const { value, checked } = e.target;
         if (checked) {
             searchQuery.append(EXTENT, value);
@@ -33,22 +38,10 @@ function Extent({ initialValues, updatedValues }) {
             }
         >
             {values.map((item) => (
-                <Checkbox name="extent[]" key={item.key} value={item.key} onChange={handleClick}>
+                <Checkbox name="extent[]" key={item.key} value={item.key} onChange={handleChange}>
                     {`${item.key} (${item.count})`}
                 </Checkbox>
             ))}
         </CheckboxGroup>
     );
 }
-
-Extent.propTypes = {
-    initialValues: PropTypes.arrayOf(
-        PropTypes.shape({
-            key: PropTypes.string,
-            count: PropTypes.number,
-        }),
-    ).isRequired,
-    updatedValues: PropTypes.arrayOf(PropTypes.shape({})),
-};
-
-export default Extent;

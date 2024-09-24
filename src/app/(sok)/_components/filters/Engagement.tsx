@@ -1,5 +1,4 @@
-import PropTypes from "prop-types";
-import React from "react";
+import React, { ReactElement } from "react";
 import { BodyShort, Checkbox, CheckboxGroup } from "@navikt/ds-react";
 import moveCriteriaToBottom from "@/app/(sok)/_components/utils/moveFacetToBottom";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
@@ -7,6 +6,7 @@ import sortValuesByFirstLetter from "@/app/(sok)/_components/utils/sortValuesByF
 import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
 import { ENGAGEMENT_TYPE } from "@/app/(sok)/_components/searchParamNames";
 import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
+import { FilterAggregation } from "@/app/(sok)/_types/FilterAggregations";
 
 /**
  * This ensures that 'Annet' is displayed as 'Ikke oppgitt' in the search filters.
@@ -17,17 +17,22 @@ import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
  * @param key
  * @returns {string|*}
  */
-export function editedItemKey(key) {
+export function editedItemKey(key: string): string {
     return key === "Annet" ? "Ikke oppgitt" : key;
 }
 
-function Engagement({ initialValues, updatedValues }) {
+interface EngagementProps {
+    initialValues: FilterAggregation[];
+    updatedValues: FilterAggregation[];
+}
+
+export default function Engagement({ initialValues, updatedValues }: EngagementProps): ReactElement {
     const sortedValuesByFirstLetter = sortValuesByFirstLetter(initialValues);
     const sortedValues = moveCriteriaToBottom(sortedValuesByFirstLetter, "Annet");
     const values = mergeCount(sortedValues, updatedValues);
     const searchQuery = useSearchQuery();
 
-    function handleClick(e) {
+    function handleChange(e: React.ChangeEvent<HTMLInputElement>): void {
         const { value, checked } = e.target;
         if (checked) {
             searchQuery.append(ENGAGEMENT_TYPE, value);
@@ -51,22 +56,15 @@ function Engagement({ initialValues, updatedValues }) {
             }
         >
             {values.map((item) => (
-                <Checkbox name="engagementType[]" key={editedItemKey(item.key)} value={item.key} onChange={handleClick}>
+                <Checkbox
+                    name="engagementType[]"
+                    key={editedItemKey(item.key)}
+                    value={item.key}
+                    onChange={handleChange}
+                >
                     {`${editedItemKey(item.key)} (${item.count})`}
                 </Checkbox>
             ))}
         </CheckboxGroup>
     );
 }
-
-Engagement.propTypes = {
-    initialValues: PropTypes.arrayOf(
-        PropTypes.shape({
-            key: PropTypes.string,
-            count: PropTypes.number,
-        }),
-    ).isRequired,
-    updatedValues: PropTypes.arrayOf(PropTypes.shape({})),
-};
-
-export default Engagement;
