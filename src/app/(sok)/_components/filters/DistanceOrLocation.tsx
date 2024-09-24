@@ -42,7 +42,9 @@ function DistanceOrLocation({ postcodes, locations, searchResult }: DistanceOrLo
                 />
             </ToggleGroup>
             {selectedOption === "distance" && <DrivingDistance postcodes={postcodes} />}
-            {selectedOption === "location" && <Counties locations={locations} updatedValues={searchResult} />}
+            {selectedOption === "location" && (
+                <Counties locations={locations} updatedValues={searchResult.aggregations} />
+            )}
         </>
     );
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import { BodyShort, Checkbox, CheckboxGroup } from "@navikt/ds-react";
 import moveCriteriaToBottom from "@/app/(sok)/_components/utils/moveFacetToBottom";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
@@ -6,14 +6,20 @@ import sortRemoteValues from "@/app/(sok)/_components/utils/sortRemoteValues";
 import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
 import { REMOTE } from "@/app/(sok)/_components/searchParamNames";
 import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
+import { FilterAggregation } from "@/app/(sok)/_types/FilterAggregations";
 
-function Remote({ initialValues, updatedValues }) {
+interface RemoteProps {
+    initialValues: FilterAggregation[];
+    updatedValues: FilterAggregation[];
+}
+
+export default function Remote({ initialValues, updatedValues }: RemoteProps): ReactElement {
     const sortedValuesByFirstLetter = sortRemoteValues(initialValues);
     const sortedValues = moveCriteriaToBottom(sortedValuesByFirstLetter, "Ikke oppgitt");
     const values = mergeCount(sortedValues, updatedValues);
     const searchQuery = useSearchQuery();
 
-    function labelForRemote(label) {
+    function labelForRemote(label: string): string {
         switch (label) {
             case "Hybridkontor":
                 return "Hybridkontor";
@@ -24,7 +30,7 @@ function Remote({ initialValues, updatedValues }) {
         }
     }
 
-    function handleClick(e) {
+    function handleChange(e: React.ChangeEvent<HTMLInputElement>): void {
         const { value, checked } = e.target;
         if (checked) {
             searchQuery.append(REMOTE, value);
@@ -44,12 +50,10 @@ function Remote({ initialValues, updatedValues }) {
             }
         >
             {values.map((item) => (
-                <Checkbox name="remote[]" key={item.key} value={item.key} onChange={handleClick}>
+                <Checkbox name="remote[]" key={item.key} value={item.key} onChange={handleChange}>
                     {`${labelForRemote(item.key)} (${item.count})`}
                 </Checkbox>
             ))}
         </CheckboxGroup>
     );
 }
-
-export default Remote;

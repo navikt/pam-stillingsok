@@ -1,5 +1,4 @@
-import PropTypes from "prop-types";
-import React from "react";
+import React, { ReactElement } from "react";
 import { BodyShort, Checkbox, CheckboxGroup } from "@navikt/ds-react";
 import moveCriteriaToBottom from "@/app/(sok)/_components/utils/moveFacetToBottom";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
@@ -7,14 +6,20 @@ import sortValuesByFirstLetter from "@/app/(sok)/_components/utils/sortValuesByF
 import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
 import { SECTOR } from "@/app/(sok)/_components/searchParamNames";
 import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
+import { FilterAggregation } from "@/app/(sok)/_types/FilterAggregations";
 
-function Sector({ initialValues, updatedValues }) {
+interface SectorProps {
+    initialValues: FilterAggregation[];
+    updatedValues: FilterAggregation[];
+}
+
+export default function Sector({ initialValues, updatedValues }: SectorProps): ReactElement {
     const sortedValuesByFirstLetter = sortValuesByFirstLetter(initialValues);
     const sortedValues = moveCriteriaToBottom(sortedValuesByFirstLetter, "Ikke oppgitt");
     const values = mergeCount(sortedValues, updatedValues);
     const searchQuery = useSearchQuery();
 
-    function handleClick(e) {
+    function handleChange(e: React.ChangeEvent<HTMLInputElement>): void {
         const { value, checked } = e.target;
         if (checked) {
             searchQuery.append(SECTOR, value);
@@ -38,17 +43,10 @@ function Sector({ initialValues, updatedValues }) {
             }
         >
             {values.map((item) => (
-                <Checkbox name="sector[]" key={item.key} value={item.key} onChange={handleClick}>
+                <Checkbox name="sector[]" key={item.key} value={item.key} onChange={handleChange}>
                     {`${item.key} (${item.count})`}
                 </Checkbox>
             ))}
         </CheckboxGroup>
     );
 }
-
-Sector.propTypes = {
-    initialValues: PropTypes.arrayOf(PropTypes.shape({})),
-    updatedValues: PropTypes.arrayOf(PropTypes.shape({})),
-};
-
-export default Sector;
