@@ -17,7 +17,6 @@ import {
     INTERNATIONAL,
     MUNICIPAL,
     NEED_DRIVERS_LICENSE,
-    OCCUPATION,
     OCCUPATION_FIRST_LEVEL,
     OCCUPATION_SECOND_LEVEL,
     PUBLISHED,
@@ -29,7 +28,6 @@ import { PublishedLabels } from "@/app/(sok)/_utils/publishedLabels";
 import FilterAggregations from "@/app/(sok)/_types/FilterAggregations";
 
 const promotedOptions: ComboboxOption[] = [
-    { label: "Butikkmedarbeider", value: `${OCCUPATION}-Butikkmedarbeider` },
     { label: "Deltid", value: `${EXTENT}-Deltid` },
     { label: labelForEducation("Ingen krav"), value: `${EDUCATION}-Ingen krav` },
     { label: labelForExperience("Ingen"), value: `${EXPERIENCE}-Ingen` },
@@ -200,17 +198,6 @@ function getRemoteOptions(aggregations: FilterAggregations): ComboboxOption[] {
     );
 }
 
-function getOccupationSuggestionOptions(allSuggestions: string[]): ComboboxOption[] {
-    return allSuggestions
-        .map(
-            (suggestion): ComboboxOption => ({
-                label: suggestion,
-                value: `${OCCUPATION}-${suggestion}`,
-            }),
-        )
-        .filter((option) => !promotedValues.includes(option.value));
-}
-
 function getDriversLicenseOptions(aggregations: FilterAggregations): ComboboxOption[] {
     return aggregations.needDriversLicense
         .map(
@@ -239,11 +226,7 @@ function getExperienceOptions(aggregations: FilterAggregations): ComboboxOption[
         .filter((option) => !promotedValues.includes(option.value));
 }
 
-export function getSearchBoxOptions(
-    aggregations: FilterAggregations,
-    locations: LocationList[],
-    allSuggestions: string[],
-): ComboboxOption[] {
+export function getSearchBoxOptions(aggregations: FilterAggregations, locations: LocationList[]): ComboboxOption[] {
     const locationList = buildLocations(aggregations, locations);
 
     return [
@@ -262,7 +245,6 @@ export function getSearchBoxOptions(
         ...getRemoteOptions(aggregations),
         ...getDriversLicenseOptions(aggregations),
         ...getExperienceOptions(aggregations),
-        ...getOccupationSuggestionOptions(allSuggestions),
     ];
 }
 
@@ -278,8 +260,6 @@ export const findLabelForFilter = (value: string): string => {
             return "(Kategori)";
         case OCCUPATION_SECOND_LEVEL:
             return "(Kategori)";
-        case OCCUPATION:
-            return "(Yrke)";
         case SECTOR:
             return "(Sektor)";
         case ENGAGEMENT_TYPE:

@@ -18,12 +18,17 @@ import {
 import { PublishedLabels } from "@/app/(sok)/_utils/publishedLabels";
 import fixLocationName from "@/app/_common/utils/fixLocationName";
 
-interface FilterEventData {
+export enum FilterSource {
+    SIDEBAR = "Sidebar",
+    SEARCHBOX = "Søkefelt",
+}
+
+export interface FilterEventData {
     name: string;
     level?: string;
     value?: string;
     checked?: boolean;
-    source?: "Sidebar" | "Søkefelt";
+    source?: FilterSource;
 }
 
 const FILTER_NAME_MAPPING: { [key: string]: FilterEventData } = {
@@ -96,7 +101,9 @@ export function formatFilterEventData(inputData: FilterEventData): FilterEventDa
     if (inputData.name in FILTER_NAME_MAPPING) {
         const { name, level } = FILTER_NAME_MAPPING[inputData.name];
         data.name = name;
-        data.level = level;
+        if (level) {
+            data.level = level;
+        }
     }
 
     if (inputData.name === "Sted") {
@@ -112,7 +119,7 @@ export function formatFilterEventData(inputData: FilterEventData): FilterEventDa
     }
 
     if (!inputData.source) {
-        data.source = "Sidebar";
+        data.source = FilterSource.SIDEBAR;
     }
     return data;
 }

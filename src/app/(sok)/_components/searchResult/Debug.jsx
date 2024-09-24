@@ -54,6 +54,15 @@ function Debug({ ad }) {
                     </GroupItem>
                 ))}
             </HStack>
+
+            {ad.properties?.keywords && (
+                <HStack gap="2" align="center">
+                    <BodyShort size="small">Keywords</BodyShort>
+                    {ad.properties.keywords.split(",").map((keywords) => (
+                        <GroupItem key={keywords}>{keywords}</GroupItem>
+                    ))}
+                </HStack>
+            )}
         </VStack>
     );
 }
