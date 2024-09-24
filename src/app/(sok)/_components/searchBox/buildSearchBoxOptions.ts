@@ -199,17 +199,6 @@ function getRemoteOptions(aggregations: Aggregations): ComboboxOption[] {
     );
 }
 
-function getOccupationSuggestionOptions(allSuggestions: string[]): ComboboxOption[] {
-    return allSuggestions
-        .map(
-            (suggestion): ComboboxOption => ({
-                label: suggestion,
-                value: `${OCCUPATION}-${suggestion}`,
-            }),
-        )
-        .filter((option) => !promotedValues.includes(option.value));
-}
-
 function getDriversLicenseOptions(aggregations: Aggregations): ComboboxOption[] {
     return aggregations.needDriversLicense
         .map(
@@ -238,11 +227,7 @@ function getExperienceOptions(aggregations: Aggregations): ComboboxOption[] {
         .filter((option) => !promotedValues.includes(option.value));
 }
 
-export function getSearchBoxOptions(
-    aggregations: Aggregations,
-    locations: LocationList[],
-    allSuggestions: string[],
-): ComboboxOption[] {
+export function getSearchBoxOptions(aggregations: Aggregations, locations: LocationList[]): ComboboxOption[] {
     const locationList = buildLocations(aggregations, locations);
 
     return [
@@ -261,7 +246,6 @@ export function getSearchBoxOptions(
         ...getRemoteOptions(aggregations),
         ...getDriversLicenseOptions(aggregations),
         ...getExperienceOptions(aggregations),
-        ...getOccupationSuggestionOptions(allSuggestions),
     ];
 }
 
