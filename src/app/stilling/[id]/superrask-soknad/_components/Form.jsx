@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import {
     BodyLong,
-    Button,
     Checkbox,
     CheckboxGroup,
     ErrorSummary,
@@ -13,8 +12,8 @@ import {
     Textarea,
     TextField,
 } from "@navikt/ds-react";
-import Link from "next/link";
 import ApiErrorMessage from "@/app/_common/components/ApiErrorMessage";
+import { FormButtonBar } from "@/app/stilling/[id]/superrask-soknad/_components/FormButtonBar";
 import { MOTIVATION_MAX_LENGTH } from "./validateForm";
 
 function Form({ ad, applicationForm, onSubmit, error, validationErrors, isPending }) {
@@ -174,14 +173,7 @@ function Form({ ad, applicationForm, onSubmit, error, validationErrors, isPendin
             {error && <ApiErrorMessage apiErrorCode={error} />}
 
             <HStack gap="4" className="mt-12">
-                <Button variant="primary" type="submit" loading={isPending}>
-                    Send søknad
-                </Button>
-                {isPending && (
-                    <Button type="button" variant="secondary" as={Link} href={`/stilling/${ad._id}`}>
-                        Avbryt
-                    </Button>
-                )}
+                <FormButtonBar id={ad._id} isPending={isPending} />
             </HStack>
         </form>
     );

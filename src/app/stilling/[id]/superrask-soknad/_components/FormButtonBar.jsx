@@ -1,17 +1,15 @@
 import React from "react";
-import { useFormStatus } from "react-dom";
 import { Button } from "@navikt/ds-react";
 import Link from "next/link";
 import PropTypes from "prop-types";
 
-export function FormButtonBar({ id }) {
-    const { pending } = useFormStatus();
+export function FormButtonBar({ id, isPending }) {
     return (
         <>
-            <Button variant="primary" type="submit" loading={pending}>
+            <Button variant="primary" type="submit" loading={isPending}>
                 Send søknad
             </Button>
-            {!pending && (
+            {isPending && (
                 <Button type="button" variant="secondary" as={Link} href={`/stilling/${id}`}>
                     Avbryt
                 </Button>
@@ -21,4 +19,5 @@ export function FormButtonBar({ id }) {
 }
 FormButtonBar.propTypes = {
     id: PropTypes.string.isRequired,
+    isPending: PropTypes.bool.isRequired,
 };
