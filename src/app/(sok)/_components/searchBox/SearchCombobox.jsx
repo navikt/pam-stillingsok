@@ -12,23 +12,13 @@ import {
     PUBLISHED,
     SEARCH_STRING,
 } from "@/app/(sok)/_components/searchParamNames";
-import { FetchAction, useFetchReducer } from "@/app/_common/hooks/useFetchReducer";
-import * as actions from "@/app/_common/actions";
 import { findLabelForFilter, getSearchBoxOptions } from "@/app/(sok)/_components/searchBox/buildSearchBoxOptions";
 import logAmplitudeEvent, { logFilterChanged } from "@/app/_common/monitoring/amplitude";
 
-let suggestionsCache = [];
-const CACHE_MAX_SIZE = 50;
-const MINIMUM_LENGTH = 1;
-
 function SearchCombobox({ aggregations, locations }) {
     const searchQuery = useSearchQuery();
-    const [suggestionsResponse, suggestionsDispatch] = useFetchReducer([]);
 
-    const options = useMemo(
-        () => getSearchBoxOptions(aggregations, locations, [...suggestionsResponse.data]),
-        [aggregations, locations, suggestionsResponse.data],
-    );
+    const options = useMemo(() => getSearchBoxOptions(aggregations, locations), [aggregations, locations]);
 
     const selectedOptions = useMemo(
         () => buildSelectedOptions(searchQuery.urlSearchParams),
@@ -41,30 +31,6 @@ function SearchCombobox({ aggregations, locations }) {
             ? { label: `${o.label} ${filterLabel}`, value: o.value }
             : { label: o.label, value: o.value };
     });
-
-    async function fetchSuggestions(value) {
-        const cached = suggestionsCache.find((c) => c.value === value);
-        if (cached) {
-            suggestionsDispatch({ type: FetchAction.RESOLVE, data: cached.data });
-            return;
-        }
-        let data;
-        try {
-            data = await actions.getSuggestions(value, MINIMUM_LENGTH);
-        } catch (err) {
-            // ignore fetch failed errors
-        }
-        if (data) {
-            suggestionsCache = [{ value, data }, ...suggestionsCache].slice(0, CACHE_MAX_SIZE);
-            suggestionsDispatch({ type: FetchAction.RESOLVE, data });
-        }
-    }
-
-    function handleValueChange(value) {
-        if (value && value.length >= MINIMUM_LENGTH) {
-            fetchSuggestions(value);
-        }
-    }
 
     const handleFreeTextSearchOption = (value, isSelected) => {
         if (isSelected) {
@@ -173,7 +139,6 @@ function SearchCombobox({ aggregations, locations }) {
             onToggleSelected={onToggleSelected}
             selectedOptions={selectedOptions}
             options={optionList}
-            onChange={handleValueChange}
         />
     );
 }
