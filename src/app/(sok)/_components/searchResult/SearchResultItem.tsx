@@ -1,5 +1,4 @@
-import PropTypes from "prop-types";
-import React from "react";
+import React, { ReactElement, ReactNode } from "react";
 import { BodyShort, Heading, HStack, Link as AkselLink, Tag, VStack } from "@navikt/ds-react";
 import { endOfDay, isSameDay, parseISO, subDays } from "date-fns";
 import { Buldings3Icon, LocationPinIcon } from "@navikt/aksel-icons";
@@ -8,9 +7,22 @@ import getEmployer from "@/app/_common/utils/getEmployer";
 import getWorkLocation from "@/app/_common/utils/getWorkLocation";
 import { formatDate } from "@/app/_common/utils/utils";
 import deadlineText from "@/app/_common/utils/deadlineText";
+import { SearchResultAd } from "@/app/(sok)/_types/SearchResult";
 import Debug from "./Debug";
 
-export default function SearchResultItem({ ad, showExpired, favouriteButton, isDebug }) {
+interface SearchResultItemProps {
+    ad: SearchResultAd;
+    showExpired: boolean;
+    favouriteButton: ReactNode;
+    isDebug: boolean;
+}
+
+export default function SearchResultItem({
+    ad,
+    showExpired,
+    favouriteButton,
+    isDebug,
+}: SearchResultItemProps): ReactElement {
     const location = getWorkLocation(ad.properties.location, ad.locationList);
     const employer = getEmployer(ad);
     const published = formatDate(ad.published);
@@ -42,9 +54,14 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, isD
                     )}
                     <HStack gap="2" wrap={false} align="center" justify="space-between">
                         <Heading level="2" size="small" className="overflow-wrap-anywhere">
-                            <LinkToAd stilling={ad} employer={employer}>
+                            <AkselLink
+                                className="purple-when-visited"
+                                as={Link}
+                                href={`/stilling/${ad.uuid}`}
+                                prefetch={false}
+                            >
                                 {ad.title}
-                            </LinkToAd>
+                            </AkselLink>
                         </Heading>
                     </HStack>
                     {jobTitle && (
@@ -99,39 +116,3 @@ export default function SearchResultItem({ ad, showExpired, favouriteButton, isD
         </HStack>
     );
 }
-
-SearchResultItem.propTypes = {
-    ad: PropTypes.shape({
-        uuid: PropTypes.string,
-        source: PropTypes.string,
-        title: PropTypes.string,
-        published: PropTypes.string,
-        properties: PropTypes.shape({
-            employer: PropTypes.string,
-            hasInterestform: PropTypes.string,
-            jobtitle: PropTypes.string,
-            location: PropTypes.string,
-            applicationdue: PropTypes.string,
-        }),
-        locationList: PropTypes.arrayOf(PropTypes.shape({})),
-    }).isRequired,
-    showExpired: PropTypes.bool,
-    favouriteButton: PropTypes.node,
-    isDebug: PropTypes.bool,
-};
-
-function LinkToAd({ children, stilling }) {
-    return (
-        <AkselLink className="purple-when-visited" as={Link} href={`/stilling/${stilling.uuid}`} prefetch={false}>
-            {children}
-        </AkselLink>
-    );
-}
-
-LinkToAd.propTypes = {
-    children: PropTypes.node,
-    stilling: PropTypes.shape({
-        reference: PropTypes.string,
-        uuid: PropTypes.string,
-    }),
-};

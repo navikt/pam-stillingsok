@@ -14,8 +14,15 @@ export interface SearchResultAd {
     uuid: string;
     score: number;
     categoryList: OccupationCategory[];
+    published: string;
+    title: string;
+    locationList: [];
     properties: {
         searchtags: SearchTag[];
+        hasInterestform: string;
+        jobtitle: string;
+        applicationdue: string;
+        location: string;
     };
 }
 
