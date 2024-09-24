@@ -1,7 +1,7 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import { Link as AkselLink } from "@navikt/ds-react";
 
-export default function NewFiltersMessage() {
+export default function NewFiltersMessage(): ReactElement {
     return (
         <>
             Vi tester ut nye filtre og jobber med å gjøre dem mer nøyaktige. Vi bruker kunstig intelligens (KI) til å

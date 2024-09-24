@@ -12,11 +12,10 @@ interface ExtentProps {
 }
 
 export default function Extent({ initialValues, updatedValues }: ExtentProps): ReactElement {
-    // @ts-expect-error mergeCount is expecting 3 arguments
-    const values: FilterAggregation[] = mergeCount(initialValues, updatedValues);
+    const values = mergeCount(initialValues, updatedValues);
     const searchQuery = useSearchQuery();
 
-    function handleClick(e: React.ChangeEvent<HTMLInputElement>): void {
+    function handleChange(e: React.ChangeEvent<HTMLInputElement>): void {
         const { value, checked } = e.target;
         if (checked) {
             searchQuery.append(EXTENT, value);
@@ -38,8 +37,8 @@ export default function Extent({ initialValues, updatedValues }: ExtentProps): R
                 </>
             }
         >
-            {values.map((item: FilterAggregation) => (
-                <Checkbox name="extent[]" key={item.key} value={item.key} onChange={handleClick}>
+            {values.map((item) => (
+                <Checkbox name="extent[]" key={item.key} value={item.key} onChange={handleChange}>
                     {`${item.key} (${item.count})`}
                 </Checkbox>
             ))}

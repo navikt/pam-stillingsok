@@ -3,8 +3,12 @@ export interface FilterAggregation {
     count: number;
 }
 
+interface OccupationSecondLevelFilterAggregation extends FilterAggregation {
+    label: string;
+}
+
 export interface OccupationFilterAggregation extends FilterAggregation {
-    occupationSecondLevels: FilterAggregation[];
+    occupationSecondLevels: OccupationSecondLevelFilterAggregation[];
 }
 
 export default interface FilterAggregations {
@@ -19,4 +23,5 @@ export default interface FilterAggregations {
     needDriversLicense: FilterAggregation[];
     experience: FilterAggregation[];
     publishedTotalCount: number;
+    totalInternational: number;
 }

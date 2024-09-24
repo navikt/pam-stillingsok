@@ -1,17 +1,22 @@
-import PropTypes from "prop-types";
-import React from "react";
+import React, { ReactElement } from "react";
 import { BodyShort, Checkbox, CheckboxGroup } from "@navikt/ds-react";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
 import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
 import { EXPERIENCE } from "@/app/(sok)/_components/searchParamNames";
 import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
+import { FilterAggregation } from "@/app/(sok)/_types/FilterAggregations";
 
-function Experience({ initialValues, updatedValues }) {
+interface ExperienceProps {
+    initialValues: FilterAggregation[];
+    updatedValues: FilterAggregation[];
+}
+
+export default function Experience({ initialValues, updatedValues }: ExperienceProps): ReactElement {
     const sortedValues = sortExperienceValues(initialValues);
     const values = mergeCount(sortedValues, updatedValues);
     const searchQuery = useSearchQuery();
 
-    function handleClick(e) {
+    function handleChange(e: React.ChangeEvent<HTMLInputElement>): void {
         const { value, checked } = e.target;
         if (checked) {
             searchQuery.append(EXPERIENCE, value);
@@ -35,7 +40,7 @@ function Experience({ initialValues, updatedValues }) {
             }
         >
             {values.map((item) => (
-                <Checkbox key={item.key} name="experience[]" value={item.key} onChange={handleClick}>
+                <Checkbox key={item.key} name="experience[]" value={item.key} onChange={handleChange}>
                     {`${labelForExperience(item.key)} (${item.count})`}
                 </Checkbox>
             ))}
@@ -43,7 +48,7 @@ function Experience({ initialValues, updatedValues }) {
     );
 }
 
-export const labelForExperience = (key) => {
+export const labelForExperience = (key: string): string => {
     switch (key) {
         case "Ingen":
             return "Ingen krav til arbeidserfaring";
@@ -56,22 +61,10 @@ export const labelForExperience = (key) => {
     }
 };
 
-function sortExperienceValues(facets) {
+function sortExperienceValues(facets: FilterAggregation[]): FilterAggregation[] {
     if (!facets) {
-        return undefined;
+        return [];
     }
     const sortedPublishedValues = ["Ingen", "Noe", "Mye", "Ikke oppgitt"];
     return facets.sort((a, b) => sortedPublishedValues.indexOf(a.key) - sortedPublishedValues.indexOf(b.key));
 }
-
-Experience.propTypes = {
-    initialValues: PropTypes.arrayOf(
-        PropTypes.shape({
-            key: PropTypes.string,
-            count: PropTypes.number,
-        }),
-    ).isRequired,
-    updatedValues: PropTypes.arrayOf(PropTypes.shape({})),
-};
-
-export default Experience;

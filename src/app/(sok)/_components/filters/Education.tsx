@@ -1,5 +1,4 @@
-import PropTypes from "prop-types";
-import React from "react";
+import React, { ReactElement } from "react";
 import { BodyShort, Checkbox, CheckboxGroup } from "@navikt/ds-react";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
 import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
@@ -7,14 +6,20 @@ import moveCriteriaToBottom from "@/app/(sok)/_components/utils/moveFacetToBotto
 import sortEducationValues from "@/app/(sok)/_components/utils/sortEducationValues";
 import { EDUCATION } from "@/app/(sok)/_components/searchParamNames";
 import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
+import { FilterAggregation } from "@/app/(sok)/_types/FilterAggregations";
 
-function Education({ initialValues, updatedValues }) {
+interface EducationProps {
+    initialValues: FilterAggregation[];
+    updatedValues: FilterAggregation[];
+}
+
+export default function Education({ initialValues, updatedValues }: EducationProps): ReactElement {
     const sortedValuesByEducation = sortEducationValues(initialValues);
     const sortedValues = moveCriteriaToBottom(sortedValuesByEducation, "Ikke oppgitt");
     const values = mergeCount(sortedValues, updatedValues);
     const searchQuery = useSearchQuery();
 
-    function handleClick(e) {
+    function handleChange(e: React.ChangeEvent<HTMLInputElement>): void {
         const { value, checked } = e.target;
         if (checked) {
             searchQuery.append(EDUCATION, value);
@@ -38,7 +43,7 @@ function Education({ initialValues, updatedValues }) {
             }
         >
             {values.map((item) => (
-                <Checkbox key={item.key} name="education[]" value={item.key} onChange={handleClick}>
+                <Checkbox key={item.key} name="education[]" value={item.key} onChange={handleChange}>
                     {`${labelForEducation(item.key)} (${item.count})`}
                 </Checkbox>
             ))}
@@ -46,7 +51,7 @@ function Education({ initialValues, updatedValues }) {
     );
 }
 
-export const labelForEducation = (key) => {
+export const labelForEducation = (key: string): string => {
     switch (key) {
         case "Ingen krav":
             return "Ingen krav til utdanning";
@@ -64,15 +69,3 @@ export const labelForEducation = (key) => {
             return key;
     }
 };
-
-Education.propTypes = {
-    initialValues: PropTypes.arrayOf(
-        PropTypes.shape({
-            key: PropTypes.string,
-            count: PropTypes.number,
-        }),
-    ).isRequired,
-    updatedValues: PropTypes.arrayOf(PropTypes.shape({})),
-};
-
-export default Education;

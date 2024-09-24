@@ -1,17 +1,22 @@
-import PropTypes from "prop-types";
-import React from "react";
+import React, { ReactElement } from "react";
 import { BodyShort, Checkbox, CheckboxGroup } from "@navikt/ds-react";
 import mergeCount from "@/app/(sok)/_components/utils/mergeCount";
 import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
 import { NEED_DRIVERS_LICENSE } from "@/app/(sok)/_components/searchParamNames";
 import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
+import { FilterAggregation } from "@/app/(sok)/_types/FilterAggregations";
 
-function DriversLicense({ initialValues, updatedValues }) {
+interface DriversLicenseProps {
+    initialValues: FilterAggregation[];
+    updatedValues: FilterAggregation[];
+}
+
+export default function DriversLicense({ initialValues, updatedValues }: DriversLicenseProps): ReactElement {
     const sortedValues = sortDriverLicenseValues(initialValues);
     const values = mergeCount(sortedValues, updatedValues);
     const searchQuery = useSearchQuery();
 
-    function handleClick(e) {
+    function handleChange(e: React.ChangeEvent<HTMLInputElement>): void {
         const { value, checked } = e.target;
         if (checked) {
             searchQuery.append(NEED_DRIVERS_LICENSE, value);
@@ -34,7 +39,7 @@ function DriversLicense({ initialValues, updatedValues }) {
             }
         >
             {values.map((item) => (
-                <Checkbox name="needDriversLicense[]" key={item.key} value={item.key} onChange={handleClick}>
+                <Checkbox name="needDriversLicense[]" key={item.key} value={item.key} onChange={handleChange}>
                     {`${labelForNeedDriversLicense(item.key)} (${item.count})`}
                 </Checkbox>
             ))}
@@ -42,17 +47,7 @@ function DriversLicense({ initialValues, updatedValues }) {
     );
 }
 
-DriversLicense.propTypes = {
-    initialValues: PropTypes.arrayOf(
-        PropTypes.shape({
-            key: PropTypes.string,
-            count: PropTypes.number,
-        }),
-    ).isRequired,
-    updatedValues: PropTypes.arrayOf(PropTypes.shape({})),
-};
-
-export const labelForNeedDriversLicense = (key) => {
+export const labelForNeedDriversLicense = (key: string): string => {
     switch (key) {
         case "true":
             return "Må ha førerkort";
@@ -63,12 +58,10 @@ export const labelForNeedDriversLicense = (key) => {
     }
 };
 
-function sortDriverLicenseValues(facets) {
+function sortDriverLicenseValues(facets: FilterAggregation[]): FilterAggregation[] {
     if (!facets) {
-        return undefined;
+        return [];
     }
     const sortedPublishedValues = ["false", "true", "Ikke oppgitt"];
     return facets.sort((a, b) => sortedPublishedValues.indexOf(a.key) - sortedPublishedValues.indexOf(b.key));
 }
-
-export default DriversLicense;

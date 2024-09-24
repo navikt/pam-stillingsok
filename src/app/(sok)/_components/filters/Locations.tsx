@@ -1,17 +1,34 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { ReactElement } from "react";
 import { BodyShort, Box, Checkbox, Fieldset } from "@navikt/ds-react";
 import fixLocationName from "@/app/_common/utils/fixLocationName";
 import buildLocations from "@/app/(sok)/_components/utils/buildLocations";
 import { logFilterChanged } from "@/app/_common/monitoring/amplitude";
 import { COUNTRY, COUNTY, INTERNATIONAL, MUNICIPAL } from "@/app/(sok)/_components/searchParamNames";
 import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";
+import FilterAggregations, { FilterAggregation } from "@/app/(sok)/_types/FilterAggregations";
 
-function Locations({ locations, updatedValues }) {
-    const locationValues = buildLocations(updatedValues.aggregations, locations);
+interface SubLocation {
+    type: string;
+    key: string;
+    count: number;
+}
+
+interface Location {
+    type: string;
+    key: string;
+    count: number;
+    subLocations: SubLocation[];
+}
+
+interface LocationsProps {
+    locations: [];
+    updatedValues: FilterAggregations;
+}
+export default function Locations({ locations, updatedValues }: LocationsProps): ReactElement {
+    const locationValues: Location[] = buildLocations(updatedValues, locations);
     const searchQuery = useSearchQuery();
 
-    function handleLocationClick(value, type, checked) {
+    function handleLocationClick(value: string, type: string, checked: boolean): void {
         if (type === "county") {
             if (checked) {
                 searchQuery.append(COUNTY, value);
@@ -48,9 +65,11 @@ function Locations({ locations, updatedValues }) {
         }
     }
 
-    const handleCheckboxClick = (key, type) => (e) => {
-        handleLocationClick(key, type, e.target.checked);
-    };
+    const handleCheckboxClick =
+        (key: string, type: string) =>
+        (e: React.ChangeEvent<HTMLInputElement>): void => {
+            handleLocationClick(key, type, e.target.checked);
+        };
 
     return (
         <Fieldset
@@ -75,7 +94,7 @@ function Locations({ locations, updatedValues }) {
                                     onChange={handleCheckboxClick(location.key, location.type)}
                                     checked={searchQuery.get(INTERNATIONAL) === "true"}
                                 >
-                                    Utland ({updatedValues.aggregations.totalInternational})
+                                    Utland ({updatedValues.totalInternational})
                                 </Checkbox>
                             ) : (
                                 <Checkbox
@@ -97,7 +116,9 @@ function Locations({ locations, updatedValues }) {
                                             <div>
                                                 {location.subLocations &&
                                                     location.subLocations
-                                                        .sort((a, b) => a.key.localeCompare(b.key, "no"))
+                                                        .sort((a: FilterAggregation, b: FilterAggregation) =>
+                                                            a.key.localeCompare(b.key, "no"),
+                                                        )
                                                         .map((subLocation) => (
                                                             <Checkbox
                                                                 name={
@@ -142,15 +163,3 @@ function Locations({ locations, updatedValues }) {
         </Fieldset>
     );
 }
-
-Locations.propTypes = {
-    updatedValues: PropTypes.shape({
-        aggregations: PropTypes.shape({
-            internationalCountMap: PropTypes.object,
-            nationalCountMap: PropTypes.object,
-        }),
-    }),
-    locations: PropTypes.arrayOf(PropTypes.object),
-};
-
-export default Locations;
