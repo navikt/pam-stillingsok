@@ -1,11 +1,10 @@
-import React, { useEffect, useRef } from "react";
+import React, { ReactElement, useEffect, useRef } from "react";
 import { BodyLong, Button, Heading } from "@navikt/ds-react";
-import PropTypes from "prop-types";
 import Link from "next/link";
 import GiveFeedback from "./GiveFeedback";
 
-function Success({ email }) {
-    const ref = useRef(null);
+function Success({ email }: { email: string }): ReactElement {
+    const ref = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -38,9 +37,5 @@ function Success({ email }) {
         </>
     );
 }
-
-Success.propTypes = {
-    email: PropTypes.string,
-};
 
 export default Success;
