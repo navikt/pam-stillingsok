@@ -1,7 +1,6 @@
 "use client";
 
 import { BodyLong, Heading, VStack } from "@navikt/ds-react";
-// @ts-expect-error TODO: Add typeinfo for arbeidsplassen-react
 import { WorriedFigure } from "@navikt/arbeidsplassen-react";
 import React, { ReactElement, useEffect } from "react";
 import * as Sentry from "@sentry/nextjs";

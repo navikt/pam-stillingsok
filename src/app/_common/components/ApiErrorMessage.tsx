@@ -1,8 +1,7 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { ReactElement } from "react";
 import { Alert, Heading } from "@navikt/ds-react";
 
-const getErrorMessage = (apiErrorCode) => {
+const getErrorMessage = (apiErrorCode: string): string => {
     switch (apiErrorCode) {
         case "invalid_name":
             return "Sjekk at navnet ditt er skrevet riktig og prøv igjen.";
@@ -23,7 +22,13 @@ const getErrorMessage = (apiErrorCode) => {
     }
 };
 
-function ApiErrorMessage({ apiErrorCode, errorHeading = "Søknaden ble ikke sendt" }) {
+function ApiErrorMessage({
+    apiErrorCode,
+    errorHeading = "Søknaden ble ikke sendt",
+}: {
+    apiErrorCode: string;
+    errorHeading: string;
+}): ReactElement {
     return (
         <Alert variant="error" className="mb-4 mt-4" role="alert">
             <Heading level="2" size="xsmall" spacing>
@@ -33,9 +38,5 @@ function ApiErrorMessage({ apiErrorCode, errorHeading = "Søknaden ble ikke send
         </Alert>
     );
 }
-
-ApiErrorMessage.propTypes = {
-    apiErrorCode: PropTypes.string,
-};
 
 export default ApiErrorMessage;

@@ -1,7 +1,7 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import { BodyLong, Box, Heading, Link as AkselLink } from "@navikt/ds-react";
 
-function GiveFeedback() {
+function GiveFeedback(): ReactElement {
     return (
         <Box padding={{ xs: "4", md: "6" }} borderRadius="small" background="surface-alt-3-subtle" className="mt-12">
             <Heading level="2" size="medium" spacing>

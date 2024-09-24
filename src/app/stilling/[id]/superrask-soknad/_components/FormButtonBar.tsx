@@ -1,9 +1,13 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import { Button } from "@navikt/ds-react";
 import Link from "next/link";
-import PropTypes from "prop-types";
 
-export function FormButtonBar({ id, isPending }) {
+interface FormButtonBarProps {
+    id: string;
+    isPending: boolean;
+}
+
+export function FormButtonBar({ id, isPending }: FormButtonBarProps): ReactElement {
     return (
         <>
             <Button variant="primary" type="submit" loading={isPending}>
@@ -17,7 +21,3 @@ export function FormButtonBar({ id, isPending }) {
         </>
     );
 }
-FormButtonBar.propTypes = {
-    id: PropTypes.string.isRequired,
-    isPending: PropTypes.bool.isRequired,
-};

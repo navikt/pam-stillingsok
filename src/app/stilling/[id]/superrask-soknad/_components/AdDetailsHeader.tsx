@@ -1,9 +1,14 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { ReactElement } from "react";
 import { BodyShort, Box, Label } from "@navikt/ds-react";
 import getEmployer from "@/app/_common/utils/getEmployer";
 
-function AdDetailsHeader({ source }) {
+interface AdDetailsHeaderProps {
+    source: {
+        title: string;
+    };
+}
+
+function AdDetailsHeader({ source }: AdDetailsHeaderProps): ReactElement {
     return (
         <Box background="surface-alt-1-subtle" paddingBlock="4" className="mb-10">
             <div className="container-medium">
@@ -15,11 +20,5 @@ function AdDetailsHeader({ source }) {
         </Box>
     );
 }
-
-AdDetailsHeader.propTypes = {
-    source: PropTypes.shape({
-        title: PropTypes.string,
-    }),
-};
 
 export default AdDetailsHeader;
