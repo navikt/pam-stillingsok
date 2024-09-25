@@ -8,6 +8,11 @@ export default defineConfig({
         globals: true, // Needed for cleanup https://github.com/testing-library/vue-testing-library/issues/296
         environment: "jsdom",
         setupFiles: "./vitest.setup.js",
+        server: {
+            deps: {
+                inline: ["@navikt/arbeidsplassen-react"],
+            },
+        },
     },
     resolve: {
         alias: {
