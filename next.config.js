@@ -6,6 +6,7 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 const nextConfig = withBundleAnalyzer({
     basePath: "/stillinger",
     cacheHandler: process.env.NODE_ENV === "production" ? require.resolve("./cache-handler.mjs") : undefined,
+    transpilePackages: ["@navikt/arbeidsplassen-react"],
     experimental: {
         optimizePackageImports: ["@navikt/ds-react", "@navikt/aksel-icons"],
         instrumentationHook: true,
