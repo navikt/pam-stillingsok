@@ -1,6 +1,5 @@
 import React, { ReactElement, useContext, useEffect, useState } from "react";
 import { BodyLong, Button, HStack, Modal } from "@navikt/ds-react";
-// @ts-expect-error TODO: Add typeinfo for arbeidsplassen-react
 import { WorriedFigure } from "@navikt/arbeidsplassen-react";
 import { AuthenticationContext, AuthenticationStatus } from "@/app/_common/auth/contexts/AuthenticationProvider";
 import useToggle from "@/app/_common/hooks/useToggle";

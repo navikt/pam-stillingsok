@@ -1,7 +1,6 @@
 import React, { ReactElement, useState } from "react";
 import { BodyLong, Heading, HStack, Link as AkselLink, Panel, VStack } from "@navikt/ds-react";
 import { FaceFrownIcon, FaceSmileIcon } from "@navikt/aksel-icons";
-// @ts-expect-error Denne er instalert, men oppdages ikke, noe feil med pakken
 import { FeedbackButton } from "@navikt/arbeidsplassen-react";
 import logAmplitudeEvent from "@/app/_common/monitoring/amplitude";
 import useSearchQuery from "@/app/(sok)/_components/SearchQueryProvider";

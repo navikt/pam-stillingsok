@@ -10,6 +10,7 @@ import useToggle from "@/app/_common/hooks/useToggle";
 import { FetchStatus } from "@/app/_common/hooks/useFetchReducer";
 import * as actions from "@/app/_common/actions";
 import { SavedSearch } from "@/app/_common/actions/savedSearchActions";
+import { ActionResponse } from "@/app/_common/actions/types";
 import { FormModes, SaveSearchFormData } from "./modal/SaveSearchForm";
 import SaveSearchModal from "./modal/SaveSearchModal";
 
@@ -56,8 +57,8 @@ function SavedSearchListItem({
     async function reactivateEmailNotification(): Promise<void> {
         setRestartEmailNotificationStatus(FetchStatus.IS_FETCHING);
 
-        let isSuccess;
-        let result;
+        let isSuccess: boolean;
+        let result: ActionResponse<SavedSearch>;
         try {
             const updatedSavedSearch = {
                 ...savedSearch,

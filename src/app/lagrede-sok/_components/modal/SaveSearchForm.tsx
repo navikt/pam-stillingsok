@@ -17,6 +17,7 @@ import useToggle from "@/app/_common/hooks/useToggle";
 import { isStringEmpty } from "@/app/_common/utils/utils";
 import * as actions from "@/app/_common/actions";
 import { SavedSearch } from "@/app/_common/actions/savedSearchActions";
+import { ActionResponse } from "@/app/_common/actions/types";
 
 export const FormModes = {
     ADD: "ADD",
@@ -103,7 +104,7 @@ function SaveSearchForm({
                 startTransition(async () => {
                     setShowError(false);
                     let isSuccess;
-                    let result;
+                    let result: ActionResponse<SavedSearch>;
                     try {
                         result = await actions.saveSavedSearchAction(dataToBeSaved);
                         isSuccess = result.success;
@@ -131,7 +132,7 @@ function SaveSearchForm({
                 startTransition(async () => {
                     setShowError(false);
                     let isSuccess;
-                    let result;
+                    let result: ActionResponse<SavedSearch>;
                     try {
                         result = await actions.updateSavedSearchAction(dataToBeSaved);
                         isSuccess = result.success;
