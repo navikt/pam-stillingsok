@@ -1,1 +1,1 @@
-declare module '@navikt/arbeidsplassen-react';
+declare module "@navikt/arbeidsplassen-react";

@@ -58,7 +58,8 @@ function RegisterEmailForm({ onClose, onSuccess }: RegisterEmailFormProps): Reac
         if (validateForm()) {
             setSaveStatus(FetchStatus.IS_FETCHING);
             let isSuccess;
-            let result;
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            let result: { success: boolean; statusCode?: number; data?: any };
 
             try {
                 result = await actions.updateUser({ ...user, email });
