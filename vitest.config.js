@@ -10,7 +10,7 @@ export default defineConfig({
         setupFiles: "./vitest.setup.js",
         server: {
             deps: {
-                inline: ['@navikt/arbeidsplassen-react'],
+                inline: ["@navikt/arbeidsplassen-react"],
             },
         },
     },
