@@ -1,5 +1,6 @@
 {
     "compilerOptions": {
+        "target": "es5",
         "lib": ["dom", "dom.iterable", "esnext"],
         "allowJs": true,
         "skipLibCheck": true,
@@ -12,6 +13,7 @@
         "resolveJsonModule": true,
         "isolatedModules": true,
         "jsx": "preserve",
+        "forceConsistentCasingInFileNames": true,
         "plugins": [
             {
                 "name": "next"
@@ -22,9 +24,6 @@
         },
         "types": ["@testing-library/jest-dom", "vitest/globals"]
     },
-    "include": ["next-env.d.ts", ".next/types/**/*.ts", "**/*.ts", "**/*.tsx"],
+    "include": ["index.d.ts", "next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
     "exclude": ["node_modules"]
 }
-
-
-// hej
