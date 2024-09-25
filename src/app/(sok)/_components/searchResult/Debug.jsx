@@ -3,15 +3,12 @@ import { BodyShort, Box, HStack, VStack } from "@navikt/ds-react";
 import PropTypes from "prop-types";
 import { useSearchParams } from "next/navigation";
 import { SEARCH_STRING } from "@/app/(sok)/_components/searchParamNames";
+import { mediumDisplayName } from "@/app/_common/utils/utils";
 
-function GroupItem({ children, highlight }) {
+function GroupItem({ children, color = "surface-neutral-subtle", semibold }) {
     return (
-        <Box
-            background={highlight ? "surface-success-subtle" : "surface-neutral-subtle"}
-            padding="05 2"
-            borderRadius="small"
-        >
-            <BodyShort size="small" weight={highlight && "semibold"}>
+        <Box background={color} padding="05 2" borderRadius="small">
+            <BodyShort size="small" weight={semibold && "semibold"}>
                 {children}
             </BodyShort>
         </Box>
@@ -39,7 +36,7 @@ function Debug({ ad }) {
             )}
             <HStack gap="2">
                 {janzzCategories.map((category) => (
-                    <GroupItem highlight key={category.id}>
+                    <GroupItem color="surface-success-subtle" semibold key={category.id}>
                         {category.name}
                     </GroupItem>
                 ))}
@@ -57,10 +54,19 @@ function Debug({ ad }) {
 
             {ad.properties?.keywords && (
                 <HStack gap="2" align="center">
-                    <BodyShort size="small">Keywords</BodyShort>
+                    <BodyShort size="small">Keywords:</BodyShort>
                     {ad.properties.keywords.split(",").map((keywords) => (
                         <GroupItem key={keywords}>{keywords}</GroupItem>
                     ))}
+                </HStack>
+            )}
+
+            {ad.medium && (
+                <HStack gap="2" align="center">
+                    <BodyShort size="small">Kilde:</BodyShort>
+                    <GroupItem color={ad.medium === "Stillingsregistrering" && "surface-danger-subtle"}>
+                        {mediumDisplayName(ad.medium)}
+                    </GroupItem>
                 </HStack>
             )}
         </VStack>
