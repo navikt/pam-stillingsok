@@ -62,7 +62,7 @@ export function SearchQueryProvider({ children }: SearchQueryProviderProps): Rea
     }
 
     function has(key: string, value?: string): boolean {
-        // @ts-expect-error https://github.com/microsoft/TypeScript/issues/55569
+        // @ts-expect-error https://github.com/microsoft/TypeScript/issues/55569 /
         return urlSearchParams.has(key, value);
     }
 
