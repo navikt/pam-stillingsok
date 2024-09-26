@@ -27,7 +27,7 @@ function ApiErrorMessage({
     errorHeading = "Søknaden ble ikke sendt",
 }: {
     apiErrorCode: string;
-    errorHeading: string;
+    errorHeading?: string;
 }): ReactElement {
     return (
         <Alert variant="error" className="mb-4 mt-4" role="alert">

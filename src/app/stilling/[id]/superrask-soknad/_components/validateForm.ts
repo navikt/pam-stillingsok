@@ -1,13 +1,8 @@
 import { isValidEmail, isValidTelephone } from "@/app/_common/utils/utils";
 import { Application, Qualification } from "@/app/stilling/[id]/superrask-soknad/_types/Application";
+import { ValidationErrors } from "@/app/stilling/[id]/superrask-soknad/_types/ValidationErrors";
 
 export const MOTIVATION_MAX_LENGTH = 800;
-
-interface ValidationErrors {
-    email?: string;
-    telephone?: string;
-    motivation?: string;
-}
 
 export function parseFormData(formData: FormData, qualifications: Qualification[]): Application {
     return {
